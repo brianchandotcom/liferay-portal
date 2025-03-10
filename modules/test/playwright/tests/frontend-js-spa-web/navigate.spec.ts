@@ -66,9 +66,15 @@ test(
 
 			// Navigate to second page using SPA. If we use page.goto() is loading a new page
 
-			await page
-				.getByRole('menuitem', {name: 'LPD-49303-secondLayout'})
-				.click();
+			const secondPageMenuItem = page.getByRole('menuitem', {
+				name: 'LPD-49303-secondLayout',
+			});
+
+			await secondPageMenuItem.click();
+
+			await secondPageMenuItem.evaluate((element) =>
+				element.classList.contains('active')
+			);
 
 			const bodyBackgroundColor = await page.evaluate(() => {
 				return window.getComputedStyle(document.body)[

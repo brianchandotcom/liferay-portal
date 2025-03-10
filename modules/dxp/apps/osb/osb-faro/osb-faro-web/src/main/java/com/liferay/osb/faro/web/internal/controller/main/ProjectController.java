@@ -56,11 +56,15 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -623,7 +627,8 @@ public class ProjectController extends BaseFaroController {
 	@Path("/usage/reset/preview")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
 	public List<FaroSubscriptionDisplay> previewResetProjectUsageDisplays(
-			@QueryParam("groupId") Long groupId)
+			@QueryParam("groupId") Long groupId,
+			@QueryParam("startDateString") String startDateString)
 		throws Exception {
 
 		List<FaroProject> faroProjects = new ArrayList<>();
@@ -640,13 +645,15 @@ public class ProjectController extends BaseFaroController {
 		return TransformUtil.transform(
 			faroProjects,
 			faroProject -> _resetProjectUsageDisplays(
-				faroProject.getGroupId()));
+				faroProject.getGroupId(), startDateString));
 	}
 
 	@DELETE
 	@Path("/usage/reset")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public void resetProjectUsageDisplays(@QueryParam("groupId") Long groupId)
+	public void resetProjectUsageDisplays(
+			@QueryParam("groupId") Long groupId,
+			@QueryParam("startDateString") String startDateString)
 		throws Exception {
 
 		List<FaroProject> faroProjects = new ArrayList<>();
@@ -664,7 +671,8 @@ public class ProjectController extends BaseFaroController {
 			_faroProjectLocalService.updateSubscription(
 				faroProject.getFaroProjectId(),
 				JSONUtil.writeValueAsString(
-					_resetProjectUsageDisplays(faroProject.getGroupId())));
+					_resetProjectUsageDisplays(
+						faroProject.getGroupId(), startDateString)));
 		}
 	}
 
@@ -1219,7 +1227,8 @@ public class ProjectController extends BaseFaroController {
 		}
 	}
 
-	private FaroSubscriptionDisplay _resetProjectUsageDisplays(long groupId)
+	private FaroSubscriptionDisplay _resetProjectUsageDisplays(
+			long groupId, String startDateString)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -1236,17 +1245,59 @@ public class ProjectController extends BaseFaroController {
 
 		Date date = new Date();
 
-		Date endDate = new Date(date.getTime() / Time.DAY * Time.DAY);
+		date = new Date(date.getTime() / Time.DAY * Time.DAY);
 
-		Calendar calendar = Calendar.getInstance();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-		calendar.setTime(endDate);
+		Calendar calendar1 = Calendar.getInstance();
 
-		calendar.set(Calendar.DATE, 1);
+		Date startDate = dateFormat.parse(startDateString);
 
-		faroSubscriptionDisplay.setUsageCounts(
-			cerebroEngineClient, contactsEngineClient, endDate, faroProject,
-			calendar.getTime());
+		calendar1.setTime(startDate);
+
+		calendar1.set(Calendar.DATE, 1);
+
+		Date lastAnniversaryDate =
+			faroSubscriptionDisplay.getLastAnniversaryDate();
+
+		if (DateUtil.compareTo(startDate, lastAnniversaryDate) < 0) {
+			startDate = lastAnniversaryDate;
+		}
+
+		while (DateUtil.compareTo(date, startDate) > 0) {
+			calendar1.add(Calendar.MONTH, 1);
+			calendar1.set(Calendar.DATE, 1);
+
+			Date endDate = calendar1.getTime();
+
+			if (DateUtil.compareTo(endDate, date) > 0) {
+				endDate = date;
+			}
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				faroProject.getSubscription());
+
+			jsonObject.put(
+				"individualsCountSinceLastAnniversary",
+				contactsEngineClient.getIndividualsCreatedBetweenCount(
+					faroProject, endDate, lastAnniversaryDate)
+			).put(
+				"pageViewsCountSinceLastAnniversary",
+				cerebroEngineClient.getPageViews(
+					faroProject, lastAnniversaryDate, endDate)
+			);
+
+			faroProject.setSubscription(jsonObject.toString());
+
+			faroSubscriptionDisplay.setUsageCounts(
+				cerebroEngineClient, contactsEngineClient, endDate, faroProject,
+				startDate);
+
+			faroProject.setSubscription(
+				JSONUtil.writeValueAsString(faroSubscriptionDisplay));
+
+			startDate = calendar1.getTime();
+		}
 
 		return faroSubscriptionDisplay;
 	}

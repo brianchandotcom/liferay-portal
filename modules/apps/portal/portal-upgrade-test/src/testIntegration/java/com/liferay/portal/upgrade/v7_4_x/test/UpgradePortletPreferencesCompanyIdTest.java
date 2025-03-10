@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -16,10 +15,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -47,7 +46,11 @@ public class UpgradePortletPreferencesCompanyIdTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new LiferayIntegrationTestRule() {
+			{
+				skipTestRule(CompanyProviderClassTestRule.INSTANCE);
+			}
+		};
 
 	@Before
 	public void setUp() throws Exception {
@@ -58,49 +61,44 @@ public class UpgradePortletPreferencesCompanyIdTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					CompanyConstants.SYSTEM)) {
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.addPortletPreferences(
+				CompanyConstants.SYSTEM, PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _testLayout.getPlid(),
+				"test", null,
+				"<portlet-preferences><preference><name>testName</name>" +
+					"<value>testValue1</value><value>testValue2</value>" +
+						"</preference></portlet-preferences>");
 
-			PortletPreferences portletPreferences =
-				_portletPreferencesLocalService.addPortletPreferences(
-					CompanyConstants.SYSTEM, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _testLayout.getPlid(),
-					"test", null,
-					"<portlet-preferences><preference><name>testName</name>" +
-						"<value>testValue1</value><value>testValue2</value>" +
-							"</preference></portlet-preferences>");
+		Assert.assertEquals(
+			CompanyConstants.SYSTEM, portletPreferences.getCompanyId());
 
-			Assert.assertEquals(
-				CompanyConstants.SYSTEM, portletPreferences.getCompanyId());
-
-			List<PortletPreferenceValue> portletPreferenceValues =
-				_getPortletPreferenceValues(
-					portletPreferences.getPortletPreferencesId());
-
-			assertCompanyIds(CompanyConstants.SYSTEM, portletPreferenceValues);
-
-			UpgradeProcess upgradeProcess =
-				new UpgradePortletPreferencesCompanyId();
-
-			upgradeProcess.upgrade();
-
-			CacheRegistryUtil.clear();
-
-			portletPreferences =
-				_portletPreferencesLocalService.getPortletPreferences(
-					portletPreferences.getPortletPreferencesId());
-
-			Assert.assertEquals(
-				PortalUtil.getDefaultCompanyId(),
-				portletPreferences.getCompanyId());
-
-			portletPreferenceValues = _getPortletPreferenceValues(
+		List<PortletPreferenceValue> portletPreferenceValues =
+			_getPortletPreferenceValues(
 				portletPreferences.getPortletPreferencesId());
 
-			assertCompanyIds(
-				PortalUtil.getDefaultCompanyId(), portletPreferenceValues);
-		}
+		assertCompanyIds(CompanyConstants.SYSTEM, portletPreferenceValues);
+
+		UpgradeProcess upgradeProcess =
+			new UpgradePortletPreferencesCompanyId();
+
+		upgradeProcess.upgrade();
+
+		CacheRegistryUtil.clear();
+
+		portletPreferences =
+			_portletPreferencesLocalService.getPortletPreferences(
+				portletPreferences.getPortletPreferencesId());
+
+		Assert.assertEquals(
+			PortalUtil.getDefaultCompanyId(),
+			portletPreferences.getCompanyId());
+
+		portletPreferenceValues = _getPortletPreferenceValues(
+			portletPreferences.getPortletPreferencesId());
+
+		assertCompanyIds(
+			PortalUtil.getDefaultCompanyId(), portletPreferenceValues);
 	}
 
 	protected void assertCompanyIds(

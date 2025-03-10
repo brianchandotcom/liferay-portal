@@ -6,11 +6,9 @@
 package com.liferay.saml.internal.servlet.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,13 +50,14 @@ public class SamlSameSiteLaxCookiesFilterTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new LiferayIntegrationTestRule() {
+			{
+				skipTestRule(CompanyProviderClassTestRule.INSTANCE);
+			}
+		};
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-			CompanyConstants.SYSTEM);
-
 		samlProviderConfigurationHelper =
 			SamlProviderConfigurationHelperUtil.
 				getSamlProviderConfigurationHelper();
@@ -102,8 +101,6 @@ public class SamlSameSiteLaxCookiesFilterTest {
 			).put(
 				"saml.enabled", String.valueOf(_enabled)
 			).build());
-
-		_safeCloseable.close();
 	}
 
 	@Test
@@ -181,6 +178,5 @@ public class SamlSameSiteLaxCookiesFilterTest {
 	private static boolean _enabled;
 	private static Map<String, String> _paramsMap;
 	private static String _postBody;
-	private static SafeCloseable _safeCloseable;
 
 }

@@ -11,7 +11,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.deploy.hot.ServiceBag;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -61,7 +61,11 @@ public class PortletPreferencesLocalServiceTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new LiferayIntegrationTestRule() {
+			{
+				skipTestRule(CompanyProviderClassTestRule.INSTANCE);
+			}
+		};
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -117,21 +121,15 @@ public class PortletPreferencesLocalServiceTest
 	public void testAddPortletPreferencesWithCompanyThreadLocalSystem()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					CompanyConstants.SYSTEM)) {
-
-			PortletPreferences portletPreferences =
-				portletPreferencesLocalService.addPortletPreferences(
-					TestPropsValues.getCompanyId(),
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, testLayout.getPlid(),
-					testPortlet.getPortletId(), testPortlet, null);
-
-			Assert.assertEquals(
+		PortletPreferences portletPreferences =
+			portletPreferencesLocalService.addPortletPreferences(
 				TestPropsValues.getCompanyId(),
-				portletPreferences.getCompanyId());
-		}
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, testLayout.getPlid(),
+				testPortlet.getPortletId(), testPortlet, null);
+
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(), portletPreferences.getCompanyId());
 	}
 
 	@Test

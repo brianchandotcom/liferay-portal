@@ -690,6 +690,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
+				"themeName",
+				StyleBookUtil.getThemeName(
+					themeDisplay.getLayout(), themeDisplay.getLocale())
+			).put(
 				"undoUpdateFormConfigURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/undo_form_item_config")

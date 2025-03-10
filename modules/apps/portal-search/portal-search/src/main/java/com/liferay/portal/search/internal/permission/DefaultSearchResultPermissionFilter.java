@@ -117,6 +117,8 @@ public class DefaultSearchResultPermissionFilter
 
 			if (!_isGroupAdmin(searchContext)) {
 				_filterHits(null, hits, searchContext);
+
+				_updateSearchHits(hits, searchContext);
 			}
 
 			return hits;
@@ -184,34 +186,6 @@ public class DefaultSearchResultPermissionFilter
 			(float)(System.currentTimeMillis() - hits.getStart()) /
 				Time.SECOND);
 		hits.setLength(hits.getLength() - excludeDocs.size());
-
-		SearchResponseImpl searchResponseImpl =
-			(SearchResponseImpl)searchContext.getAttribute("search.response");
-
-		SearchHits searchHits = searchResponseImpl.getSearchHits();
-
-		List<SearchHit> searchHitsList = searchHits.getSearchHits();
-
-		List<String> ids = new ArrayList<>();
-
-		ArrayUtil.isNotEmptyForEach(
-			excludeDocs.toArray(new Document[0]),
-			document -> ids.add(document.get("uid")));
-
-		searchHitsList.removeIf(searchHit -> ids.contains(searchHit.getId()));
-
-		SearchHitsBuilderFactory searchHitsBuilderFactory =
-			new SearchHitsBuilderFactoryImpl();
-
-		SearchHitsBuilder searchHitsBuilder =
-			searchHitsBuilderFactory.getSearchHitsBuilder();
-
-		searchHitsBuilder.addSearchHits(searchHitsList);
-		searchHitsBuilder.maxScore(searchHits.getMaxScore());
-		searchHitsBuilder.searchTime(searchHits.getSearchTime());
-		searchHitsBuilder.totalHits(hits.getLength());
-
-		searchResponseImpl.setSearchHits(searchHitsBuilder.build());
 
 		return excludeDocs.size();
 	}
@@ -369,6 +343,37 @@ public class DefaultSearchResultPermissionFilter
 		return false;
 	}
 
+	private void _updateSearchHits(Hits hits, SearchContext searchContext) {
+		Document[] documents = hits.getDocs();
+
+		SearchResponseImpl searchResponseImpl =
+			(SearchResponseImpl)searchContext.getAttribute("search.response");
+
+		SearchHits searchHits = searchResponseImpl.getSearchHits();
+
+		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+
+		List<String> ids = new ArrayList<>();
+
+		ArrayUtil.isNotEmptyForEach(
+			documents, document -> ids.add(document.get("uid")));
+
+		searchHitsList.removeIf(searchHit -> !ids.contains(searchHit.getId()));
+
+		SearchHitsBuilderFactory searchHitsBuilderFactory =
+			new SearchHitsBuilderFactoryImpl();
+
+		SearchHitsBuilder searchHitsBuilder =
+			searchHitsBuilderFactory.getSearchHitsBuilder();
+
+		searchHitsBuilder.addSearchHits(searchHitsList);
+		searchHitsBuilder.maxScore(searchHits.getMaxScore());
+		searchHitsBuilder.searchTime(searchHits.getSearchTime());
+		searchHitsBuilder.totalHits(hits.getLength());
+
+		searchResponseImpl.setSearchHits(searchHitsBuilder.build());
+	}
+
 	private static final String[] _PERMISSION_SELECTED_FIELD_NAMES = {
 		Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK
 	};
@@ -509,6 +514,12 @@ public class DefaultSearchResultPermissionFilter
 						hits, hitsStart, recalculatedHitsSize,
 						slidingWindowHelper, slidingWindowStopWatch,
 						totalDocsNeededCount);
+
+					hitFilteringStopWatch.resume();
+
+					_updateSearchHits(hits, searchContext);
+
+					hitFilteringStopWatch.suspend();
 
 					_mergeFacets(facetCountHelper, searchContext);
 

@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
@@ -51,13 +52,14 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskService batchEngineExportTaskService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
-		String className, String taskItemDelegateName) {
+		String className, String itemClassName, String taskItemDelegateName) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
 		_batchEngineExportTaskService = batchEngineExportTaskService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
 		_className = className;
+		_itemClassName = itemClassName;
 		_taskItemDelegateName = taskItemDelegateName;
 
 		_fileName = taskItemDelegateName + ".json";
@@ -68,6 +70,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String[] getClassNames() {
 		return new String[] {_className};
+	}
+
+	@Override
+	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[] {new StagedModelType(_itemClassName)};
 	}
 
 	@Override
@@ -243,6 +250,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private final String _className;
 	private final String _fileName;
+	private final String _itemClassName;
 	private final String _taskItemDelegateName;
 
 }

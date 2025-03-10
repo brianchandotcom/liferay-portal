@@ -103,6 +103,8 @@ public class BatchEnginePortletDataHandlerRegistry {
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.class.name"),
 					(String)serviceReference.getProperty(
+						"batch.engine.task.item.delegate.item.class.name"),
+					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"));
 
 			return _bundleContext.registerService(

@@ -452,6 +452,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"batch.engine.task.item.delegate.class.name",
 								ObjectEntry.class.getName()
 							).put(
+								"batch.engine.task.item.delegate.item.class." +
+									"name",
+								objectDefinition.getClassName()
+							).put(
 								"batch.engine.task.item.delegate.name",
 								objectDefinition.getName()
 							).put(

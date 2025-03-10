@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -133,6 +135,17 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		return jsonObject;
 	}
 
+	private Map<String, String> _getMapSchemaIdJsonFileName() {
+		return HashMapBuilder.put(
+			"urn:ietf:params:scim:schemas:core:2.0:Group", "group-schema.json"
+		).put(
+			"urn:ietf:params:scim:schemas:core:2.0:User", "user-schema.json"
+		).put(
+			"urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
+			"user-extension-schema.json"
+		).build();
+	}
+
 	private Map<String, String> _getResponseHeaders() throws NotFoundException {
 		return HashMapBuilder.put(
 			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
@@ -146,7 +159,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 	private String _getSchema(String id) throws AbstractCharonException {
 		try {
 			Map<String, String> schemaIdJsonFileNameStringMap =
-				ScimUtil.getMapSchemaIdJsonFileName();
+				_getMapSchemaIdJsonFileName();
 
 			if (Validator.isNotNull(schemaIdJsonFileNameStringMap.get(id))) {
 				JSONObject schemajsonObject = _createSchema(
@@ -176,7 +189,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 	private String _getSchemas() throws AbstractCharonException {
 		try {
 			Map<String, String> schemaIdJsonFileNameStringMap =
-				ScimUtil.getMapSchemaIdJsonFileName();
+				_getMapSchemaIdJsonFileName();
 
 			JSONObject rootJSONObject = JSONUtil.put(
 				"itemsPerPage", 3
@@ -221,7 +234,11 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 		try {
 			if (userManager != null) {
-				userManager.getCoreSchema();
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					serviceContext.getCompanyId(), _configurationAdmin);
 
 				if (Validator.isNull(id)) {
 					responseString = _getSchemas();

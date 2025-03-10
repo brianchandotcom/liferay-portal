@@ -303,6 +303,47 @@ describe('checkAllowedChild', () => {
 			).toBe(false);
 		});
 
+		it('it is possible to move a form container with input fragment outside a container', () => {
+			const container = getContainer();
+
+			const existingInput = getFragment({
+				fragmentEntryLinkId: 'input-fragment-id',
+				itemId: 'input-stepper-id',
+				parentId: IDS.container,
+			});
+
+			const form = getForm({
+				children: [existingInput],
+			});
+
+			const layoutData = {
+				items: {
+					[IDS.form]: form,
+					[existingInput.itemId]: existingInput,
+					[IDS.container]: container,
+				},
+			};
+
+			const fragmentEntryLinks = {
+				[existingInput.config.fragmentEntryLinkId]: {
+					fieldTypes: ['text'],
+					fragmentEntryLinkId:
+						existingInput.config.fragmentEntryLinkId,
+					fragmentEntryType: 'input',
+				},
+			};
+
+			expect(
+				checkAllowedChild(
+					form,
+					container,
+					layoutData,
+					fragmentEntryLinks,
+					() => []
+				).valid
+			).toBe(true);
+		});
+
 		it('it is possible to move a container with localizationSelectinput fragment outside a form', () => {
 			const container = getContainer();
 

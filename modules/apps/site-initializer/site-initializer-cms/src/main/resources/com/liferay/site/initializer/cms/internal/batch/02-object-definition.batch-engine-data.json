@@ -318,6 +318,57 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"externalReferenceCode": "L_EXTERNAL_VIDEO",
+			"label": {
+				"en_US": "External Video"
+			},
+			"modifiable": false,
+			"name": "ExternalVideo",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "L_CMS_FILE_TYPES",
+			"panelCategoryKey": "",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "External Videos"
+			},
+			"portlet": false,
+			"scope": "site",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "title"
+		},
+		{
+			"defaultLanguageId": "en_US",
+			"enableCategorization": true,
+			"enableComments": true,
+			"enableIndexSearch": true,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": true,
+			"enableObjectEntryHistory": true,
 			"externalReferenceCode": "L_KNOWLEDGE_BASE",
 			"label": {
 				"en_US": "Knowledge Base"

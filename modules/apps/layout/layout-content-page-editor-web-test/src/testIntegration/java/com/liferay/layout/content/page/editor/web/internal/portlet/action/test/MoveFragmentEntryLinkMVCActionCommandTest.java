@@ -14,6 +14,8 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -123,6 +125,66 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Test
+	@TestInfo("LPD-50957")
+	public void testMoveFormStyledLayoutStructureItem() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, objectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, _group.getGroupId());
+
+		List<InfoField<?>> allInfoFields = ListUtil.filter(
+			infoForm.getAllInfoFields(), InfoField::isEditable);
+
+		String classNameId = String.valueOf(
+			_portal.getClassNameId(objectDefinition.getClassName()));
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+			false, classNameId, "0", _layout, _layoutStructureProvider,
+			_segmentsExperienceId, allInfoFields.toArray(new InfoField<?>[0]));
+
+		LayoutStructure layoutStructure = (LayoutStructure)jsonObject.get(
+			"layoutData");
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(
+					jsonObject.getString("addedItemId"));
+
+		jsonObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _layout,
+			_layoutStructureProvider, _segmentsExperienceId);
+
+		_testMoveLayoutStructureItem(
+			formStyledLayoutStructureItem, jsonObject.getString("addedItemId"));
+
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
+
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
+			(ContainerStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(
+					jsonObject.getString("addedItemId"));
+
+		jsonObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _layout,
+			_layoutStructureProvider, _segmentsExperienceId);
+
+		_testMoveLayoutStructureItem(
+			containerStyledLayoutStructureItem,
+			jsonObject.getString("addedItemId"));
 	}
 
 	@Test

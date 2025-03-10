@@ -272,6 +272,14 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 			objectDefinitionSettingId);
 	}
 
+	public static ObjectDefinitionSetting getObjectDefinitionSetting(
+			long objectDefinitionId, String name)
+		throws PortalException {
+
+		return getService().getObjectDefinitionSetting(
+			objectDefinitionId, name);
+	}
+
 	/**
 	 * Returns the object definition setting with the matching UUID and company.
 	 *

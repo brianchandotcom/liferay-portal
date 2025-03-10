@@ -235,6 +235,11 @@ public interface ObjectDefinitionSettingLocalService
 			long objectDefinitionSettingId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinitionSetting getObjectDefinitionSetting(
+			long objectDefinitionId, String name)
+		throws PortalException;
+
 	/**
 	 * Returns the object definition setting with the matching UUID and company.
 	 *

@@ -46,6 +46,7 @@ renderResponse.setTitle(headerTitle);
 
 <clay:container-fluid
 	cssClass="container-form-lg"
+	size="lg"
 >
 	<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />

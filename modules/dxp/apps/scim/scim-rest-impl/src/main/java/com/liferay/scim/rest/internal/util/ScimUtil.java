@@ -78,17 +78,6 @@ public class ScimUtil {
 	public static final String LIFERAY_USER_SCHEMA_EXTENSION_URI =
 		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User";
 
-	public static Map<String, String> getMapSchemaIdJsonFileName() {
-		return HashMapBuilder.put(
-			"urn:ietf:params:scim:schemas:core:2.0:Group", "group-schema.json"
-		).put(
-			"urn:ietf:params:scim:schemas:core:2.0:User", "user-schema.json"
-		).put(
-			"urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
-			"user-extension-schema.json"
-		).build();
-	}
-
 	public static ScimClientOAuth2ApplicationConfiguration
 		getScimClientOAuth2ApplicationConfiguration(
 			long companyId, ConfigurationAdmin configurationAdmin) {

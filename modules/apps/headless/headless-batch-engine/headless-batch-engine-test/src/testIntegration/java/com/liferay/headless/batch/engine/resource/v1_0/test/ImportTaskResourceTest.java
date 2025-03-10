@@ -13,9 +13,7 @@ import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.headless.batch.engine.client.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.entity.TestEntity;
-import com.liferay.headless.batch.engine.exception.TestEntityException;
 import com.liferay.headless.batch.engine.util.ExportImportTaskUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,7 +36,6 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -146,20 +143,12 @@ public class ImportTaskResourceTest {
 
 		String batchExternalReferenceCode = RandomTestUtil.randomString();
 
-		try (BatchEngineTaskItemDelegateAutoCloseable
-				batchEngineTaskItemDelegateAutoCloseable =
-					new BatchEngineTaskItemDelegateAutoCloseable(
-						batchExternalReferenceCode)) {
+		ImportTask importTask = _postImportTask(
+			batchExternalReferenceCode, null);
 
-			ImportTask importTask = _postImportTask(
-				batchExternalReferenceCode, "COMPLETED", null,
-				batchEngineTaskItemDelegateAutoCloseable.
-					getTaskItemDelegateName());
-
-			Assert.assertNotEquals(
-				batchExternalReferenceCode,
-				importTask.getExternalReferenceCode());
-		}
+		Assert.assertEquals(batchExternalReferenceCode, _externalReferenceCode);
+		Assert.assertNotEquals(
+			batchExternalReferenceCode, importTask.getExternalReferenceCode());
 	}
 
 	@Test
@@ -167,116 +156,80 @@ public class ImportTaskResourceTest {
 		throws Exception {
 
 		String batchExternalReferenceCode = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
-		try (BatchEngineTaskItemDelegateAutoCloseable
-				batchEngineTaskItemDelegateAutoCloseable =
-					new BatchEngineTaskItemDelegateAutoCloseable(
-						batchExternalReferenceCode)) {
+		ImportTask importTask = _postImportTask(
+			batchExternalReferenceCode, externalReferenceCode);
 
-			String externalReferenceCode = RandomTestUtil.randomString();
-
-			ImportTask importTask = _postImportTask(
-				batchExternalReferenceCode, "COMPLETED", externalReferenceCode,
-				batchEngineTaskItemDelegateAutoCloseable.
-					getTaskItemDelegateName());
-
-			Assert.assertEquals(
-				externalReferenceCode, importTask.getExternalReferenceCode());
-		}
+		Assert.assertEquals(batchExternalReferenceCode, _externalReferenceCode);
+		Assert.assertEquals(
+			externalReferenceCode, importTask.getExternalReferenceCode());
 	}
 
 	@Test
 	public void testPostImportTaskWithExternalReferenceCode() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		try (BatchEngineTaskItemDelegateAutoCloseable
-				batchEngineTaskItemDelegateAutoCloseable =
-					new BatchEngineTaskItemDelegateAutoCloseable(
-						externalReferenceCode)) {
+		ImportTask importTask = _postImportTask(null, externalReferenceCode);
 
-			ImportTask importTask = _postImportTask(
-				null, "COMPLETED", externalReferenceCode,
-				batchEngineTaskItemDelegateAutoCloseable.
-					getTaskItemDelegateName());
-
-			Assert.assertEquals(
-				externalReferenceCode, importTask.getExternalReferenceCode());
-		}
+		Assert.assertEquals(externalReferenceCode, _externalReferenceCode);
+		Assert.assertEquals(
+			externalReferenceCode, importTask.getExternalReferenceCode());
 	}
 
 	@Test
-	public void testPostImportTaskWithNoExternalReferenceCodesFail()
+	public void testPostImportTaskWithoutExternalReferenceCodes()
 		throws Exception {
 
-		try (BatchEngineTaskItemDelegateAutoCloseable
-				batchEngineTaskItemDelegateAutoCloseable =
-					new BatchEngineTaskItemDelegateAutoCloseable(
-						RandomTestUtil.randomString());
-			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
+		ImportTask importTask = _postImportTask(null, null);
 
-			_postImportTask(
-				null, "FAILED", null,
-				batchEngineTaskItemDelegateAutoCloseable.
-					getTaskItemDelegateName());
-		}
-	}
-
-	@Test
-	public void testPostImportTaskWithNoExternalReferenceCodesSuccess()
-		throws Exception {
-
-		try (BatchEngineTaskItemDelegateAutoCloseable
-				batchEngineTaskItemDelegateAutoCloseable =
-					new BatchEngineTaskItemDelegateAutoCloseable(null)) {
-
-			_postImportTask(
-				null, "COMPLETED", null,
-				batchEngineTaskItemDelegateAutoCloseable.
-					getTaskItemDelegateName());
-		}
+		Assert.assertNull(_externalReferenceCode);
+		Assert.assertNotNull(importTask.getExternalReferenceCode());
 	}
 
 	private ImportTask _postImportTask(
-			String batchExternalReferenceCode, String expectedExecuteStatus,
-			String externalReferenceCode, String taskItemDelegateName)
+			String batchExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
-		return ExportImportTaskUtil.postImportTask(
-			JSONFactoryUtil.createJSONArray(
-			).put(
-				JSONUtil.put(
-					"intValue", String.valueOf(RandomTestUtil.nextInt())
+		try (BatchEngineTaskItemDelegateAutoCloseable
+				batchEngineTaskItemDelegateAutoCloseable =
+					new BatchEngineTaskItemDelegateAutoCloseable()) {
+
+			return ExportImportTaskUtil.postImportTask(
+				JSONFactoryUtil.createJSONArray(
 				).put(
-					"textValue",
-					StringUtil.getTitleCase(
-						RandomTestUtil.randomString(
-							8, UniqueStringRandomizerBumper.INSTANCE),
-						true, "")
-				)
-			).toString(),
-			"com.liferay.headless.batch.engine.entity.TestEntity",
-			expectedExecuteStatus,
-			HashMapBuilder.put(
-				"batchExternalReferenceCode", batchExternalReferenceCode
-			).put(
-				"createStrategy", "INSERT"
-			).put(
-				"externalReferenceCode", externalReferenceCode
-			).put(
-				"taskItemDelegateName", taskItemDelegateName
-			).build());
+					JSONUtil.put(
+						"intValue", String.valueOf(RandomTestUtil.nextInt())
+					).put(
+						"textValue",
+						StringUtil.getTitleCase(
+							RandomTestUtil.randomString(
+								8, UniqueStringRandomizerBumper.INSTANCE),
+							true, "")
+					)
+				).toString(),
+				"com.liferay.headless.batch.engine.entity.TestEntity",
+				"COMPLETED",
+				HashMapBuilder.put(
+					"batchExternalReferenceCode", batchExternalReferenceCode
+				).put(
+					"createStrategy", "INSERT"
+				).put(
+					"externalReferenceCode", externalReferenceCode
+				).put(
+					"taskItemDelegateName",
+					batchEngineTaskItemDelegateAutoCloseable.
+						getTaskItemDelegateName()
+				).build());
+		}
 	}
 
-	private static class BatchEngineTaskItemDelegateAutoCloseable
+	private String _externalReferenceCode;
+
+	private class BatchEngineTaskItemDelegateAutoCloseable
 		implements AutoCloseable {
 
-		public BatchEngineTaskItemDelegateAutoCloseable(
-				String expectedExternalReferenceCode)
-			throws Exception {
-
+		public BatchEngineTaskItemDelegateAutoCloseable() throws Exception {
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 			BatchEngineTaskItemDelegate<TestEntity> delegate =
@@ -284,24 +237,11 @@ public class ImportTaskResourceTest {
 
 					@Override
 					public TestEntity createItem(
-							TestEntity testEntity,
-							Map<String, Serializable> parameters)
-						throws Exception {
+						TestEntity testEntity,
+						Map<String, Serializable> parameters) {
 
-						String externalReferenceCode = (String)parameters.get(
+						_externalReferenceCode = (String)parameters.get(
 							"externalReferenceCode");
-
-						if (!Objects.equals(
-								expectedExternalReferenceCode,
-								externalReferenceCode)) {
-
-							throw new TestEntityException(
-								StringBundler.concat(
-									"Received externalReferenceCode ",
-									externalReferenceCode,
-									" does not match expected ",
-									expectedExternalReferenceCode));
-						}
 
 						return new TestEntity();
 					}

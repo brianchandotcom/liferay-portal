@@ -72,18 +72,21 @@ public class UserGroupServiceUtil {
 	 * including its resources, metadata, and internal data structures.
 	 * </p>
 	 *
-	 * @param name the user group's name
-	 * @param description the user group's description
-	 * @param serviceContext the service context to be applied (optionally
+	 * @param externalReferenceCode the user group's external reference code
+	 * @param name                  the user group's name
+	 * @param description           the user group's description
+	 * @param serviceContext        the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
 	 * @return the user group
 	 */
 	public static UserGroup addUserGroup(
-			String name, String description, ServiceContext serviceContext)
+			String externalReferenceCode, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		return getService().addUserGroup(name, description, serviceContext);
+		return getService().addUserGroup(
+			externalReferenceCode, name, description, serviceContext);
 	}
 
 	/**
@@ -110,11 +113,11 @@ public class UserGroupServiceUtil {
 	}
 
 	public static UserGroup fetchUserGroupByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().fetchUserGroupByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	public static List<UserGroup> getGtUserGroups(
@@ -345,21 +348,23 @@ public class UserGroupServiceUtil {
 	/**
 	 * Updates the user group.
 	 *
-	 * @param userGroupId the primary key of the user group
-	 * @param name the user group's name
-	 * @param description the the user group's description
-	 * @param serviceContext the service context to be applied (optionally
+	 * @param externalReferenceCode the user group's external reference code
+	 * @param userGroupId           the primary key of the user group
+	 * @param name                  the user group's name
+	 * @param description           the the user group's description
+	 * @param serviceContext        the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
 	 * @return the user group
 	 */
 	public static UserGroup updateUserGroup(
-			long userGroupId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userGroupId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateUserGroup(
-			userGroupId, name, description, serviceContext);
+			externalReferenceCode, userGroupId, name, description,
+			serviceContext);
 	}
 
 	public static UserGroupService getService() {

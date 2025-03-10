@@ -98,18 +98,19 @@ public interface UserGroupLocalService
 	 * resources for the user group.
 	 * </p>
 	 *
-	 * @param userId the primary key of the user
-	 * @param companyId the primary key of the user group's company
-	 * @param name the user group's name
-	 * @param description the user group's description
-	 * @param serviceContext the service context to be applied (optionally
+	 * @param externalReferenceCode	the user group's external reference code
+	 * @param userId                the primary key of the user
+	 * @param companyId             the primary key of the user group's company
+	 * @param name                  the user group's name
+	 * @param description           the user group's description
+	 * @param serviceContext        the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
 	 * @return the user group
 	 */
 	public UserGroup addUserGroup(
-			long userId, long companyId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long companyId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -758,18 +759,19 @@ public interface UserGroupLocalService
 	/**
 	 * Updates the user group.
 	 *
-	 * @param companyId the primary key of the user group's company
-	 * @param userGroupId the primary key of the user group
-	 * @param name the user group's name
-	 * @param description the user group's description
-	 * @param serviceContext the service context to be applied (optionally
+	 * @param externalReferenceCode the user group's external reference code
+	 * @param companyId             the primary key of the user group's company
+	 * @param userGroupId           the primary key of the user group
+	 * @param name                  the user group's name
+	 * @param description           the user group's description
+	 * @param serviceContext        the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
 	 * @return the user group
 	 */
 	public UserGroup updateUserGroup(
-			long companyId, long userGroupId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long companyId, long userGroupId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

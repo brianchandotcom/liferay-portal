@@ -157,7 +157,7 @@ public class ImportTaskResourceTest {
 						_batchExternalReferenceCode)) {
 
 			_testPostImportTask(
-				_batchExternalReferenceCode, null,
+				_batchExternalReferenceCode, "COMPLETED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
@@ -173,7 +173,8 @@ public class ImportTaskResourceTest {
 						_batchExternalReferenceCode)) {
 
 			_testPostImportTask(
-				_batchExternalReferenceCode, _externalReferenceCode,
+				_batchExternalReferenceCode, "COMPLETED",
+				_externalReferenceCode,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
@@ -187,7 +188,7 @@ public class ImportTaskResourceTest {
 						_externalReferenceCode)) {
 
 			_testPostImportTask(
-				null, _externalReferenceCode,
+				null, "COMPLETED", _externalReferenceCode,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
@@ -207,10 +208,9 @@ public class ImportTaskResourceTest {
 				LoggerTestUtil.ERROR)) {
 
 			_testPostImportTask(
-				null, null,
+				null, "FAILED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
-					getTaskItemDelegateName(),
-				false);
+					getTaskItemDelegateName());
 		}
 	}
 
@@ -223,25 +223,15 @@ public class ImportTaskResourceTest {
 					new BatchEngineTaskItemDelegateAutoCloseable(null)) {
 
 			_testPostImportTask(
-				null, null,
+				null, "COMPLETED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
 	}
 
 	private void _testPostImportTask(
-			String batchExternalReferenceCode, String externalReferenceCode,
-			String taskItemDelegateName)
-		throws Exception {
-
-		_testPostImportTask(
-			batchExternalReferenceCode, externalReferenceCode,
-			taskItemDelegateName, true);
-	}
-
-	private void _testPostImportTask(
-			String batchExternalReferenceCode, String externalReferenceCode,
-			String taskItemDelegateName, boolean expectSuccess)
+			String batchExternalReferenceCode, String expectedExecuteStatus,
+			String externalReferenceCode, String taskItemDelegateName)
 		throws Exception {
 
 		ExportImportTaskUtil.postImportTask(
@@ -258,7 +248,7 @@ public class ImportTaskResourceTest {
 				)
 			).toString(),
 			"com.liferay.headless.batch.engine.entity.TestEntity",
-			expectSuccess ? "COMPLETED" : "FAILED",
+			expectedExecuteStatus,
 			HashMapBuilder.put(
 				"batchExternalReferenceCode", batchExternalReferenceCode
 			).put(

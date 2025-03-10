@@ -1,0 +1,12 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "friendly-url-input",
+	"icon": "link",
+	"name": "friendly-url",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"text"
+		]
+	}
+}

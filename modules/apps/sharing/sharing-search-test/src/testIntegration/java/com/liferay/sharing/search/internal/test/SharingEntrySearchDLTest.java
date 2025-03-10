@@ -116,9 +116,9 @@ public class SharingEntrySearchDLTest {
 	@Test
 	public void testUserCanSearchSharedPrivateDocument() throws Exception {
 		_sharingEntryLocalService.addSharingEntry(
-			TestPropsValues.getUserId(), _groupUser.getUserId(), _classNameId,
-			_fileEntry.getFileEntryId(), _group.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null,
+			null, TestPropsValues.getUserId(), _groupUser.getUserId(),
+			_classNameId, _fileEntry.getFileEntryId(), _group.getGroupId(),
+			true, Arrays.asList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 

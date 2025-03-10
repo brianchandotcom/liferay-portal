@@ -92,7 +92,7 @@ public class ShareEntryMVCActionCommand extends BaseMVCActionCommand {
 							(user.getUserId() != themeDisplay.getUserId())) {
 
 							_sharingEntryService.addOrUpdateSharingEntry(
-								user.getUserId(), classNameId, classPK,
+								null, user.getUserId(), classNameId, classPK,
 								themeDisplay.getScopeGroupId(), shareable,
 								sharingEntryPermissionDisplayAction.
 									getSharingEntryActions(),

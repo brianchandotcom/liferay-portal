@@ -47,7 +47,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Vendel Toreki
  */
 @RunWith(Arquillian.class)
-public class ExportImportTaskResourceBatchERCTest {
+public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 	@ClassRule
 	@Rule
@@ -61,59 +61,73 @@ public class ExportImportTaskResourceBatchERCTest {
 	}
 
 	@Test
-	public void testImportWithBatchERC() throws Exception {
-		try (TestERCValidatorDelegate testERCValidatorDelegate =
-				new TestERCValidatorDelegate(_batchExternalReferenceCode)) {
+	public void testImportWithBatchExternalReferenceCode() throws Exception {
+		try (TestExternalReferenceCodeValidatorDelegate
+				testExternalReferenceCodeValidatorDelegate =
+					new TestExternalReferenceCodeValidatorDelegate(
+						_batchExternalReferenceCode)) {
 
 			_testPostImportTask(
 				_batchExternalReferenceCode, null,
-				testERCValidatorDelegate.getDelegateName());
+				testExternalReferenceCodeValidatorDelegate.getDelegateName());
 		}
 	}
 
 	@Test
-	public void testImportWithBothERCs() throws Exception {
-		try (TestERCValidatorDelegate testERCValidatorDelegate =
-				new TestERCValidatorDelegate(_batchExternalReferenceCode)) {
+	public void testImportWithBothExternalReferenceCodes() throws Exception {
+		try (TestExternalReferenceCodeValidatorDelegate
+				testExternalReferenceCodeValidatorDelegate =
+					new TestExternalReferenceCodeValidatorDelegate(
+						_batchExternalReferenceCode)) {
 
 			_testPostImportTask(
 				_batchExternalReferenceCode, _externalReferenceCode,
-				testERCValidatorDelegate.getDelegateName());
+				testExternalReferenceCodeValidatorDelegate.getDelegateName());
 		}
 	}
 
 	@Test
-	public void testImportWithERC() throws Exception {
-		try (TestERCValidatorDelegate testERCValidatorDelegate =
-				new TestERCValidatorDelegate(_externalReferenceCode)) {
+	public void testImportWithExternalReferenceCode() throws Exception {
+		try (TestExternalReferenceCodeValidatorDelegate
+				testExternalReferenceCodeValidatorDelegate =
+					new TestExternalReferenceCodeValidatorDelegate(
+						_externalReferenceCode)) {
 
 			_testPostImportTask(
 				null, _externalReferenceCode,
-				testERCValidatorDelegate.getDelegateName());
+				testExternalReferenceCodeValidatorDelegate.getDelegateName());
 		}
 	}
 
 	@Test
-	public void testImportWithNoERCsFail() throws Exception {
-		try (TestERCValidatorDelegate testERCValidatorDelegate =
-				new TestERCValidatorDelegate(_externalReferenceCode);
+	public void testImportWithNoExternalReferenceCodesFail() throws Exception {
+		try (TestExternalReferenceCodeValidatorDelegate
+				testExternalReferenceCodeValidatorDelegate =
+					new TestExternalReferenceCodeValidatorDelegate(
+						_externalReferenceCode);
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
 			_testPostImportTask(
-				null, null, testERCValidatorDelegate.getDelegateName(), false);
+				null, null,
+				testExternalReferenceCodeValidatorDelegate.getDelegateName(),
+				false);
 		}
 	}
 
 	@Test
-	public void testImportWithNoERCsSuccess() throws Exception {
-		try (TestERCValidatorDelegate testERCValidatorDelegate =
-				new TestERCValidatorDelegate(null)) {
+	public void testImportWithNoExternalReferenceCodesSuccess()
+		throws Exception {
+
+		try (TestExternalReferenceCodeValidatorDelegate
+				testExternalReferenceCodeValidatorDelegate =
+					new TestExternalReferenceCodeValidatorDelegate(null)) {
 
 			_testPostImportTask(
-				null, null, testERCValidatorDelegate.getDelegateName());
+				null, null,
+				testExternalReferenceCodeValidatorDelegate.getDelegateName());
 		}
 	}
 
@@ -175,9 +189,11 @@ public class ExportImportTaskResourceBatchERCTest {
 	private String _batchExternalReferenceCode;
 	private String _externalReferenceCode;
 
-	private static class TestERCValidatorDelegate implements AutoCloseable {
+	private static class TestExternalReferenceCodeValidatorDelegate
+		implements AutoCloseable {
 
-		public TestERCValidatorDelegate(String expectedExternalReferenceCode)
+		public TestExternalReferenceCodeValidatorDelegate(
+				String expectedExternalReferenceCode)
 			throws Exception {
 
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();

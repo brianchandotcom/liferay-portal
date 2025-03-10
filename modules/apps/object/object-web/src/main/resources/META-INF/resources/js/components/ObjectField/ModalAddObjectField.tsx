@@ -51,6 +51,7 @@ export function ModalAddObjectField({
 		indexedLanguageId: '',
 		listTypeDefinitionExternalReferenceCode: '',
 		listTypeDefinitionId: 0,
+		localized: false,
 		readOnly: 'false',
 		readOnlyConditionExpression: '',
 		required: false,

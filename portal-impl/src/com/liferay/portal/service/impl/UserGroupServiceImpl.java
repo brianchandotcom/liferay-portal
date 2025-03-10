@@ -112,12 +112,12 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * including its resources, metadata, and internal data structures.
 	 * </p>
 	 *
-	 * @param externalReferenceCode the user group's external reference code
-	 * @param name                  the user group's name
-	 * @param description           the user group's description
-	 * @param serviceContext        the service context to be applied (optionally
-	 *                              <code>null</code>). Can set expando bridge attributes for the
-	 *                              user group.
+	 * @param  externalReferenceCode the user group's external reference code
+	 * @param  name the user group's name
+	 * @param  description the user group's description
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 */
 	@Override
@@ -522,13 +522,13 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	/**
 	 * Updates the user group.
 	 *
-	 * @param externalReferenceCode the user group's external reference code
-	 * @param userGroupId           the primary key of the user group
-	 * @param name                  the user group's name
-	 * @param description           the the user group's description
-	 * @param serviceContext        the service context to be applied (optionally
-	 *                              <code>null</code>). Can set expando bridge attributes for the
-	 *                              user group.
+	 * @param  externalReferenceCode the user group's external reference code
+	 * @param  userGroupId the primary key of the user group
+	 * @param  name the user group's name
+	 * @param  description the the user group's description
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 */
 	@Override

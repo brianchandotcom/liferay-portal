@@ -98,9 +98,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user group to the group.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param userGroupId the primary key of the user group
-	 * @return <code>true</code> if the association between the ${groupId} and ${userGroupId} is added; <code>false</code> if it was already added
+	 * @param  groupId the primary key of the group
+	 * @param  userGroupId the primary key of the user group
+	 * @return <code>true</code> if the association between the ${groupId} and
+	 *         ${userGroupId} is added; <code>false</code> if it was already
+	 *         added
 	 */
 	@Override
 	public boolean addGroupUserGroup(long groupId, long userGroupId) {
@@ -121,9 +123,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user group to the group.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param userGroup the user group
-	 * @return <code>true</code> if the association between the ${groupId} and ${userGroup} is added; <code>false</code> if it was already added
+	 * @param  groupId the primary key of the group
+	 * @param  userGroup the user group
+	 * @return <code>true</code> if the association between the ${groupId} and
+	 *         ${userGroup} is added; <code>false</code> if it was already added
 	 */
 	@Override
 	public boolean addGroupUserGroup(long groupId, UserGroup userGroup) {
@@ -144,9 +147,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user groups to the group.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param userGroups the user groups
-	 * @return <code>true</code> if at least an association between the ${groupId} and the ${userGroups} is added; <code>false</code> if all were already added
+	 * @param  groupId the primary key of the group
+	 * @param  userGroups the user groups
+	 * @return <code>true</code> if at least an association between the
+	 *         ${groupId} and the ${userGroups} is added; <code>false</code> if
+	 *         all were already added
 	 */
 	@Override
 	public boolean addGroupUserGroups(
@@ -169,9 +174,11 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user groups to the group.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param userGroupIds the primary keys of the user groups
-	 * @return <code>true</code> if at least an association between the ${groupId} and the ${userGroupIds} is added; <code>false</code> if all were already added
+	 * @param  groupId the primary key of the group
+	 * @param  userGroupIds the primary keys of the user groups
+	 * @return <code>true</code> if at least an association between the
+	 *         ${groupId} and the ${userGroupIds} is added; <code>false</code>
+	 *         if all were already added
 	 */
 	@Override
 	public boolean addGroupUserGroups(long groupId, long[] userGroupIds) {
@@ -251,14 +258,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * resources for the user group.
 	 * </p>
 	 *
-	 * @param externalReferenceCode	the user group's external reference code
-	 * @param userId                the primary key of the user
-	 * @param companyId             the primary key of the user group's company
-	 * @param name                  the user group's name
-	 * @param description           the user group's description
-	 * @param serviceContext        the service context to be applied (optionally
-	 *                              <code>null</code>). Can set expando bridge attributes for the
-	 *                              user group.
+	 * @param  userId the primary key of the user
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name
+	 * @param  description the user group's description
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 */
 	@Override
@@ -1032,14 +1038,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Updates the user group.
 	 *
-	 * @param externalReferenceCode the user group's external reference code
-	 * @param companyId             the primary key of the user group's company
-	 * @param userGroupId           the primary key of the user group
-	 * @param name                  the user group's name
-	 * @param description           the user group's description
-	 * @param serviceContext        the service context to be applied (optionally
-	 *                              <code>null</code>). Can set expando bridge attributes for the
-	 *                              user group.
+	 * @param  externalReferenceCode the user group's external reference code
+	 * @param  companyId the primary key of the user group's company
+	 * @param  userGroupId the primary key of the user group
+	 * @param  name the user group's name
+	 * @param  description the user group's description
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
 	 * @return the user group
 	 */
 	@Override

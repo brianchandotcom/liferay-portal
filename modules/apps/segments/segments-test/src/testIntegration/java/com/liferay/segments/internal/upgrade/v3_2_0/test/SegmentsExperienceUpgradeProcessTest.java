@@ -364,7 +364,7 @@ public class SegmentsExperienceUpgradeProcessTest
 				_db.runSQLTemplate(
 					StringBundler.concat(
 						"alter table ", tableName, " change `", columnName,
-						"` ", columnName, " LONG"),
+						"` ", newColumnName, " LONG"),
 					true);
 
 				return indexMetadataList;

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.ReplenishmentItem;
 import com.liferay.headless.commerce.admin.inventory.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
@@ -128,6 +130,16 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			testCompany.getCompanyId());
 
 		replenishmentItemResource = ReplenishmentItemResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -603,6 +615,87 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		throws Exception {
 
 		return testGraphQLReplenishmentItem_addReplenishmentItem();
+	}
+
+	@Test
+	public void testDeleteReplenishmentItemBatch() throws Exception {
+		ReplenishmentItem replenishmentItem1 =
+			testDeleteReplenishmentItemBatch_addReplenishmentItem();
+
+		testDeleteReplenishmentItemBatch_deleteReplenishmentItem(
+			"COMPLETED", null, replenishmentItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			replenishmentItemResource.getReplenishmentItemHttpResponse(
+				replenishmentItem1.getId()));
+
+		ReplenishmentItem replenishmentItem2 =
+			testDeleteReplenishmentItemBatch_addReplenishmentItem();
+
+		testDeleteReplenishmentItemBatch_deleteReplenishmentItem(
+			"COMPLETED", replenishmentItem2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			replenishmentItemResource.getReplenishmentItemHttpResponse(
+				replenishmentItem2.getId()));
+
+		replenishmentItem1 =
+			testDeleteReplenishmentItemBatch_addReplenishmentItem();
+		replenishmentItem2 =
+			testDeleteReplenishmentItemBatch_addReplenishmentItem();
+
+		testDeleteReplenishmentItemBatch_deleteReplenishmentItem(
+			"COMPLETED", replenishmentItem2.getExternalReferenceCode(),
+			replenishmentItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			replenishmentItemResource.getReplenishmentItemHttpResponse(
+				replenishmentItem1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			replenishmentItemResource.getReplenishmentItemHttpResponse(
+				replenishmentItem2.getId()));
+
+		testDeleteReplenishmentItemBatch_deleteReplenishmentItem(
+			"COMPLETED", replenishmentItem2.getExternalReferenceCode(),
+			replenishmentItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			replenishmentItemResource.getReplenishmentItemHttpResponse(
+				replenishmentItem2.getId()));
+	}
+
+	protected ReplenishmentItem
+			testDeleteReplenishmentItemBatch_addReplenishmentItem()
+		throws Exception {
+
+		return testDeleteReplenishmentItem_addReplenishmentItem();
+	}
+
+	protected void testDeleteReplenishmentItemBatch_deleteReplenishmentItem(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			replenishmentItemResource.deleteReplenishmentItemBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1585,6 +1678,28 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<ReplenishmentItem> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2141,6 +2256,7 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 	}
 
 	protected ReplenishmentItemResource replenishmentItemResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

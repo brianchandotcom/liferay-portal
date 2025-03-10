@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseOrderResourceTestCase {
 			testCompany.getCompanyId());
 
 		orderResource = OrderResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -918,7 +930,7 @@ public abstract class BaseOrderResourceTestCase {
 			404, orderResource.getOrderHttpResponse(order.getId()));
 
 		assertHttpResponseStatusCode(
-			404, orderResource.getOrderHttpResponse(order.getId()));
+			404, orderResource.getOrderHttpResponse(0L));
 	}
 
 	protected Order testDeleteOrder_addOrder() throws Exception {
@@ -997,6 +1009,67 @@ public abstract class BaseOrderResourceTestCase {
 
 	protected Order testGraphQLDeleteOrder_addOrder() throws Exception {
 		return testGraphQLOrder_addOrder();
+	}
+
+	@Test
+	public void testDeleteOrderBatch() throws Exception {
+		Order order1 = testDeleteOrderBatch_addOrder();
+
+		testDeleteOrderBatch_deleteOrder("COMPLETED", null, order1.getId());
+
+		assertHttpResponseStatusCode(
+			404, orderResource.getOrderHttpResponse(order1.getId()));
+
+		Order order2 = testDeleteOrderBatch_addOrder();
+
+		testDeleteOrderBatch_deleteOrder(
+			"COMPLETED", order2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, orderResource.getOrderHttpResponse(order2.getId()));
+
+		order1 = testDeleteOrderBatch_addOrder();
+		order2 = testDeleteOrderBatch_addOrder();
+
+		testDeleteOrderBatch_deleteOrder(
+			"COMPLETED", order2.getExternalReferenceCode(), order1.getId());
+
+		assertHttpResponseStatusCode(
+			404, orderResource.getOrderHttpResponse(order1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, orderResource.getOrderHttpResponse(order2.getId()));
+
+		testDeleteOrderBatch_deleteOrder(
+			"COMPLETED", order2.getExternalReferenceCode(), order1.getId());
+
+		assertHttpResponseStatusCode(
+			404, orderResource.getOrderHttpResponse(order2.getId()));
+	}
+
+	protected Order testDeleteOrderBatch_addOrder() throws Exception {
+		return testDeleteOrder_addOrder();
+	}
+
+	protected void testDeleteOrderBatch_deleteOrder(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			orderResource.deleteOrderBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2486,6 +2559,28 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Order> page) {
@@ -6483,6 +6578,7 @@ public abstract class BaseOrderResourceTestCase {
 	}
 
 	protected OrderResource orderResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

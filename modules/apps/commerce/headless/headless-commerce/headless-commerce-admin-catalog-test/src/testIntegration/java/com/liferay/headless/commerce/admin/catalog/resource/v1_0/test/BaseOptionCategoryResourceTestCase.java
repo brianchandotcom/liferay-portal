@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseOptionCategoryResourceTestCase {
 			testCompany.getCompanyId());
 
 		optionCategoryResource = OptionCategoryResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -961,9 +973,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 				optionCategory.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			optionCategoryResource.getOptionCategoryHttpResponse(
-				optionCategory.getId()));
+			404, optionCategoryResource.getOptionCategoryHttpResponse(0L));
 	}
 
 	protected OptionCategory testDeleteOptionCategory_addOptionCategory()
@@ -1049,6 +1059,84 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		throws Exception {
 
 		return testGraphQLOptionCategory_addOptionCategory();
+	}
+
+	@Test
+	public void testDeleteOptionCategoryBatch() throws Exception {
+		OptionCategory optionCategory1 =
+			testDeleteOptionCategoryBatch_addOptionCategory();
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", null, optionCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory1.getId()));
+
+		OptionCategory optionCategory2 =
+			testDeleteOptionCategoryBatch_addOptionCategory();
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", optionCategory2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory2.getId()));
+
+		optionCategory1 = testDeleteOptionCategoryBatch_addOptionCategory();
+		optionCategory2 = testDeleteOptionCategoryBatch_addOptionCategory();
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", optionCategory2.getExternalReferenceCode(),
+			optionCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory2.getId()));
+
+		testDeleteOptionCategoryBatch_deleteOptionCategory(
+			"COMPLETED", optionCategory2.getExternalReferenceCode(),
+			optionCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionCategoryResource.getOptionCategoryHttpResponse(
+				optionCategory2.getId()));
+	}
+
+	protected OptionCategory testDeleteOptionCategoryBatch_addOptionCategory()
+		throws Exception {
+
+		return testDeleteOptionCategory_addOptionCategory();
+	}
+
+	protected void testDeleteOptionCategoryBatch_deleteOptionCategory(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			optionCategoryResource.deleteOptionCategoryBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1499,6 +1587,28 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<OptionCategory> page) {
@@ -1964,6 +2074,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	protected OptionCategoryResource optionCategoryResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

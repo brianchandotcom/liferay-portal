@@ -19,6 +19,8 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataRecordSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -129,6 +131,16 @@ public abstract class BaseDataRecordResourceTestCase {
 			testCompany.getCompanyId());
 
 		dataRecordResource = DataRecordResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1031,6 +1043,45 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataRecordBatch() throws Exception {
+		DataRecord dataRecord1 = testDeleteDataRecordBatch_addDataRecord();
+
+		testDeleteDataRecordBatch_deleteDataRecord(
+			"COMPLETED", null, dataRecord1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordResource.getDataRecordHttpResponse(dataRecord1.getId()));
+	}
+
+	protected DataRecord testDeleteDataRecordBatch_addDataRecord()
+		throws Exception {
+
+		return testDeleteDataRecord_addDataRecord();
+	}
+
+	protected void testDeleteDataRecordBatch_deleteDataRecord(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			dataRecordResource.deleteDataRecordBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetDataRecord() throws Exception {
 		DataRecord postDataRecord = testGetDataRecord_addDataRecord();
 
@@ -1495,6 +1546,28 @@ public abstract class BaseDataRecordResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<DataRecord> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -1838,6 +1911,7 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	protected DataRecordResource dataRecordResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

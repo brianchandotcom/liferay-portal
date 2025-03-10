@@ -20,6 +20,8 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.OrganizationSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -106,6 +108,16 @@ public abstract class BaseOrganizationResourceTestCase {
 			testCompany.getCompanyId());
 
 		organizationResource = OrganizationResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -2904,6 +2916,85 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteOrganizationBatch() throws Exception {
+		Organization organization1 =
+			testDeleteOrganizationBatch_addOrganization();
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", null, organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization1.getId()));
+
+		Organization organization2 =
+			testDeleteOrganizationBatch_addOrganization();
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", organization2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+
+		organization1 = testDeleteOrganizationBatch_addOrganization();
+		organization2 = testDeleteOrganizationBatch_addOrganization();
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", organization2.getExternalReferenceCode(),
+			organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+
+		testDeleteOrganizationBatch_deleteOrganization(
+			"COMPLETED", organization2.getExternalReferenceCode(),
+			organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+	}
+
+	protected Organization testDeleteOrganizationBatch_addOrganization()
+		throws Exception {
+
+		return testDeleteOrganization_addOrganization();
+	}
+
+	protected void testDeleteOrganizationBatch_deleteOrganization(
+			String expectedExecuteStatus, String externalReferenceCode,
+			String id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			organizationResource.deleteOrganizationBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetOrganization() throws Exception {
 		Organization postOrganization = testGetOrganization_addOrganization();
 
@@ -4365,6 +4456,28 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Organization> page) {
@@ -6317,6 +6430,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected OrganizationResource organizationResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

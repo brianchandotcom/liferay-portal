@@ -19,6 +19,8 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.AccountGroupSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -130,6 +132,16 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testCompany.getCompanyId());
 
 		accountGroupResource = AccountGroupResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1084,6 +1096,84 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountGroupBatch() throws Exception {
+		AccountGroup accountGroup1 =
+			testDeleteAccountGroupBatch_addAccountGroup();
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", null, accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup1.getId()));
+
+		AccountGroup accountGroup2 =
+			testDeleteAccountGroupBatch_addAccountGroup();
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", accountGroup2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+
+		accountGroup1 = testDeleteAccountGroupBatch_addAccountGroup();
+		accountGroup2 = testDeleteAccountGroupBatch_addAccountGroup();
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", accountGroup2.getExternalReferenceCode(),
+			accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+
+		testDeleteAccountGroupBatch_deleteAccountGroup(
+			"COMPLETED", accountGroup2.getExternalReferenceCode(),
+			accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+	}
+
+	protected AccountGroup testDeleteAccountGroupBatch_addAccountGroup()
+		throws Exception {
+
+		return testDeleteAccountGroup_addAccountGroup();
+	}
+
+	protected void testDeleteAccountGroupBatch_deleteAccountGroup(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			accountGroupResource.deleteAccountGroupBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetAccountGroup() throws Exception {
 		AccountGroup postAccountGroup = testGetAccountGroup_addAccountGroup();
 
@@ -1992,6 +2082,28 @@ public abstract class BaseAccountGroupResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<AccountGroup> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2625,6 +2737,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	protected AccountGroupResource accountGroupResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

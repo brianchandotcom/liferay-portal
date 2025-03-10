@@ -1646,9 +1646,30 @@ public abstract class BaseObjectEntryResourceImpl
 
 		UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
 			objectEntryUnsafeFunction = objectEntry -> {
-				deleteObjectEntry(objectEntry.getId());
+				if (objectEntry.getId() != null) {
+					try {
+						deleteObjectEntry(objectEntry.getId());
 
-				return objectEntry;
+						return objectEntry;
+					}
+					catch (Exception exception) {
+						if (objectEntry.getExternalReferenceCode() != null) {
+							deleteByExternalReferenceCode(
+								objectEntry.getExternalReferenceCode());
+
+							return objectEntry;
+						}
+					}
+				}
+				else if (objectEntry.getExternalReferenceCode() != null) {
+					deleteByExternalReferenceCode(
+						objectEntry.getExternalReferenceCode());
+
+					return objectEntry;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete objectEntry. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

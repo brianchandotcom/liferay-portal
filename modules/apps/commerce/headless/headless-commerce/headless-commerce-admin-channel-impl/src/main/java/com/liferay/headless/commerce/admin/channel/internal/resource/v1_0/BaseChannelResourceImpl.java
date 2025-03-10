@@ -806,9 +806,30 @@ public abstract class BaseChannelResourceImpl
 
 		UnsafeFunction<Channel, Channel, Exception> channelUnsafeFunction =
 			channel -> {
-				deleteChannel(channel.getId());
+				if (channel.getId() != null) {
+					try {
+						deleteChannel(channel.getId());
 
-				return channel;
+						return channel;
+					}
+					catch (Exception exception) {
+						if (channel.getExternalReferenceCode() != null) {
+							deleteChannelByExternalReferenceCode(
+								channel.getExternalReferenceCode());
+
+							return channel;
+						}
+					}
+				}
+				else if (channel.getExternalReferenceCode() != null) {
+					deleteChannelByExternalReferenceCode(
+						channel.getExternalReferenceCode());
+
+					return channel;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete channel. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

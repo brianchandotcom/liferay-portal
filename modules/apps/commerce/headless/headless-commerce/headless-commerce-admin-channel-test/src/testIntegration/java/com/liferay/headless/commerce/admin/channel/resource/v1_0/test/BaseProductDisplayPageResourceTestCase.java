@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.ProductDisplayPage;
 import com.liferay.headless.commerce.admin.channel.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.channel.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 			testCompany.getCompanyId());
 
 		productDisplayPageResource = ProductDisplayPageResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1231,8 +1243,7 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404,
-			productDisplayPageResource.getProductDisplayPageHttpResponse(
-				productDisplayPage.getId()));
+			productDisplayPageResource.getProductDisplayPageHttpResponse(0L));
 	}
 
 	protected ProductDisplayPage
@@ -1320,6 +1331,49 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 		throws Exception {
 
 		return testGraphQLProductDisplayPage_addProductDisplayPage();
+	}
+
+	@Test
+	public void testDeleteProductDisplayPageBatch() throws Exception {
+		ProductDisplayPage productDisplayPage1 =
+			testDeleteProductDisplayPageBatch_addProductDisplayPage();
+
+		testDeleteProductDisplayPageBatch_deleteProductDisplayPage(
+			"COMPLETED", null, productDisplayPage1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productDisplayPageResource.getProductDisplayPageHttpResponse(
+				productDisplayPage1.getId()));
+	}
+
+	protected ProductDisplayPage
+			testDeleteProductDisplayPageBatch_addProductDisplayPage()
+		throws Exception {
+
+		return testDeleteProductDisplayPage_addProductDisplayPage();
+	}
+
+	protected void testDeleteProductDisplayPageBatch_deleteProductDisplayPage(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			productDisplayPageResource.
+				deleteProductDisplayPageBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1821,6 +1875,28 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<ProductDisplayPage> page) {
@@ -2341,6 +2417,7 @@ public abstract class BaseProductDisplayPageResourceTestCase {
 	}
 
 	protected ProductDisplayPageResource productDisplayPageResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

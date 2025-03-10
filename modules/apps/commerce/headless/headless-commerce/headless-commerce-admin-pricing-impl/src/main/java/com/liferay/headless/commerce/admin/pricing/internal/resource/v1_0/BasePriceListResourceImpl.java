@@ -601,9 +601,30 @@ public abstract class BasePriceListResourceImpl
 
 		UnsafeFunction<PriceList, PriceList, Exception>
 			priceListUnsafeFunction = priceList -> {
-				deletePriceList(priceList.getId());
+				if (priceList.getId() != null) {
+					try {
+						deletePriceList(priceList.getId());
 
-				return priceList;
+						return priceList;
+					}
+					catch (Exception exception) {
+						if (priceList.getExternalReferenceCode() != null) {
+							deletePriceListByExternalReferenceCode(
+								priceList.getExternalReferenceCode());
+
+							return priceList;
+						}
+					}
+				}
+				else if (priceList.getExternalReferenceCode() != null) {
+					deletePriceListByExternalReferenceCode(
+						priceList.getExternalReferenceCode());
+
+					return priceList;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete priceList. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

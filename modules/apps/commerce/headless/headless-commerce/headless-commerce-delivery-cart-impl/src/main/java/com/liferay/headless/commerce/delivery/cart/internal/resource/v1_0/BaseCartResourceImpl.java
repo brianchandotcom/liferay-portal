@@ -1123,9 +1123,30 @@ public abstract class BaseCartResourceImpl
 		throws Exception {
 
 		UnsafeFunction<Cart, Cart, Exception> cartUnsafeFunction = cart -> {
-			deleteCart(cart.getId());
+			if (cart.getId() != null) {
+				try {
+					deleteCart(cart.getId());
 
-			return cart;
+					return cart;
+				}
+				catch (Exception exception) {
+					if (cart.getExternalReferenceCode() != null) {
+						deleteCartByExternalReferenceCode(
+							cart.getExternalReferenceCode());
+
+						return cart;
+					}
+				}
+			}
+			else if (cart.getExternalReferenceCode() != null) {
+				deleteCartByExternalReferenceCode(
+					cart.getExternalReferenceCode());
+
+				return cart;
+			}
+
+			throw new UnsupportedOperationException(
+				"Unable to delete cart. No valid identifier provided.");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

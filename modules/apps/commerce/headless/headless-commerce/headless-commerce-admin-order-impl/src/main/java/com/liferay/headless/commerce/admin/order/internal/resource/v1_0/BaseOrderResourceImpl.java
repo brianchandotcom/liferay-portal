@@ -1036,9 +1036,30 @@ public abstract class BaseOrderResourceImpl
 		throws Exception {
 
 		UnsafeFunction<Order, Order, Exception> orderUnsafeFunction = order -> {
-			deleteOrder(order.getId());
+			if (order.getId() != null) {
+				try {
+					deleteOrder(order.getId());
 
-			return order;
+					return order;
+				}
+				catch (Exception exception) {
+					if (order.getExternalReferenceCode() != null) {
+						deleteOrderByExternalReferenceCode(
+							order.getExternalReferenceCode());
+
+						return order;
+					}
+				}
+			}
+			else if (order.getExternalReferenceCode() != null) {
+				deleteOrderByExternalReferenceCode(
+					order.getExternalReferenceCode());
+
+				return order;
+			}
+
+			throw new UnsupportedOperationException(
+				"Unable to delete order. No valid identifier provided.");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -608,9 +608,30 @@ public abstract class BaseOptionResourceImpl
 
 		UnsafeFunction<Option, Option, Exception> optionUnsafeFunction =
 			option -> {
-				deleteOption(option.getId());
+				if (option.getId() != null) {
+					try {
+						deleteOption(option.getId());
 
-				return option;
+						return option;
+					}
+					catch (Exception exception) {
+						if (option.getExternalReferenceCode() != null) {
+							deleteOptionByExternalReferenceCode(
+								option.getExternalReferenceCode());
+
+							return option;
+						}
+					}
+				}
+				else if (option.getExternalReferenceCode() != null) {
+					deleteOptionByExternalReferenceCode(
+						option.getExternalReferenceCode());
+
+					return option;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete option. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

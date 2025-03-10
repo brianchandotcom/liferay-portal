@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -133,6 +135,16 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testCompany.getCompanyId());
 
 		navigationMenuResource = NavigationMenuResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -320,6 +332,47 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		throws Exception {
 
 		return testGraphQLNavigationMenu_addNavigationMenu();
+	}
+
+	@Test
+	public void testDeleteNavigationMenuBatch() throws Exception {
+		NavigationMenu navigationMenu1 =
+			testDeleteNavigationMenuBatch_addNavigationMenu();
+
+		testDeleteNavigationMenuBatch_deleteNavigationMenu(
+			"COMPLETED", null, navigationMenu1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu1.getId()));
+	}
+
+	protected NavigationMenu testDeleteNavigationMenuBatch_addNavigationMenu()
+		throws Exception {
+
+		return testDeleteNavigationMenu_addNavigationMenu();
+	}
+
+	protected void testDeleteNavigationMenuBatch_deleteNavigationMenu(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			navigationMenuResource.deleteNavigationMenuBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1643,6 +1696,28 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<NavigationMenu> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2220,6 +2295,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	protected NavigationMenuResource navigationMenuResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

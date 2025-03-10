@@ -19,6 +19,8 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserGroupSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -130,6 +132,16 @@ public abstract class BaseUserGroupResourceTestCase {
 			testCompany.getCompanyId());
 
 		userGroupResource = UserGroupResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1099,6 +1111,77 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserGroupBatch() throws Exception {
+		UserGroup userGroup1 = testDeleteUserGroupBatch_addUserGroup();
+
+		testDeleteUserGroupBatch_deleteUserGroup(
+			"COMPLETED", null, userGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			userGroupResource.getUserGroupHttpResponse(userGroup1.getId()));
+
+		UserGroup userGroup2 = testDeleteUserGroupBatch_addUserGroup();
+
+		testDeleteUserGroupBatch_deleteUserGroup(
+			"COMPLETED", userGroup2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			userGroupResource.getUserGroupHttpResponse(userGroup2.getId()));
+
+		userGroup1 = testDeleteUserGroupBatch_addUserGroup();
+		userGroup2 = testDeleteUserGroupBatch_addUserGroup();
+
+		testDeleteUserGroupBatch_deleteUserGroup(
+			"COMPLETED", userGroup2.getExternalReferenceCode(),
+			userGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			userGroupResource.getUserGroupHttpResponse(userGroup1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			userGroupResource.getUserGroupHttpResponse(userGroup2.getId()));
+
+		testDeleteUserGroupBatch_deleteUserGroup(
+			"COMPLETED", userGroup2.getExternalReferenceCode(),
+			userGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			userGroupResource.getUserGroupHttpResponse(userGroup2.getId()));
+	}
+
+	protected UserGroup testDeleteUserGroupBatch_addUserGroup()
+		throws Exception {
+
+		return testDeleteUserGroup_addUserGroup();
+	}
+
+	protected void testDeleteUserGroupBatch_deleteUserGroup(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			userGroupResource.deleteUserGroupBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetUserGroup() throws Exception {
 		UserGroup postUserGroup = testGetUserGroup_addUserGroup();
 
@@ -1656,6 +1739,28 @@ public abstract class BaseUserGroupResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<UserGroup> page) {
@@ -2307,6 +2412,7 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	protected UserGroupResource userGroupResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

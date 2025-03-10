@@ -1330,9 +1330,30 @@ public abstract class BaseRoleResourceImpl
 		throws Exception {
 
 		UnsafeFunction<Role, Role, Exception> roleUnsafeFunction = role -> {
-			deleteRole(role.getId());
+			if (role.getId() != null) {
+				try {
+					deleteRole(role.getId());
 
-			return role;
+					return role;
+				}
+				catch (Exception exception) {
+					if (role.getExternalReferenceCode() != null) {
+						deleteRoleByExternalReferenceCode(
+							role.getExternalReferenceCode());
+
+						return role;
+					}
+				}
+			}
+			else if (role.getExternalReferenceCode() != null) {
+				deleteRoleByExternalReferenceCode(
+					role.getExternalReferenceCode());
+
+				return role;
+			}
+
+			throw new UnsupportedOperationException(
+				"Unable to delete role. No valid identifier provided.");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -534,8 +534,32 @@ public abstract class BaseWarehouseResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<Warehouse, Warehouse, Exception>
+			warehouseUnsafeFunction = warehouse -> {
+				if (warehouse.getExternalReferenceCode() != null) {
+					deleteWarehouseByExternalReferenceCode(
+						warehouse.getExternalReferenceCode());
+
+					return warehouse;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete warehouse. No valid identifier provided.");
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouses, warehouseUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouses, warehouseUnsafeFunction::apply);
+		}
+		else {
+			for (Warehouse warehouse : warehouses) {
+				warehouseUnsafeFunction.apply(warehouse);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

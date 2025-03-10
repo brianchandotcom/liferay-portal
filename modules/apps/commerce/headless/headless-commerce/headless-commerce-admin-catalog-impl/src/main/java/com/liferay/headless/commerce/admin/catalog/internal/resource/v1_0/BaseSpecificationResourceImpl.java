@@ -680,9 +680,30 @@ public abstract class BaseSpecificationResourceImpl
 
 		UnsafeFunction<Specification, Specification, Exception>
 			specificationUnsafeFunction = specification -> {
-				deleteSpecification(specification.getId());
+				if (specification.getId() != null) {
+					try {
+						deleteSpecification(specification.getId());
 
-				return specification;
+						return specification;
+					}
+					catch (Exception exception) {
+						if (specification.getExternalReferenceCode() != null) {
+							deleteSpecificationByExternalReferenceCode(
+								specification.getExternalReferenceCode());
+
+							return specification;
+						}
+					}
+				}
+				else if (specification.getExternalReferenceCode() != null) {
+					deleteSpecificationByExternalReferenceCode(
+						specification.getExternalReferenceCode());
+
+					return specification;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete specification. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -836,9 +836,30 @@ public abstract class BaseOrderItemResourceImpl
 
 		UnsafeFunction<OrderItem, OrderItem, Exception>
 			orderItemUnsafeFunction = orderItem -> {
-				deleteOrderItem(orderItem.getId());
+				if (orderItem.getId() != null) {
+					try {
+						deleteOrderItem(orderItem.getId());
 
-				return orderItem;
+						return orderItem;
+					}
+					catch (Exception exception) {
+						if (orderItem.getExternalReferenceCode() != null) {
+							deleteOrderItemByExternalReferenceCode(
+								orderItem.getExternalReferenceCode());
+
+							return orderItem;
+						}
+					}
+				}
+				else if (orderItem.getExternalReferenceCode() != null) {
+					deleteOrderItemByExternalReferenceCode(
+						orderItem.getExternalReferenceCode());
+
+					return orderItem;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete orderItem. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

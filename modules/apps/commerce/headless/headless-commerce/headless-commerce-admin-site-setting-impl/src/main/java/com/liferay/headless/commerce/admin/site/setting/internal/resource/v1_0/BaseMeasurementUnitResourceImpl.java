@@ -767,9 +767,32 @@ public abstract class BaseMeasurementUnitResourceImpl
 
 		UnsafeFunction<MeasurementUnit, MeasurementUnit, Exception>
 			measurementUnitUnsafeFunction = measurementUnit -> {
-				deleteMeasurementUnit(measurementUnit.getId());
+				if (measurementUnit.getId() != null) {
+					try {
+						deleteMeasurementUnit(measurementUnit.getId());
 
-				return measurementUnit;
+						return measurementUnit;
+					}
+					catch (Exception exception) {
+						if (measurementUnit.getExternalReferenceCode() !=
+								null) {
+
+							deleteMeasurementUnitByExternalReferenceCode(
+								measurementUnit.getExternalReferenceCode());
+
+							return measurementUnit;
+						}
+					}
+				}
+				else if (measurementUnit.getExternalReferenceCode() != null) {
+					deleteMeasurementUnitByExternalReferenceCode(
+						measurementUnit.getExternalReferenceCode());
+
+					return measurementUnit;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete measurementUnit. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

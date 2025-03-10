@@ -552,9 +552,30 @@ public abstract class BaseTierPriceResourceImpl
 
 		UnsafeFunction<TierPrice, TierPrice, Exception>
 			tierPriceUnsafeFunction = tierPrice -> {
-				deleteTierPrice(tierPrice.getId());
+				if (tierPrice.getId() != null) {
+					try {
+						deleteTierPrice(tierPrice.getId());
 
-				return tierPrice;
+						return tierPrice;
+					}
+					catch (Exception exception) {
+						if (tierPrice.getExternalReferenceCode() != null) {
+							deleteTierPriceByExternalReferenceCode(
+								tierPrice.getExternalReferenceCode());
+
+							return tierPrice;
+						}
+					}
+				}
+				else if (tierPrice.getExternalReferenceCode() != null) {
+					deleteTierPriceByExternalReferenceCode(
+						tierPrice.getExternalReferenceCode());
+
+					return tierPrice;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete tierPrice. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

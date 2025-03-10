@@ -552,9 +552,30 @@ public abstract class BaseOrderNoteResourceImpl
 
 		UnsafeFunction<OrderNote, OrderNote, Exception>
 			orderNoteUnsafeFunction = orderNote -> {
-				deleteOrderNote(orderNote.getId());
+				if (orderNote.getId() != null) {
+					try {
+						deleteOrderNote(orderNote.getId());
 
-				return orderNote;
+						return orderNote;
+					}
+					catch (Exception exception) {
+						if (orderNote.getExternalReferenceCode() != null) {
+							deleteOrderNoteByExternalReferenceCode(
+								orderNote.getExternalReferenceCode());
+
+							return orderNote;
+						}
+					}
+				}
+				else if (orderNote.getExternalReferenceCode() != null) {
+					deleteOrderNoteByExternalReferenceCode(
+						orderNote.getExternalReferenceCode());
+
+					return orderNote;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete orderNote. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

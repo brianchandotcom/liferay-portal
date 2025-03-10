@@ -19,6 +19,8 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.RoleSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -129,6 +131,16 @@ public abstract class BaseRoleResourceTestCase {
 			testCompany.getCompanyId());
 
 		roleResource = RoleResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -997,6 +1009,67 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteRoleBatch() throws Exception {
+		Role role1 = testDeleteRoleBatch_addRole();
+
+		testDeleteRoleBatch_deleteRole("COMPLETED", null, role1.getId());
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role1.getId()));
+
+		Role role2 = testDeleteRoleBatch_addRole();
+
+		testDeleteRoleBatch_deleteRole(
+			"COMPLETED", role2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role2.getId()));
+
+		role1 = testDeleteRoleBatch_addRole();
+		role2 = testDeleteRoleBatch_addRole();
+
+		testDeleteRoleBatch_deleteRole(
+			"COMPLETED", role2.getExternalReferenceCode(), role1.getId());
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, roleResource.getRoleHttpResponse(role2.getId()));
+
+		testDeleteRoleBatch_deleteRole(
+			"COMPLETED", role2.getExternalReferenceCode(), role1.getId());
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role2.getId()));
+	}
+
+	protected Role testDeleteRoleBatch_addRole() throws Exception {
+		return testDeleteRole_addRole();
+	}
+
+	protected void testDeleteRoleBatch_deleteRole(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			roleResource.deleteRoleBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetRole() throws Exception {
 		Role postRole = testGetRole_addRole();
 
@@ -1684,6 +1757,28 @@ public abstract class BaseRoleResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Role> page) {
@@ -2394,6 +2489,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected RoleResource roleResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

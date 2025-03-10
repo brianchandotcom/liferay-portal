@@ -267,7 +267,7 @@ public abstract class BaseDSEnvelopeResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes/batch' -d $'{"dsDocument": ___, "dsRecipient": ___, "emailBlurb": ___, "emailSubject": ___, "id": ___, "name": ___, "senderEmailAddress": ___, "siteId": ___, "status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/digital-signature-rest/v1.0/sites/{siteId}/ds-envelopes/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -294,7 +294,6 @@ public abstract class BaseDSEnvelopeResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
 			Long siteId,
-			DSEnvelope dsEnvelope,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,

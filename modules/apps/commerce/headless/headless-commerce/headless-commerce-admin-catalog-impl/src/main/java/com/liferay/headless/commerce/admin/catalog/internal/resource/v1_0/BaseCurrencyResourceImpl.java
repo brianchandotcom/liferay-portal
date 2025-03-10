@@ -533,9 +533,30 @@ public abstract class BaseCurrencyResourceImpl
 
 		UnsafeFunction<Currency, Currency, Exception> currencyUnsafeFunction =
 			currency -> {
-				deleteCurrency(currency.getId());
+				if (currency.getId() != null) {
+					try {
+						deleteCurrency(currency.getId());
 
-				return currency;
+						return currency;
+					}
+					catch (Exception exception) {
+						if (currency.getExternalReferenceCode() != null) {
+							deleteCurrencyByExternalReferenceCode(
+								currency.getExternalReferenceCode());
+
+							return currency;
+						}
+					}
+				}
+				else if (currency.getExternalReferenceCode() != null) {
+					deleteCurrencyByExternalReferenceCode(
+						currency.getExternalReferenceCode());
+
+					return currency;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete currency. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

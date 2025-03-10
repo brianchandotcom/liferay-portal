@@ -882,9 +882,30 @@ public abstract class BaseSkuResourceImpl
 		throws Exception {
 
 		UnsafeFunction<Sku, Sku, Exception> skuUnsafeFunction = sku -> {
-			deleteSku(sku.getId());
+			if (sku.getId() != null) {
+				try {
+					deleteSku(sku.getId());
 
-			return sku;
+					return sku;
+				}
+				catch (Exception exception) {
+					if (sku.getExternalReferenceCode() != null) {
+						deleteSkuByExternalReferenceCode(
+							sku.getExternalReferenceCode());
+
+						return sku;
+					}
+				}
+			}
+			else if (sku.getExternalReferenceCode() != null) {
+				deleteSkuByExternalReferenceCode(
+					sku.getExternalReferenceCode());
+
+				return sku;
+			}
+
+			throw new UnsupportedOperationException(
+				"Unable to delete sku. No valid identifier provided.");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

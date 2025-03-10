@@ -737,9 +737,30 @@ public abstract class BaseWarehouseItemResourceImpl
 
 		UnsafeFunction<WarehouseItem, WarehouseItem, Exception>
 			warehouseItemUnsafeFunction = warehouseItem -> {
-				deleteWarehouseItem(warehouseItem.getId());
+				if (warehouseItem.getId() != null) {
+					try {
+						deleteWarehouseItem(warehouseItem.getId());
 
-				return warehouseItem;
+						return warehouseItem;
+					}
+					catch (Exception exception) {
+						if (warehouseItem.getExternalReferenceCode() != null) {
+							deleteWarehouseItemByExternalReferenceCode(
+								warehouseItem.getExternalReferenceCode());
+
+							return warehouseItem;
+						}
+					}
+				}
+				else if (warehouseItem.getExternalReferenceCode() != null) {
+					deleteWarehouseItemByExternalReferenceCode(
+						warehouseItem.getExternalReferenceCode());
+
+					return warehouseItem;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete warehouseItem. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.shipment.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseShipmentResourceTestCase {
 			testCompany.getCompanyId());
 
 		shipmentResource = ShipmentResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1033,6 +1045,70 @@ public abstract class BaseShipmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteShipmentBatch() throws Exception {
+		Shipment shipment1 = testDeleteShipmentBatch_addShipment();
+
+		testDeleteShipmentBatch_deleteShipment(
+			"COMPLETED", null, shipment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, shipmentResource.getShipmentHttpResponse(shipment1.getId()));
+
+		Shipment shipment2 = testDeleteShipmentBatch_addShipment();
+
+		testDeleteShipmentBatch_deleteShipment(
+			"COMPLETED", shipment2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, shipmentResource.getShipmentHttpResponse(shipment2.getId()));
+
+		shipment1 = testDeleteShipmentBatch_addShipment();
+		shipment2 = testDeleteShipmentBatch_addShipment();
+
+		testDeleteShipmentBatch_deleteShipment(
+			"COMPLETED", shipment2.getExternalReferenceCode(),
+			shipment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, shipmentResource.getShipmentHttpResponse(shipment1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, shipmentResource.getShipmentHttpResponse(shipment2.getId()));
+
+		testDeleteShipmentBatch_deleteShipment(
+			"COMPLETED", shipment2.getExternalReferenceCode(),
+			shipment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, shipmentResource.getShipmentHttpResponse(shipment2.getId()));
+	}
+
+	protected Shipment testDeleteShipmentBatch_addShipment() throws Exception {
+		return testDeleteShipment_addShipment();
+	}
+
+	protected void testDeleteShipmentBatch_deleteShipment(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			shipmentResource.deleteShipmentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetShipment() throws Exception {
 		Shipment postShipment = testGetShipment_addShipment();
 
@@ -1664,6 +1740,28 @@ public abstract class BaseShipmentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Shipment> page) {
@@ -2681,6 +2779,7 @@ public abstract class BaseShipmentResourceTestCase {
 	}
 
 	protected ShipmentResource shipmentResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

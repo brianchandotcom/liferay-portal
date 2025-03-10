@@ -993,9 +993,30 @@ public abstract class BaseAccountGroupResourceImpl
 
 		UnsafeFunction<AccountGroup, AccountGroup, Exception>
 			accountGroupUnsafeFunction = accountGroup -> {
-				deleteAccountGroup(accountGroup.getId());
+				if (accountGroup.getId() != null) {
+					try {
+						deleteAccountGroup(accountGroup.getId());
 
-				return accountGroup;
+						return accountGroup;
+					}
+					catch (Exception exception) {
+						if (accountGroup.getExternalReferenceCode() != null) {
+							deleteAccountGroupByExternalReferenceCode(
+								accountGroup.getExternalReferenceCode());
+
+							return accountGroup;
+						}
+					}
+				}
+				else if (accountGroup.getExternalReferenceCode() != null) {
+					deleteAccountGroupByExternalReferenceCode(
+						accountGroup.getExternalReferenceCode());
+
+					return accountGroup;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete accountGroup. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

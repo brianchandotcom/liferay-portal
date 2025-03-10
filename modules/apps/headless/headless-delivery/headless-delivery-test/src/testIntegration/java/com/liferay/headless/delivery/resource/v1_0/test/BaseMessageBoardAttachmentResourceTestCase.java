@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -128,6 +130,16 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			testCompany.getCompanyId());
 
 		messageBoardAttachmentResource = MessageBoardAttachmentResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -339,6 +351,52 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLMessageBoardAttachment_addMessageBoardAttachment();
+	}
+
+	@Test
+	public void testDeleteMessageBoardAttachmentBatch() throws Exception {
+		MessageBoardAttachment messageBoardAttachment1 =
+			testDeleteMessageBoardAttachmentBatch_addMessageBoardAttachment();
+
+		testDeleteMessageBoardAttachmentBatch_deleteMessageBoardAttachment(
+			"COMPLETED", null, messageBoardAttachment1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardAttachmentResource.
+				getMessageBoardAttachmentHttpResponse(
+					messageBoardAttachment1.getId()));
+	}
+
+	protected MessageBoardAttachment
+			testDeleteMessageBoardAttachmentBatch_addMessageBoardAttachment()
+		throws Exception {
+
+		return testDeleteMessageBoardAttachment_addMessageBoardAttachment();
+	}
+
+	protected void
+			testDeleteMessageBoardAttachmentBatch_deleteMessageBoardAttachment(
+				String expectedExecuteStatus, String externalReferenceCode,
+				Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			messageBoardAttachmentResource.
+				deleteMessageBoardAttachmentBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1412,6 +1470,28 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<MessageBoardAttachment> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2110,6 +2190,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	protected MessageBoardAttachmentResource messageBoardAttachmentResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

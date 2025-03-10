@@ -742,9 +742,30 @@ public abstract class BasePhoneResourceImpl
 		throws Exception {
 
 		UnsafeFunction<Phone, Phone, Exception> phoneUnsafeFunction = phone -> {
-			deletePhone(phone.getId());
+			if (phone.getId() != null) {
+				try {
+					deletePhone(phone.getId());
 
-			return phone;
+					return phone;
+				}
+				catch (Exception exception) {
+					if (phone.getExternalReferenceCode() != null) {
+						deletePhoneByExternalReferenceCode(
+							phone.getExternalReferenceCode());
+
+						return phone;
+					}
+				}
+			}
+			else if (phone.getExternalReferenceCode() != null) {
+				deletePhoneByExternalReferenceCode(
+					phone.getExternalReferenceCode());
+
+				return phone;
+			}
+
+			throw new UnsupportedOperationException(
+				"Unable to delete phone. No valid identifier provided.");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

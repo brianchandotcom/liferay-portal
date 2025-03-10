@@ -883,9 +883,30 @@ public abstract class BaseUserGroupResourceImpl
 
 		UnsafeFunction<UserGroup, UserGroup, Exception>
 			userGroupUnsafeFunction = userGroup -> {
-				deleteUserGroup(userGroup.getId());
+				if (userGroup.getId() != null) {
+					try {
+						deleteUserGroup(userGroup.getId());
 
-				return userGroup;
+						return userGroup;
+					}
+					catch (Exception exception) {
+						if (userGroup.getExternalReferenceCode() != null) {
+							deleteUserGroupByExternalReferenceCode(
+								userGroup.getExternalReferenceCode());
+
+							return userGroup;
+						}
+					}
+				}
+				else if (userGroup.getExternalReferenceCode() != null) {
+					deleteUserGroupByExternalReferenceCode(
+						userGroup.getExternalReferenceCode());
+
+					return userGroup;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete userGroup. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

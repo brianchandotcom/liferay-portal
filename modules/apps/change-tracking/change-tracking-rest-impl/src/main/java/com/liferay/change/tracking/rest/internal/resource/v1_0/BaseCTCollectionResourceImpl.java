@@ -226,7 +226,7 @@ public abstract class BaseCTCollectionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/batch' -d $'{"description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -245,7 +245,6 @@ public abstract class BaseCTCollectionResourceImpl
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response postCTCollectionBatch(
-			CTCollection ctCollection,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -524,14 +523,10 @@ public abstract class BaseCTCollectionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ctCollectionId"
-			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
@@ -543,14 +538,10 @@ public abstract class BaseCTCollectionResourceImpl
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/ct-collections/{ctCollectionId}/batch")
+	@javax.ws.rs.Path("/ct-collections/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response deleteCTCollectionBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("ctCollectionId")
-			Long ctCollectionId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -687,14 +678,10 @@ public abstract class BaseCTCollectionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/batch' -d $'{"description": ___, "externalReferenceCode": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ctCollectionId"
-			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
@@ -705,16 +692,11 @@ public abstract class BaseCTCollectionResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "CTCollection")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/ct-collections/{ctCollectionId}/batch")
+	@javax.ws.rs.Path("/ct-collections/batch")
 	@javax.ws.rs.Produces("application/json")
 	@javax.ws.rs.PUT
 	@Override
 	public Response putCTCollectionBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("ctCollectionId")
-			Long ctCollectionId,
-			CTCollection ctCollection,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -875,9 +857,30 @@ public abstract class BaseCTCollectionResourceImpl
 
 		UnsafeFunction<CTCollection, CTCollection, Exception>
 			ctCollectionUnsafeFunction = ctCollection -> {
-				deleteCTCollection(ctCollection.getId());
+				if (ctCollection.getId() != null) {
+					try {
+						deleteCTCollection(ctCollection.getId());
 
-				return ctCollection;
+						return ctCollection;
+					}
+					catch (Exception exception) {
+						if (ctCollection.getExternalReferenceCode() != null) {
+							deleteCTCollectionByExternalReferenceCode(
+								ctCollection.getExternalReferenceCode());
+
+							return ctCollection;
+						}
+					}
+				}
+				else if (ctCollection.getExternalReferenceCode() != null) {
+					deleteCTCollectionByExternalReferenceCode(
+						ctCollection.getExternalReferenceCode());
+
+					return ctCollection;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete ctCollection. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -19,6 +19,8 @@ import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataListViewResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataListViewSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -129,6 +131,16 @@ public abstract class BaseDataListViewResourceTestCase {
 			testCompany.getCompanyId());
 
 		dataListViewResource = DataListViewResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -713,6 +725,47 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteDataListViewBatch() throws Exception {
+		DataListView dataListView1 =
+			testDeleteDataListViewBatch_addDataListView();
+
+		testDeleteDataListViewBatch_deleteDataListView(
+			"COMPLETED", null, dataListView1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			dataListViewResource.getDataListViewHttpResponse(
+				dataListView1.getId()));
+	}
+
+	protected DataListView testDeleteDataListViewBatch_addDataListView()
+		throws Exception {
+
+		return testDeleteDataListView_addDataListView();
+	}
+
+	protected void testDeleteDataListViewBatch_deleteDataListView(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			dataListViewResource.deleteDataListViewBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetDataListView() throws Exception {
 		DataListView postDataListView = testGetDataListView_addDataListView();
 
@@ -1194,6 +1247,28 @@ public abstract class BaseDataListViewResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<DataListView> page) {
@@ -1727,6 +1802,7 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	protected DataListViewResource dataListViewResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.DiscountProductGroup;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
@@ -112,6 +114,16 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -197,6 +209,48 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 	@Test
 	public void testGraphQLDeleteDiscountProductGroup() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testDeleteDiscountProductGroupBatch() throws Exception {
+		DiscountProductGroup discountProductGroup1 =
+			testDeleteDiscountProductGroupBatch_addDiscountProductGroup();
+
+		testDeleteDiscountProductGroupBatch_deleteDiscountProductGroup(
+			"COMPLETED", null,
+			discountProductGroup1.getDiscountProductGroupId());
+	}
+
+	protected DiscountProductGroup
+			testDeleteDiscountProductGroupBatch_addDiscountProductGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void
+			testDeleteDiscountProductGroupBatch_deleteDiscountProductGroup(
+				String expectedExecuteStatus, String externalReferenceCode,
+				Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			discountProductGroupResource.
+				deleteDiscountProductGroupBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"discountProductGroupId", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1100,6 +1154,28 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<DiscountProductGroup> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -1603,6 +1679,7 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 	}
 
 	protected DiscountProductGroupResource discountProductGroupResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

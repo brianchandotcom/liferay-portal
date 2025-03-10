@@ -208,8 +208,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
-				getAccountChannelBillingAddressIdHttpResponse(
-					accountChannelEntry.getId()));
+				getAccountChannelBillingAddressIdHttpResponse(0L));
 	}
 
 	protected AccountChannelEntry
@@ -398,7 +397,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.getAccountChannelCurrencyIdHttpResponse(
-				accountChannelEntry.getId()));
+				0L));
 	}
 
 	protected AccountChannelEntry
@@ -586,8 +585,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
-				getAccountChannelDeliveryTermIdHttpResponse(
-					accountChannelEntry.getId()));
+				getAccountChannelDeliveryTermIdHttpResponse(0L));
 	}
 
 	protected AccountChannelEntry
@@ -774,7 +772,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.getAccountChannelDiscountIdHttpResponse(
-				accountChannelEntry.getId()));
+				0L));
 	}
 
 	protected AccountChannelEntry
@@ -962,8 +960,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
-				getAccountChannelPaymentMethodIdHttpResponse(
-					accountChannelEntry.getId()));
+				getAccountChannelPaymentMethodIdHttpResponse(0L));
 	}
 
 	protected AccountChannelEntry
@@ -1151,8 +1148,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
-				getAccountChannelPaymentTermIdHttpResponse(
-					accountChannelEntry.getId()));
+				getAccountChannelPaymentTermIdHttpResponse(0L));
 	}
 
 	protected AccountChannelEntry
@@ -1340,8 +1336,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
-				getAccountChannelPriceListIdHttpResponse(
-					accountChannelEntry.getId()));
+				getAccountChannelPriceListIdHttpResponse(0L));
 	}
 
 	protected AccountChannelEntry
@@ -1529,8 +1524,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
-				getAccountChannelShippingAddressIdHttpResponse(
-					accountChannelEntry.getId()));
+				getAccountChannelShippingAddressIdHttpResponse(0L));
 	}
 
 	protected AccountChannelEntry
@@ -1718,7 +1712,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.getAccountChannelUserIdHttpResponse(
-				accountChannelEntry.getId()));
+				0L));
 	}
 
 	protected AccountChannelEntry

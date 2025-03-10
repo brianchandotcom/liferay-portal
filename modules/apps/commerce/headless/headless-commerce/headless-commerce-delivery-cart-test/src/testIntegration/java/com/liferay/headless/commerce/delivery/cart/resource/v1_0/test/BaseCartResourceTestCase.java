@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.client.http.HttpInvoker;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseCartResourceTestCase {
 			testCompany.getCompanyId());
 
 		cartResource = CartResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -624,6 +636,67 @@ public abstract class BaseCartResourceTestCase {
 
 	protected Cart testGraphQLDeleteCart_addCart() throws Exception {
 		return testGraphQLCart_addCart();
+	}
+
+	@Test
+	public void testDeleteCartBatch() throws Exception {
+		Cart cart1 = testDeleteCartBatch_addCart();
+
+		testDeleteCartBatch_deleteCart("COMPLETED", null, cart1.getId());
+
+		assertHttpResponseStatusCode(
+			404, cartResource.getCartHttpResponse(cart1.getId()));
+
+		Cart cart2 = testDeleteCartBatch_addCart();
+
+		testDeleteCartBatch_deleteCart(
+			"COMPLETED", cart2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, cartResource.getCartHttpResponse(cart2.getId()));
+
+		cart1 = testDeleteCartBatch_addCart();
+		cart2 = testDeleteCartBatch_addCart();
+
+		testDeleteCartBatch_deleteCart(
+			"COMPLETED", cart2.getExternalReferenceCode(), cart1.getId());
+
+		assertHttpResponseStatusCode(
+			404, cartResource.getCartHttpResponse(cart1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, cartResource.getCartHttpResponse(cart2.getId()));
+
+		testDeleteCartBatch_deleteCart(
+			"COMPLETED", cart2.getExternalReferenceCode(), cart1.getId());
+
+		assertHttpResponseStatusCode(
+			404, cartResource.getCartHttpResponse(cart2.getId()));
+	}
+
+	protected Cart testDeleteCartBatch_addCart() throws Exception {
+		return testDeleteCart_addCart();
+	}
+
+	protected void testDeleteCartBatch_deleteCart(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			cartResource.deleteCartBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2339,6 +2412,28 @@ public abstract class BaseCartResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Cart> page) {
@@ -4539,6 +4634,7 @@ public abstract class BaseCartResourceTestCase {
 	}
 
 	protected CartResource cartResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

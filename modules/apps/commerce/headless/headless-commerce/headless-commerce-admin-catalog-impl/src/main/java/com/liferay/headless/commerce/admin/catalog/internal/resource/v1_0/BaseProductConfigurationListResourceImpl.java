@@ -608,10 +608,37 @@ public abstract class BaseProductConfigurationListResourceImpl
 			<ProductConfigurationList, ProductConfigurationList, Exception>
 				productConfigurationListUnsafeFunction =
 					productConfigurationList -> {
-						deleteProductConfigurationList(
-							productConfigurationList.getId());
+						if (productConfigurationList.getId() != null) {
+							try {
+								deleteProductConfigurationList(
+									productConfigurationList.getId());
 
-						return productConfigurationList;
+								return productConfigurationList;
+							}
+							catch (Exception exception) {
+								if (productConfigurationList.
+										getExternalReferenceCode() != null) {
+
+									deleteProductConfigurationListByExternalReferenceCode(
+										productConfigurationList.
+											getExternalReferenceCode());
+
+									return productConfigurationList;
+								}
+							}
+						}
+						else if (productConfigurationList.
+									getExternalReferenceCode() != null) {
+
+							deleteProductConfigurationListByExternalReferenceCode(
+								productConfigurationList.
+									getExternalReferenceCode());
+
+							return productConfigurationList;
+						}
+
+						throw new UnsupportedOperationException(
+							"Unable to delete productConfigurationList. No valid identifier provided.");
 					};
 
 		if (contextBatchUnsafeBiConsumer != null) {

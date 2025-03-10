@@ -22,6 +22,8 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -170,6 +172,16 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			).parameter(
 				"nestedFields", "permissions"
 			).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -2373,6 +2385,49 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteTaxonomyVocabularyBatch() throws Exception {
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testDeleteTaxonomyVocabularyBatch_addTaxonomyVocabulary();
+
+		testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
+			"COMPLETED", null, taxonomyVocabulary1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+	}
+
+	protected TaxonomyVocabulary
+			testDeleteTaxonomyVocabularyBatch_addTaxonomyVocabulary()
+		throws Exception {
+
+		return testDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
+	}
+
+	protected void testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			taxonomyVocabularyResource.
+				deleteTaxonomyVocabularyBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetTaxonomyVocabulary() throws Exception {
 		TaxonomyVocabulary postTaxonomyVocabulary =
 			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
@@ -3201,6 +3256,28 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<TaxonomyVocabulary> page) {
@@ -4060,6 +4137,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 	protected TaxonomyVocabularyResource taxonomyVocabularyResource;
 	protected TaxonomyVocabularyResource permissionsTaxonomyVocabularyResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;

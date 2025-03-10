@@ -10,11 +10,15 @@ import {
 } from '../model/models';
 <#if importClasses??>
 	<#list importClasses?sort as import>
-		import {${import}} from '../model/${import?uncap_first}';
+		<#if stringUtil.equals(import, "RequestFile")>
+			<#assign importRequestFile = true />
+		<#else>
+			import {${import}} from '../model/${import?uncap_first}';
+		</#if>
 	</#list>
 </#if>
 
-import {HttpError} from './apis';
+import {HttpError<#if importRequestFile??>, RequestFile</#if>} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**

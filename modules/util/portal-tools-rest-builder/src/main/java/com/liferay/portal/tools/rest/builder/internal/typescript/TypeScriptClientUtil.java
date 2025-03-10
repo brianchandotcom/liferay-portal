@@ -686,13 +686,15 @@ public class TypeScriptClientUtil {
 				return sb.toString();
 			}
 
-			String schemaFormat = schema.getFormat();
-
-			if (Validator.isNotNull(schemaFormat) &&
-				(schemaFormat.equals("date") ||
-				 schemaFormat.equals("date-time"))) {
-
-				return "Date";
+			if (Validator.isNotNull(schema.getFormat())) {
+				if ((Objects.equals(schema.getFormat(), "date") ||
+					 Objects.equals(schema.getFormat(), "date-time"))){
+						return "Date";
+				}
+				else if(Objects.equals(schema.getFormat(), "binary")){
+					importClasses.add("RequestFile");
+					return "RequestFile";
+				}
 			}
 
 			return "string";

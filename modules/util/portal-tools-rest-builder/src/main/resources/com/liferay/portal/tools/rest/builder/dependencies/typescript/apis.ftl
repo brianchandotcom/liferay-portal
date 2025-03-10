@@ -24,6 +24,7 @@ export class HttpError extends Error {
 	}
 }
 
+export {RequestFile} from '../model/models';
 export const APIS = [
 <#list apiContexts?sort_by("className") as apiContext>
 	${apiContext.className},

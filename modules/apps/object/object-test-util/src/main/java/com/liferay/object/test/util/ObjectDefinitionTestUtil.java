@@ -121,7 +121,7 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			null, userId, 0, null, dbTableName, false, false, true,
-			enableLocalization, labelMap, true, name, null, null,
+			enableLocalization, false, labelMap, true, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
 			scope, titleObjectFieldName, version,
 			WorkflowConstants.STATUS_DRAFT, Collections.emptyList(),
@@ -139,7 +139,7 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			externalReferenceCode, userId, 0, className, dbTableName, false,
-			false, true, false, labelMap, false, name, null, null,
+			false, true, false, false, labelMap, false, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
 			scope, titleObjectFieldName, version,
 			WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),

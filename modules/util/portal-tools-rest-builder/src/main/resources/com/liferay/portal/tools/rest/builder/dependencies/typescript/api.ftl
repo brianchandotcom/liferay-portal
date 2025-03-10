@@ -155,7 +155,21 @@ export class ${className} {
 			</#list>
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
-			const localVarUseFormData = false;
+			<#assign localVarUseFormData = false />
+			<#list operationData.parameters as parameter>
+				<#if stringUtil.equals(parameter.type, "form")>
+					if (${parameter.name} !== undefined) {
+						<#if stringUtil.equals(parameter.dataType, "RequestFile")>
+							<#assign localVarUseFormData = true />
+							localVarFormParams['${parameter.name}'] = ${parameter.name};
+						<#else>
+							localVarFormParams['${parameter.name}'] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
+						</#if>
+					}
+
+				</#if>
+			</#list>
+			const localVarUseFormData = ${localVarUseFormData?string('true', 'false')};
 
 			const localVarRequestOptions: localVarRequest.Options = {
 				<#list operationData.parameters as parameter>

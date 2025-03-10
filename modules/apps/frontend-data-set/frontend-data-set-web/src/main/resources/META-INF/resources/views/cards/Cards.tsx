@@ -72,28 +72,29 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 			return [];
 		}
 
-		return schema.labels
-			.map((label: ICardLabelSchema) => {
-				const {displayTypeKey, displayTypeValues} = label;
-				let {displayType} = label;
+		return schema.labels.flatMap((label: ICardLabelSchema) => {
+			const {displayTypeKey, displayTypeValues} = label;
+			let {displayType} = label;
 
-				if (!displayType && displayTypeValues && displayTypeKey) {
-					const keyValue = getLocalizedValue(
-						item,
-						displayTypeKey
-					)?.value;
+			if (!displayType && displayTypeValues && displayTypeKey) {
+				const keyValue = getLocalizedValue(item, displayTypeKey)?.value;
 
-					displayType = displayTypeValues[keyValue!];
-				}
+				displayType = displayTypeValues[keyValue!];
+			}
 
-				const value = getLocalizedValue(item, label.value)?.value || '';
+			const value = getLocalizedValue(item, label.value)?.value;
 
-				return {
+			if (!value) {
+				return [];
+			}
+
+			return [
+				{
 					displayType: displayType!,
 					value,
-				};
-			})
-			.filter((label) => label.value);
+				},
+			];
+		});
 	};
 
 	return (

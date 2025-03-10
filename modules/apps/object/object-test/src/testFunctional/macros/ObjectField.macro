@@ -56,6 +56,11 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro checkToggleEnableEntryTranslations() {
+		Check.checkToggleSwitch(locator1 = "ObjectField#ENABLE_ENTRY_TRANSLATION_TOGGLE");
+	}
+
+	@summary = "Default summary"
 	macro checkToggleMandatory() {
 		Check.checkToggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}

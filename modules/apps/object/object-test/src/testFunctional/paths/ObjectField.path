@@ -23,6 +23,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>ENABLE_ENTRY_TRANSLATION_TOGGLE</td>
+		<td>//input[@name="enableEntryTranslations"]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_HOME_FOLDER</td>
 		<td>//span[@class='breadcrumb-text-truncate' and contains(text(),'${key_viewHomeFolder}')]</td>
 		<td></td>

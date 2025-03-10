@@ -98,7 +98,7 @@ public class ObjectDefinitionLocalServiceWrapper
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
-			boolean enableLocalization,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
 			java.util.Map<java.util.Locale, String> labelMap,
 			boolean modifiable, String name, String panelAppOrder,
 			String panelCategoryKey, String pkObjectFieldDBColumnName,
@@ -114,11 +114,11 @@ public class ObjectDefinitionLocalServiceWrapper
 		return _objectDefinitionLocalService.addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
 			dbTableName, enableComments, enableFriendlyURLCustomization,
-			enableIndexSearch, enableLocalization, labelMap, modifiable, name,
-			panelAppOrder, panelCategoryKey, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, portlet, scope,
-			titleObjectFieldName, version, status, objectDefinitionSettings,
-			objectFields);
+			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+			labelMap, modifiable, name, panelAppOrder, panelCategoryKey,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
+			portlet, scope, titleObjectFieldName, version, status,
+			objectDefinitionSettings, objectFields);
 	}
 
 	/**

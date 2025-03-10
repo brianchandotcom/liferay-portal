@@ -40,10 +40,7 @@ public class ObjectEntryVersionLocalServiceImpl
 			objectEntryVersionPersistence.create(
 				counterLocalService.increment());
 
-		int count = objectEntryVersionPersistence.countByObjectEntryId(
-			objectEntry.getObjectEntryId());
-
-		objectEntryVersion.setVersion(++count);
+		objectEntryVersion.setVersion(objectEntry.getVersion() + 1);
 
 		return _updateObjectEntryVersion(objectEntry, objectEntryVersion);
 	}
@@ -91,11 +88,6 @@ public class ObjectEntryVersionLocalServiceImpl
 		catch (Exception exception) {
 			throw new PortalException(exception);
 		}
-
-		int count = objectEntryVersionPersistence.countByObjectEntryId(
-			objectEntry.getObjectEntryId());
-
-		objectEntryVersion.setVersion(++count);
 
 		objectEntryVersion.setStatus(objectEntry.getStatus());
 

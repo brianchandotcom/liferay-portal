@@ -26,6 +26,7 @@ import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -253,6 +254,103 @@ public class CopyItemsMVCActionCommandTest {
 				copiedHeadingFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId()),
 			headingFragmentEntryLink);
+	}
+
+	@Test
+	@TestInfo("LPD-50957")
+	public void testCopyFormStyledLayoutStructureItem() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, objectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, _group.getGroupId());
+
+		List<InfoField<?>> allInfoFields = ListUtil.filter(
+			infoForm.getAllInfoFields(), InfoField::isEditable);
+
+		String classNameId = String.valueOf(
+			_portal.getClassNameId(objectDefinition.getClassName()));
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+			false, classNameId, "0", _layout, _layoutStructureProvider,
+			_segmentsExperienceId, allInfoFields.toArray(new InfoField<?>[0]));
+
+		String formStyledLayoutStructureItemId = jsonObject.getString(
+			"addedItemId");
+
+		jsonObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _layout,
+			_layoutStructureProvider, _segmentsExperienceId);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
+
+		List<LayoutStructureItem> layoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		String parentItemId = jsonObject.getString("addedItemId");
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				new String[] {formStyledLayoutStructureItemId}, parentItemId),
+			new MockLiferayPortletActionResponse());
+
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
+
+		List<LayoutStructureItem> curLayoutStructureItems =
+			layoutStructure.getLayoutStructureItems();
+
+		Assert.assertEquals(
+			curLayoutStructureItems.toString(), layoutStructureItems.size() + 2,
+			curLayoutStructureItems.size());
+
+		List<FormStyledLayoutStructureItem> curFormStyledLayoutStructureItems =
+			layoutStructure.getFormStyledLayoutStructureItems();
+
+		Assert.assertEquals(
+			curFormStyledLayoutStructureItems.toString(), 2,
+			curFormStyledLayoutStructureItems.size());
+
+		jsonObject = ContentLayoutTestUtil.addItemToLayout(
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _layout,
+			_layoutStructureProvider, _segmentsExperienceId);
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "doTransactionalCommand",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			_getMockLiferayPortletActionRequest(
+				new String[] {parentItemId},
+				jsonObject.getString("addedItemId")),
+			new MockLiferayPortletActionResponse());
+
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_layout.getPlid(), _segmentsExperienceId);
+
+		curLayoutStructureItems = layoutStructure.getLayoutStructureItems();
+
+		Assert.assertEquals(
+			curLayoutStructureItems.toString(), layoutStructureItems.size() + 6,
+			curLayoutStructureItems.size());
+
+		curFormStyledLayoutStructureItems =
+			layoutStructure.getFormStyledLayoutStructureItems();
+
+		Assert.assertEquals(
+			curFormStyledLayoutStructureItems.toString(), 3,
+			curFormStyledLayoutStructureItems.size());
 	}
 
 	@Test

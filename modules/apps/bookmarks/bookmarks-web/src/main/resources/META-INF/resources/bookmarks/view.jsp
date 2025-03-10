@@ -77,6 +77,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 
 	<clay:container-fluid
 		cssClass="container-view sidenav-content"
+		size="xxxl"
 	>
 		<div class="bookmarks-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 			<c:if test="<%= !bookmarksDisplayContext.isNavigationRecent() && !bookmarksDisplayContext.isNavigationMine() %>">

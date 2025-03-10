@@ -57,7 +57,7 @@ public class DLFolderResourcePermissionUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeResourcePermissions() throws Exception {
+	public void testUpgrade() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);

@@ -59,7 +59,7 @@ public class JournalFolderResourcePermissionUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeResourcePermissions() throws Exception {
+	public void testUpgrade() throws Exception {
 		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
 			_journalFolderLocalService);
 

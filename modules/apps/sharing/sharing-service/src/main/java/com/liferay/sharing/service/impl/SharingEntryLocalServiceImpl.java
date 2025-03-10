@@ -296,6 +296,16 @@ public class SharingEntryLocalServiceImpl
 		return deletedSharingEntry;
 	}
 
+	@Override
+	public SharingEntry deleteSharingEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return sharingEntryLocalService.deleteSharingEntry(
+			getSharingEntryByExternalReferenceCode(
+				externalReferenceCode, groupId));
+	}
+
 	/**
 	 * Deletes the sharing entries for resources shared with the user.
 	 *

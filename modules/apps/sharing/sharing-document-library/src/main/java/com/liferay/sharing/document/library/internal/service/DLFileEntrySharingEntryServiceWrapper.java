@@ -32,28 +32,30 @@ public class DLFileEntrySharingEntryServiceWrapper
 
 	@Override
 	public SharingEntry addOrUpdateSharingEntry(
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long toUserId, long classNameId,
+			long classPK, long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		return super.addOrUpdateSharingEntry(
-			toUserId, classNameId, classPK, groupId, shareable,
+			externalReferenceCode, toUserId, classNameId, classPK, groupId,
+			shareable,
 			_processSharingEntryActions(classNameId, sharingEntryActions),
 			expirationDate, serviceContext);
 	}
 
 	@Override
 	public SharingEntry addSharingEntry(
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long toUserId, long classNameId,
+			long classPK, long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		return super.addSharingEntry(
-			toUserId, classNameId, classPK, groupId, shareable,
+			externalReferenceCode, toUserId, classNameId, classPK, groupId,
+			shareable,
 			_processSharingEntryActions(classNameId, sharingEntryActions),
 			expirationDate, serviceContext);
 	}

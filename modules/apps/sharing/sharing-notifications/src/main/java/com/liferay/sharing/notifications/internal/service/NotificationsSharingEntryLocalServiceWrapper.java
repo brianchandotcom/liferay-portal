@@ -58,15 +58,16 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 	@Override
 	public SharingEntry addSharingEntry(
-			long fromUserId, long toUserId, long classNameId, long classPK,
-			long groupId, boolean shareable,
+			String externalReferenceCode, long fromUserId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		SharingEntry sharingEntry = super.addSharingEntry(
-			fromUserId, toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActions, expirationDate, serviceContext);
+			externalReferenceCode, fromUserId, toUserId, classNameId, classPK,
+			groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 
 		_sendNotificationEvent(
 			sharingEntry,

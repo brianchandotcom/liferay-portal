@@ -59,7 +59,7 @@ public class AddOrUpdateSharingUserNotificationTest
 		long classPK = group.getGroupId();
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			_fromUser.getUserId(), user.getUserId(),
+			null, _fromUser.getUserId(), user.getUserId(),
 			_classNameLocalService.getClassNameId(Group.class.getName()),
 			classPK, group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null,
@@ -87,7 +87,7 @@ public class AddOrUpdateSharingUserNotificationTest
 		SharingEntry sharingEntry = (SharingEntry)baseModel;
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			sharingEntry.getUserId(), sharingEntry.getToUserId(),
+			null, sharingEntry.getUserId(), sharingEntry.getToUserId(),
 			sharingEntry.getClassNameId(), sharingEntry.getClassPK(),
 			sharingEntry.getGroupId(), sharingEntry.isShareable(),
 			Arrays.asList(SharingEntryAction.VIEW, SharingEntryAction.UPDATE),

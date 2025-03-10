@@ -374,6 +374,20 @@ public class FormItemManager {
 		}
 	}
 
+	public void checkFormContainerParentItemRequired(
+			String itemId, LayoutStructure layoutStructure, String parentItemId)
+		throws PortalException {
+
+		if (_hasChildFormStyledLayoutStructureItem(itemId, layoutStructure)) {
+			return;
+		}
+
+		checkFormContainerParentItemRequired(
+			_fragmentEntryLinkManager.getChildrenFragmentEntryLinks(
+				Collections.singletonList(itemId), layoutStructure),
+			layoutStructure, parentItemId);
+	}
+
 	public LayoutStructureItem findFormStepContainerStyledLayoutStructureItem(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure) {
@@ -979,6 +993,30 @@ public class FormItemManager {
 		}
 
 		return null;
+	}
+
+	private boolean _hasChildFormStyledLayoutStructureItem(
+		String itemId, LayoutStructure layoutStructure) {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		if (Objects.equals(
+				layoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_FORM)) {
+
+			return true;
+		}
+
+		for (String childrenItemId : layoutStructureItem.getChildrenItemIds()) {
+			if (_hasChildFormStyledLayoutStructureItem(
+					childrenItemId, layoutStructure)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _hasParentFormStyledLayoutStructureItem(

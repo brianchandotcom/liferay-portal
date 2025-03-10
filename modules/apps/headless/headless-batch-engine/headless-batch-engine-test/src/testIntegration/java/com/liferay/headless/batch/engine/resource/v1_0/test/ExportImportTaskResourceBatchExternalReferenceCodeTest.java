@@ -55,7 +55,7 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_batchExternalReferenceCode = RandomTestUtil.randomString();
 		_externalReferenceCode = RandomTestUtil.randomString();
 	}
@@ -204,7 +204,7 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 			BatchEngineTaskItemDelegate<TestEntity> delegate =
-				new BaseBatchEngineTaskItemDelegate<TestEntity>() {
+				new BaseBatchEngineTaskItemDelegate<>() {
 
 					@Override
 					public TestEntity createItem(
@@ -232,9 +232,8 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 					@Override
 					public Page<TestEntity> read(
-							Filter filter, Pagination pagination, Sort[] sorts,
-							Map<String, Serializable> parameters, String search)
-						throws Exception {
+						Filter filter, Pagination pagination, Sort[] sorts,
+						Map<String, Serializable> parameters, String search) {
 
 						return null;
 					}
@@ -254,7 +253,7 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 		}
 
 		@Override
-		public void close() throws Exception {
+		public void close() {
 			_serviceRegistration.unregister();
 		}
 

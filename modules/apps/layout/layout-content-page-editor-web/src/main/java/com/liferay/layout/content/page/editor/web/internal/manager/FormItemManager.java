@@ -375,17 +375,22 @@ public class FormItemManager {
 	}
 
 	public void checkFormContainerParentItemRequired(
-			String itemId, LayoutStructure layoutStructure, String parentItemId)
+			String[] itemIds, LayoutStructure layoutStructure,
+			String parentItemId)
 		throws PortalException {
 
-		if (_hasChildFormStyledLayoutStructureItem(itemId, layoutStructure)) {
-			return;
-		}
+		for (String itemId : itemIds) {
+			if (_hasChildFormStyledLayoutStructureItem(
+					itemId, layoutStructure)) {
 
-		checkFormContainerParentItemRequired(
-			_fragmentEntryLinkManager.getChildrenFragmentEntryLinks(
-				Collections.singletonList(itemId), layoutStructure),
-			layoutStructure, parentItemId);
+				continue;
+			}
+
+			checkFormContainerParentItemRequired(
+				_fragmentEntryLinkManager.getChildrenFragmentEntryLinks(
+					Collections.singletonList(itemId), layoutStructure),
+				layoutStructure, parentItemId);
+		}
 	}
 
 	public LayoutStructureItem findFormStepContainerStyledLayoutStructureItem(

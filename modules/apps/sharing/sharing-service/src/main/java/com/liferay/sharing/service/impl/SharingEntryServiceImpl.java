@@ -14,6 +14,7 @@ import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.service.base.SharingEntryServiceBaseImpl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
@@ -129,6 +130,42 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			sharingEntry.getClassPK(), sharingEntry.getGroupId());
 
 		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+	}
+
+	@Override
+	public SharingEntry fetchSharingEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		SharingEntry sharingEntry =
+			sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		if (sharingEntry != null) {
+			sharingPermission.check(
+				getPermissionChecker(), sharingEntry.getClassNameId(),
+				sharingEntry.getClassPK(), groupId,
+				Collections.singletonList(SharingEntryAction.VIEW));
+		}
+
+		return sharingEntry;
+	}
+
+	@Override
+	public SharingEntry getSharingEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		SharingEntry sharingEntry =
+			sharingEntryLocalService.getSharingEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		sharingPermission.check(
+			getPermissionChecker(), sharingEntry.getClassNameId(),
+			sharingEntry.getClassPK(), groupId,
+			Collections.singletonList(SharingEntryAction.VIEW));
+
+		return sharingEntry;
 	}
 
 	/**

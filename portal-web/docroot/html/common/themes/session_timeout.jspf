@@ -31,7 +31,7 @@ String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REME
 						{
 							openToast: (...params) => {
 								import(
-									Liferay.ThemeDisplay.getPathContext() + '/o/frontend-js-web/__liferay__/index.js'
+									Liferay.ThemeDisplay.getPathContext() + '/o/frontend-js-components-web/__liferay__/index.js'
 								).then(
 									({openToast}) => openToast(...params)
 								);

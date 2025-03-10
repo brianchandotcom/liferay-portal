@@ -169,9 +169,8 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 			false, classNameId, "0", _layout, _layoutStructureProvider,
 			_segmentsExperienceId);
 
-		_testMoveFragmentEntryLink(
+		_testMoveLayoutStructureItem(
 			fragmentStyledLayoutStructureItem,
-			(LayoutStructure)jsonObject.get("layoutData"),
 			jsonObject.getString("addedItemId"));
 	}
 
@@ -261,14 +260,17 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 			curLayoutStructureItems.size());
 	}
 
-	private void _testMoveFragmentEntryLink(
-			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-			LayoutStructure layoutStructure, String parentItemId)
+	private void _testMoveLayoutStructureItem(
+			LayoutStructureItem layoutStructureItem, String parentItemId)
 		throws Exception {
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_layout.getPlid(), _segmentsExperienceId);
 
 		LayoutStructureItem originalParentLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
-				fragmentStyledLayoutStructureItem.getParentItemId());
+				layoutStructureItem.getParentItemId());
 
 		List<String> originalChildrenItemIds =
 			originalParentLayoutStructureItem.getChildrenItemIds();
@@ -283,21 +285,20 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(
-				new String[] {fragmentStyledLayoutStructureItem.getItemId()},
+				new String[] {layoutStructureItem.getItemId()},
 				new String[] {parentLayoutStructureItem.getItemId()}),
 			new MockLiferayPortletActionResponse());
 
 		layoutStructure = _layoutStructureProvider.getLayoutStructure(
 			_layout.getPlid(), _segmentsExperienceId);
 
-		FragmentStyledLayoutStructureItem curFragmentStyledLayoutStructureItem =
-			(FragmentStyledLayoutStructureItem)
-				layoutStructure.getLayoutStructureItem(
-					fragmentStyledLayoutStructureItem.getItemId());
+		LayoutStructureItem curLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructureItem.getItemId());
 
 		Assert.assertEquals(
 			parentLayoutStructureItem.getItemId(),
-			curFragmentStyledLayoutStructureItem.getParentItemId());
+			curLayoutStructureItem.getParentItemId());
 
 		LayoutStructureItem curParentLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
@@ -311,8 +312,7 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 			curChildrenItemIds.size());
 		Assert.assertTrue(
 			curChildrenItemIds.toString(),
-			curChildrenItemIds.contains(
-				fragmentStyledLayoutStructureItem.getItemId()));
+			curChildrenItemIds.contains(layoutStructureItem.getItemId()));
 
 		originalParentLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
@@ -326,8 +326,7 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 			curChildrenItemIds.size());
 		Assert.assertFalse(
 			curChildrenItemIds.toString(),
-			curChildrenItemIds.contains(
-				fragmentStyledLayoutStructureItem.getItemId()));
+			curChildrenItemIds.contains(layoutStructureItem.getItemId()));
 	}
 
 	private Company _company;

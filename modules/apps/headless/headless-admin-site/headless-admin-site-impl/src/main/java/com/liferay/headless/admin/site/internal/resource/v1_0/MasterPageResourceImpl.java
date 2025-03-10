@@ -14,12 +14,14 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.MasterPageResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -34,6 +38,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -264,6 +272,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
+		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
+
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				masterPage.getExternalReferenceCode(), groupId,
@@ -272,7 +282,94 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				masterPage.getKey(), 0, 0, masterPage.getName(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				_getPreviewFileEntryId(groupId, masterPage), defaultTemplate, 0,
-				0, 0, status, _getServiceContext(groupId, masterPage)));
+				_getLayoutPlid(groupId, masterPage, serviceContext), 0, status,
+				serviceContext));
+	}
+
+	private long _getLayoutPlid(
+			long groupId, MasterPage masterPage, ServiceContext serviceContext)
+		throws Exception {
+
+		PageSpecification[] pageSpecifications =
+			masterPage.getPageSpecifications();
+
+		if (pageSpecifications == null) {
+			return 0;
+		}
+
+		ContentPageSpecification publishedContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[0];
+		ContentPageSpecification draftContentPageSpecification = null;
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode())) {
+
+			draftContentPageSpecification = publishedContentPageSpecification;
+			publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+		else {
+			draftContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			_portal.getSiteDefaultLocale(groupId), masterPage.getName());
+
+		String published;
+
+		if (Objects.equals(
+				publishedContentPageSpecification.getStatus(),
+				PageSpecification.Status.APPROVED)) {
+
+			published = "true";
+		}
+		else {
+			published = null;
+		}
+
+		serviceContext.setAttribute(
+			"draftLayoutExternalReferenceCode",
+			draftContentPageSpecification.getExternalReferenceCode());
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"layout.page.template.entry.type",
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+
+		Layout layout = _layoutLocalService.addLayout(
+			publishedContentPageSpecification.getExternalReferenceCode(),
+			contextUser.getUserId(), groupId, true, 0, 0, 0, titleMap, titleMap,
+			null, null, null, LayoutConstants.TYPE_CONTENT,
+			UnicodePropertiesBuilder.create(
+				true
+			).setProperty(
+				LayoutTypeSettingsConstants.KEY_PUBLISHED, () -> published
+			).setProperty(
+				"lfr-theme:regular:show-footer", Boolean.FALSE.toString()
+			).setProperty(
+				"lfr-theme:regular:show-header", Boolean.FALSE.toString()
+			).setProperty(
+				"lfr-theme:regular:show-header-search", Boolean.FALSE.toString()
+			).setProperty(
+				"lfr-theme:regular:wrap-widget-page-content",
+				Boolean.FALSE.toString()
+			).buildString(),
+			true, true, new HashMap<>(), 0, serviceContext);
+
+		if (Objects.equals(
+				draftContentPageSpecification.getStatus(),
+				PageSpecification.Status.DRAFT)) {
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			_layoutLocalService.updateStatus(
+				contextUser.getUserId(), draftLayout.getPlid(),
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+		}
+
+		return layout.getPlid();
 	}
 
 	private long _getPreviewFileEntryId(long groupId, MasterPage masterPage)
@@ -303,6 +400,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		serviceContext.setCreateDate(masterPage.getDateCreated());
 		serviceContext.setModifiedDate(masterPage.getDateModified());
+		serviceContext.setUserId(contextUser.getUserId());
 		serviceContext.setUuid(masterPage.getUuid());
 
 		return serviceContext;
@@ -325,6 +423,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	)
 	private DTOConverter<Layout, PageSpecification>
 		_pageSpecificationDTOConverter;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

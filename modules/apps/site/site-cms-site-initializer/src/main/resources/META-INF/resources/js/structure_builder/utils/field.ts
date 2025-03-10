@@ -158,7 +158,7 @@ export function getDefaultField(type: FieldType): Field {
 			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 				FIELD_TYPE_LABEL[type],
 		},
-		localized: false,
+		localized: Liferay.FeatureFlags['LPD-32050'],
 		name: normalizeName(type),
 		required: false,
 		settings: {},

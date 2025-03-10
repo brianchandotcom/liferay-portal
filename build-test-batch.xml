@@ -5232,10 +5232,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-sqlserver2017">
-		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2017" test.portal.log.assert="true" />
-	</target>
-
 	<target name="functional-smoke-tomcat90-sqlserver2019">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2019" test.portal.log.assert="true" />
 	</target>
@@ -5728,46 +5724,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" />
 	</target>
 
-	<target name="functional-tomcat-sqlserver2017">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="sqlserver"
-			database.version="2017"
-			setup.proxy="false"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
-	<target name="functional-tomcat-sqlserver2017-jdk21_zulu">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="sqlserver"
-			database.version="2017"
-			setup.proxy="false"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
 	<target name="functional-tomcat-sqlserver2019">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
@@ -5982,10 +5938,6 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="functional-tomcat90-sqlserver">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" />
-	</target>
-
-	<target name="functional-tomcat90-sqlserver2017">
-		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2017" />
 	</target>
 
 	<target name="functional-tomcat90-sqlserver2019">
@@ -6210,10 +6162,6 @@ information. Make sure to commit in all format-javadoc results.
 
 	<target name="functional-upgrade-tomcat90-sqlserver">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" />
-	</target>
-
-	<target name="functional-upgrade-tomcat90-sqlserver2017">
-		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2017" />
 	</target>
 
 	<target name="functional-upgrade-tomcat90-sqlserver2019">
@@ -7046,10 +6994,6 @@ information. Make sure to commit in all format-javadoc results.
 		<run-legacy-database-dump database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="legacy-functional-tomcat-sqlserver2017">
-		<run-legacy-database-dump database.type="sqlserver" database.version="2017" />
-	</target>
-
 	<target name="legacy-functional-tomcat-sqlserver2019">
 		<run-legacy-database-dump database.type="sqlserver" database.version="2019" />
 	</target>
@@ -7580,17 +7524,12 @@ information. Make sure to commit in all format-javadoc results.
 		<run-modules-integration-test database.type="sqlserver" />
 	</target>
 
-	<target name="modules-integration-sqlserver2017">
-		<run-modules-integration-test database.type="sqlserver" database.version="2017" />
-	</target>
-
-	<target name="modules-integration-sqlserver2017-jdk21_zulu">
-		<run-modules-integration-test database.type="sqlserver" database.version="2017" />
-	</target>
-
 	<target name="modules-integration-sqlserver2019">
 		<run-modules-integration-test database.type="sqlserver" database.version="2019" />
 	</target>
+
+	<target name="modules-integration-sqlserver2019-jdk21_zulu">
+        <run-modules-integration-test database.type="sqlserver" database.version="2019" />
 
 	<target name="modules-integration-sqlserver2022">
 		<run-modules-integration-test database.type="sqlserver" database.version="2022" />

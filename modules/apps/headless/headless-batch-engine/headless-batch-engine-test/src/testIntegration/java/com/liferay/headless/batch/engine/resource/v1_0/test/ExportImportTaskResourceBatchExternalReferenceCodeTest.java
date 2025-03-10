@@ -62,51 +62,51 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 	@Test
 	public void testImportWithBatchExternalReferenceCode() throws Exception {
-		try (TestExternalReferenceCodeValidatorDelegate
-				testExternalReferenceCodeValidatorDelegate =
-					new TestExternalReferenceCodeValidatorDelegate(
+		try (BatchEngineTaskItemDelegateAutoCloseable
+				batchEngineTaskItemDelegateAutoCloseable =
+					new BatchEngineTaskItemDelegateAutoCloseable(
 						_batchExternalReferenceCode)) {
 
 			_testPostImportTask(
 				_batchExternalReferenceCode, null,
-				testExternalReferenceCodeValidatorDelegate.
+				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
 	}
 
 	@Test
 	public void testImportWithBothExternalReferenceCodes() throws Exception {
-		try (TestExternalReferenceCodeValidatorDelegate
-				testExternalReferenceCodeValidatorDelegate =
-					new TestExternalReferenceCodeValidatorDelegate(
+		try (BatchEngineTaskItemDelegateAutoCloseable
+				batchEngineTaskItemDelegateAutoCloseable =
+					new BatchEngineTaskItemDelegateAutoCloseable(
 						_batchExternalReferenceCode)) {
 
 			_testPostImportTask(
 				_batchExternalReferenceCode, _externalReferenceCode,
-				testExternalReferenceCodeValidatorDelegate.
+				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
 	}
 
 	@Test
 	public void testImportWithExternalReferenceCode() throws Exception {
-		try (TestExternalReferenceCodeValidatorDelegate
-				testExternalReferenceCodeValidatorDelegate =
-					new TestExternalReferenceCodeValidatorDelegate(
+		try (BatchEngineTaskItemDelegateAutoCloseable
+				batchEngineTaskItemDelegateAutoCloseable =
+					new BatchEngineTaskItemDelegateAutoCloseable(
 						_externalReferenceCode)) {
 
 			_testPostImportTask(
 				null, _externalReferenceCode,
-				testExternalReferenceCodeValidatorDelegate.
+				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
 	}
 
 	@Test
 	public void testImportWithNoExternalReferenceCodesFail() throws Exception {
-		try (TestExternalReferenceCodeValidatorDelegate
-				testExternalReferenceCodeValidatorDelegate =
-					new TestExternalReferenceCodeValidatorDelegate(
+		try (BatchEngineTaskItemDelegateAutoCloseable
+				batchEngineTaskItemDelegateAutoCloseable =
+					new BatchEngineTaskItemDelegateAutoCloseable(
 						_externalReferenceCode);
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
@@ -115,7 +115,7 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 			_testPostImportTask(
 				null, null,
-				testExternalReferenceCodeValidatorDelegate.
+				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName(),
 				false);
 		}
@@ -125,13 +125,13 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 	public void testImportWithNoExternalReferenceCodesSuccess()
 		throws Exception {
 
-		try (TestExternalReferenceCodeValidatorDelegate
-				testExternalReferenceCodeValidatorDelegate =
-					new TestExternalReferenceCodeValidatorDelegate(null)) {
+		try (BatchEngineTaskItemDelegateAutoCloseable
+				batchEngineTaskItemDelegateAutoCloseable =
+					new BatchEngineTaskItemDelegateAutoCloseable(null)) {
 
 			_testPostImportTask(
 				null, null,
-				testExternalReferenceCodeValidatorDelegate.
+				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
 	}
@@ -194,10 +194,10 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 	private String _batchExternalReferenceCode;
 	private String _externalReferenceCode;
 
-	private static class TestExternalReferenceCodeValidatorDelegate
+	private static class BatchEngineTaskItemDelegateAutoCloseable
 		implements AutoCloseable {
 
-		public TestExternalReferenceCodeValidatorDelegate(
+		public BatchEngineTaskItemDelegateAutoCloseable(
 				String expectedExternalReferenceCode)
 			throws Exception {
 

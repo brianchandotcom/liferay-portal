@@ -110,6 +110,10 @@ public class ExportImportTaskUtil {
 		}
 
 		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			if (entry.getValue() == null) {
+				continue;
+			}
+
 			sb.append(entry.getKey());
 			sb.append("=");
 			sb.append(entry.getValue());

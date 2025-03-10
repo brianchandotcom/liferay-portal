@@ -260,11 +260,11 @@ public class ImportTaskResourceTest {
 			"com.liferay.headless.batch.engine.entity.TestEntity",
 			expectSuccess ? "COMPLETED" : "FAILED",
 			HashMapBuilder.put(
-				"batchExternalReferenceCode", () -> batchExternalReferenceCode
+				"batchExternalReferenceCode", batchExternalReferenceCode
 			).put(
 				"createStrategy", "INSERT"
 			).put(
-				"externalReferenceCode", () -> externalReferenceCode
+				"externalReferenceCode", externalReferenceCode
 			).put(
 				"taskItemDelegateName", taskItemDelegateName
 			).build());

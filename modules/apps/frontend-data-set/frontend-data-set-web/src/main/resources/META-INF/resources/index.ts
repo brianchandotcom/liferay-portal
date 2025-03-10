@@ -107,6 +107,7 @@ export interface IItemsActions {
 	href?: string;
 	icon?: string;
 	id?: string | number;
+	isVisible?: (item: any) => boolean;
 	items?: IItemsActions[];
 	label?: string;
 	method?: string;

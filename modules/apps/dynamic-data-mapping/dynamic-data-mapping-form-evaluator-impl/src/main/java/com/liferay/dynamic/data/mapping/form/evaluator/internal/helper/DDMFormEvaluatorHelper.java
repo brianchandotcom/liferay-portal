@@ -581,7 +581,7 @@ public class DDMFormEvaluatorHelper {
 				return true;
 			}
 
-			JSONObject jsonObject;
+			JSONObject jsonObject = null;
 
 			try {
 				jsonObject = JSONFactoryUtil.createJSONObject(valueString);
@@ -598,7 +598,7 @@ public class DDMFormEvaluatorHelper {
 			localizedObjectFieldDDMFormFieldValue.setName(
 				ddmFormFieldValue.getName());
 
-			String defaultLanguageId;
+			String defaultLanguageId = null;
 
 			try {
 				JSONObject defaultLocaleJSONObject =

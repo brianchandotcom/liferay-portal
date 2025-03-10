@@ -260,6 +260,8 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableLocalization(),
 						FeatureFlagManagerUtil.isEnabled(
 							contextUser.getCompanyId(), "LPD-32050")),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntryDraft()),
 					LocalizedMapUtil.populateLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),

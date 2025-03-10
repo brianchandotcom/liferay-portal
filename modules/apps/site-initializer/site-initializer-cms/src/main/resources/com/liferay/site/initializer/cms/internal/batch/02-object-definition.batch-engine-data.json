@@ -168,7 +168,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Basic Web Content"
+				"en_US": "Basic Web Contents"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -423,7 +423,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Knowledge Base"
+				"en_US": "Knowledge Bases"
 			},
 			"portlet": false,
 			"scope": "site",

@@ -567,8 +567,8 @@ test.describe('Localized object entries are saved correctly', () => {
 		await viewObjectEntriesPage.addObjectEntryButton.click();
 
 		for (const item of listTypeDefinitionItems) {
-			await formFieldsPage.addMultipleSelectItem(item, 0);
-			await formFieldsPage.addMultipleSelectItem(item, 1);
+			await formFieldsPage.addSelectItem(item, 0);
+			await formFieldsPage.addSelectItem(item, 1);
 		}
 
 		const responsePromise = page.waitForResponse(

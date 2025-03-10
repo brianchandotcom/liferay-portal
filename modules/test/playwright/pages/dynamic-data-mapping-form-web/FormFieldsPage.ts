@@ -12,7 +12,7 @@ export class FormFieldsPage {
 		this.page = page;
 	}
 
-	async addMultipleSelectItem(optionName: string, nth?: number) {
+	async addSelectItem(optionName: string, nth?: number) {
 		const inputFieldLocator = this.page.getByRole('combobox');
 
 		if (nth !== null && nth !== undefined) {

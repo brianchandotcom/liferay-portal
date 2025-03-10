@@ -152,7 +152,18 @@ public class ImportTaskResourceTest {
 	}
 
 	@Test
-	public void testPostImportTaskWithBothExternalReferenceCodes()
+	public void testPostImportTaskWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		ImportTask importTask = _postImportTask(null, externalReferenceCode);
+
+		Assert.assertEquals(externalReferenceCode, _externalReferenceCode);
+		Assert.assertEquals(
+			externalReferenceCode, importTask.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testPostImportTaskWithExternalReferenceCodes()
 		throws Exception {
 
 		String batchExternalReferenceCode = RandomTestUtil.randomString();
@@ -162,17 +173,6 @@ public class ImportTaskResourceTest {
 			batchExternalReferenceCode, externalReferenceCode);
 
 		Assert.assertEquals(batchExternalReferenceCode, _externalReferenceCode);
-		Assert.assertEquals(
-			externalReferenceCode, importTask.getExternalReferenceCode());
-	}
-
-	@Test
-	public void testPostImportTaskWithExternalReferenceCode() throws Exception {
-		String externalReferenceCode = RandomTestUtil.randomString();
-
-		ImportTask importTask = _postImportTask(null, externalReferenceCode);
-
-		Assert.assertEquals(externalReferenceCode, _externalReferenceCode);
 		Assert.assertEquals(
 			externalReferenceCode, importTask.getExternalReferenceCode());
 	}

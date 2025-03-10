@@ -60,4 +60,38 @@ describe('buildState', () => {
 
 		expect(result).toEqual(initialState);
 	});
+
+	it('Takes into account the status of the object definition', () => {
+		const initialState = {
+			erc: 'structureERC',
+			error: null,
+			fields: new Map([
+				[TEXT_FIELD.name, TEXT_FIELD],
+				[DATE_TIME_FIELD.name, DATE_TIME_FIELD],
+			]),
+			id: 1,
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			publishedFields: new Set([TEXT_FIELD.name, DATE_TIME_FIELD.name]),
+			selection: [],
+			status: 'published',
+		};
+
+		const objectDefinition = buildObjectDefinition({
+			erc: initialState.erc,
+			fields: Array.from(initialState.fields.values()),
+			id: initialState.id,
+			label: initialState.label,
+			name: initialState.name,
+		});
+
+		const result = buildState({
+			...objectDefinition,
+			status: {
+				label: 'approved',
+			},
+		});
+
+		expect(result).toEqual(initialState);
+	});
 });

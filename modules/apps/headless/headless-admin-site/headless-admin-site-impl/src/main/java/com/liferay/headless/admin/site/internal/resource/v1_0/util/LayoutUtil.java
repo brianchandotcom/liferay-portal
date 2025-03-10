@@ -81,7 +81,8 @@ public class LayoutUtil {
 		}
 
 		return updateLayout(
-			contentPageSpecification, draftLayout, serviceContext);
+			contentPageSpecification, draftLayout,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	public static boolean isPublished(Layout layout) {
@@ -104,7 +105,7 @@ public class LayoutUtil {
 
 	public static Layout updateLayout(
 			ContentPageSpecification contentPageSpecification, Layout layout,
-			ServiceContext serviceContext)
+			int status, ServiceContext serviceContext)
 		throws Exception {
 
 		updateLayout(
@@ -114,8 +115,8 @@ public class LayoutUtil {
 			layout, contentPageSpecification.getPageExperiences());
 
 		return LayoutLocalServiceUtil.updateStatus(
-			serviceContext.getUserId(), layout.getPlid(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			serviceContext.getUserId(), layout.getPlid(), status,
+			serviceContext);
 	}
 
 	public static Layout updateLayout(

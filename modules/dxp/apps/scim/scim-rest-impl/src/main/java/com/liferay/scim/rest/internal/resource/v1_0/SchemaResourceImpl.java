@@ -15,8 +15,6 @@ import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.internal.manager.SchemaResourceManagerImpl;
@@ -49,23 +47,13 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 	@Override
 	public Object getV2SchemaById(String id) throws Exception {
 		return _buildResponse(
-			_schemaResourceManager.get(
-				id, _userManager,
-				ParamUtil.getString(
-					contextHttpServletRequest, WebKeys.CURRENT_COMPLETE_URL,
-					null),
-				null));
+			_schemaResourceManager.get(id, _userManager, null, null));
 	}
 
 	@Override
 	public Object getV2Schemas() throws Exception {
 		return _buildResponse(
-			_schemaResourceManager.get(
-				(String)null, _userManager,
-				ParamUtil.getString(
-					contextHttpServletRequest, WebKeys.CURRENT_COMPLETE_URL,
-					null),
-				null));
+			_schemaResourceManager.get(null, _userManager, null, null));
 	}
 
 	@Activate

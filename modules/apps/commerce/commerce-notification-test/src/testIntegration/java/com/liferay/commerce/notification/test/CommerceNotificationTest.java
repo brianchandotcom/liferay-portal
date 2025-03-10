@@ -614,8 +614,8 @@ public class CommerceNotificationTest {
 
 	private String _setUpUserGroup() throws Exception {
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
-			_user.getUserId(), _group.getCompanyId(), "Test User Group",
-			RandomTestUtil.randomString(), _serviceContext);
+			StringPool.BLANK, _user.getUserId(), _group.getCompanyId(),
+			"Test User Group", RandomTestUtil.randomString(), _serviceContext);
 
 		long[] userIds = new long[1];
 

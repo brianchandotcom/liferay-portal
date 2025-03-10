@@ -54,7 +54,7 @@ class GroovyUserGroup {
 		}
 
 		userGroup = UserGroupLocalServiceUtil.addUserGroup(
-			groovyScriptingContext.guestUserId,
+			StringPool.BLANK, groovyScriptingContext.guestUserId,
 			groovyScriptingContext.companyId, name, StringPool.BLANK,
 			groovyScriptingContext.serviceContext);
 	}

@@ -1534,8 +1534,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 					userGroup.getDescription(), ldapGroup.getDescription())) {
 
 				_userGroupLocalService.updateUserGroup(
-					companyId, userGroup.getUserGroupId(),
-					ldapGroup.getGroupName(), ldapGroup.getDescription(), null);
+					userGroup.getExternalReferenceCode(), companyId,
+					userGroup.getUserGroupId(), ldapGroup.getGroupName(),
+					ldapGroup.getDescription(), null);
 			}
 		}
 		catch (NoSuchUserGroupException noSuchUserGroupException) {
@@ -1560,8 +1561,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 
 			try {
 				userGroup = _userGroupLocalService.addUserGroup(
-					guestUserId, companyId, ldapGroup.getGroupName(),
-					ldapGroup.getDescription(), null);
+					StringPool.BLANK, guestUserId, companyId,
+					ldapGroup.getGroupName(), ldapGroup.getDescription(), null);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(

@@ -286,8 +286,8 @@ public class UserGroupMembershipPolicyMembershipsTest
 		UserGroup userGroup = MembershipPolicyTestUtil.addUserGroup();
 
 		UserGroupServiceUtil.updateUserGroup(
-			userGroup.getUserGroupId(), userGroup.getName(),
-			userGroup.getDescription(),
+			userGroup.getExternalReferenceCode(), userGroup.getUserGroupId(),
+			userGroup.getName(), userGroup.getDescription(),
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertTrue(isVerify());

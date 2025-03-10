@@ -7,6 +7,7 @@ package com.liferay.scim.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -119,8 +120,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		// Delete an existing group with no SCIM client ID
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			RandomTestUtil.randomString(), null, new ServiceContext());
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(), null,
+			new ServiceContext());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -191,8 +193,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	@Test
 	public void testGetV2Groups() throws Exception {
 		_userGroupLocalService.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			RandomTestUtil.randomString(), null, new ServiceContext());
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(), null,
+			new ServiceContext());
 
 		_assertListResponse(groupResource.getV2Groups(5, null, 0, null), 0, 0);
 
@@ -413,8 +416,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		Group postGroup2 = randomGroup();
 
 		UserGroup userGroup2 = _userGroupLocalService.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			postGroup2.getDisplayName(), null, new ServiceContext());
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), postGroup2.getDisplayName(), null,
+			new ServiceContext());
 
 		postGroup2.setExternalId(userGroup2.getExternalReferenceCode());
 

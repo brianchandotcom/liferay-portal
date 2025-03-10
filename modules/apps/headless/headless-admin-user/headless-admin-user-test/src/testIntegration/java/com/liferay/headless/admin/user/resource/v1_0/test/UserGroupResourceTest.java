@@ -11,6 +11,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserGroupResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -370,8 +371,9 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	private void _testGetUserGroupWithNestedFields() throws Exception {
 		com.liferay.portal.kernel.model.UserGroup userGroup =
 			_userGroupLocalService.addUserGroup(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				StringPool.BLANK, TestPropsValues.getUserId(),
+				TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext());
 
 		User user1 = UserTestUtil.addUser();

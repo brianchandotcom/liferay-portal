@@ -6,6 +6,7 @@
 package com.liferay.user.groups.admin.service.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -42,7 +43,7 @@ public class UserGroupPermissionTest {
 		User user = UserTestUtil.addUser();
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
-			user.getUserId(), user.getCompanyId(),
+			StringPool.BLANK, user.getUserId(), user.getCompanyId(),
 			RandomTestUtil.randomString(), null,
 			ServiceContextTestUtil.getServiceContext());
 

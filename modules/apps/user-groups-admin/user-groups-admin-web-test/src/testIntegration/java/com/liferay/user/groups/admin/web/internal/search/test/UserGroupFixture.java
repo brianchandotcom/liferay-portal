@@ -5,6 +5,7 @@
 
 package com.liferay.user.groups.admin.web.internal.search.test;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -88,7 +89,8 @@ public class UserGroupFixture {
 
 		try {
 			return _userGroupLocalService.addUserGroup(
-				userId, companyId, name, description, serviceContext);
+				StringPool.BLANK, userId, companyId, name, description,
+				serviceContext);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

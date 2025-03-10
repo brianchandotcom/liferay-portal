@@ -128,11 +128,13 @@ public class UserGroupStagedModelDataHandler
 			serviceContext.setUuid(userGroup.getUuid());
 
 			importedUserGroup = _userGroupLocalService.addUserGroup(
-				userId, portletDataContext.getCompanyId(), userGroup.getName(),
+				userGroup.getExternalReferenceCode(), userId,
+				portletDataContext.getCompanyId(), userGroup.getName(),
 				userGroup.getDescription(), serviceContext);
 		}
 		else {
 			importedUserGroup = _userGroupLocalService.updateUserGroup(
+				userGroup.getExternalReferenceCode(),
 				portletDataContext.getCompanyId(),
 				existingUserGroup.getUserGroupId(), userGroup.getName(),
 				userGroup.getDescription(), serviceContext);

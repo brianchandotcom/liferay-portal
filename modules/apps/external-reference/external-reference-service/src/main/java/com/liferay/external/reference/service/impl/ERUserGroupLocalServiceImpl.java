@@ -36,20 +36,14 @@ public class ERUserGroupLocalServiceImpl
 				externalReferenceCode, companyId);
 
 		if (userGroup == null) {
-			userGroup = _userGroupLocalService.addUserGroup(
-				userId, companyId, name, description, serviceContext);
-
-			userGroup.setExternalReferenceCode(externalReferenceCode);
-
-			userGroup = _userGroupLocalService.updateUserGroup(userGroup);
-		}
-		else {
-			_userGroupLocalService.updateUserGroup(
-				companyId, userGroup.getUserGroupId(), name, description,
+			return _userGroupLocalService.addUserGroup(
+				externalReferenceCode, userId, companyId, name, description,
 				serviceContext);
 		}
 
-		return userGroup;
+		return _userGroupLocalService.updateUserGroup(
+			externalReferenceCode, companyId, userGroup.getUserGroupId(), name,
+			description, serviceContext);
 	}
 
 	@Reference

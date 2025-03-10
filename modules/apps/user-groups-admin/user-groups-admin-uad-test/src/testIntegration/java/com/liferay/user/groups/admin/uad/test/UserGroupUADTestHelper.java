@@ -5,6 +5,7 @@
 
 package com.liferay.user.groups.admin.uad.test;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
@@ -30,7 +31,7 @@ public class UserGroupUADTestHelper {
 			UniqueStringRandomizerBumper.INSTANCE);
 
 		return _userGroupLocalService.addUserGroup(
-			userId, TestPropsValues.getCompanyId(), name,
+			StringPool.BLANK, userId, TestPropsValues.getCompanyId(), name,
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 	}

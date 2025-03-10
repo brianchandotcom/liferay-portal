@@ -5,6 +5,7 @@
 
 package com.liferay.users.admin.test.util.search;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -109,7 +110,7 @@ public class UserGroupSearchFixture {
 
 		try {
 			return _userGroupLocalService.addUserGroup(
-				userGroupBlueprint.getUserId(),
+				StringPool.BLANK, userGroupBlueprint.getUserId(),
 				userGroupBlueprint.getCompanyId(), userGroupBlueprint.getName(),
 				userGroupBlueprint.getDescription(),
 				userGroupBlueprint.getServiceContext());

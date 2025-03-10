@@ -73,9 +73,9 @@ public class PortalImplActualURLTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext();
 
 		_userGroup = _userGroupLocalService.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			"Test " + RandomTestUtil.nextInt(), StringPool.BLANK,
-			_serviceContext);
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), "Test " + RandomTestUtil.nextInt(),
+			StringPool.BLANK, _serviceContext);
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
 	}

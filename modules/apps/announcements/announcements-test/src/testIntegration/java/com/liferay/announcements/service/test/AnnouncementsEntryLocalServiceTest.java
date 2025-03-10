@@ -13,6 +13,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -213,7 +214,7 @@ public class AnnouncementsEntryLocalServiceTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
-			_user.getUserId(), _user.getCompanyId(),
+			StringPool.BLANK, _user.getUserId(), _user.getCompanyId(),
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),

@@ -376,7 +376,8 @@ public class AnalyticsDemoDataCreatorImpl implements AnalyticsDemoDataCreator {
 
 			try {
 				userGroup = _userGroupLocalService.addUserGroup(
-					_guestUserId, _companyId, name, null, null);
+					StringPool.BLANK, _guestUserId, _companyId, name, null,
+					null);
 			}
 			catch (DuplicateUserGroupException duplicateUserGroupException) {
 				if (_log.isDebugEnabled()) {

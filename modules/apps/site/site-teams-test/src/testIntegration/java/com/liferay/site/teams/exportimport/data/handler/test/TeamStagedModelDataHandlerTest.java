@@ -7,6 +7,7 @@ package com.liferay.site.teams.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -88,9 +89,9 @@ public class TeamStagedModelDataHandlerTest
 		UserLocalServiceUtil.addTeamUser(team.getTeamId(), _user);
 
 		_userGroup = UserGroupLocalServiceUtil.addUserGroup(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 
 		UserGroupLocalServiceUtil.addTeamUserGroup(
 			team.getTeamId(), _userGroup);

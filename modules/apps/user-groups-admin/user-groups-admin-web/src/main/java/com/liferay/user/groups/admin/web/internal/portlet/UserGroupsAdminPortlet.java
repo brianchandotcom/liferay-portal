@@ -94,14 +94,18 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 			// Add user group
 
 			userGroup = _userGroupService.addUserGroup(
+				ParamUtil.getString(actionRequest, "externalReferenceCode"),
 				name, description, serviceContext);
 		}
 		else {
 
 			// Update user group
 
+			userGroup = _userGroupService.getUserGroup(userGroupId);
+
 			userGroup = _userGroupService.updateUserGroup(
-				userGroupId, name, description, serviceContext);
+				userGroup.getExternalReferenceCode(), userGroupId, name,
+				description, serviceContext);
 		}
 
 		// Layout set prototypes

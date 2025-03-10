@@ -146,7 +146,8 @@ public class MembershipPolicyTestUtil {
 		String description = RandomTestUtil.randomString(50);
 
 		return UserGroupServiceUtil.addUserGroup(
-			name, description, populateServiceContext(UserGroup.class, false));
+			StringPool.BLANK, name, description,
+			populateServiceContext(UserGroup.class, false));
 	}
 
 	public static void updateUser(

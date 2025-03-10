@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.test.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
@@ -25,7 +26,8 @@ public class UserGroupTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return UserGroupLocalServiceUtil.addUserGroup(
-			serviceContext.getUserId(), serviceContext.getCompanyId(),
+			StringPool.BLANK, serviceContext.getUserId(),
+			serviceContext.getCompanyId(),
 			RandomTestUtil.randomString(
 				NumericStringRandomizerBumper.INSTANCE,
 				UniqueStringRandomizerBumper.INSTANCE),

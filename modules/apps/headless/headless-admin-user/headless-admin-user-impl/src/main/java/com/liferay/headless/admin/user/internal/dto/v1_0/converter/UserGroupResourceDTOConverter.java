@@ -51,7 +51,7 @@ public class UserGroupResourceDTOConverter
 	public UserGroup getObject(String externalReferenceCode) throws Exception {
 		UserGroup userGroup =
 			_userGroupService.fetchUserGroupByExternalReferenceCode(
-				CompanyThreadLocal.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, CompanyThreadLocal.getCompanyId());
 
 		if (userGroup == null) {
 			userGroup = _userGroupService.getUserGroup(

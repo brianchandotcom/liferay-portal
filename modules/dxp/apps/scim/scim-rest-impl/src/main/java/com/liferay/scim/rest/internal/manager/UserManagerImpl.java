@@ -582,11 +582,8 @@ public class UserManagerImpl implements UserManager {
 
 		if (userGroup == null) {
 			userGroup = _userGroupService.addUserGroup(
-				group.getDisplayName(), null, new ServiceContext());
-
-			userGroup.setExternalReferenceCode(group.getExternalId());
-
-			userGroup = _userGroupLocalService.updateUserGroup(userGroup);
+				group.getExternalId(), group.getDisplayName(), null,
+				new ServiceContext());
 
 			_saveScimClientId(
 				UserGroup.class.getName(), userGroup.getPrimaryKey(),
@@ -611,17 +608,9 @@ public class UserManagerImpl implements UserManager {
 			}
 
 			userGroup = _userGroupService.updateUserGroup(
-				userGroup.getPrimaryKey(), group.getDisplayName(),
-				userGroup.getDescription(), new ServiceContext());
-
-			if (!Objects.equals(
-					group.getExternalId(),
-					userGroup.getExternalReferenceCode())) {
-
-				userGroup.setExternalReferenceCode(group.getExternalId());
-
-				userGroup = _userGroupLocalService.updateUserGroup(userGroup);
-			}
+				group.getExternalId(), userGroup.getPrimaryKey(),
+				group.getDisplayName(), userGroup.getDescription(),
+				new ServiceContext());
 
 			if (Validator.isNull(userGroupScimClientId)) {
 				_saveScimClientId(

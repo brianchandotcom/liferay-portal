@@ -2918,6 +2918,8 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 								/>
 							</not>
 							<then>
+								<var name="security.line" unless:blank="${database.password}" value="&lt;security user-name=&quot;${database.username}&quot; password=&quot;${database.password}&quot; /&gt;" />
+								<var if:blank="${database.password}" name="security.line" value="&lt;security user-name=&quot;${database.username}&quot; /&gt;" />
 								<replace
 									file="${app.server.dir}/standalone/configuration/standalone.xml"
 								>
@@ -2928,10 +2930,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 														<datasource jndi-name="java:/jdbc/LiferayPool" pool-name="LiferayPool" enabled="true" jta="true" use-java-context="true" use-ccm="true">
 															<connection-url>${database.url}</connection-url>
 															<driver>${database.type}</driver>
-															<security>
-																<user-name>${database.username}</user-name>
-																<password>${database.password}</password>
-															</security>
+															${security.line}
 														</datasource>
 												]]>
 									</replacevalue>

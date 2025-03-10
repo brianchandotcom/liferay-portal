@@ -69,7 +69,8 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 			_testPostImportTask(
 				_batchExternalReferenceCode, null,
-				testExternalReferenceCodeValidatorDelegate.getDelegateName());
+				testExternalReferenceCodeValidatorDelegate.
+					getTaskItemDelegateName());
 		}
 	}
 
@@ -82,7 +83,8 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 			_testPostImportTask(
 				_batchExternalReferenceCode, _externalReferenceCode,
-				testExternalReferenceCodeValidatorDelegate.getDelegateName());
+				testExternalReferenceCodeValidatorDelegate.
+					getTaskItemDelegateName());
 		}
 	}
 
@@ -95,7 +97,8 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 			_testPostImportTask(
 				null, _externalReferenceCode,
-				testExternalReferenceCodeValidatorDelegate.getDelegateName());
+				testExternalReferenceCodeValidatorDelegate.
+					getTaskItemDelegateName());
 		}
 	}
 
@@ -112,7 +115,8 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 			_testPostImportTask(
 				null, null,
-				testExternalReferenceCodeValidatorDelegate.getDelegateName(),
+				testExternalReferenceCodeValidatorDelegate.
+					getTaskItemDelegateName(),
 				false);
 		}
 	}
@@ -127,23 +131,24 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 			_testPostImportTask(
 				null, null,
-				testExternalReferenceCodeValidatorDelegate.getDelegateName());
+				testExternalReferenceCodeValidatorDelegate.
+					getTaskItemDelegateName());
 		}
 	}
 
 	private void _testPostImportTask(
 			String batchExternalReferenceCode, String externalReferenceCode,
-			String testDelegateName)
+			String taskItemDelegateName)
 		throws Exception {
 
 		_testPostImportTask(
-			batchExternalReferenceCode, externalReferenceCode, testDelegateName,
-			true);
+			batchExternalReferenceCode, externalReferenceCode,
+			taskItemDelegateName, true);
 	}
 
 	private void _testPostImportTask(
 			String batchExternalReferenceCode, String externalReferenceCode,
-			String testDelegateName, boolean expectSuccess)
+			String taskItemDelegateName, boolean expectSuccess)
 		throws Exception {
 
 		ExportImportTaskUtil.postImportTask(
@@ -182,7 +187,7 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 					return null;
 				}
 			).put(
-				"taskItemDelegateName", testDelegateName
+				"taskItemDelegateName", taskItemDelegateName
 			).build());
 	}
 
@@ -236,14 +241,15 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 
 				};
 
-			_delegateName =
+			_taskItemDelegateName =
 				"test-delegate-erc-" +
 					StringUtil.lowerCase(RandomTestUtil.randomString(8));
 
 			_serviceRegistration = bundleContext.registerService(
 				BatchEngineTaskItemDelegate.class, delegate,
 				HashMapDictionaryBuilder.<String, Object>put(
-					"batch.engine.task.item.delegate.name", _delegateName
+					"batch.engine.task.item.delegate.name",
+					_taskItemDelegateName
 				).build());
 		}
 
@@ -252,12 +258,12 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 			_serviceRegistration.unregister();
 		}
 
-		public String getDelegateName() {
-			return _delegateName;
+		public String getTaskItemDelegateName() {
+			return _taskItemDelegateName;
 		}
 
-		private final String _delegateName;
 		private final ServiceRegistration<?> _serviceRegistration;
+		private final String _taskItemDelegateName;
 
 	}
 

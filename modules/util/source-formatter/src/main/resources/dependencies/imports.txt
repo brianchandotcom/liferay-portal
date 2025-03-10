@@ -57,6 +57,7 @@ com.liferay.bookmarks.model.BookmarksFolderConstants=com.liferay.bookmarks.const
 com.liferay.calendar.model.CalendarBookingConstants=com.liferay.calendar.constants.CalendarBookingConstants
 com.liferay.calendar.model.CalendarNotificationTemplateConstants=com.liferay.calendar.constants.CalendarNotificationTemplateConstants
 com.liferay.calendar.workflow.CalendarBookingWorkflowConstants=com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants
+com.liferay.commerce.account.constants.CommerceAccountConstants=com.liferay.account.constants.AccountConstants
 com.liferay.commerce.account.constants.CommerceAccountPortletKeys=com.liferay.account.constants.AccountPortletKeys
 com.liferay.commerce.account.model.CommerceAccount=com.liferay.account.model.AccountEntry
 com.liferay.commerce.account.model.CommerceAccountGroup=com.liferay.account.model.AccountGroup

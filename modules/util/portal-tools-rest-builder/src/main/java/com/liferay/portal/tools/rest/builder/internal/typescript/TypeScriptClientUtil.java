@@ -687,12 +687,14 @@ public class TypeScriptClientUtil {
 			}
 
 			if (Validator.isNotNull(schema.getFormat())) {
-				if ((Objects.equals(schema.getFormat(), "date") ||
-					 Objects.equals(schema.getFormat(), "date-time"))){
-						return "Date";
+				if (Objects.equals(schema.getFormat(), "date") ||
+					Objects.equals(schema.getFormat(), "date-time")) {
+
+					return "Date";
 				}
-				else if(Objects.equals(schema.getFormat(), "binary")){
+				else if (Objects.equals(schema.getFormat(), "binary")) {
 					importClasses.add("RequestFile");
+
 					return "RequestFile";
 				}
 			}
@@ -756,23 +758,42 @@ public class TypeScriptClientUtil {
 			return parameterDatas;
 		}
 
+		if (schema.getPropertySchemas() != null) {
+			schema.getPropertySchemas(
+			).forEach(
+				(name, propertySchema) -> parameterDatas.add(
+					HashMapBuilder.<String, Object>put(
+						"dataType", _getDataType(importClasses, propertySchema)
+					).put(
+						"name", StringUtil.replace(name, '-', '_')
+					).put(
+						"required", false
+					).put(
+						"type", "form"
+					).build())
+			);
+		}
+
 		// TODO Retrieve "required" property inside requestBody
 
-		String dataType = _getDataType(importClasses, schema);
+		else {
+			String dataType = _getDataType(importClasses, schema);
 
-		parameterDatas.add(
-			HashMapBuilder.<String, Object>put(
-				"dataType", dataType
-			).put(
-				"name",
-				StringUtil.replace(
-					Validator.isNull(schema.getReference()) ? "body" : dataType,
-					'-', '_')
-			).put(
-				"required", false
-			).put(
-				"type", "body"
-			).build());
+			parameterDatas.add(
+				HashMapBuilder.<String, Object>put(
+					"dataType", dataType
+				).put(
+					"name",
+					StringUtil.replace(
+						Validator.isNull(schema.getReference()) ? "body" :
+							dataType,
+						'-', '_')
+				).put(
+					"required", false
+				).put(
+					"type", "body"
+				).build());
+		}
 
 		return parameterDatas;
 	}

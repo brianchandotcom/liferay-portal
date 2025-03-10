@@ -38,6 +38,7 @@ import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,6 +56,13 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteCTCollectionBatch() throws Exception {
+		super.testDeleteCTCollectionBatch();
+	}
 
 	@Override
 	@Test

@@ -141,6 +141,7 @@ function isLocalizable(businessType: ObjectFieldBusinessTypes) {
 		'integer',
 		'longInteger',
 		'multiselectPicklist',
+		'picklist',
 		'precisionDecimal',
 		'text',
 	];

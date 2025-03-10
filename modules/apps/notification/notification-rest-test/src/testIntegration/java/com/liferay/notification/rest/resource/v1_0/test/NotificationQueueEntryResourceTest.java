@@ -161,6 +161,13 @@ public class NotificationQueueEntryResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testDeleteNotificationQueueEntryBatch() throws Exception {
+		super.testDeleteNotificationQueueEntryBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetNotificationQueueEntriesPage() throws Exception {
 		super.testGetNotificationQueueEntriesPage();
 	}

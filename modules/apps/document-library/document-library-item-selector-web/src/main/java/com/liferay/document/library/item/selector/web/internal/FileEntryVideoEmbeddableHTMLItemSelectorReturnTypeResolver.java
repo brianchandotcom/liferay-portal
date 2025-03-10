@@ -5,16 +5,19 @@
 
 package com.liferay.document.library.item.selector.web.internal;
 
+import com.liferay.document.library.video.external.shortcut.DLVideoExternalShortcut;
+import com.liferay.document.library.video.external.shortcut.resolver.DLVideoExternalShortcutResolver;
 import com.liferay.document.library.video.renderer.DLVideoRenderer;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -41,7 +44,7 @@ public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 
 	@Override
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws PortalException {
+		throws Exception {
 
 		return JSONUtil.put(
 			"html",
@@ -58,6 +61,23 @@ public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 			}
 		).put(
 			"title", fileEntry.getTitle()
+		).put(
+			"url",
+			() -> {
+				if (!FeatureFlagManagerUtil.isEnabled("LPD-11235")) {
+					return null;
+				}
+
+				DLVideoExternalShortcut dlVideoExternalShortcut =
+					_dlVideoExternalShortcutResolver.resolve(
+						fileEntry.getFileVersion());
+
+				if (dlVideoExternalShortcut != null) {
+					return dlVideoExternalShortcut.getURL();
+				}
+
+				return null;
+			}
 		).toString();
 	}
 
@@ -65,5 +85,8 @@ public class FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver
 		new Snapshot<>(
 			FileEntryVideoEmbeddableHTMLItemSelectorReturnTypeResolver.class,
 			DLVideoRenderer.class, null, true);
+
+	@Reference
+	private DLVideoExternalShortcutResolver _dlVideoExternalShortcutResolver;
 
 }

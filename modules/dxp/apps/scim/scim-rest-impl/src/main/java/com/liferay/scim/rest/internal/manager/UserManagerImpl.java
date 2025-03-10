@@ -15,9 +15,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,7 +36,6 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,7 +59,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 import org.wso2.charon3.core.attributes.Attribute;
@@ -202,8 +198,8 @@ public class UserManagerImpl implements UserManager {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		_getScimClientOAuth2ApplicationConfiguration(
-			serviceContext.getCompanyId());
+		ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+			serviceContext.getCompanyId(), _configurationAdmin);
 
 		// Exceptions are handled in the library and are prepared the responses.
 		// This class is the connection point between the library that
@@ -288,8 +284,8 @@ public class UserManagerImpl implements UserManager {
 
 		ScimClientOAuth2ApplicationConfiguration
 			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(
-					serviceContext.getCompanyId());
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					serviceContext.getCompanyId(), _configurationAdmin);
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
@@ -382,8 +378,8 @@ public class UserManagerImpl implements UserManager {
 
 		ScimClientOAuth2ApplicationConfiguration
 			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(
-					serviceContext.getCompanyId());
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					serviceContext.getCompanyId(), _configurationAdmin);
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
@@ -531,8 +527,8 @@ public class UserManagerImpl implements UserManager {
 
 		ScimClientOAuth2ApplicationConfiguration
 			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(
-					company.getCompanyId());
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					company.getCompanyId(), _configurationAdmin);
 
 		com.liferay.portal.kernel.model.User portalUser = _fetchPortalUser(
 			scimClientOAuth2ApplicationConfiguration, scimUser);
@@ -594,8 +590,8 @@ public class UserManagerImpl implements UserManager {
 
 		ScimClientOAuth2ApplicationConfiguration
 			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(
-					company.getCompanyId());
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					company.getCompanyId(), _configurationAdmin);
 
 		UserGroup userGroup = _fetchUserGroup(
 			company.getCompanyId(), group.getExternalId(),
@@ -776,42 +772,6 @@ public class UserManagerImpl implements UserManager {
 		return expandoValue.getData();
 	}
 
-	private ScimClientOAuth2ApplicationConfiguration
-		_getScimClientOAuth2ApplicationConfiguration(long companyId) {
-
-		try {
-			Configuration[] configurations =
-				_configurationAdmin.listConfigurations(
-					StringBundler.concat(
-						"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
-						"=com.liferay.scim.rest.internal.configuration.",
-						"ScimClientOAuth2ApplicationConfiguration)(companyId=",
-						companyId, "))"));
-
-			if (ArrayUtil.isEmpty(configurations)) {
-				throw new NotFoundException(
-					"SCIM is not configured for company " + companyId);
-			}
-
-			Configuration configuration = configurations[0];
-
-			return ConfigurableUtil.createConfigurable(
-				ScimClientOAuth2ApplicationConfiguration.class,
-				configuration.getProperties());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to get the SCIM client OAuth 2 application ",
-						"configuration for company ", companyId),
-					exception);
-			}
-
-			return ReflectionUtil.throwException(exception);
-		}
-	}
-
 	private ScimUser _getScimUser(long companyId, long userId)
 		throws AbstractCharonException {
 
@@ -839,7 +799,8 @@ public class UserManagerImpl implements UserManager {
 
 		ScimClientOAuth2ApplicationConfiguration
 			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(companyId);
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					companyId, _configurationAdmin);
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());
@@ -903,7 +864,8 @@ public class UserManagerImpl implements UserManager {
 
 		ScimClientOAuth2ApplicationConfiguration
 			scimClientOAuth2ApplicationConfiguration =
-				_getScimClientOAuth2ApplicationConfiguration(companyId);
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					companyId, _configurationAdmin);
 
 		String scimClientId = ScimClientUtil.generateScimClientId(
 			scimClientOAuth2ApplicationConfiguration.oAuth2ApplicationName());

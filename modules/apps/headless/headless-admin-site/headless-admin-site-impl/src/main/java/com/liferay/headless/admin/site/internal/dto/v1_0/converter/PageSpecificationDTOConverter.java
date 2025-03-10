@@ -337,6 +337,16 @@ public class PageSpecificationDTOConverter
 
 		return new ContentPageSpecification() {
 			{
+				setDraftContentPageSpecificationExternalReferenceCode(
+					() -> {
+						Layout draftLayout = layout.fetchDraftLayout();
+
+						if (draftLayout == null) {
+							return null;
+						}
+
+						return draftLayout.getExternalReferenceCode();
+					});
 				setExternalReferenceCode(layout::getExternalReferenceCode);
 				setPageExperiences(
 					() -> _getPageExperiences(dtoConverterContext, layout));

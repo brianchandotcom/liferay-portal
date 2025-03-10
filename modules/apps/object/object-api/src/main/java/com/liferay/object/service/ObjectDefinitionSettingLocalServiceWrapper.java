@@ -308,6 +308,15 @@ public class ObjectDefinitionSettingLocalServiceWrapper
 			objectDefinitionSettingId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectDefinitionSetting
+			getObjectDefinitionSetting(long objectDefinitionId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionSettingLocalService.getObjectDefinitionSetting(
+			objectDefinitionId, name);
+	}
+
 	/**
 	 * Returns the object definition setting with the matching UUID and company.
 	 *

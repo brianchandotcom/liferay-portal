@@ -117,40 +117,6 @@ public class CETConfigurationFactoryTest {
 	}
 
 	@Test
-	public void testDeleteClientExtensionEntryRels() throws Exception {
-		Dictionary<String, Object> themeCSSCETConfigurationProperties =
-			_getThemeCSSCETConfigurationProperties(
-				_virtualInstanceCompanyId, false);
-
-		String pid = ConfigurationTestUtil.createFactoryConfiguration(
-			_PID, themeCSSCETConfigurationProperties);
-
-		String externalReferenceCode =
-			"LXC:" + pid.substring(pid.indexOf(StringPool.TILDE) + 1);
-
-		LayoutSet publicLayoutSet = _group.getPublicLayoutSet();
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				_user.getUserId(), _group.getGroupId(),
-				_portal.getClassNameId(LayoutSet.class),
-				publicLayoutSet.getLayoutSetId(), externalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Assert.assertNotNull(clientExtensionEntryRel);
-
-		ConfigurationTestUtil.saveConfiguration(
-			pid, themeCSSCETConfigurationProperties);
-
-		clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
-				clientExtensionEntryRel.getClientExtensionEntryRelId());
-
-		Assert.assertNotNull(clientExtensionEntryRel);
-	}
-
-	@Test
 	public void testAddCET() throws Exception {
 		FeatureFlagTestHelper featureFlagTestHelper =
 			new FeatureFlagTestHelper();
@@ -239,6 +205,40 @@ public class CETConfigurationFactoryTest {
 		Assert.assertEquals(
 			clientExtensionEntryRels.toString(), 0,
 			clientExtensionEntryRels.size());
+	}
+
+	@Test
+	public void testDeleteClientExtensionEntryRels() throws Exception {
+		Dictionary<String, Object> themeCSSCETConfigurationProperties =
+			_getThemeCSSCETConfigurationProperties(
+				_virtualInstanceCompanyId, false);
+
+		String pid = ConfigurationTestUtil.createFactoryConfiguration(
+			_PID, themeCSSCETConfigurationProperties);
+
+		String externalReferenceCode =
+			"LXC:" + pid.substring(pid.indexOf(StringPool.TILDE) + 1);
+
+		LayoutSet publicLayoutSet = _group.getPublicLayoutSet();
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+				_user.getUserId(), _group.getGroupId(),
+				_portal.getClassNameId(LayoutSet.class),
+				publicLayoutSet.getLayoutSetId(), externalReferenceCode,
+				ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(clientExtensionEntryRel);
+
+		ConfigurationTestUtil.saveConfiguration(
+			pid, themeCSSCETConfigurationProperties);
+
+		clientExtensionEntryRel =
+			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
+				clientExtensionEntryRel.getClientExtensionEntryRelId());
+
+		Assert.assertNotNull(clientExtensionEntryRel);
 	}
 
 	private Layout _getControlPanelLayout(long companyId) throws Exception {

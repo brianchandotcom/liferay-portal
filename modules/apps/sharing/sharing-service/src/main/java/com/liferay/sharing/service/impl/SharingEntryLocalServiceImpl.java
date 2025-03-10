@@ -82,8 +82,8 @@ public class SharingEntryLocalServiceImpl
 	 */
 	@Override
 	public SharingEntry addOrUpdateSharingEntry(
-			long userId, long toUserId, long classNameId, long classPK,
-			long groupId, boolean shareable,
+			String externalReferenceCode, long userId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
@@ -93,8 +93,9 @@ public class SharingEntryLocalServiceImpl
 
 		if (sharingEntry == null) {
 			return sharingEntryLocalService.addSharingEntry(
-				userId, toUserId, classNameId, classPK, groupId, shareable,
-				sharingEntryActions, expirationDate, serviceContext);
+				externalReferenceCode, userId, toUserId, classNameId, classPK,
+				groupId, shareable, sharingEntryActions, expirationDate,
+				serviceContext);
 		}
 
 		return sharingEntryLocalService.updateSharingEntry(
@@ -125,8 +126,8 @@ public class SharingEntryLocalServiceImpl
 	 */
 	@Override
 	public SharingEntry addSharingEntry(
-			long userId, long toUserId, long classNameId, long classPK,
-			long groupId, boolean shareable,
+			String externalReferenceCode, long userId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
@@ -159,6 +160,7 @@ public class SharingEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		sharingEntry.setExternalReferenceCode(externalReferenceCode);
 		sharingEntry.setCompanyId(user.getCompanyId());
 		sharingEntry.setUserId(user.getUserId());
 		sharingEntry.setUserName(user.getFullName());

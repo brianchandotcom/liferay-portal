@@ -271,6 +271,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			defaultTemplate = true;
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
+		else if (_isPublishedLayout(masterPage.getPageSpecifications())) {
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
@@ -419,6 +422,36 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		serviceContext.setUuid(masterPage.getUuid());
 
 		return serviceContext;
+	}
+
+	private boolean _isPublishedLayout(PageSpecification[] pageSpecifications) {
+		if (pageSpecifications == null) {
+			return false;
+		}
+
+		if (pageSpecifications.length != 2) {
+			throw new UnsupportedOperationException();
+		}
+
+		ContentPageSpecification publishedContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[0];
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode())) {
+
+			publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+
+		if (Objects.equals(
+				publishedContentPageSpecification.getStatus(),
+				PageSpecification.Status.APPROVED)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

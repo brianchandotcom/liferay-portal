@@ -21,6 +21,8 @@ export interface RequestDetailedFile {
 	value: Buffer;
 }
 
+export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
+
 /* tslint:disable:no-unused-variable */
 const primitives = [
 	'string',

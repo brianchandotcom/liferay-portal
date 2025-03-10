@@ -28,8 +28,24 @@ public class TransformerResourceBundleControlProvider
 
 	@Override
 	public ResourceBundle.Control getControl(String baseName) {
-		return TransformerResourceBundleControl._INSTANCE;
+		if (_shouldTransform(baseName)) {
+			return TransformerResourceBundleControl._INSTANCE;
+		}
+
+		return null;
 	}
+
+	private boolean _shouldTransform(String baseName) {
+		for (String baseNamePrefix : _BASE_NAME_PREFIXES) {
+			if (baseName.startsWith(baseNamePrefix)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final String[] _BASE_NAME_PREFIXES = {"javax.portlet.tck."};
 
 	private static class TransformerResourceBundleControl
 		extends ResourceBundle.Control {

@@ -371,7 +371,7 @@ public class SegmentsExperienceUpgradeProcessTest
 			}
 
 			_db.alterColumnName(
-				connection, tableName, columnName, newColumnName);
+				connection, tableName, columnName, newColumnName + " LONG");
 
 			return indexMetadataList;
 		}

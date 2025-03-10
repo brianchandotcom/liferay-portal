@@ -364,13 +364,14 @@ public class SegmentsExperienceUpgradeProcessTest
 				_db.runSQLTemplate(
 					StringBundler.concat(
 						"alter table ", tableName, " change `", columnName,
-						"` ", columnName, " LONG"),
+						"` ", newColumnName, " LONG"),
 					true);
 
 				return indexMetadataList;
 			}
 
-			_db.alterColumnName(connection, tableName, columnName, columnName);
+			_db.alterColumnName(
+				connection, tableName, columnName, newColumnName);
 
 			return indexMetadataList;
 		}

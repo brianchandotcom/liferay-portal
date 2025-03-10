@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,12 +62,6 @@ public class ImportTaskResourceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@Before
-	public void setUp() {
-		_batchExternalReferenceCode = RandomTestUtil.randomString();
-		_externalReferenceCode = RandomTestUtil.randomString();
-	}
 
 	@Test
 	public void testPostImportTask() throws Exception {
@@ -151,13 +144,15 @@ public class ImportTaskResourceTest {
 	public void testPostImportTaskWithBatchExternalReferenceCode()
 		throws Exception {
 
+		String batchExternalReferenceCode = RandomTestUtil.randomString();
+
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
-						_batchExternalReferenceCode)) {
+						batchExternalReferenceCode)) {
 
 			_testPostImportTask(
-				_batchExternalReferenceCode, "COMPLETED", null,
+				batchExternalReferenceCode, "COMPLETED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
@@ -167,14 +162,16 @@ public class ImportTaskResourceTest {
 	public void testPostImportTaskWithBothExternalReferenceCodes()
 		throws Exception {
 
+		String batchExternalReferenceCode = RandomTestUtil.randomString();
+
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
-						_batchExternalReferenceCode)) {
+						batchExternalReferenceCode)) {
 
 			_testPostImportTask(
-				_batchExternalReferenceCode, "COMPLETED",
-				_externalReferenceCode,
+				batchExternalReferenceCode, "COMPLETED",
+				RandomTestUtil.randomString(),
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
@@ -182,13 +179,15 @@ public class ImportTaskResourceTest {
 
 	@Test
 	public void testPostImportTaskWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
-						_externalReferenceCode)) {
+						externalReferenceCode)) {
 
 			_testPostImportTask(
-				null, "COMPLETED", _externalReferenceCode,
+				null, "COMPLETED", externalReferenceCode,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
@@ -201,7 +200,7 @@ public class ImportTaskResourceTest {
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
-						_externalReferenceCode);
+						RandomTestUtil.randomString());
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.batch.engine.internal." +
 					"BatchEngineImportTaskExecutorImpl",
@@ -259,9 +258,6 @@ public class ImportTaskResourceTest {
 				"taskItemDelegateName", taskItemDelegateName
 			).build());
 	}
-
-	private String _batchExternalReferenceCode;
-	private String _externalReferenceCode;
 
 	private static class BatchEngineTaskItemDelegateAutoCloseable
 		implements AutoCloseable {

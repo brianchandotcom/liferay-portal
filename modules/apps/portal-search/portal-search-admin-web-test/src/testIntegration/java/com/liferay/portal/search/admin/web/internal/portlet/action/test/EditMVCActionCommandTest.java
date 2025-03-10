@@ -219,7 +219,8 @@ public class EditMVCActionCommandTest {
 				entry.getKey(), entry.getValue());
 		}
 
-		mockLiferayPortletActionRequest.setSession(new MockPortletSession());
+		mockLiferayPortletActionRequest.setPortletSession(
+			new MockPortletSession());
 
 		return mockLiferayPortletActionRequest;
 	}

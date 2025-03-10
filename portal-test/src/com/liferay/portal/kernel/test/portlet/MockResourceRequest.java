@@ -5,10 +5,6 @@
 
 package com.liferay.portal.kernel.test.portlet;
 
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockClientDataRequest;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockResourceParameters;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockResourceURL;
-
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -20,6 +16,7 @@ import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.portlet.ResourceURL;
 import javax.servlet.DispatcherType;
 
 /**
@@ -31,9 +28,9 @@ public class MockResourceRequest
 	public MockResourceRequest() {
 	}
 
-	public MockResourceRequest(MockResourceURL url) {
-		_resourceID = url.getResourceID();
-		_cacheability = url.getCacheability();
+	public MockResourceRequest(ResourceURL resourceURL) {
+		_resourceID = resourceURL.getResourceID();
+		_cacheability = resourceURL.getCacheability();
 	}
 
 	public MockResourceRequest(

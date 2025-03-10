@@ -5,9 +5,6 @@
 
 package com.liferay.portal.kernel.test.portlet;
 
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionParameters;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockClientDataRequest;
-
 import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortalContext;

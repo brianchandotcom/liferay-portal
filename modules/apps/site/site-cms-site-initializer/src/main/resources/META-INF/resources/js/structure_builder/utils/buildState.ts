@@ -46,6 +46,8 @@ export default function buildState(
 		});
 	});
 
+	const isPublished = objectDefinition.status?.label === 'approved';
+
 	return {
 		erc: objectDefinition.externalReferenceCode,
 		error: null,
@@ -53,12 +55,9 @@ export default function buildState(
 		id: objectDefinition.id ?? null,
 		label: objectDefinition.label,
 		name: objectDefinition.name ?? '',
-		publishedFields: new Set(),
+		publishedFields: isPublished ? new Set(fields.keys()) : new Set(),
 		selection: [],
-		status:
-			objectDefinition.status?.label === 'approved'
-				? 'published'
-				: 'draft',
+		status: isPublished ? 'published' : 'draft',
 	};
 }
 

@@ -8,6 +8,7 @@ package com.liferay.scim.rest.internal.resource.v1_0;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -105,9 +106,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		return responseBuilder.build();
 	}
 
-	private JSONObject _createSchema(String attribute, String jsonFile)
-		throws IOException, JSONException {
-
+	private JSONObject _createSchema(String jsonFile) throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(SchemaResourceImpl.class);
 
 		URL userSchemaURL = bundle.getResource(
@@ -118,9 +117,13 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 		JSONObject metaJSONObject = jsonObject.getJSONObject("meta");
 
-		String locationString = metaJSONObject.getString("location");
+		String resourceEndpointURL =
+			AbstractResourceManager.getResourceEndpointURL(
+				SCIMConstants.SCHEMAS_ENDPOINT);
 
-		metaJSONObject.put("location", attribute + locationString);
+		metaJSONObject.put(
+			"location",
+			resourceEndpointURL + metaJSONObject.getString("location"));
 
 		JSONArray schemasJSONArray = JSONUtil.put(
 			"urn:ietf:params:scim:schemas:core:2.0:Schema");
@@ -140,16 +143,14 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		).build();
 	}
 
-	private String _getSchema(String attribute, String id)
-		throws AbstractCharonException {
-
+	private String _getSchema(String id) throws AbstractCharonException {
 		try {
 			Map<String, String> schemaIdJsonFileNameStringMap =
 				ScimUtil.getMapSchemaIdJsonFileName();
 
 			if (Validator.isNotNull(schemaIdJsonFileNameStringMap.get(id))) {
 				JSONObject schemajsonObject = _createSchema(
-					attribute, schemaIdJsonFileNameStringMap.get(id));
+					schemaIdJsonFileNameStringMap.get(id));
 
 				if (schemajsonObject != null) {
 					return schemajsonObject.toString();
@@ -167,11 +168,12 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 			throw new InternalErrorException(error);
 		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
-	private String _getSchemas(String attribute)
-		throws AbstractCharonException {
-
+	private String _getSchemas() throws AbstractCharonException {
 		try {
 			Map<String, String> schemaIdJsonFileNameStringMap =
 				ScimUtil.getMapSchemaIdJsonFileName();
@@ -193,8 +195,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 			for (Map.Entry<String, String> entry :
 					schemaIdJsonFileNameStringMap.entrySet()) {
 
-				resourcesJSONArray.put(
-					_createSchema(attribute, entry.getValue()));
+				resourcesJSONArray.put(_createSchema(entry.getValue()));
 			}
 
 			rootJSONObject.put("Resources", resourcesJSONArray);
@@ -210,6 +211,9 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 			throw new InternalErrorException(error);
 		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 	private SCIMResponse _getSCIMResponse(String id, UserManager userManager) {
@@ -220,10 +224,10 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 				userManager.getCoreSchema();
 
 				if (Validator.isNull(id)) {
-					responseString = _getSchemas(null);
+					responseString = _getSchemas();
 				}
 				else {
-					responseString = _getSchema(null, id);
+					responseString = _getSchema(id);
 				}
 
 				if (Validator.isNull(responseString)) {

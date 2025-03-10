@@ -2920,6 +2920,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 							<then>
 								<var name="security.line" unless:blank="${database.password}" value="&lt;security user-name=&quot;${database.username}&quot; password=&quot;${database.password}&quot; /&gt;" />
 								<var if:blank="${database.password}" name="security.line" value="&lt;security user-name=&quot;${database.username}&quot; /&gt;" />
+
 								<replace
 									file="${app.server.dir}/standalone/configuration/standalone.xml"
 								>

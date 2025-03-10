@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -59,10 +60,27 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 	@Test
 	public void testGetV2SchemaById() throws Exception {
 		assertHttpResponseStatusCode(
-			404, schemaResource.getV2SchemaByIdHttpResponse("12345"));
+			404,
+			schemaResource.getV2SchemaByIdHttpResponse(
+				RandomTestUtil.randomString()));
 
-		for (String element : _schemasStringList) {
-			_assertSchema(element);
+		for (String schema : _schemas) {
+			HttpInvoker.HttpResponse httpResponse =
+				schemaResource.getV2SchemaByIdHttpResponse(schema);
+
+			assertHttpResponseStatusCode(200, httpResponse);
+
+			JSONObject schemaJSONObject = _jsonFactory.createJSONObject(
+				httpResponse.getContent());
+
+			Assert.assertEquals(schema, schemaJSONObject.getString("id"));
+
+			JSONArray schemasJSONArray = schemaJSONObject.getJSONArray(
+				"schemas");
+
+			Assert.assertEquals(
+				"urn:ietf:params:scim:schemas:core:2.0:Schema",
+				schemasJSONArray.get(0));
 		}
 	}
 
@@ -72,58 +90,34 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 		HttpInvoker.HttpResponse httpResponse =
 			schemaResource.getV2SchemasHttpResponse();
 
-		Assert.assertEquals(2, httpResponse.getStatusCode() / 100);
+		Assert.assertEquals(200, httpResponse.getStatusCode());
 
-		JSONObject schemaDefinitionJSONObject = _jsonFactory.createJSONObject(
+		JSONObject listResponseJSONObject = _jsonFactory.createJSONObject(
 			httpResponse.getContent());
 
-		assertEquals(3, schemaDefinitionJSONObject.getInt("totalResults"));
+		JSONArray schemasJSONArray = listResponseJSONObject.getJSONArray(
+			"schemas");
 
-		JSONArray schemasParameterJSONArray =
-			schemaDefinitionJSONObject.getJSONArray("schemas");
+		Assert.assertEquals(
+			"urn:ietf:params:scim:api:messages:2.0:ListResponse",
+			schemasJSONArray.get(0));
 
-		assertEquals(
-			"urn:ietf:params:scim:schemas:core:2.0:Schema",
-			schemasParameterJSONArray.get(
-				0
-			).toString());
+		Assert.assertEquals(3, listResponseJSONObject.getLong("totalResults"));
+		Assert.assertEquals(3, listResponseJSONObject.getLong("itemsPerPage"));
 
-		JSONArray resourcesParameterJSONArray =
-			schemaDefinitionJSONObject.getJSONArray("Resources");
+		JSONArray resourcesJSONArray = listResponseJSONObject.getJSONArray(
+			"Resources");
 
-		assertEquals(3, resourcesParameterJSONArray.length());
+		Assert.assertEquals(3, resourcesJSONArray.length());
 
-		Iterator<JSONObject> iterator = resourcesParameterJSONArray.iterator();
+		Iterator<JSONObject> iterator = resourcesJSONArray.iterator();
 
 		while (iterator.hasNext()) {
-			JSONObject schemaResponseJSONObject = iterator.next();
+			JSONObject schemaJSONObject = iterator.next();
 
-			assertEquals(
-				true,
-				_schemasStringList.contains(
-					schemaResponseJSONObject.getString("id")));
+			Assert.assertTrue(
+				_schemas.contains(schemaJSONObject.getString("id")));
 		}
-	}
-
-	private void _assertSchema(String schemaId) throws Exception {
-		HttpInvoker.HttpResponse httpResponse =
-			schemaResource.getV2SchemaByIdHttpResponse(schemaId);
-
-		assertHttpResponseStatusCode(200, httpResponse);
-
-		JSONObject schemaDefinitionJSONObject = _jsonFactory.createJSONObject(
-			httpResponse.getContent());
-
-		assertEquals(schemaId, schemaDefinitionJSONObject.getString("id"));
-
-		JSONArray schemasParameterJSONArray =
-			schemaDefinitionJSONObject.getJSONArray("schemas");
-
-		assertEquals(
-			"urn:ietf:params:scim:schemas:core:2.0:Schema",
-			schemasParameterJSONArray.get(
-				0
-			).toString());
 	}
 
 	private static String _pid;
@@ -131,7 +125,7 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 	@Inject
 	private JSONFactory _jsonFactory;
 
-	private final List<String> _schemasStringList = List.of(
+	private final List<String> _schemas = List.of(
 		"urn:ietf:params:scim:schemas:core:2.0:Group",
 		"urn:ietf:params:scim:schemas:core:2.0:User",
 		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User");

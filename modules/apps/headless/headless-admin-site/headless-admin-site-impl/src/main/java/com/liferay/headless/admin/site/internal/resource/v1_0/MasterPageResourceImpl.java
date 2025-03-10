@@ -378,22 +378,22 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			).buildString(),
 			true, true, new HashMap<>(), 0, serviceContext);
 
-		Layout draftLayout = LayoutUtil.updateLayout(
-			layout.fetchDraftLayout(),
-			draftContentPageSpecification.getSettings(), serviceContext);
+		int status = WorkflowConstants.STATUS_APPROVED;
 
 		if (Objects.equals(
 				draftContentPageSpecification.getStatus(),
 				PageSpecification.Status.DRAFT)) {
 
-			_layoutLocalService.updateStatus(
-				contextUser.getUserId(), draftLayout.getPlid(),
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+			status = WorkflowConstants.STATUS_DRAFT;
 		}
 
-		layout = LayoutUtil.updateLayout(
-			layout, publishedContentPageSpecification.getSettings(),
+		LayoutUtil.updateLayout(
+			draftContentPageSpecification, layout.fetchDraftLayout(), status,
 			serviceContext);
+
+		layout = LayoutUtil.updateLayout(
+			publishedContentPageSpecification, layout,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return layout.getPlid();
 	}

@@ -755,9 +755,30 @@ public abstract class BaseEmailAddressResourceImpl
 
 		UnsafeFunction<EmailAddress, EmailAddress, Exception>
 			emailAddressUnsafeFunction = emailAddress -> {
-				deleteEmailAddress(emailAddress.getId());
+				if (emailAddress.getId() != null) {
+					try {
+						deleteEmailAddress(emailAddress.getId());
 
-				return emailAddress;
+						return emailAddress;
+					}
+					catch (Exception exception) {
+						if (emailAddress.getExternalReferenceCode() != null) {
+							deleteEmailAddressByExternalReferenceCode(
+								emailAddress.getExternalReferenceCode());
+
+							return emailAddress;
+						}
+					}
+				}
+				else if (emailAddress.getExternalReferenceCode() != null) {
+					deleteEmailAddressByExternalReferenceCode(
+						emailAddress.getExternalReferenceCode());
+
+					return emailAddress;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete emailAddress. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

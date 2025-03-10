@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Specification;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseSpecificationResourceTestCase {
 			testCompany.getCompanyId());
 
 		specificationResource = SpecificationResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -949,9 +961,7 @@ public abstract class BaseSpecificationResourceTestCase {
 				specification.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			specificationResource.getSpecificationHttpResponse(
-				specification.getId()));
+			404, specificationResource.getSpecificationHttpResponse(0L));
 	}
 
 	protected Specification testDeleteSpecification_addSpecification()
@@ -1037,6 +1047,84 @@ public abstract class BaseSpecificationResourceTestCase {
 		throws Exception {
 
 		return testGraphQLSpecification_addSpecification();
+	}
+
+	@Test
+	public void testDeleteSpecificationBatch() throws Exception {
+		Specification specification1 =
+			testDeleteSpecificationBatch_addSpecification();
+
+		testDeleteSpecificationBatch_deleteSpecification(
+			"COMPLETED", null, specification1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			specificationResource.getSpecificationHttpResponse(
+				specification1.getId()));
+
+		Specification specification2 =
+			testDeleteSpecificationBatch_addSpecification();
+
+		testDeleteSpecificationBatch_deleteSpecification(
+			"COMPLETED", specification2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			specificationResource.getSpecificationHttpResponse(
+				specification2.getId()));
+
+		specification1 = testDeleteSpecificationBatch_addSpecification();
+		specification2 = testDeleteSpecificationBatch_addSpecification();
+
+		testDeleteSpecificationBatch_deleteSpecification(
+			"COMPLETED", specification2.getExternalReferenceCode(),
+			specification1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			specificationResource.getSpecificationHttpResponse(
+				specification1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			specificationResource.getSpecificationHttpResponse(
+				specification2.getId()));
+
+		testDeleteSpecificationBatch_deleteSpecification(
+			"COMPLETED", specification2.getExternalReferenceCode(),
+			specification1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			specificationResource.getSpecificationHttpResponse(
+				specification2.getId()));
+	}
+
+	protected Specification testDeleteSpecificationBatch_addSpecification()
+		throws Exception {
+
+		return testDeleteSpecification_addSpecification();
+	}
+
+	protected void testDeleteSpecificationBatch_deleteSpecification(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			specificationResource.deleteSpecificationBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1554,6 +1642,28 @@ public abstract class BaseSpecificationResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Specification> page) {
@@ -2105,6 +2215,7 @@ public abstract class BaseSpecificationResourceTestCase {
 	}
 
 	protected SpecificationResource specificationResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

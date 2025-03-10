@@ -654,9 +654,30 @@ public abstract class BaseOptionCategoryResourceImpl
 
 		UnsafeFunction<OptionCategory, OptionCategory, Exception>
 			optionCategoryUnsafeFunction = optionCategory -> {
-				deleteOptionCategory(optionCategory.getId());
+				if (optionCategory.getId() != null) {
+					try {
+						deleteOptionCategory(optionCategory.getId());
 
-				return optionCategory;
+						return optionCategory;
+					}
+					catch (Exception exception) {
+						if (optionCategory.getExternalReferenceCode() != null) {
+							deleteOptionCategoryByExternalReferenceCode(
+								optionCategory.getExternalReferenceCode());
+
+							return optionCategory;
+						}
+					}
+				}
+				else if (optionCategory.getExternalReferenceCode() != null) {
+					deleteOptionCategoryByExternalReferenceCode(
+						optionCategory.getExternalReferenceCode());
+
+					return optionCategory;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete optionCategory. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

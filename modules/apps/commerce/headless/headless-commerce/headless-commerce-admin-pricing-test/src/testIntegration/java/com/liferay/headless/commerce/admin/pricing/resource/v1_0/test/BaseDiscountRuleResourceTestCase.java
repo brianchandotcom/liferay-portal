@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v1_0.DiscountRule;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
@@ -127,6 +129,16 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			testCompany.getCompanyId());
 
 		discountRuleResource = DiscountRuleResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -448,9 +460,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 				discountRule.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			discountRuleResource.getDiscountRuleHttpResponse(
-				discountRule.getId()));
+			404, discountRuleResource.getDiscountRuleHttpResponse(0L));
 	}
 
 	protected DiscountRule testDeleteDiscountRule_addDiscountRule()
@@ -536,6 +546,47 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDiscountRule_addDiscountRule();
+	}
+
+	@Test
+	public void testDeleteDiscountRuleBatch() throws Exception {
+		DiscountRule discountRule1 =
+			testDeleteDiscountRuleBatch_addDiscountRule();
+
+		testDeleteDiscountRuleBatch_deleteDiscountRule(
+			"COMPLETED", null, discountRule1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			discountRuleResource.getDiscountRuleHttpResponse(
+				discountRule1.getId()));
+	}
+
+	protected DiscountRule testDeleteDiscountRuleBatch_addDiscountRule()
+		throws Exception {
+
+		return testDeleteDiscountRule_addDiscountRule();
+	}
+
+	protected void testDeleteDiscountRuleBatch_deleteDiscountRule(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			discountRuleResource.deleteDiscountRuleBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1152,6 +1203,28 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<DiscountRule> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -1579,6 +1652,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	}
 
 	protected DiscountRuleResource discountRuleResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

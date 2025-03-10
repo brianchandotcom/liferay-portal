@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.client.http.HttpInvoker;
 import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
@@ -128,6 +130,16 @@ public abstract class BaseCartItemResourceTestCase {
 			testCompany.getCompanyId());
 
 		cartItemResource = CartItemResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -570,6 +582,70 @@ public abstract class BaseCartItemResourceTestCase {
 		throws Exception {
 
 		return testGraphQLCartItem_addCartItem();
+	}
+
+	@Test
+	public void testDeleteCartItemBatch() throws Exception {
+		CartItem cartItem1 = testDeleteCartItemBatch_addCartItem();
+
+		testDeleteCartItemBatch_deleteCartItem(
+			"COMPLETED", null, cartItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404, cartItemResource.getCartItemHttpResponse(cartItem1.getId()));
+
+		CartItem cartItem2 = testDeleteCartItemBatch_addCartItem();
+
+		testDeleteCartItemBatch_deleteCartItem(
+			"COMPLETED", cartItem2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, cartItemResource.getCartItemHttpResponse(cartItem2.getId()));
+
+		cartItem1 = testDeleteCartItemBatch_addCartItem();
+		cartItem2 = testDeleteCartItemBatch_addCartItem();
+
+		testDeleteCartItemBatch_deleteCartItem(
+			"COMPLETED", cartItem2.getExternalReferenceCode(),
+			cartItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404, cartItemResource.getCartItemHttpResponse(cartItem1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, cartItemResource.getCartItemHttpResponse(cartItem2.getId()));
+
+		testDeleteCartItemBatch_deleteCartItem(
+			"COMPLETED", cartItem2.getExternalReferenceCode(),
+			cartItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404, cartItemResource.getCartItemHttpResponse(cartItem2.getId()));
+	}
+
+	protected CartItem testDeleteCartItemBatch_addCartItem() throws Exception {
+		return testDeleteCartItem_addCartItem();
+	}
+
+	protected void testDeleteCartItemBatch_deleteCartItem(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			cartItemResource.deleteCartItemBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1688,6 +1764,28 @@ public abstract class BaseCartItemResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<CartItem> page) {
@@ -2993,6 +3091,7 @@ public abstract class BaseCartItemResourceTestCase {
 	}
 
 	protected CartItemResource cartItemResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

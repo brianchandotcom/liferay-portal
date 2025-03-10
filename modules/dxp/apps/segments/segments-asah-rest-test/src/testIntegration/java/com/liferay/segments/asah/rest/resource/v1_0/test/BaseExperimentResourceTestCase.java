@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -101,6 +103,16 @@ public abstract class BaseExperimentResourceTestCase {
 			testCompany.getCompanyId());
 
 		experimentResource = ExperimentResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -288,6 +300,46 @@ public abstract class BaseExperimentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLExperiment_addExperiment();
+	}
+
+	@Test
+	public void testDeleteExperimentBatch() throws Exception {
+		Experiment experiment1 = testDeleteExperimentBatch_addExperiment();
+
+		testDeleteExperimentBatch_deleteExperiment(
+			"COMPLETED", null, experiment1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			experimentResource.getExperimentHttpResponse(experiment1.getId()));
+	}
+
+	protected Experiment testDeleteExperimentBatch_addExperiment()
+		throws Exception {
+
+		return testDeleteExperiment_addExperiment();
+	}
+
+	protected void testDeleteExperimentBatch_deleteExperiment(
+			String expectedExecuteStatus, String externalReferenceCode,
+			String id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			experimentResource.deleteExperimentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -537,6 +589,28 @@ public abstract class BaseExperimentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Experiment> page) {
@@ -1157,6 +1231,7 @@ public abstract class BaseExperimentResourceTestCase {
 	}
 
 	protected ExperimentResource experimentResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

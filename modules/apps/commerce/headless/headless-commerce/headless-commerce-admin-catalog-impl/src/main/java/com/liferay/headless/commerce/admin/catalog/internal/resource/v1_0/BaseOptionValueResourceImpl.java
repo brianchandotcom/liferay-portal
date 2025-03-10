@@ -578,9 +578,30 @@ public abstract class BaseOptionValueResourceImpl
 
 		UnsafeFunction<OptionValue, OptionValue, Exception>
 			optionValueUnsafeFunction = optionValue -> {
-				deleteOptionValue(optionValue.getId());
+				if (optionValue.getId() != null) {
+					try {
+						deleteOptionValue(optionValue.getId());
 
-				return optionValue;
+						return optionValue;
+					}
+					catch (Exception exception) {
+						if (optionValue.getExternalReferenceCode() != null) {
+							deleteOptionValueByExternalReferenceCode(
+								optionValue.getExternalReferenceCode());
+
+							return optionValue;
+						}
+					}
+				}
+				else if (optionValue.getExternalReferenceCode() != null) {
+					deleteOptionValueByExternalReferenceCode(
+						optionValue.getExternalReferenceCode());
+
+					return optionValue;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete optionValue. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

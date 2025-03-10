@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v1_0.DiscountAccountGroup;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
@@ -101,6 +103,16 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 			testCompany.getCompanyId());
 
 		discountAccountGroupResource = DiscountAccountGroupResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -253,6 +265,46 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDiscountAccountGroup_addDiscountAccountGroup();
+	}
+
+	@Test
+	public void testDeleteDiscountAccountGroupBatch() throws Exception {
+		DiscountAccountGroup discountAccountGroup1 =
+			testDeleteDiscountAccountGroupBatch_addDiscountAccountGroup();
+
+		testDeleteDiscountAccountGroupBatch_deleteDiscountAccountGroup(
+			"COMPLETED", null, discountAccountGroup1.getId());
+	}
+
+	protected DiscountAccountGroup
+			testDeleteDiscountAccountGroupBatch_addDiscountAccountGroup()
+		throws Exception {
+
+		return testDeleteDiscountAccountGroup_addDiscountAccountGroup();
+	}
+
+	protected void
+			testDeleteDiscountAccountGroupBatch_deleteDiscountAccountGroup(
+				String expectedExecuteStatus, String externalReferenceCode,
+				Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			discountAccountGroupResource.
+				deleteDiscountAccountGroupBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -881,6 +933,28 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<DiscountAccountGroup> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -1350,6 +1424,7 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 	}
 
 	protected DiscountAccountGroupResource discountAccountGroupResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

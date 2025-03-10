@@ -689,9 +689,30 @@ public abstract class BaseCatalogResourceImpl
 
 		UnsafeFunction<Catalog, Catalog, Exception> catalogUnsafeFunction =
 			catalog -> {
-				deleteCatalog(catalog.getId());
+				if (catalog.getId() != null) {
+					try {
+						deleteCatalog(catalog.getId());
 
-				return catalog;
+						return catalog;
+					}
+					catch (Exception exception) {
+						if (catalog.getExternalReferenceCode() != null) {
+							deleteCatalogByExternalReferenceCode(
+								catalog.getExternalReferenceCode());
+
+							return catalog;
+						}
+					}
+				}
+				else if (catalog.getExternalReferenceCode() != null) {
+					deleteCatalogByExternalReferenceCode(
+						catalog.getExternalReferenceCode());
+
+					return catalog;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete catalog. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

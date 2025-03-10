@@ -828,9 +828,30 @@ public abstract class BaseProductResourceImpl
 
 		UnsafeFunction<Product, Product, Exception> productUnsafeFunction =
 			product -> {
-				deleteProduct(product.getId());
+				if (product.getId() != null) {
+					try {
+						deleteProduct(product.getId());
 
-				return product;
+						return product;
+					}
+					catch (Exception exception) {
+						if (product.getExternalReferenceCode() != null) {
+							deleteProductByExternalReferenceCode(
+								product.getExternalReferenceCode());
+
+							return product;
+						}
+					}
+				}
+				else if (product.getExternalReferenceCode() != null) {
+					deleteProductByExternalReferenceCode(
+						product.getExternalReferenceCode());
+
+					return product;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete product. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

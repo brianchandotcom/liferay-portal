@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseItem;
 import com.liferay.headless.commerce.admin.inventory.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
@@ -128,6 +130,16 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			testCompany.getCompanyId());
 
 		warehouseItemResource = WarehouseItemResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -633,9 +645,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 				warehouseItem.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			warehouseItemResource.getWarehouseItemHttpResponse(
-				warehouseItem.getId()));
+			404, warehouseItemResource.getWarehouseItemHttpResponse(0L));
 	}
 
 	protected WarehouseItem testDeleteWarehouseItem_addWarehouseItem()
@@ -721,6 +731,84 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		throws Exception {
 
 		return testGraphQLWarehouseItem_addWarehouseItem();
+	}
+
+	@Test
+	public void testDeleteWarehouseItemBatch() throws Exception {
+		WarehouseItem warehouseItem1 =
+			testDeleteWarehouseItemBatch_addWarehouseItem();
+
+		testDeleteWarehouseItemBatch_deleteWarehouseItem(
+			"COMPLETED", null, warehouseItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.getWarehouseItemHttpResponse(
+				warehouseItem1.getId()));
+
+		WarehouseItem warehouseItem2 =
+			testDeleteWarehouseItemBatch_addWarehouseItem();
+
+		testDeleteWarehouseItemBatch_deleteWarehouseItem(
+			"COMPLETED", warehouseItem2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.getWarehouseItemHttpResponse(
+				warehouseItem2.getId()));
+
+		warehouseItem1 = testDeleteWarehouseItemBatch_addWarehouseItem();
+		warehouseItem2 = testDeleteWarehouseItemBatch_addWarehouseItem();
+
+		testDeleteWarehouseItemBatch_deleteWarehouseItem(
+			"COMPLETED", warehouseItem2.getExternalReferenceCode(),
+			warehouseItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.getWarehouseItemHttpResponse(
+				warehouseItem1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			warehouseItemResource.getWarehouseItemHttpResponse(
+				warehouseItem2.getId()));
+
+		testDeleteWarehouseItemBatch_deleteWarehouseItem(
+			"COMPLETED", warehouseItem2.getExternalReferenceCode(),
+			warehouseItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.getWarehouseItemHttpResponse(
+				warehouseItem2.getId()));
+	}
+
+	protected WarehouseItem testDeleteWarehouseItemBatch_addWarehouseItem()
+		throws Exception {
+
+		return testDeleteWarehouseItem_addWarehouseItem();
+	}
+
+	protected void testDeleteWarehouseItemBatch_deleteWarehouseItem(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			warehouseItemResource.deleteWarehouseItemBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1628,6 +1716,28 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<WarehouseItem> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2251,6 +2361,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	}
 
 	protected WarehouseItemResource warehouseItemResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.shipment.client.pagination.Page;
@@ -128,6 +130,16 @@ public abstract class BaseShipmentItemResourceTestCase {
 			testCompany.getCompanyId());
 
 		shipmentItemResource = ShipmentItemResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -487,6 +499,84 @@ public abstract class BaseShipmentItemResourceTestCase {
 		throws Exception {
 
 		return testGraphQLShipmentItem_addShipmentItem();
+	}
+
+	@Test
+	public void testDeleteShipmentItemBatch() throws Exception {
+		ShipmentItem shipmentItem1 =
+			testDeleteShipmentItemBatch_addShipmentItem();
+
+		testDeleteShipmentItemBatch_deleteShipmentItem(
+			"COMPLETED", null, shipmentItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			shipmentItemResource.getShipmentItemHttpResponse(
+				shipmentItem1.getId()));
+
+		ShipmentItem shipmentItem2 =
+			testDeleteShipmentItemBatch_addShipmentItem();
+
+		testDeleteShipmentItemBatch_deleteShipmentItem(
+			"COMPLETED", shipmentItem2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			shipmentItemResource.getShipmentItemHttpResponse(
+				shipmentItem2.getId()));
+
+		shipmentItem1 = testDeleteShipmentItemBatch_addShipmentItem();
+		shipmentItem2 = testDeleteShipmentItemBatch_addShipmentItem();
+
+		testDeleteShipmentItemBatch_deleteShipmentItem(
+			"COMPLETED", shipmentItem2.getExternalReferenceCode(),
+			shipmentItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			shipmentItemResource.getShipmentItemHttpResponse(
+				shipmentItem1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			shipmentItemResource.getShipmentItemHttpResponse(
+				shipmentItem2.getId()));
+
+		testDeleteShipmentItemBatch_deleteShipmentItem(
+			"COMPLETED", shipmentItem2.getExternalReferenceCode(),
+			shipmentItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			shipmentItemResource.getShipmentItemHttpResponse(
+				shipmentItem2.getId()));
+	}
+
+	protected ShipmentItem testDeleteShipmentItemBatch_addShipmentItem()
+		throws Exception {
+
+		return testDeleteShipmentItem_addShipmentItem();
+	}
+
+	protected void testDeleteShipmentItemBatch_deleteShipmentItem(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			shipmentItemResource.deleteShipmentItemBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1062,8 +1152,7 @@ public abstract class BaseShipmentItemResourceTestCase {
 
 		ShipmentItem getShipmentItem =
 			shipmentItemResource.getShipmentByExternalReferenceCodeItem(
-				testPutShipmentByExternalReferenceCodeItem_getExternalReferenceCode(
-					putShipmentItem));
+				putShipmentItem.getExternalReferenceCode());
 
 		assertEquals(randomShipmentItem, getShipmentItem);
 		assertValid(getShipmentItem);
@@ -1563,6 +1652,28 @@ public abstract class BaseShipmentItemResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<ShipmentItem> page) {
@@ -2408,6 +2519,7 @@ public abstract class BaseShipmentItemResourceTestCase {
 	}
 
 	protected ShipmentItemResource shipmentItemResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

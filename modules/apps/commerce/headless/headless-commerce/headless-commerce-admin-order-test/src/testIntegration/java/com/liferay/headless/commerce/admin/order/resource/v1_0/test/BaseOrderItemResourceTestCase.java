@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseOrderItemResourceTestCase {
 			testCompany.getCompanyId());
 
 		orderItemResource = OrderItemResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -869,7 +881,7 @@ public abstract class BaseOrderItemResourceTestCase {
 			404, orderItemResource.getOrderItemHttpResponse(orderItem.getId()));
 
 		assertHttpResponseStatusCode(
-			404, orderItemResource.getOrderItemHttpResponse(orderItem.getId()));
+			404, orderItemResource.getOrderItemHttpResponse(0L));
 	}
 
 	protected OrderItem testDeleteOrderItem_addOrderItem() throws Exception {
@@ -950,6 +962,77 @@ public abstract class BaseOrderItemResourceTestCase {
 		throws Exception {
 
 		return testGraphQLOrderItem_addOrderItem();
+	}
+
+	@Test
+	public void testDeleteOrderItemBatch() throws Exception {
+		OrderItem orderItem1 = testDeleteOrderItemBatch_addOrderItem();
+
+		testDeleteOrderItemBatch_deleteOrderItem(
+			"COMPLETED", null, orderItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderItemResource.getOrderItemHttpResponse(orderItem1.getId()));
+
+		OrderItem orderItem2 = testDeleteOrderItemBatch_addOrderItem();
+
+		testDeleteOrderItemBatch_deleteOrderItem(
+			"COMPLETED", orderItem2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			orderItemResource.getOrderItemHttpResponse(orderItem2.getId()));
+
+		orderItem1 = testDeleteOrderItemBatch_addOrderItem();
+		orderItem2 = testDeleteOrderItemBatch_addOrderItem();
+
+		testDeleteOrderItemBatch_deleteOrderItem(
+			"COMPLETED", orderItem2.getExternalReferenceCode(),
+			orderItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderItemResource.getOrderItemHttpResponse(orderItem1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			orderItemResource.getOrderItemHttpResponse(orderItem2.getId()));
+
+		testDeleteOrderItemBatch_deleteOrderItem(
+			"COMPLETED", orderItem2.getExternalReferenceCode(),
+			orderItem1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderItemResource.getOrderItemHttpResponse(orderItem2.getId()));
+	}
+
+	protected OrderItem testDeleteOrderItemBatch_addOrderItem()
+		throws Exception {
+
+		return testDeleteOrderItem_addOrderItem();
+	}
+
+	protected void testDeleteOrderItemBatch_deleteOrderItem(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			orderItemResource.deleteOrderItemBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2190,6 +2273,28 @@ public abstract class BaseOrderItemResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<OrderItem> page) {
@@ -3934,6 +4039,7 @@ public abstract class BaseOrderItemResourceTestCase {
 	}
 
 	protected OrderItemResource orderItemResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

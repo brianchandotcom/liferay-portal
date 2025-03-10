@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseOrderType;
 import com.liferay.headless.commerce.admin.inventory.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
@@ -112,6 +114,16 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -194,6 +206,45 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 	@Test
 	public void testGraphQLDeleteWarehouseOrderType() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testDeleteWarehouseOrderTypeBatch() throws Exception {
+		WarehouseOrderType warehouseOrderType1 =
+			testDeleteWarehouseOrderTypeBatch_addWarehouseOrderType();
+
+		testDeleteWarehouseOrderTypeBatch_deleteWarehouseOrderType(
+			"COMPLETED", null, warehouseOrderType1.getWarehouseOrderTypeId());
+	}
+
+	protected WarehouseOrderType
+			testDeleteWarehouseOrderTypeBatch_addWarehouseOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void testDeleteWarehouseOrderTypeBatch_deleteWarehouseOrderType(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			warehouseOrderTypeResource.
+				deleteWarehouseOrderTypeBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"warehouseOrderTypeId", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1099,6 +1150,28 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<WarehouseOrderType> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -1616,6 +1689,7 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 	}
 
 	protected WarehouseOrderTypeResource warehouseOrderTypeResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.client.http.HttpInvoker;
@@ -130,6 +132,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			testCompany.getCompanyId());
 
 		objectDefinitionResource = ObjectDefinitionResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1025,6 +1037,48 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteObjectDefinitionBatch() throws Exception {
+		ObjectDefinition objectDefinition1 =
+			testDeleteObjectDefinitionBatch_addObjectDefinition();
+
+		testDeleteObjectDefinitionBatch_deleteObjectDefinition(
+			"COMPLETED", null, objectDefinition1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			objectDefinitionResource.getObjectDefinitionHttpResponse(
+				objectDefinition1.getId()));
+	}
+
+	protected ObjectDefinition
+			testDeleteObjectDefinitionBatch_addObjectDefinition()
+		throws Exception {
+
+		return testDeleteObjectDefinition_addObjectDefinition();
+	}
+
+	protected void testDeleteObjectDefinitionBatch_deleteObjectDefinition(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			objectDefinitionResource.deleteObjectDefinitionBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetObjectDefinition() throws Exception {
 		ObjectDefinition postObjectDefinition =
 			testGetObjectDefinition_addObjectDefinition();
@@ -1893,6 +1947,28 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<ObjectDefinition> page) {
@@ -3524,6 +3600,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	protected ObjectDefinitionResource objectDefinitionResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

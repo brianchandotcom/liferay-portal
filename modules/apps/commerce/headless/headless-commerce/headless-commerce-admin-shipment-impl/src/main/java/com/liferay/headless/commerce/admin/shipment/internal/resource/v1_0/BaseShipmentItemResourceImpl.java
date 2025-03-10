@@ -499,9 +499,30 @@ public abstract class BaseShipmentItemResourceImpl
 
 		UnsafeFunction<ShipmentItem, ShipmentItem, Exception>
 			shipmentItemUnsafeFunction = shipmentItem -> {
-				deleteShipmentItem(shipmentItem.getId());
+				if (shipmentItem.getId() != null) {
+					try {
+						deleteShipmentItem(shipmentItem.getId());
 
-				return shipmentItem;
+						return shipmentItem;
+					}
+					catch (Exception exception) {
+						if (shipmentItem.getExternalReferenceCode() != null) {
+							deleteShipmentItemByExternalReferenceCode(
+								shipmentItem.getExternalReferenceCode());
+
+							return shipmentItem;
+						}
+					}
+				}
+				else if (shipmentItem.getExternalReferenceCode() != null) {
+					deleteShipmentItemByExternalReferenceCode(
+						shipmentItem.getExternalReferenceCode());
+
+					return shipmentItem;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete shipmentItem. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

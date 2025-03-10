@@ -553,9 +553,30 @@ public abstract class BasePriceEntryResourceImpl
 
 		UnsafeFunction<PriceEntry, PriceEntry, Exception>
 			priceEntryUnsafeFunction = priceEntry -> {
-				deletePriceEntry(priceEntry.getId());
+				if (priceEntry.getId() != null) {
+					try {
+						deletePriceEntry(priceEntry.getId());
 
-				return priceEntry;
+						return priceEntry;
+					}
+					catch (Exception exception) {
+						if (priceEntry.getExternalReferenceCode() != null) {
+							deletePriceEntryByExternalReferenceCode(
+								priceEntry.getExternalReferenceCode());
+
+							return priceEntry;
+						}
+					}
+				}
+				else if (priceEntry.getExternalReferenceCode() != null) {
+					deletePriceEntryByExternalReferenceCode(
+						priceEntry.getExternalReferenceCode());
+
+					return priceEntry;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete priceEntry. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

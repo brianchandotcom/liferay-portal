@@ -758,9 +758,30 @@ public abstract class BaseAccountAddressResourceImpl
 
 		UnsafeFunction<AccountAddress, AccountAddress, Exception>
 			accountAddressUnsafeFunction = accountAddress -> {
-				deleteAccountAddress(accountAddress.getId());
+				if (accountAddress.getId() != null) {
+					try {
+						deleteAccountAddress(accountAddress.getId());
 
-				return accountAddress;
+						return accountAddress;
+					}
+					catch (Exception exception) {
+						if (accountAddress.getExternalReferenceCode() != null) {
+							deleteAccountAddressByExternalReferenceCode(
+								accountAddress.getExternalReferenceCode());
+
+							return accountAddress;
+						}
+					}
+				}
+				else if (accountAddress.getExternalReferenceCode() != null) {
+					deleteAccountAddressByExternalReferenceCode(
+						accountAddress.getExternalReferenceCode());
+
+					return accountAddress;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete accountAddress. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
@@ -151,6 +153,16 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testCompany.getCompanyId());
 
 		structuredContentResource = StructuredContentResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -3482,6 +3494,48 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteStructuredContentBatch() throws Exception {
+		StructuredContent structuredContent1 =
+			testDeleteStructuredContentBatch_addStructuredContent();
+
+		testDeleteStructuredContentBatch_deleteStructuredContent(
+			"COMPLETED", null, structuredContent1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.getStructuredContentHttpResponse(
+				structuredContent1.getId()));
+	}
+
+	protected StructuredContent
+			testDeleteStructuredContentBatch_addStructuredContent()
+		throws Exception {
+
+		return testDeleteStructuredContent_addStructuredContent();
+	}
+
+	protected void testDeleteStructuredContentBatch_deleteStructuredContent(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentResource.deleteStructuredContentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetStructuredContent() throws Exception {
 		StructuredContent postStructuredContent =
 			testGetStructuredContent_addStructuredContent();
@@ -4566,6 +4620,28 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<StructuredContent> page) {
@@ -5996,6 +6072,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	protected StructuredContentResource structuredContentResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;

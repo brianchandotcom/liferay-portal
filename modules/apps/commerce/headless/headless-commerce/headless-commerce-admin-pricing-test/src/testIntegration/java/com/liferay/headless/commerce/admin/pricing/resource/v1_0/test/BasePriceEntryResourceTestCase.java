@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v1_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
@@ -127,6 +129,16 @@ public abstract class BasePriceEntryResourceTestCase {
 			testCompany.getCompanyId());
 
 		priceEntryResource = PriceEntryResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -397,8 +409,7 @@ public abstract class BasePriceEntryResourceTestCase {
 			priceEntryResource.getPriceEntryHttpResponse(priceEntry.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			priceEntryResource.getPriceEntryHttpResponse(priceEntry.getId()));
+			404, priceEntryResource.getPriceEntryHttpResponse(0L));
 	}
 
 	protected PriceEntry testDeletePriceEntry_addPriceEntry() throws Exception {
@@ -480,6 +491,77 @@ public abstract class BasePriceEntryResourceTestCase {
 		throws Exception {
 
 		return testGraphQLPriceEntry_addPriceEntry();
+	}
+
+	@Test
+	public void testDeletePriceEntryBatch() throws Exception {
+		PriceEntry priceEntry1 = testDeletePriceEntryBatch_addPriceEntry();
+
+		testDeletePriceEntryBatch_deletePriceEntry(
+			"COMPLETED", null, priceEntry1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceEntryResource.getPriceEntryHttpResponse(priceEntry1.getId()));
+
+		PriceEntry priceEntry2 = testDeletePriceEntryBatch_addPriceEntry();
+
+		testDeletePriceEntryBatch_deletePriceEntry(
+			"COMPLETED", priceEntry2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			priceEntryResource.getPriceEntryHttpResponse(priceEntry2.getId()));
+
+		priceEntry1 = testDeletePriceEntryBatch_addPriceEntry();
+		priceEntry2 = testDeletePriceEntryBatch_addPriceEntry();
+
+		testDeletePriceEntryBatch_deletePriceEntry(
+			"COMPLETED", priceEntry2.getExternalReferenceCode(),
+			priceEntry1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceEntryResource.getPriceEntryHttpResponse(priceEntry1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			priceEntryResource.getPriceEntryHttpResponse(priceEntry2.getId()));
+
+		testDeletePriceEntryBatch_deletePriceEntry(
+			"COMPLETED", priceEntry2.getExternalReferenceCode(),
+			priceEntry1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceEntryResource.getPriceEntryHttpResponse(priceEntry2.getId()));
+	}
+
+	protected PriceEntry testDeletePriceEntryBatch_addPriceEntry()
+		throws Exception {
+
+		return testDeletePriceEntry_addPriceEntry();
+	}
+
+	protected void testDeletePriceEntryBatch_deletePriceEntry(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			priceEntryResource.deletePriceEntryBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1380,6 +1462,28 @@ public abstract class BasePriceEntryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<PriceEntry> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2026,6 +2130,7 @@ public abstract class BasePriceEntryResourceTestCase {
 	}
 
 	protected PriceEntryResource priceEntryResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

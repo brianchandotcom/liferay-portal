@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BasePriceListResourceTestCase {
 			testCompany.getCompanyId());
 
 		priceListResource = PriceListResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -897,7 +909,7 @@ public abstract class BasePriceListResourceTestCase {
 			404, priceListResource.getPriceListHttpResponse(priceList.getId()));
 
 		assertHttpResponseStatusCode(
-			404, priceListResource.getPriceListHttpResponse(priceList.getId()));
+			404, priceListResource.getPriceListHttpResponse(0L));
 	}
 
 	protected PriceList testDeletePriceList_addPriceList() throws Exception {
@@ -979,6 +991,77 @@ public abstract class BasePriceListResourceTestCase {
 		throws Exception {
 
 		return testGraphQLPriceList_addPriceList();
+	}
+
+	@Test
+	public void testDeletePriceListBatch() throws Exception {
+		PriceList priceList1 = testDeletePriceListBatch_addPriceList();
+
+		testDeletePriceListBatch_deletePriceList(
+			"COMPLETED", null, priceList1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceListResource.getPriceListHttpResponse(priceList1.getId()));
+
+		PriceList priceList2 = testDeletePriceListBatch_addPriceList();
+
+		testDeletePriceListBatch_deletePriceList(
+			"COMPLETED", priceList2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			priceListResource.getPriceListHttpResponse(priceList2.getId()));
+
+		priceList1 = testDeletePriceListBatch_addPriceList();
+		priceList2 = testDeletePriceListBatch_addPriceList();
+
+		testDeletePriceListBatch_deletePriceList(
+			"COMPLETED", priceList2.getExternalReferenceCode(),
+			priceList1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceListResource.getPriceListHttpResponse(priceList1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			priceListResource.getPriceListHttpResponse(priceList2.getId()));
+
+		testDeletePriceListBatch_deletePriceList(
+			"COMPLETED", priceList2.getExternalReferenceCode(),
+			priceList1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceListResource.getPriceListHttpResponse(priceList2.getId()));
+	}
+
+	protected PriceList testDeletePriceListBatch_addPriceList()
+		throws Exception {
+
+		return testDeletePriceList_addPriceList();
+	}
+
+	protected void testDeletePriceListBatch_deletePriceList(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			priceListResource.deletePriceListBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1638,6 +1721,28 @@ public abstract class BasePriceListResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<PriceList> page) {
@@ -2734,6 +2839,7 @@ public abstract class BasePriceListResourceTestCase {
 	}
 
 	protected PriceListResource priceListResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

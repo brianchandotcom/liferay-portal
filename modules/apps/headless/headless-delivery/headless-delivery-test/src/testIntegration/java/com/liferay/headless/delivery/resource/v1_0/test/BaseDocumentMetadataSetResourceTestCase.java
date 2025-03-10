@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentMetadataSet;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -145,6 +147,16 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testCompany.getCompanyId());
 
 		documentMetadataSetResource = DocumentMetadataSetResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -887,6 +899,49 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDocumentMetadataSet_addDocumentMetadataSet();
+	}
+
+	@Test
+	public void testDeleteDocumentMetadataSetBatch() throws Exception {
+		DocumentMetadataSet documentMetadataSet1 =
+			testDeleteDocumentMetadataSetBatch_addDocumentMetadataSet();
+
+		testDeleteDocumentMetadataSetBatch_deleteDocumentMetadataSet(
+			"COMPLETED", null, documentMetadataSet1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
+				documentMetadataSet1.getId()));
+	}
+
+	protected DocumentMetadataSet
+			testDeleteDocumentMetadataSetBatch_addDocumentMetadataSet()
+		throws Exception {
+
+		return testDeleteDocumentMetadataSet_addDocumentMetadataSet();
+	}
+
+	protected void testDeleteDocumentMetadataSetBatch_deleteDocumentMetadataSet(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			documentMetadataSetResource.
+				deleteDocumentMetadataSetBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2145,6 +2200,28 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<DocumentMetadataSet> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2868,6 +2945,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 	}
 
 	protected DocumentMetadataSetResource documentMetadataSetResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;

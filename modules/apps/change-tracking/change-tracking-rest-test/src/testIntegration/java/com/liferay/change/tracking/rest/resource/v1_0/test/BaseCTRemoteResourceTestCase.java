@@ -19,6 +19,8 @@ import com.liferay.change.tracking.rest.client.pagination.Page;
 import com.liferay.change.tracking.rest.client.pagination.Pagination;
 import com.liferay.change.tracking.rest.client.resource.v1_0.CTRemoteResource;
 import com.liferay.change.tracking.rest.client.serdes.v1_0.CTRemoteSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -129,6 +131,16 @@ public abstract class BaseCTRemoteResourceTestCase {
 			testCompany.getCompanyId());
 
 		ctRemoteResource = CTRemoteResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -485,7 +497,7 @@ public abstract class BaseCTRemoteResourceTestCase {
 			404, ctRemoteResource.getCTRemoteHttpResponse(ctRemote.getId()));
 
 		assertHttpResponseStatusCode(
-			404, ctRemoteResource.getCTRemoteHttpResponse(ctRemote.getId()));
+			404, ctRemoteResource.getCTRemoteHttpResponse(0L));
 	}
 
 	protected CTRemote testDeleteCTRemote_addCTRemote() throws Exception {
@@ -566,6 +578,42 @@ public abstract class BaseCTRemoteResourceTestCase {
 		throws Exception {
 
 		return testGraphQLCTRemote_addCTRemote();
+	}
+
+	@Test
+	public void testDeleteCTRemoteBatch() throws Exception {
+		CTRemote ctRemote1 = testDeleteCTRemoteBatch_addCTRemote();
+
+		testDeleteCTRemoteBatch_deleteCTRemote(
+			"COMPLETED", null, ctRemote1.getId());
+
+		assertHttpResponseStatusCode(
+			404, ctRemoteResource.getCTRemoteHttpResponse(ctRemote1.getId()));
+	}
+
+	protected CTRemote testDeleteCTRemoteBatch_addCTRemote() throws Exception {
+		return testDeleteCTRemote_addCTRemote();
+	}
+
+	protected void testDeleteCTRemoteBatch_deleteCTRemote(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			ctRemoteResource.deleteCTRemoteBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1059,6 +1107,28 @@ public abstract class BaseCTRemoteResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<CTRemote> page) {
@@ -1795,6 +1865,7 @@ public abstract class BaseCTRemoteResourceTestCase {
 	}
 
 	protected CTRemoteResource ctRemoteResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

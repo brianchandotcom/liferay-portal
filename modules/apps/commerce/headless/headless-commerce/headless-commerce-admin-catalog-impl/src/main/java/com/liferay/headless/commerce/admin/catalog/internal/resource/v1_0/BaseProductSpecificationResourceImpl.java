@@ -594,9 +594,36 @@ public abstract class BaseProductSpecificationResourceImpl
 
 		UnsafeFunction<ProductSpecification, ProductSpecification, Exception>
 			productSpecificationUnsafeFunction = productSpecification -> {
-				deleteProductSpecification(productSpecification.getId());
+				if (productSpecification.getId() != null) {
+					try {
+						deleteProductSpecification(
+							productSpecification.getId());
 
-				return productSpecification;
+						return productSpecification;
+					}
+					catch (Exception exception) {
+						if (productSpecification.getExternalReferenceCode() !=
+								null) {
+
+							deleteProductSpecificationByExternalReferenceCode(
+								productSpecification.
+									getExternalReferenceCode());
+
+							return productSpecification;
+						}
+					}
+				}
+				else if (productSpecification.getExternalReferenceCode() !=
+							null) {
+
+					deleteProductSpecificationByExternalReferenceCode(
+						productSpecification.getExternalReferenceCode());
+
+					return productSpecification;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete productSpecification. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

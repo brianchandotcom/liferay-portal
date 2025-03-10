@@ -20,6 +20,8 @@ import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataDefinitionSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -132,6 +134,16 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			testCompany.getCompanyId());
 
 		dataDefinitionResource = DataDefinitionResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -723,6 +735,47 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDataDefinition_addDataDefinition();
+	}
+
+	@Test
+	public void testDeleteDataDefinitionBatch() throws Exception {
+		DataDefinition dataDefinition1 =
+			testDeleteDataDefinitionBatch_addDataDefinition();
+
+		testDeleteDataDefinitionBatch_deleteDataDefinition(
+			"COMPLETED", null, dataDefinition1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			dataDefinitionResource.getDataDefinitionHttpResponse(
+				dataDefinition1.getId()));
+	}
+
+	protected DataDefinition testDeleteDataDefinitionBatch_addDataDefinition()
+		throws Exception {
+
+		return testDeleteDataDefinition_addDataDefinition();
+	}
+
+	protected void testDeleteDataDefinitionBatch_deleteDataDefinition(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			dataDefinitionResource.deleteDataDefinitionBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2334,6 +2387,28 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<DataDefinition> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -3147,6 +3222,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	protected DataDefinitionResource dataDefinitionResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

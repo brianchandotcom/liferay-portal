@@ -207,7 +207,7 @@ public abstract class BaseCTRemoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-remotes/batch' -d $'{"clientId": ___, "clientSecret": ___, "description": ___, "name": ___, "url": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-remotes/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -226,7 +226,6 @@ public abstract class BaseCTRemoteResourceImpl
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response postCTRemoteBatch(
-			CTRemote ctRemote,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -438,7 +437,7 @@ public abstract class BaseCTRemoteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-remotes/batch' -d $'{"clientId": ___, "clientSecret": ___, "description": ___, "name": ___, "url": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-remotes/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -457,7 +456,6 @@ public abstract class BaseCTRemoteResourceImpl
 	@javax.ws.rs.PUT
 	@Override
 	public Response putCTRemoteBatch(
-			CTRemote ctRemote,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,

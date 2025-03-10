@@ -647,9 +647,30 @@ public abstract class BaseCartCommentResourceImpl
 
 		UnsafeFunction<CartComment, CartComment, Exception>
 			cartCommentUnsafeFunction = cartComment -> {
-				deleteCartComment(cartComment.getId());
+				if (cartComment.getId() != null) {
+					try {
+						deleteCartComment(cartComment.getId());
 
-				return cartComment;
+						return cartComment;
+					}
+					catch (Exception exception) {
+						if (cartComment.getExternalReferenceCode() != null) {
+							deleteCartCommentByExternalReferenceCode(
+								cartComment.getExternalReferenceCode());
+
+							return cartComment;
+						}
+					}
+				}
+				else if (cartComment.getExternalReferenceCode() != null) {
+					deleteCartCommentByExternalReferenceCode(
+						cartComment.getExternalReferenceCode());
+
+					return cartComment;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete cartComment. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

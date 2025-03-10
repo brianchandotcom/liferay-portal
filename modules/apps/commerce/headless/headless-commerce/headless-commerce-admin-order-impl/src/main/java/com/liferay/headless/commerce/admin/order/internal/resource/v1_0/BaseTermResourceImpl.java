@@ -644,9 +644,30 @@ public abstract class BaseTermResourceImpl
 		throws Exception {
 
 		UnsafeFunction<Term, Term, Exception> termUnsafeFunction = term -> {
-			deleteTerm(term.getId());
+			if (term.getId() != null) {
+				try {
+					deleteTerm(term.getId());
 
-			return term;
+					return term;
+				}
+				catch (Exception exception) {
+					if (term.getExternalReferenceCode() != null) {
+						deleteTermByExternalReferenceCode(
+							term.getExternalReferenceCode());
+
+						return term;
+					}
+				}
+			}
+			else if (term.getExternalReferenceCode() != null) {
+				deleteTermByExternalReferenceCode(
+					term.getExternalReferenceCode());
+
+				return term;
+			}
+
+			throw new UnsupportedOperationException(
+				"Unable to delete term. No valid identifier provided.");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -62,8 +62,7 @@ public interface CTProcessResource {
 
 	public void deleteCTProcess(Long ctProcessId) throws Exception;
 
-	public Response deleteCTProcessBatch(
-			Long ctProcessId, String callbackURL, Object object)
+	public Response deleteCTProcessBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public CTProcess getCTProcess(Long ctProcessId) throws Exception;

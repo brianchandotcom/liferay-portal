@@ -742,9 +742,30 @@ public abstract class BaseWebUrlResourceImpl
 
 		UnsafeFunction<WebUrl, WebUrl, Exception> webUrlUnsafeFunction =
 			webUrl -> {
-				deleteWebUrl(webUrl.getId());
+				if (webUrl.getId() != null) {
+					try {
+						deleteWebUrl(webUrl.getId());
 
-				return webUrl;
+						return webUrl;
+					}
+					catch (Exception exception) {
+						if (webUrl.getExternalReferenceCode() != null) {
+							deleteWebUrlByExternalReferenceCode(
+								webUrl.getExternalReferenceCode());
+
+							return webUrl;
+						}
+					}
+				}
+				else if (webUrl.getExternalReferenceCode() != null) {
+					deleteWebUrlByExternalReferenceCode(
+						webUrl.getExternalReferenceCode());
+
+					return webUrl;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete webUrl. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

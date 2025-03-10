@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseProductResourceTestCase {
 			testCompany.getCompanyId());
 
 		productResource = ProductResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1044,7 +1056,7 @@ public abstract class BaseProductResourceTestCase {
 			404, productResource.getProductHttpResponse(product.getId()));
 
 		assertHttpResponseStatusCode(
-			404, productResource.getProductHttpResponse(product.getId()));
+			404, productResource.getProductHttpResponse(0L));
 	}
 
 	protected Product testDeleteProduct_addProduct() throws Exception {
@@ -1124,6 +1136,68 @@ public abstract class BaseProductResourceTestCase {
 
 	protected Product testGraphQLDeleteProduct_addProduct() throws Exception {
 		return testGraphQLProduct_addProduct();
+	}
+
+	@Test
+	public void testDeleteProductBatch() throws Exception {
+		Product product1 = testDeleteProductBatch_addProduct();
+
+		testDeleteProductBatch_deleteProduct(
+			"COMPLETED", null, product1.getId());
+
+		assertHttpResponseStatusCode(
+			404, productResource.getProductHttpResponse(product1.getId()));
+
+		Product product2 = testDeleteProductBatch_addProduct();
+
+		testDeleteProductBatch_deleteProduct(
+			"COMPLETED", product2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, productResource.getProductHttpResponse(product2.getId()));
+
+		product1 = testDeleteProductBatch_addProduct();
+		product2 = testDeleteProductBatch_addProduct();
+
+		testDeleteProductBatch_deleteProduct(
+			"COMPLETED", product2.getExternalReferenceCode(), product1.getId());
+
+		assertHttpResponseStatusCode(
+			404, productResource.getProductHttpResponse(product1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, productResource.getProductHttpResponse(product2.getId()));
+
+		testDeleteProductBatch_deleteProduct(
+			"COMPLETED", product2.getExternalReferenceCode(), product1.getId());
+
+		assertHttpResponseStatusCode(
+			404, productResource.getProductHttpResponse(product2.getId()));
+	}
+
+	protected Product testDeleteProductBatch_addProduct() throws Exception {
+		return testDeleteProduct_addProduct();
+	}
+
+	protected void testDeleteProductBatch_deleteProduct(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			productResource.deleteProductBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1441,7 +1515,7 @@ public abstract class BaseProductResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			productResource.getProductByVersionHttpResponse(
-				product.getId(), product.getVersion()));
+				0L, product.getVersion()));
 	}
 
 	protected Product testDeleteProductByVersion_addProduct() throws Exception {
@@ -2092,6 +2166,28 @@ public abstract class BaseProductResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Product> page) {
@@ -3593,6 +3689,7 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	protected ProductResource productResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

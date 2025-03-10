@@ -18,6 +18,8 @@ import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.PostalAddressSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -125,6 +127,16 @@ public abstract class BasePostalAddressResourceTestCase {
 			testCompany.getCompanyId());
 
 		postalAddressResource = PostalAddressResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -987,6 +999,84 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	@Test
+	public void testDeletePostalAddressBatch() throws Exception {
+		PostalAddress postalAddress1 =
+			testDeletePostalAddressBatch_addPostalAddress();
+
+		testDeletePostalAddressBatch_deletePostalAddress(
+			"COMPLETED", null, postalAddress1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			postalAddressResource.getPostalAddressHttpResponse(
+				postalAddress1.getId()));
+
+		PostalAddress postalAddress2 =
+			testDeletePostalAddressBatch_addPostalAddress();
+
+		testDeletePostalAddressBatch_deletePostalAddress(
+			"COMPLETED", postalAddress2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			postalAddressResource.getPostalAddressHttpResponse(
+				postalAddress2.getId()));
+
+		postalAddress1 = testDeletePostalAddressBatch_addPostalAddress();
+		postalAddress2 = testDeletePostalAddressBatch_addPostalAddress();
+
+		testDeletePostalAddressBatch_deletePostalAddress(
+			"COMPLETED", postalAddress2.getExternalReferenceCode(),
+			postalAddress1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			postalAddressResource.getPostalAddressHttpResponse(
+				postalAddress1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			postalAddressResource.getPostalAddressHttpResponse(
+				postalAddress2.getId()));
+
+		testDeletePostalAddressBatch_deletePostalAddress(
+			"COMPLETED", postalAddress2.getExternalReferenceCode(),
+			postalAddress1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			postalAddressResource.getPostalAddressHttpResponse(
+				postalAddress2.getId()));
+	}
+
+	protected PostalAddress testDeletePostalAddressBatch_addPostalAddress()
+		throws Exception {
+
+		return testDeletePostalAddress_addPostalAddress();
+	}
+
+	protected void testDeletePostalAddressBatch_deletePostalAddress(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			postalAddressResource.deletePostalAddressBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetPostalAddress() throws Exception {
 		PostalAddress postPostalAddress =
 			testGetPostalAddress_addPostalAddress();
@@ -1747,6 +1837,28 @@ public abstract class BasePostalAddressResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<PostalAddress> page) {
@@ -2733,6 +2845,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected PostalAddressResource postalAddressResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

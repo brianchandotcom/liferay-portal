@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductConfigurationList;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -139,6 +141,16 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -1001,8 +1013,7 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			productConfigurationListResource.
-				getProductConfigurationListHttpResponse(
-					productConfigurationList.getId()));
+				getProductConfigurationListHttpResponse(0L));
 	}
 
 	protected ProductConfigurationList
@@ -1092,6 +1103,96 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		throws Exception {
 
 		return testGraphQLProductConfigurationList_addProductConfigurationList();
+	}
+
+	@Test
+	public void testDeleteProductConfigurationListBatch() throws Exception {
+		ProductConfigurationList productConfigurationList1 =
+			testDeleteProductConfigurationListBatch_addProductConfigurationList();
+
+		testDeleteProductConfigurationListBatch_deleteProductConfigurationList(
+			"COMPLETED", null, productConfigurationList1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationListResource.
+				getProductConfigurationListHttpResponse(
+					productConfigurationList1.getId()));
+
+		ProductConfigurationList productConfigurationList2 =
+			testDeleteProductConfigurationListBatch_addProductConfigurationList();
+
+		testDeleteProductConfigurationListBatch_deleteProductConfigurationList(
+			"COMPLETED", productConfigurationList2.getExternalReferenceCode(),
+			null);
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationListResource.
+				getProductConfigurationListHttpResponse(
+					productConfigurationList2.getId()));
+
+		productConfigurationList1 =
+			testDeleteProductConfigurationListBatch_addProductConfigurationList();
+		productConfigurationList2 =
+			testDeleteProductConfigurationListBatch_addProductConfigurationList();
+
+		testDeleteProductConfigurationListBatch_deleteProductConfigurationList(
+			"COMPLETED", productConfigurationList2.getExternalReferenceCode(),
+			productConfigurationList1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationListResource.
+				getProductConfigurationListHttpResponse(
+					productConfigurationList1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			productConfigurationListResource.
+				getProductConfigurationListHttpResponse(
+					productConfigurationList2.getId()));
+
+		testDeleteProductConfigurationListBatch_deleteProductConfigurationList(
+			"COMPLETED", productConfigurationList2.getExternalReferenceCode(),
+			productConfigurationList1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationListResource.
+				getProductConfigurationListHttpResponse(
+					productConfigurationList2.getId()));
+	}
+
+	protected ProductConfigurationList
+			testDeleteProductConfigurationListBatch_addProductConfigurationList()
+		throws Exception {
+
+		return testDeleteProductConfigurationList_addProductConfigurationList();
+	}
+
+	protected void
+			testDeleteProductConfigurationListBatch_deleteProductConfigurationList(
+				String expectedExecuteStatus, String externalReferenceCode,
+				Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			productConfigurationListResource.
+				deleteProductConfigurationListBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1688,6 +1789,28 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<ProductConfigurationList> page) {
@@ -2434,6 +2557,7 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 	}
 
 	protected ProductConfigurationListResource productConfigurationListResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -2593,9 +2593,30 @@ public abstract class BaseUserAccountResourceImpl
 
 		UnsafeFunction<UserAccount, UserAccount, Exception>
 			userAccountUnsafeFunction = userAccount -> {
-				deleteUserAccount(userAccount.getId());
+				if (userAccount.getId() != null) {
+					try {
+						deleteUserAccount(userAccount.getId());
 
-				return userAccount;
+						return userAccount;
+					}
+					catch (Exception exception) {
+						if (userAccount.getExternalReferenceCode() != null) {
+							deleteUserAccountByExternalReferenceCode(
+								userAccount.getExternalReferenceCode());
+
+							return userAccount;
+						}
+					}
+				}
+				else if (userAccount.getExternalReferenceCode() != null) {
+					deleteUserAccountByExternalReferenceCode(
+						userAccount.getExternalReferenceCode());
+
+					return userAccount;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete userAccount. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

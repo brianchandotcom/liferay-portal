@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.payment.client.dto.v1_0.Payment;
 import com.liferay.headless.commerce.admin.payment.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.payment.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BasePaymentResourceTestCase {
 			testCompany.getCompanyId());
 
 		paymentResource = PaymentResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -911,7 +923,7 @@ public abstract class BasePaymentResourceTestCase {
 			404, paymentResource.getPaymentHttpResponse(payment.getId()));
 
 		assertHttpResponseStatusCode(
-			404, paymentResource.getPaymentHttpResponse(payment.getId()));
+			404, paymentResource.getPaymentHttpResponse(0L));
 	}
 
 	protected Payment testDeletePayment_addPayment() throws Exception {
@@ -991,6 +1003,68 @@ public abstract class BasePaymentResourceTestCase {
 
 	protected Payment testGraphQLDeletePayment_addPayment() throws Exception {
 		return testGraphQLPayment_addPayment();
+	}
+
+	@Test
+	public void testDeletePaymentBatch() throws Exception {
+		Payment payment1 = testDeletePaymentBatch_addPayment();
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", null, payment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment1.getId()));
+
+		Payment payment2 = testDeletePaymentBatch_addPayment();
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", payment2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment2.getId()));
+
+		payment1 = testDeletePaymentBatch_addPayment();
+		payment2 = testDeletePaymentBatch_addPayment();
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", payment2.getExternalReferenceCode(), payment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, paymentResource.getPaymentHttpResponse(payment2.getId()));
+
+		testDeletePaymentBatch_deletePayment(
+			"COMPLETED", payment2.getExternalReferenceCode(), payment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, paymentResource.getPaymentHttpResponse(payment2.getId()));
+	}
+
+	protected Payment testDeletePaymentBatch_addPayment() throws Exception {
+		return testDeletePayment_addPayment();
+	}
+
+	protected void testDeletePaymentBatch_deletePayment(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			paymentResource.deletePaymentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1658,6 +1732,28 @@ public abstract class BasePaymentResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Payment> page) {
@@ -3217,6 +3313,7 @@ public abstract class BasePaymentResourceTestCase {
 	}
 
 	protected PaymentResource paymentResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

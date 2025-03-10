@@ -222,7 +222,7 @@ public abstract class BaseSXPElementResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/batch' -d $'{"createDate": ___, "description": ___, "description_i18n": ___, "elementDefinition": ___, "externalReferenceCode": ___, "fallbackDescription": ___, "fallbackTitle": ___, "hidden": ___, "id": ___, "modifiedDate": ___, "readOnly": ___, "schemaVersion": ___, "title": ___, "title_i18n": ___, "type": ___, "userName": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -241,7 +241,6 @@ public abstract class BaseSXPElementResourceImpl
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response postSXPElementBatch(
-			SXPElement sxpElement,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -397,14 +396,10 @@ public abstract class BaseSXPElementResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "sxpElementId"
-			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
@@ -416,14 +411,10 @@ public abstract class BaseSXPElementResourceImpl
 	)
 	@javax.ws.rs.Consumes("application/json")
 	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/sxp-elements/{sxpElementId}/batch")
+	@javax.ws.rs.Path("/sxp-elements/batch")
 	@javax.ws.rs.Produces("application/json")
 	@Override
 	public Response deleteSXPElementBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("sxpElementId")
-			Long sxpElementId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -610,14 +601,10 @@ public abstract class BaseSXPElementResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}/batch' -d $'{"createDate": ___, "description": ___, "description_i18n": ___, "elementDefinition": ___, "externalReferenceCode": ___, "fallbackDescription": ___, "fallbackTitle": ___, "hidden": ___, "id": ___, "modifiedDate": ___, "readOnly": ___, "schemaVersion": ___, "title": ___, "title_i18n": ___, "type": ___, "userName": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "sxpElementId"
-			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
@@ -628,16 +615,11 @@ public abstract class BaseSXPElementResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPElement")}
 	)
 	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/sxp-elements/{sxpElementId}/batch")
+	@javax.ws.rs.Path("/sxp-elements/batch")
 	@javax.ws.rs.Produces("application/json")
 	@javax.ws.rs.PUT
 	@Override
 	public Response putSXPElementBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("sxpElementId")
-			Long sxpElementId,
-			SXPElement sxpElement,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,

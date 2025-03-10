@@ -18,6 +18,8 @@ import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.PhoneResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.PhoneSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -125,6 +127,16 @@ public abstract class BasePhoneResourceTestCase {
 			testCompany.getCompanyId());
 
 		phoneResource = PhoneResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -818,6 +830,67 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	@Test
+	public void testDeletePhoneBatch() throws Exception {
+		Phone phone1 = testDeletePhoneBatch_addPhone();
+
+		testDeletePhoneBatch_deletePhone("COMPLETED", null, phone1.getId());
+
+		assertHttpResponseStatusCode(
+			404, phoneResource.getPhoneHttpResponse(phone1.getId()));
+
+		Phone phone2 = testDeletePhoneBatch_addPhone();
+
+		testDeletePhoneBatch_deletePhone(
+			"COMPLETED", phone2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, phoneResource.getPhoneHttpResponse(phone2.getId()));
+
+		phone1 = testDeletePhoneBatch_addPhone();
+		phone2 = testDeletePhoneBatch_addPhone();
+
+		testDeletePhoneBatch_deletePhone(
+			"COMPLETED", phone2.getExternalReferenceCode(), phone1.getId());
+
+		assertHttpResponseStatusCode(
+			404, phoneResource.getPhoneHttpResponse(phone1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, phoneResource.getPhoneHttpResponse(phone2.getId()));
+
+		testDeletePhoneBatch_deletePhone(
+			"COMPLETED", phone2.getExternalReferenceCode(), phone1.getId());
+
+		assertHttpResponseStatusCode(
+			404, phoneResource.getPhoneHttpResponse(phone2.getId()));
+	}
+
+	protected Phone testDeletePhoneBatch_addPhone() throws Exception {
+		return testDeletePhone_addPhone();
+	}
+
+	protected void testDeletePhoneBatch_deletePhone(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			phoneResource.deletePhoneBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetPhone() throws Exception {
 		Phone postPhone = testGetPhone_addPhone();
 
@@ -1426,6 +1499,28 @@ public abstract class BasePhoneResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<Phone> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -1965,6 +2060,7 @@ public abstract class BasePhoneResourceTestCase {
 	}
 
 	protected PhoneResource phoneResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

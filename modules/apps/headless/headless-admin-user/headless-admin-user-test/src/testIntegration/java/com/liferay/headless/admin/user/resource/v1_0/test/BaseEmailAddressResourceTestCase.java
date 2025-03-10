@@ -18,6 +18,8 @@ import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.EmailAddressResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.EmailAddressSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -125,6 +127,16 @@ public abstract class BaseEmailAddressResourceTestCase {
 			testCompany.getCompanyId());
 
 		emailAddressResource = EmailAddressResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -694,6 +706,84 @@ public abstract class BaseEmailAddressResourceTestCase {
 		throws Exception {
 
 		return testGraphQLEmailAddress_addEmailAddress();
+	}
+
+	@Test
+	public void testDeleteEmailAddressBatch() throws Exception {
+		EmailAddress emailAddress1 =
+			testDeleteEmailAddressBatch_addEmailAddress();
+
+		testDeleteEmailAddressBatch_deleteEmailAddress(
+			"COMPLETED", null, emailAddress1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			emailAddressResource.getEmailAddressHttpResponse(
+				emailAddress1.getId()));
+
+		EmailAddress emailAddress2 =
+			testDeleteEmailAddressBatch_addEmailAddress();
+
+		testDeleteEmailAddressBatch_deleteEmailAddress(
+			"COMPLETED", emailAddress2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			emailAddressResource.getEmailAddressHttpResponse(
+				emailAddress2.getId()));
+
+		emailAddress1 = testDeleteEmailAddressBatch_addEmailAddress();
+		emailAddress2 = testDeleteEmailAddressBatch_addEmailAddress();
+
+		testDeleteEmailAddressBatch_deleteEmailAddress(
+			"COMPLETED", emailAddress2.getExternalReferenceCode(),
+			emailAddress1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			emailAddressResource.getEmailAddressHttpResponse(
+				emailAddress1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			emailAddressResource.getEmailAddressHttpResponse(
+				emailAddress2.getId()));
+
+		testDeleteEmailAddressBatch_deleteEmailAddress(
+			"COMPLETED", emailAddress2.getExternalReferenceCode(),
+			emailAddress1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			emailAddressResource.getEmailAddressHttpResponse(
+				emailAddress2.getId()));
+	}
+
+	protected EmailAddress testDeleteEmailAddressBatch_addEmailAddress()
+		throws Exception {
+
+		return testDeleteEmailAddress_addEmailAddress();
+	}
+
+	protected void testDeleteEmailAddressBatch_deleteEmailAddress(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			emailAddressResource.deleteEmailAddressBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1532,6 +1622,28 @@ public abstract class BaseEmailAddressResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected void assertValid(Page<EmailAddress> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -2021,6 +2133,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 	}
 
 	protected EmailAddressResource emailAddressResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

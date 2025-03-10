@@ -19,6 +19,8 @@ import com.liferay.change.tracking.rest.client.pagination.Page;
 import com.liferay.change.tracking.rest.client.pagination.Pagination;
 import com.liferay.change.tracking.rest.client.resource.v1_0.CTProcessResource;
 import com.liferay.change.tracking.rest.client.serdes.v1_0.CTProcessSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -130,6 +132,16 @@ public abstract class BaseCTProcessResourceTestCase {
 			testCompany.getCompanyId());
 
 		ctProcessResource = CTProcessResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -640,6 +652,45 @@ public abstract class BaseCTProcessResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteCTProcessBatch() throws Exception {
+		CTProcess ctProcess1 = testDeleteCTProcessBatch_addCTProcess();
+
+		testDeleteCTProcessBatch_deleteCTProcess(
+			"COMPLETED", null, ctProcess1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			ctProcessResource.getCTProcessHttpResponse(ctProcess1.getId()));
+	}
+
+	protected CTProcess testDeleteCTProcessBatch_addCTProcess()
+		throws Exception {
+
+		return testDeleteCTProcess_addCTProcess();
+	}
+
+	protected void testDeleteCTProcessBatch_deleteCTProcess(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			ctProcessResource.deleteCTProcessBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+	}
+
+	@Test
 	public void testGetCTProcess() throws Exception {
 		CTProcess postCTProcess = testGetCTProcess_addCTProcess();
 
@@ -1103,6 +1154,28 @@ public abstract class BaseCTProcessResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<CTProcess> page) {
@@ -1660,6 +1733,7 @@ public abstract class BaseCTProcessResourceTestCase {
 	}
 
 	protected CTProcessResource ctProcessResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

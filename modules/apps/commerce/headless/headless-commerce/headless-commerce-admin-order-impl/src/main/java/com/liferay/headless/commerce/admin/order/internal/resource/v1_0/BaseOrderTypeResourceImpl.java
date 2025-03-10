@@ -708,9 +708,30 @@ public abstract class BaseOrderTypeResourceImpl
 
 		UnsafeFunction<OrderType, OrderType, Exception>
 			orderTypeUnsafeFunction = orderType -> {
-				deleteOrderType(orderType.getId());
+				if (orderType.getId() != null) {
+					try {
+						deleteOrderType(orderType.getId());
 
-				return orderType;
+						return orderType;
+					}
+					catch (Exception exception) {
+						if (orderType.getExternalReferenceCode() != null) {
+							deleteOrderTypeByExternalReferenceCode(
+								orderType.getExternalReferenceCode());
+
+							return orderType;
+						}
+					}
+				}
+				else if (orderType.getExternalReferenceCode() != null) {
+					deleteOrderTypeByExternalReferenceCode(
+						orderType.getExternalReferenceCode());
+
+					return orderType;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete orderType. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

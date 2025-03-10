@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseTermResourceTestCase {
 			testCompany.getCompanyId());
 
 		termResource = TermResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -844,8 +856,7 @@ public abstract class BaseTermResourceTestCase {
 		assertHttpResponseStatusCode(
 			404, termResource.getTermHttpResponse(term.getId()));
 
-		assertHttpResponseStatusCode(
-			404, termResource.getTermHttpResponse(term.getId()));
+		assertHttpResponseStatusCode(404, termResource.getTermHttpResponse(0L));
 	}
 
 	protected Term testDeleteTerm_addTerm() throws Exception {
@@ -924,6 +935,67 @@ public abstract class BaseTermResourceTestCase {
 
 	protected Term testGraphQLDeleteTerm_addTerm() throws Exception {
 		return testGraphQLTerm_addTerm();
+	}
+
+	@Test
+	public void testDeleteTermBatch() throws Exception {
+		Term term1 = testDeleteTermBatch_addTerm();
+
+		testDeleteTermBatch_deleteTerm("COMPLETED", null, term1.getId());
+
+		assertHttpResponseStatusCode(
+			404, termResource.getTermHttpResponse(term1.getId()));
+
+		Term term2 = testDeleteTermBatch_addTerm();
+
+		testDeleteTermBatch_deleteTerm(
+			"COMPLETED", term2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, termResource.getTermHttpResponse(term2.getId()));
+
+		term1 = testDeleteTermBatch_addTerm();
+		term2 = testDeleteTermBatch_addTerm();
+
+		testDeleteTermBatch_deleteTerm(
+			"COMPLETED", term2.getExternalReferenceCode(), term1.getId());
+
+		assertHttpResponseStatusCode(
+			404, termResource.getTermHttpResponse(term1.getId()));
+
+		assertHttpResponseStatusCode(
+			200, termResource.getTermHttpResponse(term2.getId()));
+
+		testDeleteTermBatch_deleteTerm(
+			"COMPLETED", term2.getExternalReferenceCode(), term1.getId());
+
+		assertHttpResponseStatusCode(
+			404, termResource.getTermHttpResponse(term2.getId()));
+	}
+
+	protected Term testDeleteTermBatch_addTerm() throws Exception {
+		return testDeleteTerm_addTerm();
+	}
+
+	protected void testDeleteTermBatch_deleteTerm(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			termResource.deleteTermBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1457,6 +1529,28 @@ public abstract class BaseTermResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<Term> page) {
@@ -2277,6 +2371,7 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	protected TermResource termResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

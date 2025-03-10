@@ -588,9 +588,30 @@ public abstract class BasePriceModifierResourceImpl
 
 		UnsafeFunction<PriceModifier, PriceModifier, Exception>
 			priceModifierUnsafeFunction = priceModifier -> {
-				deletePriceModifier(priceModifier.getId());
+				if (priceModifier.getId() != null) {
+					try {
+						deletePriceModifier(priceModifier.getId());
 
-				return priceModifier;
+						return priceModifier;
+					}
+					catch (Exception exception) {
+						if (priceModifier.getExternalReferenceCode() != null) {
+							deletePriceModifierByExternalReferenceCode(
+								priceModifier.getExternalReferenceCode());
+
+							return priceModifier;
+						}
+					}
+				}
+				else if (priceModifier.getExternalReferenceCode() != null) {
+					deletePriceModifierByExternalReferenceCode(
+						priceModifier.getExternalReferenceCode());
+
+					return priceModifier;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete priceModifier. No valid identifier provided.");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

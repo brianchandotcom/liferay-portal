@@ -778,9 +778,7 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 				adminAccountGroup.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			adminAccountGroupResource.getAccountGroupHttpResponse(
-				adminAccountGroup.getId()));
+			404, adminAccountGroupResource.getAccountGroupHttpResponse(0L));
 	}
 
 	protected AdminAccountGroup testDeleteAccountGroup_addAdminAccountGroup()

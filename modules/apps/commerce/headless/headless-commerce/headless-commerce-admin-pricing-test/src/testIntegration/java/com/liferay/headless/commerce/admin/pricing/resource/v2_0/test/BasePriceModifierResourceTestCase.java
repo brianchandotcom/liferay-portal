@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceModifier;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BasePriceModifierResourceTestCase {
 			testCompany.getCompanyId());
 
 		priceModifierResource = PriceModifierResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1099,9 +1111,7 @@ public abstract class BasePriceModifierResourceTestCase {
 				priceModifier.getId()));
 
 		assertHttpResponseStatusCode(
-			404,
-			priceModifierResource.getPriceModifierHttpResponse(
-				priceModifier.getId()));
+			404, priceModifierResource.getPriceModifierHttpResponse(0L));
 	}
 
 	protected PriceModifier testDeletePriceModifier_addPriceModifier()
@@ -1187,6 +1197,84 @@ public abstract class BasePriceModifierResourceTestCase {
 		throws Exception {
 
 		return testGraphQLPriceModifier_addPriceModifier();
+	}
+
+	@Test
+	public void testDeletePriceModifierBatch() throws Exception {
+		PriceModifier priceModifier1 =
+			testDeletePriceModifierBatch_addPriceModifier();
+
+		testDeletePriceModifierBatch_deletePriceModifier(
+			"COMPLETED", null, priceModifier1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceModifierResource.getPriceModifierHttpResponse(
+				priceModifier1.getId()));
+
+		PriceModifier priceModifier2 =
+			testDeletePriceModifierBatch_addPriceModifier();
+
+		testDeletePriceModifierBatch_deletePriceModifier(
+			"COMPLETED", priceModifier2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			priceModifierResource.getPriceModifierHttpResponse(
+				priceModifier2.getId()));
+
+		priceModifier1 = testDeletePriceModifierBatch_addPriceModifier();
+		priceModifier2 = testDeletePriceModifierBatch_addPriceModifier();
+
+		testDeletePriceModifierBatch_deletePriceModifier(
+			"COMPLETED", priceModifier2.getExternalReferenceCode(),
+			priceModifier1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceModifierResource.getPriceModifierHttpResponse(
+				priceModifier1.getId()));
+
+		assertHttpResponseStatusCode(
+			200,
+			priceModifierResource.getPriceModifierHttpResponse(
+				priceModifier2.getId()));
+
+		testDeletePriceModifierBatch_deletePriceModifier(
+			"COMPLETED", priceModifier2.getExternalReferenceCode(),
+			priceModifier1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			priceModifierResource.getPriceModifierHttpResponse(
+				priceModifier2.getId()));
+	}
+
+	protected PriceModifier testDeletePriceModifierBatch_addPriceModifier()
+		throws Exception {
+
+		return testDeletePriceModifier_addPriceModifier();
+	}
+
+	protected void testDeletePriceModifierBatch_deletePriceModifier(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			priceModifierResource.deletePriceModifierBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1731,6 +1819,28 @@ public abstract class BasePriceModifierResourceTestCase {
 		}
 
 		Assert.assertTrue(valid);
+	}
+
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
 	}
 
 	protected void assertValid(Page<PriceModifier> page) {
@@ -2561,6 +2671,7 @@ public abstract class BasePriceModifierResourceTestCase {
 	}
 
 	protected PriceModifierResource priceModifierResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

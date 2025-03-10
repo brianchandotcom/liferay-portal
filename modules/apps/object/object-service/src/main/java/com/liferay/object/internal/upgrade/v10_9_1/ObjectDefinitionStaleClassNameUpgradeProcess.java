@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.internal.upgrade.v10_4_1;
+package com.liferay.object.internal.upgrade.v10_9_1;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -27,8 +28,10 @@ public class ObjectDefinitionStaleClassNameUpgradeProcess
 						"select ClassName_.classNameId from ClassName_ left ",
 						"join ObjectDefinition on ClassName_.value = ",
 						"ObjectDefinition.className where ClassName_.value ",
-						"like '%objectDefinition#%' and ObjectDefinition.",
-						"className is null")));
+						"like '",
+						ObjectDefinitionConstants.
+							CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION,
+						"%' and ObjectDefinition.className is null")));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, "delete from ClassName_ where classNameId = ?");

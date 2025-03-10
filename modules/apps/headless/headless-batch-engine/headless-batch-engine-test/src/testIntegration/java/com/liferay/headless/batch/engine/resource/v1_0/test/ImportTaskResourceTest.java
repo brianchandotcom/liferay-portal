@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -261,25 +260,11 @@ public class ImportTaskResourceTest {
 			"com.liferay.headless.batch.engine.entity.TestEntity",
 			expectSuccess ? "COMPLETED" : "FAILED",
 			HashMapBuilder.put(
-				"batchExternalReferenceCode",
-				() -> {
-					if (Validator.isNotNull(batchExternalReferenceCode)) {
-						return batchExternalReferenceCode;
-					}
-
-					return null;
-				}
+				"batchExternalReferenceCode", () -> batchExternalReferenceCode
 			).put(
 				"createStrategy", "INSERT"
 			).put(
-				"externalReferenceCode",
-				() -> {
-					if (Validator.isNotNull(externalReferenceCode)) {
-						return externalReferenceCode;
-					}
-
-					return null;
-				}
+				"externalReferenceCode", () -> externalReferenceCode
 			).put(
 				"taskItemDelegateName", taskItemDelegateName
 			).build());

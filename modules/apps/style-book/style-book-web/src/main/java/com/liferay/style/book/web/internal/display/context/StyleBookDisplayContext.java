@@ -28,6 +28,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryCreateDateComparator;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 import com.liferay.style.book.web.internal.security.permissions.resource.StyleBookPermission;
+import com.liferay.style.book.web.internal.util.StyleBookUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -240,8 +241,9 @@ public class StyleBookDisplayContext {
 			styleFromThemeStyleBookEntry.setName(
 				LanguageUtil.format(
 					_httpServletRequest, "styles-from-x",
-					frontendTokenDefinition.getThemeName(
-						themeDisplay.getLocale())));
+					StyleBookUtil.getThemeName(
+						themeDisplay.getCompanyId(), _httpServletRequest,
+						frontendTokenDefinition.getThemeId())));
 
 			styleFromThemeStyleBookEntry.setThemeId(
 				frontendTokenDefinition.getThemeId());

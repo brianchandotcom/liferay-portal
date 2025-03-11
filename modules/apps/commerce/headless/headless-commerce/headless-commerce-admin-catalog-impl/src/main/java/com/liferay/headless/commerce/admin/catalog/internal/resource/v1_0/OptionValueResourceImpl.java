@@ -37,6 +37,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -307,10 +308,17 @@ public class OptionValueResourceImpl extends BaseOptionValueResourceImpl {
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		OptionValue optionValue) {
 
-		return CustomFieldsUtil.toMap(
-			CPOptionValue.class.getName(), contextCompany.getCompanyId(),
-			optionValue.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
+		Map<String, Serializable> expandoBridgeAttributes =
+			CustomFieldsUtil.toMap(
+				CPOptionValue.class.getName(), contextCompany.getCompanyId(),
+				optionValue.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
+
+		if (expandoBridgeAttributes == null) {
+			expandoBridgeAttributes = new HashMap<>();
+		}
+
+		return expandoBridgeAttributes;
 	}
 
 	private OptionValue _toOptionValue(Long cpOptionValueId) throws Exception {

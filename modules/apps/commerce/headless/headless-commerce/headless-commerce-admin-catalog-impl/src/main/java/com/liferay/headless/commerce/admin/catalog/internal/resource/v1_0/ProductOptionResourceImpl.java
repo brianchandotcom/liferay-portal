@@ -36,6 +36,9 @@ import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -171,10 +174,7 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 			cpDefinitionOptionRel.getGroupId());
 
 		serviceContext.setExpandoBridgeAttributes(
-			CustomFieldsUtil.toMap(
-				CPDefinitionOptionRel.class.getName(),
-				contextCompany.getCompanyId(), productOption.getCustomFields(),
-				contextAcceptLanguage.getPreferredLocale()));
+			_getExpandoBridgeAttributes(productOption));
 
 		_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
@@ -277,11 +277,7 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 					cpDefinition.getGroupId());
 
 			serviceContext.setExpandoBridgeAttributes(
-				CustomFieldsUtil.toMap(
-					CPDefinitionOptionRel.class.getName(),
-					contextCompany.getCompanyId(),
-					productOption.getCustomFields(),
-					contextAcceptLanguage.getPreferredLocale()));
+				_getExpandoBridgeAttributes(productOption));
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				ProductOptionUtil.addOrUpdateCPDefinitionOptionRel(
@@ -314,6 +310,22 @@ public class ProductOptionResourceImpl extends BaseProductOptionResourceImpl {
 				QueryUtil.ALL_POS),
 			cpDefinitionOptionRel -> _toProductOption(
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		ProductOption productOption) {
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			CustomFieldsUtil.toMap(
+				CPDefinitionOptionRel.class.getName(),
+				contextCompany.getCompanyId(), productOption.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
+
+		if (expandoBridgeAttributes == null) {
+			expandoBridgeAttributes = new HashMap<>();
+		}
+
+		return expandoBridgeAttributes;
 	}
 
 	private long _getOptionId(long defaultOptionId, ProductOption productOption)

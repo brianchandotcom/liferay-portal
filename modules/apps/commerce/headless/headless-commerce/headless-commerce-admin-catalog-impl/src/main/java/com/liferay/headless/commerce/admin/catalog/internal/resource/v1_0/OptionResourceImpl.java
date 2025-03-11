@@ -37,6 +37,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -240,10 +241,17 @@ public class OptionResourceImpl extends BaseOptionResourceImpl {
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		Option option) {
 
-		return CustomFieldsUtil.toMap(
-			CPOption.class.getName(), contextCompany.getCompanyId(),
-			option.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
+		Map<String, Serializable> expandoBridgeAttributes =
+			CustomFieldsUtil.toMap(
+				CPOption.class.getName(), contextCompany.getCompanyId(),
+				option.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale());
+
+		if (expandoBridgeAttributes == null) {
+			expandoBridgeAttributes = new HashMap<>();
+		}
+
+		return expandoBridgeAttributes;
 	}
 
 	private Option _toOption(Long cpOptionId) throws Exception {

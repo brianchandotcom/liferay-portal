@@ -25,6 +25,7 @@ import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -179,9 +180,11 @@ public class DiagramUtil {
 				CPAttachmentFileEntry.class.getName(), companyId,
 				attachmentBase64.getCustomFields(), locale);
 
-		if (expandoBridgeAttributes != null) {
-			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		if (expandoBridgeAttributes == null) {
+			expandoBridgeAttributes = new HashMap<>();
 		}
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
 		return serviceContext;
 	}

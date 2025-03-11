@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -67,11 +70,17 @@ public class ProductOptionUtil {
 				cpDefinitionOptionRel.getDescriptionMap());
 		}
 
-		serviceContext.setExpandoBridgeAttributes(
+		Map<String, Serializable> expandoBridgeAttributes =
 			CustomFieldsUtil.toMap(
 				CPDefinitionOptionRel.class.getName(),
 				serviceContext.getCompanyId(), productOption.getCustomFields(),
-				serviceContext.getLocale()));
+				serviceContext.getLocale());
+
+		if (expandoBridgeAttributes == null) {
+			expandoBridgeAttributes = new HashMap<>();
+		}
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
 		if (cpDefinitionOptionRel == null) {
 			cpDefinitionOptionRel =

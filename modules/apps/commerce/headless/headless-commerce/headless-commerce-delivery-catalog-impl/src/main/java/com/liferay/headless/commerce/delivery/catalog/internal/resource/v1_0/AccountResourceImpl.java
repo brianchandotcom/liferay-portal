@@ -42,6 +42,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -169,13 +172,20 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	private ServiceContext _createServiceContext(Account account)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			contextCompany.getGroupId(), contextHttpServletRequest, null
-		).expandoBridgeAttributes(
+		Map<String, Serializable> expandoBridgeAttributes =
 			CustomFieldsUtil.toMap(
 				AccountEntry.class.getName(), contextCompany.getCompanyId(),
 				account.getCustomFields(),
-				contextAcceptLanguage.getPreferredLocale())
+				contextAcceptLanguage.getPreferredLocale());
+
+		if (expandoBridgeAttributes == null) {
+			expandoBridgeAttributes = new HashMap<>();
+		}
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).expandoBridgeAttributes(
+			expandoBridgeAttributes
 		).build();
 
 		serviceContext.setCompanyId(contextCompany.getCompanyId());

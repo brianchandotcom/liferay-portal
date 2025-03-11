@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.journal.internal.upgrade.v6_1_5.test;
+package com.liferay.document.library.internal.upgrade.v3_2_10.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.test.util.JournalFolderFixture;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
@@ -21,7 +20,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -44,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author Mikel Lorza
  */
 @RunWith(Arquillian.class)
-public class JournalFolderResourcePermissionUpgradeProcessTest {
+public class DLFolderAdvancedUpdateResourcePermissionUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -60,27 +58,23 @@ public class JournalFolderResourcePermissionUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
-			_journalFolderLocalService);
-
-		JournalFolder journalFolder = journalFolderFixture.addFolder(
-			_group.getGroupId(), RandomTestUtil.randomString());
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), JournalFolder.class.getName(),
+			TestPropsValues.getCompanyId(), DLFolder.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(journalFolder.getFolderId()), role.getRoleId(),
+			String.valueOf(dlFolder.getFolderId()), role.getRoleId(),
 			new String[] {ActionKeys.UPDATE});
 
 		_runUpgrade();
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
-				TestPropsValues.getCompanyId(), JournalFolder.class.getName(),
+				TestPropsValues.getCompanyId(), DLFolder.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(journalFolder.getFolderId()), role.getRoleId(),
+				String.valueOf(dlFolder.getFolderId()), role.getRoleId(),
 				ActionKeys.ADVANCED_UPDATE));
 	}
 
@@ -99,11 +93,11 @@ public class JournalFolderResourcePermissionUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.journal.internal.upgrade.v6_1_5." +
-			"JournalFolderResourcePermissionUpgradeProcess";
+		"com.liferay.document.library.internal.upgrade.v3_2_10." +
+			"DLFolderAdvancedUpdateResourcePermissionUpgradeProcess";
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
@@ -112,9 +106,6 @@ public class JournalFolderResourcePermissionUpgradeProcessTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

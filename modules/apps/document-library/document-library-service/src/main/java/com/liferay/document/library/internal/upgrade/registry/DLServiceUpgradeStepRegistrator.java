@@ -14,6 +14,7 @@ import com.liferay.document.library.internal.upgrade.v1_1_0.SchemaUpgradeProcess
 import com.liferay.document.library.internal.upgrade.v1_1_2.DLFileEntryTypeUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.document.library.internal.upgrade.v3_2_1.DDMStructureLinkUpgradeProcess;
+import com.liferay.document.library.internal.upgrade.v3_2_10.DLFolderAdvancedUpdateResourcePermissionUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_2.DLFileEntryUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_4.DLSizeLimitConfigurationUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_5.DLFileEntryTypesDDMStructureUpgradeProcess;
@@ -177,10 +178,8 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.2.9", "3.2.10",
-			new com.liferay.document.library.internal.upgrade.v3_2_10.
-				DLFolderResourcePermissionUpgradeProcess(
-					_resourceActionLocalService,
-					_resourcePermissionLocalService, _roleLocalService));
+			new DLFolderAdvancedUpdateResourcePermissionUpgradeProcess(
+				_resourceActionLocalService));
 	}
 
 	@Reference

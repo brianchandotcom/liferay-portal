@@ -15,5 +15,5 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
+public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 }

@@ -55,49 +55,6 @@ public class AssetLibrary implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The key of the asset library."
-	)
-	public String getAssetLibraryKey() {
-		if (_assetLibraryKeySupplier != null) {
-			assetLibraryKey = _assetLibraryKeySupplier.get();
-
-			_assetLibraryKeySupplier = null;
-		}
-
-		return assetLibraryKey;
-	}
-
-	public void setAssetLibraryKey(String assetLibraryKey) {
-		this.assetLibraryKey = assetLibraryKey;
-
-		_assetLibraryKeySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setAssetLibraryKey(
-		UnsafeSupplier<String, Exception> assetLibraryKeyUnsafeSupplier) {
-
-		_assetLibraryKeySupplier = () -> {
-			try {
-				return assetLibraryKeyUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The key of the asset library.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String assetLibraryKey;
-
-	@JsonIgnore
-	private Supplier<String> _assetLibraryKeySupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The asset library's creation date."
 	)
 	public Date getDateCreated() {
@@ -274,7 +231,7 @@ public class AssetLibrary implements Serializable {
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's site external reference code."
+		description = "The asset library's external reference code."
 	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
@@ -309,17 +266,15 @@ public class AssetLibrary implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The asset library's site external reference code."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@GraphQLField(description = "The asset library's external reference code.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's ID."
+		description = "The asset library's site ID."
 	)
 	public Long getId() {
 		if (_idSupplier != null) {
@@ -352,105 +307,12 @@ public class AssetLibrary implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The asset library's ID.")
+	@GraphQLField(description = "The asset library's site ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library linked site ids."
-	)
-	public Long[] getLinkedSiteIds() {
-		if (_linkedSiteIdsSupplier != null) {
-			linkedSiteIds = _linkedSiteIdsSupplier.get();
-
-			_linkedSiteIdsSupplier = null;
-		}
-
-		return linkedSiteIds;
-	}
-
-	public void setLinkedSiteIds(Long[] linkedSiteIds) {
-		this.linkedSiteIds = linkedSiteIds;
-
-		_linkedSiteIdsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLinkedSiteIds(
-		UnsafeSupplier<Long[], Exception> linkedSiteIdsUnsafeSupplier) {
-
-		_linkedSiteIdsSupplier = () -> {
-			try {
-				return linkedSiteIdsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The asset library linked site ids.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long[] linkedSiteIds;
-
-	@JsonIgnore
-	private Supplier<Long[]> _linkedSiteIdsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library linked sites external reference codes."
-	)
-	public String[] getLinkedSitesExternalReferenceCodes() {
-		if (_linkedSitesExternalReferenceCodesSupplier != null) {
-			linkedSitesExternalReferenceCodes =
-				_linkedSitesExternalReferenceCodesSupplier.get();
-
-			_linkedSitesExternalReferenceCodesSupplier = null;
-		}
-
-		return linkedSitesExternalReferenceCodes;
-	}
-
-	public void setLinkedSitesExternalReferenceCodes(
-		String[] linkedSitesExternalReferenceCodes) {
-
-		this.linkedSitesExternalReferenceCodes =
-			linkedSitesExternalReferenceCodes;
-
-		_linkedSitesExternalReferenceCodesSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLinkedSitesExternalReferenceCodes(
-		UnsafeSupplier<String[], Exception>
-			linkedSitesExternalReferenceCodesUnsafeSupplier) {
-
-		_linkedSitesExternalReferenceCodesSupplier = () -> {
-			try {
-				return linkedSitesExternalReferenceCodesUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The asset library linked sites external reference codes."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String[] linkedSitesExternalReferenceCodes;
-
-	@JsonIgnore
-	private Supplier<String[]> _linkedSitesExternalReferenceCodesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The asset library's name."
@@ -539,31 +401,31 @@ public class AssetLibrary implements Serializable {
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's site ID."
+		description = "The number of this asset library's associated users."
 	)
-	public Long getSiteId() {
-		if (_siteIdSupplier != null) {
-			siteId = _siteIdSupplier.get();
+	public Integer getNumberOfUserAccounts() {
+		if (_numberOfUserAccountsSupplier != null) {
+			numberOfUserAccounts = _numberOfUserAccountsSupplier.get();
 
-			_siteIdSupplier = null;
+			_numberOfUserAccountsSupplier = null;
 		}
 
-		return siteId;
+		return numberOfUserAccounts;
 	}
 
-	public void setSiteId(Long siteId) {
-		this.siteId = siteId;
+	public void setNumberOfUserAccounts(Integer numberOfUserAccounts) {
+		this.numberOfUserAccounts = numberOfUserAccounts;
 
-		_siteIdSupplier = null;
+		_numberOfUserAccountsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSiteId(
-		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+	public void setNumberOfUserAccounts(
+		UnsafeSupplier<Integer, Exception> numberOfUserAccountsUnsafeSupplier) {
 
-		_siteIdSupplier = () -> {
+		_numberOfUserAccountsSupplier = () -> {
 			try {
-				return siteIdUnsafeSupplier.get();
+				return numberOfUserAccountsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -574,39 +436,41 @@ public class AssetLibrary implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The asset library's site ID.")
+	@GraphQLField(
+		description = "The number of this asset library's associated users."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long siteId;
+	protected Integer numberOfUserAccounts;
 
 	@JsonIgnore
-	private Supplier<Long> _siteIdSupplier;
+	private Supplier<Integer> _numberOfUserAccountsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's users count."
+		description = "The number of this asset library's associated user groups."
 	)
-	public Integer getUsersCount() {
-		if (_usersCountSupplier != null) {
-			usersCount = _usersCountSupplier.get();
+	public Integer getNumberOfUserGroups() {
+		if (_numberOfUserGroupsSupplier != null) {
+			numberOfUserGroups = _numberOfUserGroupsSupplier.get();
 
-			_usersCountSupplier = null;
+			_numberOfUserGroupsSupplier = null;
 		}
 
-		return usersCount;
+		return numberOfUserGroups;
 	}
 
-	public void setUsersCount(Integer usersCount) {
-		this.usersCount = usersCount;
+	public void setNumberOfUserGroups(Integer numberOfUserGroups) {
+		this.numberOfUserGroups = numberOfUserGroups;
 
-		_usersCountSupplier = null;
+		_numberOfUserGroupsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setUsersCount(
-		UnsafeSupplier<Integer, Exception> usersCountUnsafeSupplier) {
+	public void setNumberOfUserGroups(
+		UnsafeSupplier<Integer, Exception> numberOfUserGroupsUnsafeSupplier) {
 
-		_usersCountSupplier = () -> {
+		_numberOfUserGroupsSupplier = () -> {
 			try {
-				return usersCountUnsafeSupplier.get();
+				return numberOfUserGroupsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -617,12 +481,190 @@ public class AssetLibrary implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The asset library's users count.")
+	@GraphQLField(
+		description = "The number of this asset library's associated user groups."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Integer usersCount;
+	protected Integer numberOfUserGroups;
 
 	@JsonIgnore
-	private Supplier<Integer> _usersCountSupplier;
+	private Supplier<Integer> _numberOfUserGroupsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's settings."
+	)
+	@Valid
+	public Settings getSettings() {
+		if (_settingsSupplier != null) {
+			settings = _settingsSupplier.get();
+
+			_settingsSupplier = null;
+		}
+
+		return settings;
+	}
+
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+
+		_settingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSettings(
+		UnsafeSupplier<Settings, Exception> settingsUnsafeSupplier) {
+
+		_settingsSupplier = () -> {
+			try {
+				return settingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's settings.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Settings settings;
+
+	@JsonIgnore
+	private Supplier<Settings> _settingsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's connected sites."
+	)
+	@Valid
+	public Site[] getSites() {
+		if (_sitesSupplier != null) {
+			sites = _sitesSupplier.get();
+
+			_sitesSupplier = null;
+		}
+
+		return sites;
+	}
+
+	public void setSites(Site[] sites) {
+		this.sites = sites;
+
+		_sitesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSites(
+		UnsafeSupplier<Site[], Exception> sitesUnsafeSupplier) {
+
+		_sitesSupplier = () -> {
+			try {
+				return sitesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's connected sites.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Site[] sites;
+
+	@JsonIgnore
+	private Supplier<Site[]> _sitesSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's associated users."
+	)
+	@Valid
+	public UserAccount[] getUserAccounts() {
+		if (_userAccountsSupplier != null) {
+			userAccounts = _userAccountsSupplier.get();
+
+			_userAccountsSupplier = null;
+		}
+
+		return userAccounts;
+	}
+
+	public void setUserAccounts(UserAccount[] userAccounts) {
+		this.userAccounts = userAccounts;
+
+		_userAccountsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUserAccounts(
+		UnsafeSupplier<UserAccount[], Exception> userAccountsUnsafeSupplier) {
+
+		_userAccountsSupplier = () -> {
+			try {
+				return userAccountsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's associated users.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected UserAccount[] userAccounts;
+
+	@JsonIgnore
+	private Supplier<UserAccount[]> _userAccountsSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's associated user groups."
+	)
+	@Valid
+	public UserGroup[] getUserGroups() {
+		if (_userGroupsSupplier != null) {
+			userGroups = _userGroupsSupplier.get();
+
+			_userGroupsSupplier = null;
+		}
+
+		return userGroups;
+	}
+
+	public void setUserGroups(UserGroup[] userGroups) {
+		this.userGroups = userGroups;
+
+		_userGroupsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUserGroups(
+		UnsafeSupplier<UserGroup[], Exception> userGroupsUnsafeSupplier) {
+
+		_userGroupsSupplier = () -> {
+			try {
+				return userGroupsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's associated user groups.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected UserGroup[] userGroups;
+
+	@JsonIgnore
+	private Supplier<UserGroup[]> _userGroupsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -653,22 +695,6 @@ public class AssetLibrary implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-		String assetLibraryKey = getAssetLibraryKey();
-
-		if (assetLibraryKey != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"assetLibraryKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(assetLibraryKey));
-
-			sb.append("\"");
-		}
 
 		Date dateCreated = getDateCreated();
 
@@ -758,55 +784,6 @@ public class AssetLibrary implements Serializable {
 			sb.append(id);
 		}
 
-		Long[] linkedSiteIds = getLinkedSiteIds();
-
-		if (linkedSiteIds != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"linkedSiteIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < linkedSiteIds.length; i++) {
-				sb.append(linkedSiteIds[i]);
-
-				if ((i + 1) < linkedSiteIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		String[] linkedSitesExternalReferenceCodes =
-			getLinkedSitesExternalReferenceCodes();
-
-		if (linkedSitesExternalReferenceCodes != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"linkedSitesExternalReferenceCodes\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < linkedSitesExternalReferenceCodes.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(linkedSitesExternalReferenceCodes[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < linkedSitesExternalReferenceCodes.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		String name = getName();
 
 		if (name != null) {
@@ -835,28 +812,106 @@ public class AssetLibrary implements Serializable {
 			sb.append(_toJSON(name_i18n));
 		}
 
-		Long siteId = getSiteId();
+		Integer numberOfUserAccounts = getNumberOfUserAccounts();
 
-		if (siteId != null) {
+		if (numberOfUserAccounts != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"siteId\": ");
+			sb.append("\"numberOfUserAccounts\": ");
 
-			sb.append(siteId);
+			sb.append(numberOfUserAccounts);
 		}
 
-		Integer usersCount = getUsersCount();
+		Integer numberOfUserGroups = getNumberOfUserGroups();
 
-		if (usersCount != null) {
+		if (numberOfUserGroups != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"usersCount\": ");
+			sb.append("\"numberOfUserGroups\": ");
 
-			sb.append(usersCount);
+			sb.append(numberOfUserGroups);
+		}
+
+		Settings settings = getSettings();
+
+		if (settings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"settings\": ");
+
+			sb.append(String.valueOf(settings));
+		}
+
+		Site[] sites = getSites();
+
+		if (sites != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sites\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < sites.length; i++) {
+				sb.append(String.valueOf(sites[i]));
+
+				if ((i + 1) < sites.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		UserAccount[] userAccounts = getUserAccounts();
+
+		if (userAccounts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccounts\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userAccounts.length; i++) {
+				sb.append(String.valueOf(userAccounts[i]));
+
+				if ((i + 1) < userAccounts.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		UserGroup[] userGroups = getUserGroups();
+
+		if (userGroups != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userGroups\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userGroups.length; i++) {
+				sb.append(String.valueOf(userGroups[i]));
+
+				if ((i + 1) < userGroups.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

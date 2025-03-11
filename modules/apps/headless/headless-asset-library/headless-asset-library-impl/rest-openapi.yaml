@@ -430,7 +430,7 @@ paths:
         delete:
             description:
                 Removes a user group from the asset library using the provided external reference codes.
-            operationId: deleteAssetLibraryByExternalReferenceCodeUserGroupByExternalReferenceCode
+            operationId: deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryExternalReferenceCode
@@ -453,7 +453,7 @@ paths:
         post:
             description:
                 Adds the user group to the asset library using the provided external reference codes.
-            operationId: postAssetLibraryByExternalReferenceCodeUserGroupByExternalReferenceCode
+            operationId: postAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode
             parameters:
                 - in: path
                   name: assetLibraryExternalReferenceCode
@@ -649,7 +649,7 @@ paths:
             description:
                 Get the asset library with the provided external reference code associated users. Results can be
                 paginated, filtered, searched, and sorted.
-            operationId: getAssetLibraryByExteralReferenceCodeExternalReferenceCodeUserAccountsPage
+            operationId: getAssetLibraryByExternalReferenceCodeUserAccountsPage
             parameters:
                 - in: path
                   name: externalReferenceCode

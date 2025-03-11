@@ -5,7 +5,7 @@
 
 package com.liferay.headless.asset.library.internal.resource.v1_0;
 
-import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
+import com.liferay.headless.asset.library.resource.v1_0.UserAccountResource;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -14,8 +14,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Roberto Díaz
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/asset-library.properties",
-	scope = ServiceScope.PROTOTYPE, service = AssetLibraryResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/user-account.properties",
+	scope = ServiceScope.PROTOTYPE, service = UserAccountResource.class
 )
-public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
+public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 }

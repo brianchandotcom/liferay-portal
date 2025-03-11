@@ -5,7 +5,7 @@
 
 package com.liferay.headless.asset.library.resource.v1_0;
 
-import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.dto.v1_0.UserAccount;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -43,38 +43,35 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface AssetLibraryResource {
+public interface UserAccountResource {
 
-	public Page<AssetLibrary> getAssetLibrariesPage(
-			String keywords, String search, Filter filter,
+	public void
+			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+				String assetLibraryExternalReferenceCode,
+				String userExternalReferenceCode)
+		throws Exception;
+
+	public void
+			postAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode(
+				String assetLibraryExternalReferenceCode,
+				String userExternalReferenceCode)
+		throws Exception;
+
+	public Page<UserAccount>
+			getAssetLibraryByExternalReferenceCodeUserAccountsPage(
+				String externalReferenceCode, String keywords, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public Page<UserAccount> getAssetLibraryUserAccountsPage(
+			Long assetLibraryId, String keywords, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public AssetLibrary postAssetLibrary(AssetLibrary assetLibrary)
+	public void deleteAssetLibraryUserAccount(Long assetLibraryId, Long userId)
 		throws Exception;
 
-	public void deleteAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public AssetLibrary getAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public AssetLibrary patchAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode, AssetLibrary assetLibrary)
-		throws Exception;
-
-	public AssetLibrary putAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode, AssetLibrary assetLibrary)
-		throws Exception;
-
-	public void deleteAssetLibrary(Long assetLibraryId) throws Exception;
-
-	public AssetLibrary getAssetLibrary(Long assetLibraryId) throws Exception;
-
-	public AssetLibrary patchAssetLibrary(
-			Long assetLibraryId, AssetLibrary assetLibrary)
+	public void postAssetLibraryUserAccount(Long assetLibraryId, Long userId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -134,7 +131,7 @@ public interface AssetLibraryResource {
 	@ProviderType
 	public interface Builder {
 
-		public AssetLibraryResource build();
+		public UserAccountResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

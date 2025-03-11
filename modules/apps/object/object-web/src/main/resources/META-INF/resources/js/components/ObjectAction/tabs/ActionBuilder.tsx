@@ -243,9 +243,11 @@ export default function ActionBuilder({
 					onClose={() => setInfoAlert(false)}
 					title={`${Liferay.Language.get('info')}:`}
 				>
-					{Liferay.Language.get(
+					{`${Liferay.Language.get(
 						'this-object-includes-translatable-fields'
-					)}
+					)} ${Liferay.Language.get(
+						'actions-always-use-the-object-entrys-default-language'
+					)}`}
 				</ClayAlert>
 			)}
 

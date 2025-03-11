@@ -442,15 +442,13 @@ public class FragmentEntryProcessorHelperImpl
 			}
 
 			if (JSONUtil.isEmpty(configJSONObject)) {
-				return _formatList(
-					list, fragmentEntryProcessorContext.getLocale());
+				return _format(list, fragmentEntryProcessorContext.getLocale());
 			}
 
 			String iterationType = configJSONObject.getString("iterationType");
 
 			if (Objects.equals(_ITERATION_TYPE_ALL, iterationType)) {
-				return _formatList(
-					list, fragmentEntryProcessorContext.getLocale());
+				return _format(list, fragmentEntryProcessorContext.getLocale());
 			}
 
 			value = _getSpecificIteration(list, configJSONObject);
@@ -651,7 +649,7 @@ public class FragmentEntryProcessorHelperImpl
 		return Validator.isNotNull(jsonObject.get("mappedField"));
 	}
 
-	private String _formatList(List<Object> list, Locale locale) {
+	private String _format(List<Object> list, Locale locale) {
 		Object firstItem = list.get(0);
 
 		Class<?> firstItemClass = firstItem.getClass();

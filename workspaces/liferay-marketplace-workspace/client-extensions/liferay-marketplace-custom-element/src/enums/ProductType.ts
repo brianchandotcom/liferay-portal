@@ -6,13 +6,15 @@
 export enum ProductType {
 	CLIENT_EXTENSION = 'client-extension',
 	CLOUD = 'cloud',
+	COMPOSITE_APP = 'composite-app',
 	DXP = 'dxp',
-	FRAGMENT = 'fragment',
+	LOW_CODE_CONFIGURATION = 'low-code-configuration',
 }
 
 export const ProductTypeLabels = {
 	[ProductType.CLIENT_EXTENSION]: 'Client Extension',
 	[ProductType.CLOUD]: 'Cloud',
+	[ProductType.COMPOSITE_APP]: 'Composite App',
 	[ProductType.DXP]: 'DXP',
-	[ProductType.FRAGMENT]: 'Fragment',
+	[ProductType.LOW_CODE_CONFIGURATION]: 'Low-code Configuration',
 } as const;

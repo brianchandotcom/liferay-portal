@@ -52,6 +52,13 @@ public class AssetVocabularyGroupRelLocalServiceUtil {
 		return getService().addAssetVocabularyGroupRel(assetVocabularyGroupRel);
 	}
 
+	public static AssetVocabularyGroupRel addAssetVocabularyGroupRel(
+			long groupId, long vocabularyId)
+		throws PortalException {
+
+		return getService().addAssetVocabularyGroupRel(groupId, vocabularyId);
+	}
+
 	/**
 	 * Creates a new asset vocabulary group rel with the primary key. Does not add the asset vocabulary group rel to the database.
 	 *
@@ -109,6 +116,16 @@ public class AssetVocabularyGroupRelLocalServiceUtil {
 
 		return getService().deleteAssetVocabularyGroupRel(
 			assetVocabularyGroupRelId);
+	}
+
+	public static void deleteAssetVocabularyGroupRelsByGroupId(long groupId) {
+		getService().deleteAssetVocabularyGroupRelsByGroupId(groupId);
+	}
+
+	public static void deleteAssetVocabularyGroupRelsByVocabularyId(
+		long vocabularyId) {
+
+		getService().deleteAssetVocabularyGroupRelsByVocabularyId(vocabularyId);
 	}
 
 	/**
@@ -283,6 +300,12 @@ public class AssetVocabularyGroupRelLocalServiceUtil {
 		return getService().getAssetVocabularyGroupRels(start, end);
 	}
 
+	public static List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByGroupId(long groupId) {
+
+		return getService().getAssetVocabularyGroupRelsByGroupId(groupId);
+	}
+
 	/**
 	 * Returns all the asset vocabulary group rels matching the UUID and company.
 	 *
@@ -317,6 +340,13 @@ public class AssetVocabularyGroupRelLocalServiceUtil {
 			uuid, companyId, start, end, orderByComparator);
 	}
 
+	public static List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId) {
+
+		return getService().getAssetVocabularyGroupRelsByVocabularyId(
+			vocabularyId);
+	}
+
 	/**
 	 * Returns the number of asset vocabulary group rels.
 	 *
@@ -349,6 +379,13 @@ public class AssetVocabularyGroupRelLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void setAssetVocabularyGroupRels(
+			long vocabularyId, long[] groupIds)
+		throws PortalException {
+
+		getService().setAssetVocabularyGroupRels(vocabularyId, groupIds);
 	}
 
 	/**

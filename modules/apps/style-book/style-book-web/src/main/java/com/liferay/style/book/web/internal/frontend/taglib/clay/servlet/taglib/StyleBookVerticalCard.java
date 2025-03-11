@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.constants.StyleBookActionKeys;
@@ -185,8 +184,7 @@ public class StyleBookVerticalCard
 			return LanguageUtil.format(
 				_themeDisplay.getLocale(), "marked-as-default-for-x",
 				StyleBookUtil.getThemeName(
-					_themeDisplay.getCompanyId(),
-					PortalUtil.getHttpServletRequest(_renderRequest),
+					_themeDisplay.getCompanyId(), _themeDisplay.getLocale(),
 					_styleBookEntry.getThemeId()));
 		}
 
@@ -201,8 +199,7 @@ public class StyleBookVerticalCard
 			return LanguageUtil.format(
 				_themeDisplay.getLocale(), "based-on-x",
 				StyleBookUtil.getThemeName(
-					_themeDisplay.getCompanyId(),
-					PortalUtil.getHttpServletRequest(_renderRequest),
+					_themeDisplay.getCompanyId(), _themeDisplay.getLocale(),
 					_styleBookEntry.getThemeId()));
 		}
 

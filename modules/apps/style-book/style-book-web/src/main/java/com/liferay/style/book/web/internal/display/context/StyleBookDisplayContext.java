@@ -242,7 +242,7 @@ public class StyleBookDisplayContext {
 				LanguageUtil.format(
 					_httpServletRequest, "styles-from-x",
 					StyleBookUtil.getThemeName(
-						themeDisplay.getCompanyId(), _httpServletRequest,
+						themeDisplay.getCompanyId(), themeDisplay.getLocale(),
 						frontendTokenDefinition.getThemeId())));
 			styleFromThemeStyleBookEntry.setThemeId(
 				frontendTokenDefinition.getThemeId());

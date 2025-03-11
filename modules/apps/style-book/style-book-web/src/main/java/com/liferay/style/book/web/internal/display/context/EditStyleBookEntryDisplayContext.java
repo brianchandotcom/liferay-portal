@@ -583,7 +583,7 @@ public class EditStyleBookEntryDisplayContext {
 	private String _getThemeName() {
 		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
 			return StyleBookUtil.getThemeName(
-				_styleBookEntry.getCompanyId(), _httpServletRequest,
+				_styleBookEntry.getCompanyId(), _themeDisplay.getLocale(),
 				_styleBookEntry.getThemeId());
 		}
 

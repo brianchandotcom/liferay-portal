@@ -14,21 +14,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Evan Thibodeau
  */
 public class StyleBookUtil {
 
-	public static String getThemeName(
-		HttpServletRequest httpServletRequest, Layout layout) {
-
+	public static String getThemeName(Layout layout, Locale locale) {
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
 			_frontendTokenDefinitionRegistrySnapshot.get();
 
@@ -37,20 +32,19 @@ public class StyleBookUtil {
 				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 					layout);
 
-			return getThemeName(
-				layout.getCompanyId(), httpServletRequest,
-				frontendTokenDefinition.getThemeName(
-					httpServletRequest.getLocale()));
+			if (frontendTokenDefinition != null) {
+				return _getThemeName(frontendTokenDefinition, locale);
+			}
 		}
 		catch (PortalException portalException) {
 			_log.error("Unable to get the theme name", portalException);
 		}
 
-		return LanguageUtil.get(httpServletRequest, "theme");
+		return LanguageUtil.get(locale, "theme");
 	}
 
 	public static String getThemeName(
-		long companyId, HttpServletRequest httpServletRequest, String themeId) {
+		long companyId, Locale locale, String themeId) {
 
 		FrontendTokenDefinition frontendTokenDefinition =
 			_getFrontendTokenDefinition(companyId, themeId);
@@ -59,20 +53,7 @@ public class StyleBookUtil {
 			return themeId;
 		}
 
-		Locale locale = (Locale)httpServletRequest.getAttribute(WebKeys.LOCALE);
-
-		if (Objects.equals(
-				frontendTokenDefinition.getThemeType(),
-				FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE)) {
-
-			return LanguageUtil.format(
-				httpServletRequest, "x-theme",
-				frontendTokenDefinition.getThemeName(locale));
-		}
-
-		return LanguageUtil.format(
-			httpServletRequest, "x-theme-css-client-extension",
-			frontendTokenDefinition.getThemeName(locale));
+		return _getThemeName(frontendTokenDefinition, locale);
 	}
 
 	public static boolean isThemeInactive(long companyId, String themeId) {
@@ -91,6 +72,23 @@ public class StyleBookUtil {
 
 		return frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 			companyId, themeId);
+	}
+
+	private static String _getThemeName(
+		FrontendTokenDefinition frontendTokenDefinition, Locale locale) {
+
+		if (Objects.equals(
+				frontendTokenDefinition.getThemeType(),
+				FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE)) {
+
+			return LanguageUtil.format(
+				locale, "x-theme",
+				frontendTokenDefinition.getThemeName(locale));
+		}
+
+		return LanguageUtil.format(
+			locale, "x-theme-css-client-extension",
+			frontendTokenDefinition.getThemeName(locale));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StyleBookUtil.class);

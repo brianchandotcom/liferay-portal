@@ -147,9 +147,8 @@ public class CustomFieldsUtil {
 			return null;
 		}
 
-		Map<Locale, String> map = (Map<Locale, String>)value;
-
-		return LocalizedMapUtil.getI18nMap(acceptAllLanguages, map);
+		return LocalizedMapUtil.getI18nMap(
+			acceptAllLanguages, (Map<Locale, String>)value);
 	}
 
 	private static Object _getValue(

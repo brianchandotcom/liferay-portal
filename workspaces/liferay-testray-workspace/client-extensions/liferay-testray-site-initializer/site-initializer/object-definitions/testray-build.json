@@ -6,26 +6,32 @@
 	"name": "Build",
 	"objectFields": [
 		{
-			"DBType": "Long",
+			"DBType": "Boolean",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Template Testray Build Id"
+				"en_US": "Archived"
 			},
-			"name": "templateTestrayBuildId",
+			"name": "archived",
 			"required": false,
-			"type": "Long"
+			"type": "Boolean"
 		},
 		{
-			"DBType": "String",
+			"DBType": "DateTime",
 			"indexed": true,
-			"indexedAsKeyword": true,
+			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Name"
+				"en_US": "Date Archived"
 			},
-			"name": "name",
+			"name": "dateArchived",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
 			"required": false,
-			"type": "String"
+			"type": "DateTime"
 		},
 		{
 			"DBType": "String",
@@ -37,17 +43,6 @@
 			"name": "description",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "Boolean",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Template"
-			},
-			"name": "template",
-			"required": false,
-			"type": "Boolean"
 		},
 		{
 			"DBType": "DateTime",
@@ -67,21 +62,17 @@
 			"type": "DateTime"
 		},
 		{
-			"DBType": "DateTime",
+			"DBType": "String",
+			"businessType": "Picklist",
 			"indexed": true,
-			"indexedAsKeyword": false,
+			"indexedAsKeyword": true,
 			"label": {
-				"en_US": "Date Archived"
+				"en_US": "Due Status"
 			},
-			"name": "dateArchived",
-			"objectFieldSettings": [
-				{
-					"name": "timeStorage",
-					"value": "convertToUTC"
-				}
-			],
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Build Statuses$]",
+			"name": "dueStatus",
 			"required": false,
-			"type": "DateTime"
+			"type": "String"
 		},
 		{
 			"DBType": "String",
@@ -106,17 +97,6 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Boolean",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Promoted"
-			},
-			"name": "promoted",
-			"required": false,
-			"type": "Boolean"
-		},
-		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"defaultValue": "PENDING",
@@ -132,27 +112,14 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": true,
 			"label": {
-				"en_US": "Due Status"
+				"en_US": "Name"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Build Statuses$]",
-			"name": "dueStatus",
+			"name": "name",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "Boolean",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Archived"
-			},
-			"name": "archived",
-			"required": false,
-			"type": "Boolean"
 		},
 		{
 			"DBType": "Clob",
@@ -164,6 +131,39 @@
 			"name": "playwrightReports",
 			"required": false,
 			"type": "Clob"
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Promoted"
+			},
+			"name": "promoted",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Template"
+			},
+			"name": "template",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "Long",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Template Testray Build Id"
+			},
+			"name": "templateTestrayBuildId",
+			"required": false,
+			"type": "Long"
 		}
 	],
 	"objectFolderExternalReferenceCode": "TESTRAY",

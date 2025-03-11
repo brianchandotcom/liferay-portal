@@ -240,6 +240,24 @@
 	fill: var(--color-neutral-8, #54555f) !important;
 }
 
+.portlet-msg-alert,
+.portlet-msg-error,
+.portlet-msg-info {
+	color: var(--color-neutral-10, #282934);
+}
+
+.portlet-msg-alert strong {
+	color: var(--color-state-warning, #B95000);
+}
+
+.portlet-msg-error strong {
+	color: var(--color-state-error, #DA1414);
+}
+
+.portlet-msg-info strong {
+	color: var(--color-state-info, #2E5AAC);
+}
+
 .show-quick-actions-on-hover .active {
 	background-color: transparent;
 	border-left: solid !important;

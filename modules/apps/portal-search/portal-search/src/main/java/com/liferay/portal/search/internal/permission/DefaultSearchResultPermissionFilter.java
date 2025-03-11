@@ -389,7 +389,8 @@ public class DefaultSearchResultPermissionFilter
 	}
 
 	private static final String[] _PERMISSION_SELECTED_FIELD_NAMES = {
-		Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK
+		Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+		Field.UID
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -57,6 +57,10 @@ create unique index IX_3966DE44 on AssetVocabulary (groupId, uuid_[$COLUMN_LENGT
 create index IX_2F7F11EE on AssetVocabulary (groupId, visibilityType);
 create index IX_55F58818 on AssetVocabulary (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_104CE969 on AssetVocabularyGroupRel (groupId, vocabularyId);
+create unique index IX_BD51FF2A on AssetVocabularyGroupRel (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+create index IX_65F8A72B on AssetVocabularyGroupRel (vocabularyId);
+
 create unique index IX_E7B95510 on BrowserTracker (userId);
 
 create unique index IX_B27A301F on ClassName_ (value[$COLUMN_LENGTH:200$]);

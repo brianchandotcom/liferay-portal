@@ -91,7 +91,7 @@ public class DepotEntryLayoutDisplayPageProvider
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
-	@Reference(target = "(item.class.name=com.liferay.object.model.DepotEntry)")
+	@Reference(target = "(item.class.name=com.liferay.depot.model.DepotEntry)")
 	private InfoItemFriendlyURLProvider<DepotEntry>
 		_infoItemFriendlyURLProvider;
 

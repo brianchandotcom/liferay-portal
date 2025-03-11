@@ -14,6 +14,7 @@
 
 <clay:container-fluid
 	cssClass="container-view"
+	size="xl"
 >
 	<liferay-site-navigation:breadcrumb
 		breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"

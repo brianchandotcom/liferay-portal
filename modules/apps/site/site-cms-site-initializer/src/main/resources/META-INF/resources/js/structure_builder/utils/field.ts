@@ -27,7 +27,7 @@ export const FIELD_TYPE_LABEL: Record<FieldType, string> = {
 	'date': Liferay.Language.get('date'),
 	'datetime': Liferay.Language.get('date-and-time'),
 	'decimal': Liferay.Language.get('decimal'),
-	'integer': Liferay.Language.get('integer'),
+	'integer': Liferay.Language.get('numeric'),
 	'long-text': Liferay.Language.get('long-text'),
 	'multiselect': Liferay.Language.get('multiselect'),
 	'rich-text': Liferay.Language.get('rich-text'),

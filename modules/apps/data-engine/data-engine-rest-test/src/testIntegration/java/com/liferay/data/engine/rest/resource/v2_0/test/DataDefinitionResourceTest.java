@@ -24,19 +24,27 @@ import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.TestDataDefinitionContentType;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.test.util.ModelResourceActionTestUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -706,55 +714,112 @@ public class DataDefinitionResourceTest
 	@Override
 	@Test
 	public void testPutDataDefinition() throws Exception {
+		Queue<Long> queue = new LinkedList<>();
+
+		ReflectionTestUtil.setFieldValue(
+			_dataDefinitionResource, "_ddmStructureLocalService",
+			ProxyUtil.newProxyInstance(
+				DDMStructureLocalService.class.getClassLoader(),
+				new Class<?>[] {DDMStructureLocalService.class},
+				(proxy, method, arguments) -> {
+					if (Objects.equals(method.getName(), "updateStructure")) {
+						queue.add((Long)arguments[1]);
+					}
+
+					return method.invoke(_ddmStructureLocalService, arguments);
+				}));
+
 		String originalName = PrincipalThreadLocal.getName();
 
 		try {
 			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
-			Queue<Long> queue = new LinkedList<>();
-
-			ReflectionTestUtil.setFieldValue(
-				_dataDefinitionResource, "_ddmStructureLocalService",
-				ProxyUtil.newProxyInstance(
-					DDMStructureLocalService.class.getClassLoader(),
-					new Class<?>[] {DDMStructureLocalService.class},
-					(proxy, method, arguments) -> {
-						if (Objects.equals(
-								method.getName(), "updateStructure")) {
-
-							queue.add((Long)arguments[1]);
-						}
-
-						return method.invoke(
-							_ddmStructureLocalService, arguments);
-					}));
-
-			DataDefinition dataDefinition =
+			DataDefinition dataDefinition1 =
 				dataDefinitionResource.postSiteDataDefinitionByContentType(
 					testGroup.getGroupId(), _CONTENT_TYPE,
 					DataDefinition.toDTO(
 						DataDefinitionTestUtil.read("data-definition-1.json")));
+			DataDefinition dataDefinition2 =
+				dataDefinitionResource.postSiteDataDefinitionByContentType(
+					testGroup.getGroupId(), _CONTENT_TYPE,
+					DataDefinition.toDTO(
+						DataDefinitionTestUtil.read(
+							"data-definition-2-linked-to-data-definition-1." +
+								"json")));
+			DataDefinition dataDefinition3 =
+				dataDefinitionResource.postSiteDataDefinitionByContentType(
+					testGroup.getGroupId(), _CONTENT_TYPE,
+					DataDefinition.toDTO(
+						DataDefinitionTestUtil.read(
+							"data-definition-3-linked-to-data-definition-2." +
+								"json")));
 
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				testGroup.getGroupId(), _CONTENT_TYPE,
-				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read(
-						"data-definition-2-linked-to-data-definition-1.json")));
-
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				testGroup.getGroupId(), _CONTENT_TYPE,
-				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read(
-						"data-definition-3-linked-to-data-definition-2.json")));
-
-			_dataDefinitionResource.setContextUser(TestPropsValues.getUser());
+			_setUpDataDefinitionResource(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUser());
 
 			_dataDefinitionResource.putDataDefinition(
-				dataDefinition.getId(),
+				dataDefinition1.getId(),
 				com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
-					dataDefinition.toString()));
+					dataDefinition1.toString()));
 
 			Assert.assertEquals(3, queue.size());
+
+			dataDefinitionResource.deleteDataDefinition(
+				dataDefinition2.getId());
+			dataDefinitionResource.deleteDataDefinition(
+				dataDefinition3.getId());
+
+			queue.clear();
+
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"domain", "able.com"
+				).put(
+					"portalInstanceId", "able.com"
+				).put(
+					"virtualHost", "www.able.com"
+				).toString(),
+				"headless-portal-instances/v1.0/portal-instances",
+				Http.Method.POST);
+
+			long companyId = jsonObject.getLong("companyId");
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						companyId)) {
+
+				User user = UserTestUtil.getAdminUser(companyId);
+
+				PrincipalThreadLocal.setName(user.getUserId());
+
+				_setUpDataDefinitionResource(companyId, user);
+
+				Group group = GroupTestUtil.addGroup(
+					companyId, user.getUserId(), 0);
+
+				DataDefinitionField dataDefinitionField =
+					dataDefinition2.getDataDefinitionFields()[0];
+
+				Map<String, Object> customProperties =
+					dataDefinitionField.getCustomProperties();
+
+				customProperties.put("ddmStructureId", dataDefinition1.getId());
+
+				_dataDefinitionResource.postSiteDataDefinitionByContentType(
+					group.getGroupId(), _CONTENT_TYPE,
+					com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
+						dataDefinition2.toString()));
+			}
+
+			_setUpDataDefinitionResource(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUser());
+
+			_dataDefinitionResource.putDataDefinition(
+				dataDefinition1.getId(),
+				com.liferay.data.engine.rest.dto.v2_0.DataDefinition.toDTO(
+					dataDefinition1.toString()));
+
+			Assert.assertEquals(1, queue.size());
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);
@@ -1031,6 +1096,14 @@ public class DataDefinitionResourceTest
 		return dataLayoutColumnFieldNames;
 	}
 
+	private void _setUpDataDefinitionResource(long companyId, User user)
+		throws Exception {
+
+		_dataDefinitionResource.setContextCompany(
+			_companyLocalService.getCompany(companyId));
+		_dataDefinitionResource.setContextUser(user);
+	}
+
 	private void _testCopiedDataDefinitionDataLayout(
 		DataLayout dataLayout1, DataLayout dataLayout2) {
 
@@ -1125,6 +1198,9 @@ public class DataDefinitionResourceTest
 
 	@Inject
 	private static ResourceActions _resourceActions;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private DataDefinitionResource _dataDefinitionResource;

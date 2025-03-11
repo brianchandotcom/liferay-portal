@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Object Entry Folder REST Client
+Bundle-SymbolicName: com.liferay.object.entry.folder.rest.client
+Bundle-Version: 1.0.0

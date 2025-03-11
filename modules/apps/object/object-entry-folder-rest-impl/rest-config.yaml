@@ -1,0 +1,13 @@
+apiDir: "../object-entry-folder-rest-api/src/main/java"
+apiPackagePath: "com.liferay.object.entry.folder.rest"
+application:
+    baseURI: "/object-entry-folder-rest"
+    className: "ObjectEntryFolderRESTApplication"
+    name: "Liferay.Object.Entry.Folder.REST"
+author: "Alicia García"
+changeTrackingEnabled: true
+clientDir: "../object-entry-folder-rest-client/src/main/java"
+compatibilityVersion: 7
+forcePredictableOperationId: true
+managePermissions: true
+testDir: "../object-entry-folder-rest-test/src/testIntegration/java"

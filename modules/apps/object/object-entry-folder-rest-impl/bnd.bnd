@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Object Entry Folder REST Implementation
+Bundle-SymbolicName: com.liferay.object.entry.folder.rest.impl
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

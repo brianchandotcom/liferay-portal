@@ -503,7 +503,7 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Test
-	@TestInfo("LPD-11377")
+	@TestInfo({"LPD-11377", "LPD-51076"})
 	public void testGetRepeatableAssetTags() throws Exception {
 		JSONObject jsonObject = JSONUtil.put(
 			"className", JournalArticle.class.getName()
@@ -523,6 +523,11 @@ public class FragmentEntryProcessorHelperTest {
 			"fieldId", "AssetTag_tagNames"
 		);
 
+		Assert.assertEquals(
+			"one, two, three",
+			_getFieldValue(
+				jsonObject.put("config", JSONUtil.put("iterationType", "all")),
+				LocaleUtil.SPAIN));
 		Assert.assertEquals(
 			"one",
 			_getFieldValue(

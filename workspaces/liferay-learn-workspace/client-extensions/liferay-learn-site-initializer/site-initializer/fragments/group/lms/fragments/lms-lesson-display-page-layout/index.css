@@ -240,9 +240,7 @@
 	fill: var(--color-neutral-8, #54555f) !important;
 }
 
-.portlet-msg-alert,
-.portlet-msg-error,
-.portlet-msg-info {
+.portlet-msg-alert, .portlet-msg-error, .portlet-msg-info {
 	color: var(--color-neutral-10, #282934);
 }
 

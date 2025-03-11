@@ -288,6 +288,8 @@ AUI.add(
 							backgroundColor: value,
 							opacity: '0.8',
 						});
+
+						node.toggleClass('scheduler-event-past', isPastEvent);
 					}
 				},
 

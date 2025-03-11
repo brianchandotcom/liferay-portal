@@ -449,9 +449,9 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	 */
 	@Override
 	public Role updateRole(
-			long roleId, String name, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String subtype,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long roleId, String name,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String subtype, ServiceContext serviceContext)
 		throws PortalException {
 
 		RolePermissionUtil.check(
@@ -465,7 +465,8 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 			oldExpandoBridge.getAttributes();
 
 		Role role = roleLocalService.updateRole(
-			roleId, name, titleMap, descriptionMap, subtype, serviceContext);
+			externalReferenceCode, roleId, name, titleMap, descriptionMap,
+			subtype, serviceContext);
 
 		if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
 			OrganizationMembershipPolicyUtil.verifyPolicy(

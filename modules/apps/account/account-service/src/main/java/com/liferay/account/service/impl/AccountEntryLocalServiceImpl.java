@@ -21,7 +21,6 @@ import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -490,15 +490,14 @@ public class AccountEntryLocalServiceImpl
 			String name, String type)
 		throws Exception {
 
-		AccountEntry accountEntry =
-			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				externalReferenceCode, companyId);
+		AccountEntry accountEntry = fetchAccountEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 
 		if (accountEntry != null) {
 			return accountEntry;
 		}
 
-		if (!LazyReferencingThreadLocal.isLazyReferencingEnabled()) {
+		if (!LazyReferencingThreadLocal.isEnabled()) {
 			throw new NoSuchEntryException(
 				StringBundler.concat(
 					"Unable to find account entry with external reference ",

@@ -27,7 +27,6 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.test.util.ExpandoTestUtil;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
@@ -40,6 +39,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
@@ -586,8 +586,7 @@ public class AccountEntryLocalServiceTest {
 	@Test
 	public void testGetOrAddIncompleteAccountEntry() throws Exception {
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableLazyReferencingWithSelfCloseable()) {
+				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
@@ -617,8 +616,7 @@ public class AccountEntryLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableLazyReferencingWithSelfCloseable()) {
+				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
 
 			_enableWorkflow();
 
@@ -1203,8 +1201,7 @@ public class AccountEntryLocalServiceTest {
 	@Test
 	public void testUpdateAccountEntryWithStatusIncomplete() throws Exception {
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableLazyReferencingWithSelfCloseable()) {
+				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
@@ -1235,8 +1232,7 @@ public class AccountEntryLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableLazyReferencingWithSelfCloseable()) {
+				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
 
 			_enableWorkflow();
 

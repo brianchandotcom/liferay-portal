@@ -183,7 +183,7 @@ public class CommerceOrderSystemObjectDefinitionManager
 			).dbColumnName(
 				"orderTypeExternalReferenceCode"
 			).labelMap(
-				createLabelMap("orderTypeExternalReferenceCode")
+				createLabelMap("order-type-external-reference-code")
 			).name(
 				"orderTypeExternalReferenceCode"
 			).system(
@@ -196,6 +196,16 @@ public class CommerceOrderSystemObjectDefinitionManager
 				createLabelMap("order-type-id")
 			).name(
 				"orderTypeId"
+			).system(
+				true
+			).build(),
+			new IntegerObjectFieldBuilder(
+			).labelMap(
+				createLabelMap("payment-status")
+			).name(
+				"paymentStatus"
+			).required(
+				true
 			).system(
 				true
 			).build(),
@@ -336,6 +346,8 @@ public class CommerceOrderSystemObjectDefinitionManager
 						values.get("orderTypeExternalReferenceCode")));
 				setOrderTypeId(
 					() -> GetterUtil.getLong(values.get("orderTypeId")));
+				setPaymentStatus(
+					() -> GetterUtil.getInteger(values.get("paymentStatus")));
 				setShippingAmount(
 					() -> {
 						String shippingAmountString = GetterUtil.getString(

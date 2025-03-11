@@ -111,16 +111,30 @@ type BaseField = {
 	required: boolean;
 };
 
-export type TextField = BaseField & {
+export type UniqueValuesSettings = {
+	settings: {
+		uniqueValues?: boolean;
+	};
+};
+
+export type MaxLengthSettings = {
 	settings: {
 		maxLength?: number;
 		showCounter?: boolean;
-		uniqueValues?: boolean;
 	};
-	type: 'text';
 };
 
+export type NumericField = BaseField & {
+	type: 'integer';
+} & UniqueValuesSettings;
+
+export type TextField = BaseField & {
+	type: 'text';
+} & MaxLengthSettings &
+	UniqueValuesSettings;
+
 export type Field =
+	| NumericField
 	| TextField
 	| (BaseField & {
 			settings: {timeStorage: 'convertToUTC'};
@@ -136,9 +150,8 @@ export type Field =
 	  })
 	| (BaseField & {
 			settings: {};
-			type: Exclude<FieldType, ['datetime', 'text', 'upload']>;
+			type: Exclude<FieldType, ['datetime', 'numeric', 'text', 'upload']>;
 	  });
-
 export type FieldType = (typeof FIELD_TYPES)[number];
 
 export type FieldBusinessType =

@@ -24,7 +24,7 @@ import {getTempDir} from '../../utils/temp';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
-import {reloadImportUntilFieldsetOpened} from './utils/reloadImportUntilFieldsetOpened';
+import {openImportFieldset} from './utils/openImportFieldset';
 
 export const test = mergeTests(
 	companyExportImportPageTest,
@@ -358,7 +358,7 @@ test('can see corresponding elements at site level', async ({
 		exportImportPage.page.getByLabel('Delete Application Data')
 	).toBeVisible();
 
-	await reloadImportUntilFieldsetOpened({
+	await openImportFieldset({
 		name: 'Update Data',
 		page: exportImportPage.page,
 	});

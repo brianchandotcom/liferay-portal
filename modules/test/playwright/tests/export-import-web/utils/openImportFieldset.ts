@@ -5,7 +5,9 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export async function reloadImportUntilFieldsetOpened({
+import {reloadImportPage} from './reloadImportPage';
+
+export async function openImportFieldset({
 	maxAttempts = 5,
 	name,
 	page,
@@ -31,8 +33,7 @@ export async function reloadImportUntilFieldsetOpened({
 		}
 
 		if (!(await _isExpanded(fieldset))) {
-			await page.reload();
-			await page.getByRole('button', {name: 'Continue'}).click();
+			reloadImportPage(page);
 		}
 
 		attempts++;

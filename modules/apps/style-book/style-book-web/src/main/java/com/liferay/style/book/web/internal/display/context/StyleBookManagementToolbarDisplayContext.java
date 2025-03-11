@@ -248,7 +248,7 @@ public class StyleBookManagementToolbarDisplayContext
 				HashMapBuilder.<String, Object>put(
 					"name",
 					StyleBookUtil.getThemeName(
-						_themeDisplay.getCompanyId(), httpServletRequest,
+						_themeDisplay.getCompanyId(), _themeDisplay.getLocale(),
 						frontendTokenDefinition.getThemeId())
 				).put(
 					"themeId", frontendTokenDefinition.getThemeId()

@@ -346,7 +346,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					LanguageUtil.format(
 						_httpServletRequest, "mark-as-default-for-x",
 						StyleBookUtil.getThemeName(
-							_themeDisplay.getCompanyId(), _httpServletRequest,
+							_themeDisplay.getCompanyId(),
+							_themeDisplay.getLocale(),
 							_styleBookEntry.getThemeId())));
 			}
 			else {

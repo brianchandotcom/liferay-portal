@@ -52,10 +52,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				liferayPortletRequest, liferayPortletResponse);
 
 		renderRequest.setAttribute(
-			FrontendTokenDefinitionRegistry.class.getName(),
-			_frontendTokenDefinitionRegistry);
-
-		renderRequest.setAttribute(
 			StyleBookDisplayContext.class.getName(), styleBookDisplayContext);
 
 		StyleBookManagementToolbarDisplayContext

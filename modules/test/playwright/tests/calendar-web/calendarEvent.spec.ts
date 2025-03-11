@@ -61,6 +61,35 @@ test.beforeEach(
 	}
 );
 
+test('assert that past events have respective within the click more dropdown', async ({
+	calendarWidgetPage,
+	page,
+}) => {
+	await calendarWidgetPage.previousButton.click();
+
+	for (let i = 0; i < 3; i++) {
+		await calendarWidgetPage.addEvent({
+			allDay: false,
+			publishEvent: true,
+			title: 'Event' + getRandomString(),
+		});
+
+		await calendarWidgetPage.closeModalEvent();
+	}
+
+	await calendarWidgetPage.monthViewTab.click();
+
+	await page.getByRole('link', {name: 'Show 1 More'}).click();
+
+	await expect(
+		page
+			.locator(
+				'.scheduler-view-table-events-overlay-node-body .scheduler-event'
+			)
+			.nth(2)
+	).toHaveClass(/scheduler-event-past/);
+});
+
 test('can create all-day calendar event with different time zone', async ({
 	calendarWidgetPage,
 }) => {

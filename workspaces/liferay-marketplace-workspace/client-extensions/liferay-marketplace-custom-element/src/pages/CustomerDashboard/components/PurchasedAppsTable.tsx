@@ -91,7 +91,9 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				{
 					key: 'orderTypeExternalReferenceCode',
 					render: (orderTypeExternalReferenceCode) => {
-						return ORDER_TYPES_LABELS[orderTypeExternalReferenceCode as ORDER_TYPES];
+						return ORDER_TYPES_LABELS[
+							orderTypeExternalReferenceCode as ORDER_TYPES
+						];
 					},
 					title: i18n.translate('app-type'),
 				},

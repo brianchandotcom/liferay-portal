@@ -157,7 +157,9 @@ export function ProvideAppBuildPage({
 			vocabId: marketplaceLiferayPlatformOfferingId,
 		});
 
-		const platformOfferingLabels = getOfferingTypes(appType.value as ProductType);
+		const platformOfferingLabels = getOfferingTypes(
+			appType.value as ProductType
+		);
 
 		const fullyManagedOption = platformOfferingList.filter(
 			(platformOffering) =>

@@ -19,27 +19,11 @@ import java.util.List;
 import org.json.JSONObject;
 
 import org.junit.After;
-import org.junit.BeforeClass;
 
 /**
  * @author Kenji Heigel
  */
 public abstract class BaseRelevantRuleTestCase {
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		jsonObject.put(
-			"build_profile", "DXP"
-		).put(
-			"git_repository_dir", "liferay-portal"
-		).put(
-			"job_name", "test-portal-acceptance-pullrequest("
-		).put(
-			"test_suite_name", "relevant"
-		).put(
-			"upstream_branch_name", "master"
-		);
-	}
 
 	@After
 	public void tearDown() {
@@ -60,8 +44,8 @@ public abstract class BaseRelevantRuleTestCase {
 		return _baseDir;
 	}
 
-	protected PortalAcceptancePullRequestJob getPortalAcceptancePullRequestJob(
-		JSONObject jsonObject) {
+	protected PortalAcceptancePullRequestJob
+		getPortalAcceptancePullRequestJob() {
 
 		if (_portalAcceptancePullRequestJob != null) {
 			return _portalAcceptancePullRequestJob;
@@ -74,6 +58,20 @@ public abstract class BaseRelevantRuleTestCase {
 			(PortalGitWorkingDirectory)
 				GitWorkingDirectoryFactory.newGitWorkingDirectory(
 					upstreamBranchName, getPortalDir(null), repositoryName);
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"build_profile", "DXP"
+		).put(
+			"git_repository_dir", "liferay-portal"
+		).put(
+			"job_name", "test-portal-acceptance-pullrequest("
+		).put(
+			"test_suite_name", "relevant"
+		).put(
+			"upstream_branch_name", "master"
+		);
 
 		_portalAcceptancePullRequestJob =
 			(PortalAcceptancePullRequestJob)JobFactory.newJob(
@@ -116,19 +114,13 @@ public abstract class BaseRelevantRuleTestCase {
 	}
 
 	protected RelevantRuleEngine getRelevantRuleEngine() {
-		return getRelevantRuleEngine(null);
-	}
-
-	protected RelevantRuleEngine getRelevantRuleEngine(JSONObject jsonObject) {
 		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
-			getPortalAcceptancePullRequestJob(jsonObject));
+			getPortalAcceptancePullRequestJob());
 
 		relevantRuleEngine.setBaseDir(getBaseDir());
 
 		return relevantRuleEngine;
 	}
-
-	protected static JSONObject jsonObject = new JSONObject();
 
 	private File _baseDir;
 	private PortalAcceptancePullRequestJob _portalAcceptancePullRequestJob;

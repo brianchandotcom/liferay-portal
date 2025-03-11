@@ -29,8 +29,7 @@ public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testExcludedModifiedFileInModule1Dir() {
-		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine(
-			jsonObject);
+		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine();
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(
@@ -55,8 +54,7 @@ public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testModifiedFileForPlaywrightBatch() {
-		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine(
-			jsonObject);
+		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine();
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(
@@ -109,8 +107,7 @@ public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 
 	@Test
 	public void testModifiedFileInBaseDir() {
-		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine(
-			jsonObject);
+		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine();
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(

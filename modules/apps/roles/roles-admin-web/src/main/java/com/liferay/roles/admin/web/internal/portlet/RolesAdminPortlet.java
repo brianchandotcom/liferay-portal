@@ -247,6 +247,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		// Update role
 
+		Role role = _roleLocalService.getRole(roleId);
+
 		if (name.equals(RoleConstants.SITE_ADMINISTRATOR)) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -255,14 +257,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 				actionRequest, "manageSubgroups");
 
 			_updateAction(
-				_roleLocalService.getRole(roleId),
-				themeDisplay.getScopeGroupId(), Group.class.getName(),
+				role, themeDisplay.getScopeGroupId(), Group.class.getName(),
 				ActionKeys.MANAGE_SUBGROUPS, manageSubgroups,
 				ResourceConstants.SCOPE_GROUP_TEMPLATE, new String[0]);
 		}
 
 		return _roleService.updateRole(
-			roleId, name, titleMap, descriptionMap, subtype, serviceContext);
+			role.getExternalReferenceCode(), roleId, name, titleMap,
+			descriptionMap, subtype, serviceContext);
 	}
 
 	public void editRoleAssignments(

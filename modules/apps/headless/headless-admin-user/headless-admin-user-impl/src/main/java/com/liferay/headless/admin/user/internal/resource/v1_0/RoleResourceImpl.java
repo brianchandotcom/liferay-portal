@@ -237,6 +237,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 			_roleService.getRole(roleId);
 
 		serviceBuilderRole = _roleService.updateRole(
+			serviceBuilderRole.getExternalReferenceCode(),
 			serviceBuilderRole.getRoleId(),
 			GetterUtil.get(role.getName(), serviceBuilderRole.getName()),
 			(Map<Locale, String>)GetterUtil.getObject(
@@ -429,6 +430,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		}
 		else {
 			serviceBuilderRole = _roleService.updateRole(
+				serviceBuilderRole.getExternalReferenceCode(),
 				serviceBuilderRole.getRoleId(),
 				GetterUtil.get(role.getName(), serviceBuilderRole.getName()),
 				_getTitleMap(role), _getDescriptionMap(role), null,

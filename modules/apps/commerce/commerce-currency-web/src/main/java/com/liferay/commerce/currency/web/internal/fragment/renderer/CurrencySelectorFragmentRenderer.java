@@ -8,7 +8,6 @@ package com.liferay.commerce.currency.web.internal.fragment.renderer;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
@@ -16,11 +15,8 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,7 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
@@ -126,8 +121,19 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:currency-selector:commerceOrderTypes",
-				_getCommerceOrderTypesJSONArray(
-					commerceChannelId, httpServletRequest));
+				JSONUtil.toJSONArray(
+					_commerceOrderTypeLocalService.getCommerceOrderTypes(
+						_portal.getCompanyId(httpServletRequest),
+						CommerceChannel.class.getName(), commerceChannelId,
+						true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					commerceOrderType -> JSONUtil.put(
+						"name_i18n",
+						commerceOrderType.getName(
+							_portal.getLocale(httpServletRequest))
+					).put(
+						"orderTypeId",
+						commerceOrderType.getCommerceOrderTypeId()
+					)));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -136,35 +142,6 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 
 			throw new RuntimeException(exception);
 		}
-	}
-
-	private JSONArray _getCommerceOrderTypesJSONArray(
-			long commerceChannelId, HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		List<CommerceOrderType> commerceOrderTypes =
-			_commerceOrderTypeLocalService.getCommerceOrderTypes(
-				_portal.getCompanyId(httpServletRequest),
-				CommerceChannel.class.getName(), commerceChannelId, true,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		JSONArray commerceOrderTypesJSONArray = _jsonFactory.createJSONArray();
-
-		for (CommerceOrderType commerceOrderType : commerceOrderTypes) {
-			JSONObject commerceOrderTypeJSONObject =
-				_jsonFactory.createJSONObject();
-
-			commerceOrderTypeJSONObject.put(
-				"name_i18n",
-				commerceOrderType.getName(_portal.getLocale(httpServletRequest))
-			).put(
-				"orderTypeId", commerceOrderType.getCommerceOrderTypeId()
-			);
-
-			commerceOrderTypesJSONArray.put(commerceOrderTypeJSONObject);
-		}
-
-		return commerceOrderTypesJSONArray;
 	}
 
 	private boolean _isEditMode(HttpServletRequest httpServletRequest) {
@@ -213,9 +190,6 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -100,8 +101,9 @@ public class CPConfigurationListEligibilityCommerceHealthStatusTest {
 			commerceChannel1.getCommerceChannelId(), serviceContext);
 
 		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 		CommerceChannel commerceChannel2 =
 			_commerceChannelLocalService.addCommerceChannel(
 				null, 0, TestPropsValues.getGroupId(),
@@ -132,8 +134,9 @@ public class CPConfigurationListEligibilityCommerceHealthStatusTest {
 			commerceChannel2.getCommerceChannelId(), serviceContext);
 
 		AccountGroup accountGroup2 = _accountGroupLocalService.addAccountGroup(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		CPDefinition cpDefinition4 = CPTestUtil.addCPDefinitionFromCatalog(
 			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,

@@ -11,6 +11,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountgroup/add-account-group \
 				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d externalReferenceCode='' \
 				-d userId=${userId} \
 				-d name=${accountGroupName} \
 				-d description=${accountGroupDescription}

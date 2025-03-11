@@ -27,6 +27,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -92,10 +93,9 @@ public class CommerceDiscountLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
-			serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			serviceContext);
+			StringPool.BLANK, serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), serviceContext);
 
-		_accountGroup.setExternalReferenceCode(null);
 		_accountGroup.setDefaultAccountGroup(false);
 		_accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		_accountGroup.setExpandoBridgeAttributes(serviceContext);

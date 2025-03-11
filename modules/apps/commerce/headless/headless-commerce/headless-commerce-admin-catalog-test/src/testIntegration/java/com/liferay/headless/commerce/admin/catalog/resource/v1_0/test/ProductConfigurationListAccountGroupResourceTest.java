@@ -21,6 +21,7 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductConfig
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.core.util.DateConfig;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -167,8 +168,9 @@ public class ProductConfigurationListAccountGroupResourceTest
 
 		AccountGroup randomAccountGroup =
 			_accountGroupLocalService.addAccountGroup(
-				_user.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), _serviceContext);
+				StringPool.BLANK, _user.getUserId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		_accountGroupIds.add(randomAccountGroup.getAccountGroupId());
 

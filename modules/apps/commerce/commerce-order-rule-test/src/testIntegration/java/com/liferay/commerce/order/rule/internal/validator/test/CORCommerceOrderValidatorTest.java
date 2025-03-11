@@ -25,6 +25,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -83,10 +84,9 @@ public class CORCommerceOrderValidatorTest {
 			_user.getUserId());
 
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
-			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			_serviceContext);
+			StringPool.BLANK, _serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), _serviceContext);
 
-		_accountGroup.setExternalReferenceCode(null);
 		_accountGroup.setDefaultAccountGroup(false);
 		_accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		_accountGroup.setExpandoBridgeAttributes(_serviceContext);

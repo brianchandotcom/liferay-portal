@@ -36,6 +36,7 @@ import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.problem.Problem;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -86,8 +87,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(testCompany.getGroupId());
 
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
-			user.getUserId(), null, RandomTestUtil.randomString(),
-			serviceContext);
+			StringPool.BLANK, user.getUserId(), null,
+			RandomTestUtil.randomString(), serviceContext);
 
 		_accountGroup.setDefaultAccountGroup(false);
 		_accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);

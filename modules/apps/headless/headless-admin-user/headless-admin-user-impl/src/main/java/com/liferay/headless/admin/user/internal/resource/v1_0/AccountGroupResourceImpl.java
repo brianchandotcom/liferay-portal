@@ -234,13 +234,9 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 
 		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
 			_accountGroupService.addAccountGroup(
+				accountGroup.getExternalReferenceCode(),
 				contextUser.getUserId(), accountGroup.getDescription(),
 				accountGroup.getName(), _createServiceContext(accountGroup));
-
-		serviceBuilderAccountGroup =
-			_accountGroupService.updateExternalReferenceCode(
-				serviceBuilderAccountGroup.getAccountGroupId(),
-				accountGroup.getExternalReferenceCode());
 
 		return _toAccountGroup(
 			_updateNestedResources(accountGroup, serviceBuilderAccountGroup));
@@ -269,27 +265,22 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		if (accountGroupId <= 0) {
 			com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
 				_accountGroupService.addAccountGroup(
+					accountGroup.getExternalReferenceCode(),
 					contextUser.getUserId(), accountGroup.getDescription(),
 					accountGroup.getName(),
 					_createServiceContext(accountGroup));
 
 			return _toAccountGroup(
 				_updateNestedResources(
-					accountGroup,
-					_accountGroupService.updateExternalReferenceCode(
-						serviceBuilderAccountGroup.getAccountGroupId(),
-						accountGroup.getExternalReferenceCode())));
+					accountGroup, serviceBuilderAccountGroup));
 		}
-
-		_accountGroupService.updateExternalReferenceCode(
-			accountGroupId, accountGroup.getExternalReferenceCode());
 
 		return _toAccountGroup(
 			_updateNestedResources(
 				accountGroup,
 				_accountGroupService.updateAccountGroup(
-					accountGroupId, accountGroup.getDescription(),
-					accountGroup.getName(),
+					accountGroup.getExternalReferenceCode(), accountGroupId,
+					accountGroup.getDescription(), accountGroup.getName(),
 					_createServiceContext(accountGroup))));
 	}
 
@@ -503,6 +494,9 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		throws Exception {
 
 		serviceBuilderAccountGroup = _accountGroupService.updateAccountGroup(
+			GetterUtil.getString(
+				accountGroup.getExternalReferenceCode(),
+				serviceBuilderAccountGroup.getExternalReferenceCode()),
 			serviceBuilderAccountGroup.getAccountGroupId(),
 			GetterUtil.getString(
 				accountGroup.getDescription(),
@@ -512,11 +506,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			_createServiceContext(accountGroup));
 
 		return _toAccountGroup(
-			_updateNestedResources(
-				accountGroup,
-				_accountGroupService.updateExternalReferenceCode(
-					serviceBuilderAccountGroup.getAccountGroupId(),
-					accountGroup.getExternalReferenceCode())));
+			_updateNestedResources(accountGroup, serviceBuilderAccountGroup));
 	}
 
 	private com.liferay.account.model.AccountGroup _updateNestedResources(

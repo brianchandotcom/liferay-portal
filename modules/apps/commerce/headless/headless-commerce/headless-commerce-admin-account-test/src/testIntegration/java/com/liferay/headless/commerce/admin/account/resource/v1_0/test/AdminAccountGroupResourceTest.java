@@ -15,6 +15,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AdminAccountGroup;
 import com.liferay.headless.commerce.admin.account.client.pagination.Page;
 import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -79,10 +80,9 @@ public class AdminAccountGroupResourceTest
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(
-			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			_serviceContext);
+			StringPool.BLANK, _serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), _serviceContext);
 
-		accountGroup1.setExternalReferenceCode(null);
 		accountGroup1.setDefaultAccountGroup(false);
 		accountGroup1.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup1.setExpandoBridgeAttributes(_serviceContext);
@@ -95,10 +95,9 @@ public class AdminAccountGroupResourceTest
 			accountEntry.getAccountEntryId());
 
 		AccountGroup accountGroup2 = _accountGroupLocalService.addAccountGroup(
-			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			_serviceContext);
+			StringPool.BLANK, _serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), _serviceContext);
 
-		accountGroup2.setExternalReferenceCode(null);
 		accountGroup2.setDefaultAccountGroup(false);
 		accountGroup2.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup2.setExpandoBridgeAttributes(_serviceContext);
@@ -148,10 +147,9 @@ public class AdminAccountGroupResourceTest
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
 		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(
-			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			_serviceContext);
+			StringPool.BLANK, _serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), _serviceContext);
 
-		accountGroup1.setExternalReferenceCode(null);
 		accountGroup1.setDefaultAccountGroup(false);
 		accountGroup1.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup1.setExpandoBridgeAttributes(_serviceContext);
@@ -164,10 +162,9 @@ public class AdminAccountGroupResourceTest
 			accountEntry.getAccountEntryId());
 
 		AccountGroup accountGroup2 = _accountGroupLocalService.addAccountGroup(
-			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			_serviceContext);
+			StringPool.BLANK, _serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), _serviceContext);
 
-		accountGroup2.setExternalReferenceCode(null);
 		accountGroup2.setDefaultAccountGroup(false);
 		accountGroup2.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup2.setExpandoBridgeAttributes(_serviceContext);

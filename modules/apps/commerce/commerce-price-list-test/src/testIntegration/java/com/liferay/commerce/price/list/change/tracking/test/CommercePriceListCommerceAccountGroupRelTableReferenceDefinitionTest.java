@@ -14,6 +14,7 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService;
 import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -57,10 +58,9 @@ public class
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
-			serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			serviceContext);
+			StringPool.BLANK, serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), serviceContext);
 
-		_accountGroup.setExternalReferenceCode(null);
 		_accountGroup.setDefaultAccountGroup(false);
 		_accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		_accountGroup.setExpandoBridgeAttributes(serviceContext);

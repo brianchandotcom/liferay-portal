@@ -15,6 +15,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.AccountGroup;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -92,7 +93,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 	private AccountGroup _addAccountGroup() throws Exception {
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
-			_user.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, _user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), _serviceContext);
 
 		AccountGroupRelLocalServiceUtil.addAccountGroupRel(

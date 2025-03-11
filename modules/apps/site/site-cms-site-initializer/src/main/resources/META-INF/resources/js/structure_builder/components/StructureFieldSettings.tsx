@@ -19,7 +19,7 @@ import selectStructureError from '../selectors/selectStructureError';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureStatus from '../selectors/selectStructureStatus';
-import {Field} from '../utils/field';
+import {FIELD_TYPE_LABEL, Field} from '../utils/field';
 import getFieldComponents from '../utils/getFieldComponents';
 import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
 import ERCInput from './ERCInput';
@@ -118,7 +118,9 @@ function GeneralTab({field}: {field: Field}) {
 					{Liferay.Language.get('field-type')}
 				</p>
 
-				<ClayLabel displayType="info">{field.type}</ClayLabel>
+				<ClayLabel displayType="info">
+					{FIELD_TYPE_LABEL[field.type]}
+				</ClayLabel>
 			</div>
 
 			<div className="mt-4 pb-2">

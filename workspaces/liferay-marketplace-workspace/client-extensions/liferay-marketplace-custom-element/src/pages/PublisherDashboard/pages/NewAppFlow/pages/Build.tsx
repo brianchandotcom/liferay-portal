@@ -15,8 +15,6 @@ import {
 } from '../../../../../context/NewAppContext';
 import {ProductType} from '../../../../../enums/ProductType';
 import i18n from '../../../../../i18n';
-import OfferingTypeCheckbox from '../../Apps/AppCreationFlow/ProvideAppBuildPage/components/OfferingTypeCheckbox';
-import {offeringTypesDescription} from '../../Apps/AppCreationFlow/ProvideAppBuildPage/constants/offeringTypesDescriptions';
 import CloudResourceRequirements from '../components/CloudResourceRequirements';
 import {NewAppPackageVersionModal} from '../components/NewAppPackagesModal';
 import NewAppUploadAppPackagesComponent from '../components/NewAppUploadPackage';
@@ -56,23 +54,6 @@ const Content = () => {
 
 	return (
 		<>
-			<Section
-				className="d-flex flex-column form-checkbox"
-				label={i18n.translate('compatible-offering')}
-			>
-				<OfferingTypeCheckbox
-					handleSelectCheckbox={handleSelectCheckbox}
-					offeringTypes={
-						offeringTypesDescription[
-							cloudCompatible
-								? ProductType.CLOUD
-								: ProductType.DXP
-						] as unknown as OfferingType[]
-					}
-					selectedValue={compatibleOffering}
-				/>
-			</Section>
-
 			{cloudCompatible && (
 				<Section
 					className="d-flex justify-content-between mt-4"

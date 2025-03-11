@@ -35,10 +35,9 @@ import {
 } from '../../../../../../utils/api';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
-import {offeringTypesDescription} from './constants/offeringTypesDescriptions';
+import {getOfferingTypes} from './constants/offeringTypesDescriptions';
 
 import './ProvideAppBuildPage.scss';
-import {CardView} from '../../../../../../components/Card/CardView';
 import {
 	PRODUCT_SPECIFICATION_KEY,
 	PRODUCT_WORKFLOW_STATUS_CODE,
@@ -158,13 +157,7 @@ export function ProvideAppBuildPage({
 			vocabId: marketplaceLiferayPlatformOfferingId,
 		});
 
-		const platformOfferingLabels = (
-			offeringTypesDescription[
-				appType.value as ProductType
-			] as unknown as OfferingType[]
-		)
-			?.filter((type) => !type.disabled)
-			.map((type) => type.label);
+		const platformOfferingLabels = getOfferingTypes(appType.value as ProductType);
 
 		const fullyManagedOption = platformOfferingList.filter(
 			(platformOffering) =>
@@ -534,21 +527,6 @@ export function ProvideAppBuildPage({
 
 			{appType.value && (
 				<>
-					<Section label={i18n.translate('compatible-offering')}>
-						{(
-							offeringTypesDescription[
-								appType.value as ProductType
-							] as unknown as OfferingType[]
-						).map((type) => {
-							return type.disabled ? null : (
-								<CardView
-									description={type.description}
-									title={type.label}
-								/>
-							);
-						})}
-					</Section>
-
 					{isCloud && (
 						<Section
 							label={i18n.translate('resource-requirements')}

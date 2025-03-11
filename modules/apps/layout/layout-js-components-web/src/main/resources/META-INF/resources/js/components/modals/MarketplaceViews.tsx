@@ -7,7 +7,6 @@
 
 import ClayButton from '@clayui/button';
 import {
-	Cart,
 	Marketplace,
 	MarketplaceRest,
 	MarketplaceView,
@@ -28,30 +27,6 @@ async function fetchFragmentBlob(marketplaceRest: MarketplaceRest, url: URL) {
 	);
 
 	return response.blob();
-}
-
-async function getVirtualEntryBlob(
-	cart: Cart,
-	marketplaceRest: MarketplaceRest
-) {
-	const placedOrder = await marketplaceRest.getPlacedOrder(
-		cart.id,
-		new URLSearchParams({
-			nestedFields: 'placedOrderItems',
-		})
-	);
-
-	if (!placedOrder.placedOrderItems.length) {
-		return;
-	}
-
-	const [virtualItem] = placedOrder.placedOrderItems?.[0]?.virtualItems ?? [];
-
-	if (!virtualItem) {
-		return;
-	}
-
-	return fetchFragmentBlob(marketplaceRest, new URL(virtualItem.url));
 }
 
 function getProductAttachmentBlob(
@@ -95,17 +70,6 @@ export default function MarketplaceViews() {
 			});
 
 			await marketplaceRest.checkoutCart(cart);
-
-			// This is an example of a virtual Entry
-			// Currently there is an issue to retrieve the virtual item
-			// from the cart due this bug: https://liferay.atlassian.net/browse/LPD-50173
-			// getVirtualEntryBlob would be the ideal solution for this case.
-
-			// const blob = await getVirtualEntryBlob(cart, marketplaceRest);
-
-			// This is an example of a product attachment
-			// We will (for now) save the fragment zip inside the product attachment
-			// in order to not block the whole development of this feature
 
 			const blob = await getProductAttachmentBlob(
 				marketplaceRest,

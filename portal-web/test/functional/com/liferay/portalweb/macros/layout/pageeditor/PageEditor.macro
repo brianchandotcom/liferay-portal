@@ -4125,7 +4125,7 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 	macro viewFragmentMessageInfo(fragmentName = null) {
 		if (${fragmentName} == "Collection Display") {
 			if (!(isSet(messageInfo))) {
-				var messageInfo = "No Collection Selected Yet";
+				var messageInfo = "Select a collection to display.";
 			}
 
 			AssertVisible(

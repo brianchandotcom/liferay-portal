@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>NO_COLLECTION_SELECTED_MESSAGE</td>
-	<td>//div[@data-name='${key_fragmentName}']//div[contains(@class,'page-editor__collection__message')][normalize-space(text())='${key_messageInfo}']</td>
+	<td>//div[@data-name='${key_fragmentName}']//p[contains(@class,'page-editor__no-fragments-state__message')][normalize-space(text())='${key_messageInfo}']</td>
 	<td></td>
 </tr>
 <tr>

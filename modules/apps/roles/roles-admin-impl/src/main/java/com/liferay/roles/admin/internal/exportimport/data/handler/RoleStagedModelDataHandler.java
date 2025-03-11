@@ -150,8 +150,9 @@ public class RoleStagedModelDataHandler
 		}
 		else {
 			importedRole = _roleLocalService.updateRole(
-				existingRole.getRoleId(), role.getName(), role.getTitleMap(),
-				role.getDescriptionMap(), role.getSubtype(), serviceContext);
+				role.getExternalReferenceCode(), existingRole.getRoleId(),
+				role.getName(), role.getTitleMap(), role.getDescriptionMap(),
+				role.getSubtype(), serviceContext);
 
 			_deleteRolePermissions(portletDataContext, importedRole);
 		}

@@ -760,8 +760,9 @@ public class RoleLocalServiceTest {
 				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
 
 			role = _roleLocalService.updateRole(
-				role.getRoleId(), role.getName(), role.getTitleMap(),
-				role.getDescriptionMap(), role.getSubtype(), null);
+				role.getExternalReferenceCode(), role.getRoleId(),
+				role.getName(), role.getTitleMap(), role.getDescriptionMap(),
+				role.getSubtype(), null);
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED, role.getStatus());

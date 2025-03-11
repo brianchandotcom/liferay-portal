@@ -3681,6 +3681,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 			else {
 				role = _roleLocalService.updateRole(
+					jsonObject.getString("externalReferenceCode"),
 					role.getRoleId(), jsonObject.getString("name"),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),

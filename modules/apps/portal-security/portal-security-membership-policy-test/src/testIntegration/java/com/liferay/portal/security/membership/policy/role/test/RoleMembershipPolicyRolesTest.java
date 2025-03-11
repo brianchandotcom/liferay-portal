@@ -222,7 +222,8 @@ public class RoleMembershipPolicyRolesTest
 			RoleConstants.TYPE_REGULAR);
 
 		RoleServiceUtil.updateRole(
-			role.getRoleId(), RandomTestUtil.randomString(), role.getTitleMap(),
+			role.getExternalReferenceCode(), role.getRoleId(),
+			RandomTestUtil.randomString(), role.getTitleMap(),
 			role.getDescriptionMap(), role.getSubtype(), new ServiceContext());
 
 		Assert.assertTrue(isVerify());

@@ -230,7 +230,8 @@ public class SiteMembershipPolicyRolesTest
 		Role role = MembershipPolicyTestUtil.addRole(RoleConstants.TYPE_SITE);
 
 		RoleServiceUtil.updateRole(
-			role.getRoleId(), RandomTestUtil.randomString(), role.getTitleMap(),
+			role.getExternalReferenceCode(), role.getRoleId(),
+			RandomTestUtil.randomString(), role.getTitleMap(),
 			role.getDescriptionMap(), role.getSubtype(), new ServiceContext());
 
 		Assert.assertTrue(isVerify());

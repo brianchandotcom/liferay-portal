@@ -119,8 +119,8 @@ public class EditAccountRoleMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "description");
 
 		_roleLocalService.updateRole(
-			accountRole.getRoleId(), name, titleMap, descriptionMap, null,
-			null);
+			accountRole.getExternalReferenceCode(), accountRole.getRoleId(),
+			name, titleMap, descriptionMap, null, null);
 	}
 
 	@Reference

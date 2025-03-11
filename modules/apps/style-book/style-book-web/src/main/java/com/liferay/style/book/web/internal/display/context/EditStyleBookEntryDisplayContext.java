@@ -66,7 +66,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.web.internal.util.StyleBookUtil;
+import com.liferay.style.book.util.StyleBookUtil;
 
 import java.util.Collections;
 import java.util.List;

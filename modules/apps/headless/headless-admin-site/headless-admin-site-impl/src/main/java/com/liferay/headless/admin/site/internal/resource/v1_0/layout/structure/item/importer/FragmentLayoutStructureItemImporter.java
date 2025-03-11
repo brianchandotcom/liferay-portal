@@ -5,11 +5,11 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
@@ -29,18 +29,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FragmentLayoutStructureItemImporter
 	implements LayoutStructureItemImporter {
-
-	public FragmentLayoutStructureItemImporter(
-		FragmentCollectionContributorRegistry
-			fragmentCollectionContributorRegistry,
-		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
-		FragmentEntryLocalService fragmentEntryLocalService) {
-
-		_fragmentCollectionContributorRegistry =
-			fragmentCollectionContributorRegistry;
-		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
-		_fragmentEntryLocalService = fragmentEntryLocalService;
-	}
 
 	@Override
 	public LayoutStructureItem addLayoutStructureItem(
@@ -96,7 +84,7 @@ public class FragmentLayoutStructureItemImporter
 			layoutStructureItemImporterContext.getGroupId(),
 			pageFragmentInstanceDefinition);
 
-		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			null, layoutStructureItemImporterContext.getUserId(),
 			layout.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
 			layoutStructureItemImporterContext.getSegmentsExperienceId(),
@@ -119,7 +107,7 @@ public class FragmentLayoutStructureItemImporter
 					pageFragmentInstanceDefinition.getFragmentReference();
 
 			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.
+				FragmentEntryLocalServiceUtil.
 					fetchFragmentEntryByExternalReferenceCode(
 						itemExternalReference.getExternalReferenceCode(),
 						groupId);
@@ -133,13 +121,8 @@ public class FragmentLayoutStructureItemImporter
 			(DefaultFragmentReference)
 				pageFragmentInstanceDefinition.getFragmentReference();
 
-		return _fragmentCollectionContributorRegistry.getFragmentEntry(
+		return FragmentCollectionContributorRegistryUtil.getFragmentEntry(
 			defaultFragmentReference.getDefaultFragmentKey());
 	}
-
-	private final FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
-	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-	private final FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

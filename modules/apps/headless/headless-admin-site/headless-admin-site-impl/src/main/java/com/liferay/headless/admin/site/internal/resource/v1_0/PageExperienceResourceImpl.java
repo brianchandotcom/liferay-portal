@@ -5,9 +5,6 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.CollectionItemLayoutStructureItemImporter;
@@ -256,9 +253,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			new FragmentDropZoneLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
 			PageElement.Type.FRAGMENT,
-			new FragmentLayoutStructureItemImporter(
-				_fragmentCollectionContributorRegistry,
-				_fragmentEntryLinkLocalService, _fragmentEntryLocalService));
+			new FragmentLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
 			PageElement.Type.ROW, new RowLayoutStructureItemImporter());
 	}
@@ -394,16 +389,6 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		return _pageExperienceDTOConverter.toDTO(
 			layoutPageTemplateStructureRel);
 	}
-
-	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
-
-	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Object Entry Folder REST API
 Bundle-SymbolicName: com.liferay.object.entry.folder.rest.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.object.entry.folder.rest.dto.v1_0,\
+	com.liferay.object.entry.folder.rest.resource.v1_0

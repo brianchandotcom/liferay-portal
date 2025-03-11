@@ -43,7 +43,9 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 	<aui:model-context bean="<%= ddmTemplate %>" model="<%= DDMTemplate.class %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-article">
-		<clay:container-fluid>
+		<clay:container-fluid
+			fullWidth="<%= true %>"
+		>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input cssClass="form-control-inline" defaultLanguageId="<%= (ddmTemplate == null) ? LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()): ddmTemplate.getDefaultLanguageId() %>" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" name="name" placeholder='<%= LanguageUtil.format(request, "untitled-x", "template") %>' wrapperCssClass="article-content-title mb-0" />

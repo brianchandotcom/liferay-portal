@@ -101,7 +101,9 @@ journalEditArticleDisplayContext.setViewAttributes();
 		DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		%>
 
-		<clay:container-fluid>
+		<clay:container-fluid
+			fullWidth="<%= true %>"
+		>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<div class="autofit-row sidebar-section">
@@ -334,6 +336,7 @@ journalEditArticleDisplayContext.setViewAttributes();
 	<div class="contextual-sidebar-content">
 		<clay:container-fluid
 			cssClass="container-view"
+			size="lg"
 		>
 			<div class="article-content-content">
 				<%@ include file="/edit_article_exceptions.jspf" %>

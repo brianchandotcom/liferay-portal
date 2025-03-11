@@ -15,7 +15,9 @@ FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 %>
 
 <nav class="component-tbar subnav-tbar-light tbar upper-tbar" role="navigation">
-	<clay:container-fluid>
+	<clay:container-fluid
+		fullWidth="<%= true %>"
+	>
 		<ul class="tbar-nav">
 			<li class="tbar-item tbar-item-expand">
 				<div class="tbar-section text-left">

@@ -23,7 +23,7 @@ renderResponse.setTitle(fileEntry.getTitle());
 	navigationItems="<%= dlViewEntryHistoryDisplayContext.getNavigationItems() %>"
 />
 
-<div class="container-fluid container-fluid-max-xl">
+<div class="container-fluid container-fluid-max-xxxl">
 	<liferay-ui:search-container
 		id="articleVersions"
 		searchContainer="<%= dlViewEntryHistoryDisplayContext.getSearchContainer() %>"

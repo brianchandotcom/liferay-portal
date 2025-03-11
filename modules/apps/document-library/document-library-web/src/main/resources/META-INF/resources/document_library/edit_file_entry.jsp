@@ -126,7 +126,9 @@ renderResponse.setTitle(headerTitle);
 	%>
 
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
-		<clay:container-fluid>
+		<clay:container-fluid
+			fullWidth="<%= true %>"
+		>
 			<ul class="m-auto navbar-nav"></ul>
 
 			<ul class="middle navbar-nav">
@@ -142,6 +144,7 @@ renderResponse.setTitle(headerTitle);
 
 <clay:container-fluid
 	cssClass="container-form-lg"
+	size="lg"
 >
 	<c:if test="<%= checkedOut %>">
 

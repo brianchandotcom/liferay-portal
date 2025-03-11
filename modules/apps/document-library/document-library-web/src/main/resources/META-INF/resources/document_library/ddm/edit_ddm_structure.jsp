@@ -51,7 +51,9 @@ renderResponse.setTitle(title);
 		<aui:model-context bean="<%= ddmStructure %>" model="<%= com.liferay.dynamic.data.mapping.model.DDMStructure.class %>" />
 
 		<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
-			<clay:container-fluid>
+			<clay:container-fluid
+				fullWidth="<%= true %>"
+			>
 				<ul class="tbar-nav">
 					<li class="tbar-item tbar-item-expand">
 						<aui:input cssClass="form-control-inline" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "metadata-set") %>' wrapperCssClass="mb-0" />

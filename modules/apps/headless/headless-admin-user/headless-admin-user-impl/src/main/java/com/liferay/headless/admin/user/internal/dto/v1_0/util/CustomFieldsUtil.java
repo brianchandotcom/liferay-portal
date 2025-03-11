@@ -84,80 +84,57 @@ public class CustomFieldsUtil {
 			companyId, className);
 
 		for (CustomField customField : customFields) {
-			String name = customField.getName();
+			String fieldName = customField.getName();
 
-			int attributeType = expandoBridge.getAttributeType(
-				customField.getName());
+			int attributeType = expandoBridge.getAttributeType(fieldName);
 
 			CustomValue customValue = customField.getCustomValue();
 
 			Object data = customValue.getData();
 
 			if (ExpandoColumnConstants.DATE == attributeType) {
-				map.put(name, _parseDate(String.valueOf(data)));
-
-				continue;
+				map.put(fieldName, _parseDate(String.valueOf(data)));
 			}
-
-			if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toDoubleArray));
-
-				continue;
+			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
+				map.put(fieldName, _toArray(data, ArrayUtil::toDoubleArray));
 			}
-
-			if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toFloatArray));
-
-				continue;
+			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
+				map.put(fieldName, _toArray(data, ArrayUtil::toFloatArray));
 			}
-
-			if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
+			else if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 				Geo geo = customValue.getGeo();
 
 				map.put(
-					name,
+					fieldName,
 					JSONUtil.put(
 						"latitude", geo.getLatitude()
 					).put(
 						"longitude", geo.getLongitude()
 					).toString());
-
-				continue;
 			}
-
-			if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toIntArray));
-
-				continue;
+			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
+				map.put(fieldName, _toArray(data, ArrayUtil::toIntArray));
 			}
-
-			if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
+			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
 				map.put(
-					name,
+					fieldName,
 					_toArray(
 						data,
 						(Function<Collection<Number>, Serializable>)
 							ArrayUtil::toLongArray));
-
-				continue;
 			}
-
-			if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toStringArray));
-
-				continue;
+			else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
+				map.put(fieldName, _toArray(data, ArrayUtil::toStringArray));
 			}
-
-			if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
+			else if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
 				map.put(
-					name,
+					fieldName,
 					(Serializable)LocalizedMapUtil.getLocalizedMap(
 						locale, (String)data, customValue.getData_i18n()));
-
-				continue;
 			}
-
-			map.put(name, (Serializable)data);
+			else {
+				map.put(fieldName, (Serializable)data);
+			}
 		}
 
 		return map;

@@ -51,9 +51,15 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {
-							dropdownItem.setHref(
+							dropdownItem.putData("action", "createAsset");
+							dropdownItem.putData(
+								"redirect",
 								getAddStructuredContentItemURL(
 									objectDefinition.getObjectDefinitionId()));
+							dropdownItem.putData(
+								"title",
+								objectDefinition.getLabel(
+									themeDisplay.getLocale()));
 							dropdownItem.setIcon("forms");
 							dropdownItem.setLabel(
 								objectDefinition.getLabel(

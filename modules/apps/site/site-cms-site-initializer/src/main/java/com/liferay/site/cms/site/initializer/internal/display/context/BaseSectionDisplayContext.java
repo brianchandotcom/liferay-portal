@@ -100,13 +100,11 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	protected String getAddStructuredContentItemURL(long objectDefinitionId) {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(themeDisplay.getPortalURL());
 		sb.append(themeDisplay.getPathMain());
-		sb.append("/cms/add_structured_content_item?groupId=");
-		sb.append(themeDisplay.getScopeGroupId());
-		sb.append("&objectDefinitionId=");
+		sb.append("/cms/add_structured_content_item?objectDefinitionId=");
 		sb.append(objectDefinitionId);
 
 		return sb.toString();

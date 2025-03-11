@@ -1,0 +1,10 @@
+{
+	"friendlyURL": "/my-experience",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "My Experience"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

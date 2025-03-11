@@ -19,6 +19,7 @@
 				"definition": {
 					"indexed": true,
 					"layout": {
+						"widthType": "Fixed"
 					},
 					"name": "Product Lists Page"
 				},
@@ -46,19 +47,11 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"backgroundFragmentImage": {
-											"title": {
-												"value": "glasses-in-front-of-leaf-small"
-											},
-											"url": {
-												"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/glasses_in_front_of_leaf_small.png$]"
-											}
-										}
 									},
 									"widgetInstance": {
 										"widgetConfig": {
 											"assetCategoryId": "0",
-											"displayStyle": "ddmTemplate_Product Category Banner",
+											"displayStyle": "default",
 											"displayStyleGroupId": "[$GROUP_ID$]",
 											"displayStyleGroupKey": "[$GROUP_KEY$]",
 											"useAssetCategory": "false"
@@ -248,7 +241,7 @@
 														"widgetConfig": {
 															"cpContentListRendererKey": "list-default",
 															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
-															"displayStyle": "ddmTemplate_Product Search Results",
+															"displayStyle": "ddmTemplate_PRODUCT-SEARCH-RESULTS",
 															"displayStyleGroupId": "[$GROUP_ID$]",
 															"displayStyleGroupKey": "[$GROUP_KEY$]",
 															"grouped--cpTypeListEntryRendererKey": "list-entry-default",

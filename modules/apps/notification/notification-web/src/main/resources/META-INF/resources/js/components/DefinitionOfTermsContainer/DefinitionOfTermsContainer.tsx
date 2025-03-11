@@ -59,8 +59,11 @@ export default function DefinitionOfTermsContainer({
 					displayType="info"
 					title={`${Liferay.Language.get('info')}:`}
 				>
-					{Liferay.Language.get(
-						'this-object-includes-translatable-fields.-notification-terms-always-use-the-object-entrys-default-language'
+					{Liferay.Util.sub(
+						Liferay.Language.get(
+							'this-object-includes-translatable-fields-.x'
+						),
+						Liferay.Language.get('notification-terms')
 					)}
 				</ClayAlert>
 			)}

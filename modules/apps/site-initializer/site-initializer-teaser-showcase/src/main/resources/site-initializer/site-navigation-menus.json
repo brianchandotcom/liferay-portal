@@ -105,6 +105,11 @@
 		"externalReferenceCode": "HEADER-PAGE",
 		"menuItems": [
 			{
+				"friendlyURL": "/products",
+				"name": "Products",
+				"type": "layout"
+			},
+			{
 				"friendlyURL": "/about-us",
 				"name": "About Us",
 				"type": "layout"
@@ -115,6 +120,11 @@
 				"type": "layout"
 			},
 			{
+				"friendlyURL": "/faq",
+				"name": "FAQ",
+				"type": "layout"
+			},
+			{
 				"friendlyURL": "/careers",
 				"name": "Careers",
 				"type": "layout"
@@ -122,16 +132,6 @@
 			{
 				"friendlyURL": "/contact-us",
 				"name": "Contact Us",
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/faq",
-				"name": "FAQ",
-				"type": "layout"
-			},
-			{
-				"friendlyURL": "/products",
-				"name": "Products",
 				"type": "layout"
 			}
 		],

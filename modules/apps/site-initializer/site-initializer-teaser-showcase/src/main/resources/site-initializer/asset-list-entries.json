@@ -127,7 +127,6 @@
 		}
 	},
 	{
-		"externalReferenceCode": "BLOGS_COLLECTION",
 		"title": "Blogs",
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.blogs.model.BlogsEntry",

@@ -118,9 +118,11 @@ export function Conditions({
 						displayType="info"
 						title={`${Liferay.Language.get('info')}:`}
 					>
-						{Liferay.Language.get(
-							'this-object-includes-translatable-fields.-validations-always-use-the-object-entrys-default-language'
-						)}
+						{`${Liferay.Language.get(
+							'this-object-includes-translatable-fields'
+						)} ${Liferay.Language.get(
+							'validations-always-use-the-object-entrys-default-language'
+						)}`}
 					</ClayAlert>
 				)}
 

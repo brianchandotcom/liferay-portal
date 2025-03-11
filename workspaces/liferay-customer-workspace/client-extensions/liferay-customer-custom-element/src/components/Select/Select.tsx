@@ -17,12 +17,7 @@ import './Select.css';
 
 import PopoverIconButton from '~/features/project/components/PopoverIconButton';
 import i18n from '~/utils/I18n';
-
-interface IOption {
-	disabled?: boolean;
-	label: string;
-	value: string | number;
-}
+import {IOption} from '~/utils/types';
 
 interface IProps {
 	badgeClassName?: string;

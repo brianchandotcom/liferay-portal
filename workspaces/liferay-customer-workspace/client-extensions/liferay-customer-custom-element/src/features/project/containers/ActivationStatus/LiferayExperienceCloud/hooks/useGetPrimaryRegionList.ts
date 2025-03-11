@@ -7,10 +7,11 @@ import {useMemo} from 'react';
 import {LIST_TYPES} from '~/features/project/utils/constants';
 import SearchBuilder from '~/lib/SearchBuilder';
 import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
+import {IOption} from '~/utils/types';
 
 const listTypePrimaryRegions = LIST_TYPES.lxcPrimaryRegion;
 
-export default function useGetPrimaryRegionList() {
+export default function useGetPrimaryRegionList(): IOption[] {
 	const {data} = useGetListTypeDefinitions({
 		filter: SearchBuilder.eq('name', listTypePrimaryRegions),
 	});

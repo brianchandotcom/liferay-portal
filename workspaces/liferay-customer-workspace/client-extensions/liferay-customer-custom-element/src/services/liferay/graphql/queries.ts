@@ -67,10 +67,10 @@ export const addBusinessEvent = gql`
 				type: "C_BusinessEvent"
 				path: "/c/businessevents/"
 			) {
+			associatedTickets
 			currentLiferayVersion
 			description
 			eventType
-			impactedZendeskTicketIds
 			name
 			newLiferayVersione
 			targetGoLiveDateTime

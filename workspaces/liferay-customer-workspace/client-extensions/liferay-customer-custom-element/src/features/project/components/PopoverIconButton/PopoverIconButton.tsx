@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import Button from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
 
 type Writeable<T> = {-readonly [P in keyof T]: T[P]};
@@ -32,16 +33,23 @@ const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 			onClick={(event) => event.stopPropagation()}
 			size="lg"
 			trigger={
-				<ClayButtonWithIcon
+				<Button
 					aria-labelledby="Info Icon"
 					className="text-brand-primary-darken-2"
 					displayType={null}
 					onClick={(event) => event.stopPropagation()}
 					size={iconSize}
-					symbol={
-						isSubscriptionCard ? 'question-circle' : 'info-circle'
-					}
-				/>
+				>
+					<span>
+						<ClayIcon
+							symbol={
+								isSubscriptionCard
+									? 'question-circle'
+									: 'info-circle'
+							}
+						/>
+					</span>
+				</Button>
 			}
 		>
 			{formatedHTML ? (

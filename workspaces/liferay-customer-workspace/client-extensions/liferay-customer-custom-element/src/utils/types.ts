@@ -52,10 +52,14 @@ export interface IBusinessEvent {
 		key: string;
 		name: string;
 	};
+	r_accountEntryToBusinessEvents_accountEntryId?: number;
 	targetGoLiveDate?: string;
 	targetGoLiveDateTime?: string;
 	targetGoLiveTime?: string;
-	timeZone?: string;
+	timeZone?: {
+		key: string;
+		name: string;
+	};
 }
 
 export interface IKoroneikiAccount {
@@ -79,6 +83,12 @@ export interface IKoroneikiAccount {
 	slaFuture?: string;
 	slaFutureStartDate?: string;
 	status: string;
+}
+
+export interface IOption {
+	disabled?: boolean;
+	label: string;
+	value: string | number;
 }
 
 export interface IOrganizationBrief {

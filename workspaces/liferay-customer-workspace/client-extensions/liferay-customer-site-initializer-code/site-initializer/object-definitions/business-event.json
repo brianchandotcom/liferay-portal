@@ -160,6 +160,27 @@
 		},
 		{
 			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Associated Tickets"
+			},
+			"localized": false,
+			"name": "associatedTickets",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
 			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -212,27 +233,6 @@
 			},
 			"localized": false,
 			"name": "feedback",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Impacted Zendesk Ticket Ids"
-			},
-			"localized": false,
-			"name": "impactedZendeskTicketIds",
 			"objectFieldSettings": [
 			],
 			"readOnly": "false",

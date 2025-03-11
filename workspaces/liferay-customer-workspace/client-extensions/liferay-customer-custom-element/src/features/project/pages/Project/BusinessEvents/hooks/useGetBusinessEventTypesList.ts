@@ -7,10 +7,14 @@ import {useMemo} from 'react';
 import {LIST_TYPES} from '~/features/project/utils/constants';
 import SearchBuilder from '~/lib/SearchBuilder';
 import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
+import {IOption} from '~/utils/types';
 
 const listTypeBusinessEventTypes = LIST_TYPES.businessEventTypes;
 
-export default function useGetBusinessEventTypesList() {
+export default function useGetBusinessEventTypesList(): {
+	businessEventTypesList: IOption[];
+	loading: boolean;
+} {
 	const {data, loading} = useGetListTypeDefinitions({
 		filter: SearchBuilder.eq('name', listTypeBusinessEventTypes),
 	});

@@ -7,10 +7,14 @@ import {useMemo} from 'react';
 import {LIST_TYPES} from '~/features/project/utils/constants';
 import SearchBuilder from '~/lib/SearchBuilder';
 import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
+import {IOption} from '~/utils/types';
 
 const listTypeGMTTimeZones = LIST_TYPES.gmtTimeZones;
 
-export default function useGetGMTTimeZonesList() {
+export default function useGetGMTTimeZonesList(): {
+	gmtTimeZonesList: IOption[];
+	loading: boolean;
+} {
 	const {data, loading} = useGetListTypeDefinitions({
 		filter: SearchBuilder.eq('name', listTypeGMTTimeZones),
 	});

@@ -27,7 +27,12 @@ public class ComponentEnabler {
 	@Activate
 	protected void activate(ComponentContext componentContext) {
 		if (Objects.equals(
-				PropsValues.DL_STORE_IMPL, S3Store.class.getName())) {
+				PropsValues.DL_STORE_IMPL, IBMS3Store.class.getName())) {
+
+			componentContext.enableComponent(IBMS3Store.class.getName());
+		}
+		else if (Objects.equals(
+					PropsValues.DL_STORE_IMPL, S3Store.class.getName())) {
 
 			componentContext.enableComponent(S3Store.class.getName());
 
@@ -35,11 +40,6 @@ public class ComponentEnabler {
 				Store.class, "(store.type=" + PropsValues.DL_STORE_IMPL + ")",
 				componentContext,
 				AbortedMultipartUploadCleanerSchedulerJobConfiguration.class);
-		}
-		else if (Objects.equals(
-				PropsValues.DL_STORE_IMPL, IBMS3Store.class.getName())) {
-
-			componentContext.enableComponent(IBMS3Store.class.getName());
 		}
 	}
 

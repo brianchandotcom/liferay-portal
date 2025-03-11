@@ -46,6 +46,7 @@ import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -434,9 +435,11 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 				shipment.getCustomFields(),
 				contextAcceptLanguage.getPreferredLocale());
 
-		if (expandoBridgeAttributes != null) {
-			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		if (expandoBridgeAttributes == null) {
+			expandoBridgeAttributes = new HashMap<>();
 		}
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 
 		_commerceShipmentService.updateCommerceShipment(
 			commerceShipment.getCommerceShipmentId(),

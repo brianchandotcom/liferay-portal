@@ -1,5 +1,3 @@
-import * as http from 'http';
-
 <#list apiContexts?sort_by("className") as apiContext>
 	import {${apiContext.className}} from './${apiContext.className?uncap_first}';
 </#list>
@@ -15,9 +13,9 @@ import * as http from 'http';
 
 export class HttpError extends Error {
 	constructor(
-		public response: http.IncomingMessage,
 		public body: any,
-		public statusCode?: number
+		public response: Response,
+		public statusCode: number
 	) {
 		super('HTTP request failed');
 		this.name = 'HttpError';

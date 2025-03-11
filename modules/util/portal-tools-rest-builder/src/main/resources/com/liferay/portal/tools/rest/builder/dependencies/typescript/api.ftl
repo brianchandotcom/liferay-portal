@@ -1,7 +1,3 @@
-import http from 'http';
-
-import localVarRequest from 'request';
-/* tslint:disable:no-unused-locals */
 import {ObjectSerializer} from '../model/models';
 
 <#if importClasses??>
@@ -15,7 +11,6 @@ import {ObjectSerializer} from '../model/models';
 </#if>
 
 import {HttpError<#if importRequestFile??>, RequestFile</#if>} from './apis';
-const defaultBasePath = 'http://localhost';
 
 /**
  * @author ${configYAML.author}
@@ -23,7 +18,7 @@ const defaultBasePath = 'http://localhost';
  */
 
 export class ${className} {
-	protected _basePath = defaultBasePath;
+	protected _basePath: string;
 	protected _defaultHeaders: any = {};
 
 	constructor(basePath?: string) {
@@ -51,37 +46,21 @@ export class ${className} {
 					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
 				</#list>
 			</#if>
-			options: {
-				headers: {[name: string]: string};
-			} = {headers: {}}
+			headers: {[name: string]: string} = {}
 		): Promise<{
 			<#if operationData.returnDataType??>
 				body: ${operationData.returnDataType};
 			<#else>
 				body?: any;
 			</#if>
-			response: http.IncomingMessage;
+			response: Response;
 		}> {
 			const localVarPath = this._basePath + '${operationData.path}'
 				<#list operationData.parameters as parameter>
 					<#if stringUtil.equals(parameter.type, "path")>
-						.replace(
-							'{' + '${parameter.name}' + '}',
-							encodeURIComponent(String(${parameter.name}))
-						)
+						.replace('{${parameter.name}}',encodeURIComponent(${parameter.name}))
 					</#if>
 				</#list>;
-			const localVarQueryParameters: any = {};
-			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-			<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
-				const responseContentTypes = [<#list operationData.responseContentTypes as responseContentType>'${responseContentType}'<#sep>, </#list>];
-				if (responseContentTypes.indexOf('application/json') >= 0) {
-					localVarHeaderParams.Accept = 'application/json';
-				} else {
-					localVarHeaderParams.Accept = responseContentTypes.join(',');
-				}
-			</#if>
-			const localVarFormParams: any = {};
 
 			<#if operationData.parameters??>
 				<#list operationData.parameters as parameter>
@@ -92,77 +71,91 @@ export class ${className} {
 					</#if>
 				</#list>
 			</#if>
+
+			const localVarQueryParameters: any = {};
+
 			<#list operationData.parameters as parameter>
 				<#if stringUtil.equals(parameter.type, "query")>
 					if (${parameter.name} !== undefined) {
-						localVarQueryParameters['${parameter.name}'] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
+						localVarQueryParameters['${parameter.name}'] = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
 					}
 				</#if>
 			</#list>
-			(<any>Object).assign(localVarHeaderParams, options.headers);
 
-			<#assign localVarUseFormData = false />
+			const queryString = Object.keys(localVarQueryParameters).length
+				? '?' + new URLSearchParams(localVarQueryParameters).toString()
+				: '';
+
+			const localVarFormParams: any = {};
+
 			<#list operationData.parameters as parameter>
 				<#if stringUtil.equals(parameter.type, "form")>
 					if (${parameter.name} !== undefined) {
 						<#if stringUtil.equals(parameter.dataType, "RequestFile")>
-							<#assign localVarUseFormData = true />
 							localVarFormParams['${parameter.name}'] = ${parameter.name};
 						<#else>
-							localVarFormParams['${parameter.name}'] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
+							localVarFormParams['${parameter.name}'] = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
 						</#if>
 					}
 				</#if>
 			</#list>
 
-			const localVarRequestOptions: localVarRequest.Options = {
-				<#list operationData.parameters as parameter>
-					<#if stringUtil.equals(parameter.type, "body")>
-						body: ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"),
-					</#if>
-				</#list>
-				headers: localVarHeaderParams,
-				json: true,
-				method: '${operationData.httpMethod}',
-				qs: localVarQueryParameters,
-				uri: localVarPath,
-			};
+			let body;
+
+			<#list operationData.parameters as parameter>
+				<#if stringUtil.equals(parameter.type, "body")>
+					body = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
+				</#if>
+			</#list>
 
 			if (Object.keys(localVarFormParams).length) {
-				<#if localVarUseFormData>
-					(<any>localVarRequestOptions).formData = localVarFormParams;
-				<#else>
-					localVarRequestOptions.form = localVarFormParams;
-				</#if>
+				const formData = new FormData();
+				for (const key in localVarFormParams) {
+					formData.append(key, localVarFormParams[key]);
+				}
+				body = formData;
 			}
-			return new Promise<{ <#if operationData.returnDataType??> body: ${operationData.returnDataType};<#else> body?: any;</#if> response: http.IncomingMessage;}>((resolve, reject) => {
-				localVarRequest(localVarRequestOptions, (error, response, body) => {
-					if (error) {
-						reject(error);
-					}
-					else {
-						if (
-							response.statusCode &&
-							response.statusCode >= 200 &&
-							response.statusCode <= 299
-						) {
-							<#if operationData.returnDataType??>
-								body = ObjectSerializer.deserialize(body, "${operationData.returnDataType}");
+
+			const response = await fetch(localVarPath + queryString, {
+				method: '${operationData.httpMethod}',
+				headers:
+					Object.assign({}, this._defaultHeaders, headers
+					<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
+						,!headers.Accept ? {
+							<#if operationData.responseContentTypes?seq_contains("application/json")>
+								Accept: 'application/json'
+							<#else>
+								Accept: '${operationData.responseContentTypes[0]}'
 							</#if>
-							resolve({body, response});
-						}
-						else {
-							reject(
-								new HttpError(
-									body,
-									response,
-									response.statusCode
-								)
-							);
-						}
-					}
-				});
+						} : {}
+					</#if>
+				),
+				body: body
 			});
+
+			if (response.ok) {
+                const contentType = response.headers.get('content-type') || '';
+
+                <#if operationData.returnDataType??>
+                    if (contentType.includes('application/json')) {
+                        return {body: ObjectSerializer.deserialize(await response.json(), "${operationData.returnDataType}"), response};
+                    } else {
+                        return {body: await response.text() as any, response};
+                    }
+                <#else>
+                    if (contentType.includes('application/json')) {
+                        return {body: await response.json(), response};
+                    } else {
+                        return {body: await response.text(), response};
+                    }
+                </#if>
+            } else {
+                throw new HttpError(
+                    await response.text(),
+                    response,
+                    response.status
+                );
+            }
 		}
 	</#list>
 }

@@ -14,6 +14,13 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -245,6 +252,29 @@ public class ContentObjectFragmentRendererTest {
 	}
 
 	@Test
+	public void testRenderDraftContentInViewMode() throws Exception {
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
+
+		String content = _render(fragmentEntryLink, _journalArticle);
+
+		Assert.assertTrue(
+			content.contains(
+				_journalArticle.getTitle(LocaleUtil.getSiteDefault())));
+
+		String newTitle = RandomTestUtil.randomString();
+
+		JournalArticle draftArticle = JournalTestUtil.updateArticle(
+			_journalArticle, newTitle, _journalArticle.getContent(), true,
+			false, _serviceContext);
+
+		content = _render(fragmentEntryLink, draftArticle);
+
+		Assert.assertTrue(
+			content.contains(
+				draftArticle.getTitle(LocaleUtil.getSiteDefault())));
+	}
+
+	@Test
 	public void testRenderRestoredContentInEditMode() throws Exception {
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink();
 
@@ -399,6 +429,55 @@ public class ContentObjectFragmentRendererTest {
 		return themeDisplay;
 	}
 
+	private String _render(
+			FragmentEntryLink fragmentEntryLink, JournalArticle journalArticle)
+		throws Exception {
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.VIEW);
+		defaultFragmentRendererContext.setContextInfoItemReference(
+			new InfoItemReference(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey()));
+
+		HttpServletRequest httpServletRequest = _getMockHttpServletRequest();
+
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, JournalArticle.class.getName(),
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			journalArticle.getResourcePrimKey());
+
+		infoItemIdentifier.setVersion(
+			String.valueOf(journalArticle.getVersion()));
+
+		Object infoItem = infoItemObjectProvider.getInfoItem(
+			infoItemIdentifier);
+
+		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
+
+		InfoItemDetailsProvider infoItemDetailsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, JournalArticle.class.getName());
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+			infoItemDetailsProvider.getInfoItemDetails(infoItem));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_fragmentRenderer.render(
+			defaultFragmentRendererContext, httpServletRequest,
+			mockHttpServletResponse);
+
+		return mockHttpServletResponse.getContentAsString();
+	}
+
 	private String _render(FragmentEntryLink fragmentEntryLink, String mode)
 		throws Exception {
 
@@ -434,6 +513,9 @@ public class ContentObjectFragmentRendererTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private JournalArticle _journalArticle;
 

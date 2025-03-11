@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {API} from '@liferay/object-js-components-web';
@@ -19,6 +18,7 @@ import selectStructureLocalizedLabel from '../selectors/selectStructureLocalized
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import StructureService from '../services/StructureService';
+import AsyncButton from './AsyncButton';
 
 export default function ManagementBar() {
 	const label = useSelector(selectStructureLocalizedLabel);
@@ -132,13 +132,11 @@ function SaveButton() {
 	};
 
 	return (
-		<ClayButton
+		<AsyncButton
 			displayType={status === 'published' ? 'primary' : 'secondary'}
+			label={Liferay.Language.get('save')}
 			onClick={onSave}
-			size="sm"
-		>
-			{Liferay.Language.get('save')}
-		</ClayButton>
+		/>
 	);
 }
 
@@ -186,13 +184,11 @@ function PublishButton() {
 	};
 
 	return (
-		<ClayButton
+		<AsyncButton
 			disabled={status === 'new'}
 			displayType="primary"
+			label={Liferay.Language.get('publish')}
 			onClick={onPublish}
-			size="sm"
-		>
-			{Liferay.Language.get('publish')}
-		</ClayButton>
+		/>
 	);
 }

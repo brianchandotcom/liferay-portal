@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -152,10 +152,10 @@ function BulkActions({
 				selectable,
 				sidePanelId,
 			}) => (
-				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
+				<nav className="management-bar management-bar-primary navbar navbar-expand-md">
 					<div
 						className={classNames(
-							'container-fluid py-1',
+							'container-fluid',
 							!fluid && 'px-0'
 						)}
 					>
@@ -225,16 +225,14 @@ function BulkActions({
 
 						{showBulkActionsManagementBarActions && (
 							<ul className="bulk-actions navbar-nav">
-								{bulkActions.map((actionDefinition, i) => (
+								{bulkActions.map((actionDefinition) => (
 									<li
 										className="nav-item"
 										key={actionDefinition.label}
 									>
-										<button
-											className={classNames(
-												'btn btn-monospaced btn-link',
-												i > 0 && 'ml-1'
-											)}
+										<ClayButton
+											className="nav-link"
+											displayType="unstyled"
 											onClick={() =>
 												handleActionClick(
 													actionDefinition,
@@ -245,12 +243,17 @@ function BulkActions({
 													sidePanelId
 												)
 											}
-											type="button"
 										>
-											<ClayIcon
-												symbol={actionDefinition.icon}
-											/>
-										</button>
+											<span className="inline-item inline-item-before">
+												<ClayIcon
+													symbol={
+														actionDefinition.icon
+													}
+												/>
+											</span>
+
+											{actionDefinition.label}
+										</ClayButton>
 									</li>
 								))}
 
@@ -263,8 +266,8 @@ function BulkActions({
 													aria-label={Liferay.Language.get(
 														'actions'
 													)}
+													className="nav-link nav-link-monospaced"
 													displayType="unstyled"
-													small
 													symbol="ellipsis-v"
 													title={Liferay.Language.get(
 														'actions'

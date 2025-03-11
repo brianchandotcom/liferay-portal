@@ -78,8 +78,7 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	enabled = false,
+	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
 	property = "store.type=com.liferay.portal.store.s3.IBMS3Store",
 	service = Store.class
 )

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.sharing.exception.DuplicateSharingEntryExternalReferenceCodeException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.NoSuchEntryException;
@@ -179,8 +180,7 @@ public class SharingEntryServiceTest {
 	public void testAddOrUpdateSharingEntryWithExpirationDateInThePast()
 		throws Exception {
 
-		_registerSharingPermissionChecker(
-			SharingEntryAction.UPDATE, SharingEntryAction.VIEW);
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
 		Instant instant = Instant.now();
 
@@ -191,6 +191,69 @@ public class SharingEntryServiceTest {
 			_group.getGroupId(), true,
 			Collections.singletonList(SharingEntryAction.VIEW), expirationDate,
 			_serviceContext);
+	}
+
+	@Test
+	public void testAddOrUpdateSharingEntryWithExternalReferenceCode()
+		throws Exception {
+
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_sharingEntryService.addOrUpdateSharingEntry(
+			externalReferenceCode, _toUser.getUserId(), _classNameId,
+			_group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		SharingEntry sharingEntry =
+			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNotNull(sharingEntry);
+		Assert.assertEquals(
+			externalReferenceCode, sharingEntry.getExternalReferenceCode());
+	}
+
+	@Test(expected = DuplicateSharingEntryExternalReferenceCodeException.class)
+	public void testAddSharingEntryWithExistingExternalReferenceCode()
+		throws Exception {
+
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_sharingEntryService.addSharingEntry(
+			externalReferenceCode, _toUser.getUserId(), _classNameId,
+			_group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		_sharingEntryService.addSharingEntry(
+			externalReferenceCode, _toUser.getUserId(), _classNameId,
+			_group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+	}
+
+	@Test
+	public void testAddSharingEntryWithExternalReferenceCode()
+		throws Exception {
+
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_sharingEntryService.addSharingEntry(
+			externalReferenceCode, _toUser.getUserId(), _classNameId,
+			_group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		SharingEntry sharingEntry =
+			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNotNull(sharingEntry);
+		Assert.assertEquals(
+			externalReferenceCode, sharingEntry.getExternalReferenceCode());
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -436,6 +499,39 @@ public class SharingEntryServiceTest {
 		Assert.assertNull(
 			_sharingEntryLocalService.fetchSharingEntry(
 				sharingEntry.getSharingEntryId()));
+	}
+
+	@Test
+	public void testDeleteSharingEntryByExternalReferenceCode()
+		throws Exception {
+
+		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_sharingEntryLocalService.addSharingEntry(
+			externalReferenceCode, _fromUser.getUserId(), _toUser.getUserId(),
+			_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+		Assert.assertNotNull(
+			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, _group.getGroupId()));
+
+		_sharingEntryService.deleteSharingEntryByExternalReferenceCode(
+			externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNull(
+			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, _group.getGroupId()));
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testDeleteSharingEntryByExternalReferenceCodeWithNonexistingExternalReferenceCode()
+		throws Exception {
+
+		_sharingEntryService.deleteSharingEntryByExternalReferenceCode(
+			RandomTestUtil.randomString(), _group.getGroupId());
 	}
 
 	@Test(expected = PrincipalException.class)

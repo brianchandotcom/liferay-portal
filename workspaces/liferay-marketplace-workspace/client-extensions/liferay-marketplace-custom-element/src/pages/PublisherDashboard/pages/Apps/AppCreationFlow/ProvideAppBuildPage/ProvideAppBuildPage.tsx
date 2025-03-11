@@ -35,7 +35,7 @@ import {
 } from '../../../../../../utils/api';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
-import {getOfferingTypes} from './constants/offeringTypesDescriptions';
+import {getOfferingTypes} from './constants/offeringTypes';
 
 import './ProvideAppBuildPage.scss';
 import {
@@ -555,9 +555,9 @@ export function ProvideAppBuildPage({
 						<div className="provide-app-build-page-app-build-radio-container">
 							<RadioCard
 								description={i18n.translate(
-									appType.value === ProductType.CLOUD
-										? 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
-										: 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
+									appType.value === ProductType.DXP
+										? 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
+										: 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
 								)}
 								icon="upload"
 								onChange={() =>
@@ -572,11 +572,11 @@ export function ProvideAppBuildPage({
 									appBuild === ProductUploadType.ZIP_UPLOAD
 								}
 								title={
-									appType.value === ProductType.CLOUD
-										? i18n.translate('via-zip-upload')
-										: i18n.translate(
+									appType.value === ProductType.DXP
+										? i18n.translate(
 												'via-liferay-plugin-packages'
 											)
+										: i18n.translate('via-zip-upload')
 								}
 								tooltip={ReactDOMServer.renderToString(
 									<span>
@@ -637,20 +637,20 @@ export function ProvideAppBuildPage({
 
 					<Section
 						description={i18n.translate(
-							appType.value === ProductType.CLOUD
-								? 'select-a-local-file-to-upload'
-								: 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
+							appType.value === ProductType.DXP
+								? 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
+								: 'select-a-local-file-to-upload'
 						)}
 						label={i18n.translate(
-							appType.value === ProductType.CLOUD
-								? 'upload-zip-files'
-								: 'upload-liferay-plugin-packages'
+							appType.value === ProductType.DXP
+								? 'upload-liferay-plugin-packages'
+								: 'upload-zip-files'
 						)}
 						required
 						tooltip={i18n.translate(
-							appType.value === ProductType.CLOUD
-								? 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
-								: 'only-jar-war-files-are-allowed-max-file-size-is-500mb'
+							appType.value === ProductType.DXP
+								? 'only-jar-war-files-are-allowed-max-file-size-is-500mb'
+								: 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
 						)}
 						tooltipText={i18n.translate('more-info')}
 					>

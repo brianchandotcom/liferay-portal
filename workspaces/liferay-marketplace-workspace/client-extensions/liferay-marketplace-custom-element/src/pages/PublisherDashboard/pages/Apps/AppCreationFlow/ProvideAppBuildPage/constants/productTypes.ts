@@ -21,8 +21,26 @@ export const ProductTypeOptions: ProductTypeOption[] = [
 	},
 	{
 		description:
+			'Modular, decoupled components that allow developers to customize and extend Liferay DXP’s functionality without altering its core code. They interact with Liferay via headless APIs, providing flexibility and maintainability.',
+		label: i18n.translate('client-extension'),
+		value: ProductType.CLIENT_EXTENSION,
+	},
+	{
+		description:
+			'Complex app with multiple parts like i.e. OSGI extentions + CX + low-code applications',
+		label: i18n.translate('composite-app'),
+		value: ProductType.COMPOSITE_APP,
+	},
+	{
+		description:
 			'Module-based apps delivered as .lpkg files that the user can install to modify native Liferay behavior.',
 		label: i18n.translate('dxp-app'),
 		value: ProductType.DXP,
+	},
+	{
+		description:
+			'Methods for building business applications faster without needing in-depth coding knowledge (i.e.: fragments , data set, object definitions, etc ',
+		label: i18n.translate('low-code-configuration'),
+		value: ProductType.LOW_CODE_CONFIGURATION,
 	},
 ];

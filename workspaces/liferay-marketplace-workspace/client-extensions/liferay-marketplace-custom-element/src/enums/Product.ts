@@ -24,6 +24,12 @@ export enum PRODUCT_LICENSE {
 	DXP = 'dxp-license-usage-type',
 }
 
+export enum PRODUCT_OFFERING_TYPES {
+	LIFERAY_PAAS = 'Liferay PaaS',
+	LIFERAY_SAAS = 'Liferay SaaS',
+	LIFERAY_SELF_HOSTED = 'Liferay Self-Hosted',
+}
+
 export enum PRODUCT_PRICE_MODEL {
 	FREE = 'Free',
 	PAID = 'Paid',

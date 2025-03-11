@@ -19,12 +19,21 @@ type UploadAppPackagesComponentProps = {
 };
 
 export const acceptFileTypes = {
+	[ProductType.CLIENT_EXTENSION]: {
+		'application/java-archive': ['.zip'],
+	},
 	[ProductType.CLOUD]: {
+		'application/java-archive': ['.zip'],
+	},
+	[ProductType.COMPOSITE_APP]: {
 		'application/java-archive': ['.zip'],
 	},
 	[ProductType.DXP]: {
 		'application/java-archive': ['.jar'],
 		'application/octet-stream': ['.war'],
+	},
+	[ProductType.LOW_CODE_CONFIGURATION]: {
+		'application/java-archive': ['.zip'],
 	},
 };
 
@@ -103,12 +112,12 @@ export function UploadAppPackagesComponent({
 					}
 					buttonText={i18n.translate('select-a-file')}
 					description={
-						appType.value === ProductType.CLOUD
+						appType.value === ProductType.DXP
 							? i18n.translate(
-									'only-zip-files-are-allowed-max-file-size-is-500-mb'
+									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 								)
 							: i18n.translate(
-									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
+									'only-zip-files-are-allowed-max-file-size-is-500-mb'
 								)
 					}
 					maxFiles={1}

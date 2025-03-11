@@ -94,6 +94,7 @@ export default {
 	'company-profile': 'Company Profile',
 	'compatible-offering': 'Compatible Offering',
 	'complete-publisher-account-request': 'Complete Publisher Account Request',
+	'composite-app': 'Composite App',
 	'confirm': 'Confirm',
 	'confirm-deactivate-keys': 'Confirm & Deactivate Keys',
 	'confirm-deactivation-terms': 'Confirm Deactivation Terms',
@@ -273,6 +274,7 @@ export default {
 	'list-with-latest-published-apps': 'List with latest published apps',
 	'login-as-a-user-that-has-access-to-a-project-or-contact-your-project-administrator-to-add-you-to-a-project.':
 		'Login as a user that has access to a project or contact your project administrator to add you to a project.',
+	'low-code-configuration': 'Low-Code Configuration',
 	'mac-addresses': 'Mac Addresses',
 	'manage': 'Manage',
 	'manage-all-your-app-purchases-and-subscriptions-in-one-place-read-other-users-reviews-get-notifications-when-updates-are-available-and-get-the-most-out-of-our-apps-catalog':

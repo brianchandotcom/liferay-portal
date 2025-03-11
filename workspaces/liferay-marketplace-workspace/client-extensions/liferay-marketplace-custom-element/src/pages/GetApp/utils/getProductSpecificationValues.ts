@@ -6,7 +6,7 @@
 export function getProductSpecificationValues(
 	productSpecifications: DeliveryProductSpecification[]
 ) {
-	const validValues = [
+	const validSpecificationValues = [
 		'client-extension',
 		'cloud',
 		'composite-app',
@@ -15,7 +15,7 @@ export function getProductSpecificationValues(
 	];
 
 	const productSpecification = productSpecifications.find(({value}) => {
-		return validValues.includes(value.toLowerCase());
+		return validSpecificationValues.includes(value.toLowerCase());
 	}) as DeliveryProductSpecification;
 
 	return productSpecification?.value ?? '';

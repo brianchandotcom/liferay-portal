@@ -12,10 +12,10 @@ import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
@@ -172,8 +172,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				Map<String, Serializable> parameters)
 			throws Exception {
 
-			Assert.assertTrue(
-				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+			Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
 
 			super.create(items, parameters);
 		}
@@ -206,8 +205,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				Map<String, Serializable> parameters)
 			throws Exception {
 
-			Assert.assertTrue(
-				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+			Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
 
 			super.delete(items, parameters);
 		}
@@ -235,8 +233,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				Map<String, Serializable> parameters, String search)
 			throws Exception {
 
-			Assert.assertFalse(
-				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+			Assert.assertFalse(LazyReferencingThreadLocal.isEnabled());
 
 			long siteId = GetterUtil.getLong(parameters.get("siteId"));
 
@@ -265,8 +262,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				Map<String, Serializable> parameters)
 			throws Exception {
 
-			Assert.assertTrue(
-				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+			Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
 
 			super.update(items, parameters);
 		}
@@ -276,8 +272,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				BlogPosting blogPosting, Map<String, Serializable> parameters)
 			throws Exception {
 
-			Assert.assertTrue(
-				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+			Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
 
 			LocalDateTime localDateTime = _toLocalDateTime(
 				blogPosting.getDatePublished());

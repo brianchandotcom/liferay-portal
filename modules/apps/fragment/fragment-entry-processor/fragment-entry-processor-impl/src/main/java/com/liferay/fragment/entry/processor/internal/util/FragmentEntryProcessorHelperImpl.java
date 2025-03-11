@@ -442,16 +442,14 @@ public class FragmentEntryProcessorHelperImpl
 			}
 
 			if (JSONUtil.isEmpty(configJSONObject)) {
-				Object firstItem = list.get(0);
+				return _formatList(
+					list, fragmentEntryProcessorContext.getLocale());
+			}
 
-				Class<?> firstItemClass = firstItem.getClass();
+			String iterationType = configJSONObject.getString("iterationType");
 
-				InfoCollectionTextFormatter<Object>
-					infoCollectionTextFormatter =
-						_getInfoCollectionTextFormatter(
-							firstItemClass.getName());
-
-				return infoCollectionTextFormatter.format(
+			if (Objects.equals(_ITERATION_TYPE_ALL, iterationType)) {
+				return _formatList(
 					list, fragmentEntryProcessorContext.getLocale());
 			}
 
@@ -651,6 +649,17 @@ public class FragmentEntryProcessorHelperImpl
 	@Override
 	public boolean isMappedDisplayPage(JSONObject jsonObject) {
 		return Validator.isNotNull(jsonObject.get("mappedField"));
+	}
+
+	private String _formatList(List<Object> list, Locale locale) {
+		Object firstItem = list.get(0);
+
+		Class<?> firstItemClass = firstItem.getClass();
+
+		InfoCollectionTextFormatter<Object> infoCollectionTextFormatter =
+			_getInfoCollectionTextFormatter(firstItemClass.getName());
+
+		return infoCollectionTextFormatter.format(list, locale);
 	}
 
 	private String _getDateValue(
@@ -910,6 +919,8 @@ public class FragmentEntryProcessorHelperImpl
 	private static final InfoCollectionTextFormatter<Object>
 		_INFO_COLLECTION_TEXT_FORMATTER =
 			new CommaSeparatedInfoCollectionTextFormatter();
+
+	private static final String _ITERATION_TYPE_ALL = "all";
 
 	private static final String _ITERATION_TYPE_LAST = "last";
 

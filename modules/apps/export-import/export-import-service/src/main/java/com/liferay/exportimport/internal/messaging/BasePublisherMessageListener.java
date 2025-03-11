@@ -37,7 +37,8 @@ public abstract class BasePublisherMessageListener implements MessageListener {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
 
-		_safeCloseable = CompanyThreadLocal.lock(user.getCompanyId());
+		SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+			user.getCompanyId());
 
 		PrincipalThreadLocal.setName(userId);
 
@@ -86,13 +87,11 @@ public abstract class BasePublisherMessageListener implements MessageListener {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		return () -> {
-			_safeCloseable.close();
+			safeCloseable.close();
 			PermissionThreadLocal.setPermissionChecker(null);
 			PrincipalThreadLocal.setName(null);
 			ServiceContextThreadLocal.popServiceContext();
 		};
 	}
-
-	private static SafeCloseable _safeCloseable;
 
 }

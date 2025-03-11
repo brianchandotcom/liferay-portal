@@ -124,6 +124,10 @@ export type MaxLengthSettingsField = {
 	};
 };
 
+export type LongTextField = BaseField & {
+	type: 'long-text';
+} & MaxLengthSettingsField;
+
 export type NumericField = BaseField & {
 	type: 'integer';
 } & UniqueValuesSettingsField;
@@ -134,6 +138,7 @@ export type TextField = BaseField & {
 	UniqueValuesSettingsField;
 
 export type Field =
+	| LongTextField
 	| NumericField
 	| TextField
 	| (BaseField & {
@@ -150,7 +155,10 @@ export type Field =
 	  })
 	| (BaseField & {
 			settings: {};
-			type: Exclude<FieldType, ['datetime', 'numeric', 'text', 'upload']>;
+			type: Exclude<
+				FieldType,
+				['datetime', 'long-text', 'numeric', 'text', 'upload']
+			>;
 	  });
 export type FieldType = (typeof FIELD_TYPES)[number];
 

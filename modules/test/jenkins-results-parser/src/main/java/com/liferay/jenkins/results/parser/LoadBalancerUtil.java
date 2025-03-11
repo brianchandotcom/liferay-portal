@@ -454,20 +454,22 @@ public class LoadBalancerUtil {
 			throw new RuntimeException(interruptedException);
 		}
 
-		List<JenkinsMaster> unavailableJenkinsMasters = new ArrayList<>(
-			jenkinsMasters.size());
+		synchronized (_urlPattern) {
+			List<JenkinsMaster> unavailableJenkinsMasters = new ArrayList<>(
+				jenkinsMasters.size());
 
-		for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
-			if (!jenkinsMaster.isAvailable()) {
-				unavailableJenkinsMasters.add(jenkinsMaster);
+			for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+				if (!jenkinsMaster.isAvailable()) {
+					unavailableJenkinsMasters.add(jenkinsMaster);
+				}
 			}
-		}
 
-		jenkinsMasters.removeAll(unavailableJenkinsMasters);
+			jenkinsMasters.removeAll(unavailableJenkinsMasters);
 
-		if (jenkinsMasters.isEmpty()) {
-			throw new RuntimeException(
-				"Unable to communicate with any Jenkins masters");
+			if (jenkinsMasters.isEmpty()) {
+				throw new RuntimeException(
+					"Unable to communicate with any Jenkins masters");
+			}
 		}
 	}
 

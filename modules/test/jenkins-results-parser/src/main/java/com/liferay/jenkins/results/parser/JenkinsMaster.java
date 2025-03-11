@@ -565,19 +565,20 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return _masterURL;
 	}
 
-	public boolean isAvailable() {
+	public synchronized boolean isAvailable() {
 		if ((_availableTimestamp == -1) ||
 			((System.currentTimeMillis() - _availableTimestamp) >
 				_AVAILABLE_TIMEOUT)) {
 
 			try {
 				if (!isBlackListed()) {
-					JenkinsResultsParserUtil.toString(getURL(), false, 0, 0, 0);
+					JenkinsResultsParserUtil.toJSONObject(
+						getURL() + "/api/json?tree=mode", false, 1, 1, 1000);
 
 					_available = true;
 				}
 			}
-			catch (IOException ioException) {
+			catch (Exception exception) {
 				System.out.println(getName() + " is unreachable.");
 
 				_available = false;

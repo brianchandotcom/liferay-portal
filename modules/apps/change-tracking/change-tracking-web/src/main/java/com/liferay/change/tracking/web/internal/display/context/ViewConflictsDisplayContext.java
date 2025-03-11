@@ -459,6 +459,8 @@ public class ViewConflictsDisplayContext {
 						).setParameter(
 							"ctCollectionId", ctEntry.getCtCollectionId()
 						).setParameter(
+							"force", true
+						).setParameter(
 							"modelClassNameId", ctEntry.getModelClassNameId()
 						).setParameter(
 							"modelClassPK", ctEntry.getModelClassPK()

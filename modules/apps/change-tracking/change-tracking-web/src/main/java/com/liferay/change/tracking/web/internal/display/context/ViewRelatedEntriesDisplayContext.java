@@ -71,6 +71,7 @@ public class ViewRelatedEntriesDisplayContext {
 		_ctCollectionId = ParamUtil.getLong(renderRequest, "ctCollectionId");
 		_ctEntryIds = StringUtil.split(
 			ParamUtil.getString(httpServletRequest, "id"), 0L);
+		_force = ParamUtil.getBoolean(renderRequest, "force");
 		_modelClassNameId = ParamUtil.getLong(
 			renderRequest, "modelClassNameId");
 		_modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
@@ -235,6 +236,8 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctEntryIds", StringUtil.merge(_ctEntryIds)
 		).setParameter(
+			"force", _force
+		).setParameter(
 			"modelClassNameId", _modelClassNameId
 		).setParameter(
 			"modelClassPK", _modelClassPK
@@ -283,6 +286,7 @@ public class ViewRelatedEntriesDisplayContext {
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final long[] _ctEntryIds;
 	private final CTEntryLocalService _ctEntryLocalService;
+	private final boolean _force;
 	private final HttpServletRequest _httpServletRequest;
 	private final long _modelClassNameId;
 	private final long _modelClassPK;

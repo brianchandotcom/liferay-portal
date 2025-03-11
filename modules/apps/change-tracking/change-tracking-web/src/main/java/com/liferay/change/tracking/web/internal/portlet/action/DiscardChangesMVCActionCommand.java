@@ -61,6 +61,7 @@ public class DiscardChangesMVCActionCommand
 			actionRequest, "ctCollectionId");
 		long[] ctEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "ctEntryIds"), 0L);
+		boolean force = ParamUtil.getBoolean(actionRequest, "force");
 		long modelClassNameId = ParamUtil.getLong(
 			actionRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(actionRequest, "modelClassPK");
@@ -69,13 +70,13 @@ public class DiscardChangesMVCActionCommand
 			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 				ctCollectionId, modelClassNameId, modelClassPK);
 
-			_discardCTEntry(ctCollectionId, ctEntry);
+			_discardCTEntry(ctCollectionId, ctEntry, force);
 		}
 
 		for (long ctEntryId : ctEntryIds) {
 			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
 
-			_discardCTEntry(ctCollectionId, ctEntry);
+			_discardCTEntry(ctCollectionId, ctEntry, force);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -86,7 +87,7 @@ public class DiscardChangesMVCActionCommand
 	}
 
 	private <T extends BaseModel<T>> void _discardCTEntry(
-			long ctCollectionId, CTEntry ctEntry)
+			long ctCollectionId, CTEntry ctEntry, boolean force)
 		throws Exception {
 
 		if (ctEntry == null) {
@@ -101,8 +102,9 @@ public class DiscardChangesMVCActionCommand
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 		if ((model == null) ||
-			!_ctDisplayRendererRegistry.isMovable(
-				model, ctEntry.getModelClassNameId())) {
+			(!_ctDisplayRendererRegistry.isMovable(
+				model, ctEntry.getModelClassNameId()) &&
+			 !force)) {
 
 			return;
 		}

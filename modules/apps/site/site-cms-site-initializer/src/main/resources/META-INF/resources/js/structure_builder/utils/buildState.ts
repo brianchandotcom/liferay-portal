@@ -80,8 +80,9 @@ function getSettings(objectField: ObjectField): Field['settings'] {
 		settings.timeStorage = objectFieldSettings.timeStorage;
 	}
 	else if (
-		objectField.businessType === 'Text' ||
-		objectField.businessType === 'Integer'
+		objectField.businessType === 'Integer' ||
+		objectField.businessType === 'LongText' ||
+		objectField.businessType === 'Text'
 	) {
 		if (objectFieldSettings.maxLength) {
 			settings.maxLength = objectFieldSettings.maxLength;

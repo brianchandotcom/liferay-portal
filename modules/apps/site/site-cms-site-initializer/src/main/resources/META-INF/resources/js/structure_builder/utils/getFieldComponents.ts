@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import getLongTextFieldComponents from '../components/LongTextFieldComponents';
 import getNumericFieldComponents from '../components/NumericFieldComponents';
 import getTextFieldComponents from '../components/TextFieldComponents';
 import {Field, FieldType} from './field';
@@ -18,7 +19,7 @@ const GETTERS: Record<FieldType, () => Partial<FieldComponents>> = {
 	'datetime': () => ({}),
 	'decimal': () => ({}),
 	'integer': getNumericFieldComponents,
-	'long-text': () => ({}),
+	'long-text': getLongTextFieldComponents,
 	'multiselect': () => ({}),
 	'rich-text': () => ({}),
 	'single-select': () => ({}),

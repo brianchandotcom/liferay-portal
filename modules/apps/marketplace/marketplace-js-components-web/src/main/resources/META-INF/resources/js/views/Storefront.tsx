@@ -105,7 +105,7 @@ export function MarketplaceStorefront({
 							},
 						].map((button, index) => (
 							<div
-								className="align-items-center card-buttons d-flex w-100"
+								className="align-items-center d-flex marketplace-card-buttons w-100"
 								key={index}
 							>
 								<ClayIcon
@@ -136,7 +136,7 @@ export function MarketplaceStorefront({
 			{
 				title: Liferay.Language.get('share-link'),
 				value: (
-					<div className="align-items-center card-buttons d-flex w-100">
+					<div className="align-items-center d-flex marketplace-card-buttons w-100">
 						<ClayIcon className="mr-2" symbol="link" />
 
 						<a
@@ -228,7 +228,7 @@ export function MarketplaceStorefront({
 				</div>
 			</div>
 
-			<div className="card-description-text d-flex h-100 justify-content-between mt-4 w-100">
+			<div className="d-flex h-100 justify-content-between marketplace-card-description-text mt-4 w-100">
 				<div className="storefront-section">
 					<Carousel images={marketplaceProduct.getProductImages()} />
 

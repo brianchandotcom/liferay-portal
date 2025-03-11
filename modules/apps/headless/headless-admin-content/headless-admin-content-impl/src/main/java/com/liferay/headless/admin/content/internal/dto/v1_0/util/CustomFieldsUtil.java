@@ -11,6 +11,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.headless.delivery.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.dto.v1_0.CustomValue;
 import com.liferay.headless.delivery.dto.v1_0.Geo;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -22,9 +23,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Array;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -38,30 +37,28 @@ public class CustomFieldsUtil {
 		boolean acceptAllLanguages, String className, long classPK,
 		long companyId, Locale locale) {
 
-		List<CustomField> customFields = new ArrayList<>();
-
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, className, classPK);
 
 		Map<String, Serializable> attributes = expandoBridge.getAttributes();
 
-		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
-			UnicodeProperties unicodeProperties =
-				expandoBridge.getAttributeProperties(entry.getKey());
+		return TransformUtil.transformToArray(
+			attributes.entrySet(),
+			entry -> {
+				UnicodeProperties unicodeProperties =
+					expandoBridge.getAttributeProperties(entry.getKey());
 
-			if (GetterUtil.getBoolean(
-					unicodeProperties.getProperty(
-						ExpandoColumnConstants.PROPERTY_HIDDEN))) {
+				if (GetterUtil.getBoolean(
+						unicodeProperties.getProperty(
+							ExpandoColumnConstants.PROPERTY_HIDDEN))) {
 
-				continue;
-			}
+					return null;
+				}
 
-			customFields.add(
-				_toCustomField(
-					acceptAllLanguages, entry, expandoBridge, locale));
-		}
-
-		return customFields.toArray(new CustomField[0]);
+				return _toCustomField(
+					acceptAllLanguages, entry, expandoBridge, locale);
+			},
+			CustomField.class);
 	}
 
 	private static Map<String, String> _getLocalizedValues(

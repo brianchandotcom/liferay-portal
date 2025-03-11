@@ -1,5 +1,5 @@
 Bundle-SymbolicName: jakarta.ws.rs
-Bundle-Version: 2.1.6.LIFERAY-PATCHED-1
+Bundle-Version: 2.1.6.LIFERAY-PATCHED-2
 Export-Package: javax.ws.rs.*
 Provide-Capability:\
 	osgi.contract;\

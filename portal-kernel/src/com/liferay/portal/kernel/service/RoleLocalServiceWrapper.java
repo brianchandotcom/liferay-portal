@@ -1353,6 +1353,21 @@ public class RoleLocalServiceWrapper
 	}
 
 	/**
+	 * Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RoleLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param role the role
+	 * @return the role that was updated
+	 */
+	@Override
+	public Role updateRole(Role role) {
+		return _roleLocalService.updateRole(role);
+	}
+
+	/**
 	 * Updates the role with the primary key.
 	 *
 	 * @param roleId the primary key of the role
@@ -1369,29 +1384,15 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public Role updateRole(
-			long roleId, String name,
+			String externalReferenceCode, long roleId, String name,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.updateRole(
-			roleId, name, titleMap, descriptionMap, subtype, serviceContext);
-	}
-
-	/**
-	 * Updates the role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect RoleLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param role the role
-	 * @return the role that was updated
-	 */
-	@Override
-	public Role updateRole(Role role) {
-		return _roleLocalService.updateRole(role);
+			externalReferenceCode, roleId, name, titleMap, descriptionMap,
+			subtype, serviceContext);
 	}
 
 	@Override

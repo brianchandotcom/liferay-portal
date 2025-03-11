@@ -83,7 +83,12 @@ function getImportBridgeCode(
 	let modulePath = 'index.js';
 
 	if (submodule) {
-		modulePath = `${moduleName.split('/')[1]}.js`;
+		if (moduleName.startsWith('@')) {
+			modulePath = `${moduleName.split('/')[2]}.js`;
+		}
+		else {
+			modulePath = `${moduleName.split('/')[1]}.js`;
+		}
 	}
 	else if (external) {
 		modulePath = `exports/${getFlatName(moduleName)}.js`;

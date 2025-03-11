@@ -41,15 +41,15 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 	@Override
 	public AccountGroup addAccountGroup(
-			long userId, String description, String name,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String description,
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		PortalPermissionUtil.check(
 			getPermissionChecker(), AccountActionKeys.ADD_ACCOUNT_GROUP);
 
 		return accountGroupLocalService.addAccountGroup(
-			userId, description, name, serviceContext);
+			externalReferenceCode, userId, description, name, serviceContext);
 	}
 
 	@Override
@@ -159,15 +159,16 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 	@Override
 	public AccountGroup updateAccountGroup(
-			long accountGroupId, String description, String name,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long accountGroupId,
+			String description, String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		_accountGroupModelResourcePermission.check(
 			getPermissionChecker(), accountGroupId, ActionKeys.UPDATE);
 
 		return accountGroupLocalService.updateAccountGroup(
-			accountGroupId, description, name, serviceContext);
+			externalReferenceCode, accountGroupId, description, name,
+			serviceContext);
 	}
 
 	@Override

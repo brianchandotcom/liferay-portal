@@ -25,10 +25,4 @@ export const ProductTypeOptions: ProductTypeOption[] = [
 		label: i18n.translate('dxp-app'),
 		value: ProductType.DXP,
 	},
-	{
-		description:
-			'Modular components, built with HTML, CSS, and JavaScript, offer extensible and reusable elements or collections of elements for constructing content pages and templates.',
-		label: i18n.translate('fragment-collection-of-fragments'),
-		value: ProductType.FRAGMENT,
-	},
 ];

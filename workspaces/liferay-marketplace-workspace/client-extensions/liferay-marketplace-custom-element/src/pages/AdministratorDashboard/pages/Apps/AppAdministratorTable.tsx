@@ -54,7 +54,7 @@ const AppAdministratorTable: React.FC<AppsTableProps> = ({items}) => {
 					{
 						key: 'productSpecifications',
 						render: (_, {productSpecifications}) => (
-							<div className="text-capitalize">
+							<div>
 								{getProductTypeFromSpecifications(
 									productSpecifications
 								)}

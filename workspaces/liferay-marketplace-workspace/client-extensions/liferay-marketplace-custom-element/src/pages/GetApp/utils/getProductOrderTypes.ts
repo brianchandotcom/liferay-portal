@@ -8,8 +8,9 @@ import {ProductType} from '../../../enums/ProductType';
 const productTypeERC = {
 	[ProductType.CLIENT_EXTENSION]: 'CLIENT_EXTENSION',
 	[ProductType.CLOUD]: 'CLOUDAPP',
+	[ProductType.COMPOSITE_APP]: 'COMPOSITE_APP',
 	[ProductType.DXP]: 'DXPAPP',
-	[ProductType.FRAGMENT]: 'FRAGMENT',
+	[ProductType.LOW_CODE_CONFIGURATION]: 'LOW_CODE_CONFIGURATION',
 } as const;
 
 export function getProductOrderTypes(productSpecificationValue: any) {

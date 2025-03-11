@@ -34,14 +34,16 @@ public class ObjectEntryFolderModelDocumentContributor
 		document.addKeyword(
 			Field.FOLDER_ID, objectEntryFolder.getObjectEntryFolderId());
 		document.addText(Field.NAME, objectEntryFolder.getName());
-		document.addLocalizedKeyword(
-			"localized_label", objectEntryFolder.getLabelMap(), true, true);
 
 		String[] parts = StringUtil.split(
 			objectEntryFolder.getTreePath(), CharPool.SLASH);
 
 		document.addKeyword(Field.TREE_PATH, parts);
+
 		document.addKeyword("cms_section", _getCMSSection(parts));
+
+		document.addLocalizedKeyword(
+			"localized_label", objectEntryFolder.getLabelMap(), true, true);
 	}
 
 	private String _getCMSSection(String[] parts) {

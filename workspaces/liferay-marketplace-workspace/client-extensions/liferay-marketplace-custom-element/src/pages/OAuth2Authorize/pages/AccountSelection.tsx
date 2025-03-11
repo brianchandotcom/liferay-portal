@@ -19,6 +19,9 @@ const AccountSelection = () => {
 
 	useEffect(() => {
 		if (singleAccount) {
+			setSelectedAccount(
+				myUserAccount?.accountBriefs[0] as unknown as Account
+			);
 			navigate('/project-selection');
 		}
 	}, [singleAccount, navigate]);

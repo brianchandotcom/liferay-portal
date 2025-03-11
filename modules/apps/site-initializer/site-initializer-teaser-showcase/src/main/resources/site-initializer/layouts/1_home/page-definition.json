@@ -253,7 +253,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Marketing Assets/home_banner_narrow_no_background.png#]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Marketing Assets/home_banner_narrow_no_background.png$]"
 																					}
 																				}
 																			}
@@ -322,8 +322,6 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"backgroundFragmentImage": {
-														},
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -440,7 +438,7 @@
 																						}
 																					],
 																					"fragmentStyle": {
-																						"textColor": "colorNeutral0"
+																						"textColor": "colorNeutral1"
 																					},
 																					"indexed": true
 																				},
@@ -471,7 +469,7 @@
 																						"fontSize": "fontSizeBase",
 																						"marginBottom": "4",
 																						"marginTop": "4",
-																						"textColor": "colorNeutral0"
+																						"textColor": "colorNeutral1"
 																					},
 																					"indexed": true
 																				},
@@ -1268,7 +1266,7 @@
 											"fieldKey": "FileEntry_fileURL",
 											"itemReference": {
 												"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-												"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Marketing Assets/home_promotion.png#]"
+												"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Marketing Assets/home_promotion.png$]"
 											}
 										}
 									}
@@ -1696,9 +1694,11 @@
 		"type": "Root"
 	},
 	"settings": {
+		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "primary"
-		}
+		},
+		"themeName": "Dialect"
 	},
 	"version": 1.1
 }

@@ -281,11 +281,10 @@ public class CommerceAccountsImporter {
 					if (accountGroup == null) {
 						accountGroup =
 							_accountGroupLocalService.addAccountGroup(
+								externalReferenceCode,
 								serviceContext.getUserId(), null,
 								accountGroupName, serviceContext);
 
-						accountGroup.setExternalReferenceCode(
-							externalReferenceCode);
 						accountGroup.setDefaultAccountGroup(false);
 						accountGroup.setType(
 							AccountConstants.ACCOUNT_GROUP_TYPE_GUEST);

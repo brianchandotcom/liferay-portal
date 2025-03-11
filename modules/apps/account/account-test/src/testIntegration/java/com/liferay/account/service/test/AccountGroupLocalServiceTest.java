@@ -15,6 +15,7 @@ import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.SystemEvent;
@@ -58,7 +59,8 @@ public class AccountGroupLocalServiceTest {
 	public void testAccountGroupName() throws Exception {
 		try {
 			_accountGroupLocalService.addAccountGroup(
-				TestPropsValues.getUserId(), null, "", new ServiceContext());
+				StringPool.BLANK, TestPropsValues.getUserId(), null, "",
+				new ServiceContext());
 
 			Assert.fail();
 		}
@@ -72,7 +74,8 @@ public class AccountGroupLocalServiceTest {
 
 		try {
 			_accountGroupLocalService.updateAccountGroup(
-				accountGroup.getUserId(), null, "", new ServiceContext());
+				StringPool.BLANK, accountGroup.getUserId(), null, "",
+				new ServiceContext());
 
 			Assert.fail();
 		}
@@ -240,8 +243,9 @@ public class AccountGroupLocalServiceTest {
 					TestPropsValues.getCompanyId());
 
 			_accountGroupLocalService.updateAccountGroup(
-				accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), new ServiceContext());
+				StringPool.BLANK, accountGroup.getAccountGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new ServiceContext());
 		}
 		catch (ModelListenerException modelListenerException) {
 			Assert.assertTrue(

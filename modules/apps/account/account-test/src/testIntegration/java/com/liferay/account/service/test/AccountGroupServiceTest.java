@@ -12,6 +12,7 @@ import com.liferay.account.service.AccountGroupService;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.account.service.test.util.UserRoleTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -66,14 +67,14 @@ public class AccountGroupServiceTest {
 			_user.getUserId());
 
 		_accountGroupService.addAccountGroup(
-			_user.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, _user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new ServiceContext());
 	}
 
 	@Test(expected = PrincipalException.class)
 	public void testAddAccountGroupWithoutPermission() throws Exception {
 		_accountGroupService.addAccountGroup(
-			_user.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, _user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new ServiceContext());
 	}
 
@@ -166,8 +167,9 @@ public class AccountGroupServiceTest {
 			ActionKeys.UPDATE, AccountGroup.class.getName(), _user.getUserId());
 
 		_accountGroupService.updateAccountGroup(
-			accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-			accountGroup.getName(), new ServiceContext());
+			StringPool.BLANK, accountGroup.getAccountGroupId(),
+			RandomTestUtil.randomString(), accountGroup.getName(),
+			new ServiceContext());
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -177,8 +179,9 @@ public class AccountGroupServiceTest {
 			RandomTestUtil.randomString());
 
 		_accountGroupService.updateAccountGroup(
-			accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-			accountGroup.getName(), new ServiceContext());
+			StringPool.BLANK, accountGroup.getAccountGroupId(),
+			RandomTestUtil.randomString(), accountGroup.getName(),
+			new ServiceContext());
 	}
 
 	@Inject

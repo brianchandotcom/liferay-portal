@@ -86,7 +86,8 @@ public class CommerceAccountTestUtil {
 
 		AccountGroup accountGroup =
 			AccountGroupLocalServiceUtil.addAccountGroup(
-				serviceContext.getUserId(), null, name, serviceContext);
+				StringPool.BLANK, serviceContext.getUserId(), null, name,
+				serviceContext);
 
 		accountGroup.setExternalReferenceCode(externalReferenceCode);
 		accountGroup.setDefaultAccountGroup(false);

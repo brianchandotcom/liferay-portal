@@ -18,6 +18,7 @@ import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.WarehouseAccountGroup;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Pagination;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -114,8 +115,9 @@ public class WarehouseAccountGroupResourceTest
 
 		AccountGroup randomAccountGroup =
 			_accountGroupLocalService.addAccountGroup(
-				_user.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), _serviceContext);
+				StringPool.BLANK, _user.getUserId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		_accountGroupIds.add(randomAccountGroup.getAccountGroupId());
 

@@ -103,8 +103,8 @@ public class CommercePricingTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
-			serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			serviceContext);
+			StringPool.BLANK, serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), serviceContext);
 
 		accountGroup.setExternalReferenceCode("");
 		accountGroup.setDefaultAccountGroup(false);

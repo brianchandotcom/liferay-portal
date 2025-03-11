@@ -171,7 +171,8 @@ public class AdminAccountGroupResourceImpl
 		throws Exception {
 
 		_accountGroupService.updateAccountGroup(
-			id, adminAccountGroup.getDescription(), adminAccountGroup.getName(),
+			adminAccountGroup.getExternalReferenceCode(), id,
+			adminAccountGroup.getDescription(), adminAccountGroup.getName(),
 			_serviceContextHelper.getServiceContext());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
@@ -195,7 +196,7 @@ public class AdminAccountGroupResourceImpl
 		}
 
 		_accountGroupService.updateAccountGroup(
-			accountGroup.getAccountGroupId(),
+			externalReferenceCode, accountGroup.getAccountGroupId(),
 			adminAccountGroup.getDescription(), adminAccountGroup.getName(),
 			_serviceContextHelper.getServiceContext());
 
@@ -230,16 +231,14 @@ public class AdminAccountGroupResourceImpl
 
 		if (accountGroup == null) {
 			accountGroup = _accountGroupService.addAccountGroup(
+				adminAccountGroup.getExternalReferenceCode(),
 				contextUser.getUserId(), adminAccountGroup.getDescription(),
 				adminAccountGroup.getName(),
 				_serviceContextHelper.getServiceContext());
-
-			accountGroup = _accountGroupService.updateExternalReferenceCode(
-				accountGroup.getAccountGroupId(),
-				adminAccountGroup.getExternalReferenceCode());
 		}
 		else {
 			accountGroup = _accountGroupService.updateAccountGroup(
+				adminAccountGroup.getExternalReferenceCode(),
 				accountGroup.getAccountGroupId(),
 				adminAccountGroup.getDescription(), adminAccountGroup.getName(),
 				_serviceContextHelper.getServiceContext());

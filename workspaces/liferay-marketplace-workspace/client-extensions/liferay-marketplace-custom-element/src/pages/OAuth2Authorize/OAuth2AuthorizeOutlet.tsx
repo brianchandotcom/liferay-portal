@@ -35,8 +35,8 @@ const OAuth2AuthorizeOutlet = () => {
 
 	const {environment, project} = watch();
 
-	const singleProject = projects?.length === 1;
 	const singleAccount = myUserAccount?.accountBriefs?.length === 1;
+	const singleProject = projects?.length === 1;
 
 	useEffect(() => {
 		if (singleProject) {

@@ -62,12 +62,12 @@ public class AWSFleetCloud {
 		return _jsonObject.optString("executor.scaler.class.name");
 	}
 
-	public int getExecutorScalerNumExecutor() {
-		return _jsonObject.getInt("executor.scaler.num.executors");
-	}
-
 	public int getExecutorScalerMemoryGiBPerExecutor() {
 		return _jsonObject.optInt("executor.scaler.memory.gib.per.executor");
+	}
+
+	public int getExecutorScalerNumExecutor() {
+		return _jsonObject.getInt("executor.scaler.num.executors");
 	}
 
 	public int getExecutorScalerVCpuPerExecutor() {

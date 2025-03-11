@@ -16,5 +16,5 @@ export const ProductTypeLabels = {
 	[ProductType.CLOUD]: 'Cloud',
 	[ProductType.COMPOSITE_APP]: 'Composite App',
 	[ProductType.DXP]: 'DXP',
-	[ProductType.LOW_CODE_CONFIGURATION]: 'Low-code Configuration',
+	[ProductType.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
 } as const;

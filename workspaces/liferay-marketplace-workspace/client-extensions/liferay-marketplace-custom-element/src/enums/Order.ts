@@ -30,7 +30,7 @@ export const ORDER_TYPES_LABELS = {
 	[ORDER_TYPES.CLOUDAPP]: 'Cloud',
 	[ORDER_TYPES.COMPOSITE_APP]: 'Composite App',
 	[ORDER_TYPES.DXPAPP]: 'DXP',
-	[ORDER_TYPES.LOW_CODE_CONFIGURATION]: 'Low-code Configuration',
+	[ORDER_TYPES.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
 	[ORDER_TYPES.SOLUTIONS7]: 'Solutions 7',
 	[ORDER_TYPES.SOLUTIONS30]: 'Solutions 30',
 } as const;

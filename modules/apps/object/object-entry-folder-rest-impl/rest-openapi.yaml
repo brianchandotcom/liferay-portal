@@ -72,6 +72,12 @@ components:
                         The ID of the object entry folder's parent, if it exists.
                     format: int64
                     type: integer
+                scopeKey:
+                    # @review
+                    description:
+                        The scope key of the object entry folder.
+                    readOnly: true
+                    type: string
                 viewableBy:
                     description:
                         A write-only property that specifies the object entry folder's default permissions.

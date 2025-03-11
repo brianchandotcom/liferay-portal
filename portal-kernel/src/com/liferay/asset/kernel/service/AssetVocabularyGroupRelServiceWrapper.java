@@ -5,6 +5,7 @@
 
 package com.liferay.asset.kernel.service;
 
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -28,6 +29,24 @@ public class AssetVocabularyGroupRelServiceWrapper
 		_assetVocabularyGroupRelService = assetVocabularyGroupRelService;
 	}
 
+	@Override
+	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
+			long vocabularyId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyGroupRelService.addAssetVocabularyGroupRel(
+			vocabularyId, groupId);
+	}
+
+	@Override
+	public java.util.List<AssetVocabularyGroupRel>
+			getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyGroupRelService.
+			getAssetVocabularyGroupRelsByVocabularyId(vocabularyId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -36,6 +55,14 @@ public class AssetVocabularyGroupRelServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _assetVocabularyGroupRelService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetVocabularyGroupRelService.setAssetVocabularyGroupRels(
+			vocabularyId, groupIds);
 	}
 
 	@Override

@@ -175,7 +175,7 @@ public class CustomFieldsUtil {
 
 		Object value = entry.getValue();
 
-		if (_isEmpty(entry.getValue())) {
+		if (_isEmpty(value)) {
 			value = expandoBridge.getAttributeDefault(key);
 		}
 

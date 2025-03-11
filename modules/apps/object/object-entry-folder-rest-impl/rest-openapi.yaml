@@ -14,18 +14,6 @@ components:
                         Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
-                assetLibraryId:
-                    # @review
-                    description:
-                        The ID of the asset library to which this object entry folder is scoped.
-                    format: int64
-                    type: integer
-                assetLibraryKey:
-                    # @review
-                    description:
-                        The key of the asset library to which the object entry folder is scoped.
-                    readOnly: true
-                    type: string
                 creator:
                     $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
                     description:

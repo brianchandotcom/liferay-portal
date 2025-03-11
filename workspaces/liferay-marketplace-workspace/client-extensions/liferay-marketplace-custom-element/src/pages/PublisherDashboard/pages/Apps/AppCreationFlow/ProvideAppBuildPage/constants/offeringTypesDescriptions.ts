@@ -6,19 +6,20 @@
 import {ProductType} from '../../../../../../../enums/ProductType';
 
 export const getOfferingTypes = (type: ProductType) => {
-	let offeringTypes = [];
+	const offeringTypes = [];
 
 	if (type === ProductType.CLOUD) {
 		offeringTypes.push('Liferay SaaS');
 		offeringTypes.push('Liferay PaaS');
 
 		return offeringTypes;
-	} 
+	}
 	if (type === ProductType.DXP) {
 		offeringTypes.push('Liferay PaaS');
 		offeringTypes.push('Liferay Self-Hosted');
 
 		return offeringTypes;
 	}
+
 	return ['Liferay SaaS', 'Liferay PaaS', 'Liferay Self-Hosted'];
 };

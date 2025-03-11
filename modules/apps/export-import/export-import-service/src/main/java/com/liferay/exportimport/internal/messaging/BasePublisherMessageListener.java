@@ -88,6 +88,7 @@ public abstract class BasePublisherMessageListener implements MessageListener {
 
 		return () -> {
 			safeCloseable.close();
+
 			PermissionThreadLocal.setPermissionChecker(null);
 			PrincipalThreadLocal.setName(null);
 			ServiceContextThreadLocal.popServiceContext();

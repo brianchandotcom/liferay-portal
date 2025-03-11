@@ -24,8 +24,8 @@ import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
+import com.liferay.style.book.util.StyleBookUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
-import com.liferay.style.book.web.internal.util.StyleBookUtil;
 
 import java.util.List;
 

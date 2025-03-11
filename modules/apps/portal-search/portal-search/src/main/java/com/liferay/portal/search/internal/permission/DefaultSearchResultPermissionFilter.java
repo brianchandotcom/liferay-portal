@@ -344,14 +344,34 @@ public class DefaultSearchResultPermissionFilter
 	}
 
 	private void _updateSearchHits(Hits hits, SearchContext searchContext) {
-		Document[] documents = hits.getDocs();
-
 		SearchResponseImpl searchResponseImpl =
 			(SearchResponseImpl)searchContext.getAttribute("search.response");
+
+		if (searchResponseImpl == null) {
+			return;
+		}
 
 		SearchHits searchHits = searchResponseImpl.getSearchHits();
 
 		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+
+		if (searchHitsList.isEmpty()) {
+			return;
+		}
+
+		Document[] documents = hits.getDocs();
+
+		SearchHitsBuilderFactory searchHitsBuilderFactory =
+			new SearchHitsBuilderFactoryImpl();
+
+		SearchHitsBuilder searchHitsBuilder =
+			searchHitsBuilderFactory.getSearchHitsBuilder();
+
+		if (documents.length == 0) {
+			searchResponseImpl.setSearchHits(searchHitsBuilder.build());
+
+			return;
+		}
 
 		List<String> ids = new ArrayList<>();
 
@@ -359,12 +379,6 @@ public class DefaultSearchResultPermissionFilter
 			documents, document -> ids.add(document.get("uid")));
 
 		searchHitsList.removeIf(searchHit -> !ids.contains(searchHit.getId()));
-
-		SearchHitsBuilderFactory searchHitsBuilderFactory =
-			new SearchHitsBuilderFactoryImpl();
-
-		SearchHitsBuilder searchHitsBuilder =
-			searchHitsBuilderFactory.getSearchHitsBuilder();
 
 		searchHitsBuilder.addSearchHits(searchHitsList);
 		searchHitsBuilder.maxScore(searchHits.getMaxScore());

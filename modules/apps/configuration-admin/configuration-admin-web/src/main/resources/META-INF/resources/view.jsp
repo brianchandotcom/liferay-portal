@@ -16,7 +16,13 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 ExtendedObjectClassDefinition.Scope scope = configurationScopeDisplayContext.getScope();
 %>
 
-<div class="sticky-top" style="top: var(--control-menu-container-height);">
+<aui:style type="text/css">
+	.configuration-admin--main {
+		top: var(--control-menu-container-height);
+	}
+</aui:style>
+
+<div class="configuration-admin--main sticky-top">
 	<clay:management-toolbar
 		managementToolbarDisplayContext="<%= new ConfigurationScopeManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, 0) %>"
 	/>

@@ -12,7 +12,13 @@
 		<clay:content-col>
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
-					<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
+					<aui:style type="text/css">
+						.site-administration--header-no-collapsible {
+							background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);
+						}
+					</aui:style>
+
+					<div class="aspect-ratio-bg-cover site-administration--header-no-collapsible sticker"></div>
 				</c:when>
 				<c:otherwise>
 					<clay:sticker

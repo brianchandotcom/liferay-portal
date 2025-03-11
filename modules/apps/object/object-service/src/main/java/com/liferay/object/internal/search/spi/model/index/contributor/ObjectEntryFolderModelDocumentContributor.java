@@ -6,13 +6,16 @@
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -33,10 +36,42 @@ public class ObjectEntryFolderModelDocumentContributor
 		document.addText(Field.NAME, objectEntryFolder.getName());
 		document.addLocalizedKeyword(
 			"localized_label", objectEntryFolder.getLabelMap(), true, true);
-		document.addKeyword(
-			Field.TREE_PATH,
-			StringUtil.split(objectEntryFolder.getTreePath(), CharPool.SLASH));
-		document.addKeyword("cms", true);
+
+		String[] parts = StringUtil.split(
+			objectEntryFolder.getTreePath(), CharPool.SLASH);
+
+		document.addKeyword(Field.TREE_PATH, parts);
+		document.addKeyword("cms_section", _getCMSSection(parts));
 	}
+
+	private String _getCMSSection(String[] parts) {
+		if (parts.length <= 1) {
+			return "none";
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.fetchObjectEntryFolder(
+				GetterUtil.getLong(parts[1]));
+
+		if (objectEntryFolder == null) {
+			return "none";
+		}
+
+		String externalReferenceCode =
+			objectEntryFolder.getExternalReferenceCode();
+
+		if (externalReferenceCode.equals("L_CONTENT")) {
+			return "content";
+		}
+
+		if (externalReferenceCode.equals("L_FILES")) {
+			return "files";
+		}
+
+		return "none";
+	}
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 }

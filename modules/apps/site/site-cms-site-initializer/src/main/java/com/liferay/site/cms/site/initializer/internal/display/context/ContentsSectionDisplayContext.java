@@ -136,6 +136,11 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 			contentsObjectDefinitionFolderExternalReferenceCodes();
 	}
 
+	@Override
+	protected String getCMSSectionFilter() {
+		return "cmsSection in ('content', 'files')";
+	}
+
 	private final Language _language;
 	private final ObjectDefinitionService _objectDefinitionService;
 

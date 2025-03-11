@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
@@ -35,7 +36,7 @@ public abstract class BaseSectionDisplayContext {
 		this.cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
 		this.httpServletRequest = httpServletRequest;
 
-		Object object = (Object)httpServletRequest.getAttribute(
+		Object object = httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
 
 		if (object instanceof ObjectEntryFolder) {
@@ -50,7 +51,7 @@ public abstract class BaseSectionDisplayContext {
 		String[] objectDefinitionFolderExternalReferenceCodes =
 			getObjectDefinitionFolderExternalReferenceCodes();
 
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
 		sb.append("filter=objectDefinitionFolder in ('");
@@ -60,8 +61,11 @@ public abstract class BaseSectionDisplayContext {
 				objectDefinitionFolderExternalReferenceCodes, "','"));
 		sb.append("')");
 
-		if (showFolders()) {
-			sb.append(" or cms eq true");
+		String cmsSectionFilter = getCMSSectionFilter();
+
+		if (Validator.isNotNull(cmsSectionFilter)) {
+			sb.append(" or ");
+			sb.append(cmsSectionFilter);
 		}
 
 		if (objectEntryFolder != null) {
@@ -96,10 +100,6 @@ public abstract class BaseSectionDisplayContext {
 		return new String[0];
 	}
 
-	public boolean showFolders() {
-		return true;
-	}
-
 	protected String getAddStructuredContentItemURL(long objectDefinitionId) {
 		StringBundler sb = new StringBundler(6);
 
@@ -112,6 +112,8 @@ public abstract class BaseSectionDisplayContext {
 
 		return sb.toString();
 	}
+
+	protected abstract String getCMSSectionFilter();
 
 	protected final CMSSiteInitializerConfiguration
 		cmsSiteInitializerConfiguration;

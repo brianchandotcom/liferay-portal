@@ -56,6 +56,10 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 
 		_companyId = TestPropsValues.getCompanyId();
 
+		ReflectionTestUtil.setFieldValue(
+			_batchEngineTaskItemDelegate, "contextCompany",
+			CompanyLocalServiceUtil.getCompany(_companyId));
+
 		_expandoTable = _expandoTableLocalService.addTable(
 			_companyId, PortalUtil.getClassNameId(User.class),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
@@ -81,10 +85,6 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 		_expandoColumnLocalService.addColumn(
 			_expandoTable.getTableId(), "testField",
 			ExpandoColumnConstants.STRING);
-
-		ReflectionTestUtil.setFieldValue(
-			_batchEngineTaskItemDelegate, "contextCompany",
-			CompanyLocalServiceUtil.getCompany(_companyId));
 	}
 
 	@After
@@ -93,7 +93,7 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 	}
 
 	@Test
-	public void testSendExpandoColumnAnalytics() throws Exception {
+	public void test() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
@@ -107,10 +107,10 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 							}
 						).build())) {
 
-			Page<DXPEntity> resultPage = _batchEngineTaskItemDelegate.read(
+			Page<DXPEntity> page = _batchEngineTaskItemDelegate.read(
 				null, Pagination.of(1, 7), null, Collections.emptyMap(), null);
 
-			Collection<DXPEntity> dxpEntities = resultPage.getItems();
+			Collection<DXPEntity> dxpEntities = page.getItems();
 
 			Assert.assertEquals(dxpEntities.toString(), 3, dxpEntities.size());
 		}

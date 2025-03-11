@@ -19,6 +19,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
+import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -588,6 +589,73 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	}
 
 	@Test
+	public void testRetrievePriceListWithEligibleCurrency() throws Exception {
+		frutillaRule.scenario(
+			"When multiple price list are defined for the same catalog the " +
+				"eligible currency is taken"
+		).given(
+			"A catalog with multiple price lists with different currency"
+		).when(
+			"The price list is discovered"
+		).then(
+			"The price list is retrieved with the eligible currency"
+		);
+
+		CommercePriceList discoveredPriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry7.getAccountEntryId(),
+				_commerceChannel5.getCommerceChannelId(), 0, null, null, _TYPE,
+				StringPool.BLANK);
+
+		Assert.assertEquals(
+			_commercePriceList5.getCommercePriceListId(),
+			discoveredPriceList.getCommercePriceListId());
+
+		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
+			_commerceCatalog.getGroupId(), _accountEntry7.getAccountEntryId(),
+			_commerceChannel5.getCommerceChannelId(), 0, null,
+			_commerceCurrency2.getCode(), _TYPE, StringPool.BLANK);
+
+		Assert.assertEquals(
+			_commercePriceList6.getCommercePriceListId(),
+			discoveredPriceList.getCommercePriceListId());
+
+		_commerceChannelRelLocalService.addCommerceChannelRel(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency1.getCommerceCurrencyId(),
+			_commerceChannel5.getCommerceChannelId(), _serviceContext);
+
+		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
+			_commerceCatalog.getGroupId(), _accountEntry7.getAccountEntryId(),
+			_commerceChannel5.getCommerceChannelId(), 0, null,
+			_commerceCurrency2.getCode(), _TYPE, StringPool.BLANK);
+
+		Assert.assertNull(discoveredPriceList);
+
+		_commerceChannelRelLocalService.addCommerceChannelRel(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency2.getCommerceCurrencyId(),
+			_commerceChannel5.getCommerceChannelId(), _serviceContext);
+
+		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
+			_commerceCatalog.getGroupId(), _accountEntry7.getAccountEntryId(),
+			_commerceChannel5.getCommerceChannelId(), 0, null,
+			_commerceCurrency2.getCode(), _TYPE, StringPool.BLANK);
+
+		Assert.assertEquals(
+			_commercePriceList6.getCommercePriceListId(),
+			discoveredPriceList.getCommercePriceListId());
+
+		_commerceChannelRelLocalService.deleteCommerceChannelRels(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency1.getCommerceCurrencyId());
+		_commerceChannelRelLocalService.deleteCommerceChannelRels(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency2.getCommerceCurrencyId());
+	}
+
+	@Test
 	public void testRetrievePriceListWithMultipleCurrency() throws Exception {
 		frutillaRule.scenario(
 			"When multiple price list are defined for the same catalog the " +
@@ -650,6 +718,10 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private CommerceChannel _commerceChannel3;
 	private CommerceChannel _commerceChannel4;
 	private CommerceChannel _commerceChannel5;
+
+	@Inject
+	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
+
 	private CommerceCurrency _commerceCurrency1;
 	private CommerceCurrency _commerceCurrency2;
 	private CommercePriceList _commercePriceList1;

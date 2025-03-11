@@ -1,0 +1,22 @@
+diff --git a/javax/ws/rs/ext/FactoryFinder.java b/javax/ws/rs/ext/FactoryFinder.java
+index c396078e2a80b..a8010311c6290 100644
+--- a/javax/ws/rs/ext/FactoryFinder.java
++++ b/javax/ws/rs/ext/FactoryFinder.java
+@@ -124,7 +124,7 @@ final class FactoryFinder {
+             if(iterator.hasNext()) {
+                 return iterator.next();
+             }
+-        } catch (Exception ex) {
++        } catch (Throwable ex) {
+             LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", ex);
+         }
+ 
+@@ -134,7 +134,7 @@ final class FactoryFinder {
+             if(iterator.hasNext()) {
+                 return iterator.next();
+             }
+-        } catch (Exception ex) {
++        } catch (Throwable ex) {
+             LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", ex);
+         }
+ 

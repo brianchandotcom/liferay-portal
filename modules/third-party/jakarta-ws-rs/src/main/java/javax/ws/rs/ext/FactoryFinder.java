@@ -124,7 +124,7 @@ final class FactoryFinder {
             if(iterator.hasNext()) {
                 return iterator.next();
             }
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", ex);
         }
 
@@ -134,7 +134,7 @@ final class FactoryFinder {
             if(iterator.hasNext()) {
                 return iterator.next();
             }
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", ex);
         }
 

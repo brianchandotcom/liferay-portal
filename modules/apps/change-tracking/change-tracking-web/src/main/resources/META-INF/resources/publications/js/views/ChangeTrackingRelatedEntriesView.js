@@ -4,7 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -246,14 +245,8 @@ export default function ChangeTrackingRelatedEntriesView({
 	) : (
 		<>
 			<ClayAlert displayType="danger">
-				{Liferay.Language.get('the-changes-could-not-be-moved')}
+				{Liferay.Language.get('no-changes-were-found')}
 			</ClayAlert>
-			<ClayEmptyState
-				className="mt-n4"
-				description={Liferay.Language.get('no-changes-were-found')}
-				small
-				title=" "
-			/>
 		</>
 	);
 }

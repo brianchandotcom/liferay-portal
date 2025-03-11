@@ -1028,7 +1028,8 @@ public class RoleServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Role updateRole(
-			HttpPrincipal httpPrincipal, long roleId, String name,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long roleId, String name,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String subtype,
@@ -1041,8 +1042,8 @@ public class RoleServiceHttp {
 				_updateRoleParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, roleId, name, titleMap, descriptionMap, subtype,
-				serviceContext);
+				methodKey, externalReferenceCode, roleId, name, titleMap,
+				descriptionMap, subtype, serviceContext);
 
 			Object returnObj = null;
 
@@ -1156,8 +1157,9 @@ public class RoleServiceHttp {
 			com.liferay.portal.kernel.model.Role.class, String.class
 		};
 	private static final Class<?>[] _updateRoleParameterTypes25 = new Class[] {
-		long.class, String.class, java.util.Map.class, java.util.Map.class,
-		String.class, com.liferay.portal.kernel.service.ServiceContext.class
+		String.class, long.class, String.class, java.util.Map.class,
+		java.util.Map.class, String.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 
 }

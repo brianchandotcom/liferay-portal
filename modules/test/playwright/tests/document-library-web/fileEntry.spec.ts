@@ -357,6 +357,54 @@ test(
 );
 
 test(
+	'Unable to filter by category if their vocabulary is related with a specific document type',
+	{
+		tag: '@LPD-50971',
+	},
+
+	async ({apiHelpers, documentLibraryPage, page, site}) => {
+		const vocabularyName = getRandomString();
+
+		const categories = await createCategories({
+			apiHelpers,
+			assetTypes: [
+				{
+					required: false,
+					subtype: 'Basic Document',
+					type: 'Document',
+				},
+			],
+			categoryNames: [{name: 'Books'}],
+			siteId: site.id,
+			vocabularyName,
+		});
+
+		await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(path.join(__dirname, '/dependencies/image1.jpeg')),
+			{
+				description: getRandomString(),
+				fileName: getRandomString(),
+				taxonomyCategoryIds: [categories[0].id],
+				title: getRandomString(),
+			}
+		);
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+
+		await page.getByLabel('Filter', {exact: true}).click();
+
+		await page.getByRole('menuitem', {name: 'Categories'}).click();
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Filter by Categories"]')
+				.getByText(vocabularyName)
+		).toBeVisible();
+	}
+);
+
+test(
 	'Only one well formatted success message on scheduling file from widget page',
 	{
 		tag: ['@LPD-45614', '@LPD-45658'],

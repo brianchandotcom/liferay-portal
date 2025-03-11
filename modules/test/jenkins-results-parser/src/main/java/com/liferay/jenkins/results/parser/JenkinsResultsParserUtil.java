@@ -766,7 +766,7 @@ public class JenkinsResultsParserUtil {
 		try {
 			String url = null;
 
-			if (matcher.matches()) {
+			if (!isCINode() && matcher.matches()) {
 				int masterNumber = Integer.valueOf(matcher.group(1));
 
 				if (masterNumber > 40) {
@@ -2515,8 +2515,8 @@ public class JenkinsResultsParserUtil {
 		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(
-			"master\\.slaves\\((?<jenkinsMasterName>" + cohortName +
-				"-\\d+)\\)");
+			"master\\.property\\((?<jenkinsMasterName>" + cohortName +
+				"-\\d+)/executors.size\\)");
 
 		for (String buildPropertyName : buildProperties.stringPropertyNames()) {
 			Matcher matcher = pattern.matcher(buildPropertyName);

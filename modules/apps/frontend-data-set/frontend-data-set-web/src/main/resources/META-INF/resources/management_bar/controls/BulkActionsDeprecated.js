@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
@@ -15,7 +13,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
 import {getOpenedSidePanel} from '../../utils/sidePanels';
-import SelectionCheckbox from './SelectionCheckbox';
 
 function getQueryString(key, values = []) {
 	return `?${key}=${values.join(',')}`;
@@ -33,10 +30,7 @@ function getRichPayload(payload, key, values = []) {
 function BulkActions({
 	bulkActions,
 	fluid,
-	handleCheckboxClick,
 	items,
-	onClear,
-	pageSelectedItemsValue,
 	selectItems,
 	selectedItems,
 	selectedItemsKey,
@@ -161,17 +155,7 @@ function BulkActions({
 					>
 						<ul className="navbar-nav">
 							{!!total && selectable && (
-								<li className="nav-item">
-									<SelectionCheckbox
-										handleCheckboxClick={
-											handleCheckboxClick
-										}
-										items={items}
-										selectedItemsValue={
-											pageSelectedItemsValue
-										}
-									/>
-								</li>
+								<li className="ml-3 nav-item"></li>
 							)}
 
 							<li className="nav-item">
@@ -193,19 +177,6 @@ function BulkActions({
 											)}
 								</span>
 
-								{Liferay.FeatureFlags['LPD-42570'] && (
-									<ClayLink
-										className="ml-3"
-										href="#"
-										onClick={(event) => {
-											event.preventDefault();
-											onClear();
-										}}
-									>
-										{Liferay.Language.get('clear')}
-									</ClayLink>
-								)}
-
 								<ClayLink
 									className="ml-3"
 									href="#"
@@ -224,86 +195,32 @@ function BulkActions({
 						</ul>
 
 						{showBulkActionsManagementBarActions && (
-							<ul className="bulk-actions navbar-nav">
+							<div className="bulk-actions">
 								{bulkActions.map((actionDefinition, i) => (
-									<li
-										className="nav-item"
+									<button
+										className={classNames(
+											'btn btn-monospaced btn-link',
+											i > 0 && 'ml-1'
+										)}
 										key={actionDefinition.label}
+										onClick={() =>
+											handleActionClick(
+												actionDefinition,
+												formId,
+												formName,
+												loadData,
+												namespace,
+												sidePanelId
+											)
+										}
+										type="button"
 									>
-										<button
-											className={classNames(
-												'btn btn-monospaced btn-link',
-												i > 0 && 'ml-1'
-											)}
-											onClick={() =>
-												handleActionClick(
-													actionDefinition,
-													formId,
-													formName,
-													loadData,
-													namespace,
-													sidePanelId
-												)
-											}
-											type="button"
-										>
-											<ClayIcon
-												symbol={actionDefinition.icon}
-											/>
-										</button>
-									</li>
+										<ClayIcon
+											symbol={actionDefinition.icon}
+										/>
+									</button>
 								))}
-
-								{!!bulkActions.length && (
-									<li className="nav-item">
-										<DropDown
-											hasLeftSymbols
-											trigger={
-												<ClayButtonWithIcon
-													aria-label={Liferay.Language.get(
-														'actions'
-													)}
-													displayType="unstyled"
-													small
-													symbol="ellipsis-v"
-													title={Liferay.Language.get(
-														'actions'
-													)}
-												/>
-											}
-										>
-											<DropDown.ItemList>
-												{bulkActions.map(
-													(actionDefinition) => (
-														<DropDown.Item
-															key={
-																actionDefinition.label
-															}
-															onClick={() =>
-																handleActionClick(
-																	actionDefinition,
-																	formId,
-																	formName,
-																	loadData,
-																	namespace,
-																	sidePanelId
-																)
-															}
-															symbolLeft={
-																actionDefinition.icon
-															}
-														>
-															{
-																actionDefinition.label
-															}
-														</DropDown.Item>
-													)
-												)}
-											</DropDown.ItemList>
-										</DropDown>
-									</li>
-								)}
-							</ul>
+							</div>
 						)}
 					</div>
 				</nav>
@@ -324,7 +241,6 @@ BulkActions.propTypes = {
 	),
 	handleCheckboxClick: PropTypes.func.isRequired,
 	items: PropTypes.array.isRequired,
-	onClear: PropTypes.func.isRequired,
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,
 	total: PropTypes.number,

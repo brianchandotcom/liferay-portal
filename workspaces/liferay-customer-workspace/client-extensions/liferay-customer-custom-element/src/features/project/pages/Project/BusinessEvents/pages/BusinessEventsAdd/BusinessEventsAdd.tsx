@@ -17,7 +17,7 @@ import {Liferay} from '~/services/liferay';
 import {addBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import getInitialEvent from '~/utils/getInitialEvent';
-import {IBusinessEvent} from '~/utils/types';
+import {IBusinessEvent, IOption} from '~/utils/types';
 
 import Layout from '../../../../../../../components/FormLayout';
 import {PRODUCT_TYPES} from '../../../../../utils/constants';
@@ -52,12 +52,12 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
 
 	const [businessEventTypesOptions, setBusinessEventTypesOptions] = useState<
-		{disabled?: boolean; label: string; value: string}[]
+		IOption[]
 	>([]);
 
-	const [gmtTimeZonesOptions, setGMTTimeZonesOptions] = useState<
-		{disabled?: boolean; label: string; value: string}[]
-	>([]);
+	const [gmtTimeZonesOptions, setGMTTimeZonesOptions] = useState<IOption[]>(
+		[]
+	);
 
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
@@ -65,7 +65,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const [
 		versionOfLiferaySoftwareOptions,
 		setVersionOfLiferaySoftwareOptions,
-	] = useState<{disabled?: boolean; label: string; value: string}[]>([]);
+	] = useState<IOption[]>([]);
 
 	const {businessEventTypesList} = useGetBusinessEventTypesList();
 
@@ -86,7 +86,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		if (!dateString) {
 			return '';
 		}
-		const [month, day, year] = dateString.split('/');
+		const [month, day, year] = dateString.split('-');
 
 		return `${year}-${month}-${day}`;
 	};
@@ -153,7 +153,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	);
 
 	const isDescriptionRequired = useMemo(
-		() => isSaasOnly || businessEvent.eventType?.name === 'otherEvent',
+		() => isSaasOnly || businessEvent.eventType?.key === 'otherEvent',
 		[isSaasOnly, businessEvent.eventType]
 	);
 
@@ -161,7 +161,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		() =>
 			!isSaasOnly &&
 			['migration', 'upgrade'].includes(
-				businessEvent.eventType?.name || ''
+				businessEvent.eventType?.key || ''
 			),
 		[isSaasOnly, businessEvent.eventType]
 	);
@@ -172,10 +172,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		const hasTouched = !!Object.keys(touched).length;
 		const hasError = errors && Object.keys(errors).length;
 		const hasEventName = values.businessEvent.name;
-		const hasEventType = values.businessEvent.eventType;
+		const hasEventType = values.businessEvent.eventType.key;
 		const hasCurrentLiferayVersion =
-			values.businessEvent.currentLiferayVersion;
-		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion;
+			values.businessEvent.currentLiferayVersion.key;
+		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
 		const hasDescription = values.businessEvent.description;
 		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
 
@@ -240,20 +240,16 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	}, [emptyOption, versionOfLiferaySoftwareList]);
 
 	useEffect(() => {
-		if (businessEventTypesOptions?.length) {
-			setFieldValue('businessEvent.eventType', {
-				name: businessEventTypesOptions[0].value,
-			});
+		if (!isDescriptionRequired) {
+			setFieldValue('businessEvent.description', '');
 		}
-	}, [businessEventTypesOptions, setFieldValue]);
+	}, [isDescriptionRequired, setFieldValue]);
 
 	useEffect(() => {
-		if (versionOfLiferaySoftwareOptions?.length) {
-			setFieldValue('businessEvent.currentLiferayVersion', {
-				name: versionOfLiferaySoftwareOptions[0].value,
-			});
+		if (!isNewLiferayVersionRequired) {
+			setFieldValue('businessEvent.newLiferayVersion.key', '');
 		}
-	}, [versionOfLiferaySoftwareOptions, setFieldValue]);
+	}, [isNewLiferayVersionRequired, setFieldValue]);
 
 	useEffect(() => {
 		setFieldValue(
@@ -311,7 +307,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 							label={i18n.translate('event-type')}
 							link="https://help.liferay.com/hc"
 							linkText="here"
-							name="businessEvent.eventType"
+							name="businessEvent.eventType.key"
 							options={businessEventTypesOptions}
 							required
 							showPopover
@@ -326,7 +322,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 								label={i18n.translate(
 									'your-current-liferay-version'
 								)}
-								name="businessEvent.currentLiferayVersion"
+								name="businessEvent.currentLiferayVersion.key"
 								options={versionOfLiferaySoftwareOptions}
 								required
 							/>
@@ -338,7 +334,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 								className="text-capitalize"
 								groupStyle="pb-1"
 								label={i18n.translate('new-version')}
-								name="businessEvent.newLiferayVersion"
+								name="businessEvent.newLiferayVersion.key"
 								options={versionOfLiferaySoftwareOptions}
 								required
 							/>
@@ -362,7 +358,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 						<ClayInput.Group className="m-0">
 							<ClayInput.GroupItem className="m-0">
 								<DatePicker
-									dateFormat="MM/dd/yyyy"
+									badgeClassName="ml-3 mr-3"
+									dateFormat="MM-dd-yyyy"
 									groupStyle="pb-1"
 									label={i18n.translate(
 										'target-go-live-date'
@@ -384,7 +381,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									groupStyle="pb-1"
 									id="select-businessEvent.timeZone"
 									label={i18n.translate('time-zone')}
-									name="businessEvent.timeZone"
+									name="businessEvent.timeZone.key"
 									options={gmtTimeZonesOptions}
 								/>
 							</ClayInput.GroupItem>

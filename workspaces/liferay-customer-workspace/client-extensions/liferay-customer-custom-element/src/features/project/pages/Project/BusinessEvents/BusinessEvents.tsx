@@ -7,7 +7,8 @@ import i18n from '~/utils/I18n';
 
 import './BusinessEvents.css';
 
-import {ButtonWithIcon} from '@clayui/core';
+import Button from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
@@ -178,17 +179,17 @@ const BusinessEvents = () => {
 						<div className="d-flex justify-content-center">
 							<ButtonDropDown
 								customDropDownButton={
-									<ButtonWithIcon
+									<Button
 										aria-label={i18n.translate(
 											'manage-user-options'
 										)}
 										borderless
 										className="text-neutral-5"
-										onPointerEnterCapture={undefined}
-										onPointerLeaveCapture={undefined}
-										placeholder={undefined}
-										symbol="ellipsis-v"
-									/>
+									>
+										<span>
+											<ClayIcon symbol="ellipsis-v" />
+										</span>
+									</Button>
 								}
 								items={userOptions}
 								label="Options"

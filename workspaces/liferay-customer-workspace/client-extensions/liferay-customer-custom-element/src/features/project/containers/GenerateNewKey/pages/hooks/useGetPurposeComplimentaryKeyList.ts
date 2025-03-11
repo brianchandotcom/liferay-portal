@@ -6,10 +6,11 @@
 import {useMemo} from 'react';
 import SearchBuilder from '~/lib/SearchBuilder';
 import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-definitions';
+import {IOption} from '~/utils/types';
 
 const listTypePurposeComplimentaryKey = 'Purpose of Complimentary Key';
 
-export default function useGetPurposeComplimentaryKeyList() {
+export default function useGetPurposeComplimentaryKeyList(): IOption[] {
 	const {data} = useGetListTypeDefinitions({
 		filter: SearchBuilder.eq('name', listTypePurposeComplimentaryKey),
 	});

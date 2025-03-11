@@ -5,16 +5,26 @@
 
 export default function getInitialEvent() {
 	return {
-		currentLiferayVersion: '',
+		associatedTickets: [],
+		currentLiferayVersion: {
+			key: '',
+		},
 		description: '',
-		eventStatus: 'open',
-		eventType: '',
-		impactedZendeskTicketIds: [],
+		eventStatus: {
+			key: 'open',
+		},
+		eventType: {
+			key: '',
+		},
 		name: '',
-		newLiferayVersion: '',
+		newLiferayVersion: {
+			key: '',
+		},
 		r_accountEntryToBusinessEvents_accountEntryId: '',
 		targetGoLiveDate: '',
 		time: '',
-		timeZone: '',
+		timeZone: {
+			key: '',
+		},
 	};
 }

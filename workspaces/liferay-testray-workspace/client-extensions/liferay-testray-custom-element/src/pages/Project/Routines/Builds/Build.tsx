@@ -17,6 +17,7 @@ import {StatusBadgeType} from '~/components/StatusBadge/StatusBadge';
 import useMutate from '~/hooks/useMutate';
 import i18n from '~/i18n';
 import {testrayCaseResultImpl} from '~/services/rest';
+import {getDurationTime} from '~/util/date';
 import {getTruncateText} from '~/util/getTruncateText';
 
 import useBuildTestActions from './useBuildTestActions';
@@ -99,6 +100,12 @@ const Build = () => {
 							key: 'testrayRunName',
 							value: i18n.translate('environment'),
 							width: '250',
+						},
+						{
+							clickable: true,
+							key: 'duration',
+							render: (duration) => getDurationTime(duration),
+							value: i18n.translate('duration'),
 						},
 						{
 							key: 'user',

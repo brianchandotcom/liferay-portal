@@ -227,12 +227,12 @@ public class TestrayCaseResultResourceImpl
 
 		StringBundler sb = new StringBundler(48);
 
-		sb.append("select cr.c_caseResultId_, cr.comment_, cr.dueStatus_, ");
-		sb.append("cr.errors_, cr.issues_, ct.name_ as caseTypeName, c.name_ ");
-		sb.append("as caseName, c.priority_, c.flaky_, r.name_ as runName, ");
-		sb.append("r.number_ as runNumber, co.name_ as componentName, ");
-		sb.append("t.name_ as teamName, u.firstName, u.lastName, ");
-		sb.append("u.middleName, u.uuid_, u.portraitId from ");
+		sb.append("select cr.c_caseResultId_, cr.comment_, cr.duration_, ");
+		sb.append("cr.dueStatus_, cr.errors_, cr.issues_, ct.name_ as ");
+		sb.append("caseTypeName, c.name_ as caseName, c.priority_, c.flaky_, ");
+		sb.append("r.name_ as runName, r.number_ as runNumber, co.name_ as ");
+		sb.append("componentName, t.name_ as teamName, u.firstName, ");
+		sb.append("u.lastName, u.middleName, u.uuid_, u.portraitId from ");
 		sb.append("O_[%COMPANY_ID%]_Build b, O_[%COMPANY_ID%]_CaseResult cr ");
 		sb.append("left outer join User_ u on u.userId = ");
 		sb.append("cr.r_userToCaseResults_userId, O_[%COMPANY_ID%]_Case c, ");
@@ -365,6 +365,7 @@ public class TestrayCaseResultResourceImpl
 				value -> new TestrayCaseResult() {
 					{
 						comment = GetterUtil.getString(value.get("comment_"));
+						duration = GetterUtil.getLong(value.get("duration_"));
 						error = GetterUtil.getString(value.get("errors_"));
 						flaky = GetterUtil.getBoolean(
 							String.valueOf(value.get("flaky_")));

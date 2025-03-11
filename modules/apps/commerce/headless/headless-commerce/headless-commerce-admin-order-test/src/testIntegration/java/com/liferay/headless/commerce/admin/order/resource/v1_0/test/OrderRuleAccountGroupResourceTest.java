@@ -83,7 +83,7 @@ public class OrderRuleAccountGroupResourceTest
 			};
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
-			_user.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, _user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), _serviceContext);
 
 		orderRuleAccountGroup.setAccountGroupId(

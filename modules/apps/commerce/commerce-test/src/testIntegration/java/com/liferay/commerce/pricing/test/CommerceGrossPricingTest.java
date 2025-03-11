@@ -104,10 +104,9 @@ public class CommerceGrossPricingTest {
 			ServiceContextTestUtil.getServiceContext();
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
-			serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			serviceContext);
+			StringPool.BLANK, serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), serviceContext);
 
-		accountGroup.setExternalReferenceCode("");
 		accountGroup.setDefaultAccountGroup(false);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_DYNAMIC);
 		accountGroup.setExpandoBridgeAttributes(serviceContext);

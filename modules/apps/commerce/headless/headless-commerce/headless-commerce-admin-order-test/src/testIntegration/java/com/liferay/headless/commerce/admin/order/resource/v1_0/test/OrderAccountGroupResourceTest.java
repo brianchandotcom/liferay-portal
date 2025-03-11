@@ -14,6 +14,7 @@ import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderAccountGroup;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -46,7 +47,7 @@ public class OrderAccountGroupResourceTest
 				user.getUserId());
 
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
-			user.getUserId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 
 		COREntry corEntry = _corEntryLocalService.addCOREntry(

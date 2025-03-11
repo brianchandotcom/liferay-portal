@@ -10,6 +10,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalServiceUtil;
 import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -41,10 +42,9 @@ public class CommerceAccountGroupTestUtil {
 
 		AccountGroup accountGroup =
 			AccountGroupLocalServiceUtil.addAccountGroup(
-				serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-				serviceContext);
+				StringPool.BLANK, serviceContext.getUserId(), null,
+				RandomTestUtil.randomString(), serviceContext);
 
-		accountGroup.setExternalReferenceCode(null);
 		accountGroup.setDefaultAccountGroup(false);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 		accountGroup.setExpandoBridgeAttributes(serviceContext);

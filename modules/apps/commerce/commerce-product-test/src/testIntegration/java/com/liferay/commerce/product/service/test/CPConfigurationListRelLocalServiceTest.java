@@ -18,6 +18,7 @@ import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListRelLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -74,8 +75,8 @@ public class CPConfigurationListRelLocalServiceTest {
 			_serviceContext);
 
 		_accountGroup = _accountGroupLocalService.addAccountGroup(
-			_serviceContext.getUserId(), null, RandomTestUtil.randomString(),
-			_serviceContext);
+			StringPool.BLANK, _serviceContext.getUserId(), null,
+			RandomTestUtil.randomString(), _serviceContext);
 		_commerceCatalog = _commerceCatalogService.addCommerceCatalog(
 			RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,

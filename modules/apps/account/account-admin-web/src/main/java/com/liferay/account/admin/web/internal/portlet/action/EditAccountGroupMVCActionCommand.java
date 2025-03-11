@@ -101,14 +101,11 @@ public class EditAccountGroupMVCActionCommand
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		AccountGroup accountGroup = _accountGroupService.addAccountGroup(
+		return _accountGroupService.addAccountGroup(
+			ParamUtil.getString(actionRequest, "externalReferenceCode"),
 			themeDisplay.getUserId(), description, name,
 			ServiceContextFactory.getInstance(
 				AccountGroup.class.getName(), actionRequest));
-
-		return _accountGroupLocalService.updateExternalReferenceCode(
-			accountGroup.getAccountGroupId(),
-			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
 
 	private void _updateAccountGroup(ActionRequest actionRequest)
@@ -120,14 +117,11 @@ public class EditAccountGroupMVCActionCommand
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		AccountGroup accountGroup = _accountGroupService.updateAccountGroup(
+		_accountGroupService.updateAccountGroup(
+			ParamUtil.getString(actionRequest, "externalReferenceCode"),
 			accountGroupId, description, name,
 			ServiceContextFactory.getInstance(
 				AccountGroup.class.getName(), actionRequest));
-
-		_accountGroupService.updateExternalReferenceCode(
-			accountGroup.getAccountGroupId(),
-			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
 
 	@Reference

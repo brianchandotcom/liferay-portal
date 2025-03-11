@@ -29,7 +29,7 @@ export default React.memo(function Toolbar() {
 
 	return (
 		<div className="management-bar navbar style-book-editor__toolbar">
-			<ClayLayout.ContainerFluid>
+			<ClayLayout.ContainerFluid size="xxxl">
 				<ul className="navbar-nav start">
 					{previewLayout?.url && (
 						<li className="nav-item">

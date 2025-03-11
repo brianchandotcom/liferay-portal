@@ -33,7 +33,9 @@ StyleBookDisplayContext styleBookDisplayContext = (StyleBookDisplayContext)reque
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<clay:container-fluid>
+<clay:container-fluid
+	size="xxxl"
+>
 	<aui:form action="<%= deleteStyleBookEntryURL %>" name="fm">
 		<liferay-ui:search-container
 			searchContainer="<%= styleBookDisplayContext.getStyleBookEntriesSearchContainer() %>"

@@ -34,7 +34,7 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 	@Test
 	public void testJUnitTestSelectorMerge() throws IOException {
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
-			getPortalAcceptancePullRequestJob(jsonObject));
+			getPortalAcceptancePullRequestJob());
 
 		relevantTestSuite.setModifiedFiles(
 			Arrays.asList(
@@ -82,7 +82,7 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 	@Test
 	public void testPlaywrightTestSelectorMerge() {
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
-			getPortalAcceptancePullRequestJob(jsonObject));
+			getPortalAcceptancePullRequestJob());
 
 		relevantTestSuite.setModifiedFiles(
 			Arrays.asList(
@@ -126,7 +126,7 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 	@Test
 	public void testPoshiTestSelectorMerge() throws IOException {
 		RelevantTestSuite relevantTestSuite = new RelevantTestSuite(
-			getPortalAcceptancePullRequestJob(jsonObject));
+			getPortalAcceptancePullRequestJob());
 
 		relevantTestSuite.setModifiedFiles(
 			Arrays.asList(

@@ -20,6 +20,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
@@ -78,6 +79,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletResponse;
@@ -94,6 +96,7 @@ public class DLAdminManagementToolbarDisplayContext
 	public DLAdminManagementToolbarDisplayContext(
 		AssetVocabularyService assetVocabularyService,
 		DLAdminDisplayContext dlAdminDisplayContext,
+		DLFileEntryTypeService dLFileEntryTypeService,
 		DLTrashHelper dlTrashHelper, HttpServletRequest httpServletRequest,
 		ItemSelector itemSelector, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -111,6 +114,8 @@ public class DLAdminManagementToolbarDisplayContext
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_siteConnectedGroupGroupProvider = siteConnectedGroupGroupProvider;
+
+		_dlFileEntryTypeService = dLFileEntryTypeService;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
@@ -582,13 +587,7 @@ public class DLAdminManagementToolbarDisplayContext
 			"selectedCategoryIds",
 			StringUtil.merge(_getAssetCategoryIds(), StringPool.COMMA)
 		).setParameter(
-			"vocabularyIds",
-			StringUtil.merge(
-				_assetVocabularyService.getGroupsVocabularies(
-					_getGroupIds(), DLFileEntryConstants.getClassName()),
-				assetVocabulary -> String.valueOf(
-					assetVocabulary.getVocabularyId()),
-				StringPool.COMMA)
+			"vocabularyIds", _getVocabularyIds()
 		).buildString();
 	}
 
@@ -988,6 +987,25 @@ public class DLAdminManagementToolbarDisplayContext
 		).buildString();
 	}
 
+	private String _getVocabularyIds() {
+		Set<AssetVocabulary> vocabularies = new TreeSet<>();
+
+		for (DLFileEntryType dlFileEntryType :
+				_dlFileEntryTypeService.getFileEntryTypes(_getGroupIds())) {
+
+			vocabularies.addAll(
+				_assetVocabularyService.getGroupsVocabularies(
+					_getGroupIds(), DLFileEntryConstants.getClassName(),
+					dlFileEntryType.getFileEntryTypeId()));
+		}
+
+		return StringUtil.merge(
+			vocabularies,
+			assetVocabulary -> String.valueOf(
+				assetVocabulary.getVocabularyId()),
+			StringPool.COMMA);
+	}
+
 	private boolean _hasValidAssetVocabularies() {
 		if (_hasValidAssetVocabularies != null) {
 			return _hasValidAssetVocabularies;
@@ -1059,6 +1077,7 @@ public class DLAdminManagementToolbarDisplayContext
 	private final AssetVocabularyService _assetVocabularyService;
 	private final PortletURL _currentURLObj;
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
+	private final DLFileEntryTypeService _dlFileEntryTypeService;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private final DLRequestHelper _dlRequestHelper;

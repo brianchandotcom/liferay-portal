@@ -14,6 +14,8 @@ public class FriendlyURLResolverConstants {
 
 	public static final String URL_SEPARATOR_ASSET_CATEGORY = "/v/";
 
+	public static final String URL_SEPARATOR_ASSET_LIBRARY = "/asset-library/";
+
 	public static final String URL_SEPARATOR_BLOGS_ENTRY = "/b/";
 
 	public static final String URL_SEPARATOR_CALENDAR_BOOKING = "/h/";

@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,8 +27,13 @@ public class AWSFactory {
 
 		List<AWSFleetCloud> awsFleetClouds = new ArrayList<>();
 
-		JSONArray fleetCloudsJSONArray = _getFleetCloudsJSONArray(
-			jenkinsMaster);
+		JSONArray fleetCloudsJSONArray =
+			_getFleetCloudsJSONArrayFromBuildProperties(jenkinsMaster);
+
+		if (fleetCloudsJSONArray == null) {
+			fleetCloudsJSONArray = _getFleetCloudsJSONArrayFromJenkins(
+				jenkinsMaster);
+		}
 
 		if (fleetCloudsJSONArray == null) {
 			return awsFleetClouds;
@@ -42,25 +48,84 @@ public class AWSFactory {
 		return awsFleetClouds;
 	}
 
-	public static AWSComputerConnector newAWSComputerConnector(
-		AWSFleetCloud awsFleetCloud, JSONObject jsonObject) {
-
-		return new AWSComputerConnector(awsFleetCloud, jsonObject);
-	}
-
-	public static AWSExecutorScaler newAWSExecutorScaler(
-		AWSFleetCloud awsFleetCloud, JSONObject jsonObject) {
-
-		return new AWSExecutorScaler(awsFleetCloud, jsonObject);
-	}
-
 	public static AWSFleetCloud newAWSFleetCloud(
 		JenkinsMaster jenkinsMaster, JSONObject jsonObject) {
 
 		return new AWSFleetCloud(jenkinsMaster, jsonObject);
 	}
 
-	private static JSONArray _getFleetCloudsJSONArray(
+	private static JSONArray _getFleetCloudsJSONArrayFromBuildProperties(
+		JenkinsMaster jenkinsMaster) {
+
+		if (jenkinsMaster == null) {
+			return null;
+		}
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String fleetNames = JenkinsResultsParserUtil.getProperty(
+				buildProperties,
+				"master.cloud.fleets(" + jenkinsMaster.getName() + ")");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(fleetNames)) {
+				return null;
+			}
+
+			String cloudFleetPropertyNames =
+				JenkinsResultsParserUtil.getProperty(
+					buildProperties, "cloud.fleet.property.names");
+
+			JSONArray fleetCloudsJSONArray = new JSONArray();
+
+			for (String fleetName : fleetNames.split(",")) {
+				JSONObject fleetCloudJSONObject = new JSONObject();
+
+				fleetCloudJSONObject.put("name", fleetName);
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(
+						cloudFleetPropertyNames)) {
+
+					fleetCloudsJSONArray.put(fleetCloudJSONObject);
+
+					continue;
+				}
+
+				for (String cloudFleetPropertyName :
+						cloudFleetPropertyNames.split(",")) {
+
+					String cloudFleetPropertyValue =
+						JenkinsResultsParserUtil.getProperty(
+							buildProperties,
+							"cloud.fleet.property(" + fleetName + "/" +
+								cloudFleetPropertyName + ")");
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(
+							cloudFleetPropertyValue)) {
+
+						cloudFleetPropertyValue =
+							JenkinsResultsParserUtil.getProperty(
+								buildProperties,
+								"cloud.fleet.property(default/" +
+									cloudFleetPropertyName + ")");
+					}
+
+					fleetCloudJSONObject.put(
+						cloudFleetPropertyName, cloudFleetPropertyValue);
+				}
+
+				fleetCloudsJSONArray.put(fleetCloudJSONObject);
+			}
+
+			return fleetCloudsJSONArray;
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+	}
+
+	private static JSONArray _getFleetCloudsJSONArrayFromJenkins(
 		JenkinsMaster jenkinsMaster) {
 
 		if (jenkinsMaster == null) {

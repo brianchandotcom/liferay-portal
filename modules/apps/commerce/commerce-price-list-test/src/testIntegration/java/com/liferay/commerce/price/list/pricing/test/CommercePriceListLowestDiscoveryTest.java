@@ -23,6 +23,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
@@ -175,6 +176,110 @@ public class CommercePriceListLowestDiscoveryTest {
 		Assert.assertEquals(
 			commerceCurrencyPriceList.getCommercePriceListId(),
 			discoveredCommercePriceList.getCommercePriceListId());
+	}
+
+	@Test
+	public void testRetrieveCorrectPriceListByEligibleCurrency()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"When multiple price list are defined for the same catalog the " +
+				"price list that provides the eligible currency should be taken"
+		).given(
+			"A catalog with multiple price lists and one product"
+		).when(
+			"The price list is discovered"
+		).then(
+			"The price list that gives the eligible currency is retrieved"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			_commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CommercePriceList commerceUnqualifiedPriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false, _TYPE, 1.0);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryTestUtil.addCommercePriceEntry(
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commerceUnqualifiedPriceList.getCommercePriceListId(),
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()));
+
+		CommercePriceList discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
+
+		Assert.assertEquals(
+			commerceUnqualifiedPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
+
+		CommercePriceList commerceCurrencyPriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false,
+				_commerceCurrency2.getCode(), _TYPE, 0);
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commerceCurrencyPriceList.getCommercePriceListId(),
+			commercePriceEntry.getPrice());
+
+		discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), _commerceCurrency2.getCode(),
+				_TYPE, StringPool.BLANK);
+
+		Assert.assertEquals(
+			commerceCurrencyPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
+
+		_commerceChannelRelLocalService.addCommerceChannelRel(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency1.getCommerceCurrencyId(),
+			_commerceChannel.getCommerceChannelId(), _serviceContext);
+
+		discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), _commerceCurrency2.getCode(),
+				_TYPE, StringPool.BLANK);
+
+		Assert.assertNull(discoveredCommercePriceList);
+
+		_commerceChannelRelLocalService.addCommerceChannelRel(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency2.getCommerceCurrencyId(),
+			_commerceChannel.getCommerceChannelId(), _serviceContext);
+
+		discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), _commerceCurrency2.getCode(),
+				_TYPE, StringPool.BLANK);
+
+		Assert.assertEquals(
+			commerceCurrencyPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
+
+		_commerceChannelRelLocalService.deleteCommerceChannelRels(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency1.getCommerceCurrencyId());
+		_commerceChannelRelLocalService.deleteCommerceChannelRels(
+			CommerceCurrency.class.getName(),
+			_commerceCurrency2.getCommerceCurrencyId());
 	}
 
 	@Test
@@ -371,6 +476,10 @@ public class CommercePriceListLowestDiscoveryTest {
 
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;
+
+	@Inject
+	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
+
 	private CommerceCurrency _commerceCurrency1;
 	private CommerceCurrency _commerceCurrency2;
 

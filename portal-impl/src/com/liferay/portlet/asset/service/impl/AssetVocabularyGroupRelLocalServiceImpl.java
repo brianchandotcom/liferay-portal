@@ -6,8 +6,11 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.InvalidAssetVocabularyGroupRelException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -47,7 +50,12 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 			assetVocabularyGroupRel.setUuid(serviceContext.getUuid());
 		}
 
-		return addAssetVocabularyGroupRel(assetVocabularyGroupRel);
+		assetVocabularyGroupRel = addAssetVocabularyGroupRel(
+			assetVocabularyGroupRel);
+
+		_reindexAssetVocabulary(vocabularyId);
+
+		return assetVocabularyGroupRel;
 	}
 
 	public void deleteAssetVocabularyGroupRelsByGroupId(long groupId) {
@@ -86,6 +94,15 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 		for (long groupId : groupIds) {
 			addAssetVocabularyGroupRel(vocabularyId, groupId);
 		}
+	}
+
+	private void _reindexAssetVocabulary(long vocabularyId)
+		throws PortalException {
+
+		Indexer<AssetVocabulary> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(AssetVocabulary.class);
+
+		indexer.reindex(AssetVocabulary.class.getName(), vocabularyId);
 	}
 
 }

@@ -79,16 +79,19 @@ function getSettings(objectField: ObjectField): Field['settings'] {
 	else if (objectField.businessType === 'DateTime') {
 		settings.timeStorage = objectFieldSettings.timeStorage;
 	}
-	else if (objectField.businessType === 'Text') {
-		if (settings.maxLength) {
+	else if (
+		objectField.businessType === 'Text' ||
+		objectField.businessType === 'Integer'
+	) {
+		if (objectFieldSettings.maxLength) {
 			settings.maxLength = objectFieldSettings.maxLength;
 		}
 
-		if (settings.showCounter) {
+		if (objectFieldSettings.showCounter) {
 			settings.showCounter = objectFieldSettings.showCounter;
 		}
 
-		if (settings.uniqueValues) {
+		if (objectFieldSettings.uniqueValues) {
 			settings.uniqueValues = objectFieldSettings.uniqueValues;
 		}
 	}

@@ -15,6 +15,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
+import com.liferay.portal.search.hits.SearchHitsBuilder;
+import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
+import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
+import com.liferay.portal.search.internal.searcher.SearchResponseImpl;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -201,6 +205,7 @@ public class DefaultSearchResultPermissionFilterTest {
 		SearchContext searchContext = new SearchContext();
 
 		_mockPermission(searchContext);
+		_mockSearchResponse(searchContext);
 
 		_setUpDocuments();
 
@@ -253,6 +258,25 @@ public class DefaultSearchResultPermissionFilterTest {
 		).thenReturn(
 			_groupAdmin
 		);
+	}
+
+	private void _mockSearchResponse(SearchContext searchContext) {
+		SearchResponseImpl searchResponseImpl = Mockito.mock(
+			SearchResponseImpl.class);
+
+		SearchHitsBuilderFactory searchHitsBuilderFactory =
+			new SearchHitsBuilderFactoryImpl();
+
+		SearchHitsBuilder searchHitsBuilder =
+			searchHitsBuilderFactory.getSearchHitsBuilder();
+
+		Mockito.when(
+			searchResponseImpl.getSearchHits()
+		).thenReturn(
+			searchHitsBuilder.build()
+		);
+
+		searchContext.setAttribute("search.response", searchResponseImpl);
 	}
 
 	private void _mockSearchResultPermissionFilterConfiguration() {

@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {PORTLET_URLS} from '../../utils/portletUrls';
@@ -18,7 +19,98 @@ export const test = mergeTests(
 	apiHelpersTest,
 	blogsPagesTest,
 	changeTrackingPagesTest,
-	journalPagesTest
+	journalPagesTest,
+	pageEditorPagesTest
+);
+
+test(
+	'Delete hidden system modification conflict publications by discarding',
+	{tag: '@LPD-50810'},
+	async ({
+		apiHelpers,
+		changeTrackingPage,
+		ctCollection,
+		page,
+		pageEditorPage,
+	}) => {
+		const site =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				'guest'
+			);
+
+		// Add a page with a fragment in production
+
+		await changeTrackingPage.workOnProduction();
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {type: 'content'},
+			title: layoutTitle,
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+		await pageEditorPage.publishPage();
+
+		// Edit fragment in publication
+
+		await changeTrackingPage.workOnPublication(ctCollection);
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		const headingId = await pageEditorPage.getFragmentId('Heading');
+
+		await pageEditorPage.editTextEditable(
+			headingId,
+			'element-text',
+			'Edited Text'
+		);
+
+		await pageEditorPage.publishPage();
+
+		// Delete fragment from production
+
+		await changeTrackingPage.workOnProduction();
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.deleteFragment(headingId);
+
+		await pageEditorPage.publishPage();
+
+		// Review and discard publication changes
+
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await page.getByRole('link', {name: 'Publish'}).click();
+
+		await expect(page.getByText('Checking Changes')).toBeVisible();
+
+		for (let i = 0; i < 2; i++) {
+			await page
+				.getByRole('link', {name: 'Discard Change'})
+				.first()
+				.click();
+
+			await page.getByRole('button', {name: 'Discard'}).click();
+		}
+
+		// Assert entries deleted
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await expect(
+			page.getByRole('link', {name: ctCollection.body.name})
+		).toBeVisible();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await expect(page.getByText('Heading Example')).not.toBeVisible();
+	}
 );
 
 test('Resolve deletion modification conflict publications by discarding', async ({

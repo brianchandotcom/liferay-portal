@@ -19,8 +19,8 @@
     padding-top: 0.5rem;
 }
 
-.dropdown-menu.show .dropdown-item:hover,
-.dropdown-menu.show .dropdown-item.active {
+.dropdown-menu.show .dropdown-item.active,
+.dropdown-menu.show .dropdown-item:hover {
     background-color: #5E45F422;
 }
 

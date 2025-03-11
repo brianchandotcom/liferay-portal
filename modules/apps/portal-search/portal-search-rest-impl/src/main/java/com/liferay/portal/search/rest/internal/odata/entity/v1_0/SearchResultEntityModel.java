@@ -7,7 +7,6 @@ package com.liferay.portal.search.rest.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -24,7 +23,6 @@ public class SearchResultEntityModel implements EntityModel {
 
 	public SearchResultEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new BooleanEntityField("cms", locale -> "cms"),
 			new CollectionEntityField(
 				new IntegerEntityField("groupIds", locale -> Field.GROUP_ID)),
 			new CollectionEntityField(
@@ -47,6 +45,7 @@ public class SearchResultEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField("folderId", locale -> Field.FOLDER_ID),
+			new StringEntityField("cmsSection", locale -> "cms_section"),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(

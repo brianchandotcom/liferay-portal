@@ -97,6 +97,11 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			filesObjectDefinitionFolderExternalReferenceCodes();
 	}
 
+	@Override
+	protected String getCMSSectionFilter() {
+		return "cmsSection eq 'files'";
+	}
+
 	private final Language _language;
 	private final ObjectDefinitionService _objectDefinitionService;
 

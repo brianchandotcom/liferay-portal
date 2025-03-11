@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,11 @@ public class CategorizationSectionDisplayContext
 		HttpServletRequest httpServletRequest) {
 
 		super(cmsSiteInitializerConfiguration, httpServletRequest);
+	}
+
+	@Override
+	protected String getCMSSectionFilter() {
+		return StringPool.BLANK;
 	}
 
 }

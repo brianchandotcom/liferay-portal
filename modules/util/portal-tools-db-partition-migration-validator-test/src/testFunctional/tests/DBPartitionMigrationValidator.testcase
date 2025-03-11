@@ -29,15 +29,17 @@ definition {
 		property test.run.type = "single";
 
 		task ("The database are set and we start a new database with database partitioning enabled") {
+			var defaultCompanyId = JSONCompany.getCompanyId();
+
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
-
-			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
 		}
 
 		task ("When run the migration tool to export the partition, the tool should run successfully") {
+			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
 			DBPartitionMigrationValidator.executeExtraction(
@@ -50,8 +52,6 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			var defaultCompanyId = JSONCompany.getCompanyId();
-
 			DBPartitionMigrationValidator.executeExtraction(
 				databaseCompanyId = ${defaultCompanyId},
 				databaseSchemaName = "lportal");
@@ -88,12 +88,12 @@ definition {
 		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
+			var defaultCompanyId = JSONCompany.getCompanyId();
+
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
-
-			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
 
 			Portlet.shutdownServer();
 
@@ -101,6 +101,8 @@ definition {
 		}
 
 		task ("When run the migration tool to export the source database, then the tool should run successfully") {
+			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
 			DBPartitionMigrationValidator.executeExtraction(
@@ -113,8 +115,6 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			var defaultCompanyId = JSONCompany.getCompanyId();
-
 			DBPartitionMigrationValidator.executeExtraction(
 				databaseCompanyId = ${defaultCompanyId},
 				databaseSchemaName = "lportal_target");
@@ -141,16 +141,17 @@ definition {
 		property test.run.type = "single";
 
 		task ("The database is set and we add a new virtual instance without database partitioning enabled") {
+			var defaultCompanyId = JSONCompany.getCompanyId();
+
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
-
-			var defaultCompanyId = JSONCompany.getCompanyId();
-			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
 		}
 
 		task ("Extraction of non default company from multi company database without database partitioning enabled is successful") {
+			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+
 			DBPartitionMigrationValidator.executeExtraction(
 				databaseCompanyId = ${newCompanyId},
 				databaseSchemaName = "lportal",

@@ -19,7 +19,7 @@ export function confirmCurrencyChange({
 				<div>
 					<p>
 						${Liferay.Language.get(
-							'changing-your-currency-will-automatically-create-a-new-order-with-the-selected-currency.-your-current-order-will-be-saved-and-accessible.-are-you-sure-you-want-to-proceed'
+							'changing-your-currency-will-automatically-create-a-new-order-with-the-selected-currency'
 						)}
 					</p>
 				</div>

@@ -105,8 +105,8 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	public boolean showFolders() {
-		return false;
+	protected String getCMSSectionFilter() {
+		return "cmsSection in ('content', 'files')";
 	}
 
 	private String _getPermissionsURL() throws Exception {

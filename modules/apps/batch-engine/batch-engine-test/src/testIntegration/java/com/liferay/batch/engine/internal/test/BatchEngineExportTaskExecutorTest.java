@@ -20,6 +20,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -263,6 +264,7 @@ public class BatchEngineExportTaskExecutorTest
 	}
 
 	@Test
+	@TestInfo("LPD-50699")
 	public void testExportBlogPostingsWithoutPersistingContent()
 		throws Throwable {
 
@@ -326,7 +328,9 @@ public class BatchEngineExportTaskExecutorTest
 
 				Blob content = _batchEngineExportTask.getContent();
 
-				Assert.assertEquals(0, content.length());
+				if (content != null) {
+					Assert.assertEquals(0, content.length());
+				}
 
 				return null;
 			});

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
+import com.liferay.portal.upgrade.v7_4_x.util.AssetVocabularyGroupRelTable;
 import com.liferay.portal.upgrade.v7_4_x.util.RememberMeTokenTable;
 
 /**
@@ -581,6 +582,9 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.alterColumnType(
 				"SystemEvent", "classExternalReferenceCode",
 				"VARCHAR(1000) null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 16, 0), AssetVocabularyGroupRelTable.create());
 	}
 
 }

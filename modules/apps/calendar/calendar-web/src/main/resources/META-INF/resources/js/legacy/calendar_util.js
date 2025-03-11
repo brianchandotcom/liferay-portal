@@ -123,7 +123,18 @@ AUI.add(
 			fillURLParameters(url, data) {
 				url = Lang.sub(url, data);
 
-				return url.replace(REGEX_UNFILLED_PARAMETER, '');
+				url = url.replace(REGEX_UNFILLED_PARAMETER, '');
+
+				const newURL = new URL(url);
+
+				if (newURL.searchParams.has('doAsUserId')) {
+					newURL.searchParams.set(
+						'doAsUserId',
+						Liferay.ThemeDisplay.getDoAsUserIdEncoded()
+					);
+				}
+
+				return newURL.toString();
 			},
 
 			getCalendarName(name, calendarResourceName) {

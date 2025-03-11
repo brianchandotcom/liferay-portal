@@ -5,6 +5,11 @@
 
 package com.liferay.asset.kernel.service;
 
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for AssetVocabularyGroupRel. This utility wraps
  * <code>com.liferay.portlet.asset.service.impl.AssetVocabularyGroupRelServiceImpl</code> and is an
@@ -24,14 +29,35 @@ public class AssetVocabularyGroupRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetVocabularyGroupRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static AssetVocabularyGroupRel addAssetVocabularyGroupRel(
+			long vocabularyId, long groupId)
+		throws PortalException {
+
+		return getService().addAssetVocabularyGroupRel(vocabularyId, groupId);
+	}
+
+	public static List<AssetVocabularyGroupRel>
+			getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId)
+		throws PortalException {
+
+		return getService().getAssetVocabularyGroupRelsByVocabularyId(
+			vocabularyId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void setAssetVocabularyGroupRels(
+			long vocabularyId, long[] groupIds)
+		throws PortalException {
+
+		getService().setAssetVocabularyGroupRels(vocabularyId, groupIds);
 	}
 
 	public static AssetVocabularyGroupRelService getService() {

@@ -52,6 +52,15 @@ public class AssetVocabularyGroupRelLocalServiceWrapper
 			assetVocabularyGroupRel);
 	}
 
+	@Override
+	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
+			long vocabularyId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
+			vocabularyId, groupId);
+	}
+
 	/**
 	 * Creates a new asset vocabulary group rel with the primary key. Does not add the asset vocabulary group rel to the database.
 	 *
@@ -114,6 +123,20 @@ public class AssetVocabularyGroupRelLocalServiceWrapper
 
 		return _assetVocabularyGroupRelLocalService.
 			deleteAssetVocabularyGroupRel(assetVocabularyGroupRelId);
+	}
+
+	@Override
+	public void deleteAssetVocabularyGroupRelsByGroupId(long groupId) {
+		_assetVocabularyGroupRelLocalService.
+			deleteAssetVocabularyGroupRelsByGroupId(groupId);
+	}
+
+	@Override
+	public void deleteAssetVocabularyGroupRelsByVocabularyId(
+		long vocabularyId) {
+
+		_assetVocabularyGroupRelLocalService.
+			deleteAssetVocabularyGroupRelsByVocabularyId(vocabularyId);
 	}
 
 	/**
@@ -314,6 +337,14 @@ public class AssetVocabularyGroupRelLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByGroupId(long groupId) {
+
+		return _assetVocabularyGroupRelLocalService.
+			getAssetVocabularyGroupRelsByGroupId(groupId);
+	}
+
 	/**
 	 * Returns all the asset vocabulary group rels matching the UUID and company.
 	 *
@@ -350,6 +381,14 @@ public class AssetVocabularyGroupRelLocalServiceWrapper
 		return _assetVocabularyGroupRelLocalService.
 			getAssetVocabularyGroupRelsByUuidAndCompanyId(
 				uuid, companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId) {
+
+		return _assetVocabularyGroupRelLocalService.
+			getAssetVocabularyGroupRelsByVocabularyId(vocabularyId);
 	}
 
 	/**
@@ -391,6 +430,14 @@ public class AssetVocabularyGroupRelLocalServiceWrapper
 
 		return _assetVocabularyGroupRelLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+			vocabularyId, groupIds);
 	}
 
 	/**

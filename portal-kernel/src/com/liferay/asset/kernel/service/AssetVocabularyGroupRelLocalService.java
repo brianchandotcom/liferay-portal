@@ -79,6 +79,10 @@ public interface AssetVocabularyGroupRelLocalService
 	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
 		AssetVocabularyGroupRel assetVocabularyGroupRel);
 
+	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
+			long vocabularyId, long groupId)
+		throws PortalException;
+
 	/**
 	 * Creates a new asset vocabulary group rel with the primary key. Does not add the asset vocabulary group rel to the database.
 	 *
@@ -124,6 +128,10 @@ public interface AssetVocabularyGroupRelLocalService
 	public AssetVocabularyGroupRel deleteAssetVocabularyGroupRel(
 			long assetVocabularyGroupRelId)
 		throws PortalException;
+
+	public void deleteAssetVocabularyGroupRelsByGroupId(long groupId);
+
+	public void deleteAssetVocabularyGroupRelsByVocabularyId(long vocabularyId);
 
 	/**
 	 * @throws PortalException
@@ -262,6 +270,10 @@ public interface AssetVocabularyGroupRelLocalService
 	public List<AssetVocabularyGroupRel> getAssetVocabularyGroupRels(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabularyGroupRel> getAssetVocabularyGroupRelsByGroupId(
+		long groupId);
+
 	/**
 	 * Returns all the asset vocabulary group rels matching the UUID and company.
 	 *
@@ -290,6 +302,10 @@ public interface AssetVocabularyGroupRelLocalService
 			String uuid, long companyId, int start, int end,
 			OrderByComparator<AssetVocabularyGroupRel> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId);
+
 	/**
 	 * Returns the number of asset vocabulary group rels.
 	 *
@@ -314,6 +330,9 @@ public interface AssetVocabularyGroupRelLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
 		throws PortalException;
 
 	/**

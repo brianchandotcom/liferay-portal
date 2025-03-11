@@ -1894,7 +1894,13 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (originalObjectEntry.isDraft() || originalObjectEntry.isPending()) {
-			_updateLatestObjectEntryVersion(objectEntry);
+			List<ObjectEntryVersion> objectEntryVersions =
+				_objectEntryVersionLocalService.getObjectEntryVersions(
+					objectEntry.getObjectEntryId());
+
+			if (!objectEntryVersions.isEmpty()) {
+				_updateLatestObjectEntryVersion(objectEntry);
+			}
 
 			return objectEntry;
 		}

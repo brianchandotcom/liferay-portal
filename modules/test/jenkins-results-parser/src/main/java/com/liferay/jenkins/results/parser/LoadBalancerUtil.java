@@ -407,6 +407,9 @@ public class LoadBalancerUtil {
 			return whitelist;
 		}
 
+		whitelistString = JenkinsResultsParserUtil.expandSlaveRange(
+			whitelistString);
+
 		if (verbose) {
 			System.out.println("Whitelist: " + whitelistString);
 		}

@@ -111,13 +111,13 @@ type BaseField = {
 	required: boolean;
 };
 
-export type UniqueValuesSettings = {
+export type UniqueValuesSettingsField = {
 	settings: {
 		uniqueValues?: boolean;
 	};
 };
 
-export type MaxLengthSettings = {
+export type MaxLengthSettingsField = {
 	settings: {
 		maxLength?: number;
 		showCounter?: boolean;
@@ -126,12 +126,12 @@ export type MaxLengthSettings = {
 
 export type NumericField = BaseField & {
 	type: 'integer';
-} & UniqueValuesSettings;
+} & UniqueValuesSettingsField;
 
 export type TextField = BaseField & {
 	type: 'text';
-} & MaxLengthSettings &
-	UniqueValuesSettings;
+} & MaxLengthSettingsField &
+	UniqueValuesSettingsField;
 
 export type Field =
 	| NumericField

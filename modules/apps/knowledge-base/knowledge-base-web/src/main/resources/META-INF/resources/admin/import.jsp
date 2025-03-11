@@ -21,7 +21,9 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 
-<clay:container-fluid>
+<clay:container-fluid
+	size="lg"
+>
 	<aui:form action="<%= importFileURL %>" class="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
 		<aui:input name="mvcPath" type="hidden" value="/admin/import.jsp" />
 		<aui:input name="parentKBFolderId" type="hidden" value="<%= String.valueOf(parentKBFolderId) %>" />

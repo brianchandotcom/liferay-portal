@@ -20,7 +20,9 @@ ViewKBTemplatesDisplayContext viewKBTemplatesDisplayContext = (ViewKBTemplatesDi
 		searchContainerId="kbTemplates"
 	/>
 
-	<clay:container-fluid>
+	<clay:container-fluid
+		size="xxxl"
+	>
 		<aui:form action="<%= viewKBTemplatesDisplayContext.getSearchURL() %>" method="get" name="fm">
 			<aui:input name="kbTemplateIds" type="hidden" />
 

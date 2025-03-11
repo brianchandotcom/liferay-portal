@@ -33,7 +33,9 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-knowledge-base-edit-article">
-		<clay:container-fluid>
+		<clay:container-fluid
+			fullWidth="<%= true %>"
+		>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<aui:input autocomplete="off" cssClass="form-control-inline" label='<%= LanguageUtil.get(request, "name") %>' labelCssClass="sr-only" name="title" placeholder='<%= LanguageUtil.format(request, "untitled-x", "article") %>' required="<%= true %>" type="text" value="<%= HtmlUtil.escape(editKBArticleDisplayContext.getKBArticleTitle()) %>" wrapperCssClass="mb-0" />

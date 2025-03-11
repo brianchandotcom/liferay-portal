@@ -35,6 +35,7 @@ renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "n
 
 <clay:container-fluid
 	cssClass="container-form-lg"
+	size="lg"
 >
 	<aui:form action="<%= updateKBFolderURL %>" method="post" name="fm">
 		<aui:input name="mvcPath" type="hidden" value="/admin/common/edit_kb_folder.jsp" />

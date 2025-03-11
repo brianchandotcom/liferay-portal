@@ -26,6 +26,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 
 <clay:container-fluid
 	cssClass="container-form-lg"
+	size="lg"
 >
 	<aui:form action="<%= updateKBTemplateURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "updateKBTemplate();" %>'>
 		<aui:input name="mvcPath" type="hidden" value="/admin/common/edit_kb_template.jsp" />

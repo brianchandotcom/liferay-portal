@@ -70,6 +70,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 
 		<clay:container-fluid
 			cssClass="container-view sidenav-content"
+			size="xxxl"
 		>
 
 			<%

@@ -179,7 +179,7 @@ public class EditKBArticleDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return "class=\"container-fluid container-fluid-max-xl " +
+		return "class=\"container-fluid container-fluid-max-lg " +
 			"container-form-lg\"";
 	}
 

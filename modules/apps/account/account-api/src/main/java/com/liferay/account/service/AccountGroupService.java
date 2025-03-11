@@ -46,8 +46,8 @@ public interface AccountGroupService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountGroupServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the account group remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AccountGroupServiceUtil} if injection and service tracking are not available.
 	 */
 	public AccountGroup addAccountGroup(
-			long userId, String description, String name,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String description,
+			String name, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AccountGroup deleteAccountGroup(long accountGroupId)
@@ -92,8 +92,8 @@ public interface AccountGroupService extends BaseService {
 		throws PortalException;
 
 	public AccountGroup updateAccountGroup(
-			long accountGroupId, String description, String name,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long accountGroupId,
+			String description, String name, ServiceContext serviceContext)
 		throws PortalException;
 
 	public AccountGroup updateExternalReferenceCode(

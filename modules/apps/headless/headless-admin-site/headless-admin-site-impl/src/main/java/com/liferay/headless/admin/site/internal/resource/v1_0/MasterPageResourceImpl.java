@@ -261,6 +261,11 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	protected void preparePatch(
 		MasterPage masterPage, MasterPage existingMasterPage) {
 
+		if (masterPage.getPageSpecifications() != null) {
+			existingMasterPage.setPageSpecifications(
+				masterPage::getPageSpecifications);
+		}
+
 		if (masterPage.getThumbnail() != null) {
 			existingMasterPage.setThumbnail(masterPage::getThumbnail);
 		}

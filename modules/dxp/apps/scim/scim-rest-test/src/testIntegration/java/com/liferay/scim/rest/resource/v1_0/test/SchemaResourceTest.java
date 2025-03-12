@@ -64,7 +64,7 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 			schemaResource.getV2SchemaByIdHttpResponse(
 				RandomTestUtil.randomString()));
 
-		for (String schema : _schemas) {
+		for (String schema : _schemaIds) {
 			HttpInvoker.HttpResponse httpResponse =
 				schemaResource.getV2SchemaByIdHttpResponse(schema);
 
@@ -92,21 +92,19 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 
 		Assert.assertEquals(200, httpResponse.getStatusCode());
 
-		JSONObject listResponseJSONObject = _jsonFactory.createJSONObject(
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			httpResponse.getContent());
 
-		JSONArray schemasJSONArray = listResponseJSONObject.getJSONArray(
-			"schemas");
+		JSONArray schemasJSONArray = jsonObject.getJSONArray("schemas");
 
 		Assert.assertEquals(
 			"urn:ietf:params:scim:api:messages:2.0:ListResponse",
 			schemasJSONArray.get(0));
 
-		Assert.assertEquals(3, listResponseJSONObject.getLong("totalResults"));
-		Assert.assertEquals(3, listResponseJSONObject.getLong("itemsPerPage"));
+		Assert.assertEquals(3, jsonObject.getLong("totalResults"));
+		Assert.assertEquals(3, jsonObject.getLong("itemsPerPage"));
 
-		JSONArray resourcesJSONArray = listResponseJSONObject.getJSONArray(
-			"Resources");
+		JSONArray resourcesJSONArray = jsonObject.getJSONArray("Resources");
 
 		Assert.assertEquals(3, resourcesJSONArray.length());
 
@@ -116,7 +114,7 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 			JSONObject schemaJSONObject = iterator.next();
 
 			Assert.assertTrue(
-				_schemas.contains(schemaJSONObject.getString("id")));
+				_schemaIds.contains(schemaJSONObject.getString("id")));
 		}
 	}
 
@@ -125,7 +123,7 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 	@Inject
 	private JSONFactory _jsonFactory;
 
-	private final List<String> _schemas = List.of(
+	private final List<String> _schemaIds = List.of(
 		"urn:ietf:params:scim:schemas:core:2.0:Group",
 		"urn:ietf:params:scim:schemas:core:2.0:User",
 		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User");

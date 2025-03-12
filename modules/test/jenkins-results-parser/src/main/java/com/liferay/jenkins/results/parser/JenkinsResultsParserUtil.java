@@ -2934,7 +2934,7 @@ public class JenkinsResultsParserUtil {
 			sb.append(invokedBatchSize);
 		}
 
-		if (isNullOrEmpty(jobName)) {
+		if (!isNullOrEmpty(jobName)) {
 			sb.append("&jobName=");
 			sb.append(fixURL(jobName));
 		}

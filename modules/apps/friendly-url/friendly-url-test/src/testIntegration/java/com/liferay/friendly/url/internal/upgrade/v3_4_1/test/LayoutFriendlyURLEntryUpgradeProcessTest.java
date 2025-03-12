@@ -6,6 +6,7 @@
 package com.liferay.friendly.url.internal.upgrade.v3_4_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -16,21 +17,30 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.impl.LayoutFriendlyURLImpl;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -43,6 +53,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import java.util.List;
 
@@ -92,6 +103,70 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		_deleteFriendlyURLEntries(draftLayout2, layout2);
 
 		_assertUpgrade(draftLayout1, draftLayout2, layout1, layout2);
+	}
+
+	@Test
+	public void testUpgradeDuplicateFriendlyURLEntryLocalization()
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+
+		Layout layout = null;
+
+		try {
+			String name = RandomTestUtil.randomString();
+
+			layout = LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId(), false,
+				HashMapBuilder.put(
+					LocaleUtil.US, name
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.US,
+					_friendlyURLNormalizer.normalizeWithEncoding(
+						StringPool.SLASH + name)
+				).build());
+
+			_insertLayoutFriendlyURLEntry(
+				layout,
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					StringPool.SLASH + name),
+				LanguageUtil.getLanguageId(LocaleUtil.SPAIN));
+
+			db.runSQL(
+				"create unique index IX_8AB5CAE on " +
+					"FriendlyURLEntryLocalization (groupId, classNameId, " +
+						"urlTitle[$COLUMN_LENGTH:255$])");
+			db.runSQL(
+				"create unique index IX_C753170C on " +
+					"FriendlyURLEntryLocalization (groupId, classNameId, " +
+						"urlTitle[$COLUMN_LENGTH:255$], ctCollectionId)");
+
+			_entityCache.clearCache(LayoutFriendlyURLImpl.class);
+			_finderCache.clearCache(LayoutFriendlyURLImpl.class);
+
+			_assertUpgrade(layout);
+		}
+		finally {
+			if (dbInspector.hasIndex(
+					"FriendlyURLEntryLocalization", "IX_8AB5CAE")) {
+
+				db.runSQL(
+					"drop index IX_8AB5CAE on FriendlyURLEntryLocalization");
+			}
+
+			if (dbInspector.hasIndex(
+					"FriendlyURLEntryLocalization", "IX_C753170C")) {
+
+				db.runSQL(
+					"drop index IX_C753170C on FriendlyURLEntryLocalization");
+			}
+
+			if (layout != null) {
+				_layoutLocalService.deleteLayout(layout);
+			}
+		}
 	}
 
 	@Test
@@ -400,6 +475,42 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		return 0;
 	}
 
+	private void _insertLayoutFriendlyURLEntry(
+			Layout layout, String friendlyURL, String languageId)
+		throws Exception {
+
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"insert into LayoutFriendlyURL (mvccVersion, ",
+					"ctCollectionId, uuid_, layoutFriendlyURLId, groupId, ",
+					"companyId, userId, userName, createDate, modifiedDate, ",
+					"plid, privateLayout, friendlyURL, languageId, ",
+					"lastPublishDate) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+					"?, ?, ?, ?, ?)"))) {
+
+			preparedStatement.setLong(1, 0);
+			preparedStatement.setLong(2, 0);
+			preparedStatement.setString(3, PortalUUIDUtil.generate());
+			preparedStatement.setLong(4, _counterLocalService.increment());
+			preparedStatement.setLong(5, _group.getGroupId());
+			preparedStatement.setLong(6, _group.getCompanyId());
+			preparedStatement.setLong(7, TestPropsValues.getUserId());
+			preparedStatement.setString(8, null);
+			preparedStatement.setTimestamp(9, timestamp);
+			preparedStatement.setTimestamp(10, timestamp);
+			preparedStatement.setLong(11, layout.getPlid());
+			preparedStatement.setBoolean(12, layout.isPrivateLayout());
+			preparedStatement.setString(13, friendlyURL);
+			preparedStatement.setString(14, languageId);
+			preparedStatement.setTimestamp(15, null);
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
 	private void _runSQL(String sql) throws Exception {
 		DB db = DBManagerUtil.getDB();
 
@@ -436,6 +547,15 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
+	private CounterLocalService _counterLocalService;
+
+	@Inject
+	private EntityCache _entityCache;
+
+	@Inject
+	private FinderCache _finderCache;
+
+	@Inject
 	private FriendlyURLEntryLocalizationPersistence
 		_friendlyURLEntryLocalizationPersistence;
 
@@ -451,6 +571,12 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

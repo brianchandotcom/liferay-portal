@@ -5,7 +5,6 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {API} from '@liferay/object-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -125,7 +124,7 @@ function SaveButton() {
 			}
 		}
 		catch (error) {
-			const {message} = error as API.ErrorDetails;
+			const {message} = error as Error;
 
 			dispatch({error: message, type: 'set-error'});
 		}
@@ -177,7 +176,7 @@ function PublishButton() {
 			dispatch({type: 'publish-structure'});
 		}
 		catch (error) {
-			const {message} = error as API.ErrorDetails;
+			const {message} = error as Error;
 
 			dispatch({error: message, type: 'set-error'});
 		}

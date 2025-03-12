@@ -6,6 +6,7 @@
 package com.liferay.testray.rest.internal.resource.v1_0;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -383,7 +384,7 @@ public class TestrayStatusMetricResourceImpl
 	@Override
 	public Page<TestrayRoutineMetric>
 			getTestrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetricsPage(
-				Long testrayProjectId, Pagination pagination)
+				Long testrayProjectId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(27);
@@ -425,6 +426,14 @@ public class TestrayStatusMetricResourceImpl
 			String.valueOf(contextCompany.getCompanyId()));
 
 		long totalCount = TestrayUtil.getTotalCount(sql, params);
+
+		if (sorts != null) {
+			sql += " order by r.name_ ";
+
+			if (sorts[0].isReverse()) {
+				sql += "desc";
+			}
+		}
 
 		if (pagination != null) {
 			sql += " limit ? offset ?";

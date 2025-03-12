@@ -71,8 +71,9 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 
 		if (sharingEntry == null) {
 			return sharingEntryService.addSharingEntry(
-				externalReferenceCode, toUserId, classNameId, classPK, groupId,
-				shareable, sharingEntryActions, expirationDate, serviceContext);
+				externalReferenceCode, toUserGroupId, toUserId, classNameId,
+				classPK, groupId, shareable, sharingEntryActions,
+				expirationDate, serviceContext);
 		}
 
 		return sharingEntryService.updateSharingEntry(
@@ -113,9 +114,9 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			sharingEntryActions);
 
 		return sharingEntryLocalService.addSharingEntry(
-			externalReferenceCode, getUserId(), toUserId, classNameId, classPK,
-			groupId, shareable, sharingEntryActions, expirationDate,
-			serviceContext);
+			externalReferenceCode, getUserId(), toUserGroupId, toUserId,
+			classNameId, classPK, groupId, shareable, sharingEntryActions,
+			expirationDate, serviceContext);
 	}
 
 	@Override

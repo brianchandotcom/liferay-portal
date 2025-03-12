@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
-import {sub} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {getAssetsLibrariesByCompany} from '../../../api/api';
@@ -17,12 +17,14 @@ import {required, validate} from '../forms/validations';
 type Props = {
 	assetLibraryId?: string;
 	closeModal: () => void;
+	redirect?: string;
 	title: string;
 };
 
 export default function CreationModalContent({
 	assetLibraryId = '',
 	closeModal,
+	redirect,
 	title,
 }: Props) {
 	const [assetLibraries, setAssetsLibraries] = useState<
@@ -48,16 +50,28 @@ export default function CreationModalContent({
 					assetLibraryId || assetLibraries.length === 1
 						? assetLibraries[0].id
 						: '',
-				folderName: '',
+				name: '',
 			},
 			onSubmit: (values) => {
-				alert(JSON.stringify(values, null, 4));
+				if (redirect) {
+					const {assetLibraryId, name} = values;
+
+					const url = new URL(redirect);
+
+					url.searchParams.set('name', name);
+					url.searchParams.set('assetLibraryId', assetLibraryId);
+
+					navigate(url.pathname + url.search);
+				}
+				else {
+					alert(JSON.stringify(values, null, 4));
+				}
 			},
 			validate: (values) =>
 				validate(
 					{
 						assetLibraryId: [required],
-						folderName: [required],
+						name: [required],
 					},
 					values
 				),
@@ -76,15 +90,13 @@ export default function CreationModalContent({
 					<>
 						<FieldText
 							errorMessage={
-								touched.folderName
-									? errors.folderName
-									: undefined
+								touched.name ? errors.name : undefined
 							}
 							label={Liferay.Language.get('name')}
-							name="folderName"
+							name="name"
 							onChange={handleChange}
 							required
-							value={values.folderName}
+							value={values.name}
 						/>
 
 						{assetLibraries.length > 1 && (
@@ -105,7 +117,7 @@ export default function CreationModalContent({
 									value: id,
 								}))}
 								label={Liferay.Language.get('space')}
-								name="folderName"
+								name="assetLibraryId"
 								onSelectionChange={(value: string) => {
 									setFieldValue('assetLibraryId', value);
 								}}

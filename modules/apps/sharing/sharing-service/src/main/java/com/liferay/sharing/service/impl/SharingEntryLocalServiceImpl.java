@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
+import com.liferay.sharing.exception.InvalidSharingEntryUserAndUserGroupException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -136,7 +138,7 @@ public class SharingEntryLocalServiceImpl
 
 		_validateSharingEntryActions(sharingEntryActions);
 
-		_validateUsers(userId, toUserId);
+		_validateUsersAndUserGroup(userId, toUserGroupId, toUserId);
 
 		_validateExpirationDate(expirationDate);
 
@@ -167,6 +169,7 @@ public class SharingEntryLocalServiceImpl
 		sharingEntry.setUserId(user.getUserId());
 		sharingEntry.setUserName(user.getFullName());
 
+		sharingEntry.setToUserGroupId(toUserGroupId);
 		sharingEntry.setToUserId(toUserId);
 		sharingEntry.setClassNameId(classNameId);
 		sharingEntry.setClassPK(classPK);
@@ -751,10 +754,21 @@ public class SharingEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateUsers(long fromUserId, long toUserId)
-		throws InvalidSharingEntryUserException {
+	private void _validateUsersAndUserGroup(
+			long fromUserId, long toUserGroupId, long toUserId)
+		throws PortalException {
 
-		if (fromUserId == toUserId) {
+		if (toUserGroupId > 0) {
+			_userGroupLocalService.getUserGroup(toUserGroupId);
+		}
+
+		if ((toUserGroupId > 0) && (toUserId > 0)) {
+			throw new InvalidSharingEntryUserAndUserGroupException(
+				"Creating a sharing entry for a user and a user group at the " +
+					"same time is not allowed");
+		}
+
+		if ((toUserId > 0) && (fromUserId == toUserId)) {
 			throw new InvalidSharingEntryUserException(
 				"From user cannot be the same as to user");
 		}
@@ -768,6 +782,9 @@ public class SharingEntryLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

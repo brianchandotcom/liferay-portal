@@ -48,6 +48,7 @@ import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectEntryVersionService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -648,6 +649,48 @@ public class DefaultObjectEntryManagerImpl
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(),
 				serviceBuilderObjectEntry.getPrimaryKey(), null));
+	}
+
+	@Override
+	public Page<ObjectEntry> getObjectEntryVersions(
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			Pagination pagination)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			objectEntryLocalService.getObjectEntry(objectEntryId);
+
+		return Page.of(
+			TransformUtil.transform(
+				_objectEntryVersionService.getObjectEntryVersions(
+					objectEntryId, _getStartPosition(pagination),
+					_getEndPosition(pagination)),
+				objectEntryVersion -> {
+					dtoConverterContext.setAttribute(
+						"objectEntryVersion", objectEntryVersion);
+
+					return _objectEntryDTOConverter.toDTO(
+						dtoConverterContext, objectEntry);
+				}),
+			pagination,
+			_objectEntryVersionService.getObjectEntryVersionsCount(
+				objectEntryId));
+	}
+
+	@Override
+	public Page<ObjectEntry> getObjectEntryVersions(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Pagination pagination)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			objectEntryLocalService.getObjectEntry(
+				externalReferenceCode,
+				objectDefinition.getObjectDefinitionId());
+
+		return getObjectEntryVersions(
+			dtoConverterContext, objectEntry.getObjectEntryId(), pagination);
 	}
 
 	@Override
@@ -1923,6 +1966,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectEntryService _objectEntryService;
+
+	@Reference
+	private ObjectEntryVersionService _objectEntryVersionService;
 
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;

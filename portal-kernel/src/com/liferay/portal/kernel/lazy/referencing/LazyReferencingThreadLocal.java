@@ -13,20 +13,22 @@ import com.liferay.petra.lang.SafeCloseable;
  */
 public class LazyReferencingThreadLocal {
 
-	public static SafeCloseable enableIncompleteModelWithSelfCloseable() {
-		return _incompleteModel.setWithSafeCloseable(true);
-	}
-
-	public static SafeCloseable enableWithSelfCloseable() {
-		return _enabled.setWithSafeCloseable(true);
-	}
-
 	public static boolean isEnabled() {
 		return _enabled.get();
 	}
 
 	public static boolean isIncompleteModel() {
 		return _incompleteModel.get();
+	}
+
+	public static SafeCloseable setEnabledWithSafeCloseable(boolean enabled) {
+		return _enabled.setWithSafeCloseable(enabled);
+	}
+
+	public static SafeCloseable setIncompleteModelWithSafeCloseable(
+		boolean incompleteModel) {
+
+		return _incompleteModel.setWithSafeCloseable(incompleteModel);
 	}
 
 	private static final CentralizedThreadLocal<Boolean> _enabled =

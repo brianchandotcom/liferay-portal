@@ -506,8 +506,8 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableIncompleteModelWithSelfCloseable()) {
+				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
+					true)) {
 
 			accountEntry = accountEntryLocalService.addAccountEntry(
 				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,

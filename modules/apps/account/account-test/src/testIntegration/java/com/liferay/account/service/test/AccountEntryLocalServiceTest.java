@@ -586,7 +586,7 @@ public class AccountEntryLocalServiceTest {
 	@Test
 	public void testGetOrAddIncompleteAccountEntry() throws Exception {
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
@@ -616,7 +616,7 @@ public class AccountEntryLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			_enableWorkflow();
 
@@ -1201,7 +1201,7 @@ public class AccountEntryLocalServiceTest {
 	@Test
 	public void testUpdateAccountEntryWithStatusIncomplete() throws Exception {
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
@@ -1232,7 +1232,7 @@ public class AccountEntryLocalServiceTest {
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			_enableWorkflow();
 

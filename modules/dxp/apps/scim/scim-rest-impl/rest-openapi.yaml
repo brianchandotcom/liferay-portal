@@ -48,10 +48,10 @@ components:
                         to a GET request or in response to a PUT, POST, or PATCH request.
                     enum: [always, never, default, request]
                     type: string
-                subattribute:
-                    oneOf:
-                        - $ref: "#/components/schemas/Attribute"
-                    type: object
+                subAttributes:
+                    items:
+                        $ref: "#/components/schemas/Attribute"
+                    type: array
                 type:
                     description:
                         The attribute's data type.  Valid values are "string", "boolean", "decimal", "integer",

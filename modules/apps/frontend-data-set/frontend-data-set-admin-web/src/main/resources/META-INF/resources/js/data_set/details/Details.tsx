@@ -126,189 +126,206 @@ const Details = ({
 	const {restApplication, restEndpoint, restSchema} = dataSet;
 
 	return (
-		<ClayLayout.Sheet className="mt-3" size="lg">
-			<ClayLayout.SheetHeader>
-				<h2 className="sheet-title">
-					{Liferay.Language.get('details')}
-				</h2>
-			</ClayLayout.SheetHeader>
+		<ClayLayout.ContainerFluid
+			className="mt-3 visualization-modes"
+			size="lg"
+		>
+			<ClayLayout.Sheet>
+				<ClayLayout.SheetHeader>
+					<h2 className="sheet-title">
+						{Liferay.Language.get('details')}
+					</h2>
+				</ClayLayout.SheetHeader>
 
-			<ClayLayout.SheetSection>
-				<ClayForm.Group
-					className={classNames({
-						'has-error': labelValidationError,
-					})}
-				>
-					<label htmlFor={`${namespace}dataSetLabelInput`}>
-						{Liferay.Language.get('name')}
-
-						<RequiredMark />
-					</label>
-
-					<ClayInput
-						defaultValue={dataSet.label}
-						id={`${namespace}dataSetLabelInput`}
-						onBlur={() =>
-							setLabelValidationError(!labelRef.current?.value)
-						}
-						ref={labelRef}
-						type="text"
-					/>
-
-					{labelValidationError && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{Liferay.Language.get('this-field-is-required')}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					)}
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label htmlFor={`${namespace}dataSetDesctiptionInput`}>
-						{Liferay.Language.get('description')}
-					</label>
-
-					<ClayInput
-						defaultValue={dataSet.description}
-						id={`${namespace}dataSetDesctiptionInput`}
-						ref={descriptionRef}
-						type="text"
-					/>
-				</ClayForm.Group>
-			</ClayLayout.SheetSection>
-
-			<ClayLayout.SheetSection className="mb-4">
-				<h3 className="sheet-subtitle">
-					{Liferay.Language.get('rest-information')}
-				</h3>
-
-				<ClayList className="flex-row flex-wrap">
-					<ClayList.Item className="border-0 col-12 col-sm-6" flex>
-						<ClayList.ItemField className="justify-content-center">
-							<ClayIcon symbol="api-web" />
-						</ClayList.ItemField>
-
-						<ClayList.ItemField expand>
-							<ClayList.ItemTitle>
-								{Liferay.Language.get('application')}
-							</ClayList.ItemTitle>
-
-							<ClayList.ItemText>
-								{restApplication}
-							</ClayList.ItemText>
-						</ClayList.ItemField>
-					</ClayList.Item>
-
-					<ClayList.Item className="border-0 col-12 col-sm-6" flex>
-						<ClayList.ItemField className="justify-content-center">
-							<ClayIcon symbol="diagram" />
-						</ClayList.ItemField>
-
-						<ClayList.ItemField>
-							<ClayList.ItemTitle>
-								{Liferay.Language.get('schema')}
-							</ClayList.ItemTitle>
-
-							<ClayList.ItemText>{restSchema}</ClayList.ItemText>
-						</ClayList.ItemField>
-					</ClayList.Item>
-
-					<ClayList.Item className="border-0 col-12" flex>
-						<ClayList.ItemField className="justify-content-center">
-							<ClayIcon symbol="nodes" />
-						</ClayList.ItemField>
-
-						<ClayList.ItemField>
-							<ClayList.ItemTitle>
-								{Liferay.Language.get('endpoint')}
-							</ClayList.ItemTitle>
-
-							<ClayList.ItemText>
-								{restEndpoint}
-							</ClayList.ItemText>
-						</ClayList.ItemField>
-					</ClayList.Item>
-				</ClayList>
-			</ClayLayout.SheetSection>
-
-			<ClayLayout.SheetSection className="mb-4">
-				<h3 className="sheet-subtitle">
-					{Liferay.Language.get('advanced-optional-parameters')}
-				</h3>
-
-				<ClayForm.Group>
-					<label htmlFor={`${namespace}dataSetParametersInput`}>
-						{Liferay.Language.get('parameters')}
-
-						<span
-							className="label-icon lfr-portal-tooltip ml-2"
-							title={Liferay.Language.get(
-								'data-set-parameters-help'
-							)}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
-					</label>
-
-					<ClayInput
-						component="textarea"
-						defaultValue={dataSet.additionalAPIURLParameters}
-						id={`${namespace}dataSetParametersInput`}
-						onChange={handleKeyUpParameters}
-						placeholder={sub(
-							Liferay.Language.get(
-								'data-set-parameters-placeholder'
-							),
-							'filter=dateCreated le 2012-05-29T00:00:00.000Z&flatten=true&sort=name'
-						)}
-						ref={parametersRef}
-						type="text"
-					/>
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label htmlFor={`${namespace}dataSetURLPreviewInput`}>
-						{Liferay.Language.get('url-preview')}
-
-						<span
-							className="label-icon lfr-portal-tooltip ml-2"
-							title={Liferay.Language.get('url-preview-help')}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
-					</label>
-
-					<ClayInput
-						id={`${namespace}dataSetURLPreviewInput`}
-						readOnly
-						value={urlPreview}
-					/>
-				</ClayForm.Group>
-
-				<LearnMessage
-					resource="frontend-data-set-admin-web"
-					resourceKey="rest-parameters"
-				/>
-			</ClayLayout.SheetSection>
-
-			<ClayLayout.SheetFooter>
-				<ClayButton.Group spaced>
-					<ClayButton onClick={updateFDSView}>
-						{Liferay.Language.get('save')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="secondary"
-						onClick={() => navigate(backURL)}
+				<ClayLayout.SheetSection>
+					<ClayForm.Group
+						className={classNames({
+							'has-error': labelValidationError,
+						})}
 					>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
-				</ClayButton.Group>
-			</ClayLayout.SheetFooter>
-		</ClayLayout.Sheet>
+						<label htmlFor={`${namespace}dataSetLabelInput`}>
+							{Liferay.Language.get('name')}
+
+							<RequiredMark />
+						</label>
+
+						<ClayInput
+							defaultValue={dataSet.label}
+							id={`${namespace}dataSetLabelInput`}
+							onBlur={() =>
+								setLabelValidationError(
+									!labelRef.current?.value
+								)
+							}
+							ref={labelRef}
+							type="text"
+						/>
+
+						{labelValidationError && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+									{Liferay.Language.get(
+										'this-field-is-required'
+									)}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}dataSetDesctiptionInput`}>
+							{Liferay.Language.get('description')}
+						</label>
+
+						<ClayInput
+							defaultValue={dataSet.description}
+							id={`${namespace}dataSetDesctiptionInput`}
+							ref={descriptionRef}
+							type="text"
+						/>
+					</ClayForm.Group>
+				</ClayLayout.SheetSection>
+
+				<ClayLayout.SheetSection className="mb-4">
+					<h3 className="sheet-subtitle">
+						{Liferay.Language.get('rest-information')}
+					</h3>
+
+					<ClayList className="flex-row flex-wrap">
+						<ClayList.Item
+							className="border-0 col-12 col-sm-6"
+							flex
+						>
+							<ClayList.ItemField className="justify-content-center">
+								<ClayIcon symbol="api-web" />
+							</ClayList.ItemField>
+
+							<ClayList.ItemField expand>
+								<ClayList.ItemTitle>
+									{Liferay.Language.get('application')}
+								</ClayList.ItemTitle>
+
+								<ClayList.ItemText>
+									{restApplication}
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+						</ClayList.Item>
+
+						<ClayList.Item
+							className="border-0 col-12 col-sm-6"
+							flex
+						>
+							<ClayList.ItemField className="justify-content-center">
+								<ClayIcon symbol="diagram" />
+							</ClayList.ItemField>
+
+							<ClayList.ItemField>
+								<ClayList.ItemTitle>
+									{Liferay.Language.get('schema')}
+								</ClayList.ItemTitle>
+
+								<ClayList.ItemText>
+									{restSchema}
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+						</ClayList.Item>
+
+						<ClayList.Item className="border-0 col-12" flex>
+							<ClayList.ItemField className="justify-content-center">
+								<ClayIcon symbol="nodes" />
+							</ClayList.ItemField>
+
+							<ClayList.ItemField>
+								<ClayList.ItemTitle>
+									{Liferay.Language.get('endpoint')}
+								</ClayList.ItemTitle>
+
+								<ClayList.ItemText>
+									{restEndpoint}
+								</ClayList.ItemText>
+							</ClayList.ItemField>
+						</ClayList.Item>
+					</ClayList>
+				</ClayLayout.SheetSection>
+
+				<ClayLayout.SheetSection className="mb-4">
+					<h3 className="sheet-subtitle">
+						{Liferay.Language.get('advanced-optional-parameters')}
+					</h3>
+
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}dataSetParametersInput`}>
+							{Liferay.Language.get('parameters')}
+
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get(
+									'data-set-parameters-help'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							component="textarea"
+							defaultValue={dataSet.additionalAPIURLParameters}
+							id={`${namespace}dataSetParametersInput`}
+							onChange={handleKeyUpParameters}
+							placeholder={sub(
+								Liferay.Language.get(
+									'data-set-parameters-placeholder'
+								),
+								'filter=dateCreated le 2012-05-29T00:00:00.000Z&flatten=true&sort=name'
+							)}
+							ref={parametersRef}
+							type="text"
+						/>
+					</ClayForm.Group>
+
+					<ClayForm.Group>
+						<label htmlFor={`${namespace}dataSetURLPreviewInput`}>
+							{Liferay.Language.get('url-preview')}
+
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get('url-preview-help')}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							id={`${namespace}dataSetURLPreviewInput`}
+							readOnly
+							value={urlPreview}
+						/>
+					</ClayForm.Group>
+
+					<LearnMessage
+						resource="frontend-data-set-admin-web"
+						resourceKey="rest-parameters"
+					/>
+				</ClayLayout.SheetSection>
+
+				<ClayLayout.SheetFooter>
+					<ClayButton.Group spaced>
+						<ClayButton onClick={updateFDSView}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={() => navigate(backURL)}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				</ClayLayout.SheetFooter>
+			</ClayLayout.Sheet>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

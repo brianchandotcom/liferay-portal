@@ -141,156 +141,163 @@ function Pagination({
 		requiredDefaultItemsPerPageValidationError;
 
 	return (
-		<ClayLayout.Sheet className="mt-3" size="lg">
-			<ClayLayout.SheetHeader>
-				<h2 className="sheet-title">
-					{Liferay.Language.get('pagination')}
-				</h2>
+		<ClayLayout.ContainerFluid className="mt-3" size="lg">
+			<ClayLayout.Sheet>
+				<ClayLayout.SheetHeader>
+					<h2 className="sheet-title">
+						{Liferay.Language.get('pagination')}
+					</h2>
 
-				<div className="sheet-text">
-					{Liferay.Language.get(
-						'data-set-view-pagination-description'
-					)}
-				</div>
-			</ClayLayout.SheetHeader>
+					<div className="sheet-text">
+						{Liferay.Language.get(
+							'data-set-view-pagination-description'
+						)}
+					</div>
+				</ClayLayout.SheetHeader>
 
-			<ClayLayout.SheetSection>
-				<ClayForm.Group
-					className={classnames(
-						listOfItemsPerPageValidationError && 'has-error'
-					)}
-				>
-					<label
-						htmlFor={`${namespace}dataSetListOfItemsPerPageTextarea`}
+				<ClayLayout.SheetSection>
+					<ClayForm.Group
+						className={classnames(
+							listOfItemsPerPageValidationError && 'has-error'
+						)}
 					>
-						{Liferay.Language.get('list-of-items-per-page')}
+						<label
+							htmlFor={`${namespace}dataSetListOfItemsPerPageTextarea`}
+						>
+							{Liferay.Language.get('list-of-items-per-page')}
 
-						<RequiredMark />
-					</label>
+							<RequiredMark />
+						</label>
 
-					<ClayInput
-						component="textarea"
-						id={`${namespace}dataSetListOfItemsPerPageTextarea`}
-						onBlur={() => {
-							const itemsPerPageArray = getItemsPerPageArray();
+						<ClayInput
+							component="textarea"
+							id={`${namespace}dataSetListOfItemsPerPageTextarea`}
+							onBlur={() => {
+								const itemsPerPageArray =
+									getItemsPerPageArray();
 
-							listOfItemsPerPageFieldValidation(
-								itemsPerPageArray
-							);
+								listOfItemsPerPageFieldValidation(
+									itemsPerPageArray
+								);
 
-							compatibilityValidation(itemsPerPageArray);
+								compatibilityValidation(itemsPerPageArray);
 
-							setRequiredListOfItemsPerPageValidationError(
-								!listOfItemsPerPageRef.current?.value
-							);
-						}}
-						onChange={(event) =>
-							setListOfItemsPerPage(event.target.value)
-						}
-						ref={listOfItemsPerPageRef}
-						required
-						type="text"
-						value={listOfItemsPerPage}
-					/>
+								setRequiredListOfItemsPerPageValidationError(
+									!listOfItemsPerPageRef.current?.value
+								);
+							}}
+							onChange={(event) =>
+								setListOfItemsPerPage(event.target.value)
+							}
+							ref={listOfItemsPerPageRef}
+							required
+							type="text"
+							value={listOfItemsPerPage}
+						/>
 
-					{listOfItemsPerPageValidationError && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+						{listOfItemsPerPageValidationError && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{requiredListOfItemsPerPageValidationError
-									? Liferay.Language.get(
-											'this-field-is-required'
-										)
-									: invalidNumberInListOfItemsPerPageValidationError
+									{requiredListOfItemsPerPageValidationError
 										? Liferay.Language.get(
-												'this-field-contains-an-invalid-number'
+												'this-field-is-required'
+											)
+										: invalidNumberInListOfItemsPerPageValidationError
+											? Liferay.Language.get(
+													'this-field-contains-an-invalid-number'
+												)
+											: Liferay.Language.get(
+													'this-field-contains-more-than-25-elements'
+												)}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
+
+						<ClayForm.Text>
+							{Liferay.Language.get(
+								'list-of-items-per-page-help'
+							)}
+						</ClayForm.Text>
+					</ClayForm.Group>
+
+					<ClayForm.Group
+						className={classnames(
+							defaultItemsPerPageValidationError && 'has-error'
+						)}
+					>
+						<label
+							htmlFor={`${namespace}dataSetDefaultItemsPerPageInput`}
+						>
+							{Liferay.Language.get('default-items-per-page')}
+
+							<RequiredMark />
+						</label>
+
+						<ClayInput
+							id={`${namespace}dataSetDefaultItemsPerPageInput`}
+							onBlur={() => {
+								compatibilityValidation(getItemsPerPageArray());
+
+								setRequiredDefaultItemsPerPageValidationError(
+									!defaultItemsPerPageRef.current?.value
+								);
+							}}
+							onChange={(event) =>
+								setDefaultItemsPerPage(event.target.value)
+							}
+							ref={defaultItemsPerPageRef}
+							type="number"
+							value={defaultItemsPerPage}
+						/>
+
+						{defaultItemsPerPageValidationError && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+									{requiredDefaultItemsPerPageValidationError
+										? Liferay.Language.get(
+												'this-field-is-required'
 											)
 										: Liferay.Language.get(
-												'this-field-contains-more-than-25-elements'
+												'the-default-value-must-exist-in-the-list-of-items-per-page'
 											)}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					)}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
 
-					<ClayForm.Text>
-						{Liferay.Language.get('list-of-items-per-page-help')}
-					</ClayForm.Text>
-				</ClayForm.Group>
+						<ClayForm.Text>
+							{Liferay.Language.get(
+								'default-items-per-page-help'
+							)}
+						</ClayForm.Text>
+					</ClayForm.Group>
+				</ClayLayout.SheetSection>
 
-				<ClayForm.Group
-					className={classnames(
-						defaultItemsPerPageValidationError && 'has-error'
-					)}
-				>
-					<label
-						htmlFor={`${namespace}dataSetDefaultItemsPerPageInput`}
-					>
-						{Liferay.Language.get('default-items-per-page')}
+				<ClayLayout.SheetFooter>
+					<ClayButton.Group spaced>
+						<ClayButton
+							disabled={
+								listOfItemsPerPageValidationError ||
+								defaultItemsPerPageValidationError
+							}
+							onClick={handleSaveClick}
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
 
-						<RequiredMark />
-					</label>
-
-					<ClayInput
-						id={`${namespace}dataSetDefaultItemsPerPageInput`}
-						onBlur={() => {
-							compatibilityValidation(getItemsPerPageArray());
-
-							setRequiredDefaultItemsPerPageValidationError(
-								!defaultItemsPerPageRef.current?.value
-							);
-						}}
-						onChange={(event) =>
-							setDefaultItemsPerPage(event.target.value)
-						}
-						ref={defaultItemsPerPageRef}
-						type="number"
-						value={defaultItemsPerPage}
-					/>
-
-					{defaultItemsPerPageValidationError && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{requiredDefaultItemsPerPageValidationError
-									? Liferay.Language.get(
-											'this-field-is-required'
-										)
-									: Liferay.Language.get(
-											'the-default-value-must-exist-in-the-list-of-items-per-page'
-										)}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					)}
-
-					<ClayForm.Text>
-						{Liferay.Language.get('default-items-per-page-help')}
-					</ClayForm.Text>
-				</ClayForm.Group>
-			</ClayLayout.SheetSection>
-
-			<ClayLayout.SheetFooter>
-				<ClayButton.Group spaced>
-					<ClayButton
-						disabled={
-							listOfItemsPerPageValidationError ||
-							defaultItemsPerPageValidationError
-						}
-						onClick={handleSaveClick}
-					>
-						{Liferay.Language.get('save')}
-					</ClayButton>
-
-					<ClayButton
-						displayType="secondary"
-						onClick={() => navigate(backURL)}
-					>
-						{Liferay.Language.get('cancel')}
-					</ClayButton>
-				</ClayButton.Group>
-			</ClayLayout.SheetFooter>
-		</ClayLayout.Sheet>
+						<ClayButton
+							displayType="secondary"
+							onClick={() => navigate(backURL)}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+					</ClayButton.Group>
+				</ClayLayout.SheetFooter>
+			</ClayLayout.Sheet>
+		</ClayLayout.ContainerFluid>
 	);
 }
 

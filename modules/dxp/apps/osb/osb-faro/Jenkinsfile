@@ -10,7 +10,7 @@ pipeline {
 		LABEL_BUILD_DATE = "${sh(script: "date -u +%Y-%m-%dT%H:%M:%SZ", returnStdout: true).trim()}"
 		IMAGE_NAME = "liferaycloud/com-liferay-osb-faro"
 		IMAGE_TAG_SUFFIX = "${FARO_ENVIRONMENT}-${sh(script: "date +%Y%m%d", returnStdout: true).trim()}-${sh(script: "git rev-parse --short=7 ${GIT_COMMIT}", returnStdout: true).trim()}"
-		JAVA_HOME = "/opt/java/jdk8u292-b10"
+		JAVA_HOME = "${JAVA_17_HOME}"
 
 		DOCKER_BUILD_ARGS = "--build-arg LABEL_BUILD_DATE=${LABEL_BUILD_DATE} --build-arg LABEL_VCS_REF=${GIT_COMMIT} --no-cache -f ./Dockerfile ./"
 	}

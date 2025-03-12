@@ -19,9 +19,16 @@
 					{
 						"definition": {
 							"widgetInstance": {
-								"widgetConfig": {
-									"displayStyleGroupId": "[$GROUP_ID$]"
-								},
+								"widgetConfig": {},
+								"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
+							}
+						},
+						"type": "Widget"
+					},
+					{
+						"definition": {
+							"widgetInstance": {
+								"widgetConfig": {},
 								"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet"
 							}
 						},
@@ -34,9 +41,11 @@
 		"type": "Root"
 	},
 	"settings": {
+		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "primary-master-page"
-		}
+			"key": "primary"
+		},
+		"themeName": "Dialect"
 	},
 	"version": 1.1
 }

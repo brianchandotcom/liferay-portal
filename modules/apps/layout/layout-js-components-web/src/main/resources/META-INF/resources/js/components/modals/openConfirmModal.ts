@@ -8,6 +8,7 @@ import {openModal} from 'frontend-js-components-web';
 type Props = {
 	buttonLabel: string;
 	center?: boolean;
+	hideCancel?: boolean;
 	onCancel?: () => void;
 	onConfirm?: () => void;
 	status: 'info' | 'warning';
@@ -18,40 +19,46 @@ type Props = {
 export default function openConfirmModal({
 	buttonLabel,
 	center,
+	hideCancel,
 	onCancel,
 	onConfirm,
 	status,
 	text,
 	title,
 }: Props) {
+	const buttons = [];
+
+	if (!hideCancel) {
+		buttons.push({
+			autoFocus: true,
+			displayType: 'secondary' as const,
+			label: Liferay.Language.get('cancel'),
+			onClick: ({processClose} = {processClose: () => {}}) => {
+				processClose();
+
+				if (onCancel) {
+					onCancel();
+				}
+			},
+			type: 'cancel' as const,
+		});
+	}
+
+	buttons.push({
+		displayType: status,
+		label: buttonLabel,
+		onClick: ({processClose} = {processClose: () => {}}) => {
+			processClose();
+
+			if (onConfirm) {
+				onConfirm();
+			}
+		},
+	});
+
 	openModal({
 		bodyHTML: text,
-		buttons: [
-			{
-				autoFocus: true,
-				displayType: 'secondary',
-				label: Liferay.Language.get('cancel'),
-				onClick: ({processClose} = {processClose: () => {}}) => {
-					processClose();
-
-					if (onCancel) {
-						onCancel();
-					}
-				},
-				type: 'cancel',
-			},
-			{
-				displayType: status,
-				label: buttonLabel,
-				onClick: ({processClose} = {processClose: () => {}}) => {
-					processClose();
-
-					if (onConfirm) {
-						onConfirm();
-					}
-				},
-			},
-		],
+		buttons,
 		center,
 		status,
 		title,

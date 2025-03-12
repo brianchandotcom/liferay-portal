@@ -28,8 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jürgen Kappler
@@ -97,12 +95,8 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 	@Reference
 	private Language _language;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")"
-	)
-	private volatile PortletResourcePermission _portletResourcePermission;
+	@Reference(target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

@@ -5,6 +5,14 @@
 
 package com.liferay.scim.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -14,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -26,10 +35,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.scim.rest.client.dto.v1_0.Group;
+import com.liferay.scim.rest.client.dto.v1_0.Schema;
 import com.liferay.scim.rest.client.dto.v1_0.User;
 import com.liferay.scim.rest.client.http.HttpInvoker;
 import com.liferay.scim.rest.client.pagination.Page;
 import com.liferay.scim.rest.client.resource.v1_0.SchemaResource;
+import com.liferay.scim.rest.client.serdes.v1_0.SchemaSerDes;
 
 import java.lang.reflect.Method;
 
@@ -107,6 +118,71 @@ public abstract class BaseSchemaResourceTestCase {
 	}
 
 	@Test
+	public void testClientSerDesToDTO() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Schema schema1 = randomSchema();
+
+		String json = objectMapper.writeValueAsString(schema1);
+
+		Schema schema2 = SchemaSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(schema1, schema2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = getClientSerDesObjectMapper();
+
+		Schema schema = randomSchema();
+
+		String json1 = objectMapper.writeValueAsString(schema);
+		String json2 = SchemaSerDes.toJSON(schema);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	protected ObjectMapper getClientSerDesObjectMapper() {
+		return new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+				enable(SerializationFeature.INDENT_OUTPUT);
+				setDateFormat(new ISO8601DateFormat());
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+			}
+		};
+	}
+
+	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		Schema schema = randomSchema();
+
+		schema.setDescription(regex);
+		schema.setId(regex);
+		schema.setName(regex);
+
+		String json = SchemaSerDes.toJSON(schema);
+
+		Assert.assertFalse(json.contains(regex));
+
+		schema = SchemaSerDes.toDTO(json);
+
+		Assert.assertEquals(regex, schema.getDescription());
+		Assert.assertEquals(regex, schema.getId());
+		Assert.assertEquals(regex, schema.getName());
+	}
+
+	@Test
 	public void testGetV2Schemas() throws Exception {
 		Assert.assertTrue(false);
 	}
@@ -116,10 +192,15 @@ public abstract class BaseSchemaResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	protected void assertContains(Object schema, List<Object> schemas) {
+	protected Schema testGraphQLSchema_addSchema() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void assertContains(Schema schema, List<Schema> schemas) {
 		boolean contains = false;
 
-		for (Object item : schemas) {
+		for (Schema item : schemas) {
 			if (equals(schema, item)) {
 				contains = true;
 
@@ -138,31 +219,31 @@ public abstract class BaseSchemaResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Object schema1, Object schema2) {
+	protected void assertEquals(Schema schema1, Schema schema2) {
 		Assert.assertTrue(
 			schema1 + " does not equal " + schema2, equals(schema1, schema2));
 	}
 
-	protected void assertEquals(List<Object> schemas1, List<Object> schemas2) {
+	protected void assertEquals(List<Schema> schemas1, List<Schema> schemas2) {
 		Assert.assertEquals(schemas1.size(), schemas2.size());
 
 		for (int i = 0; i < schemas1.size(); i++) {
-			Object schema1 = schemas1.get(i);
-			Object schema2 = schemas2.get(i);
+			Schema schema1 = schemas1.get(i);
+			Schema schema2 = schemas2.get(i);
 
 			assertEquals(schema1, schema2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Object> schemas1, List<Object> schemas2) {
+		List<Schema> schemas1, List<Schema> schemas2) {
 
 		Assert.assertEquals(schemas1.size(), schemas2.size());
 
-		for (Object schema1 : schemas1) {
+		for (Schema schema1 : schemas1) {
 			boolean contains = false;
 
-			for (Object schema2 : schemas2) {
+			for (Schema schema2 : schemas2) {
 				if (equals(schema1, schema2)) {
 					contains = true;
 
@@ -175,11 +256,55 @@ public abstract class BaseSchemaResourceTestCase {
 		}
 	}
 
-	protected void assertValid(Object schema) throws Exception {
+	protected void assertValid(Schema schema) throws Exception {
 		boolean valid = true;
+
+		if (schema.getId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("attributes", additionalAssertFieldName)) {
+				if (schema.getAttributes() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (schema.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("meta", additionalAssertFieldName)) {
+				if (schema.getMeta() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (schema.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("schemas", additionalAssertFieldName)) {
+				if (schema.getSchemas() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
@@ -189,16 +314,16 @@ public abstract class BaseSchemaResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Object> page) {
+	protected void assertValid(Page<Schema> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<Object> page, Map<String, Map<String, String>> expectedActions) {
+		Page<Schema> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<Object> schemas = page.getItems();
+		java.util.Collection<Schema> schemas = page.getItems();
 
 		int size = schemas.size();
 
@@ -238,6 +363,19 @@ public abstract class BaseSchemaResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		for (java.lang.reflect.Field field :
+				getDeclaredFields(
+					com.liferay.scim.rest.dto.v1_0.Schema.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
 		return graphQLFields;
 	}
 
@@ -275,13 +413,67 @@ public abstract class BaseSchemaResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Object schema1, Object schema2) {
+	protected boolean equals(Schema schema1, Schema schema2) {
 		if (schema1 == schema2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("attributes", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						schema1.getAttributes(), schema2.getAttributes())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						schema1.getDescription(), schema2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(schema1.getId(), schema2.getId())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("meta", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(schema1.getMeta(), schema2.getMeta())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(schema1.getName(), schema2.getName())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("schemas", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						schema1.getSchemas(), schema2.getSchemas())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
@@ -378,7 +570,7 @@ public abstract class BaseSchemaResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Object schema) {
+		EntityField entityField, String operator, Schema schema) {
 
 		StringBundler sb = new StringBundler();
 
@@ -389,6 +581,159 @@ public abstract class BaseSchemaResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("attributes")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("description")) {
+			Object object = schema.getDescription();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("id")) {
+			Object object = schema.getId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("meta")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("name")) {
+			Object object = schema.getName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("schemas")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
@@ -430,6 +775,27 @@ public abstract class BaseSchemaResourceTestCase {
 
 		return JSONFactoryUtil.createJSONObject(
 			invoke(queryGraphQLField.toString()));
+	}
+
+	protected Schema randomSchema() throws Exception {
+		return new Schema() {
+			{
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
+	protected Schema randomIrrelevantSchema() throws Exception {
+		Schema randomIrrelevantSchema = randomSchema();
+
+		return randomIrrelevantSchema;
+	}
+
+	protected Schema randomPatchSchema() throws Exception {
+		return randomSchema();
 	}
 
 	protected SchemaResource schemaResource;

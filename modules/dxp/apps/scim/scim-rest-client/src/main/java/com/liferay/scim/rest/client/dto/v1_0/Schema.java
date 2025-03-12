@@ -6,7 +6,7 @@
 package com.liferay.scim.rest.client.dto.v1_0;
 
 import com.liferay.scim.rest.client.function.UnsafeSupplier;
-import com.liferay.scim.rest.client.serdes.v1_0.SchemaDefinitionSerDes;
+import com.liferay.scim.rest.client.serdes.v1_0.SchemaSerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SchemaDefinition implements Cloneable, Serializable {
+public class Schema implements Cloneable, Serializable {
 
-	public static SchemaDefinition toDTO(String json) {
-		return SchemaDefinitionSerDes.toDTO(json);
+	public static Schema toDTO(String json) {
+		return SchemaSerDes.toDTO(json);
 	}
 
 	public Attribute[] getAttributes() {
@@ -146,8 +146,8 @@ public class SchemaDefinition implements Cloneable, Serializable {
 	protected String[] schemas;
 
 	@Override
-	public SchemaDefinition clone() throws CloneNotSupportedException {
-		return (SchemaDefinition)super.clone();
+	public Schema clone() throws CloneNotSupportedException {
+		return (Schema)super.clone();
 	}
 
 	@Override
@@ -156,13 +156,13 @@ public class SchemaDefinition implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SchemaDefinition)) {
+		if (!(object instanceof Schema)) {
 			return false;
 		}
 
-		SchemaDefinition schemaDefinition = (SchemaDefinition)object;
+		Schema schema = (Schema)object;
 
-		return Objects.equals(toString(), schemaDefinition.toString());
+		return Objects.equals(toString(), schema.toString());
 	}
 
 	@Override
@@ -173,7 +173,7 @@ public class SchemaDefinition implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return SchemaDefinitionSerDes.toJSON(this);
+		return SchemaSerDes.toJSON(this);
 	}
 
 }

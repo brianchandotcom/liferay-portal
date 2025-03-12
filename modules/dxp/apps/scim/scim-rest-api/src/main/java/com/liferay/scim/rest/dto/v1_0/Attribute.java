@@ -14,13 +14,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
@@ -41,10 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "Each SCIM resource (Users, Groups, etc.) includes the following common attributes.",
-	value = "Attribute"
-)
+@GraphQLName("Attribute")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Attribute")
 public class Attribute implements Serializable {
@@ -57,7 +51,7 @@ public class Attribute implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Attribute.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A collection of suggested canonical values that MAY be used (e.g., \"work\" and \"home\")."
 	)
 	public String[] getCanonicalValues() {
@@ -102,7 +96,7 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _canonicalValuesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A Boolean value that specifies whether or not a string attribute is case sensitive"
 	)
 	public Boolean getCaseExact() {
@@ -147,7 +141,7 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _caseExactSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The attribute's human-readable description.  When applicable, service providers MUST specify the description"
 	)
 	public String getDescription() {
@@ -192,7 +186,7 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A Boolean value indicating the attribute's plurality."
 	)
 	public Boolean getMultiValued() {
@@ -237,10 +231,10 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _multiValuedSupplier;
 
-	@JsonGetter("mutability")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A single keyword indicating the circumstances under which the value of the attribute can be (re)defined."
 	)
+	@JsonGetter("mutability")
 	@Valid
 	public Mutability getMutability() {
 		if (_mutabilitySupplier != null) {
@@ -295,7 +289,9 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<Mutability> _mutabilitySupplier;
 
-	@Schema(description = "The attribute's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The attribute's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -334,7 +330,7 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A multi-valued array of JSON strings that indicate the SCIM resource types that may be referenced"
 	)
 	public String[] getReferenceTypes() {
@@ -379,8 +375,8 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _referenceTypesSupplier;
 
-	@Schema(
-		description = "TA Boolean value that specifies whether or not the attribute is required."
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A Boolean value that specifies whether or not the attribute is required."
 	)
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
@@ -416,7 +412,7 @@ public class Attribute implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "TA Boolean value that specifies whether or not the attribute is required."
+		description = "A Boolean value that specifies whether or not the attribute is required."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
@@ -424,10 +420,10 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@JsonGetter("returned")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A single keyword that indicates when an attribute and associated values are returned in response to a GET request or in response to a PUT, POST, or PATCH request."
 	)
+	@JsonGetter("returned")
 	@Valid
 	public Returned getReturned() {
 		if (_returnedSupplier != null) {
@@ -482,31 +478,31 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<Returned> _returnedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public Object getSubattribute() {
-		if (_subattributeSupplier != null) {
-			subattribute = _subattributeSupplier.get();
+	public Attribute[] getSubAttributes() {
+		if (_subAttributesSupplier != null) {
+			subAttributes = _subAttributesSupplier.get();
 
-			_subattributeSupplier = null;
+			_subAttributesSupplier = null;
 		}
 
-		return subattribute;
+		return subAttributes;
 	}
 
-	public void setSubattribute(Object subattribute) {
-		this.subattribute = subattribute;
+	public void setSubAttributes(Attribute[] subAttributes) {
+		this.subAttributes = subAttributes;
 
-		_subattributeSupplier = null;
+		_subAttributesSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSubattribute(
-		UnsafeSupplier<Object, Exception> subattributeUnsafeSupplier) {
+	public void setSubAttributes(
+		UnsafeSupplier<Attribute[], Exception> subAttributesUnsafeSupplier) {
 
-		_subattributeSupplier = () -> {
+		_subAttributesSupplier = () -> {
 			try {
-				return subattributeUnsafeSupplier.get();
+				return subAttributesUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -519,15 +515,15 @@ public class Attribute implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object subattribute;
+	protected Attribute[] subAttributes;
 
 	@JsonIgnore
-	private Supplier<Object> _subattributeSupplier;
+	private Supplier<Attribute[]> _subAttributesSupplier;
 
-	@JsonGetter("type")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The attribute's data type.  Valid values are \"string\", \"boolean\", \"decimal\", \"integer\", \"dateTime\", \"reference\", and \"complex\"."
 	)
+	@JsonGetter("type")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -580,10 +576,10 @@ public class Attribute implements Serializable {
 	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
-	@JsonGetter("uniqueness")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A single keyword value that specifies how the service provider enforces uniqueness of attribute values."
 	)
+	@JsonGetter("uniqueness")
 	@Valid
 	public Uniqueness getUniqueness() {
 		if (_uniquenessSupplier != null) {
@@ -817,27 +813,26 @@ public class Attribute implements Serializable {
 			sb.append("\"");
 		}
 
-		Object subattribute = getSubattribute();
+		Attribute[] subAttributes = getSubAttributes();
 
-		if (subattribute != null) {
+		if (subAttributes != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"subattribute\": ");
+			sb.append("\"subAttributes\": ");
 
-			if (subattribute instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)subattribute));
+			sb.append("[");
+
+			for (int i = 0; i < subAttributes.length; i++) {
+				sb.append(String.valueOf(subAttributes[i]));
+
+				if ((i + 1) < subAttributes.length) {
+					sb.append(", ");
+				}
 			}
-			else if (subattribute instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)subattribute));
-				sb.append("\"");
-			}
-			else {
-				sb.append(subattribute);
-			}
+
+			sb.append("]");
 		}
 
 		Type type = getType();
@@ -877,8 +872,8 @@ public class Attribute implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.scim.rest.dto.v1_0.Attribute",
 		name = "x-class-name"
 	)

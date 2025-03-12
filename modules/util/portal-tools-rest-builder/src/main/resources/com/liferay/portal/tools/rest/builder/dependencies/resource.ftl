@@ -9,8 +9,6 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion};
 </#list>
 
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -86,7 +84,7 @@ public interface ${schemaName}Resource {
 
 	public void setContextUser(com.liferay.portal.kernel.model.User contextUser);
 
-	public void setExpressionConvert(ExpressionConvert<Filter> expressionConvert);
+	public void setExpressionConvert(ExpressionConvert<com.liferay.portal.kernel.search.filter.Filter> expressionConvert);
 
 	public void setFilterParserProvider(FilterParserProvider filterParserProvider);
 
@@ -108,16 +106,16 @@ public interface ${schemaName}Resource {
 		public void setVulcanBatchEngineImportTaskResource(VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource);
 	</#if>
 
-	public default Filter toFilter(String filterString) {
+	public default com.liferay.portal.kernel.search.filter.Filter toFilter(String filterString) {
 		return toFilter(filterString, Collections.<String, List<String>>emptyMap());
 	}
 
-	public default Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
+	public default com.liferay.portal.kernel.search.filter.Filter toFilter(String filterString, Map<String, List<String>> multivaluedMap) {
 		return null;
 	}
 
-	public default Sort[] toSorts(String sortsString) {
-		return new Sort[0];
+	public default com.liferay.portal.kernel.search.Sort[] toSorts(String sortsString) {
+		return new com.liferay.portal.kernel.search.Sort[0];
 	}
 
 	@ProviderType

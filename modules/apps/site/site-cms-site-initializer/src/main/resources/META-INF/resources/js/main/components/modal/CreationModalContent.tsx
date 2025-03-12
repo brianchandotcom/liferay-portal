@@ -7,19 +7,24 @@ import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {getAssetsLibrariesByCompany} from '../../../api/api';
 import {FieldPicker, FieldText} from '../forms';
 import {required, validate} from '../forms/validations';
 
-export default function CreationFolderModalContent({
-	assetLibraryId = '',
-	closeModal,
-}: {
+type Props = {
 	assetLibraryId?: string;
 	closeModal: () => void;
-}) {
+	title: string;
+};
+
+export default function CreationModalContent({
+	assetLibraryId = '',
+	closeModal,
+	title,
+}: Props) {
 	const [assetLibraries, setAssetsLibraries] = useState<
 		{id: string; name: string}[]
 	>([]);
@@ -60,9 +65,7 @@ export default function CreationFolderModalContent({
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<ClayModal.Header>
-				{Liferay.Language.get('new-folder')}
-			</ClayModal.Header>
+			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>
 				{loading ? (
@@ -91,8 +94,11 @@ export default function CreationFolderModalContent({
 										? errors.assetLibraryId
 										: undefined
 								}
-								helpMessage={Liferay.Language.get(
-									'choose-the-space-for-the-new-folder'
+								helpMessage={sub(
+									Liferay.Language.get(
+										'choose-the-space-for-the-x'
+									),
+									title
 								)}
 								items={assetLibraries.map(({id, name}) => ({
 									label: name,

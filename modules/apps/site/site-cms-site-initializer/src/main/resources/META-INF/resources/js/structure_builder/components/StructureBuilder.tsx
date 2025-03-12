@@ -5,10 +5,11 @@
 
 import '../../../css/structure_builder/StructureBuilder.scss';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {Config, initializeConfig} from '../config';
-import StateContextProvider from '../contexts/StateContext';
+import StateContextProvider, {useSelector} from '../contexts/StateContext';
+import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildState from '../utils/buildState';
 import ManagementBar from './ManagementBar';
@@ -27,6 +28,8 @@ export default function StructureBuilder({
 	return (
 		<StateContextProvider initialState={buildState(state.objectDefinition)}>
 			<div className="d-flex flex-column structure-builder__wrapper">
+				<HistoryManager />
+
 				<ManagementBar />
 
 				<div className="d-flex flex-grow-1 p-4">
@@ -37,4 +40,26 @@ export default function StructureBuilder({
 			</div>
 		</StateContextProvider>
 	);
+}
+
+function HistoryManager() {
+	const structureId = useSelector(selectStructureId);
+
+	useEffect(() => {
+		if (!structureId) {
+			return;
+		}
+
+		const url = new URL(window.location.href);
+
+		if (url.searchParams.has('objectFolderExternalReferenceCode')) {
+			url.searchParams.delete('objectFolderExternalReferenceCode');
+		}
+
+		url.searchParams.set('objectDefinitionId', structureId.toString());
+
+		history.replaceState(null, document.head.title, url.href);
+	}, [structureId]);
+
+	return null;
 }

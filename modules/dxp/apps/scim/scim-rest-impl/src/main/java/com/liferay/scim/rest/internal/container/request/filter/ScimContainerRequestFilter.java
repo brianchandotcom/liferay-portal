@@ -41,6 +41,9 @@ public class ScimContainerRequestFilter implements ContainerRequestFilter {
 				HashMapBuilder.put(
 					SCIMConstants.GROUP_ENDPOINT, basePath + "v1.0/v2/Groups"
 				).put(
+					SCIMConstants.RESOURCE_TYPE_ENDPOINT,
+					basePath + "v1.0/v2/ResourceTypes"
+				).put(
 					SCIMConstants.SCHEMAS_ENDPOINT, basePath + "v1.0/v2/Schemas"
 				).put(
 					SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT,

@@ -677,9 +677,9 @@ export function ProvideAppBuildPage({
 					setProcessing(true);
 
 					try {
+						await submitAppBuildTypeSpecification();
 						await submitAppBuildCategories();
 						await submitAppBuildPackages();
-						await submitAppBuildTypeSpecification();
 
 						if (isCloud) {
 							await submitAppBuildCloudResourceRequirements(

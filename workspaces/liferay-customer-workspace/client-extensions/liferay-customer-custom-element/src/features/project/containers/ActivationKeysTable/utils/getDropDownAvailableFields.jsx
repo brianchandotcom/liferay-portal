@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 import i18n from '~/utils/I18n';
-import FilterCheckbox from '~/components/Filter/components/FilterDropdown/components/FilterContent';
+import CheckboxFilter from '~/features/project/components/CheckboxFilter';
 import DateFilter from '~/features/project/components/DateFilter';
 import ExpirationDateFilter from '~/features/project/components/ExpirationDateFilter';
 import KeyTypeFilter from '~/features/project/components/KeyTypeFilter';
@@ -15,31 +15,44 @@ export function getDropDownAvailableFields(
 ) {
 	return {
 		x0a0: [
-			{child: 'x0a1', title: i18n.translate('key-type')},
+			{
+				child: 'x0a1',
+				title: i18n.translate('key-type'),
+				type: 'item',
+			},
 			{
 				child: 'x0a2',
 				disabled: !availableFields.environmentTypes.length,
 				title: i18n.translate('environment-type'),
+				type: 'item',
 			},
-			{child: 'x0a4', title: i18n.translate('start-date')},
+			{
+				child: 'x0a4',
+				title: i18n.translate('start-date'),
+				type: 'item',
+			},
 			{
 				child: 'x0a5',
 				title: i18n.translate('expiration-date'),
+				type: 'item',
 			},
 			{
 				child: 'x0a6',
 				disabled: !availableFields.status.length,
 				title: i18n.translate('status'),
+				type: 'item',				
 			},
 			{
 				child: 'x0a7',
 				disabled: !availableFields.productVersions.length,
 				title: i18n.translate('product-version'),
+				type: 'item',
 			},
 			{
 				child: 'x0a8',
 				disabled: !availableFields.instanceSizes.length,
 				title: i18n.translate('instance-size'),
+				type: 'item',
 			},
 		],
 		x0a1: [
@@ -60,7 +73,7 @@ export function getDropDownAvailableFields(
 		x0a2: [
 			{
 				child: (
-					<FilterCheckbox
+					<CheckboxFilter
 						availableItems={availableFields.environmentTypes}
 						clearCheckboxes={
 							!filters.environmentTypes.value?.length
@@ -122,7 +135,7 @@ export function getDropDownAvailableFields(
 		x0a6: [
 			{
 				child: (
-					<FilterCheckbox
+					<CheckboxFilter
 						availableItems={availableFields.status}
 						clearCheckboxes={!filters.status.value?.length}
 						updateFilters={(checkedItems) =>
@@ -142,7 +155,7 @@ export function getDropDownAvailableFields(
 		x0a7: [
 			{
 				child: (
-					<FilterCheckbox
+					<CheckboxFilter
 						availableItems={availableFields.productVersions}
 						clearCheckboxes={!filters.productVersions.value?.length}
 						updateFilters={(checkedItems) =>
@@ -162,7 +175,7 @@ export function getDropDownAvailableFields(
 		x0a8: [
 			{
 				child: (
-					<FilterCheckbox
+					<CheckboxFilter
 						availableItems={availableFields.instanceSizes}
 						clearCheckboxes={!filters.instanceSizes.value?.length}
 						updateFilters={(checkedItems) =>

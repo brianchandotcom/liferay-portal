@@ -68,5 +68,6 @@
 		<exception>InvalidSharingEntryAction</exception>
 		<exception>InvalidSharingEntryExpirationDate</exception>
 		<exception>InvalidSharingEntryUser</exception>
+		<exception>InvalidSharingEntryUserAndUserGroup</exception>
 	</exceptions>
 </service-builder>

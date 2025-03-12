@@ -145,9 +145,10 @@ public class AccountEntryLocalServiceImpl
 
 	@Override
 	public AccountEntry addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, String emailAddress,
-			byte[] logoBytes, String taxIdNumber, String type, int status,
+			String externalReferenceCode, long userId,
+			long parentAccountEntryId, String name, String description,
+			String[] domains, String emailAddress, byte[] logoBytes,
+			String taxIdNumber, String type, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -160,6 +161,7 @@ public class AccountEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		accountEntry.setExternalReferenceCode(externalReferenceCode);
 		accountEntry.setCompanyId(user.getCompanyId());
 		accountEntry.setUserId(user.getUserId());
 		accountEntry.setUserName(user.getFullName());
@@ -266,18 +268,15 @@ public class AccountEntryLocalServiceImpl
 
 		if (accountEntry != null) {
 			return updateAccountEntry(
-				accountEntry.getAccountEntryId(), parentAccountEntryId, name,
-				description, false, domains, emailAddress, logoBytes,
-				taxIdNumber, status, serviceContext);
+				externalReferenceCode, accountEntry.getAccountEntryId(),
+				parentAccountEntryId, name, description, false, domains,
+				emailAddress, logoBytes, taxIdNumber, status, serviceContext);
 		}
 
-		accountEntry = addAccountEntry(
-			userId, parentAccountEntryId, name, description, domains,
-			emailAddress, logoBytes, taxIdNumber, type, status, serviceContext);
-
-		accountEntry.setExternalReferenceCode(externalReferenceCode);
-
-		return accountEntryPersistence.update(accountEntry);
+		return addAccountEntry(
+			externalReferenceCode, userId, parentAccountEntryId, name,
+			description, domains, emailAddress, logoBytes, taxIdNumber, type,
+			status, serviceContext);
 	}
 
 	@Override
@@ -510,7 +509,8 @@ public class AccountEntryLocalServiceImpl
 					true)) {
 
 			accountEntry = accountEntryLocalService.addAccountEntry(
-				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				StringPool.BLANK, userId,
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 				GetterUtil.get(name, externalReferenceCode), StringPool.BLANK,
 				null, StringPool.BLANK, null, StringPool.BLANK, type,
 				WorkflowConstants.STATUS_INCOMPLETE, null);
@@ -656,15 +656,17 @@ public class AccountEntryLocalServiceImpl
 
 	@Override
 	public AccountEntry updateAccountEntry(
-			long accountEntryId, long parentAccountEntryId, String name,
-			String description, boolean deleteLogo, String[] domains,
-			String emailAddress, byte[] logoBytes, String taxIdNumber,
-			int status, ServiceContext serviceContext)
+			String externalReferenceCode, long accountEntryId,
+			long parentAccountEntryId, String name, String description,
+			boolean deleteLogo, String[] domains, String emailAddress,
+			byte[] logoBytes, String taxIdNumber, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		AccountEntry accountEntry = accountEntryPersistence.findByPrimaryKey(
 			accountEntryId);
 
+		accountEntry.setExternalReferenceCode(externalReferenceCode);
 		accountEntry.setParentAccountEntryId(parentAccountEntryId);
 
 		_validateName(name);

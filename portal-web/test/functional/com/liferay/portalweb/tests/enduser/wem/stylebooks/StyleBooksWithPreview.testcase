@@ -414,7 +414,7 @@ definition {
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			AssertElementPresent(
-				key_caption = "Showing 4 of 10 Items",
+				key_caption = "Showing 4 of 9 Items",
 				locator1 = "Dropdown#CAPTION");
 		}
 
@@ -474,7 +474,7 @@ definition {
 
 		task ("Select the Navigation Bars from Default fragment set in the preview item selector") {
 			StyleBooks.selectPreviewItem(
-				caption = "Showing 4 of 9 Items",
+				caption = "Showing 4 of 8 Items",
 				previewItem = "Navigation Bars",
 				scope = "Default");
 
@@ -573,7 +573,7 @@ definition {
 				locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
 
 			AssertElementPresent(
-				key_caption = "Showing 4 of 10 Items",
+				key_caption = "Showing 4 of 9 Items",
 				locator1 = "Dropdown#CAPTION");
 		}
 

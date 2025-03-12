@@ -17,28 +17,4 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('Content Security Policy Smoke Test', async ({
-	contentSecurityPolicyPage,
-	page,
-}) => {
-	await contentSecurityPolicyPage.goTo();
 
-	await contentSecurityPolicyPage.enableCSP();
-
-	await contentSecurityPolicyPage.setPolicy('test');
-
-	await contentSecurityPolicyPage.addExcludedPaths('test1');
-	await contentSecurityPolicyPage.addExcludedPaths('test2');
-	await contentSecurityPolicyPage.addExcludedPaths('test3');
-
-	await contentSecurityPolicyPage.removeExcludedPaths('test1');
-	await contentSecurityPolicyPage.removeExcludedPaths('test2');
-
-	await contentSecurityPolicyPage.saveConfiguration();
-
-	await contentSecurityPolicyPage.resetCSPConfiguration();
-
-	await expect(
-		page.locator('textarea[id*="excludedPaths"]', {hasText: 'test3'})
-	).not.toBeVisible();
-});

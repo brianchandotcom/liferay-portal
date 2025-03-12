@@ -17,6 +17,7 @@ import {Field} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
+import openDeletionModal from '../utils/openDeletionModal';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
@@ -137,6 +138,12 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'delete-field': {
+			if (state.fields.size === 1) {
+				openDeletionModal();
+
+				return state;
+			}
+
 			const {uuid} = action;
 
 			const nextFields = new Map(state.fields);
@@ -159,6 +166,12 @@ function reducer(state: State, action: Action): State {
 
 			for (const fieldName of state.selection) {
 				nextFields.delete(fieldName);
+			}
+
+			if (nextFields.size === 0) {
+				openDeletionModal();
+
+				return state;
 			}
 
 			return {

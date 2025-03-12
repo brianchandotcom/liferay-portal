@@ -13,7 +13,9 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 
-<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
+<%@ page import="com.liferay.asset.kernel.service.AssetVocabularyLocalService" %><%@
+page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.portal.kernel.service.GroupLocalService" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
@@ -31,7 +33,10 @@ AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContex
 
 CategoryFacetPortletInstanceConfiguration categoryFacetPortletInstanceConfiguration = assetCategoriesSearchFacetDisplayContext.getCategoryFacetPortletInstanceConfiguration();
 
-CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFacetPortletPreferencesImpl(portletPreferences);
+AssetVocabularyLocalService assetVocabularyLocalService = (AssetVocabularyLocalService)request.getAttribute(AssetVocabularyLocalService.class.getName());
+GroupLocalService groupLocalService = (GroupLocalService)request.getAttribute(GroupLocalService.class.getName());
+
+CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFacetPortletPreferencesImpl(assetVocabularyLocalService, groupLocalService, portletPreferences);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

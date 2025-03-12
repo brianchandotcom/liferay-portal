@@ -10,6 +10,10 @@ package com.liferay.portal.search.web.internal.category.facet.portlet;
  */
 public interface CategoryFacetPortletPreferences {
 
+	public static final String
+		PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES =
+			"groupVocabularyExternalReferenceCodes";
+
 	public static final String PREFERENCE_KEY_DISPLAY_STYLE =
 		"categoryFacetDisplayStyle";
 
@@ -25,11 +29,18 @@ public interface CategoryFacetPortletPreferences {
 
 	public static final String PREFERENCE_KEY_PARAMETER_NAME = "parameterName";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES}
+	 */
+	@Deprecated
 	public static final String PREFERENCE_VOCABULARY_IDS = "vocabularyIds";
 
 	public String getDisplayStyle();
 
 	public int getFrequencyThreshold();
+
+	public String[] getGroupVocabularyExternalReferenceCodes();
 
 	public int getMaxTerms();
 

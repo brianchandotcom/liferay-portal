@@ -27,6 +27,9 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -34,6 +37,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.concurrent.Callable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -187,7 +191,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				).build(),
 				_taskItemDelegateName);
 
-		_batchEngineImportTaskExecutor.execute(batchEngineImportTask);
+		try {
+			TransactionInvokerUtil.invoke(
+				transactionConfig,
+				new BatchEngineImportTaskExecutorCallable(
+					batchEngineImportTask));
+		}
+		catch (Throwable throwable) {
+			throw new RuntimeException(throwable);
+		}
 
 		batchEngineImportTask =
 			_batchEngineImportTaskService.getBatchEngineImportTask(
@@ -217,6 +229,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		return 0;
 	}
+
+	protected static final TransactionConfig transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	private byte[] _getBytes(String fileName, InputStream inputStream)
 		throws Exception {
@@ -252,5 +268,25 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final String _fileName;
 	private final String _itemClassName;
 	private final String _taskItemDelegateName;
+
+	private class BatchEngineImportTaskExecutorCallable
+		implements Callable<Void> {
+
+		public BatchEngineImportTaskExecutorCallable(
+			BatchEngineImportTask batchEngineImportTask) {
+
+			_batchEngineImportTask = batchEngineImportTask;
+		}
+
+		@Override
+		public Void call() {
+			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+
+			return null;
+		}
+
+		private final BatchEngineImportTask _batchEngineImportTask;
+
+	}
 
 }

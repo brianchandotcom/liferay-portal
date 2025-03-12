@@ -264,8 +264,8 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
-				larFile, _companyGroupId
-			).toString(),
+				_companyGroupId, larFile
+						).toString(),
 			JSONCompareMode.STRICT);
 
 		exportParams = _getExportIndividualDeletionsParameterMap(
@@ -286,8 +286,8 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
-				larFile, _companyGroupId
-			).toString(),
+				_companyGroupId, larFile
+						).toString(),
 			JSONCompareMode.STRICT);
 
 		exportParams = _getExportIndividualDeletionsParameterMap(
@@ -311,8 +311,8 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
-				larFile, _companyGroupId
-			).toString(),
+				_companyGroupId, larFile
+						).toString(),
 			JSONCompareMode.STRICT);
 	}
 
@@ -332,7 +332,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private JSONArray _classExternalReferenceCodesJSONArray(
-			File larFile, long groupId)
+			long groupId, File larFile)
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(larFile)) {

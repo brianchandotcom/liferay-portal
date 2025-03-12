@@ -232,36 +232,38 @@ public class ImportTaskResourceTest {
 		public BatchEngineTaskItemDelegateAutoCloseable() throws Exception {
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-			BatchEngineTaskItemDelegate<TestEntity> delegate =
-				new BaseBatchEngineTaskItemDelegate<>() {
+			BatchEngineTaskItemDelegate<TestEntity>
+				batchEngineTaskItemDelegate =
+					new BaseBatchEngineTaskItemDelegate<>() {
 
-					@Override
-					public TestEntity createItem(
-						TestEntity testEntity,
-						Map<String, Serializable> parameters) {
+						@Override
+						public TestEntity createItem(
+							TestEntity testEntity,
+							Map<String, Serializable> parameters) {
 
-						_externalReferenceCode = (String)parameters.get(
-							"externalReferenceCode");
+							_externalReferenceCode = (String)parameters.get(
+								"externalReferenceCode");
 
-						return new TestEntity();
-					}
+							return new TestEntity();
+						}
 
-					@Override
-					public Page<TestEntity> read(
-						Filter filter, Pagination pagination, Sort[] sorts,
-						Map<String, Serializable> parameters, String search) {
+						@Override
+						public Page<TestEntity> read(
+							Filter filter, Pagination pagination, Sort[] sorts,
+							Map<String, Serializable> parameters,
+							String search) {
 
-						return null;
-					}
+							return null;
+						}
 
-				};
+					};
 
 			_taskItemDelegateName =
 				"test-delegate-erc-" +
 					StringUtil.lowerCase(RandomTestUtil.randomString(8));
 
 			_serviceRegistration = bundleContext.registerService(
-				BatchEngineTaskItemDelegate.class, delegate,
+				BatchEngineTaskItemDelegate.class, batchEngineTaskItemDelegate,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"batch.engine.task.item.delegate.name",
 					_taskItemDelegateName

@@ -108,7 +108,12 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		_copyDBPartition(fromCompanyId, toCompanyId);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_defaultCompanyId)) {
+
+			_copyDBPartition(fromCompanyId, toCompanyId);
+		}
 
 		return true;
 	}
@@ -249,7 +254,12 @@ public class DBPartitionUtil {
 			return false;
 		}
 
-		_insertDBPartition(companyId);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_defaultCompanyId)) {
+
+			_insertDBPartition(companyId);
+		}
 
 		return true;
 	}

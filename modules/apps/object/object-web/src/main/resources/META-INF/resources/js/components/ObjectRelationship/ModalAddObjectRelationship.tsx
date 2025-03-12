@@ -17,7 +17,7 @@ import {useObjectRelationshipForm} from './useObjectRelationshipForm';
 
 import './ModalAddObjectRelationship.scss';
 
-import { ILearnResourceContext } from 'frontend-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 
 interface ModalAddObjectRelationshipProps {
 	baseResourceURL: string;

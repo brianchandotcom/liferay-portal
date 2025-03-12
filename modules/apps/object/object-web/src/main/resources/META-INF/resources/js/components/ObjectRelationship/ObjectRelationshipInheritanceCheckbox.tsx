@@ -11,7 +11,14 @@ import React, {useState} from 'react';
 
 import './ObjectRelationshipInheritanceCheckbox.scss';
 
+import {
+	ILearnResourceContext,
+	LearnMessage,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
+
 interface ObjectRelationshipInheritanceCheckbox {
+	learnResources: ILearnResourceContext;
 	onChange: (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => Promise<void> | void;
@@ -19,6 +26,7 @@ interface ObjectRelationshipInheritanceCheckbox {
 }
 
 export function ObjectRelationshipInheritanceCheckbox({
+	learnResources,
 	onChange,
 	values,
 }: ObjectRelationshipInheritanceCheckbox) {
@@ -37,14 +45,13 @@ export function ObjectRelationshipInheritanceCheckbox({
 					alignPosition="top"
 					disableScroll
 					header={Liferay.Language.get('inheritance')}
+					onMouseLeave={() => setShowPopover(false)}
 					onShowChange={setShowPopover}
 					show={showPopover}
 					trigger={
 						<ClayIcon
 							className="field-base-tooltip-icon"
-							onBlur={() => setShowPopover(false)}
 							onFocus={() => setShowPopover(true)}
-							onMouseLeave={() => setShowPopover(false)}
 							onMouseOver={() => setShowPopover(true)}
 							symbol="question-circle-full"
 						/>
@@ -53,6 +60,14 @@ export function ObjectRelationshipInheritanceCheckbox({
 					{Liferay.Language.get(
 						'enable-inheritance-to-share-settings-between-related-data-models'
 					)}
+					&nbsp;
+					<LearnResourcesContext.Provider value={learnResources}>
+						<LearnMessage
+							className="alert-link"
+							resource="object-web"
+							resourceKey="relationships"
+						/>
+					</LearnResourcesContext.Provider>
 				</ClayPopover>
 			</div>
 

@@ -33,6 +33,17 @@ public class ObjectEntryVersionServiceImpl
 	extends ObjectEntryVersionServiceBaseImpl {
 
 	@Override
+	public ObjectEntryVersion getObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException {
+
+		_checkModelResourcePermission(objectEntryId);
+
+		return objectEntryVersionLocalService.getObjectEntryVersion(
+			objectEntryId, version);
+	}
+
+	@Override
 	public List<ObjectEntryVersion> getObjectEntryVersions(
 			long objectEntryId, int start, int end)
 		throws PortalException {

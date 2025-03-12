@@ -381,6 +381,10 @@
 		<finder name="ObjectEntryId" return-type="Collection">
 			<finder-column name="objectEntryId" />
 		</finder>
+		<finder name="OEI_V" return-type="ObjectEntryVersion" unique="true">
+			<finder-column name="objectEntryId" />
+			<finder-column name="version" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 

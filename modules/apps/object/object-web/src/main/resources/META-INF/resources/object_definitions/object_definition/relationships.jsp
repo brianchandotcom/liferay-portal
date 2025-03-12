@@ -48,6 +48,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"items", objectDefinitionsRelationshipsDisplayContext.getFDSActionDropdownItems()
 			).put(
+				"learnResources", LearnMessageUtil.getReactDataJSONObject("object-web")
+			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()

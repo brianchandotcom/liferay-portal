@@ -10,6 +10,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/usergroup/add-user-group \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d name=${userGroupName} \
 				-d description=${userGroupDescription}
 		''';

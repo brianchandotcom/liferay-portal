@@ -120,21 +120,22 @@ AUI.add(
 				scheduler.syncEventsUI();
 			},
 
-			fillURLParameters(url, data) {
-				url = Lang.sub(url, data);
+			fillURLParameters(urlString, data) {
+				const url = new URL(
+					Lang.sub(urlString, data).replace(
+						REGEX_UNFILLED_PARAMETER,
+						''
+					)
+				);
 
-				url = url.replace(REGEX_UNFILLED_PARAMETER, '');
-
-				const newURL = new URL(url);
-
-				if (newURL.searchParams.has('doAsUserId')) {
-					newURL.searchParams.set(
+				if (url.searchParams.has('doAsUserId')) {
+					url.searchParams.set(
 						'doAsUserId',
 						Liferay.ThemeDisplay.getDoAsUserIdEncoded()
 					);
 				}
 
-				return newURL.toString();
+				return url.toString();
 			},
 
 			getCalendarName(name, calendarResourceName) {

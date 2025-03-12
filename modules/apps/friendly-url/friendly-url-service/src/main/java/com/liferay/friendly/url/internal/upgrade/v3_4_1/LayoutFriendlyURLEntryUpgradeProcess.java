@@ -8,6 +8,7 @@ package com.liferay.friendly.url.internal.upgrade.v3_4_1;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
+import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,6 +47,12 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_dropIndex(
+			FriendlyURLEntryLocalizationModelImpl.TABLE_NAME, "IX_8AB5CAE");
+
+		_dropIndex(
+			FriendlyURLEntryLocalizationModelImpl.TABLE_NAME, "IX_C753170C");
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Map<Long, String> defaultLanguageIds = new ConcurrentHashMap<>();
 
@@ -261,6 +268,22 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(7, friendlyURLEntryId);
 
 			preparedStatement.executeUpdate();
+		}
+	}
+
+	private void _dropIndex(String tableName, String indexName)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				String.format(
+					"Dropping index %s from table %s", indexName, tableName));
+		}
+
+		if (hasIndex(tableName, indexName)) {
+			runSQL(
+				StringBundler.concat(
+					"drop index ", indexName, " on ", tableName));
 		}
 	}
 

@@ -269,6 +269,7 @@ components:
                         A multi-valued list of complex objects containing the requested resources.
                     oneOf:
                         - $ref: "#/components/schemas/Group"
+                        - $ref: "#/components/schemas/ResourceType"
                         - $ref: "#/components/schemas/Schema"
                         - $ref: "#/components/schemas/User"
                     type: object
@@ -284,6 +285,51 @@ components:
                     description:
                         The total number of results returned by the list or query operation.
                     type: integer
+            type: object
+        ResourceType:
+            description:
+                Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
+            properties:
+                description:
+                    description:
+                        The resource type's human-readable description.
+                    type: string
+                endpoint:
+                    description:
+                        The resource type's HTTP-addressable endpoint relative to the Base URL of the service provider.
+                    type: string
+                id:
+                    description:
+                        The resource type's server unique id.
+                    readOnly: true
+                    type: string
+                meta:
+                    $ref: "#/components/schemas/Meta"
+                name:
+                    description:
+                        The resource type name.
+                    type: string
+                schema:
+                    description:
+                        The resource type's primary/base schema URI.
+                    type: string
+                schemas:
+                    description:
+                        A list of URIs of the resource type's schema extensions
+                    items:
+                        allOf:
+                            - properties:
+                                  required:
+                                      description:
+                                          A Boolean value that specifies whether or not the schema extension is required
+                                          for the resource type.
+                                      type: boolean
+                                  schema:
+                                      description:
+                                          The resource type's primary/base schema URI.
+                                      type: string
+                        type: object
+                    type: array
             type: object
         Schema:
             properties:
@@ -730,6 +776,49 @@ paths:
                     description:
                         The Group was successfully updated.
             tags: ["Group"]
+    /v2/ResourceTypes:
+        get:
+            description:
+                To discover the types of resources available on a SCIM service provider.
+            operationId: getV2ResourceTypes
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/QueryResponse"
+                    description:
+                        The list of Resource Types.
+            tags: ["ResourceTypes"]
+    /v2/ResourceTypes/{id}:
+        get:
+            operationId: getV2ResourceTypeById
+            parameters:
+                - in: path
+                  description:
+                      Resource type defines the endpoints.
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/ResourceType"
+                    description:
+                        The requested resource types.
+                404:
+                    description:
+                        ResourceTypes not found.
+            tags: ["ResourceTypes"]
     /v2/Schemas:
         get:
             description:

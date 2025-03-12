@@ -6,18 +6,22 @@
 package com.liferay.sharing.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -26,6 +30,7 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
+import com.liferay.sharing.exception.InvalidSharingEntryUserAndUserGroupException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
@@ -244,6 +249,82 @@ public class SharingEntryLocalServiceTest {
 			sharingEntry.getActionIds());
 	}
 
+	@Test(expected = NoSuchUserGroupException.class)
+	public void testAddSharingEntryToNonexistingUserGroup() throws Exception {
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomString(), _fromUser.getUserId(),
+			RandomTestUtil.randomLong(), 0, _classNameId, _group.getGroupId(),
+			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
+			null, _serviceContext);
+	}
+
+	@Test
+	public void testAddSharingEntryToUser() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_sharingEntryLocalService.addSharingEntry(
+			externalReferenceCode, _fromUser.getUserId(), 0,
+			_toUser.getUserId(), _classNameId, _group.getGroupId(),
+			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
+			null, _serviceContext);
+
+		SharingEntry sharingEntry =
+			_sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, _group.getGroupId());
+
+		Assert.assertNotNull(sharingEntry);
+		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
+		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
+	}
+
+	@Test(expected = InvalidSharingEntryUserAndUserGroupException.class)
+	public void testAddSharingEntryToUserAndUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		try {
+			_sharingEntryLocalService.addSharingEntry(
+				RandomTestUtil.randomString(), _fromUser.getUserId(),
+				userGroup.getUserGroupId(), _toUser.getUserId(), _classNameId,
+				_group.getGroupId(), _group.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+		}
+		finally {
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
+		}
+	}
+
+	@Test
+	public void testAddSharingEntryToUserGroup() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		try {
+			_sharingEntryLocalService.addSharingEntry(
+				externalReferenceCode, _fromUser.getUserId(),
+				userGroup.getUserGroupId(), 0, _classNameId,
+				_group.getGroupId(), _group.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
+
+			SharingEntry sharingEntry =
+				_sharingEntryLocalService.
+					fetchSharingEntryByExternalReferenceCode(
+						externalReferenceCode, _group.getGroupId());
+
+			Assert.assertNotNull(sharingEntry);
+			Assert.assertEquals(
+				userGroup.getUserGroupId(), sharingEntry.getToUserGroupId());
+			Assert.assertEquals(0, sharingEntry.getToUserId());
+		}
+		finally {
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
+		}
+	}
+
 	@Test(expected = InvalidSharingEntryActionException.class)
 	public void testAddSharingEntryWithEmptySharingEntryActions()
 		throws Exception {
@@ -261,13 +342,13 @@ public class SharingEntryLocalServiceTest {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_sharingEntryLocalService.addSharingEntry(
-			externalReferenceCode, 0, _fromUser.getUserId(),
+			externalReferenceCode, _fromUser.getUserId(), 0,
 			_toUser.getUserId(), _classNameId, _group.getGroupId(),
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
 			null, _serviceContext);
 
 		_sharingEntryLocalService.addSharingEntry(
-			externalReferenceCode, 0, _fromUser.getUserId(),
+			externalReferenceCode, _fromUser.getUserId(), 0,
 			_toUser.getUserId(), _classNameId, _group.getGroupId(),
 			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
 			null, _serviceContext);
@@ -1113,5 +1194,8 @@ public class SharingEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

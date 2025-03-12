@@ -9,7 +9,7 @@ import CreationFolderModalContent from '../../components/modal/CreationFolderMod
 
 export default function createFolderAction(data: {assetLibraryId?: string}) {
 	openModal({
-		contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			CreationFolderModalContent({
 				...data,
 				closeModal,

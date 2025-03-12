@@ -1,0 +1,8 @@
+assemble:
+    - from: assets
+      hashify: favicon.ico
+      into: static
+liferay-courseclarity-theme-favicon-dark:
+    name: Liferay Course Clarity Theme Favicon Dark
+    type: themeFavicon
+    url: favicon.*.ico

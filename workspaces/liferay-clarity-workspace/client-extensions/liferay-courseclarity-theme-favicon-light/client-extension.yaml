@@ -1,0 +1,8 @@
+assemble:
+    - from: assets
+      hashify: favicon.ico
+      into: static
+liferay-courseclarity-theme-favicon-light:
+    name: Liferay Course Clarity Theme Favicon Light
+    type: themeFavicon
+    url: favicon.*.ico

@@ -228,26 +228,26 @@ public class Attribute implements Cloneable, Serializable {
 
 	protected Returned returned;
 
-	public Object getSubattribute() {
-		return subattribute;
+	public Attribute[] getSubAttributes() {
+		return subAttributes;
 	}
 
-	public void setSubattribute(Object subattribute) {
-		this.subattribute = subattribute;
+	public void setSubAttributes(Attribute[] subAttributes) {
+		this.subAttributes = subAttributes;
 	}
 
-	public void setSubattribute(
-		UnsafeSupplier<Object, Exception> subattributeUnsafeSupplier) {
+	public void setSubAttributes(
+		UnsafeSupplier<Attribute[], Exception> subAttributesUnsafeSupplier) {
 
 		try {
-			subattribute = subattributeUnsafeSupplier.get();
+			subAttributes = subAttributesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object subattribute;
+	protected Attribute[] subAttributes;
 
 	public Type getType() {
 		return type;

@@ -6,7 +6,7 @@
 package com.liferay.scim.rest.client.serdes.v1_0;
 
 import com.liferay.scim.rest.client.dto.v1_0.Attribute;
-import com.liferay.scim.rest.client.dto.v1_0.SchemaDefinition;
+import com.liferay.scim.rest.client.dto.v1_0.Schema;
 import com.liferay.scim.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -22,24 +22,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class SchemaDefinitionSerDes {
+public class SchemaSerDes {
 
-	public static SchemaDefinition toDTO(String json) {
-		SchemaDefinitionJSONParser schemaDefinitionJSONParser =
-			new SchemaDefinitionJSONParser();
+	public static Schema toDTO(String json) {
+		SchemaJSONParser schemaJSONParser = new SchemaJSONParser();
 
-		return schemaDefinitionJSONParser.parseToDTO(json);
+		return schemaJSONParser.parseToDTO(json);
 	}
 
-	public static SchemaDefinition[] toDTOs(String json) {
-		SchemaDefinitionJSONParser schemaDefinitionJSONParser =
-			new SchemaDefinitionJSONParser();
+	public static Schema[] toDTOs(String json) {
+		SchemaJSONParser schemaJSONParser = new SchemaJSONParser();
 
-		return schemaDefinitionJSONParser.parseToDTOs(json);
+		return schemaJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(SchemaDefinition schemaDefinition) {
-		if (schemaDefinition == null) {
+	public static String toJSON(Schema schema) {
+		if (schema == null) {
 			return "null";
 		}
 
@@ -47,7 +45,7 @@ public class SchemaDefinitionSerDes {
 
 		sb.append("{");
 
-		if (schemaDefinition.getAttributes() != null) {
+		if (schema.getAttributes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -56,10 +54,10 @@ public class SchemaDefinitionSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < schemaDefinition.getAttributes().length; i++) {
-				sb.append(String.valueOf(schemaDefinition.getAttributes()[i]));
+			for (int i = 0; i < schema.getAttributes().length; i++) {
+				sb.append(String.valueOf(schema.getAttributes()[i]));
 
-				if ((i + 1) < schemaDefinition.getAttributes().length) {
+				if ((i + 1) < schema.getAttributes().length) {
 					sb.append(", ");
 				}
 			}
@@ -67,7 +65,7 @@ public class SchemaDefinitionSerDes {
 			sb.append("]");
 		}
 
-		if (schemaDefinition.getDescription() != null) {
+		if (schema.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -76,12 +74,12 @@ public class SchemaDefinitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(schemaDefinition.getDescription()));
+			sb.append(_escape(schema.getDescription()));
 
 			sb.append("\"");
 		}
 
-		if (schemaDefinition.getId() != null) {
+		if (schema.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -90,22 +88,22 @@ public class SchemaDefinitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(schemaDefinition.getId()));
+			sb.append(_escape(schema.getId()));
 
 			sb.append("\"");
 		}
 
-		if (schemaDefinition.getMeta() != null) {
+		if (schema.getMeta() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"meta\": ");
 
-			sb.append(String.valueOf(schemaDefinition.getMeta()));
+			sb.append(String.valueOf(schema.getMeta()));
 		}
 
-		if (schemaDefinition.getName() != null) {
+		if (schema.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -114,12 +112,12 @@ public class SchemaDefinitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(schemaDefinition.getName()));
+			sb.append(_escape(schema.getName()));
 
 			sb.append("\"");
 		}
 
-		if (schemaDefinition.getSchemas() != null) {
+		if (schema.getSchemas() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -128,10 +126,10 @@ public class SchemaDefinitionSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < schemaDefinition.getSchemas().length; i++) {
-				sb.append(_toJSON(schemaDefinition.getSchemas()[i]));
+			for (int i = 0; i < schema.getSchemas().length; i++) {
+				sb.append(_toJSON(schema.getSchemas()[i]));
 
-				if ((i + 1) < schemaDefinition.getSchemas().length) {
+				if ((i + 1) < schema.getSchemas().length) {
 					sb.append(", ");
 				}
 			}
@@ -145,78 +143,73 @@ public class SchemaDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SchemaDefinitionJSONParser schemaDefinitionJSONParser =
-			new SchemaDefinitionJSONParser();
+		SchemaJSONParser schemaJSONParser = new SchemaJSONParser();
 
-		return schemaDefinitionJSONParser.parseToMap(json);
+		return schemaJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(SchemaDefinition schemaDefinition) {
-		if (schemaDefinition == null) {
+	public static Map<String, String> toMap(Schema schema) {
+		if (schema == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (schemaDefinition.getAttributes() == null) {
+		if (schema.getAttributes() == null) {
 			map.put("attributes", null);
 		}
 		else {
-			map.put(
-				"attributes", String.valueOf(schemaDefinition.getAttributes()));
+			map.put("attributes", String.valueOf(schema.getAttributes()));
 		}
 
-		if (schemaDefinition.getDescription() == null) {
+		if (schema.getDescription() == null) {
 			map.put("description", null);
 		}
 		else {
-			map.put(
-				"description",
-				String.valueOf(schemaDefinition.getDescription()));
+			map.put("description", String.valueOf(schema.getDescription()));
 		}
 
-		if (schemaDefinition.getId() == null) {
+		if (schema.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(schemaDefinition.getId()));
+			map.put("id", String.valueOf(schema.getId()));
 		}
 
-		if (schemaDefinition.getMeta() == null) {
+		if (schema.getMeta() == null) {
 			map.put("meta", null);
 		}
 		else {
-			map.put("meta", String.valueOf(schemaDefinition.getMeta()));
+			map.put("meta", String.valueOf(schema.getMeta()));
 		}
 
-		if (schemaDefinition.getName() == null) {
+		if (schema.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(schemaDefinition.getName()));
+			map.put("name", String.valueOf(schema.getName()));
 		}
 
-		if (schemaDefinition.getSchemas() == null) {
+		if (schema.getSchemas() == null) {
 			map.put("schemas", null);
 		}
 		else {
-			map.put("schemas", String.valueOf(schemaDefinition.getSchemas()));
+			map.put("schemas", String.valueOf(schema.getSchemas()));
 		}
 
 		return map;
 	}
 
-	public static class SchemaDefinitionJSONParser
-		extends BaseJSONParser<SchemaDefinition> {
+	public static class SchemaJSONParser extends BaseJSONParser<Schema> {
 
 		@Override
-		protected SchemaDefinition createDTO() {
-			return new SchemaDefinition();
+		protected Schema createDTO() {
+			return new Schema();
 		}
 
 		@Override
-		protected SchemaDefinition[] createDTOArray(int size) {
-			return new SchemaDefinition[size];
+		protected Schema[] createDTOArray(int size) {
+			return new Schema[size];
 		}
 
 		@Override
@@ -245,7 +238,7 @@ public class SchemaDefinitionSerDes {
 
 		@Override
 		protected void setField(
-			SchemaDefinition schemaDefinition, String jsonParserFieldName,
+			Schema schema, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "attributes")) {
@@ -261,34 +254,33 @@ public class SchemaDefinitionSerDes {
 							(String)jsonParserFieldValues[i]);
 					}
 
-					schemaDefinition.setAttributes(attributesArray);
+					schema.setAttributes(attributesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					schemaDefinition.setDescription(
-						(String)jsonParserFieldValue);
+					schema.setDescription((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					schemaDefinition.setId((String)jsonParserFieldValue);
+					schema.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "meta")) {
 				if (jsonParserFieldValue != null) {
-					schemaDefinition.setMeta(
+					schema.setMeta(
 						MetaSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					schemaDefinition.setName((String)jsonParserFieldValue);
+					schema.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "schemas")) {
 				if (jsonParserFieldValue != null) {
-					schemaDefinition.setSchemas(
+					schema.setSchemas(
 						toStrings((Object[])jsonParserFieldValue));
 				}
 			}

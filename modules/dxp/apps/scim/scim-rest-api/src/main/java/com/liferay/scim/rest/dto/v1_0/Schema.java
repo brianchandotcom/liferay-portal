@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -37,23 +35,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "Each SCIM resource (Users, Groups, etc.) includes the following common attributes.",
-	value = "SchemaDefinition"
-)
+@GraphQLName("Schema")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SchemaDefinition")
-public class SchemaDefinition implements Serializable {
+@XmlRootElement(name = "Schema")
+public class Schema implements Serializable {
 
-	public static SchemaDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(SchemaDefinition.class, json);
+	public static Schema toDTO(String json) {
+		return ObjectMapperUtil.readValue(Schema.class, json);
 	}
 
-	public static SchemaDefinition unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(SchemaDefinition.class, json);
+	public static Schema unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Schema.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A complex type that defines service provider attributes and their qualities."
 	)
 	@Valid
@@ -99,7 +94,9 @@ public class SchemaDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Attribute[]> _attributesSupplier;
 
-	@Schema(description = "The schema's human-readable description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The schema's human-readable description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -140,7 +137,9 @@ public class SchemaDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(description = "The unique URI of the schema.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The unique URI of the schema."
+	)
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -179,7 +178,7 @@ public class SchemaDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Meta getMeta() {
 		if (_metaSupplier != null) {
@@ -219,7 +218,9 @@ public class SchemaDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Meta> _metaSupplier;
 
-	@Schema(description = "The schema's human-readable name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The schema's human-readable name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -258,7 +259,7 @@ public class SchemaDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of strings that MUST contain the value 'urn:ietf:params:scim:schemas:core:2.0:Schema'.",
 		example = "[urn:ietf:params:scim:schemas:core:2.0:Schema]"
 	)
@@ -310,13 +311,13 @@ public class SchemaDefinition implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SchemaDefinition)) {
+		if (!(object instanceof Schema)) {
 			return false;
 		}
 
-		SchemaDefinition schemaDefinition = (SchemaDefinition)object;
+		Schema schema = (Schema)object;
 
-		return Objects.equals(toString(), schemaDefinition.toString());
+		return Objects.equals(toString(), schema.toString());
 	}
 
 	@Override
@@ -444,9 +445,9 @@ public class SchemaDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.scim.rest.dto.v1_0.SchemaDefinition",
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.scim.rest.dto.v1_0.Schema",
 		name = "x-class-name"
 	)
 	public String xClassName;

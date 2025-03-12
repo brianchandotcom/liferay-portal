@@ -64,18 +64,31 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		return buildData.getCohortName();
 	}
 
-	protected String getJobURL() {
-		String mostAvailableMasterURL =
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+	protected String getJobURL(String testSuite) {
+		S buildData = getBuildData();
+
+		String jobName = JenkinsResultsParserUtil.combine(
+			"test-portal-testsuite-upstream(",
+			buildData.getPortalUpstreamBranchName(), ")");
+
+		String masterURL = null;
+
+		try {
+			masterURL = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.osb.jenkins.web.master.url", jobName, testSuite);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (masterURL == null) {
+			masterURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				JenkinsResultsParserUtil.combine(
 					"http://" + getInvocationCohortName() + ".liferay.com"),
 				null, 1, 24, 2);
+		}
 
-		S buildData = getBuildData();
-
-		return JenkinsResultsParserUtil.combine(
-			mostAvailableMasterURL, "/job/test-portal-testsuite-upstream(",
-			buildData.getPortalUpstreamBranchName(), ")");
+		return JenkinsResultsParserUtil.combine(masterURL, "/job/", jobName);
 	}
 
 	protected String getTestPortalBuildProfile(String testSuite) {
@@ -141,7 +154,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 				continue;
 			}
 
-			String jobURL = getJobURL();
+			String jobURL = getJobURL(testSuiteName);
 
 			StringBuilder sb = new StringBuilder();
 

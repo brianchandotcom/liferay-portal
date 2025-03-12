@@ -76,7 +76,11 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 	@Override
 	protected void invokeTestSuiteBuilds() {
-		String jobURL = getJobURL();
+		S buildData = getBuildData();
+
+		String testSuiteName = buildData.getTestSuiteName();
+
+		String jobURL = getJobURL(testSuiteName);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -100,11 +104,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		sb.append("token=");
 		sb.append(jenkinsAuthenticationToken);
 
-		S buildData = getBuildData();
-
 		Map<String, String> invocationParameters = new HashMap<>();
-
-		String testSuiteName = buildData.getTestSuiteName();
 
 		invocationParameters.put("CI_TEST_SUITE", testSuiteName);
 

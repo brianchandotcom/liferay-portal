@@ -1619,6 +1619,11 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = 0);
 
+			Type(
+				key_text = "Tier Price",
+				locator1 = "TextInput#ANY",
+				value1 = 0);
+
 			Click(locator1 = "Button#SUBMIT");
 		}
 

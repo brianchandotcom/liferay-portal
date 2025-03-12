@@ -838,6 +838,10 @@ test(
 		await siteMembershipsPage.userGroupsLink.click();
 		await siteMembershipsPage.newUserGroupButton.click();
 
+		await expect(
+			siteMembershipsPage.assignUserGroupIFrameTitle
+		).toBeVisible();
+
 		await siteMembershipsPage.assignUserGroupTable.changeView('Table');
 
 		await expect(

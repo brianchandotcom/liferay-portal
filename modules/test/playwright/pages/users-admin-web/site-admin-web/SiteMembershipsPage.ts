@@ -10,6 +10,7 @@ import {DataTablePage} from '../../account-admin-web/DataTablePage';
 
 export class SiteMembershipsPage {
 	readonly assignUserGroupIFrame: FrameLocator;
+	readonly assignUserGroupIFrameTitle: Locator;
 	readonly assignUserGroupTable: DataTablePage;
 	readonly newUserGroupButton: Locator;
 	readonly noUserGroupMessage: Locator;
@@ -23,6 +24,9 @@ export class SiteMembershipsPage {
 	constructor(page: Page) {
 		this.assignUserGroupIFrame = page.frameLocator(
 			'iframe[title="Assign User Groups to This Site"]'
+		);
+		this.assignUserGroupIFrameTitle = page.getByText(
+			'Assign User Groups to This Site'
 		);
 		this.assignUserGroupTable = new DataTablePage(
 			this.assignUserGroupIFrame,

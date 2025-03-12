@@ -479,6 +479,18 @@
 	}
 }
 
+.lfr-calendar__general-header,
+.lfr-calendar__notification-header {
+	max-width: 1870px;
+	padding-top: 10px;
+}
+
+.lfr-calendar__navigation-bar {
+	.container-fluid {
+		max-width: 1870px;
+	}
+}
+
 .portal-popup .calendar-portlet .fieldset {
 	margin-bottom: 2em;
 }

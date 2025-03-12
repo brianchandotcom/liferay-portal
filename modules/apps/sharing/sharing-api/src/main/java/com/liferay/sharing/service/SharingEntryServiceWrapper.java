@@ -46,8 +46,8 @@ public class SharingEntryServiceWrapper
 	 */
 	@Override
 	public com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
-			String externalReferenceCode, long toUserId, long classNameId,
-			long classPK, long groupId, boolean shareable,
+			String externalReferenceCode, long toUserGroupId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -56,8 +56,9 @@ public class SharingEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sharingEntryService.addOrUpdateSharingEntry(
-			externalReferenceCode, toUserId, classNameId, classPK, groupId,
-			shareable, sharingEntryActions, expirationDate, serviceContext);
+			externalReferenceCode, toUserGroupId, toUserId, classNameId,
+			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 	}
 
 	/**
@@ -82,8 +83,8 @@ public class SharingEntryServiceWrapper
 	 */
 	@Override
 	public com.liferay.sharing.model.SharingEntry addSharingEntry(
-			String externalReferenceCode, long toUserId, long classNameId,
-			long classPK, long groupId, boolean shareable,
+			String externalReferenceCode, long toUserGroupId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -92,8 +93,9 @@ public class SharingEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sharingEntryService.addSharingEntry(
-			externalReferenceCode, toUserId, classNameId, classPK, groupId,
-			shareable, sharingEntryActions, expirationDate, serviceContext);
+			externalReferenceCode, toUserGroupId, toUserId, classNameId,
+			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 	}
 
 	@Override

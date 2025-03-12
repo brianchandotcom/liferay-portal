@@ -166,7 +166,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 			JSONObject schemaJSONObject = _jsonFactory.createJSONObject(
 				URLUtil.toString(
-					bundle.getResource("META-INF/schemas/json/" + fileName)));
+					bundle.getResource("META-INF/schemas/" + fileName)));
 
 			JSONObject metaJSONObject = schemaJSONObject.getJSONObject("meta");
 

@@ -67,9 +67,10 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 	@Override
 	public AccountEntry addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, String email,
-			byte[] logoBytes, String taxIdNumber, String type, int status,
+			String externalReferenceCode, long userId,
+			long parentAccountEntryId, String name, String description,
+			String[] domains, String email, byte[] logoBytes,
+			String taxIdNumber, String type, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -77,9 +78,9 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 			getPermissionChecker(), AccountActionKeys.ADD_ACCOUNT_ENTRY);
 
 		return accountEntryLocalService.addAccountEntry(
-			userId, parentAccountEntryId, name, description,
-			_getManageableDomains(0L, domains), email, logoBytes, taxIdNumber,
-			type, status, serviceContext);
+			externalReferenceCode, userId, parentAccountEntryId, name,
+			description, _getManageableDomains(0L, domains), email, logoBytes,
+			taxIdNumber, type, status, serviceContext);
 	}
 
 	@Override
@@ -288,17 +289,19 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 	@Override
 	public AccountEntry updateAccountEntry(
-			long accountEntryId, long parentAccountEntryId, String name,
-			String description, boolean deleteLogo, String[] domains,
-			String emailAddress, byte[] logoBytes, String taxIdNumber,
-			int status, ServiceContext serviceContext)
+			String externalReferenceCode, long accountEntryId,
+			long parentAccountEntryId, String name, String description,
+			boolean deleteLogo, String[] domains, String emailAddress,
+			byte[] logoBytes, String taxIdNumber, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(), accountEntryId, ActionKeys.UPDATE);
 
 		return accountEntryLocalService.updateAccountEntry(
-			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			externalReferenceCode, accountEntryId, parentAccountEntryId, name,
+			description, deleteLogo,
 			_getManageableDomains(accountEntryId, domains), emailAddress,
 			logoBytes, taxIdNumber, status, serviceContext);
 	}

@@ -8,17 +8,22 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,7 +77,37 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 						themeDisplay),
 					"objectDefinitionId", "{id}"),
 				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
-				"get", null, null));
+				"get", null, null),
+			new FDSActionDropdownItem(
+				"", "copy", "copy",
+				LanguageUtil.get(httpServletRequest, "make-a-copy"), null, null,
+				null),
+			new FDSActionDropdownItem(
+				ResourceURLBuilder.createResourceURL(
+					PortletURLFactoryUtil.create(
+						httpServletRequest,
+						ObjectPortletKeys.OBJECT_DEFINITIONS,
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"objectDefinitionId", "{id}"
+				).setResourceID(
+					"/object_definitions/export_object_definition"
+				).buildString(),
+				"export", "export",
+				LanguageUtil.get(httpServletRequest, "export-as-json"), "get",
+				"exportObjectDefinition", null),
+			new FDSActionDropdownItem(
+				"", "import", "import",
+				LanguageUtil.get(httpServletRequest, "import-and-override"),
+				null, null, null),
+			new FDSActionDropdownItem(
+				"", "password-policies", "permissions",
+				LanguageUtil.get(httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"),
+			new FDSActionDropdownItem(
+				"", "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "headless"));
 	}
 
 	private String _getHref(String objectFolderExternalReferenceCode) {

@@ -16,29 +16,15 @@ import java.util.Map;
 /**
  * @author Noor Najjar
  */
-public class ViewVocabulariesDisplayContext {
+public class EditVocabularyDisplayContext {
 
-	public ViewVocabulariesDisplayContext(ThemeDisplay themeDisplay) {
+	public EditVocabularyDisplayContext(ThemeDisplay themeDisplay) {
 		_themeDisplay = themeDisplay;
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
-			"addVocabularyURL",
-			PortalUtil.getLayoutFullURL(
-				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-					_themeDisplay.getScopeGroupId(), false,
-					"/categorization/new_vocabulary"),
-				_themeDisplay)
-		).put(
-			"tagsURL",
-			PortalUtil.getLayoutFullURL(
-				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-					_themeDisplay.getScopeGroupId(), false,
-					"/categorization/view_tags"),
-				_themeDisplay)
-		).put(
-			"vocabulariesURL",
+			"backURL",
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false,

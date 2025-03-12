@@ -4,14 +4,17 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import CategorizationToolbar from '../CategorizationToolbar';
 
 export default function ViewVocabularies({
+	addVocabularyURL,
 	tagsURL,
 	vocabulariesURL,
 }: {
+	addVocabularyURL: string;
 	tagsURL: string;
 	vocabulariesURL: string;
 }) {
@@ -19,6 +22,7 @@ export default function ViewVocabularies({
 		primaryItems: [
 			{
 				label: Liferay.Language.get('add-vocabulary'),
+				onClick: () => navigate(addVocabularyURL),
 			},
 		],
 	};

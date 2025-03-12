@@ -49,8 +49,8 @@ public class SharingEntryServiceUtil {
 	 the expiration date is a past value
 	 */
 	public static SharingEntry addOrUpdateSharingEntry(
-			String externalReferenceCode, long toUserId, long classNameId,
-			long classPK, long groupId, boolean shareable,
+			String externalReferenceCode, long toUserGroupId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -59,8 +59,9 @@ public class SharingEntryServiceUtil {
 		throws PortalException {
 
 		return getService().addOrUpdateSharingEntry(
-			externalReferenceCode, toUserId, classNameId, classPK, groupId,
-			shareable, sharingEntryActions, expirationDate, serviceContext);
+			externalReferenceCode, toUserGroupId, toUserId, classNameId,
+			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 	}
 
 	/**
@@ -84,8 +85,8 @@ public class SharingEntryServiceUtil {
 	 expiration date is a past value
 	 */
 	public static SharingEntry addSharingEntry(
-			String externalReferenceCode, long toUserId, long classNameId,
-			long classPK, long groupId, boolean shareable,
+			String externalReferenceCode, long toUserGroupId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -94,8 +95,9 @@ public class SharingEntryServiceUtil {
 		throws PortalException {
 
 		return getService().addSharingEntry(
-			externalReferenceCode, toUserId, classNameId, classPK, groupId,
-			shareable, sharingEntryActions, expirationDate, serviceContext);
+			externalReferenceCode, toUserGroupId, toUserId, classNameId,
+			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 	}
 
 	public static SharingEntry deleteSharingEntry(

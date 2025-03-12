@@ -66,8 +66,8 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTU_C_C(
-			toUserId, classNameId, classPK);
+		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTUG_TU_C_C(
+			0, toUserId, classNameId, classPK);
 
 		if (sharingEntry == null) {
 			return sharingEntryService.addSharingEntry(

@@ -60,6 +60,7 @@ export default function StructureFieldSettings({
 						},
 					},
 					{
+						active: true,
 						label: field!.label[
 							Liferay.ThemeDisplay.getDefaultLanguageId()
 						]!,

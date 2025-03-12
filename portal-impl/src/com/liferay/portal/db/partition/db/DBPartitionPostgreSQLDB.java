@@ -5,6 +5,8 @@
 
 package com.liferay.portal.db.partition.db;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.db.PostgreSQLDB;
@@ -127,35 +129,38 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 		DB db = DBManagerUtil.getDB();
 
-		String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
-			connection, fromTableName);
+		try (SafeCloseable safeCloseable = _setPartition(fromPartitionName)) {
+			String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
+				connection, fromTableName);
 
-		if (ArrayUtil.isNotEmpty(primaryKeyColumnNames)) {
-			sb.append("alter table ");
-			sb.append(toPartitionName + StringPool.PERIOD + toTableName);
-			sb.append(" add primary key (");
+			if (ArrayUtil.isNotEmpty(primaryKeyColumnNames)) {
+				sb.append("alter table ");
+				sb.append(toPartitionName + StringPool.PERIOD + toTableName);
+				sb.append(" add primary key (");
 
-			for (String columnName : primaryKeyColumnNames) {
-				sb.append(columnName);
-				sb.append(StringPool.COMMA_AND_SPACE);
+				for (String columnName : primaryKeyColumnNames) {
+					sb.append(columnName);
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append(");");
 			}
 
-			sb.setIndex(sb.index() - 1);
+			for (IndexMetadata indexMetadata :
+					db.getIndexMetadatas(
+						connection, fromTableName, null, false)) {
 
-			sb.append(");");
-		}
+				sb.append(StringPool.NEW_LINE);
 
-		for (IndexMetadata indexMetadata :
-				db.getIndexMetadatas(connection, fromTableName, null, false)) {
-
-			sb.append(StringPool.NEW_LINE);
-
-			sb.append(
-				StringUtil.replace(
-					indexMetadata.getCreateSQL(null), "on " + fromTableName,
-					StringBundler.concat(
-						"on ", toPartitionName, StringPool.PERIOD,
-						toTableName)));
+				sb.append(
+					StringUtil.replace(
+						indexMetadata.getCreateSQL(null), "on " + fromTableName,
+						StringBundler.concat(
+							"on ", toPartitionName, StringPool.PERIOD,
+							toTableName)));
+			}
 		}
 
 		return sb.toString();
@@ -204,6 +209,10 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 	@Override
 	public String getSchema(Connection connection, String partitionName) {
+		if (_partitionName.get() != null) {
+			return _partitionName.get();
+		}
+
 		return partitionName;
 	}
 
@@ -219,7 +228,15 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 		connection.setSchema(partitionName);
 	}
 
+	private SafeCloseable _setPartition(String partitionName) {
+		_partitionName.set(partitionName);
+
+		return () -> _partitionName.set(null);
+	}
+
 	private static String _defaultPartitionName;
+	private static final ThreadLocal<String> _partitionName =
+		new CentralizedThreadLocal<>(String.class.getName());
 	private static final Pattern _rulePattern = Pattern.compile(
 		"create.* rule (.*?) as");
 

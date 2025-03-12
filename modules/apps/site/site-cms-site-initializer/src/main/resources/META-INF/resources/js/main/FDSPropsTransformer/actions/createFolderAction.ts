@@ -5,14 +5,20 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-import CreationFolderModalContent from '../../components/modal/CreationFolderModalContent';
+import CreationModalContent from '../../components/modal/CreationModalContent';
 
-export default function createFolderAction(data: {assetLibraryId?: string}) {
+type FolderData = {
+	action: 'createFolder';
+	assetLibraryId?: string;
+};
+
+export default function createFolderAction(data: FolderData) {
 	openModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
-			CreationFolderModalContent({
+			CreationModalContent({
 				...data,
 				closeModal,
+				title: Liferay.Language.get('new-folder'),
 			}),
 		size: 'sm',
 	});

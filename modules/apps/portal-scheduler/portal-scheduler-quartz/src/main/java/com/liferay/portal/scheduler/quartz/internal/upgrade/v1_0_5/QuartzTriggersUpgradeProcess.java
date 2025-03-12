@@ -19,7 +19,9 @@ public class QuartzTriggersUpgradeProcess extends UpgradeProcess {
 		}
 
 		removePrimaryKey("QUARTZ_TRIGGERS");
+
 		runSQL("drop index IX_186442A4 on QUARTZ_TRIGGERS");
+
 		runSQL(
 			"alter table QUARTZ_TRIGGERS add primary key (SCHED_NAME, " +
 				"TRIGGER_NAME, TRIGGER_GROUP)");

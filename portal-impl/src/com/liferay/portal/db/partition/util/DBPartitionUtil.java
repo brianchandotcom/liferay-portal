@@ -298,7 +298,8 @@ public class DBPartitionUtil {
 				statement.executeUpdate(
 					_getCopyDataSQL(
 						_defaultPartitionName, partitionName, viewName,
-						_getColumnNames(connection, viewName),
+						_getColumnNames(
+							connection, _defaultPartitionName, viewName),
 						StringPool.BLANK));
 			}
 		}
@@ -422,7 +423,9 @@ public class DBPartitionUtil {
 								_getCopyDataSQL(
 									_defaultPartitionName, partitionName,
 									tableName,
-									_getColumnNames(connection, tableName),
+									_getColumnNames(
+										connection, _defaultPartitionName,
+										tableName),
 									StringPool.BLANK));
 						}
 					}
@@ -650,7 +653,7 @@ public class DBPartitionUtil {
 	private static void _copySchema(
 			Connection connection, String sourcePartitionName,
 			String targetPartitionName)
-		throws SQLException {
+		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
@@ -695,7 +698,8 @@ public class DBPartitionUtil {
 						_getCopyDataSQL(
 							sourcePartitionName, targetPartitionName,
 							fromTableName, fromTableName,
-							_getColumnNames(connection, fromTableName),
+							_getColumnNames(
+								connection, sourcePartitionName, fromTableName),
 							StringPool.BLANK));
 				}
 			}
@@ -824,7 +828,9 @@ public class DBPartitionUtil {
 							_getCopyDataSQL(
 								getPartitionName(companyId),
 								extractedPartitionName, tableName, tableName,
-								_getColumnNames(connection, tableName),
+								_getColumnNames(
+									connection, extractedPartitionName,
+									tableName),
 								StringPool.BLANK));
 
 						continue;
@@ -882,7 +888,9 @@ public class DBPartitionUtil {
 		else if (_isCopyableQuartzTable(tableName)) {
 			_moveData(
 				_defaultPartitionName, extractedPartitionName, tableName,
-				_getColumnNames(statement.getConnection(), tableName),
+				_getColumnNames(
+					statement.getConnection(), _defaultPartitionName,
+					tableName),
 				statement, _getQuartzWhereClauseSQL(companyId, tableName),
 				deleteSourceData);
 		}
@@ -890,7 +898,9 @@ public class DBPartitionUtil {
 			statement.executeUpdate(
 				_getCopyDataSQL(
 					_defaultPartitionName, extractedPartitionName, tableName,
-					_getColumnNames(statement.getConnection(), tableName),
+					_getColumnNames(
+						statement.getConnection(), _defaultPartitionName,
+						tableName),
 					StringPool.BLANK));
 		}
 	}
@@ -960,14 +970,20 @@ public class DBPartitionUtil {
 	}
 
 	private static List<String> _getColumnNames(
-			Connection connection, String tableName)
-		throws SQLException {
+			Connection connection, String partitionName, String tableName)
+		throws Exception {
 
 		List<String> columnNames = new ArrayList<>();
 
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
 		DBInspector dbInspector = new DBInspector(connection);
 
-		try (ResultSet resultSet = dbInspector.getColumnsResultSet(tableName)) {
+		try (ResultSet resultSet = databaseMetaData.getColumns(
+				_dbPartitionDB.getCatalog(connection, partitionName),
+				_dbPartitionDB.getSchema(connection, partitionName),
+				dbInspector.normalizeName(tableName, databaseMetaData), null)) {
+
 			while (resultSet.next()) {
 				columnNames.add(resultSet.getString("COLUMN_NAME"));
 			}
@@ -1206,7 +1222,8 @@ public class DBPartitionUtil {
 							_getCopyDataSQL(
 								targetPartitionName, _defaultPartitionName,
 								tableName,
-								_getColumnNames(connection, tableName),
+								_getColumnNames(
+									connection, targetPartitionName, tableName),
 								" where companyId = " + companyId));
 
 						copiedTableNames.add(tableName);
@@ -1216,7 +1233,8 @@ public class DBPartitionUtil {
 							_getCopyDataSQL(
 								targetPartitionName, _defaultPartitionName,
 								tableName,
-								_getColumnNames(connection, tableName),
+								_getColumnNames(
+									connection, targetPartitionName, tableName),
 								_getQuartzWhereClauseSQL(
 									companyId, tableName)));
 
@@ -1325,8 +1343,9 @@ public class DBPartitionUtil {
 
 		_moveData(
 			fromPartitionName, toPartitionName, tableName,
-			_getColumnNames(statement.getConnection(), tableName), statement,
-			" where companyId = " + companyId, deleteSourceData);
+			_getColumnNames(
+				statement.getConnection(), fromPartitionName, tableName),
+			statement, " where companyId = " + companyId, deleteSourceData);
 	}
 
 	private static void _moveData(
@@ -1383,7 +1402,8 @@ public class DBPartitionUtil {
 		throws Exception {
 
 		List<String> columnNames = _getColumnNames(
-			statement.getConnection(), tableName);
+			statement.getConnection(), getPartitionName(fromCompanyId),
+			tableName);
 
 		List<String> replaceSQLs = new ArrayList<>();
 

@@ -26,10 +26,9 @@ public class CPEUtil {
 		if (ReleaseInfo.isDXP()) {
 			String versionDisplayName = ReleaseInfo.getVersionDisplayName();
 
-			int periodLastIndex = versionDisplayName.lastIndexOf(
-				StringPool.PERIOD);
+			int index = versionDisplayName.lastIndexOf(StringPool.PERIOD);
 
-			patchVersion = versionDisplayName.substring(periodLastIndex + 1);
+			patchVersion = versionDisplayName.substring(index + 1);
 
 			if (patchVersion.endsWith(" LTS")) {
 				patchVersion = patchVersion.substring(
@@ -38,7 +37,7 @@ public class CPEUtil {
 
 			product = "dxp";
 
-			String qVersion = versionDisplayName.substring(0, periodLastIndex);
+			String qVersion = versionDisplayName.substring(0, index);
 
 			version = qVersion.toLowerCase();
 		}

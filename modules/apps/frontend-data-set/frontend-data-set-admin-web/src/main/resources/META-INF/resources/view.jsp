@@ -10,6 +10,20 @@
 <liferay-ui:error embed="<%= false %>" exception="<%= NoSuchObjectEntryException.class %>" message="the-object-could-not-be-found" />
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
 
+<aui:style type="text/css">
+	.fds-with-custom-management-bar-bg::before {
+		background: #fff;
+		border-bottom: 1px solid #e7e7ed;
+		content: '';
+		display: block;
+		height: 64px;
+		left: 0;
+		padding-top: 64px;
+		position: absolute;
+		width: 100%;
+	}
+</aui:style>
+
 <c:choose>
 	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-37531") %>'>
 

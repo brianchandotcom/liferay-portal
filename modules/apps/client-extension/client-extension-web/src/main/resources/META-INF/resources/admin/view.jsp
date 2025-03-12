@@ -11,13 +11,31 @@
 ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientExtensionAdminDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.CLIENT_EXTENSION_ADMIN_DISPLAY_CONTEXT);
 %>
 
-<frontend-data-set:classic-display
-	actionParameterName="externalReferenceCode"
-	creationMenu="<%= clientExtensionAdminDisplayContext.getCreationMenu() %>"
-	dataProviderKey="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
-	id="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
-	itemsPerPage="<%= 10 %>"
-	selectedItemsKey="externalReferenceCode"
-	style="fluid"
-	uniformActionsDisplay="<%= true %>"
-/>
+<aui:style type="text/css">
+	.fds-with-custom-management-bar-bg::before {
+		background: #fff;
+		border-bottom: 1px solid #e7e7ed;
+		content: '';
+		display: block;
+		height: 64px;
+		left: 0;
+		padding-top: 64px;
+		position: absolute;
+		width: 100%;
+	}
+</aui:style>
+
+<div class="fds-with-custom-management-bar-bg">
+	<div class="container-fluid container-fluid-max-xxl">
+		<frontend-data-set:classic-display
+			actionParameterName="externalReferenceCode"
+			creationMenu="<%= clientExtensionAdminDisplayContext.getCreationMenu() %>"
+			dataProviderKey="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
+			id="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
+			itemsPerPage="<%= 10 %>"
+			selectedItemsKey="externalReferenceCode"
+			style="fluid"
+			uniformActionsDisplay="<%= true %>"
+		/>
+	</div>
+</div>

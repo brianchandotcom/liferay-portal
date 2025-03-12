@@ -88,38 +88,6 @@
 				"code": 1,
 				"label": "success"
 			}
-		},
-		{
-			"conditionExpression": "",
-			"objectActionExecutorKey": "update-object-entry",
-			"errorMessage": {},
-			"active": true,
-			"description": "",
-			"label": {
-				"en_US": "Answered Is False by Default"
-			},
-			"system": false,
-			"objectActionTriggerKey": "onAfterAdd",
-			"name": "answeredFalseByDefault",
-			"parameters": {
-				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
-				"predefinedValues": [
-					{
-						"name": "answered",
-						"inputAsValue": false,
-						"label": {
-							"en_US": "Answered"
-						},
-						"businessType": "Boolean",
-						"value": "false"
-					}
-				]
-			},
-			"status": {
-				"label_i18n": "Success",
-				"code": 1,
-				"label": "success"
-			}
 		}
 	],
 	"objectFields": [

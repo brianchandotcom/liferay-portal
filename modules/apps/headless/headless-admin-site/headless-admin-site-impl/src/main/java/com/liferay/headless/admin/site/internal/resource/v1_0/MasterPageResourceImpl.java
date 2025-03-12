@@ -281,6 +281,23 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					(ContentPageSpecification)pageSpecifications[1];
 			}
 
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			if (!Objects.equals(
+					draftLayout.getExternalReferenceCode(),
+					draftContentPageSpecification.getExternalReferenceCode()) ||
+				!Objects.equals(
+					layout.getExternalReferenceCode(),
+					publishedContentPageSpecification.
+						getExternalReferenceCode()) ||
+				!Objects.equals(
+					publishedContentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode(),
+					draftContentPageSpecification.getExternalReferenceCode())) {
+
+				throw new UnsupportedOperationException();
+			}
+
 			int status = WorkflowConstants.STATUS_APPROVED;
 
 			if (Objects.equals(
@@ -300,8 +317,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					PageSpecification.Status.APPROVED));
 
 			LayoutUtil.updateLayout(
-				draftContentPageSpecification, layout.fetchDraftLayout(),
-				status, serviceContext);
+				draftContentPageSpecification, draftLayout, status,
+				serviceContext);
 
 			LayoutUtil.updateLayout(
 				publishedContentPageSpecification, layout,

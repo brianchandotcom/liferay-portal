@@ -64,7 +64,7 @@ export class ContentSecurityPolicyPage {
 		await this.saveConfiguration();
 	}
 
-	async goTo() {
+	async goto() {
 		await this.applicationsMenuPage.goToInstanceSettings();
 
 		await this.page
@@ -72,6 +72,14 @@ export class ContentSecurityPolicyPage {
 			.click();
 
 		await this.enabled.waitFor();
+	}
+
+	async gotoAndConfigurePolicy(policy: string) {
+		await this.goto();
+
+		await this.setPolicy(policy);
+
+		await this.enableCSP();
 	}
 
 	async removeExcludedPaths(excludedPaths: string) {

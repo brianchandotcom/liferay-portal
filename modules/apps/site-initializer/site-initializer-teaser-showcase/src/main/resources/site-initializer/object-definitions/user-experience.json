@@ -18,8 +18,7 @@
 			"active": true,
 			"conditionExpression": "",
 			"description": "",
-			"errorMessage": {
-			},
+			"errorMessage": {},
 			"label": {
 				"en_US": "Update User and Date"
 			},
@@ -55,9 +54,95 @@
 				"label_i18n": "Success"
 			},
 			"system": false
+		},
+		{
+			"conditionExpression": "",
+			"objectActionExecutorKey": "update-object-entry",
+			"errorMessage": {
+				"en_US": "Sorry, it seems that something happened"
+			},
+			"active": true,
+			"description": "",
+			"label": {
+				"en_US": "Standalone User Confirmation"
+			},
+			"system": false,
+			"objectActionTriggerKey": "standalone",
+			"name": "standaloneUserConfirmation",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
+				"predefinedValues": [
+					{
+						"name": "answered",
+						"inputAsValue": false,
+						"label": {
+							"en_US": "Answered"
+						},
+						"businessType": "Boolean",
+						"value": "true"
+					}
+				]
+			},
+			"status": {
+				"label_i18n": "Success",
+				"code": 1,
+				"label": "success"
+			}
+		},
+		{
+			"conditionExpression": "",
+			"objectActionExecutorKey": "update-object-entry",
+			"errorMessage": {},
+			"active": true,
+			"description": "",
+			"label": {
+				"en_US": "Answered Is False by Default"
+			},
+			"system": false,
+			"objectActionTriggerKey": "onAfterAdd",
+			"name": "answeredFalseByDefault",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
+				"predefinedValues": [
+					{
+						"name": "answered",
+						"inputAsValue": false,
+						"label": {
+							"en_US": "Answered"
+						},
+						"businessType": "Boolean",
+						"value": "false"
+					}
+				]
+			},
+			"status": {
+				"label_i18n": "Success",
+				"code": 1,
+				"label": "success"
+			}
 		}
 	],
 	"objectFields": [
+		{
+            "indexed": true,
+            "localized": false,
+            "objectFieldSettings": [],
+            "readOnly": "false",
+            "DBType": "Boolean",
+            "label": {
+                "en_US": "Answer Confirmed by the User"
+            },
+            "type": "Boolean",
+            "required": false,
+            "indexedAsKeyword": false,
+            "system": false,
+            "indexedLanguageId": "",
+            "unique": false,
+            "name": "answered",
+            "state": false,
+            "businessType": "Boolean",
+            "readOnlyConditionExpression": ""
+        },
 		{
 			"DBType": "Clob",
 			"businessType": "RichText",
@@ -69,8 +154,7 @@
 			},
 			"localized": false,
 			"name": "answerFromClarity",
-			"objectFieldSettings": [
-			],
+			"objectFieldSettings": [],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -115,8 +199,7 @@
 			},
 			"localized": false,
 			"name": "date",
-			"objectFieldSettings": [
-			],
+			"objectFieldSettings": [],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -127,8 +210,7 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "MY-EXPERIENCES",
-	"objectValidationRules": [
-	],
+	"objectValidationRules": [],
 	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {

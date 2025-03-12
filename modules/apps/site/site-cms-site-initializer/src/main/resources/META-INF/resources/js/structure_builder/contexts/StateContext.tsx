@@ -206,7 +206,7 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'set-error':
-			return {...state, error: action.error};
+			return {...state, error: action.error, selection: [state.uuid]};
 		case 'set-label':
 			return {...state, label: action.label};
 		case 'set-selection': {

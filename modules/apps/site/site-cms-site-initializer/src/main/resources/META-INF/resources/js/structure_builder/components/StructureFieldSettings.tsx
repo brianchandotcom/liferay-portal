@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
@@ -15,7 +14,6 @@ import React, {useMemo, useState} from 'react';
 
 import {Uuid, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
-import selectStructureError from '../selectors/selectStructureError';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import {FIELD_TYPE_LABEL, Field} from '../utils/field';
@@ -26,22 +24,11 @@ import Input from './Input';
 
 export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 	const dispatch = useStateDispatch();
-	const error = useSelector(selectStructureError);
 	const field = useSelector(selectStructureField(uuid));
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 
 	return (
 		<ClayLayout.ContainerFluid size="md" view>
-			{error ? (
-				<ClayAlert
-					displayType="danger"
-					role={null}
-					title={Liferay.Language.get('error')}
-				>
-					{error}
-				</ClayAlert>
-			) : null}
-
 			<ClayBreadcrumb
 				className="mb-3"
 				items={[

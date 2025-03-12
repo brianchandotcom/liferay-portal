@@ -64,7 +64,7 @@ public class UserModelListenerTest {
 		long classPK = _group.getGroupId();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), _groupUser1.getUserId(),
+			null, TestPropsValues.getUserId(), 0, _groupUser1.getUserId(),
 			_classNameLocalService.getClassNameId(Group.class.getName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null,
@@ -95,7 +95,7 @@ public class UserModelListenerTest {
 		long classPK = _group.getGroupId();
 
 		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), _groupUser1.getUserId(),
+			null, TestPropsValues.getUserId(), 0, _groupUser1.getUserId(),
 			_classNameLocalService.getClassNameId(Group.class.getName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null,

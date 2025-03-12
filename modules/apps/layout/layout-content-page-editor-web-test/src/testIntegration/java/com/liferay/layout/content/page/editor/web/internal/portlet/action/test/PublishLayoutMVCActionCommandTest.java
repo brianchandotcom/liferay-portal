@@ -14,6 +14,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -33,6 +35,8 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
@@ -116,6 +120,113 @@ public class PublishLayoutMVCActionCommandTest {
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_draftLayout.getPlid());
+	}
+
+	@Test
+	@TestInfo("LPD-51205")
+	public void testDeletedFragmentEntryLinksAreRemovedWhenLayoutIsPublished()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				StringUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		FragmentEntryLink dropzoneFragmentEntryLink = _addFragmentEntryLink(
+			fragmentCollection.getFragmentCollectionId(),
+			"<lfr-drop-zone></lfr-drop-zone>", null, serviceContext);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				_draftLayout.getPlid(), _segmentsExperienceId);
+
+		FragmentStyledLayoutStructureItem
+			dropZoneFragmentStyledLayoutStructureItem =
+				(FragmentStyledLayoutStructureItem)
+					layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+						dropzoneFragmentEntryLink.getFragmentEntryLinkId());
+
+		List<String> childrenItemIds =
+			dropZoneFragmentStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 1, childrenItemIds.size());
+
+		FragmentDropZoneLayoutStructureItem
+			fragmentDropZoneLayoutStructureItem =
+				(FragmentDropZoneLayoutStructureItem)
+					layoutStructure.getLayoutStructureItem(
+						childrenItemIds.get(0));
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			fragmentCollection.getFragmentCollectionId(),
+			"<h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>",
+			fragmentDropZoneLayoutStructureItem.getItemId(), serviceContext);
+
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			_draftLayout.getPlid(), _segmentsExperienceId);
+
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			fragmentDropZoneLayoutStructureItem.getItemId(),
+			fragmentStyledLayoutStructureItem.getParentItemId());
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		FragmentEntryLink publishedLayoutDropzoneFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_group.getGroupId(),
+				dropzoneFragmentEntryLink.getFragmentEntryLinkId(),
+				_layout.getPlid());
+
+		Assert.assertNotNull(publishedLayoutDropzoneFragmentEntryLink);
+
+		FragmentEntryLink publishedLayoutFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_group.getGroupId(), fragmentEntryLink.getFragmentEntryLinkId(),
+				_layout.getPlid());
+
+		Assert.assertNotNull(publishedLayoutFragmentEntryLink);
+
+		ContentLayoutTestUtil.markItemForDeletionFromLayout(
+			dropZoneFragmentStyledLayoutStructureItem.getItemId(), _draftLayout,
+			StringPool.BLANK);
+
+		dropzoneFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				dropzoneFragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertTrue(dropzoneFragmentEntryLink.isDeleted());
+
+		fragmentEntryLink = _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertTrue(fragmentEntryLink.isDeleted());
+
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
+
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				dropzoneFragmentEntryLink.getFragmentEntryLinkId()));
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId()));
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				publishedLayoutDropzoneFragmentEntryLink.
+					getFragmentEntryLinkId()));
+		Assert.assertNull(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				publishedLayoutFragmentEntryLink.getFragmentEntryLinkId()));
 	}
 
 	@Test
@@ -528,6 +639,46 @@ public class PublishLayoutMVCActionCommandTest {
 				LAYOUT_CONTENT_PAGE_EDITOR_WEB_NONINSTANCEABLE_TEST_PORTLET);
 	}
 
+	private FragmentEntryLink _addFragmentEntryLink(
+			long fragmentCollectionId, String html, String parentItemId,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollectionId, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), StringPool.BLANK, html,
+				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+				FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				"{}", fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), _draftLayout,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				parentItemId, 0, _segmentsExperienceId);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					_fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					fragmentEntryLink);
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		return fragmentEntryLink;
+	}
+
 	private FragmentEntryLink _addFragmentEntryLinkToLayout(String html)
 		throws Exception {
 
@@ -801,6 +952,10 @@ public class PublishLayoutMVCActionCommandTest {
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

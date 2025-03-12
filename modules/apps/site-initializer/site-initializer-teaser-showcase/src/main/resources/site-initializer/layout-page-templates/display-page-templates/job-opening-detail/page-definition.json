@@ -41,13 +41,15 @@
 										{
 											"id": "page-title-fragment-right",
 											"value": {
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										},
 										{
 											"id": "page-title-fragment-left",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"mapping": {
 														"fieldKey": "JournalArticle_title",
@@ -68,12 +70,14 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-paragraph"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"mapping": {
 														"fieldKey": "AssetVocabulary_34193",
@@ -117,7 +121,8 @@
 										"paddingRight": "9"
 									},
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Role Overview"
 								},
 								"pageElements": [
@@ -133,7 +138,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Role Overview"
@@ -154,7 +160,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -184,7 +191,8 @@
 										"paddingRight": "9"
 									},
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Key Responsibilities"
 								},
 								"pageElements": [
@@ -200,7 +208,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Key Responsibilities"
@@ -222,7 +231,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -252,7 +262,8 @@
 										"paddingRight": "9"
 									},
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Qualifications and Kills"
 								},
 								"pageElements": [
@@ -268,7 +279,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Qualifications and Skills"
@@ -290,7 +302,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -320,7 +333,8 @@
 										"paddingRight": "9"
 									},
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Why Join"
 								},
 								"pageElements": [
@@ -336,7 +350,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Why Join Clarity"
@@ -358,7 +373,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -400,18 +416,19 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
 												"iconName": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "ghost",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
 													"id": "link",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Back to Open Positions"
@@ -422,7 +439,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -437,18 +455,19 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
 												"iconName": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "solid",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
 													"id": "link",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Apply Now"
@@ -459,7 +478,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Apply Now"

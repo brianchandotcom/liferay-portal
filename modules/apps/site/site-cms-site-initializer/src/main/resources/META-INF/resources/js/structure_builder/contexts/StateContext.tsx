@@ -73,11 +73,6 @@ type SaveStructureAction = {
 
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
-type SetLabelAction = {
-	label: Liferay.Language.LocalizedValue<string>;
-	type: 'set-label';
-};
-
 type SetSelection = {
 	selection: State['selection'];
 	type: 'set-selection';
@@ -98,6 +93,7 @@ type UpdateFieldAction = {
 
 type UpdateStructureAction = {
 	erc?: string;
+	label?: Liferay.Language.LocalizedValue<string>;
 	name?: string;
 	type: 'update-structure';
 };
@@ -110,7 +106,6 @@ export type Action =
 	| PublishStructureAction
 	| SaveStructureAction
 	| SetErrorAction
-	| SetLabelAction
 	| SetSelection
 	| UpdateFieldAction
 	| UpdateStructureAction;
@@ -207,8 +202,6 @@ function reducer(state: State, action: Action): State {
 		}
 		case 'set-error':
 			return {...state, error: action.error, selection: [state.uuid]};
-		case 'set-label':
-			return {...state, label: action.label};
 		case 'set-selection': {
 			const {selection} = action;
 
@@ -255,10 +248,15 @@ function reducer(state: State, action: Action): State {
 		}
 		case 'update-structure': {
 			let nextErc = state.erc;
+			let nextLabel = state.label;
 			let nextName = state.name;
 
 			if (!isNullOrUndefined(action.erc)) {
 				nextErc = action.erc;
+			}
+
+			if (!isNullOrUndefined(action.label)) {
+				nextLabel = action.label;
 			}
 
 			if (!isNullOrUndefined(action.name)) {
@@ -269,6 +267,7 @@ function reducer(state: State, action: Action): State {
 				...state,
 				erc: nextErc,
 				error: null,
+				label: nextLabel,
 				name: nextName,
 			};
 		}

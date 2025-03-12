@@ -74,7 +74,7 @@ function StructureSettings() {
 					onBlur={() => {
 						dispatch({
 							label,
-							type: 'set-label',
+							type: 'update-structure',
 						});
 					}}
 					onChange={(label) => setLabel(label)}

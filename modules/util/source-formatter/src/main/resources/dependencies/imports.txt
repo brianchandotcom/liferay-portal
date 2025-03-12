@@ -322,6 +322,7 @@ com.liferay.petra.encryptor.Encryptor=com.liferay.portal.kernel.encryptor.Encryp
 com.liferay.petra.encryptor.EncryptorException=com.liferay.portal.kernel.encryptor.EncryptorException
 com.liferay.petra.io.SerializationConstants=com.liferay.petra.io.constants.SerializationConstants
 com.liferay.petra.json.web.service.client.server.simulator.SimulatorConstants=com.liferay.petra.json.web.service.client.server.simulator.constants.SimulatorConstants
+com.liferay.petra.portlet.url.builder.PortletURLBuilder=com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder
 com.liferay.portal.DuplicateUserEmailAddressException=com.liferay.portal.kernel.exception.UserEmailAddressException
 com.liferay.portal.background.task.BackgroundTaskContextMapConstants=com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants
 com.liferay.portal.kernel.audit.AuditMessageProcessor=com.liferay.portal.security.audit.AuditMessageProcessor

@@ -18,7 +18,7 @@ export default function CreationFolderModalContent({
 	closeModal,
 }: {
 	assetLibraryId?: string;
-	closeModal: voidReturn;
+	closeModal: () => void;
 }) {
 	const [assetLibraries, setAssetsLibraries] = useState<
 		{id: string; name: string}[]

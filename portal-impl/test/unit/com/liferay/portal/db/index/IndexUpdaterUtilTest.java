@@ -33,16 +33,16 @@ public class IndexUpdaterUtilTest {
 				"create table TestTable2 (field1 INT, field2 INT);";
 		String indexesSQL = "create index IX_TEST1 on TestTable1 (field2);";
 
-		Map<String, String> tableIndexesMap = ReflectionTestUtil.invoke(
+		Map<String, String> tableIndexesSQLMap = ReflectionTestUtil.invoke(
 			IndexUpdaterUtil.class, "_getTableIndexesSQLMap",
 			new Class<?>[] {String.class, String.class}, tablesSQL, indexesSQL);
 
 		Assert.assertEquals(
-			tableIndexesMap.toString(), 2, tableIndexesMap.size());
+			tableIndexesSQLMap.toString(), 2, tableIndexesSQLMap.size());
 
-		Assert.assertEquals(tableIndexesMap.get("TestTable1"), indexesSQL);
+		Assert.assertEquals(tableIndexesSQLMap.get("TestTable1"), indexesSQL);
 		Assert.assertEquals(
-			tableIndexesMap.get("TestTable2"), StringPool.BLANK);
+			tableIndexesSQLMap.get("TestTable2"), StringPool.BLANK);
 	}
 
 }

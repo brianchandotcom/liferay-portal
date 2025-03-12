@@ -7,6 +7,7 @@ import getDateTimeFieldComponents from '../components/DateTimeFieldComponents';
 import getLongTextFieldComponents from '../components/LongTextFieldComponents';
 import getNumericFieldComponents from '../components/NumericFieldComponents';
 import getTextFieldComponents from '../components/TextFieldComponents';
+import getUploadFieldComponents from '../components/UploadFieldComponents';
 import {Field, FieldType} from './field';
 
 type FieldComponents = {
@@ -25,7 +26,7 @@ const GETTERS: Record<FieldType, () => Partial<FieldComponents>> = {
 	'rich-text': () => ({}),
 	'single-select': () => ({}),
 	'text': getTextFieldComponents,
-	'upload': () => ({}),
+	'upload': getUploadFieldComponents,
 };
 
 export default function getFieldComponents(

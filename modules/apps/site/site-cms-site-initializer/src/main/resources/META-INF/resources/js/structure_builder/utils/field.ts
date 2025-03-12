@@ -142,19 +142,24 @@ export type TextField = BaseField & {
 } & MaxLengthSettingsField &
 	UniqueValuesSettingsField;
 
+export type UploadField = BaseField & {
+	type: 'upload';
+} & {
+	settings: {
+		acceptedFileExtensions: string;
+		fileSource: 'userComputer' | 'documentsAndMedia';
+		maximumFileSize: number;
+		showFilesInDocumentsAndMedia?: boolean;
+		storageDLFolderPath?: string;
+	};
+};
+
 export type Field =
 	| DateTimeField
 	| LongTextField
 	| NumericField
 	| TextField
-	| (BaseField & {
-			settings: {
-				acceptedFileExtensions: string;
-				fileSource: 'userComputer';
-				maximumFileSize: number;
-			};
-			type: 'upload';
-	  })
+	| UploadField
 	| (BaseField & {
 			settings: {};
 			type: Exclude<

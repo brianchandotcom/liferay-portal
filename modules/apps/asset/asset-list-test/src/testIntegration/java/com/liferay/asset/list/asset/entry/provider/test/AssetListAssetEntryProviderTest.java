@@ -165,7 +165,6 @@ public class AssetListAssetEntryProviderTest {
 				3, _getAssetEntry(journalArticle1),
 				_getAssetEntry(journalArticle2),
 				_getAssetEntry(journalArticle3));
-
 			_assertAssetListEntryResultsPagination(
 				assetListEntry, segmentsEntryIds,
 				_getAssetEntry(journalArticle1),

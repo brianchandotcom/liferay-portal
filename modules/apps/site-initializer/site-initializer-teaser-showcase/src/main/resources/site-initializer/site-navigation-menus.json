@@ -133,6 +133,11 @@
 				"friendlyURL": "/contact-us",
 				"name": "Contact Us",
 				"type": "layout"
+			},
+			{
+				"friendlyURL": "/my-experience",
+				"name": "My Experience",
+				"type": "layout"
 			}
 		],
 		"name": "Header Page Menu",

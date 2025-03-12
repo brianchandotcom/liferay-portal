@@ -6,6 +6,7 @@
 package com.liferay.wiki.web.internal.trash;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,7 +47,6 @@ import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.web.internal.asset.model.WikiPageAssetRenderer;
 import com.liferay.wiki.web.internal.util.WikiPageAttachmentsUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -251,8 +251,6 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			OrderByComparator<?> orderByComparator)
 		throws PortalException {
 
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
 		WikiPage page = _wikiPageLocalService.getPage(classPK);
 
 		List<WikiPage> pages = _wikiPageLocalService.getChildren(
@@ -260,11 +258,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			WorkflowConstants.STATUS_IN_TRASH, start, end,
 			(OrderByComparator<WikiPage>)orderByComparator);
 
-		for (WikiPage curPage : pages) {
-			trashedModels.add(curPage);
-		}
-
-		return trashedModels;
+		return TransformUtil.transform(pages, curPage -> curPage);
 	}
 
 	@Override

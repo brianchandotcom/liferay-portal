@@ -5,7 +5,6 @@
 
 package com.liferay.wiki.web.internal.display.context;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -57,7 +56,6 @@ import com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermis
 import com.liferay.wiki.web.internal.util.WikiPortletUtil;
 import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -487,23 +485,17 @@ public class WikiListPagesDisplayContext {
 					assetEntryQuery.setEnd(searchContainer.getEnd());
 					assetEntryQuery.setStart(searchContainer.getStart());
 
-					List<AssetEntry> assetEntries =
-						AssetEntryServiceUtil.getEntries(assetEntryQuery);
+					return TransformUtil.transform(
+						AssetEntryServiceUtil.getEntries(assetEntryQuery),
+						assetEntry -> {
+							WikiPageResource pageResource =
+								WikiPageResourceLocalServiceUtil.
+									getPageResource(assetEntry.getClassPK());
 
-					List<WikiPage> results = new ArrayList<>();
-
-					for (AssetEntry assetEntry : assetEntries) {
-						WikiPageResource pageResource =
-							WikiPageResourceLocalServiceUtil.getPageResource(
-								assetEntry.getClassPK());
-
-						WikiPage assetPage = WikiPageLocalServiceUtil.getPage(
-							pageResource.getNodeId(), pageResource.getTitle());
-
-						results.add(assetPage);
-					}
-
-					return results;
+							return WikiPageLocalServiceUtil.getPage(
+								pageResource.getNodeId(),
+								pageResource.getTitle());
+						});
 				},
 				AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
 		}

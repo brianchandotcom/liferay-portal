@@ -5,6 +5,7 @@
 
 package com.liferay.wiki.web.internal.trash;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -17,7 +18,6 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,8 +83,6 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 			long classPK, long containerModelId, int start, int end)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<>();
-
 		WikiPage page = null;
 
 		String parentTitle = StringPool.BLANK;
@@ -93,14 +91,10 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 			page = WikiPageLocalServiceUtil.getPage(containerModelId);
 
 			if (page == null) {
-				List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
-					containerModelId, start, end);
-
-				for (WikiPage curPage : pages) {
-					containerModels.add(curPage);
-				}
-
-				return containerModels;
+				return TransformUtil.transform(
+					WikiPageLocalServiceUtil.getPages(
+						containerModelId, start, end),
+					curPage -> curPage);
 			}
 
 			parentTitle = page.getTitle();
@@ -109,14 +103,10 @@ public abstract class BaseWikiTrashHandler extends BaseTrashHandler {
 			page = WikiPageLocalServiceUtil.getPage(classPK);
 		}
 
-		List<WikiPage> pages = WikiPageLocalServiceUtil.getChildren(
-			page.getNodeId(), true, parentTitle, start, end);
-
-		for (WikiPage curPage : pages) {
-			containerModels.add(curPage);
-		}
-
-		return containerModels;
+		return TransformUtil.transform(
+			WikiPageLocalServiceUtil.getChildren(
+				page.getNodeId(), true, parentTitle, start, end),
+			curPage -> curPage);
 	}
 
 	@Override

@@ -170,21 +170,24 @@ public class AttributeSerDes {
 			sb.append("\"");
 		}
 
-		if (attribute.getSubattribute() != null) {
+		if (attribute.getSubAttributes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"subattribute\": ");
+			sb.append("\"subAttributes\": ");
 
-			if (attribute.getSubattribute() instanceof String) {
-				sb.append("\"");
-				sb.append((String)attribute.getSubattribute());
-				sb.append("\"");
+			sb.append("[");
+
+			for (int i = 0; i < attribute.getSubAttributes().length; i++) {
+				sb.append(String.valueOf(attribute.getSubAttributes()[i]));
+
+				if ((i + 1) < attribute.getSubAttributes().length) {
+					sb.append(", ");
+				}
 			}
-			else {
-				sb.append(attribute.getSubattribute());
-			}
+
+			sb.append("]");
 		}
 
 		if (attribute.getType() != null) {
@@ -300,12 +303,12 @@ public class AttributeSerDes {
 			map.put("returned", String.valueOf(attribute.getReturned()));
 		}
 
-		if (attribute.getSubattribute() == null) {
-			map.put("subattribute", null);
+		if (attribute.getSubAttributes() == null) {
+			map.put("subAttributes", null);
 		}
 		else {
 			map.put(
-				"subattribute", String.valueOf(attribute.getSubattribute()));
+				"subAttributes", String.valueOf(attribute.getSubAttributes()));
 		}
 
 		if (attribute.getType() == null) {
@@ -366,7 +369,7 @@ public class AttributeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "returned")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "subattribute")) {
+			else if (Objects.equals(jsonParserFieldName, "subAttributes")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -435,9 +438,20 @@ public class AttributeSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "subattribute")) {
+			else if (Objects.equals(jsonParserFieldName, "subAttributes")) {
 				if (jsonParserFieldValue != null) {
-					attribute.setSubattribute((Object)jsonParserFieldValue);
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					Attribute[] subAttributesArray =
+						new Attribute[jsonParserFieldValues.length];
+
+					for (int i = 0; i < subAttributesArray.length; i++) {
+						subAttributesArray[i] = AttributeSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					attribute.setSubAttributes(subAttributesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

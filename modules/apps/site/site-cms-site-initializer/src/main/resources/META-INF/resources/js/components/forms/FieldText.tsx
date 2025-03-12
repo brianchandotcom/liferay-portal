@@ -8,6 +8,13 @@ import React from 'react';
 
 import FieldWrapper from './FieldWrapper';
 
+type ClayInputProps = {
+	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
+	insetAfter?: boolean;
+	insetBefore?: boolean;
+	sizing?: 'lg' | 'regular' | 'sm';
+} & React.InputHTMLAttributes<HTMLInputElement>;
+
 const FieldText = ({
 	disabled,
 	errorMessage,
@@ -27,7 +34,7 @@ const FieldText = ({
 	name: string;
 	required?: boolean;
 	type?: 'textarea' | 'input';
-} & React.ComponentProps<typeof ClayInput>) => {
+} & ClayInputProps) => {
 	const fieldId = id ?? name;
 	const feedbackId = `feedback-${fieldId}`;
 

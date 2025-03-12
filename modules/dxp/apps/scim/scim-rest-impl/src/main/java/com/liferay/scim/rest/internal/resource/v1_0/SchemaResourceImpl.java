@@ -78,7 +78,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		return responseBuilder.build();
 	}
 
-	private Map<String, String> _getResponseHeaders() throws NotFoundException {
+	private Map<String, String> _getHeaders() throws NotFoundException {
 		return HashMapBuilder.put(
 			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
 		).put(
@@ -88,7 +88,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		).build();
 	}
 
-	private String _getSchema(String id) throws AbstractCharonException {
+	private String _getSchemaJSON(String id) throws AbstractCharonException {
 		if (_schemasMap.containsKey(id)) {
 			JSONObject schemaJSONObject = _read(_schemasMap.get(id));
 
@@ -133,18 +133,18 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 			if (Validator.isNull(id)) {
 				return new SCIMResponse(
 					ResponseCodeConstants.CODE_OK, _getSchemas(),
-					_getResponseHeaders());
+					_getHeaders());
 			}
 
-			String schema = _getSchema(id);
+			String schemaJSON = _getSchemaJSON(id);
 
-			if (Validator.isNull(schema)) {
+			if (Validator.isNull(schemaJSON)) {
 				throw new NotFoundException(
 					"No schema found with schema ID " + id);
 			}
 
 			return new SCIMResponse(
-				ResponseCodeConstants.CODE_OK, schema, _getResponseHeaders());
+				ResponseCodeConstants.CODE_OK, schemaJSON, _getHeaders());
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(

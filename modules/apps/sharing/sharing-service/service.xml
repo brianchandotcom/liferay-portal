@@ -23,6 +23,7 @@
 
 		<!-- Other fields -->
 
+		<column name="toUserGroupId" type="long" />
 		<column name="toUserId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />

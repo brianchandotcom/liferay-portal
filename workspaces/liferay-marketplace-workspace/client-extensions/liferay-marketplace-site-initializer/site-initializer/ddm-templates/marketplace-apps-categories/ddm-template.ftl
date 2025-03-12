@@ -27,14 +27,19 @@
 		white-space: nowrap;
 	}
 
-	.client-extension-app-product-type {
+	.client-extension-product-type {
 		background-color: #FFE6C6;
 		color: #9D4C00;
 	}
 
-	.cloud-app-product-type {
+	.cloud-product-type {
 		background-color: #D1EEDC;
 		color: #0E7835;
+	}
+
+	.composite-app-product-type {
+		background-color: #FBE0FF;
+		color: #720086;
 	}
 
 	.diamond-icon-container {
@@ -43,12 +48,12 @@
 		width: 4px;
 	}
 
-	.dxp-app-product-type {
+	.dxp-product-type {
 		background-color: #D1ECFA;
 		color: #166E9E;
 	}
 
-	.fragment-app-product-type {
+	.low-code-configuration-product-type {
 		background-color: #DCD7E9;
 		color: #503690;
 	}
@@ -70,13 +75,17 @@
 		}
 	}
 </style>
+
 <#assign
-	PRODUCT_TYPE_CLIENT_EXTENSION = "CLIENT-EXTENSION"
-	PRODUCT_TYPE_CLOUD = "CLOUD"
-	PRODUCT_TYPE_DXP = "DXP"
-	PRODUCT_TYPE_FRAGMENT = "FRAGMENT"
-	PRODUCT_TYPE_FREE = "FREE"
-	PRODUCT_TYPE_PAID = "PAID"
+	productTypeValues =
+		{
+			"client-extension": "Client Extension",
+			"cloud": "Cloud App",
+			"composite-app": "Composite App",
+			"dxp": "DXP App",
+			"low-code-configuration": "Low-Code"
+		}
+
 	VOCABULARY_PRODUCT_CATEGORY = "MARKETPLACE APP CATEGORY"
 />
 
@@ -116,22 +125,14 @@
 			<#assign productTypes = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "type")) />
 
 			<#list productTypes as productType>
-				<#if productType.value?upper_case == PRODUCT_TYPE_CLIENT_EXTENSION>
-					<div class="align-items-center app-product-type border border-radius-small client-extension-app-product-type d-flex mb-1 mr-2 px-2 rounded-lg">
-						<div class="bg-neutral-8">Client Extension</div>
-					</div>
-				<#elseif productType.value?upper_case == PRODUCT_TYPE_CLOUD>
-					<div class="align-items-center app-product-type border border-radius-small cloud-app-product-type d-flex mb-1 mr-2 px-2 rounded-lg">
-						<div class="bg-neutral-8">Cloud App</div>
-					</div>
-				<#elseif productType.value?upper_case == PRODUCT_TYPE_DXP>
-					<div class="align-items-center app-product-type border border-radius-small d-flex dxp-app-product-type mb-1 mr-2 px-2 rounded-lg">
-						<div class="bg-neutral-8">DXP App</div>
-					</div>
-				<#elseif productType.value?upper_case == PRODUCT_TYPE_FRAGMENT>
-					<div class="align-items-center app-product-type border border-radius-small d-flex fragment-app-product-type mb-1 mr-2 px-2 rounded-lg">
-						<div class="bg-neutral-8">Fragment</div>
-					</div>
+				<#if productType?has_content>
+					<#assign appType = (productTypeValues[productType.value]!) />
+
+					<#if appType?has_content>
+						<div class="align-items-center app-product-type border border-radius-small d-flex mb-1 mr-2 px-2 rounded-lg ${productType.value}-product-type">
+							<div class="bg-neutral-8">${appType}</div>
+						</div>
+					</#if>
 				</#if>
 			</#list>
 		</#if>
@@ -139,7 +140,7 @@
 		<#if categories?has_content>
 			<#assign filteredCategories = categories?filter(category -> category.vocabulary?upper_case == VOCABULARY_PRODUCT_CATEGORY) />
 
-			<#if filteredCategories?has_content && productTypes?has_content>
+			<#if filteredCategories?has_content && appType?has_content>
 				<span class="align-items-center d-flex justify-content-between">
 					<span class="align-items-center d-flex diamond-icon-container justify-content-between mr-3">
 						<@clay["icon"] symbol="diamond" />

@@ -37,22 +37,26 @@ public class CPEUtilTest extends CPEUtil {
 			"cpe:2.3:a:liferay:dxp:2024.q4:6:*:*:*:*:*:*", "dxp", "7.4.13",
 			"2024.Q4.6", ".u129");
 		_testGetName(
-			"cpe:2.3:a:liferay:portal:7.4.3.129-ga129:*:*:*:*:*:*:*", "portal",
-			"7.4.3.129", "7.4.3.129 CE GA129", "-ga129");
-		_testGetName(
 			"cpe:2.3:a:liferay:dxp:2025.q1:0:*:*:*:*:*:*", "dxp", "7.4.13",
 			"2025.Q1.0 LTS", ".u132");
+		_testGetName(
+			"cpe:2.3:a:liferay:portal:7.4.3.129-ga129:*:*:*:*:*:*:*", "portal",
+			"7.4.3.129", "7.4.3.129 CE GA129", "-ga129");
 	}
 
 	private void _testGetName(
 		String expectedValue, String product, String version,
 		String versionDisplayName, String versionFileSuffix) {
 
-		_releaseInfoMockedStatic.when(
-			ReleaseInfo::isDXP
+		Project project = Mockito.mock(Project.class);
+
+		Mockito.when(
+			project.getProperty("release.info.version.file.suffix")
 		).thenAnswer(
-			invocation -> product.equals("dxp")
+			invocation -> versionFileSuffix
 		);
+
+		_manifestHelperTask.setProject(project);
 
 		_releaseInfoMockedStatic.when(
 			ReleaseInfo::getVersion
@@ -66,15 +70,11 @@ public class CPEUtilTest extends CPEUtil {
 			invocation -> versionDisplayName
 		);
 
-		Project project = Mockito.mock(Project.class);
-
-		Mockito.when(
-			project.getProperty("release.info.version.file.suffix")
+		_releaseInfoMockedStatic.when(
+			ReleaseInfo::isDXP
 		).thenAnswer(
-			invocation -> versionFileSuffix
+			invocation -> product.equals("dxp")
 		);
-
-		_manifestHelperTask.setProject(project);
 
 		Assert.assertEquals(
 			expectedValue, getName(_manifestHelperTask.getProject()));

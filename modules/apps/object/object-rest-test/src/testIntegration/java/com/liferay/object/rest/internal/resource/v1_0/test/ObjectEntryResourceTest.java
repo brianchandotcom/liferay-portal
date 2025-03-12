@@ -4172,7 +4172,21 @@ public class ObjectEntryResourceTest {
 		throws Exception {
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
+			_objectDefinition1,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+			).put(
+				"externalReferenceCode",
+				() -> {
+					StringBuilder sb = new StringBuilder(
+						RandomTestUtil.randomString());
+
+					sb.setCharAt(4, 'a');
+
+					return sb.toString();
+				}
+			).build());
+
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
@@ -4227,7 +4241,7 @@ public class ObjectEntryResourceTest {
 
 		String substring = _objectEntry1.getExternalReferenceCode(
 		).substring(
-			0, 3
+			0, 4
 		);
 
 		_assertFilterString(
@@ -4251,7 +4265,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s lt '%s'", _objectRelationship1.getName(),
-					objectRelationshipERCObjectFieldName, substring + "ZZZZ")),
+					objectRelationshipERCObjectFieldName, substring + "zzzz")),
 			_objectDefinition1);
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,

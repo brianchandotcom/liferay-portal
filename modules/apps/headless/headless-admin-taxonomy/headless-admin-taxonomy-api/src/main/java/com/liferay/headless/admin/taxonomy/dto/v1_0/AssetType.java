@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,9 @@ public class AssetType implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AssetType.class, json);
 	}
 
-	@Schema(description = "A flag that marks if this type is required.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A flag that marks if this type is required."
+	)
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -92,7 +92,9 @@ public class AssetType implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema(description = "The asset's subtype.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset's subtype."
+	)
 	public String getSubtype() {
 		if (_subtypeSupplier != null) {
 			subtype = _subtypeSupplier.get();
@@ -133,7 +135,7 @@ public class AssetType implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _subtypeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The asset's type (e.g., `BlogPosting`, `Document`, etc.)."
 	)
 	public String getType() {
@@ -252,8 +254,8 @@ public class AssetType implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("PriceModifierCategory")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"categoryId", "priceModifierId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"categoryId", "priceModifierId"})
 @XmlRootElement(name = "PriceModifierCategory")
 public class PriceModifierCategory implements Serializable {
 
@@ -54,7 +54,7 @@ public class PriceModifierCategory implements Serializable {
 			PriceModifierCategory.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -97,7 +97,7 @@ public class PriceModifierCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Category getCategory() {
 		if (_categorySupplier != null) {
@@ -139,7 +139,7 @@ public class PriceModifierCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Category> _categorySupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getCategoryExternalReferenceCode() {
 		if (_categoryExternalReferenceCodeSupplier != null) {
 			categoryExternalReferenceCode =
@@ -185,7 +185,7 @@ public class PriceModifierCategory implements Serializable {
 	private Supplier<String> _categoryExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getCategoryId() {
 		if (_categoryIdSupplier != null) {
 			categoryId = _categoryIdSupplier.get();
@@ -228,7 +228,7 @@ public class PriceModifierCategory implements Serializable {
 	private Supplier<Long> _categoryIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getPriceModifierCategoryId() {
 		if (_priceModifierCategoryIdSupplier != null) {
 			priceModifierCategoryId = _priceModifierCategoryIdSupplier.get();
@@ -269,7 +269,7 @@ public class PriceModifierCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _priceModifierCategoryIdSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getPriceModifierExternalReferenceCode() {
 		if (_priceModifierExternalReferenceCodeSupplier != null) {
 			priceModifierExternalReferenceCode =
@@ -316,7 +316,7 @@ public class PriceModifierCategory implements Serializable {
 	private Supplier<String> _priceModifierExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getPriceModifierId() {
 		if (_priceModifierIdSupplier != null) {
 			priceModifierId = _priceModifierIdSupplier.get();
@@ -485,8 +485,8 @@ public class PriceModifierCategory implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierCategory",
 		name = "x-class-name"
 	)

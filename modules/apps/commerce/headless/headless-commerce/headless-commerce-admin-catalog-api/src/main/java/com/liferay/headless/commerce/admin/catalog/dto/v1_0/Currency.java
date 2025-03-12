@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -46,8 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Currency")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"code", "name"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"code", "name"})
 @XmlRootElement(name = "Currency")
 public class Currency implements Serializable {
 
@@ -59,7 +59,7 @@ public class Currency implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Currency.class, json);
 	}
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -100,7 +100,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
 	public String getCode() {
 		if (_codeSupplier != null) {
 			code = _codeSupplier.get();
@@ -140,7 +140,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _codeSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -181,7 +181,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -227,7 +227,7 @@ public class Currency implements Serializable {
 	private Supplier<Map<String, String>> _formatPatternSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -267,7 +267,7 @@ public class Currency implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getMaxFractionDigits() {
 		if (_maxFractionDigitsSupplier != null) {
 			maxFractionDigits = _maxFractionDigitsSupplier.get();
@@ -309,7 +309,7 @@ public class Currency implements Serializable {
 	private Supplier<Integer> _maxFractionDigitsSupplier;
 
 	@DecimalMin("0")
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getMinFractionDigits() {
 		if (_minFractionDigitsSupplier != null) {
 			minFractionDigits = _minFractionDigitsSupplier.get();
@@ -350,7 +350,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _minFractionDigitsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -395,7 +395,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPrimary() {
 		if (_primarySupplier != null) {
 			primary = _primarySupplier.get();
@@ -436,7 +436,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
-	@Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -477,7 +477,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
 	@Valid
 	public BigDecimal getRate() {
 		if (_rateSupplier != null) {
@@ -519,8 +519,8 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _rateSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "HALF_EVEN")
 	@JsonGetter("roundingMode")
-	@Schema(example = "HALF_EVEN")
 	@Valid
 	public RoundingMode getRoundingMode() {
 		if (_roundingModeSupplier != null) {
@@ -573,7 +573,7 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<RoundingMode> _roundingModeSupplier;
 
-	@Schema(example = "$")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "$")
 	public String getSymbol() {
 		if (_symbolSupplier != null) {
 			symbol = _symbolSupplier.get();
@@ -818,8 +818,8 @@ public class Currency implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Currency",
 		name = "x-class-name"
 	)

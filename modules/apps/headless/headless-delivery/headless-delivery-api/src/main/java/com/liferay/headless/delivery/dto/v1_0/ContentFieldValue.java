@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,9 @@ public class ContentFieldValue implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ContentFieldValue.class, json);
 	}
 
-	@Schema(description = "The field's content for simple types.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The field's content for simple types."
+	)
 	public String getData() {
 		if (_dataSupplier != null) {
 			data = _dataSupplier.get();
@@ -92,7 +92,9 @@ public class ContentFieldValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dataSupplier;
 
-	@Schema(description = "A content document element.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A content document element."
+	)
 	@Valid
 	public ContentDocument getDocument() {
 		if (_documentSupplier != null) {
@@ -134,7 +136,9 @@ public class ContentFieldValue implements Serializable {
 	@JsonIgnore
 	private Supplier<ContentDocument> _documentSupplier;
 
-	@Schema(description = "A point determined by latitude and longitude.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A point determined by latitude and longitude."
+	)
 	@Valid
 	public Geo getGeo() {
 		if (_geoSupplier != null) {
@@ -174,7 +178,7 @@ public class ContentFieldValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Geo> _geoSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A content document element that stores an image file."
 	)
 	@Valid
@@ -220,7 +224,9 @@ public class ContentFieldValue implements Serializable {
 	@JsonIgnore
 	private Supplier<ContentDocument> _imageSupplier;
 
-	@Schema(description = "A link to a page on the server.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A link to a page on the server."
+	)
 	public String getLink() {
 		if (_linkSupplier != null) {
 			link = _linkSupplier.get();
@@ -259,7 +265,9 @@ public class ContentFieldValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _linkSupplier;
 
-	@Schema(description = "A link to structured content on the server.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A link to structured content on the server."
+	)
 	@Valid
 	public StructuredContentLink getStructuredContentLink() {
 		if (_structuredContentLinkSupplier != null) {
@@ -304,7 +312,9 @@ public class ContentFieldValue implements Serializable {
 	@JsonIgnore
 	private Supplier<StructuredContentLink> _structuredContentLinkSupplier;
 
-	@Schema(description = "The field's visible value")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The field's visible value"
+	)
 	public String getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -474,8 +484,8 @@ public class ContentFieldValue implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ContentFieldValue",
 		name = "x-class-name"
 	)

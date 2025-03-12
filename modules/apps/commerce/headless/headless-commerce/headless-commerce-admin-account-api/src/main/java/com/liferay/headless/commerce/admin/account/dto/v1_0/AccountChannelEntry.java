@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class AccountChannelEntry implements Serializable {
 			AccountChannelEntry.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -96,7 +94,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -137,7 +135,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -180,7 +178,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -225,7 +223,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -266,7 +264,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClassExternalReferenceCode() {
 		if (_classExternalReferenceCodeSupplier != null) {
 			classExternalReferenceCode =
@@ -311,7 +309,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _classExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getClassPK() {
 		if (_classPKSupplier != null) {
 			classPK = _classPKSupplier.get();
@@ -352,7 +350,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -391,7 +389,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getOverrideEligibility() {
 		if (_overrideEligibilitySupplier != null) {
 			overrideEligibility = _overrideEligibilitySupplier.get();
@@ -432,7 +430,7 @@ public class AccountChannelEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _overrideEligibilitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -637,8 +635,8 @@ public class AccountChannelEntry implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelEntry",
 		name = "x-class-name"
 	)

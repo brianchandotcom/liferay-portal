@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class ClientExtension implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ClientExtension.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The configuration keys and values of the client extension."
 	)
 	@Valid
@@ -102,7 +100,9 @@ public class ClientExtension implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _clientExtensionConfigSupplier;
 
-	@Schema(description = "The client extension's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The client extension's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -205,8 +205,8 @@ public class ClientExtension implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ClientExtension",
 		name = "x-class-name"
 	)

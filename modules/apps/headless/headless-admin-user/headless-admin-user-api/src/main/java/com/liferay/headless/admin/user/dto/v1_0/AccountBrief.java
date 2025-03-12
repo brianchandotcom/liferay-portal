@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,9 @@ public class AccountBrief implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AccountBrief.class, json);
 	}
 
-	@Schema(description = "The account's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The account's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -94,7 +94,9 @@ public class AccountBrief implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The account's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The account's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -133,7 +135,9 @@ public class AccountBrief implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The account's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The account's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -172,7 +176,9 @@ public class AccountBrief implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "A list of the user's roles.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of the user's roles."
+	)
 	@Valid
 	public RoleBrief[] getRoleBriefs() {
 		if (_roleBriefsSupplier != null) {
@@ -312,8 +318,8 @@ public class AccountBrief implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.AccountBrief",
 		name = "x-class-name"
 	)

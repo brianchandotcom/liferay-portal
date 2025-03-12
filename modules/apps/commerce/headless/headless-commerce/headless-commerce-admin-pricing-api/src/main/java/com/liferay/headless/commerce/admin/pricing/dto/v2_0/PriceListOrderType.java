@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("PriceListOrderType")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"orderTypeId", "priceListId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"orderTypeId", "priceListId"})
 @XmlRootElement(name = "PriceListOrderType")
 public class PriceListOrderType implements Serializable {
 
@@ -53,7 +53,7 @@ public class PriceListOrderType implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceListOrderType.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,7 +96,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public OrderType getOrderType() {
 		if (_orderTypeSupplier != null) {
@@ -138,7 +138,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -184,7 +184,7 @@ public class PriceListOrderType implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -226,7 +226,7 @@ public class PriceListOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -272,7 +272,7 @@ public class PriceListOrderType implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -315,7 +315,7 @@ public class PriceListOrderType implements Serializable {
 	private Supplier<Long> _priceListIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getPriceListOrderTypeId() {
 		if (_priceListOrderTypeIdSupplier != null) {
 			priceListOrderTypeId = _priceListOrderTypeIdSupplier.get();
@@ -357,7 +357,7 @@ public class PriceListOrderType implements Serializable {
 	private Supplier<Long> _priceListOrderTypeIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
 	public Integer getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -536,8 +536,8 @@ public class PriceListOrderType implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListOrderType",
 		name = "x-class-name"
 	)

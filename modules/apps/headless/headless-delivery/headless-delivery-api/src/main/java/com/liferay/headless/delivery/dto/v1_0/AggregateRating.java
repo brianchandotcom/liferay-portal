@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class AggregateRating implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AggregateRating.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The highest possible rating (by default normalized to 1.0)."
 	)
 	public Double getBestRating() {
@@ -96,7 +94,9 @@ public class AggregateRating implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _bestRatingSupplier;
 
-	@Schema(description = "The average rating.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The average rating."
+	)
 	public Double getRatingAverage() {
 		if (_ratingAverageSupplier != null) {
 			ratingAverage = _ratingAverageSupplier.get();
@@ -137,7 +137,9 @@ public class AggregateRating implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _ratingAverageSupplier;
 
-	@Schema(description = "The number of ratings.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of ratings."
+	)
 	public Integer getRatingCount() {
 		if (_ratingCountSupplier != null) {
 			ratingCount = _ratingCountSupplier.get();
@@ -178,7 +180,9 @@ public class AggregateRating implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _ratingCountSupplier;
 
-	@Schema(description = "The rating value.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The rating value."
+	)
 	public Double getRatingValue() {
 		if (_ratingValueSupplier != null) {
 			ratingValue = _ratingValueSupplier.get();
@@ -219,7 +223,7 @@ public class AggregateRating implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _ratingValueSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The lowest possible rating (by default normalized to 0.0)."
 	)
 	public Double getWorstRating() {
@@ -356,8 +360,8 @@ public class AggregateRating implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.AggregateRating",
 		name = "x-class-name"
 	)

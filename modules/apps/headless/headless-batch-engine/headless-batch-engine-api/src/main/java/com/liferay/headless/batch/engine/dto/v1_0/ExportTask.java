@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -58,7 +56,7 @@ public class ExportTask implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ExportTask.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The item class name for which data will be exported in batch.",
 		example = "com.liferay.headless.delivery.dto.v1_0.BlogPosting"
 	)
@@ -104,7 +102,9 @@ public class ExportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
-	@Schema(description = "The file content type.", example = "JSON")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The file content type.", example = "JSON"
+	)
 	public String getContentType() {
 		if (_contentTypeSupplier != null) {
 			contentType = _contentTypeSupplier.get();
@@ -145,7 +145,7 @@ public class ExportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The end time of export task operation.",
 		example = "2019-27-09'T'08:33:33'Z'"
 	)
@@ -189,7 +189,7 @@ public class ExportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _endTimeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The error message in case of export task's failed execution.",
 		example = "File import failed"
 	)
@@ -235,11 +235,11 @@ public class ExportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
-	@JsonGetter("executeStatus")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The status of export task's execution.",
 		example = "INITIALIZED"
 	)
+	@JsonGetter("executeStatus")
 	@Valid
 	public ExecuteStatus getExecuteStatus() {
 		if (_executeStatusSupplier != null) {
@@ -292,7 +292,9 @@ public class ExportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<ExecuteStatus> _executeStatusSupplier;
 
-	@Schema(description = "The optional external key of this account.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The optional external key of this account."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -334,7 +336,9 @@ public class ExportTask implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(description = "The task's ID.", example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The task's ID.", example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -374,7 +378,7 @@ public class ExportTask implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Number of items processed by export task opeartion.",
 		example = "100"
 	)
@@ -420,7 +424,7 @@ public class ExportTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _processedItemsCountSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The start time of export task operation.",
 		example = "2019-27-09'T'08:23:33'Z'"
 	)
@@ -465,7 +469,7 @@ public class ExportTask implements Serializable {
 	private Supplier<Date> _startTimeSupplier;
 
 	@DecimalMin("0")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Total number of items that will be processed by export task operation.",
 		example = "1000"
 	)
@@ -694,8 +698,8 @@ public class ExportTask implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.batch.engine.dto.v1_0.ExportTask",
 		name = "x-class-name"
 	)

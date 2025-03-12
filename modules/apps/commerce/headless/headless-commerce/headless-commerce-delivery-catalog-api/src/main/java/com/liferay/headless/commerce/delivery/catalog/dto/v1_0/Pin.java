@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class Pin implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "33130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -91,7 +89,7 @@ public class Pin implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public MappedProduct getMappedProduct() {
 		if (_mappedProductSupplier != null) {
@@ -133,7 +131,7 @@ public class Pin implements Serializable {
 	@JsonIgnore
 	private Supplier<MappedProduct> _mappedProductSupplier;
 
-	@Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
 	public Double getPositionX() {
 		if (_positionXSupplier != null) {
 			positionX = _positionXSupplier.get();
@@ -174,7 +172,7 @@ public class Pin implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _positionXSupplier;
 
-	@Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
 	public Double getPositionY() {
 		if (_positionYSupplier != null) {
 			positionY = _positionYSupplier.get();
@@ -215,7 +213,7 @@ public class Pin implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _positionYSupplier;
 
-	@Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
 	public String getSequence() {
 		if (_sequenceSupplier != null) {
 			sequence = _sequenceSupplier.get();
@@ -352,8 +350,8 @@ public class Pin implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Pin",
 		name = "x-class-name"
 	)

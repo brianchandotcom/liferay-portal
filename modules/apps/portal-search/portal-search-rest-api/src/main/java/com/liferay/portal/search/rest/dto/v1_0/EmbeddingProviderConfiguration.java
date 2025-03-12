@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 			EmbeddingProviderConfiguration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getAttributes() {
 		if (_attributesSupplier != null) {
@@ -95,7 +93,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _attributesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getEmbeddingVectorDimensions() {
 		if (_embeddingVectorDimensionsSupplier != null) {
 			embeddingVectorDimensions =
@@ -140,7 +138,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _embeddingVectorDimensionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getLanguageIds() {
 		if (_languageIdsSupplier != null) {
 			languageIds = _languageIdsSupplier.get();
@@ -181,7 +179,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _languageIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getModelClassNames() {
 		if (_modelClassNamesSupplier != null) {
 			modelClassNames = _modelClassNamesSupplier.get();
@@ -222,7 +220,7 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _modelClassNamesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getProviderName() {
 		if (_providerNameSupplier != null) {
 			providerName = _providerNameSupplier.get();
@@ -400,8 +398,8 @@ public class EmbeddingProviderConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration",
 		name = "x-class-name"
 	)

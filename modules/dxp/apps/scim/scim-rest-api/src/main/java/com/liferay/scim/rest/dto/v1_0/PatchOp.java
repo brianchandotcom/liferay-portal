@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class PatchOp implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PatchOp.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Operation[] getOperations() {
 		if (_OperationsSupplier != null) {
@@ -92,7 +90,9 @@ public class PatchOp implements Serializable {
 	@JsonIgnore
 	private Supplier<Operation[]> _OperationsSupplier;
 
-	@Schema(description = "The schema associated to this operation.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The schema associated to this operation."
+	)
 	public String[] getSchemas() {
 		if (_schemasSupplier != null) {
 			schemas = _schemasSupplier.get();
@@ -213,8 +213,8 @@ public class PatchOp implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.scim.rest.dto.v1_0.PatchOp",
 		name = "x-class-name"
 	)

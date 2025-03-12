@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -57,7 +55,7 @@ public class OrderItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(OrderItem.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getCpDefinitionId() {
 		if (_cpDefinitionIdSupplier != null) {
 			cpDefinitionId = _cpDefinitionIdSupplier.get();
@@ -98,7 +96,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _cpDefinitionIdSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -139,7 +137,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -181,7 +179,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -223,7 +221,7 @@ public class OrderItem implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "200")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "200")
 	@Valid
 	public BigDecimal getFinalPrice() {
 		if (_finalPriceSupplier != null) {
@@ -266,7 +264,7 @@ public class OrderItem implements Serializable {
 	private Supplier<BigDecimal> _finalPriceSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -305,7 +303,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -346,7 +344,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -390,7 +388,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getOptions() {
 		if (_optionsSupplier != null) {
 			options = _optionsSupplier.get();
@@ -432,7 +430,7 @@ public class OrderItem implements Serializable {
 	private Supplier<String> _optionsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30128")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30128")
 	public Long getOrderId() {
 		if (_orderIdSupplier != null) {
 			orderId = _orderIdSupplier.get();
@@ -474,7 +472,7 @@ public class OrderItem implements Serializable {
 	private Supplier<Long> _orderIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30128")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30128")
 	public Long getParentOrderItemId() {
 		if (_parentOrderItemIdSupplier != null) {
 			parentOrderItemId = _parentOrderItemIdSupplier.get();
@@ -516,7 +514,7 @@ public class OrderItem implements Serializable {
 	private Supplier<Long> _parentOrderItemIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2")
 	public Integer getQuantity() {
 		if (_quantitySupplier != null) {
 			quantity = _quantitySupplier.get();
@@ -557,7 +555,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
-	@Schema(example = "12341234")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12341234")
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -596,7 +594,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getSubscription() {
 		if (_subscriptionSupplier != null) {
 			subscription = _subscriptionSupplier.get();
@@ -637,7 +635,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
-	@Schema(example = "pc")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "pc")
 	public String getUnitOfMeasure() {
 		if (_unitOfMeasureSupplier != null) {
 			unitOfMeasure = _unitOfMeasureSupplier.get();
@@ -679,7 +677,7 @@ public class OrderItem implements Serializable {
 	private Supplier<String> _unitOfMeasureSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "101")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "101")
 	@Valid
 	public BigDecimal getUnitPrice() {
 		if (_unitPriceSupplier != null) {
@@ -721,7 +719,7 @@ public class OrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _unitPriceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -1025,8 +1023,8 @@ public class OrderItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.OrderItem",
 		name = "x-class-name"
 	)

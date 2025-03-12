@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class AccountChannelShippingOption implements Serializable {
 			AccountChannelShippingOption.class, json);
 	}
 
-	@Schema(example = "UAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "UAB-34098-789-N")
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -99,7 +97,7 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -140,7 +138,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -183,7 +181,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -228,7 +226,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -270,7 +268,7 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<Long> _channelIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -310,7 +308,7 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getShippingMethodId() {
 		if (_shippingMethodIdSupplier != null) {
 			shippingMethodId = _shippingMethodIdSupplier.get();
@@ -351,7 +349,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shippingMethodIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingMethodKey() {
 		if (_shippingMethodKeySupplier != null) {
 			shippingMethodKey = _shippingMethodKeySupplier.get();
@@ -393,7 +391,7 @@ public class AccountChannelShippingOption implements Serializable {
 	private Supplier<String> _shippingMethodKeySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getShippingOptionId() {
 		if (_shippingOptionIdSupplier != null) {
 			shippingOptionId = _shippingOptionIdSupplier.get();
@@ -434,7 +432,7 @@ public class AccountChannelShippingOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shippingOptionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingOptionKey() {
 		if (_shippingOptionKeySupplier != null) {
 			shippingOptionKey = _shippingOptionKeySupplier.get();
@@ -645,8 +643,8 @@ public class AccountChannelShippingOption implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.AccountChannelShippingOption",
 		name = "x-class-name"
 	)

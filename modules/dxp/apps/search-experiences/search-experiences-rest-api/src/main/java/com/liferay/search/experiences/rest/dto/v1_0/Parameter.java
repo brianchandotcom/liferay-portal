@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,7 @@ public class Parameter implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Parameter.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getDefaultValue() {
 		if (_defaultValueSupplier != null) {
@@ -96,7 +94,7 @@ public class Parameter implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _defaultValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFormat() {
 		if (_formatSupplier != null) {
 			format = _formatSupplier.get();
@@ -137,7 +135,7 @@ public class Parameter implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _formatSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getMax() {
 		if (_maxSupplier != null) {
@@ -177,7 +175,7 @@ public class Parameter implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _maxSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getMin() {
 		if (_minSupplier != null) {
@@ -217,8 +215,8 @@ public class Parameter implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _minSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("type")
-	@Schema
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -400,8 +398,8 @@ public class Parameter implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Parameter",
 		name = "x-class-name"
 	)

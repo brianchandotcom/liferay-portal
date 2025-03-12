@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -55,7 +53,7 @@ public class NotificationQueueEntry implements Serializable {
 			NotificationQueueEntry.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -98,7 +96,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getBody() {
 		if (_bodySupplier != null) {
 			body = _bodySupplier.get();
@@ -137,7 +135,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _bodySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFromName() {
 		if (_fromNameSupplier != null) {
 			fromName = _fromNameSupplier.get();
@@ -178,7 +176,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fromNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -217,7 +215,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object[] getRecipients() {
 		if (_recipientsSupplier != null) {
@@ -259,7 +257,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Object[]> _recipientsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getRecipientsSummary() {
 		if (_recipientsSummarySupplier != null) {
 			recipientsSummary = _recipientsSummarySupplier.get();
@@ -300,7 +298,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _recipientsSummarySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getSentDate() {
 		if (_sentDateSupplier != null) {
 			sentDate = _sentDateSupplier.get();
@@ -341,7 +339,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _sentDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -382,7 +380,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSubject() {
 		if (_subjectSupplier != null) {
 			subject = _subjectSupplier.get();
@@ -423,7 +421,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _subjectSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTriggerBy() {
 		if (_triggerBySupplier != null) {
 			triggerBy = _triggerBySupplier.get();
@@ -464,7 +462,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _triggerBySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -503,7 +501,7 @@ public class NotificationQueueEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTypeLabel() {
 		if (_typeLabelSupplier != null) {
 			typeLabel = _typeLabelSupplier.get();
@@ -770,8 +768,8 @@ public class NotificationQueueEntry implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry",
 		name = "x-class-name"
 	)

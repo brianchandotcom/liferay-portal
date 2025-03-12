@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class PortalInstance implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PortalInstance.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -91,7 +89,7 @@ public class PortalInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The portal instance's administrator. This field is optional and is only used in the portal instance creation."
 	)
 	@Valid
@@ -135,7 +133,9 @@ public class PortalInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Admin> _adminSupplier;
 
-	@Schema(description = "internal unique key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "internal unique key."
+	)
 	public Long getCompanyId() {
 		if (_companyIdSupplier != null) {
 			companyId = _companyIdSupplier.get();
@@ -176,7 +176,9 @@ public class PortalInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _companyIdSupplier;
 
-	@Schema(description = "domain used for email authentication.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "domain used for email authentication."
+	)
 	public String getDomain() {
 		if (_domainSupplier != null) {
 			domain = _domainSupplier.get();
@@ -217,7 +219,7 @@ public class PortalInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _domainSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "public unique key (corresponds to company's webId field)"
 	)
 	public String getPortalInstanceId() {
@@ -262,7 +264,7 @@ public class PortalInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _portalInstanceIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSiteInitializerKey() {
 		if (_siteInitializerKeySupplier != null) {
 			siteInitializerKey = _siteInitializerKeySupplier.get();
@@ -303,7 +305,7 @@ public class PortalInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _siteInitializerKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getVirtualHost() {
 		if (_virtualHostSupplier != null) {
 			virtualHost = _virtualHostSupplier.get();
@@ -476,8 +478,8 @@ public class PortalInstance implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.portal.instances.dto.v1_0.PortalInstance",
 		name = "x-class-name"
 	)

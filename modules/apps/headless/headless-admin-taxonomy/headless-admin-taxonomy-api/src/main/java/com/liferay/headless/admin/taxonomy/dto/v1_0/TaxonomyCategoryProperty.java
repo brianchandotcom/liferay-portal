@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,11 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Key value pair to associate detailed information with a category.",
 	value = "TaxonomyCategoryProperty"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Key value pair to associate detailed information with a category.",
 	requiredProperties = {"key"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TaxonomyCategoryProperty")
 public class TaxonomyCategoryProperty implements Serializable {
 
@@ -58,7 +56,9 @@ public class TaxonomyCategoryProperty implements Serializable {
 			TaxonomyCategoryProperty.class, json);
 	}
 
-	@Schema(description = "The taxonomy category's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The taxonomy category's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -101,7 +101,9 @@ public class TaxonomyCategoryProperty implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The taxonomy category property's key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The taxonomy category property's key."
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -141,7 +143,9 @@ public class TaxonomyCategoryProperty implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(description = "The taxonomy category property's value.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The taxonomy category property's value."
+	)
 	public String getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -263,8 +267,8 @@ public class TaxonomyCategoryProperty implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty",
 		name = "x-class-name"
 	)

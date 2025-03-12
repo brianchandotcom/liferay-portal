@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,7 @@ public class MappedProduct implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(MappedProduct.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -97,7 +95,7 @@ public class MappedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -140,7 +138,7 @@ public class MappedProduct implements Serializable {
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "33130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -179,7 +177,7 @@ public class MappedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -225,7 +223,7 @@ public class MappedProduct implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "33131")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33131")
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -266,7 +264,7 @@ public class MappedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -312,7 +310,7 @@ public class MappedProduct implements Serializable {
 	private Supplier<Map<String, String>> _productNameSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
 	public Integer getQuantity() {
 		if (_quantitySupplier != null) {
 			quantity = _quantitySupplier.get();
@@ -353,7 +351,7 @@ public class MappedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
-	@Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
 	public String getSequence() {
 		if (_sequenceSupplier != null) {
 			sequence = _sequenceSupplier.get();
@@ -394,7 +392,7 @@ public class MappedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sequenceSupplier;
 
-	@Schema(example = "SKU01")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "SKU01")
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -433,7 +431,7 @@ public class MappedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@Schema(example = "SKU0111")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "SKU0111")
 	public String getSkuExternalReferenceCode() {
 		if (_skuExternalReferenceCodeSupplier != null) {
 			skuExternalReferenceCode = _skuExternalReferenceCodeSupplier.get();
@@ -476,7 +474,7 @@ public class MappedProduct implements Serializable {
 	private Supplier<String> _skuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "33135")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33135")
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -515,8 +513,8 @@ public class MappedProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "sku")
 	@JsonGetter("type")
-	@Schema(example = "sku")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -773,8 +771,8 @@ public class MappedProduct implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,9 @@ public class FragmentImageClassPKReference implements Serializable {
 			FragmentImageClassPKReference.class, json);
 	}
 
-	@Schema(description = "A map of class primary key references.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A map of class primary key references."
+	)
 	@Valid
 	public Map<String, ClassPKReference> getClassPKReferences() {
 		if (_classPKReferencesSupplier != null) {
@@ -100,7 +100,9 @@ public class FragmentImageClassPKReference implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ClassPKReference>> _classPKReferencesSupplier;
 
-	@Schema(description = "The fragment image's configuration.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment image's configuration."
+	)
 	@Valid
 	public FragmentImageConfiguration getFragmentImageConfiguration() {
 		if (_fragmentImageConfigurationSupplier != null) {
@@ -207,8 +209,8 @@ public class FragmentImageClassPKReference implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentImageClassPKReference",
 		name = "x-class-name"
 	)

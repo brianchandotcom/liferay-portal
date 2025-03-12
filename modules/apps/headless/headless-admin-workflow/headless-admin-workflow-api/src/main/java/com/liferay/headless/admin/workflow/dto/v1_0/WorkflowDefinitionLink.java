@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -49,7 +47,7 @@ public class WorkflowDefinitionLink implements Serializable {
 			WorkflowDefinitionLink.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClassName() {
 		if (_classNameSupplier != null) {
 			className = _classNameSupplier.get();
@@ -90,7 +88,7 @@ public class WorkflowDefinitionLink implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -131,7 +129,7 @@ public class WorkflowDefinitionLink implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getGroupExternalReferenceCode() {
 		if (_groupExternalReferenceCodeSupplier != null) {
 			groupExternalReferenceCode =
@@ -176,7 +174,7 @@ public class WorkflowDefinitionLink implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _groupExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getGroupId() {
 		if (_groupIdSupplier != null) {
 			groupId = _groupIdSupplier.get();
@@ -217,7 +215,7 @@ public class WorkflowDefinitionLink implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _groupIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -256,7 +254,9 @@ public class WorkflowDefinitionLink implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The name of the instance's workflow definition.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The name of the instance's workflow definition."
+	)
 	public String getWorkflowDefinitionName() {
 		if (_workflowDefinitionNameSupplier != null) {
 			workflowDefinitionName = _workflowDefinitionNameSupplier.get();
@@ -300,7 +300,7 @@ public class WorkflowDefinitionLink implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _workflowDefinitionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getWorkflowDefinitionVersion() {
 		if (_workflowDefinitionVersionSupplier != null) {
 			workflowDefinitionVersion =
@@ -478,8 +478,8 @@ public class WorkflowDefinitionLink implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinitionLink",
 		name = "x-class-name"
 	)

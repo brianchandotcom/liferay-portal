@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class Role implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Role.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of languages for which the role has a translation."
 	)
 	public String[] getAvailableLanguages() {
@@ -102,7 +100,9 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
-	@Schema(description = "The role's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The role's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -144,7 +144,9 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The role's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The role's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -185,7 +187,7 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time any of the role's fields were changed."
 	)
 	public Date getDateModified() {
@@ -230,7 +232,9 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The role's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The role's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -271,7 +275,7 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		if (_description_i18nSupplier != null) {
@@ -314,7 +318,7 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema(description = "The role's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The role's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -353,7 +357,9 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The role's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The role's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -392,7 +398,7 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -435,7 +441,9 @@ public class Role implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema(description = "The role's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The role's type."
+	)
 	public String getRoleType() {
 		if (_roleTypeSupplier != null) {
 			roleType = _roleTypeSupplier.get();
@@ -665,8 +673,8 @@ public class Role implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.Role",
 		name = "x-class-name"
 	)

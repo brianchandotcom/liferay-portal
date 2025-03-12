@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Rescore implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Rescore.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getQuery() {
 		if (_querySupplier != null) {
@@ -93,7 +91,7 @@ public class Rescore implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _querySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getQueryWeight() {
 		if (_queryWeightSupplier != null) {
@@ -135,7 +133,7 @@ public class Rescore implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _queryWeightSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getRescoreQueryWeight() {
 		if (_rescoreQueryWeightSupplier != null) {
@@ -177,7 +175,7 @@ public class Rescore implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _rescoreQueryWeightSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getScoreMode() {
 		if (_scoreModeSupplier != null) {
 			scoreMode = _scoreModeSupplier.get();
@@ -218,7 +216,7 @@ public class Rescore implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _scoreModeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getWindowSize() {
 		if (_windowSizeSupplier != null) {
@@ -400,8 +398,8 @@ public class Rescore implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Rescore",
 		name = "x-class-name"
 	)

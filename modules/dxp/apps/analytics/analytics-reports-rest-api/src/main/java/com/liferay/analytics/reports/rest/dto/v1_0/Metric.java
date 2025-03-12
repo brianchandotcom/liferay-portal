@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Metric implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Metric.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMetricType() {
 		if (_metricTypeSupplier != null) {
 			metricType = _metricTypeSupplier.get();
@@ -91,7 +89,7 @@ public class Metric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _metricTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getPreviousValue() {
 		if (_previousValueSupplier != null) {
 			previousValue = _previousValueSupplier.get();
@@ -132,7 +130,7 @@ public class Metric implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _previousValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPreviousValueKey() {
 		if (_previousValueKeySupplier != null) {
 			previousValueKey = _previousValueKeySupplier.get();
@@ -173,7 +171,7 @@ public class Metric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _previousValueKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Trend getTrend() {
 		if (_trendSupplier != null) {
@@ -213,7 +211,7 @@ public class Metric implements Serializable {
 	@JsonIgnore
 	private Supplier<Trend> _trendSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -254,7 +252,7 @@ public class Metric implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _valueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getValueKey() {
 		if (_valueKeySupplier != null) {
 			valueKey = _valueKeySupplier.get();
@@ -411,8 +409,8 @@ public class Metric implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.reports.rest.dto.v1_0.Metric",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Idp implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Idp.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAuthnRequestSignatureRequired() {
 		if (_authnRequestSignatureRequiredSupplier != null) {
 			authnRequestSignatureRequired =
@@ -96,7 +94,7 @@ public class Idp implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _authnRequestSignatureRequiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getDefaultAssertionLifetime() {
 		if (_defaultAssertionLifetimeSupplier != null) {
 			defaultAssertionLifetime = _defaultAssertionLifetimeSupplier.get();
@@ -138,7 +136,7 @@ public class Idp implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _defaultAssertionLifetimeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSessionMaximumAge() {
 		if (_sessionMaximumAgeSupplier != null) {
 			sessionMaximumAge = _sessionMaximumAgeSupplier.get();
@@ -179,7 +177,7 @@ public class Idp implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _sessionMaximumAgeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSessionTimeout() {
 		if (_sessionTimeoutSupplier != null) {
 			sessionTimeout = _sessionTimeoutSupplier.get();
@@ -301,8 +299,8 @@ public class Idp implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.saml.admin.rest.dto.v1_0.Idp",
 		name = "x-class-name"
 	)

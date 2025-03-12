@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Country")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"a2", "a3", "name", "number"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"a2", "a3", "name", "number"})
 @XmlRootElement(name = "Country")
 public class Country implements Serializable {
 
@@ -53,7 +53,7 @@ public class Country implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Country.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getA2() {
 		if (_a2Supplier != null) {
 			a2 = _a2Supplier.get();
@@ -93,7 +93,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _a2Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getA3() {
 		if (_a3Supplier != null) {
 			a3 = _a3Supplier.get();
@@ -133,7 +133,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _a3Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -174,7 +174,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getBillingAllowed() {
 		if (_billingAllowedSupplier != null) {
 			billingAllowed = _billingAllowedSupplier.get();
@@ -215,7 +215,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _billingAllowedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getGroupFilterEnabled() {
 		if (_groupFilterEnabledSupplier != null) {
 			groupFilterEnabled = _groupFilterEnabledSupplier.get();
@@ -256,7 +256,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _groupFilterEnabledSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -295,7 +295,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getIdd() {
 		if (_iddSupplier != null) {
 			idd = _iddSupplier.get();
@@ -334,7 +334,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _iddSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -374,7 +374,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getNumber() {
 		if (_numberSupplier != null) {
 			number = _numberSupplier.get();
@@ -416,7 +416,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getPosition() {
 		if (_positionSupplier != null) {
 			position = _positionSupplier.get();
@@ -457,7 +457,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _positionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Region[] getRegions() {
 		if (_regionsSupplier != null) {
@@ -499,7 +499,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Region[]> _regionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShippingAllowed() {
 		if (_shippingAllowedSupplier != null) {
 			shippingAllowed = _shippingAllowedSupplier.get();
@@ -540,7 +540,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _shippingAllowedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSubjectToVAT() {
 		if (_subjectToVATSupplier != null) {
 			subjectToVAT = _subjectToVATSupplier.get();
@@ -581,7 +581,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _subjectToVATSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getTitle_i18n() {
 		if (_title_i18nSupplier != null) {
@@ -624,7 +624,7 @@ public class Country implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getZipRequired() {
 		if (_zipRequiredSupplier != null) {
 			zipRequired = _zipRequiredSupplier.get();
@@ -899,8 +899,8 @@ public class Country implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.address.dto.v1_0.Country",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("PriceListChannel")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"channelId", "priceListId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"channelId", "priceListId"})
 @XmlRootElement(name = "PriceListChannel")
 public class PriceListChannel implements Serializable {
 
@@ -53,7 +53,7 @@ public class PriceListChannel implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceListChannel.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,7 +96,7 @@ public class PriceListChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Channel getChannel() {
 		if (_channelSupplier != null) {
@@ -138,7 +138,7 @@ public class PriceListChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -184,7 +184,7 @@ public class PriceListChannel implements Serializable {
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -227,7 +227,7 @@ public class PriceListChannel implements Serializable {
 	private Supplier<Long> _channelIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
 	public Integer getOrder() {
 		if (_orderSupplier != null) {
 			order = _orderSupplier.get();
@@ -269,7 +269,7 @@ public class PriceListChannel implements Serializable {
 	private Supplier<Integer> _orderSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getPriceListChannelId() {
 		if (_priceListChannelIdSupplier != null) {
 			priceListChannelId = _priceListChannelIdSupplier.get();
@@ -310,7 +310,7 @@ public class PriceListChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _priceListChannelIdSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -356,7 +356,7 @@ public class PriceListChannel implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -535,8 +535,8 @@ public class PriceListChannel implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListChannel",
 		name = "x-class-name"
 	)

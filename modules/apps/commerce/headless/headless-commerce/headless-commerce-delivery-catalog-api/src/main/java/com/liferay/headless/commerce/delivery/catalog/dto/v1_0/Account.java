@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -47,8 +45,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Account")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"name"})
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
 
@@ -60,7 +58,7 @@ public class Account implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Account.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -103,7 +101,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -145,7 +143,9 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "The account's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The account's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -186,7 +186,9 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The account's most recent modification date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The account's most recent modification date."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -228,7 +230,7 @@ public class Account implements Serializable {
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "10130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10130")
 	public Long getDefaultBillingAddressId() {
 		if (_defaultBillingAddressIdSupplier != null) {
 			defaultBillingAddressId = _defaultBillingAddressIdSupplier.get();
@@ -270,7 +272,7 @@ public class Account implements Serializable {
 	private Supplier<Long> _defaultBillingAddressIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "10131")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10131")
 	public Long getDefaultShippingAddressId() {
 		if (_defaultShippingAddressIdSupplier != null) {
 			defaultShippingAddressId = _defaultShippingAddressIdSupplier.get();
@@ -312,7 +314,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _defaultShippingAddressIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -353,7 +355,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getDomains() {
 		if (_domainsSupplier != null) {
 			domains = _domainsSupplier.get();
@@ -394,7 +396,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _domainsSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -436,7 +438,7 @@ public class Account implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -476,7 +478,7 @@ public class Account implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20078")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20078")
 	public Long getLogoId() {
 		if (_logoIdSupplier != null) {
 			logoId = _logoIdSupplier.get();
@@ -517,7 +519,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _logoIdSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getLogoURL() {
 		if (_logoURLSupplier != null) {
 			logoURL = _logoURLSupplier.get();
@@ -558,7 +560,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _logoURLSupplier;
 
-	@Schema(example = "Account Name")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Account Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -598,7 +600,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getOrganizationIds() {
 		if (_organizationIdsSupplier != null) {
 			organizationIds = _organizationIdsSupplier.get();
@@ -639,7 +641,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _organizationIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -680,7 +682,7 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
-	@Schema(example = "Abcd1234")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Abcd1234")
 	public String getTaxId() {
 		if (_taxIdSupplier != null) {
 			taxId = _taxIdSupplier.get();
@@ -721,8 +723,8 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _taxIdSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("type")
-	@Schema
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -1078,8 +1080,8 @@ public class Account implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Account",
 		name = "x-class-name"
 	)

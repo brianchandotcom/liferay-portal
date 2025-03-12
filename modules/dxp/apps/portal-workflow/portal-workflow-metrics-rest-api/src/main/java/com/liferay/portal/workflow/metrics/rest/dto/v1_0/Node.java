@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -52,7 +50,7 @@ public class Node implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Node.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -93,7 +91,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -134,7 +132,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -173,7 +171,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getInitial() {
 		if (_initialSupplier != null) {
 			initial = _initialSupplier.get();
@@ -214,7 +212,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _initialSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -255,7 +253,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -294,7 +292,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProcessId() {
 		if (_processIdSupplier != null) {
 			processId = _processIdSupplier.get();
@@ -335,7 +333,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getProcessVersion() {
 		if (_processVersionSupplier != null) {
 			processVersion = _processVersionSupplier.get();
@@ -376,7 +374,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _processVersionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getTerminal() {
 		if (_terminalSupplier != null) {
 			terminal = _terminalSupplier.get();
@@ -417,7 +415,7 @@ public class Node implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _terminalSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -635,8 +633,8 @@ public class Node implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node",
 		name = "x-class-name"
 	)

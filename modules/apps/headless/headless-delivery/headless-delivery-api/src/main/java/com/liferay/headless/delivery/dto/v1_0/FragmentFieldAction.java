@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,7 @@ public class FragmentFieldAction implements Serializable {
 			FragmentFieldAction.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment field's action. Must be mapped to an external value."
 	)
 	@Valid
@@ -101,7 +99,7 @@ public class FragmentFieldAction implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _actionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The action execution result in case the action fails."
 	)
 	@Valid
@@ -148,7 +146,7 @@ public class FragmentFieldAction implements Serializable {
 	@JsonIgnore
 	private Supplier<ActionExecutionResult> _onErrorSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The action execution result in case the action succeeds."
 	)
 	@Valid
@@ -195,7 +193,9 @@ public class FragmentFieldAction implements Serializable {
 	@JsonIgnore
 	private Supplier<ActionExecutionResult> _onSuccessSupplier;
 
-	@Schema(description = "The fragment field's text.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment field's text."
+	)
 	@Valid
 	public Object getText() {
 		if (_textSupplier != null) {
@@ -335,8 +335,8 @@ public class FragmentFieldAction implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldAction",
 		name = "x-class-name"
 	)

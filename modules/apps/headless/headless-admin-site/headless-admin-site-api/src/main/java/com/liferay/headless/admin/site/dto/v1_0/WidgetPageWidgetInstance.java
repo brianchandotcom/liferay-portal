@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,9 @@ public class WidgetPageWidgetInstance implements Serializable {
 			WidgetPageWidgetInstance.class, json);
 	}
 
-	@Schema(description = "The external reference code of the widget instance.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The external reference code of the widget instance."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -98,7 +98,7 @@ public class WidgetPageWidgetInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The section's ID of the widget page or the nested application widget instance this widget belongs to."
 	)
 	public String getParentSectionId() {
@@ -143,7 +143,7 @@ public class WidgetPageWidgetInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _parentSectionIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external reference code of the parent widget instance. Only available if this widget instance is within a nested applications widget instance."
 	)
 	public String getParentWidgetInstanceExternalReferenceCode() {
@@ -195,7 +195,7 @@ public class WidgetPageWidgetInstance implements Serializable {
 	private Supplier<String> _parentWidgetInstanceExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The 0-based position this widget instance occupies with respect to its siblings (0 for first child, 1 for second child, ...). If not specified when creating a widget instance the widget instance will be added at the last valid position."
 	)
 	public Integer getPosition() {
@@ -240,7 +240,7 @@ public class WidgetPageWidgetInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _positionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The configuration keys and values of the widget instance."
 	)
 	@Valid
@@ -287,7 +287,9 @@ public class WidgetPageWidgetInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _widgetConfigSupplier;
 
-	@Schema(description = "The widget instance's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The widget instance's ID."
+	)
 	public String getWidgetInstanceId() {
 		if (_widgetInstanceIdSupplier != null) {
 			widgetInstanceId = _widgetInstanceIdSupplier.get();
@@ -328,7 +330,9 @@ public class WidgetPageWidgetInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _widgetInstanceIdSupplier;
 
-	@Schema(description = "The widget instance's look and feel configuration.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The widget instance's look and feel configuration."
+	)
 	@Valid
 	public WidgetLookAndFeelConfig[] getWidgetLookAndFeelConfig() {
 		if (_widgetLookAndFeelConfigSupplier != null) {
@@ -376,7 +380,9 @@ public class WidgetPageWidgetInstance implements Serializable {
 	private Supplier<WidgetLookAndFeelConfig[]>
 		_widgetLookAndFeelConfigSupplier;
 
-	@Schema(description = "The widget instance's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The widget instance's name."
+	)
 	public String getWidgetName() {
 		if (_widgetNameSupplier != null) {
 			widgetName = _widgetNameSupplier.get();
@@ -417,7 +423,9 @@ public class WidgetPageWidgetInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _widgetNameSupplier;
 
-	@Schema(description = "The widget instance's permissions.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The widget instance's permissions."
+	)
 	@Valid
 	public WidgetPermission[] getWidgetPermissions() {
 		if (_widgetPermissionsSupplier != null) {
@@ -643,8 +651,8 @@ public class WidgetPageWidgetInstance implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance",
 		name = "x-class-name"
 	)

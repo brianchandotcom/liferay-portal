@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Sp implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Sp.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAllowShowingTheLoginPortlet() {
 		if (_allowShowingTheLoginPortletSupplier != null) {
 			allowShowingTheLoginPortlet =
@@ -96,7 +94,7 @@ public class Sp implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _allowShowingTheLoginPortletSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAssertionSignatureRequired() {
 		if (_assertionSignatureRequiredSupplier != null) {
 			assertionSignatureRequired =
@@ -141,7 +139,7 @@ public class Sp implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _assertionSignatureRequiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getClockSkew() {
 		if (_clockSkewSupplier != null) {
 			clockSkew = _clockSkewSupplier.get();
@@ -182,7 +180,7 @@ public class Sp implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _clockSkewSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getKeyStoreEncryptionCredentialPassword() {
 		if (_keyStoreEncryptionCredentialPasswordSupplier != null) {
 			keyStoreEncryptionCredentialPassword =
@@ -228,7 +226,7 @@ public class Sp implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keyStoreEncryptionCredentialPasswordSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getLdapImportEnabled() {
 		if (_ldapImportEnabledSupplier != null) {
 			ldapImportEnabled = _ldapImportEnabledSupplier.get();
@@ -269,7 +267,7 @@ public class Sp implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _ldapImportEnabledSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSignAuthnRequest() {
 		if (_signAuthnRequestSupplier != null) {
 			signAuthnRequest = _signAuthnRequestSupplier.get();
@@ -419,8 +417,8 @@ public class Sp implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.saml.admin.rest.dto.v1_0.Sp",
 		name = "x-class-name"
 	)

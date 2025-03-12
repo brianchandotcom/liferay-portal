@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -56,7 +54,7 @@ public class FragmentLinkValue implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FragmentLinkValue.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
 	)
 	@Valid
@@ -100,10 +98,10 @@ public class FragmentLinkValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _hrefSupplier;
 
-	@JsonGetter("target")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment link value's target (blank, parent, self, top)."
 	)
+	@JsonGetter("target")
 	@Valid
 	public Target getTarget() {
 		if (_targetSupplier != null) {
@@ -228,8 +226,8 @@ public class FragmentLinkValue implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue",
 		name = "x-class-name"
 	)

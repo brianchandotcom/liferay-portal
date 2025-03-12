@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Condition implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Condition.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Condition[] getAllConditions() {
 		if (_allConditionsSupplier != null) {
@@ -92,7 +90,7 @@ public class Condition implements Serializable {
 	@JsonIgnore
 	private Supplier<Condition[]> _allConditionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Condition[] getAnyConditions() {
 		if (_anyConditionsSupplier != null) {
@@ -134,7 +132,7 @@ public class Condition implements Serializable {
 	@JsonIgnore
 	private Supplier<Condition[]> _anyConditionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Contains getContains() {
 		if (_containsSupplier != null) {
@@ -176,7 +174,7 @@ public class Condition implements Serializable {
 	@JsonIgnore
 	private Supplier<Contains> _containsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Equals getEquals() {
 		if (_equalsSupplier != null) {
@@ -218,7 +216,7 @@ public class Condition implements Serializable {
 	@JsonIgnore
 	private Supplier<Equals> _equalsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Exists getExists() {
 		if (_existsSupplier != null) {
@@ -260,7 +258,7 @@ public class Condition implements Serializable {
 	@JsonIgnore
 	private Supplier<Exists> _existsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public In getIn() {
 		if (_inSupplier != null) {
@@ -300,7 +298,7 @@ public class Condition implements Serializable {
 	@JsonIgnore
 	private Supplier<In> _inSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Condition getNot() {
 		if (_notSupplier != null) {
@@ -340,7 +338,7 @@ public class Condition implements Serializable {
 	@JsonIgnore
 	private Supplier<Condition> _notSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Range getRange() {
 		if (_rangeSupplier != null) {
@@ -528,8 +526,8 @@ public class Condition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Condition",
 		name = "x-class-name"
 	)

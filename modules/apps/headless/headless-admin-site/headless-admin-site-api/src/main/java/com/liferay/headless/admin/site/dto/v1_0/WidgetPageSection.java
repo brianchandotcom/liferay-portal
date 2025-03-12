@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class WidgetPageSection implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(WidgetPageSection.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the widget page section is customizable or not."
 	)
 	public Boolean getCustomizable() {
@@ -97,7 +95,9 @@ public class WidgetPageSection implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _customizableSupplier;
 
-	@Schema(description = "The widget page section's id.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The widget page section's id."
+	)
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -136,7 +136,7 @@ public class WidgetPageSection implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the widget instances within this page section."
 	)
 	@Valid
@@ -270,8 +270,8 @@ public class WidgetPageSection implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection",
 		name = "x-class-name"
 	)

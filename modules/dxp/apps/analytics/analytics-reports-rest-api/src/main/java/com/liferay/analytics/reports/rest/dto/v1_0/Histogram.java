@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Histogram implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Histogram.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMetricName() {
 		if (_metricNameSupplier != null) {
 			metricName = _metricNameSupplier.get();
@@ -91,7 +89,7 @@ public class Histogram implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _metricNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Metric[] getMetrics() {
 		if (_metricsSupplier != null) {
@@ -133,7 +131,7 @@ public class Histogram implements Serializable {
 	@JsonIgnore
 	private Supplier<Metric[]> _metricsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getTotal() {
 		if (_totalSupplier != null) {
 			total = _totalSupplier.get();
@@ -174,7 +172,7 @@ public class Histogram implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _totalSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getTotalValue() {
 		if (_totalValueSupplier != null) {
 			totalValue = _totalValueSupplier.get();
@@ -309,8 +307,8 @@ public class Histogram implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.reports.rest.dto.v1_0.Histogram",
 		name = "x-class-name"
 	)

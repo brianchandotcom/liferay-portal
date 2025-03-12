@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a object entry folder that contains objects entries and other object entry folders.",
 	value = "ObjectEntryFolder"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a object entry folder that contains objects entries and other object entry folders.",
 	requiredProperties = {"name"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ObjectEntryFolder")
 public class ObjectEntryFolder implements Serializable {
 
@@ -65,7 +63,7 @@ public class ObjectEntryFolder implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectEntryFolder.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -112,7 +110,7 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The key of the asset library to which the object entry folder is scoped."
 	)
 	public String getAssetLibraryKey() {
@@ -157,7 +155,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
-	@Schema(description = "The object entry folder's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -199,7 +199,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The object entry folder's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -240,7 +242,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time a field of the folder changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time a field of the folder changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -281,7 +285,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The object entry folder's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -324,7 +330,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The object entry folder's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -363,7 +371,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The object entry folder's label.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's label."
+	)
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -404,7 +414,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema(description = "The localized object entry folder's label.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized object entry folder's label."
+	)
 	@Valid
 	public Map<String, String> getLabel_i18n() {
 		if (_label_i18nSupplier != null) {
@@ -447,7 +459,9 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _label_i18nSupplier;
 
-	@Schema(description = "The object entry folder's main title/name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's main title/name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -487,7 +501,7 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of object entries in this object entry folder."
 	)
 	public Integer getNumberOfObjectEntries() {
@@ -533,7 +547,7 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfObjectEntriesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of this object entry folder's child object entry folders."
 	)
 	public Integer getNumberOfObjectEntryFolders() {
@@ -582,7 +596,7 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfObjectEntryFoldersSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the object entry folder's parent, if it exists."
 	)
 	public Long getParentObjectEntryFolderId() {
@@ -629,10 +643,10 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentObjectEntryFolderIdSupplier;
 
-	@JsonGetter("viewableBy")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only property that specifies the object entry folder's default permissions."
 	)
+	@JsonGetter("viewableBy")
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -918,8 +932,8 @@ public class ObjectEntryFolder implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,11 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "A reference specifying the class name.",
 	value = "ClassNameReference"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "A reference specifying the class name.",
 	requiredProperties = {"className"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ClassNameReference")
 public class ClassNameReference
 	extends CollectionReference implements Serializable {
@@ -58,7 +56,7 @@ public class ClassNameReference
 		return ObjectMapperUtil.unsafeReadValue(ClassNameReference.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClassName() {
 		if (_classNameSupplier != null) {
 			className = _classNameSupplier.get();
@@ -164,8 +162,8 @@ public class ClassNameReference
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ClassNameReference",
 		name = "x-class-name"
 	)

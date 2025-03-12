@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Catalog")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"name"})
 @XmlRootElement(name = "Catalog")
 public class Catalog implements Serializable {
 
@@ -54,7 +52,7 @@ public class Catalog implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -95,7 +93,7 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -138,7 +136,7 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
 	public String getCurrencyCode() {
 		if (_currencyCodeSupplier != null) {
 			currencyCode = _currencyCodeSupplier.get();
@@ -179,7 +177,7 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getCurrencyExternalReferenceCode() {
 		if (_currencyExternalReferenceCodeSupplier != null) {
 			currencyExternalReferenceCode =
@@ -225,7 +223,7 @@ public class Catalog implements Serializable {
 	private Supplier<String> _currencyExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getCurrencyId() {
 		if (_currencyIdSupplier != null) {
 			currencyId = _currencyIdSupplier.get();
@@ -266,7 +264,7 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _currencyIdSupplier;
 
-	@Schema(example = "en_US")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "en_US")
 	public String getDefaultLanguageId() {
 		if (_defaultLanguageIdSupplier != null) {
 			defaultLanguageId = _defaultLanguageIdSupplier.get();
@@ -307,7 +305,7 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _defaultLanguageIdSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -349,7 +347,7 @@ public class Catalog implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -388,7 +386,7 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "Category Name")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "Category Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -428,7 +426,7 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "false")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "false")
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -642,8 +640,8 @@ public class Catalog implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -38,8 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Captcha")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"token"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"token"})
 @XmlRootElement(name = "Captcha")
 public class Captcha implements Serializable {
 
@@ -51,7 +49,7 @@ public class Captcha implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Captcha.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAnswer() {
 		if (_answerSupplier != null) {
 			answer = _answerSupplier.get();
@@ -92,7 +90,7 @@ public class Captcha implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _answerSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getImage() {
 		if (_imageSupplier != null) {
 			image = _imageSupplier.get();
@@ -133,7 +131,7 @@ public class Captcha implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getToken() {
 		if (_tokenSupplier != null) {
 			token = _tokenSupplier.get();
@@ -255,8 +253,8 @@ public class Captcha implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.captcha.rest.dto.v1_0.Captcha",
 		name = "x-class-name"
 	)

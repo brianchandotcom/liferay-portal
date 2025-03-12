@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class ObjectLayoutBox implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectLayoutBox.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getCollapsable() {
 		if (_collapsableSupplier != null) {
 			collapsable = _collapsableSupplier.get();
@@ -94,7 +92,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _collapsableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -133,7 +131,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName() {
 		if (_nameSupplier != null) {
@@ -175,7 +173,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ObjectLayoutRow[] getObjectLayoutRows() {
 		if (_objectLayoutRowsSupplier != null) {
@@ -218,7 +216,7 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectLayoutRow[]> _objectLayoutRowsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -259,8 +257,8 @@ public class ObjectLayoutBox implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("type")
-	@Schema
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -429,8 +427,8 @@ public class ObjectLayoutBox implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutBox",
 		name = "x-class-name"
 	)

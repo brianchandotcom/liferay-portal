@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class WikiPageAttachment implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(WikiPageAttachment.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -100,7 +98,9 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "The file's relative URL.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The file's relative URL."
+	)
 	public String getContentUrl() {
 		if (_contentUrlSupplier != null) {
 			contentUrl = _contentUrlSupplier.get();
@@ -141,7 +141,7 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Optional field with the content of the document in Base64, can be embedded with nestedFields."
 	)
 	public String getContentValue() {
@@ -186,7 +186,7 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The file's media format (e.g., application/pdf, etc.)."
 	)
 	public String getEncodingFormat() {
@@ -231,7 +231,7 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -272,7 +272,9 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The file's extension.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The file's extension."
+	)
 	public String getFileExtension() {
 		if (_fileExtensionSupplier != null) {
 			fileExtension = _fileExtensionSupplier.get();
@@ -313,7 +315,7 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fileExtensionSupplier;
 
-	@Schema(description = "The file's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The file's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -352,7 +354,9 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The file's size in bytes.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The file's size in bytes."
+	)
 	public Long getSizeInBytes() {
 		if (_sizeInBytesSupplier != null) {
 			sizeInBytes = _sizeInBytesSupplier.get();
@@ -393,7 +397,9 @@ public class WikiPageAttachment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _sizeInBytesSupplier;
 
-	@Schema(description = "The file's title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The file's title."
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -598,8 +604,8 @@ public class WikiPageAttachment implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment",
 		name = "x-class-name"
 	)

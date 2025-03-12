@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class FieldMapping implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FieldMapping.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Float getBoost() {
 		if (_boostSupplier != null) {
@@ -90,7 +88,7 @@ public class FieldMapping implements Serializable {
 	@JsonIgnore
 	private Supplier<Float> _boostSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getField() {
 		if (_fieldSupplier != null) {
 			field = _fieldSupplier.get();
@@ -131,7 +129,7 @@ public class FieldMapping implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fieldSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLocale() {
 		if (_localeSupplier != null) {
 			locale = _localeSupplier.get();
@@ -248,8 +246,8 @@ public class FieldMapping implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.FieldMapping",
 		name = "x-class-name"
 	)

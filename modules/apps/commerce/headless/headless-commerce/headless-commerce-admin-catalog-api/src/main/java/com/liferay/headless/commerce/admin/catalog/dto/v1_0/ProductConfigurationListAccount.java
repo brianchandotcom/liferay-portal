@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ProductConfigurationListAccount")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"accountId", "productConfigurationListId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"accountId", "productConfigurationListId"})
 @XmlRootElement(name = "ProductConfigurationListAccount")
 public class ProductConfigurationListAccount implements Serializable {
 
@@ -55,7 +55,7 @@ public class ProductConfigurationListAccount implements Serializable {
 			ProductConfigurationListAccount.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Account getAccount() {
 		if (_accountSupplier != null) {
@@ -97,7 +97,7 @@ public class ProductConfigurationListAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Account> _accountSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -143,7 +143,7 @@ public class ProductConfigurationListAccount implements Serializable {
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -185,7 +185,7 @@ public class ProductConfigurationListAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -229,7 +229,7 @@ public class ProductConfigurationListAccount implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getProductConfigurationListAccountId() {
 		if (_productConfigurationListAccountIdSupplier != null) {
 			productConfigurationListAccountId =
@@ -275,7 +275,7 @@ public class ProductConfigurationListAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productConfigurationListAccountIdSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getProductConfigurationListExternalReferenceCode() {
 		if (_productConfigurationListExternalReferenceCodeSupplier != null) {
 			productConfigurationListExternalReferenceCode =
@@ -324,7 +324,7 @@ public class ProductConfigurationListAccount implements Serializable {
 		_productConfigurationListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getProductConfigurationListId() {
 		if (_productConfigurationListIdSupplier != null) {
 			productConfigurationListId =
@@ -496,8 +496,8 @@ public class ProductConfigurationListAccount implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationListAccount",
 		name = "x-class-name"
 	)

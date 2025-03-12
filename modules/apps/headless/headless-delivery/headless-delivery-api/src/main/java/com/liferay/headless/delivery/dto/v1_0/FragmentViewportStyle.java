@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,9 @@ public class FragmentViewportStyle implements Serializable {
 			FragmentViewportStyle.class, json);
 	}
 
-	@Schema(description = "The fragment viewport's background color.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's background color."
+	)
 	public String getBackgroundColor() {
 		if (_backgroundColorSupplier != null) {
 			backgroundColor = _backgroundColorSupplier.get();
@@ -93,7 +93,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _backgroundColorSupplier;
 
-	@Schema(description = "The fragment viewport's border color.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's border color."
+	)
 	public String getBorderColor() {
 		if (_borderColorSupplier != null) {
 			borderColor = _borderColorSupplier.get();
@@ -134,7 +136,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _borderColorSupplier;
 
-	@Schema(description = "The fragment viewport's background radius.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's background radius."
+	)
 	public String getBorderRadius() {
 		if (_borderRadiusSupplier != null) {
 			borderRadius = _borderRadiusSupplier.get();
@@ -175,7 +179,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _borderRadiusSupplier;
 
-	@Schema(description = "The fragment viewport's border width.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's border width."
+	)
 	public String getBorderWidth() {
 		if (_borderWidthSupplier != null) {
 			borderWidth = _borderWidthSupplier.get();
@@ -216,7 +222,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _borderWidthSupplier;
 
-	@Schema(description = "The fragment viewport's font family.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's font family."
+	)
 	public String getFontFamily() {
 		if (_fontFamilySupplier != null) {
 			fontFamily = _fontFamilySupplier.get();
@@ -257,7 +265,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fontFamilySupplier;
 
-	@Schema(description = "The fragment viewport's font size.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's font size."
+	)
 	public String getFontSize() {
 		if (_fontSizeSupplier != null) {
 			fontSize = _fontSizeSupplier.get();
@@ -298,7 +308,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fontSizeSupplier;
 
-	@Schema(description = "The fragment viewport's font weight.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's font weight."
+	)
 	public String getFontWeight() {
 		if (_fontWeightSupplier != null) {
 			fontWeight = _fontWeightSupplier.get();
@@ -339,7 +351,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fontWeightSupplier;
 
-	@Schema(description = "The fragment viewport's height.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's height."
+	)
 	public String getHeight() {
 		if (_heightSupplier != null) {
 			height = _heightSupplier.get();
@@ -380,7 +394,7 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _heightSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Specifies if the fragment's viewport is hidden to the user."
 	)
 	public Boolean getHidden() {
@@ -425,7 +439,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _hiddenSupplier;
 
-	@Schema(description = "The fragment viewport's margin bottom.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's margin bottom."
+	)
 	public String getMarginBottom() {
 		if (_marginBottomSupplier != null) {
 			marginBottom = _marginBottomSupplier.get();
@@ -466,7 +482,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginBottomSupplier;
 
-	@Schema(description = "The fragment viewport's margin left.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's margin left."
+	)
 	public String getMarginLeft() {
 		if (_marginLeftSupplier != null) {
 			marginLeft = _marginLeftSupplier.get();
@@ -507,7 +525,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginLeftSupplier;
 
-	@Schema(description = "The fragment viewport's margin right.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's margin right."
+	)
 	public String getMarginRight() {
 		if (_marginRightSupplier != null) {
 			marginRight = _marginRightSupplier.get();
@@ -548,7 +568,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginRightSupplier;
 
-	@Schema(description = "The fragment viewport's margin top.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's margin top."
+	)
 	public String getMarginTop() {
 		if (_marginTopSupplier != null) {
 			marginTop = _marginTopSupplier.get();
@@ -589,7 +611,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _marginTopSupplier;
 
-	@Schema(description = "The fragment viewport's max height.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's max height."
+	)
 	public String getMaxHeight() {
 		if (_maxHeightSupplier != null) {
 			maxHeight = _maxHeightSupplier.get();
@@ -630,7 +654,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _maxHeightSupplier;
 
-	@Schema(description = "The fragment viewport's max width.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's max width."
+	)
 	public String getMaxWidth() {
 		if (_maxWidthSupplier != null) {
 			maxWidth = _maxWidthSupplier.get();
@@ -671,7 +697,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _maxWidthSupplier;
 
-	@Schema(description = "The fragment viewport's min height.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's min height."
+	)
 	public String getMinHeight() {
 		if (_minHeightSupplier != null) {
 			minHeight = _minHeightSupplier.get();
@@ -712,7 +740,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _minHeightSupplier;
 
-	@Schema(description = "The fragment viewport's min width.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's min width."
+	)
 	public String getMinWidth() {
 		if (_minWidthSupplier != null) {
 			minWidth = _minWidthSupplier.get();
@@ -753,7 +783,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _minWidthSupplier;
 
-	@Schema(description = "The fragment viewport's opacity.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's opacity."
+	)
 	public String getOpacity() {
 		if (_opacitySupplier != null) {
 			opacity = _opacitySupplier.get();
@@ -794,7 +826,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _opacitySupplier;
 
-	@Schema(description = "The fragment viewport's overflow behavior.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's overflow behavior."
+	)
 	public String getOverflow() {
 		if (_overflowSupplier != null) {
 			overflow = _overflowSupplier.get();
@@ -835,7 +869,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _overflowSupplier;
 
-	@Schema(description = "The fragment viewport's padding bottom.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's padding bottom."
+	)
 	public String getPaddingBottom() {
 		if (_paddingBottomSupplier != null) {
 			paddingBottom = _paddingBottomSupplier.get();
@@ -876,7 +912,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paddingBottomSupplier;
 
-	@Schema(description = "The fragment viewport's padding left.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's padding left."
+	)
 	public String getPaddingLeft() {
 		if (_paddingLeftSupplier != null) {
 			paddingLeft = _paddingLeftSupplier.get();
@@ -917,7 +955,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paddingLeftSupplier;
 
-	@Schema(description = "The fragment viewport's padding right.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's padding right."
+	)
 	public String getPaddingRight() {
 		if (_paddingRightSupplier != null) {
 			paddingRight = _paddingRightSupplier.get();
@@ -958,7 +998,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paddingRightSupplier;
 
-	@Schema(description = "The fragment viewport's padding top.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's padding top."
+	)
 	public String getPaddingTop() {
 		if (_paddingTopSupplier != null) {
 			paddingTop = _paddingTopSupplier.get();
@@ -999,7 +1041,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paddingTopSupplier;
 
-	@Schema(description = "The fragment viewport's shadow effect.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's shadow effect."
+	)
 	public String getShadow() {
 		if (_shadowSupplier != null) {
 			shadow = _shadowSupplier.get();
@@ -1040,7 +1084,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shadowSupplier;
 
-	@Schema(description = "The fragment viewport's text align.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's text align."
+	)
 	public String getTextAlign() {
 		if (_textAlignSupplier != null) {
 			textAlign = _textAlignSupplier.get();
@@ -1081,7 +1127,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _textAlignSupplier;
 
-	@Schema(description = "The fragment viewport's text color.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's text color."
+	)
 	public String getTextColor() {
 		if (_textColorSupplier != null) {
 			textColor = _textColorSupplier.get();
@@ -1122,7 +1170,9 @@ public class FragmentViewportStyle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _textColorSupplier;
 
-	@Schema(description = "The fragment viewport's width.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewport's width."
+	)
 	public String getWidth() {
 		if (_widthSupplier != null) {
 			width = _widthSupplier.get();
@@ -1624,8 +1674,8 @@ public class FragmentViewportStyle implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentViewportStyle",
 		name = "x-class-name"
 	)

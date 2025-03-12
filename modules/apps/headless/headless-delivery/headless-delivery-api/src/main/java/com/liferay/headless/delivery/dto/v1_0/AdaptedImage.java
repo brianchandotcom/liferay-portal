@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,9 @@ public class AdaptedImage implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AdaptedImage.class, json);
 	}
 
-	@Schema(description = "The image's relative URL.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The image's relative URL."
+	)
 	public String getContentUrl() {
 		if (_contentUrlSupplier != null) {
 			contentUrl = _contentUrlSupplier.get();
@@ -92,7 +92,7 @@ public class AdaptedImage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Optional field with the content of the image in Base64, can be embedded with nestedFields."
 	)
 	public String getContentValue() {
@@ -137,7 +137,9 @@ public class AdaptedImage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
-	@Schema(description = "The image's height in pixels.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The image's height in pixels."
+	)
 	public Integer getHeight() {
 		if (_heightSupplier != null) {
 			height = _heightSupplier.get();
@@ -178,7 +180,7 @@ public class AdaptedImage implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _heightSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The name of the image's Adaptive Media image resolution."
 	)
 	public String getResolutionName() {
@@ -223,7 +225,9 @@ public class AdaptedImage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _resolutionNameSupplier;
 
-	@Schema(description = "The image's size in bytes.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The image's size in bytes."
+	)
 	public Long getSizeInBytes() {
 		if (_sizeInBytesSupplier != null) {
 			sizeInBytes = _sizeInBytesSupplier.get();
@@ -264,7 +268,9 @@ public class AdaptedImage implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _sizeInBytesSupplier;
 
-	@Schema(description = "The image's width in pixels.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The image's width in pixels."
+	)
 	public Integer getWidth() {
 		if (_widthSupplier != null) {
 			width = _widthSupplier.get();
@@ -421,8 +427,8 @@ public class AdaptedImage implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.AdaptedImage",
 		name = "x-class-name"
 	)

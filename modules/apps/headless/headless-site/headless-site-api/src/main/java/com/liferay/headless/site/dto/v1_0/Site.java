@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -42,11 +40,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(description = "Represents the site being created.", value = "Site")
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents the site being created.",
 	requiredProperties = {"name"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Site")
 public class Site implements Serializable {
 
@@ -58,7 +56,9 @@ public class Site implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Site.class, json);
 	}
 
-	@Schema(description = "The site's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The site's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -99,7 +99,7 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFriendlyUrlPath() {
 		if (_friendlyUrlPathSupplier != null) {
 			friendlyUrlPath = _friendlyUrlPathSupplier.get();
@@ -140,7 +140,7 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -179,7 +179,7 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -218,8 +218,10 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The default value is open."
+	)
 	@JsonGetter("membershipType")
-	@Schema(description = "The default value is open.")
 	@Valid
 	public MembershipType getMembershipType() {
 		if (_membershipTypeSupplier != null) {
@@ -273,7 +275,7 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<MembershipType> _membershipTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -313,7 +315,7 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getParentSiteKey() {
 		if (_parentSiteKeySupplier != null) {
 			parentSiteKey = _parentSiteKeySupplier.get();
@@ -354,7 +356,7 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _parentSiteKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTemplateKey() {
 		if (_templateKeySupplier != null) {
 			templateKey = _templateKeySupplier.get();
@@ -395,8 +397,8 @@ public class Site implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _templateKeySupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("templateType")
-	@Schema
 	@Valid
 	public TemplateType getTemplateType() {
 		if (_templateTypeSupplier != null) {
@@ -621,8 +623,8 @@ public class Site implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.site.dto.v1_0.Site",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class AssigneeMetric implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AssigneeMetric.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Assignee getAssignee() {
 		if (_assigneeSupplier != null) {
@@ -94,7 +92,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Assignee> _assigneeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDurationTaskAvg() {
 		if (_durationTaskAvgSupplier != null) {
 			durationTaskAvg = _durationTaskAvgSupplier.get();
@@ -135,7 +133,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _durationTaskAvgSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getOnTimeTaskCount() {
 		if (_onTimeTaskCountSupplier != null) {
 			onTimeTaskCount = _onTimeTaskCountSupplier.get();
@@ -176,7 +174,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _onTimeTaskCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getOverdueTaskCount() {
 		if (_overdueTaskCountSupplier != null) {
 			overdueTaskCount = _overdueTaskCountSupplier.get();
@@ -217,7 +215,7 @@ public class AssigneeMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _overdueTaskCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTaskCount() {
 		if (_taskCountSupplier != null) {
 			taskCount = _taskCountSupplier.get();
@@ -350,8 +348,8 @@ public class AssigneeMetric implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric",
 		name = "x-class-name"
 	)

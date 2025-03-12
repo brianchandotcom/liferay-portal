@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -46,8 +44,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Sku")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"sku"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"sku"})
 @XmlRootElement(name = "Sku")
 public class Sku implements Serializable {
 
@@ -60,7 +58,7 @@ public class Sku implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "101")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "101")
 	@Valid
 	public BigDecimal getCost() {
 		if (_costSupplier != null) {
@@ -102,7 +100,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _costSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDiscontinued() {
 		if (_discontinuedSupplier != null) {
 			discontinued = _discontinuedSupplier.get();
@@ -143,7 +141,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _discontinuedSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -184,7 +182,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -225,7 +223,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -266,7 +264,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(example = "12341234")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12341234")
 	public String getGtin() {
 		if (_gtinSupplier != null) {
 			gtin = _gtinSupplier.get();
@@ -306,7 +304,7 @@ public class Sku implements Serializable {
 	private Supplier<String> _gtinSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -345,7 +343,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "12341234")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12341234")
 	public String getManufacturerPartNumber() {
 		if (_manufacturerPartNumberSupplier != null) {
 			manufacturerPartNumber = _manufacturerPartNumberSupplier.get();
@@ -387,7 +385,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _manufacturerPartNumberSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPublished() {
 		if (_publishedSupplier != null) {
 			published = _publishedSupplier.get();
@@ -428,7 +426,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _publishedSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPurchasable() {
 		if (_purchasableSupplier != null) {
 			purchasable = _purchasableSupplier.get();
@@ -469,7 +467,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _purchasableSupplier;
 
-	@Schema(example = "12341234")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12341234")
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -700,8 +698,8 @@ public class Sku implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.Sku",
 		name = "x-class-name"
 	)

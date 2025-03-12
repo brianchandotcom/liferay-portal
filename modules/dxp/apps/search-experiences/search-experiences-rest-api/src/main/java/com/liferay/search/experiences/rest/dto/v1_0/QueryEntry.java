@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class QueryEntry implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(QueryEntry.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Clause[] getClauses() {
 		if (_clausesSupplier != null) {
@@ -92,7 +90,7 @@ public class QueryEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Clause[]> _clausesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Condition getCondition() {
 		if (_conditionSupplier != null) {
@@ -134,7 +132,7 @@ public class QueryEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Condition> _conditionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEnabled() {
 		if (_enabledSupplier != null) {
 			enabled = _enabledSupplier.get();
@@ -175,7 +173,7 @@ public class QueryEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _enabledSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Clause[] getPostFilterClauses() {
 		if (_postFilterClausesSupplier != null) {
@@ -217,7 +215,7 @@ public class QueryEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Clause[]> _postFilterClausesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Rescore[] getRescores() {
 		if (_rescoresSupplier != null) {
@@ -381,8 +379,8 @@ public class QueryEntry implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.QueryEntry",
 		name = "x-class-name"
 	)

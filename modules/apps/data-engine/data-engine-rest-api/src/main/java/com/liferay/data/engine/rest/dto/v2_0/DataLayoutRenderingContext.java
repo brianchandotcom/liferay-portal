@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class DataLayoutRenderingContext implements Serializable {
 			DataLayoutRenderingContext.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getContainerId() {
 		if (_containerIdSupplier != null) {
 			containerId = _containerIdSupplier.get();
@@ -93,7 +91,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _containerIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getDataRecordValues() {
 		if (_dataRecordValuesSupplier != null) {
@@ -136,7 +134,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _dataRecordValuesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getNamespace() {
 		if (_namespaceSupplier != null) {
 			namespace = _namespaceSupplier.get();
@@ -177,7 +175,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _namespaceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPathThemeImages() {
 		if (_pathThemeImagesSupplier != null) {
 			pathThemeImages = _pathThemeImagesSupplier.get();
@@ -218,7 +216,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _pathThemeImagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getReadOnly() {
 		if (_readOnlySupplier != null) {
 			readOnly = _readOnlySupplier.get();
@@ -259,7 +257,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getScopeGroupId() {
 		if (_scopeGroupIdSupplier != null) {
 			scopeGroupId = _scopeGroupIdSupplier.get();
@@ -300,7 +298,7 @@ public class DataLayoutRenderingContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _scopeGroupIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteGroupId() {
 		if (_siteGroupIdSupplier != null) {
 			siteGroupId = _siteGroupIdSupplier.get();
@@ -471,8 +469,8 @@ public class DataLayoutRenderingContext implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataLayoutRenderingContext",
 		name = "x-class-name"
 	)

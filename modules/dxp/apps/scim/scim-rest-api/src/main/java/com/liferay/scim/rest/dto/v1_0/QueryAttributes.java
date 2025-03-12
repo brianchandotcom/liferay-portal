@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class QueryAttributes implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(QueryAttributes.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A multi-valued list of strings indicating the names of resource attributes to return in the response, overriding the set of attributes that would be returned by default."
 	)
 	public String[] getAttributes() {
@@ -93,7 +91,7 @@ public class QueryAttributes implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _attributesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "An integer indicating the desired maximum number of query results per page."
 	)
 	public Integer getCount() {
@@ -138,7 +136,7 @@ public class QueryAttributes implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _countSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A multi-valued list of strings indicating the names of resource attributes to be removed from the default set of attributes to return."
 	)
 	public String[] getExcludedAttributes() {
@@ -183,7 +181,7 @@ public class QueryAttributes implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _excludedAttributesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The filter string used to request a subset of resources."
 	)
 	public String getFilter() {
@@ -228,7 +226,7 @@ public class QueryAttributes implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _filterSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A string indicating the attribute whose value SHALL be used to order the returned responses."
 	)
 	public String getSortBy() {
@@ -273,7 +271,7 @@ public class QueryAttributes implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sortBySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A string indicating the order in which the \"sortBy\" parameter is applied."
 	)
 	public String getSortOrder() {
@@ -318,7 +316,7 @@ public class QueryAttributes implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sortOrderSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "An integer indicating the 1-based index of the first query result."
 	)
 	public Integer getStartIndex() {
@@ -519,8 +517,8 @@ public class QueryAttributes implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.scim.rest.dto.v1_0.QueryAttributes",
 		name = "x-class-name"
 	)

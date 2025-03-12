@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -55,7 +53,7 @@ public class Meta implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Meta.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The \"DateTime\" that the resource was added to the service provider."
 	)
 	public Date getCreated() {
@@ -100,7 +98,7 @@ public class Meta implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The most recent DateTime that the details of this resource were updated at the service provider."
 	)
 	public Date getLastModified() {
@@ -145,7 +143,9 @@ public class Meta implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _lastModifiedSupplier;
 
-	@Schema(description = "The URI of the resource being returned.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The URI of the resource being returned."
+	)
 	public String getLocation() {
 		if (_locationSupplier != null) {
 			location = _locationSupplier.get();
@@ -186,7 +186,9 @@ public class Meta implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _locationSupplier;
 
-	@Schema(description = "The name of the resource type of the resource.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The name of the resource type of the resource."
+	)
 	public String getResourceType() {
 		if (_resourceTypeSupplier != null) {
 			resourceType = _resourceTypeSupplier.get();
@@ -229,7 +231,9 @@ public class Meta implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _resourceTypeSupplier;
 
-	@Schema(description = "The version of the resource being returned.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The version of the resource being returned."
+	)
 	public String getVersion() {
 		if (_versionSupplier != null) {
 			version = _versionSupplier.get();
@@ -385,8 +389,8 @@ public class Meta implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.scim.rest.dto.v1_0.Meta",
 		name = "x-class-name"
 	)

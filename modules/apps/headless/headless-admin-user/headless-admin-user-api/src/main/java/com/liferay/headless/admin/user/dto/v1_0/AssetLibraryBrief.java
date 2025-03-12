@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,9 @@ public class AssetLibraryBrief implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AssetLibraryBrief.class, json);
 	}
 
-	@Schema(description = "The asset library's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -89,7 +89,9 @@ public class AssetLibraryBrief implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The asset library's group ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's group ID."
+	)
 	public Long getGroupId() {
 		if (_groupIdSupplier != null) {
 			groupId = _groupIdSupplier.get();
@@ -130,7 +132,9 @@ public class AssetLibraryBrief implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _groupIdSupplier;
 
-	@Schema(description = "The asset library's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -245,8 +249,8 @@ public class AssetLibraryBrief implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.AssetLibraryBrief",
 		name = "x-class-name"
 	)

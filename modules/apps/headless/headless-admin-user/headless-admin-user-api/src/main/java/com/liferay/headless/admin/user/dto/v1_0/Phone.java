@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,9 @@ public class Phone implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Phone.class, json);
 	}
 
-	@Schema(description = "The phone number's extension.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The phone number's extension."
+	)
 	public String getExtension() {
 		if (_extensionSupplier != null) {
 			extension = _extensionSupplier.get();
@@ -92,7 +92,9 @@ public class Phone implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _extensionSupplier;
 
-	@Schema(description = "The phone number's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The phone number's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -133,7 +135,9 @@ public class Phone implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The phone number's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The phone number's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -172,7 +176,9 @@ public class Phone implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The phone number without its extension.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The phone number without its extension."
+	)
 	public String getPhoneNumber() {
 		if (_phoneNumberSupplier != null) {
 			phoneNumber = _phoneNumberSupplier.get();
@@ -213,7 +219,9 @@ public class Phone implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
-	@Schema(description = "The phone number's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The phone number's type."
+	)
 	public String getPhoneType() {
 		if (_phoneTypeSupplier != null) {
 			phoneType = _phoneTypeSupplier.get();
@@ -254,7 +262,7 @@ public class Phone implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _phoneTypeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that identifies whether this is the main phone number of the user/organization."
 	)
 	public Boolean getPrimary() {
@@ -419,8 +427,8 @@ public class Phone implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Phone",
 		name = "x-class-name"
 	)

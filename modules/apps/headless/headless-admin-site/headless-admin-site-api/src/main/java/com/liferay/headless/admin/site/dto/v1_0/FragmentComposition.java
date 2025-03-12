@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -59,7 +57,7 @@ public class FragmentComposition implements Serializable {
 			FragmentComposition.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment composition's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -105,7 +103,9 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The page's creator external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's creator external reference code."
+	)
 	public String getCreatorExternalReferenceCode() {
 		if (_creatorExternalReferenceCodeSupplier != null) {
 			creatorExternalReferenceCode =
@@ -150,7 +150,9 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorExternalReferenceCodeSupplier;
 
-	@Schema(description = "The structured content's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The structured content's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -191,7 +193,7 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time any field of the structured content was changed."
 	)
 	public Date getDateModified() {
@@ -236,7 +238,7 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The structured content's most recent publication date."
 	)
 	public Date getDatePublished() {
@@ -281,7 +283,9 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(description = "The description of this fragment composition.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The description of this fragment composition."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -322,7 +326,7 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external reference code of this fragment composition."
 	)
 	public String getExternalReferenceCode() {
@@ -367,7 +371,7 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external reference code of the fragment set this fragment composition belongs to."
 	)
 	public String getFragmentSetExternalReferenceCode() {
@@ -417,7 +421,9 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fragmentSetExternalReferenceCodeSupplier;
 
-	@Schema(description = "The fragment composition's key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment composition's key."
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -456,7 +462,9 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(description = "The fragment composition's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment composition's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -495,7 +503,7 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment composition's page element, whose definition must be of type PageSectionDefinition."
 	)
 	@Valid
@@ -541,7 +549,9 @@ public class FragmentComposition implements Serializable {
 	@JsonIgnore
 	private Supplier<PageElement> _pageElementSupplier;
 
-	@Schema(description = "The fragment composition's thumbnail.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment composition's thumbnail."
+	)
 	@Valid
 	public ItemExternalReference getThumbnail() {
 		if (_thumbnailSupplier != null) {
@@ -800,8 +810,8 @@ public class FragmentComposition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentComposition",
 		name = "x-class-name"
 	)

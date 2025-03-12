@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("AccountAddressChannel")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"addressChannelId", "addressId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"addressChannelId", "addressId"})
 @XmlRootElement(name = "AccountAddressChannel")
 public class AccountAddressChannel implements Serializable {
 
@@ -55,7 +55,7 @@ public class AccountAddressChannel implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getAccountAddressChannelId() {
 		if (_accountAddressChannelIdSupplier != null) {
 			accountAddressChannelId = _accountAddressChannelIdSupplier.get();
@@ -96,7 +96,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountAddressChannelIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -139,7 +139,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getAddressChannelExternalReferenceCode() {
 		if (_addressChannelExternalReferenceCodeSupplier != null) {
 			addressChannelExternalReferenceCode =
@@ -186,7 +186,7 @@ public class AccountAddressChannel implements Serializable {
 	private Supplier<String> _addressChannelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAddressChannelId() {
 		if (_addressChannelIdSupplier != null) {
 			addressChannelId = _addressChannelIdSupplier.get();
@@ -228,7 +228,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _addressChannelIdSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getAddressExternalReferenceCode() {
 		if (_addressExternalReferenceCodeSupplier != null) {
 			addressExternalReferenceCode =
@@ -274,7 +274,7 @@ public class AccountAddressChannel implements Serializable {
 	private Supplier<String> _addressExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getAddressId() {
 		if (_addressIdSupplier != null) {
 			addressId = _addressIdSupplier.get();
@@ -316,7 +316,7 @@ public class AccountAddressChannel implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _addressIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Channel getChannel() {
 		if (_channelSupplier != null) {
@@ -484,8 +484,8 @@ public class AccountAddressChannel implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.channel.dto.v1_0.AccountAddressChannel",
 		name = "x-class-name"
 	)

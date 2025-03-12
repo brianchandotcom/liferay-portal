@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -60,7 +58,7 @@ public class DisplayPageTemplateFolder implements Serializable {
 			DisplayPageTemplateFolder.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template folder's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -106,7 +104,7 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template folder's creator external reference code."
 	)
 	public String getCreatorExternalReferenceCode() {
@@ -155,7 +153,9 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorExternalReferenceCodeSupplier;
 
-	@Schema(description = "The display page template folder's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template folder's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -198,7 +198,7 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time any field of the display page template folder was changed."
 	)
 	public Date getDateModified() {
@@ -243,7 +243,9 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The display page template folder's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template folder's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -286,7 +288,7 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template folder's external reference code."
 	)
 	public String getExternalReferenceCode() {
@@ -331,7 +333,9 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The display page template folder's key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template folder's key."
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -370,7 +374,9 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(description = "The display page template folder's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template folder's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -409,7 +415,7 @@ public class DisplayPageTemplateFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The parent display page template folder's external reference code."
 	)
 	public String getParentDisplayPageTemplateFolderExternalReferenceCode() {
@@ -465,7 +471,7 @@ public class DisplayPageTemplateFolder implements Serializable {
 	private Supplier<String>
 		_parentDisplayPageTemplateFolderExternalReferenceCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A valid external identifier to reference this page template folder."
 	)
 	public String getUuid() {
@@ -703,8 +709,8 @@ public class DisplayPageTemplateFolder implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder",
 		name = "x-class-name"
 	)

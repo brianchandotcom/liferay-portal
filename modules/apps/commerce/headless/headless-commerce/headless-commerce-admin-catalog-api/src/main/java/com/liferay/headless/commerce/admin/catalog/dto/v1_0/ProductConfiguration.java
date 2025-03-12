@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -57,7 +55,7 @@ public class ProductConfiguration implements Serializable {
 			ProductConfiguration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -100,7 +98,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getAllowBackOrder() {
 		if (_allowBackOrderSupplier != null) {
 			allowBackOrder = _allowBackOrderSupplier.get();
@@ -141,7 +139,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _allowBackOrderSupplier;
 
-	@Schema(example = "[10, 20, 30, 40]")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "[10, 20, 30, 40]")
 	@Valid
 	public BigDecimal[] getAllowedOrderQuantities() {
 		if (_allowedOrderQuantitiesSupplier != null) {
@@ -185,7 +183,7 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<BigDecimal[]> _allowedOrderQuantitiesSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getAvailabilityEstimateId() {
 		if (_availabilityEstimateIdSupplier != null) {
 			availabilityEstimateId = _availabilityEstimateIdSupplier.get();
@@ -226,7 +224,9 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _availabilityEstimateIdSupplier;
 
-	@Schema(example = "{en_US=3-5 Days, it_IT=3-5 Giorni}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=3-5 Days, it_IT=3-5 Giorni}"
+	)
 	@Valid
 	public Map<String, String> getAvailabilityEstimateName() {
 		if (_availabilityEstimateNameSupplier != null) {
@@ -271,7 +271,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _availabilityEstimateNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getDifferences() {
 		if (_differencesSupplier != null) {
 			differences = _differencesSupplier.get();
@@ -312,7 +312,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _differencesSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getDisplayAvailability() {
 		if (_displayAvailabilitySupplier != null) {
 			displayAvailability = _displayAvailabilitySupplier.get();
@@ -353,7 +353,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _displayAvailabilitySupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getDisplayStockQuantity() {
 		if (_displayStockQuantitySupplier != null) {
 			displayStockQuantity = _displayStockQuantitySupplier.get();
@@ -394,7 +394,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _displayStockQuantitySupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getEntityExternalReferenceCode() {
 		if (_entityExternalReferenceCodeSupplier != null) {
 			entityExternalReferenceCode =
@@ -440,7 +440,7 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<String> _entityExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getEntityId() {
 		if (_entityIdSupplier != null) {
 			entityId = _entityIdSupplier.get();
@@ -481,7 +481,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _entityIdSupplier;
 
-	@Schema(example = "ABS Sensor")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "ABS Sensor")
 	public String getEntityName() {
 		if (_entityNameSupplier != null) {
 			entityName = _entityNameSupplier.get();
@@ -522,8 +522,8 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _entityNameSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "product")
 	@JsonGetter("entityType")
-	@Schema(example = "product")
 	@Valid
 	public EntityType getEntityType() {
 		if (_entityTypeSupplier != null) {
@@ -576,7 +576,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<EntityType> _entityTypeSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -618,7 +618,7 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -657,7 +657,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The inventory engine that will be used to manage the product inventory"
 	)
 	public String getInventoryEngine() {
@@ -702,7 +702,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _inventoryEngineSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The low stock action that will be performed when a product is out of stock"
 	)
 	public String getLowStockAction() {
@@ -747,7 +747,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _lowStockActionSupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getMaxOrderQuantity() {
 		if (_maxOrderQuantitySupplier != null) {
@@ -789,7 +789,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _maxOrderQuantitySupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getMinOrderQuantity() {
 		if (_minOrderQuantitySupplier != null) {
@@ -831,7 +831,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _minOrderQuantitySupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getMinStockQuantity() {
 		if (_minStockQuantitySupplier != null) {
@@ -873,7 +873,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _minStockQuantitySupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getMultipleOrderQuantity() {
 		if (_multipleOrderQuantitySupplier != null) {
@@ -916,7 +916,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _multipleOrderQuantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductShippingConfiguration getProductShippingConfiguration() {
 		if (_productShippingConfigurationSupplier != null) {
@@ -963,7 +963,7 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<ProductShippingConfiguration>
 		_productShippingConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductTaxConfiguration getProductTaxConfiguration() {
 		if (_productTaxConfigurationSupplier != null) {
@@ -1008,7 +1008,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductTaxConfiguration> _productTaxConfigurationSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPurchasable() {
 		if (_purchasableSupplier != null) {
 			purchasable = _purchasableSupplier.get();
@@ -1049,7 +1049,7 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _purchasableSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getVisible() {
 		if (_visibleSupplier != null) {
 			visible = _visibleSupplier.get();
@@ -1462,8 +1462,8 @@ public class ProductConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration",
 		name = "x-class-name"
 	)

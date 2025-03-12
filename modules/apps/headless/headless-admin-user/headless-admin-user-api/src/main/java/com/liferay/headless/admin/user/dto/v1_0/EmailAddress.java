@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,9 @@ public class EmailAddress implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(EmailAddress.class, json);
 	}
 
-	@Schema(description = "The email address.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The email address."
+	)
 	public String getEmailAddress() {
 		if (_emailAddressSupplier != null) {
 			emailAddress = _emailAddressSupplier.get();
@@ -92,7 +92,7 @@ public class EmailAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The email address's external reference code.",
 		example = "AB-34098-789-N"
 	)
@@ -136,7 +136,9 @@ public class EmailAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The email address's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The email address's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -175,7 +177,7 @@ public class EmailAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether this is the main email address of the user/organization."
 	)
 	public Boolean getPrimary() {
@@ -220,7 +222,9 @@ public class EmailAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
-	@Schema(description = "The email address's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The email address's type."
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -363,8 +367,8 @@ public class EmailAddress implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.EmailAddress",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class TaxonomyCategory implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TaxonomyCategory.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTaxonomyCategoryId() {
 		if (_taxonomyCategoryIdSupplier != null) {
 			taxonomyCategoryId = _taxonomyCategoryIdSupplier.get();
@@ -89,7 +87,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _taxonomyCategoryIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTaxonomyCategoryName() {
 		if (_taxonomyCategoryNameSupplier != null) {
 			taxonomyCategoryName = _taxonomyCategoryNameSupplier.get();
@@ -190,8 +188,8 @@ public class TaxonomyCategory implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.TaxonomyCategory",
 		name = "x-class-name"
 	)

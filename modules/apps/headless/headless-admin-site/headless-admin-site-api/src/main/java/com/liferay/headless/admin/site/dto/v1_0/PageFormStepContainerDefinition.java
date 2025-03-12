@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,7 @@ public class PageFormStepContainerDefinition implements Serializable {
 			PageFormStepContainerDefinition.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of CSS classes that are applied to the page element."
 	)
 	public String[] getCssClasses() {
@@ -100,7 +98,9 @@ public class PageFormStepContainerDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
-	@Schema(description = "Custom CSS that is applied on the page element.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom CSS that is applied on the page element."
+	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
 			customCSS = _customCSSSupplier.get();
@@ -143,7 +143,9 @@ public class PageFormStepContainerDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
-	@Schema(description = "The custom CSS viewports of the page form.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom CSS viewports of the page form."
+	)
 	@Valid
 	public CustomCSSViewport[] getCustomCSSViewports() {
 		if (_customCSSViewportsSupplier != null) {
@@ -186,7 +188,9 @@ public class PageFormStepContainerDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
-	@Schema(description = "The fragment style of a page form.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment style of a page form."
+	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		if (_fragmentStyleSupplier != null) {
@@ -228,7 +232,9 @@ public class PageFormStepContainerDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
-	@Schema(description = "A list of fragment viewports of a page form.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of fragment viewports of a page form."
+	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		if (_fragmentViewportsSupplier != null) {
@@ -271,7 +277,9 @@ public class PageFormStepContainerDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@Schema(description = "The page form's layout.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page form's layout."
+	)
 	@Valid
 	public Layout getLayout() {
 		if (_layoutSupplier != null) {
@@ -313,7 +321,9 @@ public class PageFormStepContainerDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Layout> _layoutSupplier;
 
-	@Schema(description = "The custom name of of a page form.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom name of of a page form."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -512,8 +522,8 @@ public class PageFormStepContainerDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageFormStepContainerDefinition",
 		name = "x-class-name"
 	)

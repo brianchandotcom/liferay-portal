@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class DataRule implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DataRule.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map[] getActions() {
 		if (_actionsSupplier != null) {
@@ -92,7 +90,7 @@ public class DataRule implements Serializable {
 	@JsonIgnore
 	private Supplier<Map[]> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map[] getConditions() {
 		if (_conditionsSupplier != null) {
@@ -134,7 +132,7 @@ public class DataRule implements Serializable {
 	@JsonIgnore
 	private Supplier<Map[]> _conditionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLogicalOperator() {
 		if (_logicalOperatorSupplier != null) {
 			logicalOperator = _logicalOperatorSupplier.get();
@@ -175,7 +173,7 @@ public class DataRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _logicalOperatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getName() {
 		if (_nameSupplier != null) {
@@ -321,8 +319,8 @@ public class DataRule implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataRule",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class ProductVirtualSettings implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	public Integer getActivationStatus() {
 		if (_activationStatusSupplier != null) {
 			activationStatus = _activationStatusSupplier.get();
@@ -94,7 +92,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _activationStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getActivationStatusInfo() {
 		if (_activationStatusInfoSupplier != null) {
@@ -136,7 +134,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _activationStatusInfoSupplier;
 
-	@Schema(description = "Base64 encoded file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Base64 encoded file"
+	)
 	public String getAttachment() {
 		if (_attachmentSupplier != null) {
 			attachment = _attachmentSupplier.get();
@@ -177,7 +177,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _attachmentSupplier;
 
-	@Schema(description = "Number of days to download the attachment")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of days to download the attachment"
+	)
 	public Long getDuration() {
 		if (_durationSupplier != null) {
 			duration = _durationSupplier.get();
@@ -219,7 +221,7 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<Long> _durationSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -258,7 +260,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "Number of downloads available for attachment")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of downloads available for attachment"
+	)
 	public Integer getMaxUsages() {
 		if (_maxUsagesSupplier != null) {
 			maxUsages = _maxUsagesSupplier.get();
@@ -299,7 +303,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _maxUsagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductVirtualSettingsFileEntry[]
 		getProductVirtualSettingsFileEntries() {
@@ -350,7 +354,9 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<ProductVirtualSettingsFileEntry[]>
 		_productVirtualSettingsFileEntriesSupplier;
 
-	@Schema(description = "Base64 encoded sample file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Base64 encoded sample file"
+	)
 	public String getSampleAttachment() {
 		if (_sampleAttachmentSupplier != null) {
 			sampleAttachment = _sampleAttachmentSupplier.get();
@@ -391,7 +397,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sampleAttachmentSupplier;
 
-	@Schema(description = "URL to download the sample file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "URL to download the sample file"
+	)
 	public String getSampleSrc() {
 		if (_sampleSrcSupplier != null) {
 			sampleSrc = _sampleSrcSupplier.get();
@@ -432,7 +440,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sampleSrcSupplier;
 
-	@Schema(description = "URL of the sample file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "URL of the sample file"
+	)
 	public String getSampleURL() {
 		if (_sampleURLSupplier != null) {
 			sampleURL = _sampleURLSupplier.get();
@@ -473,7 +483,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sampleURLSupplier;
 
-	@Schema(description = "URL to download the file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "URL to download the file"
+	)
 	public String getSrc() {
 		if (_srcSupplier != null) {
 			src = _srcSupplier.get();
@@ -512,7 +524,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _srcSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Terms of Use content",
 		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
 	)
@@ -558,7 +570,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _termsOfUseContentSupplier;
 
-	@Schema(description = "Terms of Use related Article Id")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Terms of Use related Article Id"
+	)
 	public Long getTermsOfUseJournalArticleId() {
 		if (_termsOfUseJournalArticleIdSupplier != null) {
 			termsOfUseJournalArticleId =
@@ -601,7 +615,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _termsOfUseJournalArticleIdSupplier;
 
-	@Schema(description = "Terms of Use required")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Terms of Use required"
+	)
 	public Boolean getTermsOfUseRequired() {
 		if (_termsOfUseRequiredSupplier != null) {
 			termsOfUseRequired = _termsOfUseRequiredSupplier.get();
@@ -642,7 +658,7 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _termsOfUseRequiredSupplier;
 
-	@Schema(description = "URL of the file")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "URL of the file")
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -681,7 +697,9 @@ public class ProductVirtualSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
-	@Schema(description = "Enable sample file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Enable sample file"
+	)
 	public Boolean getUseSample() {
 		if (_useSampleSupplier != null) {
 			useSample = _useSampleSupplier.get();
@@ -982,8 +1000,8 @@ public class ProductVirtualSettings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductVirtualSettings",
 		name = "x-class-name"
 	)

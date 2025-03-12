@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class DSEnvelope implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DSEnvelope.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -95,7 +93,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -136,7 +134,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DSDocument[] getDsDocument() {
 		if (_dsDocumentSupplier != null) {
@@ -178,7 +176,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<DSDocument[]> _dsDocumentSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DSRecipient[] getDsRecipient() {
 		if (_dsRecipientSupplier != null) {
@@ -220,7 +218,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<DSRecipient[]> _dsRecipientSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getEmailBlurb() {
 		if (_emailBlurbSupplier != null) {
 			emailBlurb = _emailBlurbSupplier.get();
@@ -261,7 +259,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailBlurbSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getEmailSubject() {
 		if (_emailSubjectSupplier != null) {
 			emailSubject = _emailSubjectSupplier.get();
@@ -302,7 +300,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailSubjectSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -341,7 +339,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -380,7 +378,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSenderEmailAddress() {
 		if (_senderEmailAddressSupplier != null) {
 			senderEmailAddress = _senderEmailAddressSupplier.get();
@@ -421,7 +419,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _senderEmailAddressSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -462,7 +460,7 @@ public class DSEnvelope implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -722,8 +720,8 @@ public class DSEnvelope implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope",
 		name = "x-class-name"
 	)

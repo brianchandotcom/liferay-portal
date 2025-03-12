@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class FragmentImageConfiguration implements Serializable {
 			FragmentImageConfiguration.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The landscape mobile configuration of the fragment image."
 	)
 	public String getLandscapeMobile() {
@@ -98,7 +96,7 @@ public class FragmentImageConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _landscapeMobileSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The portrait mobile configuration of the fragment image."
 	)
 	public String getPortraitMobile() {
@@ -143,7 +141,9 @@ public class FragmentImageConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _portraitMobileSupplier;
 
-	@Schema(description = "The tablet configuration of the fragment image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The tablet configuration of the fragment image."
+	)
 	public String getTablet() {
 		if (_tabletSupplier != null) {
 			tablet = _tabletSupplier.get();
@@ -268,8 +268,8 @@ public class FragmentImageConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentImageConfiguration",
 		name = "x-class-name"
 	)

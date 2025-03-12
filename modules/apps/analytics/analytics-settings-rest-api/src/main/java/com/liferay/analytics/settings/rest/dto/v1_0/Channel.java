@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -55,7 +53,7 @@ public class Channel implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Channel.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -96,7 +94,7 @@ public class Channel implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _channelIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getCommerceSyncEnabled() {
 		if (_commerceSyncEnabledSupplier != null) {
 			commerceSyncEnabled = _commerceSyncEnabledSupplier.get();
@@ -137,7 +135,7 @@ public class Channel implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _commerceSyncEnabledSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -178,7 +176,7 @@ public class Channel implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DataSource[] getDataSources() {
 		if (_dataSourcesSupplier != null) {
@@ -220,7 +218,7 @@ public class Channel implements Serializable {
 	@JsonIgnore
 	private Supplier<DataSource[]> _dataSourcesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Size(min = 3)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -377,8 +375,8 @@ public class Channel implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.settings.rest.dto.v1_0.Channel",
 		name = "x-class-name"
 	)

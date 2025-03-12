@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class KeywordBulkSelection implements Serializable {
 			KeywordBulkSelection.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DocumentBulkSelection getDocumentBulkSelection() {
 		if (_documentBulkSelectionSupplier != null) {
@@ -96,7 +94,7 @@ public class KeywordBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<DocumentBulkSelection> _documentBulkSelectionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getKeywordsToAdd() {
 		if (_keywordsToAddSupplier != null) {
 			keywordsToAdd = _keywordsToAddSupplier.get();
@@ -137,7 +135,7 @@ public class KeywordBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsToAddSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getKeywordsToRemove() {
 		if (_keywordsToRemoveSupplier != null) {
 			keywordsToRemove = _keywordsToRemoveSupplier.get();
@@ -276,8 +274,8 @@ public class KeywordBulkSelection implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.KeywordBulkSelection",
 		name = "x-class-name"
 	)

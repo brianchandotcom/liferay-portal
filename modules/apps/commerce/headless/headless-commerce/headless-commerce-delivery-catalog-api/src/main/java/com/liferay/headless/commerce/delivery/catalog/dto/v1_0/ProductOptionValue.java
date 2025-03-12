@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class ProductOptionValue implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -90,7 +88,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getInfoMessage() {
 		if (_infoMessageSupplier != null) {
 			infoMessage = _infoMessageSupplier.get();
@@ -131,7 +129,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _infoMessageSupplier;
 
-	@Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -170,7 +168,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -209,7 +207,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPreselected() {
 		if (_preselectedSupplier != null) {
 			preselected = _preselectedSupplier.get();
@@ -250,7 +248,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _preselectedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPrice() {
 		if (_priceSupplier != null) {
 			price = _priceSupplier.get();
@@ -291,7 +289,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _priceSupplier;
 
-	@Schema(example = "static")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "static")
 	public String getPriceType() {
 		if (_priceTypeSupplier != null) {
 			priceType = _priceTypeSupplier.get();
@@ -332,7 +330,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _priceTypeSupplier;
 
-	@Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -374,7 +372,7 @@ public class ProductOptionValue implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getProductOptionId() {
 		if (_productOptionIdSupplier != null) {
 			productOptionId = _productOptionIdSupplier.get();
@@ -415,7 +413,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productOptionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getQuantity() {
 		if (_quantitySupplier != null) {
 			quantity = _quantitySupplier.get();
@@ -456,7 +454,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _quantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getRelativePriceFormatted() {
 		if (_relativePriceFormattedSupplier != null) {
 			relativePriceFormatted = _relativePriceFormattedSupplier.get();
@@ -498,7 +496,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _relativePriceFormattedSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getSelectable() {
 		if (_selectableSupplier != null) {
 			selectable = _selectableSupplier.get();
@@ -539,7 +537,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _selectableSupplier;
 
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -578,7 +576,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTotalPrice() {
 		if (_totalPriceSupplier != null) {
 			totalPrice = _totalPriceSupplier.get();
@@ -619,7 +617,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _totalPriceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUnitOfMeasureKey() {
 		if (_unitOfMeasureKeySupplier != null) {
 			unitOfMeasureKey = _unitOfMeasureKeySupplier.get();
@@ -660,7 +658,7 @@ public class ProductOptionValue implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getVisible() {
 		if (_visibleSupplier != null) {
 			visible = _visibleSupplier.get();
@@ -961,8 +959,8 @@ public class ProductOptionValue implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOptionValue",
 		name = "x-class-name"
 	)

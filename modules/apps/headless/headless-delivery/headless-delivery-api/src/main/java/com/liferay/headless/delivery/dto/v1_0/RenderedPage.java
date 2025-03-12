@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class RenderedPage implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(RenderedPage.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the master page used to render the content."
 	)
 	public String getMasterPageId() {
@@ -96,7 +94,7 @@ public class RenderedPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _masterPageIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The name of the master page used to render the content."
 	)
 	public String getMasterPageName() {
@@ -141,7 +139,9 @@ public class RenderedPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _masterPageNameSupplier;
 
-	@Schema(description = "The ID of the template used to render the content.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the template used to render the content."
+	)
 	public String getPageTemplateId() {
 		if (_pageTemplateIdSupplier != null) {
 			pageTemplateId = _pageTemplateIdSupplier.get();
@@ -184,7 +184,7 @@ public class RenderedPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _pageTemplateIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The name of the template used to render the content."
 	)
 	public String getPageTemplateName() {
@@ -229,7 +229,9 @@ public class RenderedPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _pageTemplateNameSupplier;
 
-	@Schema(description = "An absolute URL to the rendered page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "An absolute URL to the rendered page."
+	)
 	public String getRenderedPageURL() {
 		if (_renderedPageURLSupplier != null) {
 			renderedPageURL = _renderedPageURLSupplier.get();
@@ -382,8 +384,8 @@ public class RenderedPage implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RenderedPage",
 		name = "x-class-name"
 	)

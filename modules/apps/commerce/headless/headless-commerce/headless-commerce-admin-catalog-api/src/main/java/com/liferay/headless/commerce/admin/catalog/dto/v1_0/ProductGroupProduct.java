@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class ProductGroupProduct implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -91,7 +89,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -136,7 +134,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getProductGroupExternalReferenceCode() {
 		if (_productGroupExternalReferenceCodeSupplier != null) {
 			productGroupExternalReferenceCode =
@@ -183,7 +181,7 @@ public class ProductGroupProduct implements Serializable {
 	private Supplier<String> _productGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getProductGroupId() {
 		if (_productGroupIdSupplier != null) {
 			productGroupId = _productGroupIdSupplier.get();
@@ -225,7 +223,7 @@ public class ProductGroupProduct implements Serializable {
 	private Supplier<Long> _productGroupIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -266,7 +264,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getProductName() {
 		if (_productNameSupplier != null) {
 			productName = _productNameSupplier.get();
@@ -307,7 +305,7 @@ public class ProductGroupProduct implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _productNameSupplier;
 
-	@Schema(example = "BL500IC")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "BL500IC")
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -479,8 +477,8 @@ public class ProductGroupProduct implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroupProduct",
 		name = "x-class-name"
 	)

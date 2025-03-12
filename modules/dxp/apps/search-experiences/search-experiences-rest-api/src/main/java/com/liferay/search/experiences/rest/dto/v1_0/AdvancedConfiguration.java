@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class AdvancedConfiguration implements Serializable {
 			AdvancedConfiguration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Collapse getCollapse() {
 		if (_collapseSupplier != null) {
@@ -93,7 +91,7 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Collapse> _collapseSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getFields() {
 		if (_fieldsSupplier != null) {
 			fields = _fieldsSupplier.get();
@@ -134,7 +132,7 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _fieldsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Source getSource() {
 		if (_sourceSupplier != null) {
@@ -176,7 +174,7 @@ public class AdvancedConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Source> _sourceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getStored_fields() {
 		if (_stored_fieldsSupplier != null) {
 			stored_fields = _stored_fieldsSupplier.get();
@@ -326,8 +324,8 @@ public class AdvancedConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration",
 		name = "x-class-name"
 	)

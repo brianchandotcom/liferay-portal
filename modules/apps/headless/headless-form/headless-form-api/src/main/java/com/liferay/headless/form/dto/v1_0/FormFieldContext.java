@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class FormFieldContext implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FormFieldContext.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEvaluable() {
 		if (_evaluableSupplier != null) {
 			evaluable = _evaluableSupplier.get();
@@ -94,7 +92,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _evaluableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FormFieldOption[] getFormFieldOptions() {
 		if (_formFieldOptionsSupplier != null) {
@@ -137,7 +135,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<FormFieldOption[]> _formFieldOptionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -176,7 +174,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getReadOnly() {
 		if (_readOnlySupplier != null) {
 			readOnly = _readOnlySupplier.get();
@@ -217,7 +215,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -258,7 +256,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getValid() {
 		if (_validSupplier != null) {
 			valid = _validSupplier.get();
@@ -299,7 +297,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _validSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -340,7 +338,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _valueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getValueChanged() {
 		if (_valueChangedSupplier != null) {
 			valueChanged = _valueChangedSupplier.get();
@@ -381,7 +379,7 @@ public class FormFieldContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _valueChangedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getVisible() {
 		if (_visibleSupplier != null) {
 			visible = _visibleSupplier.get();
@@ -580,8 +578,8 @@ public class FormFieldContext implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormFieldContext",
 		name = "x-class-name"
 	)

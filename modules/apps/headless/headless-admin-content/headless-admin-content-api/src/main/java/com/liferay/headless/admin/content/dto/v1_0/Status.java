@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,9 @@ public class Status implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Status.class, json);
 	}
 
-	@Schema(description = "A number which identifies a specific status")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A number which identifies a specific status"
+	)
 	public Integer getCode() {
 		if (_codeSupplier != null) {
 			code = _codeSupplier.get();
@@ -91,7 +91,9 @@ public class Status implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _codeSupplier;
 
-	@Schema(description = "Label associated to the status")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Label associated to the status"
+	)
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -132,7 +134,7 @@ public class Status implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getLabel_i18n() {
 		if (_label_i18nSupplier != null) {
@@ -247,8 +249,8 @@ public class Status implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.content.dto.v1_0.Status",
 		name = "x-class-name"
 	)

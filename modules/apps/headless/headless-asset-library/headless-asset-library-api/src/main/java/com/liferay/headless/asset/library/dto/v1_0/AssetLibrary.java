@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -56,7 +54,9 @@ public class AssetLibrary implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AssetLibrary.class, json);
 	}
 
-	@Schema(description = "The key of the asset library.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The key of the asset library."
+	)
 	public String getAssetLibraryKey() {
 		if (_assetLibraryKeySupplier != null) {
 			assetLibraryKey = _assetLibraryKeySupplier.get();
@@ -97,7 +97,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
-	@Schema(description = "The asset library's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -138,7 +140,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time a field of the asset library changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time a field of the asset library changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -181,7 +185,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The asset library's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -222,7 +228,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(description = "The localized asset library's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized asset library's description."
+	)
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		if (_description_i18nSupplier != null) {
@@ -265,7 +273,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema(description = "The asset library's site external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's site external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -308,7 +318,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The asset library's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -347,7 +359,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The asset library linked site ids.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library linked site ids."
+	)
 	public Long[] getLinkedSiteIds() {
 		if (_linkedSiteIdsSupplier != null) {
 			linkedSiteIds = _linkedSiteIdsSupplier.get();
@@ -388,7 +402,7 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _linkedSiteIdsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The asset library linked sites external reference codes."
 	)
 	public String[] getLinkedSitesExternalReferenceCodes() {
@@ -438,7 +452,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _linkedSitesExternalReferenceCodesSupplier;
 
-	@Schema(description = "The asset library's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -477,7 +493,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The localized asset library's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized asset library's name."
+	)
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -520,7 +538,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema(description = "The asset library's site ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's site ID."
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -561,7 +581,9 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(description = "The asset library's users count.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's users count."
+	)
 	public Integer getUsersCount() {
 		if (_usersCountSupplier != null) {
 			usersCount = _usersCountSupplier.get();
@@ -842,8 +864,8 @@ public class AssetLibrary implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.asset.library.dto.v1_0.AssetLibrary",
 		name = "x-class-name"
 	)

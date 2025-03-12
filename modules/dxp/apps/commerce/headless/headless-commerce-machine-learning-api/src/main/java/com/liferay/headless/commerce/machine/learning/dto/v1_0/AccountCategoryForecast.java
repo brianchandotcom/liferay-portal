@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -55,7 +53,7 @@ public class AccountCategoryForecast implements Serializable {
 			AccountCategoryForecast.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getAccount() {
 		if (_accountSupplier != null) {
 			account = _accountSupplier.get();
@@ -96,7 +94,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Float getActual() {
 		if (_actualSupplier != null) {
@@ -138,7 +136,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<Float> _actualSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getCategory() {
 		if (_categorySupplier != null) {
 			category = _categorySupplier.get();
@@ -179,7 +177,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _categorySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCategoryTitle() {
 		if (_categoryTitleSupplier != null) {
 			categoryTitle = _categoryTitleSupplier.get();
@@ -220,7 +218,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _categoryTitleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Float getForecast() {
 		if (_forecastSupplier != null) {
@@ -262,7 +260,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<Float> _forecastSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Float getForecastLowerBound() {
 		if (_forecastLowerBoundSupplier != null) {
@@ -304,7 +302,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<Float> _forecastLowerBoundSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Float getForecastUpperBound() {
 		if (_forecastUpperBoundSupplier != null) {
@@ -346,7 +344,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<Float> _forecastUpperBoundSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getTimestamp() {
 		if (_timestampSupplier != null) {
 			timestamp = _timestampSupplier.get();
@@ -387,7 +385,7 @@ public class AccountCategoryForecast implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _timestampSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUnit() {
 		if (_unitSupplier != null) {
 			unit = _unitSupplier.get();
@@ -582,8 +580,8 @@ public class AccountCategoryForecast implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.AccountCategoryForecast",
 		name = "x-class-name"
 	)

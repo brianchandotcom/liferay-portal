@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ProductConfigurationListOrderType")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"orderTypeId", "productConfigurationListId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"orderTypeId", "productConfigurationListId"})
 @XmlRootElement(name = "ProductConfigurationListOrderType")
 public class ProductConfigurationListOrderType implements Serializable {
 
@@ -55,7 +55,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 			ProductConfigurationListOrderType.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -98,7 +98,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public OrderType getOrderType() {
 		if (_orderTypeSupplier != null) {
@@ -140,7 +140,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -186,7 +186,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -229,7 +229,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
 	public Integer getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -270,7 +270,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getProductConfigurationListExternalReferenceCode() {
 		if (_productConfigurationListExternalReferenceCodeSupplier != null) {
 			productConfigurationListExternalReferenceCode =
@@ -319,7 +319,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 		_productConfigurationListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getProductConfigurationListId() {
 		if (_productConfigurationListIdSupplier != null) {
 			productConfigurationListId =
@@ -364,7 +364,7 @@ public class ProductConfigurationListOrderType implements Serializable {
 	private Supplier<Long> _productConfigurationListIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getProductConfigurationListOrderTypeId() {
 		if (_productConfigurationListOrderTypeIdSupplier != null) {
 			productConfigurationListOrderTypeId =
@@ -551,8 +551,8 @@ public class ProductConfigurationListOrderType implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfigurationListOrderType",
 		name = "x-class-name"
 	)

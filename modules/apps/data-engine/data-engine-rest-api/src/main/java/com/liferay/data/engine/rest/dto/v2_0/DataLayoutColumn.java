@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class DataLayoutColumn implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DataLayoutColumn.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getColumnSize() {
 		if (_columnSizeSupplier != null) {
 			columnSize = _columnSizeSupplier.get();
@@ -89,7 +87,7 @@ public class DataLayoutColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _columnSizeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getFieldNames() {
 		if (_fieldNamesSupplier != null) {
 			fieldNames = _fieldNamesSupplier.get();
@@ -200,8 +198,8 @@ public class DataLayoutColumn implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn",
 		name = "x-class-name"
 	)

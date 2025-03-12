@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -60,7 +58,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 			PageFragmentInstanceDefinition.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of CSS classes that are applied to the fragment instance."
 	)
 	public String[] getCssClasses() {
@@ -105,7 +103,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Custom CSS that is applied on the fragment instance."
 	)
 	public String getCustomCSS() {
@@ -150,7 +148,9 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
-	@Schema(description = "The custom CSS viewports of the fragment instance.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom CSS viewports of the fragment instance."
+	)
 	@Valid
 	public CustomCSSViewport[] getCustomCSSViewports() {
 		if (_customCSSViewportsSupplier != null) {
@@ -195,7 +195,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment instance's most recent propagation date."
 	)
 	public Date getDatePropagated() {
@@ -240,7 +240,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePropagatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment instance's most recent publication date."
 	)
 	public Date getDatePublished() {
@@ -285,7 +285,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external reference code of the corresponding page element in the draft of the page. Available only in the published page specification."
 	)
 	public String getDraftPageElementExternalReferenceCode() {
@@ -336,7 +336,9 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _draftPageElementExternalReferenceCodeSupplier;
 
-	@Schema(description = "The configuration values of the fragment instance.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The configuration values of the fragment instance."
+	)
 	@Valid
 	public Map<String, Object> getFragmentConfig() {
 		if (_fragmentConfigSupplier != null) {
@@ -381,7 +383,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _fragmentConfigSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment field values of the the fragment instance."
 	)
 	@Valid
@@ -428,7 +430,9 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentField[]> _fragmentFieldsSupplier;
 
-	@Schema(description = "An external reference to the fragment.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "An external reference to the fragment."
+	)
 	@Valid
 	public Object getFragmentReference() {
 		if (_fragmentReferenceSupplier != null) {
@@ -470,7 +474,9 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _fragmentReferenceSupplier;
 
-	@Schema(description = "The fragment style of the page fragment instance.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment style of the page fragment instance."
+	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		if (_fragmentStyleSupplier != null) {
@@ -514,7 +520,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of fragment viewports of the page fragment instance."
 	)
 	@Valid
@@ -561,7 +567,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the page fragment instance is indexed or not."
 	)
 	public Boolean getIndexed() {
@@ -606,7 +612,9 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
-	@Schema(description = "The custom name of a fragment instance.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom name of a fragment instance."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -645,7 +653,9 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The fragment instance's namespace.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment instance's namespace."
+	)
 	public String getNamespace() {
 		if (_namespaceSupplier != null) {
 			namespace = _namespaceSupplier.get();
@@ -686,7 +696,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _namespaceSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A valid external identifier to reference this fragment instance."
 	)
 	public String getUuid() {
@@ -729,7 +739,7 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _uuidSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of widget instances within the fragment instance."
 	)
 	@Valid
@@ -1100,8 +1110,8 @@ public class PageFragmentInstanceDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageFragmentInstanceDefinition",
 		name = "x-class-name"
 	)

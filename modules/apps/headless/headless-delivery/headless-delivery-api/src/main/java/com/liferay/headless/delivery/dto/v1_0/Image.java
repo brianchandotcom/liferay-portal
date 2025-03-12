@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,9 @@ public class Image implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Image.class, json);
 	}
 
-	@Schema(description = "The text describing the image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The text describing the image."
+	)
 	public String getCaption() {
 		if (_captionSupplier != null) {
 			caption = _captionSupplier.get();
@@ -89,7 +89,9 @@ public class Image implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _captionSupplier;
 
-	@Schema(description = "The image's relative URL.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The image's relative URL."
+	)
 	public String getContentUrl() {
 		if (_contentUrlSupplier != null) {
 			contentUrl = _contentUrlSupplier.get();
@@ -130,7 +132,7 @@ public class Image implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentUrlSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "optional field with the content of the image in Base64, can be embedded with nestedFields"
 	)
 	public String getContentValue() {
@@ -175,7 +177,7 @@ public class Image implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentValueSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The image's ID. This can be used to retrieve more information in the `Document` API."
 	)
 	public Long getImageId() {
@@ -312,8 +314,8 @@ public class Image implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Image",
 		name = "x-class-name"
 	)

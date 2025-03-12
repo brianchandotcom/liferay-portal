@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class SuggestionsContributorConfiguration implements Serializable {
 			SuggestionsContributorConfiguration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getAttributes() {
 		if (_attributesSupplier != null) {
@@ -95,7 +93,7 @@ public class SuggestionsContributorConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _attributesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getContributorName() {
 		if (_contributorNameSupplier != null) {
 			contributorName = _contributorNameSupplier.get();
@@ -136,7 +134,7 @@ public class SuggestionsContributorConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contributorNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDisplayGroupName() {
 		if (_displayGroupNameSupplier != null) {
 			displayGroupName = _displayGroupNameSupplier.get();
@@ -177,7 +175,7 @@ public class SuggestionsContributorConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _displayGroupNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getSize() {
 		if (_sizeSupplier != null) {
 			size = _sizeSupplier.get();
@@ -318,8 +316,8 @@ public class SuggestionsContributorConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration",
 		name = "x-class-name"
 	)

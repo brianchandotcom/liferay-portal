@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class FieldSummary implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FieldSummary.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getAccount() {
 		if (_accountSupplier != null) {
 			account = _accountSupplier.get();
@@ -89,7 +87,7 @@ public class FieldSummary implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _accountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getOrder() {
 		if (_orderSupplier != null) {
 			order = _orderSupplier.get();
@@ -130,7 +128,7 @@ public class FieldSummary implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _orderSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getPeople() {
 		if (_peopleSupplier != null) {
 			people = _peopleSupplier.get();
@@ -171,7 +169,7 @@ public class FieldSummary implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _peopleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getProduct() {
 		if (_productSupplier != null) {
 			product = _productSupplier.get();
@@ -292,8 +290,8 @@ public class FieldSummary implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.settings.rest.dto.v1_0.FieldSummary",
 		name = "x-class-name"
 	)

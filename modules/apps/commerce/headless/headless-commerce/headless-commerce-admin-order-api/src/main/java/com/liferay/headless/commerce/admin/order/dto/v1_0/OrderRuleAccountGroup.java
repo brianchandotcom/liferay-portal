@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("OrderRuleAccountGroup")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"accountGroupId", "orderRuleId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"accountGroupId", "orderRuleId"})
 @XmlRootElement(name = "OrderRuleAccountGroup")
 public class OrderRuleAccountGroup implements Serializable {
 
@@ -54,7 +54,7 @@ public class OrderRuleAccountGroup implements Serializable {
 			OrderRuleAccountGroup.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public OrderAccountGroup getAccountGroup() {
 		if (_accountGroupSupplier != null) {
@@ -97,7 +97,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<OrderAccountGroup> _accountGroupSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getAccountGroupExternalReferenceCode() {
 		if (_accountGroupExternalReferenceCodeSupplier != null) {
 			accountGroupExternalReferenceCode =
@@ -144,7 +144,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	private Supplier<String> _accountGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getAccountGroupId() {
 		if (_accountGroupIdSupplier != null) {
 			accountGroupId = _accountGroupIdSupplier.get();
@@ -186,7 +186,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountGroupIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -230,7 +230,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getOrderRuleAccountGroupId() {
 		if (_orderRuleAccountGroupIdSupplier != null) {
 			orderRuleAccountGroupId = _orderRuleAccountGroupIdSupplier.get();
@@ -271,7 +271,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _orderRuleAccountGroupIdSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getOrderRuleExternalReferenceCode() {
 		if (_orderRuleExternalReferenceCodeSupplier != null) {
 			orderRuleExternalReferenceCode =
@@ -317,7 +317,7 @@ public class OrderRuleAccountGroup implements Serializable {
 	private Supplier<String> _orderRuleExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getOrderRuleId() {
 		if (_orderRuleIdSupplier != null) {
 			orderRuleId = _orderRuleIdSupplier.get();
@@ -486,8 +486,8 @@ public class OrderRuleAccountGroup implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccountGroup",
 		name = "x-class-name"
 	)

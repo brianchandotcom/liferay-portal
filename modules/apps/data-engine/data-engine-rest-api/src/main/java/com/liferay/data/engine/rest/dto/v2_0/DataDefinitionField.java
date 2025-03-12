@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -57,7 +55,7 @@ public class DataDefinitionField implements Serializable {
 			DataDefinitionField.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getCustomProperties() {
 		if (_customPropertiesSupplier != null) {
@@ -100,7 +98,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _customPropertiesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getDefaultValue() {
 		if (_defaultValueSupplier != null) {
@@ -143,7 +141,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _defaultValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFieldType() {
 		if (_fieldTypeSupplier != null) {
 			fieldType = _fieldTypeSupplier.get();
@@ -184,7 +182,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fieldTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -223,8 +221,8 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("indexType")
-	@Schema
 	@Valid
 	public IndexType getIndexType() {
 		if (_indexTypeSupplier != null) {
@@ -277,7 +275,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<IndexType> _indexTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getIndexable() {
 		if (_indexableSupplier != null) {
 			indexable = _indexableSupplier.get();
@@ -318,7 +316,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getLabel() {
 		if (_labelSupplier != null) {
@@ -360,7 +358,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getLocalizable() {
 		if (_localizableSupplier != null) {
 			localizable = _localizableSupplier.get();
@@ -401,7 +399,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _localizableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -440,7 +438,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of child data definition fields that depend on this resource."
 	)
 	@Valid
@@ -490,7 +488,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<DataDefinitionField[]> _nestedDataDefinitionFieldsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getReadOnly() {
 		if (_readOnlySupplier != null) {
 			readOnly = _readOnlySupplier.get();
@@ -531,7 +529,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRepeatable() {
 		if (_repeatableSupplier != null) {
 			repeatable = _repeatableSupplier.get();
@@ -572,7 +570,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _repeatableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -613,7 +611,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShowLabel() {
 		if (_showLabelSupplier != null) {
 			showLabel = _showLabelSupplier.get();
@@ -654,7 +652,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _showLabelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getTip() {
 		if (_tipSupplier != null) {
@@ -696,7 +694,7 @@ public class DataDefinitionField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _tipSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getVisible() {
 		if (_visibleSupplier != null) {
 			visible = _visibleSupplier.get();
@@ -984,8 +982,8 @@ public class DataDefinitionField implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField",
 		name = "x-class-name"
 	)

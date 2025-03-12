@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,9 @@ public class PageElement implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageElement.class, json);
 	}
 
-	@Schema(description = "The page element's definition.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page element's definition."
+	)
 	@Valid
 	public Object getDefinition() {
 		if (_definitionSupplier != null) {
@@ -96,7 +96,9 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _definitionSupplier;
 
-	@Schema(description = "The page element's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page element's ID."
+	)
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -135,7 +137,9 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(description = "A list of the page elements this page element has.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of the page elements this page element has."
+	)
 	@Valid
 	public PageElement[] getPageElements() {
 		if (_pageElementsSupplier != null) {
@@ -179,10 +183,10 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<PageElement[]> _pageElementsSupplier;
 
-	@JsonGetter("type")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page element's type (collection, collection item, column, drop zone, form, fragment, fragment drop zone, root, row, section or widget)."
 	)
+	@JsonGetter("type")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -344,8 +348,8 @@ public class PageElement implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageElement",
 		name = "x-class-name"
 	)

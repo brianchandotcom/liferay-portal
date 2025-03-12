@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -49,7 +47,7 @@ public class GeneralConfiguration implements Serializable {
 			GeneralConfiguration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getClauseContributorsExcludes() {
 		if (_clauseContributorsExcludesSupplier != null) {
 			clauseContributorsExcludes =
@@ -94,7 +92,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _clauseContributorsExcludesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getClauseContributorsIncludes() {
 		if (_clauseContributorsIncludesSupplier != null) {
 			clauseContributorsIncludes =
@@ -139,7 +137,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _clauseContributorsIncludesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEmptySearchEnabled() {
 		if (_emptySearchEnabledSupplier != null) {
 			emptySearchEnabled = _emptySearchEnabledSupplier.get();
@@ -180,7 +178,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _emptySearchEnabledSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getExplain() {
 		if (_explainSupplier != null) {
 			explain = _explainSupplier.get();
@@ -221,7 +219,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _explainSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getIncludeResponseString() {
 		if (_includeResponseStringSupplier != null) {
 			includeResponseString = _includeResponseStringSupplier.get();
@@ -263,7 +261,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _includeResponseStringSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLanguageId() {
 		if (_languageIdSupplier != null) {
 			languageId = _languageIdSupplier.get();
@@ -304,7 +302,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _languageIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getQueryString() {
 		if (_queryStringSupplier != null) {
 			queryString = _queryStringSupplier.get();
@@ -345,7 +343,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _queryStringSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getSearchableAssetTypes() {
 		if (_searchableAssetTypesSupplier != null) {
 			searchableAssetTypes = _searchableAssetTypesSupplier.get();
@@ -387,7 +385,7 @@ public class GeneralConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _searchableAssetTypesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTimeZoneId() {
 		if (_timeZoneIdSupplier != null) {
 			timeZoneId = _timeZoneIdSupplier.get();
@@ -623,8 +621,8 @@ public class GeneralConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.GeneralConfiguration",
 		name = "x-class-name"
 	)

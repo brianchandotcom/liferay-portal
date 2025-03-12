@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -60,7 +58,7 @@ public class MasterPage implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(MasterPage.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The master page's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -106,7 +104,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The page's creator external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's creator external reference code."
+	)
 	public String getCreatorExternalReferenceCode() {
 		if (_creatorExternalReferenceCodeSupplier != null) {
 			creatorExternalReferenceCode =
@@ -151,7 +151,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorExternalReferenceCodeSupplier;
 
-	@Schema(description = "The master page's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The master page's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -192,7 +194,7 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time any field of the master page was changed."
 	)
 	public Date getDateModified() {
@@ -237,7 +239,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The master page's most recent publication date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The master page's most recent publication date."
+	)
 	public Date getDatePublished() {
 		if (_datePublishedSupplier != null) {
 			datePublished = _datePublishedSupplier.get();
@@ -280,7 +284,7 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The master page's external reference code, unique per site."
 	)
 	public String getExternalReferenceCode() {
@@ -325,7 +329,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The master page's key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The master page's key."
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -364,7 +370,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(description = "The external references to the associated keywords.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The external references to the associated keywords."
+	)
 	@Valid
 	public ItemExternalReference[] getKeywordItemExternalReferences() {
 		if (_keywordItemExternalReferencesSupplier != null) {
@@ -413,7 +421,7 @@ public class MasterPage implements Serializable {
 	private Supplier<ItemExternalReference[]>
 		_keywordItemExternalReferencesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The associated keywords. They are not returned by default. They can be embedded via nestedFields."
 	)
 	@Valid
@@ -459,7 +467,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Keyword[]> _keywordsSupplier;
 
-	@Schema(description = "Whether the master page is the default one.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the master page is the default one."
+	)
 	public Boolean getMarkedAsDefault() {
 		if (_markedAsDefaultSupplier != null) {
 			markedAsDefault = _markedAsDefaultSupplier.get();
@@ -500,7 +510,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _markedAsDefaultSupplier;
 
-	@Schema(description = "The master page's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The master page's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -539,7 +551,7 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The master page's specifications. A master page will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
@@ -586,7 +598,7 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<PageSpecification[]> _pageSpecificationsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The associated categories. They are not returned by default. They can be embedded via nestedFields."
 	)
 	@Valid
@@ -633,7 +645,7 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategory[]> _taxonomyCategoriesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external references to the associated categories."
 	)
 	@Valid
@@ -686,7 +698,9 @@ public class MasterPage implements Serializable {
 	private Supplier<ItemExternalReference[]>
 		_taxonomyCategoryItemExternalReferencesSupplier;
 
-	@Schema(description = "The master page's thumbnail.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The master page's thumbnail."
+	)
 	@Valid
 	public ItemExternalReference getThumbnail() {
 		if (_thumbnailSupplier != null) {
@@ -729,7 +743,9 @@ public class MasterPage implements Serializable {
 	@JsonIgnore
 	private Supplier<ItemExternalReference> _thumbnailSupplier;
 
-	@Schema(description = "A valid external identifier to reference this page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A valid external identifier to reference this page."
+	)
 	public String getUuid() {
 		if (_uuidSupplier != null) {
 			uuid = _uuidSupplier.get();
@@ -1084,8 +1100,8 @@ public class MasterPage implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.MasterPage",
 		name = "x-class-name"
 	)

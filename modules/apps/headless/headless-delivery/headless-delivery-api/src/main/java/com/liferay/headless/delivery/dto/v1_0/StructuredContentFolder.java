@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a folder that can be used to organize structured content.",
 	value = "StructuredContentFolder"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a folder that can be used to organize structured content.",
 	requiredProperties = {"name"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "StructuredContentFolder")
 public class StructuredContentFolder implements Serializable {
 
@@ -66,7 +64,7 @@ public class StructuredContentFolder implements Serializable {
 			StructuredContentFolder.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -113,7 +111,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The key of the asset library to which the folder is scoped."
 	)
 	public String getAssetLibraryKey() {
@@ -158,7 +156,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetLibraryKeySupplier;
 
-	@Schema(description = "The folder's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The folder's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -200,7 +200,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the custom fields associated with the folder."
 	)
 	@Valid
@@ -246,7 +246,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "The date the folder was created.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The date the folder was created."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -287,7 +289,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time any of the folder's fields changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time any of the folder's fields changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -330,7 +334,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The folder's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The folder's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -371,7 +377,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The structured content folder's external reference code."
 	)
 	public String getExternalReferenceCode() {
@@ -416,7 +422,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The folder's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The folder's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -455,7 +463,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The folder's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The folder's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -495,7 +505,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of structured content folders inside this folder."
 	)
 	public Integer getNumberOfStructuredContentFolders() {
@@ -545,7 +555,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfStructuredContentFoldersSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of structured content objects inside this folder."
 	)
 	public Integer getNumberOfStructuredContents() {
@@ -594,7 +604,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfStructuredContentsSupplier;
 
-	@Schema(description = "The ID of the folder's parent, if it exists.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the folder's parent, if it exists."
+	)
 	public Long getParentStructuredContentFolderId() {
 		if (_parentStructuredContentFolderIdSupplier != null) {
 			parentStructuredContentFolderId =
@@ -639,7 +651,9 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentStructuredContentFolderIdSupplier;
 
-	@Schema(description = "The ID of the site to which this folder is scoped.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the site to which this folder is scoped."
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -682,7 +696,7 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the user making the requests is subscribed to this folder."
 	)
 	public Boolean getSubscribed() {
@@ -727,10 +741,10 @@ public class StructuredContentFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
-	@JsonGetter("viewableBy")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only property that specifies the folder's default permissions."
 	)
+	@JsonGetter("viewableBy")
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -1053,8 +1067,8 @@ public class StructuredContentFolder implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder",
 		name = "x-class-name"
 	)

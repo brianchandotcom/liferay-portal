@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class DSDocument implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DSDocument.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssignTabsToDSRecipientId() {
 		if (_assignTabsToDSRecipientIdSupplier != null) {
 			assignTabsToDSRecipientId =
@@ -91,7 +89,7 @@ public class DSDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assignTabsToDSRecipientIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getData() {
 		if (_dataSupplier != null) {
 			data = _dataSupplier.get();
@@ -130,7 +128,7 @@ public class DSDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dataSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFileEntryExternalReferenceCode() {
 		if (_fileEntryExternalReferenceCodeSupplier != null) {
 			fileEntryExternalReferenceCode =
@@ -175,7 +173,7 @@ public class DSDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fileEntryExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFileExtension() {
 		if (_fileExtensionSupplier != null) {
 			fileExtension = _fileExtensionSupplier.get();
@@ -216,7 +214,7 @@ public class DSDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fileExtensionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -255,7 +253,7 @@ public class DSDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -294,7 +292,7 @@ public class DSDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getTransformPDFFields() {
 		if (_transformPDFFieldsSupplier != null) {
 			transformPDFFields = _transformPDFFieldsSupplier.get();
@@ -335,7 +333,7 @@ public class DSDocument implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _transformPDFFieldsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUri() {
 		if (_uriSupplier != null) {
 			uri = _uriSupplier.get();
@@ -531,8 +529,8 @@ public class DSDocument implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSDocument",
 		name = "x-class-name"
 	)

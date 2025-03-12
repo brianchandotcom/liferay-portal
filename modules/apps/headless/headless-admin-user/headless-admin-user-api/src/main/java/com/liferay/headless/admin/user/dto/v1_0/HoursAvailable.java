@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class HoursAvailable implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(HoursAvailable.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The organization's closing time (in `HH:MM` format)."
 	)
 	public String getCloses() {
@@ -96,7 +94,9 @@ public class HoursAvailable implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _closesSupplier;
 
-	@Schema(description = "The day of the week.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The day of the week."
+	)
 	public String getDayOfWeek() {
 		if (_dayOfWeekSupplier != null) {
 			dayOfWeek = _dayOfWeekSupplier.get();
@@ -137,7 +137,7 @@ public class HoursAvailable implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dayOfWeekSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The organization's opening time (in `HH:MM` format)."
 	)
 	public String getOpens() {
@@ -262,8 +262,8 @@ public class HoursAvailable implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.HoursAvailable",
 		name = "x-class-name"
 	)

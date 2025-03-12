@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -55,7 +53,9 @@ public class AttachmentUrl implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AttachmentUrl.class, json);
 	}
 
-	@Schema(description = "Content type of attachment")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Content type of attachment"
+	)
 	public String getContentType() {
 		if (_contentTypeSupplier != null) {
 			contentType = _contentTypeSupplier.get();
@@ -96,7 +96,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -138,7 +138,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -179,7 +179,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -220,7 +220,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -261,7 +261,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getGalleryEnabled() {
 		if (_galleryEnabledSupplier != null) {
 			galleryEnabled = _galleryEnabledSupplier.get();
@@ -303,7 +303,7 @@ public class AttachmentUrl implements Serializable {
 	private Supplier<Boolean> _galleryEnabledSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -342,7 +342,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -383,7 +383,9 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
-	@Schema(example = "{color=yellow, optionKey=optionValueKey, size=xs}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{color=yellow, optionKey=optionValueKey, size=xs}"
+	)
 	@Valid
 	public Map<String, String> getOptions() {
 		if (_optionsSupplier != null) {
@@ -425,7 +427,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _optionsSupplier;
 
-	@Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -466,7 +468,9 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@Schema(description = "URL of the location")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "URL of the location"
+	)
 	public String getSrc() {
 		if (_srcSupplier != null) {
 			src = _srcSupplier.get();
@@ -505,7 +509,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _srcSupplier;
 
-	@Schema(example = "[tag1, tag2, tag3]")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "[tag1, tag2, tag3]")
 	public String[] getTags() {
 		if (_tagsSupplier != null) {
 			tags = _tagsSupplier.get();
@@ -546,7 +550,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _tagsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Hand Saw, hr_HR=Attachment Title HR, hu_HU=Attachment Title HU}"
 	)
 	@Valid
@@ -590,7 +594,7 @@ public class AttachmentUrl implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -876,8 +880,8 @@ public class AttachmentUrl implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.AttachmentUrl",
 		name = "x-class-name"
 	)

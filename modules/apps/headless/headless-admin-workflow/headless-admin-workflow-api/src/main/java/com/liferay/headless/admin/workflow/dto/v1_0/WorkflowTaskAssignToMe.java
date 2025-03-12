@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -56,7 +54,7 @@ public class WorkflowTaskAssignToMe implements Serializable {
 			WorkflowTaskAssignToMe.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "An optional comment to add when accepting the workflow task."
 	)
 	public String getComment() {
@@ -101,7 +99,7 @@ public class WorkflowTaskAssignToMe implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The date on which the workflow task should be executed."
 	)
 	public Date getDueDate() {
@@ -146,7 +144,7 @@ public class WorkflowTaskAssignToMe implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dueDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getWorkflowTaskId() {
 		if (_workflowTaskIdSupplier != null) {
 			workflowTaskId = _workflowTaskIdSupplier.get();
@@ -267,8 +265,8 @@ public class WorkflowTaskAssignToMe implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe",
 		name = "x-class-name"
 	)

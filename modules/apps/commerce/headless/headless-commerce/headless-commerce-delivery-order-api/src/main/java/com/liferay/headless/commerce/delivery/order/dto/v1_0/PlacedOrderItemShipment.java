@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -59,7 +57,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -100,7 +98,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema(example = "Author")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Author")
 	public String getAuthor() {
 		if (_authorSupplier != null) {
 			author = _authorSupplier.get();
@@ -141,7 +139,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
-	@Schema(example = "FedEx")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "FedEx")
 	public String getCarrier() {
 		if (_carrierSupplier != null) {
 			carrier = _carrierSupplier.get();
@@ -182,7 +180,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _carrierSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -223,7 +221,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getEstimatedDeliveryDate() {
 		if (_estimatedDeliveryDateSupplier != null) {
 			estimatedDeliveryDate = _estimatedDeliveryDateSupplier.get();
@@ -264,7 +262,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _estimatedDeliveryDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getEstimatedShippingDate() {
 		if (_estimatedShippingDateSupplier != null) {
 			estimatedShippingDate = _estimatedShippingDateSupplier.get();
@@ -305,7 +303,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _estimatedShippingDateSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -347,7 +345,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -386,7 +384,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -428,7 +426,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	private Supplier<Date> _modifiedDateSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getOrderId() {
 		if (_orderIdSupplier != null) {
 			orderId = _orderIdSupplier.get();
@@ -469,7 +467,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _orderIdSupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getQuantity() {
 		if (_quantitySupplier != null) {
@@ -512,7 +510,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	private Supplier<BigDecimal> _quantitySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getShippingAddressId() {
 		if (_shippingAddressIdSupplier != null) {
 			shippingAddressId = _shippingAddressIdSupplier.get();
@@ -554,7 +552,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getShippingMethodId() {
 		if (_shippingMethodIdSupplier != null) {
 			shippingMethodId = _shippingMethodIdSupplier.get();
@@ -595,7 +593,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shippingMethodIdSupplier;
 
-	@Schema(example = "Standard Delivery")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Standard Delivery")
 	public String getShippingOptionName() {
 		if (_shippingOptionNameSupplier != null) {
 			shippingOptionName = _shippingOptionNameSupplier.get();
@@ -636,7 +634,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingOptionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getStatus() {
 		if (_statusSupplier != null) {
@@ -678,7 +676,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSupplierShipment() {
 		if (_supplierShipmentSupplier != null) {
 			supplierShipment = _supplierShipmentSupplier.get();
@@ -719,7 +717,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _supplierShipmentSupplier;
 
-	@Schema(example = "123AD-asd")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "123AD-asd")
 	public String getTrackingNumber() {
 		if (_trackingNumberSupplier != null) {
 			trackingNumber = _trackingNumberSupplier.get();
@@ -760,7 +758,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _trackingNumberSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTrackingURL() {
 		if (_trackingURLSupplier != null) {
 			trackingURL = _trackingURLSupplier.get();
@@ -801,7 +799,7 @@ public class PlacedOrderItemShipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _trackingURLSupplier;
 
-	@Schema(example = "m")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "m")
 	public String getUnitOfMeasureKey() {
 		if (_unitOfMeasureKeySupplier != null) {
 			unitOfMeasureKey = _unitOfMeasureKeySupplier.get();
@@ -1150,8 +1148,8 @@ public class PlacedOrderItemShipment implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItemShipment",
 		name = "x-class-name"
 	)

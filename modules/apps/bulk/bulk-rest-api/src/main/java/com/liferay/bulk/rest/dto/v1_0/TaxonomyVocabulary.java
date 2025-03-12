@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class TaxonomyVocabulary implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TaxonomyVocabulary.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getMultiValued() {
 		if (_multiValuedSupplier != null) {
 			multiValued = _multiValuedSupplier.get();
@@ -91,7 +89,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _multiValuedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -130,7 +128,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -171,7 +169,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		if (_taxonomyCategoriesSupplier != null) {
@@ -214,7 +212,7 @@ public class TaxonomyVocabulary implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategory[]> _taxonomyCategoriesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getTaxonomyVocabularyId() {
 		if (_taxonomyVocabularyIdSupplier != null) {
 			taxonomyVocabularyId = _taxonomyVocabularyIdSupplier.get();
@@ -361,8 +359,8 @@ public class TaxonomyVocabulary implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.TaxonomyVocabulary",
 		name = "x-class-name"
 	)

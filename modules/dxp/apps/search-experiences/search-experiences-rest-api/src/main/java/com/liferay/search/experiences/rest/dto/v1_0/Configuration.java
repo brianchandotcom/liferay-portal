@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Configuration implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Configuration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AdvancedConfiguration getAdvancedConfiguration() {
 		if (_advancedConfigurationSupplier != null) {
@@ -95,7 +93,7 @@ public class Configuration implements Serializable {
 	@JsonIgnore
 	private Supplier<AdvancedConfiguration> _advancedConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AggregationConfiguration getAggregationConfiguration() {
 		if (_aggregationConfigurationSupplier != null) {
@@ -141,7 +139,7 @@ public class Configuration implements Serializable {
 	private Supplier<AggregationConfiguration>
 		_aggregationConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public GeneralConfiguration getGeneralConfiguration() {
 		if (_generalConfigurationSupplier != null) {
@@ -186,7 +184,7 @@ public class Configuration implements Serializable {
 	@JsonIgnore
 	private Supplier<GeneralConfiguration> _generalConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public HighlightConfiguration getHighlightConfiguration() {
 		if (_highlightConfigurationSupplier != null) {
@@ -231,7 +229,7 @@ public class Configuration implements Serializable {
 	@JsonIgnore
 	private Supplier<HighlightConfiguration> _highlightConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public IndexConfiguration getIndexConfiguration() {
 		if (_indexConfigurationSupplier != null) {
@@ -274,7 +272,7 @@ public class Configuration implements Serializable {
 	@JsonIgnore
 	private Supplier<IndexConfiguration> _indexConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ParameterConfiguration getParameterConfiguration() {
 		if (_parameterConfigurationSupplier != null) {
@@ -319,7 +317,7 @@ public class Configuration implements Serializable {
 	@JsonIgnore
 	private Supplier<ParameterConfiguration> _parameterConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public QueryConfiguration getQueryConfiguration() {
 		if (_queryConfigurationSupplier != null) {
@@ -362,7 +360,7 @@ public class Configuration implements Serializable {
 	@JsonIgnore
 	private Supplier<QueryConfiguration> _queryConfigurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getSearchContextAttributes() {
 		if (_searchContextAttributesSupplier != null) {
@@ -407,7 +405,7 @@ public class Configuration implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _searchContextAttributesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public SortConfiguration getSortConfiguration() {
 		if (_sortConfigurationSupplier != null) {
@@ -595,8 +593,8 @@ public class Configuration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Configuration",
 		name = "x-class-name"
 	)

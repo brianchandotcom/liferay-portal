@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class ObjectLayoutColumn implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectLayoutColumn.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -87,7 +85,7 @@ public class ObjectLayoutColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectFieldName() {
 		if (_objectFieldNameSupplier != null) {
 			objectFieldName = _objectFieldNameSupplier.get();
@@ -128,7 +126,7 @@ public class ObjectLayoutColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectFieldNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -169,7 +167,7 @@ public class ObjectLayoutColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _prioritySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getSize() {
 		if (_sizeSupplier != null) {
 			size = _sizeSupplier.get();
@@ -292,8 +290,8 @@ public class ObjectLayoutColumn implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn",
 		name = "x-class-name"
 	)

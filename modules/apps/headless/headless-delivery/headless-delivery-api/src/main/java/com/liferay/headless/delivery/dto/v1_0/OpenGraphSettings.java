@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,9 @@ public class OpenGraphSettings implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(OpenGraphSettings.class, json);
 	}
 
-	@Schema(description = "The Open Graph's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The Open Graph's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -94,7 +94,9 @@ public class OpenGraphSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(description = "The localized Open Graph's descriptions.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized Open Graph's descriptions."
+	)
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		if (_description_i18nSupplier != null) {
@@ -137,7 +139,9 @@ public class OpenGraphSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema(description = "The Open Graph's image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The Open Graph's image."
+	)
 	@Valid
 	public ContentDocument getImage() {
 		if (_imageSupplier != null) {
@@ -179,7 +183,9 @@ public class OpenGraphSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<ContentDocument> _imageSupplier;
 
-	@Schema(description = "The Open Graph's image alt.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The Open Graph's image alt."
+	)
 	public String getImageAlt() {
 		if (_imageAltSupplier != null) {
 			imageAlt = _imageAltSupplier.get();
@@ -220,7 +226,9 @@ public class OpenGraphSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageAltSupplier;
 
-	@Schema(description = "The localized Open Graph's image alts.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized Open Graph's image alts."
+	)
 	@Valid
 	public Map<String, String> getImageAlt_i18n() {
 		if (_imageAlt_i18nSupplier != null) {
@@ -263,7 +271,9 @@ public class OpenGraphSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _imageAlt_i18nSupplier;
 
-	@Schema(description = "The Open Graph's title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The Open Graph's title."
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -304,7 +314,9 @@ public class OpenGraphSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@Schema(description = "The localized Open Graph's titles.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized Open Graph's titles."
+	)
 	@Valid
 	public Map<String, String> getTitle_i18n() {
 		if (_title_i18nSupplier != null) {
@@ -475,8 +487,8 @@ public class OpenGraphSettings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings",
 		name = "x-class-name"
 	)

@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -56,7 +54,9 @@ public class FormConfig implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FormConfig.class, json);
 	}
 
-	@Schema(description = "The form reference.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The form reference."
+	)
 	@Valid
 	public Object getFormReference() {
 		if (_formReferenceSupplier != null) {
@@ -98,7 +98,9 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _formReferenceSupplier;
 
-	@Schema(description = "The definition for the success message of the form.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The definition for the success message of the form."
+	)
 	@Valid
 	public Object getFormSuccessSubmissionResult() {
 		if (_formSuccessSubmissionResultSupplier != null) {
@@ -146,10 +148,10 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _formSuccessSubmissionResultSupplier;
 
-	@JsonGetter("formType")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the page form instance is multi step or not."
 	)
+	@JsonGetter("formType")
 	@Valid
 	public FormType getFormType() {
 		if (_formTypeSupplier != null) {
@@ -204,7 +206,7 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<FormType> _formTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public LocalizationConfig getLocalizationConfig() {
 		if (_localizationConfigSupplier != null) {
@@ -247,7 +249,9 @@ public class FormConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<LocalizationConfig> _localizationConfigSupplier;
 
-	@Schema(description = "The definition for the number of steps of the form.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The definition for the number of steps of the form."
+	)
 	public Integer getNumberOfSteps() {
 		if (_numberOfStepsSupplier != null) {
 			numberOfSteps = _numberOfStepsSupplier.get();
@@ -409,8 +413,8 @@ public class FormConfig implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FormConfig",
 		name = "x-class-name"
 	)

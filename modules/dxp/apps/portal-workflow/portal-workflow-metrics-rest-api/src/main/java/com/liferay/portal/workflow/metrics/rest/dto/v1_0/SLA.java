@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class SLA implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SLA.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCalendarKey() {
 		if (_calendarKeySupplier != null) {
 			calendarKey = _calendarKeySupplier.get();
@@ -95,7 +93,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _calendarKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -136,7 +134,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -177,7 +175,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDuration() {
 		if (_durationSupplier != null) {
 			duration = _durationSupplier.get();
@@ -218,7 +216,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _durationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -257,7 +255,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -296,7 +294,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PauseNodeKeys getPauseNodeKeys() {
 		if (_pauseNodeKeysSupplier != null) {
@@ -338,7 +336,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<PauseNodeKeys> _pauseNodeKeysSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProcessId() {
 		if (_processIdSupplier != null) {
 			processId = _processIdSupplier.get();
@@ -379,7 +377,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public StartNodeKeys getStartNodeKeys() {
 		if (_startNodeKeysSupplier != null) {
@@ -421,7 +419,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<StartNodeKeys> _startNodeKeysSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -462,7 +460,7 @@ public class SLA implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public StopNodeKeys getStopNodeKeys() {
 		if (_stopNodeKeysSupplier != null) {
@@ -687,8 +685,8 @@ public class SLA implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA",
 		name = "x-class-name"
 	)

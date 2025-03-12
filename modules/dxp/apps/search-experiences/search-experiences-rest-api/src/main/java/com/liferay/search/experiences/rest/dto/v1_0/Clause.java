@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Clause implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Clause.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAdditive() {
 		if (_additiveSupplier != null) {
 			additive = _additiveSupplier.get();
@@ -92,7 +90,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _additiveSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Float getBoost() {
 		if (_boostSupplier != null) {
@@ -132,7 +130,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<Float> _boostSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getContext() {
 		if (_contextSupplier != null) {
 			context = _contextSupplier.get();
@@ -173,7 +171,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contextSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDisabled() {
 		if (_disabledSupplier != null) {
 			disabled = _disabledSupplier.get();
@@ -214,7 +212,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _disabledSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getField() {
 		if (_fieldSupplier != null) {
 			field = _fieldSupplier.get();
@@ -255,7 +253,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fieldSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -294,7 +292,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getOccur() {
 		if (_occurSupplier != null) {
 			occur = _occurSupplier.get();
@@ -335,7 +333,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _occurSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getParent() {
 		if (_parentSupplier != null) {
 			parent = _parentSupplier.get();
@@ -376,7 +374,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _parentSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getQuery() {
 		if (_querySupplier != null) {
@@ -418,7 +416,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _querySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -457,7 +455,7 @@ public class Clause implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -700,8 +698,8 @@ public class Clause implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Clause",
 		name = "x-class-name"
 	)

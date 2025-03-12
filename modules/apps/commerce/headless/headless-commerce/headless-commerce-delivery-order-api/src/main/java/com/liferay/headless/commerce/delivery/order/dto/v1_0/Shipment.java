@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -56,7 +54,7 @@ public class Shipment implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -97,7 +95,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema(example = "FedEx")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "FedEx")
 	public String getCarrier() {
 		if (_carrierSupplier != null) {
 			carrier = _carrierSupplier.get();
@@ -138,7 +136,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _carrierSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -179,7 +177,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getExpectedDate() {
 		if (_expectedDateSupplier != null) {
 			expectedDate = _expectedDateSupplier.get();
@@ -220,7 +218,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _expectedDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -262,7 +260,7 @@ public class Shipment implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -301,7 +299,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -342,7 +340,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getOrderExternalReferenceCode() {
 		if (_orderExternalReferenceCodeSupplier != null) {
 			orderExternalReferenceCode =
@@ -388,7 +386,7 @@ public class Shipment implements Serializable {
 	private Supplier<String> _orderExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getOrderId() {
 		if (_orderIdSupplier != null) {
 			orderId = _orderIdSupplier.get();
@@ -429,7 +427,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _orderIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ShippingAddress getShippingAddress() {
 		if (_shippingAddressSupplier != null) {
@@ -473,7 +471,7 @@ public class Shipment implements Serializable {
 	private Supplier<ShippingAddress> _shippingAddressSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getShippingAddressId() {
 		if (_shippingAddressIdSupplier != null) {
 			shippingAddressId = _shippingAddressIdSupplier.get();
@@ -514,7 +512,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shippingAddressIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getShippingDate() {
 		if (_shippingDateSupplier != null) {
 			shippingDate = _shippingDateSupplier.get();
@@ -556,7 +554,7 @@ public class Shipment implements Serializable {
 	private Supplier<Date> _shippingDateSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getShippingMethodId() {
 		if (_shippingMethodIdSupplier != null) {
 			shippingMethodId = _shippingMethodIdSupplier.get();
@@ -597,7 +595,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shippingMethodIdSupplier;
 
-	@Schema(example = "Standard Delivery")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Standard Delivery")
 	public String getShippingOptionName() {
 		if (_shippingOptionNameSupplier != null) {
 			shippingOptionName = _shippingOptionNameSupplier.get();
@@ -638,7 +636,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingOptionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getStatus() {
 		if (_statusSupplier != null) {
@@ -680,7 +678,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
-	@Schema(example = "123AD-asd")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "123AD-asd")
 	public String getTrackingNumber() {
 		if (_trackingNumberSupplier != null) {
 			trackingNumber = _trackingNumberSupplier.get();
@@ -721,7 +719,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _trackingNumberSupplier;
 
-	@Schema(example = "Standard Delivery")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Standard Delivery")
 	public String getTrackingURL() {
 		if (_trackingURLSupplier != null) {
 			trackingURL = _trackingURLSupplier.get();
@@ -762,7 +760,7 @@ public class Shipment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _trackingURLSupplier;
 
-	@Schema(example = "John")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "John")
 	public String getUserName() {
 		if (_userNameSupplier != null) {
 			userName = _userNameSupplier.get();
@@ -1098,8 +1096,8 @@ public class Shipment implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.order.dto.v1_0.Shipment",
 		name = "x-class-name"
 	)

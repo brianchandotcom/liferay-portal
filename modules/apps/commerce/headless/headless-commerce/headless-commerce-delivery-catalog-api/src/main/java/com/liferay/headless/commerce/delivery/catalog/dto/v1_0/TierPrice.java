@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -53,7 +51,7 @@ public class TierPrice implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TierPrice.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCurrency() {
 		if (_currencySupplier != null) {
 			currency = _currencySupplier.get();
@@ -94,7 +92,7 @@ public class TierPrice implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getPrice() {
 		if (_priceSupplier != null) {
 			price = _priceSupplier.get();
@@ -135,7 +133,7 @@ public class TierPrice implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _priceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPriceFormatted() {
 		if (_priceFormattedSupplier != null) {
 			priceFormatted = _priceFormattedSupplier.get();
@@ -176,7 +174,7 @@ public class TierPrice implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _priceFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getPricingQuantityPrice() {
 		if (_pricingQuantityPriceSupplier != null) {
 			pricingQuantityPrice = _pricingQuantityPriceSupplier.get();
@@ -217,7 +215,7 @@ public class TierPrice implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _pricingQuantityPriceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPricingQuantityPriceFormatted() {
 		if (_pricingQuantityPriceFormattedSupplier != null) {
 			pricingQuantityPriceFormatted =
@@ -263,7 +261,7 @@ public class TierPrice implements Serializable {
 	private Supplier<String> _pricingQuantityPriceFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "202.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "202.1")
 	@Valid
 	public BigDecimal getQuantity() {
 		if (_quantitySupplier != null) {
@@ -422,8 +420,8 @@ public class TierPrice implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.TierPrice",
 		name = "x-class-name"
 	)

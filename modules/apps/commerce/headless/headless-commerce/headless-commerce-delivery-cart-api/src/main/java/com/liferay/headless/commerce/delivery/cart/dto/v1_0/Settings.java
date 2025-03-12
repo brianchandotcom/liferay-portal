@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -52,7 +50,7 @@ public class Settings implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Settings.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BigDecimal[] getAllowedQuantities() {
 		if (_allowedQuantitiesSupplier != null) {
@@ -95,7 +93,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal[]> _allowedQuantitiesSupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getMaxQuantity() {
 		if (_maxQuantitySupplier != null) {
@@ -137,7 +135,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _maxQuantitySupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getMinQuantity() {
 		if (_minQuantitySupplier != null) {
@@ -179,7 +177,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _minQuantitySupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getMultipleQuantity() {
 		if (_multipleQuantitySupplier != null) {
@@ -311,8 +309,8 @@ public class Settings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.cart.dto.v1_0.Settings",
 		name = "x-class-name"
 	)

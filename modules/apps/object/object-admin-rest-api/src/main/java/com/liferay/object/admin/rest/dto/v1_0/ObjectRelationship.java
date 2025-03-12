@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class ObjectRelationship implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectRelationship.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,8 +94,8 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("deletionType")
-	@Schema
 	@Valid
 	public DeletionType getDeletionType() {
 		if (_deletionTypeSupplier != null) {
@@ -150,7 +148,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<DeletionType> _deletionTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEdge() {
 		if (_edgeSupplier != null) {
 			edge = _edgeSupplier.get();
@@ -189,7 +187,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _edgeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -230,7 +228,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -269,7 +267,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getLabel() {
 		if (_labelSupplier != null) {
@@ -311,7 +309,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -350,7 +348,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionExternalReferenceCode1() {
 		if (_objectDefinitionExternalReferenceCode1Supplier != null) {
 			objectDefinitionExternalReferenceCode1 =
@@ -397,7 +395,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCode1Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionExternalReferenceCode2() {
 		if (_objectDefinitionExternalReferenceCode2Supplier != null) {
 			objectDefinitionExternalReferenceCode2 =
@@ -444,7 +442,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCode2Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getObjectDefinitionId1() {
 		if (_objectDefinitionId1Supplier != null) {
 			objectDefinitionId1 = _objectDefinitionId1Supplier.get();
@@ -485,7 +483,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _objectDefinitionId1Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getObjectDefinitionId2() {
 		if (_objectDefinitionId2Supplier != null) {
 			objectDefinitionId2 = _objectDefinitionId2Supplier.get();
@@ -526,7 +524,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _objectDefinitionId2Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getObjectDefinitionModifiable2() {
 		if (_objectDefinitionModifiable2Supplier != null) {
 			objectDefinitionModifiable2 =
@@ -571,7 +569,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _objectDefinitionModifiable2Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionName2() {
 		if (_objectDefinitionName2Supplier != null) {
 			objectDefinitionName2 = _objectDefinitionName2Supplier.get();
@@ -612,7 +610,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionName2Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionScope2() {
 		if (_objectDefinitionScope2Supplier != null) {
 			objectDefinitionScope2 = _objectDefinitionScope2Supplier.get();
@@ -654,7 +652,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionScope2Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getObjectDefinitionSystem2() {
 		if (_objectDefinitionSystem2Supplier != null) {
 			objectDefinitionSystem2 = _objectDefinitionSystem2Supplier.get();
@@ -696,7 +694,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _objectDefinitionSystem2Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ObjectField getObjectField() {
 		if (_objectFieldSupplier != null) {
@@ -738,7 +736,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectField> _objectFieldSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getParameterObjectFieldId() {
 		if (_parameterObjectFieldIdSupplier != null) {
 			parameterObjectFieldId = _parameterObjectFieldIdSupplier.get();
@@ -779,7 +777,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parameterObjectFieldIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getParameterObjectFieldName() {
 		if (_parameterObjectFieldNameSupplier != null) {
 			parameterObjectFieldName = _parameterObjectFieldNameSupplier.get();
@@ -821,7 +819,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _parameterObjectFieldNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getReverse() {
 		if (_reverseSupplier != null) {
 			reverse = _reverseSupplier.get();
@@ -862,7 +860,7 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _reverseSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -903,8 +901,8 @@ public class ObjectRelationship implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("type")
-	@Schema
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -1277,8 +1275,8 @@ public class ObjectRelationship implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship",
 		name = "x-class-name"
 	)

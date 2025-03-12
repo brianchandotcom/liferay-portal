@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class UserRecommendation implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(UserRecommendation.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getAssetCategoryIds() {
 		if (_assetCategoryIdsSupplier != null) {
 			assetCategoryIds = _assetCategoryIdsSupplier.get();
@@ -95,7 +93,7 @@ public class UserRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _assetCategoryIdsSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -136,7 +134,7 @@ public class UserRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getJobId() {
 		if (_jobIdSupplier != null) {
 			jobId = _jobIdSupplier.get();
@@ -177,7 +175,9 @@ public class UserRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _jobIdSupplier;
 
-	@Schema(description = "The product identifier.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The product identifier."
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -218,7 +218,9 @@ public class UserRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema(description = "The recommendation rank.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The recommendation rank."
+	)
 	public Integer getRank() {
 		if (_rankSupplier != null) {
 			rank = _rankSupplier.get();
@@ -257,7 +259,9 @@ public class UserRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _rankSupplier;
 
-	@Schema(description = "The recommended product identifier.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The recommended product identifier."
+	)
 	public Long getRecommendedProductId() {
 		if (_recommendedProductIdSupplier != null) {
 			recommendedProductId = _recommendedProductIdSupplier.get();
@@ -298,7 +302,9 @@ public class UserRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _recommendedProductIdSupplier;
 
-	@Schema(description = "The recommendation score.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The recommendation score."
+	)
 	@Valid
 	public Float getScore() {
 		if (_scoreSupplier != null) {
@@ -475,8 +481,8 @@ public class UserRecommendation implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.UserRecommendation",
 		name = "x-class-name"
 	)

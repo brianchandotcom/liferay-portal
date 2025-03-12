@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -49,7 +47,7 @@ public class ContactConfiguration implements Serializable {
 			ContactConfiguration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSyncAllAccounts() {
 		if (_syncAllAccountsSupplier != null) {
 			syncAllAccounts = _syncAllAccountsSupplier.get();
@@ -90,7 +88,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _syncAllAccountsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSyncAllContacts() {
 		if (_syncAllContactsSupplier != null) {
 			syncAllContacts = _syncAllContactsSupplier.get();
@@ -131,7 +129,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _syncAllContactsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getSyncedAccountGroupIds() {
 		if (_syncedAccountGroupIdsSupplier != null) {
 			syncedAccountGroupIds = _syncedAccountGroupIdsSupplier.get();
@@ -173,7 +171,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _syncedAccountGroupIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getSyncedOrganizationIds() {
 		if (_syncedOrganizationIdsSupplier != null) {
 			syncedOrganizationIds = _syncedOrganizationIdsSupplier.get();
@@ -215,7 +213,7 @@ public class ContactConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _syncedOrganizationIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getSyncedUserGroupIds() {
 		if (_syncedUserGroupIdsSupplier != null) {
 			syncedUserGroupIds = _syncedUserGroupIdsSupplier.get();
@@ -391,8 +389,8 @@ public class ContactConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.settings.rest.dto.v1_0.ContactConfiguration",
 		name = "x-class-name"
 	)

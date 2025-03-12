@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class Name implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Name.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFamilyName() {
 		if (_familyNameSupplier != null) {
 			familyName = _familyNameSupplier.get();
@@ -89,7 +87,7 @@ public class Name implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _familyNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFormatted() {
 		if (_formattedSupplier != null) {
 			formatted = _formattedSupplier.get();
@@ -130,7 +128,7 @@ public class Name implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _formattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getGivenName() {
 		if (_givenNameSupplier != null) {
 			givenName = _givenNameSupplier.get();
@@ -171,7 +169,7 @@ public class Name implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _givenNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getHonorificPrefix() {
 		if (_honorificPrefixSupplier != null) {
 			honorificPrefix = _honorificPrefixSupplier.get();
@@ -212,7 +210,7 @@ public class Name implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _honorificPrefixSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getHonorificSuffix() {
 		if (_honorificSuffixSupplier != null) {
 			honorificSuffix = _honorificSuffixSupplier.get();
@@ -253,7 +251,7 @@ public class Name implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _honorificSuffixSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMiddleName() {
 		if (_middleNameSupplier != null) {
 			middleName = _middleNameSupplier.get();
@@ -422,8 +420,8 @@ public class Name implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.scim.rest.dto.v1_0.Name",
 		name = "x-class-name"
 	)

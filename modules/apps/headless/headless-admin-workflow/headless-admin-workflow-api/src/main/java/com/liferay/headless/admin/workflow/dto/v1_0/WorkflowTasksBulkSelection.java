@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 			WorkflowTasksBulkSelection.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAndOperator() {
 		if (_andOperatorSupplier != null) {
 			andOperator = _andOperatorSupplier.get();
@@ -95,7 +93,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _andOperatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getAssetPrimaryKeys() {
 		if (_assetPrimaryKeysSupplier != null) {
 			assetPrimaryKeys = _assetPrimaryKeysSupplier.get();
@@ -136,7 +134,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _assetPrimaryKeysSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetTitle() {
 		if (_assetTitleSupplier != null) {
 			assetTitle = _assetTitleSupplier.get();
@@ -177,7 +175,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getAssetTypes() {
 		if (_assetTypesSupplier != null) {
 			assetTypes = _assetTypesSupplier.get();
@@ -218,7 +216,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _assetTypesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getAssigneeIds() {
 		if (_assigneeIdsSupplier != null) {
 			assigneeIds = _assigneeIdsSupplier.get();
@@ -259,7 +257,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _assigneeIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getCompleted() {
 		if (_completedSupplier != null) {
 			completed = _completedSupplier.get();
@@ -300,7 +298,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateDueEnd() {
 		if (_dateDueEndSupplier != null) {
 			dateDueEnd = _dateDueEndSupplier.get();
@@ -341,7 +339,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateDueEndSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateDueStart() {
 		if (_dateDueStartSupplier != null) {
 			dateDueStart = _dateDueStartSupplier.get();
@@ -382,7 +380,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateDueStartSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSearchByRoles() {
 		if (_searchByRolesSupplier != null) {
 			searchByRoles = _searchByRolesSupplier.get();
@@ -423,7 +421,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _searchByRolesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSearchByUserRoles() {
 		if (_searchByUserRolesSupplier != null) {
 			searchByUserRoles = _searchByUserRolesSupplier.get();
@@ -464,7 +462,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _searchByUserRolesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getWorkflowDefinitionId() {
 		if (_workflowDefinitionIdSupplier != null) {
 			workflowDefinitionId = _workflowDefinitionIdSupplier.get();
@@ -505,7 +503,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _workflowDefinitionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getWorkflowInstanceIds() {
 		if (_workflowInstanceIdsSupplier != null) {
 			workflowInstanceIds = _workflowInstanceIdsSupplier.get();
@@ -546,7 +544,7 @@ public class WorkflowTasksBulkSelection implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _workflowInstanceIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getWorkflowTaskNames() {
 		if (_workflowTaskNamesSupplier != null) {
 			workflowTaskNames = _workflowTaskNamesSupplier.get();
@@ -850,8 +848,8 @@ public class WorkflowTasksBulkSelection implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTasksBulkSelection",
 		name = "x-class-name"
 	)

@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,8 +51,10 @@ public class PageRule implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageRule.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom name of a Page rule."
+	)
 	@JsonGetter("conditionType")
-	@Schema(description = "The custom name of a Page rule.")
 	@Valid
 	public ConditionType getConditionType() {
 		if (_conditionTypeSupplier != null) {
@@ -107,7 +107,9 @@ public class PageRule implements Serializable {
 	@JsonIgnore
 	private Supplier<ConditionType> _conditionTypeSupplier;
 
-	@Schema(description = "The page rule external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page rule external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -148,7 +150,9 @@ public class PageRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The custom name of a page rule.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom name of a page rule."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -187,7 +191,9 @@ public class PageRule implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "A list of actions of a page rule.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of actions of a page rule."
+	)
 	@Valid
 	public PageRuleAction[] getPageRuleActions() {
 		if (_pageRuleActionsSupplier != null) {
@@ -230,7 +236,9 @@ public class PageRule implements Serializable {
 	@JsonIgnore
 	private Supplier<PageRuleAction[]> _pageRuleActionsSupplier;
 
-	@Schema(description = "A list of conditions of a page rule.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of conditions of a page rule."
+	)
 	@Valid
 	public PageRuleCondition[] getPageRuleConditions() {
 		if (_pageRuleConditionsSupplier != null) {
@@ -397,8 +405,8 @@ public class PageRule implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageRule",
 		name = "x-class-name"
 	)

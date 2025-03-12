@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,9 @@ public class PostalAddress implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PostalAddress.class, json);
 	}
 
-	@Schema(description = "The address's country (e.g., USA).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's country (e.g., USA)."
+	)
 	public String getAddressCountry() {
 		if (_addressCountrySupplier != null) {
 			addressCountry = _addressCountrySupplier.get();
@@ -94,7 +94,7 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressCountrySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getAddressCountry_i18n() {
 		if (_addressCountry_i18nSupplier != null) {
@@ -139,7 +139,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _addressCountry_i18nSupplier;
 
-	@Schema(description = "The address's locality (e.g., city).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's locality (e.g., city)."
+	)
 	public String getAddressLocality() {
 		if (_addressLocalitySupplier != null) {
 			addressLocality = _addressLocalitySupplier.get();
@@ -180,7 +182,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressLocalitySupplier;
 
-	@Schema(description = "The address's region (e.g., state).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's region (e.g., state)."
+	)
 	public String getAddressRegion() {
 		if (_addressRegionSupplier != null) {
 			addressRegion = _addressRegionSupplier.get();
@@ -221,7 +225,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressRegionSupplier;
 
-	@Schema(description = "The address's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's type."
+	)
 	public String getAddressType() {
 		if (_addressTypeSupplier != null) {
 			addressType = _addressTypeSupplier.get();
@@ -262,7 +268,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressTypeSupplier;
 
-	@Schema(description = "The optional external key of this address.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The optional external key of this address."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -303,7 +311,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The address's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -342,7 +352,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The address's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -381,7 +393,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The phone number.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The phone number."
+	)
 	public String getPhoneNumber() {
 		if (_phoneNumberSupplier != null) {
 			phoneNumber = _phoneNumberSupplier.get();
@@ -422,7 +436,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
-	@Schema(description = "The address's postal code (e.g., zip code).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's postal code (e.g., zip code)."
+	)
 	public String getPostalCode() {
 		if (_postalCodeSupplier != null) {
 			postalCode = _postalCodeSupplier.get();
@@ -463,7 +479,7 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _postalCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that identifies whether this is the main address of the user/organization."
 	)
 	public Boolean getPrimary() {
@@ -508,7 +524,7 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The street address's first line (e.g., 1600 Amphitheatre Pkwy.)."
 	)
 	public String getStreetAddressLine1() {
@@ -553,7 +569,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _streetAddressLine1Supplier;
 
-	@Schema(description = "The street address's second line.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The street address's second line."
+	)
 	public String getStreetAddressLine2() {
 		if (_streetAddressLine2Supplier != null) {
 			streetAddressLine2 = _streetAddressLine2Supplier.get();
@@ -594,7 +612,9 @@ public class PostalAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _streetAddressLine2Supplier;
 
-	@Schema(description = "The street address's third line.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The street address's third line."
+	)
 	public String getStreetAddressLine3() {
 		if (_streetAddressLine3Supplier != null) {
 			streetAddressLine3 = _streetAddressLine3Supplier.get();
@@ -879,8 +899,8 @@ public class PostalAddress implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.PostalAddress",
 		name = "x-class-name"
 	)

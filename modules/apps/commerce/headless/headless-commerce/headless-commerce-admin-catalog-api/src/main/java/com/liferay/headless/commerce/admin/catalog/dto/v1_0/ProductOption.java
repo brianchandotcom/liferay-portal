@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ProductOption")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"fieldType", "key", "name", "optionId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"fieldType", "key", "name", "optionId"})
 @XmlRootElement(name = "ProductOption")
 public class ProductOption implements Serializable {
 
@@ -54,7 +54,7 @@ public class ProductOption implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ProductOption.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getCatalogId() {
 		if (_catalogIdSupplier != null) {
 			catalogId = _catalogIdSupplier.get();
@@ -95,7 +95,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -137,7 +137,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getDefinedExternally() {
 		if (_definedExternallySupplier != null) {
 			definedExternally = _definedExternallySupplier.get();
@@ -178,7 +178,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _definedExternallySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{hu_HU=Description HU, hr_HR=Description HR, en_US=Description}"
 	)
 	@Valid
@@ -223,7 +223,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getFacetable() {
 		if (_facetableSupplier != null) {
 			facetable = _facetableSupplier.get();
@@ -264,7 +264,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _facetableSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "checkbox, checkbox_multiple, date, numeric, radio, select"
 	)
 	public String getFieldType() {
@@ -309,7 +309,7 @@ public class ProductOption implements Serializable {
 	private Supplier<String> _fieldTypeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -348,7 +348,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getInfoItemServiceKey() {
 		if (_infoItemServiceKeySupplier != null) {
 			infoItemServiceKey = _infoItemServiceKeySupplier.get();
@@ -389,7 +389,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _infoItemServiceKeySupplier;
 
-	@Schema(example = "color")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "color")
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -429,7 +429,9 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(example = "{en_US=Color, hr_HR=Color HR, hu_HU=Color HU}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=Color, hr_HR=Color HR, hu_HU=Color HU}"
+	)
 	@Valid
 	public Map<String, String> getName() {
 		if (_nameSupplier != null) {
@@ -472,7 +474,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getOptionExternalReferenceCode() {
 		if (_optionExternalReferenceCodeSupplier != null) {
 			optionExternalReferenceCode =
@@ -518,7 +520,7 @@ public class ProductOption implements Serializable {
 	private Supplier<String> _optionExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30080")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30080")
 	public Long getOptionId() {
 		if (_optionIdSupplier != null) {
 			optionId = _optionIdSupplier.get();
@@ -560,7 +562,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _optionIdSupplier;
 
-	@Schema(example = "dynamic, static")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "dynamic, static")
 	public String getPriceType() {
 		if (_priceTypeSupplier != null) {
 			priceType = _priceTypeSupplier.get();
@@ -601,7 +603,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _priceTypeSupplier;
 
-	@Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -642,7 +644,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductOptionValue[] getProductOptionValues() {
 		if (_productOptionValuesSupplier != null) {
@@ -687,7 +689,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductOptionValue[]> _productOptionValuesSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -728,7 +730,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getSkuContributor() {
 		if (_skuContributorSupplier != null) {
 			skuContributor = _skuContributorSupplier.get();
@@ -769,7 +771,7 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _skuContributorSupplier;
 
-	@Schema(example = "22.50")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "22.50")
 	public String getTypeSettings() {
 		if (_typeSettingsSupplier != null) {
 			typeSettings = _typeSettingsSupplier.get();
@@ -1102,8 +1104,8 @@ public class ProductOption implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption",
 		name = "x-class-name"
 	)

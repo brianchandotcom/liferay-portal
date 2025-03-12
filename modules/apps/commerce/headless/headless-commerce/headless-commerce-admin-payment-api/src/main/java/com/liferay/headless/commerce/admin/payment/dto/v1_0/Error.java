@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -39,10 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Error")
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	requiredProperties = {"errorCode", "errorDescription", "message", "status"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Error")
 public class Error implements Serializable {
 
@@ -54,7 +52,9 @@ public class Error implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Error.class, json);
 	}
 
-	@Schema(description = "Internal error code mapping", example = "996")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal error code mapping", example = "996"
+	)
 	public Integer getErrorCode() {
 		if (_errorCodeSupplier != null) {
 			errorCode = _errorCodeSupplier.get();
@@ -96,7 +96,7 @@ public class Error implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _errorCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "Unable to find currency. Currency code should be expressed with 3-letter ISO 4217 format."
 	)
 	public String getErrorDescription() {
@@ -140,7 +140,7 @@ public class Error implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorDescriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "No CommerceCurrency exists with the key {groupId=41811, code=US Dollar}"
 	)
 	public String getMessage() {
@@ -184,7 +184,9 @@ public class Error implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
-	@Schema(description = "HTTP Status code", example = "404")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "HTTP Status code", example = "404"
+	)
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -314,8 +316,8 @@ public class Error implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.payment.dto.v1_0.Error",
 		name = "x-class-name"
 	)

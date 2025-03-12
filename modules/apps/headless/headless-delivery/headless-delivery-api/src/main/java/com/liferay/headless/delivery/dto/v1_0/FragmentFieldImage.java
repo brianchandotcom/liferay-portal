@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,9 @@ public class FragmentFieldImage implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FragmentFieldImage.class, json);
 	}
 
-	@Schema(description = "The fragment field's image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment field's image."
+	)
 	@Valid
 	public FragmentImage getFragmentImage() {
 		if (_fragmentImageSupplier != null) {
@@ -95,7 +95,9 @@ public class FragmentFieldImage implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentImage> _fragmentImageSupplier;
 
-	@Schema(description = "A link to a fragment.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A link to a fragment."
+	)
 	@Valid
 	public FragmentLink getFragmentLink() {
 		if (_fragmentLinkSupplier != null) {
@@ -193,8 +195,8 @@ public class FragmentFieldImage implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentFieldImage",
 		name = "x-class-name"
 	)

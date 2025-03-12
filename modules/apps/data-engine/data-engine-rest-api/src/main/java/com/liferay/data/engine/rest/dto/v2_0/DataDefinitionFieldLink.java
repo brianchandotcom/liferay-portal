@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class DataDefinitionFieldLink implements Serializable {
 			DataDefinitionFieldLink.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DataDefinition getDataDefinition() {
 		if (_dataDefinitionSupplier != null) {
@@ -94,7 +92,7 @@ public class DataDefinitionFieldLink implements Serializable {
 	@JsonIgnore
 	private Supplier<DataDefinition> _dataDefinitionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DataLayout[] getDataLayouts() {
 		if (_dataLayoutsSupplier != null) {
@@ -136,7 +134,7 @@ public class DataDefinitionFieldLink implements Serializable {
 	@JsonIgnore
 	private Supplier<DataLayout[]> _dataLayoutsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public DataListView[] getDataListViews() {
 		if (_dataListViewsSupplier != null) {
@@ -267,8 +265,8 @@ public class DataDefinitionFieldLink implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink",
 		name = "x-class-name"
 	)

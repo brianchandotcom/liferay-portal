@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -59,7 +57,7 @@ public class Instance implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Instance.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -100,7 +98,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetTitle() {
 		if (_assetTitleSupplier != null) {
 			assetTitle = _assetTitleSupplier.get();
@@ -141,7 +139,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getAssetTitle_i18n() {
 		if (_assetTitle_i18nSupplier != null) {
@@ -184,7 +182,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _assetTitle_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetType() {
 		if (_assetTypeSupplier != null) {
 			assetType = _assetTypeSupplier.get();
@@ -225,7 +223,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getAssetType_i18n() {
 		if (_assetType_i18nSupplier != null) {
@@ -268,7 +266,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _assetType_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Assignee[] getAssignees() {
 		if (_assigneesSupplier != null) {
@@ -310,7 +308,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Assignee[]> _assigneesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClassName() {
 		if (_classNameSupplier != null) {
 			className = _classNameSupplier.get();
@@ -351,7 +349,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getClassPK() {
 		if (_classPKSupplier != null) {
 			classPK = _classPKSupplier.get();
@@ -392,7 +390,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _classPKSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getCompleted() {
 		if (_completedSupplier != null) {
 			completed = _completedSupplier.get();
@@ -433,7 +431,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -475,7 +473,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCompletion() {
 		if (_dateCompletionSupplier != null) {
 			dateCompletion = _dateCompletionSupplier.get();
@@ -516,7 +514,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCompletionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -557,7 +555,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -598,7 +596,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDuration() {
 		if (_durationSupplier != null) {
 			duration = _durationSupplier.get();
@@ -639,7 +637,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _durationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -678,7 +676,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProcessId() {
 		if (_processIdSupplier != null) {
 			processId = _processIdSupplier.get();
@@ -719,7 +717,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _processIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getProcessVersion() {
 		if (_processVersionSupplier != null) {
 			processVersion = _processVersionSupplier.get();
@@ -760,7 +758,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _processVersionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public SLAResult[] getSlaResults() {
 		if (_slaResultsSupplier != null) {
@@ -802,8 +800,8 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<SLAResult[]> _slaResultsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("slaStatus")
-	@Schema
 	@Valid
 	public SLAStatus getSLAStatus() {
 		if (_slaStatusSupplier != null) {
@@ -856,7 +854,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<SLAStatus> _slaStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getTaskNames() {
 		if (_taskNamesSupplier != null) {
 			taskNames = _taskNamesSupplier.get();
@@ -897,7 +895,7 @@ public class Instance implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _taskNamesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Transition[] getTransitions() {
 		if (_transitionsSupplier != null) {
@@ -1302,8 +1300,8 @@ public class Instance implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance",
 		name = "x-class-name"
 	)

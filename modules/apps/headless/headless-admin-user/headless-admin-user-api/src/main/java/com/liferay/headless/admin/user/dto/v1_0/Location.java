@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class Location implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Location.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The organization's country. This follows the [`addressCountry`](https://schema.org/addressCountry) specification."
 	)
 	public String getAddressCountry() {
@@ -98,7 +96,9 @@ public class Location implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressCountrySupplier;
 
-	@Schema(description = "The organization's country isocode.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's country isocode."
+	)
 	public String getAddressCountryCode() {
 		if (_addressCountryCodeSupplier != null) {
 			addressCountryCode = _addressCountryCodeSupplier.get();
@@ -139,7 +139,7 @@ public class Location implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressCountryCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getAddressCountry_i18n() {
 		if (_addressCountry_i18nSupplier != null) {
@@ -184,7 +184,7 @@ public class Location implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _addressCountry_i18nSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The organization's region. This follows the [`addressRegion`](https://schema.org/addressRegion) specification."
 	)
 	public String getAddressRegion() {
@@ -229,7 +229,9 @@ public class Location implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressRegionSupplier;
 
-	@Schema(description = "The organization's region code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's region code."
+	)
 	public String getAddressRegionCode() {
 		if (_addressRegionCodeSupplier != null) {
 			addressRegionCode = _addressRegionCodeSupplier.get();
@@ -270,7 +272,9 @@ public class Location implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _addressRegionCodeSupplier;
 
-	@Schema(description = "The location's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The location's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -429,8 +433,8 @@ public class Location implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Location",
 		name = "x-class-name"
 	)

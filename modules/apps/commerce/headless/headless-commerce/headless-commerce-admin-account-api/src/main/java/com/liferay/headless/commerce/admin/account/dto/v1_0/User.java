@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -39,8 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("User")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"email", "firstName", "lastName"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"email", "firstName", "lastName"})
 @XmlRootElement(name = "User")
 public class User implements Serializable {
 
@@ -52,7 +52,7 @@ public class User implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(User.class, json);
 	}
 
-	@Schema(example = "joe.1@commerce.com")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "joe.1@commerce.com")
 	public String getEmail() {
 		if (_emailSupplier != null) {
 			email = _emailSupplier.get();
@@ -94,7 +94,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -135,7 +135,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFirstName() {
 		if (_firstNameSupplier != null) {
 			firstName = _firstNameSupplier.get();
@@ -178,7 +178,7 @@ public class User implements Serializable {
 	private Supplier<String> _firstNameSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -217,7 +217,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getJobTitle() {
 		if (_jobTitleSupplier != null) {
 			jobTitle = _jobTitleSupplier.get();
@@ -258,7 +258,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _jobTitleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLastName() {
 		if (_lastNameSupplier != null) {
 			lastName = _lastNameSupplier.get();
@@ -300,7 +300,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _lastNameSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getMale() {
 		if (_maleSupplier != null) {
 			male = _maleSupplier.get();
@@ -339,7 +339,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _maleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getMiddleName() {
 		if (_middleNameSupplier != null) {
 			middleName = _middleNameSupplier.get();
@@ -380,7 +380,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _middleNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getRoles() {
 		if (_rolesSupplier != null) {
 			roles = _rolesSupplier.get();
@@ -599,8 +599,8 @@ public class User implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.User",
 		name = "x-class-name"
 	)

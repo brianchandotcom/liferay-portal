@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class ProductTaxConfiguration implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -91,7 +89,7 @@ public class ProductTaxConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "taxCategoryName")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "taxCategoryName")
 	public String getTaxCategory() {
 		if (_taxCategorySupplier != null) {
 			taxCategory = _taxCategorySupplier.get();
@@ -132,7 +130,7 @@ public class ProductTaxConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _taxCategorySupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getTaxable() {
 		if (_taxableSupplier != null) {
 			taxable = _taxableSupplier.get();
@@ -246,8 +244,8 @@ public class ProductTaxConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class RolePermission implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(RolePermission.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getActionIds() {
 		if (_actionIdsSupplier != null) {
 			actionIds = _actionIdsSupplier.get();
@@ -89,7 +87,7 @@ public class RolePermission implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _actionIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -128,7 +126,7 @@ public class RolePermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -169,7 +167,7 @@ public class RolePermission implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPrimaryKey() {
 		if (_primaryKeySupplier != null) {
 			primaryKey = _primaryKeySupplier.get();
@@ -210,7 +208,7 @@ public class RolePermission implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _primaryKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getResourceName() {
 		if (_resourceNameSupplier != null) {
 			resourceName = _resourceNameSupplier.get();
@@ -251,7 +249,7 @@ public class RolePermission implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _resourceNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getRoleId() {
 		if (_roleIdSupplier != null) {
 			roleId = _roleIdSupplier.get();
@@ -292,7 +290,7 @@ public class RolePermission implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getScope() {
 		if (_scopeSupplier != null) {
 			scope = _scopeSupplier.get();
@@ -473,8 +471,8 @@ public class RolePermission implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.RolePermission",
 		name = "x-class-name"
 	)

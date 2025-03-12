@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class HighlightField implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(HighlightField.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getFragment_offset() {
 		if (_fragment_offsetSupplier != null) {
 			fragment_offset = _fragment_offsetSupplier.get();
@@ -89,7 +87,7 @@ public class HighlightField implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _fragment_offsetSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getFragment_size() {
 		if (_fragment_sizeSupplier != null) {
 			fragment_size = _fragment_sizeSupplier.get();
@@ -130,7 +128,7 @@ public class HighlightField implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _fragment_sizeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getNumber_of_fragments() {
 		if (_number_of_fragmentsSupplier != null) {
 			number_of_fragments = _number_of_fragmentsSupplier.get();
@@ -239,8 +237,8 @@ public class HighlightField implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.HighlightField",
 		name = "x-class-name"
 	)

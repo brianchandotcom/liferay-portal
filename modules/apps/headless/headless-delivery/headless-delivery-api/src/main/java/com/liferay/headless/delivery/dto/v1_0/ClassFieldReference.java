@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -38,8 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ClassFieldReference")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"className", "fieldName", "fieldValue"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"className", "fieldName", "fieldValue"})
 @XmlRootElement(name = "ClassFieldReference")
 public class ClassFieldReference implements Serializable {
 
@@ -52,7 +52,7 @@ public class ClassFieldReference implements Serializable {
 			ClassFieldReference.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClassName() {
 		if (_classNameSupplier != null) {
 			className = _classNameSupplier.get();
@@ -94,7 +94,7 @@ public class ClassFieldReference implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _classNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFieldName() {
 		if (_fieldNameSupplier != null) {
 			fieldName = _fieldNameSupplier.get();
@@ -136,7 +136,7 @@ public class ClassFieldReference implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fieldNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFieldValue() {
 		if (_fieldValueSupplier != null) {
 			fieldValue = _fieldValueSupplier.get();
@@ -258,8 +258,8 @@ public class ClassFieldReference implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ClassFieldReference",
 		name = "x-class-name"
 	)

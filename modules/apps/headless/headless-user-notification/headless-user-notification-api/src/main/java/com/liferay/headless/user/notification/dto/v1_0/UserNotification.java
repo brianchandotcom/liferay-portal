@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class UserNotification implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(UserNotification.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -104,7 +102,9 @@ public class UserNotification implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "The user notification's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user notification's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -145,7 +145,9 @@ public class UserNotification implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The user notification's identifier.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user notification's identifier."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -184,7 +186,9 @@ public class UserNotification implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The user notification's message.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user notification's message."
+	)
 	public String getMessage() {
 		if (_messageSupplier != null) {
 			message = _messageSupplier.get();
@@ -225,7 +229,7 @@ public class UserNotification implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _messageSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether this user notification has been read."
 	)
 	public Boolean getRead() {
@@ -268,7 +272,9 @@ public class UserNotification implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _readSupplier;
 
-	@Schema(description = "User notification's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "User notification's type."
+	)
 	public Integer getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -422,8 +428,8 @@ public class UserNotification implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.user.notification.dto.v1_0.UserNotification",
 		name = "x-class-name"
 	)

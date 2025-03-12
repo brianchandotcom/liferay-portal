@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -56,7 +54,7 @@ public class SamlProvider implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SamlProvider.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEnabled() {
 		if (_enabledSupplier != null) {
 			enabled = _enabledSupplier.get();
@@ -97,7 +95,7 @@ public class SamlProvider implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _enabledSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getEntityId() {
 		if (_entityIdSupplier != null) {
 			entityId = _entityIdSupplier.get();
@@ -138,7 +136,7 @@ public class SamlProvider implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _entityIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Idp getIdp() {
 		if (_idpSupplier != null) {
@@ -178,7 +176,7 @@ public class SamlProvider implements Serializable {
 	@JsonIgnore
 	private Supplier<Idp> _idpSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getKeyStoreCredentialPassword() {
 		if (_keyStoreCredentialPasswordSupplier != null) {
 			keyStoreCredentialPassword =
@@ -223,8 +221,8 @@ public class SamlProvider implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keyStoreCredentialPasswordSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("role")
-	@Schema
 	@Valid
 	public Role getRole() {
 		if (_roleSupplier != null) {
@@ -275,7 +273,7 @@ public class SamlProvider implements Serializable {
 	@JsonIgnore
 	private Supplier<Role> _roleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSignMetadata() {
 		if (_signMetadataSupplier != null) {
 			signMetadata = _signMetadataSupplier.get();
@@ -316,7 +314,7 @@ public class SamlProvider implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _signMetadataSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Sp getSp() {
 		if (_spSupplier != null) {
@@ -356,7 +354,7 @@ public class SamlProvider implements Serializable {
 	@JsonIgnore
 	private Supplier<Sp> _spSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSslRequired() {
 		if (_sslRequiredSupplier != null) {
 			sslRequired = _sslRequiredSupplier.get();
@@ -537,8 +535,8 @@ public class SamlProvider implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.saml.admin.rest.dto.v1_0.SamlProvider",
 		name = "x-class-name"
 	)

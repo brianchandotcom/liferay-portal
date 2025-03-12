@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -39,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Category")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"id"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"id"})
 @XmlRootElement(name = "Category")
 public class Category implements Serializable {
 
@@ -52,7 +50,7 @@ public class Category implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Category.class, json);
 	}
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -94,7 +92,7 @@ public class Category implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -134,7 +132,7 @@ public class Category implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "Category Name")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "Category Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -173,7 +171,7 @@ public class Category implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -214,7 +212,7 @@ public class Category implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(example = "Default Vocabulary")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Default Vocabulary")
 	public String getVocabulary() {
 		if (_vocabularySupplier != null) {
 			vocabulary = _vocabularySupplier.get();
@@ -359,8 +357,8 @@ public class Category implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.Category",
 		name = "x-class-name"
 	)

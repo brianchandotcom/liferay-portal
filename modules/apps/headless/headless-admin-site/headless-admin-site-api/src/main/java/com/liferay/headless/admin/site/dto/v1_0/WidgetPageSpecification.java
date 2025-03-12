@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,9 @@ public class WidgetPageSpecification
 			WidgetPageSpecification.class, json);
 	}
 
-	@Schema(description = "The sections of a widget page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The sections of a widget page."
+	)
 	@Valid
 	public WidgetPageSection[] getWidgetPageSections() {
 		if (_widgetPageSectionsSupplier != null) {
@@ -213,8 +213,8 @@ public class WidgetPageSpecification
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification",
 		name = "x-class-name"
 	)

@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class SearchResponse implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SearchResponse.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map[] getErrors() {
 		if (_errorsSupplier != null) {
@@ -93,7 +91,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<Map[]> _errorsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getPage() {
 		if (_pageSupplier != null) {
 			page = _pageSupplier.get();
@@ -132,7 +130,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _pageSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getPageSize() {
 		if (_pageSizeSupplier != null) {
 			pageSize = _pageSizeSupplier.get();
@@ -173,7 +171,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _pageSizeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getRequest() {
 		if (_requestSupplier != null) {
@@ -215,7 +213,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _requestSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getRequestString() {
 		if (_requestStringSupplier != null) {
 			requestString = _requestStringSupplier.get();
@@ -256,7 +254,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _requestStringSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getResponse() {
 		if (_responseSupplier != null) {
@@ -298,7 +296,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _responseSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getResponseString() {
 		if (_responseStringSupplier != null) {
 			responseString = _responseStringSupplier.get();
@@ -339,7 +337,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _responseStringSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public SearchHits getSearchHits() {
 		if (_searchHitsSupplier != null) {
@@ -381,7 +379,7 @@ public class SearchResponse implements Serializable {
 	@JsonIgnore
 	private Supplier<SearchHits> _searchHitsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public SearchRequest getSearchRequest() {
 		if (_searchRequestSupplier != null) {
@@ -602,8 +600,8 @@ public class SearchResponse implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.SearchResponse",
 		name = "x-class-name"
 	)

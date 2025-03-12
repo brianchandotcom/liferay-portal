@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,9 @@ public class PageRuleAction implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageRuleAction.class, json);
 	}
 
-	@Schema(description = "The page rule action's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page rule action's ID."
+	)
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -90,7 +90,9 @@ public class PageRuleAction implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(description = "The page rule condition's item ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page rule condition's item ID."
+	)
 	public String getItemId() {
 		if (_itemIdSupplier != null) {
 			itemId = _itemIdSupplier.get();
@@ -131,7 +133,9 @@ public class PageRuleAction implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _itemIdSupplier;
 
-	@Schema(description = "The page rule action's type.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page rule action's type."
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -250,8 +254,8 @@ public class PageRuleAction implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageRuleAction",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,9 @@ public class RowViewportDefinition implements Serializable {
 			RowViewportDefinition.class, json);
 	}
 
-	@Schema(description = "The number of modules per row.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of modules per row."
+	)
 	public Integer getModulesPerRow() {
 		if (_modulesPerRowSupplier != null) {
 			modulesPerRow = _modulesPerRowSupplier.get();
@@ -93,7 +93,7 @@ public class RowViewportDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _modulesPerRowSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the row viewport has reverse order."
 	)
 	public Boolean getReverseOrder() {
@@ -138,7 +138,9 @@ public class RowViewportDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _reverseOrderSupplier;
 
-	@Schema(description = "The vertical aligment property of the row viewport.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The vertical aligment property of the row viewport."
+	)
 	public String getVerticalAlignment() {
 		if (_verticalAlignmentSupplier != null) {
 			verticalAlignment = _verticalAlignmentSupplier.get();
@@ -254,8 +256,8 @@ public class RowViewportDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewportDefinition",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class ObjectView implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectView.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -97,7 +95,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -138,7 +136,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -179,7 +177,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getDefaultObjectView() {
 		if (_defaultObjectViewSupplier != null) {
 			defaultObjectView = _defaultObjectViewSupplier.get();
@@ -220,7 +218,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _defaultObjectViewSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -259,7 +257,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName() {
 		if (_nameSupplier != null) {
@@ -301,7 +299,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionExternalReferenceCode() {
 		if (_objectDefinitionExternalReferenceCodeSupplier != null) {
 			objectDefinitionExternalReferenceCode =
@@ -348,7 +346,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getObjectDefinitionId() {
 		if (_objectDefinitionIdSupplier != null) {
 			objectDefinitionId = _objectDefinitionIdSupplier.get();
@@ -389,7 +387,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _objectDefinitionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ObjectViewColumn[] getObjectViewColumns() {
 		if (_objectViewColumnsSupplier != null) {
@@ -432,7 +430,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectViewColumn[]> _objectViewColumnsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ObjectViewFilterColumn[] getObjectViewFilterColumns() {
 		if (_objectViewFilterColumnsSupplier != null) {
@@ -477,7 +475,7 @@ public class ObjectView implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectViewFilterColumn[]> _objectViewFilterColumnsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ObjectViewSortColumn[] getObjectViewSortColumns() {
 		if (_objectViewSortColumnsSupplier != null) {
@@ -734,8 +732,8 @@ public class ObjectView implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.object.admin.rest.dto.v1_0.ObjectView",
 		name = "x-class-name"
 	)

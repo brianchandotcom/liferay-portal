@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -56,7 +54,7 @@ public class ProductShippingConfiguration implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "202")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "202")
 	@Valid
 	public BigDecimal getDepth() {
 		if (_depthSupplier != null) {
@@ -98,7 +96,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _depthSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getFreeShipping() {
 		if (_freeShippingSupplier != null) {
 			freeShipping = _freeShippingSupplier.get();
@@ -140,7 +138,7 @@ public class ProductShippingConfiguration implements Serializable {
 	private Supplier<Boolean> _freeShippingSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "202")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "202")
 	@Valid
 	public BigDecimal getHeight() {
 		if (_heightSupplier != null) {
@@ -182,7 +180,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _heightSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getShippable() {
 		if (_shippableSupplier != null) {
 			shippable = _shippableSupplier.get();
@@ -224,7 +222,7 @@ public class ProductShippingConfiguration implements Serializable {
 	private Supplier<Boolean> _shippableSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "202")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "202")
 	@Valid
 	public BigDecimal getShippingExtraPrice() {
 		if (_shippingExtraPriceSupplier != null) {
@@ -267,7 +265,7 @@ public class ProductShippingConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingExtraPriceSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getShippingSeparately() {
 		if (_shippingSeparatelySupplier != null) {
 			shippingSeparately = _shippingSeparatelySupplier.get();
@@ -309,7 +307,7 @@ public class ProductShippingConfiguration implements Serializable {
 	private Supplier<Boolean> _shippingSeparatelySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "202")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "202")
 	@Valid
 	public BigDecimal getWeight() {
 		if (_weightSupplier != null) {
@@ -352,7 +350,7 @@ public class ProductShippingConfiguration implements Serializable {
 	private Supplier<BigDecimal> _weightSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "202")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "202")
 	@Valid
 	public BigDecimal getWidth() {
 		if (_widthSupplier != null) {
@@ -524,8 +522,8 @@ public class ProductShippingConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration",
 		name = "x-class-name"
 	)

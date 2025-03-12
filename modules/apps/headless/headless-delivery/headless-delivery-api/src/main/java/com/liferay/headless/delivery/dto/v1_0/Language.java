@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,9 @@ public class Language implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Language.class, json);
 	}
 
-	@Schema(description = "The language's contry name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The language's contry name."
+	)
 	public String getCountryName() {
 		if (_countryNameSupplier != null) {
 			countryName = _countryNameSupplier.get();
@@ -94,7 +94,9 @@ public class Language implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _countryNameSupplier;
 
-	@Schema(description = "The localized language's country name values.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized language's country name values."
+	)
 	@Valid
 	public Map<String, String> getCountryName_i18n() {
 		if (_countryName_i18nSupplier != null) {
@@ -137,7 +139,9 @@ public class Language implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _countryName_i18nSupplier;
 
-	@Schema(description = "The language's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The language's ID."
+	)
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -176,7 +180,7 @@ public class Language implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the language has benn marked as default language."
 	)
 	public Boolean getMarkedAsDefault() {
@@ -221,7 +225,9 @@ public class Language implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _markedAsDefaultSupplier;
 
-	@Schema(description = "The language's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The language's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -260,7 +266,9 @@ public class Language implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The localized language's name values.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized language's name values."
+	)
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -419,8 +427,8 @@ public class Language implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Language",
 		name = "x-class-name"
 	)

@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class TypeOptions implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TypeOptions.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getBoost() {
 		if (_boostSupplier != null) {
 			boost = _boostSupplier.get();
@@ -92,7 +90,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _boostSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFormat() {
 		if (_formatSupplier != null) {
 			format = _formatSupplier.get();
@@ -133,7 +131,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _formatSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getMax() {
 		if (_maxSupplier != null) {
@@ -173,7 +171,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _maxSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getMin() {
 		if (_minSupplier != null) {
@@ -213,7 +211,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _minSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getNullable() {
 		if (_nullableSupplier != null) {
 			nullable = _nullableSupplier.get();
@@ -254,7 +252,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _nullableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Option[] getOptions() {
 		if (_optionsSupplier != null) {
@@ -296,7 +294,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<Option[]> _optionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -337,7 +335,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getStep() {
 		if (_stepSupplier != null) {
@@ -377,7 +375,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _stepSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUnit() {
 		if (_unitSupplier != null) {
 			unit = _unitSupplier.get();
@@ -416,7 +414,7 @@ public class TypeOptions implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _unitSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUnitSuffix() {
 		if (_unitSuffixSupplier != null) {
 			unitSuffix = _unitSuffixSupplier.get();
@@ -661,8 +659,8 @@ public class TypeOptions implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.TypeOptions",
 		name = "x-class-name"
 	)

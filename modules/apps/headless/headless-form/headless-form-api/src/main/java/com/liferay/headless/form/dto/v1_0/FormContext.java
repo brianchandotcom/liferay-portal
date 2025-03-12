@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,9 @@ public class FormContext implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FormContext.class, json);
 	}
 
-	@Schema(description = "https://www.schema.org/FormFieldValue")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "https://www.schema.org/FormFieldValue"
+	)
 	@Valid
 	public FormFieldValue[] getFormFieldValues() {
 		if (_formFieldValuesSupplier != null) {
@@ -95,7 +95,9 @@ public class FormContext implements Serializable {
 	@JsonIgnore
 	private Supplier<FormFieldValue[]> _formFieldValuesSupplier;
 
-	@Schema(description = "https://www.schema.org/FormPageContext")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "https://www.schema.org/FormPageContext"
+	)
 	@Valid
 	public FormPageContext[] getFormPageContexts() {
 		if (_formPageContextsSupplier != null) {
@@ -138,7 +140,7 @@ public class FormContext implements Serializable {
 	@JsonIgnore
 	private Supplier<FormPageContext[]> _formPageContextsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getReadOnly() {
 		if (_readOnlySupplier != null) {
 			readOnly = _readOnlySupplier.get();
@@ -179,7 +181,7 @@ public class FormContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShowRequiredFieldsWarning() {
 		if (_showRequiredFieldsWarningSupplier != null) {
 			showRequiredFieldsWarning =
@@ -224,7 +226,7 @@ public class FormContext implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _showRequiredFieldsWarningSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShowSubmitButton() {
 		if (_showSubmitButtonSupplier != null) {
 			showSubmitButton = _showSubmitButtonSupplier.get();
@@ -377,8 +379,8 @@ public class FormContext implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormContext",
 		name = "x-class-name"
 	)

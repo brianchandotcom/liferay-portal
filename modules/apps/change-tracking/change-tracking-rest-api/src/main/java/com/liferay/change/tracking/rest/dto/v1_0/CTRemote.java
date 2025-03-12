@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class CTRemote implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CTRemote.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -100,7 +98,7 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClientId() {
 		if (_clientIdSupplier != null) {
 			clientId = _clientIdSupplier.get();
@@ -141,7 +139,7 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _clientIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getClientSecret() {
 		if (_clientSecretSupplier != null) {
 			clientSecret = _clientSecretSupplier.get();
@@ -182,7 +180,9 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _clientSecretSupplier;
 
-	@Schema(description = "The remote's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The remote's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -223,7 +223,7 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time any of the remote's fields were changed."
 	)
 	public Date getDateModified() {
@@ -268,7 +268,7 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -309,7 +309,7 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -348,7 +348,7 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -387,7 +387,9 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The remote's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The remote's creator."
+	)
 	public String getOwnerName() {
 		if (_ownerNameSupplier != null) {
 			ownerName = _ownerNameSupplier.get();
@@ -428,7 +430,7 @@ public class CTRemote implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _ownerNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -654,8 +656,8 @@ public class CTRemote implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.change.tracking.rest.dto.v1_0.CTRemote",
 		name = "x-class-name"
 	)

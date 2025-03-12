@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,9 @@ public class Settings implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Settings.class, json);
 	}
 
-	@Schema(description = "The page specification's color scheme name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page specification's color scheme name."
+	)
 	public String getColorSchemeName() {
 		if (_colorSchemeNameSupplier != null) {
 			colorSchemeName = _colorSchemeNameSupplier.get();
@@ -95,7 +95,9 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _colorSchemeNameSupplier;
 
-	@Schema(description = "The page specification's CSS.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page specification's CSS."
+	)
 	public String getCss() {
 		if (_cssSupplier != null) {
 			css = _cssSupplier.get();
@@ -134,7 +136,9 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _cssSupplier;
 
-	@Schema(description = "The FavIcon of the page specification.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The FavIcon of the page specification."
+	)
 	@Valid
 	public Object getFavIcon() {
 		if (_favIconSupplier != null) {
@@ -176,7 +180,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _favIconSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The client extensions for global CSS associated to the page."
 	)
 	@Valid
@@ -226,7 +230,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<ClientExtension[]> _globalCSSClientExtensionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The client extensions for global JS associated to the page."
 	)
 	@Valid
@@ -275,7 +279,9 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<ClientExtension[]> _globalJSClientExtensionsSupplier;
 
-	@Schema(description = "The page specification's JavaScript.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page specification's JavaScript."
+	)
 	public String getJavascript() {
 		if (_javascriptSupplier != null) {
 			javascript = _javascriptSupplier.get();
@@ -316,7 +322,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _javascriptSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A reference to the page specification's master page. This property is not applied if the page specification belongs to a master page."
 	)
 	@Valid
@@ -367,7 +373,7 @@ public class Settings implements Serializable {
 	private Supplier<ItemExternalReference>
 		_masterPageItemExternalReferenceSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A reference to the style book that is applied to the page specification."
 	)
 	@Valid
@@ -418,7 +424,7 @@ public class Settings implements Serializable {
 	private Supplier<ItemExternalReference>
 		_styleBookItemExternalReferenceSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The client extension for the theme CSS of a page specification."
 	)
 	@Valid
@@ -467,7 +473,9 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<ClientExtension> _themeCSSClientExtensionSupplier;
 
-	@Schema(description = "The page specification's theme name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page specification's theme name."
+	)
 	public String getThemeName() {
 		if (_themeNameSupplier != null) {
 			themeName = _themeNameSupplier.get();
@@ -508,7 +516,9 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _themeNameSupplier;
 
-	@Schema(description = "The page specification's theme settings.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page specification's theme settings."
+	)
 	@Valid
 	public Map<String, String> getThemeSettings() {
 		if (_themeSettingsSupplier != null) {
@@ -551,7 +561,7 @@ public class Settings implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _themeSettingsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The client extension for the theme spritemap of a page specification."
 	)
 	@Valid
@@ -828,8 +838,8 @@ public class Settings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.Settings",
 		name = "x-class-name"
 	)

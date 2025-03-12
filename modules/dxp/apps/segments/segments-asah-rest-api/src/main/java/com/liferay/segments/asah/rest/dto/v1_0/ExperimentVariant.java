@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class ExperimentVariant implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ExperimentVariant.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -92,7 +90,7 @@ public class ExperimentVariant implements Serializable {
 
 	@DecimalMax("99")
 	@DecimalMin("1")
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getTrafficSplit() {
 		if (_trafficSplitSupplier != null) {
 			trafficSplit = _trafficSplitSupplier.get();
@@ -193,8 +191,8 @@ public class ExperimentVariant implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.segments.asah.rest.dto.v1_0.ExperimentVariant",
 		name = "x-class-name"
 	)

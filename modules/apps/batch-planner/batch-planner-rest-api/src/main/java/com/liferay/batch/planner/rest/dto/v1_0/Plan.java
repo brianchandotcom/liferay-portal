@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Plan implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Plan.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -91,7 +89,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getExport() {
 		if (_exportSupplier != null) {
 			export = _exportSupplier.get();
@@ -132,7 +130,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _exportSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalType() {
 		if (_externalTypeSupplier != null) {
 			externalType = _externalTypeSupplier.get();
@@ -173,7 +171,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalURL() {
 		if (_externalURLSupplier != null) {
 			externalURL = _externalURLSupplier.get();
@@ -214,7 +212,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalURLSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -253,7 +251,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getInternalClassName() {
 		if (_internalClassNameSupplier != null) {
 			internalClassName = _internalClassNameSupplier.get();
@@ -294,7 +292,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _internalClassNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getInternalClassNameKey() {
 		if (_internalClassNameKeySupplier != null) {
 			internalClassNameKey = _internalClassNameKeySupplier.get();
@@ -335,7 +333,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _internalClassNameKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Mapping[] getMappings() {
 		if (_mappingsSupplier != null) {
@@ -377,7 +375,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Mapping[]> _mappingsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -416,7 +414,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Policy[] getPolicies() {
 		if (_policiesSupplier != null) {
@@ -458,7 +456,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Policy[]> _policiesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getSize() {
 		if (_sizeSupplier != null) {
 			size = _sizeSupplier.get();
@@ -497,7 +495,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _sizeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -538,7 +536,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _statusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTaskItemDelegateName() {
 		if (_taskItemDelegateNameSupplier != null) {
 			taskItemDelegateName = _taskItemDelegateNameSupplier.get();
@@ -579,7 +577,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _taskItemDelegateNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getTemplate() {
 		if (_templateSupplier != null) {
 			template = _templateSupplier.get();
@@ -620,7 +618,7 @@ public class Plan implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _templateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getTotal() {
 		if (_totalSupplier != null) {
 			total = _totalSupplier.get();
@@ -917,8 +915,8 @@ public class Plan implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.batch.planner.rest.dto.v1_0.Plan",
 		name = "x-class-name"
 	)

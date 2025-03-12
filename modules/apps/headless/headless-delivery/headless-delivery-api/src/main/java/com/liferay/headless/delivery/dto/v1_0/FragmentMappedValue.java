@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,9 @@ public class FragmentMappedValue implements Serializable {
 			FragmentMappedValue.class, json);
 	}
 
-	@Schema(description = "The default value of the fragment mapped value.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The default value of the fragment mapped value."
+	)
 	@Valid
 	public FragmentInlineValue getDefaultFragmentInlineValue() {
 		if (_defaultFragmentInlineValueSupplier != null) {
@@ -102,7 +102,7 @@ public class FragmentMappedValue implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentInlineValue> _defaultFragmentInlineValueSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by defaultFragmentInlineValue"
 	)
@@ -150,7 +150,9 @@ public class FragmentMappedValue implements Serializable {
 	@JsonIgnore
 	private Supplier<DefaultValue> _defaultValueSupplier;
 
-	@Schema(description = "The mapping of the fragment mapped value.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The mapping of the fragment mapped value."
+	)
 	@Valid
 	public Mapping getMapping() {
 		if (_mappingSupplier != null) {
@@ -261,8 +263,8 @@ public class FragmentMappedValue implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentMappedValue",
 		name = "x-class-name"
 	)

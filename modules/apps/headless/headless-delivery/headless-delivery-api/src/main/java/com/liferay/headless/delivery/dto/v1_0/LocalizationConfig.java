@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,9 @@ public class LocalizationConfig implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(LocalizationConfig.class, json);
 	}
 
-	@Schema(description = "The message displayed in the unlocalized fields.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The message displayed in the unlocalized fields."
+	)
 	@Valid
 	public FragmentInlineValue getUnlocalizedFieldsMessage() {
 		if (_unlocalizedFieldsMessageSupplier != null) {
@@ -100,8 +100,10 @@ public class LocalizationConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentInlineValue> _unlocalizedFieldsMessageSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The state of the unlocalized fields."
+	)
 	@JsonGetter("unlocalizedFieldsState")
-	@Schema(description = "The state of the unlocalized fields.")
 	@Valid
 	public UnlocalizedFieldsState getUnlocalizedFieldsState() {
 		if (_unlocalizedFieldsStateSupplier != null) {
@@ -220,8 +222,8 @@ public class LocalizationConfig implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.LocalizationConfig",
 		name = "x-class-name"
 	)

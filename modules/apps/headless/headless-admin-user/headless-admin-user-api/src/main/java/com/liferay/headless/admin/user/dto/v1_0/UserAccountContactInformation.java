@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,7 @@ public class UserAccountContactInformation implements Serializable {
 			UserAccountContactInformation.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the user's email addresses, with one optionally marked as primary."
 	)
 	@Valid
@@ -102,7 +100,9 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<EmailAddress[]> _emailAddressesSupplier;
 
-	@Schema(description = "The user's Facebook account.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's Facebook account."
+	)
 	public String getFacebook() {
 		if (_facebookSupplier != null) {
 			facebook = _facebookSupplier.get();
@@ -143,7 +143,9 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _facebookSupplier;
 
-	@Schema(description = "The ID of the `contactInformation`.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the `contactInformation`."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -182,7 +184,9 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The user's Jabber handle.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's Jabber handle."
+	)
 	public String getJabber() {
 		if (_jabberSupplier != null) {
 			jabber = _jabberSupplier.get();
@@ -223,7 +227,7 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _jabberSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of user's postal addresses, with one optionally marked as primary."
 	)
 	@Valid
@@ -270,7 +274,9 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<PostalAddress[]> _postalAddressesSupplier;
 
-	@Schema(description = "The user's Skype handle.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's Skype handle."
+	)
 	public String getSkype() {
 		if (_skypeSupplier != null) {
 			skype = _skypeSupplier.get();
@@ -311,7 +317,9 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skypeSupplier;
 
-	@Schema(description = "The user's SMS number.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's SMS number."
+	)
 	public String getSms() {
 		if (_smsSupplier != null) {
 			sms = _smsSupplier.get();
@@ -350,7 +358,7 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _smsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the user's phone numbers, with one optionally marked as primary."
 	)
 	@Valid
@@ -396,7 +404,9 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<Phone[]> _telephonesSupplier;
 
-	@Schema(description = "The user's Twitter handle.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's Twitter handle."
+	)
 	public String getTwitter() {
 		if (_twitterSupplier != null) {
 			twitter = _twitterSupplier.get();
@@ -437,7 +447,7 @@ public class UserAccountContactInformation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _twitterSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the user's web URLs, with one optionally marked as primary."
 	)
 	@Valid
@@ -697,8 +707,8 @@ public class UserAccountContactInformation implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation",
 		name = "x-class-name"
 	)

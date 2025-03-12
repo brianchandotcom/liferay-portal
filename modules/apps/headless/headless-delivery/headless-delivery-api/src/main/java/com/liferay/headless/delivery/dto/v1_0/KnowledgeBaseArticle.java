@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.",
 	value = "KnowledgeBaseArticle"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.",
 	requiredProperties = {"articleBody", "title"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "KnowledgeBaseArticle")
 public class KnowledgeBaseArticle implements Serializable {
 
@@ -66,7 +64,7 @@ public class KnowledgeBaseArticle implements Serializable {
 			KnowledgeBaseArticle.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -113,7 +111,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "The article's average rating.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's average rating."
+	)
 	@Valid
 	public AggregateRating getAggregateRating() {
 		if (_aggregateRatingSupplier != null) {
@@ -156,7 +156,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
-	@Schema(description = "The article's main content.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's main content."
+	)
 	public String getArticleBody() {
 		if (_articleBodySupplier != null) {
 			articleBody = _articleBodySupplier.get();
@@ -198,7 +200,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _articleBodySupplier;
 
-	@Schema(description = "The article's author.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's author."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -240,7 +244,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the custom fields associated with the article."
 	)
 	@Valid
@@ -286,7 +290,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "The date the article was created.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The date the article was created."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -327,7 +333,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time the article's content or metadata changed."
 	)
 	public Date getDateModified() {
@@ -372,7 +378,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The article's scheduled publication date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's scheduled publication date."
+	)
 	public Date getDatePublished() {
 		if (_datePublishedSupplier != null) {
 			datePublished = _datePublishedSupplier.get();
@@ -413,7 +421,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(description = "The article's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -454,7 +464,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The article's media type (e.g., HTML, BBCode, etc.)."
 	)
 	public String getEncodingFormat() {
@@ -499,7 +509,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
-	@Schema(description = "The article's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -540,7 +552,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The article's relative URL.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's relative URL."
+	)
 	public String getFriendlyUrlPath() {
 		if (_friendlyUrlPathSupplier != null) {
 			friendlyUrlPath = _friendlyUrlPathSupplier.get();
@@ -581,7 +595,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
-	@Schema(description = "The article's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -620,7 +636,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "A list of keywords describing the article.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of keywords describing the article."
+	)
 	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
@@ -661,7 +679,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
-	@Schema(description = "The article's number attachments.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's number attachments."
+	)
 	public Integer getNumberOfAttachments() {
 		if (_numberOfAttachmentsSupplier != null) {
 			numberOfAttachments = _numberOfAttachmentsSupplier.get();
@@ -702,7 +722,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfAttachmentsSupplier;
 
-	@Schema(description = "The number of this article's child articles.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of this article's child articles."
+	)
 	public Integer getNumberOfKnowledgeBaseArticles() {
 		if (_numberOfKnowledgeBaseArticlesSupplier != null) {
 			numberOfKnowledgeBaseArticles =
@@ -747,7 +769,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfKnowledgeBaseArticlesSupplier;
 
-	@Schema(description = "The ID of the article's parent, if it exists.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the article's parent, if it exists."
+	)
 	public Long getParentKnowledgeBaseArticleId() {
 		if (_parentKnowledgeBaseArticleIdSupplier != null) {
 			parentKnowledgeBaseArticleId =
@@ -792,7 +816,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentKnowledgeBaseArticleIdSupplier;
 
-	@Schema(description = "The article's parent folder, if it exists.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's parent folder, if it exists."
+	)
 	@Valid
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
 		if (_parentKnowledgeBaseFolderSupplier != null) {
@@ -839,7 +865,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	private Supplier<ParentKnowledgeBaseFolder>
 		_parentKnowledgeBaseFolderSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the article's parent folder, if that folder exists."
 	)
 	public Long getParentKnowledgeBaseFolderId() {
@@ -888,7 +914,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentKnowledgeBaseFolderIdSupplier;
 
-	@Schema(description = "A list of related contents to this article.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of related contents to this article."
+	)
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		if (_relatedContentsSupplier != null) {
@@ -931,7 +959,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
-	@Schema(description = "The ID of the site to which this article is scoped.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the site to which this article is scoped."
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -974,7 +1004,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the user making the requests is subscribed to this article."
 	)
 	public Boolean getSubscribed() {
@@ -1019,7 +1049,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _subscribedSupplier;
 
-	@Schema(description = "The categories associated with this article.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The categories associated with this article."
+	)
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		if (_taxonomyCategoryBriefsSupplier != null) {
@@ -1064,7 +1096,7 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only field that adds `TaxonomyCategory` instances to the article."
 	)
 	public Long[] getTaxonomyCategoryIds() {
@@ -1109,7 +1141,9 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
-	@Schema(description = "The article's main title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The article's main title."
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -1151,10 +1185,10 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@JsonGetter("viewableBy")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only property that specifies the article's default permissions."
 	)
+	@JsonGetter("viewableBy")
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -1654,8 +1688,8 @@ public class KnowledgeBaseArticle implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle",
 		name = "x-class-name"
 	)

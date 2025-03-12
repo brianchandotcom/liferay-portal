@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("AccountRole")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"name"})
 @XmlRootElement(name = "AccountRole")
 public class AccountRole implements Serializable {
 
@@ -53,7 +51,7 @@ public class AccountRole implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AccountRole.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Role Description US, hr_HR=Role Description HR, hu_HU=Role Description HU}"
 	)
 	@Valid
@@ -98,7 +96,7 @@ public class AccountRole implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@Schema(example = "Role Name")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Role Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -139,7 +137,7 @@ public class AccountRole implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getRoleId() {
 		if (_roleIdSupplier != null) {
 			roleId = _roleIdSupplier.get();
@@ -180,7 +178,7 @@ public class AccountRole implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Role Title US, hr_HR=Role Title HR, hu_HU=Role Title HU}"
 	)
 	@Valid
@@ -308,8 +306,8 @@ public class AccountRole implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.AccountRole",
 		name = "x-class-name"
 	)

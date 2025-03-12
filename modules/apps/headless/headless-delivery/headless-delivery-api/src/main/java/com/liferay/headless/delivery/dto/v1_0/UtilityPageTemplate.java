@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -57,7 +55,7 @@ public class UtilityPageTemplate implements Serializable {
 			UtilityPageTemplate.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Specifies if the utility page template should be the default for the given type."
 	)
 	public Boolean getDefaultTemplate() {
@@ -102,7 +100,9 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _defaultTemplateSupplier;
 
-	@Schema(description = "The utility page template external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page template external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -145,7 +145,9 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The utility page template name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page template name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -184,8 +186,10 @@ public class UtilityPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page template type."
+	)
 	@JsonGetter("type")
-	@Schema(description = "The utility page template type.")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -328,8 +332,8 @@ public class UtilityPageTemplate implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate",
 		name = "x-class-name"
 	)

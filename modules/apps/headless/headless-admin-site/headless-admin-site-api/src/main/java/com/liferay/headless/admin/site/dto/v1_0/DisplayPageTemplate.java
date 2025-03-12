@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -58,7 +56,7 @@ public class DisplayPageTemplate implements Serializable {
 			DisplayPageTemplate.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The content type (and optionally subtype) associated to the display page template."
 	)
 	@Valid
@@ -107,7 +105,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<ClassSubtypeReference> _contentTypeReferenceSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -153,7 +151,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's creator external reference code."
 	)
 	public String getCreatorExternalReferenceCode() {
@@ -202,7 +200,9 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorExternalReferenceCodeSupplier;
 
-	@Schema(description = "The display page template's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -243,7 +243,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The last time any field of the display page template was changed."
 	)
 	public Date getDateModified() {
@@ -288,7 +288,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's most recent publication date."
 	)
 	public Date getDatePublished() {
@@ -333,7 +333,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Settings of the display page template, such as SEO or OpenGraph."
 	)
 	@Valid
@@ -384,7 +384,7 @@ public class DisplayPageTemplate implements Serializable {
 	private Supplier<DisplayPageTemplateSettings>
 		_displayPageTemplateSettingsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's external reference code."
 	)
 	public String getExternalReferenceCode() {
@@ -429,7 +429,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The history of previously used URLs to the display page template's rendered content. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
@@ -476,7 +476,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<FriendlyUrlHistory> _friendlyUrlHistorySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The localized relative URLs to the display page template's rendered content."
 	)
 	@Valid
@@ -525,7 +525,9 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _friendlyUrlPath_i18nSupplier;
 
-	@Schema(description = "The display page template's key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template's key."
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -564,7 +566,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Whether the display page template is the default one for the given content type/subtype."
 	)
 	public Boolean getMarkedAsDefault() {
@@ -609,7 +611,9 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _markedAsDefaultSupplier;
 
-	@Schema(description = "The display page template's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -648,7 +652,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's specifications. A display page template will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
@@ -695,7 +699,9 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<PageSpecification[]> _pageSpecificationsSupplier;
 
-	@Schema(description = "The display page template's parent folder.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template's parent folder."
+	)
 	@Valid
 	public DisplayPageTemplateFolder getParentFolder() {
 		if (_parentFolderSupplier != null) {
@@ -738,7 +744,9 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<DisplayPageTemplateFolder> _parentFolderSupplier;
 
-	@Schema(description = "The display page template's thumbnail.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template's thumbnail."
+	)
 	@Valid
 	public ItemExternalReference getThumbnail() {
 		if (_thumbnailSupplier != null) {
@@ -781,7 +789,7 @@ public class DisplayPageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<ItemExternalReference> _thumbnailSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A valid external identifier to reference this display page template."
 	)
 	public String getUuid() {
@@ -1106,8 +1114,8 @@ public class DisplayPageTemplate implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplate",
 		name = "x-class-name"
 	)

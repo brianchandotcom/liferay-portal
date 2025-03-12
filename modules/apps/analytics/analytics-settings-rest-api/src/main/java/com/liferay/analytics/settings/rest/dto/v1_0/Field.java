@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class Field implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Field.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExample() {
 		if (_exampleSupplier != null) {
 			example = _exampleSupplier.get();
@@ -89,7 +87,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _exampleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -128,7 +126,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -169,7 +167,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSelected() {
 		if (_selectedSupplier != null) {
 			selected = _selectedSupplier.get();
@@ -210,7 +208,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _selectedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSource() {
 		if (_sourceSupplier != null) {
 			source = _sourceSupplier.get();
@@ -251,7 +249,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _sourceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -410,8 +408,8 @@ public class Field implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.settings.rest.dto.v1_0.Field",
 		name = "x-class-name"
 	)

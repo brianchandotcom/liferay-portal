@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class Service implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Service.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification."
 	)
 	@Valid
@@ -100,7 +98,9 @@ public class Service implements Serializable {
 	@JsonIgnore
 	private Supplier<HoursAvailable[]> _hoursAvailableSupplier;
 
-	@Schema(description = "The type of service the organization provides.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The type of service the organization provides."
+	)
 	public String getServiceType() {
 		if (_serviceTypeSupplier != null) {
 			serviceType = _serviceTypeSupplier.get();
@@ -213,8 +213,8 @@ public class Service implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Service",
 		name = "x-class-name"
 	)

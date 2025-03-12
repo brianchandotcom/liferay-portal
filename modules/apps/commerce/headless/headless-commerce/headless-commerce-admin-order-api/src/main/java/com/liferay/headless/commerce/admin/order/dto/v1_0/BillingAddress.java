@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -39,8 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("BillingAddress")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"city", "countryISOCode", "name", "street1"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"city", "countryISOCode", "name", "street1"})
 @XmlRootElement(name = "BillingAddress")
 public class BillingAddress implements Serializable {
 
@@ -52,7 +52,7 @@ public class BillingAddress implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(BillingAddress.class, json);
 	}
 
-	@Schema(example = "Diamond Bar")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Diamond Bar")
 	public String getCity() {
 		if (_citySupplier != null) {
 			city = _citySupplier.get();
@@ -92,7 +92,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _citySupplier;
 
-	@Schema(example = "US")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "US")
 	public String getCountryISOCode() {
 		if (_countryISOCodeSupplier != null) {
 			countryISOCode = _countryISOCodeSupplier.get();
@@ -134,7 +134,9 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _countryISOCodeSupplier;
 
-	@Schema(example = "right stairs, first room on the left")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "right stairs, first room on the left"
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -175,7 +177,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -217,7 +219,7 @@ public class BillingAddress implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -256,7 +258,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "33.9976884")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.9976884")
 	public Double getLatitude() {
 		if (_latitudeSupplier != null) {
 			latitude = _latitudeSupplier.get();
@@ -297,7 +299,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _latitudeSupplier;
 
-	@Schema(example = "-117.8144595")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "-117.8144595")
 	public Double getLongitude() {
 		if (_longitudeSupplier != null) {
 			longitude = _longitudeSupplier.get();
@@ -338,7 +340,9 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _longitudeSupplier;
 
-	@Schema(example = "Alessio Antonio Rendina")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Alessio Antonio Rendina"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -378,7 +382,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "(123) 456 7890")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "(123) 456 7890")
 	public String getPhoneNumber() {
 		if (_phoneNumberSupplier != null) {
 			phoneNumber = _phoneNumberSupplier.get();
@@ -419,7 +423,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _phoneNumberSupplier;
 
-	@Schema(example = "CA")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "CA")
 	public String getRegionISOCode() {
 		if (_regionISOCodeSupplier != null) {
 			regionISOCode = _regionISOCodeSupplier.get();
@@ -460,7 +464,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _regionISOCodeSupplier;
 
-	@Schema(example = "1400 Montefino Ave")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1400 Montefino Ave")
 	public String getStreet1() {
 		if (_street1Supplier != null) {
 			street1 = _street1Supplier.get();
@@ -502,7 +506,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street1Supplier;
 
-	@Schema(example = "1st floor")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1st floor")
 	public String getStreet2() {
 		if (_street2Supplier != null) {
 			street2 = _street2Supplier.get();
@@ -543,7 +547,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street2Supplier;
 
-	@Schema(example = "suite 200")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "suite 200")
 	public String getStreet3() {
 		if (_street3Supplier != null) {
 			street3 = _street3Supplier.get();
@@ -584,7 +588,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
-	@Schema(example = "353246836565")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "353246836565")
 	public String getVatNumber() {
 		if (_vatNumberSupplier != null) {
 			vatNumber = _vatNumberSupplier.get();
@@ -625,7 +629,7 @@ public class BillingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _vatNumberSupplier;
 
-	@Schema(example = "91765")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "91765")
 	public String getZip() {
 		if (_zipSupplier != null) {
 			zip = _zipSupplier.get();
@@ -924,8 +928,8 @@ public class BillingAddress implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress",
 		name = "x-class-name"
 	)

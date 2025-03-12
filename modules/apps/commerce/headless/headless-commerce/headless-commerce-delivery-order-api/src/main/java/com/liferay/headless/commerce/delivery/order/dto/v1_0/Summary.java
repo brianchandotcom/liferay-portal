@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -52,7 +50,7 @@ public class Summary implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Summary.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCurrency() {
 		if (_currencySupplier != null) {
 			currency = _currencySupplier.get();
@@ -93,7 +91,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencySupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getItemsQuantity() {
 		if (_itemsQuantitySupplier != null) {
@@ -135,7 +133,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _itemsQuantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getShippingDiscountPercentages() {
 		if (_shippingDiscountPercentagesSupplier != null) {
 			shippingDiscountPercentages =
@@ -180,7 +178,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _shippingDiscountPercentagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getShippingDiscountValue() {
 		if (_shippingDiscountValueSupplier != null) {
 			shippingDiscountValue = _shippingDiscountValueSupplier.get();
@@ -221,7 +219,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _shippingDiscountValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingDiscountValueFormatted() {
 		if (_shippingDiscountValueFormattedSupplier != null) {
 			shippingDiscountValueFormatted =
@@ -266,7 +264,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingDiscountValueFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getShippingValue() {
 		if (_shippingValueSupplier != null) {
 			shippingValue = _shippingValueSupplier.get();
@@ -307,7 +305,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _shippingValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingValueFormatted() {
 		if (_shippingValueFormattedSupplier != null) {
 			shippingValueFormatted = _shippingValueFormattedSupplier.get();
@@ -349,7 +347,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingValueFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getShippingValueWithTaxAmount() {
 		if (_shippingValueWithTaxAmountSupplier != null) {
 			shippingValueWithTaxAmount =
@@ -394,7 +392,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _shippingValueWithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingValueWithTaxAmountFormatted() {
 		if (_shippingValueWithTaxAmountFormattedSupplier != null) {
 			shippingValueWithTaxAmountFormatted =
@@ -440,7 +438,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingValueWithTaxAmountFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getSubtotal() {
 		if (_subtotalSupplier != null) {
 			subtotal = _subtotalSupplier.get();
@@ -481,7 +479,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _subtotalSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getSubtotalDiscountPercentages() {
 		if (_subtotalDiscountPercentagesSupplier != null) {
 			subtotalDiscountPercentages =
@@ -526,7 +524,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _subtotalDiscountPercentagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getSubtotalDiscountValue() {
 		if (_subtotalDiscountValueSupplier != null) {
 			subtotalDiscountValue = _subtotalDiscountValueSupplier.get();
@@ -567,7 +565,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _subtotalDiscountValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSubtotalDiscountValueFormatted() {
 		if (_subtotalDiscountValueFormattedSupplier != null) {
 			subtotalDiscountValueFormatted =
@@ -612,7 +610,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _subtotalDiscountValueFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSubtotalFormatted() {
 		if (_subtotalFormattedSupplier != null) {
 			subtotalFormatted = _subtotalFormattedSupplier.get();
@@ -653,7 +651,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _subtotalFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getTaxValue() {
 		if (_taxValueSupplier != null) {
 			taxValue = _taxValueSupplier.get();
@@ -694,7 +692,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _taxValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTaxValueFormatted() {
 		if (_taxValueFormattedSupplier != null) {
 			taxValueFormatted = _taxValueFormattedSupplier.get();
@@ -735,7 +733,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _taxValueFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getTotal() {
 		if (_totalSupplier != null) {
 			total = _totalSupplier.get();
@@ -776,7 +774,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _totalSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getTotalDiscountPercentages() {
 		if (_totalDiscountPercentagesSupplier != null) {
 			totalDiscountPercentages = _totalDiscountPercentagesSupplier.get();
@@ -818,7 +816,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _totalDiscountPercentagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getTotalDiscountValue() {
 		if (_totalDiscountValueSupplier != null) {
 			totalDiscountValue = _totalDiscountValueSupplier.get();
@@ -859,7 +857,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _totalDiscountValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTotalDiscountValueFormatted() {
 		if (_totalDiscountValueFormattedSupplier != null) {
 			totalDiscountValueFormatted =
@@ -904,7 +902,7 @@ public class Summary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _totalDiscountValueFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTotalFormatted() {
 		if (_totalFormattedSupplier != null) {
 			totalFormatted = _totalFormattedSupplier.get();
@@ -1310,8 +1308,8 @@ public class Summary implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.order.dto.v1_0.Summary",
 		name = "x-class-name"
 	)

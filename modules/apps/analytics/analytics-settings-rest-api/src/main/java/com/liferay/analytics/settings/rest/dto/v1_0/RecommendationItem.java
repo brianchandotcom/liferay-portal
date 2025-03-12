@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class RecommendationItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(RecommendationItem.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEnabled() {
 		if (_enabledSupplier != null) {
 			enabled = _enabledSupplier.get();
@@ -94,8 +92,8 @@ public class RecommendationItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _enabledSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("status")
-	@Schema
 	@Valid
 	public Status getStatus() {
 		if (_statusSupplier != null) {
@@ -208,8 +206,8 @@ public class RecommendationItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.settings.rest.dto.v1_0.RecommendationItem",
 		name = "x-class-name"
 	)

@@ -21,8 +21,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -74,7 +72,7 @@ public abstract class PageSpecification implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageSpecification.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page specification's external reference code, unique per site."
 	)
 	public String getExternalReferenceCode() {
@@ -119,7 +117,7 @@ public abstract class PageSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Settings getSettings() {
 		if (_settingsSupplier != null) {
@@ -161,8 +159,10 @@ public abstract class PageSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The status of the page specification."
+	)
 	@JsonGetter("status")
-	@Schema(description = "The status of the page specification.")
 	@Valid
 	public Status getStatus() {
 		if (_statusSupplier != null) {
@@ -215,8 +215,10 @@ public abstract class PageSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The type of the page specification."
+	)
 	@JsonGetter("type")
-	@Schema(description = "The type of the page specification.")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -359,8 +361,8 @@ public abstract class PageSpecification implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageSpecification",
 		name = "x-class-name"
 	)

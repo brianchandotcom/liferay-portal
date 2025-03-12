@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ShippingFixedOptionTerm")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"shippingFixedOptionId", "termId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"shippingFixedOptionId", "termId"})
 @XmlRootElement(name = "ShippingFixedOptionTerm")
 public class ShippingFixedOptionTerm implements Serializable {
 
@@ -54,7 +54,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 			ShippingFixedOptionTerm.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -98,7 +98,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getShippingFixedOptionId() {
 		if (_shippingFixedOptionIdSupplier != null) {
 			shippingFixedOptionId = _shippingFixedOptionIdSupplier.get();
@@ -141,7 +141,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	private Supplier<Long> _shippingFixedOptionIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getShippingFixedOptionTermId() {
 		if (_shippingFixedOptionTermIdSupplier != null) {
 			shippingFixedOptionTermId =
@@ -184,7 +184,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shippingFixedOptionTermIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Term getTerm() {
 		if (_termSupplier != null) {
@@ -224,7 +224,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	@JsonIgnore
 	private Supplier<Term> _termSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getTermExternalReferenceCode() {
 		if (_termExternalReferenceCodeSupplier != null) {
 			termExternalReferenceCode =
@@ -268,7 +268,7 @@ public class ShippingFixedOptionTerm implements Serializable {
 	private Supplier<String> _termExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getTermId() {
 		if (_termIdSupplier != null) {
 			termId = _termIdSupplier.get();
@@ -419,8 +419,8 @@ public class ShippingFixedOptionTerm implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm",
 		name = "x-class-name"
 	)

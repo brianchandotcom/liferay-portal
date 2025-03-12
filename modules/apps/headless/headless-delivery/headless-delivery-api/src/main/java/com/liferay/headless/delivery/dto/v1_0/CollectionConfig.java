@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -43,8 +41,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("CollectionConfig")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"collectionReference", "collectionType"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"collectionReference", "collectionType"})
 @XmlRootElement(name = "CollectionConfig")
 public class CollectionConfig implements Serializable {
 
@@ -56,7 +56,9 @@ public class CollectionConfig implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CollectionConfig.class, json);
 	}
 
-	@Schema(description = "The page collection's reference.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page collection's reference."
+	)
 	@Valid
 	public Object getCollectionReference() {
 		if (_collectionReferenceSupplier != null) {
@@ -99,10 +101,10 @@ public class CollectionConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _collectionReferenceSupplier;
 
-	@JsonGetter("collectionType")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page collection's type (Collection, CollectionProvider)."
 	)
+	@JsonGetter("collectionType")
 	@Valid
 	public CollectionType getCollectionType() {
 		if (_collectionTypeSupplier != null) {
@@ -231,8 +233,8 @@ public class CollectionConfig implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.CollectionConfig",
 		name = "x-class-name"
 	)

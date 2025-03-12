@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class DataRecord implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DataRecord.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDataRecordCollectionId() {
 		if (_dataRecordCollectionIdSupplier != null) {
 			dataRecordCollectionId = _dataRecordCollectionIdSupplier.get();
@@ -93,7 +91,7 @@ public class DataRecord implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _dataRecordCollectionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Object> getDataRecordValues() {
 		if (_dataRecordValuesSupplier != null) {
@@ -136,7 +134,7 @@ public class DataRecord implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _dataRecordValuesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -175,7 +173,7 @@ public class DataRecord implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -296,8 +294,8 @@ public class DataRecord implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.data.engine.rest.dto.v2_0.DataRecord",
 		name = "x-class-name"
 	)

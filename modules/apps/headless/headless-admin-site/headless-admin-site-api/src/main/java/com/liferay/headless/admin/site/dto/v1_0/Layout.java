@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,8 +51,8 @@ public class Layout implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Layout.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("align")
-	@Schema
 	@Valid
 	public Align getAlign() {
 		if (_alignSupplier != null) {
@@ -105,8 +103,8 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<Align> _alignSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("contentDisplay")
-	@Schema
 	@Valid
 	public ContentDisplay getContentDisplay() {
 		if (_contentDisplaySupplier != null) {
@@ -160,8 +158,8 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<ContentDisplay> _contentDisplaySupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("flexWrap")
-	@Schema
 	@Valid
 	public FlexWrap getFlexWrap() {
 		if (_flexWrapSupplier != null) {
@@ -214,8 +212,8 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<FlexWrap> _flexWrapSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("justify")
-	@Schema
 	@Valid
 	public Justify getJustify() {
 		if (_justifySupplier != null) {
@@ -268,8 +266,10 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<Justify> _justifySupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The width's type (fixed or fluid)."
+	)
 	@JsonGetter("widthType")
-	@Schema(description = "The width's type (fixed or fluid).")
 	@Valid
 	public WidthType getWidthType() {
 		if (_widthTypeSupplier != null) {
@@ -434,8 +434,8 @@ public class Layout implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.Layout",
 		name = "x-class-name"
 	)

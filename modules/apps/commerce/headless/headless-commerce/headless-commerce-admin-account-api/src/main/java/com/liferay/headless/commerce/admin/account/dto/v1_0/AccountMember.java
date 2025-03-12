@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("AccountMember")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"email"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"email"})
 @XmlRootElement(name = "AccountMember")
 public class AccountMember implements Serializable {
 
@@ -54,7 +52,7 @@ public class AccountMember implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -95,7 +93,7 @@ public class AccountMember implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "[{description={en_US=Account Administrator Description US, hr_HR=Account Administrator Description HR, hu_HU=Account Administrator Description HU}}, {description={en_US=Order Manager Description US, hr_HR=Order Manager Description HR, hu_HU=Order Manager Description HU}}]"
 	)
 	@Valid
@@ -139,7 +137,7 @@ public class AccountMember implements Serializable {
 	@JsonIgnore
 	private Supplier<AccountRole[]> _accountRolesSupplier;
 
-	@Schema(example = "joe.1@commerce.com")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "joe.1@commerce.com")
 	public String getEmail() {
 		if (_emailSupplier != null) {
 			email = _emailSupplier.get();
@@ -181,7 +179,7 @@ public class AccountMember implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -222,7 +220,7 @@ public class AccountMember implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(example = "User Name")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "User Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -261,7 +259,7 @@ public class AccountMember implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "UAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "UAB-34098-789-N")
 	public String getUserExternalReferenceCode() {
 		if (_userExternalReferenceCodeSupplier != null) {
 			userExternalReferenceCode =
@@ -305,7 +303,7 @@ public class AccountMember implements Serializable {
 	private Supplier<String> _userExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30002")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30002")
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -488,8 +486,8 @@ public class AccountMember implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember",
 		name = "x-class-name"
 	)

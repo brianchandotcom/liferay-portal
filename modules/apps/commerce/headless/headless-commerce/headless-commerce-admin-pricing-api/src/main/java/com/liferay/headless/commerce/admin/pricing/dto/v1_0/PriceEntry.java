@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -42,8 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("PriceEntry")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"price"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"price"})
 @XmlRootElement(name = "PriceEntry")
 public class PriceEntry implements Serializable {
 
@@ -55,7 +53,7 @@ public class PriceEntry implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceEntry.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -97,7 +95,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -138,7 +136,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getHasTierPrice() {
 		if (_hasTierPriceSupplier != null) {
 			hasTierPrice = _hasTierPriceSupplier.get();
@@ -180,7 +178,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<Boolean> _hasTierPriceSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -220,7 +218,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	@Valid
 	public BigDecimal getPrice() {
 		if (_priceSupplier != null) {
@@ -263,7 +261,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _priceSupplier;
 
-	@Schema(example = "PLAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PLAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -309,7 +307,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20078")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20078")
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -351,7 +349,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<Long> _priceListIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	@Valid
 	public BigDecimal getPromoPrice() {
 		if (_promoPriceSupplier != null) {
@@ -393,7 +391,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _promoPriceSupplier;
 
-	@Schema(example = "BL500IC")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "BL500IC")
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -432,7 +430,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@Schema(example = "CAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "CAB-34098-789-N")
 	public String getSkuExternalReferenceCode() {
 		if (_skuExternalReferenceCodeSupplier != null) {
 			skuExternalReferenceCode = _skuExternalReferenceCodeSupplier.get();
@@ -475,7 +473,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<String> _skuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -514,7 +512,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public TierPrice[] getTierPrices() {
 		if (_tierPricesSupplier != null) {
@@ -759,8 +757,8 @@ public class PriceEntry implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceEntry",
 		name = "x-class-name"
 	)

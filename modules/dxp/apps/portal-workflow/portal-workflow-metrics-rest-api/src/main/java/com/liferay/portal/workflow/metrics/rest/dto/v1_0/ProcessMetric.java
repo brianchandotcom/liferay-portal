@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class ProcessMetric implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ProcessMetric.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getInstanceCount() {
 		if (_instanceCountSupplier != null) {
 			instanceCount = _instanceCountSupplier.get();
@@ -94,7 +92,7 @@ public class ProcessMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _instanceCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getOnTimeInstanceCount() {
 		if (_onTimeInstanceCountSupplier != null) {
 			onTimeInstanceCount = _onTimeInstanceCountSupplier.get();
@@ -135,7 +133,7 @@ public class ProcessMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _onTimeInstanceCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getOverdueInstanceCount() {
 		if (_overdueInstanceCountSupplier != null) {
 			overdueInstanceCount = _overdueInstanceCountSupplier.get();
@@ -176,7 +174,7 @@ public class ProcessMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _overdueInstanceCountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Process getProcess() {
 		if (_processSupplier != null) {
@@ -218,7 +216,7 @@ public class ProcessMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Process> _processSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getUntrackedInstanceCount() {
 		if (_untrackedInstanceCountSupplier != null) {
 			untrackedInstanceCount = _untrackedInstanceCountSupplier.get();
@@ -351,8 +349,8 @@ public class ProcessMetric implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessMetric",
 		name = "x-class-name"
 	)

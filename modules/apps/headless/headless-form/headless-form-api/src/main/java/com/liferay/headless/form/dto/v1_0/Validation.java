@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class Validation implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Validation.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getErrorMessage() {
 		if (_errorMessageSupplier != null) {
 			errorMessage = _errorMessageSupplier.get();
@@ -94,7 +92,7 @@ public class Validation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorMessageSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getErrorMessage_i18n() {
 		if (_errorMessage_i18nSupplier != null) {
@@ -137,7 +135,7 @@ public class Validation implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _errorMessage_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExpression() {
 		if (_expressionSupplier != null) {
 			expression = _expressionSupplier.get();
@@ -178,7 +176,7 @@ public class Validation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _expressionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -305,8 +303,8 @@ public class Validation implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.Validation",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -40,8 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("OrderRuleOrderType")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"orderRuleId", "orderTypeId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"orderRuleId", "orderTypeId"})
 @XmlRootElement(name = "OrderRuleOrderType")
 public class OrderRuleOrderType implements Serializable {
 
@@ -53,7 +53,7 @@ public class OrderRuleOrderType implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(OrderRuleOrderType.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,7 +96,7 @@ public class OrderRuleOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
 	public String getOrderRuleExternalReferenceCode() {
 		if (_orderRuleExternalReferenceCodeSupplier != null) {
 			orderRuleExternalReferenceCode =
@@ -142,7 +142,7 @@ public class OrderRuleOrderType implements Serializable {
 	private Supplier<String> _orderRuleExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getOrderRuleId() {
 		if (_orderRuleIdSupplier != null) {
 			orderRuleId = _orderRuleIdSupplier.get();
@@ -185,7 +185,7 @@ public class OrderRuleOrderType implements Serializable {
 	private Supplier<Long> _orderRuleIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
 	public Long getOrderRuleOrderTypeId() {
 		if (_orderRuleOrderTypeIdSupplier != null) {
 			orderRuleOrderTypeId = _orderRuleOrderTypeIdSupplier.get();
@@ -226,7 +226,7 @@ public class OrderRuleOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _orderRuleOrderTypeIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public OrderType getOrderType() {
 		if (_orderTypeSupplier != null) {
@@ -268,7 +268,7 @@ public class OrderRuleOrderType implements Serializable {
 	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
-	@Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -314,7 +314,7 @@ public class OrderRuleOrderType implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -482,8 +482,8 @@ public class OrderRuleOrderType implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType",
 		name = "x-class-name"
 	)

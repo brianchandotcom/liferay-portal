@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -58,8 +56,10 @@ public class SiteMapSettings implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SiteMapSettings.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Indicates how often a page is updated."
+	)
 	@JsonGetter("changeFrequency")
-	@Schema(description = "Indicates how often a page is updated.")
 	@Valid
 	public ChangeFrequency getChangeFrequency() {
 		if (_changeFrequencySupplier != null) {
@@ -113,7 +113,7 @@ public class SiteMapSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<ChangeFrequency> _changeFrequencySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Whether search engines should crawl and index the page."
 	)
 	public Boolean getInclude() {
@@ -158,7 +158,7 @@ public class SiteMapSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _includeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Whether search engines should crawl and index the child pages."
 	)
 	public Boolean getIncludeChildSitePages() {
@@ -206,7 +206,7 @@ public class SiteMapSettings implements Serializable {
 
 	@DecimalMax("1")
 	@DecimalMin("0")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "How the page should be prioritized relative to other pages."
 	)
 	public Double getPagePriority() {
@@ -335,8 +335,8 @@ public class SiteMapSettings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.SiteMapSettings",
 		name = "x-class-name"
 	)

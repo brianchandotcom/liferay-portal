@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class CTEntry implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CTEntry.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -97,7 +95,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getChangeType() {
 		if (_changeTypeSupplier != null) {
 			changeType = _changeTypeSupplier.get();
@@ -138,7 +136,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _changeTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getCtCollectionId() {
 		if (_ctCollectionIdSupplier != null) {
 			ctCollectionId = _ctCollectionIdSupplier.get();
@@ -179,7 +177,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _ctCollectionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCtCollectionName() {
 		if (_ctCollectionNameSupplier != null) {
 			ctCollectionName = _ctCollectionNameSupplier.get();
@@ -220,7 +218,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _ctCollectionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getCtCollectionStatus() {
 		if (_ctCollectionStatusSupplier != null) {
@@ -262,7 +260,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _ctCollectionStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getCtCollectionStatusDate() {
 		if (_ctCollectionStatusDateSupplier != null) {
 			ctCollectionStatusDate = _ctCollectionStatusDateSupplier.get();
@@ -303,7 +301,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _ctCollectionStatusDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCtCollectionStatusUserName() {
 		if (_ctCollectionStatusUserNameSupplier != null) {
 			ctCollectionStatusUserName =
@@ -348,7 +346,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _ctCollectionStatusUserNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -389,7 +387,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -430,7 +428,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getHideable() {
 		if (_hideableSupplier != null) {
 			hideable = _hideableSupplier.get();
@@ -471,7 +469,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _hideableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -510,7 +508,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getModelClassNameId() {
 		if (_modelClassNameIdSupplier != null) {
 			modelClassNameId = _modelClassNameIdSupplier.get();
@@ -551,7 +549,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _modelClassNameIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getModelClassPK() {
 		if (_modelClassPKSupplier != null) {
 			modelClassPK = _modelClassPKSupplier.get();
@@ -592,7 +590,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _modelClassPKSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getOwnerId() {
 		if (_ownerIdSupplier != null) {
 			ownerId = _ownerIdSupplier.get();
@@ -633,7 +631,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _ownerIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getOwnerName() {
 		if (_ownerNameSupplier != null) {
 			ownerName = _ownerNameSupplier.get();
@@ -674,7 +672,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _ownerNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -715,7 +713,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSiteName() {
 		if (_siteNameSupplier != null) {
 			siteName = _siteNameSupplier.get();
@@ -756,7 +754,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _siteNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getStatus() {
 		if (_statusSupplier != null) {
@@ -798,7 +796,9 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
-	@Schema(description = "Info on when a change was made.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Info on when a change was made."
+	)
 	public String getStatusMessage() {
 		if (_statusMessageSupplier != null) {
 			statusMessage = _statusMessageSupplier.get();
@@ -839,7 +839,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _statusMessageSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -880,7 +880,7 @@ public class CTEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTypeName() {
 		if (_typeNameSupplier != null) {
 			typeName = _typeNameSupplier.get();
@@ -1252,8 +1252,8 @@ public class CTEntry implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.change.tracking.rest.dto.v1_0.CTEntry",
 		name = "x-class-name"
 	)

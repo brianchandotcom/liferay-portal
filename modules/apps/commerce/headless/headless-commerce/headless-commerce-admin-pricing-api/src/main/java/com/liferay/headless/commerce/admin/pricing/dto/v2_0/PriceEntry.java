@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -46,8 +44,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("PriceEntry")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"price", "priceListId", "skuId"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"price", "priceListId", "skuId"})
 @XmlRootElement(name = "PriceEntry")
 public class PriceEntry implements Serializable {
 
@@ -59,7 +59,7 @@ public class PriceEntry implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PriceEntry.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -102,7 +102,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -143,7 +143,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getBulkPricing() {
 		if (_bulkPricingSupplier != null) {
 			bulkPricing = _bulkPricingSupplier.get();
@@ -184,7 +184,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _bulkPricingSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -226,7 +226,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getDiscountDiscovery() {
 		if (_discountDiscoverySupplier != null) {
 			discountDiscovery = _discountDiscoverySupplier.get();
@@ -268,7 +268,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<Boolean> _discountDiscoverySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel1() {
 		if (_discountLevel1Supplier != null) {
@@ -311,7 +311,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<BigDecimal> _discountLevel1Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel2() {
 		if (_discountLevel2Supplier != null) {
@@ -354,7 +354,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<BigDecimal> _discountLevel2Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel3() {
 		if (_discountLevel3Supplier != null) {
@@ -397,7 +397,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<BigDecimal> _discountLevel3Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	@Valid
 	public BigDecimal getDiscountLevel4() {
 		if (_discountLevel4Supplier != null) {
@@ -439,7 +439,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _discountLevel4Supplier;
 
-	@Schema(example = "10 | 10 | 10 | 10")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10 | 10 | 10 | 10")
 	public String getDiscountLevelsFormatted() {
 		if (_discountLevelsFormattedSupplier != null) {
 			discountLevelsFormatted = _discountLevelsFormattedSupplier.get();
@@ -481,7 +481,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _discountLevelsFormattedSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -522,7 +522,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -563,7 +563,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -604,7 +604,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getHasTierPrice() {
 		if (_hasTierPriceSupplier != null) {
 			hasTierPrice = _hasTierPriceSupplier.get();
@@ -645,7 +645,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _hasTierPriceSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -686,7 +686,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _neverExpireSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getPrice() {
 		if (_priceSupplier != null) {
 			price = _priceSupplier.get();
@@ -729,7 +729,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<Double> _priceSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getPriceEntryId() {
 		if (_priceEntryIdSupplier != null) {
 			priceEntryId = _priceEntryIdSupplier.get();
@@ -770,7 +770,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _priceEntryIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPriceFormatted() {
 		if (_priceFormattedSupplier != null) {
 			priceFormatted = _priceFormattedSupplier.get();
@@ -811,7 +811,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _priceFormattedSupplier;
 
-	@Schema(example = "PLAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "PLAB-34098-789-N")
 	public String getPriceListExternalReferenceCode() {
 		if (_priceListExternalReferenceCodeSupplier != null) {
 			priceListExternalReferenceCode =
@@ -857,7 +857,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<String> _priceListExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20078")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20078")
 	public Long getPriceListId() {
 		if (_priceListIdSupplier != null) {
 			priceListId = _priceListIdSupplier.get();
@@ -899,7 +899,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _priceListIdSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPriceOnApplication() {
 		if (_priceOnApplicationSupplier != null) {
 			priceOnApplication = _priceOnApplicationSupplier.get();
@@ -940,7 +940,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _priceOnApplicationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Product getProduct() {
 		if (_productSupplier != null) {
@@ -982,7 +982,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Product> _productSupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getQuantity() {
 		if (_quantitySupplier != null) {
@@ -1024,7 +1024,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Sku getSku() {
 		if (_skuSupplier != null) {
@@ -1064,7 +1064,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Sku> _skuSupplier;
 
-	@Schema(example = "CAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "CAB-34098-789-N")
 	public String getSkuExternalReferenceCode() {
 		if (_skuExternalReferenceCodeSupplier != null) {
 			skuExternalReferenceCode = _skuExternalReferenceCodeSupplier.get();
@@ -1107,7 +1107,7 @@ public class PriceEntry implements Serializable {
 	private Supplier<String> _skuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -1147,7 +1147,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public TierPrice[] getTierPrices() {
 		if (_tierPricesSupplier != null) {
@@ -1189,7 +1189,7 @@ public class PriceEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<TierPrice[]> _tierPricesSupplier;
 
-	@Schema(example = "m")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "m")
 	public String getUnitOfMeasureKey() {
 		if (_unitOfMeasureKeySupplier != null) {
 			unitOfMeasureKey = _unitOfMeasureKeySupplier.get();
@@ -1644,8 +1644,8 @@ public class PriceEntry implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry",
 		name = "x-class-name"
 	)

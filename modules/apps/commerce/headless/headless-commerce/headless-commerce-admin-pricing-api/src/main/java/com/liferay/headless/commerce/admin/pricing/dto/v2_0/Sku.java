@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Sku implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Sku.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getBasePrice() {
 		if (_basePriceSupplier != null) {
 			basePrice = _basePriceSupplier.get();
@@ -91,7 +89,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _basePriceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getBasePriceFormatted() {
 		if (_basePriceFormattedSupplier != null) {
 			basePriceFormatted = _basePriceFormattedSupplier.get();
@@ -132,7 +130,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _basePriceFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getBasePromoPrice() {
 		if (_basePromoPriceSupplier != null) {
 			basePromoPrice = _basePromoPriceSupplier.get();
@@ -173,7 +171,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _basePromoPriceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getBasePromoPriceFormatted() {
 		if (_basePromoPriceFormattedSupplier != null) {
 			basePromoPriceFormatted = _basePromoPriceFormattedSupplier.get();
@@ -216,7 +214,7 @@ public class Sku implements Serializable {
 	private Supplier<String> _basePromoPriceFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -255,7 +253,7 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "simple")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "simple")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -410,8 +408,8 @@ public class Sku implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku",
 		name = "x-class-name"
 	)

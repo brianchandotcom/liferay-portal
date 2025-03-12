@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Field implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Field.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getDefaultValue() {
 		if (_defaultValueSupplier != null) {
@@ -93,7 +91,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _defaultValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FieldMapping[] getFieldMappings() {
 		if (_fieldMappingsSupplier != null) {
@@ -135,7 +133,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<FieldMapping[]> _fieldMappingsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getHelpText() {
 		if (_helpTextSupplier != null) {
 			helpText = _helpTextSupplier.get();
@@ -176,7 +174,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _helpTextSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getHelpTextLocalized() {
 		if (_helpTextLocalizedSupplier != null) {
 			helpTextLocalized = _helpTextLocalizedSupplier.get();
@@ -217,7 +215,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _helpTextLocalizedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -258,7 +256,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLabelLocalized() {
 		if (_labelLocalizedSupplier != null) {
 			labelLocalized = _labelLocalizedSupplier.get();
@@ -299,7 +297,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelLocalizedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -338,7 +336,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -377,7 +375,7 @@ public class Field implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public TypeOptions getTypeOptions() {
 		if (_typeOptionsSupplier != null) {
@@ -604,8 +602,8 @@ public class Field implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Field",
 		name = "x-class-name"
 	)

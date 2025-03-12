@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,9 @@ public class PageElement implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageElement.class, json);
 	}
 
-	@Schema(description = "The page element's definition.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page element's definition."
+	)
 	@Valid
 	public Object getDefinition() {
 		if (_definitionSupplier != null) {
@@ -97,7 +97,7 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _definitionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page element's external reference code. Unique within the site."
 	)
 	public String getExternalReferenceCode() {
@@ -142,7 +142,9 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "A list of the page elements this page element has.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of the page elements this page element has."
+	)
 	@Valid
 	public PageElement[] getPageElements() {
 		if (_pageElementsSupplier != null) {
@@ -186,7 +188,7 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<PageElement[]> _pageElementsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The parent's page element's external reference code. Unique within the site."
 	)
 	public String getParentExternalReferenceCode() {
@@ -236,7 +238,7 @@ public class PageElement implements Serializable {
 	private Supplier<String> _parentExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The 0-based position this page element occupies with respect to its siblings (0 for first child, 1 for second child, ...). If not specified when creating a page element the page element will be added at the last valid position."
 	)
 	public Integer getPosition() {
@@ -281,10 +283,10 @@ public class PageElement implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _positionSupplier;
 
-	@JsonGetter("type")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page element's type (collection, collection item, column, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, row, widget or widget section)."
 	)
+	@JsonGetter("type")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -474,8 +476,8 @@ public class PageElement implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageElement",
 		name = "x-class-name"
 	)

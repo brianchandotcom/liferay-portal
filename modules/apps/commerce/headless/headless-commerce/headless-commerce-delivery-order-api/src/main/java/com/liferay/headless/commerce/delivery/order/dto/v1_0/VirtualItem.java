@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,9 @@ public class VirtualItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(VirtualItem.class, json);
 	}
 
-	@Schema(example = "http://www.liferay.com")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "http://www.liferay.com"
+	)
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -87,7 +87,7 @@ public class VirtualItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getUsages() {
 		if (_usagesSupplier != null) {
 			usages = _usagesSupplier.get();
@@ -128,7 +128,7 @@ public class VirtualItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _usagesSupplier;
 
-	@Schema(example = "v1.0.0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "v1.0.0")
 	public String getVersion() {
 		if (_versionSupplier != null) {
 			version = _versionSupplier.get();
@@ -245,8 +245,8 @@ public class VirtualItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.order.dto.v1_0.VirtualItem",
 		name = "x-class-name"
 	)

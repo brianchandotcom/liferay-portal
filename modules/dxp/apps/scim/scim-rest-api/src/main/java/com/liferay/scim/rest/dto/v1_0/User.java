@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class User implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(User.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A Boolean value indicating the user's administrative status."
 	)
 	public Boolean getActive() {
@@ -95,7 +93,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema(description = "A physical mailing address for this user.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A physical mailing address for this user."
+	)
 	@Valid
 	public Object[] getAddresses() {
 		if (_addressesSupplier != null) {
@@ -137,7 +137,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<Object[]> _addressesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The name of the user, suitable for display to end-users."
 	)
 	public String getDisplayName() {
@@ -182,7 +182,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _displayNameSupplier;
 
-	@Schema(description = "Email addresses for the User.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Email addresses for the User."
+	)
 	@Valid
 	public MultiValuedAttribute[] getEmails() {
 		if (_emailsSupplier != null) {
@@ -225,7 +227,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _emailsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of entitlements for the user that represent a thing the user has."
 	)
 	@Valid
@@ -272,7 +274,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _entitlementsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A String that is an identifier for the resource as defined by the provisioning client."
 	)
 	public String getExternalId() {
@@ -317,7 +319,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of groups to which the user belongs, either through direct membership, through nested groups, or dynamically calculated."
 	)
 	@Valid
@@ -364,7 +366,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _groupsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A unique identifier for a SCIM resource as defined by the service provider."
 	)
 	public String getId() {
@@ -407,7 +409,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(description = "Instant messaging address for the user.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Instant messaging address for the user."
+	)
 	@Valid
 	public MultiValuedAttribute[] getIms() {
 		if (_imsSupplier != null) {
@@ -449,7 +453,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _imsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Used to indicate the User's default location for purposes of localizing such items as currency, date time format, or numerical representations."
 	)
 	public String getLocale() {
@@ -494,7 +498,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _localeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Meta getMeta() {
 		if (_metaSupplier != null) {
@@ -534,7 +538,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<Meta> _metaSupplier;
 
-	@Schema(description = "The components of the user's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The components of the user's name."
+	)
 	@Valid
 	public Name getName() {
 		if (_nameSupplier != null) {
@@ -574,7 +580,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<Name> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The casual way to address the user in real life, e.g., \"Bob\" or \"Bobby\" instead of \"Robert\"."
 	)
 	public String getNickName() {
@@ -619,7 +625,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nickNameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "This attribute is intended to be used as a means to set, replace, or compare (i.e., filter for equality) a password."
 	)
 	public String getPassword() {
@@ -664,7 +670,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _passwordSupplier;
 
-	@Schema(description = "Phone numbers for the user.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Phone numbers for the user."
+	)
 	@Valid
 	public MultiValuedAttribute[] getPhoneNumbers() {
 		if (_phoneNumbersSupplier != null) {
@@ -707,7 +715,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _phoneNumbersSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A URI that is a uniform resource locator that points to a resource location representing the user's image."
 	)
 	@Valid
@@ -754,7 +762,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _photosSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Indicates the user's preferred written or spoken languages and is generally used for selecting a localized user interface."
 	)
 	public String getPreferredLanguage() {
@@ -799,7 +807,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _preferredLanguageSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A URI that is a uniform resource locator and that points to a location representing the user's online profile (e.g., a web page)."
 	)
 	public String getProfileUrl() {
@@ -844,7 +852,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _profileUrlSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of roles for the user that collectively represent who the user is, e.g., \"Student\", \"Faculty\"."
 	)
 	@Valid
@@ -890,7 +898,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<MultiValuedAttribute[]> _rolesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A multi-valued list of strings indicating the namespaces of the SCIM schemas that define the attributes present in the current JSON structure."
 	)
 	public String[] getSchemas() {
@@ -935,7 +943,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _schemasSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The User's time zone, in IANA Time Zone database format, also known as the \"Olson\" time zone database format (e.g., \"America/Los_Angeles\")."
 	)
 	public String getTimezone() {
@@ -980,7 +988,9 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _timezoneSupplier;
 
-	@Schema(description = "The user's title, such as \"Vice President\".")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user's title, such as \"Vice President\"."
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -1021,7 +1031,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The components of the Liferay's User Schema Extension."
 	)
 	@Valid
@@ -1086,7 +1096,7 @@ public class User implements Serializable {
 	private Supplier<UserSchemaExtension>
 		_urn_ietf_params_scim_schemas_extension_liferay_2_0_UserSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A service provider's unique identifier for the user, typically used by the user to directly authenticate to the service provider."
 	)
 	public String getUserName() {
@@ -1131,7 +1141,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Used to identify the relationship between the organization and the user."
 	)
 	public String getUserType() {
@@ -1176,7 +1186,7 @@ public class User implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _userTypeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of certificates associated with the resource (e.g., a User)."
 	)
 	@Valid
@@ -1728,8 +1738,8 @@ public class User implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.scim.rest.dto.v1_0.User",
 		name = "x-class-name"
 	)

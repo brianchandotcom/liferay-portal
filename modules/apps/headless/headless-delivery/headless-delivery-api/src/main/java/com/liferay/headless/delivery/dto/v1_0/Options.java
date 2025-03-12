@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,8 +51,10 @@ public class Options implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Options.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page rule condition option's type."
+	)
 	@JsonGetter("type")
-	@Schema(description = "The page rule condition option's type.")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -105,7 +105,9 @@ public class Options implements Serializable {
 	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
-	@Schema(description = "The page rule condition's value.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page rule condition's value."
+	)
 	public String getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -210,8 +212,8 @@ public class Options implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Options",
 		name = "x-class-name"
 	)

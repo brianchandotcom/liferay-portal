@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class ProductGroup implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ProductGroup.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -93,7 +91,7 @@ public class ProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{hu_HU=Description HU, hr_HR=Description HR, en_US=Description}"
 	)
 	@Valid
@@ -138,7 +136,7 @@ public class ProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -180,7 +178,7 @@ public class ProductGroup implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -219,7 +217,7 @@ public class ProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ProductGroupProduct[] getProducts() {
 		if (_productsSupplier != null) {
@@ -263,7 +261,7 @@ public class ProductGroup implements Serializable {
 	private Supplier<ProductGroupProduct[]> _productsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
 	public Integer getProductsCount() {
 		if (_productsCountSupplier != null) {
 			productsCount = _productsCountSupplier.get();
@@ -304,7 +302,9 @@ public class ProductGroup implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _productsCountSupplier;
 
-	@Schema(example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}"
+	)
 	@Valid
 	public Map<String, String> getTitle() {
 		if (_titleSupplier != null) {
@@ -476,8 +476,8 @@ public class ProductGroup implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup",
 		name = "x-class-name"
 	)

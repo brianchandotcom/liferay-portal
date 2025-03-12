@@ -24,8 +24,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -76,7 +74,7 @@ public abstract class PageTemplate implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageTemplate.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page template's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -122,7 +120,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The page's creator external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's creator external reference code."
+	)
 	public String getCreatorExternalReferenceCode() {
 		if (_creatorExternalReferenceCodeSupplier != null) {
 			creatorExternalReferenceCode =
@@ -167,7 +167,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorExternalReferenceCodeSupplier;
 
-	@Schema(description = "The page template's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -208,7 +210,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time the page template changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time the page template changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -249,7 +253,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The last time the page template was published.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time the page template was published."
+	)
 	public Date getDatePublished() {
 		if (_datePublishedSupplier != null) {
 			datePublished = _datePublishedSupplier.get();
@@ -292,7 +298,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(description = "The page template's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -333,7 +341,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The page template's key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template's key."
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -372,7 +382,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(description = "The external references to the associated keywords.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The external references to the associated keywords."
+	)
 	@Valid
 	public ItemExternalReference[] getKeywordItemExternalReferences() {
 		if (_keywordItemExternalReferencesSupplier != null) {
@@ -421,7 +433,7 @@ public abstract class PageTemplate implements Serializable {
 	private Supplier<ItemExternalReference[]>
 		_keywordItemExternalReferencesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The associated keywords. They are not returned by default. They can be embedded via nestedFields."
 	)
 	@Valid
@@ -467,7 +479,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Keyword[]> _keywordsSupplier;
 
-	@Schema(description = "The page template's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -506,7 +520,7 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page template's specifications. A page template of type content will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. A page template of type widget contains only 1 page specification for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
@@ -553,7 +567,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<PageSpecification[]> _pageSpecificationsSupplier;
 
-	@Schema(description = "The page template's set.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template's set."
+	)
 	@Valid
 	public PageTemplateSet getPageTemplateSet() {
 		if (_pageTemplateSetSupplier != null) {
@@ -596,7 +612,9 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<PageTemplateSet> _pageTemplateSetSupplier;
 
-	@Schema(description = "The settings of the page template.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The settings of the page template."
+	)
 	@Valid
 	public PageTemplateSettings getPageTemplateSettings() {
 		if (_pageTemplateSettingsSupplier != null) {
@@ -641,7 +659,7 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<PageTemplateSettings> _pageTemplateSettingsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The associated categories. They are not returned by default. They can be embedded via nestedFields."
 	)
 	@Valid
@@ -688,7 +706,7 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategory[]> _taxonomyCategoriesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external references to the associated categories."
 	)
 	@Valid
@@ -741,8 +759,10 @@ public abstract class PageTemplate implements Serializable {
 	private Supplier<ItemExternalReference[]>
 		_taxonomyCategoryItemExternalReferencesSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The type of the page template."
+	)
 	@JsonGetter("type")
-	@Schema(description = "The type of the page template.")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -793,7 +813,7 @@ public abstract class PageTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A valid external identifier to reference this page template."
 	)
 	public String getUuid() {
@@ -1166,8 +1186,8 @@ public abstract class PageTemplate implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageTemplate",
 		name = "x-class-name"
 	)

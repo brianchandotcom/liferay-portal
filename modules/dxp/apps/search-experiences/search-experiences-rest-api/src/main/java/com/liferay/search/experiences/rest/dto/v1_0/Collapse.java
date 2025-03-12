@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class Collapse implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Collapse.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getField() {
 		if (_fieldSupplier != null) {
 			field = _fieldSupplier.get();
@@ -91,7 +89,7 @@ public class Collapse implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _fieldSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public InnerHit[] getInnerHits() {
 		if (_innerHitsSupplier != null) {
@@ -133,7 +131,7 @@ public class Collapse implements Serializable {
 	@JsonIgnore
 	private Supplier<InnerHit[]> _innerHitsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getMaxConcurrentGroupRequests() {
 		if (_maxConcurrentGroupRequestsSupplier != null) {
 			maxConcurrentGroupRequests =
@@ -260,8 +258,8 @@ public class Collapse implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Collapse",
 		name = "x-class-name"
 	)

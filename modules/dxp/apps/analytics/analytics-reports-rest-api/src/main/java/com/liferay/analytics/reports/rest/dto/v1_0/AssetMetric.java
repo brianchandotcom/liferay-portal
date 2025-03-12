@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class AssetMetric implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AssetMetric.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetId() {
 		if (_assetIdSupplier != null) {
 			assetId = _assetIdSupplier.get();
@@ -91,7 +89,7 @@ public class AssetMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetTitle() {
 		if (_assetTitleSupplier != null) {
 			assetTitle = _assetTitleSupplier.get();
@@ -132,7 +130,7 @@ public class AssetMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAssetType() {
 		if (_assetTypeSupplier != null) {
 			assetType = _assetTypeSupplier.get();
@@ -173,7 +171,7 @@ public class AssetMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDataSourceId() {
 		if (_dataSourceIdSupplier != null) {
 			dataSourceId = _dataSourceIdSupplier.get();
@@ -214,7 +212,7 @@ public class AssetMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dataSourceIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Metric getDefaultMetric() {
 		if (_defaultMetricSupplier != null) {
@@ -256,7 +254,7 @@ public class AssetMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<Metric> _defaultMetricSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Metric[] getSelectedMetrics() {
 		if (_selectedMetricsSupplier != null) {
@@ -428,8 +426,8 @@ public class AssetMetric implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.reports.rest.dto.v1_0.AssetMetric",
 		name = "x-class-name"
 	)

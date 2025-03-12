@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,9 @@ public class DefaultFragmentReference implements Serializable {
 			DefaultFragmentReference.class, json);
 	}
 
-	@Schema(description = "The key of the default fragment.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The key of the default fragment."
+	)
 	public String getDefaultFragmentKey() {
 		if (_defaultFragmentKeySupplier != null) {
 			defaultFragmentKey = _defaultFragmentKeySupplier.get();
@@ -142,8 +142,8 @@ public class DefaultFragmentReference implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference",
 		name = "x-class-name"
 	)

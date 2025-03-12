@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class ContentAssociation implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ContentAssociation.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The subtype of the content. i.e. the Structure name if it's a Structured Content."
 	)
 	public String getContentSubtype() {
@@ -96,7 +94,7 @@ public class ContentAssociation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentSubtypeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The type of the content, i.e. Structure Content, BlogsPosting, etc."
 	)
 	public String getContentType() {
@@ -205,8 +203,8 @@ public class ContentAssociation implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.content.dto.v1_0.ContentAssociation",
 		name = "x-class-name"
 	)

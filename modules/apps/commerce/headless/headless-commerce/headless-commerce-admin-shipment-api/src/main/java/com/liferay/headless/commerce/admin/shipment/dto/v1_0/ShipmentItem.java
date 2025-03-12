@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -46,8 +44,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ShipmentItem")
+@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"quantity"})
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"quantity"})
 @XmlRootElement(name = "ShipmentItem")
 public class ShipmentItem implements Serializable {
 
@@ -59,7 +57,7 @@ public class ShipmentItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ShipmentItem.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -102,7 +100,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -143,7 +141,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -185,7 +183,7 @@ public class ShipmentItem implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -224,7 +222,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -265,7 +263,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getOrderItemExternalReferenceCode() {
 		if (_orderItemExternalReferenceCodeSupplier != null) {
 			orderItemExternalReferenceCode =
@@ -311,7 +309,7 @@ public class ShipmentItem implements Serializable {
 	private Supplier<String> _orderItemExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getOrderItemId() {
 		if (_orderItemIdSupplier != null) {
 			orderItemId = _orderItemIdSupplier.get();
@@ -353,7 +351,7 @@ public class ShipmentItem implements Serializable {
 	private Supplier<Long> _orderItemIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getQuantity() {
 		if (_quantitySupplier != null) {
@@ -396,7 +394,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShipmentExternalReferenceCode() {
 		if (_shipmentExternalReferenceCodeSupplier != null) {
 			shipmentExternalReferenceCode =
@@ -442,7 +440,7 @@ public class ShipmentItem implements Serializable {
 	private Supplier<String> _shipmentExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getShipmentId() {
 		if (_shipmentIdSupplier != null) {
 			shipmentId = _shipmentIdSupplier.get();
@@ -483,7 +481,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shipmentIdSupplier;
 
-	@Schema(example = "s")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "s")
 	public String getUnitOfMeasureKey() {
 		if (_unitOfMeasureKeySupplier != null) {
 			unitOfMeasureKey = _unitOfMeasureKeySupplier.get();
@@ -524,7 +522,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
-	@Schema(example = "John")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "John")
 	public String getUserName() {
 		if (_userNameSupplier != null) {
 			userName = _userNameSupplier.get();
@@ -565,7 +563,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _userNameSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getValidateInventory() {
 		if (_validateInventorySupplier != null) {
 			validateInventory = _validateInventorySupplier.get();
@@ -606,7 +604,7 @@ public class ShipmentItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _validateInventorySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getWarehouseExternalReferenceCode() {
 		if (_warehouseExternalReferenceCodeSupplier != null) {
 			warehouseExternalReferenceCode =
@@ -652,7 +650,7 @@ public class ShipmentItem implements Serializable {
 	private Supplier<String> _warehouseExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getWarehouseId() {
 		if (_warehouseIdSupplier != null) {
 			warehouseId = _warehouseIdSupplier.get();
@@ -943,8 +941,8 @@ public class ShipmentItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem",
 		name = "x-class-name"
 	)

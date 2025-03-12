@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,9 @@ public class URLActionExecutionResult implements Serializable {
 			URLActionExecutionResult.class, json);
 	}
 
-	@Schema(description = "The localized action execution result of type URL.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized action execution result of type URL."
+	)
 	@Valid
 	public FragmentInlineValue getUrl() {
 		if (_urlSupplier != null) {
@@ -143,8 +143,8 @@ public class URLActionExecutionResult implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.URLActionExecutionResult",
 		name = "x-class-name"
 	)

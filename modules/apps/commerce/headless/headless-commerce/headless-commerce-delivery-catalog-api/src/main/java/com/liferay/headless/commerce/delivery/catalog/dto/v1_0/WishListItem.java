@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class WishListItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(WishListItem.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFinalPrice() {
 		if (_finalPriceSupplier != null) {
 			finalPrice = _finalPriceSupplier.get();
@@ -89,7 +87,7 @@ public class WishListItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _finalPriceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFriendlyURL() {
 		if (_friendlyURLSupplier != null) {
 			friendlyURL = _friendlyURLSupplier.get();
@@ -130,7 +128,7 @@ public class WishListItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _friendlyURLSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getIcon() {
 		if (_iconSupplier != null) {
 			icon = _iconSupplier.get();
@@ -169,7 +167,7 @@ public class WishListItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _iconSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -208,7 +206,7 @@ public class WishListItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -249,7 +247,7 @@ public class WishListItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getProductName() {
 		if (_productNameSupplier != null) {
 			productName = _productNameSupplier.get();
@@ -290,7 +288,7 @@ public class WishListItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _productNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -461,8 +459,8 @@ public class WishListItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.catalog.dto.v1_0.WishListItem",
 		name = "x-class-name"
 	)

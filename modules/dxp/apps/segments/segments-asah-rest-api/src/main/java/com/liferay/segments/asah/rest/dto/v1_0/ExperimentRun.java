@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -41,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("ExperimentRun")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"confidenceLevel", "experimentVariants"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"confidenceLevel", "experimentVariants"})
 @XmlRootElement(name = "ExperimentRun")
 public class ExperimentRun implements Serializable {
 
@@ -56,7 +56,7 @@ public class ExperimentRun implements Serializable {
 
 	@DecimalMax("99")
 	@DecimalMin("80")
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getConfidenceLevel() {
 		if (_confidenceLevelSupplier != null) {
 			confidenceLevel = _confidenceLevelSupplier.get();
@@ -98,7 +98,7 @@ public class ExperimentRun implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _confidenceLevelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ExperimentVariant[] getExperimentVariants() {
 		if (_experimentVariantsSupplier != null) {
@@ -142,7 +142,7 @@ public class ExperimentRun implements Serializable {
 	@JsonIgnore
 	private Supplier<ExperimentVariant[]> _experimentVariantsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
@@ -265,8 +265,8 @@ public class ExperimentRun implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun",
 		name = "x-class-name"
 	)

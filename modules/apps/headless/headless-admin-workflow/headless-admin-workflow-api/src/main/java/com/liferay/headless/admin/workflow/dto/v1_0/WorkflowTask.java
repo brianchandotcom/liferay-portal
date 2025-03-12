@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class WorkflowTask implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(WorkflowTask.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -100,7 +98,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Creator getAssigneePerson() {
 		if (_assigneePersonSupplier != null) {
@@ -142,7 +140,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _assigneePersonSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Role[] getAssigneeRoles() {
 		if (_assigneeRolesSupplier != null) {
@@ -184,7 +182,9 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Role[]> _assigneeRolesSupplier;
 
-	@Schema(description = "A flag that indicates whether the task is complete.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A flag that indicates whether the task is complete."
+	)
 	public Boolean getCompleted() {
 		if (_completedSupplier != null) {
 			completed = _completedSupplier.get();
@@ -227,7 +227,9 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
-	@Schema(description = "The task's completion date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The task's completion date."
+	)
 	public Date getDateCompletion() {
 		if (_dateCompletionSupplier != null) {
 			dateCompletion = _dateCompletionSupplier.get();
@@ -268,7 +270,9 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCompletionSupplier;
 
-	@Schema(description = "The task's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The task's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -309,7 +313,9 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The date the task should be completed by.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The date the task should be completed by."
+	)
 	public Date getDateDue() {
 		if (_dateDueSupplier != null) {
 			dateDue = _dateDueSupplier.get();
@@ -350,7 +356,9 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateDueSupplier;
 
-	@Schema(description = "The task's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The task's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -391,7 +399,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(description = "The task's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The task's ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -430,7 +438,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -471,7 +479,9 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema(description = "The task's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The task's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -510,7 +520,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The object/asset that the task's workflow is managing."
 	)
 	@Valid
@@ -557,7 +567,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectReviewed> _objectReviewedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getWorkflowDefinitionId() {
 		if (_workflowDefinitionIdSupplier != null) {
 			workflowDefinitionId = _workflowDefinitionIdSupplier.get();
@@ -598,7 +608,9 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _workflowDefinitionIdSupplier;
 
-	@Schema(description = "The name of the task's workflow definition.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The name of the task's workflow definition."
+	)
 	public String getWorkflowDefinitionName() {
 		if (_workflowDefinitionNameSupplier != null) {
 			workflowDefinitionName = _workflowDefinitionNameSupplier.get();
@@ -640,7 +652,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _workflowDefinitionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getWorkflowDefinitionVersion() {
 		if (_workflowDefinitionVersionSupplier != null) {
 			workflowDefinitionVersion =
@@ -683,7 +695,7 @@ public class WorkflowTask implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _workflowDefinitionVersionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getWorkflowInstanceId() {
 		if (_workflowInstanceIdSupplier != null) {
 			workflowInstanceId = _workflowInstanceIdSupplier.get();
@@ -993,8 +1005,8 @@ public class WorkflowTask implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask",
 		name = "x-class-name"
 	)

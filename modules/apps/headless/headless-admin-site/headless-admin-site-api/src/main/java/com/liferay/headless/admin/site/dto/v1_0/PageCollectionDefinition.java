@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -57,7 +55,7 @@ public class PageCollectionDefinition implements Serializable {
 			PageCollectionDefinition.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CollectionReference getCollectionReference() {
 		if (_collectionReferenceSupplier != null) {
@@ -102,7 +100,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<CollectionReference> _collectionReferenceSupplier;
 
-	@Schema(description = "A list of viewports of the page collection.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of viewports of the page collection."
+	)
 	@Valid
 	public CollectionViewport[] getCollectionViewports() {
 		if (_collectionViewportsSupplier != null) {
@@ -147,7 +147,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<CollectionViewport[]> _collectionViewportsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Whether to show all items when pagination is disabled."
 	)
 	public Boolean getDisplayAllItems() {
@@ -192,7 +192,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _displayAllItemsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Whether to show all pages when pagination is enabled."
 	)
 	public Boolean getDisplayAllPages() {
@@ -237,7 +237,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _displayAllPagesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public EmptyCollectionConfig getEmptyCollectionConfig() {
 		if (_emptyCollectionConfigSupplier != null) {
@@ -282,7 +282,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<EmptyCollectionConfig> _emptyCollectionConfigSupplier;
 
-	@Schema(description = "The fragment style of the page collection.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment style of the page collection."
+	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		if (_fragmentStyleSupplier != null) {
@@ -324,7 +326,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
-	@Schema(description = "The fragment viewports of the page collection.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment viewports of the page collection."
+	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		if (_fragmentViewportsSupplier != null) {
@@ -369,7 +373,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@Schema(description = "the page collection's layout.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "the page collection's layout."
+	)
 	@Valid
 	public Layout getLayout() {
 		if (_layoutSupplier != null) {
@@ -411,7 +417,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Layout> _layoutSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The style of a list of items in the page collection."
 	)
 	public String getListItemStyle() {
@@ -456,7 +462,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _listItemStyleSupplier;
 
-	@Schema(description = "The style of a list in the page collection.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The style of a list in the page collection."
+	)
 	public String getListStyle() {
 		if (_listStyleSupplier != null) {
 			listStyle = _listStyleSupplier.get();
@@ -497,7 +505,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _listStyleSupplier;
 
-	@Schema(description = "The custom name of a Page Collection.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom name of a Page Collection."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -536,7 +546,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The number of columns in the page collection.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of columns in the page collection."
+	)
 	public Integer getNumberOfColumns() {
 		if (_numberOfColumnsSupplier != null) {
 			numberOfColumns = _numberOfColumnsSupplier.get();
@@ -577,7 +589,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfColumnsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The maximum number of items to display in the page collection when pagination is disabled."
 	)
 	public Integer getNumberOfItems() {
@@ -622,7 +634,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfItemsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of items per page in the page collection."
 	)
 	public Integer getNumberOfItemsPerPage() {
@@ -667,7 +679,7 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfItemsPerPageSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The maximum number of pages to show when pagination is enabled."
 	)
 	public Integer getNumberOfPages() {
@@ -712,8 +724,10 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfPagesSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The type of pagination."
+	)
 	@JsonGetter("paginationType")
-	@Schema(description = "The type of pagination.")
 	@Valid
 	public PaginationType getPaginationType() {
 		if (_paginationTypeSupplier != null) {
@@ -767,7 +781,9 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<PaginationType> _paginationTypeSupplier;
 
-	@Schema(description = "The page collection's template key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page collection's template key."
+	)
 	public String getTemplateKey() {
 		if (_templateKeySupplier != null) {
 			templateKey = _templateKeySupplier.get();
@@ -1086,8 +1102,8 @@ public class PageCollectionDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageCollectionDefinition",
 		name = "x-class-name"
 	)

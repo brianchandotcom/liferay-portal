@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Suggestion implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Suggestion.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object getAttributes() {
 		if (_attributesSupplier != null) {
@@ -93,7 +91,7 @@ public class Suggestion implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _attributesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Float getScore() {
 		if (_scoreSupplier != null) {
@@ -133,7 +131,7 @@ public class Suggestion implements Serializable {
 	@JsonIgnore
 	private Supplier<Float> _scoreSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getText() {
 		if (_textSupplier != null) {
 			text = _textSupplier.get();
@@ -255,8 +253,8 @@ public class Suggestion implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.search.rest.dto.v1_0.Suggestion",
 		name = "x-class-name"
 	)

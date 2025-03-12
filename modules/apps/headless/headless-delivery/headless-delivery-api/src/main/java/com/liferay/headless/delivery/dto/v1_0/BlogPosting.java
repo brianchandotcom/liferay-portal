@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.",
 	value = "BlogPosting"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.",
 	requiredProperties = {"articleBody", "headline"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BlogPosting")
 public class BlogPosting implements Serializable {
 
@@ -65,7 +63,7 @@ public class BlogPosting implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(BlogPosting.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -112,7 +110,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "The blog post's average rating.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's average rating."
+	)
 	@Valid
 	public AggregateRating getAggregateRating() {
 		if (_aggregateRatingSupplier != null) {
@@ -155,7 +155,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
-	@Schema(description = "The blog post's subtitle.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's subtitle."
+	)
 	public String getAlternativeHeadline() {
 		if (_alternativeHeadlineSupplier != null) {
 			alternativeHeadline = _alternativeHeadlineSupplier.get();
@@ -196,7 +198,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _alternativeHeadlineSupplier;
 
-	@Schema(description = "The blog post's body (content).")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's body (content)."
+	)
 	public String getArticleBody() {
 		if (_articleBodySupplier != null) {
 			articleBody = _articleBodySupplier.get();
@@ -238,7 +242,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _articleBodySupplier;
 
-	@Schema(description = "The blog post's author.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's author."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -280,7 +286,7 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of the custom fields associated with the blog post."
 	)
 	@Valid
@@ -326,7 +332,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "The blog post's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -367,7 +375,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The blog post's most recent modification date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's most recent modification date."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -410,7 +420,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The blog post's publication date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's publication date."
+	)
 	public Date getDatePublished() {
 		if (_datePublishedSupplier != null) {
 			datePublished = _datePublishedSupplier.get();
@@ -451,7 +463,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(description = "The blog post's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -492,7 +506,7 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The blog post's media format (e.g., HTML, BBCode, etc.)."
 	)
 	public String getEncodingFormat() {
@@ -537,7 +551,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _encodingFormatSupplier;
 
-	@Schema(description = "The blog post's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -578,7 +594,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The blog post's relative URL.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's relative URL."
+	)
 	public String getFriendlyUrlPath() {
 		if (_friendlyUrlPathSupplier != null) {
 			friendlyUrlPath = _friendlyUrlPathSupplier.get();
@@ -619,7 +637,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
-	@Schema(description = "The blog post's main title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's main title."
+	)
 	public String getHeadline() {
 		if (_headlineSupplier != null) {
 			headline = _headlineSupplier.get();
@@ -661,7 +681,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _headlineSupplier;
 
-	@Schema(description = "The blog post's identifier.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's identifier."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -700,7 +722,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The blog post's cover image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The blog post's cover image."
+	)
 	@Valid
 	public Image getImage() {
 		if (_imageSupplier != null) {
@@ -740,7 +764,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Image> _imageSupplier;
 
-	@Schema(description = "A list of keywords describing the blog post.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of keywords describing the blog post."
+	)
 	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
@@ -781,7 +807,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
-	@Schema(description = "The number of comments this blog post has received.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of comments this blog post has received."
+	)
 	public Integer getNumberOfComments() {
 		if (_numberOfCommentsSupplier != null) {
 			numberOfComments = _numberOfCommentsSupplier.get();
@@ -824,7 +852,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfCommentsSupplier;
 
-	@Schema(description = "A list of related contents to this blog post.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of related contents to this blog post."
+	)
 	@Valid
 	public RelatedContent[] getRelatedContents() {
 		if (_relatedContentsSupplier != null) {
@@ -867,7 +897,7 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<RelatedContent[]> _relatedContentsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of rendered blogs posts, which results from using a display page to process the blogs post and return HTML."
 	)
 	@Valid
@@ -914,7 +944,7 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<RenderedContent[]> _renderedContentsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the site to which this blog post is scoped."
 	)
 	public Long getSiteId() {
@@ -959,7 +989,9 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(description = "The categories associated with this blog post.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The categories associated with this blog post."
+	)
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		if (_taxonomyCategoryBriefsSupplier != null) {
@@ -1006,7 +1038,7 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only field that adds `TaxonomyCategory` instances to the blog post."
 	)
 	public Long[] getTaxonomyCategoryIds() {
@@ -1051,10 +1083,10 @@ public class BlogPosting implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
-	@JsonGetter("viewableBy")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only property that specifies the default permissions."
 	)
+	@JsonGetter("viewableBy")
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -1541,8 +1573,8 @@ public class BlogPosting implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.BlogPosting",
 		name = "x-class-name"
 	)

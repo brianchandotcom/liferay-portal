@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class Rating implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Rating.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -104,7 +102,7 @@ public class Rating implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The best possible rating an asset can receive (normalized to 1.0 by default)."
 	)
 	public Double getBestRating() {
@@ -149,7 +147,9 @@ public class Rating implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _bestRatingSupplier;
 
-	@Schema(description = "The rating's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The rating's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -191,7 +191,9 @@ public class Rating implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The rating's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The rating's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -232,7 +234,9 @@ public class Rating implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time a field of the rating changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time a field of the rating changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -273,7 +277,9 @@ public class Rating implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The rating's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The rating's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -312,7 +318,9 @@ public class Rating implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "The rating's value.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The rating's value."
+	)
 	public Double getRatingValue() {
 		if (_ratingValueSupplier != null) {
 			ratingValue = _ratingValueSupplier.get();
@@ -353,7 +361,7 @@ public class Rating implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _ratingValueSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The worst possible rating an asset can receive (normalized to 0.0 by default)."
 	)
 	public Double getWorstRating() {
@@ -537,8 +545,8 @@ public class Rating implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.Rating",
 		name = "x-class-name"
 	)

@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,8 +51,8 @@ public class ObjectField implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectField.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("DBType")
-	@Schema
 	@Valid
 	public DBType getDBType() {
 		if (_DBTypeSupplier != null) {
@@ -107,7 +105,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<DBType> _DBTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -150,8 +148,8 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("businessType")
-	@Schema
 	@Valid
 	public BusinessType getBusinessType() {
 		if (_businessTypeSupplier != null) {
@@ -204,7 +202,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<BusinessType> _businessTypeSupplier;
 
-	@Schema(deprecated = true)
+	@io.swagger.v3.oas.annotations.media.Schema(deprecated = true)
 	public String getDefaultValue() {
 		if (_defaultValueSupplier != null) {
 			defaultValue = _defaultValueSupplier.get();
@@ -246,7 +244,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _defaultValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -287,7 +285,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -326,7 +324,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getIndexed() {
 		if (_indexedSupplier != null) {
 			indexed = _indexedSupplier.get();
@@ -367,7 +365,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getIndexedAsKeyword() {
 		if (_indexedAsKeywordSupplier != null) {
 			indexedAsKeyword = _indexedAsKeywordSupplier.get();
@@ -408,7 +406,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexedAsKeywordSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getIndexedLanguageId() {
 		if (_indexedLanguageIdSupplier != null) {
 			indexedLanguageId = _indexedLanguageIdSupplier.get();
@@ -449,7 +447,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _indexedLanguageIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getLabel() {
 		if (_labelSupplier != null) {
@@ -491,7 +489,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getListTypeDefinitionExternalReferenceCode() {
 		if (_listTypeDefinitionExternalReferenceCodeSupplier != null) {
 			listTypeDefinitionExternalReferenceCode =
@@ -538,7 +536,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _listTypeDefinitionExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getListTypeDefinitionId() {
 		if (_listTypeDefinitionIdSupplier != null) {
 			listTypeDefinitionId = _listTypeDefinitionIdSupplier.get();
@@ -579,7 +577,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _listTypeDefinitionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getLocalized() {
 		if (_localizedSupplier != null) {
 			localized = _localizedSupplier.get();
@@ -620,7 +618,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _localizedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -659,7 +657,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionExternalReferenceCode1() {
 		if (_objectDefinitionExternalReferenceCode1Supplier != null) {
 			objectDefinitionExternalReferenceCode1 =
@@ -706,7 +704,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCode1Supplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ObjectFieldSetting[] getObjectFieldSettings() {
 		if (_objectFieldSettingsSupplier != null) {
@@ -751,7 +749,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectFieldSetting[]> _objectFieldSettingsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectRelationshipExternalReferenceCode() {
 		if (_objectRelationshipExternalReferenceCodeSupplier != null) {
 			objectRelationshipExternalReferenceCode =
@@ -798,8 +796,8 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectRelationshipExternalReferenceCodeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("readOnly")
-	@Schema
 	@Valid
 	public ReadOnly getReadOnly() {
 		if (_readOnlySupplier != null) {
@@ -852,7 +850,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<ReadOnly> _readOnlySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getReadOnlyConditionExpression() {
 		if (_readOnlyConditionExpressionSupplier != null) {
 			readOnlyConditionExpression =
@@ -897,8 +895,8 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _readOnlyConditionExpressionSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("relationshipType")
-	@Schema
 	@Valid
 	public RelationshipType getRelationshipType() {
 		if (_relationshipTypeSupplier != null) {
@@ -952,7 +950,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<RelationshipType> _relationshipTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -993,7 +991,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getState() {
 		if (_stateSupplier != null) {
 			state = _stateSupplier.get();
@@ -1034,7 +1032,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _stateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -1075,8 +1073,8 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(deprecated = true)
 	@JsonGetter("type")
-	@Schema(deprecated = true)
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -1128,7 +1126,7 @@ public class ObjectField implements Serializable {
 	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getUnique() {
 		if (_uniqueSupplier != null) {
 			unique = _uniqueSupplier.get();
@@ -1566,8 +1564,8 @@ public class ObjectField implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.object.admin.rest.dto.v1_0.ObjectField",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -47,8 +45,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName("Order")
+@io.swagger.v3.oas.annotations.media.Schema(
+	requiredProperties = {"channelId", "currencyCode"}
+)
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"channelId", "currencyCode"})
 @XmlRootElement(name = "Order")
 public class Order implements Serializable {
 
@@ -60,7 +60,7 @@ public class Order implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Order.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Account getAccount() {
 		if (_accountSupplier != null) {
@@ -102,7 +102,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Account> _accountSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getAccountExternalReferenceCode() {
 		if (_accountExternalReferenceCodeSupplier != null) {
 			accountExternalReferenceCode =
@@ -148,7 +148,7 @@ public class Order implements Serializable {
 	private Supplier<String> _accountExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -189,7 +189,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -232,7 +232,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "trasmitted")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "trasmitted")
 	public String getAdvanceStatus() {
 		if (_advanceStatusSupplier != null) {
 			advanceStatus = _advanceStatusSupplier.get();
@@ -273,7 +273,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _advanceStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BillingAddress getBillingAddress() {
 		if (_billingAddressSupplier != null) {
@@ -316,7 +316,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BillingAddress> _billingAddressSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getBillingAddressExternalReferenceCode() {
 		if (_billingAddressExternalReferenceCodeSupplier != null) {
 			billingAddressExternalReferenceCode =
@@ -363,7 +363,7 @@ public class Order implements Serializable {
 	private Supplier<String> _billingAddressExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getBillingAddressId() {
 		if (_billingAddressIdSupplier != null) {
 			billingAddressId = _billingAddressIdSupplier.get();
@@ -404,7 +404,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _billingAddressIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Channel getChannel() {
 		if (_channelSupplier != null) {
@@ -446,7 +446,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Channel> _channelSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getChannelExternalReferenceCode() {
 		if (_channelExternalReferenceCodeSupplier != null) {
 			channelExternalReferenceCode =
@@ -492,7 +492,7 @@ public class Order implements Serializable {
 	private Supplier<String> _channelExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -534,7 +534,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
-	@Schema(example = "save20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "save20")
 	public String getCouponCode() {
 		if (_couponCodeSupplier != null) {
 			couponCode = _couponCodeSupplier.get();
@@ -575,7 +575,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _couponCodeSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -616,7 +616,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCreatorEmailAddress() {
 		if (_creatorEmailAddressSupplier != null) {
 			creatorEmailAddress = _creatorEmailAddressSupplier.get();
@@ -657,7 +657,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorEmailAddressSupplier;
 
-	@Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
 	public String getCurrencyCode() {
 		if (_currencyCodeSupplier != null) {
 			currencyCode = _currencyCodeSupplier.get();
@@ -699,7 +699,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getCurrencyExternalReferenceCode() {
 		if (_currencyExternalReferenceCodeSupplier != null) {
 			currencyExternalReferenceCode =
@@ -745,7 +745,7 @@ public class Order implements Serializable {
 	private Supplier<String> _currencyExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getCurrencyId() {
 		if (_currencyIdSupplier != null) {
 			currencyId = _currencyIdSupplier.get();
@@ -786,7 +786,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _currencyIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -828,7 +828,9 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(example = "Orders delivery terms description")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Orders delivery terms description"
+	)
 	public String getDeliveryTermDescription() {
 		if (_deliveryTermDescriptionSupplier != null) {
 			deliveryTermDescription = _deliveryTermDescriptionSupplier.get();
@@ -870,7 +872,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _deliveryTermDescriptionSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getDeliveryTermExternalReferenceCode() {
 		if (_deliveryTermExternalReferenceCodeSupplier != null) {
 			deliveryTermExternalReferenceCode =
@@ -917,7 +919,7 @@ public class Order implements Serializable {
 	private Supplier<String> _deliveryTermExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getDeliveryTermId() {
 		if (_deliveryTermIdSupplier != null) {
 			deliveryTermId = _deliveryTermIdSupplier.get();
@@ -958,7 +960,9 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _deliveryTermIdSupplier;
 
-	@Schema(example = "Orders delivery terms name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Orders delivery terms name"
+	)
 	public String getDeliveryTermName() {
 		if (_deliveryTermNameSupplier != null) {
 			deliveryTermName = _deliveryTermNameSupplier.get();
@@ -999,7 +1003,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _deliveryTermNameSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -1041,7 +1045,7 @@ public class Order implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -1080,7 +1084,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getLastPriceUpdateDate() {
 		if (_lastPriceUpdateDateSupplier != null) {
 			lastPriceUpdateDate = _lastPriceUpdateDateSupplier.get();
@@ -1121,7 +1125,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _lastPriceUpdateDateSupplier;
 
-	@Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -1162,7 +1166,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
 
-	@Schema(example = "Order Name")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Order Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -1201,7 +1205,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getOrderDate() {
 		if (_orderDateSupplier != null) {
 			orderDate = _orderDateSupplier.get();
@@ -1242,7 +1246,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _orderDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public OrderItem[] getOrderItems() {
 		if (_orderItemsSupplier != null) {
@@ -1285,7 +1289,7 @@ public class Order implements Serializable {
 	private Supplier<OrderItem[]> _orderItemsSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	public Integer getOrderStatus() {
 		if (_orderStatusSupplier != null) {
 			orderStatus = _orderStatusSupplier.get();
@@ -1326,7 +1330,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _orderStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getOrderStatusInfo() {
 		if (_orderStatusInfoSupplier != null) {
@@ -1368,7 +1372,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _orderStatusInfoSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -1414,7 +1418,7 @@ public class Order implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -1455,7 +1459,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _orderTypeIdSupplier;
 
-	@Schema(example = "paypal")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "paypal")
 	public String getPaymentMethod() {
 		if (_paymentMethodSupplier != null) {
 			paymentMethod = _paymentMethodSupplier.get();
@@ -1497,7 +1501,7 @@ public class Order implements Serializable {
 	private Supplier<String> _paymentMethodSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	public Integer getPaymentStatus() {
 		if (_paymentStatusSupplier != null) {
 			paymentStatus = _paymentStatusSupplier.get();
@@ -1538,7 +1542,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _paymentStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getPaymentStatusInfo() {
 		if (_paymentStatusInfoSupplier != null) {
@@ -1580,7 +1584,9 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _paymentStatusInfoSupplier;
 
-	@Schema(example = "Orders payment terms description")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Orders payment terms description"
+	)
 	public String getPaymentTermDescription() {
 		if (_paymentTermDescriptionSupplier != null) {
 			paymentTermDescription = _paymentTermDescriptionSupplier.get();
@@ -1622,7 +1628,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paymentTermDescriptionSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getPaymentTermExternalReferenceCode() {
 		if (_paymentTermExternalReferenceCodeSupplier != null) {
 			paymentTermExternalReferenceCode =
@@ -1669,7 +1675,7 @@ public class Order implements Serializable {
 	private Supplier<String> _paymentTermExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getPaymentTermId() {
 		if (_paymentTermIdSupplier != null) {
 			paymentTermId = _paymentTermIdSupplier.get();
@@ -1710,7 +1716,9 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _paymentTermIdSupplier;
 
-	@Schema(example = "Orders payment terms name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "Orders payment terms name"
+	)
 	public String getPaymentTermName() {
 		if (_paymentTermNameSupplier != null) {
 			paymentTermName = _paymentTermNameSupplier.get();
@@ -1751,7 +1759,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _paymentTermNameSupplier;
 
-	@Schema(example = "Order printed note")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Order printed note")
 	public String getPrintedNote() {
 		if (_printedNoteSupplier != null) {
 			printedNote = _printedNoteSupplier.get();
@@ -1792,7 +1800,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _printedNoteSupplier;
 
-	@Schema(example = "Abcd1234")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Abcd1234")
 	public String getPurchaseOrderNumber() {
 		if (_purchaseOrderNumberSupplier != null) {
 			purchaseOrderNumber = _purchaseOrderNumberSupplier.get();
@@ -1833,7 +1841,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getRequestedDeliveryDate() {
 		if (_requestedDeliveryDateSupplier != null) {
 			requestedDeliveryDate = _requestedDeliveryDateSupplier.get();
@@ -1874,7 +1882,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _requestedDeliveryDateSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getShippable() {
 		if (_shippableSupplier != null) {
 			shippable = _shippableSupplier.get();
@@ -1915,7 +1923,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _shippableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ShippingAddress getShippingAddress() {
 		if (_shippingAddressSupplier != null) {
@@ -1958,7 +1966,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<ShippingAddress> _shippingAddressSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getShippingAddressExternalReferenceCode() {
 		if (_shippingAddressExternalReferenceCodeSupplier != null) {
 			shippingAddressExternalReferenceCode =
@@ -2005,7 +2013,7 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingAddressExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getShippingAddressId() {
 		if (_shippingAddressIdSupplier != null) {
 			shippingAddressId = _shippingAddressIdSupplier.get();
@@ -2047,7 +2055,7 @@ public class Order implements Serializable {
 	private Supplier<Long> _shippingAddressIdSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
 	@Valid
 	public BigDecimal getShippingAmount() {
 		if (_shippingAmountSupplier != null) {
@@ -2089,7 +2097,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingAmountFormatted() {
 		if (_shippingAmountFormattedSupplier != null) {
 			shippingAmountFormatted = _shippingAmountFormattedSupplier.get();
@@ -2132,7 +2140,7 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
 	public Double getShippingAmountValue() {
 		if (_shippingAmountValueSupplier != null) {
 			shippingAmountValue = _shippingAmountValueSupplier.get();
@@ -2173,7 +2181,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _shippingAmountValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BigDecimal getShippingDiscountAmount() {
 		if (_shippingDiscountAmountSupplier != null) {
@@ -2216,7 +2224,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingDiscountAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingDiscountAmountFormatted() {
 		if (_shippingDiscountAmountFormattedSupplier != null) {
 			shippingDiscountAmountFormatted =
@@ -2261,7 +2269,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingDiscountAmountFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getShippingDiscountAmountValue() {
 		if (_shippingDiscountAmountValueSupplier != null) {
 			shippingDiscountAmountValue =
@@ -2307,7 +2315,7 @@ public class Order implements Serializable {
 	private Supplier<Double> _shippingDiscountAmountValueSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel1() {
 		if (_shippingDiscountPercentageLevel1Supplier != null) {
@@ -2355,7 +2363,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel1WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel1WithTaxAmountSupplier != null) {
@@ -2405,7 +2413,7 @@ public class Order implements Serializable {
 		_shippingDiscountPercentageLevel1WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel2() {
 		if (_shippingDiscountPercentageLevel2Supplier != null) {
@@ -2453,7 +2461,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel2WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel2WithTaxAmountSupplier != null) {
@@ -2503,7 +2511,7 @@ public class Order implements Serializable {
 		_shippingDiscountPercentageLevel2WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel3() {
 		if (_shippingDiscountPercentageLevel3Supplier != null) {
@@ -2551,7 +2559,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel3WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel3WithTaxAmountSupplier != null) {
@@ -2601,7 +2609,7 @@ public class Order implements Serializable {
 		_shippingDiscountPercentageLevel3WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel4() {
 		if (_shippingDiscountPercentageLevel4Supplier != null) {
@@ -2649,7 +2657,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _shippingDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getShippingDiscountPercentageLevel4WithTaxAmount() {
 		if (_shippingDiscountPercentageLevel4WithTaxAmountSupplier != null) {
@@ -2698,7 +2706,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal>
 		_shippingDiscountPercentageLevel4WithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BigDecimal getShippingDiscountWithTaxAmount() {
 		if (_shippingDiscountWithTaxAmountSupplier != null) {
@@ -2744,7 +2752,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingDiscountWithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingDiscountWithTaxAmountFormatted() {
 		if (_shippingDiscountWithTaxAmountFormattedSupplier != null) {
 			shippingDiscountWithTaxAmountFormatted =
@@ -2791,7 +2799,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingDiscountWithTaxAmountFormattedSupplier;
 
-	@Schema(example = "fixed")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "fixed")
 	public String getShippingMethod() {
 		if (_shippingMethodSupplier != null) {
 			shippingMethod = _shippingMethodSupplier.get();
@@ -2832,7 +2840,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingMethodSupplier;
 
-	@Schema(example = "by Air")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "by Air")
 	public String getShippingOption() {
 		if (_shippingOptionSupplier != null) {
 			shippingOption = _shippingOptionSupplier.get();
@@ -2874,7 +2882,7 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingOptionSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
 	@Valid
 	public BigDecimal getShippingWithTaxAmount() {
 		if (_shippingWithTaxAmountSupplier != null) {
@@ -2917,7 +2925,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _shippingWithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getShippingWithTaxAmountFormatted() {
 		if (_shippingWithTaxAmountFormattedSupplier != null) {
 			shippingWithTaxAmountFormatted =
@@ -2963,7 +2971,7 @@ public class Order implements Serializable {
 	private Supplier<String> _shippingWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
 	public Double getShippingWithTaxAmountValue() {
 		if (_shippingWithTaxAmountValueSupplier != null) {
 			shippingWithTaxAmountValue =
@@ -3008,7 +3016,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _shippingWithTaxAmountValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BigDecimal getSubtotal() {
 		if (_subtotalSupplier != null) {
@@ -3050,7 +3058,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getSubtotalAmount() {
 		if (_subtotalAmountSupplier != null) {
 			subtotalAmount = _subtotalAmountSupplier.get();
@@ -3091,7 +3099,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _subtotalAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BigDecimal getSubtotalDiscountAmount() {
 		if (_subtotalDiscountAmountSupplier != null) {
@@ -3134,7 +3142,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalDiscountAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSubtotalDiscountAmountFormatted() {
 		if (_subtotalDiscountAmountFormattedSupplier != null) {
 			subtotalDiscountAmountFormatted =
@@ -3180,7 +3188,7 @@ public class Order implements Serializable {
 	private Supplier<String> _subtotalDiscountAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel1() {
 		if (_subtotalDiscountPercentageLevel1Supplier != null) {
@@ -3228,7 +3236,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel1WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel1WithTaxAmountSupplier != null) {
@@ -3278,7 +3286,7 @@ public class Order implements Serializable {
 		_subtotalDiscountPercentageLevel1WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel2() {
 		if (_subtotalDiscountPercentageLevel2Supplier != null) {
@@ -3326,7 +3334,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel2WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel2WithTaxAmountSupplier != null) {
@@ -3376,7 +3384,7 @@ public class Order implements Serializable {
 		_subtotalDiscountPercentageLevel2WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel3() {
 		if (_subtotalDiscountPercentageLevel3Supplier != null) {
@@ -3424,7 +3432,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel3WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel3WithTaxAmountSupplier != null) {
@@ -3474,7 +3482,7 @@ public class Order implements Serializable {
 		_subtotalDiscountPercentageLevel3WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel4() {
 		if (_subtotalDiscountPercentageLevel4Supplier != null) {
@@ -3522,7 +3530,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _subtotalDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getSubtotalDiscountPercentageLevel4WithTaxAmount() {
 		if (_subtotalDiscountPercentageLevel4WithTaxAmountSupplier != null) {
@@ -3571,7 +3579,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal>
 		_subtotalDiscountPercentageLevel4WithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BigDecimal getSubtotalDiscountWithTaxAmount() {
 		if (_subtotalDiscountWithTaxAmountSupplier != null) {
@@ -3617,7 +3625,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalDiscountWithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSubtotalDiscountWithTaxAmountFormatted() {
 		if (_subtotalDiscountWithTaxAmountFormattedSupplier != null) {
 			subtotalDiscountWithTaxAmountFormatted =
@@ -3664,7 +3672,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _subtotalDiscountWithTaxAmountFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSubtotalFormatted() {
 		if (_subtotalFormattedSupplier != null) {
 			subtotalFormatted = _subtotalFormattedSupplier.get();
@@ -3705,7 +3713,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _subtotalFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public BigDecimal getSubtotalWithTaxAmount() {
 		if (_subtotalWithTaxAmountSupplier != null) {
@@ -3748,7 +3756,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _subtotalWithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSubtotalWithTaxAmountFormatted() {
 		if (_subtotalWithTaxAmountFormattedSupplier != null) {
 			subtotalWithTaxAmountFormatted =
@@ -3793,7 +3801,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _subtotalWithTaxAmountFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getSubtotalWithTaxAmountValue() {
 		if (_subtotalWithTaxAmountValueSupplier != null) {
 			subtotalWithTaxAmountValue =
@@ -3839,7 +3847,7 @@ public class Order implements Serializable {
 	private Supplier<Double> _subtotalWithTaxAmountValueSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
 	@Valid
 	public BigDecimal getTaxAmount() {
 		if (_taxAmountSupplier != null) {
@@ -3881,7 +3889,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _taxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTaxAmountFormatted() {
 		if (_taxAmountFormattedSupplier != null) {
 			taxAmountFormatted = _taxAmountFormattedSupplier.get();
@@ -3923,7 +3931,7 @@ public class Order implements Serializable {
 	private Supplier<String> _taxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
 	public Double getTaxAmountValue() {
 		if (_taxAmountValueSupplier != null) {
 			taxAmountValue = _taxAmountValueSupplier.get();
@@ -3965,7 +3973,7 @@ public class Order implements Serializable {
 	private Supplier<Double> _taxAmountValueSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
 	@Valid
 	public BigDecimal getTotal() {
 		if (_totalSupplier != null) {
@@ -4008,7 +4016,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
 	public Double getTotalAmount() {
 		if (_totalAmountSupplier != null) {
 			totalAmount = _totalAmountSupplier.get();
@@ -4050,7 +4058,7 @@ public class Order implements Serializable {
 	private Supplier<Double> _totalAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
 	@Valid
 	public BigDecimal getTotalDiscountAmount() {
 		if (_totalDiscountAmountSupplier != null) {
@@ -4093,7 +4101,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _totalDiscountAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTotalDiscountAmountFormatted() {
 		if (_totalDiscountAmountFormattedSupplier != null) {
 			totalDiscountAmountFormatted =
@@ -4139,7 +4147,7 @@ public class Order implements Serializable {
 	private Supplier<String> _totalDiscountAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
 	public Double getTotalDiscountAmountValue() {
 		if (_totalDiscountAmountValueSupplier != null) {
 			totalDiscountAmountValue = _totalDiscountAmountValueSupplier.get();
@@ -4182,7 +4190,7 @@ public class Order implements Serializable {
 	private Supplier<Double> _totalDiscountAmountValueSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel1() {
 		if (_totalDiscountPercentageLevel1Supplier != null) {
@@ -4229,7 +4237,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel1Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel1WithTaxAmount() {
 		if (_totalDiscountPercentageLevel1WithTaxAmountSupplier != null) {
@@ -4279,7 +4287,7 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel1WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel2() {
 		if (_totalDiscountPercentageLevel2Supplier != null) {
@@ -4326,7 +4334,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel2Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel2WithTaxAmount() {
 		if (_totalDiscountPercentageLevel2WithTaxAmountSupplier != null) {
@@ -4376,7 +4384,7 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel2WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel3() {
 		if (_totalDiscountPercentageLevel3Supplier != null) {
@@ -4423,7 +4431,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel3Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel3WithTaxAmount() {
 		if (_totalDiscountPercentageLevel3WithTaxAmountSupplier != null) {
@@ -4473,7 +4481,7 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel3WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel4() {
 		if (_totalDiscountPercentageLevel4Supplier != null) {
@@ -4520,7 +4528,7 @@ public class Order implements Serializable {
 	private Supplier<BigDecimal> _totalDiscountPercentageLevel4Supplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	@Valid
 	public BigDecimal getTotalDiscountPercentageLevel4WithTaxAmount() {
 		if (_totalDiscountPercentageLevel4WithTaxAmountSupplier != null) {
@@ -4570,7 +4578,7 @@ public class Order implements Serializable {
 		_totalDiscountPercentageLevel4WithTaxAmountSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
 	@Valid
 	public BigDecimal getTotalDiscountWithTaxAmount() {
 		if (_totalDiscountWithTaxAmountSupplier != null) {
@@ -4616,7 +4624,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _totalDiscountWithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTotalDiscountWithTaxAmountFormatted() {
 		if (_totalDiscountWithTaxAmountFormattedSupplier != null) {
 			totalDiscountWithTaxAmountFormatted =
@@ -4663,7 +4671,7 @@ public class Order implements Serializable {
 	private Supplier<String> _totalDiscountWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "11")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "11")
 	public Double getTotalDiscountWithTaxAmountValue() {
 		if (_totalDiscountWithTaxAmountValueSupplier != null) {
 			totalDiscountWithTaxAmountValue =
@@ -4708,7 +4716,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _totalDiscountWithTaxAmountValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTotalFormatted() {
 		if (_totalFormattedSupplier != null) {
 			totalFormatted = _totalFormattedSupplier.get();
@@ -4750,7 +4758,7 @@ public class Order implements Serializable {
 	private Supplier<String> _totalFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
 	@Valid
 	public BigDecimal getTotalWithTaxAmount() {
 		if (_totalWithTaxAmountSupplier != null) {
@@ -4793,7 +4801,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _totalWithTaxAmountSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTotalWithTaxAmountFormatted() {
 		if (_totalWithTaxAmountFormattedSupplier != null) {
 			totalWithTaxAmountFormatted =
@@ -4839,7 +4847,7 @@ public class Order implements Serializable {
 	private Supplier<String> _totalWithTaxAmountFormattedSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "113")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "113")
 	public Double getTotalWithTaxAmountValue() {
 		if (_totalWithTaxAmountValueSupplier != null) {
 			totalWithTaxAmountValue = _totalWithTaxAmountValueSupplier.get();
@@ -4881,7 +4889,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _totalWithTaxAmountValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTransactionId() {
 		if (_transactionIdSupplier != null) {
 			transactionId = _transactionIdSupplier.get();
@@ -4922,7 +4930,7 @@ public class Order implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _transactionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getWorkflowStatusInfo() {
 		if (_workflowStatusInfoSupplier != null) {
@@ -6559,8 +6567,8 @@ public class Order implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.order.dto.v1_0.Order",
 		name = "x-class-name"
 	)

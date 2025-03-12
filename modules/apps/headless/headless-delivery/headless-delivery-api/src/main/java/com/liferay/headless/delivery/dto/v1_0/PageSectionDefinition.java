@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,7 +52,7 @@ public class PageSectionDefinition implements Serializable {
 			PageSectionDefinition.class, json);
 	}
 
-	@Schema(deprecated = true)
+	@io.swagger.v3.oas.annotations.media.Schema(deprecated = true)
 	public String getBackgroundColor() {
 		if (_backgroundColorSupplier != null) {
 			backgroundColor = _backgroundColorSupplier.get();
@@ -96,7 +94,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _backgroundColorSupplier;
 
-	@Schema(description = "The background fragment image of the page section.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The background fragment image of the page section."
+	)
 	@Valid
 	public FragmentImage getBackgroundFragmentImage() {
 		if (_backgroundFragmentImageSupplier != null) {
@@ -143,7 +143,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		deprecated = true,
 		description = "Deprecated as of Athanasius (7.3.x), replaced by backgroundFragmentImage"
 	)
@@ -192,7 +192,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<BackgroundImage> _backgroundImageSupplier;
 
-	@Schema(description = "Defines the content visibility of the container.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Defines the content visibility of the container."
+	)
 	public String getContentVisibility() {
 		if (_contentVisibilitySupplier != null) {
 			contentVisibility = _contentVisibilitySupplier.get();
@@ -235,7 +237,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentVisibilitySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of CSS Classes that are applied to the element."
 	)
 	public String[] getCssClasses() {
@@ -280,7 +282,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _cssClassesSupplier;
 
-	@Schema(description = "Custom CSS that is applied on the fragment.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom CSS that is applied on the fragment."
+	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
 			customCSS = _customCSSSupplier.get();
@@ -321,7 +325,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
-	@Schema(description = "The custom CSS viewports of the page collection.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom CSS viewports of the page collection."
+	)
 	@Valid
 	public CustomCSSViewport[] getCustomCSSViewports() {
 		if (_customCSSViewportsSupplier != null) {
@@ -366,7 +372,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
 
-	@Schema(description = "The fragment link of the page section.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment link of the page section."
+	)
 	@Valid
 	public FragmentLink getFragmentLink() {
 		if (_fragmentLinkSupplier != null) {
@@ -408,7 +416,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentLink> _fragmentLinkSupplier;
 
-	@Schema(description = "The fragment style of the page section.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The fragment style of the page section."
+	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
 		if (_fragmentStyleSupplier != null) {
@@ -450,7 +460,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
-	@Schema(description = "A list of fragment viewports of the page section.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of fragment viewports of the page section."
+	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
 		if (_fragmentViewportsSupplier != null) {
@@ -495,7 +507,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
-	@Schema(description = "The page section's html properties")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page section's html properties"
+	)
 	@Valid
 	public HtmlProperties getHtmlProperties() {
 		if (_htmlPropertiesSupplier != null) {
@@ -538,7 +552,7 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<HtmlProperties> _htmlPropertiesSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the page section is indexed or not."
 	)
 	public Boolean getIndexed() {
@@ -583,7 +597,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _indexedSupplier;
 
-	@Schema(description = "the page section's layout.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "the page section's layout."
+	)
 	@Valid
 	public Layout getLayout() {
 		if (_layoutSupplier != null) {
@@ -625,7 +641,9 @@ public class PageSectionDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Layout> _layoutSupplier;
 
-	@Schema(description = "The custom name of a Page section.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The custom name of a Page section."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -915,8 +933,8 @@ public class PageSectionDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition",
 		name = "x-class-name"
 	)

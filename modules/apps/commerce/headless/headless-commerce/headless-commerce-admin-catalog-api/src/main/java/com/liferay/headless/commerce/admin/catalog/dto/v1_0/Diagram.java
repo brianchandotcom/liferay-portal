@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class Diagram implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Diagram.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public AttachmentBase64 getAttachmentBase64() {
 		if (_attachmentBase64Supplier != null) {
@@ -94,7 +92,7 @@ public class Diagram implements Serializable {
 	@JsonIgnore
 	private Supplier<AttachmentBase64> _attachmentBase64Supplier;
 
-	@Schema(example = "black")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "black")
 	public String getColor() {
 		if (_colorSupplier != null) {
 			color = _colorSupplier.get();
@@ -136,7 +134,7 @@ public class Diagram implements Serializable {
 	private Supplier<String> _colorSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -176,7 +174,7 @@ public class Diagram implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "33132")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33132")
 	public Long getImageId() {
 		if (_imageIdSupplier != null) {
 			imageId = _imageIdSupplier.get();
@@ -217,7 +215,7 @@ public class Diagram implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _imageIdSupplier;
 
-	@Schema(example = "Name 1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Name 1")
 	public String getImageURL() {
 		if (_imageURLSupplier != null) {
 			imageURL = _imageURLSupplier.get();
@@ -258,7 +256,7 @@ public class Diagram implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageURLSupplier;
 
-	@Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -304,7 +302,7 @@ public class Diagram implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "33131")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33131")
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -345,7 +343,7 @@ public class Diagram implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
 	public Double getRadius() {
 		if (_radiusSupplier != null) {
 			radius = _radiusSupplier.get();
@@ -386,7 +384,7 @@ public class Diagram implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _radiusSupplier;
 
-	@Schema(example = "default")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "default")
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -581,8 +579,8 @@ public class Diagram implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram",
 		name = "x-class-name"
 	)

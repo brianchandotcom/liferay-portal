@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -54,8 +52,8 @@ public class ObjectViewFilterColumn implements Serializable {
 			ObjectViewFilterColumn.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("filterType")
-	@Schema
 	@Valid
 	public FilterType getFilterType() {
 		if (_filterTypeSupplier != null) {
@@ -108,7 +106,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<FilterType> _filterTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -147,7 +145,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getJson() {
 		if (_jsonSupplier != null) {
 			json = _jsonSupplier.get();
@@ -186,7 +184,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _jsonSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectFieldName() {
 		if (_objectFieldNameSupplier != null) {
 			objectFieldName = _objectFieldNameSupplier.get();
@@ -227,7 +225,7 @@ public class ObjectViewFilterColumn implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectFieldNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getValueSummary() {
 		if (_valueSummarySupplier != null) {
 			valueSummary = _valueSummarySupplier.get();
@@ -377,8 +375,8 @@ public class ObjectViewFilterColumn implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.object.admin.rest.dto.v1_0.ObjectViewFilterColumn",
 		name = "x-class-name"
 	)

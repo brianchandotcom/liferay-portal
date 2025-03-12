@@ -17,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -55,7 +53,7 @@ public class PageTemplateSet implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageTemplateSet.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page template set's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -101,7 +99,7 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page template set's creator external reference code."
 	)
 	public String getCreatorExternalReferenceCode() {
@@ -150,7 +148,9 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorExternalReferenceCodeSupplier;
 
-	@Schema(description = "The page template set's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template set's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -191,7 +191,9 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time the page template set changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time the page template set changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -232,7 +234,9 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The page template set's description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template set's description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -273,7 +277,9 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema(description = "The page template set's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template set's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -316,7 +322,9 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The page template set's key.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template set's key."
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -355,7 +363,9 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(description = "The page template set's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page template set's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -394,7 +404,7 @@ public class PageTemplateSet implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A valid external identifier to reference this page template set."
 	)
 	public String getUuid() {
@@ -612,8 +622,8 @@ public class PageTemplateSet implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet",
 		name = "x-class-name"
 	)

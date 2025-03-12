@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class FormField implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FormField.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getAutocomplete() {
 		if (_autocompleteSupplier != null) {
 			autocomplete = _autocompleteSupplier.get();
@@ -93,7 +91,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _autocompleteSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDataSourceType() {
 		if (_dataSourceTypeSupplier != null) {
 			dataSourceType = _dataSourceTypeSupplier.get();
@@ -134,7 +132,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dataSourceTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDataType() {
 		if (_dataTypeSupplier != null) {
 			dataType = _dataTypeSupplier.get();
@@ -175,7 +173,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dataTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDisplayStyle() {
 		if (_displayStyleSupplier != null) {
 			displayStyle = _displayStyleSupplier.get();
@@ -216,7 +214,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _displayStyleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public FormFieldOption[] getFormFieldOptions() {
 		if (_formFieldOptionsSupplier != null) {
@@ -259,7 +257,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<FormFieldOption[]> _formFieldOptionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Grid getGrid() {
 		if (_gridSupplier != null) {
@@ -299,7 +297,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Grid> _gridSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getHasFormRules() {
 		if (_hasFormRulesSupplier != null) {
 			hasFormRules = _hasFormRulesSupplier.get();
@@ -340,7 +338,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _hasFormRulesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -379,7 +377,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getImmutable() {
 		if (_immutableSupplier != null) {
 			immutable = _immutableSupplier.get();
@@ -420,7 +418,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _immutableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getInline() {
 		if (_inlineSupplier != null) {
 			inline = _inlineSupplier.get();
@@ -461,7 +459,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _inlineSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getInputControl() {
 		if (_inputControlSupplier != null) {
 			inputControl = _inputControlSupplier.get();
@@ -502,7 +500,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _inputControlSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -543,7 +541,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getLabel_i18n() {
 		if (_label_i18nSupplier != null) {
@@ -586,7 +584,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _label_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getLocalizable() {
 		if (_localizableSupplier != null) {
 			localizable = _localizableSupplier.get();
@@ -627,7 +625,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _localizableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getMultiple() {
 		if (_multipleSupplier != null) {
 			multiple = _multipleSupplier.get();
@@ -668,7 +666,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _multipleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -707,7 +705,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPlaceholder() {
 		if (_placeholderSupplier != null) {
 			placeholder = _placeholderSupplier.get();
@@ -748,7 +746,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _placeholderSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPredefinedValue() {
 		if (_predefinedValueSupplier != null) {
 			predefinedValue = _predefinedValueSupplier.get();
@@ -789,7 +787,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _predefinedValueSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getPredefinedValue_i18n() {
 		if (_predefinedValue_i18nSupplier != null) {
@@ -834,7 +832,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _predefinedValue_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getReadOnly() {
 		if (_readOnlySupplier != null) {
 			readOnly = _readOnlySupplier.get();
@@ -875,7 +873,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _readOnlySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRepeatable() {
 		if (_repeatableSupplier != null) {
 			repeatable = _repeatableSupplier.get();
@@ -916,7 +914,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _repeatableSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -957,7 +955,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShowAsSwitcher() {
 		if (_showAsSwitcherSupplier != null) {
 			showAsSwitcher = _showAsSwitcherSupplier.get();
@@ -998,7 +996,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _showAsSwitcherSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getShowLabel() {
 		if (_showLabelSupplier != null) {
 			showLabel = _showLabelSupplier.get();
@@ -1039,7 +1037,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _showLabelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getStyle() {
 		if (_styleSupplier != null) {
 			style = _styleSupplier.get();
@@ -1080,7 +1078,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _styleSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getText() {
 		if (_textSupplier != null) {
 			text = _textSupplier.get();
@@ -1119,7 +1117,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _textSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getText_i18n() {
 		if (_text_i18nSupplier != null) {
@@ -1162,7 +1160,7 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _text_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTooltip() {
 		if (_tooltipSupplier != null) {
 			tooltip = _tooltipSupplier.get();
@@ -1203,7 +1201,9 @@ public class FormField implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _tooltipSupplier;
 
-	@Schema(description = "https://www.schema.org/FormFieldValidation")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "https://www.schema.org/FormFieldValidation"
+	)
 	@Valid
 	public Validation getValidation() {
 		if (_validationSupplier != null) {
@@ -1679,8 +1679,8 @@ public class FormField implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.form.dto.v1_0.FormField",
 		name = "x-class-name"
 	)

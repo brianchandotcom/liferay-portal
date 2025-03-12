@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,9 @@ public class PageSettings implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageSettings.class, json);
 	}
 
-	@Schema(description = "A list of custom metatags this page has.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of custom metatags this page has."
+	)
 	@Valid
 	public CustomMetaTag[] getCustomMetaTags() {
 		if (_customMetaTagsSupplier != null) {
@@ -95,7 +95,7 @@ public class PageSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomMetaTag[]> _customMetaTagsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the page is hidden from navigation."
 	)
 	public Boolean getHiddenFromNavigation() {
@@ -140,7 +140,9 @@ public class PageSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _hiddenFromNavigationSupplier;
 
-	@Schema(description = "The page's Open Graph settings.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's Open Graph settings."
+	)
 	@Valid
 	public OpenGraphSettings getOpenGraphSettings() {
 		if (_openGraphSettingsSupplier != null) {
@@ -183,7 +185,9 @@ public class PageSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<OpenGraphSettings> _openGraphSettingsSupplier;
 
-	@Schema(description = "The page's SEO settings.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's SEO settings."
+	)
 	@Valid
 	public SEOSettings getSeoSettings() {
 		if (_seoSettingsSupplier != null) {
@@ -225,7 +229,9 @@ public class PageSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<SEOSettings> _seoSettingsSupplier;
 
-	@Schema(description = "The page's site navigation menu settings.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's site navigation menu settings."
+	)
 	@Valid
 	public SitePageNavigationMenuSettings getSitePageNavigationMenuSettings() {
 		if (_sitePageNavigationMenuSettingsSupplier != null) {
@@ -375,8 +381,8 @@ public class PageSettings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageSettings",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -54,7 +52,7 @@ public class DispatchTrigger implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DispatchTrigger.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -95,7 +93,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getCompanyId() {
 		if (_companyIdSupplier != null) {
 			companyId = _companyIdSupplier.get();
@@ -136,7 +134,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _companyIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCronExpression() {
 		if (_cronExpressionSupplier != null) {
 			cronExpression = _cronExpressionSupplier.get();
@@ -177,7 +175,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _cronExpressionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getDispatchTaskClusterMode() {
 		if (_dispatchTaskClusterModeSupplier != null) {
 			dispatchTaskClusterMode = _dispatchTaskClusterModeSupplier.get();
@@ -219,7 +217,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _dispatchTaskClusterModeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDispatchTaskExecutorType() {
 		if (_dispatchTaskExecutorTypeSupplier != null) {
 			dispatchTaskExecutorType = _dispatchTaskExecutorTypeSupplier.get();
@@ -261,7 +259,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dispatchTaskExecutorTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getDispatchTaskSettings() {
 		if (_dispatchTaskSettingsSupplier != null) {
@@ -304,7 +302,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _dispatchTaskSettingsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getEndDate() {
 		if (_endDateSupplier != null) {
 			endDate = _endDateSupplier.get();
@@ -345,7 +343,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _endDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -386,7 +384,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -425,7 +423,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -464,7 +462,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getOverlapAllowed() {
 		if (_overlapAllowedSupplier != null) {
 			overlapAllowed = _overlapAllowedSupplier.get();
@@ -505,7 +503,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _overlapAllowedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getStartDate() {
 		if (_startDateSupplier != null) {
 			startDate = _startDateSupplier.get();
@@ -546,7 +544,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _startDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -587,7 +585,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTimeZoneId() {
 		if (_timeZoneIdSupplier != null) {
 			timeZoneId = _timeZoneIdSupplier.get();
@@ -628,7 +626,7 @@ public class DispatchTrigger implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _timeZoneIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getUserId() {
 		if (_userIdSupplier != null) {
 			userId = _userIdSupplier.get();
@@ -912,8 +910,8 @@ public class DispatchTrigger implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.dispatch.rest.dto.v1_0.DispatchTrigger",
 		name = "x-class-name"
 	)

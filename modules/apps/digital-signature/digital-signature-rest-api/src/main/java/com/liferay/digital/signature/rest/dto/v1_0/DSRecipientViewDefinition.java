@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class DSRecipientViewDefinition implements Serializable {
 			DSRecipientViewDefinition.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAuthenticationMethod() {
 		if (_authenticationMethodSupplier != null) {
 			authenticationMethod = _authenticationMethodSupplier.get();
@@ -91,7 +89,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _authenticationMethodSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDsClientUserId() {
 		if (_dsClientUserIdSupplier != null) {
 			dsClientUserId = _dsClientUserIdSupplier.get();
@@ -132,7 +130,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _dsClientUserIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getEmailAddress() {
 		if (_emailAddressSupplier != null) {
 			emailAddress = _emailAddressSupplier.get();
@@ -173,7 +171,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _emailAddressSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getReturnURL() {
 		if (_returnURLSupplier != null) {
 			returnURL = _returnURLSupplier.get();
@@ -214,7 +212,7 @@ public class DSRecipientViewDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _returnURLSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUserName() {
 		if (_userNameSupplier != null) {
 			userName = _userNameSupplier.get();
@@ -368,8 +366,8 @@ public class DSRecipientViewDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.digital.signature.rest.dto.v1_0.DSRecipientViewDefinition",
 		name = "x-class-name"
 	)

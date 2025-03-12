@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a site page. This is modeled internally as a `Layout`.",
 	value = "SitePage"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a site page. This is modeled internally as a `Layout`.",
 	requiredProperties = {"title"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SitePage")
 public class SitePage implements Serializable {
 
@@ -65,7 +63,7 @@ public class SitePage implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SitePage.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Block of actions allowed by the user making the request."
 	)
 	@Valid
@@ -112,7 +110,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "The page's average rating.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's average rating."
+	)
 	@Valid
 	public AggregateRating getAggregateRating() {
 		if (_aggregateRatingSupplier != null) {
@@ -155,7 +155,7 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<AggregateRating> _aggregateRatingSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The list of languages the page has a translation for."
 	)
 	public String[] getAvailableLanguages() {
@@ -200,7 +200,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
-	@Schema(description = "The page's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -242,7 +244,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "Custom fields associated with the page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom fields associated with the page."
+	)
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -284,7 +288,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "The page's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -325,7 +331,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time any field of the page was changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time any field of the page was changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -368,7 +376,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The page's most recent publication date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's most recent publication date."
+	)
 	public Date getDatePublished() {
 		if (_datePublishedSupplier != null) {
 			datePublished = _datePublishedSupplier.get();
@@ -409,7 +419,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(description = "Experience of the page that it's being retrieved.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Experience of the page that it's being retrieved."
+	)
 	@Valid
 	public Experience getExperience() {
 		if (_experienceSupplier != null) {
@@ -453,7 +465,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Experience> _experienceSupplier;
 
-	@Schema(description = "A relative URL to the page's rendered content.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A relative URL to the page's rendered content."
+	)
 	public String getFriendlyUrlPath() {
 		if (_friendlyUrlPathSupplier != null) {
 			friendlyUrlPath = _friendlyUrlPathSupplier.get();
@@ -496,7 +510,7 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _friendlyUrlPathSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The localized relative URLs to the page's rendered content."
 	)
 	@Valid
@@ -545,7 +559,7 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _friendlyUrlPath_i18nSupplier;
 
-	@Schema(description = "The page ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The page ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -584,7 +598,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "A list of keywords describing the page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of keywords describing the page."
+	)
 	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
@@ -625,7 +641,7 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Optional field with the structure of all the elements of the page. Can be embedded with nestedFields when retrieving the collection of site pages. When retrieving a single site page, it will automatically be included."
 	)
 	@Valid
@@ -672,7 +688,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<PageDefinition> _pageDefinitionSupplier;
 
-	@Schema(description = "The page's permissions.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's permissions."
+	)
 	@Valid
 	public PagePermission[] getPagePermissions() {
 		if (_pagePermissionsSupplier != null) {
@@ -715,7 +733,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<PagePermission[]> _pagePermissionsSupplier;
 
-	@Schema(description = "Settings of the page, such as SEO or OpenGraph.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Settings of the page, such as SEO or OpenGraph."
+	)
 	@Valid
 	public PageSettings getPageSettings() {
 		if (_pageSettingsSupplier != null) {
@@ -759,7 +779,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<PageSettings> _pageSettingsSupplier;
 
-	@Schema(description = "The type of the page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The type of the page."
+	)
 	public String getPageType() {
 		if (_pageTypeSupplier != null) {
 			pageType = _pageTypeSupplier.get();
@@ -800,7 +822,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _pageTypeSupplier;
 
-	@Schema(description = "The parent page or null if it is a top level page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The parent page or null if it is a top level page."
+	)
 	@Valid
 	public ParentSitePage getParentSitePage() {
 		if (_parentSitePageSupplier != null) {
@@ -845,7 +869,7 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<ParentSitePage> _parentSitePageSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Metadata of the page such as it's master page and template."
 	)
 	@Valid
@@ -891,7 +915,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<RenderedPage> _renderedPageSupplier;
 
-	@Schema(description = "The ID of the site to which this page is scoped.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The ID of the site to which this page is scoped."
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -934,7 +960,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(description = "The categories associated with this page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The categories associated with this page."
+	)
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		if (_taxonomyCategoryBriefsSupplier != null) {
@@ -979,7 +1007,7 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		deprecated = true,
 		description = "A write-only field that adds `TaxonomyCategory` instances to the page. Deprecated as of Cavanaugh (7.4.x), replaced by `taxonomyCategoryBriefs.taxonomyCategoryReference`"
 	)
@@ -1026,7 +1054,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
-	@Schema(description = "The page's title.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page's title."
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -1068,7 +1098,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@Schema(description = "The localized page's titles.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The localized page's titles."
+	)
 	@Valid
 	public Map<String, String> getTitle_i18n() {
 		if (_title_i18nSupplier != null) {
@@ -1111,7 +1143,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _title_i18nSupplier;
 
-	@Schema(description = "A valid external identifier to reference this page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A valid external identifier to reference this page."
+	)
 	public String getUuid() {
 		if (_uuidSupplier != null) {
 			uuid = _uuidSupplier.get();
@@ -1152,8 +1186,8 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _uuidSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("viewableBy")
-	@Schema
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -1654,8 +1688,8 @@ public class SitePage implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.delivery.dto.v1_0.SitePage",
 		name = "x-class-name"
 	)

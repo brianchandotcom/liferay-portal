@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class Trend implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Trend.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Double getPercentage() {
 		if (_percentageSupplier != null) {
 			percentage = _percentageSupplier.get();
@@ -94,8 +92,8 @@ public class Trend implements Serializable {
 	@JsonIgnore
 	private Supplier<Double> _percentageSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("trendClassification")
-	@Schema
 	@Valid
 	public TrendClassification getTrendClassification() {
 		if (_trendClassificationSupplier != null) {
@@ -211,8 +209,8 @@ public class Trend implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.analytics.reports.rest.dto.v1_0.Trend",
 		name = "x-class-name"
 	)

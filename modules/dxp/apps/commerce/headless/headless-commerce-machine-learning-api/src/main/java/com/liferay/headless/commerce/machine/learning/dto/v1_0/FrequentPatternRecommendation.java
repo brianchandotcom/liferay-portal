@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -56,7 +54,7 @@ public class FrequentPatternRecommendation implements Serializable {
 			FrequentPatternRecommendation.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getAntecedentIds() {
 		if (_antecedentIdsSupplier != null) {
 			antecedentIds = _antecedentIdsSupplier.get();
@@ -97,7 +95,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _antecedentIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getAntecedentIdsLength() {
 		if (_antecedentIdsLengthSupplier != null) {
 			antecedentIdsLength = _antecedentIdsLengthSupplier.get();
@@ -138,7 +136,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _antecedentIdsLengthSupplier;
 
-	@Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -179,7 +177,7 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getJobId() {
 		if (_jobIdSupplier != null) {
 			jobId = _jobIdSupplier.get();
@@ -220,7 +218,9 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _jobIdSupplier;
 
-	@Schema(description = "The recommended product identifier.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The recommended product identifier."
+	)
 	public Long getRecommendedProductId() {
 		if (_recommendedProductIdSupplier != null) {
 			recommendedProductId = _recommendedProductIdSupplier.get();
@@ -261,7 +261,9 @@ public class FrequentPatternRecommendation implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _recommendedProductIdSupplier;
 
-	@Schema(description = "The recommendation score.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The recommendation score."
+	)
 	@Valid
 	public Float getScore() {
 		if (_scoreSupplier != null) {
@@ -428,8 +430,8 @@ public class FrequentPatternRecommendation implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.machine.learning.dto.v1_0.FrequentPatternRecommendation",
 		name = "x-class-name"
 	)

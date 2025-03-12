@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class MultiValuedAttribute implements Serializable {
 			MultiValuedAttribute.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The reference URI of a target resource, if the attribute is a reference."
 	)
 	public String get$ref() {
@@ -95,7 +93,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _$refSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A human-readable name, primarily used for display purposes and having a mutability of \"immutable\"."
 	)
 	public String getDisplay() {
@@ -140,7 +138,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _displaySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred mailing address or the primary email address."
 	)
 	public Boolean getPrimary() {
@@ -185,7 +183,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A label indicating the attribute's function, e.g., \"work\" or \"home\"."
 	)
 	public String getType() {
@@ -228,7 +226,7 @@ public class MultiValuedAttribute implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The attribute's significant value, e.g., email address, phone number."
 	)
 	public String getValue() {
@@ -382,8 +380,8 @@ public class MultiValuedAttribute implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.scim.rest.dto.v1_0.MultiValuedAttribute",
 		name = "x-class-name"
 	)

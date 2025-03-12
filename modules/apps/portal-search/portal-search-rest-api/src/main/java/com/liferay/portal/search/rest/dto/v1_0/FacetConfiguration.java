@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,9 @@ public class FacetConfiguration implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FacetConfiguration.class, json);
 	}
 
-	@Schema(description = "The name of the aggregation.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The name of the aggregation."
+	)
 	public String getAggregationName() {
 		if (_aggregationNameSupplier != null) {
 			aggregationName = _aggregationNameSupplier.get();
@@ -91,7 +91,9 @@ public class FacetConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _aggregationNameSupplier;
 
-	@Schema(description = "Additional attributes for the facet.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Additional attributes for the facet."
+	)
 	@Valid
 	public Map<String, Object> getAttributes() {
 		if (_attributesSupplier != null) {
@@ -134,7 +136,9 @@ public class FacetConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Object>> _attributesSupplier;
 
-	@Schema(description = "Frequency threshold for showing the terms.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Frequency threshold for showing the terms."
+	)
 	public Integer getFrequencyThreshold() {
 		if (_frequencyThresholdSupplier != null) {
 			frequencyThreshold = _frequencyThresholdSupplier.get();
@@ -175,7 +179,9 @@ public class FacetConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _frequencyThresholdSupplier;
 
-	@Schema(description = "Maximum number of terms to be shown.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Maximum number of terms to be shown."
+	)
 	public Integer getMaxTerms() {
 		if (_maxTermsSupplier != null) {
 			maxTerms = _maxTermsSupplier.get();
@@ -216,7 +222,9 @@ public class FacetConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _maxTermsSupplier;
 
-	@Schema(description = "The name of the facet.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The name of the facet."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -255,7 +263,9 @@ public class FacetConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(description = "The values / selections to be filtered by.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The values / selections to be filtered by."
+	)
 	@Valid
 	public Object[] getValues() {
 		if (_valuesSupplier != null) {
@@ -423,8 +433,8 @@ public class FacetConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.portal.search.rest.dto.v1_0.FacetConfiguration",
 		name = "x-class-name"
 	)

@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 			WorkflowInstanceSubmit.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getContext() {
 		if (_contextSupplier != null) {
@@ -93,7 +91,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _contextSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -134,7 +132,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTransitionName() {
 		if (_transitionNameSupplier != null) {
 			transitionName = _transitionNameSupplier.get();
@@ -175,7 +173,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _transitionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getWorkflowDefinitionName() {
 		if (_workflowDefinitionNameSupplier != null) {
 			workflowDefinitionName = _workflowDefinitionNameSupplier.get();
@@ -217,7 +215,7 @@ public class WorkflowInstanceSubmit implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _workflowDefinitionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getWorkflowDefinitionVersion() {
 		if (_workflowDefinitionVersionSupplier != null) {
 			workflowDefinitionVersion =
@@ -365,8 +363,8 @@ public class WorkflowInstanceSubmit implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstanceSubmit",
 		name = "x-class-name"
 	)

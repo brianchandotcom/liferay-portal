@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -49,11 +47,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 	description = "Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.",
 	value = "TaxonomyCategory"
 )
-@JsonFilter("Liferay.Vulcan")
-@Schema(
+@io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a category, which is a hierarchical classification that can be associated with particular asset types. Properties follow the [category](https://schema.org/category) specification.",
 	requiredProperties = {"name"}
 )
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TaxonomyCategory")
 public class TaxonomyCategory implements Serializable {
 
@@ -65,7 +63,7 @@ public class TaxonomyCategory implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TaxonomyCategory.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -108,7 +106,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of languages the category has a translation for."
 	)
 	public String[] getAvailableLanguages() {
@@ -153,7 +151,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _availableLanguagesSupplier;
 
-	@Schema(description = "The category's creator.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's creator."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -195,7 +195,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The category's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -236,7 +238,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The category's most recent modification date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's most recent modification date."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -277,7 +281,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The category's text description.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's text description."
+	)
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -318,7 +324,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getDescription_i18n() {
 		if (_description_i18nSupplier != null) {
@@ -361,7 +367,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _description_i18nSupplier;
 
-	@Schema(description = "The category's external reference code")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's external reference code"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -402,7 +410,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The category's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's ID."
+	)
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -441,7 +451,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(description = "The category's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -481,7 +493,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -524,7 +536,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of times this category has been used in other assets."
 	)
 	public Integer getNumberOfTaxonomyCategories() {
@@ -573,7 +585,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfTaxonomyCategoriesSupplier;
 
-	@Schema(description = "The category's parent category, if it exists.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's parent category, if it exists."
+	)
 	@Valid
 	public ParentTaxonomyCategory getParentTaxonomyCategory() {
 		if (_parentTaxonomyCategorySupplier != null) {
@@ -618,7 +632,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<ParentTaxonomyCategory> _parentTaxonomyCategorySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The parent category's `TaxonomyVocabulary`, if such a parent category exists."
 	)
 	@Valid
@@ -668,7 +682,7 @@ public class TaxonomyCategory implements Serializable {
 	private Supplier<ParentTaxonomyVocabulary>
 		_parentTaxonomyVocabularySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public com.liferay.portal.vulcan.permission.Permission[] getPermissions() {
 		if (_permissionsSupplier != null) {
@@ -715,7 +729,7 @@ public class TaxonomyCategory implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
 		_permissionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The external reference code of the site to which this category is scoped."
 	)
 	public String getSiteExternalReferenceCode() {
@@ -762,7 +776,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _siteExternalReferenceCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the site to which this category is scoped."
 	)
 	public Long getSiteId() {
@@ -807,7 +821,9 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@Schema(description = "The category's properties.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The category's properties."
+	)
 	@Valid
 	public TaxonomyCategoryProperty[] getTaxonomyCategoryProperties() {
 		if (_taxonomyCategoryPropertiesSupplier != null) {
@@ -854,7 +870,7 @@ public class TaxonomyCategory implements Serializable {
 	private Supplier<TaxonomyCategoryProperty[]>
 		_taxonomyCategoryPropertiesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getTaxonomyCategoryUsageCount() {
 		if (_taxonomyCategoryUsageCountSupplier != null) {
 			taxonomyCategoryUsageCount =
@@ -899,7 +915,7 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _taxonomyCategoryUsageCountSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The `TaxonomyVocabulary` id, only if the category does not have a parent category."
 	)
 	public Long getTaxonomyVocabularyId() {
@@ -944,10 +960,10 @@ public class TaxonomyCategory implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _taxonomyVocabularyIdSupplier;
 
-	@JsonGetter("viewableBy")
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A write-only property that specifies the category's default permissions."
 	)
+	@JsonGetter("viewableBy")
 	@Valid
 	public ViewableBy getViewableBy() {
 		if (_viewableBySupplier != null) {
@@ -1359,8 +1375,8 @@ public class TaxonomyCategory implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory",
 		name = "x-class-name"
 	)

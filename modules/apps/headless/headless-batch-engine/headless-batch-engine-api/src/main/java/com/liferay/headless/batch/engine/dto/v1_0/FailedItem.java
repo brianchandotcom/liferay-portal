@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,9 @@ public class FailedItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FailedItem.class, json);
 	}
 
-	@Schema(description = "The item which failed to be imported.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The item which failed to be imported."
+	)
 	public String getItem() {
 		if (_itemSupplier != null) {
 			item = _itemSupplier.get();
@@ -87,7 +87,7 @@ public class FailedItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _itemSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Position of the item in the import file. For CSV file it will represent a line number, for JSON file it will represent an array index etc."
 	)
 	public Integer getItemIndex() {
@@ -132,7 +132,9 @@ public class FailedItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _itemIndexSupplier;
 
-	@Schema(description = "Message describing the reason of import failure.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Message describing the reason of import failure."
+	)
 	public String getMessage() {
 		if (_messageSupplier != null) {
 			message = _messageSupplier.get();
@@ -251,8 +253,8 @@ public class FailedItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.batch.engine.dto.v1_0.FailedItem",
 		name = "x-class-name"
 	)

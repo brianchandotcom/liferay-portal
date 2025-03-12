@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class ElementDefinition implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ElementDefinition.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCategory() {
 		if (_categorySupplier != null) {
 			category = _categorySupplier.get();
@@ -91,7 +89,7 @@ public class ElementDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _categorySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Configuration getConfiguration() {
 		if (_configurationSupplier != null) {
@@ -133,7 +131,7 @@ public class ElementDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Configuration> _configurationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getIcon() {
 		if (_iconSupplier != null) {
 			icon = _iconSupplier.get();
@@ -172,7 +170,7 @@ public class ElementDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _iconSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public UiConfiguration getUiConfiguration() {
 		if (_uiConfigurationSupplier != null) {
@@ -303,8 +301,8 @@ public class ElementDefinition implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition",
 		name = "x-class-name"
 	)

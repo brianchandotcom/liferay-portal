@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -50,7 +48,7 @@ public class ObjectFolderItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ObjectFolderItem.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getLinkedObjectDefinition() {
 		if (_linkedObjectDefinitionSupplier != null) {
 			linkedObjectDefinition = _linkedObjectDefinitionSupplier.get();
@@ -92,7 +90,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _linkedObjectDefinitionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public ObjectDefinition getObjectDefinition() {
 		if (_objectDefinitionSupplier != null) {
@@ -135,7 +133,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectDefinition> _objectDefinitionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionExternalReferenceCode() {
 		if (_objectDefinitionExternalReferenceCodeSupplier != null) {
 			objectDefinitionExternalReferenceCode =
@@ -182,7 +180,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getPositionX() {
 		if (_positionXSupplier != null) {
 			positionX = _positionXSupplier.get();
@@ -223,7 +221,7 @@ public class ObjectFolderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _positionXSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getPositionY() {
 		if (_positionYSupplier != null) {
 			positionY = _positionYSupplier.get();
@@ -361,8 +359,8 @@ public class ObjectFolderItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.object.admin.rest.dto.v1_0.ObjectFolderItem",
 		name = "x-class-name"
 	)

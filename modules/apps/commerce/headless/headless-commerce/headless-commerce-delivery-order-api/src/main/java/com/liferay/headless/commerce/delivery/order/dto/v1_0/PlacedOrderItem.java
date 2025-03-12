@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -56,7 +54,7 @@ public class PlacedOrderItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PlacedOrderItem.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAdaptiveMediaImageHTMLTag() {
 		if (_adaptiveMediaImageHTMLTagSupplier != null) {
 			adaptiveMediaImageHTMLTag =
@@ -99,7 +97,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _adaptiveMediaImageHTMLTagSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -141,7 +139,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
-	@Schema(deprecated = true)
+	@io.swagger.v3.oas.annotations.media.Schema(deprecated = true)
 	public String getDeliveryGroup() {
 		if (_deliveryGroupSupplier != null) {
 			deliveryGroup = _deliveryGroupSupplier.get();
@@ -183,7 +181,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _deliveryGroupSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDeliveryGroupName() {
 		if (_deliveryGroupNameSupplier != null) {
 			deliveryGroupName = _deliveryGroupNameSupplier.get();
@@ -224,7 +222,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _deliveryGroupNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getErrorMessages() {
 		if (_errorMessagesSupplier != null) {
 			errorMessages = _errorMessagesSupplier.get();
@@ -265,7 +263,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _errorMessagesSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -306,7 +304,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -345,7 +343,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -384,7 +382,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getOptions() {
 		if (_optionsSupplier != null) {
 			options = _optionsSupplier.get();
@@ -425,7 +423,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _optionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getParentOrderItemId() {
 		if (_parentOrderItemIdSupplier != null) {
 			parentOrderItemId = _parentOrderItemIdSupplier.get();
@@ -466,7 +464,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _parentOrderItemIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PlacedOrderItemShipment[] getPlacedOrderItemShipments() {
 		if (_placedOrderItemShipmentsSupplier != null) {
@@ -512,7 +510,7 @@ public class PlacedOrderItem implements Serializable {
 	private Supplier<PlacedOrderItemShipment[]>
 		_placedOrderItemShipmentsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PlacedOrderItem[] getPlacedOrderItems() {
 		if (_placedOrderItemsSupplier != null) {
@@ -555,7 +553,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<PlacedOrderItem[]> _placedOrderItemsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Price getPrice() {
 		if (_priceSupplier != null) {
@@ -595,7 +593,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Price> _priceSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -636,7 +634,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=product-url-us, hr_HR=product-url-hr, hu_HU=product-url-hu}"
 	)
 	@Valid
@@ -681,7 +679,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _productURLsSupplier;
 
-	@Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
 	@Valid
 	public BigDecimal getQuantity() {
 		if (_quantitySupplier != null) {
@@ -723,7 +721,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _quantitySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getReplacedSku() {
 		if (_replacedSkuSupplier != null) {
 			replacedSku = _replacedSkuSupplier.get();
@@ -764,7 +762,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _replacedSkuSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getRequestedDeliveryDate() {
 		if (_requestedDeliveryDateSupplier != null) {
 			requestedDeliveryDate = _requestedDeliveryDateSupplier.get();
@@ -805,7 +803,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _requestedDeliveryDateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Settings getSettings() {
 		if (_settingsSupplier != null) {
@@ -847,7 +845,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Settings> _settingsSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getShippingAddressExternalReferenceCode() {
 		if (_shippingAddressExternalReferenceCodeSupplier != null) {
 			shippingAddressExternalReferenceCode =
@@ -893,7 +891,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _shippingAddressExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getShippingAddressId() {
 		if (_shippingAddressIdSupplier != null) {
 			shippingAddressId = _shippingAddressIdSupplier.get();
@@ -934,7 +932,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _shippingAddressIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -973,7 +971,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -1012,7 +1010,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getSubscription() {
 		if (_subscriptionSupplier != null) {
 			subscription = _subscriptionSupplier.get();
@@ -1053,7 +1051,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _subscriptionSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getThumbnail() {
 		if (_thumbnailSupplier != null) {
 			thumbnail = _thumbnailSupplier.get();
@@ -1094,7 +1092,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _thumbnailSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUnitOfMeasure() {
 		if (_unitOfMeasureSupplier != null) {
 			unitOfMeasure = _unitOfMeasureSupplier.get();
@@ -1135,7 +1133,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _unitOfMeasureSupplier;
 
-	@Schema(example = "m")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "m")
 	public String getUnitOfMeasureKey() {
 		if (_unitOfMeasureKeySupplier != null) {
 			unitOfMeasureKey = _unitOfMeasureKeySupplier.get();
@@ -1176,7 +1174,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getValid() {
 		if (_validSupplier != null) {
 			valid = _validSupplier.get();
@@ -1217,7 +1215,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _validSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getVirtualItemURLs() {
 		if (_virtualItemURLsSupplier != null) {
 			virtualItemURLs = _virtualItemURLsSupplier.get();
@@ -1258,7 +1256,7 @@ public class PlacedOrderItem implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _virtualItemURLsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public VirtualItem[] getVirtualItems() {
 		if (_virtualItemsSupplier != null) {
@@ -1807,8 +1805,8 @@ public class PlacedOrderItem implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.delivery.order.dto.v1_0.PlacedOrderItem",
 		name = "x-class-name"
 	)

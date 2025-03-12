@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -48,7 +46,7 @@ public class SelectionScope implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SelectionScope.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getFolderId() {
 		if (_folderIdSupplier != null) {
 			folderId = _folderIdSupplier.get();
@@ -89,7 +87,7 @@ public class SelectionScope implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _folderIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getRepositoryId() {
 		if (_repositoryIdSupplier != null) {
 			repositoryId = _repositoryIdSupplier.get();
@@ -130,7 +128,7 @@ public class SelectionScope implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _repositoryIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSelectAll() {
 		if (_selectAllSupplier != null) {
 			selectAll = _selectAllSupplier.get();
@@ -239,8 +237,8 @@ public class SelectionScope implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.bulk.rest.dto.v1_0.SelectionScope",
 		name = "x-class-name"
 	)

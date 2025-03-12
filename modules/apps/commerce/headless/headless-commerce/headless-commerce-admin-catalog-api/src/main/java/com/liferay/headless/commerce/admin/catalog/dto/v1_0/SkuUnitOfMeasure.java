@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -53,7 +51,7 @@ public class SkuUnitOfMeasure implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(SkuUnitOfMeasure.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,7 +94,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -138,7 +136,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<Boolean> _activeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "10.0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.0")
 	@Valid
 	public BigDecimal getBasePrice() {
 		if (_basePriceSupplier != null) {
@@ -181,7 +179,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<BigDecimal> _basePriceSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -221,7 +219,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1.5")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.5")
 	@Valid
 	public BigDecimal getIncrementalOrderQuantity() {
 		if (_incrementalOrderQuantitySupplier != null) {
@@ -266,7 +264,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _incrementalOrderQuantitySupplier;
 
-	@Schema(example = "pl")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "pl")
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -305,7 +303,9 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@Schema(example = "{en_US=Pallet, hr_HR=Pallet HR, hu_HU=Pallet HU}")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "{en_US=Pallet, hr_HR=Pallet HR, hu_HU=Pallet HU}"
+	)
 	@Valid
 	public Map<String, String> getName() {
 		if (_nameSupplier != null) {
@@ -347,7 +347,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@Schema(example = "3")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "3")
 	public Integer getPrecision() {
 		if (_precisionSupplier != null) {
 			precision = _precisionSupplier.get();
@@ -389,7 +389,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<Integer> _precisionSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1.5")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.5")
 	@Valid
 	public BigDecimal getPricingQuantity() {
 		if (_pricingQuantitySupplier != null) {
@@ -431,7 +431,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _pricingQuantitySupplier;
 
-	@Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
 	public Boolean getPrimary() {
 		if (_primarySupplier != null) {
 			primary = _primarySupplier.get();
@@ -473,7 +473,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<Boolean> _primarySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1.1")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.1")
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -515,7 +515,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "10.0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "10.0")
 	@Valid
 	public BigDecimal getPromoPrice() {
 		if (_promoPriceSupplier != null) {
@@ -558,7 +558,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<BigDecimal> _promoPriceSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "1.5")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "1.5")
 	@Valid
 	public BigDecimal getRate() {
 		if (_rateSupplier != null) {
@@ -600,7 +600,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _rateSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -640,7 +640,7 @@ public class SkuUnitOfMeasure implements Serializable {
 	private Supplier<String> _skuSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -899,8 +899,8 @@ public class SkuUnitOfMeasure implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuUnitOfMeasure",
 		name = "x-class-name"
 	)

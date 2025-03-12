@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class WorkflowInstance implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(WorkflowInstance.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -100,7 +98,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the instance is complete."
 	)
 	public Boolean getCompleted() {
@@ -145,7 +143,9 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
-	@Schema(description = "The instance's current node names.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The instance's current node names."
+	)
 	public String[] getCurrentNodeNames() {
 		if (_currentNodeNamesSupplier != null) {
 			currentNodeNames = _currentNodeNamesSupplier.get();
@@ -186,7 +186,9 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _currentNodeNamesSupplier;
 
-	@Schema(description = "The instance's completion date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The instance's completion date."
+	)
 	public Date getDateCompletion() {
 		if (_dateCompletionSupplier != null) {
 			dateCompletion = _dateCompletionSupplier.get();
@@ -227,7 +229,9 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCompletionSupplier;
 
-	@Schema(description = "The instance's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The instance's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -268,7 +272,9 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The instance's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The instance's ID."
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -307,7 +313,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The object/asset that the instance's workflow is managing."
 	)
 	@Valid
@@ -354,7 +360,9 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<ObjectReviewed> _objectReviewedSupplier;
 
-	@Schema(description = "The name of the instance's workflow definition.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The name of the instance's workflow definition."
+	)
 	public String getWorkflowDefinitionName() {
 		if (_workflowDefinitionNameSupplier != null) {
 			workflowDefinitionName = _workflowDefinitionNameSupplier.get();
@@ -398,7 +406,7 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _workflowDefinitionNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getWorkflowDefinitionVersion() {
 		if (_workflowDefinitionVersionSupplier != null) {
 			workflowDefinitionVersion =
@@ -614,8 +622,8 @@ public class WorkflowInstance implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.workflow.dto.v1_0.WorkflowInstance",
 		name = "x-class-name"
 	)

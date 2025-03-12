@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -55,7 +53,9 @@ public class DisplayPageTemplateSettings implements Serializable {
 			DisplayPageTemplateSettings.class, json);
 	}
 
-	@Schema(description = "The display page template's Open Graph settings.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template's Open Graph settings."
+	)
 	@Valid
 	public OpenGraphSettings getOpenGraphSettings() {
 		if (_openGraphSettingsSupplier != null) {
@@ -100,7 +100,9 @@ public class DisplayPageTemplateSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<OpenGraphSettings> _openGraphSettingsSupplier;
 
-	@Schema(description = "The display page template's SEO settings.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The display page template's SEO settings."
+	)
 	@Valid
 	public SEOSettings getSeoSettings() {
 		if (_seoSettingsSupplier != null) {
@@ -200,8 +202,8 @@ public class DisplayPageTemplateSettings implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings",
 		name = "x-class-name"
 	)

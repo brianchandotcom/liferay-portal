@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -52,7 +50,7 @@ public class AccountOrganization implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -93,7 +91,7 @@ public class AccountOrganization implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@Schema(example = "Organization Name")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Organization Name")
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -132,7 +130,7 @@ public class AccountOrganization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(example = "UAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "UAB-34098-789-N")
 	public String getOrganizationExternalReferenceCode() {
 		if (_organizationExternalReferenceCodeSupplier != null) {
 			organizationExternalReferenceCode =
@@ -179,7 +177,7 @@ public class AccountOrganization implements Serializable {
 	private Supplier<String> _organizationExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30002")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30002")
 	public Long getOrganizationId() {
 		if (_organizationIdSupplier != null) {
 			organizationId = _organizationIdSupplier.get();
@@ -220,7 +218,9 @@ public class AccountOrganization implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _organizationIdSupplier;
 
-	@Schema(example = "/Parent Organization/Organization Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "/Parent Organization/Organization Name"
+	)
 	public String getTreePath() {
 		if (_treePathSupplier != null) {
 			treePath = _treePathSupplier.get();
@@ -366,8 +366,8 @@ public class AccountOrganization implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization",
 		name = "x-class-name"
 	)

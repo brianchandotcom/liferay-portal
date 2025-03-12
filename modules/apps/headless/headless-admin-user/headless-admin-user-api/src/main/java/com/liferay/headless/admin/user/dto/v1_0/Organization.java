@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -57,7 +55,7 @@ public class Organization implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Organization.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The list of accounts associated with this organization."
 	)
 	@Valid
@@ -103,7 +101,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<AccountBrief[]> _accountBriefsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -146,7 +144,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Organization[] getChildOrganizations() {
 		if (_childOrganizationsSupplier != null) {
@@ -189,7 +187,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Organization[]> _childOrganizationsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The text of a comment associated with the organization."
 	)
 	public String getComment() {
@@ -234,7 +232,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
-	@Schema(description = "The user who created the organization.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The user who created the organization."
+	)
 	@Valid
 	public Creator getCreator() {
 		if (_creatorSupplier != null) {
@@ -276,7 +276,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -318,7 +318,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<CustomField[]> _customFieldsSupplier;
 
-	@Schema(description = "The organization's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -359,7 +361,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The most recent time any of the organization's fields changed."
 	)
 	public Date getDateModified() {
@@ -404,7 +406,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The optional external key of this organization.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The optional external key of this organization."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -447,7 +451,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The organization's ID.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's ID."
+	)
 	public String getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -486,7 +492,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _idSupplier;
 
-	@Schema(description = "A relative URL to the organization's image.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A relative URL to the organization's image."
+	)
 	public String getImage() {
 		if (_imageSupplier != null) {
 			image = _imageSupplier.get();
@@ -527,7 +535,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageSupplier;
 
-	@Schema(description = "The organization's image external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's image external reference code."
+	)
 	public String getImageExternalReferenceCode() {
 		if (_imageExternalReferenceCodeSupplier != null) {
 			imageExternalReferenceCode =
@@ -574,7 +584,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _imageExternalReferenceCodeSupplier;
 
-	@Schema(description = "The organization's image id.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's image id."
+	)
 	public Long getImageId() {
 		if (_imageIdSupplier != null) {
 			imageId = _imageIdSupplier.get();
@@ -615,7 +627,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _imageIdSupplier;
 
-	@Schema(description = "A list of keywords describing the organization.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of keywords describing the organization."
+	)
 	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
@@ -658,7 +672,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The organization's postal information (country and region)."
 	)
 	@Valid
@@ -704,7 +718,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Location> _locationSupplier;
 
-	@Schema(description = "The organization's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -743,7 +759,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of this organization's associated accounts."
 	)
 	public Integer getNumberOfAccounts() {
@@ -788,7 +804,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfAccountsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of this organization's child organizations."
 	)
 	public Integer getNumberOfOrganizations() {
@@ -834,7 +850,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfOrganizationsSupplier;
 
-	@Schema(description = "The number of this organization's associated users.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of this organization's associated users."
+	)
 	public Integer getNumberOfUsers() {
 		if (_numberOfUsersSupplier != null) {
 			numberOfUsers = _numberOfUsersSupplier.get();
@@ -877,7 +895,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _numberOfUsersSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Account[] getOrganizationAccounts() {
 		if (_organizationAccountsSupplier != null) {
@@ -920,7 +938,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Account[]> _organizationAccountsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
 	)
 	@Valid
@@ -971,7 +989,9 @@ public class Organization implements Serializable {
 	private Supplier<OrganizationContactInformation>
 		_organizationContactInformationSupplier;
 
-	@Schema(description = "The organization's parent organization.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The organization's parent organization."
+	)
 	@Valid
 	public Organization getParentOrganization() {
 		if (_parentOrganizationSupplier != null) {
@@ -1014,7 +1034,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Organization> _parentOrganizationSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public com.liferay.portal.vulcan.permission.Permission[] getPermissions() {
 		if (_permissionsSupplier != null) {
@@ -1061,7 +1081,7 @@ public class Organization implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
 		_permissionsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The list of roles associated with this organization."
 	)
 	@Valid
@@ -1107,7 +1127,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<RoleBrief[]> _roleBriefsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification."
 	)
 	@Valid
@@ -1153,7 +1173,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Service[]> _servicesSupplier;
 
-	@Schema(description = "The categories associated with this organization.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The categories associated with this organization."
+	)
 	@Valid
 	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
 		if (_taxonomyCategoryBriefsSupplier != null) {
@@ -1200,7 +1222,9 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
-	@Schema(description = "The tree path of the organization.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The tree path of the organization."
+	)
 	public String getTreePath() {
 		if (_treePathSupplier != null) {
 			treePath = _treePathSupplier.get();
@@ -1241,7 +1265,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _treePathSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The list of users associated with this organization."
 	)
 	@Valid
@@ -1288,7 +1312,7 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<UserAccountBrief[]> _userAccountBriefsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public UserAccount[] getUserAccounts() {
 		if (_userAccountsSupplier != null) {
@@ -1866,8 +1890,8 @@ public class Organization implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.user.dto.v1_0.Organization",
 		name = "x-class-name"
 	)

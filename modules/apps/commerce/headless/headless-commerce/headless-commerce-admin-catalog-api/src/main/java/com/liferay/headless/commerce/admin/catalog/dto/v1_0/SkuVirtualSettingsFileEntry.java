@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -53,7 +51,7 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 			SkuVirtualSettingsFileEntry.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -96,7 +94,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(description = "Base64 encoded file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Base64 encoded file"
+	)
 	public String getAttachment() {
 		if (_attachmentSupplier != null) {
 			attachment = _attachmentSupplier.get();
@@ -138,7 +138,7 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	private Supplier<String> _attachmentSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -177,7 +177,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(description = "URL to download the file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "URL to download the file"
+	)
 	public String getSrc() {
 		if (_srcSupplier != null) {
 			src = _srcSupplier.get();
@@ -216,7 +218,7 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _srcSupplier;
 
-	@Schema(description = "URL of the file")
+	@io.swagger.v3.oas.annotations.media.Schema(description = "URL of the file")
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -255,7 +257,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _urlSupplier;
 
-	@Schema(description = "The version of the file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The version of the file"
+	)
 	public String getVersion() {
 		if (_versionSupplier != null) {
 			version = _versionSupplier.get();
@@ -418,8 +422,8 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuVirtualSettingsFileEntry",
 		name = "x-class-name"
 	)

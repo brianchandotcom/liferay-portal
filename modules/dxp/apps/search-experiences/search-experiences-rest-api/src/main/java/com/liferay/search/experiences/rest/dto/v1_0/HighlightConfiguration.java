@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.util.Iterator;
@@ -51,7 +49,7 @@ public class HighlightConfiguration implements Serializable {
 			HighlightConfiguration.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, HighlightField> getFields() {
 		if (_fieldsSupplier != null) {
@@ -94,7 +92,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, HighlightField>> _fieldsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getFragment_size() {
 		if (_fragment_sizeSupplier != null) {
 			fragment_size = _fragment_sizeSupplier.get();
@@ -135,7 +133,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _fragment_sizeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Integer getNumber_of_fragments() {
 		if (_number_of_fragmentsSupplier != null) {
 			number_of_fragments = _number_of_fragmentsSupplier.get();
@@ -176,7 +174,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _number_of_fragmentsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getPost_tags() {
 		if (_post_tagsSupplier != null) {
 			post_tags = _post_tagsSupplier.get();
@@ -217,7 +215,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _post_tagsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getPre_tags() {
 		if (_pre_tagsSupplier != null) {
 			pre_tags = _pre_tagsSupplier.get();
@@ -258,7 +256,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _pre_tagsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getRequire_field_match() {
 		if (_require_field_matchSupplier != null) {
 			require_field_match = _require_field_matchSupplier.get();
@@ -299,7 +297,7 @@ public class HighlightConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _require_field_matchSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -487,8 +485,8 @@ public class HighlightConfiguration implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.HighlightConfiguration",
 		name = "x-class-name"
 	)

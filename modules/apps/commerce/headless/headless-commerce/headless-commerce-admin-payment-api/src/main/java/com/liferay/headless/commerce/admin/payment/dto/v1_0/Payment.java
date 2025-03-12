@@ -16,8 +16,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -57,7 +55,7 @@ public class Payment implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Payment.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -100,7 +98,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema(example = "101")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "101")
 	@Valid
 	public BigDecimal getAmount() {
 		if (_amountSupplier != null) {
@@ -142,7 +140,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<BigDecimal> _amountSupplier;
 
-	@Schema(example = "$ 101.00")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "$ 101.00")
 	public String getAmountFormatted() {
 		if (_amountFormattedSupplier != null) {
 			amountFormatted = _amountFormattedSupplier.get();
@@ -183,7 +181,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _amountFormattedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getAuthor() {
 		if (_authorSupplier != null) {
 			author = _authorSupplier.get();
@@ -224,7 +222,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _authorSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCallbackURL() {
 		if (_callbackURLSupplier != null) {
 			callbackURL = _callbackURLSupplier.get();
@@ -265,7 +263,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _callbackURLSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getCancelURL() {
 		if (_cancelURLSupplier != null) {
 			cancelURL = _cancelURLSupplier.get();
@@ -307,7 +305,7 @@ public class Payment implements Serializable {
 	private Supplier<String> _cancelURLSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getChannelId() {
 		if (_channelIdSupplier != null) {
 			channelId = _channelIdSupplier.get();
@@ -348,7 +346,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _channelIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getComment() {
 		if (_commentSupplier != null) {
 			comment = _commentSupplier.get();
@@ -389,7 +387,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _commentSupplier;
 
-	@Schema(example = "2023-12-01")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "2023-12-01")
 	public Date getCreateDate() {
 		if (_createDateSupplier != null) {
 			createDate = _createDateSupplier.get();
@@ -430,7 +428,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _createDateSupplier;
 
-	@Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
 	public String getCurrencyCode() {
 		if (_currencyCodeSupplier != null) {
 			currencyCode = _currencyCodeSupplier.get();
@@ -471,7 +469,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
-	@Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
 	public String getCurrencyExternalReferenceCode() {
 		if (_currencyExternalReferenceCodeSupplier != null) {
 			currencyExternalReferenceCode =
@@ -517,7 +515,7 @@ public class Payment implements Serializable {
 	private Supplier<String> _currencyExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getCurrencyId() {
 		if (_currencyIdSupplier != null) {
 			currencyId = _currencyIdSupplier.get();
@@ -558,7 +556,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _currencyIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getErrorMessages() {
 		if (_errorMessagesSupplier != null) {
 			errorMessages = _errorMessagesSupplier.get();
@@ -599,7 +597,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _errorMessagesSupplier;
 
-	@Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -641,7 +639,7 @@ public class Payment implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -680,7 +678,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema(example = "en_US")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "en_US")
 	public String getLanguageId() {
 		if (_languageIdSupplier != null) {
 			languageId = _languageIdSupplier.get();
@@ -721,7 +719,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _languageIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getPayload() {
 		if (_payloadSupplier != null) {
 			payload = _payloadSupplier.get();
@@ -762,7 +760,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _payloadSupplier;
 
-	@Schema(example = "money-order")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "money-order")
 	public String getPaymentIntegrationKey() {
 		if (_paymentIntegrationKeySupplier != null) {
 			paymentIntegrationKey = _paymentIntegrationKeySupplier.get();
@@ -804,7 +802,7 @@ public class Payment implements Serializable {
 	private Supplier<String> _paymentIntegrationKeySupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	public Integer getPaymentIntegrationType() {
 		if (_paymentIntegrationTypeSupplier != null) {
 			paymentIntegrationType = _paymentIntegrationTypeSupplier.get();
@@ -847,7 +845,7 @@ public class Payment implements Serializable {
 	private Supplier<Integer> _paymentIntegrationTypeSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	public Integer getPaymentStatus() {
 		if (_paymentStatusSupplier != null) {
 			paymentStatus = _paymentStatusSupplier.get();
@@ -888,7 +886,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _paymentStatusSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Status getPaymentStatusStatus() {
 		if (_paymentStatusStatusSupplier != null) {
@@ -930,7 +928,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _paymentStatusStatusSupplier;
 
-	@Schema(example = "product-defect")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "product-defect")
 	public String getReasonKey() {
 		if (_reasonKeySupplier != null) {
 			reasonKey = _reasonKeySupplier.get();
@@ -971,7 +969,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _reasonKeySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		example = "{en_US=Product Defect, hr_HR=Product Defect HR, hu_HU=Product Defect HU}"
 	)
 	@Valid
@@ -1016,7 +1014,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _reasonNameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getRedirectURL() {
 		if (_redirectURLSupplier != null) {
 			redirectURL = _redirectURLSupplier.get();
@@ -1058,7 +1056,7 @@ public class Payment implements Serializable {
 	private Supplier<String> _redirectURLSupplier;
 
 	@DecimalMin("0")
-	@Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getRelatedItemId() {
 		if (_relatedItemIdSupplier != null) {
 			relatedItemId = _relatedItemIdSupplier.get();
@@ -1099,7 +1097,9 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _relatedItemIdSupplier;
 
-	@Schema(example = "com.liferay.commerce.model.CommerceOrder")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		example = "com.liferay.commerce.model.CommerceOrder"
+	)
 	public String getRelatedItemName() {
 		if (_relatedItemNameSupplier != null) {
 			relatedItemName = _relatedItemNameSupplier.get();
@@ -1140,7 +1140,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _relatedItemNameSupplier;
 
-	@Schema(example = "Order")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Order")
 	public String getRelatedItemNameLabel() {
 		if (_relatedItemNameLabelSupplier != null) {
 			relatedItemNameLabel = _relatedItemNameLabelSupplier.get();
@@ -1181,7 +1181,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _relatedItemNameLabelSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTransactionCode() {
 		if (_transactionCodeSupplier != null) {
 			transactionCode = _transactionCodeSupplier.get();
@@ -1222,7 +1222,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _transactionCodeSupplier;
 
-	@Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
 	public Integer getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -1261,7 +1261,7 @@ public class Payment implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _typeSupplier;
 
-	@Schema(example = "Refund")
+	@io.swagger.v3.oas.annotations.media.Schema(example = "Refund")
 	public String getTypeLabel() {
 		if (_typeLabelSupplier != null) {
 			typeLabel = _typeLabelSupplier.get();
@@ -1774,8 +1774,8 @@ public class Payment implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.commerce.admin.payment.dto.v1_0.Payment",
 		name = "x-class-name"
 	)

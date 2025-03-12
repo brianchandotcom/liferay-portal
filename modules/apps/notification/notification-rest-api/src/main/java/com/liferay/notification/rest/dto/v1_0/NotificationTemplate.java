@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -58,7 +56,7 @@ public class NotificationTemplate implements Serializable {
 			NotificationTemplate.class, json);
 	}
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -101,7 +99,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String[] getAttachmentObjectFieldExternalReferenceCodes() {
 		if (_attachmentObjectFieldExternalReferenceCodesSupplier != null) {
 			attachmentObjectFieldExternalReferenceCodes =
@@ -149,7 +147,7 @@ public class NotificationTemplate implements Serializable {
 	private Supplier<String[]>
 		_attachmentObjectFieldExternalReferenceCodesSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long[] getAttachmentObjectFieldIds() {
 		if (_attachmentObjectFieldIdsSupplier != null) {
 			attachmentObjectFieldIds = _attachmentObjectFieldIdsSupplier.get();
@@ -191,7 +189,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _attachmentObjectFieldIdsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getBody() {
 		if (_bodySupplier != null) {
@@ -233,7 +231,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _bodySupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -274,7 +272,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -315,7 +313,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getDescription() {
 		if (_descriptionSupplier != null) {
 			description = _descriptionSupplier.get();
@@ -356,8 +354,8 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _descriptionSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("editorType")
-	@Schema
 	@Valid
 	public EditorType getEditorType() {
 		if (_editorTypeSupplier != null) {
@@ -410,7 +408,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<EditorType> _editorTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -451,7 +449,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -490,7 +488,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -529,7 +527,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
 		if (_name_i18nSupplier != null) {
@@ -572,7 +570,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectDefinitionExternalReferenceCode() {
 		if (_objectDefinitionExternalReferenceCodeSupplier != null) {
 			objectDefinitionExternalReferenceCode =
@@ -619,7 +617,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _objectDefinitionExternalReferenceCodeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getObjectDefinitionId() {
 		if (_objectDefinitionIdSupplier != null) {
 			objectDefinitionId = _objectDefinitionIdSupplier.get();
@@ -660,7 +658,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _objectDefinitionIdSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getRecipientType() {
 		if (_recipientTypeSupplier != null) {
 			recipientType = _recipientTypeSupplier.get();
@@ -701,7 +699,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _recipientTypeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Object[] getRecipients() {
 		if (_recipientsSupplier != null) {
@@ -743,7 +741,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Object[]> _recipientsSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Map<String, String> getSubject() {
 		if (_subjectSupplier != null) {
@@ -785,7 +783,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _subjectSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -826,7 +824,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _systemSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -865,7 +863,7 @@ public class NotificationTemplate implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
-	@Schema
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTypeLabel() {
 		if (_typeLabelSupplier != null) {
 			typeLabel = _typeLabelSupplier.get();
@@ -1267,8 +1265,8 @@ public class NotificationTemplate implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.notification.rest.dto.v1_0.NotificationTemplate",
 		name = "x-class-name"
 	)

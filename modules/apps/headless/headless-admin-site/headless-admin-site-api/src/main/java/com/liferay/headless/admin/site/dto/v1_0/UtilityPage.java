@@ -20,8 +20,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -60,7 +58,7 @@ public class UtilityPage implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(UtilityPage.class, json);
 	}
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The utility page's creator. It is not returned by default. It can be embedded via nestedFields."
 	)
 	@Valid
@@ -106,7 +104,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Creator> _creatorSupplier;
 
-	@Schema(description = "The utility page's creator external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page's creator external reference code."
+	)
 	public String getCreatorExternalReferenceCode() {
 		if (_creatorExternalReferenceCodeSupplier != null) {
 			creatorExternalReferenceCode =
@@ -153,7 +153,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _creatorExternalReferenceCodeSupplier;
 
-	@Schema(description = "The utility page's creation date.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page's creation date."
+	)
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
 			dateCreated = _dateCreatedSupplier.get();
@@ -194,7 +196,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateCreatedSupplier;
 
-	@Schema(description = "The last time the utility page changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time the utility page changed."
+	)
 	public Date getDateModified() {
 		if (_dateModifiedSupplier != null) {
 			dateModified = _dateModifiedSupplier.get();
@@ -235,7 +239,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _dateModifiedSupplier;
 
-	@Schema(description = "The last time the utility page changed.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The last time the utility page changed."
+	)
 	public Date getDatePublished() {
 		if (_datePublishedSupplier != null) {
 			datePublished = _datePublishedSupplier.get();
@@ -276,7 +282,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Date> _datePublishedSupplier;
 
-	@Schema(description = "The utility page's external reference code.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page's external reference code."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -317,7 +325,7 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The history of previously used URLs to the utility page's rendered content. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
@@ -364,7 +372,7 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<FriendlyUrlHistory> _friendlyUrlHistorySupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The localized relative URLs to the utility page's rendered content."
 	)
 	@Valid
@@ -413,7 +421,7 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _friendlyUrlPath_i18nSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Specifies if the utility page should be the default for the given type."
 	)
 	public Boolean getMarkedAsDefault() {
@@ -458,7 +466,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _markedAsDefaultSupplier;
 
-	@Schema(description = "The utility page's name.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page's name."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -497,7 +507,7 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The utility page's specifications. A utility page will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
@@ -544,7 +554,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<PageSpecification[]> _pageSpecificationsSupplier;
 
-	@Schema(description = "The utility page's thumbnail.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page's thumbnail."
+	)
 	@Valid
 	public ItemExternalReference getThumbnail() {
 		if (_thumbnailSupplier != null) {
@@ -587,8 +599,10 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<ItemExternalReference> _thumbnailSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The utility page's type."
+	)
 	@JsonGetter("type")
-	@Schema(description = "The utility page's type.")
 	@Valid
 	public Type getType() {
 		if (_typeSupplier != null) {
@@ -639,7 +653,9 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<Type> _typeSupplier;
 
-	@Schema(description = "Settings of the utility page.")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Settings of the utility page."
+	)
 	@Valid
 	public UtilityPageSettings getUtilityPageSettings() {
 		if (_utilityPageSettingsSupplier != null) {
@@ -684,7 +700,7 @@ public class UtilityPage implements Serializable {
 	@JsonIgnore
 	private Supplier<UtilityPageSettings> _utilityPageSettingsSupplier;
 
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A valid external identifier to reference this utility page."
 	)
 	public String getUuid() {
@@ -984,8 +1000,8 @@ public class UtilityPage implements Serializable {
 		return sb.toString();
 	}
 
-	@Schema(
-		accessMode = Schema.AccessMode.READ_ONLY,
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
 		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.UtilityPage",
 		name = "x-class-name"
 	)

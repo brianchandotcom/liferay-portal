@@ -1708,3 +1708,155 @@ testAdmin(
 		);
 	}
 );
+
+testAdmin(
+	'Pagination works in export personal data',
+	{tag: '@LPD-51202'},
+	async ({
+		apiHelpers,
+		exportUserDataPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		test.setTimeout(120000);
+
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount.alternateName);
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await apiHelpers.headlessDelivery.postBlog(site.id);
+
+		const folder = await apiHelpers.jsonWebServicesJournal.addFolder({
+			groupId: site.id,
+		});
+
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: contentStructureId,
+			folderId: folder.folderId,
+			groupId: site.id,
+		});
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: contentStructureId,
+			groupId: site.id,
+		});
+
+		await apiHelpers.jsonWebServicesMBApiHelper.addMessage({
+			groupId: site.id,
+		});
+
+		const wikiNode = await apiHelpers.headlessDelivery.postWikiNode(
+			site.id
+		);
+
+		await apiHelpers.headlessDelivery.postWikiPage(wikiNode.id);
+
+		await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			)
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await usersAndOrganizationsPage.goToUsers(false);
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.exportPersonalDataItem.click();
+		await exportUserDataPage.addExportProcessesButton.click();
+
+		await exportUserDataPage.blogsCheckbox.check();
+		await exportUserDataPage.documentsAndMediaCheckbox.check();
+		await exportUserDataPage.messageBoardsCheckbox.check();
+		await exportUserDataPage.webContentCheckbox.check();
+		await exportUserDataPage.wikiCheckbox.check();
+
+		await exportUserDataPage.exportButton.click();
+
+		await waitForAlert(page);
+
+		await exportUserDataPage.checkVisibility([
+			true,
+			true,
+			true,
+			true,
+			true,
+		]);
+
+		await exportUserDataPage.orderByButton.click();
+		await exportUserDataPage.nameMenuItem.click();
+
+		for (const itemsPerPage of [4, 8, 20, 40, 60]) {
+			await exportUserDataPage.selectPaginationItemsPerPage(
+				String(itemsPerPage)
+			);
+
+			if (itemsPerPage === 4) {
+				await exportUserDataPage.checkVisibility([
+					true,
+					true,
+					true,
+					true,
+					false,
+				]);
+				await exportUserDataPage.verifyPaginationResult(1, 4, 5);
+				await exportUserDataPage.selectPage('2').click();
+
+				await exportUserDataPage.checkVisibility([
+					false,
+					false,
+					false,
+					false,
+					true,
+				]);
+				await exportUserDataPage.verifyPaginationResult(5, 5, 5);
+				await exportUserDataPage.selectPage('1').click();
+			}
+			else {
+				await exportUserDataPage.checkVisibility([
+					true,
+					true,
+					true,
+					true,
+					true,
+				]);
+				await exportUserDataPage.verifyPaginationResult(1, 5, 5);
+			}
+		}
+	}
+);

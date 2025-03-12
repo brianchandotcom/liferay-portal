@@ -12,11 +12,17 @@ import java.util.HashMap;
  */
 public class FDSActionDropdownItemFilter extends HashMap<String, Object> {
 
+	public FDSActionDropdownItemFilter(String key, Object value) {
+		setKey(key);
+
+		setValue(value);
+	}
+
 	public void setKey(String key) {
 		put("key", key);
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		put("value", value);
 	}
 

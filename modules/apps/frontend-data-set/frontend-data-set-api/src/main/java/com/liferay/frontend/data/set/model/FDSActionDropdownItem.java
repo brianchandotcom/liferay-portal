@@ -7,12 +7,50 @@ package com.liferay.frontend.data.set.model;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Marco Leo
  */
 public class FDSActionDropdownItem extends DropdownItem {
+
+	public FDSActionDropdownItem(
+		List<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters,
+		String href, String icon, String id, String label, String method,
+		String permissionKey, String target) {
+
+		setFilters(fdsActionDropdownItemFilters);
+		setHref(href);
+		setIcon(icon);
+		setId(id);
+		setLabel(label);
+		setMethod(method);
+		setPermissionKey(permissionKey);
+		setTarget(target);
+	}
+
+	public FDSActionDropdownItem(
+		String confirmationMessage, String confirmationMessageType,
+		String errorMessage,
+		List<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters,
+		String href, String icon, String id, String label, String method,
+		String modalSize, String permissionKey, String requestBody,
+		String successMessage, String target, String title, String type) {
+
+		this(
+			fdsActionDropdownItemFilters, href, icon, id, label, method,
+			permissionKey, target);
+
+		setConfirmationMessage(confirmationMessage);
+		setConfirmationMessageType(confirmationMessageType);
+		setErrorMessage(errorMessage);
+		setModalSize(modalSize);
+		setRequestBody(requestBody);
+		setRequestBody(requestBody);
+		setSuccessMessage(successMessage);
+		setTitle(title);
+		setType(type);
+	}
 
 	public FDSActionDropdownItem(
 		String href, String icon, String id, String label, String method,
@@ -25,21 +63,6 @@ public class FDSActionDropdownItem extends DropdownItem {
 		setMethod(method);
 		setPermissionKey(permissionKey);
 		setTarget(target);
-	}
-
-	public FDSActionDropdownItem(
-		String href, String icon, String id, String label, String method,
-		String permissionKey, String target,
-		ArrayList<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters) {
-
-		setHref(href);
-		setIcon(icon);
-		setId(id);
-		setLabel(label);
-		setMethod(method);
-		setPermissionKey(permissionKey);
-		setTarget(target);
-		setFilters(fdsActionDropdownItemFilters);
 	}
 
 	public FDSActionDropdownItem(
@@ -84,7 +107,7 @@ public class FDSActionDropdownItem extends DropdownItem {
 	}
 
 	public void setFilters(
-		ArrayList<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters) {
+		List<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters) {
 
 		putData("filters", fdsActionDropdownItemFilters);
 	}

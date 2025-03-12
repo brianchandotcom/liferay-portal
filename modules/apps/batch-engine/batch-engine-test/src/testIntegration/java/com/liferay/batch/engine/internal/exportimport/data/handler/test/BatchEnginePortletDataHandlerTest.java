@@ -336,10 +336,9 @@ public class BatchEnginePortletDataHandlerTest {
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(larFile)) {
-			String filePath =
-				"group/" + groupId + "/deletion-system-events.xml";
 
-			ZipEntry zipEntry = zipFile.getEntry(filePath);
+			ZipEntry zipEntry = zipFile.getEntry(
+				"group/" + groupId + "/deletion-system-events.xml");
 
 			if (zipEntry == null) {
 				throw new FileNotFoundException();

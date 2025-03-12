@@ -23,6 +23,8 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 		).put(
 			"hasUpdateObjectDefinitionPermission", objectDefinitionsRelationshipsDisplayContext.hasUpdateObjectDefinitionPermission()
 		).put(
+			"learnResources", LearnMessageUtil.getReactDataJSONObject("object-web")
+		).put(
 			"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 		).put(
 			"objectRelationship", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipJSONObject(objectRelationship)

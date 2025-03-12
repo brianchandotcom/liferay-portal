@@ -19,7 +19,40 @@
 			"conditionExpression": "",
 			"description": "",
 			"errorMessage": {
+				"en_US": "Sorry, it seems that something happened"
 			},
+			"label": {
+				"en_US": "Standalone User Confirmation"
+			},
+			"name": "standaloneUserConfirmation",
+			"objectActionExecutorKey": "update-object-entry",
+			"objectActionTriggerKey": "standalone",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
+				"predefinedValues": [
+					{
+						"businessType": "Boolean",
+						"inputAsValue": false,
+						"label": {
+							"en_US": "Answered"
+						},
+						"name": "answered",
+						"value": "true"
+					}
+				]
+			},
+			"status": {
+				"code": 1,
+				"label": "success",
+				"label_i18n": "Success"
+			},
+			"system": false
+		},
+		{
+			"active": true,
+			"conditionExpression": "",
+			"description": "",
+			"errorMessage": {},
 			"label": {
 				"en_US": "Update User and Date"
 			},
@@ -55,40 +88,6 @@
 				"label_i18n": "Success"
 			},
 			"system": false
-		},
-		{
-			"active": true,
-			"conditionExpression": "",
-			"description": "",
-			"errorMessage": {
-				"en_US": "Sorry, it seems that something happened"
-			},
-			"label": {
-				"en_US": "Standalone User Confirmation"
-			},
-			"name": "standaloneUserConfirmation",
-			"objectActionExecutorKey": "update-object-entry",
-			"objectActionTriggerKey": "standalone",
-			"parameters": {
-				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
-				"predefinedValues": [
-					{
-						"businessType": "Boolean",
-						"inputAsValue": false,
-						"label": {
-							"en_US": "Answered"
-						},
-						"name": "answered",
-						"value": "true"
-					}
-				]
-			},
-			"status": {
-				"code": 1,
-				"label": "success",
-				"label_i18n": "Success"
-			},
-			"system": false
 		}
 	],
 	"objectFields": [
@@ -103,8 +102,7 @@
 			},
 			"localized": false,
 			"name": "answered",
-			"objectFieldSettings": [
-			],
+			"objectFieldSettings": [],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -124,8 +122,7 @@
 			},
 			"localized": false,
 			"name": "answerFromClarity",
-			"objectFieldSettings": [
-			],
+			"objectFieldSettings": [],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -170,8 +167,7 @@
 			},
 			"localized": false,
 			"name": "date",
-			"objectFieldSettings": [
-			],
+			"objectFieldSettings": [],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -182,8 +178,7 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "MY-EXPERIENCES",
-	"objectValidationRules": [
-	],
+	"objectValidationRules": [],
 	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {

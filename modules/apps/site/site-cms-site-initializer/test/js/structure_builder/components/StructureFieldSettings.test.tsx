@@ -14,14 +14,16 @@ import StructureFieldSettings from '../../../../src/main/resources/META-INF/reso
 import {
 	Action,
 	State,
+	Uuid,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 import {
 	Field,
 	getDefaultField,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
+import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 import {MockStateProvider} from '../mocks/MockStateProvider';
 
-const TEXT_FIELD_NAME = 'testField';
+const TEXT_FIELD_UUID = getUuid();
 
 const FIELD: Field = {
 	erc: 'test-erc',
@@ -33,36 +35,38 @@ const FIELD: Field = {
 		es_ES: 'Campo de Prueba',
 	},
 	localized: false,
-	name: TEXT_FIELD_NAME,
+	name: 'TextField',
 	required: false,
 	settings: {},
 	type: 'text',
+	uuid: TEXT_FIELD_UUID,
 };
 
 const DEFAULT_STATE: State = {
 	erc: 'structure-erc',
 	error: null,
-	fields: new Map([[TEXT_FIELD_NAME, FIELD]]),
+	fields: new Map([[TEXT_FIELD_UUID, FIELD]]),
 	id: null,
 	label: 'untitled-structure',
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
 	selection: [],
 	status: 'new',
+	uuid: getUuid(),
 };
 
 const renderComponent = ({
 	dispatch = jest.fn(),
-	fieldName = TEXT_FIELD_NAME,
 	state = DEFAULT_STATE,
+	uuid = TEXT_FIELD_UUID,
 }: {
 	dispatch?: React.Dispatch<Action>;
-	fieldName?: string;
 	state?: State;
+	uuid?: Uuid;
 } = {}) => {
 	return render(
 		<MockStateProvider dispatch={dispatch} state={state}>
-			<StructureFieldSettings fieldName={fieldName} />
+			<StructureFieldSettings uuid={uuid} />
 		</MockStateProvider>
 	);
 };
@@ -97,9 +101,9 @@ describe('StructureFieldSettings', () => {
 		fireEvent.blur(nameInput);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name: TEXT_FIELD_NAME,
-			newName: 'newFieldName',
+			name: 'newFieldName',
 			type: 'update-field',
+			uuid: TEXT_FIELD_UUID,
 		});
 	});
 
@@ -111,17 +115,17 @@ describe('StructureFieldSettings', () => {
 		await userEvent.click(screen.getByLabelText('mandatory'));
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name: TEXT_FIELD_NAME,
 			required: true,
 			type: 'update-field',
+			uuid: TEXT_FIELD_UUID,
 		});
 
 		await userEvent.click(screen.getByLabelText('localizable'));
 
 		expect(mockDispatch).toHaveBeenCalledWith({
 			localized: true,
-			name: TEXT_FIELD_NAME,
 			type: 'update-field',
+			uuid: TEXT_FIELD_UUID,
 		});
 	});
 
@@ -140,8 +144,8 @@ describe('StructureFieldSettings', () => {
 				indexedAsKeyword: false,
 				indexedLanguageId: 'en_US',
 			},
-			name: TEXT_FIELD_NAME,
 			type: 'update-field',
+			uuid: TEXT_FIELD_UUID,
 		});
 	});
 
@@ -154,7 +158,7 @@ describe('StructureFieldSettings', () => {
 				...DEFAULT_STATE,
 				fields: new Map([
 					[
-						TEXT_FIELD_NAME,
+						TEXT_FIELD_UUID,
 						{
 							...FIELD,
 							indexableConfig: {
@@ -176,31 +180,31 @@ describe('StructureFieldSettings', () => {
 				indexedAsKeyword: true,
 				indexedLanguageId: undefined,
 			},
-			name: TEXT_FIELD_NAME,
 			type: 'update-field',
+			uuid: TEXT_FIELD_UUID,
 		});
 	});
 
 	it('updates specific date time configuration', async () => {
 		const mockDispatch = jest.fn();
 
-		const name = 'dateTimeField';
+		const uuid = getUuid();
 
 		renderComponent({
 			dispatch: mockDispatch,
-			fieldName: name,
 			state: {
 				...DEFAULT_STATE,
 				fields: new Map([
 					[
-						name,
+						uuid,
 						{
 							...getDefaultField('datetime'),
-							name,
+							uuid,
 						},
 					],
 				]),
 			},
+			uuid,
 		});
 
 		await userEvent.click(screen.getByLabelText('time-storage'));
@@ -208,34 +212,34 @@ describe('StructureFieldSettings', () => {
 		await userEvent.click(screen.getByText('use-input-as-entered'));
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name,
 			settings: {
 				timeStorage: 'useInputAsEntered',
 			},
 			type: 'update-field',
+			uuid,
 		});
 	});
 
 	it('updates specific long text configuration', async () => {
 		const mockDispatch = jest.fn();
 
-		const name = 'longTextField';
+		const uuid = getUuid();
 
 		renderComponent({
 			dispatch: mockDispatch,
-			fieldName: name,
 			state: {
 				...DEFAULT_STATE,
 				fields: new Map([
 					[
-						name,
+						uuid,
 						{
 							...getDefaultField('long-text'),
-							name,
+							uuid,
 						},
 					],
 				]),
 			},
+			uuid,
 		});
 
 		expect(
@@ -252,35 +256,35 @@ describe('StructureFieldSettings', () => {
 		fireEvent.blur(numberOfCharactersInput);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name,
 			settings: {
 				maxLength: 10,
 				showCounter: true,
 			},
 			type: 'update-field',
+			uuid,
 		});
 	});
 
 	it('updates specific numeric configuration', async () => {
 		const mockDispatch = jest.fn();
 
-		const name = 'numericField';
+		const uuid = getUuid();
 
 		renderComponent({
 			dispatch: mockDispatch,
-			fieldName: name,
 			state: {
 				...DEFAULT_STATE,
 				fields: new Map([
 					[
-						name,
+						uuid,
 						{
 							...getDefaultField('integer'),
-							name,
+							uuid,
 						},
 					],
 				]),
 			},
+			uuid,
 		});
 
 		await userEvent.click(
@@ -288,11 +292,11 @@ describe('StructureFieldSettings', () => {
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name,
 			settings: {
 				uniqueValues: true,
 			},
 			type: 'update-field',
+			uuid,
 		});
 	});
 
@@ -306,11 +310,11 @@ describe('StructureFieldSettings', () => {
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name: TEXT_FIELD_NAME,
 			settings: {
 				uniqueValues: true,
 			},
 			type: 'update-field',
+			uuid: TEXT_FIELD_UUID,
 		});
 
 		expect(
@@ -327,35 +331,35 @@ describe('StructureFieldSettings', () => {
 		fireEvent.blur(numberOfCharactersInput);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name: TEXT_FIELD_NAME,
 			settings: {
 				maxLength: 10,
 				showCounter: true,
 			},
 			type: 'update-field',
+			uuid: TEXT_FIELD_UUID,
 		});
 	});
 
 	it('updates specific upload configuration', async () => {
 		const mockDispatch = jest.fn();
 
-		const name = 'uploadField';
+		const uuid = getUuid();
 
 		renderComponent({
 			dispatch: mockDispatch,
-			fieldName: name,
 			state: {
 				...DEFAULT_STATE,
 				fields: new Map([
 					[
-						name,
+						uuid,
 						{
 							...getDefaultField('upload'),
-							name,
+							uuid,
 						},
 					],
 				]),
 			},
+			uuid,
 		});
 
 		expect(
@@ -367,7 +371,6 @@ describe('StructureFieldSettings', () => {
 		);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name,
 			settings: {
 				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
 				fileSource: 'userComputer',
@@ -376,6 +379,7 @@ describe('StructureFieldSettings', () => {
 				storageDLFolderPath: '/new',
 			},
 			type: 'update-field',
+			uuid,
 		});
 
 		mockDispatch.mockClear();
@@ -389,13 +393,13 @@ describe('StructureFieldSettings', () => {
 		fireEvent.blur(acceptedFileExtensionsInput);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name,
 			settings: {
 				acceptedFileExtensions: 'gif',
 				fileSource: 'userComputer',
 				maximumFileSize: 100,
 			},
 			type: 'update-field',
+			uuid,
 		});
 
 		const maximumFileSizeInput = screen.getByLabelText('maximum-file-size');
@@ -405,13 +409,13 @@ describe('StructureFieldSettings', () => {
 		fireEvent.blur(maximumFileSizeInput);
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			name,
 			settings: {
 				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
 				fileSource: 'userComputer',
 				maximumFileSize: 200,
 			},
 			type: 'update-field',
+			uuid,
 		});
 	});
 
@@ -422,7 +426,7 @@ describe('StructureFieldSettings', () => {
 			dispatch: mockDispatch,
 			state: {
 				...DEFAULT_STATE,
-				publishedFields: new Set([TEXT_FIELD_NAME]),
+				publishedFields: new Set([TEXT_FIELD_UUID]),
 				status: 'published',
 			},
 		});

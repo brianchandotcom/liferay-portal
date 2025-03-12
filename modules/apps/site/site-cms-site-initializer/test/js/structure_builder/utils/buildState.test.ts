@@ -6,6 +6,10 @@
 import buildObjectDefinition from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildObjectDefinition';
 import buildState from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildState';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
+import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
+
+const DATE_TIME_FIELD_UUID = getUuid();
+const TEXT_FIELD_UUID = getUuid();
 
 const DATE_TIME_FIELD: Field = {
 	erc: 'datetime-field',
@@ -18,17 +22,23 @@ const DATE_TIME_FIELD: Field = {
 		timeStorage: 'convertToUTC',
 	},
 	type: 'datetime',
+	uuid: DATE_TIME_FIELD_UUID,
 };
 
 const TEXT_FIELD: Field = {
 	erc: 'text-field',
-	indexableConfig: {indexed: true, indexedAsKeyword: true},
+	indexableConfig: {
+		indexed: true,
+		indexedAsKeyword: true,
+		indexedLanguageId: undefined,
+	},
 	label: {en_US: 'Text Field'},
 	localized: false,
 	name: 'textField',
 	required: true,
 	settings: {},
 	type: 'text',
+	uuid: TEXT_FIELD_UUID,
 };
 
 describe('buildState', () => {
@@ -36,10 +46,6 @@ describe('buildState', () => {
 		const initialState = {
 			erc: 'structureERC',
 			error: null,
-			fields: new Map([
-				[TEXT_FIELD.name, TEXT_FIELD],
-				[DATE_TIME_FIELD.name, DATE_TIME_FIELD],
-			]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -50,7 +56,7 @@ describe('buildState', () => {
 
 		const objectDefinition = buildObjectDefinition({
 			erc: initialState.erc,
-			fields: Array.from(initialState.fields.values()),
+			fields: Array.from([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: initialState.id,
 			label: initialState.label,
 			name: initialState.name,
@@ -58,28 +64,25 @@ describe('buildState', () => {
 
 		const result = buildState(objectDefinition);
 
-		expect(result).toEqual(initialState);
+		const {fields, uuid} = result!;
+
+		expect(result).toEqual({...initialState, fields, uuid});
 	});
 
 	it('Takes into account the status of the object definition', () => {
 		const initialState = {
 			erc: 'structureERC',
 			error: null,
-			fields: new Map([
-				[TEXT_FIELD.name, TEXT_FIELD],
-				[DATE_TIME_FIELD.name, DATE_TIME_FIELD],
-			]),
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
-			publishedFields: new Set([TEXT_FIELD.name, DATE_TIME_FIELD.name]),
 			selection: [],
 			status: 'published',
 		};
 
 		const objectDefinition = buildObjectDefinition({
 			erc: initialState.erc,
-			fields: Array.from(initialState.fields.values()),
+			fields: Array.from([TEXT_FIELD, DATE_TIME_FIELD]),
 			id: initialState.id,
 			label: initialState.label,
 			name: initialState.name,
@@ -92,6 +95,15 @@ describe('buildState', () => {
 			},
 		});
 
-		expect(result).toEqual(initialState);
+		const {fields, uuid} = result!;
+
+		const publishedFields = new Set(fields.keys());
+
+		expect(result).toEqual({
+			...initialState,
+			fields,
+			publishedFields,
+			uuid,
+		});
 	});
 });

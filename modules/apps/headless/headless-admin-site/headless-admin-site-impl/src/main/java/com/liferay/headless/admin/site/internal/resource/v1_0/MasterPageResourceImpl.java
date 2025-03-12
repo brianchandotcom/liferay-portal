@@ -251,6 +251,63 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					previewFileEntryId);
 		}
 
+		PageSpecification[] pageSpecifications =
+			masterPage.getPageSpecifications();
+
+		if (pageSpecifications != null) {
+			if (pageSpecifications.length != 2) {
+				throw new UnsupportedOperationException();
+			}
+
+			Layout layout = _layoutLocalService.getLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			ContentPageSpecification draftContentPageSpecification = null;
+			ContentPageSpecification publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[0];
+
+			if (!Objects.equals(
+					layout.getExternalReferenceCode(),
+					publishedContentPageSpecification.
+						getExternalReferenceCode())) {
+
+				draftContentPageSpecification =
+					publishedContentPageSpecification;
+				publishedContentPageSpecification =
+					(ContentPageSpecification)pageSpecifications[1];
+			}
+			else {
+				draftContentPageSpecification =
+					(ContentPageSpecification)pageSpecifications[1];
+			}
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (Objects.equals(
+					draftContentPageSpecification.getStatus(),
+					PageSpecification.Status.DRAFT)) {
+
+				status = WorkflowConstants.STATUS_DRAFT;
+			}
+
+			ServiceContext serviceContext = _getServiceContext(
+				groupId, masterPage);
+
+			serviceContext.setAttribute(
+				"published",
+				Objects.equals(
+					publishedContentPageSpecification.getStatus(),
+					PageSpecification.Status.APPROVED));
+
+			LayoutUtil.updateLayout(
+				draftContentPageSpecification, layout.fetchDraftLayout(),
+				status, serviceContext);
+
+			LayoutUtil.updateLayout(
+				publishedContentPageSpecification, layout,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
+
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),

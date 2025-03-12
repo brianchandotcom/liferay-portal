@@ -18,6 +18,7 @@ import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureName from '../selectors/selectStructureName';
+import selectStructureStatus from '../selectors/selectStructureStatus';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
@@ -114,10 +115,12 @@ function GeneralTab() {
 	const dispatch = useStateDispatch();
 	const name = useSelector(selectStructureName);
 	const erc = useSelector(selectStructureERC);
+	const status = useSelector(selectStructureStatus);
 
 	return (
 		<div>
 			<Input
+				disabled={status === 'published'}
 				label={Liferay.Language.get('structure-name')}
 				onValueChange={(value) =>
 					dispatch({name: value, type: 'update-structure'})

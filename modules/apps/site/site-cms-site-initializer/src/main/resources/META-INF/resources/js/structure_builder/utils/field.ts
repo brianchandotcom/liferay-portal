@@ -124,6 +124,11 @@ export type MaxLengthSettingsField = {
 	};
 };
 
+export type DateTimeField = BaseField & {
+	settings: {timeStorage: 'convertToUTC' | 'useInputAsEntered'};
+	type: 'datetime';
+};
+
 export type LongTextField = BaseField & {
 	type: 'long-text';
 } & MaxLengthSettingsField;
@@ -138,13 +143,10 @@ export type TextField = BaseField & {
 	UniqueValuesSettingsField;
 
 export type Field =
+	| DateTimeField
 	| LongTextField
 	| NumericField
 	| TextField
-	| (BaseField & {
-			settings: {timeStorage: 'convertToUTC'};
-			type: 'datetime';
-	  })
 	| (BaseField & {
 			settings: {
 				acceptedFileExtensions: string;

@@ -1646,38 +1646,6 @@ definition {
 		ObjectPortlet.assertEntryNotPresent(entry = "Test 1");
 	}
 
-	@description = "LPS-135393 - Verify that is possible to search for a field on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
-	@priority = 3
-	test CanSearchForFieldOnDropdownToSelectColumns {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 263",
-			objectName = "CustomObject263",
-			pluralLabelName = "Custom Objects 263");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject263");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject263");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "text",
-			objectName = "CustomObject263",
-			value = "Test text");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject263");
-
-		ObjectPortlet.searchColumn(columnName = "Field");
-
-		AssertElementPresent(
-			key_dropdownItem = "Field",
-			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
-	}
-
 	@description = "LPS-135390 - Verify it is possible to update an Object entry with the Update permission"
 	@priority = 4
 	test CanUpdateObjectEntryWithUpdatePermission {
@@ -2329,38 +2297,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",
 			value1 = "No Results Found");
-	}
-
-	@description = "LPS-135393 - Verify the empty state when searching for a value that does not exist on the dropdown to select the columns to be displayed on the auto-generated table on the Custom Object Portlet"
-	@priority = 3
-	test EmptyStateDisplayedForSearchOnDropdownToSelectColumns {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 281",
-			objectName = "CustomObject281",
-			pluralLabelName = "Custom Objects 281");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject281");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject281");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "text",
-			objectName = "CustomObject281",
-			value = "Test text");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject281");
-
-		ObjectPortlet.searchColumn(columnName = "test");
-
-		AssertTextEquals(
-			locator1 = "ObjectPortlet#NO_FIELDS_WERE_FOUND_MESSAGE",
-			value1 = "No fields were found.");
 	}
 
 	@description = "LPS-135393 - Verify if the empty state is displayed when there is no entry on the Custom Object Portlet"

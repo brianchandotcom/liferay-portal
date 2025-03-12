@@ -1,0 +1,11 @@
+{
+	"description": "https://datatracker.ietf.org/doc/html/rfc7643#section-8.7.1",
+	"endpoint": "/Groups",
+	"id": "Group",
+	"meta": {
+		"location": "/Group",
+		"resourceType": "ResourceType"
+	},
+	"name": "Group",
+	"schema": "urn:ietf:params:scim:schemas:core:2.0:Group"
+}

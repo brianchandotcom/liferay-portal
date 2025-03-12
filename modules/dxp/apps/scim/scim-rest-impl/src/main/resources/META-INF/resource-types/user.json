@@ -1,0 +1,17 @@
+{
+	"description": "https://datatracker.ietf.org/doc/html/rfc7643#section-8.7.1",
+	"endpoint": "/Users",
+	"id": "User",
+	"meta": {
+		"location": "/User",
+		"resourceType": "ResourceType"
+	},
+	"name": "User",
+	"schema": "urn:ietf:params:scim:schemas:core:2.0:User",
+	"schemaExtensions": [
+		{
+			"required": false,
+			"schema": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User"
+		}
+	]
+}

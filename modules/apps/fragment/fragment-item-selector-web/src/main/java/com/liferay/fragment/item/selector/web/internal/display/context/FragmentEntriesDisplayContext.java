@@ -7,7 +7,7 @@ package com.liferay.fragment.item.selector.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
+import com.liferay.fragment.item.selector.FragmentEntryItemSelectorCriterion;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;

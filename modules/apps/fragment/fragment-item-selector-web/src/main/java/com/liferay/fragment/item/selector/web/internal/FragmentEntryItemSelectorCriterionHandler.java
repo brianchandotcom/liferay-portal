@@ -5,7 +5,7 @@
 
 package com.liferay.fragment.item.selector.web.internal;
 
-import com.liferay.fragment.item.selector.criterion.FragmentEntryItemSelectorCriterion;
+import com.liferay.fragment.item.selector.FragmentEntryItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

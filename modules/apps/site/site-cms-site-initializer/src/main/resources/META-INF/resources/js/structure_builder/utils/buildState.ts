@@ -75,6 +75,13 @@ function getSettings(objectField: ObjectField): Field['settings'] {
 			objectFieldSettings.acceptedFileExtensions;
 		settings.fileSource = objectFieldSettings.fileSource;
 		settings.maximumFileSize = objectFieldSettings.maximumFileSize;
+
+		if (objectFieldSettings.fileSource === 'userComputer') {
+			settings.showFilesInDocumentsAndMedia =
+				objectFieldSettings.showFilesInDocumentsAndMedia;
+			settings.storageDLFolderPath =
+				objectFieldSettings.storageDLFolderPath;
+		}
 	}
 	else if (objectField.businessType === 'DateTime') {
 		settings.timeStorage = objectFieldSettings.timeStorage;

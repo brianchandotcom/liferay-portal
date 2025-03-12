@@ -37,7 +37,7 @@ public class ControlledFDSDisplayContext {
 				0, 20, null),
 			user -> new UserEntry(
 				user.getEmailAddress(), user.getFirstName(), user.getUserId(),
-				user.getLastName()));
+				user.isActive(), user.getLastName()));
 	}
 
 	public Object getViews() {

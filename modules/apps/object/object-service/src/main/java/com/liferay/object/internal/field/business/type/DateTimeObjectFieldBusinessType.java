@@ -31,6 +31,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -173,21 +174,26 @@ public class DateTimeObjectFieldBusinessType
 	}
 
 	@Override
-	public Object getValue(
+	public Timestamp getValue(
 			ObjectField objectField, long userId, Map<String, Object> values)
 		throws PortalException {
 
-		String value = String.valueOf(
-			ObjectFieldBusinessType.super.getValue(
-				objectField, userId, values));
+		Object value = ObjectFieldBusinessType.super.getValue(
+			objectField, userId, values);
 
 		if (Validator.isNull(value)) {
 			return null;
 		}
 
+		if (value instanceof Date) {
+			Date date = (Date)value;
+
+			return new Timestamp(date.getTime());
+		}
+
 		return _getTimestamp(
 			objectField.getObjectFieldSettings(),
-			_userLocalService.getUser(userId), value);
+			_userLocalService.getUser(userId), String.valueOf(value));
 	}
 
 	@Override

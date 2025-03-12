@@ -1,8 +1,6 @@
 components:
     schemas:
         Attribute:
-            description:
-                Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
             properties:
                 canonicalValues:
                     description:
@@ -256,8 +254,6 @@ components:
                     type: integer
             type: object
         Schema:
-            description:
-                Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
             properties:
                 attributes:
                     description:

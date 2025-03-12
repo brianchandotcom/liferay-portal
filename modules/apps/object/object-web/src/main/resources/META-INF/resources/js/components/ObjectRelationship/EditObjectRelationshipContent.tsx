@@ -4,7 +4,10 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {ILearnResourceContext, InputLocalized} from 'frontend-js-components-web';
+import {
+	ILearnResourceContext,
+	InputLocalized,
+} from 'frontend-js-components-web';
 import React from 'react';
 
 import {ObjectRelationshipDeletionTypeSelect} from './ObjectRelationshipDeletionTypeSelect';

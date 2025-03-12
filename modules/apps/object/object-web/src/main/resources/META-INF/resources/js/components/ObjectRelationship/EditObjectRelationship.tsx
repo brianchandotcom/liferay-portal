@@ -10,12 +10,11 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {FormEvent, useState} from 'react';
 
 import {EditObjectRelationshipContent} from './EditObjectRelationshipContent';
 import {useObjectRelationshipForm} from './useObjectRelationshipForm';
-
-import { ILearnResourceContext } from 'frontend-js-components-web';
 
 interface EditObjectRelationshipProps {
 	baseResourceURL: string;

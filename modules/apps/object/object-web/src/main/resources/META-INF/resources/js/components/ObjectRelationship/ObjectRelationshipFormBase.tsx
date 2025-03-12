@@ -11,14 +11,13 @@ import {
 	SingleSelect,
 	stringUtils,
 } from '@liferay/object-js-components-web';
+import {ILearnResourceContext} from 'frontend-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import CurrentObjectDefinition from './CurrentObjectDefinition';
 import {ObjectRelationshipInheritanceCheckbox} from './ObjectRelationshipInheritanceCheckbox';
 import SelectObjectDefinition from './SelectObjectDefinition';
-
-import { ILearnResourceContext } from 'frontend-js-components-web';
 
 interface ObjectRelationshipFormBaseProps {
 	baseResourceURL: string;

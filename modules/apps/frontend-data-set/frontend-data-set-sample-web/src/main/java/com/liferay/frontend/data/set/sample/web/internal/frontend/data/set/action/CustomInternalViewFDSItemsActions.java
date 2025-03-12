@@ -40,7 +40,10 @@ public class CustomInternalViewFDSItemsActions implements FDSItemsActions {
 			new FDSActionDropdownItem(
 				null, null, null, "#", "document", "openDocument",
 				_language.get(httpServletRequest, "document"), null, null, null,
-				null, null, "link", null, "item"));
+				null, null, "link", null, "item"),
+			new FDSActionDropdownItem(
+				null, null, null, "#", "cog", "turnGreen", "Turn Green", null,
+				null, null, null, null, "link", null, "item"));
 	}
 
 	@Override

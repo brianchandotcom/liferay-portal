@@ -10,7 +10,7 @@ import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {getAssetsLibrariesByCompany} from '../api/api';
+import {getAssetsLibrariesByCompany} from '../../api/api';
 import SpaceSticker from '../components/SpaceSticker';
 
 const MAX_NUMBER_SPACES = 5;

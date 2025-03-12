@@ -82,6 +82,7 @@ com.liferay.commerce.service.CommerceCountryLocalService=com.liferay.portal.kern
 com.liferay.commerce.service.CommerceCountryLocalServiceUtil=com.liferay.portal.kernel.service.CountryLocalServiceUtil
 com.liferay.commerce.service.CommerceCountryService=com.liferay.portal.kernel.service.CountryService
 com.liferay.commerce.service.CommerceRegionLocalServiceUtil=com.liferay.portal.kernel.service.RegionLocalServiceUtil
+com.liferay.commerce.util.CommerceBigDecimalUtil=com.liferay.portal.kernel.util.BigDecimalUtil
 com.liferay.counter.NoSuchCounterException=com.liferay.counter.kernel.exception.NoSuchCounterException
 com.liferay.counter.model.Counter=com.liferay.counter.kernel.model.Counter
 com.liferay.counter.model.CounterModel=com.liferay.counter.kernel.model.CounterModel

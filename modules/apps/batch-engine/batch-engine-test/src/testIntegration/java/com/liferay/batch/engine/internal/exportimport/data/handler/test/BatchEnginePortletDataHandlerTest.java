@@ -265,7 +265,7 @@ public class BatchEnginePortletDataHandlerTest {
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
 				_companyGroupId, larFile
-						).toString(),
+			).toString(),
 			JSONCompareMode.STRICT);
 
 		exportParams = _getExportIndividualDeletionsParameterMap(
@@ -287,7 +287,7 @@ public class BatchEnginePortletDataHandlerTest {
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
 				_companyGroupId, larFile
-						).toString(),
+			).toString(),
 			JSONCompareMode.STRICT);
 
 		exportParams = _getExportIndividualDeletionsParameterMap(
@@ -312,7 +312,7 @@ public class BatchEnginePortletDataHandlerTest {
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
 				_companyGroupId, larFile
-						).toString(),
+			).toString(),
 			JSONCompareMode.STRICT);
 	}
 
@@ -336,7 +336,6 @@ public class BatchEnginePortletDataHandlerTest {
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(larFile)) {
-
 			ZipEntry zipEntry = zipFile.getEntry(
 				"group/" + groupId + "/deletion-system-events.xml");
 

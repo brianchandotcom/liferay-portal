@@ -15,7 +15,7 @@ export type ObjectField = {
 	label: Liferay.Language.LocalizedValue<string>;
 	localized: boolean;
 	name: string;
-	objectFieldSettings?: {name: string; value: string | number}[];
+	objectFieldSettings?: {name: string; value: boolean | string | number}[];
 	required: boolean;
 	system?: boolean;
 };

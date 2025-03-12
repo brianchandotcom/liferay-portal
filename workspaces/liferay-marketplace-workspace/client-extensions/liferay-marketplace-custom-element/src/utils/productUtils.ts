@@ -29,6 +29,7 @@ export function getProductFallback(): DeliveryProduct {
 		shortDescription: i18n.translate('this-product-is-no-longer-available'),
 		skus: [],
 		urlImage: '',
+		urls: {en_US: ''},
 	};
 }
 

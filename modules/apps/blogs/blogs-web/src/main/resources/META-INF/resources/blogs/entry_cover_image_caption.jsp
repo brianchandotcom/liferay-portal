@@ -19,7 +19,7 @@ String viewEntryURL = ParamUtil.getString(request, "viewEntryURL");
 	</c:if>
 
 	<liferay-ui:csp>
-		<div <c:if test="<%= Validator.isNotNull(coverImageCaption) %>">aria-label="<%= HtmlUtil.escapeAttribute(HtmlUtil.stripHtml(coverImageCaption)) %>" role="img"</c:if> class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" style="background-image: url(<%= coverImageURL %>);"></div>
+		<div <c:if test="<%= Validator.isNotNull(coverImageCaption) %>">aria-label="<%= HtmlUtil.escapeAttribute(HtmlUtil.stripHtml(coverImageCaption)) %>" role="img"</c:if> class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" style="background-image: url(<%= HtmlUtil.escapeAttribute(coverImageURL) %>);"></div>
 	</liferay-ui:csp>
 
 	<c:if test="<%= Validator.isNotNull(viewEntryURL) %>">

@@ -62,9 +62,6 @@ public class VirtualHostFilterTest {
 
 	@Before
 	public void setUp() {
-		_mockHttpServletRequest.setAttribute(
-			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
-
 		_portalUtil.setPortal(
 			new PortalImpl() {
 
@@ -94,36 +91,15 @@ public class VirtualHostFilterTest {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"COMPANY_DEFAULT_HOME_URL", StringPool.SLASH)) {
 
-			_mockHttpServletRequest.setRequestURI(StringPool.SLASH);
-
 			Assert.assertNotEquals(
-				StringPool.SLASH,
-				_getForwardedURL(
-					_mockHttpServletRequest, _mockHttpServletResponse,
-					_mockFilterChain));
+				StringPool.SLASH, _getForwardedURL(StringPool.SLASH));
 		}
 	}
 
 	@Test
 	public void testProcessFilterForwardedURLForLanguageIdWithoutTrailingSlash() {
-		_mockHttpServletRequest.setRequestURI("/en-US/");
-
-		String expectedForwardedURL = _getForwardedURL(
-			_mockHttpServletRequest, _mockHttpServletResponse,
-			_mockFilterChain);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
-		mockHttpServletRequest.setRequestURI("/en-US");
-
 		Assert.assertEquals(
-			expectedForwardedURL,
-			_getForwardedURL(
-				mockHttpServletRequest, new MockHttpServletResponse(),
-				new MockFilterChain()));
+			_getForwardedURL("/en-US/"), _getForwardedURL("/en-US"));
 	}
 
 	@Test
@@ -135,12 +111,14 @@ public class VirtualHostFilterTest {
 		_testProcessFilterLastPath(_PATH_PROXY, StringPool.BLANK, _LAST_PATH);
 	}
 
-	private String _getForwardedURL(
-		MockHttpServletRequest mockHttpServletRequest,
-		MockHttpServletResponse mockHttpServletResponse,
-		MockFilterChain filterChain) {
+	private String _getForwardedURL(String requestURI) {
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(requestURI);
 
-		_virtualHostFilter.init(_mockFilterConfig);
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_virtualHostFilter.init(new MockFilterConfig());
 
 		ReflectionTestUtil.invoke(
 			_virtualHostFilter, "processFilter",
@@ -148,17 +126,17 @@ public class VirtualHostFilterTest {
 				HttpServletRequest.class, HttpServletResponse.class,
 				FilterChain.class
 			},
-			mockHttpServletRequest, mockHttpServletResponse, filterChain);
+			mockHttpServletRequest, mockHttpServletResponse,
+			new MockFilterChain());
 
 		return mockHttpServletResponse.getForwardedUrl();
 	}
 
-	private String _getLastPath(
-		MockHttpServletRequest mockHttpServletRequest,
-		MockHttpServletResponse mockHttpServletResponse,
-		MockFilterChain filterChain) {
+	private String _getLastPath(String requestURI) {
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(requestURI);
 
-		_virtualHostFilter.init(_mockFilterConfig);
+		_virtualHostFilter.init(new MockFilterConfig());
 
 		ReflectionTestUtil.invoke(
 			_virtualHostFilter, "processFilter",
@@ -166,7 +144,8 @@ public class VirtualHostFilterTest {
 				HttpServletRequest.class, HttpServletResponse.class,
 				FilterChain.class
 			},
-			mockHttpServletRequest, mockHttpServletResponse, filterChain);
+			mockHttpServletRequest, new MockHttpServletResponse(),
+			new MockFilterChain());
 
 		LastPath lastPath = (LastPath)mockHttpServletRequest.getAttribute(
 			WebKeys.LAST_PATH);
@@ -178,11 +157,8 @@ public class VirtualHostFilterTest {
 		return StringPool.BLANK;
 	}
 
-	private void _testProcessFilterLastPath(
-		String pathContext, String pathProxy, String requestURI) {
-
-		_pathContext = pathContext;
-		_pathProxy = pathProxy;
+	private MockHttpServletRequest _getMockHttpServletRequest(
+		String requestURI) {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -191,11 +167,16 @@ public class VirtualHostFilterTest {
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
 		mockHttpServletRequest.setRequestURI(requestURI);
 
-		Assert.assertEquals(
-			_LAST_PATH,
-			_getLastPath(
-				mockHttpServletRequest, new MockHttpServletResponse(),
-				new MockFilterChain()));
+		return mockHttpServletRequest;
+	}
+
+	private void _testProcessFilterLastPath(
+		String pathContext, String pathProxy, String requestURI) {
+
+		_pathContext = pathContext;
+		_pathProxy = pathProxy;
+
+		Assert.assertEquals(_LAST_PATH, _getLastPath(requestURI));
 	}
 
 	private static final String _LAST_PATH =
@@ -210,12 +191,6 @@ public class VirtualHostFilterTest {
 	@Inject
 	private static LayoutSetLocalService _layoutSetLocalService;
 
-	private final MockFilterChain _mockFilterChain = new MockFilterChain();
-	private final MockFilterConfig _mockFilterConfig = new MockFilterConfig();
-	private final MockHttpServletRequest _mockHttpServletRequest =
-		new MockHttpServletRequest();
-	private final MockHttpServletResponse _mockHttpServletResponse =
-		new MockHttpServletResponse();
 	private String _pathContext;
 	private String _pathProxy;
 

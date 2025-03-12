@@ -159,7 +159,7 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Template Testray Build Id"
+				"en_US": "Template Testray Build ID"
 			},
 			"name": "templateTestrayBuildId",
 			"required": false,

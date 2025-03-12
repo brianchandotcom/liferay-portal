@@ -5,6 +5,7 @@
 				"definition": {
 					"indexed": true,
 					"layout": {
+						"widthType": "Fixed"
 					},
 					"name": "Blog Post Page"
 				},

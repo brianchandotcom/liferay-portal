@@ -4,7 +4,7 @@
  */
 
 export const config = {
-	name: 'stable',
-	testDir: 'tests/stable',
+	name: 'smoke',
+	testDir: 'tests/smoke',
 	timeout: 100 * 1000,
 };

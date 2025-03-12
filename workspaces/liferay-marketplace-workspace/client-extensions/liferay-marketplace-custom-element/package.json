@@ -3,7 +3,7 @@
 		"@clayui/alert": "^3.85.0",
 		"@clayui/autocomplete": "^3.116.1",
 		"@clayui/badge": "^3.100.0",
-		"@clayui/button": "^3.111.0",
+		"@clayui/button": "3.111.0",
 		"@clayui/card": "^3.85.0",
 		"@clayui/charts": "^3.106.1",
 		"@clayui/drop-down": "^3.87.0",

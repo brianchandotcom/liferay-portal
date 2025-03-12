@@ -285,6 +285,33 @@ public class ObjectRelationshipResourceImpl
 			String externalReferenceCode, ObjectRelationship objectRelationship)
 		throws Exception {
 
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition = null;
+
+		if (Validator.isNotNull(
+				objectRelationship.
+					getObjectDefinitionExternalReferenceCode1())) {
+
+			serviceBuilderObjectDefinition =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						objectRelationship.
+							getObjectDefinitionExternalReferenceCode1(),
+						contextCompany.getCompanyId());
+		}
+
+		if (serviceBuilderObjectDefinition == null) {
+			serviceBuilderObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					GetterUtil.getLong(
+						objectRelationship.getObjectDefinitionId1()));
+		}
+
+		long objectDefinitionId =
+			serviceBuilderObjectDefinition.getObjectDefinitionId();
+
+		objectRelationship.setObjectDefinitionId1(() -> objectDefinitionId);
+
 		com.liferay.object.model.ObjectRelationship
 			serviceBuilderObjectRelationship =
 				_objectRelationshipService.

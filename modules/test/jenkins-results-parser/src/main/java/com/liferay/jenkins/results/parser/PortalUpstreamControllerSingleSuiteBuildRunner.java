@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 /**
  * @author Michael Hashimoto
  */
@@ -18,12 +20,26 @@ public class PortalUpstreamControllerSingleSuiteBuildRunner
 
 	@Override
 	protected String getJobURL(String testSuite) {
-		return JenkinsResultsParserUtil.combine(
-			JenkinsResultsParserUtil.getMostAvailableMasterURL(
+		String jobName = "test-portal-upstream";
+
+		String masterURL = null;
+
+		try {
+			masterURL = JenkinsResultsParserUtil.getBuildProperty(
+				jobName, testSuite);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (masterURL == null) {
+			masterURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				JenkinsResultsParserUtil.combine(
 					"http://" + getInvocationCohortName() + ".liferay.com"),
-				null, 1, 24, 2),
-			"/job/test-portal-upstream");
+				null, 1, 24, 2);
+		}
+
+		return JenkinsResultsParserUtil.combine(masterURL, "/job/", jobName);
 	}
 
 }

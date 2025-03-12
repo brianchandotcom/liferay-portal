@@ -255,7 +255,7 @@ components:
                         The total number of results returned by the list or query operation.
                     type: integer
             type: object
-        SchemaDefinition:
+        Schema:
             description:
                 Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
             properties:
@@ -680,7 +680,7 @@ paths:
                                 oneOf:
                                     - format: binary
                                       type: string
-                                    - $ref: "#/components/schemas/SchemaDefinition"
+                                    - $ref: "#/components/schemas/Schema"
                     description:
                         The requested schema.
                 404:

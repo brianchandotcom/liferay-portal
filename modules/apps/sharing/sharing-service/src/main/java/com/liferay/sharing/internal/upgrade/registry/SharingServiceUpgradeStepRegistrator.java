@@ -29,6 +29,11 @@ public class SharingServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new com.liferay.sharing.internal.upgrade.v1_2_0.
+				SharingEntryUpgradeProcess());
 	}
 
 }

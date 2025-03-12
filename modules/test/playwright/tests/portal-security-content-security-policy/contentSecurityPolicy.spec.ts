@@ -5,16 +5,298 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {contentSecurityPolicyPagesTest} from '../../fixtures/contentSecurityPolicyPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {liferayConfig} from '../../liferay.config';
+import getRandomString from '../../utils/getRandomString';
+import {performLoginViaApi} from '../../utils/performLogin';
+import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 
 export const test = mergeTests(
+	apiHelpersTest,
 	contentSecurityPolicyPagesTest,
 	featureFlagsTest({
 		'LPS-134060': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
-	loginTest()
+	isolatedSiteTest,
+	loginTest(),
+	pageEditorPagesTest
 );
 
+test.afterEach(
+	'Reset CSP configuration',
+	async ({contentSecurityPolicyPage, page}) => {
+		await page.goto('/');
 
+		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
+			await performLoginViaApi(page, 'test');
+		}
+
+		await contentSecurityPolicyPage.goto();
+
+		await contentSecurityPolicyPage.resetCSPConfiguration();
+	}
+);
+
+test("CSP connect-src allows connections to 'self'", async ({
+	apiHelpers,
+	contentSecurityPolicyPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await contentSecurityPolicyPage.gotoAndConfigurePolicy(
+		`connect-src 'self'`
+	);
+
+	const pageName = getRandomString();
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-html',
+			}),
+		]),
+		siteId: site.id,
+		title: pageName,
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	const portalURL = liferayConfig.environment.baseUrl;
+
+	await pageEditorPage.editHTMLEditable({
+		editableId: 'element-html',
+		fragmentId: await pageEditorPage.getFragmentId('HTML'),
+		value: `<a  ping="${portalURL}" href="${portalURL}" target="_blank">
+		 			Test CSP
+					<script>
+						const response = fetch("${portalURL}");
+
+						const xmlHttpRequest = new XMLHttpRequest();
+						xmlHttpRequest.open("GET", "${portalURL}");
+						xmlHttpRequest.send();
+
+						const webSocket = new WebSocket("${portalURL}");
+
+						const eventSource = new EventSource("${portalURL}");
+
+						navigator.sendBeacon("${portalURL}", {
+						/* … */
+						});
+					</script>
+				</a>`,
+	});
+
+	await pageEditorPage.publishPage();
+
+	const cspErrors = [];
+
+	page.on('console', (msg) => {
+		if (
+			msg.type() === 'error' &&
+			msg
+				.text()
+				.includes('Content Security Policy directive: "connect-src')
+		) {
+			cspErrors.push({text: msg.text(), type: msg.type()});
+		}
+	});
+
+	page.on('requestfailed', (request) => {
+		if (
+			request.url().includes('localhost') &&
+			request.failure().errorText.includes('csp')
+		) {
+			cspErrors.push({
+				failure: request.failure(),
+				url: request.url(),
+			});
+		}
+	});
+
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+	await page.getByRole('link', {name: 'Test CSP'}).click({
+		button: 'middle',
+	});
+
+	expect(cspErrors.length).toBeLessThanOrEqual(0);
+});
+
+test('CSP connect-src allows connections to specific domain', async ({
+	apiHelpers,
+	contentSecurityPolicyPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await contentSecurityPolicyPage.gotoAndConfigurePolicy(
+		`connect-src 'self' http://www.able.com:8080/ wss://www.able.com:8080/;`
+	);
+
+	const pageName = getRandomString();
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-html',
+			}),
+		]),
+		siteId: site.id,
+		title: pageName,
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.editHTMLEditable({
+		editableId: 'element-html',
+		fragmentId: await pageEditorPage.getFragmentId('HTML'),
+		value: `<a  ping="http://www.able.com:8080" href="http://localhost:8080" target="_blank">
+		 			Test CSP
+					<script>
+						const response = fetch("http://www.able.com:8080");
+
+						const xmlHttpRequest = new XMLHttpRequest();
+						xmlHttpRequest.open("GET", "http://www.able.com:8080");
+						xmlHttpRequest.send();
+
+						const webSocket = new WebSocket("wss://www.able.com:8080/");
+
+						const eventSource = new EventSource("http://www.able.com:8080");
+
+						navigator.sendBeacon("http://www.able.com:8080", {
+						/* … */
+						});
+					</script>
+				</a>`,
+	});
+
+	await pageEditorPage.publishPage();
+
+	const cspErrors = [];
+
+	page.on('console', (msg) => {
+		if (
+			msg.type() === 'error' &&
+			msg
+				.text()
+				.includes('Content Security Policy directive: "connect-src')
+		) {
+			cspErrors.push({text: msg.text(), type: msg.type()});
+		}
+	});
+
+	page.on('requestfailed', (request) => {
+		if (
+			request.url().includes('www.able.com') &&
+			request.failure().errorText.includes('csp')
+		) {
+			cspErrors.push({
+				failure: request.failure(),
+				url: request.url(),
+			});
+		}
+	});
+
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+	await page.getByRole('link', {name: 'Test CSP'}).click({
+		button: 'middle',
+	});
+
+	expect(cspErrors.length).toBeLessThanOrEqual(0);
+});
+
+test('CSP connect-src blocks connections', async ({
+	apiHelpers,
+	contentSecurityPolicyPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await contentSecurityPolicyPage.gotoAndConfigurePolicy(
+		`connect-src 'self';`
+	);
+
+	const pageName = getRandomString();
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-html',
+			}),
+		]),
+		siteId: site.id,
+		title: pageName,
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.editHTMLEditable({
+		editableId: 'element-html',
+		fragmentId: await pageEditorPage.getFragmentId('HTML'),
+		value: `<a  ping="http://www.able.com:8080" href="http://localhost:8080" target="_blank">
+		 			Test CSP
+					<script>
+						const response = fetch("http://www.able.com:8080");
+
+						const xmlHttpRequest = new XMLHttpRequest();
+						xmlHttpRequest.open("GET", "http://www.able.com:8080");
+						xmlHttpRequest.send();
+
+						const webSocket = new WebSocket("wss://www.able.com:8080/");
+
+						const eventSource = new EventSource("http://www.able.com:8080");
+
+						navigator.sendBeacon("http://www.able.com:8080", {
+						/* … */
+						});
+					</script>
+				</a>`,
+	});
+
+	await pageEditorPage.publishPage();
+
+	const cspErrors = [];
+
+	page.on('console', (msg) => {
+		if (
+			msg.type() === 'error' &&
+			msg
+				.text()
+				.includes('Content Security Policy directive: "connect-src')
+		) {
+			cspErrors.push({text: msg.text(), type: msg.type()});
+		}
+	});
+
+	page.on('requestfailed', (request) => {
+		if (
+			request.url().includes('www.able.com') &&
+			request.failure().errorText.includes('csp')
+		) {
+			cspErrors.push({
+				failure: request.failure(),
+				url: request.url(),
+			});
+		}
+	});
+
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+	await page.getByRole('link', {name: 'Test CSP'}).click({
+		button: 'middle',
+	});
+
+	expect(cspErrors.length).toBeGreaterThanOrEqual(9);
+});

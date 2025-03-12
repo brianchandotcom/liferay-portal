@@ -7,6 +7,7 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -170,6 +171,38 @@ public class ObjectRelationshipResourceTest
 		Assert.assertEquals(
 			newObjectRelationship.getExternalReferenceCode(),
 			putObjectRelationship.getExternalReferenceCode());
+
+		randomObjectRelationship = randomObjectRelationship();
+
+		randomObjectRelationship.setObjectDefinitionId1((Long)null);
+
+		putObjectRelationship =
+			objectRelationshipResource.
+				putObjectRelationshipByExternalReferenceCode(
+					postObjectRelationship.getExternalReferenceCode(),
+					randomObjectRelationship);
+
+		Assert.assertEquals(
+			Long.valueOf(_objectDefinition1.getObjectDefinitionId()),
+			putObjectRelationship.getObjectDefinitionId1());
+
+		randomObjectRelationship.setObjectDefinitionExternalReferenceCode1(
+			(String)null);
+
+		try {
+			objectRelationshipResource.
+				putObjectRelationshipByExternalReferenceCode(
+					postObjectRelationship.getExternalReferenceCode(),
+					randomObjectRelationship);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	@Override

@@ -57,7 +57,8 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="TU_C_C" return-type="SharingEntry" unique="true">
+		<finder name="TUG_TU_C_C" return-type="SharingEntry" unique="true">
+			<finder-column name="toUserGroupId" />
 			<finder-column name="toUserId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

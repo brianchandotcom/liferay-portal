@@ -87,6 +87,17 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception;
 
+	public ObjectEntry getObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext, Long objectEntryId,
+			Integer version)
+		throws Exception;
+
+	public ObjectEntry getObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Integer version)
+		throws Exception;
+
 	public Page<ObjectEntry> getObjectEntryRelatedObjectEntries(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, Long objectEntryId,

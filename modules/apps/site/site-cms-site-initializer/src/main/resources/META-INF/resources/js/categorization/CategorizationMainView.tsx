@@ -24,7 +24,7 @@ export default function CategorizationMainView() {
 
 	const renderTabContent = () => {
 		switch (tab) {
-			case 'tags':
+			case Liferay.Language.get('tags'):
 				return <TagsView />;
 			default:
 				return <VocabulariesView />;

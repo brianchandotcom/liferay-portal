@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -635,24 +636,21 @@ public class MediaWikiImporter {
 			throw new ImportFilesException("Invalid pages XML file");
 		}
 
-		List<String> namespaces = new ArrayList<>();
-
 		Element namespacesElement = siteinfoElement.element("namespaces");
 
-		List<Element> namespaceElements = namespacesElement.elements(
-			"namespace");
+		return TransformUtil.transform(
+			namespacesElement.elements("namespace"),
+			namespaceElement -> {
+				Attribute attribute = namespaceElement.attribute("key");
 
-		for (Element namespaceElement : namespaceElements) {
-			Attribute attribute = namespaceElement.attribute("key");
+				String value = attribute.getValue();
 
-			String value = attribute.getValue();
+				if (value.equals("0")) {
+					return null;
+				}
 
-			if (!value.equals("0")) {
-				namespaces.add(namespaceElement.getText());
-			}
-		}
-
-		return namespaces;
+				return namespaceElement.getText();
+			});
 	}
 
 	private Map<String, String> _readUsersFile(InputStream usersInputStream)

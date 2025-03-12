@@ -33,46 +33,43 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "A EntityModelResource test entity (`implements EntityModelResource` in the EntityModelResourceTestEntity2ResourceImpl class) with filterable fields.",
-	value = "EntityModelResourceTestEntity2"
-)
+@GraphQLName("Schema")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "EntityModelResourceTestEntity2")
-public class EntityModelResourceTestEntity2 implements Serializable {
+@XmlRootElement(name = "Schema")
+public class Schema implements Serializable {
 
-	public static EntityModelResourceTestEntity2 toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			EntityModelResourceTestEntity2.class, json);
+	public static Schema toDTO(String json) {
+		return ObjectMapperUtil.readValue(Schema.class, json);
 	}
 
-	public static EntityModelResourceTestEntity2 unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			EntityModelResourceTestEntity2.class, json);
+	public static Schema unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Schema.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getId() {
-		if (_idSupplier != null) {
-			id = _idSupplier.get();
+	public String getProperty1() {
+		if (_property1Supplier != null) {
+			property1 = _property1Supplier.get();
 
-			_idSupplier = null;
+			_property1Supplier = null;
 		}
 
-		return id;
+		return property1;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setProperty1(String property1) {
+		this.property1 = property1;
 
-		_idSupplier = null;
+		_property1Supplier = null;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		_idSupplier = () -> {
+	public void setProperty1(
+		UnsafeSupplier<String, Exception> property1UnsafeSupplier) {
+
+		_property1Supplier = () -> {
 			try {
-				return idUnsafeSupplier.get();
+				return property1UnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -85,49 +82,10 @@ public class EntityModelResourceTestEntity2 implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+	protected String property1;
 
 	@JsonIgnore
-	private Supplier<Long> _idSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public String getName() {
-		if (_nameSupplier != null) {
-			name = _nameSupplier.get();
-
-			_nameSupplier = null;
-		}
-
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-
-		_nameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		_nameSupplier = () -> {
-			try {
-				return nameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
-	@JsonIgnore
-	private Supplier<String> _nameSupplier;
+	private Supplier<String> _property1Supplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -135,15 +93,13 @@ public class EntityModelResourceTestEntity2 implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof EntityModelResourceTestEntity2)) {
+		if (!(object instanceof Schema)) {
 			return false;
 		}
 
-		EntityModelResourceTestEntity2 entityModelResourceTestEntity2 =
-			(EntityModelResourceTestEntity2)object;
+		Schema schema = (Schema)object;
 
-		return Objects.equals(
-			toString(), entityModelResourceTestEntity2.toString());
+		return Objects.equals(toString(), schema.toString());
 	}
 
 	@Override
@@ -158,30 +114,18 @@ public class EntityModelResourceTestEntity2 implements Serializable {
 
 		sb.append("{");
 
-		Long id = getId();
+		String property1 = getProperty1();
 
-		if (id != null) {
+		if (property1 != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
-
-			sb.append(id);
-		}
-
-		String name = getName();
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
+			sb.append("\"property1\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(name));
+			sb.append(_escape(property1));
 
 			sb.append("\"");
 		}
@@ -193,7 +137,7 @@ public class EntityModelResourceTestEntity2 implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity2",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.Schema",
 		name = "x-class-name"
 	)
 	public String xClassName;

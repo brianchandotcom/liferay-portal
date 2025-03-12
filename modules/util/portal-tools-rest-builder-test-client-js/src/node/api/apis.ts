@@ -8,6 +8,7 @@ import * as http from 'http';
 	import {CompanyTestEntityApi} from './companyTestEntityApi';
 	import {EntityModelResourceTestEntity1Api} from './entityModelResourceTestEntity1Api';
 	import {EntityModelResourceTestEntity2Api} from './entityModelResourceTestEntity2Api';
+	import {SchemaApi} from './schemaApi';
 	import {SiteTestEntityApi} from './siteTestEntityApi';
 	import {TestEntityAddressApi} from './testEntityAddressApi';
 	import {TestEntityApi} from './testEntityApi';
@@ -15,6 +16,7 @@ import * as http from 'http';
 	export * from './companyTestEntityApi';
 	export * from './entityModelResourceTestEntity1Api';
 	export * from './entityModelResourceTestEntity2Api';
+	export * from './schemaApi';
 	export * from './siteTestEntityApi';
 	export * from './testEntityAddressApi';
 	export * from './testEntityApi';
@@ -39,6 +41,7 @@ export const APIS = [
 	CompanyTestEntityApi,
 	EntityModelResourceTestEntity1Api,
 	EntityModelResourceTestEntity2Api,
+	SchemaApi,
 	SiteTestEntityApi,
 	TestEntityAddressApi,
 	TestEntityApi,

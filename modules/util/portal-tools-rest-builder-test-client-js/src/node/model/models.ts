@@ -20,9 +20,11 @@ import localVarRequest from 'request';
 	import {PageCompanyTestEntity} from './pageCompanyTestEntity';
 	import {PageEntityModelResourceTestEntity1} from './pageEntityModelResourceTestEntity1';
 	import {PagePermission} from './pagePermission';
+	import {PageSchema} from './pageSchema';
 	import {PageSiteTestEntity} from './pageSiteTestEntity';
 	import {PageTestEntity} from './pageTestEntity';
 	import {Permission} from './permission';
+	import {Schema} from './schema';
 	import {SiteTestEntity} from './siteTestEntity';
 	import {TestEntity} from './testEntity';
 	import {TestEntityAddress} from './testEntityAddress';
@@ -43,9 +45,11 @@ import localVarRequest from 'request';
 	export * from './pageCompanyTestEntity';
 	export * from './pageEntityModelResourceTestEntity1';
 	export * from './pagePermission';
+	export * from './pageSchema';
 	export * from './pageSiteTestEntity';
 	export * from './pageTestEntity';
 	export * from './permission';
+	export * from './schema';
 	export * from './siteTestEntity';
 	export * from './testEntity';
 	export * from './testEntityAddress';
@@ -92,9 +96,11 @@ const typeMap: {[index: string]: any} = {
 	PageCompanyTestEntity,
 	PageEntityModelResourceTestEntity1,
 	PagePermission,
+	PageSchema,
 	PageSiteTestEntity,
 	PageTestEntity,
 	Permission,
+	Schema,
 	SiteTestEntity,
 	TestEntity,
 	TestEntityAddress,

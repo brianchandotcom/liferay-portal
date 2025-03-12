@@ -12,7 +12,7 @@ import {
 
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {openToast} from 'frontend-js-components-web';
+import {ILearnResourceContext, openToast} from 'frontend-js-components-web';
 import {sessionStorage} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -36,6 +36,7 @@ interface ItemData {
 interface RelationshipsProps extends IFDSTableProps {
 	baseResourceURL: string;
 	isApproved: boolean;
+	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: string;
 	objectRelationshipTypes: string[];
@@ -143,6 +144,7 @@ export default function Relationships({
 	id,
 	isApproved,
 	items,
+	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	parameterRequired,
@@ -319,6 +321,7 @@ export default function Relationships({
 				<ModalAddObjectRelationship
 					baseResourceURL={baseResourceURL}
 					handleOnClose={() => setShowAddModal(false)}
+					learnResources={learnResources}
 					objectDefinitionExternalReferenceCode1={
 						objectDefinitionExternalReferenceCode
 					}

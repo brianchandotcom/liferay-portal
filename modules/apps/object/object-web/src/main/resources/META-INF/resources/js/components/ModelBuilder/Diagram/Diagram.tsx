@@ -267,6 +267,7 @@ function DiagramBuilder() {
 						setShowAddObjectRelationshipModal(false)
 					}
 					hasDefinedObjectDefinitionTarget
+					learnResources={learnResourceContext}
 					objectDefinitionExternalReferenceCode1={
 						newObjectRelationshipSourceNodeProps?.sourceNode.erc!
 					}

@@ -4,7 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {InputLocalized} from 'frontend-js-components-web';
+import {ILearnResourceContext, InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {ObjectRelationshipDeletionTypeSelect} from './ObjectRelationshipDeletionTypeSelect';
@@ -20,6 +20,7 @@ interface EditObjectRelationshipContentProps {
 	containerWrapper: ElementType;
 	errors: FormError<ObjectRelationship>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
+	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	onChangeInheritanceCheckbox: (
@@ -40,6 +41,7 @@ export function EditObjectRelationshipContent({
 	containerWrapper: ContainerWrapper,
 	errors,
 	handleChange,
+	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectRelationshipDeletionTypes,
 	onChangeInheritanceCheckbox,
@@ -86,6 +88,7 @@ export function EditObjectRelationshipContent({
 					baseResourceURL={baseResourceURL}
 					errors={errors}
 					handleChange={handleChange}
+					learnResources={learnResources}
 					objectDefinitionExternalReferenceCode1={
 						objectDefinitionExternalReferenceCode
 					}

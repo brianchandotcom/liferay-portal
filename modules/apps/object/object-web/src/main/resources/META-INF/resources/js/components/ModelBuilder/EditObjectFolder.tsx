@@ -388,6 +388,7 @@ export default function EditObjectFolder({
 								type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 							});
 						}}
+						learnResources={learnResourceContext}
 						objectDefinitionExternalReferenceCode1={
 							selectedObjectDefinitionNode.data
 								.externalReferenceCode

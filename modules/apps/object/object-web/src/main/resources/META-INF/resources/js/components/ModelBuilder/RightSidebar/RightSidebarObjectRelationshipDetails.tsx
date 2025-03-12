@@ -36,6 +36,7 @@ export function RightSidebarObjectRelationshipDetails({
 		{
 			baseResourceURL,
 			elements,
+			learnResourceContext,
 			selectedObjectFolder,
 			selectedObjectRelationship,
 		},
@@ -294,6 +295,7 @@ export function RightSidebarObjectRelationshipDetails({
 						containerWrapper={ClayPanel}
 						errors={errors}
 						handleChange={handleChange}
+						learnResources={learnResourceContext}
 						objectDefinitionExternalReferenceCode={
 							values.objectDefinitionExternalReferenceCode1
 						}

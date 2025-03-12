@@ -17,10 +17,13 @@ import {useObjectRelationshipForm} from './useObjectRelationshipForm';
 
 import './ModalAddObjectRelationship.scss';
 
+import { ILearnResourceContext } from 'frontend-js-components-web';
+
 interface ModalAddObjectRelationshipProps {
 	baseResourceURL: string;
 	handleOnClose: () => void;
 	hasDefinedObjectDefinitionTarget?: boolean;
+	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
 	objectRelationshipParameterRequired: boolean;
@@ -34,6 +37,7 @@ export function ModalAddObjectRelationship({
 	baseResourceURL,
 	handleOnClose,
 	hasDefinedObjectDefinitionTarget,
+	learnResources,
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
 	objectRelationshipParameterRequired,
@@ -149,6 +153,7 @@ export function ModalAddObjectRelationship({
 							hasDefinedObjectDefinitionTarget={
 								hasDefinedObjectDefinitionTarget
 							}
+							learnResources={learnResources}
 							objectDefinitionExternalReferenceCode1={
 								objectDefinitionExternalReferenceCode1
 							}

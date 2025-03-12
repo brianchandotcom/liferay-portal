@@ -15,9 +15,12 @@ import React, {FormEvent, useState} from 'react';
 import {EditObjectRelationshipContent} from './EditObjectRelationshipContent';
 import {useObjectRelationshipForm} from './useObjectRelationshipForm';
 
+import { ILearnResourceContext } from 'frontend-js-components-web';
+
 interface EditObjectRelationshipProps {
 	baseResourceURL: string;
 	hasUpdateObjectDefinitionPermission: boolean;
+	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationship: ObjectRelationship;
 	objectRelationshipDeletionTypes: LabelValueObject[];
@@ -28,6 +31,7 @@ interface EditObjectRelationshipProps {
 export default function EditObjectRelationship({
 	baseResourceURL,
 	hasUpdateObjectDefinitionPermission,
+	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectRelationship: initialValues,
 	objectRelationshipDeletionTypes,
@@ -123,6 +127,7 @@ export default function EditObjectRelationship({
 				containerWrapper={Card}
 				errors={errors}
 				handleChange={handleChange}
+				learnResources={learnResources}
 				objectDefinitionExternalReferenceCode={
 					objectDefinitionExternalReferenceCode
 				}

@@ -18,6 +18,8 @@ import CurrentObjectDefinition from './CurrentObjectDefinition';
 import {ObjectRelationshipInheritanceCheckbox} from './ObjectRelationshipInheritanceCheckbox';
 import SelectObjectDefinition from './SelectObjectDefinition';
 
+import { ILearnResourceContext } from 'frontend-js-components-web';
+
 interface ObjectRelationshipFormBaseProps {
 	baseResourceURL: string;
 	children?: JSX.Element;
@@ -25,6 +27,7 @@ interface ObjectRelationshipFormBaseProps {
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	hasDefinedObjectDefinitionTarget?: boolean;
+	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
 	onChangeInheritanceCheckbox: (
@@ -90,6 +93,7 @@ export function ObjectRelationshipFormBase({
 	errors,
 	handleChange,
 	hasDefinedObjectDefinitionTarget,
+	learnResources,
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
 	onChangeInheritanceCheckbox,
@@ -435,6 +439,7 @@ export function ObjectRelationshipFormBase({
 				values.type === 'oneToMany' &&
 				Liferay.FeatureFlags['LPD-34594'] && (
 					<ObjectRelationshipInheritanceCheckbox
+						learnResources={learnResources}
 						onChange={onChangeInheritanceCheckbox}
 						values={values}
 					/>

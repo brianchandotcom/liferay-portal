@@ -44,6 +44,15 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryVersion getObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException {
+
+		return objectEntryVersionPersistence.findByOEI_V(
+			objectEntryId, version);
+	}
+
+	@Override
 	public List<ObjectEntryVersion> getObjectEntryVersions(long objectEntryId) {
 		return objectEntryVersionPersistence.findByObjectEntryId(objectEntryId);
 	}

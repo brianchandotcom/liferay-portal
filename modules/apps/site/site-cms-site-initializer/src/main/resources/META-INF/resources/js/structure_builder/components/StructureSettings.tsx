@@ -9,6 +9,7 @@ import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
+import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
@@ -66,10 +67,15 @@ function StructureSettings() {
 				{Liferay.Language.get('content')}
 			</ClayLabel>
 
-			<ClayForm.Group>
+			<ClayForm.Group className={classNames({'has-error': !label})}>
 				<InputLocalized
 					aria-label={Liferay.Language.get('structure-label')}
 					className="form-control-inline structure-builder__title-input"
+					error={
+						label
+							? ''
+							: Liferay.Language.get('this-field-is-required')
+					}
 					label=""
 					onBlur={() => {
 						dispatch({

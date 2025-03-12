@@ -74,7 +74,7 @@ export default function MaxLengthInput({field}: {field: Field}) {
 						}}
 						required
 						value={String(
-							maxLengthSettingsField.settings.maxLength
+							maxLengthSettingsField.settings.maxLength || ''
 						)}
 					/>
 				</ClayForm.Group>

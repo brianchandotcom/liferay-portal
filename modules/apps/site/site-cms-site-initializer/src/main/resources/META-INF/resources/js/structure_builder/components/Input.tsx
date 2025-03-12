@@ -5,12 +5,14 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useId} from 'frontend-js-components-web';
+import classNames from 'classnames';
+import {FieldFeedback, useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 export default function Input({
 	className,
 	disabled = false,
+	error,
 	helpMessage,
 	inputProps,
 	label,
@@ -20,6 +22,7 @@ export default function Input({
 }: {
 	className?: string;
 	disabled?: boolean;
+	error?: string;
 	helpMessage?: string;
 	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 	label: string;
@@ -31,8 +34,12 @@ export default function Input({
 	const helpMessageId = useId();
 	const [value, setValue] = useState(initialValue);
 
+	const hasError = error || (required && !value);
+
 	return (
-		<ClayForm.Group className={className}>
+		<ClayForm.Group
+			className={classNames(className, {'has-error': hasError})}
+		>
 			<label htmlFor={id}>
 				{label}
 
@@ -57,13 +64,16 @@ export default function Input({
 				{...inputProps}
 			/>
 
+			{hasError ? (
+				<FieldFeedback
+					errorMessage={
+						error || Liferay.Language.get('this-field-is-required')
+					}
+				/>
+			) : null}
+
 			{helpMessage ? (
-				<p
-					className="m-0 mt-1 text-3 text-secondary"
-					id={helpMessageId}
-				>
-					{helpMessage}
-				</p>
+				<FieldFeedback helpMessage={helpMessage} id={helpMessageId} />
 			) : null}
 		</ClayForm.Group>
 	);

@@ -77,16 +77,15 @@
 </style>
 
 <#assign
-	productTypeValues =
-		{
-			"client-extension": "Client Extension",
-			"cloud": "Cloud App",
-			"composite-app": "Composite App",
-			"dxp": "DXP App",
-			"low-code-configuration": "Low-Code"
-		}
+	productTypeValues = {
+		"client-extension": "Client Extension",
+		"cloud": "Cloud App",
+		"composite-app": "Composite App",
+		"dxp": "DXP App",
+		"low-code-configuration": "Low-Code"
+	}
 
-	VOCABULARY_PRODUCT_CATEGORY = "MARKETPLACE APP CATEGORY"
+	vocabularyProductCategory = "MARKETPLACE APP CATEGORY"
 />
 
 <#if themeDisplay?has_content>
@@ -138,7 +137,7 @@
 		</#if>
 
 		<#if categories?has_content>
-			<#assign filteredCategories = categories?filter(category -> category.vocabulary?upper_case == VOCABULARY_PRODUCT_CATEGORY) />
+			<#assign filteredCategories = categories?filter(category -> category.vocabulary?upper_case == vocabularyProductCategory) />
 
 			<#if filteredCategories?has_content && appType?has_content>
 				<span class="align-items-center d-flex justify-content-between">
@@ -149,7 +148,7 @@
 			</#if>
 
 			<#list categories as category>
-				<#if category.vocabulary?upper_case == VOCABULARY_PRODUCT_CATEGORY>
+				<#if category.vocabulary?upper_case == vocabularyProductCategory>
 					<span class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${category.name}">
 						${category.name}
 					</span>

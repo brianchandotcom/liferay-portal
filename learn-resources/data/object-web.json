@@ -10,5 +10,11 @@
 			"message": "Learn more.",
 			"url": "https://learn.liferay.com/en/w/dxp/liferay-development/objects/creating-and-managing-objects/validations/expression-builder-validations-reference"
 		}
+	},
+	"relationships": {
+		"en_US": {
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/w/dxp/liferay-development/objects/creating-and-managing-objects/relationships"
+		}
 	}
 }

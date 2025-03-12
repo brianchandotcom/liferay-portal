@@ -121,6 +121,11 @@ components:
                 testEntity:
                     $ref: "#/components/schemas/TestEntity"
             type: object
+        Schema:
+            properties:
+                property1:
+                    type: string
+            type: object
         SiteTestEntity:
             properties:
                 dateCreated:
@@ -474,6 +479,25 @@ paths:
                     description:
                         "OK"
             tags: ["TestEntity"]
+    /schemas:
+        get:
+            operationId: getSchemasPage
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Schema"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Schema"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["Schema"]
     /site-test-entities/{siteTestEntityId}:
         get:
             operationId: getSiteTestEntity

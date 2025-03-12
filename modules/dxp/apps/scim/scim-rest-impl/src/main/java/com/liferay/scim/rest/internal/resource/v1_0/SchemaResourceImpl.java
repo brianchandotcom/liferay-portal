@@ -98,19 +98,21 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		throw new NotFoundException("No schema found with schema ID " + id);
 	}
 
-	private String _getSchemas() throws AbstractCharonException {
+	private String _getSchemasJSON() throws AbstractCharonException {
 		return JSONUtil.put(
 			"itemsPerPage", 3
 		).put(
 			"Resources",
 			() -> {
-				JSONArray resourcesJSONArray = _jsonFactory.createJSONArray();
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-				for (Map.Entry<String, String> entry : _schemaFileNames.entrySet()) {
-					resourcesJSONArray.put(_read(entry.getValue()));
+				for (Map.Entry<String, String> entry :
+						_schemaFileNames.entrySet()) {
+
+					jsonArray.put(_read(entry.getValue()));
 				}
 
-				return resourcesJSONArray;
+				return jsonArray;
 			}
 		).put(
 			"schemas",
@@ -132,7 +134,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 			if (Validator.isNull(id)) {
 				return new SCIMResponse(
-					ResponseCodeConstants.CODE_OK, _getSchemas(),
+					ResponseCodeConstants.CODE_OK, _getSchemasJSON(),
 					_getHeaders());
 			}
 

@@ -47,6 +47,9 @@ public abstract class BaseMBUploadFileEntryHandler
 
 		String contentType = _getContentType(uploadPortletRequest);
 
+		_dlValidator.validateFileMimeType(
+			themeDisplay.getCompanyId(), contentType);
+
 		_dlValidator.validateFileSize(
 			themeDisplay.getScopeGroupId(), fileName, contentType,
 			uploadPortletRequest.getSize(getParameterName()));

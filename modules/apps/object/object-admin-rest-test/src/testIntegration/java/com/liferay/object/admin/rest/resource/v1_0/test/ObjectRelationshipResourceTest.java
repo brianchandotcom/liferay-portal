@@ -7,11 +7,13 @@ package com.liferay.object.admin.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.client.problem.Problem;
 import com.liferay.object.admin.rest.resource.v1_0.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -170,6 +172,38 @@ public class ObjectRelationshipResourceTest
 		Assert.assertEquals(
 			newObjectRelationship.getExternalReferenceCode(),
 			putObjectRelationship.getExternalReferenceCode());
+
+		randomObjectRelationship = randomObjectRelationship();
+
+		long objectDefinitionId = RandomTestUtil.randomLong();
+
+		randomObjectRelationship.setObjectDefinitionId1(objectDefinitionId);
+
+		putObjectRelationship =
+			objectRelationshipResource.
+				putObjectRelationshipByExternalReferenceCode(
+					postObjectRelationship.getExternalReferenceCode(),
+					randomObjectRelationship);
+
+		Assert.assertEquals(
+			Long.valueOf(_objectDefinition1.getObjectDefinitionId()),
+			putObjectRelationship.getObjectDefinitionId1());
+
+		randomObjectRelationship.setObjectDefinitionExternalReferenceCode1(
+			(String)null);
+
+		ObjectRelationship finalRandomObjectRelationship =
+			randomObjectRelationship;
+
+		AssertUtils.assertFailure(
+			Problem.ProblemException.class,
+			"No ObjectDefinition exists with the primary key " +
+				objectDefinitionId,
+			() ->
+				objectRelationshipResource.
+					putObjectRelationshipByExternalReferenceCode(
+						postObjectRelationship.getExternalReferenceCode(),
+						finalRandomObjectRelationship));
 	}
 
 	@Override

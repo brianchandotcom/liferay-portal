@@ -2917,9 +2917,14 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 									<split-testsuites-junit-report test.suites.report.filepath="${playwright.dir}/test-results/TEST-playwright.xml" />
 
-									<ant dir="portal-kernel" inheritAll="false" target="test-class">
-										<property name="test.class" value="PortalLogAssertorTest" />
-									</ant>
+									<if>
+										<equals arg1="${playwright.project.name}" arg2="stable" />
+										<then>
+											<ant dir="portal-kernel" inheritAll="false" target="test-class">
+												<property name="test.class" value="PortalLogAssertorTest" />
+											</ant>
+										</then>
+									</if>
 
 									<print-docker-database-logs />
 								</finally>

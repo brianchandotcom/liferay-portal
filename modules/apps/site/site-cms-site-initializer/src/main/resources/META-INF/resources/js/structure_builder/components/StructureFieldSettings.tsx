@@ -105,20 +105,6 @@ function GeneralTab({field}: {field: Field}) {
 			</div>
 
 			<div className="mt-4 pb-2">
-				<Input
-					disabled={isPublished}
-					label={Liferay.Language.get('field-name')}
-					onValueChange={(value) => {
-						dispatch({
-							name: value,
-							type: 'update-field',
-							uuid: field.uuid,
-						});
-					}}
-					required
-					value={field.name}
-				/>
-
 				<InputLocalized
 					id={labelInputId}
 					label={Liferay.Language.get('label')}
@@ -135,6 +121,20 @@ function GeneralTab({field}: {field: Field}) {
 						label as Liferay.Language.LocalizedValue<string>
 					}
 					validate
+				/>
+
+				<Input
+					disabled={isPublished}
+					label={Liferay.Language.get('field-name')}
+					onValueChange={(value) => {
+						dispatch({
+							name: value,
+							type: 'update-field',
+							uuid: field.uuid,
+						});
+					}}
+					required
+					value={field.name}
 				/>
 
 				<FirstSectionComponent field={field} />

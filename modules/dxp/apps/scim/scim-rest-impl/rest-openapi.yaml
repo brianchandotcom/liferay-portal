@@ -40,7 +40,7 @@ components:
                     type: array
                 required:
                     description:
-                        TA Boolean value that specifies whether or not the attribute is required.
+                        A Boolean value that specifies whether or not the attribute is required.
                     type: boolean
                 returned:
                     description:

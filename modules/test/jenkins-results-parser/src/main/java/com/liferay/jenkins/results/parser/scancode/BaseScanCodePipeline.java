@@ -167,7 +167,8 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 
 			sb.append("curl ");
 			sb.append("--output ");
-			sb.append(scanCodeResultsDir + _projectNameFromURL);
+			sb.append(scanCodeResultsDir);
+			sb.append(_projectNameFromURL);
 			sb.append(".");
 			sb.append(resultTypeEntry.getValue());
 			sb.append(" \"");

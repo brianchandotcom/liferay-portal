@@ -31,8 +31,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.jackson.databind.deser.JSONStringStdDeserializer;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -95,7 +93,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 )
 @JsonFilter("Liferay.Vulcan")
 <#if schema.requiredPropertySchemaNames?has_content>
-	@Schema(
+	@io.swagger.v3.oas.annotations.media.Schema(
 		<#if schema.deprecated>
 			deprecated = ${schema.deprecated?c},
 		</#if>
@@ -161,7 +159,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 			@Size(${sizeParameters?join(", ")})
 		</#if>
 
-		@Schema(
+		@io.swagger.v3.oas.annotations.media.Schema(
 			<#if propertySchema.deprecated>
 				deprecated = ${propertySchema.deprecated?c}
 			</#if>
@@ -580,7 +578,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 		return sb.toString();
 	}
 
-	@Schema(accessMode = Schema.AccessMode.READ_ONLY, defaultValue = "${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}", name = "x-class-name")
+	@io.swagger.v3.oas.annotations.media.Schema(accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY, defaultValue = "${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}", name = "x-class-name")
 	public String xClassName;
 
 	<#list enumSchemas?keys as enumName>

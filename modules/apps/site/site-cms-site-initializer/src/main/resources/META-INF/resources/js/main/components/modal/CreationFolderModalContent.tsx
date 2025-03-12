@@ -9,8 +9,8 @@ import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
 import React, {useEffect, useState} from 'react';
 
-import {getAssetsLibrariesByCompany} from '../../api/api';
-import {FieldPicker, FieldText} from '../forms/';
+import {getAssetsLibrariesByCompany} from '../../../api/api';
+import {FieldPicker, FieldText} from '../forms';
 import {required, validate} from '../forms/validations';
 
 export default function CreationFolderModalContent({

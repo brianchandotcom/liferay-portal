@@ -5,7 +5,7 @@
 
 import React, {useState} from 'react';
 
-import '../../css/categorization/Categorization.scss';
+import '../../../css/categorization/Categorization.scss';
 import CategorizationToolbar from './CategorizationToolbar';
 import TagsView from './tags/TagsView';
 import VocabulariesView from './vocabulary/VocabulariesView';

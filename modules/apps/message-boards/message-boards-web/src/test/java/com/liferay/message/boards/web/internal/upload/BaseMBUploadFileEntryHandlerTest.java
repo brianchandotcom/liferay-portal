@@ -6,10 +6,13 @@
 package com.liferay.message.boards.web.internal.upload;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
@@ -46,6 +49,36 @@ public class BaseMBUploadFileEntryHandlerTest {
 		).thenReturn(
 			RandomTestUtil.randomString()
 		);
+
+		testMBUploadFileEntryHandler.upload(_uploadPortletRequest);
+	}
+
+	@Test(expected = FileMimeTypeException.class)
+	public void testUploadValidatesFileMimeType() throws Exception {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			_uploadPortletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		Mockito.doThrow(
+			FileMimeTypeException.class
+		).when(
+			_dlValidator
+		).validateFileMimeType(
+			Mockito.anyLong(), Mockito.anyString()
+		);
+
+		Mockito.when(
+			_uploadPortletRequest.getContentType(Mockito.anyString())
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		TestMBUploadFileEntryHandler testMBUploadFileEntryHandler =
+			new TestMBUploadFileEntryHandler(_dlValidator, _mbMessageService);
 
 		testMBUploadFileEntryHandler.upload(_uploadPortletRequest);
 	}

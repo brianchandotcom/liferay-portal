@@ -43,10 +43,10 @@ test('User is able to propagate pages separately on site templates', async ({
 	sitesPage,
 	widgetPagePage,
 }) => {
-	const siteTemplateName: string = 'timplate-' + getRandomString();
-	const siteName: string = 'site-' + getRandomString();
-	const pageName: string = 'Page-' + getRandomString();
 	const homePageName: string = 'Home';
+	const pageName: string = 'Page-' + getRandomString();
+	const siteTemplateName: string = 'Template-' + getRandomString();
+	const siteName: string = 'Site-' + getRandomString();
 
 	const layoutSetPrototype = await createSiteTemplate({
 		apiHelpers,
@@ -88,8 +88,8 @@ test('User is able to propagate pages separately on site templates', async ({
 		siteId
 	);
 
-	const homePageModificationDate1 = homePageData.dateModified;
-	const widgetPageModificationDate1 = widgetPageData.dateModified;
+	const homePageModificationDateBefore = homePageData.dateModified;
+	const widgetPageModificationDateBefore = widgetPageData.dateModified;
 
 	await page.goto(
 		`/group/template-${layoutSetPrototype.layoutSetPrototypeId}${widgetPageData.friendlyUrlPath}`
@@ -104,7 +104,7 @@ test('User is able to propagate pages separately on site templates', async ({
 		siteId
 	);
 
-	const widgetPageModificationDate2 = widgetPageData.dateModified;
+	const widgetPageModificationDateAfter = widgetPageData.dateModified;
 
 	await page.goto(
 		`/group/template-${layoutSetPrototype.layoutSetPrototypeId}`
@@ -126,10 +126,10 @@ test('User is able to propagate pages separately on site templates', async ({
 		siteId
 	);
 
-	const homePageModificationDate2 = homePageData.dateModified;
+	const homePageModificationDateAfter = homePageData.dateModified;
 
 	expect(
-		widgetPageModificationDate1 !== widgetPageModificationDate2 &&
-			!homePageModificationDate2 !== homePageModificationDate1
+		widgetPageModificationDateBefore !== widgetPageModificationDateAfter &&
+			!homePageModificationDateAfter !== homePageModificationDateBefore
 	).toEqual(true);
 });

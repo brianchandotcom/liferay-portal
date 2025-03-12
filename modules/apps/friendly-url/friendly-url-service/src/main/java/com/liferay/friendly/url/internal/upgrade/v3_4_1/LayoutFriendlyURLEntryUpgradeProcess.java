@@ -8,6 +8,7 @@ package com.liferay.friendly.url.internal.upgrade.v3_4_1;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
+import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,6 +48,10 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		dropIndexes(
+			Arrays.asList("IX_8AB5CAE", "IX_C753170C"),
+			FriendlyURLEntryLocalizationModelImpl.TABLE_NAME);
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			Map<Long, String> defaultLanguageIds = new ConcurrentHashMap<>();
 

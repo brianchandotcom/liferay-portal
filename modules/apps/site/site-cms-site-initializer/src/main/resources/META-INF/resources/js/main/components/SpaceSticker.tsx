@@ -6,6 +6,20 @@
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
+type StickerValidDisplayType =
+	| 'outline-0'
+	| 'outline-1'
+	| 'outline-2'
+	| 'outline-3'
+	| 'outline-4'
+	| 'outline-5'
+	| 'outline-6'
+	| 'outline-7'
+	| 'outline-8'
+	| 'outline-9';
+
+type StickerValidSize = 'sm' | 'lg' | 'xl';
+
 function getRandomDisplayType(): StickerValidDisplayType {
 	const validDisplayTypes: StickerValidDisplayType[] = [
 		'outline-0',

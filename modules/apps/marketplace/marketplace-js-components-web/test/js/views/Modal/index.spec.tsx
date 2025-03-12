@@ -19,6 +19,7 @@ const observer = {
 const mockEvent = jest.fn();
 const onClick = jest.fn().mockImplementation(mockEvent);
 const onOpenChange = jest.fn();
+const setView = jest.fn();
 const open = true;
 const reactTrigger = <button onClick={() => onClick}>trigger</button>;
 
@@ -33,6 +34,7 @@ describe('MarketplaceModal', () => {
 							loading: false,
 						},
 						modal: {observer, onOpenChange, open},
+						setView,
 					} as any
 				}
 			>
@@ -48,6 +50,7 @@ describe('MarketplaceModal', () => {
 		fireEvent.click(getByText('trigger'));
 
 		expect(onOpenChange).toHaveBeenCalled();
+		expect(setView).toHaveBeenCalledTimes(0);
 		expect(queryByText('children')).toBeInTheDocument();
 	});
 
@@ -61,6 +64,7 @@ describe('MarketplaceModal', () => {
 							loading: false,
 						},
 						modal: {observer, onOpenChange, open: false},
+						setView,
 					} as any
 				}
 			>
@@ -71,6 +75,7 @@ describe('MarketplaceModal', () => {
 		);
 
 		expect(queryByText('children')).toBeFalsy();
+		expect(setView).toHaveBeenCalledTimes(1);
 	});
 
 	it('render component while loading', () => {

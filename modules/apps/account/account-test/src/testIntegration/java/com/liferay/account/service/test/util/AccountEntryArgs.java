@@ -65,6 +65,7 @@ public class AccountEntryArgs {
 	public String description = RandomTestUtil.randomString(50);
 	public String[] domains = null;
 	public String emailAddress = null;
+	public String externalReferenceCode = null;
 	public byte[] logoBytes = null;
 	public String name = RandomTestUtil.randomString(50);
 	public Organization[] organizations = null;

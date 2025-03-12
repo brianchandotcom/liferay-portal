@@ -29,6 +29,7 @@ import com.liferay.headless.admin.user.client.permission.Permission;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountGroupResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -329,7 +330,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 	private AccountEntry _addAccountEntry() throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
-			_serviceContext.getUserId(),
+			StringPool.BLANK, _serviceContext.getUserId(),
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), null, null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
@@ -584,7 +585,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 
 		AccountEntry serviceBuilderAccountEntry1 =
 			_accountEntryLocalService.addAccountEntry(
-				TestPropsValues.getUserId(),
+				StringPool.BLANK, TestPropsValues.getUserId(),
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 				RandomTestUtil.randomString(), null, new String[0], null, null,
 				null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,

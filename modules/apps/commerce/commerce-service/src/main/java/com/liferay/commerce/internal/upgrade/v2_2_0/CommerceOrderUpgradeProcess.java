@@ -109,7 +109,7 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 
 					AccountEntry accountEntry =
 						_accountEntryLocalService.addAccountEntry(
-							user.getUserId(),
+							StringPool.BLANK, user.getUserId(),
 							AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 							user.getFullName(), null, null,
 							user.getEmailAddress(), null, StringPool.BLANK,

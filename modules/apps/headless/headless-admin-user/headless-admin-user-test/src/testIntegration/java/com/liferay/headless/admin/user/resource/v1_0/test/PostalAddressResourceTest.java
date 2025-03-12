@@ -80,7 +80,8 @@ public class PostalAddressResourceTest
 			ServiceContextTestUtil.getServiceContext();
 
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
-			_user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			StringPool.BLANK, _user.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), null, new String[0], null, null,
 			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);

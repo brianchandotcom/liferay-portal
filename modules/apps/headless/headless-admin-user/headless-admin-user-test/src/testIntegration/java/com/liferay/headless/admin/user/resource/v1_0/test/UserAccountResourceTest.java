@@ -1720,7 +1720,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	private AccountEntry _addAccountEntry() throws Exception {
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
 			null, null, null, null,

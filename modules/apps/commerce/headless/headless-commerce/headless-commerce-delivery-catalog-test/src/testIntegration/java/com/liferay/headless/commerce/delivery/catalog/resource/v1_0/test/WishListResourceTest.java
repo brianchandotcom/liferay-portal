@@ -18,6 +18,7 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.WishList;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.WishListItem;
 import com.liferay.headless.commerce.delivery.catalog.client.resource.v1_0.WishListResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -49,7 +50,8 @@ public class WishListResourceTest extends BaseWishListResourceTestCase {
 		_user = UserTestUtil.addUser(testCompany);
 
 		_accountEntry = AccountEntryLocalServiceUtil.addAccountEntry(
-			_user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			StringPool.BLANK, _user.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString() + "@liferay.com", null,
 			RandomTestUtil.randomString(),

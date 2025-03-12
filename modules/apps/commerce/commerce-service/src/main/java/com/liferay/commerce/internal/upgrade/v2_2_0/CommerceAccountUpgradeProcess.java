@@ -125,9 +125,10 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 
 		AccountEntry accountEntry =
 			AccountEntryLocalServiceUtil.addAccountEntry(
-				organization.getUserId(), parentCommerceAccountId,
-				organization.getName(), null, null, email, null,
-				StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				StringPool.BLANK, organization.getUserId(),
+				parentCommerceAccountId, organization.getName(), null, null,
+				email, null, StringPool.BLANK,
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		if (organization.getExternalReferenceCode() != null) {

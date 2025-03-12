@@ -6,7 +6,6 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.model.AccountEntryUserRel;
@@ -101,14 +100,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		_accountEntryService.deleteAccountEntry(
 			accountEntry.getAccountEntryId());
@@ -158,14 +151,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		return _accountDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -214,14 +201,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		_updateAccount(accountEntry.getAccountEntryId(), account);
 
@@ -284,14 +265,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		updateAccountLogo(accountEntry, multipartBody);
 
@@ -348,6 +323,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws IOException, PortalException {
 
 		_accountEntryService.updateAccountEntry(
+			accountEntry.getExternalReferenceCode(),
 			accountEntry.getAccountEntryId(),
 			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
 			accountEntry.getDescription(), true,

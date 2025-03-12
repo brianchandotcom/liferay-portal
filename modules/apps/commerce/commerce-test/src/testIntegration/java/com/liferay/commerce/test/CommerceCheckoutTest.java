@@ -236,7 +236,7 @@ public class CommerceCheckoutTest {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.addAccountEntry(
-					user1.getUserId(),
+					StringPool.BLANK, user1.getUserId(),
 					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 					RandomTestUtil.randomString(), null, null, null, null,
 					StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,

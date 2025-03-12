@@ -87,11 +87,12 @@ public class AccountEntryTestUtil {
 
 		AccountEntry accountEntry =
 			AccountEntryLocalServiceUtil.addAccountEntry(
-				accountEntryArgs.userId, parentAccountEntryId,
-				accountEntryArgs.name, accountEntryArgs.description,
-				accountEntryArgs.domains, accountEntryArgs.emailAddress,
-				accountEntryArgs.logoBytes, accountEntryArgs.taxIdNumber,
-				accountEntryArgs.type, accountEntryArgs.status, serviceContext);
+				accountEntryArgs.externalReferenceCode, accountEntryArgs.userId,
+				parentAccountEntryId, accountEntryArgs.name,
+				accountEntryArgs.description, accountEntryArgs.domains,
+				accountEntryArgs.emailAddress, accountEntryArgs.logoBytes,
+				accountEntryArgs.taxIdNumber, accountEntryArgs.type,
+				accountEntryArgs.status, serviceContext);
 
 		if (ArrayUtil.isNotEmpty(accountEntryArgs.accountGroups)) {
 			for (AccountGroup accountGroup : accountEntryArgs.accountGroups) {

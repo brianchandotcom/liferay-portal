@@ -11,6 +11,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/account.accountentry/add-account-entry \
 				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d externalReferenceCode='' \
 				-d userId=${userId} \
 				-d parentAccountEntryId=0 \
 				-d name=${accountEntryName} \

@@ -217,6 +217,7 @@ public class AccountEntryLocalServiceTest {
 
 		try {
 			_accountEntryLocalService.updateAccountEntry(
+				accountEntry.getExternalReferenceCode(),
 				accountEntry.getAccountEntryId(),
 				accountEntry.getParentAccountEntryId(), "", null, false, null,
 				null, null, null, accountEntry.getStatus(),
@@ -288,7 +289,7 @@ public class AccountEntryLocalServiceTest {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.addAccountEntry(
-					TestPropsValues.getUserId(), 0,
+					StringPool.BLANK, TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(), null,
 					RandomTestUtil.randomString() + "@liferay.com", null,
@@ -337,6 +338,7 @@ public class AccountEntryLocalServiceTest {
 				).build());
 
 			_accountEntryLocalService.updateAccountEntry(
+				accountEntry.getExternalReferenceCode(),
 				accountEntry.getAccountEntryId(), 0, accountEntry.getName(),
 				accountEntry.getDescription(), false, null,
 				accountEntry.getEmailAddress(), null,
@@ -1319,6 +1321,7 @@ public class AccountEntryLocalServiceTest {
 			).build());
 
 		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntry.getExternalReferenceCode(),
 			accountEntry.getAccountEntryId(),
 			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
 			accountEntry.getDescription(), false, expectedDomains,
@@ -1329,6 +1332,7 @@ public class AccountEntryLocalServiceTest {
 			expectedDomains, accountEntry.getDomainsArray());
 
 		accountEntry = _accountEntryLocalService.updateAccountEntry(
+			accountEntry.getExternalReferenceCode(),
 			accountEntry.getAccountEntryId(),
 			accountEntry.getParentAccountEntryId(), accountEntry.getName(),
 			accountEntry.getDescription(), false, null,
@@ -1374,6 +1378,7 @@ public class AccountEntryLocalServiceTest {
 			Assert.assertFalse(_hasWorkflowInstance(accountEntry));
 
 			accountEntry = _accountEntryLocalService.updateAccountEntry(
+				accountEntry.getExternalReferenceCode(),
 				accountEntry.getAccountEntryId(),
 				accountEntry.getParentAccountEntryId(), accountEntry.getName(),
 				accountEntry.getDescription(), false, null,
@@ -1406,6 +1411,7 @@ public class AccountEntryLocalServiceTest {
 			Assert.assertFalse(_hasWorkflowInstance(accountEntry));
 
 			accountEntry = _accountEntryLocalService.updateAccountEntry(
+				accountEntry.getExternalReferenceCode(),
 				accountEntry.getAccountEntryId(),
 				accountEntry.getParentAccountEntryId(), accountEntry.getName(),
 				accountEntry.getDescription(), false, null,

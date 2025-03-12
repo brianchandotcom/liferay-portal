@@ -840,9 +840,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			RandomTestUtil.randomString(), null, _serviceContext);
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			_adminUser.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
+			StringPool.BLANK, _adminUser.getUserId(), 0L,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 

@@ -125,14 +125,10 @@ public class CommerceAccountsImporter {
 		// Add Commerce Account
 
 		accountEntry = _accountEntryLocalService.addAccountEntry(
-			serviceContext.getUserId(),
+			_friendlyURLNormalizer.normalize(name), serviceContext.getUserId(),
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, name, null, null,
 			email, null, taxId, accountType, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
-
-		accountEntry = _accountEntryLocalService.updateExternalReferenceCode(
-			accountEntry.getAccountEntryId(),
-			_friendlyURLNormalizer.normalize(accountEntry.getName()));
 
 		String twoLetterISOCode = jsonObject.getString("country");
 
@@ -182,6 +178,7 @@ public class CommerceAccountsImporter {
 				}
 
 				_accountEntryLocalService.updateAccountEntry(
+					accountEntry.getExternalReferenceCode(),
 					accountEntry.getAccountEntryId(),
 					accountEntry.getParentAccountEntryId(),
 					accountEntry.getName(), accountEntry.getDescription(),

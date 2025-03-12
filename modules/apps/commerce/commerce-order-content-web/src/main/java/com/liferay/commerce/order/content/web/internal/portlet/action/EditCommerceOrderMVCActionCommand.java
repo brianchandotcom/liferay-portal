@@ -559,7 +559,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.addAccountEntry(
-					serviceContext.getUserId(),
+					StringPool.BLANK, serviceContext.getUserId(),
 					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 					emailAddress, null, null, emailAddress, null, null,
 					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,

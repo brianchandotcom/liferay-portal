@@ -89,23 +89,6 @@ public class VirtualHostFilterTest {
 	}
 
 	@Test
-	public void testProcessFilter1() {
-		_testProcessFilterLastPath(
-			_PATH_PROXY + _PATH_CONTEXT, _PATH_PROXY,
-			_PATH_CONTEXT + _LAST_PATH);
-	}
-
-	@Test
-	public void testProcessFilter2() {
-		_testProcessFilterLastPath(_PATH_PROXY, _PATH_PROXY, _LAST_PATH);
-	}
-
-	@Test
-	public void testProcessFilter3() {
-		_testProcessFilterLastPath(_PATH_PROXY, StringPool.BLANK, _LAST_PATH);
-	}
-
-	@Test
 	public void testProcessFilterForwardedURL() {
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -141,6 +124,15 @@ public class VirtualHostFilterTest {
 			_getForwardedURL(
 				mockHttpServletRequest, new MockHttpServletResponse(),
 				new MockFilterChain()));
+	}
+
+	@Test
+	public void testProcessFilterLastPath() {
+		_testProcessFilterLastPath(
+			_PATH_PROXY + _PATH_CONTEXT, _PATH_PROXY,
+			_PATH_CONTEXT + _LAST_PATH);
+		_testProcessFilterLastPath(_PATH_PROXY, _PATH_PROXY, _LAST_PATH);
+		_testProcessFilterLastPath(_PATH_PROXY, StringPool.BLANK, _LAST_PATH);
 	}
 
 	private String _getForwardedURL(

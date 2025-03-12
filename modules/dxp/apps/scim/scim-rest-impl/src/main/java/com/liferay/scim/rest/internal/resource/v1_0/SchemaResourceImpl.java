@@ -191,8 +191,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 				_log.debug(exception);
 			}
 
-			throw new InternalErrorException(
-				"Error reading schema file " + fileName);
+			throw new InternalErrorException("Unable to read " + fileName);
 		}
 	}
 

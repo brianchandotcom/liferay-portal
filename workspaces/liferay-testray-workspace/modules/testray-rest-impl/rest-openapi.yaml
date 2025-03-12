@@ -555,6 +555,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: query
                   name: status
                   schema:
                       type: string
@@ -1041,6 +1045,10 @@ paths:
                       type: string
                 - in: query
                   name: pageSize
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
                   schema:
                       type: string
             responses:

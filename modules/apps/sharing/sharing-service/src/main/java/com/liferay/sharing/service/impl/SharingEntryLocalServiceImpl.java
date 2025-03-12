@@ -94,9 +94,9 @@ public class SharingEntryLocalServiceImpl
 
 		if (sharingEntry == null) {
 			return sharingEntryLocalService.addSharingEntry(
-				externalReferenceCode, userId, toUserId, classNameId, classPK,
-				groupId, shareable, sharingEntryActions, expirationDate,
-				serviceContext);
+				externalReferenceCode, userId, toUserGroupId, toUserId,
+				classNameId, classPK, groupId, shareable, sharingEntryActions,
+				expirationDate, serviceContext);
 		}
 
 		return sharingEntryLocalService.updateSharingEntry(

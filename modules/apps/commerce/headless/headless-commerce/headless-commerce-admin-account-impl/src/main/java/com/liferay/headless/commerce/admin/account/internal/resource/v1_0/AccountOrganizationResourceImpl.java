@@ -5,7 +5,6 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
-import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryOrganizationRelService;
@@ -48,14 +47,8 @@ public class AccountOrganizationResourceImpl
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		_accountEntryOrganizationRelService.deleteAccountEntryOrganizationRel(
 			accountEntry.getAccountEntryId(), organizationId);
@@ -85,14 +78,8 @@ public class AccountOrganizationResourceImpl
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		AccountEntryOrganizationRel accountEntryOrganizationRel =
 			_accountEntryOrganizationRelService.getAccountEntryOrganizationRel(
@@ -111,14 +98,8 @@ public class AccountOrganizationResourceImpl
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
 			_accountEntryOrganizationRelService.getAccountEntryOrganizationRels(
@@ -177,14 +158,8 @@ public class AccountOrganizationResourceImpl
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		AccountEntryOrganizationRel accountOrganizationRel =
 			_accountEntryOrganizationRelService.addAccountEntryOrganizationRel(

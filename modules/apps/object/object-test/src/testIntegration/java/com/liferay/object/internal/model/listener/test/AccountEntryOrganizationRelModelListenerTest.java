@@ -21,6 +21,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -95,9 +96,9 @@ public class AccountEntryOrganizationRelModelListenerTest {
 				objectRelationship.getObjectFieldId2());
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
+			StringPool.BLANK, TestPropsValues.getUserId(), 0L,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
@@ -139,9 +140,9 @@ public class AccountEntryOrganizationRelModelListenerTest {
 			reindexed.set(false);
 
 			accountEntry = _accountEntryLocalService.addAccountEntry(
-				TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), null, null, null,
-				RandomTestUtil.randomString(),
+				StringPool.BLANK, TestPropsValues.getUserId(), 0L,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null, null, null, RandomTestUtil.randomString(),
 				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext());

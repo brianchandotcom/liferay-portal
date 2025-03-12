@@ -170,9 +170,10 @@ public class LoginPostAction extends Action {
 		serviceContext.setUserId(user.getUserId());
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			user.getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-			name, null, null, user.getEmailAddress(), null, StringPool.BLANK,
-			type, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			StringPool.BLANK, user.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, name, null, null,
+			user.getEmailAddress(), null, StringPool.BLANK, type,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), user.getUserId());

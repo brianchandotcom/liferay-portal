@@ -13,6 +13,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseRel;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseRelLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Account;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -79,8 +80,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	private Account _addAccount() throws Exception {
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
-			_user.getUserId(), 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null,
+			StringPool.BLANK, _user.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, _serviceContext);
 

@@ -276,9 +276,9 @@ public class ObjectActionLocalServiceTest {
 			TestPropsValues.getCompanyId());
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			adminUser.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
+			StringPool.BLANK, adminUser.getUserId(), 0L,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
@@ -2185,9 +2185,9 @@ public class ObjectActionLocalServiceTest {
 			).build());
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, null,
-			RandomTestUtil.randomString(),
+			StringPool.BLANK, TestPropsValues.getUserId(), 0L,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -2200,6 +2200,7 @@ public class ObjectActionLocalServiceTest {
 			).build());
 
 		_accountEntryLocalService.updateAccountEntry(
+			accountEntry.getExternalReferenceCode(),
 			accountEntry.getAccountEntryId(), 0, accountEntry.getName(),
 			accountEntry.getDescription(), false, null,
 			accountEntry.getEmailAddress(), null, accountEntry.getTaxIdNumber(),

@@ -357,6 +357,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			accountId);
 
 		accountEntry = _accountEntryService.updateAccountEntry(
+			GetterUtil.getString(
+				account.getExternalReferenceCode(),
+				accountEntry.getExternalReferenceCode()),
 			accountId,
 			_getParentAccountId(
 				account,
@@ -379,12 +382,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					accountEntry.getStatus(),
 					WorkflowConstants.STATUS_APPROVED)),
 			_createServiceContext(account));
-
-		accountEntry = _accountEntryService.updateExternalReferenceCode(
-			accountId,
-			GetterUtil.getString(
-				account.getExternalReferenceCode(),
-				accountEntry.getExternalReferenceCode()));
 
 		accountEntry = _updateNestedResources(account, accountEntry, accountId);
 
@@ -428,7 +425,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	@Override
 	public Account postAccount(Account account) throws Exception {
 		AccountEntry accountEntry = _accountEntryService.addAccountEntry(
-			contextUser.getUserId(),
+			account.getExternalReferenceCode(), contextUser.getUserId(),
 			_getParentAccountId(
 				account, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT),
 			account.getName(), account.getDescription(), _getDomains(account),
@@ -450,10 +447,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			_accountEntryLocalService.updateDefaultShippingAddressId(
 				accountEntry.getAccountEntryId(), defaultShippingAddressId);
 		}
-
-		accountEntry = _accountEntryService.updateExternalReferenceCode(
-			accountEntry.getAccountEntryId(),
-			account.getExternalReferenceCode());
 
 		long[] organizationIds = _getOrganizationIds(account);
 
@@ -565,7 +558,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		}
 
 		accountEntry = _accountEntryService.updateAccountEntry(
-			accountId,
+			account.getExternalReferenceCode(), accountId,
 			_getParentAccountId(
 				account,
 				GetterUtil.getLong(
@@ -576,9 +569,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			accountEntry.getEmailAddress(),
 			_getLogoBytes(account, accountEntry, false), account.getTaxId(),
 			_getStatus(account), _createServiceContext(account));
-
-		_accountEntryService.updateExternalReferenceCode(
-			accountId, account.getExternalReferenceCode());
 
 		accountEntry = _updateNestedResources(account, accountEntry, accountId);
 

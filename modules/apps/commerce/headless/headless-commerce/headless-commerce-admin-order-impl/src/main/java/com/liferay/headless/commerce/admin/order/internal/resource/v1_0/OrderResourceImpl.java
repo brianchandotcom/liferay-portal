@@ -5,7 +5,6 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
-import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -316,13 +315,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 			Validator.isNotNull(order.getAccountExternalReferenceCode())) {
 
 			accountEntry =
-				_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+				_accountEntryService.getAccountEntryByExternalReferenceCode(
 					order.getAccountExternalReferenceCode(),
 					commerceChannel.getCompanyId());
-		}
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException();
 		}
 
 		CommerceCurrency commerceCurrency =

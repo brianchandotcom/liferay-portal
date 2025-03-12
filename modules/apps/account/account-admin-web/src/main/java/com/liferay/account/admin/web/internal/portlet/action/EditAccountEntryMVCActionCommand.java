@@ -122,30 +122,24 @@ public class EditAccountEntryMVCActionCommand
 		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
 			accountEntryId);
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-
 		String[] domains = accountEntry.getDomainsArray();
 
 		if (_isAllowUpdateDomains(accountEntry.getType())) {
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
 		}
 
-		String emailAddress = ParamUtil.getString(
-			actionRequest, "emailAddress");
-		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
-
 		accountEntry = _accountEntryService.updateAccountEntry(
-			accountEntryId, accountEntry.getParentAccountEntryId(), name,
-			description, deleteLogo, domains, emailAddress,
-			_getLogoBytes(actionRequest), taxIdNumber, accountEntry.getStatus(),
+			ParamUtil.getString(actionRequest, "externalReferenceCode"),
+			accountEntryId, accountEntry.getParentAccountEntryId(),
+			ParamUtil.getString(actionRequest, "name"),
+			ParamUtil.getString(actionRequest, "description"),
+			ParamUtil.getBoolean(actionRequest, "deleteLogo"), domains,
+			ParamUtil.getString(actionRequest, "emailAddress"),
+			_getLogoBytes(actionRequest),
+			ParamUtil.getString(actionRequest, "taxIdNumber"),
+			accountEntry.getStatus(),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
-
-		accountEntry = _accountEntryService.updateExternalReferenceCode(
-			accountEntry.getAccountEntryId(),
-			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 
 		if (Objects.equals(
 				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON,
@@ -174,12 +168,7 @@ public class EditAccountEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
 		String[] domains = new String[0];
-		String emailAddress = ParamUtil.getString(
-			actionRequest, "emailAddress");
-		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
 
 		String type = ParamUtil.getString(
 			actionRequest, "type",
@@ -189,17 +178,17 @@ public class EditAccountEntryMVCActionCommand
 			domains = ParamUtil.getStringValues(actionRequest, "domains");
 		}
 
-		AccountEntry accountEntry = _accountEntryService.addAccountEntry(
+		return _accountEntryService.addAccountEntry(
+			ParamUtil.getString(actionRequest, "externalReferenceCode"),
 			themeDisplay.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			name, description, domains, emailAddress,
-			_getLogoBytes(actionRequest), taxIdNumber, type,
+			ParamUtil.getString(actionRequest, "name"),
+			ParamUtil.getString(actionRequest, "description"), domains,
+			ParamUtil.getString(actionRequest, "emailAddress"),
+			_getLogoBytes(actionRequest),
+			ParamUtil.getString(actionRequest, "taxIdNumber"), type,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
-
-		return _accountEntryService.updateExternalReferenceCode(
-			accountEntry.getAccountEntryId(),
-			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
 
 	private byte[] _getLogoBytes(ActionRequest actionRequest) throws Exception {

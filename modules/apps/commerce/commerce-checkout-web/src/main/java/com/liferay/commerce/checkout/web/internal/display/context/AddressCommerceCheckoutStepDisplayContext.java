@@ -216,7 +216,7 @@ public class AddressCommerceCheckoutStepDisplayContext {
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.addAccountEntry(
-					serviceContext.getUserId(),
+					StringPool.BLANK, serviceContext.getUserId(),
 					AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, name,
 					null, null, email, null, null,
 					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST,

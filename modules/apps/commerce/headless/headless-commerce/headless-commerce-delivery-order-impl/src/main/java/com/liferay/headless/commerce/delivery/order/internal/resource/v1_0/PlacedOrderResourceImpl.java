@@ -5,7 +5,6 @@
 
 package com.liferay.headless.commerce.delivery.order.internal.resource.v1_0;
 
-import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
@@ -18,7 +17,6 @@ import com.liferay.commerce.exception.CommerceOrderStatusException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
-import com.liferay.commerce.product.exception.NoSuchChannelException;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -111,26 +109,14 @@ public class PlacedOrderResourceImpl extends BasePlacedOrderResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				accountExternalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account entry with external reference code " +
-					accountExternalReferenceCode);
-		}
 
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.
-				fetchCommerceChannelByExternalReferenceCode(
+				getCommerceChannelByExternalReferenceCode(
 					channelExternalReferenceCode,
 					contextCompany.getCompanyId());
-
-		if (commerceChannel == null) {
-			throw new NoSuchChannelException(
-				"Unable to find channel with external reference code " +
-					channelExternalReferenceCode);
-		}
 
 		return getChannelAccountPlacedOrdersPage(
 			accountEntry.getAccountEntryId(),

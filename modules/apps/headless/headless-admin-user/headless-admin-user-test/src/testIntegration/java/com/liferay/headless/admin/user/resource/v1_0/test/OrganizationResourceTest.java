@@ -906,7 +906,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		Organization postOrganization = testGetOrganization_addOrganization();
 
 		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
@@ -917,7 +917,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			accountEntry1.getAccountEntryId(), postOrganization.getId());
 
 		AccountEntry accountEntry2 = _accountEntryLocalService.addAccountEntry(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,

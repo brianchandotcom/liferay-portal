@@ -35,6 +35,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -646,7 +647,7 @@ public class ObjectRelatedModelsProviderTest {
 
 	private AccountEntry _addAccountEntry(long userId) throws Exception {
 		return _accountEntryLocalService.addAccountEntry(
-			userId, 0L, RandomTestUtil.randomString(),
+			StringPool.BLANK, userId, 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), null, null, null,
 			RandomTestUtil.randomString(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,

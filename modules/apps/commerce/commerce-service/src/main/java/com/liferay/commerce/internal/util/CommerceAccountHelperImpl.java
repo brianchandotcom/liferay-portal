@@ -344,7 +344,7 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 
 						accountEntry =
 							_accountEntryLocalService.addAccountEntry(
-								userId,
+								StringPool.BLANK, userId,
 								AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 								user.getFullName(), null, null,
 								user.getEmailAddress(), null, StringPool.BLANK,

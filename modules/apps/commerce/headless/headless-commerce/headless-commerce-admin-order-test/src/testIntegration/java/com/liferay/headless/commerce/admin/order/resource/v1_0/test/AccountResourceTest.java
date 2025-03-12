@@ -14,6 +14,7 @@ import com.liferay.commerce.order.rule.model.COREntryRel;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.commerce.order.rule.service.COREntryRelLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -48,8 +49,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				user.getUserId());
 
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
-			user.getUserId(), 0, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null,
+			StringPool.BLANK, user.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString() + "@liferay.com", null, null,
 			"business", 1, serviceContext);
 

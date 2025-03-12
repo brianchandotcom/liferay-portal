@@ -126,9 +126,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry = _accountEntryService.addAccountEntry(
-			contextUser.getUserId(), 0, account.getName(),
-			account.getDescription(), _getDomains(account), null,
-			_getLogoBytes(account, null, false), account.getTaxId(),
+			account.getExternalReferenceCode(), contextUser.getUserId(), 0,
+			account.getName(), account.getDescription(), _getDomains(account),
+			null, _getLogoBytes(account, null, false), account.getTaxId(),
 			_getType(account), _getStatus(account),
 			_createServiceContext(account));
 
@@ -157,10 +157,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				accountEntry.getAccountEntryId(),
 				account.getDefaultShippingAddressId());
 		}
-
-		accountEntry = _accountEntryService.updateExternalReferenceCode(
-			accountEntry.getAccountEntryId(),
-			account.getExternalReferenceCode());
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(

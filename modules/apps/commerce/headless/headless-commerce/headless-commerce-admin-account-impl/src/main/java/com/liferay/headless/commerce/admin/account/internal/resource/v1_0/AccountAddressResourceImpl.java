@@ -5,7 +5,6 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
-import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryService;
@@ -31,6 +30,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.ws.rs.core.Response;
 
@@ -113,14 +113,8 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		return _getAccountAddressesPage(accountEntry, pagination);
 	}
@@ -250,14 +244,8 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		throws Exception {
 
 		AccountEntry accountEntry =
-			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
+			_accountEntryService.getAccountEntryByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountEntry == null) {
-			throw new NoSuchEntryException(
-				"Unable to find account with external reference code " +
-					externalReferenceCode);
-		}
 
 		CommerceAddress commerceAddress = null;
 
@@ -274,6 +262,15 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 		}
 
 		if (commerceAddress != null) {
+			if (!Objects.equals(
+					commerceAddress.getClassName(),
+					AccountEntry.class.getName()) ||
+				(commerceAddress.getClassPK() !=
+					accountEntry.getAccountEntryId())) {
+
+				throw new NoSuchAddressException();
+			}
+
 			Country country = _countryService.getCountryByA2(
 				commerceAddress.getCompanyId(),
 				accountAddress.getCountryISOCode());

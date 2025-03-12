@@ -66,6 +66,15 @@ components:
                     enum: [-1em, -0.95em, 1em, 0.95em]
                     type: string
             type: object
+        Filter:
+            properties:
+                maxResults:
+                    readOnly: true
+                    type: integer
+                supported:
+                    readOnly: true
+                    type: boolean
+            type: object
         JSONMapAttributeTestEntity:
             description:
                 Test Component to test the generation of getValue method on Entities when one or multiple JSON Maps are
@@ -150,6 +159,12 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+            type: object
+        Sort:
+            properties:
+                supported:
+                    readOnly: true
+                    type: boolean
             type: object
         TestEntity:
             description:
@@ -462,6 +477,25 @@ paths:
                     description:
                         "OK"
             tags: ["EntityModelResourceTestEntity2"]
+    /filters:
+        get:
+            operationId: getFiltersPage
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Filter"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Filter"
+                                type: array
+                    description:
+                        "OK"
+            tags: [ "Filter" ]
     /reserved-word:
         post:
             operationId: postReservedWord
@@ -702,6 +736,25 @@ paths:
                     description:
                         "OK"
             tags: ["SiteTestEntity"]
+    /sorts:
+        get:
+            operationId: getSortsPage
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sort"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sort"
+                                type: array
+                    description:
+                        "OK"
+            tags: [ "Sort" ]
     /test-entities:
         get:
             operationId: getTestEntitiesPage

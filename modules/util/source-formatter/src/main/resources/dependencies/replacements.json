@@ -3835,6 +3835,18 @@
 	},
 	{
 		"classNames": [
+			"CommerceOrderItemLocalService",
+			"CommerceOrderItemLocalServiceUtil"
+		],
+		"from": "addOrUpdateCommerceOrderItem(long paramName, long paramName, long paramName, String paramName, BigDecimal paramName, long paramName, int paramName, String paramName, CommerceContext paramName, ServiceContext paramName)",
+		"issueKey": "LPD-49117",
+		"newImports": [
+			"java.math.BigDecimal"
+		],
+		"to": "addOrUpdateCommerceOrderItem(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, BigDecimal.valueOf(param#6#), param#7#, param#8#, param#9#)"
+	},
+	{
+		"classNames": [
 			"CPAttachmentFileEntryLocalService",
 			"CPAttachmentFileEntryLocalServiceUtil"
 		],

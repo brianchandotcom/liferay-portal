@@ -332,6 +332,7 @@ type DeliveryProduct = {
 	shortDescription: string;
 	skus: DeliverySKU[];
 	urlImage: string;
+	urls: {en_US: string};
 };
 
 type DeliveryProductAttachment = {
@@ -562,6 +563,7 @@ type Product = {
 	catalogId: number;
 	catalogName?: string;
 	categories: ProductCategories[];
+	createDate: string;
 	customFields?: CustomField[];
 	description: {[key: string]: string};
 	externalReferenceCode: string;
@@ -577,6 +579,8 @@ type Product = {
 	productType: string;
 	skus: SKU[];
 	thumbnail: string;
+	urlImage: string;
+	urls: {en_US: string};
 	version: number;
 	workflowStatusInfo: {
 		code: number;

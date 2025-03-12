@@ -467,10 +467,7 @@ public class DBPartitionUtil {
 		String sourcePartitionName = getPartitionName(fromCompanyId);
 		String targetPartitionName = getPartitionName(toCompanyId);
 
-		try (SafeCloseable safeCloseable1 =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(fromCompanyId);
-			AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
-
+		try (AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 			_copySchema(connection, sourcePartitionName, targetPartitionName);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -802,9 +799,7 @@ public class DBPartitionUtil {
 
 		String extractedPartitionName = _getExtractedPartitionName(companyId);
 
-		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(companyId);
-			AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
-
+		try (AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 			_copySchema(
 				connection, getPartitionName(companyId),
 				extractedPartitionName);

@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.EntityModelResourceTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -31,6 +30,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -46,10 +46,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface EntityModelResourceTestEntity1Resource {
+public interface FilterResource {
 
-	public Page<EntityModelResourceTestEntity1>
-			getEntityModelResourceTestEntities1Page()
+	public Page<Filter> getFiltersPage() throws Exception;
+
+	public Response postFiltersPageExportBatch(
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -122,7 +124,7 @@ public interface EntityModelResourceTestEntity1Resource {
 	@ProviderType
 	public interface Builder {
 
-		public EntityModelResourceTestEntity1Resource build();
+		public FilterResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

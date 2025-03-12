@@ -77,6 +77,7 @@ com.liferay.commerce.account.service.CommerceAccountService=com.liferay.account.
 com.liferay.commerce.account.service.CommerceAccountServiceUtil=com.liferay.account.service.AccountEntryServiceUtil;
 com.liferay.commerce.constants.CommerceDestinationNames=com.liferay.portal.kernel.messaging.DestinationNames
 com.liferay.commerce.frontend.CommerceDataSetDataProvider=com.liferay.frontend.data.set.provider.FDSDataProvider
+com.liferay.commerce.frontend.util.ProductHelper=com.liferay.commerce.frontend.helper.ProductHelper
 com.liferay.commerce.model.CommerceCountry=com.liferay.portal.kernel.model.Country
 com.liferay.commerce.model.CommerceRegion=com.liferay.portal.kernel.model.Region
 com.liferay.commerce.product.content.util.CPContentHelper=com.liferay.commerce.product.content.helper.CPContentHelper

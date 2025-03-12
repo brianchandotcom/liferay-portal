@@ -105,6 +105,7 @@ const Build = () => {
 							clickable: true,
 							key: 'duration',
 							render: (duration) => getDurationTime(duration),
+							sorteable: true,
 							value: i18n.translate('duration'),
 						},
 						{

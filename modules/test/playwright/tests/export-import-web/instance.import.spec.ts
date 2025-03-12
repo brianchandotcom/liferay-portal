@@ -375,6 +375,10 @@ test('can see corresponding elements at instance level', async ({
 	await expect(companyExportImportPage.page.getByText('Tests')).toBeVisible();
 
 	await expect(
+		companyExportImportPage.page.getByText('C_Tests Change')
+	).not.toBeVisible();
+
+	await expect(
 		companyExportImportPage.page.getByLabel('Delete Application Data')
 	).not.toBeVisible();
 

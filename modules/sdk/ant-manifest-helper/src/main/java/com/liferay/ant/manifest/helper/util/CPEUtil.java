@@ -5,7 +5,6 @@
 
 package com.liferay.ant.manifest.helper.util;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 
@@ -43,9 +42,17 @@ public class CPEUtil {
 			version = version.toLowerCase();
 		}
 
-		return StringBundler.concat(
-			"cpe:2.3:a:liferay:", product, ":", version, ":", patchVersion,
-			":*:*:*:*:*:*");
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("cpe:2.3:a:liferay:");
+		sb.append(product);
+		sb.append(":");
+		sb.append(version);
+		sb.append(":");
+		sb.append(patchVersion);
+		sb.append(":*:*:*:*:*:*");
+
+		return sb.toString();
 	}
 
 }

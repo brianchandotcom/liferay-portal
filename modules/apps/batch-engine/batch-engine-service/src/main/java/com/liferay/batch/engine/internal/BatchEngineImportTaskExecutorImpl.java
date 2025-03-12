@@ -334,7 +334,7 @@ public class BatchEngineImportTaskExecutorImpl
 				_getBatchEngineImportTaskItemReader(
 					batchEngineImportTask, inputStream, parameters);
 			SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.enableWithSelfCloseable()) {
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			BatchEngineTaskItemDelegateExecutor
 				batchEngineTaskItemDelegateExecutor =

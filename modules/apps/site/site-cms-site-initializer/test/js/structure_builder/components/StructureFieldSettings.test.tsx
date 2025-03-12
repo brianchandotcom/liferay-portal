@@ -15,7 +15,10 @@ import {
 	Action,
 	State,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
-import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
+import {
+	Field,
+	getDefaultField,
+} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import {MockStateProvider} from '../mocks/MockStateProvider';
 
 const TEXT_FIELD_NAME = 'testField';
@@ -49,15 +52,17 @@ const DEFAULT_STATE: State = {
 };
 
 const renderComponent = ({
-	state = DEFAULT_STATE,
 	dispatch = jest.fn(),
+	fieldName = TEXT_FIELD_NAME,
+	state = DEFAULT_STATE,
 }: {
 	dispatch?: React.Dispatch<Action>;
+	fieldName?: string;
 	state?: State;
 } = {}) => {
 	return render(
 		<MockStateProvider dispatch={dispatch} state={state}>
-			<StructureFieldSettings fieldName={TEXT_FIELD_NAME} />
+			<StructureFieldSettings fieldName={fieldName} />
 		</MockStateProvider>
 	);
 };
@@ -176,6 +181,121 @@ describe('StructureFieldSettings', () => {
 		});
 	});
 
+	it('updates specific date time configuration', async () => {
+		const mockDispatch = jest.fn();
+
+		const name = 'dateTimeField';
+
+		renderComponent({
+			dispatch: mockDispatch,
+			fieldName: name,
+			state: {
+				...DEFAULT_STATE,
+				fields: new Map([
+					[
+						name,
+						{
+							...getDefaultField('datetime'),
+							name,
+						},
+					],
+				]),
+			},
+		});
+
+		await userEvent.click(screen.getByLabelText('time-storage'));
+
+		await userEvent.click(screen.getByText('use-input-as-entered'));
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			name,
+			settings: {
+				timeStorage: 'useInputAsEntered',
+			},
+			type: 'update-field',
+		});
+	});
+
+	it('updates specific long text configuration', async () => {
+		const mockDispatch = jest.fn();
+
+		const name = 'longTextField';
+
+		renderComponent({
+			dispatch: mockDispatch,
+			fieldName: name,
+			state: {
+				...DEFAULT_STATE,
+				fields: new Map([
+					[
+						name,
+						{
+							...getDefaultField('long-text'),
+							name,
+						},
+					],
+				]),
+			},
+		});
+
+		expect(
+			screen.queryByLabelText('maximun-number-of-characters')
+		).not.toBeInTheDocument();
+
+		await userEvent.click(screen.getByLabelText('limit-characters'));
+
+		const numberOfCharactersInput = screen.getByLabelText(
+			'maximum-number-of-characters'
+		);
+
+		await userEvent.type(numberOfCharactersInput, '10');
+		fireEvent.blur(numberOfCharactersInput);
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			name,
+			settings: {
+				maxLength: 10,
+				showCounter: true,
+			},
+			type: 'update-field',
+		});
+	});
+
+	it('updates specific numeric configuration', async () => {
+		const mockDispatch = jest.fn();
+
+		const name = 'numericField';
+
+		renderComponent({
+			dispatch: mockDispatch,
+			fieldName: name,
+			state: {
+				...DEFAULT_STATE,
+				fields: new Map([
+					[
+						name,
+						{
+							...getDefaultField('integer'),
+							name,
+						},
+					],
+				]),
+			},
+		});
+
+		await userEvent.click(
+			screen.getByLabelText('accept-unique-values-only')
+		);
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			name,
+			settings: {
+				uniqueValues: true,
+			},
+			type: 'update-field',
+		});
+	});
+
 	it('updates specific text configuration', async () => {
 		const mockDispatch = jest.fn();
 
@@ -211,6 +331,85 @@ describe('StructureFieldSettings', () => {
 			settings: {
 				maxLength: 10,
 				showCounter: true,
+			},
+			type: 'update-field',
+		});
+	});
+
+	it('updates specific upload configuration', async () => {
+		const mockDispatch = jest.fn();
+
+		const name = 'uploadField';
+
+		renderComponent({
+			dispatch: mockDispatch,
+			fieldName: name,
+			state: {
+				...DEFAULT_STATE,
+				fields: new Map([
+					[
+						name,
+						{
+							...getDefaultField('upload'),
+							name,
+						},
+					],
+				]),
+			},
+		});
+
+		expect(
+			screen.queryByLabelText('storage-folder')
+		).not.toBeInTheDocument();
+
+		await userEvent.click(
+			screen.getByLabelText('show-files-in-documents-and-media')
+		);
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			name,
+			settings: {
+				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
+				fileSource: 'userComputer',
+				maximumFileSize: 100,
+				showFilesInDocumentsAndMedia: true,
+				storageDLFolderPath: '/new',
+			},
+			type: 'update-field',
+		});
+
+		mockDispatch.mockClear();
+
+		const acceptedFileExtensionsInput = screen.getByLabelText(
+			'accepted-file-extensions'
+		);
+
+		await userEvent.clear(acceptedFileExtensionsInput);
+		await userEvent.type(acceptedFileExtensionsInput, 'gif');
+		fireEvent.blur(acceptedFileExtensionsInput);
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			name,
+			settings: {
+				acceptedFileExtensions: 'gif',
+				fileSource: 'userComputer',
+				maximumFileSize: 100,
+			},
+			type: 'update-field',
+		});
+
+		const maximumFileSizeInput = screen.getByLabelText('maximum-file-size');
+
+		await userEvent.clear(maximumFileSizeInput);
+		await userEvent.type(maximumFileSizeInput, '200');
+		fireEvent.blur(maximumFileSizeInput);
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			name,
+			settings: {
+				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
+				fileSource: 'userComputer',
+				maximumFileSize: 200,
 			},
 			type: 'update-field',
 		});

@@ -24,7 +24,12 @@ const AccountSelection = () => {
 			);
 			navigate('/project-selection');
 		}
-	}, [singleAccount, navigate]);
+	}, [
+		myUserAccount?.accountBriefs,
+		navigate,
+		setSelectedAccount,
+		singleAccount,
+	]);
 
 	return (
 		<div className="border mt-2 p-4 pt-2 rounded">

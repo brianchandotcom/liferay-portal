@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {useCallback, useState} from 'react';
+import {useState} from 'react';
 
 import {RadioCard} from '../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../components/Section/Section';
@@ -21,13 +21,9 @@ import NewAppUploadAppPackagesComponent from '../components/NewAppUploadPackage'
 import {BUILD_UPLOAD_OPTIONS, COMPATIBLE_OFFERING_CARDS} from '../constants';
 
 const Content = () => {
-	const [selectedCheckboxValue, setSelectedCheckboxValue] = useState<
-		string[]
-	>([]);
-
 	const [
 		{
-			build: {cloudCompatible, compatibleOffering, liferayPackages},
+			build: {cloudCompatible, liferayPackages},
 			loading,
 		},
 		dispatch,
@@ -35,22 +31,6 @@ const Content = () => {
 
 	const [visibleSelectVersionModal, setVisibleSelectVersionModal] =
 		useState(false);
-
-	const handleSelectCheckbox = useCallback(
-		(offeringType: string) => {
-			setSelectedCheckboxValue((prevValue) =>
-				prevValue.includes(offeringType)
-					? prevValue.filter((value) => value !== offeringType)
-					: [...prevValue, offeringType]
-			);
-
-			dispatch({
-				payload: {compatibleOffering: selectedCheckboxValue},
-				type: NewAppTypes.SET_BUILD,
-			});
-		},
-		[dispatch, selectedCheckboxValue]
-	);
 
 	return (
 		<>

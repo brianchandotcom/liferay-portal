@@ -19,7 +19,8 @@
 					{
 						"definition": {
 							"widgetInstance": {
-								"widgetConfig": {},
+								"widgetConfig": {
+								},
 								"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
 							}
 						},
@@ -28,7 +29,8 @@
 					{
 						"definition": {
 							"widgetInstance": {
-								"widgetConfig": {},
+								"widgetConfig": {
+								},
 								"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet"
 							}
 						},

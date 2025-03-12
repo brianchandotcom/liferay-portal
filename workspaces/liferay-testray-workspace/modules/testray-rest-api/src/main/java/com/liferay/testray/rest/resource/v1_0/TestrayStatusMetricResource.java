@@ -74,7 +74,7 @@ public interface TestrayStatusMetricResource {
 
 	public Page<TestrayRoutineMetric>
 			getTestrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetricsPage(
-				Long testrayProjectId, Pagination pagination)
+				Long testrayProjectId, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<TestrayBuildMetric>

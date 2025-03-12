@@ -58,7 +58,8 @@ public interface TestrayCaseResultResource {
 			String priority, String status, String testrayCaseName,
 			String testrayCaseTypeIds, String testrayComponentIds,
 			String testrayRunId, String testrayRunName, String testraySubtaskId,
-			String testrayTeamIds, String userId, Pagination pagination)
+			String testrayTeamIds, String userId, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public Response getTestrayExportCaseResultTestrayBuild(Long testrayBuildId)

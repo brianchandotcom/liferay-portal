@@ -225,7 +225,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1);
 
-			CommerceCheckout.gotoCheckoutViaMiniCart(asGuest = "true");
+			CommerceCheckout.gotoCheckoutViaMiniCart();
 		}
 
 		task ("Then during the checkout process, the buyer can set a new billing address which will be visible at the Order Summary") {
@@ -646,7 +646,7 @@ definition {
 				productName = "U-Joint",
 				productQuantity = 1);
 
-			CommerceCheckout.gotoCheckoutViaMiniCart();
+			CommerceCheckout.gotoCheckoutViaMiniCart(asGuest = "true");
 		}
 
 		task ("Then at the Order Summary, the guest can view the billing address of the order") {

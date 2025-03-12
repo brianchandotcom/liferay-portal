@@ -107,7 +107,6 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		Map<String, String> invocationParameters = new HashMap<>();
 
 		invocationParameters.put("CI_TEST_SUITE", testSuiteName);
-
 		invocationParameters.put(
 			"CONTROLLER_BUILD_URL", buildData.getBuildURL());
 		invocationParameters.put(

@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useControlledState} from '@liferay/layout-js-components-web';
+import {
+	openConfirmModal,
+	useControlledState,
+} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import React, {useCallback} from 'react';
 
@@ -17,7 +20,6 @@ import {
 } from '../../../../../../app/contexts/LocalConfigContext';
 import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import {getStepperChild} from '../../../../../../app/utils/getStepperChild';
-import {openConfirmModal} from '../../../../../../app/utils/openConfirmModal';
 
 const FORM_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('simple'), value: 'simple'},

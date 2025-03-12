@@ -15,7 +15,7 @@ type Props = {
 	title: string;
 };
 
-export function openConfirmModal({
+export default function openConfirmModal({
 	buttonLabel,
 	center,
 	onCancel,

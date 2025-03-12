@@ -26,8 +26,6 @@ import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -323,11 +321,6 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			serviceBuilderAccountGroup.getAccountGroupId(),
 			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
 
-		Indexer<AccountEntry> indexer = _indexerRegistry.nullSafeGetIndexer(
-			AccountEntry.class);
-
-		indexer.reindex(accountEntry);
-
 		return serviceBuilderAccountGroup;
 	}
 
@@ -516,9 +509,6 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
-
-	@Reference
-	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private Portal _portal;

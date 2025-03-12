@@ -141,7 +141,7 @@ public class DLFileEntrySharingEntryServiceTest {
 		throws Exception {
 
 		return _sharingEntryService.addSharingEntry(
-			null, _toUser.getUserId(), classNameId, classPK,
+			null, 0, _toUser.getUserId(), classNameId, classPK,
 			_group.getGroupId(), true,
 			Collections.singletonList(SharingEntryAction.VIEW), expirationDate,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

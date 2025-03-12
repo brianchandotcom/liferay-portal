@@ -141,7 +141,7 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			null, fromUser.getUserId(), toUser.getUserId(),
+			null, fromUser.getUserId(), 0, toUser.getUserId(),
 			_classNameLocalService.getClassNameId(model.getModelClassName()),
 			classPK, group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null,

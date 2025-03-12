@@ -120,7 +120,7 @@ import {config as siteNavigationBreadcrumbWebConfig} from './tests/site-navigati
 import {config as siteNavigationDirectoryWebConfig} from './tests/site-navigation-directory-web/config';
 import {config as siteNavigationLanguageWebConfig} from './tests/site-navigation-language-web/config';
 import {config as siteNavigationMenuWebConfig} from './tests/site-navigation-menu-web/config';
-import {config as stableConfig} from './tests/stable/config';
+import {config as smokeConfig} from './tests/smoke/config';
 import {config as stagingConfig} from './tests/staging-configuration-web/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
 import {config as templateWebConfig} from './tests/template-web/config';
@@ -252,7 +252,7 @@ export default defineConfig({
 		siteNavigationDirectoryWebConfig,
 		siteNavigationLanguageWebConfig,
 		siteNavigationMenuWebConfig,
-		stableConfig,
+		smokeConfig,
 		stagingConfig,
 		stylebookWebConfig,
 		templateWebConfig,

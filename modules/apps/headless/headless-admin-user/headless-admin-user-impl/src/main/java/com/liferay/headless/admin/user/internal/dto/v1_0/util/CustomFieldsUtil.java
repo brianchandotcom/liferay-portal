@@ -169,13 +169,17 @@ public class CustomFieldsUtil {
 	}
 
 	private static Object _getValue(
-		Map.Entry<String, Serializable> entry, ExpandoBridge expandoBridge,
-		String key) {
+		int attributeType, Map.Entry<String, Serializable> entry,
+		ExpandoBridge expandoBridge, String key) {
 
 		Object value = entry.getValue();
 
-		if (_isEmpty(value)) {
-			value = expandoBridge.getAttributeDefault(key);
+		if (!_isEmpty(value)) {
+			return value;
+		}
+
+		if (!ExpandoColumnConstants.isArray(attributeType)) {
+			return expandoBridge.getAttributeDefault(key);
 		}
 
 		return value;
@@ -273,11 +277,15 @@ public class CustomFieldsUtil {
 							setData(
 								() -> _getValue(
 									attributeType, locale,
-									_getValue(entry, expandoBridge, key)));
+									_getValue(
+										attributeType, entry, expandoBridge,
+										key)));
 							setData_i18n(
 								() -> _getLocalizedValues(
 									acceptAllLanguages, attributeType,
-									_getValue(entry, expandoBridge, key)));
+									_getValue(
+										attributeType, entry, expandoBridge,
+										key)));
 						}
 					});
 				setDataType(

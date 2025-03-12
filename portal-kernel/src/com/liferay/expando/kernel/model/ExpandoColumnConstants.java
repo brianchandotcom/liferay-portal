@@ -208,12 +208,7 @@ public class ExpandoColumnConstants {
 		if (type == BOOLEAN) {
 			return PROPERTY_DISPLAY_TYPE_BOOLEAN;
 		}
-		else if ((type == BOOLEAN_ARRAY) || (type == DATE_ARRAY) ||
-				 (type == DOUBLE_ARRAY) || (type == FLOAT_ARRAY) ||
-				 (type == INTEGER_ARRAY) || (type == LONG_ARRAY) ||
-				 (type == NUMBER_ARRAY) || (type == SHORT_ARRAY) ||
-				 (type == STRING_ARRAY) || (type == STRING_ARRAY_LOCALIZED)) {
-
+		else if (isArray(type)) {
 			return PROPERTY_DISPLAY_TYPE_SELECTION_LIST;
 		}
 		else if (type == DATE) {
@@ -390,6 +385,19 @@ public class ExpandoColumnConstants {
 		}
 
 		return UNKNOWN_LABEL;
+	}
+
+	public static boolean isArray(int type) {
+		if ((type == BOOLEAN_ARRAY) || (type == DATE_ARRAY) ||
+			(type == DOUBLE_ARRAY) || (type == FLOAT_ARRAY) ||
+			(type == INTEGER_ARRAY) || (type == LONG_ARRAY) ||
+			(type == NUMBER_ARRAY) || (type == SHORT_ARRAY) ||
+			(type == STRING_ARRAY) || (type == STRING_ARRAY_LOCALIZED)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -30,19 +30,19 @@ public class BundleUtil {
 		return null;
 	}
 
-	public static boolean isLiferayServiceBundle(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders(
-			StringPool.BLANK);
-
-		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
-	}
-
-	public static boolean isRequireSchemaVersionBundle(Bundle bundle) {
+	public static boolean isLiferayRequireSchemaVersionBundle(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
 		return GetterUtil.getBoolean(
 			headers.get("Liferay-Require-SchemaVersion"));
+	}
+
+	public static boolean isLiferayServiceBundle(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
 	}
 
 }

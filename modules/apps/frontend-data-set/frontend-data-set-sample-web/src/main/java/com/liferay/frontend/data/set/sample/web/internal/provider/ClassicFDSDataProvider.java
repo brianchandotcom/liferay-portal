@@ -50,13 +50,13 @@ public class ClassicFDSDataProvider implements FDSDataProvider<UserEntry> {
 			UsersAdminUtil.getUsers(
 				_userLocalService.search(
 					themeDisplay.getCompanyId(), fdsKeywords.getKeywords(),
-					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_ANY,
 					new LinkedHashMap<String, Object>(),
 					fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition(), sort)),
 			user -> new UserEntry(
 				user.getEmailAddress(), user.getFirstName(), user.getUserId(),
-				user.getLastName()));
+				user.isActive(), user.getLastName()));
 	}
 
 	@Override

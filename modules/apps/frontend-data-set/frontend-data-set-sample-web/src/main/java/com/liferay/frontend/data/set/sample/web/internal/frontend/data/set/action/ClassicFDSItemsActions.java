@@ -8,6 +8,7 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set.acti
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemFilter;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
 
@@ -40,7 +41,27 @@ public class ClassicFDSItemsActions implements FDSItemsActions {
 			new FDSActionDropdownItem(
 				null, null, null, "#", "archive", "navigateToArchive",
 				_language.get(httpServletRequest, "job-archive"), null, null,
-				null, null, null, "link", null, "item"));
+				null, null, null, "link", null, "item"),
+			new FDSActionDropdownItem(
+				null, null, null,
+				Arrays.asList(new FDSActionDropdownItemFilter("active", true)),
+				"#", "cog", "deactivate",
+				_language.get(httpServletRequest, "deactivate"), null, null,
+				null, null, null, "link", null, "item"),
+			new FDSActionDropdownItem(
+				null, null, null,
+				Arrays.asList(new FDSActionDropdownItemFilter("active", false)),
+				"#", "cog", "activate",
+				_language.get(httpServletRequest, "activate"), null, null, null,
+				null, null, "link", null, "item"),
+			new FDSActionDropdownItem(
+				null, null, null,
+				Arrays.asList(
+					new FDSActionDropdownItemFilter("active", true),
+					new FDSActionDropdownItemFilter("lastName", "Test")),
+				"#", "cog", "activity",
+				_language.get(httpServletRequest, "activity"), null, null, null,
+				null, null, "link", null, "item"));
 	}
 
 	@Override

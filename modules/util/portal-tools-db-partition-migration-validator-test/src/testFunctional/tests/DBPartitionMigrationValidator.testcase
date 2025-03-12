@@ -88,8 +88,6 @@ definition {
 		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
-			var defaultCompanyId = JSONCompany.getCompanyId();
-
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
@@ -101,12 +99,12 @@ definition {
 		}
 
 		task ("When run the migration tool to export the source database, then the tool should run successfully") {
-			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+			var sourceCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
 
-			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
+			var sourceSchemaName = StringUtil.concat("lpartition_", ${sourceCompanyId});
 
 			DBPartitionMigrationValidator.executeExtraction(
-				databaseCompanyId = ${newCompanyId},
+				databaseCompanyId = ${sourceCompanyId},
 				databaseSchemaName = ${sourceSchemaName});
 
 			var sourceFilePath = DBPartitionMigrationValidator.getGeneratedFile();
@@ -115,8 +113,10 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
+			var targetCompanyId = DBPartitionMigrationValidator.getTargetDatabaseCompanyId();
+
 			DBPartitionMigrationValidator.executeExtraction(
-				databaseCompanyId = ${defaultCompanyId},
+				databaseCompanyId = ${targetCompanyId},
 				databaseSchemaName = "lportal_target");
 
 			var targetFilePath = DBPartitionMigrationValidator.getGeneratedFile();

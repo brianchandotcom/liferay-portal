@@ -64,6 +64,24 @@ definition {
 		return ${filePath};
 	}
 
+	@summary = "Returns the company ID of the target database"
+	macro getTargetDatabaseCompanyId() {
+		var databaseType = PropsUtil.get("database.type");
+
+		if (${databaseType} == "mysql") {
+			var originalDatabaseUrl = PropsUtil.get("database.mysql.url");
+		}
+		else {
+			var originalDatabaseUrl = PropsUtil.get("database.postgresql.url");
+		}
+
+		var databaseUrl = StringUtil.replace(${originalDatabaseUrl}, "lportal", "lportal_target");
+
+		var companyId = SQL.executeSQLStatement(sqlStatement = "SELECT companyId FROM Company LIMIT 1;", customDatabaseUrl = ${databaseUrl});
+
+		return ${companyId};
+	}
+
 	@summary = "Restarts the source schema"
 	macro restartSourceSchema() {
 		Portlet.shutdownServer();

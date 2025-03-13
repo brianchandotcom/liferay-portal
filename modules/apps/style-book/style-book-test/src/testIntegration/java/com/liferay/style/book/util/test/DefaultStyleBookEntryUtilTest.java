@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -65,7 +64,7 @@ public class DefaultStyleBookEntryUtilTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), true, null, RandomTestUtil.randomString(),
-				null, _THEME_ID, _serviceContext);
+				null, _THEME_ID, null);
 
 		Assert.assertEquals(
 			"styles-by-default",
@@ -86,7 +85,7 @@ public class DefaultStyleBookEntryUtilTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), true, null, RandomTestUtil.randomString(),
-				null, _THEME_ID, _serviceContext);
+				null, _THEME_ID, null);
 
 		Assert.assertEquals(
 			"styles-by-default",
@@ -120,7 +119,7 @@ public class DefaultStyleBookEntryUtilTest {
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, _THEME_ID, _serviceContext);
+				null, _THEME_ID, null);
 
 		masterPageTemplateLayout.setStyleBookEntryId(
 			styleBookEntry.getStyleBookEntryId());
@@ -158,8 +157,7 @@ public class DefaultStyleBookEntryUtilTest {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), false, null, name, null, _THEME_ID,
-				_serviceContext);
+				_group.getGroupId(), false, null, name, null, _THEME_ID, null);
 
 		Assert.assertEquals(
 			name,
@@ -199,8 +197,6 @@ public class DefaultStyleBookEntryUtilTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	private ServiceContext _serviceContext;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

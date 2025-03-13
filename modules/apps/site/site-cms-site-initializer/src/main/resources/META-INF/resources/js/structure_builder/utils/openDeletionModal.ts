@@ -11,7 +11,7 @@ export default function openDeletionModal() {
 		hideCancel: true,
 		status: 'warning',
 		text: Liferay.Language.get(
-			'the-deletion-cannot-be-done-because-the-structure-requires-at-least-one-field'
+			'structure-cannot-be-deleted-because-it-requires-at-least-one-field'
 		),
 		title: Liferay.Language.get('deletion-not-allowed'),
 	});

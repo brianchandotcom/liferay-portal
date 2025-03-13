@@ -91,7 +91,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				groupAssetVocabularyExternalReferenceCodesMap.entrySet()) {
 
 			String scopeExternalReferenceCode = getScopeExternalReferenceCode(
-				companyId, plid, entries.getKey());
+				companyId, ownerId, ownerType, plid, entries.getKey());
 
 			if (Validator.isNull(scopeExternalReferenceCode)) {
 				portletPreferences.setValues(

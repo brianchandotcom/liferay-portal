@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -79,10 +80,12 @@ public abstract class BaseUpgradePortletPreferences
 	protected abstract String[] getPortletIds();
 
 	protected String getScopeExternalReferenceCode(
-			long companyId, long plid, long scopeGroupId)
+			long companyId, long ownerId, int ownerType, long plid,
+			long scopeGroupId)
 		throws Exception {
 
-		long layoutGroupId = _getLayoutGroupId(companyId, plid);
+		long layoutGroupId = _getLayoutGroupId(
+			companyId, ownerId, ownerType, plid);
 
 		if ((layoutGroupId == 0L) || (layoutGroupId == scopeGroupId)) {
 			return StringPool.BLANK;
@@ -92,10 +95,12 @@ public abstract class BaseUpgradePortletPreferences
 	}
 
 	protected String getScopeExternalReferenceCode(
-			long companyId, long plid, String scopeGroupKey)
+			long companyId, long ownerId, int ownerType, long plid,
+			String scopeGroupKey)
 		throws Exception {
 
-		long layoutGroupId = _getLayoutGroupId(companyId, plid);
+		long layoutGroupId = _getLayoutGroupId(
+			companyId, ownerId, ownerType, plid);
 		long scopeGroupId = getGroupId(companyId, scopeGroupKey);
 
 		if ((layoutGroupId == 0L) || (layoutGroupId == scopeGroupId)) {
@@ -127,7 +132,7 @@ public abstract class BaseUpgradePortletPreferences
 
 		if (Validator.isNotNull(displayStyleGroupKey)) {
 			groupExternalReferenceCode = getScopeExternalReferenceCode(
-				companyId, plid, displayStyleGroupKey);
+				companyId, ownerId, ownerType, plid, displayStyleGroupKey);
 		}
 		else {
 			long displayStyleGroupId = GetterUtil.getLong(
@@ -135,7 +140,7 @@ public abstract class BaseUpgradePortletPreferences
 
 			if (displayStyleGroupId > 0) {
 				groupExternalReferenceCode = getScopeExternalReferenceCode(
-					companyId, plid, displayStyleGroupId);
+					companyId, ownerId, ownerType, plid, displayStyleGroupId);
 			}
 		}
 
@@ -205,7 +210,16 @@ public abstract class BaseUpgradePortletPreferences
 		return StringPool.BLANK;
 	}
 
-	private long _getLayoutGroupId(long companyId, long plid) {
+	private long _getLayoutGroupId(
+		long companyId, long ownerId, int ownerType, long plid) {
+
+		if (((ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) ||
+			 (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP)) &&
+			(ownerId > 0) && (plid == PortletKeys.PREFS_PLID_SHARED)) {
+
+			return ownerId;
+		}
+
 		Map<Long, Long> companyIdPlidMap = _plidMap.computeIfAbsent(
 			companyId, curCompanyId -> new ConcurrentHashMap<>());
 

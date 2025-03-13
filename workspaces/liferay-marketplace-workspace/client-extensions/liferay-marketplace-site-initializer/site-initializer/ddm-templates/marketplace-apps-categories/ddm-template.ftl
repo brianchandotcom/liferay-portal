@@ -77,13 +77,14 @@
 </style>
 
 <#assign
-	productTypeValues = {
-		"client-extension": "Client Extension",
-		"cloud": "Cloud App",
-		"composite-app": "Composite App",
-		"dxp": "DXP App",
-		"low-code-configuration": "Low-Code"
-	}
+	productTypeValues =
+		{
+			"client-extension": "Client Extension",
+			"cloud": "Cloud App",
+			"composite-app": "Composite App",
+			"dxp": "DXP App",
+			"low-code-configuration": "Low-Code"
+		}
 
 	vocabularyProductCategory = "MARKETPLACE APP CATEGORY"
 />

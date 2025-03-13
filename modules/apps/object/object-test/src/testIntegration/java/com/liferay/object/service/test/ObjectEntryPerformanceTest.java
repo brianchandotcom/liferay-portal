@@ -203,8 +203,57 @@ public class ObjectEntryPerformanceTest {
 		objectFolderResource.putObjectFolderByExternalReferenceCode(
 			objectFolder.getExternalReferenceCode(), objectFolder);
 
-		_testImportObjectEntryByObjectRestAPI();
-		_testDeleteObjectEntryByObjectRestAPI();
+		try (PerformanceTimer performanceTimer1 = new PerformanceTimer(
+				18000,
+				StringBundler.concat(
+					" Import ", _objectEntryCount, " Object Entries"))) {
+
+			_invokeHttp(
+				_createObjectEntryJSON(), HttpInvoker.HttpMethod.POST,
+				_getPath(_PATH_SUFFIX));
+
+			List<ObjectDefinition> objectDefinitions =
+				_objectDefinitionLocalService.getCustomObjectDefinitions(
+					_CUSTOM_OBJECT_DEFINITION_STATUS);
+
+			_customObjectDefinition = objectDefinitions.get(
+				_OBJECT_DEFINITION_LIST_INDEX);
+
+			long currentObjectEntryCount = 0;
+
+			while (currentObjectEntryCount < _objectEntryCount) {
+				currentObjectEntryCount =
+					_objectEntryLocalService.getObjectEntriesCount(
+						_customObjectDefinition.getObjectDefinitionId());
+			}
+		}
+
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(
+				15000,
+				StringBundler.concat(
+					" Delete ", _objectEntryCount, " Object Entries"))) {
+
+			HttpInvoker.HttpResponse httpResponse = _invokeHttp(
+				null, HttpInvoker.HttpMethod.GET,
+				_getPath("/o/c/foos/?fields=id&pageSize=" + _objectEntryCount));
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				httpResponse.getContent());
+
+			JSONArray jsonArray = (JSONArray)jsonObject.get("items");
+
+			_invokeHttp(
+				jsonArray.toString(), HttpInvoker.HttpMethod.DELETE,
+				_getPath(_PATH_SUFFIX));
+
+			long currentObjectEntryCount = _objectEntryCount;
+
+			while (currentObjectEntryCount != 0) {
+				currentObjectEntryCount =
+					_objectEntryLocalService.getObjectEntriesCount(
+						_customObjectDefinition.getObjectDefinitionId());
+			}
+		}
 	}
 
 	private String _createObjectEntryJSON() {
@@ -240,62 +289,6 @@ public class ObjectEntryPerformanceTest {
 				PropsValues.DEFAULT_ADMIN_PASSWORD));
 
 		return httpInvoker.invoke();
-	}
-
-	private void _testDeleteObjectEntryByObjectRestAPI() throws Exception {
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				15000,
-				StringBundler.concat(
-					" Delete ", _objectEntryCount, " Object Entries"))) {
-
-			HttpInvoker.HttpResponse httpResponse = _invokeHttp(
-				null, HttpInvoker.HttpMethod.GET,
-				_getPath("/o/c/foos/?fields=id&pageSize=" + _objectEntryCount));
-
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				httpResponse.getContent());
-
-			JSONArray jsonArray = (JSONArray)jsonObject.get("items");
-
-			_invokeHttp(
-				jsonArray.toString(), HttpInvoker.HttpMethod.DELETE,
-				_getPath(_PATH_SUFFIX));
-
-			long currentObjectEntryCount = _objectEntryCount;
-
-			while (currentObjectEntryCount != 0) {
-				currentObjectEntryCount =
-					_objectEntryLocalService.getObjectEntriesCount(
-						_customObjectDefinition.getObjectDefinitionId());
-			}
-		}
-	}
-
-	private void _testImportObjectEntryByObjectRestAPI() throws Exception {
-		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				18000,
-				StringBundler.concat(
-					" Import ", _objectEntryCount, " Object Entries"))) {
-
-			_invokeHttp(
-				_createObjectEntryJSON(), HttpInvoker.HttpMethod.POST,
-				_getPath(_PATH_SUFFIX));
-
-			List<ObjectDefinition> objectDefinitions =
-				_objectDefinitionLocalService.getCustomObjectDefinitions(
-					_CUSTOM_OBJECT_DEFINITION_STATUS);
-
-			_customObjectDefinition = objectDefinitions.get(
-				_OBJECT_DEFINITION_LIST_INDEX);
-
-			long currentObjectEntryCount = 0;
-
-			while (currentObjectEntryCount < _objectEntryCount) {
-				currentObjectEntryCount =
-					_objectEntryLocalService.getObjectEntriesCount(
-						_customObjectDefinition.getObjectDefinitionId());
-			}
-		}
 	}
 
 	private static final int _CUSTOM_OBJECT_DEFINITION_STATUS = 0;

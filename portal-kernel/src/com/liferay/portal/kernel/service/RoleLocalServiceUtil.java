@@ -483,6 +483,16 @@ public class RoleLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static Role getOrAddIncompleteRole(
+			String externalReferenceCode, long companyId, long userId,
+			String className, long classPK, String name, int type)
+		throws Exception {
+
+		return getService().getOrAddIncompleteRole(
+			externalReferenceCode, companyId, userId, className, classPK, name,
+			type);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -1230,6 +1240,15 @@ public class RoleLocalServiceUtil {
 	 */
 	public static Role updateRole(Role role) {
 		return getService().updateRole(role);
+	}
+
+	public static Role updateStatus(
+			long userId, long roleId, int status, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		return getService().updateStatus(
+			userId, roleId, status, serviceContext, workflowContext);
 	}
 
 	public static void validateName(String name) throws PortalException {

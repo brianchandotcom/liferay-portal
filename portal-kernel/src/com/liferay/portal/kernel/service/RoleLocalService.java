@@ -400,6 +400,12 @@ public interface RoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getOrAddIncompleteRole(
+			String externalReferenceCode, long companyId, long userId,
+			String className, long classPK, String name, int type)
+		throws Exception;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -1039,6 +1045,12 @@ public interface RoleLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(Role role);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Role updateStatus(
+			long userId, long roleId, int status, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException;
 
 	public void validateName(String name) throws PortalException;
 

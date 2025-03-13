@@ -758,6 +758,59 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testHasShareableSharingPermissionToUserGroup()
+		throws Exception {
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		try {
+			_userGroupLocalService.addUserUserGroup(
+				_toUser.getUserId(), userGroup);
+
+			SharingEntry sharingEntry =
+				_sharingEntryLocalService.addSharingEntry(
+					null, _fromUser.getUserId(), userGroup.getUserGroupId(), 0,
+					_classNameId, _group.getGroupId(), _group.getGroupId(),
+					true,
+					Arrays.asList(
+						SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
+					null, _serviceContext);
+
+			Assert.assertTrue(
+				_sharingEntryLocalService.hasShareableSharingPermission(
+					_toUser.getUserId(), _classNameId, _group.getGroupId(),
+					SharingEntryAction.UPDATE));
+
+			_sharingEntryLocalService.updateSharingEntry(
+				_fromUser.getUserId(), sharingEntry.getSharingEntryId(),
+				Arrays.asList(SharingEntryAction.VIEW), true, null,
+				_serviceContext);
+
+			Assert.assertFalse(
+				_sharingEntryLocalService.hasShareableSharingPermission(
+					_toUser.getUserId(), _classNameId, _group.getGroupId(),
+					SharingEntryAction.UPDATE));
+
+			_sharingEntryLocalService.updateSharingEntry(
+				_fromUser.getUserId(), sharingEntry.getSharingEntryId(),
+				Arrays.asList(SharingEntryAction.VIEW), false, null,
+				_serviceContext);
+
+			Assert.assertFalse(
+				_sharingEntryLocalService.hasShareableSharingPermission(
+					_toUser.getUserId(), _classNameId, _group.getGroupId(),
+					SharingEntryAction.UPDATE));
+		}
+		finally {
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserUserGroup(
+					_toUser.getUserId(), userGroup);
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
+		}
+	}
+
+	@Test
 	public void testHasShareableSharingPermissionWithShareableAddDiscussionAndViewSharingEntryAction()
 		throws Exception {
 
@@ -805,6 +858,50 @@ public class SharingEntryLocalServiceTest {
 			_sharingEntryLocalService.hasShareableSharingPermission(
 				_toUser.getUserId(), _classNameId, _group.getGroupId(),
 				SharingEntryAction.VIEW));
+	}
+
+	@Test
+	public void testHasSharingPermissionToUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		try {
+			_userGroupLocalService.addUserUserGroup(
+				_toUser.getUserId(), userGroup);
+
+			_sharingEntryLocalService.addSharingEntry(
+				null, _fromUser.getUserId(), userGroup.getUserGroupId(), 0,
+				_classNameId, _group.getGroupId(), _group.getGroupId(), true,
+				Arrays.asList(
+					SharingEntryAction.UPDATE, SharingEntryAction.VIEW),
+				null, _serviceContext);
+
+			Assert.assertTrue(
+				_sharingEntryLocalService.hasSharingPermission(
+					_toUser.getUserId(), _classNameId, _group.getGroupId(),
+					SharingEntryAction.UPDATE));
+			Assert.assertTrue(
+				_sharingEntryLocalService.hasSharingPermission(
+					_toUser.getUserId(), _classNameId, _group.getGroupId(),
+					SharingEntryAction.VIEW));
+
+			User user = UserTestUtil.addUser();
+
+			Assert.assertFalse(
+				_sharingEntryLocalService.hasSharingPermission(
+					user.getUserId(), _classNameId, _group.getGroupId(),
+					SharingEntryAction.UPDATE));
+			Assert.assertFalse(
+				_sharingEntryLocalService.hasSharingPermission(
+					user.getUserId(), _classNameId, _group.getGroupId(),
+					SharingEntryAction.VIEW));
+		}
+		finally {
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserUserGroup(
+					_toUser.getUserId(), userGroup);
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
+		}
 	}
 
 	@Test

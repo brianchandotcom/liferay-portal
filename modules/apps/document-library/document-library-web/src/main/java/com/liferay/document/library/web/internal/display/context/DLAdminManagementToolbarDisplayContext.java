@@ -587,7 +587,7 @@ public class DLAdminManagementToolbarDisplayContext
 			"selectedCategoryIds",
 			StringUtil.merge(_getAssetCategoryIds(), StringPool.COMMA)
 		).setParameter(
-			"vocabularyIds", _getVocabularyIds()
+			"vocabularyIds", _getAssetVocabularyIds()
 		).buildString();
 	}
 
@@ -610,6 +610,25 @@ public class DLAdminManagementToolbarDisplayContext
 					_liferayPortletRequest),
 				_liferayPortletResponse.getNamespace() + "selectTag",
 				assetTagsItemSelectorCriterion));
+	}
+
+	private String _getAssetVocabularyIds() {
+		Set<AssetVocabulary> assetVocabularies = new TreeSet<>();
+
+		for (DLFileEntryType dlFileEntryType :
+				_dlFileEntryTypeService.getFileEntryTypes(_getGroupIds())) {
+
+			assetVocabularies.addAll(
+				_assetVocabularyService.getGroupsVocabularies(
+					_getGroupIds(), DLFileEntryConstants.getClassName(),
+					dlFileEntryType.getFileEntryTypeId()));
+		}
+
+		return StringUtil.merge(
+			assetVocabularies,
+			assetVocabulary -> String.valueOf(
+				assetVocabulary.getVocabularyId()),
+			StringPool.COMMA);
 	}
 
 	private PortletURL _getCurrentRenderURL() {
@@ -985,25 +1004,6 @@ public class DLAdminManagementToolbarDisplayContext
 		).setParameter(
 			key, valueUnsafeSupplier
 		).buildString();
-	}
-
-	private String _getVocabularyIds() {
-		Set<AssetVocabulary> vocabularies = new TreeSet<>();
-
-		for (DLFileEntryType dlFileEntryType :
-				_dlFileEntryTypeService.getFileEntryTypes(_getGroupIds())) {
-
-			vocabularies.addAll(
-				_assetVocabularyService.getGroupsVocabularies(
-					_getGroupIds(), DLFileEntryConstants.getClassName(),
-					dlFileEntryType.getFileEntryTypeId()));
-		}
-
-		return StringUtil.merge(
-			vocabularies,
-			assetVocabulary -> String.valueOf(
-				assetVocabulary.getVocabularyId()),
-			StringPool.COMMA);
 	}
 
 	private boolean _hasValidAssetVocabularies() {

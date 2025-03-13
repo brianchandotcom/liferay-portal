@@ -310,12 +310,9 @@ public class LayoutUtil {
 			_addChildPageElements(newLayoutStructure, pageElement);
 		}
 
-		LayoutPageTemplateStructureLocalServiceUtil.
-			updateLayoutPageTemplateStructureData(
-				layoutPageTemplateStructure.getGroupId(),
-				layoutPageTemplateStructure.getPlid(),
-				segmentsExperience.getSegmentsExperienceId(),
-				newLayoutStructure.toString());
+		LayoutLocalServiceUtil.updateLayoutContent(
+			newLayoutStructure.toString(), layout,
+			segmentsExperience.getSegmentsExperienceId());
 	}
 
 	private static Layout _updateLookAndFeel(Layout layout, Settings settings)

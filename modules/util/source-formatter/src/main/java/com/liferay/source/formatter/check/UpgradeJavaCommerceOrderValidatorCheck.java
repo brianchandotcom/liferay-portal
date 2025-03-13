@@ -86,7 +86,8 @@ public class UpgradeJavaCommerceOrderValidatorCheck extends BaseUpgradeCheck {
 		javaMethodContent = StringUtil.replace(
 			javaMethodContent, methodCall,
 			StringUtil.replace(
-				methodCall, "int quantity", "BigDecimal quantity"));
+				methodCall, "int quantity",
+				"String json, BigDecimal quantity, boolean child"));
 
 		javaMethodContent = StringUtil.replaceFirst(
 			javaMethodContent, CharPool.OPEN_CURLY_BRACE,

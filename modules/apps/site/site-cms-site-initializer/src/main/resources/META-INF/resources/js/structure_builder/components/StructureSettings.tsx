@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
@@ -21,6 +21,7 @@ import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import selectStructureUuid from '../selectors/selectStructureUuid';
+import focusInvalidInput from '../utils/focusInvalidInput';
 import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
 import Input from './Input';
@@ -50,6 +51,10 @@ function StructureSettings() {
 
 	const [label, setLabel] =
 		useState<Liferay.Language.LocalizedValue<string>>(structureLabel);
+
+	useEffect(() => {
+		focusInvalidInput();
+	}, []);
 
 	return (
 		<ClayLayout.ContainerFluid size="md" view>

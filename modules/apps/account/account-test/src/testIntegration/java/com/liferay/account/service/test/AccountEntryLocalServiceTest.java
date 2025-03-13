@@ -585,6 +585,23 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testGetOrAddIncompleteAccountEntry() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_accountEntryLocalService.getOrAddIncompleteAccountEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			Assert.fail();
+		}
+		catch (NoSuchEntryException noSuchEntryException) {
+			Assert.assertNotNull(noSuchEntryException);
+		}
+
+		// Lazy referencing enabled, workflow disabled
+
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
@@ -599,21 +616,8 @@ public class AccountEntryLocalServiceTest {
 				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
 				TestPropsValues.getUser());
 		}
-	}
 
-	@Test(expected = NoSuchEntryException.class)
-	public void testGetOrAddIncompleteAccountEntryWithoutLazyReferencing()
-		throws Exception {
-
-		_accountEntryLocalService.getOrAddIncompleteAccountEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
-	}
-
-	@Test
-	public void testGetOrAddIncompleteAccountEntryWithWorkflowEnabled()
-		throws Exception {
+		// Lazy referencing enabled, workflow enabled
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
@@ -1199,7 +1203,11 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateAccountEntryWithStatusIncomplete() throws Exception {
+	public void testUpdateAccountEntryWithLazyReferencingEnabled()
+		throws Exception {
+
+		// Workflow disabled
+
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
@@ -1225,11 +1233,8 @@ public class AccountEntryLocalServiceTest {
 				accountEntry, WorkflowConstants.STATUS_APPROVED,
 				TestPropsValues.getUser());
 		}
-	}
 
-	@Test
-	public void testUpdateAccountEntryWithStatusIncompleteWorkflowEnabled()
-		throws Exception {
+		// Workflow enabled
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {

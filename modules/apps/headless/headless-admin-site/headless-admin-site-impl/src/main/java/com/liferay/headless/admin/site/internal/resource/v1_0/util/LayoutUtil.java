@@ -277,7 +277,7 @@ public class LayoutUtil {
 		return styleBookEntry.getStyleBookEntryId();
 	}
 
-	private static void _updateLayoutPageTemplateStructureData(
+	private static void _updateLayoutContent(
 			Layout layout, PageExperience pageExperience,
 			SegmentsExperience segmentsExperience)
 		throws Exception {
@@ -444,7 +444,7 @@ public class LayoutUtil {
 		}
 
 		for (PageExperience pageExperience : pageExperiences) {
-			_updateLayoutPageTemplateStructureData(
+			_updateLayoutContent(
 				layout, pageExperience,
 				segmentsExperiencesMap.get(
 					pageExperience.getExternalReferenceCode()));

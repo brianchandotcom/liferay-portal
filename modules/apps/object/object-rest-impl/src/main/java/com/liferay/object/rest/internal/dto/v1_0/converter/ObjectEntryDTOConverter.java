@@ -253,20 +253,6 @@ public class ObjectEntryDTOConverter
 						return null;
 					});
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
-				setFolderExternalReferenceCode(
-					() -> {
-						ObjectEntryFolder objectEntryFolder =
-							_objectEntryFolderLocalService.
-								fetchObjectEntryFolder(
-									objectEntry.getObjectEntryFolderId());
-
-						if (objectEntryFolder != null) {
-							return objectEntryFolder.getExternalReferenceCode();
-						}
-
-						return StringPool.BLANK;
-					});
-				setFolderId(objectEntry::getObjectEntryFolderId);
 				setFriendlyUrlPath(
 					() -> objectEntry.getURLTitle(
 						dtoConverterContext.getLocale()));
@@ -284,6 +270,20 @@ public class ObjectEntryDTOConverter
 								objectEntry.getObjectEntryId()),
 							AssetTag.NAME_ACCESSOR);
 					});
+				setObjectEntryFolderExternalReferenceCode(
+					() -> {
+						ObjectEntryFolder objectEntryFolder =
+							_objectEntryFolderLocalService.
+								fetchObjectEntryFolder(
+									objectEntry.getObjectEntryFolderId());
+
+						if (objectEntryFolder != null) {
+							return objectEntryFolder.getExternalReferenceCode();
+						}
+
+						return StringPool.BLANK;
+					});
+				setObjectEntryFolderId(objectEntry::getObjectEntryFolderId);
 				setPermissions(
 					() -> _toPermissions(objectDefinition, objectEntry));
 				setProperties(

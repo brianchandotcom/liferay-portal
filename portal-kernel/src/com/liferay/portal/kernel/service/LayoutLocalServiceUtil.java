@@ -1784,6 +1784,13 @@ public class LayoutLocalServiceUtil {
 			masterLayoutPlid);
 	}
 
+	public static void updateLayoutContent(
+			String data, Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		getService().updateLayoutContent(data, layout, segmentsExperienceId);
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

@@ -104,12 +104,14 @@ public class SegmentsExperienceUtil {
 
 		layoutStructure.addRootLayoutStructureItem();
 
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext =
+			new LayoutStructureItemImporterContext(
+				layout.getGroupId(), layout, segmentsExperienceId,
+				serviceContext.getUserId());
+
 		for (PageElement pageElement : pageExperience.getPageElements()) {
 			LayoutStructureUtil.addLayoutStructureItem(
-				layoutStructure,
-				new LayoutStructureItemImporterContext(
-					layout.getGroupId(), layout, segmentsExperienceId,
-					serviceContext.getUserId()),
+				layoutStructure, layoutStructureItemImporterContext,
 				pageElement);
 		}
 

@@ -615,6 +615,7 @@ public class AccountEntryLocalServiceTest {
 			_assertStatus(
 				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
 				TestPropsValues.getUser());
+			//Assert.assertFalse(_hasWorkflowInstance(accountEntry));
 		}
 
 		// Lazy referencing enabled, workflow enabled
@@ -1232,6 +1233,7 @@ public class AccountEntryLocalServiceTest {
 			_assertStatus(
 				accountEntry, WorkflowConstants.STATUS_APPROVED,
 				TestPropsValues.getUser());
+			//Assert.assertFalse(_hasWorkflowInstance(accountEntry));
 		}
 
 		// Workflow enabled

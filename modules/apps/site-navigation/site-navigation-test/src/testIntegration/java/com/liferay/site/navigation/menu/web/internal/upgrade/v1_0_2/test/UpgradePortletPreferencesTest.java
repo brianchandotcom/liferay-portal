@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
@@ -134,6 +135,39 @@ public class UpgradePortletPreferencesTest
 				"siteNavigationMenuId",
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
 			).build());
+	}
+
+	@Test
+	@TestInfo("LPD-51051")
+	public void testUpgradePreferenceWithSiteNavigationMenuFromDifferentGroupAndPreferencesPlidShared()
+		throws Exception {
+
+		Group curGroup = GroupTestUtil.addGroup();
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), curGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				SiteNavigationConstants.TYPE_DEFAULT, true,
+				ServiceContextTestUtil.getServiceContext(
+					curGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		testUpgrade(
+			HashMapBuilder.put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuGroupExternalReferenceCode",
+				curGroup.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuId",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build(),
+			HashMapBuilder.put(
+				"siteNavigationMenuId",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build(),
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, PortletKeys.PREFS_PLID_SHARED);
 	}
 
 	@Test

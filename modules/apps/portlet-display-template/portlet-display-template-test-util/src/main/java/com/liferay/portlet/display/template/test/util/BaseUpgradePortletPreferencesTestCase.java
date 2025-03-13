@@ -11,7 +11,10 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -182,20 +185,20 @@ public abstract class BaseUpgradePortletPreferencesTestCase {
 	protected void assertPortletPreferences(Map<String, String> expectedMap)
 		throws Exception {
 
+		_assertPortletPreferences(
+			expectedMap,
+			LayoutTestUtil.getPortletPreferences(layout, portletId));
+	}
+
+	protected void assertPortletPreferences(
+		Map<String, String> expectedMap, long ownerId, int ownerType,
+		long plid) {
+
 		PortletPreferences portletPreferences =
-			LayoutTestUtil.getPortletPreferences(layout, portletId);
+			_portletPreferencesLocalService.getPreferences(
+				group.getCompanyId(), ownerId, ownerType, plid, portletId);
 
-		Map<String, String[]> map = portletPreferences.getMap();
-
-		Assert.assertEquals(
-			MapUtil.toString(map), expectedMap.size(), map.size());
-
-		for (Map.Entry<String, String> entry : expectedMap.entrySet()) {
-			Assert.assertTrue(entry.getKey(), map.containsKey(entry.getKey()));
-
-			Assert.assertArrayEquals(
-				new String[] {entry.getValue()}, map.get(entry.getKey()));
-		}
+		_assertPortletPreferences(expectedMap, portletPreferences);
 	}
 
 	protected abstract String getPortletId();
@@ -235,6 +238,30 @@ public abstract class BaseUpgradePortletPreferencesTestCase {
 		assertPortletPreferences(expectedMap);
 	}
 
+	protected void testUpgrade(
+			Map<String, String> expectedMap, Map<String, String> map,
+			int ownerType, long plid)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				group.getCompanyId(), group.getGroupId(), ownerType, plid,
+				portletId, PortletConstants.DEFAULT_PREFERENCES);
+
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			portletPreferences.setValue(entry.getKey(), entry.getValue());
+		}
+
+		portletPreferences.store();
+
+		assertPortletPreferences(map, group.getGroupId(), ownerType, plid);
+
+		runUpgrade();
+
+		assertPortletPreferences(
+			expectedMap, group.getGroupId(), ownerType, plid);
+	}
+
 	protected void updateLayoutPortletPreference(
 			Map<String, String> portletPreferencesMap)
 		throws Exception {
@@ -260,5 +287,25 @@ public abstract class BaseUpgradePortletPreferencesTestCase {
 	protected MultiVMPool multiVMPool;
 
 	protected String portletId;
+
+	private void _assertPortletPreferences(
+		Map<String, String> expectedMap,
+		PortletPreferences portletPreferences) {
+
+		Map<String, String[]> map = portletPreferences.getMap();
+
+		Assert.assertEquals(
+			MapUtil.toString(map), expectedMap.size(), map.size());
+
+		for (Map.Entry<String, String> entry : expectedMap.entrySet()) {
+			Assert.assertTrue(entry.getKey(), map.containsKey(entry.getKey()));
+
+			Assert.assertArrayEquals(
+				new String[] {entry.getValue()}, map.get(entry.getKey()));
+		}
+	}
+
+	@Inject
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

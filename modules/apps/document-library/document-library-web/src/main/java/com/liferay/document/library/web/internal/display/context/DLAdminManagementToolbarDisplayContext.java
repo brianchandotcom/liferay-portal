@@ -96,7 +96,7 @@ public class DLAdminManagementToolbarDisplayContext
 	public DLAdminManagementToolbarDisplayContext(
 		AssetVocabularyService assetVocabularyService,
 		DLAdminDisplayContext dlAdminDisplayContext,
-		DLFileEntryTypeService dLFileEntryTypeService,
+		DLFileEntryTypeService dlFileEntryTypeService,
 		DLTrashHelper dlTrashHelper, HttpServletRequest httpServletRequest,
 		ItemSelector itemSelector, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -108,14 +108,13 @@ public class DLAdminManagementToolbarDisplayContext
 
 		_assetVocabularyService = assetVocabularyService;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
+		_dlFileEntryTypeService = dlFileEntryTypeService;
 		_dlTrashHelper = dlTrashHelper;
 		_httpServletRequest = httpServletRequest;
 		_itemSelector = itemSelector;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_siteConnectedGroupGroupProvider = siteConnectedGroupGroupProvider;
-
-		_dlFileEntryTypeService = dLFileEntryTypeService;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);

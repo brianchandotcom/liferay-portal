@@ -13,7 +13,9 @@ import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCrite
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +72,49 @@ public class DepotAdminMembershipsDisplayContext {
 
 	public int getDepotGroupsCount() throws PortalException {
 		List<Group> groups = _getDepotGroups();
+
+		return groups.size();
+	}
+
+	public List<Group> getInheritedDepotGroups() throws PortalException {
+		if (_inheritedDepotGroups != null) {
+			return _inheritedDepotGroups;
+		}
+
+		if (_user == null) {
+			_inheritedDepotGroups = Collections.emptyList();
+
+			return _inheritedDepotGroups;
+		}
+
+		List<Group> groups = new ArrayList<>();
+		List<Organization> organizations = _user.getOrganizations();
+
+		if (!organizations.isEmpty()) {
+			groups.addAll(
+				ListUtil.filter(
+					GroupLocalServiceUtil.getOrganizationsRelatedGroups(
+						organizations),
+					Group::isDepot));
+		}
+
+		List<UserGroup> userGroups = _user.getUserGroups();
+
+		if (!userGroups.isEmpty()) {
+			groups.addAll(
+				ListUtil.filter(
+					GroupLocalServiceUtil.getUserGroupsRelatedGroups(
+						userGroups),
+					Group::isDepot));
+		}
+
+		_inheritedDepotGroups = ListUtil.unique(groups);
+
+		return _inheritedDepotGroups;
+	}
+
+	public int getInheritedDepotGroupsCount() throws PortalException {
+		List<Group> groups = getInheritedDepotGroups();
 
 		return groups.size();
 	}
@@ -119,6 +166,16 @@ public class DepotAdminMembershipsDisplayContext {
 		return isSelectable();
 	}
 
+	public boolean isInheritedDepotGroupsEmpty() throws PortalException {
+		List<Group> groups = getInheritedDepotGroups();
+
+		if (groups.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isSelectable() {
 		String myAccountPortletId = PortletProviderUtil.getPortletId(
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
@@ -168,6 +225,7 @@ public class DepotAdminMembershipsDisplayContext {
 	}
 
 	private List<Group> _depotGroups;
+	private List<Group> _inheritedDepotGroups;
 	private final ItemSelector _itemSelector;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -129,8 +129,13 @@ public class UserDisplayContext {
 		SortedSet<Group> inheritedSiteGroupsSet = new TreeSet<>();
 
 		inheritedSiteGroupsSet.addAll(
-			GroupLocalServiceUtil.getUserGroupsRelatedGroups(getUserGroups()));
-		inheritedSiteGroupsSet.addAll(_getOrganizationRelatedGroups());
+			ListUtil.filter(
+				GroupLocalServiceUtil.getUserGroupsRelatedGroups(
+					getUserGroups()),
+				group -> !group.isDepot()));
+		inheritedSiteGroupsSet.addAll(
+			ListUtil.filter(
+				_getOrganizationRelatedGroups(), group -> !group.isDepot()));
 
 		return ListUtil.fromCollection(inheritedSiteGroupsSet);
 	}

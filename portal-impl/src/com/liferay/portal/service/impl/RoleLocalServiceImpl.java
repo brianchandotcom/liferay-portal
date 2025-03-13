@@ -8,6 +8,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -26,9 +27,11 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleNameException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -106,10 +109,13 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -172,6 +178,24 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setDescriptionMap(descriptionMap);
 		role.setType(type);
 		role.setSubtype(subtype);
+
+		if (LazyReferencingThreadLocal.isIncompleteModel()) {
+			role.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
+		}
+		else {
+			role.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
+
+		role.setStatusByUserId(user.getUserId());
+		role.setStatusByUserName(user.getFullName());
+
+		if (serviceContext != null) {
+			role.setStatusDate(serviceContext.getModifiedDate(new Date()));
+		}
+		else {
+			role.setStatusDate(new Date());
+		}
+
 		role.setExpandoBridgeAttributes(serviceContext);
 
 		role = rolePersistence.update(role);
@@ -776,6 +800,40 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return roleFinder.countByGroupRoleAndTeamRole(
 			companyId, name, excludedNames, title, description, types,
 			excludedTeamRoleId, teamGroupId);
+	}
+
+	@Override
+	public Role getOrAddIncompleteRole(
+			String externalReferenceCode, long companyId, long userId,
+			String className, long classPK, String name, int type)
+		throws Exception {
+
+		Role role = roleLocalService.fetchRoleByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		if (role != null) {
+			return role;
+		}
+
+		if (!LazyReferencingThreadLocal.isEnabled()) {
+			throw new NoSuchRoleException(
+				StringBundler.concat(
+					"Unable to find role with external reference code ",
+					externalReferenceCode, " and company ", companyId));
+		}
+
+		if (roleLocalService.fetchRole(companyId, name) != null) {
+			name = externalReferenceCode;
+		}
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
+					true)) {
+
+			return roleLocalService.addRole(
+				externalReferenceCode, userId, className, classPK, name, null,
+				null, type, StringPool.BLANK, new ServiceContext());
+		}
 	}
 
 	/**
@@ -1918,7 +1976,50 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setSubtype(subtype);
 		role.setExpandoBridgeAttributes(serviceContext);
 
-		return rolePersistence.update(role);
+		role = rolePersistence.update(role);
+
+		if (role.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
+			return role;
+		}
+
+		long userId = role.getUserId();
+
+		if (serviceContext != null) {
+			userId = serviceContext.getUserId();
+		}
+
+		return updateStatus(
+			userId, role.getRoleId(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext, Collections.emptyMap());
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Role updateStatus(
+			long userId, long roleId, int status, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		Role role = getRole(roleId);
+
+		if (role.getStatus() == status) {
+			return role;
+		}
+
+		role.setStatus(status);
+
+		User user = _userLocalService.getUser(userId);
+
+		role.setStatusByUserId(user.getUserId());
+		role.setStatusByUserName(user.getFullName());
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		role.setStatusDate(serviceContext.getModifiedDate(new Date()));
+
+		return updateRole(role);
 	}
 
 	@Override

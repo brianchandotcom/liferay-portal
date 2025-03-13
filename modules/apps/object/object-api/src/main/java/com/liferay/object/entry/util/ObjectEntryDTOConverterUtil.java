@@ -102,6 +102,7 @@ public class ObjectEntryDTOConverterUtil {
 		dtoJSONObject.remove("dateModified");
 		dtoJSONObject.remove("id");
 		dtoJSONObject.remove("status");
+		dtoJSONObject.remove("version");
 
 		return dtoJSONObject.toString();
 	}

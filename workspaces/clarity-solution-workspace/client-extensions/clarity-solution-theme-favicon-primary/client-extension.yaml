@@ -2,7 +2,7 @@ assemble:
     - from: assets
       hashify: favicon.ico
       into: static
-liferay-courseclarity-theme-favicon-primary:
-    name: Liferay Course Clarity Theme Favicon Primary
+clarity-solution-theme-favicon-primary:
+    name: Clarity Solution Theme Favicon Primary
     type: themeFavicon
     url: favicon.*.ico

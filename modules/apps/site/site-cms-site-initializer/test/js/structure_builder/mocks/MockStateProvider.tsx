@@ -10,17 +10,20 @@ import {
 	State,
 	StateContext,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
+import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
 const DEFAULT_STATE: State = {
 	erc: '',
 	error: null,
 	fields: new Map(),
 	id: null,
+	invalids: new Set(),
 	label: 'untitled-structure',
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
 	selection: [],
 	status: 'new',
+	uuid: getUuid(),
 };
 
 export function MockStateProvider({

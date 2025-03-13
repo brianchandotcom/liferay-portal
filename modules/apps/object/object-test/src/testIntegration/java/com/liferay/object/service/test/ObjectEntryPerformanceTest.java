@@ -222,10 +222,24 @@ public class ObjectEntryPerformanceTest {
 			"http://", _VIRTUAL_HOST_NAME, ":8080", pathSuffix);
 	}
 
-	private String _getUserNameAndPassword() {
-		return StringBundler.concat(
-			"test@", _VIRTUAL_HOST_NAME, ":",
-			PropsValues.DEFAULT_ADMIN_PASSWORD);
+	private HttpInvoker.HttpResponse _invokeHttp(
+			String bodyJSON, HttpInvoker.HttpMethod httpMethod, String path)
+		throws Exception {
+
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		if (bodyJSON != null) {
+			httpInvoker.body(bodyJSON, "application/json");
+		}
+
+		httpInvoker.httpMethod(httpMethod);
+		httpInvoker.path(path);
+		httpInvoker.userNameAndPassword(
+			StringBundler.concat(
+				"test@", _VIRTUAL_HOST_NAME, ":",
+				PropsValues.DEFAULT_ADMIN_PASSWORD));
+
+		return httpInvoker.invoke();
 	}
 
 	private void _testDeleteObjectEntryByObjectRestAPI() throws Exception {
@@ -234,29 +248,18 @@ public class ObjectEntryPerformanceTest {
 				StringBundler.concat(
 					" Delete ", _objectEntryCount, " Object Entries"))) {
 
-			HttpInvoker httpInvoker1 = HttpInvoker.newHttpInvoker();
-
-			httpInvoker1.userNameAndPassword(_getUserNameAndPassword());
-			httpInvoker1.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker1.path(
+			HttpInvoker.HttpResponse httpResponse = _invokeHttp(
+				null, HttpInvoker.HttpMethod.GET,
 				_getPath("/o/c/foos/?fields=id&pageSize=" + _objectEntryCount));
-
-			HttpInvoker.HttpResponse httpResponse = httpInvoker1.invoke();
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				httpResponse.getContent());
 
 			JSONArray jsonArray = (JSONArray)jsonObject.get("items");
 
-			HttpInvoker httpInvoker2 = HttpInvoker.newHttpInvoker();
-
-			httpInvoker2.body(jsonArray.toString(), "application/json");
-			httpInvoker2.userNameAndPassword(_getUserNameAndPassword());
-			httpInvoker2.httpMethod(HttpInvoker.HttpMethod.DELETE);
-			httpInvoker2.path(_getPath(_PATH_SUFFIX));
-
-			httpInvoker2.invoke();
+			_invokeHttp(
+				jsonArray.toString(), HttpInvoker.HttpMethod.DELETE,
+				_getPath(_PATH_SUFFIX));
 
 			long currentObjectEntryCount = _objectEntryCount;
 
@@ -274,14 +277,9 @@ public class ObjectEntryPerformanceTest {
 				StringBundler.concat(
 					" Import ", _objectEntryCount, " Object Entries"))) {
 
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(_createObjectEntryJSON(), "application/json");
-			httpInvoker.userNameAndPassword(_getUserNameAndPassword());
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-			httpInvoker.path(_getPath(_PATH_SUFFIX));
-
-			httpInvoker.invoke();
+			_invokeHttp(
+				_createObjectEntryJSON(), HttpInvoker.HttpMethod.POST,
+				_getPath(_PATH_SUFFIX));
 
 			List<ObjectDefinition> objectDefinitions =
 				_objectDefinitionLocalService.getCustomObjectDefinitions(

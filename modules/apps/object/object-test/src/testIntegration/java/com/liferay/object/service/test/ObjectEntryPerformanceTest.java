@@ -134,21 +134,26 @@ public class ObjectEntryPerformanceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 		}
 
+		List<com.liferay.object.model.ObjectEntry> objectEntries = null;
+
 		try (Closeable closeable = new PerformanceTimer(
 				60000,
 				"Get all the Object Entries by ObjectEntryLocalService with " +
 					"CustomObjectDefinitionId:" +
 						_customObjectDefinition.getObjectDefinitionId())) {
 
-			_objectEntries = _objectEntryLocalService.getObjectEntries(
+			objectEntries = _objectEntryLocalService.getObjectEntries(
 				0, _customObjectDefinition.getObjectDefinitionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
+		finally {
+			if (objectEntries != null) {
+				for (com.liferay.object.model.ObjectEntry objectEntry :
+					objectEntries) {
 
-		for (com.liferay.object.model.ObjectEntry objectEntry :
-				_objectEntries) {
-
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+					_objectEntryLocalService.deleteObjectEntry(objectEntry);
+				}
+			}
 		}
 	}
 
@@ -326,7 +331,6 @@ public class ObjectEntryPerformanceTest {
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	private List<com.liferay.object.model.ObjectEntry> _objectEntries;
 	private int _objectEntryCount;
 
 	@Inject

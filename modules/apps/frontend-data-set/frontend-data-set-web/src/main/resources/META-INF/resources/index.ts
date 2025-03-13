@@ -143,7 +143,7 @@ export interface IItemActionsData {
 
 export interface IItemActionsDataFilter {
 	key: string;
-	value: string;
+	value: boolean | number | string;
 }
 
 export interface IQuickActions extends IBaseActions {

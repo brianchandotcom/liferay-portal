@@ -33,7 +33,7 @@ export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 	}, []);
 
 	return (
-		<ClayLayout.ContainerFluid size="md" view>
+		<ClayLayout.ContainerFluid className="px-4" size="md" view>
 			<ClayBreadcrumb
 				className="mb-3"
 				items={[
@@ -67,11 +67,11 @@ export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 				</ClayTabs.List>
 
 				<ClayTabs.Panels fade>
-					<ClayTabs.TabPane>
+					<ClayTabs.TabPane className="px-0">
 						<GeneralTab field={field!} />
 					</ClayTabs.TabPane>
 
-					<ClayTabs.TabPane>
+					<ClayTabs.TabPane className="px-0">
 						<SearchTab field={field!} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>

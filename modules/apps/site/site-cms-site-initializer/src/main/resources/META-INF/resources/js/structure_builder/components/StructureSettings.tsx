@@ -57,7 +57,7 @@ function StructureSettings() {
 	}, []);
 
 	return (
-		<ClayLayout.ContainerFluid size="md" view>
+		<ClayLayout.ContainerFluid className="px-4" size="md" view>
 			{error ? (
 				<ClayAlert
 					displayType="danger"
@@ -109,11 +109,11 @@ function StructureSettings() {
 				</ClayTabs.List>
 
 				<ClayTabs.Panels fade>
-					<ClayTabs.TabPane>
+					<ClayTabs.TabPane className="px-0">
 						<GeneralTab />
 					</ClayTabs.TabPane>
 
-					<ClayTabs.TabPane>
+					<ClayTabs.TabPane className="px-0">
 						<ValidationsTab />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>

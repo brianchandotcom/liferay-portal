@@ -54,7 +54,9 @@ if (portletTitleBasedNavigation) {
 	%>
 
 	<div class="management-bar management-bar-light navbar navbar-expand-md">
-		<clay:container-fluid>
+		<clay:container-fluid
+			fullWidth="<%= true %>"
+		>
 			<ul class="justify-content-end navbar-nav navbar-nav-expand">
 				<li class="nav-item">
 					<clay:link
@@ -107,7 +109,7 @@ if (portletTitleBasedNavigation) {
 		</liferay-frontend:sidebar-panel>
 	</c:if>
 
-	<div class="sidenav-content <%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-xl container-form-lg" : StringPool.BLANK %>">
+	<div class="sidenav-content <%= portletTitleBasedNavigation ? "container-fluid container-fluid-max-lg container-form-lg" : StringPool.BLANK %>">
 		<c:if test="<%= !portletTitleBasedNavigation %>">
 			<div class="autofit-row">
 				<div class="autofit-col autofit-col-expand">

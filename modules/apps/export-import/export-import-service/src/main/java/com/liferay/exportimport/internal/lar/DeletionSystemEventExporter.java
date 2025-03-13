@@ -16,6 +16,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -264,7 +267,7 @@ public class DeletionSystemEventExporter {
 			systemEvent.getClassExternalReferenceCode());
 
 		if (_isBatchDeletion(className)) {
-			String key = className + "_batchDeleteERCs";
+			String key = className + _BATCH_DELETE_CLASS_NAME_POSTFIX;
 
 			Map<String, String> newPrimaryKeysMap =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
@@ -382,8 +385,13 @@ public class DeletionSystemEventExporter {
 	}
 
 	private boolean _isBatchDeletion(String className) {
-		return className.startsWith(
-			"com.liferay.object.model.ObjectDefinition");
+		try (ServiceTrackerList resources = ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(), null,
+				"(&(batch.engine.scope=company)(batch.engine.task.item.delegate=true)(batch.engine.task.item.delegate.item.class.name=" +
+					className + "))")) {
+
+			return !resources.isEmpty();
+		}
 	}
 
 	private static final String _BATCH_DELETE_CLASS_NAME_POSTFIX =

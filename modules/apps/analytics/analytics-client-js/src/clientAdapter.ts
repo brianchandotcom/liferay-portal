@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Analytics} from './types';
 import {HEADER_PROJECT_ID, REQUEST_TIMEOUT} from './utils/constants';
 
 /**
@@ -12,7 +13,19 @@ import {HEADER_PROJECT_ID, REQUEST_TIMEOUT} from './utils/constants';
  * process messages in its queue.
  */
 class ClientAdapter {
-	constructor({endpointUrl, projectId, timeout} = {}) {
+	projectId: string;
+	timeout: number;
+	url: string;
+
+	constructor({
+		endpointUrl,
+		projectId,
+		timeout,
+	}: {
+		endpointUrl: string;
+		projectId: string;
+		timeout?: number;
+	}) {
 		this.projectId = projectId;
 		this.timeout = timeout || REQUEST_TIMEOUT;
 		this.url = endpointUrl;
@@ -21,12 +34,8 @@ class ClientAdapter {
 	/**
 	 * Returns a Request object with all data from the analytics instance
 	 * including the batched event objects
-	 * @param {Object} analytics The Analytics instance from which the data is extracted
-	 * @param {string} userId The userId string representation
-	 * @protected
-	 * @returns {Object} Parameters of the request to be sent.
 	 */
-	_getRequestParameters() {
+	_getRequestParameters(): RequestInit {
 		const headers = {'Content-Type': 'application/json'};
 
 		if (this.projectId) {
@@ -45,31 +54,28 @@ class ClientAdapter {
 	/**
 	 * Returns the Response object or a rejected Promise based on the
 	 * HTTP Response Code of the Response object
-	 * @param {Object} response Response
-	 * @returns {Object} Promise
 	 */
-	_validateResponse(response) {
+	_validateResponse(response: Response) {
+		let newResponse: Response | Promise<Response> = response;
+
 		if (!response.ok) {
-			response = new Promise((_, reject) => reject(response));
+			newResponse = new Promise((_, reject) => reject(response));
 		}
 
-		return response;
+		return newResponse;
 	}
 
 	/**
 	 * Returns a resolved or rejected promise as per the response status or if the request times out.
-	 * @param {Object} analytics The Analytics instance from which the data is extracted
-	 * @param {string} userId The userId string representation
-	 * @returns {Object} Promise object representing the result of the operation
 	 */
-	sendWithTimeout(payload) {
+	sendWithTimeout(payload: Analytics.Event | Analytics.Identity) {
 		return Promise.race([this.send(payload), this._timeout()]);
 	}
 
 	/**
 	 * Send a request with given payload and url.
 	 */
-	send(payload) {
+	send(payload: Analytics.Event | Analytics.Identity) {
 		const parameters = this._getRequestParameters();
 
 		Object.assign(parameters, {
@@ -81,8 +87,6 @@ class ClientAdapter {
 
 	/**
 	 * Returns a promise that times out after the given time limit is exceeded
-	 * @param {number} timeout
-	 * @returns {Object} Promise
 	 */
 	_timeout() {
 		return new Promise((_, reject) => setTimeout(reject, this.timeout));

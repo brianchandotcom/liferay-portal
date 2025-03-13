@@ -13,6 +13,8 @@
 		"./build"
 	],
 	"include": [
-		"./src/**/*.ts"
+		"./src/**/*.ts",
+		"./test/**/*.ts",
+		"global.d.ts"
 	]
 }

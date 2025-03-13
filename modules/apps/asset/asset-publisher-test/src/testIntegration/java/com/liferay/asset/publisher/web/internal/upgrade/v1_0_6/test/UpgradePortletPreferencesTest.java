@@ -11,10 +11,12 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -53,6 +55,40 @@ public class UpgradePortletPreferencesTest
 					"assetListEntryId",
 					String.valueOf(assetListEntry.getAssetListEntryId())
 				).build());
+		}
+		finally {
+			_assetListEntryLocalService.deleteAssetListEntry(assetListEntry);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-51051")
+	public void testUpgradeWithDifferentGroupAssetListEntryAndPreferencesPlidShared()
+		throws Exception {
+
+		Group guestGroup = groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		AssetListEntry assetListEntry = _addAssetListEntry(guestGroup);
+
+		try {
+			testUpgrade(
+				HashMapBuilder.put(
+					"assetListEntryExternalReferenceCode",
+					assetListEntry.getExternalReferenceCode()
+				).put(
+					"assetListEntryGroupExternalReferenceCode",
+					guestGroup.getExternalReferenceCode()
+				).put(
+					"assetListEntryId",
+					String.valueOf(assetListEntry.getAssetListEntryId())
+				).build(),
+				HashMapBuilder.put(
+					"assetListEntryId",
+					String.valueOf(assetListEntry.getAssetListEntryId())
+				).build(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED);
 		}
 		finally {
 			_assetListEntryLocalService.deleteAssetListEntry(assetListEntry);

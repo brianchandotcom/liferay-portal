@@ -589,6 +589,13 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 16, 0), AssetVocabularyGroupRelTable.create());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 17, 0),
+			UpgradeProcessFactory.addColumns(
+				"Role_", "status INTEGER", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75)", "statusDate DATE"),
+			UpgradeProcessFactory.runSQL("update Role_ set status = 0"));
 	}
 
 }

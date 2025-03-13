@@ -1,0 +1,44 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Wilson Ferreira
+ */
+public class LPD_40617 {
+
+	public void method(
+		long userId, long parentOrganizationId, String name, String type,
+		long regionId, long countryId, long statusId, String comments,
+		boolean site, ServiceContext serviceContext) {
+
+		OrganizationLocalServiceUtil.addOrganization(null, userId, parentOrganizationId, name, type, regionId, countryId, _listTypeLocalService.getListTypeId(CompanyThreadLocal.getCompanyId(), statusId, ListTypeConstants.ORGANIZATION_STATUS), comments, site, serviceContext);
+		_organizationLocalService.addOrganization(123, parentOrganizationId, name, type, regionId, countryId, statusId, comments, site, serviceContext);
+		_organizationLocalService.addOrganization(null, userId, parentOrganizationId, name, type, regionId, countryId, _listTypeLocalService.getListTypeId(CompanyThreadLocal.getCompanyId(), statusId, ListTypeConstants.ORGANIZATION_STATUS), comments, site, serviceContext);
+
+		OrganizationServiceUtil.addOrganization(null, parentOrganizationId, name, type, regionId, countryId, _listTypeService.getListTypeId(CompanyThreadLocal.getCompanyId(), statusId, ListTypeConstants.ORGANIZATION_STATUS), comments, site, serviceContext);
+		_organizationService.addOrganization(123, name, type, regionId, countryId, statusId, comments, site, serviceContext);
+		_organizationService.addOrganization(null, parentOrganizationId, name, type, regionId, countryId, _listTypeService.getListTypeId(CompanyThreadLocal.getCompanyId(), statusId, ListTypeConstants.ORGANIZATION_STATUS), comments, site, serviceContext);
+	}
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private ListTypeService _listTypeService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private OrganizationService _organizationService;
+
+}

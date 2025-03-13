@@ -442,14 +442,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeDisplayTemplate(displayTemplate = null) {
-		Select(
-			key_fieldLabel = "Display Template",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${displayTemplate});
-	}
-
-	@summary = "Default summary"
 	macro configureMenuType(menuType = null, navigationMenu = null, oldPrimaryNavigationMenu = null) {
 		if (${menuType} == "Primary Navigation") {
 			LexiconEntry.gotoEntryMenuItemNoError(
@@ -662,13 +654,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openPreviewMenu() {
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		Button.click(button = "Preview");
-	}
-
-	@summary = "Default summary"
 	macro toggleAutomaticallyAddNewPagesToMenu(toggleValue = null) {
 		Click(locator1 = "SiteNavigationMenu#SIDEBAR_COG");
 
@@ -687,14 +672,6 @@ definition {
 		}
 
 		Button.clickSave();
-	}
-
-	@summary = "Default summary"
-	macro viewDisplayTemplate(displayTemplate = null) {
-		AssertSelectedLabel(
-			key_fieldLabel = "Display Template",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${displayTemplate});
 	}
 
 	@summary = "Default summary"

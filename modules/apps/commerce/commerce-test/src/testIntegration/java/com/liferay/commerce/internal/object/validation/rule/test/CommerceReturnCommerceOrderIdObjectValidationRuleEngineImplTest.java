@@ -7,11 +7,11 @@ package com.liferay.commerce.internal.object.validation.rule.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -19,6 +19,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,7 +29,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Crescenzo Rega
  */
-@FeatureFlags("LPD-10562")
 @RunWith(Arquillian.class)
 public class CommerceReturnCommerceOrderIdObjectValidationRuleEngineImplTest
 	extends BaseObjectValidationRuleEngineImplTestCase {
@@ -38,6 +39,14 @@ public class CommerceReturnCommerceOrderIdObjectValidationRuleEngineImplTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		Assume.assumeTrue(FeatureFlagManagerUtil.isEnabled("LPD-10562"));
+
+		super.setUp();
+	}
 
 	@Test
 	public void test() {

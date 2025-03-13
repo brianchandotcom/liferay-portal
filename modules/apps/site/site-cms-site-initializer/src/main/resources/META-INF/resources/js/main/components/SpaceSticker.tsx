@@ -39,13 +39,16 @@ function getRandomDisplayType(): StickerValidDisplayType {
 	return validDisplayTypes[randomIndex];
 }
 interface SpaceStickerProps {
+	displayType?: StickerValidDisplayType;
 	name: string;
 	size?: StickerValidSize;
 }
 
-export default function SpaceSticker({name, size}: SpaceStickerProps) {
-	const displayType = getRandomDisplayType();
-
+export default function SpaceSticker({
+	displayType = getRandomDisplayType(),
+	name,
+	size,
+}: SpaceStickerProps) {
 	return (
 		<>
 			<ClaySticker displayType={displayType} size={size}>

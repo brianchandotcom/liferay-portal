@@ -92,6 +92,12 @@ public class ObjectEntryPerformanceTest {
 
 		_objectEntriesCount = GetterUtil.getInteger(
 			_properties.getProperty("object.entries.count"));
+
+		_expectedImportTime = GetterUtil.getInteger(
+			_properties.getProperty("expected.import.time"));
+
+		_expectedDeletionTime = GetterUtil.getInteger(
+			_properties.getProperty("expected.deletion.time"));
 	}
 
 	@Test
@@ -202,7 +208,7 @@ public class ObjectEntryPerformanceTest {
 			objectFolder.getExternalReferenceCode(), objectFolder);
 
 		try (PerformanceTimer performanceTimer1 = new PerformanceTimer(
-				36000,
+				_expectedImportTime,
 				StringBundler.concat(
 					"Import all the ", _objectEntriesCount, " Object Entries ",
 					"to SampleObjectFolder by HTTP POST"))) {
@@ -225,7 +231,7 @@ public class ObjectEntryPerformanceTest {
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				30000,
+				_expectedDeletionTime,
 				StringBundler.concat(
 					"Delete all the ", _objectEntriesCount, " Object Entries ",
 					"from SampleObjectFolder by HTTP POST"))) {
@@ -303,6 +309,8 @@ public class ObjectEntryPerformanceTest {
 
 	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
+	private static int _expectedDeletionTime;
+	private static int _expectedImportTime;
 	private static int _objectEntriesCount;
 	private static Properties _properties;
 

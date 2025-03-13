@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -213,18 +212,19 @@ public class FaroProjectLocalServiceImpl
 		List<Long> groupIds = TransformUtil.transform(
 			groups, Group::getGroupId);
 
-		List<FaroProject> faroProjectsFiltered = new ArrayList<>();
+		return TransformUtil.transform(
+			faroProjects,
+			faroProject -> {
+				if (!groupIds.contains(faroProject.getGroupId()) &&
+					StringUtil.equals(
+						faroProject.getState(),
+						FaroProjectConstants.STATE_READY)) {
 
-		for (FaroProject faroProject : faroProjects) {
-			if (!groupIds.contains(faroProject.getGroupId()) &&
-				StringUtil.equals(
-					faroProject.getState(), FaroProjectConstants.STATE_READY)) {
+					return faroProject;
+				}
 
-				faroProjectsFiltered.add(faroProject);
-			}
-		}
-
-		return faroProjectsFiltered;
+				return null;
+			});
 	}
 
 	@Override

@@ -60,7 +60,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.junit.Assume;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,8 +83,8 @@ public class ObjectEntryPerformanceTest {
 		Assume.assumeTrue(Validator.isNull(System.getenv("JENKINS_HOME")));
 	}
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		Class<?> clazz = ObjectEntryPerformanceTest.class;
 
 		Properties properties = PropertiesUtil.load(
@@ -299,6 +299,8 @@ public class ObjectEntryPerformanceTest {
 
 	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
+	private static int _objectEntryCount;
+
 	@DeleteAfterTestRun
 	private Company _company;
 
@@ -313,8 +315,6 @@ public class ObjectEntryPerformanceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	private int _objectEntryCount;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

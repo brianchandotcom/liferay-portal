@@ -60,19 +60,15 @@ public class DefaultStyleBookEntryUtilTest {
 	public void testGetStyleBookEntryNameWithDefaultStyleBookEntry()
 		throws Exception {
 
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), true, null, RandomTestUtil.randomString(),
-				null, _THEME_ID, null);
+		_styleBookEntryLocalService.addStyleBookEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), true, null, RandomTestUtil.randomString(),
+			null, _THEME_ID, null);
 
 		Assert.assertEquals(
 			"styles-by-default",
 			DefaultStyleBookEntryUtil.getStyleBookEntryName(
 				_layout, null, null));
-
-		_styleBookEntryLocalService.deleteStyleBookEntry(
-			styleBookEntry.getStyleBookEntryId());
 	}
 
 	@Test
@@ -81,19 +77,15 @@ public class DefaultStyleBookEntryUtilTest {
 
 		Layout layoutWithMasterLayout = _getLayoutWithMasterLayout();
 
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), true, null, RandomTestUtil.randomString(),
-				null, _THEME_ID, null);
+		_styleBookEntryLocalService.addStyleBookEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), true, null, RandomTestUtil.randomString(),
+			null, _THEME_ID, null);
 
 		Assert.assertEquals(
 			"styles-by-default",
 			DefaultStyleBookEntryUtil.getStyleBookEntryName(
 				layoutWithMasterLayout, null, null));
-
-		_styleBookEntryLocalService.deleteStyleBookEntry(
-			styleBookEntry.getStyleBookEntryId());
 	}
 
 	@Test
@@ -163,9 +155,6 @@ public class DefaultStyleBookEntryUtilTest {
 			name,
 			DefaultStyleBookEntryUtil.getStyleBookEntryName(
 				_layout, null, styleBookEntry));
-
-		_styleBookEntryLocalService.deleteStyleBookEntry(
-			styleBookEntry.getStyleBookEntryId());
 	}
 
 	private Layout _getLayoutWithMasterLayout() throws Exception {

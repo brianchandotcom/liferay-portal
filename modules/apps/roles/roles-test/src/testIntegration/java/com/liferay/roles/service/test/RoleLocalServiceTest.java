@@ -7,11 +7,14 @@ package com.liferay.roles.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleNameException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -465,6 +468,39 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddIncompleteRole() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_roleLocalService.getOrAddIncompleteRole(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Role.class.getName(), 0,
+				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+			Assert.fail();
+		}
+		catch (NoSuchRoleException noSuchRoleException) {
+			Assert.assertNotNull(noSuchRoleException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Role role = _roleLocalService.getOrAddIncompleteRole(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Role.class.getName(), 0,
+				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+			_assertStatus(
+				WorkflowConstants.STATUS_INCOMPLETE, TestPropsValues.getUser(),
+				role);
+		}
+	}
+
+	@Test
 	public void testGetResourceActionRoles() {
 		List<Role> roles = _roleLocalService.getResourceRoles(
 			_resourcePermission.getCompanyId(), _resourcePermission.getName(),
@@ -711,6 +747,30 @@ public class RoleLocalServiceTest {
 		}
 	}
 
+	@Test
+	public void testUpdateRoleWithLazyReferencingEnabled() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Role role = _roleLocalService.getOrAddIncompleteRole(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Role.class.getName(), 0,
+				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+			_assertStatus(
+				WorkflowConstants.STATUS_INCOMPLETE, TestPropsValues.getUser(),
+				role);
+
+			role = _roleLocalService.updateRole(
+				role.getRoleId(), role.getName(), role.getTitleMap(),
+				role.getDescriptionMap(), role.getSubtype(), null);
+
+			_assertStatus(
+				WorkflowConstants.STATUS_APPROVED, TestPropsValues.getUser(),
+				role);
+		}
+	}
+
 	protected void assertGetTeamRoleMap(
 		Map<Team, Role> teamRoleMap, Team team, boolean hasTeam) {
 
@@ -740,6 +800,15 @@ public class RoleLocalServiceTest {
 		_team = _teamLocalService.addTeam(
 			user.getUserId(), _organization.getGroupId(),
 			RandomTestUtil.randomString(), null, new ServiceContext());
+	}
+
+	private void _assertStatus(
+		int expectedStatus, User expectedUser, Role role) {
+
+		Assert.assertEquals(expectedStatus, role.getStatus());
+		Assert.assertEquals(expectedUser.getUserId(), role.getStatusByUserId());
+		Assert.assertEquals(
+			expectedUser.getFullName(), role.getStatusByUserName());
 	}
 
 	private void _testLoggingAuditMessageProcessorConfigurationEnabled()

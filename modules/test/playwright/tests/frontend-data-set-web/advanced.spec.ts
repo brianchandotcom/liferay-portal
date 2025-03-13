@@ -12,6 +12,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
 
 const test = mergeTests(
@@ -473,25 +474,23 @@ test('Check behavior of item actions', async ({fdsSamplePage, page}) => {
 	await test.step('Async connection refused action opens an unexpected error alert toast', async () => {
 		await fdsSamplePage.clickItemAction(asyncConnectionRefused);
 
-		await expect(
-			page.getByText('Error:An unexpected error occurred.')
-		).toBeVisible();
+		await waitForAlert(page, 'Error:An unexpected error occurred.', {
+			type: 'danger',
+		});
 	});
 
 	await test.step('Async resource not found action opens an unexpected error alert toast', async () => {
 		await fdsSamplePage.clickItemAction(asyncResourceNotFound);
 
-		await expect(
-			page.getByText('Error:An unexpected error occurred.').first()
-		).toBeVisible();
+		await waitForAlert(page, 'Error:An unexpected error occurred.', {
+			type: 'danger',
+		});
 	});
 
 	await test.step('Async success action opens a success alert toast', async () => {
 		await fdsSamplePage.clickItemAction(asyncSuccess);
 
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+		await waitForAlert(page);
 	});
 });
 

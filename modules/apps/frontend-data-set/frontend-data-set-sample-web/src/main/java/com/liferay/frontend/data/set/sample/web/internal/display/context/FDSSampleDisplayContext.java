@@ -13,7 +13,6 @@ import com.liferay.frontend.data.set.sample.web.internal.display.context.helper.
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -67,10 +66,7 @@ public class FDSSampleDisplayContext {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Company company = themeDisplay.getCompany();
-
-		String portalURL = company.getPortalURL(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		String portalURL = "/o/c/fdssamples/{id}";
 
 		FDSActionDropdownItem sidePanel1FDSActionDropdownItem =
 			new FDSActionDropdownItem(

@@ -57,6 +57,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="TUG_C_C" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="toUserGroupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="TUG_TU_C_C" return-type="SharingEntry" unique="true">
 			<finder-column name="toUserGroupId" />
 			<finder-column name="toUserId" />

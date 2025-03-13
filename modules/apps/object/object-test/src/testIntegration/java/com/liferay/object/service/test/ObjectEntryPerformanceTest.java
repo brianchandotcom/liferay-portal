@@ -97,7 +97,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	@Test
-	public void testGetObjectEntriesByObjectEntryLocalService()
+	public void testGetObjectEntries()
 		throws Exception {
 
 		_publishCustomObjectDefinitionByObjectDefinitionLocalService();
@@ -119,7 +119,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	@Test
-	public void testImportAndDeleteObjectEntryByObjectRestAPI()
+	public void testImportAndDeleteByRestAPI()
 		throws Exception {
 
 		_setUpCompanyForObjectRestAPITest();

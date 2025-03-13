@@ -1942,6 +1942,15 @@ public class LayoutLocalServiceWrapper
 			masterLayoutPlid);
 	}
 
+	@Override
+	public void updateLayoutContent(
+			String data, Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		_layoutLocalService.updateLayoutContent(
+			data, layout, segmentsExperienceId);
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

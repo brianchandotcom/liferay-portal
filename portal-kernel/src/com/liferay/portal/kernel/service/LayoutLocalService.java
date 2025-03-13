@@ -1454,6 +1454,10 @@ public interface LayoutLocalService
 			long faviconFileEntryId, long masterLayoutPlid)
 		throws PortalException;
 
+	public void updateLayoutContent(
+			String data, Layout layout, long segmentsExperienceId)
+		throws Exception;
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

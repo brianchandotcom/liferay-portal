@@ -79,6 +79,9 @@ public interface AssetTagGroupRelLocalService
 	public AssetTagGroupRel addAssetTagGroupRel(
 		AssetTagGroupRel assetTagGroupRel);
 
+	public AssetTagGroupRel addAssetTagGroupRel(long groupId, long tagId)
+		throws PortalException;
+
 	/**
 	 * Creates a new asset tag group rel with the primary key. Does not add the asset tag group rel to the database.
 	 *
@@ -122,6 +125,10 @@ public interface AssetTagGroupRelLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public AssetTagGroupRel deleteAssetTagGroupRel(long assetTagGroupRelId)
 		throws PortalException;
+
+	public void deleteAssetTagGroupRelsByGroupId(long groupId);
+
+	public void deleteAssetTagGroupRelsByTagId(long tagId);
 
 	/**
 	 * @throws PortalException
@@ -257,6 +264,12 @@ public interface AssetTagGroupRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetTagGroupRel> getAssetTagGroupRels(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTagGroupRel> getAssetTagGroupRelsByGroupyId(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetTagGroupRel> getAssetTagGroupRelsByTagId(long tagId);
+
 	/**
 	 * Returns all the asset tag group rels matching the UUID and company.
 	 *
@@ -307,6 +320,9 @@ public interface AssetTagGroupRelLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public void setAssetTagGroupRels(long tagId, long[] groupIds)
 		throws PortalException;
 
 	/**

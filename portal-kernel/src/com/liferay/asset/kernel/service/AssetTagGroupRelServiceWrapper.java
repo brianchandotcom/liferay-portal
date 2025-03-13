@@ -5,6 +5,7 @@
 
 package com.liferay.asset.kernel.service;
 
+import com.liferay.asset.kernel.model.AssetTagGroupRel;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -28,6 +29,21 @@ public class AssetTagGroupRelServiceWrapper
 		_assetTagGroupRelService = assetTagGroupRelService;
 	}
 
+	@Override
+	public AssetTagGroupRel addAssetTagGroupRel(long groupId, long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetTagGroupRelService.addAssetTagGroupRel(groupId, tagId);
+	}
+
+	@Override
+	public java.util.List<AssetTagGroupRel> getAssetTagGroupRelsByTagId(
+			long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetTagGroupRelService.getAssetTagGroupRelsByTagId(tagId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -36,6 +52,13 @@ public class AssetTagGroupRelServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _assetTagGroupRelService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void setAssetTagGroupRels(long tagId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetTagGroupRelService.setAssetTagGroupRels(tagId, groupIds);
 	}
 
 	@Override

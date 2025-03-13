@@ -52,6 +52,12 @@ public class AssetTagGroupRelLocalServiceUtil {
 		return getService().addAssetTagGroupRel(assetTagGroupRel);
 	}
 
+	public static AssetTagGroupRel addAssetTagGroupRel(long groupId, long tagId)
+		throws PortalException {
+
+		return getService().addAssetTagGroupRel(groupId, tagId);
+	}
+
 	/**
 	 * Creates a new asset tag group rel with the primary key. Does not add the asset tag group rel to the database.
 	 *
@@ -106,6 +112,14 @@ public class AssetTagGroupRelLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteAssetTagGroupRel(assetTagGroupRelId);
+	}
+
+	public static void deleteAssetTagGroupRelsByGroupId(long groupId) {
+		getService().deleteAssetTagGroupRelsByGroupId(groupId);
+	}
+
+	public static void deleteAssetTagGroupRelsByTagId(long tagId) {
+		getService().deleteAssetTagGroupRelsByTagId(tagId);
 	}
 
 	/**
@@ -274,6 +288,18 @@ public class AssetTagGroupRelLocalServiceUtil {
 		return getService().getAssetTagGroupRels(start, end);
 	}
 
+	public static List<AssetTagGroupRel> getAssetTagGroupRelsByGroupyId(
+		long groupId) {
+
+		return getService().getAssetTagGroupRelsByGroupyId(groupId);
+	}
+
+	public static List<AssetTagGroupRel> getAssetTagGroupRelsByTagId(
+		long tagId) {
+
+		return getService().getAssetTagGroupRelsByTagId(tagId);
+	}
+
 	/**
 	 * Returns all the asset tag group rels matching the UUID and company.
 	 *
@@ -338,6 +364,12 @@ public class AssetTagGroupRelLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void setAssetTagGroupRels(long tagId, long[] groupIds)
+		throws PortalException {
+
+		getService().setAssetTagGroupRels(tagId, groupIds);
 	}
 
 	/**

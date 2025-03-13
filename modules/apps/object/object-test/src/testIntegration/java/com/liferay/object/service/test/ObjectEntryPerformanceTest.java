@@ -149,7 +149,7 @@ public class ObjectEntryPerformanceTest {
 		finally {
 			if (objectEntries != null) {
 				for (com.liferay.object.model.ObjectEntry objectEntry :
-					objectEntries) {
+						objectEntries) {
 
 					_objectEntryLocalService.deleteObjectEntry(objectEntry);
 				}
@@ -158,34 +158,26 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	@Test
-	public void testImportAndDeleteByRestAPI() throws Exception {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+	public void testImportAndDeleteByRestAPI() throws Throwable {
+		TransactionConfig.Builder transactionConfigBuilder =
+			new TransactionConfig.Builder();
 
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(Exception.class);
+		_company = TransactionInvokerUtil.invoke(
+			transactionConfigBuilder.setPropagation(
+				Propagation.REQUIRED
+			).setRollbackForClasses(
+				Exception.class
+			).build(),
+			() -> {
+				Company company = CompanyLocalServiceUtil.addCompany(
+					null, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME,
+					_VIRTUAL_HOST_NAME, 0, true, true, null, null, null, null,
+					null, null);
 
-		TransactionConfig transactionConfig = builder.build();
+				PortalInstances.initCompany(company);
 
-		try {
-			_company = TransactionInvokerUtil.invoke(
-				transactionConfig,
-				() -> {
-					Company company = CompanyLocalServiceUtil.addCompany(
-						null, _VIRTUAL_HOST_NAME, _VIRTUAL_HOST_NAME,
-						_VIRTUAL_HOST_NAME, 0, true, true, null, null, null,
-						null, null, null);
-
-					PortalInstances.initCompany(company);
-
-					return company;
-				});
-		}
-		catch (Exception exception) {
-			throw exception;
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
-		}
+				return company;
+			});
 
 		ObjectFolderResource.Builder objectFolderResourceBuilder =
 			_objectFolderResourceFactory.create();
@@ -215,7 +207,7 @@ public class ObjectEntryPerformanceTest {
 		_testDeleteObjectEntryByObjectRestAPI();
 	}
 
-	private String _createObjectEntryJSON() throws Exception {
+	private String _createObjectEntryJSON() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (int i = 0; i < _objectEntryCount; i++) {

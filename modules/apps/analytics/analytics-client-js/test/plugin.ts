@@ -4,17 +4,18 @@
  */
 
 import AnalyticsClient from '../src/analytics';
+import {INITIAL_ANALYTICS_CONFIG} from './helpers';
 
 describe('Analytics Plugin Integration', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeEach(() => {
-		Analytics = AnalyticsClient.create();
+		Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 	});
 
 	describe('registerPlugin()', () => {

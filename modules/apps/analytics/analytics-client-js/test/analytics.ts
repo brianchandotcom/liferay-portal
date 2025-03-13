@@ -3,43 +3,46 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../src/analytics';
-import {
-	DXP_APPLICATION_IDS,
-	STORAGE_KEY_EVENTS,
-	STORAGE_KEY_IDENTITY,
-	STORAGE_KEY_USER_ID,
-} from '../src/utils/constants';
+import {Analytics as AnalyticsType} from '../src/types';
 import {getItem} from '../src/utils/storage';
-import {sendDummyEvents, trackDummyEvents, wait} from './helpers';
+import {DXP_APPLICATION_IDS} from '../src/utils/validators';
+import {
+	INITIAL_ANALYTICS_CONFIG,
+	sendDummyEvents,
+	trackDummyEvents,
+	wait,
+} from './helpers';
 
-const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
-const ENDPOINT_URL = 'https://ac-server.io';
+const ANALYTICS_IDENTITY = {email: 'foo@bar.com', name: 'Foo Bar'};
+
 const FLUSH_INTERVAL = 100;
+
 const INITIAL_CONFIG = {
-	channelId: '4321',
-	dataSourceId: '1234',
-	endpointUrl: ENDPOINT_URL,
+	...INITIAL_ANALYTICS_CONFIG,
+	endpointUrl: 'https://ac-server.io',
 	flushInterval: FLUSH_INTERVAL,
 };
 
 describe('Analytics', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeEach(() => {
 		fetchMock.mock(/ac-server/i, () => Promise.resolve(200));
 
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-		localStorage.removeItem(STORAGE_KEY_EVENTS);
-		localStorage.removeItem(STORAGE_KEY_USER_ID);
+		localStorage.removeItem(AnalyticsType.Queues.Events);
+		localStorage.removeItem(AnalyticsType.Keys.UserId);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 
@@ -51,52 +54,52 @@ describe('Analytics', () => {
 	});
 
 	it('returns channelId from middleware', () => {
-		Analytics.registerMiddleware((request) => {
+		const middleware = ((request: {context: AnalyticsType.Context}) => {
 			request.context.channelId = '5678';
 
 			return request;
-		});
+		}) as unknown as AnalyticsType.Middleware;
+
+		Analytics.registerMiddleware(middleware);
 
 		expect(Analytics._getContext().channelId).toBe('5678');
 	});
 
 	it('is exposed in the global scope', () => {
-		expect(global.Analytics).toBeInstanceOf(Object);
+		expect((global as any).Analytics).toBeInstanceOf(Object);
 	});
 
 	it('exposes a "create" instantiation method', () => {
-		expect(typeof Analytics.create).toBe('function');
+		expect(typeof AnalyticsClient.create).toBe('function');
 	});
 
 	it('accepts a configuration object', () => {
-		const config = {a: 1, b: 2, c: 3};
-
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
-		Analytics = Analytics.create(config);
+		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-		expect(Analytics.config).toEqual(config);
+		expect(Analytics.config).toEqual(INITIAL_CONFIG);
 	});
 
 	it('regenerates the stored identity if the identity changed', async () => {
 		fetchMock.mock(/identity$/i, () => Promise.resolve(200));
 
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
 		await Analytics.setIdentity(ANALYTICS_IDENTITY);
 
-		const previousIdentityHash = getItem(STORAGE_KEY_IDENTITY);
+		const previousIdentityHash = getItem(AnalyticsType.Keys.Identity);
 
 		await Analytics.setIdentity({
 			email: 'john@liferay.com',
 			name: 'John',
 		});
 
-		const currentIdentityHash = getItem(STORAGE_KEY_IDENTITY);
+		const currentIdentityHash = getItem(AnalyticsType.Keys.Identity);
 
 		expect(currentIdentityHash).not.toEqual(previousIdentityHash);
 	});
@@ -105,7 +108,7 @@ describe('Analytics', () => {
 		fetchMock.mock('*', () => Promise.resolve(200));
 
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
@@ -123,7 +126,8 @@ describe('Analytics', () => {
 		});
 
 		await Analytics.setIdentity({
-			email: 'john@liferay.com',
+			email: 'test@liferay.com',
+			name: 'Test',
 		});
 
 		await wait(FLUSH_INTERVAL);
@@ -135,7 +139,7 @@ describe('Analytics', () => {
 		fetchMock.mock(/identity$/, () => Promise.resolve(200));
 
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
@@ -160,7 +164,7 @@ describe('Analytics', () => {
 		fetchMock.mock(/identity$/, () => Promise.resolve(200));
 
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
@@ -170,14 +174,14 @@ describe('Analytics', () => {
 
 			// Flush should have happened at least once
 
-			const userId = getItem(STORAGE_KEY_USER_ID);
+			const userId = getItem(AnalyticsType.Keys.UserId);
 
 			await Analytics.setIdentity({
 				email: 'john@liferay.com',
 				name: 'John',
 			});
 
-			expect(getItem(STORAGE_KEY_USER_ID)).toEqual(userId);
+			expect(getItem(AnalyticsType.Keys.UserId)).toEqual(userId);
 		}, FLUSH_INTERVAL * 2);
 	});
 
@@ -190,14 +194,14 @@ describe('Analytics', () => {
 			name: 'John',
 		});
 
-		const firstUserId = getItem(STORAGE_KEY_USER_ID);
+		const firstUserId = getItem(AnalyticsType.Keys.UserId);
 
 		await Analytics.setIdentity({
 			email: 'brian@liferay.com',
 			name: 'Brian',
 		});
 
-		const secondUserId = getItem(STORAGE_KEY_USER_ID);
+		const secondUserId = getItem(AnalyticsType.Keys.UserId);
 
 		expect(firstUserId).not.toEqual(secondUserId);
 	});
@@ -211,14 +215,14 @@ describe('Analytics', () => {
 			name: 'John',
 		});
 
-		const firstUserId = getItem(STORAGE_KEY_USER_ID);
+		const firstUserId = getItem(AnalyticsType.Keys.UserId);
 
 		await Analytics.setIdentity({
 			email: 'john@liferay.com',
 			name: 'John',
 		});
 
-		const secondUserId = getItem(STORAGE_KEY_USER_ID);
+		const secondUserId = getItem(AnalyticsType.Keys.UserId);
 
 		expect(firstUserId).toEqual(secondUserId);
 	});
@@ -232,31 +236,27 @@ describe('Analytics', () => {
 			name: 'John',
 		});
 
-		const firstUserId = getItem(STORAGE_KEY_USER_ID);
+		const firstUserId = getItem(AnalyticsType.Keys.UserId);
 
 		await Analytics.setIdentity({
 			email: 'john@liferay.com',
 			name: 'John',
 		});
 
-		const secondUserId = getItem(STORAGE_KEY_USER_ID);
+		const secondUserId = getItem(AnalyticsType.Keys.UserId);
 
 		expect(firstUserId).toEqual(secondUserId);
 	});
 
-	// Skipping this test because it was broken in the old
-	// Karma-based implementation (the `expect` was failing but it
-	// did so asynchronously after the test has "finished").
-
-	it.skip('regenerates the user id on logouts or session expirations ', async () => {
+	it('regenerates the user id on logouts or session expirations ', async () => {
 		fetchMock.mock(/ac-server/i, () => Promise.resolve(200));
 		fetchMock.mock(/identity$/, () => Promise.resolve(200));
 
 		sendDummyEvents(Analytics, 1);
 
-		await Analytics.flush();
+		await Analytics._queueFlushService?.flush();
 
-		const userId = getItem(STORAGE_KEY_USER_ID);
+		const userId = getItem(AnalyticsType.Keys.UserId);
 
 		await Analytics.setIdentity({
 			email: 'john@liferay.com',
@@ -264,13 +264,13 @@ describe('Analytics', () => {
 		});
 
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		sendDummyEvents(Analytics, 1);
 
-		await Analytics.flush();
+		await Analytics._queueFlushService?.flush();
 
-		expect(getItem(STORAGE_KEY_USER_ID)).not.toEqual(userId);
+		expect(getItem(AnalyticsType.Keys.UserId)).not.toEqual(userId);
 	});
 
 	describe('send()', () => {
@@ -281,18 +281,20 @@ describe('Analytics', () => {
 		it('adds the given event to the event queue', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			const eventId = 'eventId';
-			const applicationId = 'applicationId';
 			const properties = {a: 1, b: 2, c: 3};
 
-			await Analytics.send(eventId, applicationId, properties);
+			await Analytics.send(
+				AnalyticsType.EventId.BlogViewed,
+				AnalyticsType.ApplicationId.Blog,
+				properties
+			);
 
 			const events = Analytics.getEvents();
 
 			expect(events).toEqual([
 				expect.objectContaining({
-					applicationId,
-					eventId,
+					applicationId: AnalyticsType.ApplicationId.Blog,
+					eventId: AnalyticsType.EventId.BlogViewed,
 					properties,
 				}),
 			]);
@@ -312,8 +314,10 @@ describe('Analytics', () => {
 
 	describe('track()', () => {
 		afterEach(() => {
-			if (console.error.mockRestore) {
-				console.error.mockRestore();
+			const error = console.error as any;
+
+			if (error.mockRestore) {
+				error.mockRestore();
 			}
 		});
 
@@ -324,17 +328,16 @@ describe('Analytics', () => {
 		it('adds the given event to the event queue', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			const eventId = 'customEventId';
 			const properties = {a: 1, b: 2, c: 3};
 
-			await Analytics.track(eventId, properties);
+			await Analytics.track(AnalyticsType.EventId.BlogViewed, properties);
 
 			const events = Analytics.getEvents();
 
 			expect(events).toEqual([
 				expect.objectContaining({
 					applicationId: 'CustomEvent',
-					eventId,
+					eventId: AnalyticsType.EventId.BlogViewed,
 					properties,
 				}),
 			]);
@@ -347,7 +350,7 @@ describe('Analytics', () => {
 
 			console.error = jest.fn((val) => val);
 
-			await Analytics.track(eventId);
+			await Analytics.track(eventId as any);
 
 			expect(console.error).toHaveBeenCalledTimes(1);
 		});
@@ -358,8 +361,8 @@ describe('Analytics', () => {
 			console.error = jest.fn((val) => val);
 
 			Analytics.track(
-				'foo',
-				{bar: [], type: null},
+				AnalyticsType.EventId.AssetClicked,
+				{bar: [], type: null} as any,
 				{applicationId: 'Any'}
 			);
 
@@ -372,7 +375,11 @@ describe('Analytics', () => {
 			console.error = jest.fn((val) => val);
 
 			DXP_APPLICATION_IDS.forEach((applicationId) => {
-				Analytics.track('foo', {bar: [], type: null}, {applicationId});
+				Analytics.track(
+					AnalyticsType.EventId.AssetClicked,
+					{bar: [], type: null} as any,
+					{applicationId}
+				);
 
 				expect(console.error).toHaveBeenCalledTimes(0);
 			});
@@ -381,8 +388,8 @@ describe('Analytics', () => {
 		it('uses the applicationId from options', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			const eventId = 'test';
-			const applicationId = 'Page';
+			const eventId = AnalyticsType.EventId.BlogViewed;
+			const applicationId = AnalyticsType.ApplicationId.Blog;
 			const properties = {a: 1, b: 2, c: 3};
 
 			await Analytics.track(eventId, properties, {applicationId});
@@ -401,9 +408,11 @@ describe('Analytics', () => {
 		it('uses the assetType from properties over the applicationId from options', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			const assetType = 'Blog';
-			const eventId = 'test';
-			const properties = {a: 1, assetType};
+			const eventId = AnalyticsType.EventId.BlogViewed;
+			const properties = {
+				a: 1,
+				assetType: AnalyticsType.ApplicationId.Blog,
+			};
 
 			await Analytics.track(eventId, properties, {applicationId: 'Page'});
 
@@ -411,7 +420,7 @@ describe('Analytics', () => {
 
 			expect(events).toEqual([
 				expect.objectContaining({
-					applicationId: assetType,
+					applicationId: AnalyticsType.ApplicationId.Blog,
 					eventId,
 					properties: {a: 1},
 				}),
@@ -421,7 +430,7 @@ describe('Analytics', () => {
 		it('uses CustomEvent as default applicationId', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			const eventId = 'customEventId';
+			const eventId = AnalyticsType.EventId.AssetClicked;
 			const properties = {a: 1, b: 2, c: 3};
 
 			await Analytics.track(eventId, properties);
@@ -430,7 +439,7 @@ describe('Analytics', () => {
 
 			expect(events).toEqual([
 				expect.objectContaining({
-					applicationId: 'CustomEvent',
+					applicationId: AnalyticsType.ApplicationId.CustomEvent,
 					eventId,
 					properties,
 				}),
@@ -440,9 +449,9 @@ describe('Analytics', () => {
 		it('uses applicationId from options', async () => {
 			Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
-			const eventId = 'BlogView';
+			const eventId = AnalyticsType.EventId.BlogViewed;
 			const properties = {a: 1, b: 2, c: 3};
-			const options = {applicationId: 'Blog'};
+			const options = {applicationId: AnalyticsType.ApplicationId.Blog};
 
 			await Analytics.track(eventId, properties, options);
 
@@ -450,7 +459,7 @@ describe('Analytics', () => {
 
 			expect(events).toEqual([
 				expect.objectContaining({
-					applicationId: 'Blog',
+					applicationId: AnalyticsType.ApplicationId.Blog,
 					eventId,
 					properties,
 				}),

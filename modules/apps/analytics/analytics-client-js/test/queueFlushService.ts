@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import Analytics from '../src/analytics';
 import QueueFlushService from '../src/queueFlushService';
 import EventMessageQueue from '../src/queues/eventMessageQueue';
 import IdentityMessageQueue from '../src/queues/identityMessageQueue';
+import {Analytics as AnalyticsTypes} from '../src/types';
 import {INITIAL_ANALYTICS_CONFIG, wait} from './helpers';
 
 // We don't need any of the timing callbacks to run during these tests.
@@ -19,21 +22,20 @@ const analyticsInstance = Analytics.create(INITIAL_ANALYTICS_CONFIG);
 
 const FLUSH_INTERVAL = 100;
 
-const INITIAL_CONFIG = {
-	flushInterval: FLUSH_INTERVAL,
-};
-
-const getMockMessageItem = (id = 0, data = {}) => {
+const getMockMessageItem = (id = '0', data = {}) => {
 	return {
-		foo: 'bar',
-		id: `${id}`,
+		channelId: '1234',
+		dataSourceId: '4321',
+		emailAddressHashed: 'Gh4PyAipwQAsaAyMjD58bdIIxU2rnX',
+		id,
+		userId: 'TT0MyOwsiRKVbVS93lIy91VPWG36D6',
 		...data,
 	};
 };
 
 describe('QueueFlushService', () => {
-	let queueFlushService;
-	let identityQueue;
+	let queueFlushService: QueueFlushService;
+	let identityQueue: IdentityMessageQueue;
 
 	afterEach(() => {
 		fetchMock.restore();
@@ -43,10 +45,13 @@ describe('QueueFlushService', () => {
 	});
 
 	beforeEach(() => {
-		queueFlushService = new QueueFlushService(INITIAL_CONFIG);
+		queueFlushService = new QueueFlushService({
+			...INITIAL_ANALYTICS_CONFIG,
+			flushInterval: 100,
+		});
 		identityQueue = new IdentityMessageQueue({
 			analyticsInstance,
-			name: 'IdentityQueueTest',
+			name: AnalyticsTypes.Queues.Messages,
 		});
 	});
 
@@ -71,14 +76,14 @@ describe('QueueFlushService', () => {
 	});
 
 	it('flush queue items ordered by queue priority', async () => {
-		const sentEvents = [];
+		const sentEvents: string[] = [];
 		const eventQueue = new EventMessageQueue({
 			analyticsInstance,
-			name: 'EventQueueTest',
+			name: 'EventQueueTest' as AnalyticsTypes.Queues,
 		});
 		const priorityItem = getMockMessageItem('priority');
 
-		fetchMock.mock(/ac-server/i, (url, {body}) => {
+		fetchMock.mock(/ac-server/i, (url: string, {body}: {body: string}) => {
 			sentEvents.push(JSON.parse(body));
 
 			return Promise.resolve(200);

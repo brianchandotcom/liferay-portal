@@ -11,10 +11,6 @@
  *
  * @see https://github.com/jsdom/jsdom/issues/1245
  */
-global.setInnerHTML = (element, html) => {
-	element.innerHTML = html;
-	element.innerText = element.textContent;
-};
 
 if (!global.performance.timing) {
 	Object.defineProperty(global.performance, 'timing', {
@@ -27,12 +23,12 @@ if (!global.performance.timing) {
 	});
 }
 
-Liferay.Util.Cookie = {
-	TYPES: {
-		FUNCTIONAL: 'CONSENT_TYPE_FUNCTIONAL',
-		NECESSARY: 'CONSENT_TYPE_NECESSARY',
-		PERFORMANCE: 'CONSENT_TYPE_PERFORMANCE',
-		PERSONALIZATION: 'CONSENT_TYPE_PERSONALIZATION',
-	},
-	set: jest.fn(),
-};
+// Liferay.Util.Cookie = {
+// 	TYPES: {
+// 		FUNCTIONAL: 'CONSENT_TYPE_FUNCTIONAL',
+// 		NECESSARY: 'CONSENT_TYPE_NECESSARY',
+// 		PERFORMANCE: 'CONSENT_TYPE_PERFORMANCE',
+// 		PERSONALIZATION: 'CONSENT_TYPE_PERSONALIZATION',
+// 	},
+// 	set: jest.fn(),
+// };

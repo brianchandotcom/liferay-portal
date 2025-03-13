@@ -3,26 +3,35 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../src/analytics';
 import {meta} from '../src/middlewares/meta';
-import {sendDummyEvents, wait} from './helpers';
+import {Analytics} from '../src/types';
+import {INITIAL_ANALYTICS_CONFIG, sendDummyEvents, wait} from './helpers';
 
 const FLUSH_INTERVAL = 100;
 
+const INITIAL_CONFIG = {
+	...INITIAL_ANALYTICS_CONFIG,
+	endpointUrl: 'https://ac-server.io',
+	flushInterval: FLUSH_INTERVAL,
+};
+
 describe('Analytics MiddleWare Integration', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeEach(() => {
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create({flushInterval: FLUSH_INTERVAL});
+		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 	});
@@ -37,22 +46,23 @@ describe('Analytics MiddleWare Integration', () => {
 				return req;
 			});
 
-			Analytics.registerMiddleware(middleware);
+			Analytics.registerMiddleware(
+				middleware as unknown as Analytics.Middleware
+			);
 
 			sendDummyEvents(Analytics);
 
 			await wait(FLUSH_INTERVAL * 2);
 
 			expect(middleware).toHaveBeenCalledWith(
-				expect.objectContaining({context: expect.anything()}),
-				Analytics
+				expect.objectContaining({context: expect.anything()})
 			);
 		});
 	});
 
 	describe('default middlewares', () => {
 		it('includes document metadata by default', () => {
-			const req = {context: {}};
+			const req = {context: {channelId: '', dataSourceId: ''}};
 
 			expect(meta(req).context).toEqual(
 				expect.objectContaining({

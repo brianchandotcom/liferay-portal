@@ -40,6 +40,8 @@ const LDAP_GROUP_1 = 'ldapgroup1';
 const LDAP_GROUP_2 = 'ldapgroup2';
 const LDAP_GROUP_3 = 'ldapgroup3';
 const LDAP_GROUP_3_MODIFIED = 'ldapgroup3modified';
+const LDAP_GROUP_4_A = 'ldapgroup4a';
+const LDAP_GROUP_4_B = 'ldapgroup4b';
 
 const LDAP_USER_1: TUserAccount = {
 	alternateName: 'ldapuser1',
@@ -71,6 +73,30 @@ const LDAP_USER_3_MODIFIED: TUserAccount = {
 	familyName: 'lastmodified',
 	givenName: 'firstmodified',
 	password: 'testmodified',
+};
+
+const LDAP_USER_4: TUserAccount = {
+	alternateName: 'ldapuser4',
+	emailAddress: 'ldapuser4@liferay.com',
+	familyName: 'last',
+	givenName: 'first',
+	password: 'test',
+};
+
+const LDAP_USER_4_A: TUserAccount = {
+	alternateName: 'ldapuser4a',
+	emailAddress: 'ldapuser4@liferay.com',
+	familyName: 'last4a',
+	givenName: 'first4a',
+	password: 'test',
+};
+
+const LDAP_USER_4_AB: TUserAccount = {
+	alternateName: 'ldapuser4ab',
+	emailAddress: 'ldapuser4@liferay.com',
+	familyName: 'last4ab',
+	givenName: 'first4ab',
+	password: 'test',
 };
 
 test.afterAll(async ({browser}) => {
@@ -106,6 +132,9 @@ test.afterEach(
 				LDAP_USER_2,
 				LDAP_USER_3,
 				LDAP_USER_3_MODIFIED,
+				LDAP_USER_4,
+				LDAP_USER_4_A,
+				LDAP_USER_4_AB,
 			]) {
 				const user =
 					await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
@@ -156,7 +185,12 @@ test.beforeAll(async () => {
 	// Add LDAP user info to userData so we can authenticate via performLogin or
 	// performLoginViaApi
 
-	for (const ldapUser of [LDAP_USER_1, LDAP_USER_2, LDAP_USER_3]) {
+	for (const ldapUser of [
+		LDAP_USER_1,
+		LDAP_USER_2,
+		LDAP_USER_3,
+		LDAP_USER_4,
+	]) {
 		userData[ldapUser.alternateName] = {
 			name: ldapUser.givenName,
 			password: ldapUser.password,
@@ -169,11 +203,13 @@ test.beforeAll(async () => {
 	// the performLogin constraints by using the email as the key, and passing
 	// in a blank 'domain' argument.
 
-	userData[LDAP_USER_3_MODIFIED.emailAddress] = {
-		name: LDAP_USER_3_MODIFIED.givenName,
-		password: LDAP_USER_3_MODIFIED.password,
-		surname: LDAP_USER_3_MODIFIED.familyName,
-	};
+	for (const modifiedLdapUser of [LDAP_USER_3_MODIFIED, LDAP_USER_4_A]) {
+		userData[modifiedLdapUser.emailAddress] = {
+			name: modifiedLdapUser.givenName,
+			password: modifiedLdapUser.password,
+			surname: modifiedLdapUser.familyName,
+		};
+	}
 });
 
 test.beforeEach(async ({browser}) => {
@@ -440,6 +476,155 @@ test('LPD-47223 AC2 TC2: Verify LDAP bulk import updates user information and me
 			undefined,
 			''
 		);
+	});
+});
+
+test('LPD-47223 AC3 TC3: Verify LDAP import via authentication with multiple matching LDAP servers imports/updates only user groups for the first matching LDAP server', async ({
+	browser,
+	editUserPage,
+	ldapConfigurationPage,
+	ldapServerPage,
+	usersAndOrganizationsPage,
+}) => {
+	const ldapServerA: TLdapServer = {
+		authenticationSearchFilter: `(&(mail=@email_address@)(cn=${LDAP_USER_4_AB.alternateName}))`,
+		defaultValues: 'OpenLDAP',
+		ignoreUserSearchFilterForAuthentication: false,
+		importSearchFilterGroup: `(&(objectClass=groupOfUniqueNames)(cn=${LDAP_GROUP_4_A}))`,
+		importSearchFilterUser: `(&(objectClass=inetOrgPerson)(cn=${LDAP_USER_4_AB.alternateName}))`,
+		principal: 'cn=admin,dc=example,dc=com',
+		serverName: getRandomString(),
+	};
+
+	const ldapServerB = JSON.parse(JSON.stringify(ldapServerA));
+
+	ldapServerB.importSearchFilterGroup = `(&(objectClass=groupOfUniqueNames)(cn=${LDAP_GROUP_4_B}))`;
+	ldapServerB.serverName = getRandomString();
+
+	await test.step('Add the same LDAP server twice, but adjust the group import search filter so each entry adds a different group', async () => {
+		await test.step('Add first LDAP server', async () => {
+			await ldapServerPage.addLdapServer(ldapServerA);
+		});
+
+		await testAndExpectLdapEntries(
+			'group',
+			[LDAP_GROUP_4_A],
+			ldapServerA.serverName,
+			ldapServerPage,
+			undefined,
+			[LDAP_GROUP_4_B]
+		);
+
+		await testAndExpectLdapEntries(
+			'user',
+			[LDAP_USER_4_AB.alternateName],
+			ldapServerA.serverName,
+			ldapServerPage,
+			true,
+			[LDAP_USER_4.alternateName, LDAP_USER_4_A.alternateName]
+		);
+
+		await test.step('Add second LDAP server', async () => {
+			await ldapServerPage.addLdapServer(ldapServerB, false);
+		});
+
+		await testAndExpectLdapEntries(
+			'group',
+			[LDAP_GROUP_4_B],
+			ldapServerB.serverName,
+			ldapServerPage,
+			undefined,
+			[LDAP_GROUP_4_A]
+		);
+
+		await testAndExpectLdapEntries(
+			'user',
+			[LDAP_USER_4_AB.alternateName],
+			ldapServerB.serverName,
+			ldapServerPage,
+			undefined,
+			[LDAP_USER_4.alternateName, LDAP_USER_4_A.alternateName]
+		);
+	});
+
+	await invokeLdapImport(ldapConfigurationPage.page);
+
+	await test.step(`Assert ${LDAP_USER_4_AB.alternateName} was imported`, async () => {
+		await usersAndOrganizationsPage.goToUsers(false);
+
+		await expect(
+			await usersAndOrganizationsPage.usersTableCell(
+				LDAP_USER_4_AB.alternateName
+			)
+		).toBeVisible();
+	});
+
+	await test.step(`Assert ${LDAP_USER_4_AB.alternateName} is a member of both groups`, async () => {
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				LDAP_USER_4_AB.alternateName
+			)
+		).click();
+
+		await editUserPage.membershipsLink.click();
+
+		await expect(
+			await editUserPage.page.getByRole('cell', {
+				exact: true,
+				name: LDAP_GROUP_4_A,
+			})
+		).toBeVisible();
+
+		await expect(
+			await editUserPage.page.getByRole('cell', {
+				exact: true,
+				name: LDAP_GROUP_4_B,
+			})
+		).toBeVisible();
+	});
+
+	await test.step('Change memberships on LDAP server by adjusting import filter, since we cannot modify LDAP server from playwright test.  The email will stay the same, so the portal will think the user was actually removed from the groups on the LDAP server.', async () => {
+		ldapServerA.authenticationSearchFilter = `(&(mail=@email_address@)(cn=${LDAP_USER_4.alternateName}))`;
+		ldapServerA.importSearchFilterUser = `(&(objectClass=inetOrgPerson)(cn=${LDAP_USER_4.alternateName}))`;
+
+		await ldapServerPage.editLdapServer(ldapServerA);
+
+		ldapServerB.authenticationSearchFilter = `(&(mail=@email_address@)(cn=${LDAP_USER_4.alternateName}))`;
+		ldapServerB.importSearchFilterUser = `(&(objectClass=inetOrgPerson)(cn=${LDAP_USER_4.alternateName}))`;
+
+		await ldapServerPage.editLdapServer(ldapServerB);
+	});
+
+	await test.step(`Authenticate with ${LDAP_USER_4.alternateName}, triggering an import from LDAP server A only`, async () => {
+		const page = await browser.newPage();
+
+		await performLogin(page, LDAP_USER_4.alternateName);
+	});
+
+	await test.step(`Assert membership was revoked only for the first server's group`, async () => {
+		await usersAndOrganizationsPage.goToUsers(false);
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				LDAP_USER_4.alternateName
+			)
+		).click();
+
+		await editUserPage.membershipsLink.click();
+
+		await expect(
+			await editUserPage.page.getByRole('cell', {
+				exact: true,
+				name: LDAP_GROUP_4_A,
+			})
+		).toBeHidden();
+
+		await expect(
+			await editUserPage.page.getByRole('cell', {
+				exact: true,
+				name: LDAP_GROUP_4_B,
+			})
+		).toBeVisible();
 	});
 });
 

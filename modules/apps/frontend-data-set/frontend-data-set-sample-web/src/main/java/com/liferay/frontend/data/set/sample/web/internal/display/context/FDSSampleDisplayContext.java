@@ -57,7 +57,7 @@ public class FDSSampleDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		String endPoint = "/o/c/fdssamples/{id}";
+		String href = "/o/c/fdssamples/{id}";
 
 		FDSActionDropdownItem sidePanel1FDSActionDropdownItem =
 			new FDSActionDropdownItem(
@@ -119,7 +119,7 @@ public class FDSSampleDisplayContext {
 				"#test-copy", "copy", "sampleMoveFolderMessage", "Sample Copy",
 				null, null, null),
 			new FDSActionDropdownItem(
-				endPoint, "truck", "asyncSuccess", "Async Success", "get", null,
+				href, "truck", "asyncSuccess", "Async Success", "get", null,
 				"async"),
 			new FDSActionDropdownItem(
 				"http://localhost", "times-circle",
@@ -138,7 +138,7 @@ public class FDSSampleDisplayContext {
 				"rectangle-split", "open-side-panel-without-title",
 				"Side Panel With No Title", null, null, "sidePanel"),
 			new FDSActionDropdownItem(
-				endPoint + "/abc", "staging", "asyncErrorResourceNotFound",
+				href + "/abc", "staging", "asyncErrorResourceNotFound",
 				"Async Resource Not Found", "get", null, "async"),
 			new FDSActionDropdownItem(
 				null, "reload", "reload", "Reload Data", null, null, null),

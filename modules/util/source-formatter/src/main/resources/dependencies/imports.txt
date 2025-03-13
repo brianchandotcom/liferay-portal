@@ -1,3 +1,4 @@
+com.liferay.account.model.AccountEntryGroup=com.liferay.account.model.AccountGroup
 com.liferay.adaptive.media.AMOptimizeImagesBackgroundTaskConstants=com.liferay.adaptive.media.constants.AMOptimizeImagesBackgroundTaskConstants
 com.liferay.asset.kernel.exception.AssetLinkException=com.liferay.asset.link.exception.AssetLinkException
 com.liferay.asset.kernel.exception.NoSuchLinkException=com.liferay.asset.link.exception.NoSuchLinkException

@@ -33,3 +33,30 @@ objectClass: inetOrgPerson
 objectClass: top
 sn: lastmodified
 userPassword: testmodified
+
+cn: ldapuser4
+dn: cn=ldapuser4,dc=example,dc=com
+givenName: first
+mail: ldapuser4@liferay.com
+objectClass: inetOrgPerson
+objectClass: top
+sn: last
+userPassword: test
+
+cn: ldapuser4a
+dn: cn=ldapuser4a,dc=example,dc=com
+givenName: first4a
+mail: ldapuser4@liferay.com
+objectClass: inetOrgPerson
+objectClass: top
+sn: last4a
+userPassword: test
+
+cn: ldapuser4ab
+dn: cn=ldapuser4ab,dc=example,dc=com
+givenName: first4ab
+mail: ldapuser4@liferay.com
+objectClass: inetOrgPerson
+objectClass: top
+sn: last4ab
+userPassword: test

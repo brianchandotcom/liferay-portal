@@ -1,4 +1,6 @@
 cn=ldapgroup1,dc=example,dc=com
 cn=ldapgroup2,dc=example,dc=com
 cn=ldapgroup3,dc=example,dc=com
-cn=ldapgroup3modified,dc=example,dc=com,
+cn=ldapgroup3modified,dc=example,dc=com
+cn=ldapgroup4a,dc=example,dc=com
+cn=ldapgroup4b,dc=example,dc=com,

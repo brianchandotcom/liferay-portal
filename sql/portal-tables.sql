@@ -1259,6 +1259,10 @@ create table Role_ (
 	description TEXT null,
 	type_ INTEGER,
 	subtype VARCHAR(75) null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
 	primary key (roleId, ctCollectionId)
 );
 

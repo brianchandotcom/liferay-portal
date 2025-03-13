@@ -343,6 +343,14 @@ public class ObjectEntryVersionLocalServiceWrapper
 			objectEntryId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntryVersion>
+		getObjectEntryVersions(long objectEntryId, int start, int end) {
+
+		return _objectEntryVersionLocalService.getObjectEntryVersions(
+			objectEntryId, start, end);
+	}
+
 	/**
 	 * Returns the number of object entry versions.
 	 *
@@ -351,6 +359,12 @@ public class ObjectEntryVersionLocalServiceWrapper
 	@Override
 	public int getObjectEntryVersionsCount() {
 		return _objectEntryVersionLocalService.getObjectEntryVersionsCount();
+	}
+
+	@Override
+	public int getObjectEntryVersionsCount(long objectEntryId) {
+		return _objectEntryVersionLocalService.getObjectEntryVersionsCount(
+			objectEntryId);
 	}
 
 	/**

@@ -16,7 +16,7 @@ export default function buildObjectDefinition({
 	label,
 	name,
 }: {
-	erc: string;
+	erc: State['erc'];
 	fields?: Field[];
 	id?: State['id'];
 	label: State['label'];

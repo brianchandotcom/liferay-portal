@@ -15,7 +15,7 @@ async function createStructure({
 	label,
 	name,
 }: {
-	erc?: string;
+	erc?: State['erc'];
 	fields: Field[];
 	label: State['label'];
 	name?: State['name'];
@@ -50,7 +50,7 @@ async function updateStructure({
 	label,
 	name,
 }: {
-	erc: string;
+	erc: State['erc'];
 	fields: Field[];
 	id: State['id'];
 	label: State['label'];

@@ -1,0 +1,23 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+/**
+ * @author Alan Huang
+ */
+public class SwitchExpression {
+
+	public void method(String month) {
+		return switch (month) {
+			case "Jan", "Feb", "Mar" -> "Q1";
+			case "Apr", "May", "Jun" -> "Q2";
+			case "Jul", "Aug", "Sep" -> "Q3";
+			case "Oct", "Nov", "Dec" -> "Q4";
+			default -> "";
+		};
+	}
+
+}

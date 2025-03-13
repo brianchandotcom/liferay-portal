@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Analytics} from '../../src/types';
 import {
 	isValidEvent,
 	validateAttributeType,
@@ -29,7 +30,8 @@ describe('isValidEvent()', () => {
 
 	it('returns if an event is valid', () => {
 		const event = {
-			eventId: 'Small Event Name',
+			applicationId: Analytics.ApplicationId.Blog,
+			eventId: Analytics.EventId.BlogViewed,
 			eventProps: {
 				someKey: 'Some Value',
 			},
@@ -41,7 +43,8 @@ describe('isValidEvent()', () => {
 
 	it('returns false if an event id has more than 255 chars', () => {
 		const event = {
-			eventId: new Array(256).fill('a').join(''),
+			applicationId: Analytics.ApplicationId.Blog,
+			eventId: new Array(256).fill('a').join('') as Analytics.EventId,
 			eventProps: {
 				someKey: 'Some Value',
 			},
@@ -53,7 +56,8 @@ describe('isValidEvent()', () => {
 
 	it('returns false if an event id is empty', () => {
 		const event = {
-			eventId: '',
+			applicationId: Analytics.ApplicationId.Blog,
+			eventId: '' as Analytics.EventId,
 			eventProps: {
 				someKey: 'Some Value',
 			},
@@ -65,7 +69,8 @@ describe('isValidEvent()', () => {
 
 	it('returns false if an event prop key has more than 255 chars', () => {
 		const event = {
-			eventId: 'Small Event Name',
+			applicationId: Analytics.ApplicationId.Blog,
+			eventId: Analytics.EventId.BlogViewed,
 			eventProps: {
 				[new Array(256).fill('a').join('')]: 'Some Value',
 			},
@@ -77,7 +82,8 @@ describe('isValidEvent()', () => {
 
 	it('returns false if an event prop key is empty', () => {
 		const event = {
-			eventId: 'Small Event Name',
+			applicationId: Analytics.ApplicationId.Blog,
+			eventId: Analytics.EventId.BlogViewed,
 			eventProps: {
 				[new Array(256).fill('a').join('')]: 'Some Value',
 			},
@@ -87,21 +93,36 @@ describe('isValidEvent()', () => {
 		expect(console.error).toBeCalled();
 	});
 
-	it('returns false if an event prop value has more than 1024 chars', () => {
+	it('returns false if an event prop value has more than 1024 chars and application id is from DXP', () => {
 		const event = {
+			applicationId: '123',
 			eventId: 'Small Event Name',
 			eventProps: {
 				someKey: new Array(1025).fill('a').join(''),
 			},
 		};
 
-		expect(isValidEvent(event)).toBe(false);
+		expect(isValidEvent(event as unknown as Analytics.Event)).toBe(false);
 		expect(console.error).toBeCalled();
+	});
+
+	it('returns true if an event prop value has more than 1024 chars and application id is from DXP', () => {
+		const event = {
+			applicationId: Analytics.ApplicationId.Blog,
+			eventId: Analytics.EventId.BlogViewed,
+			eventProps: {
+				someKey: new Array(1025).fill('a').join(''),
+			},
+		};
+
+		expect(isValidEvent(event)).toBe(true);
+		expect(console.error).not.toBeCalled();
 	});
 
 	it('returns false if eventProps has more than 25 items', () => {
 		const event = {
-			eventId: 'Small Event Name',
+			applicationId: Analytics.ApplicationId.Blog,
+			eventId: Analytics.EventId.BlogViewed,
 			eventProps: new Array(26)
 				.fill('a')
 				.reduce((o, k, i) => ({...o, [`key_${i}`]: `value ${i}`}), {}),
@@ -113,31 +134,41 @@ describe('isValidEvent()', () => {
 
 	it('show all errors in console', () => {
 		const event = {
+			applicationId: '123',
 			eventId: '',
 			eventProps: {
 				someKey: new Array(1025).fill('a').join(''),
 			},
 		};
 
-		expect(isValidEvent(event)).toBe(false);
+		expect(isValidEvent(event as unknown as Analytics.Event)).toBe(false);
 		expect(console.error).toBeCalledTimes(2);
 	});
 });
 
 describe('validateAttributeType()', () => {
 	it('returns nothing when attribute is a string', () => {
+
+		// @ts-ignore
+
 		const errorMsg = validateAttributeType('testLabel');
 
 		expect(errorMsg).toBeFalsy();
 	});
 
 	it('returns nothing when attribute is a number', () => {
+
+		// @ts-ignore
+
 		const errorMsg = validateAttributeType(123);
 
 		expect(errorMsg).toBeFalsy();
 	});
 
 	it('returns nothing when attribute is a boolean', () => {
+
+		// @ts-ignore
+
 		const errorMsg = validateAttributeType(false);
 
 		expect(errorMsg).toBeFalsy();
@@ -150,12 +181,18 @@ describe('validateAttributeType()', () => {
 	});
 
 	it('returns an error msg when attribute is an array', () => {
+
+		// @ts-ignore
+
 		const errorMsg = validateAttributeType([1, 2, 3]);
 
 		expect(errorMsg).toBeTruthy();
 	});
 
 	it('returns an error msg when attribute is a function', () => {
+
+		// @ts-ignore
+
 		const errorMsg = validateAttributeType(() => {});
 
 		expect(errorMsg).toBeTruthy();

@@ -52,9 +52,9 @@ describe('Storage Utils', () => {
 
 			setItem(STORAGE_KEY, expected);
 
-			expect(JSON.parse(localStorage.getItem(STORAGE_KEY))).toEqual(
-				expected
-			);
+			expect(
+				JSON.parse(localStorage.getItem(STORAGE_KEY) as string)
+			).toEqual(expected);
 		});
 	});
 

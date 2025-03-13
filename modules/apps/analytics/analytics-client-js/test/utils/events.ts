@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Analytics} from '../../src/types';
 import {
 	normalizeEvent,
 	removeDups,
@@ -39,9 +40,9 @@ describe('Event Utils', () => {
 	});
 
 	it('returns a normalized event', () => {
-		const eventId = 'pageViewed';
-		const applicationId = 'Page';
-		const contextHash = 12345;
+		const eventId = Analytics.EventId.PageViewed;
+		const applicationId = Analytics.ApplicationId.Page;
+		const contextHash = '12345';
 		const properties = {};
 
 		expect(
@@ -76,7 +77,7 @@ describe('Event Utils', () => {
 							eventDate: '2021-12-02T22:32:51.659Z',
 							eventId: 'tabFocused',
 						},
-					],
+					] as Analytics.Event[],
 				},
 			},
 		];
@@ -94,7 +95,7 @@ describe('Event Utils', () => {
 				eventDate: '2021-12-02T22:32:50.887Z',
 				eventId: 'pageUnloaded',
 			},
-		];
+		] as Analytics.Event[];
 
 		const events = removeDups(results, items);
 
@@ -119,7 +120,7 @@ describe('Event Utils', () => {
 							eventDate: '2021-12-02T22:32:51.421Z',
 							eventId: 'tabFocused',
 						},
-					],
+					] as Analytics.Event[],
 				},
 			},
 		];
@@ -137,7 +138,7 @@ describe('Event Utils', () => {
 				eventDate: '2021-12-02T22:32:50.555Z',
 				eventId: 'pageUnloaded',
 			},
-		];
+		] as Analytics.Event[];
 
 		const events = removeDups(results, items);
 

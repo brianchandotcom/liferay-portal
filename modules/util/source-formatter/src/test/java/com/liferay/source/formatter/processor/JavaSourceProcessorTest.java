@@ -868,6 +868,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSwitchExpression() throws Exception {
+		test(
+			"SwitchExpression.testjava",
+			"Use \"if/else\" statement instead of \"switch\"", 18);
+	}
+
+	@Test
 	public void testThrowsSystemException() throws Exception {
 		test("ThrowsSystemException.testjava");
 	}

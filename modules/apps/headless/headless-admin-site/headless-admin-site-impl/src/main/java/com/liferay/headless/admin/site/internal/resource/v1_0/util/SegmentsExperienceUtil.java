@@ -9,10 +9,10 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.LayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -67,11 +67,9 @@ public class SegmentsExperienceUtil {
 				pageElement);
 		}
 
-		LayoutPageTemplateStructureLocalServiceUtil.
-			updateLayoutPageTemplateStructureData(
-				layout.getGroupId(), layout.getPlid(),
-				segmentsExperience.getSegmentsExperienceId(),
-				layoutStructure.toString());
+		LayoutLocalServiceUtil.updateLayoutContent(
+			layoutStructure.toString(), layout,
+			segmentsExperience.getSegmentsExperienceId());
 
 		return segmentsExperience;
 	}

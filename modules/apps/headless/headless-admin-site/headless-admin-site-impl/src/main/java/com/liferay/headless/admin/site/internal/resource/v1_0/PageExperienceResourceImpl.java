@@ -195,7 +195,10 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		return _toPageExperience(
 			SegmentsExperienceUtil.updateSegmentsExperience(
-				pageExperience, segmentsExperience));
+				layout, pageExperience, segmentsExperience,
+				ServiceContextUtil.createServiceContext(
+					groupId, contextHttpServletRequest,
+					contextUser.getUserId())));
 	}
 
 	@Override

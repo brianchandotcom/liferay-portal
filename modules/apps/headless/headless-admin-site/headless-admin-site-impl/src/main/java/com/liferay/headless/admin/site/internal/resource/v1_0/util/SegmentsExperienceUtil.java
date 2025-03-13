@@ -53,31 +53,26 @@ public class SegmentsExperienceUtil {
 				).build(),
 				serviceContext);
 
-		LayoutStructure layoutStructure = new LayoutStructure();
-
-		layoutStructure.addRootLayoutStructureItem();
-
-		for (PageElement pageElement : pageExperience.getPageElements()) {
-			_addLayoutStructureItem(
-				layoutStructure,
-				new LayoutStructureItemImporterContext(
-					layout.getGroupId(), layout,
-					segmentsExperience.getSegmentsExperienceId(),
-					serviceContext.getUserId()),
-				pageElement);
-		}
-
 		LayoutLocalServiceUtil.updateLayoutContent(
-			layoutStructure.toString(), layout,
-			segmentsExperience.getSegmentsExperienceId());
+			_getData(
+				layout, pageExperience,
+				segmentsExperience.getSegmentsExperienceId(), serviceContext),
+			layout, segmentsExperience.getSegmentsExperienceId());
 
 		return segmentsExperience;
 	}
 
 	public static SegmentsExperience updateSegmentsExperience(
-			PageExperience pageExperience,
-			SegmentsExperience segmentsExperience)
+			Layout layout, PageExperience pageExperience,
+			SegmentsExperience segmentsExperience,
+			ServiceContext serviceContext)
 		throws Exception {
+
+		LayoutLocalServiceUtil.updateLayoutContent(
+			_getData(
+				layout, pageExperience,
+				segmentsExperience.getSegmentsExperienceId(), serviceContext),
+			layout, segmentsExperience.getSegmentsExperienceId());
 
 		if ((pageExperience.getPriority() != null) &&
 			(segmentsExperience.getPriority() !=
@@ -120,6 +115,27 @@ public class SegmentsExperienceUtil {
 				layoutStructure, layoutStructureItemImporterContext,
 				childPageElement);
 		}
+	}
+
+	private static String _getData(
+			Layout layout, PageExperience pageExperience,
+			long segmentsExperienceId, ServiceContext serviceContext)
+		throws Exception {
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		layoutStructure.addRootLayoutStructureItem();
+
+		for (PageElement pageElement : pageExperience.getPageElements()) {
+			_addLayoutStructureItem(
+				layoutStructure,
+				new LayoutStructureItemImporterContext(
+					layout.getGroupId(), layout, segmentsExperienceId,
+					serviceContext.getUserId()),
+				pageElement);
+		}
+
+		return layoutStructure.toString();
 	}
 
 	private static long _getSegmentsEntryId(

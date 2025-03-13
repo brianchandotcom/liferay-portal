@@ -5,7 +5,7 @@
 
 export default function getInitialEvent() {
 	return {
-		associatedTickets: [],
+		associatedTickets: '[]',
 		currentLiferayVersion: {
 			key: '',
 		},

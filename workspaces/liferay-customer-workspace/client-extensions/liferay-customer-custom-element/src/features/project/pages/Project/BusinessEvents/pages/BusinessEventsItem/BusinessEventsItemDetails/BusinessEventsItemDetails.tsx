@@ -13,77 +13,37 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
-import {getBusinessEventById} from '~/services/liferay/api';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
-import {IBusinessEvent} from '~/utils/types';
+import {ITicket} from '~/utils/types';
 
 import CancelEventForm from '../../../components/CancelEventForm';
 
 import './BusinessEventsItemDetails.css';
+import TicketList from '../../../components/AssociatedTicketsContainer/TicketList';
+import useAccountTickets from '../../../hooks/useAccountTickets';
+import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 
 const BusinessEventsItemDetails = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
 
-	const [businessEvent, setBusinessEvent] = useState<
-		IBusinessEvent | undefined
-	>(undefined);
+	const {businessEvent, fetchBusinessEvent, loading} = useGetBusinessEvent(
+		id || ''
+	);
 
 	const {client} = useAppPropertiesContext();
 
-	const [loading, setLoading] = useState(true);
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
-	const {observer, onOpenChange, open} = useModal();
-
-	const fetchBusinessEvent = useCallback(async () => {
-		try {
-			setLoading(true);
-
-			const eventData = await getBusinessEventById(id!);
-
-			setBusinessEvent(eventData);
-		}
-		catch (error) {
-			console.error('Error', error);
-
-			setBusinessEvent(undefined);
-		}
-		finally {
-			setLoading(false);
-		}
-	}, [id]);
-
-	const handleEventCanceled = useCallback(() => {
-		fetchBusinessEvent();
-
-		Liferay.Util.openToast({
-			message: i18n.translate('business-event-canceled-successfully'),
-			type: 'success',
-		});
-	}, [fetchBusinessEvent]);
-
-	useEffect(() => {
-		if (id) {
-			fetchBusinessEvent();
-		}
-	}, [fetchBusinessEvent, id]);
+	const {loading: loadingTickets, tickets} = useAccountTickets(
+		accountKey || ''
+	);
 
 	const navigate = useNavigate();
 
-	if (loading) {
-		return (
-			<div className="mx-auto">
-				<ClayLoadingIndicator size="sm" />
-			</div>
-		);
-	}
-
-	if (!businessEvent) {
-		return <div>{i18n.translate('no-data-found')}</div>;
-	}
+	const {observer, onOpenChange, open} = useModal();
 
 	const userOptions = [
 		{
@@ -110,7 +70,42 @@ const BusinessEventsItemDetails = () => {
 		},
 	];
 
-	const isOtherEventType = businessEvent?.eventType?.key === 'otherEvent';
+	const [ticketOptions, setTicketOptions] = useState<ITicket[]>([]);
+
+	const handleOnCancel = useCallback(() => {
+		fetchBusinessEvent();
+
+		Liferay.Util.openToast({
+			message: i18n.translate('business-event-canceled-successfully'),
+			type: 'success',
+		});
+	}, [fetchBusinessEvent]);
+
+	useEffect(() => {
+		if (businessEvent && tickets) {
+			const associatedTickets = JSON.parse(
+				businessEvent.associatedTickets!
+			);
+
+			setTicketOptions([
+				...(tickets?.filter((ticket) =>
+					associatedTickets.includes(ticket.ticketId)
+				) || []),
+			]);
+		}
+	}, [businessEvent, tickets]);
+
+	if (loading) {
+		return (
+			<div className="mx-auto">
+				<ClayLoadingIndicator size="sm" />
+			</div>
+		);
+	}
+
+	if (!businessEvent) {
+		return <div>{i18n.translate('no-data-found')}</div>;
+	}
 
 	return (
 		<div>
@@ -135,6 +130,7 @@ const BusinessEventsItemDetails = () => {
 					<div className="font-weight-bold text-neutral-10">
 						<h3>{businessEvent.name}</h3>
 					</div>
+
 					{hasAllEventsPermissions &&
 						!['canceled', 'completed'].includes(
 							businessEvent.eventStatus?.key!
@@ -216,7 +212,7 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{isOtherEventType && businessEvent?.description && (
+					{businessEvent?.description && (
 						<div className="event-detail-item mb-4">
 							<div className="event-detail-title font-weight-semi-bold mb-2 text-neutral-8">
 								{i18n.translate('details')}
@@ -242,6 +238,7 @@ const BusinessEventsItemDetails = () => {
 										'GMT'
 									)}
 								</div>
+
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
 										businessEvent?.targetGoLiveDateTime,
@@ -266,6 +263,7 @@ const BusinessEventsItemDetails = () => {
 										'GMT'
 									)}
 								</div>
+
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
 										businessEvent?.actualGoLiveDateTime,
@@ -276,15 +274,38 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{businessEvent?.associatedTickets && (
-						<div className="event-detail-item mb-4">
-							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
-								{i18n.translate('associated-tickets')}
-							</div>
+					{!loadingTickets ? (
+						!tickets ? (
+							<p
+								dangerouslySetInnerHTML={{
+									__html: i18n.sub(
+										'we-apologize-for-the-inconvenience-but-we-ve-detected-a-system-error-with-this-project',
+										[
+											'<a href="https://help.liferay.com">' +
+												i18n.translate(
+													'support-ticket'
+												) +
+												'</a>',
+										]
+									),
+								}}
+							/>
+						) : (
+							Boolean(ticketOptions.length) && (
+								<div className="event-detail-item mb-4">
+									<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
+										{i18n.translate('associated-tickets')}
+									</div>
 
-							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-								{businessEvent?.associatedTickets}
-							</div>
+									<div className="w-50">
+										<TicketList tickets={ticketOptions} />
+									</div>
+								</div>
+							)
+						)
+					) : (
+						<div className="w-25">
+							<ClayLoadingIndicator size="sm" />
 						</div>
 					)}
 				</div>
@@ -293,10 +314,11 @@ const BusinessEventsItemDetails = () => {
 			{businessEvent && open && (
 				<ClayModal center disableAutoClose observer={observer}>
 					<CancelEventForm
+						accountExternalReferenceCode={accountKey || ''}
 						businessEvent={businessEvent}
 						client={client}
 						closeFunction={onOpenChange}
-						onCancel={handleEventCanceled}
+						onCancel={handleOnCancel}
 					/>
 				</ClayModal>
 			)}

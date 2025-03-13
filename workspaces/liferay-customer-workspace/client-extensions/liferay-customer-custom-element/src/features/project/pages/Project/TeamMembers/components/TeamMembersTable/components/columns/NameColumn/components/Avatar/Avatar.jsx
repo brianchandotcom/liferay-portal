@@ -10,7 +10,7 @@ import {getInitials} from './utils/getInitials';
 const AVATAR_SIZE_IN_PX = 40;
 
 const Avatar = ({emailAddress, gravatarAPI, userName}) => {
-	const emailAddressMD5 = md5(emailAddress);
+	const emailAddressMD5 = md5(emailAddress || '');
 	const uiAvatarURL = `https://ui-avatars.com/api/${getInitials(
 		userName
 	)}/128/0B5FFF/FFFFFF/2/0.33/true/true/true`;

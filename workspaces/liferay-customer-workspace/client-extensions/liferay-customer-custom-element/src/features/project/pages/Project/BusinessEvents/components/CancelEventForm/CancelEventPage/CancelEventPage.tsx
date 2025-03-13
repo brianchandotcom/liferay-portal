@@ -13,8 +13,10 @@ import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
 import Layout from '../../../../../../../../components/FormLayout';
+import useUpdateZendeskOrg from '../../../hooks/useUpdateZendeskOrg';
 
 interface IProps {
+	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
 	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
@@ -25,6 +27,7 @@ interface IProps {
 }
 
 const CancelEventPage: React.FC<IProps> = ({
+	accountExternalReferenceCode,
 	businessEvent,
 	client,
 	closeFunction = () => {},
@@ -38,6 +41,13 @@ const CancelEventPage: React.FC<IProps> = ({
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
 
+	const {updateZendeskOrg} = useUpdateZendeskOrg(
+		accountExternalReferenceCode,
+		businessEvent,
+		false,
+		true
+	);
+
 	const handleSubmit = async () => {
 		const businessEventId = businessEvent.id;
 
@@ -45,6 +55,8 @@ const CancelEventPage: React.FC<IProps> = ({
 
 		try {
 			setIsLoadingSubmitButton(true);
+
+			await updateZendeskOrg();
 
 			await client.mutate<{
 				updateBusinessEvent: IBusinessEvent;

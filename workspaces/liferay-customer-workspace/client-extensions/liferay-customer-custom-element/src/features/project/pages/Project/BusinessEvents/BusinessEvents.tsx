@@ -10,30 +10,23 @@ import './BusinessEvents.css';
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
-import {IFilterOption} from '~/components/Filter/Filter';
 import Table, {IRow} from '~/components/Table';
 import TableHeader from '~/components/Table/TableHeader';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '~/features/project/context';
-import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 import {Liferay} from '~/services/liferay';
-import {getBusinessEvents} from '~/services/liferay/api';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
 import {IBusinessEvent} from '~/utils/types';
 
 import CancelEventForm from './components/CancelEventForm';
+import useFilters from './hooks/useFilters';
+import useGetBusinessEvents from './hooks/useGetBusinessEvents';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
-import {INITIAL_FILTER} from './utils/constants/initialFilter';
-
-export interface IState {
-	availableFilters?: IFilterOption[];
-	searchTerm?: string;
-	selectedFilters?: IFilterOption[];
-}
+import useIsSaasOnly from './utils/useIsSaasOnly';
 
 const columns = [
 	{
@@ -66,24 +59,23 @@ const columns = [
 const BusinessEvents = () => {
 	const [{project, subscriptionGroups}] = useCustomerPortal();
 
-	const [filters, setFilters] = useState<IState>({
-		availableFilters: INITIAL_FILTER,
-		searchTerm: '',
-		selectedFilters: [],
-	});
+	const {filterQuery, filters, handleFilterChange, handleSearchChange} =
+		useFilters(project);
 
-	const [businessEvents, setBusinessEvents] = useState<IBusinessEvent[]>([]);
-	const [loading, setLoading] = useState(true);
+	const {businessEvents, fetchBusinessEvents, loading} =
+		useGetBusinessEvents(filterQuery);
 
 	const {client} = useAppPropertiesContext();
+
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
+
+	const {isSaasOnly} = useIsSaasOnly(subscriptionGroups);
+
+	const navigate = useNavigate();
 
 	const [selectedBusinessEvent, setSelectedBusinessEvent] = useState<
 		IBusinessEvent | undefined
 	>(undefined);
-
-	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
-
-	const navigate = useNavigate();
 
 	const {observer, onOpenChange, open} = useModal({
 		onClose: () => {
@@ -91,74 +83,7 @@ const BusinessEvents = () => {
 		},
 	});
 
-	const generateFilterQuery = useCallback(
-		(filters: IState) => {
-			const queryParams: string[] = [];
-
-			if (project?.id) {
-				queryParams.push(
-					`r_accountEntryToBusinessEvents_accountEntryId eq '${project.id}'`
-				);
-			}
-
-			if (
-				filters.selectedFilters &&
-				Boolean(filters.selectedFilters.length)
-			) {
-				filters.selectedFilters.forEach((filter) => {
-					if (filter.values && Boolean(filter.values.length)) {
-						const filterQuery = `(${filter.values
-							.map(
-								(value: {key: string; name: string}) =>
-									`${filter.key} eq '${value.key}'`
-							)
-							.join(' or ')})`;
-						queryParams.push(filterQuery);
-					}
-				});
-			}
-
-			if (filters.searchTerm?.trim()) {
-				queryParams.push(`(contains(name, '${filters.searchTerm}'))`);
-			}
-
-			const oneYearAgo = new Date();
-
-			oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-			queryParams.push(
-				`(eventStatus ne 'canceled' or (eventStatus eq 'canceled' and dateModified ge ${oneYearAgo.toISOString()}))`
-			);
-
-			return queryParams.length
-				? `filter=${queryParams.join(' and ')}`
-				: '';
-		},
-		[project?.id]
-	);
-
-	const filterQuery = useMemo(
-		() => generateFilterQuery(filters),
-		[filters, generateFilterQuery]
-	);
-
-	const fetchBusinessEvents = useCallback(async () => {
-		setLoading(true);
-
-		try {
-			const businessEventsResponse = await getBusinessEvents(filterQuery);
-
-			setBusinessEvents(businessEventsResponse.items);
-		}
-		catch (error) {
-			console.error('Error fetching business events:', error);
-		}
-		finally {
-			setLoading(false);
-		}
-	}, [filterQuery]);
-
-	const handleEventCanceled = useCallback(() => {
+	const handleOnCancel = useCallback(() => {
 		fetchBusinessEvents();
 
 		Liferay.Util.openToast({
@@ -167,43 +92,64 @@ const BusinessEvents = () => {
 		});
 	}, [fetchBusinessEvents]);
 
-	const handleFilterChange = useCallback(
-		(newFilterOptions: IFilterOption[]) => {
-			setFilters((prevFilters) => ({
-				...prevFilters,
-				selectedFilters: newFilterOptions,
-			}));
-		},
-		[]
-	);
-
-	const handleSearchChange = useCallback((searchTerm: string) => {
-		setFilters((prevFilters) => ({
-			...prevFilters,
-			searchTerm,
-		}));
-	}, []);
-
-	useEffect(() => {
-		if (!project?.id) {
-			setLoading(true);
-
-			return;
-		}
-
-		fetchBusinessEvents();
-	}, [fetchBusinessEvents, filterQuery, project?.id]);
-
-	const isSaasOnly = useMemo(
-		() =>
-			subscriptionGroups?.length === 1 &&
-			subscriptionGroups[0].name === PRODUCT_TYPES.liferayExperienceCloud,
-		[subscriptionGroups]
-	);
-
 	const rows = useMemo(() => {
 		if (businessEvents?.length > 0) {
 			return businessEvents.map((businessEvent) => {
+				const associatedTicketsCount = JSON.parse(
+					businessEvent.associatedTickets!
+				).length;
+
+				const associatedTicketsString =
+					associatedTicketsCount > 0
+						? associatedTicketsCount > 1
+							? `${associatedTicketsCount} Tickets`
+							: `1 Ticket`
+						: '';
+
+				const isGoLiveType = businessEvent?.eventType?.key === 'goLive';
+
+				const isOtherEventType =
+					businessEvent?.eventType?.key === 'otherEvent';
+
+				const DetailsColumn = () => {
+					if (isGoLiveType) {
+						return (
+							<div className="text-neutral-10">
+								{businessEvent?.currentLiferayVersion?.name}
+							</div>
+						);
+					}
+
+					if (isOtherEventType) {
+						return (
+							<div className="text-neutral-10">
+								{businessEvent?.description}
+							</div>
+						);
+					}
+
+					return (
+						<div className="align-items-center d-flex">
+							<div className="text-neutral-10">
+								{businessEvent?.currentLiferayVersion?.name}
+							</div>
+
+							{!isSaasOnly && (
+								<>
+									<ClayIcon
+										className="mx-2 text-neutral-4"
+										symbol="order-arrow-right"
+									/>
+
+									<div className="text-neutral-10">
+										{businessEvent?.newLiferayVersion?.name}
+									</div>
+								</>
+							)}
+						</div>
+					);
+				};
+
 				const userOptions = [
 					{
 						customOptionStyle: 'pr-5',
@@ -248,57 +194,6 @@ const BusinessEvents = () => {
 					);
 				}
 
-				const isOtherEventType =
-					businessEvent?.eventType?.key === 'otherEvent';
-				const isGoLiveType = businessEvent?.eventType?.key === 'goLive';
-
-				const DetailsColumn = () => {
-					if (isOtherEventType) {
-						return (
-							<div className="text-neutral-10">
-								{businessEvent?.description}
-							</div>
-						);
-					}
-
-					if (isGoLiveType && !isSaasOnly) {
-						return (
-							<div className="text-neutral-10">
-								{businessEvent?.currentLiferayVersion?.name}
-							</div>
-						);
-					}
-
-					if (!isGoLiveType && !isOtherEventType) {
-						if (isSaasOnly) {
-							return (
-								<div className="align-items-center d-flex">
-									<div className="text-neutral-10">
-										{businessEvent?.newLiferayVersion?.name}
-									</div>
-								</div>
-							);
-						}
-
-						return (
-							<div className="align-items-center d-flex">
-								<div className="text-neutral-10">
-									{businessEvent?.currentLiferayVersion?.name}
-								</div>
-								<ClayIcon
-									className="mx-2 text-neutral-4"
-									symbol="order-arrow-right"
-								/>
-								<div className="text-neutral-10">
-									{businessEvent?.newLiferayVersion?.name}
-								</div>
-							</div>
-						);
-					}
-
-					return null;
-				};
-
 				return {
 					actions: (
 						<div className="d-flex justify-content-center">
@@ -323,7 +218,7 @@ const BusinessEvents = () => {
 					),
 					associatedTickets: (
 						<div className="text-neutral-10">
-							{businessEvent?.associatedTickets}
+							{associatedTicketsString}
 						</div>
 					),
 					details: <DetailsColumn />,
@@ -422,10 +317,13 @@ const BusinessEvents = () => {
 								observer={observer}
 							>
 								<CancelEventForm
+									accountExternalReferenceCode={
+										project?.accountKey || ''
+									}
 									businessEvent={selectedBusinessEvent}
 									client={client}
 									closeFunction={onOpenChange}
-									onCancel={handleEventCanceled}
+									onCancel={handleOnCancel}
 								/>
 							</ClayModal>
 						)}

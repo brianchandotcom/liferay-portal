@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayInput} from '@clayui/form';
+import {ClayInput, ClayRadio} from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Input as TimeInput} from '@clayui/time-picker/lib';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Button, Input, Select} from '~/components';
 import DatePicker from '~/components/DatePicker/DatePicker';
@@ -17,14 +18,18 @@ import {Liferay} from '~/services/liferay';
 import {addBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import getInitialEvent from '~/utils/getInitialEvent';
-import {IBusinessEvent, IOption} from '~/utils/types';
+import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 
 import Layout from '../../../../../../../components/FormLayout';
-import {PRODUCT_TYPES} from '../../../../../utils/constants';
+import AssociatedTicketsContainer from '../../components/AssociatedTicketsContainer';
+import useAccountTickets from '../../hooks/useAccountTickets';
 import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
 import useGetGMTTimeZonesList from '../../hooks/useGetGMTTimeZonesList';
 import useGetVersionOfLiferaySoftwareList from '../../hooks/useGetVersionOfLiferaySoftwareList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
+import useUpdateZendeskOrg from '../../hooks/useUpdateZendeskOrg';
+import formatDateToISO from '../../utils/formatDateToISO';
+import useIsSaasOnly from '../../utils/useIsSaasOnly';
 
 interface IProps {
 	businessEvent: IBusinessEvent;
@@ -51,23 +56,11 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
 
+	const {businessEventTypesList} = useGetBusinessEventTypesList();
+
 	const [businessEventTypesOptions, setBusinessEventTypesOptions] = useState<
 		IOption[]
 	>([]);
-
-	const [gmtTimeZonesOptions, setGMTTimeZonesOptions] = useState<IOption[]>(
-		[]
-	);
-
-	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
-		useState<boolean>(false);
-
-	const [
-		versionOfLiferaySoftwareOptions,
-		setVersionOfLiferaySoftwareOptions,
-	] = useState<IOption[]>([]);
-
-	const {businessEventTypesList} = useGetBusinessEventTypesList();
 
 	const emptyOption = useMemo(
 		() => ({
@@ -80,19 +73,81 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	const {gmtTimeZonesList} = useGetGMTTimeZonesList();
 
+	const [gmtTimeZonesOptions, setGMTTimeZonesOptions] = useState<IOption[]>(
+		[]
+	);
+
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
+
+	const [hasImpactingEvents, setHasImpactingEvents] = useState<string>('no');
+
+	const isDescriptionRequired = useMemo(
+		() => businessEvent.eventType?.key === 'otherEvent',
+		[businessEvent.eventType]
+	);
+
+	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
+		useState<boolean>(false);
+
+	const isNewLiferayVersionRequired = useMemo(
+		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
+		[businessEvent.eventType]
+	);
+
+	const {isSaasOnly} = useIsSaasOnly(subscriptionGroups);
+
+	const {loading, tickets} = useAccountTickets(project?.accountKey || '');
+
 	const navigate = useNavigate();
 
-	const formatDateToISO = (dateString: string) => {
-		if (!dateString) {
-			return '';
-		}
-		const [month, day, year] = dateString.split('-');
+	const {updateZendeskOrg} = useUpdateZendeskOrg(
+		project?.accountKey || '',
+		businessEvent,
+		false,
+		false
+	);
 
-		return `${year}-${month}-${day}`;
+	const {versionOfLiferaySoftwareList} = useGetVersionOfLiferaySoftwareList();
+
+	const [
+		versionOfLiferaySoftwareOptions,
+		setVersionOfLiferaySoftwareOptions,
+	] = useState<IOption[]>([]);
+
+	const [ticketOptions, setTicketOptions] = useState<ITicket[]>([]);
+
+	const handleRadioChange = (value: string) => {
+		setHasImpactingEvents(value);
 	};
 
+	const handleRemove = useCallback((selectedTicket: ITicket) => {
+		setTicketOptions((ticketOptions) => [
+			...ticketOptions.map((ticket) => {
+				return selectedTicket.ticketId === ticket.ticketId
+					? {...ticket, selected: false}
+					: {...ticket};
+			}),
+		]);
+	}, []);
+
+	const handleSelect = useCallback((selectedTicket: ITicket) => {
+		setTicketOptions((ticketOptions) => [
+			...ticketOptions.map((ticket) => {
+				return selectedTicket.ticketId === ticket.ticketId
+					? {...ticket, selected: true}
+					: {...ticket};
+			}),
+		]);
+	}, []);
+
 	const handleSubmit = async () => {
-		const updatedBusinessEvent = {...businessEvent};
+		const updatedBusinessEvent = {
+			...businessEvent,
+			currentLiferayVersion: {
+				key: businessEvent.currentLiferayVersion?.key,
+			},
+			newLiferayVersion: {key: businessEvent.newLiferayVersion?.key},
+		};
 
 		if (updatedBusinessEvent.targetGoLiveDate) {
 			const formattedDate = formatDateToISO(
@@ -111,6 +166,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 		try {
 			setIsLoadingSubmitButton(true);
+
+			if (
+				businessEvent.associatedTickets !== '[]' &&
+				hasImpactingEvents === 'yes'
+			) {
+				await updateZendeskOrg();
+			}
 
 			await client.mutate<{
 				addBusinessEvent: IBusinessEvent;
@@ -143,26 +205,69 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		}
 	};
 
-	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
+	useEffect(() => {
+		if (hasImpactingEvents === 'yes') {
+			const selectedTickets = ticketOptions
+				.filter((ticket) => ticket.selected)
+				.map((ticket) => ticket.ticketId);
 
-	const isDescriptionRequired = useMemo(
-		() => businessEvent.eventType?.key === 'otherEvent',
-		[businessEvent.eventType]
-	);
+			setFieldValue(
+				'businessEvent.associatedTickets',
+				`[${selectedTickets.length ? selectedTickets.join(', ') : ''}]`
+			);
+		}
+		else {
+			setFieldValue('businessEvent.associatedTickets', '[]');
+		}
+	}, [hasImpactingEvents, setFieldValue, ticketOptions]);
 
-	const isNewLiferayVersionRequired = useMemo(
-		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
-		[businessEvent.eventType]
-	);
+	useEffect(() => {
+		if (versionOfLiferaySoftwareOptions.length) {
+			setFieldValue(
+				'businessEvent.currentLiferayVersion.name',
+				versionOfLiferaySoftwareOptions.filter(
+					(version) =>
+						version.value ===
+						businessEvent.currentLiferayVersion?.key
+				)[0].label
+			);
+		}
+	}, [
+		businessEvent.currentLiferayVersion?.key,
+		setFieldValue,
+		versionOfLiferaySoftwareOptions,
+	]);
 
-	const isSaasOnly = useMemo(
-		() =>
-			subscriptionGroups?.length === 1 &&
-			subscriptionGroups[0].name === PRODUCT_TYPES.liferayExperienceCloud,
-		[subscriptionGroups]
-	);
+	useEffect(() => {
+		if (businessEventTypesOptions.length) {
+			setFieldValue(
+				'businessEvent.eventType.name',
+				businessEventTypesOptions.filter(
+					(type) => type.value === businessEvent.eventType?.key
+				)[0].label
+			);
+		}
+	}, [
+		businessEvent.eventType?.key,
+		businessEventTypesOptions,
+		setFieldValue,
+	]);
 
-	const {versionOfLiferaySoftwareList} = useGetVersionOfLiferaySoftwareList();
+	useEffect(() => {
+		if (versionOfLiferaySoftwareOptions.length) {
+			setFieldValue(
+				'businessEvent.newLiferayVersion.name',
+				versionOfLiferaySoftwareOptions.filter(
+					(version) =>
+						version.value === businessEvent.newLiferayVersion?.key
+				)[0].label
+			);
+		}
+	}, [
+		businessEvent.newLiferayVersion?.key,
+		setFieldValue,
+		versionOfLiferaySoftwareOptions,
+	]);
 
 	useEffect(() => {
 		const hasCurrentLiferayVersion =
@@ -259,156 +364,250 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		);
 	}, [project?.id, setFieldValue]);
 
-	return hasAllEventsPermissions ? (
-		<Layout
-			footerProps={{
-				leftButton: (
-					<Button
-						displayType="secondary"
-						onClick={() => {
-							navigate(`/${project?.accountKey}/business-events`);
-						}}
-					>
-						{i18n.translate('cancel')}
-					</Button>
-				),
-				middleButton: (
-					<Button
-						disabled={baseButtonDisabled || isLoadingSubmitButton}
-						displayType="primary"
-						isLoading={isLoadingSubmitButton}
-						onClick={handleSubmit}
-					>
-						{i18n.translate('create-event')}
-					</Button>
-				),
-			}}
-			headerProps={{
-				greetings: project?.name,
-				title: i18n.translate('create-business-event'),
-			}}
-		>
-			<FieldArray
-				name="businessEvent"
-				render={() => (
-					<>
-						<Input
-							badgeClassName="ml-3 mr-3"
-							groupStyle="pb-1"
-							label={i18n.translate('event-name')}
-							name="businessEvent.name"
-							placeholder={i18n.translate('event-name')}
-							required
-							type="text"
-						/>
+	useEffect(() => {
+		setTicketOptions([
+			...(tickets?.map((ticket) => {
+				return {...ticket, selected: false};
+			}) || []),
+		]);
+	}, [tickets]);
 
-						<Select
-							badgeClassName="ml-3 mr-3"
-							groupStyle="pb-1"
-							label={i18n.translate('event-type')}
-							link="https://help.liferay.com/hc"
-							linkText="here"
-							name="businessEvent.eventType.key"
-							options={businessEventTypesOptions}
-							required
-							showPopover
-							text="to-learn-more-about-types-of-business-events-please-click-x"
-						/>
-
-						{subscriptionGroups && !isSaasOnly && (
-							<Select
-								badgeClassName="ml-3 mr-3"
-								groupStyle="pb-1"
-								label={i18n.translate(
-									'your-current-liferay-version'
-								)}
-								name="businessEvent.currentLiferayVersion.key"
-								options={versionOfLiferaySoftwareOptions}
-								required
-							/>
-						)}
-
-						{isNewLiferayVersionRequired && (
-							<Select
-								badgeClassName="ml-3 mr-3"
-								groupStyle="pb-1"
-								label={i18n.translate('new-version')}
-								name="businessEvent.newLiferayVersion.key"
-								options={versionOfLiferaySoftwareOptions}
-								required
-							/>
-						)}
-
-						{isDescriptionRequired && (
-							<Input
-								badgeClassName="ml-3 mr-3"
-								component="textarea"
-								groupStyle="pb-1"
-								label={i18n.translate('event-description')}
-								name="businessEvent.description"
-								placeholder={i18n.translate(
-									'event-description'
-								)}
-								required
-								type="text"
-							/>
-						)}
-
-						<ClayInput.Group className="m-0">
-							<ClayInput.GroupItem className="m-0">
-								<DatePicker
-									badgeClassName="ml-3 mr-3"
-									dateFormat="MM-dd-yyyy"
-									groupStyle="pb-1"
-									label={i18n.translate(
-										'target-go-live-date'
-									)}
-									name="businessEvent.targetGoLiveDate"
-									onChange={(value) =>
-										setFieldValue(
-											'businessEvent.targetGoLiveDate',
-											value
-										)
-									}
-									placeholder={i18n.translate('mm-dd-yyyy')}
+	return !loading ? (
+		tickets ? (
+			hasAllEventsPermissions ? (
+				<Layout
+					footerProps={{
+						leftButton: (
+							<Button
+								displayType="secondary"
+								onClick={() => {
+									navigate(
+										`/${project?.accountKey}/business-events`
+									);
+								}}
+							>
+								{i18n.translate('cancel')}
+							</Button>
+						),
+						middleButton: (
+							<Button
+								disabled={
+									baseButtonDisabled || isLoadingSubmitButton
+								}
+								displayType="primary"
+								isLoading={isLoadingSubmitButton}
+								onClick={handleSubmit}
+							>
+								{i18n.translate('create-event')}
+							</Button>
+						),
+					}}
+					headerProps={{
+						greetings: project?.name,
+						title: i18n.translate('create-business-event'),
+					}}
+				>
+					<FieldArray
+						name="businessEvent"
+						render={() => (
+							<>
+								<Input
+									badgeClassName="ml-3 mr-3 mt-1"
+									label={i18n.translate('event-name')}
+									name="businessEvent.name"
+									placeholder={i18n.translate('event-name')}
 									required
+									type="text"
 								/>
-							</ClayInput.GroupItem>
 
-							<ClayInput.GroupItem className="m-0">
 								<Select
-									groupStyle="pb-1"
-									id="select-businessEvent.timeZone"
-									label={i18n.translate('time-zone')}
-									name="businessEvent.timeZone.key"
-									options={gmtTimeZonesOptions}
+									badgeClassName="ml-3 mr-3 mt-1"
+									label={i18n.translate('event-type')}
+									link="https://help.liferay.com/hc"
+									linkText="here"
+									name="businessEvent.eventType.key"
+									options={businessEventTypesOptions}
+									required
+									showPopover
+									text="to-learn-more-about-types-of-business-events-please-click-x"
 								/>
-							</ClayInput.GroupItem>
 
-							<ClayInput.GroupItem className="m-0">
-								<TimePicker
-									groupStyle="pb-1"
-									label={i18n.translate('time')}
-									name="businessEvent.targetGoLiveTime"
-									onChange={(value) =>
-										setFieldValue(
-											'businessEvent.targetGoLiveTime',
-											value
-										)
-									}
-								/>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</>
-				)}
+								{subscriptionGroups && !isSaasOnly && (
+									<Select
+										badgeClassName="ml-3 mr-3 mt-1"
+										label={i18n.translate(
+											'your-current-liferay-version'
+										)}
+										name="businessEvent.currentLiferayVersion.key"
+										options={
+											versionOfLiferaySoftwareOptions
+										}
+										required
+									/>
+								)}
+
+								{isNewLiferayVersionRequired && (
+									<Select
+										badgeClassName="ml-3 mr-3 mt-1"
+										label={i18n.translate('new-version')}
+										name="businessEvent.newLiferayVersion.key"
+										options={
+											versionOfLiferaySoftwareOptions
+										}
+										required
+									/>
+								)}
+
+								{isDescriptionRequired && (
+									<Input
+										badgeClassName="ml-3 mr-3 mt-1"
+										component="textarea"
+										label={i18n.translate(
+											'event-description'
+										)}
+										name="businessEvent.description"
+										placeholder={i18n.translate(
+											'event-description'
+										)}
+										required
+										type="text"
+									/>
+								)}
+
+								<ClayInput.Group className="m-0">
+									<ClayInput.GroupItem className="m-0">
+										<DatePicker
+											badgeClassName="ml-3 mr-3 mt-1"
+											dateFormat="MM-dd-yyyy"
+											label={i18n.translate(
+												'target-go-live-date'
+											)}
+											name="businessEvent.targetGoLiveDate"
+											onChange={(value) =>
+												setFieldValue(
+													'businessEvent.targetGoLiveDate',
+													value
+												)
+											}
+											placeholder={i18n.translate(
+												'mm-dd-yyyy'
+											)}
+											required
+										/>
+									</ClayInput.GroupItem>
+
+									<ClayInput.GroupItem className="m-0">
+										<Select
+											id="select-businessEvent.timeZone"
+											label={i18n.translate('time-zone')}
+											name="businessEvent.timeZone.key"
+											options={gmtTimeZonesOptions}
+										/>
+									</ClayInput.GroupItem>
+
+									<ClayInput.GroupItem className="m-0">
+										<TimePicker
+											label={i18n.translate('time')}
+											name="businessEvent.targetGoLiveTime"
+											onChange={(value) =>
+												setFieldValue(
+													'businessEvent.targetGoLiveTime',
+													value
+												)
+											}
+										/>
+									</ClayInput.GroupItem>
+								</ClayInput.Group>
+
+								{tickets && !!tickets.length ? (
+									<>
+										<div className="ml-3 mr-3 pb-3">
+											<label>
+												{i18n.translate(
+													'are-there-any-support-tickets-impacting-this-event'
+												)}
+											</label>
+
+											<div className="ml-1">
+												<ClayRadio
+													checked={
+														hasImpactingEvents ===
+														'no'
+													}
+													label="No"
+													onChange={() =>
+														handleRadioChange('no')
+													}
+													value="no"
+												/>
+
+												<ClayRadio
+													checked={
+														hasImpactingEvents ===
+														'yes'
+													}
+													label="Yes"
+													onChange={() =>
+														handleRadioChange('yes')
+													}
+													value="yes"
+												/>
+											</div>
+										</div>
+
+										{hasImpactingEvents === 'yes' && (
+											<div className="ml-3 mr-3 pb-3">
+												<label>
+													{i18n.translate(
+														'please-select-the-tickets-that-are-impacting-this-event'
+													)}
+												</label>
+
+												<AssociatedTicketsContainer
+													editing
+													handleRemove={handleRemove}
+													handleSelect={handleSelect}
+													tickets={ticketOptions}
+												/>
+											</div>
+										)}
+									</>
+								) : (
+									<div className="ml-3 mr-3 pb-3">
+										{i18n.translate(
+											'there-are-currently-no-open-tickets-under-this-project'
+										)}
+									</div>
+								)}
+							</>
+						)}
+					/>
+				</Layout>
+			) : (
+				<p>
+					{i18n.translate(
+						'make-sure-the-project-link-is-correct-and-that-you-have-access-to-this-project'
+					)}
+				</p>
+			)
+		) : (
+			<p
+				dangerouslySetInnerHTML={{
+					__html: i18n.sub(
+						'we-apologize-for-the-inconvenience-but-we-ve-detected-a-system-error-with-this-project',
+						[
+							'<a href="https://help.liferay.com">' +
+								i18n.translate('support-ticket') +
+								'</a>',
+						]
+					),
+				}}
 			/>
-		</Layout>
+		)
 	) : (
-		<p>
-			{i18n.translate(
-				'make-sure-the-project-link-is-correct-and-that-you-have-access-to-this-project'
-			)}
-		</p>
+		<div className="mx-auto">
+			<ClayLoadingIndicator size="sm" />
+		</div>
 	);
 };
 

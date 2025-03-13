@@ -342,6 +342,7 @@ const BusinessEventsItemActivityHistory = () => {
 			{businessEvent && open && (
 				<ClayModal center disableAutoClose observer={observer}>
 					<CancelEventForm
+						accountExternalReferenceCode={accountKey || ''}
 						businessEvent={businessEvent}
 						client={client}
 						closeFunction={onOpenChange}

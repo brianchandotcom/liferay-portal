@@ -10,6 +10,7 @@ import {IBusinessEvent} from '~/utils/types';
 import CancelEventPage from './CancelEventPage';
 
 interface IProps {
+	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
 	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const CancelEventForm: React.FC<IProps> = ({
+	accountExternalReferenceCode,
 	businessEvent,
 	client,
 	closeFunction,
@@ -30,6 +32,7 @@ const CancelEventForm: React.FC<IProps> = ({
 		>
 			{(formikProps) => (
 				<CancelEventPage
+					accountExternalReferenceCode={accountExternalReferenceCode}
 					businessEvent={businessEvent}
 					client={client}
 					closeFunction={closeFunction}

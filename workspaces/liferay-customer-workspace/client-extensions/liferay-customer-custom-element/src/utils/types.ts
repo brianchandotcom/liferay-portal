@@ -31,7 +31,7 @@ export interface IBusinessEvent {
 	actualGoLiveDate?: string;
 	actualGoLiveDateTime?: string;
 	actualGoLiveTime?: string;
-	associatedTickets?: any;
+	associatedTickets?: string;
 	currentLiferayVersion?: {
 		key: string;
 		name: string;
@@ -127,6 +127,14 @@ export interface IProject {
 
 export interface IRoleBrief {
 	name: string;
+}
+
+export interface ITicket {
+	link: string;
+	selected?: boolean;
+	status: string;
+	subject: string;
+	ticketId: number;
 }
 
 export interface ITimeInput {

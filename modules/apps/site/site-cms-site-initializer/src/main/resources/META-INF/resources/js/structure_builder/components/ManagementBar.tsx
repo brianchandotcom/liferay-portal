@@ -6,9 +6,11 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectInvalids from '../selectors/selectInvalids';
+import selectSelection from '../selectors/selectSelection';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
@@ -17,6 +19,7 @@ import selectStructureLocalizedLabel from '../selectors/selectStructureLocalized
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import StructureService from '../services/StructureService';
+import focusInvalidInput from '../utils/focusInvalidInput';
 import AsyncButton from './AsyncButton';
 
 export default function ManagementBar() {
@@ -74,6 +77,7 @@ function SaveButton() {
 	const structureId = useSelector(selectStructureId);
 	const structureName = useSelector(selectStructureName);
 	const structureERC = useSelector(selectStructureERC);
+	const validate = useValidate();
 
 	const create = async () => {
 		const {id, name} = await StructureService.createStructure({
@@ -115,6 +119,12 @@ function SaveButton() {
 	};
 
 	const onSave = async () => {
+		const valid = validate();
+
+		if (!valid) {
+			return;
+		}
+
 		try {
 			if (status === 'new') {
 				await create();
@@ -148,12 +158,19 @@ function PublishButton() {
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const name = useSelector(selectStructureName);
 	const status = useSelector(selectStructureStatus);
+	const validate = useValidate();
 
 	if (status === 'published') {
 		return null;
 	}
 
 	const onPublish = async () => {
+		const valid = validate();
+
+		if (!valid) {
+			return;
+		}
+
 		try {
 			await StructureService.updateStructure({
 				erc,
@@ -190,4 +207,32 @@ function PublishButton() {
 			onClick={onPublish}
 		/>
 	);
+}
+
+function useValidate() {
+	const dispatch = useStateDispatch();
+	const invalids = useSelector(selectInvalids);
+	const selection = useSelector(selectSelection);
+
+	return useCallback(() => {
+		if (!invalids.size) {
+			return true;
+		}
+
+		const [uuid] = [...invalids];
+
+		const isSelected = selection.length === 1 && selection.includes(uuid);
+
+		if (isSelected) {
+			focusInvalidInput();
+		}
+		else {
+			dispatch({
+				selection: [uuid],
+				type: 'set-selection',
+			});
+		}
+
+		return false;
+	}, [dispatch, invalids, selection]);
 }

@@ -22,7 +22,7 @@ const test = mergeTests(
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
 	const locale = 'es';
 
-	await fdsSamplePage.setupFDSSampleWidget({site, locale});
+	await fdsSamplePage.setupFDSSampleWidget({locale, site});
 
 	await fdsSamplePage.selectTab('Classic');
 

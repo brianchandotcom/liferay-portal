@@ -13,7 +13,7 @@ const ALL_OFFERINGS = [
 ];
 
 const offeringTypes = {
-	'client-extensions': ALL_OFFERINGS,
+	'client-extension': ALL_OFFERINGS,
 	'cloud': [PRODUCT_OFFERING_TYPES.LIFERAY_SAAS],
 	'composite-app': [PRODUCT_OFFERING_TYPES.LIFERAY_SELF_HOSTED],
 	'dxp': [

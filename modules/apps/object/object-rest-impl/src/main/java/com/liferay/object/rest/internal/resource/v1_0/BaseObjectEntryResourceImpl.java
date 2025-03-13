@@ -445,6 +445,16 @@ public abstract class BaseObjectEntryResourceImpl
 			existingObjectEntry.setKeywords(objectEntry.getKeywords());
 		}
 
+		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
+			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
+				objectEntry.getObjectEntryFolderExternalReferenceCode());
+		}
+
+		if (objectEntry.getObjectEntryFolderId() != null) {
+			existingObjectEntry.setObjectEntryFolderId(
+				objectEntry.getObjectEntryFolderId());
+		}
+
 		if (objectEntry.getPermissions() != null) {
 			existingObjectEntry.setPermissions(objectEntry.getPermissions());
 		}
@@ -678,6 +688,16 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getKeywords() != null) {
 			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
+			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
+				objectEntry.getObjectEntryFolderExternalReferenceCode());
+		}
+
+		if (objectEntry.getObjectEntryFolderId() != null) {
+			existingObjectEntry.setObjectEntryFolderId(
+				objectEntry.getObjectEntryFolderId());
 		}
 
 		if (objectEntry.getPermissions() != null) {
@@ -937,6 +957,16 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getKeywords() != null) {
 			existingObjectEntry.setKeywords(objectEntry.getKeywords());
+		}
+
+		if (objectEntry.getObjectEntryFolderExternalReferenceCode() != null) {
+			existingObjectEntry.setObjectEntryFolderExternalReferenceCode(
+				objectEntry.getObjectEntryFolderExternalReferenceCode());
+		}
+
+		if (objectEntry.getObjectEntryFolderId() != null) {
+			existingObjectEntry.setObjectEntryFolderId(
+				objectEntry.getObjectEntryFolderId());
 		}
 
 		if (objectEntry.getPermissions() != null) {

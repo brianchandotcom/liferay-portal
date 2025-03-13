@@ -531,6 +531,94 @@ public class ObjectEntry implements Serializable {
 	private Supplier<String[]> _keywordsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getObjectEntryFolderExternalReferenceCode() {
+		if (_objectEntryFolderExternalReferenceCodeSupplier != null) {
+			objectEntryFolderExternalReferenceCode =
+				_objectEntryFolderExternalReferenceCodeSupplier.get();
+
+			_objectEntryFolderExternalReferenceCodeSupplier = null;
+		}
+
+		return objectEntryFolderExternalReferenceCode;
+	}
+
+	public void setObjectEntryFolderExternalReferenceCode(
+		String objectEntryFolderExternalReferenceCode) {
+
+		this.objectEntryFolderExternalReferenceCode =
+			objectEntryFolderExternalReferenceCode;
+
+		_objectEntryFolderExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setObjectEntryFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectEntryFolderExternalReferenceCodeUnsafeSupplier) {
+
+		_objectEntryFolderExternalReferenceCodeSupplier = () -> {
+			try {
+				return objectEntryFolderExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectEntryFolderExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _objectEntryFolderExternalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getObjectEntryFolderId() {
+		if (_objectEntryFolderIdSupplier != null) {
+			objectEntryFolderId = _objectEntryFolderIdSupplier.get();
+
+			_objectEntryFolderIdSupplier = null;
+		}
+
+		return objectEntryFolderId;
+	}
+
+	public void setObjectEntryFolderId(Long objectEntryFolderId) {
+		this.objectEntryFolderId = objectEntryFolderId;
+
+		_objectEntryFolderIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setObjectEntryFolderId(
+		UnsafeSupplier<Long, Exception> objectEntryFolderIdUnsafeSupplier) {
+
+		_objectEntryFolderIdSupplier = () -> {
+			try {
+				return objectEntryFolderIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long objectEntryFolderId;
+
+	@JsonIgnore
+	private Supplier<Long> _objectEntryFolderIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public com.liferay.portal.vulcan.permission.Permission[] getPermissions() {
 		if (_permissionsSupplier != null) {
@@ -880,6 +968,14 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "keywords")) {
 			return getKeywords();
 		}
+		else if (Objects.equals(
+					propertyName, "objectEntryFolderExternalReferenceCode")) {
+
+			return getObjectEntryFolderExternalReferenceCode();
+		}
+		else if (Objects.equals(propertyName, "objectEntryFolderId")) {
+			return getObjectEntryFolderId();
+		}
 		else if (Objects.equals(propertyName, "permissions")) {
 			return getPermissions();
 		}
@@ -1134,6 +1230,35 @@ public class ObjectEntry implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String objectEntryFolderExternalReferenceCode =
+			getObjectEntryFolderExternalReferenceCode();
+
+		if (objectEntryFolderExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectEntryFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectEntryFolderExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		Long objectEntryFolderId = getObjectEntryFolderId();
+
+		if (objectEntryFolderId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectEntryFolderId\": ");
+
+			sb.append(objectEntryFolderId);
 		}
 
 		com.liferay.portal.vulcan.permission.Permission[] permissions =

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import {v4 as uuidv4} from 'uuid';
 
 import middlewares from './middlewares/defaults';
@@ -11,19 +13,12 @@ import QueueFlushService from './queueFlushService';
 import EventMessageQueue from './queues/eventMessageQueue';
 import EventQueue from './queues/eventsQueue';
 import IdentityMessageQueue from './queues/identityMessageQueue';
+import {Analytics as AnalyticsType} from './types';
 import {
 	ANALYTICS_CLIENT_VERSION,
 	FLUSH_INTERVAL,
 	QUEUE_PRIORITY_DEFAULT,
 	QUEUE_PRIORITY_IDENTITY,
-	STORAGE_KEY_CHANNEL_ID,
-	STORAGE_KEY_EVENTS,
-	STORAGE_KEY_IDENTITY,
-	STORAGE_KEY_MESSAGES,
-	STORAGE_KEY_MESSAGE_IDENTITY,
-	STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED,
-	STORAGE_KEY_USER_ID,
-	TRACK_DEFAULT_OPTIONS,
 	VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH,
 } from './utils/constants';
 import {getContexts, setContexts} from './utils/contexts';
@@ -36,9 +31,7 @@ import {isValidEvent} from './utils/validators';
 
 // Constants
 
-export const ENV = window || global;
-
-let instance;
+export const ENV: any = window || global;
 
 /**
  * Analytics class that is designed to collect events that are captured
@@ -46,41 +39,61 @@ let instance;
  * and flushes it to the defined endpoint at regular intervals.
  */
 class Analytics {
+	[AnalyticsType.Queues.Events]!: EventQueue;
+	[AnalyticsType.Queues.Messages]!: EventMessageQueue;
+	[AnalyticsType.Queues.IdentityMessage]!: IdentityMessageQueue;
+
+	_disposed: boolean = false;
+	_pluginDisposers: any[] = [];
+	_queueFlushService!: QueueFlushService;
+
+	config: AnalyticsType.Config = {
+		channelId: '',
+		dataSourceId: '',
+		endpointUrl: '',
+		flushInterval: 0,
+		identity: {
+			emailAddressHashed: '',
+		},
+		identityEndpoint: '',
+		projectId: '',
+		userId: '',
+	};
+	middlewares: AnalyticsType.Middleware[] = [];
+	version: string = '';
 
 	/**
 	 * Returns an Analytics instance and triggers the automatic flush loop
-	 * @param {Object} config object to instantiate the Analytics tool
 	 */
-	constructor(config, middlewares) {
-		if (!instance) {
-			instance = this;
-		}
-
+	constructor(
+		config: AnalyticsType.Config,
+		middlewares: AnalyticsType.Middleware[]
+	) {
 		if (this._isTrackingDisabled()) {
-			return instance;
+			return this;
 		}
 
-		instance._disposed = false;
+		this._disposed = false;
 
 		const endpointUrl = (config.endpointUrl || '').replace(/\/$/, '');
 
-		instance.config = Object.assign(config, {
+		this.config = Object.assign(config, {
 			endpointUrl,
 			flushInterval: config.flushInterval || FLUSH_INTERVAL,
 			identityEndpoint: `${endpointUrl}/identity`,
 		});
 
-		instance.version = ANALYTICS_CLIENT_VERSION;
+		this.version = ANALYTICS_CLIENT_VERSION;
 
 		removeCookiesFromUserBrowser();
 
 		// Register initial middlewares
 
 		middlewares.forEach((middleware) =>
-			instance.registerMiddleware(middleware)
+			this.registerMiddleware(middleware)
 		);
 
-		instance._queueFlushService = new QueueFlushService(instance.config);
+		this._queueFlushService = new QueueFlushService(this.config);
 
 		this._initializeEventQueue();
 		this._initializeEventMessageQueue();
@@ -92,18 +105,15 @@ class Analytics {
 
 		// Initializes default plugins
 
-		instance._pluginDisposers = defaultPlugins.map((plugin) =>
-			plugin(instance)
-		);
+		this._pluginDisposers = defaultPlugins.map((plugin) => plugin(this));
 
 		this._ensureIntegrity();
 
-		return instance;
+		return this;
 	}
 
 	/**
 	 * Creates a singleton instance of Analytics
-	 * @param {Object} config Configuration object
 	 * @example
 	 * Analytics.create(
 	 *   {
@@ -116,7 +126,10 @@ class Analytics {
 	 *   }
 	 * );
 	 */
-	static create(config = {}, middlewares = []) {
+	static create(
+		config: AnalyticsType.Config,
+		middlewares: AnalyticsType.Middleware[] = []
+	) {
 		const self = new Analytics(config, middlewares);
 		const Liferay = window.Liferay;
 
@@ -149,8 +162,6 @@ class Analytics {
 
 	/**
 	 * Disposes events and stops interval timer
-	 * @example
-	 * Analytics.dispose();
 	 */
 	static dispose() {
 		const self = ENV.Analytics;
@@ -161,14 +172,15 @@ class Analytics {
 	}
 
 	getEvents() {
-		return this[STORAGE_KEY_EVENTS].getItems();
+		return this[
+			AnalyticsType.Queues.Events
+		].getItems<AnalyticsType.Event>();
 	}
 
 	/**
 	 * Registers the given plugin and executes its initialization logic
-	 * @param {Function} plugin An Analytics Plugin
 	 */
-	registerPlugin(plugin) {
+	registerPlugin(plugin: (analytics: Analytics) => void) {
 		if (typeof plugin === 'function') {
 			plugin(this);
 		}
@@ -177,15 +189,14 @@ class Analytics {
 	/**
 	 * Registers the given middleware. This middleware will be later on called
 	 * with the request object and this Analytics instance
-	 * @param {Function} middleware A function that will be invoked on every request
 	 * @example
-	 * Analytics.registerMiddleware(
-	 *   (request, analytics) => {
+	 * AnalyticsType.registerMiddleware(
+	 *   (request) => {
 	 *     ...
 	 *   }
 	 * );
 	 */
-	registerMiddleware(middleware) {
+	registerMiddleware(middleware: AnalyticsType.Middleware) {
 		if (this._isTrackingDisabled()) {
 			return;
 		}
@@ -203,7 +214,7 @@ class Analytics {
 			return;
 		}
 
-		this[STORAGE_KEY_EVENTS].reset();
+		this[AnalyticsType.Queues.Events].reset();
 
 		this.resetContext();
 	}
@@ -222,32 +233,39 @@ class Analytics {
 
 	/**
 	 * Registers an event that is to be sent to Analytics Cloud
-	 * @param {string} eventId Id of the event
-	 * @param {Object} eventProps Complementary information about the event
-	 * @param {Object} options Complementary information about the request
 	 */
-	track(eventId, eventProps, options = {}) {
+	track(
+		eventId: AnalyticsType.EventId,
+		eventProps?: AnalyticsType.EventProps,
+		options = {}
+	) {
 		const {assetType, ...otherEventProps} = eventProps || {};
 
-		// eslint-disable-next-line
-		const mergedOptions = Object.assign({}, TRACK_DEFAULT_OPTIONS, options);
+		const mergedOptions = {
+			...{applicationId: AnalyticsType.ApplicationId.CustomEvent},
+			...options,
+		};
 
 		const applicationId = assetType || mergedOptions.applicationId;
 
 		if (
 			this._isTrackingDisabled() ||
-			instance._disposed ||
-			!isValidEvent({applicationId, eventId, eventProps: otherEventProps})
+			this._disposed ||
+			!isValidEvent({
+				applicationId,
+				eventId,
+				eventProps: otherEventProps,
+			})
 		) {
 			return;
 		}
 
 		const currentContextHash = this._getCurrentContextHash();
 
-		instance[STORAGE_KEY_EVENTS].addItem(
+		this[AnalyticsType.Queues.Events].addItem(
 			normalizeEvent(
 				eventId,
-				applicationId,
+				applicationId as AnalyticsType.ApplicationId,
 				otherEventProps,
 				currentContextHash
 			)
@@ -256,11 +274,12 @@ class Analytics {
 
 	/**
 	 * Registers an event that is to be sent to Analytics Cloud
-	 * @param {string} eventId Id of the event
-	 * @param {string} applicationId ID of the application that triggered the event
-	 * @param {Object} eventProps Complementary information about the event
 	 */
-	send(eventId, applicationId, eventProps) {
+	send(
+		eventId: AnalyticsType.EventId,
+		applicationId: AnalyticsType.ApplicationId,
+		eventProps?: AnalyticsType.EventProps
+	) {
 		if (!applicationId) {
 			return;
 		}
@@ -273,10 +292,8 @@ class Analytics {
 	 * by consumers every time an identity change is detected. If the identity is
 	 * different than the previously stored one, we will save this new identity and
 	 * send a request updating the Identity Service.
-	 * @param {Object} identity A key-value pair object that identifies the user
-	 * @returns {Promise} A promise resolved with the generated identity hash
 	 */
-	setIdentity(identity) {
+	setIdentity(identity: {email: string; name: string}) {
 		if (this._isTrackingDisabled()) {
 			return;
 		}
@@ -300,24 +317,24 @@ class Analytics {
 	 * Clears interval and calls plugins disposers if available
 	 */
 	_disposeInternal() {
-		instance._disposed = true;
+		this._disposed = true;
 
-		if (instance._queueFlushService) {
-			instance._queueFlushService.dispose();
+		if (this._queueFlushService) {
+			this._queueFlushService.dispose();
 		}
 
-		if (instance._pluginDisposers) {
-			instance._pluginDisposers
+		if (this._pluginDisposers.length) {
+			this._pluginDisposers
 				.filter((disposer) => typeof disposer === 'function')
 				.forEach((disposer) => disposer());
 		}
 	}
 
 	_ensureIntegrity() {
-		const userId = getItem(STORAGE_KEY_USER_ID);
+		const userId = getItem<string>(AnalyticsType.Keys.UserId);
 
 		if (userId) {
-			this._setCookie(STORAGE_KEY_USER_ID, userId);
+			this._setCookie(AnalyticsType.Keys.UserId, userId);
 		}
 	}
 
@@ -337,21 +354,31 @@ class Analytics {
 
 	_getContext() {
 		const {context} = middlewares.reduce(
-			(request, middleware) => middleware(request, this),
-			{context: {channelId: instance.config.channelId}}
+			(request, middleware) => middleware(request),
+			{
+				context: {
+					channelId: this.config.channelId,
+				} as AnalyticsType.Context,
+			}
 		);
 
-		for (const key in context) {
-			context[key] = String(context[key]).slice(
+		const clonedContext = {...context};
+
+		for (const key in clonedContext) {
+			clonedContext[key] = String(clonedContext[key]).slice(
 				0,
 				VALIDATION_CONTEXT_VALUE_MAXIMUM_LENGTH
 			);
 		}
 
-		return context;
+		return clonedContext;
 	}
 
-	_getIdentityHash(dataSourceId, identity, userId) {
+	_getIdentityHash(
+		dataSourceId: string,
+		identity: AnalyticsType.Config['identity'],
+		userId: string
+	) {
 		const bodyData = {
 			dataSourceId,
 			identity,
@@ -366,14 +393,13 @@ class Analytics {
 	 * are stored and retrieved before generating a new one. If an anonymous
 	 * navigation is started after an identified navigation, the user ID token
 	 * is regenerated.
-	 * @returns {Promise} A promise resolved with the stored or generated userId
 	 */
 	_getUserId() {
-		let userId = getItem(STORAGE_KEY_USER_ID);
+		let userId = getItem<string>(AnalyticsType.Keys.UserId);
 
 		const {emailAddressHashed} = this.config.identity;
-		const previousEmailAddressHashed = getItem(
-			STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED
+		const previousEmailAddressHashed = getItem<string>(
+			AnalyticsType.Keys.PrevEmailAddressHash
 		);
 
 		if (!userId) {
@@ -388,7 +414,10 @@ class Analytics {
 				userId = this._generateUserId();
 			}
 
-			setItem(STORAGE_KEY_PREV_EMAIL_ADDRESS_HASHED, emailAddressHashed);
+			setItem(
+				AnalyticsType.Keys.PrevEmailAddressHash,
+				emailAddressHashed
+			);
 		}
 
 		return userId;
@@ -398,22 +427,21 @@ class Analytics {
 	 * Returns a unique identifier for a user, additionally it stores
 	 * the generated token to the local storage cache and clears
 	 * previously stored identity hash.
-	 * @returns {string} The generated id
 	 */
 	_generateUserId() {
-		const userId = uuidv4();
+		const userId: string = uuidv4();
 
-		setItem(STORAGE_KEY_USER_ID, userId);
-		this._setCookie(STORAGE_KEY_USER_ID, userId);
+		setItem(AnalyticsType.Keys.UserId, userId);
+		this._setCookie(AnalyticsType.Keys.UserId, userId);
 
-		removeItem(STORAGE_KEY_IDENTITY);
+		removeItem(AnalyticsType.Keys.Identity);
 
 		return userId;
 	}
 
 	_isTrackingDisabled() {
 		return (
-			ENV.ac_client_disable_tracking ||
+			ENV[AnalyticsType.Keys.DisableTracking] ||
 			navigator.doNotTrack === '1' ||
 			navigator.doNotTrack === 'yes'
 		);
@@ -421,11 +449,8 @@ class Analytics {
 
 	/**
 	 * Sends the identity information and user id to the Identity Service.
-	 * @param {Object} identity The identity information about an user.
-	 * @param {String} userId The unique user id.
-	 * @returns {Promise} A promise returned by the fetch request.
 	 */
-	_sendIdentity(identity, userId) {
+	_sendIdentity(identity: AnalyticsType.Config['identity'], userId: string) {
 		const {dataSourceId} = this.config;
 		const {channelId} = this._getContext();
 
@@ -434,8 +459,8 @@ class Analytics {
 			identity,
 			userId
 		);
-		const storedIdentityHash = getItem(STORAGE_KEY_IDENTITY);
-		const storedChannelId = getItem(STORAGE_KEY_CHANNEL_ID);
+		const storedIdentityHash = getItem<string>(AnalyticsType.Keys.Identity);
+		const storedChannelId = getItem<string>(AnalyticsType.Keys.ChannelId);
 
 		if (
 			identityHash !== storedIdentityHash ||
@@ -443,10 +468,10 @@ class Analytics {
 		) {
 			const {emailAddressHashed} = identity;
 
-			setItem(STORAGE_KEY_CHANNEL_ID, channelId);
-			setItem(STORAGE_KEY_IDENTITY, identityHash);
+			setItem(AnalyticsType.Keys.ChannelId, channelId);
+			setItem(AnalyticsType.Keys.Identity, identityHash);
 
-			instance[STORAGE_KEY_MESSAGE_IDENTITY].addItem({
+			this[AnalyticsType.Queues.IdentityMessage].addItem({
 				channelId,
 				dataSourceId,
 				emailAddressHashed,
@@ -460,7 +485,7 @@ class Analytics {
 	 * Sets a browser cookie
 	 * @protected
 	 */
-	_setCookie(key, data) {
+	_setCookie(key: string, data: string) {
 		const Liferay = window.Liferay;
 		const expires = new Date();
 
@@ -472,10 +497,10 @@ class Analytics {
 		// yet have the Cookie method.
 
 		if (Liferay?.Util?.Cookie) {
-			Liferay.Util.Cookie.set(
+			Liferay.Util.Cookie.set?.(
 				key,
 				data,
-				Liferay.Util.Cookie.TYPES.PERSONALIZATION,
+				Liferay?.Util?.Cookie?.TYPES?.PERSONALIZATION,
 				{
 					expires,
 					secure: true,
@@ -483,7 +508,7 @@ class Analytics {
 			);
 		}
 		else {
-			const path = Liferay?.themeDisplay?.getPathContext() || '/';
+			const path = Liferay?.ThemeDisplay?.getPathContext?.() || '/';
 
 			document.cookie = `${key}=${data}; expires=${expires.toUTCString()}; path=${path}; Secure`;
 		}
@@ -496,11 +521,12 @@ class Analytics {
 	 */
 	_initializeEventQueue() {
 		const eventQueue = new EventQueue({
-			analyticsInstance: instance,
+			analyticsInstance: this,
 		});
 
-		instance[STORAGE_KEY_EVENTS] = eventQueue;
-		instance._queueFlushService.addQueue(eventQueue, {
+		this[AnalyticsType.Queues.Events] = eventQueue;
+
+		this._queueFlushService.addQueue(eventQueue, {
 			priority: QUEUE_PRIORITY_DEFAULT,
 		});
 	}
@@ -510,11 +536,12 @@ class Analytics {
 	 */
 	_initializeEventMessageQueue() {
 		const eventMessageQueue = new EventMessageQueue({
-			analyticsInstance: instance,
+			analyticsInstance: this,
 		});
 
-		instance[STORAGE_KEY_MESSAGES] = eventMessageQueue;
-		instance._queueFlushService.addQueue(eventMessageQueue, {
+		this[AnalyticsType.Queues.Messages] = eventMessageQueue;
+
+		this._queueFlushService.addQueue(eventMessageQueue, {
 			priority: QUEUE_PRIORITY_DEFAULT,
 		});
 	}
@@ -524,11 +551,12 @@ class Analytics {
 	 */
 	_initializeIdentityMessageQueue() {
 		const identityMessageQueue = new IdentityMessageQueue({
-			analyticsInstance: instance,
+			analyticsInstance: this,
 		});
 
-		instance[STORAGE_KEY_MESSAGE_IDENTITY] = identityMessageQueue;
-		instance._queueFlushService.addQueue(identityMessageQueue, {
+		this[AnalyticsType.Queues.IdentityMessage] = identityMessageQueue;
+
+		this._queueFlushService.addQueue(identityMessageQueue, {
 			priority: QUEUE_PRIORITY_IDENTITY,
 		});
 	}

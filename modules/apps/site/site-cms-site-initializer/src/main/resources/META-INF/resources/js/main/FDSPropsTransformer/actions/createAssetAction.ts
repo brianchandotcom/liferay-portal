@@ -15,6 +15,7 @@ type AssetData = {
 
 export default function createAssetAction(data: AssetData) {
 	openModal({
+		center: true,
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			CreationModalContent({
 				...data,

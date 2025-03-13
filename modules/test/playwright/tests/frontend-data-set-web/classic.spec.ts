@@ -38,6 +38,5 @@ test(
 				await fdsSamplePage.table.headerCells.allInnerTexts()
 			).toEqual(['Nombre', 'Apellido', 'Dirección de correo', '']);
 		});
-
 	}
 );

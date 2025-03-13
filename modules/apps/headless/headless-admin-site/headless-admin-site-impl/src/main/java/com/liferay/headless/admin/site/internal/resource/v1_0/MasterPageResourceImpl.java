@@ -320,9 +320,16 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				draftContentPageSpecification, draftLayout, status,
 				serviceContext);
 
-			LayoutUtil.updateLayout(
+			layout = LayoutUtil.updateLayout(
 				publishedContentPageSpecification, layout,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			if (!layoutPageTemplateEntry.isApproved() && layout.isPublished()) {
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryService.updateStatus(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+						WorkflowConstants.STATUS_APPROVED);
+			}
 		}
 
 		return _masterPageDTOConverter.toDTO(

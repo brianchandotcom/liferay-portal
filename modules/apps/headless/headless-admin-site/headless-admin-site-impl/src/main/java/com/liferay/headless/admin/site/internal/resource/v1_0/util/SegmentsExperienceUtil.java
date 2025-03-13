@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
-import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.LayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.model.Layout;
@@ -96,27 +95,6 @@ public class SegmentsExperienceUtil {
 			).build());
 	}
 
-	private static void _addLayoutStructureItem(
-			LayoutStructure layoutStructure,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext,
-			PageElement pageElement)
-		throws Exception {
-
-		LayoutStructureItemImporter layoutStructureItemImporter =
-			LayoutStructureItemImporterUtil.getLayoutStructureItemImporter(
-				pageElement.getType());
-
-		layoutStructureItemImporter.addLayoutStructureItem(
-			layoutStructure, layoutStructureItemImporterContext, pageElement);
-
-		for (PageElement childPageElement : pageElement.getPageElements()) {
-			_addLayoutStructureItem(
-				layoutStructure, layoutStructureItemImporterContext,
-				childPageElement);
-		}
-	}
-
 	private static String _getData(
 			Layout layout, PageExperience pageExperience,
 			long segmentsExperienceId, ServiceContext serviceContext)
@@ -127,7 +105,7 @@ public class SegmentsExperienceUtil {
 		layoutStructure.addRootLayoutStructureItem();
 
 		for (PageElement pageElement : pageExperience.getPageElements()) {
-			_addLayoutStructureItem(
+			LayoutStructureUtil.addLayoutStructureItem(
 				layoutStructure,
 				new LayoutStructureItemImporterContext(
 					layout.getGroupId(), layout, segmentsExperienceId,

@@ -6,10 +6,8 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.LayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
-import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureItemImporterUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageElementResource;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -381,41 +379,18 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			_getDTOConverterContext(layoutStructure), layoutStructureItem);
 	}
 
-	private LayoutStructureItem _addLayoutStructureItem(
-			LayoutStructure layoutStructure,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext,
-			PageElement pageElement)
-		throws Exception {
-
-		LayoutStructureItemImporter layoutStructureItemImporter =
-			LayoutStructureItemImporterUtil.getLayoutStructureItemImporter(
-				pageElement.getType());
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructureItemImporter.addLayoutStructureItem(
-				layoutStructure, layoutStructureItemImporterContext,
-				pageElement);
-
-		for (PageElement childPageElement : pageElement.getPageElements()) {
-			_addLayoutStructureItem(
-				layoutStructure, layoutStructureItemImporterContext,
-				childPageElement);
-		}
-
-		return layoutStructureItem;
-	}
-
 	private PageElement _addPageElement(
 			long groupId, Layout layout, LayoutStructure layoutStructure,
 			PageElement pageElement, long segmentsExperienceId)
 		throws Exception {
 
-		LayoutStructureItem layoutStructureItem = _addLayoutStructureItem(
-			layoutStructure,
-			new LayoutStructureItemImporterContext(
-				groupId, layout, segmentsExperienceId, contextUser.getUserId()),
-			pageElement);
+		LayoutStructureItem layoutStructureItem =
+			LayoutStructureUtil.addLayoutStructureItem(
+				layoutStructure,
+				new LayoutStructureItemImporterContext(
+					groupId, layout, segmentsExperienceId,
+					contextUser.getUserId()),
+				pageElement);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

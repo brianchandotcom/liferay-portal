@@ -38,7 +38,7 @@ import java.io.Closeable;
 import java.util.Collections;
 import java.util.Properties;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -59,8 +59,8 @@ public class ObjectEntryPerformanceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		Class<?> clazz = ObjectEntryPerformanceTest.class;
 
 		_properties = PropertiesUtil.load(

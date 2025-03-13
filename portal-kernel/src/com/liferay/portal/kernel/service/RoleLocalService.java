@@ -1046,12 +1046,6 @@ public interface RoleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(Role role);
 
-	@Indexable(type = IndexableType.REINDEX)
-	public Role updateStatus(
-			long userId, long roleId, int status, ServiceContext serviceContext,
-			Map<String, Serializable> workflowContext)
-		throws PortalException;
-
 	public void validateName(String name) throws PortalException;
 
 	@Override

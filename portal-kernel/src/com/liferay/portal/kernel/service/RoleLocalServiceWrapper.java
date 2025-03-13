@@ -1395,16 +1395,6 @@ public class RoleLocalServiceWrapper
 	}
 
 	@Override
-	public Role updateStatus(
-			long userId, long roleId, int status, ServiceContext serviceContext,
-			java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _roleLocalService.updateStatus(
-			userId, roleId, status, serviceContext, workflowContext);
-	}
-
-	@Override
 	public void validateName(String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

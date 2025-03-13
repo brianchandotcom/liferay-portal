@@ -61,12 +61,6 @@ public class RoleTable extends BaseTable<RoleTable> {
 		"subtype", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RoleTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<RoleTable, Long> statusByUserId = createColumn(
-		"statusByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<RoleTable, String> statusByUserName = createColumn(
-		"statusByUserName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<RoleTable, Date> statusDate = createColumn(
-		"statusDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private RoleTable() {
 		super("Role_", RoleTable::new);

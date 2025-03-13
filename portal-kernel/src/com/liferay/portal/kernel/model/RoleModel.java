@@ -30,7 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface RoleModel
 	extends AttachedModel, BaseModel<Role>, CTModel<Role>,
 			ExternalReferenceCodeModel, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel, WorkflowedModel {
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -522,7 +522,6 @@ public interface RoleModel
 	 *
 	 * @return the status of this role
 	 */
-	@Override
 	public int getStatus();
 
 	/**
@@ -530,137 +529,7 @@ public interface RoleModel
 	 *
 	 * @param status the status of this role
 	 */
-	@Override
 	public void setStatus(int status);
-
-	/**
-	 * Returns the status by user ID of this role.
-	 *
-	 * @return the status by user ID of this role
-	 */
-	@Override
-	public long getStatusByUserId();
-
-	/**
-	 * Sets the status by user ID of this role.
-	 *
-	 * @param statusByUserId the status by user ID of this role
-	 */
-	@Override
-	public void setStatusByUserId(long statusByUserId);
-
-	/**
-	 * Returns the status by user uuid of this role.
-	 *
-	 * @return the status by user uuid of this role
-	 */
-	@Override
-	public String getStatusByUserUuid();
-
-	/**
-	 * Sets the status by user uuid of this role.
-	 *
-	 * @param statusByUserUuid the status by user uuid of this role
-	 */
-	@Override
-	public void setStatusByUserUuid(String statusByUserUuid);
-
-	/**
-	 * Returns the status by user name of this role.
-	 *
-	 * @return the status by user name of this role
-	 */
-	@AutoEscape
-	@Override
-	public String getStatusByUserName();
-
-	/**
-	 * Sets the status by user name of this role.
-	 *
-	 * @param statusByUserName the status by user name of this role
-	 */
-	@Override
-	public void setStatusByUserName(String statusByUserName);
-
-	/**
-	 * Returns the status date of this role.
-	 *
-	 * @return the status date of this role
-	 */
-	@Override
-	public Date getStatusDate();
-
-	/**
-	 * Sets the status date of this role.
-	 *
-	 * @param statusDate the status date of this role
-	 */
-	@Override
-	public void setStatusDate(Date statusDate);
-
-	/**
-	 * Returns <code>true</code> if this role is approved.
-	 *
-	 * @return <code>true</code> if this role is approved; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isApproved();
-
-	/**
-	 * Returns <code>true</code> if this role is denied.
-	 *
-	 * @return <code>true</code> if this role is denied; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isDenied();
-
-	/**
-	 * Returns <code>true</code> if this role is a draft.
-	 *
-	 * @return <code>true</code> if this role is a draft; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isDraft();
-
-	/**
-	 * Returns <code>true</code> if this role is expired.
-	 *
-	 * @return <code>true</code> if this role is expired; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isExpired();
-
-	/**
-	 * Returns <code>true</code> if this role is inactive.
-	 *
-	 * @return <code>true</code> if this role is inactive; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInactive();
-
-	/**
-	 * Returns <code>true</code> if this role is incomplete.
-	 *
-	 * @return <code>true</code> if this role is incomplete; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isIncomplete();
-
-	/**
-	 * Returns <code>true</code> if this role is pending.
-	 *
-	 * @return <code>true</code> if this role is pending; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isPending();
-
-	/**
-	 * Returns <code>true</code> if this role is scheduled.
-	 *
-	 * @return <code>true</code> if this role is scheduled; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isScheduled();
 
 	@Override
 	public String[] getAvailableLanguageIds();

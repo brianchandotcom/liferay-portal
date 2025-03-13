@@ -426,7 +426,9 @@ public class JavaParser {
 			javaTermContent.contains(
 				"\n" + JavaEnumConstantDefinition.NESTED_CODE_BLOCK + "\n") ||
 			javaTermContent.contains(
-				"\n" + JavaLambdaExpression.NESTED_CODE_BLOCK + "\n")) {
+				"\n" + JavaLambdaExpression.NESTED_CODE_BLOCK + "\n") ||
+			javaTermContent.contains(
+				"\n" + JavaSwitchExpression.NESTED_CODE_BLOCK + "\n")) {
 
 			return _addJavaTermWithNestedCodeBlocks(
 				parsedJavaClass, detailAST, javaTermContent, className,
@@ -488,6 +490,10 @@ public class JavaParser {
 				else if (line.equals(JavaLambdaExpression.NESTED_CODE_BLOCK)) {
 					followingNestedCodeBlockClassName =
 						JavaLambdaExpression.class.getName();
+				}
+				else if (line.equals(JavaSwitchExpression.NESTED_CODE_BLOCK)) {
+					followingNestedCodeBlockClassName =
+						JavaSwitchExpression.class.getName();
 				}
 				else {
 					sb.append(line);
@@ -689,13 +695,36 @@ public class JavaParser {
 		else if (detailAST.getType() == TokenTypes.LAMBDA) {
 			DetailAST lastChildDetailAST = detailAST.getLastChild();
 
-			if (lastChildDetailAST.getType() == TokenTypes.SLIST) {
+			if ((lastChildDetailAST != null) &&
+				(lastChildDetailAST.getType() == TokenTypes.SLIST)) {
+
 				curlyBracePositionList.add(
 					new Position(
 						lastChildDetailAST.getLineNo(),
 						lastChildDetailAST.getColumnNo() + 1));
 
 				lastChildDetailAST = lastChildDetailAST.getLastChild();
+
+				curlyBracePositionList.add(
+					new Position(
+						lastChildDetailAST.getLineNo(),
+						lastChildDetailAST.getColumnNo()));
+			}
+		}
+		else if (detailAST.getType() == TokenTypes.LITERAL_SWITCH) {
+			DetailAST switchRuleDetailAST = detailAST.findFirstToken(
+				TokenTypes.SWITCH_RULE);
+
+			if (switchRuleDetailAST != null) {
+				DetailAST previousSiblingDetailAST =
+					switchRuleDetailAST.getPreviousSibling();
+
+				curlyBracePositionList.add(
+					new Position(
+						previousSiblingDetailAST.getLineNo(),
+						previousSiblingDetailAST.getColumnNo() + 1));
+
+				DetailAST lastChildDetailAST = detailAST.getLastChild();
 
 				curlyBracePositionList.add(
 					new Position(
@@ -1156,6 +1185,16 @@ public class JavaParser {
 					parsedJavaClass, caseGroupDetailAST, fileContents,
 					maxLineLength);
 			}
+
+			List<DetailAST> switchRuleDetailASTList =
+				DetailASTUtil.getAllChildTokens(
+					detailAST, false, TokenTypes.SWITCH_RULE);
+
+			for (DetailAST switchRuleDetailAST : switchRuleDetailASTList) {
+				parsedJavaClass = _parseDetailAST(
+					parsedJavaClass, switchRuleDetailAST, fileContents,
+					maxLineLength);
+			}
 		}
 		else if (detailAST.getType() == TokenTypes.LITERAL_TRY) {
 			List<DetailAST> literalCatchDetailASTList =
@@ -1258,7 +1297,8 @@ public class JavaParser {
 		}
 		else if ((detailAST.getType() == TokenTypes.IMPORT) ||
 				 (detailAST.getType() == TokenTypes.PACKAGE_DEF) ||
-				 (detailAST.getType() == TokenTypes.STATIC_IMPORT)) {
+				 (detailAST.getType() == TokenTypes.STATIC_IMPORT) ||
+				 (detailAST.getType() == TokenTypes.SWITCH_RULE)) {
 
 			parsedJavaClass = _parseDetailAST(
 				parsedJavaClass, detailAST, fileContents, maxLineLength);

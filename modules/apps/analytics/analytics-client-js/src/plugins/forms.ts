@@ -3,32 +3,31 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {isTrackable} from '../utils/assets';
-import {FORM} from '../utils/constants';
 import {onReady} from '../utils/events';
-
-const applicationId = FORM;
 
 /**
  * Returns an identifier for a form element.
- * @param {Object} form The form DOM element
- * @returns {Object} Either form id, name or action.
  */
-function getFormKey(form) {
-	return (
-		form.dataset.analyticsAssetId ||
+function getFormKey(form: AnalyticsType.HTMLElement & {action?: string}) {
+	return (form.dataset.analyticsAssetId ||
 		form.id ||
 		form.getAttribute('name') ||
-		form.action
-	);
+		form.action) as string;
 }
 
 /**
  * Returns analytics payload with field information.
- * @param {Object} form The field DOM element
- * @returns {Object} The payload with field information
  */
-function getFieldPayload({form, name}) {
+function getFieldPayload({
+	form,
+	name,
+}: {
+	form: AnalyticsType.HTMLElement;
+	name: string;
+}) {
 	return {
 		fieldName: name,
 		...getFormPayload(form),
@@ -37,10 +36,8 @@ function getFieldPayload({form, name}) {
 
 /**
  * Returns analytics payload with form information.
- * @param {Object} form The form DOM element
- * @returns {Object} The payload with form information
  */
-function getFormPayload(form) {
+function getFormPayload(form: AnalyticsType.HTMLElement) {
 	const payload = {
 		formId: getFormKey(form).trim(),
 	};
@@ -56,20 +53,20 @@ function getFormPayload(form) {
 
 /**
  * Wether a form is trackable or not.
- * @param {Object} form The form DOM element
- * @returns {boolean} True if the form is trackable.
  */
-function isTrackableForm(element) {
+function isTrackableForm(element: AnalyticsType.HTMLElement) {
 	return isTrackable(element) && !!getFormKey(element);
 }
 
 /**
  * Adds an event listener for the blur event and sends analytics information
- * when that event happens.
- * @param {Object} The Analytics client instance
  */
-function trackFieldBlurred(analytics) {
-	const onBlur = ({target}) => {
+function trackFieldBlurred(analytics: Analytics) {
+	const onBlur = (event: MouseEvent) => {
+		const target = event.target as unknown as {
+			form: AnalyticsType.HTMLElement;
+			name: string;
+		};
 		const {form} = target;
 
 		if (!form || !isTrackableForm(form)) {
@@ -86,27 +83,37 @@ function trackFieldBlurred(analytics) {
 
 		const perfData = performance.getEntriesByName('focusDuration').pop();
 
-		const focusDuration = ~~perfData.duration;
+		const focusDuration =
+			perfData && typeof perfData.duration === 'number'
+				? ~~perfData.duration
+				: 0;
 
 		Object.assign(payload, {focusDuration});
 
-		analytics.send('fieldBlurred', applicationId, payload);
+		analytics.send(
+			AnalyticsType.EventId.FieldBlurred,
+			AnalyticsType.ApplicationId.Form,
+			payload
+		);
 
 		performance.clearMarks('focusDuration');
 	};
 
-	document.addEventListener('blur', onBlur, true);
+	document.addEventListener('blur', onBlur as EventListener, true);
 
-	return () => document.removeEventListener('blur', onBlur, true);
+	return () =>
+		document.removeEventListener('blur', onBlur as EventListener, true);
 }
 
 /**
  * Adds an event listener for the focus event and sends analytics information
- * when that event happens.
- * @param {Object} The Analytics client instance
  */
-function trackFieldFocused(analytics) {
-	const onFocus = ({target}) => {
+function trackFieldFocused(analytics: Analytics) {
+	const onFocus = (event: MouseEvent) => {
+		const target = event.target as unknown as {
+			form: AnalyticsType.HTMLElement;
+			name: string;
+		};
 		const {form} = target;
 
 		if (!form || !isTrackableForm(form)) {
@@ -118,22 +125,25 @@ function trackFieldFocused(analytics) {
 		const focusMark = `${payload.formId}${payload.fieldName}focused`;
 		performance.mark(focusMark);
 
-		analytics.send('fieldFocused', applicationId, payload);
+		analytics.send(
+			AnalyticsType.EventId.FieldFocused,
+			AnalyticsType.ApplicationId.Form,
+			payload
+		);
 	};
 
-	document.addEventListener('focus', onFocus, true);
+	document.addEventListener('focus', onFocus as EventListener, true);
 
-	return () => document.removeEventListener('focus', onFocus, true);
+	return () =>
+		document.removeEventListener('focus', onFocus as EventListener, true);
 }
 
 /**
  * Adds an event listener for a form submission and sends information when that
- * event happens.
- * @param {Object} The Analytics client instance
  */
-function trackFormSubmitted(analytics) {
-	const onSubmit = (event) => {
-		const {target} = event;
+function trackFormSubmitted(analytics: Analytics) {
+	const onSubmit = (event: MouseEvent) => {
+		const target = event.target as AnalyticsType.HTMLElement;
 
 		if (
 			!isTrackableForm(target) ||
@@ -142,19 +152,23 @@ function trackFormSubmitted(analytics) {
 			return;
 		}
 
-		analytics.send('formSubmitted', applicationId, getFormPayload(target));
+		analytics.send(
+			AnalyticsType.EventId.FormSubmitted,
+			AnalyticsType.ApplicationId.Form,
+			getFormPayload(target)
+		);
 	};
 
-	document.addEventListener('submit', onSubmit, true);
+	document.addEventListener('submit', onSubmit as EventListener, true);
 
-	return () => document.removeEventListener('submit', onSubmit, true);
+	return () =>
+		document.removeEventListener('submit', onSubmit as EventListener, true);
 }
 
 /**
  * Sends information about forms rendered on the page when it was loaded.
- * @param {Object} The Analytics client instance
  */
-function trackFormViewed(analytics) {
+function trackFormViewed(analytics: Analytics) {
 	return onReady(() => {
 		Array.prototype.slice
 			.call(document.querySelectorAll('form'))
@@ -162,16 +176,19 @@ function trackFormViewed(analytics) {
 			.forEach((form) => {
 				const payload = getFormPayload(form);
 
-				analytics.send('formViewed', applicationId, payload);
+				analytics.send(
+					AnalyticsType.EventId.FormViewed,
+					AnalyticsType.ApplicationId.Form,
+					payload
+				);
 			});
 	});
 }
 
 /**
  * Plugin function that registers listener against form events
- * @param {Object} analytics The Analytics client
  */
-function forms(analytics) {
+function forms(analytics: Analytics) {
 	const stopTrackingFieldBlurred = trackFieldBlurred(analytics);
 	const stopTrackingFieldFocused = trackFieldFocused(analytics);
 	const stopTrackingFormSubmitted = trackFormSubmitted(analytics);

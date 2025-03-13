@@ -3,26 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {
 	getNumberOfWords,
 	isTrackable,
 	transformAssetTypeToSelector,
 } from '../utils/assets';
-import {BLOG, DEBOUNCE} from '../utils/constants';
+import {DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onReady} from '../utils/events';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = BLOG;
-
-export const blogTypes = ['blog', 'com.liferay.blogs.model.BlogsEntry'];
-
 /**
  * Returns analytics payload with Blog information.
- * @param {Object} blog The blog DOM element
- * @returns {Object} The payload with blog information
  */
-function getBlogPayload({dataset}) {
+function getBlogPayload({dataset}: AnalyticsType.HTMLElement) {
 	const payload = {
 		entryId: dataset.analyticsAssetId.trim(),
 	};
@@ -44,9 +40,11 @@ function getBlogPayload({dataset}) {
 
 /**
  * Sends information about Blogs scroll actions.
- * @param {Object} The Analytics client instance
  */
-function trackBlogsScroll(analytics, blogElements) {
+function trackBlogsScroll(
+	analytics: Analytics,
+	blogElements: AnalyticsType.HTMLElement[]
+) {
 	const scrollSessionId = new Date().toISOString();
 	const scrollTracker = new ScrollTracker();
 
@@ -56,40 +54,60 @@ function trackBlogsScroll(analytics, blogElements) {
 				const payload = getBlogPayload(element);
 				Object.assign(payload, {depth, sessionId: scrollSessionId});
 
-				analytics.send('blogDepthReached', applicationId, payload);
+				analytics.send(
+					AnalyticsType.EventId.BlogDepthReached,
+					AnalyticsType.ApplicationId.Blog,
+					payload
+				);
 			}, element);
 		});
 	}, DEBOUNCE);
 
-	document.addEventListener('scroll', onScroll);
+	document.addEventListener('scroll', onScroll as EventListener);
 
 	return () => {
-		document.removeEventListener('scroll', onScroll);
+		document.removeEventListener('scroll', onScroll as EventListener);
 	};
 }
 
 /**
  * Sends information when user scrolls on a Blog.
- * @param {Object} The Analytics client instance
  */
-function trackBlog(analytics, {eventId, isTrackable}) {
-	const blogElements = [];
+function trackBlog(
+	analytics: Analytics,
+	{
+		eventId,
+		isTrackable,
+	}: {
+		eventId: AnalyticsType.EventId;
+		isTrackable: (element: AnalyticsType.HTMLElement) => boolean;
+	}
+) {
+	const blogElements: AnalyticsType.HTMLElement[] = [];
 
-	const selector = transformAssetTypeToSelector(blogTypes);
+	const selector = transformAssetTypeToSelector([
+		AnalyticsType.ElementType.Blog,
+		AnalyticsType.ElementType.BlogsEntry,
+	]);
 
 	const stopTrackingOnReady = onReady(() => {
 		Array.prototype.slice
 			.call(document.querySelectorAll(selector))
 			.filter(isTrackable)
-			.forEach((element) => {
+			.forEach((element: AnalyticsType.HTMLElement) => {
 				const payload = getBlogPayload(element);
+
 				Object.assign(payload, {
 					numberOfWords: getNumberOfWords(element),
 				});
 
 				blogElements.push(element);
 
-				analytics.send(eventId, applicationId, payload);
+				analytics.send(
+					eventId,
+					AnalyticsType.ApplicationId.Blog,
+					payload
+				);
 			});
 	});
 
@@ -103,37 +121,37 @@ function trackBlog(analytics, {eventId, isTrackable}) {
 
 /**
  * Sends information when user clicks on a Blog.
- * @param {Object} The Analytics client instance
  */
-function trackBlogClicked(analytics) {
+function trackBlogClicked(analytics: Analytics) {
 	return clickEvent({
 		analytics,
-		applicationId,
-		eventType: 'blogClicked',
+		applicationId: AnalyticsType.ApplicationId.Blog,
+		eventType: AnalyticsType.EventId.BlogClicked,
 		getPayload: getBlogPayload,
 		isTrackable,
-		type: 'blog',
+		type: AnalyticsType.ElementType.Blog,
 	});
 }
 
 /**
  * Plugin function that registers listeners for Blog events
- * @param {Object} analytics The Analytics client
  */
-function blogs(analytics) {
+function blogs(analytics: Analytics) {
 	const stopTrackingBlogClicked = trackBlogClicked(analytics);
 	const stopTrackingBlogImpressionMade = trackBlog(analytics, {
-		eventId: 'blogImpressionMade',
+		eventId: AnalyticsType.EventId.BlogImpressionMade,
 		isTrackable: (element) =>
 			isTrackable(element) &&
-			element.dataset?.analyticsAssetAction === 'impression',
+			element.dataset?.analyticsAssetAction ===
+				AnalyticsType.ElementAction.Impression,
 	});
 	const stopTrackingBlogViewed = trackBlog(analytics, {
-		eventId: 'blogViewed',
+		eventId: AnalyticsType.EventId.BlogViewed,
 		isTrackable: (element) =>
 			isTrackable(element) &&
 			(!element.dataset?.analyticsAssetAction ||
-				element.dataset?.analyticsAssetAction === 'view'),
+				element.dataset?.analyticsAssetAction ===
+					AnalyticsType.ElementAction.View),
 	});
 
 	return () => {

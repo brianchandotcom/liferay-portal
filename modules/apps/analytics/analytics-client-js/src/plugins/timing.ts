@@ -3,20 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	MARK_NAVIGATION_START,
-	MARK_VIEW_DURATION,
-	PAGE,
-} from '../utils/constants';
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
+import {MARK_NAVIGATION_START, MARK_VIEW_DURATION} from '../utils/constants';
 import {getDuration} from '../utils/performance';
-
-const applicationId = PAGE;
 
 /**
  * Sends page load information on the window load event
- * @param {Object} analytics The Analytics client
  */
-function onload(analytics) {
+function onload(analytics: Analytics) {
 	const perfData = window.performance.timing;
 
 	const pageLoadTime = perfData.loadEventStart - perfData.navigationStart;
@@ -25,14 +20,17 @@ function onload(analytics) {
 		pageLoadTime,
 	};
 
-	analytics.send('pageLoaded', applicationId, props);
+	analytics.send(
+		AnalyticsType.EventId.PageLoaded,
+		AnalyticsType.ApplicationId.Page,
+		props
+	);
 }
 
 /**
  * Sends view duration information on the window unload event
- * @param {Object} analytics The Analytics client
  */
-function unload(analytics) {
+function unload(analytics: Analytics) {
 	const navigationStartMark = window.performance.getEntriesByName(
 		MARK_NAVIGATION_START
 	);
@@ -46,14 +44,17 @@ function unload(analytics) {
 		viewDuration: duration,
 	};
 
-	analytics.send('pageUnloaded', applicationId, props);
+	analytics.send(
+		AnalyticsType.EventId.PageUnloaded,
+		AnalyticsType.ApplicationId.Page,
+		props
+	);
 }
 
 /**
  * Plugin function that registers listeners against browser time events
- * @param {Object} analytics The Analytics client
  */
-function timing(analytics) {
+function timing(analytics: Analytics) {
 	const onLoad = onload.bind(null, analytics);
 
 	window.addEventListener('load', onLoad);

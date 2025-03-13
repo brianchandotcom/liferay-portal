@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {getNumberOfWords} from '../utils/assets';
 import {
 	DEBOUNCE,
-	PAGE,
 	READ_CHARS_PER_MIN,
 	READ_LOGOGRAPHIC_LANGUAGES,
 	READ_MINIMUM_SCROLL_DEPTH,
@@ -18,13 +19,10 @@ import {onReady} from '../utils/events';
 import {ReadTracker} from '../utils/read';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = PAGE;
-
 const MIN_TO_MS = 60000;
 
 /**
  * Get all readable content on the page
- * @returns {string} Readable content of the page
  */
 function getReadableContent() {
 	const mainContent = document.getElementById('main-content');
@@ -41,7 +39,6 @@ function getReadableContent() {
 
 /**
  * Get the lang property on documentElement.
- * @returns {string} DocumentElement language.
  */
 function getLang() {
 	return document.documentElement.lang;
@@ -49,10 +46,8 @@ function getLang() {
 
 /**
  * Calculates the viewDuration based on total characters.
- * @param {string} content Text to be used on the calculation.
- * @returns {number} Expected View Duration.
  */
-export function viewDurationByCharacters(content) {
+export function viewDurationByCharacters(content: string) {
 	return (
 		(content.replace(/\s+/gm, '').length / READ_CHARS_PER_MIN) *
 		MIN_TO_MS *
@@ -62,12 +57,11 @@ export function viewDurationByCharacters(content) {
 
 /**
  * Calculates the viewDuration based on total words.
- * @param {string} content Text to be used on the calculation.
- * @returns {number} Expected View Duration.
  */
-export function viewDurationByWords(content) {
+export function viewDurationByWords(content: string) {
 	return (
-		(getNumberOfWords({innerText: content}) / READ_WORDS_PER_MIN) *
+		(getNumberOfWords({innerText: content} as AnalyticsType.HTMLElement) /
+			READ_WORDS_PER_MIN) *
 		MIN_TO_MS *
 		READ_TIME_FACTOR
 	);
@@ -75,10 +69,8 @@ export function viewDurationByWords(content) {
 
 /**
  * Calculates the viewDuration based on the documentElement language.
- * @param {string} content Text to be used on the calculation.
- * @returns {number} Expected View Duration.
  */
-export function getExpectedViewDuration(content) {
+export function getExpectedViewDuration(content: string) {
 	const language = getLang();
 
 	if (READ_LOGOGRAPHIC_LANGUAGES.has(language)) {
@@ -90,9 +82,8 @@ export function getExpectedViewDuration(content) {
 
 /**
  * Sends information when user read a page.
- * @param {Object} The Analytics client instance.
  */
-function read(analytics) {
+function read(analytics: Analytics) {
 	const readTracker = new ReadTracker();
 	let scrollTracker = new ScrollTracker();
 
@@ -100,7 +91,11 @@ function read(analytics) {
 		const content = getReadableContent();
 
 		readTracker.setExpectedViewDuration(
-			() => analytics.send('pageRead', applicationId),
+			() =>
+				analytics.send(
+					AnalyticsType.EventId.PageRead,
+					AnalyticsType.ApplicationId.Page
+				),
 			getExpectedViewDuration(content)
 		);
 	});
@@ -109,17 +104,20 @@ function read(analytics) {
 		scrollTracker.onDepthReached((depth) => {
 			if (depth >= READ_MINIMUM_SCROLL_DEPTH) {
 				readTracker.onDepthReached(() => {
-					analytics.send('pageRead', applicationId);
+					analytics.send(
+						AnalyticsType.EventId.PageRead,
+						AnalyticsType.ApplicationId.Page
+					);
 				});
 			}
 		});
 	}, DEBOUNCE);
 
-	document.addEventListener('scroll', onScroll);
+	document.addEventListener('scroll', onScroll as EventListener);
 
 	return () => {
 		stopTrackingOnReady();
-		document.removeEventListener('scroll', onScroll);
+		document.removeEventListener('scroll', onScroll as EventListener);
 		readTracker.dispose();
 		scrollTracker = new ScrollTracker();
 	};

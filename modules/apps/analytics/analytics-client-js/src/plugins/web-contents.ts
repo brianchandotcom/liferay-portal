@@ -3,29 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {
 	getNumberOfWords,
 	isTrackable,
 	transformAssetTypeToSelector,
 } from '../utils/assets';
-import {WEB_CONTENT} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onEvents, onReady} from '../utils/events';
 import {isPartiallyInViewport} from '../utils/scroll';
 
-const applicationId = WEB_CONTENT;
-
-export const webContentTypes = [
-	'web-content',
-	'com.liferay.journal.model.JournalArticle',
-];
-
 /**
  * Returns analytics payload with WebContent information.
- * @param {Object} webContent The webContent DOM element
- * @returns {Object} The payload with webContent information
  */
-function getWebContentPayload({dataset}) {
+function getWebContentPayload({dataset}: AnalyticsType.HTMLElement) {
 	const payload = {
 		articleId: dataset.analyticsAssetId.trim(),
 	};
@@ -53,27 +45,39 @@ function getWebContentPayload({dataset}) {
 
 /**
  * Sends information when user clicks on a Web Content.
- * @param {Object} The Analytics client instance
  */
-function trackWebContentClicked(analytics) {
+function trackWebContentClicked(analytics: Analytics) {
 	return clickEvent({
 		analytics,
-		applicationId,
-		eventType: 'webContentClicked',
+		applicationId: AnalyticsType.ApplicationId.WebContent,
+		eventType: AnalyticsType.EventId.WebContentClicked,
 		getPayload: getWebContentPayload,
 		isTrackable,
-		type: webContentTypes,
+		type: [
+			AnalyticsType.ElementType.WebContent,
+			AnalyticsType.ElementType.JournalArticle,
+		],
 	});
 }
 
 /**
  * Sends information the first time a WebContent enters into the viewport.
- * @param {Object} analytics: The Analytics client instance
- * @param {Object} props: {action: 'view' | 'impression', eventId: string}
  */
-function trackWebContent(analytics, {eventId, isTrackable}) {
+function trackWebContent(
+	analytics: Analytics,
+	{
+		eventId,
+		isTrackable,
+	}: {
+		eventId: AnalyticsType.EventId;
+		isTrackable: (element: AnalyticsType.HTMLElement) => boolean;
+	}
+) {
 	const selector = transformAssetTypeToSelector(
-		webContentTypes,
+		[
+			AnalyticsType.ElementType.WebContent,
+			AnalyticsType.ElementType.JournalArticle,
+		],
 		`:not([data-analytics-asset-viewed="true"])`
 	);
 
@@ -92,14 +96,18 @@ function trackWebContent(analytics, {eventId, isTrackable}) {
 
 				element.dataset.analyticsAssetViewed = true;
 
-				analytics.send(eventId, applicationId, payload);
+				analytics.send(
+					eventId,
+					AnalyticsType.ApplicationId.WebContent,
+					payload
+				);
 			}
 		});
 	}, 250);
 
 	const stopTrackingOnReady = onReady(markViewedElements);
 	const stopTrackingEvents = onEvents(
-		['scroll', 'resize', 'orientationchange'],
+		['scroll', 'resize'],
 		markViewedElements
 	);
 
@@ -111,22 +119,23 @@ function trackWebContent(analytics, {eventId, isTrackable}) {
 
 /**
  * Plugin function that registers listeners for Web Content events
- * @param {Object} analytics The Analytics client
  */
-function webContent(analytics) {
+function webContent(analytics: Analytics) {
 	const stopTrackingWebContentClicked = trackWebContentClicked(analytics);
 	const stopTrackingWebContentImpressionMade = trackWebContent(analytics, {
-		eventId: 'webContentImpressionMade',
+		eventId: AnalyticsType.EventId.WebContentImpressionMade,
 		isTrackable: (element) =>
 			isTrackable(element) &&
-			element.dataset?.analyticsAssetAction === 'impression',
+			element.dataset?.analyticsAssetAction ===
+				AnalyticsType.ElementAction.Impression,
 	});
 	const stopTrackingWebContentViewed = trackWebContent(analytics, {
-		eventId: 'webContentViewed',
+		eventId: AnalyticsType.EventId.WebContentViewed,
 		isTrackable: (element) =>
 			isTrackable(element) &&
 			(!element.dataset?.analyticsAssetAction ||
-				element.dataset?.analyticsAssetAction === 'view'),
+				element.dataset?.analyticsAssetAction ===
+					AnalyticsType.ElementAction.View),
 	});
 
 	return () => {

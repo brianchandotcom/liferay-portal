@@ -3,24 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {isTrackable, transformAssetTypeToSelector} from '../utils/assets';
-import {DOCUMENT} from '../utils/constants';
 import {onReady} from '../utils/events';
-
-const applicationId = DOCUMENT;
-
-export const documentType =
-	'com.liferay.portal.kernel.repository.model.FileEntry';
 
 /**
  * Returns analytics payload with Document information.
- * @param {Object} documentElement The document DOM element
- * @returns {Object} The payload with document information
  */
-function getDocumentPayload({dataset}) {
+function getDocumentPayload({dataset}: AnalyticsType.HTMLElement) {
 	const payload = {
 		fileEntryId: dataset.analyticsAssetId.trim(),
-		fileEntryVersion: dataset.analyticsAssetVersion,
 	};
 
 	if (dataset.analyticsAssetSubtype) {
@@ -35,22 +28,29 @@ function getDocumentPayload({dataset}) {
 		Object.assign(payload, {type: dataset.analyticsAssetType.trim()});
 	}
 
+	if (dataset.analyticsAssetVersion) {
+		Object.assign(payload, {
+			fileEntryVersion: dataset.analyticsAssetVersion.trim(),
+		});
+	}
+
 	return payload;
 }
 
 /**
  * Sends information when user clicks on a Document.
- * @param {Object} The Analytics client instance
  */
-function trackDocumentDownloaded(analytics) {
-	const onClick = ({target}) => {
+function trackDocumentDownloaded(analytics: Analytics) {
+	const onClick = (event: MouseEvent) => {
+		const target = event.target as AnalyticsType.HTMLElement;
+
 		if (
 			isTrackable(target) &&
 			target.dataset.analyticsAssetAction === 'download'
 		) {
 			analytics.send(
-				'documentDownloaded',
-				applicationId,
+				AnalyticsType.EventId.DocumentDownloaded,
+				AnalyticsType.ApplicationId.Document,
 				getDocumentPayload(target)
 			);
 		}
@@ -63,10 +63,20 @@ function trackDocumentDownloaded(analytics) {
 
 /**
  * Sends information when user scrolls on a Document.
- * @param {Object} The Analytics client instance
  */
-function trackDocument(analytics, {eventId, isTrackable}) {
-	const selector = transformAssetTypeToSelector(documentType);
+function trackDocument(
+	analytics: Analytics,
+	{
+		eventId,
+		isTrackable,
+	}: {
+		eventId: AnalyticsType.EventId;
+		isTrackable: (element: AnalyticsType.HTMLElement) => boolean;
+	}
+) {
+	const selector = transformAssetTypeToSelector(
+		AnalyticsType.ElementType.FileEntry
+	);
 
 	const stopTrackingOnReady = onReady(() => {
 		Array.prototype.slice
@@ -75,7 +85,11 @@ function trackDocument(analytics, {eventId, isTrackable}) {
 			.forEach((element) => {
 				const payload = getDocumentPayload(element);
 
-				analytics.send(eventId, applicationId, payload);
+				analytics.send(
+					eventId,
+					AnalyticsType.ApplicationId.Document,
+					payload
+				);
 			});
 	});
 
@@ -86,17 +100,18 @@ function trackDocument(analytics, {eventId, isTrackable}) {
  * Plugin function that registers listeners for Document events.
  * A link with action download should fire a documentImpressionMade event
  * on load page to the documentsFragment plugin.
- * @param {Object} analytics The Analytics client
  */
-function documents(analytics) {
+function documents(analytics: Analytics) {
 	const stopTrackingDocumentDownloaded = trackDocumentDownloaded(analytics);
 	const stopTrackingDocumentImpressionMade = trackDocument(analytics, {
-		eventId: 'documentImpressionMade',
+		eventId: AnalyticsType.EventId.DocumentImpressionMade,
 		isTrackable: (element) =>
 			(isTrackable(element) &&
-				element.dataset.analyticsAssetAction === 'impression') ||
+				element.dataset.analyticsAssetAction ===
+					AnalyticsType.ElementAction.Impression) ||
 			(isTrackable(element) &&
-				element.dataset.analyticsAssetAction === 'download'),
+				element.dataset.analyticsAssetAction ===
+					AnalyticsType.ElementAction.Download),
 	});
 
 	return () => {

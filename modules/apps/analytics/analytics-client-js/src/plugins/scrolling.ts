@@ -3,26 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {DEBOUNCE, PAGE} from '../utils/constants';
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
+import {DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = PAGE;
-
 /**
  * Plugin function that registers listener against scroll event
- * @param {Object} analytics The Analytics client
  */
-function scrolling(analytics) {
+function scrolling(analytics: Analytics) {
 	let scrollTracker = new ScrollTracker();
 
 	const onScroll = debounce(() => {
 		scrollTracker.onDepthReached((depth) => {
-			analytics.send('pageDepthReached', applicationId, {depth});
+			analytics.send(
+				AnalyticsType.EventId.PageDepthReached,
+				AnalyticsType.ApplicationId.Page,
+				{depth}
+			);
 		});
 	}, DEBOUNCE);
 
-	document.addEventListener('scroll', onScroll);
+	document.addEventListener('scroll', onScroll as EventListener);
 
 	// Reset levels on SPA-enabled environments
 
@@ -34,7 +37,7 @@ function scrolling(analytics) {
 	window.addEventListener('load', onLoad);
 
 	return () => {
-		document.removeEventListener('scroll', onScroll);
+		document.removeEventListener('scroll', onScroll as EventListener);
 		window.removeEventListener('load', onLoad);
 	};
 }

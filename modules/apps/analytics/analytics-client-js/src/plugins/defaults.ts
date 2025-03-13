@@ -26,6 +26,7 @@ export {
 	timing,
 	webContents,
 };
+
 export default [
 
 	// Dxp should be before other events plugins, because it can dispose analytics

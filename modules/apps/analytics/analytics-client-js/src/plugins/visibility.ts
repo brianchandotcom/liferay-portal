@@ -3,10 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {PAGE} from '../utils/constants';
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 
-const applicationId = PAGE;
-const beforeunloadEventListener = 'beforeunload';
+type ExtendedDoc = Document & {
+	msHidden?: boolean;
+	webkitHidden?: boolean;
+};
+
 let enableTabEvent = true;
 
 /**
@@ -16,15 +20,17 @@ function getHiddenKey() {
 	let hidden;
 	let visibilityChange;
 
-	if (typeof document.hidden !== 'undefined') {
+	const extendedDoc: ExtendedDoc = document;
+
+	if (typeof extendedDoc.hidden !== 'undefined') {
 		hidden = 'hidden';
 		visibilityChange = 'visibilitychange';
 	}
-	else if (typeof document.msHidden !== 'undefined') {
+	else if (typeof extendedDoc.msHidden !== 'undefined') {
 		hidden = 'msHidden';
 		visibilityChange = 'msvisibilitychange';
 	}
-	else if (typeof document.webkitHidden !== 'undefined') {
+	else if (typeof extendedDoc.webkitHidden !== 'undefined') {
 		hidden = 'webkitHidden';
 		visibilityChange = 'webkitvisibilitychange';
 	}
@@ -37,42 +43,42 @@ function getHiddenKey() {
 
 /**
  * Sends tabBlurred or tabFocused event on visibilityChange
- * @param {Object} analytics The Analytics client
  */
-function handleVisibilityChange(analytics) {
+function handleVisibilityChange(analytics: Analytics) {
 	const {hidden} = getHiddenKey();
 
+	const extendedDoc: ExtendedDoc = document;
+
 	if (enableTabEvent) {
-		if (document[hidden]) {
-			analytics.send('tabBlurred', applicationId);
+		if (extendedDoc[hidden as 'hidden' | 'msHidden' | 'webkitHidden']) {
+			analytics.send(
+				AnalyticsType.EventId.TabBlurred,
+				AnalyticsType.ApplicationId.Page
+			);
 		}
 		else {
-			analytics.send('tabFocused', applicationId);
+			analytics.send(
+				AnalyticsType.EventId.TabFocused,
+				AnalyticsType.ApplicationId.Page
+			);
 		}
 	}
 }
 
 /**
  * Plugin function that registers listeners against browser visibility tabs
- * @param {Object} analytics The Analytics client
  */
-function visibility(analytics) {
+function visibility(analytics: Analytics) {
 	const {visibilityChange} = getHiddenKey();
 
 	if (visibilityChange) {
 		const onVisibilityChange = handleVisibilityChange.bind(null, analytics);
 
-		window.addEventListener(
-			beforeunloadEventListener,
-			enableTabEventHandle
-		);
+		window.addEventListener('beforeunload', enableTabEventHandle);
 		document.addEventListener(visibilityChange, onVisibilityChange);
 
 		return () => {
-			window.removeEventListener(
-				beforeunloadEventListener,
-				enableTabEventHandle
-			);
+			window.removeEventListener('beforeunload', enableTabEventHandle);
 			document.removeEventListener(visibilityChange, onVisibilityChange);
 		};
 	}

@@ -3,27 +3,30 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {closest, getClosestAssetElement, isTrackable} from '../utils/assets';
-import {CUSTOM, DEBOUNCE} from '../utils/constants';
+import {DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onReady} from '../utils/events';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = CUSTOM;
-
 /**
  * Returns analytics payload with Custom Asset information.
- * @param {Object} custom The custom asset DOM element
- * @returns {Object} The payload with custom information
  */
-function getCustomAssetPayload({dataset}) {
+function getCustomAssetPayload({dataset}: AnalyticsType.HTMLElement) {
 	const payload = {
 		assetId: dataset.analyticsAssetId.trim(),
-		category: dataset.analyticsAssetCategory,
 	};
 
 	if (dataset.analyticsAssetTitle) {
 		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
+	}
+
+	if (dataset.analyticsAssetCategory) {
+		Object.assign(payload, {
+			category: dataset.analyticsAssetCategory.trim(),
+		});
 	}
 
 	return payload;
@@ -31,27 +34,31 @@ function getCustomAssetPayload({dataset}) {
 
 /**
  * Sends information when user clicks on a Custom Asset.
- * @param {Object} analytics The Analytics client instance
  */
-function trackCustomAssetDownloaded(analytics) {
-	const onClick = ({target}) => {
+function trackCustomAssetDownloaded(analytics: Analytics) {
+	const onClick = (event: MouseEvent) => {
+		const target = event.target as AnalyticsType.HTMLElement;
+
 		const actionElement = closest(
 			target,
 			'[data-analytics-asset-action="download"]'
 		);
 
-		const customAssetElement = getClosestAssetElement(target, 'custom');
+		const customAssetElement = getClosestAssetElement(
+			target,
+			AnalyticsType.ElementType.Custom
+		) as AnalyticsType.HTMLElement;
 
 		if (
 			actionElement &&
 			isTrackable(customAssetElement, [
-				'analyticsAssetId',
-				'analyticsAssetType',
+				AnalyticsType.DataSetList.AnalyticsAssetId,
+				AnalyticsType.DataSetList.AnalyticsAssetType,
 			])
 		) {
 			analytics.send(
-				'assetDownloaded',
-				applicationId,
+				AnalyticsType.EventId.AssetDownloaded,
+				AnalyticsType.ApplicationId.Custom,
 				getCustomAssetPayload(customAssetElement)
 			);
 		}
@@ -64,9 +71,11 @@ function trackCustomAssetDownloaded(analytics) {
 
 /**
  * Sends information about Custom Asset scroll actions.
- * @param {Object} analytics The Analytics client instance
  */
-function trackCustomAssetScroll(analytics, customAssetElements) {
+function trackCustomAssetScroll(
+	analytics: Analytics,
+	customAssetElements: AnalyticsType.HTMLElement[]
+) {
 	const scrollSessionId = new Date().toISOString();
 	const scrollTracker = new ScrollTracker();
 
@@ -76,30 +85,36 @@ function trackCustomAssetScroll(analytics, customAssetElements) {
 				const payload = getCustomAssetPayload(element);
 				Object.assign(payload, {depth, sessionId: scrollSessionId});
 
-				analytics.send('assetDepthReached', applicationId, payload);
+				analytics.send(
+					AnalyticsType.EventId.AssetDepthReached,
+					AnalyticsType.ApplicationId.Custom,
+					payload
+				);
 			}, element);
 		});
 	}, DEBOUNCE);
 
-	document.addEventListener('scroll', onScroll);
+	document.addEventListener('scroll', onScroll as EventListener);
 
 	return () => {
-		document.removeEventListener('scroll', onScroll);
+		document.removeEventListener('scroll', onScroll as EventListener);
 	};
 }
 
 /**
  * Adds an event listener for a Custom Asset submission and sends information when that
  * event happens.
- * @param {Object} analytics The Analytics client instance
  */
-function trackCustomAssetSubmitted(analytics) {
-	const onSubmit = (event) => {
-		const {target} = event;
-		const customAssetElement = getClosestAssetElement(target, 'custom');
+function trackCustomAssetSubmitted(analytics: Analytics) {
+	const onSubmit = (event: MouseEvent) => {
+		const target = event.target as AnalyticsType.HTMLElement;
+		const customAssetElement = getClosestAssetElement(
+			target,
+			AnalyticsType.ElementType.Custom
+		) as AnalyticsType.HTMLElement;
 		const isElementTrackable = isTrackable(customAssetElement, [
-			'analyticsAssetId',
-			'analyticsAssetType',
+			AnalyticsType.DataSetList.AnalyticsAssetId,
+			AnalyticsType.DataSetList.AnalyticsAssetType,
 		]);
 
 		if (
@@ -111,23 +126,23 @@ function trackCustomAssetSubmitted(analytics) {
 		}
 
 		analytics.send(
-			'assetSubmitted',
-			applicationId,
+			AnalyticsType.EventId.AssetSubmitted,
+			AnalyticsType.ApplicationId.Custom,
 			getCustomAssetPayload(customAssetElement)
 		);
 	};
 
-	document.addEventListener('submit', onSubmit);
+	document.addEventListener('submit', onSubmit as EventListener);
 
-	return () => document.removeEventListener('submit', onSubmit);
+	return () =>
+		document.removeEventListener('submit', onSubmit as EventListener);
 }
 
 /**
  * Sends information when user scrolls on a Custom asset.
- * @param {Object} analytics The Analytics client instance
  */
-function trackCustomAssetViewed(analytics) {
-	const customAssetElements = [];
+function trackCustomAssetViewed(analytics: Analytics) {
+	const customAssetElements: AnalyticsType.HTMLElement[] = [];
 	const stopTrackingOnReady = onReady(() => {
 		Array.prototype.slice
 			.call(
@@ -136,7 +151,10 @@ function trackCustomAssetViewed(analytics) {
 				)
 			)
 			.filter((element) =>
-				isTrackable(element, ['analyticsAssetId', 'analyticsAssetType'])
+				isTrackable(element, [
+					AnalyticsType.DataSetList.AnalyticsAssetId,
+					AnalyticsType.DataSetList.AnalyticsAssetType,
+				])
 			)
 			.forEach((element) => {
 				const formEnabled =
@@ -147,7 +165,11 @@ function trackCustomAssetViewed(analytics) {
 
 				customAssetElements.push(element);
 
-				analytics.send('assetViewed', applicationId, payload);
+				analytics.send(
+					AnalyticsType.EventId.AssetViewed,
+					AnalyticsType.ApplicationId.Custom,
+					payload
+				);
 			});
 	});
 
@@ -164,25 +186,26 @@ function trackCustomAssetViewed(analytics) {
 
 /**
  * Sends information when user clicks on a Custom Asset.
- * @param {Object} analytics The Analytics client instance
  */
-function trackCustomAssetClick(analytics) {
+function trackCustomAssetClick(analytics: Analytics) {
 	return clickEvent({
 		analytics,
-		applicationId,
-		eventType: 'assetClicked',
+		applicationId: AnalyticsType.ApplicationId.Custom,
+		eventType: AnalyticsType.EventId.AssetClicked,
 		getPayload: getCustomAssetPayload,
 		isTrackable: (element) =>
-			isTrackable(element, ['analyticsAssetId', 'analyticsAssetType']),
-		type: 'custom',
+			isTrackable(element, [
+				AnalyticsType.DataSetList.AnalyticsAssetId,
+				AnalyticsType.DataSetList.AnalyticsAssetType,
+			]),
+		type: AnalyticsType.ElementType.Custom,
 	});
 }
 
 /**
  * Plugin function that registers listeners for Custom Asset events
- * @param {Object} analytics The Analytics client
  */
-function custom(analytics) {
+function custom(analytics: Analytics) {
 	const stopTrackingClicked = trackCustomAssetClick(analytics);
 	const stopTrackingDownloaded = trackCustomAssetDownloaded(analytics);
 	const stopTrackingSubmitted = trackCustomAssetSubmitted(analytics);

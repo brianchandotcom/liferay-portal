@@ -107,8 +107,8 @@ public class VirtualHostFilterTest {
 		_testProcessFilterLastPath(
 			_PATH_PROXY + _PATH_CONTEXT, _PATH_PROXY,
 			_PATH_CONTEXT + _LAST_PATH);
-		_testProcessFilterLastPath(_PATH_PROXY, _PATH_PROXY, _LAST_PATH);
 		_testProcessFilterLastPath(_PATH_PROXY, StringPool.BLANK, _LAST_PATH);
+		_testProcessFilterLastPath(_PATH_PROXY, _PATH_PROXY, _LAST_PATH);
 	}
 
 	private String _getForwardedURL(String requestURI) {

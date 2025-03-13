@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
 	<head>
@@ -6,7 +6,7 @@
 		<meta content="IE=edge" http-equiv="X-UA-Compatible" />
 		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-		<title>Events with assetId and title</title>
+		<title>Events</title>
 
 		<link href="style.css" rel="stylesheet" />
 	</head>
@@ -34,7 +34,7 @@
 
 				<h2 class="box__title"><small>ApplicationId</small> Blog</h2>
 
-			<div class="box__track" data-analytics-asset-id="myBlogId" data-analytics-asset-title="Blog Title" data-analytics-asset-type="blog">
+				<div class="box__track" data-analytics-asset-id="myBlogId" data-analytics-asset-title="Blog Title" data-analytics-asset-type="blog">
 					<h3>
 						Bringing Ideas To Life: A Look Into Creative Writing
 					</h3>
@@ -99,7 +99,7 @@
 					<small>ApplicationId</small> WebContent
 				</h2>
 
-			<div class="box__track" data-analytics-asset-id="myWebContentId" data-analytics-asset-title="Web Content Title" data-analytics-asset-type="web-content">
+				<div class="box__track" data-analytics-asset-id="myWebContentId" data-analytics-asset-title="Web Content Title" data-analytics-asset-type="web-content">
 					<h3>
 						Bringing Ideas To Life: A Look Into Creative Writing
 					</h3>
@@ -166,7 +166,7 @@
 
 				<h2 class="box__title"><small>ApplicationId</small> Custom</h2>
 
-			<div class="box__track" data-analytics-asset-id="myCustomId" data-analytics-asset-type="custom">
+				<div class="box__track" data-analytics-asset-id="myCustomId" data-analytics-asset-type="custom">
 					<h3>
 						Bringing Ideas To Life: A Look Into Creative Writing
 					</h3>
@@ -223,10 +223,10 @@
 					m.parentNode.insertBefore(a, m);
 			})('http://localhost:8081/analytics-all-min.js', function () {
 				Analytics.create({
-					channelId: '4321',
-					dataSourceId: '1234',
-					endpointUrl: 'http://127.0.0.1:8084',
-					projectId: 'osbasah',
+					channelId: '[CHANNEL_ID]',
+					dataSourceId: '[DATA_SOURCE_ID]',
+					endpointUrl: '[ENDPOINT_URL]',
+					projectId: '[PROJECT_ID]',
 				});
 			});
 
@@ -241,20 +241,18 @@
 				Object.keys(boxes)
 					.filter((key) => boxes[key] === 'hidden')
 					.forEach((key) => {
-						btns.push(
-							`<button onclick='setShow("${key}")'>${key} X</button>`
-						);
+						btns.push(`<button onclick='setShow("${key}")'>${key} X</button>`);
 					});
 
 				const hiddenBoxes = document.querySelector('#hiddenBoxes');
 
 				if (Object.keys(boxes).some((key) => boxes[key] === 'hidden')) {
 					hiddenBoxes.innerHTML = `
-						<div class="btns-header">
-							<span>Hidden boxes</span>
-							${btns.join('')}
-						</div>
-					`;
+									<div class="btns-header">
+										<span>Hidden boxes</span>
+										${btns.join('')}
+									</div>
+								`;
 				}
 			}
 

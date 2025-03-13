@@ -454,6 +454,14 @@ public class LayoutLocalServiceWrapper
 			return;
 		}
 
+		_updateLayoutPageTemplateStructureData(
+			data, sourceLayout, sourceSegmentsExperienceId, targetLayout,
+			targetSegmentsExperienceId, user);
+	}
+
+	private void _updateLayoutPageTemplateStructureData(
+		String data, Layout sourceLayout, long sourceSegmentsExperienceId,
+		Layout targetLayout, long targetSegmentsExperienceId, User user) throws Exception {
 		Set<Long> targetFragmentEntryLinkIds = _getTargetFragmentEntryLinkIds(
 			new long[] {sourceSegmentsExperienceId}, targetLayout);
 

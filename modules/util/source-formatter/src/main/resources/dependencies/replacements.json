@@ -3564,6 +3564,20 @@
 	},
 	{
 		"classNames": [
+			"OrganizationLocalService",
+			"OrganizationLocalServiceUtil"
+		],
+		"from": "addOrganization(long paramName, long paramName, String paramName, String paramName, long paramName, long paramName, long paramName, String paramName, boolean paramName, ServiceContext paramName)",
+		"issueKey": "LPD-40617",
+		"newImports": [
+			"com.liferay.portal.kernel.model.ListTypeConstants",
+			"com.liferay.portal.kernel.security.auth.CompanyThreadLocal"
+		],
+		"newReference": "ListTypeLocalService _listTypeLocalService",
+		"to": "addOrganization(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#,  _listTypeLocalService.getListTypeId(CompanyThreadLocal.getCompanyId(), param#6#, ListTypeConstants.ORGANIZATION_STATUS), param#7#, param#8#, param#9#)"
+	},
+	{
+		"classNames": [
 			"LayoutLocalService",
 			"LayoutLocalServiceUtil",
 			"LayoutService",

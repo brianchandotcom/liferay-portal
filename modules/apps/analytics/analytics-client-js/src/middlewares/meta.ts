@@ -3,26 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Analytics} from '../types';
 import {getTimezoneOffsetHour} from '../utils/date';
 
 /**
  * Generates a local helper function to fetch information from DOM elements
- * @param {string} selector A CSS selector query string
- * @param {string} attribute The element attribute to get
- * @returns {string} Value of the specified attribute
  */
-function getAttribute(selector, attribute) {
-	const tag = document.querySelector(selector) || {};
+function getAttribute(selector: string, attribute: string) {
+	const tag = document.querySelector(selector);
 
-	return tag[attribute] || '';
+	return tag ? tag.getAttribute(attribute) || '' : '';
 }
 
 /**
  * Updates context with general page information
- * @param {Object} request Request object to alter
- * @returns {Object} The updated request object
  */
-function meta(request) {
+function meta(request: {context: Analytics.Context}) {
 	Object.assign(request.context, {
 		canonicalUrl: getAttribute('link[rel=canonical]', 'href'),
 		contentLanguageId: getAttribute('html', 'lang'),

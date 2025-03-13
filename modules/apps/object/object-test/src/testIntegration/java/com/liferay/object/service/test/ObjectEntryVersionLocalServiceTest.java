@@ -419,11 +419,11 @@ public class ObjectEntryVersionLocalServiceTest {
 				expectedObjectEntryVersion.getContent(),
 				actualObjectEntryVersion.getContent());
 			Assert.assertEquals(
-				expectedObjectEntryVersion.getStatus(),
-				actualObjectEntryVersion.getStatus());
-			Assert.assertEquals(
 				expectedObjectEntryVersion.getVersion(),
 				actualObjectEntryVersion.getVersion());
+			Assert.assertEquals(
+				expectedObjectEntryVersion.getStatus(),
+				actualObjectEntryVersion.getStatus());
 		}
 	}
 

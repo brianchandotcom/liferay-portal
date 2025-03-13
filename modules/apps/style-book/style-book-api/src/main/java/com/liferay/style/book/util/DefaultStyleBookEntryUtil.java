@@ -8,9 +8,6 @@ package com.liferay.style.book.util;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -23,7 +20,6 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Víctor Galán
@@ -31,18 +27,7 @@ import java.util.Objects;
 public class DefaultStyleBookEntryUtil {
 
 	public static StyleBookEntry getDefaultMasterStyleBookEntry(Layout layout) {
-		StyleBookEntry styleBookEntry = null;
-
-		if (layout.getMasterLayoutPlid() > 0) {
-			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-				layout.getMasterLayoutPlid());
-
-			if (masterLayout != null) {
-				styleBookEntry =
-					StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-						masterLayout.getStyleBookEntryId());
-			}
-		}
+		StyleBookEntry styleBookEntry = _getMasterLayoutStyleBookEntry(layout);
 
 		if (styleBookEntry != null) {
 			return styleBookEntry;
@@ -108,35 +93,33 @@ public class DefaultStyleBookEntryUtil {
 			return LanguageUtil.get(locale, "styles-from-theme");
 		}
 
-		if (_hasEditableMasterLayout(layout) &&
-			(layout.getMasterLayoutPlid() > 0)) {
+		StyleBookEntry masterLayoutStyleBookEntry =
+			_getMasterLayoutStyleBookEntry(layout);
 
+		if (masterLayoutStyleBookEntry != null) {
 			return LanguageUtil.get(locale, "styles-from-master");
 		}
 
 		return LanguageUtil.get(locale, "styles-by-default");
 	}
 
-	private static boolean _hasEditableMasterLayout(Layout layout) {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.
-				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+	private static StyleBookEntry _getMasterLayoutStyleBookEntry(
+		Layout layout) {
 
-		if (layoutPageTemplateEntry == null) {
-			layoutPageTemplateEntry =
-				LayoutPageTemplateEntryLocalServiceUtil.
-					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		StyleBookEntry styleBookEntry = null;
+
+		if (layout.getMasterLayoutPlid() > 0) {
+			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
+				layout.getMasterLayoutPlid());
+
+			if (masterLayout != null) {
+				styleBookEntry =
+					StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+						masterLayout.getStyleBookEntryId());
+			}
 		}
 
-		if ((layoutPageTemplateEntry == null) ||
-			!Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
-
-			return true;
-		}
-
-		return false;
+		return styleBookEntry;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

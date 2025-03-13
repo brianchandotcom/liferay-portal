@@ -49,6 +49,27 @@ public class ContentPageSpecificationSerDes {
 
 		sb.append("{");
 
+		if (contentPageSpecification.
+				getDraftContentPageSpecificationExternalReferenceCode() !=
+					null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"draftContentPageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					contentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (contentPageSpecification.getPageExperiences() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -150,6 +171,20 @@ public class ContentPageSpecificationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (contentPageSpecification.
+				getDraftContentPageSpecificationExternalReferenceCode() ==
+					null) {
+
+			map.put("draftContentPageSpecificationExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"draftContentPageSpecificationExternalReferenceCode",
+				String.valueOf(
+					contentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode()));
+		}
+
 		if (contentPageSpecification.getPageExperiences() == null) {
 			map.put("pageExperiences", null);
 		}
@@ -211,7 +246,13 @@ public class ContentPageSpecificationSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "pageExperiences")) {
+			if (Objects.equals(
+					jsonParserFieldName,
+					"draftContentPageSpecificationExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageExperiences")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -237,7 +278,17 @@ public class ContentPageSpecificationSerDes {
 			ContentPageSpecification contentPageSpecification,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "pageExperiences")) {
+			if (Objects.equals(
+					jsonParserFieldName,
+					"draftContentPageSpecificationExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					contentPageSpecification.
+						setDraftContentPageSpecificationExternalReferenceCode(
+							(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageExperiences")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;

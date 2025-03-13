@@ -1160,6 +1160,20 @@ public abstract class BaseSitePageResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalContentPageSpecificationAssertFieldNames()) {
 
+			if (Objects.equals(
+					"draftContentPageSpecificationExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (contentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode() ==
+							null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pageExperiences", additionalAssertFieldName)) {
 				if (contentPageSpecification.getPageExperiences() == null) {
 					valid = false;
@@ -1540,6 +1554,22 @@ public abstract class BaseSitePageResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalContentPageSpecificationAssertFieldNames()) {
+
+			if (Objects.equals(
+					"draftContentPageSpecificationExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						contentPageSpecification1.
+							getDraftContentPageSpecificationExternalReferenceCode(),
+						contentPageSpecification2.
+							getDraftContentPageSpecificationExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("pageExperiences", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -2048,6 +2078,8 @@ public abstract class BaseSitePageResourceTestCase {
 
 		return new ContentPageSpecification() {
 			{
+				draftContentPageSpecificationExternalReferenceCode =
+					RandomTestUtil.randomString();
 			}
 		};
 	}

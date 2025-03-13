@@ -53,6 +53,61 @@ public class ContentPageSpecification
 			ContentPageSpecification.class, json);
 	}
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The draft content page specification external reference code or null if it is a draft content page specification."
+	)
+	public String getDraftContentPageSpecificationExternalReferenceCode() {
+		if (_draftContentPageSpecificationExternalReferenceCodeSupplier !=
+				null) {
+
+			draftContentPageSpecificationExternalReferenceCode =
+				_draftContentPageSpecificationExternalReferenceCodeSupplier.
+					get();
+
+			_draftContentPageSpecificationExternalReferenceCodeSupplier = null;
+		}
+
+		return draftContentPageSpecificationExternalReferenceCode;
+	}
+
+	public void setDraftContentPageSpecificationExternalReferenceCode(
+		String draftContentPageSpecificationExternalReferenceCode) {
+
+		this.draftContentPageSpecificationExternalReferenceCode =
+			draftContentPageSpecificationExternalReferenceCode;
+
+		_draftContentPageSpecificationExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDraftContentPageSpecificationExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			draftContentPageSpecificationExternalReferenceCodeUnsafeSupplier) {
+
+		_draftContentPageSpecificationExternalReferenceCodeSupplier = () -> {
+			try {
+				return draftContentPageSpecificationExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The draft content page specification external reference code or null if it is a draft content page specification."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String draftContentPageSpecificationExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String>
+		_draftContentPageSpecificationExternalReferenceCodeSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public PageExperience[] getPageExperiences() {
@@ -123,6 +178,25 @@ public class ContentPageSpecification
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String draftContentPageSpecificationExternalReferenceCode =
+			getDraftContentPageSpecificationExternalReferenceCode();
+
+		if (draftContentPageSpecificationExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append(
+				"\"draftContentPageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(draftContentPageSpecificationExternalReferenceCode));
+
+			sb.append("\"");
+		}
 
 		PageExperience[] pageExperiences = getPageExperiences();
 

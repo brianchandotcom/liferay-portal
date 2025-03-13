@@ -498,6 +498,8 @@ public abstract class BasePageSpecificationResourceTestCase {
 				{
 					externalReferenceCode = StringUtil.toLowerCase(
 						RandomTestUtil.randomString());
+					draftContentPageSpecificationExternalReferenceCode =
+						StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 					type = Type.create("ContentPageSpecification");
 				}
@@ -1032,6 +1034,24 @@ public abstract class BasePageSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"draftContentPageSpecificationExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!(pageSpecification instanceof ContentPageSpecification)) {
+					continue;
+				}
+
+				if (((ContentPageSpecification)pageSpecification).
+						getDraftContentPageSpecificationExternalReferenceCode() ==
+							null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pageExperiences", additionalAssertFieldName)) {
 				if (!(pageSpecification instanceof ContentPageSpecification)) {
 					continue;
@@ -1222,6 +1242,28 @@ public abstract class BasePageSpecificationResourceTestCase {
 				if (!Objects.deepEquals(
 						pageSpecification1.getType(),
 						pageSpecification2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"draftContentPageSpecificationExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!(pageSpecification1 instanceof ContentPageSpecification) ||
+					!(pageSpecification2 instanceof ContentPageSpecification)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((ContentPageSpecification)pageSpecification1).
+							getDraftContentPageSpecificationExternalReferenceCode(),
+						((ContentPageSpecification)pageSpecification2).
+							getDraftContentPageSpecificationExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1488,6 +1530,10 @@ public abstract class BasePageSpecificationResourceTestCase {
 
 				pageSpecification.setExternalReferenceCode(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				pageSpecification.
+					setDraftContentPageSpecificationExternalReferenceCode(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 				pageSpecification.setType(
 					PageSpecification.Type.create("ContentPageSpecification"));

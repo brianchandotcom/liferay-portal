@@ -26,6 +26,33 @@ public class ContentPageSpecification
 		return ContentPageSpecificationSerDes.toDTO(json);
 	}
 
+	public String getDraftContentPageSpecificationExternalReferenceCode() {
+		return draftContentPageSpecificationExternalReferenceCode;
+	}
+
+	public void setDraftContentPageSpecificationExternalReferenceCode(
+		String draftContentPageSpecificationExternalReferenceCode) {
+
+		this.draftContentPageSpecificationExternalReferenceCode =
+			draftContentPageSpecificationExternalReferenceCode;
+	}
+
+	public void setDraftContentPageSpecificationExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			draftContentPageSpecificationExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			draftContentPageSpecificationExternalReferenceCode =
+				draftContentPageSpecificationExternalReferenceCodeUnsafeSupplier.
+					get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String draftContentPageSpecificationExternalReferenceCode;
+
 	public PageExperience[] getPageExperiences() {
 		return pageExperiences;
 	}

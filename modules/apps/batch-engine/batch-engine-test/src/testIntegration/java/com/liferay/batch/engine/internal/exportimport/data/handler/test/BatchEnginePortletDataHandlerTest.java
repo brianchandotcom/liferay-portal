@@ -322,7 +322,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0L,
-			objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.put(

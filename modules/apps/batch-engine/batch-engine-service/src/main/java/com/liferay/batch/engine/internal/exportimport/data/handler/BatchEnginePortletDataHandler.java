@@ -65,6 +65,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_itemClassName = itemClassName;
 		_taskItemDelegateName = taskItemDelegateName;
 
+		_deletionsFileName = taskItemDelegateName + "_deletions.json";
 		_fileName = taskItemDelegateName + ".json";
 
 		setEmptyControlsAllowed(true);
@@ -98,6 +99,38 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public boolean isModelCountSupported() {
 		return false;
+	}
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
+			_deletionsFileName);
+
+		if (inputStream == null) {
+			return portletPreferences;
+		}
+
+		BatchEngineImportTask batchEngineDeleteTask =
+			_batchEngineImportTaskService.addBatchEngineImportTask(
+				null, portletDataContext.getCompanyId(), _getUserId(), 100,
+				null, _className, _getBytes(_fileName, inputStream), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Collections.emptyMap(),
+				BatchEngineImportTaskConstants.
+					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
+				BatchEngineTaskOperation.DELETE.name(),
+				HashMapBuilder.<String, Serializable>put(
+					"createStrategy", CreateStrategy.UPSERT.getDBOperation()
+				).build(),
+				_taskItemDelegateName);
+
+		_batchEngineImportTaskExecutor.execute(batchEngineDeleteTask);
+
+		return portletPreferences;
 	}
 
 	@Override
@@ -272,6 +305,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private final String _className;
+	private final String _deletionsFileName;
 	private final String _fileName;
 	private final String _itemClassName;
 	private final String _taskItemDelegateName;

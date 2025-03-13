@@ -699,6 +699,10 @@ public class AccountEntryLocalServiceImpl
 			accountEntry = updateDomains(accountEntryId, domains);
 		}
 
+		if (status == WorkflowConstants.STATUS_INCOMPLETE) {
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+
 		ServiceContext workflowServiceContext = new ServiceContext();
 		long workflowUserId = accountEntry.getUserId();
 
@@ -710,10 +714,6 @@ public class AccountEntryLocalServiceImpl
 
 			workflowServiceContext = (ServiceContext)serviceContext.clone();
 			workflowUserId = serviceContext.getUserId();
-		}
-
-		if (status == WorkflowConstants.STATUS_INCOMPLETE) {
-			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
 		if (_isWorkflowEnabled(accountEntry.getCompanyId())) {

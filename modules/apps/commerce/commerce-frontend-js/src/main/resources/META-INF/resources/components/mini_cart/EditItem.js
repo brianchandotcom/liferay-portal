@@ -139,6 +139,7 @@ function EditItem() {
 		({
 			accountId,
 			channelId,
+			currencyCode,
 			options,
 			productId,
 			quantity,
@@ -149,6 +150,7 @@ function EditItem() {
 					channelId,
 					productId,
 					accountId,
+					currencyCode,
 					quantity,
 					unitOfMeasureKey,
 					options
@@ -366,6 +368,13 @@ function EditItem() {
 											postChannelProductSkuBySkuOption({
 												accountId: cartState.accountId,
 												channelId: channel.id,
+												currencyCode:
+													Liferay.CommerceContext
+														? Liferay
+																.CommerceContext
+																.currency
+																.currencyCode
+														: '',
 												options:
 													cpInstance?.skuOptions ||
 													[],

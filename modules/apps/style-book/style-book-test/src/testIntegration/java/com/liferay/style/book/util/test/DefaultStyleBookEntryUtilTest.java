@@ -80,22 +80,7 @@ public class DefaultStyleBookEntryUtilTest {
 	public void testGetStyleBookEntryNameWithDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry()
 		throws Exception {
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Layout layoutWithMasterLayout = LayoutTestUtil.addTypeContentLayout(
-			_group);
-
-		layoutWithMasterLayout.setMasterLayoutPlid(
-			masterLayoutPageTemplateEntry.getPlid());
-
-		layoutWithMasterLayout = _layoutLocalService.updateLayout(
-			layoutWithMasterLayout);
+		Layout layoutWithMasterLayout = _getLayoutWithMasterLayout();
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
@@ -116,52 +101,20 @@ public class DefaultStyleBookEntryUtilTest {
 	public void testGetStyleBookEntryNameWithMasterLayoutWithoutStyleBookEntry()
 		throws Exception {
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Layout layoutWithMasterLayout = LayoutTestUtil.addTypeContentLayout(
-			_group);
-
-		layoutWithMasterLayout.setMasterLayoutPlid(
-			masterLayoutPageTemplateEntry.getPlid());
-
-		layoutWithMasterLayout = _layoutLocalService.updateLayout(
-			layoutWithMasterLayout);
-
 		Assert.assertEquals(
 			"styles-from-theme",
 			DefaultStyleBookEntryUtil.getStyleBookEntryName(
-				layoutWithMasterLayout, null, null));
+				_getLayoutWithMasterLayout(), null, null));
 	}
 
 	@Test
 	public void testGetStyleBookEntryNameWithMasterLayoutWithStyleBookEntry()
 		throws Exception {
 
-		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
-				RandomTestUtil.randomString(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Layout layoutWithMasterLayout = LayoutTestUtil.addTypeContentLayout(
-			_group);
-
-		layoutWithMasterLayout.setMasterLayoutPlid(
-			masterLayoutPageTemplateEntry.getPlid());
-
-		layoutWithMasterLayout = _layoutLocalService.updateLayout(
-			layoutWithMasterLayout);
+		Layout layoutWithMasterLayout = _getLayoutWithMasterLayout();
 
 		Layout masterPageTemplateLayout = _layoutLocalService.getLayout(
-			masterLayoutPageTemplateEntry.getPlid());
+			layoutWithMasterLayout.getMasterLayoutPlid());
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
@@ -215,6 +168,24 @@ public class DefaultStyleBookEntryUtilTest {
 
 		_styleBookEntryLocalService.deleteStyleBookEntry(
 			styleBookEntry.getStyleBookEntryId());
+	}
+
+	private Layout _getLayoutWithMasterLayout() throws Exception {
+		Layout layoutWithMasterLayout = LayoutTestUtil.addTypeContentLayout(
+			_group);
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		layoutWithMasterLayout.setMasterLayoutPlid(
+			masterLayoutPageTemplateEntry.getPlid());
+
+		return _layoutLocalService.updateLayout(layoutWithMasterLayout);
 	}
 
 	private static final String _THEME_ID = RandomTestUtil.randomString();

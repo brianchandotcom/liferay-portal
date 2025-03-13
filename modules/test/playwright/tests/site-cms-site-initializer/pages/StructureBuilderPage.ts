@@ -33,7 +33,7 @@ export class StructureBuilderPage {
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
 	private readonly publishButton: Locator;
-	private readonly saveButton: Locator;
+	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -84,21 +84,21 @@ export class StructureBuilderPage {
 		mandatory?: boolean;
 		name?: string;
 	}) {
-		if (erc) {
+		if (erc !== undefined) {
 			const ercInput = this.page.getByLabel('ERC');
 
 			await ercInput.fill(erc);
 			await ercInput.blur();
 		}
 
-		if (name) {
+		if (name !== undefined) {
 			const fieldNameInput = this.page.getByLabel('Field Name');
 
 			await fieldNameInput.fill(name);
 			await fieldNameInput.blur();
 		}
 
-		if (label) {
+		if (label !== undefined) {
 			const labelInput = this.page.getByLabel('Label');
 
 			await labelInput.fill(label);
@@ -107,13 +107,16 @@ export class StructureBuilderPage {
 
 		const localizableToggle = this.page.getByLabel('Localizable');
 
-		if (localizable && !(await localizableToggle.isChecked())) {
+		if (
+			localizable !== undefined &&
+			!(await localizableToggle.isChecked())
+		) {
 			await this.page.getByLabel('Localizable').click();
 		}
 
 		const mandatoryToggle = this.page.getByLabel('Mandatory');
 
-		if (mandatory && !(await mandatoryToggle.isChecked())) {
+		if (mandatory !== undefined && !(await mandatoryToggle.isChecked())) {
 			await this.page.getByLabel('Mandatory').click();
 		}
 	}
@@ -127,18 +130,18 @@ export class StructureBuilderPage {
 		label?: string;
 		name?: string;
 	}) {
-		if (erc) {
+		if (erc !== undefined) {
 			const ercInput = this.page.getByLabel('ERC');
 			await ercInput.fill(erc);
 			await ercInput.blur();
 		}
 
-		if (label) {
+		if (label !== undefined) {
 			await this.labelInput.fill(label);
 			await this.labelInput.blur();
 		}
 
-		if (name) {
+		if (name !== undefined) {
 			await this.nameInput.fill(name);
 			await this.nameInput.blur();
 		}

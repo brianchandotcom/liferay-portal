@@ -269,3 +269,63 @@ test(
 		await structureBuilderPage.deleteStructure(id);
 	}
 );
+
+test(
+	'Frontend validations',
+	{tag: '@LPD-36752'},
+	async ({page, structureBuilderPage}) => {
+
+		// Go to the Structure Builder
+
+		await structureBuilderPage.goto();
+
+		// Set label and empty name
+
+		const label = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.changeStructureSettings({
+			label,
+			name: '',
+		});
+
+		await expect(page.getByText('This field is required')).toBeVisible();
+
+		// Add a Text field and select it
+
+		await structureBuilderPage.addField('Text');
+
+		await structureBuilderPage.selectField({label: 'Text'});
+
+		// Put empty name
+
+		await structureBuilderPage.changeFieldSettings({name: ''});
+
+		// Try to save and check it redirects to structure view
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Structure Name'),
+			trigger: structureBuilderPage.saveButton,
+		});
+
+		// Fill name
+
+		await structureBuilderPage.changeStructureSettings({name: label});
+
+		// Now try to save and check it redirects to field view
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.breadcrumb-link', {hasText: 'Text'}),
+			trigger: structureBuilderPage.saveButton,
+		});
+
+		// Fill name and save again
+
+		await structureBuilderPage.changeFieldSettings({name: 'text'});
+
+		const {id} = await structureBuilderPage.saveStructure();
+
+		// Delete structure
+
+		await structureBuilderPage.deleteStructure(id);
+	}
+);

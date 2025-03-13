@@ -4,17 +4,20 @@
  */
 
 import userEvent from '@testing-library/user-event';
+
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
-import {webContentTypes} from '../../src/plugins/web-contents';
-import {wait} from '../helpers';
+import {Analytics as AnalyticsTypes} from '../../src/types';
+import {INITIAL_ANALYTICS_CONFIG, wait} from '../helpers';
 
 const applicationId = 'WebContent';
 
 const googleUrl = 'http://google.com/';
 
-const createWebContentElement = (assetId, assetTitle) => {
+const createWebContentElement = (assetId?: string, assetTitle?: string) => {
 	const webContentElement = document.createElement('div');
 
 	webContentElement.dataset.analyticsAssetId = assetId || 'assetId';
@@ -29,7 +32,7 @@ const createWebContentElement = (assetId, assetTitle) => {
 	return webContentElement;
 };
 
-function createDynamicWebContentElement(attrs) {
+function createDynamicWebContentElement(attrs: any) {
 	const element = document.createElement('div');
 
 	for (let index = 0; index < Object.keys(attrs).length; index++) {
@@ -41,19 +44,19 @@ function createDynamicWebContentElement(attrs) {
 
 	document.body.appendChild(element);
 
-	const paragraph = document.createElement('p');
+	const link = document.createElement('a');
 
-	paragraph.href = googleUrl;
+	link.href = googleUrl;
 
-	setInnerHTML(paragraph, 'Paragraph inside a Web Content');
+	link.innerHTML = 'Paragraph inside a Web Content';
 
-	element.appendChild(paragraph);
+	element.appendChild(link);
 
-	return [element, paragraph];
+	return [element, link];
 }
 
 describe('WebContent Plugin', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeEach(() => {
 
@@ -66,12 +69,12 @@ describe('WebContent Plugin', () => {
 
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create();
+		Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 	});
@@ -83,14 +86,17 @@ describe('WebContent Plugin', () => {
 			jest.spyOn(
 				webContentElement,
 				'getBoundingClientRect'
-			).mockImplementation(() => ({
-				bottom: 500,
-				height: 500,
-				left: 0,
-				right: 500,
-				top: 0,
-				width: 500,
-			}));
+			).mockImplementation(
+				() =>
+					({
+						bottom: 500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 0,
+						width: 500,
+					}) as DOMRect
+			);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
 
@@ -123,14 +129,17 @@ describe('WebContent Plugin', () => {
 			jest.spyOn(
 				webContentElement,
 				'getBoundingClientRect'
-			).mockImplementation(() => ({
-				bottom: 1500,
-				height: 500,
-				left: 0,
-				right: 500,
-				top: 1000,
-				width: 500,
-			}));
+			).mockImplementation(
+				() =>
+					({
+						bottom: 1500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 1000,
+						width: 500,
+					}) as DOMRect
+			);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
 
@@ -156,14 +165,17 @@ describe('WebContent Plugin', () => {
 			jest.spyOn(
 				webContentElement,
 				'getBoundingClientRect'
-			).mockImplementation(() => ({
-				bottom: 500,
-				height: 500,
-				left: 0,
-				right: 500,
-				top: 0,
-				width: 500,
-			}));
+			).mockImplementation(
+				() =>
+					({
+						bottom: 500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 0,
+						width: 500,
+					}) as DOMRect
+			);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
 
@@ -228,7 +240,7 @@ describe('WebContent Plugin', () => {
 
 			linkInsideWebContent.href = googleUrl;
 
-			setInnerHTML(linkInsideWebContent, text);
+			linkInsideWebContent.innerText = text;
 
 			webContentElement.appendChild(linkInsideWebContent);
 
@@ -253,18 +265,15 @@ describe('WebContent Plugin', () => {
 		it('is fired when clicking any other element inside a webContent', async () => {
 			const webContentElement = createWebContentElement();
 
-			const paragraphInsideWebContent = document.createElement('p');
+			const linkInsideWebContent = document.createElement('a');
 
-			paragraphInsideWebContent.href = googleUrl;
+			linkInsideWebContent.href = googleUrl;
 
-			setInnerHTML(
-				paragraphInsideWebContent,
-				'Paragraph inside a WebContent'
-			);
+			linkInsideWebContent.innerHTML = 'Paragraph inside a WebContent';
 
-			webContentElement.appendChild(paragraphInsideWebContent);
+			webContentElement.appendChild(linkInsideWebContent);
 
-			await userEvent.click(paragraphInsideWebContent);
+			await userEvent.click(linkInsideWebContent);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -272,7 +281,7 @@ describe('WebContent Plugin', () => {
 					eventId: 'webContentClicked',
 					properties: expect.objectContaining({
 						articleId: 'assetId',
-						tagName: 'p',
+						tagName: 'a',
 					}),
 				}),
 			]);
@@ -320,14 +329,25 @@ describe('WebContent Plugin', () => {
 	});
 
 	describe('webContent events with actions', () => {
-		const createWebContentElementWithAction = (action, type) => {
-			const setDataset = (element, data) => {
+		const createWebContentElementWithAction = (
+			action: AnalyticsTypes.ElementAction,
+			type: AnalyticsTypes.ElementType
+		) => {
+			const setDataset = (
+				element: AnalyticsTypes.HTMLElement,
+				data: AnalyticsTypes.HTMLElement['dataset']
+			) => {
 				Object.entries(data).forEach(([key, value]) => {
+
+					// @ts-ignore
+
 					element.dataset[key] = value;
 				});
 			};
 
-			const webContentElement = document.createElement('div');
+			const webContentElement = document.createElement(
+				'div'
+			) as unknown as AnalyticsTypes.HTMLElement;
 
 			setDataset(webContentElement, {
 				analyticsAssetAction: action,
@@ -346,19 +366,20 @@ describe('WebContent Plugin', () => {
 
 		it('is not fired when view webContent with an incorrect action value', async () => {
 			const element = createWebContentElementWithAction(
-				'unknown',
-				'web-content'
+				'unknown' as AnalyticsTypes.ElementAction,
+				AnalyticsTypes.ElementType.WebContent
 			);
 
 			jest.spyOn(element, 'getBoundingClientRect').mockImplementation(
-				() => ({
-					bottom: 500,
-					height: 500,
-					left: 0,
-					right: 500,
-					top: 0,
-					width: 500,
-				})
+				() =>
+					({
+						bottom: 500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 0,
+						width: 500,
+					}) as DOMRect
 			);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
@@ -376,57 +397,74 @@ describe('WebContent Plugin', () => {
 			document.body.removeChild(element);
 		});
 
-		webContentTypes.forEach(async (type) => {
+		[
+			AnalyticsTypes.ElementType.WebContent,
+			AnalyticsTypes.ElementType.JournalArticle,
+		].forEach(async (type) => {
 			[
-				{action: 'view', eventId: 'webContentViewed'},
-				{action: 'impression', eventId: 'webContentImpressionMade'},
-			].forEach(async (props) => {
-				it(`is fired ${props.eventId} when view a web content with action ${props.action} and type: ${type}`, async () => {
-					const element = createWebContentElementWithAction(
-						props.action,
-						type
-					);
+				{
+					action: AnalyticsTypes.ElementAction.View,
+					eventId: AnalyticsTypes.EventId.WebContentViewed,
+				},
+				{
+					action: AnalyticsTypes.ElementAction.Impression,
+					eventId: AnalyticsTypes.EventId.WebContentImpressionMade,
+				},
+			].forEach(
+				async (props: {
+					action: AnalyticsTypes.ElementAction;
+					eventId: AnalyticsTypes.EventId;
+				}) => {
+					it(`is fired ${props.eventId} when view a web content with action ${props.action} and type: ${type}`, async () => {
+						const element = createWebContentElementWithAction(
+							props.action,
+							type
+						);
 
-					jest.spyOn(
-						element,
-						'getBoundingClientRect'
-					).mockImplementation(() => ({
-						bottom: 500,
-						height: 500,
-						left: 0,
-						right: 500,
-						top: 0,
-						width: 500,
-					}));
+						jest.spyOn(
+							element,
+							'getBoundingClientRect'
+						).mockImplementation(
+							() =>
+								({
+									bottom: 500,
+									height: 500,
+									left: 0,
+									right: 500,
+									top: 0,
+									width: 500,
+								}) as DOMRect
+						);
 
-					const domContentLoaded = new Event('DOMContentLoaded');
+						const domContentLoaded = new Event('DOMContentLoaded');
 
-					document.dispatchEvent(domContentLoaded);
+						document.dispatchEvent(domContentLoaded);
 
-					await wait(250);
+						await wait(250);
 
-					const events = Analytics.getEvents().filter(
-						({eventId}) => eventId === props.eventId
-					);
+						const events = Analytics.getEvents().filter(
+							({eventId}) => eventId === props.eventId
+						);
 
-					expect(events.length).toBeGreaterThanOrEqual(1);
+						expect(events.length).toBeGreaterThanOrEqual(1);
 
-					expect(events[0]).toEqual(
-						expect.objectContaining({
-							applicationId,
-							eventId: props.eventId,
-							properties: expect.objectContaining({
-								articleId: 'assetId',
-								subtype: 'basic-web-content',
-								title: 'assetTitle',
-								type,
-							}),
-						})
-					);
+						expect(events[0]).toEqual(
+							expect.objectContaining({
+								applicationId,
+								eventId: props.eventId,
+								properties: expect.objectContaining({
+									articleId: 'assetId',
+									subtype: 'basic-web-content',
+									title: 'assetTitle',
+									type,
+								}),
+							})
+						);
 
-					document.body.removeChild(element);
-				});
-			});
+						document.body.removeChild(element);
+					});
+				}
+			);
 		});
 	});
 });

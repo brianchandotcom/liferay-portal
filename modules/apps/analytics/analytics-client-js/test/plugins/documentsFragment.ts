@@ -4,21 +4,24 @@
  */
 
 import userEvent from '@testing-library/user-event';
+
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
-import {documentType} from '../../src/plugins/documentsFragment';
-import {wait} from '../helpers';
+import {Analytics as AnalyticsTypes} from '../../src/types';
+import {INITIAL_ANALYTICS_CONFIG, wait} from '../helpers';
 
-const createElement = (tmpl) =>
+const createElement = (tmpl: string) =>
 	new DOMParser().parseFromString(tmpl, 'text/html').body.firstChild;
 
 const createElementTitle = () => {
 	const node = createElement(`
-		<div data-analytics-asset-id="myDocumentId" data-analytics-asset-title="my document title" data-analytics-asset-type="${documentType}" data-analytics-asset-action="impression">
+		<div data-analytics-asset-id="myDocumentId" data-analytics-asset-title="my document title" data-analytics-asset-type="${AnalyticsTypes.ElementType.FileEntry}" data-analytics-asset-action="impression">
 			this is a title
 		</div>
-	`);
+	`) as AnalyticsTypes.HTMLElement;
 
 	document.body.appendChild(node);
 
@@ -27,17 +30,17 @@ const createElementTitle = () => {
 
 const createFragmentWithLink = () => {
 	const node = createElement(`
-		<a data-analytics-asset-id="myDocumentId" data-analytics-asset-title="my document with link" data-analytics-asset-type="${documentType}" data-analytics-asset-action="download" href="#">
+		<a data-analytics-asset-id="myDocumentId" data-analytics-asset-title="my document with link" data-analytics-asset-type="${AnalyticsTypes.ElementType.FileEntry}" data-analytics-asset-action="download" href="#">
 			this is a link
 		</a>
-	`);
+	`) as AnalyticsTypes.HTMLElement;
 
 	document.body.appendChild(node);
 
 	return node;
 };
 
-function createDynamicDocumentsElement(attrs) {
+function createDynamicDocumentsElement(attrs: any) {
 	const documentElement = document.createElement('div');
 
 	for (let index = 0; index < Object.keys(attrs).length; index++) {
@@ -57,7 +60,7 @@ function createDynamicDocumentsElement(attrs) {
 }
 
 describe('Documents Plugin', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeEach(() => {
 
@@ -69,12 +72,12 @@ describe('Documents Plugin', () => {
 
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create();
+		Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 	});
@@ -100,7 +103,7 @@ describe('Documents Plugin', () => {
 					properties: {
 						fileEntryId: 'myDocumentId',
 						title: 'my document title',
-						type: documentType,
+						type: AnalyticsTypes.ElementType.FileEntry,
 					},
 				})
 			);
@@ -128,7 +131,7 @@ describe('Documents Plugin', () => {
 					properties: {
 						fileEntryId: 'myDocumentId',
 						title: 'my document with link',
-						type: documentType,
+						type: AnalyticsTypes.ElementType.FileEntry,
 					},
 				})
 			);
@@ -150,7 +153,7 @@ describe('Documents Plugin', () => {
 					properties: expect.objectContaining({
 						fileEntryId: 'myDocumentId',
 						title: 'my document with link',
-						type: documentType,
+						type: AnalyticsTypes.ElementType.FileEntry,
 					}),
 				}),
 			]);
@@ -165,21 +168,21 @@ describe('Documents Plugin', () => {
 				'assetId',
 				{
 					analyticsAssetTitle: 'assetTitle',
-					analyticsAssetType: documentType,
+					analyticsAssetType: AnalyticsTypes.ElementType.FileEntry,
 				},
 			],
 			[
 				'assetTitle',
 				{
 					analyticsAssetId: 'assetId',
-					analyticsAssetType: documentType,
+					analyticsAssetType: AnalyticsTypes.ElementType.FileEntry,
 				},
 			],
 			[
 				'assetType',
 				{
 					analyticsAssetId: 'assetId',
-					analyticsAssetType: documentType,
+					analyticsAssetType: AnalyticsTypes.ElementType.FileEntry,
 				},
 			],
 		])(
@@ -198,21 +201,31 @@ describe('Documents Plugin', () => {
 	});
 
 	describe('documents events with actions', () => {
-		const createDocumentsElementWithAction = (action) => {
-			const setDataset = (element, data) => {
+		const createDocumentsElementWithAction = (
+			action: AnalyticsTypes.ElementAction
+		) => {
+			const setDataset = (
+				element: AnalyticsTypes.HTMLElement,
+				data: AnalyticsTypes.HTMLElement['dataset']
+			) => {
 				Object.entries(data).forEach(([key, value]) => {
+
+					// @ts-ignore
+
 					element.dataset[key] = value;
 				});
 			};
 
-			const documentElement = document.createElement('div');
+			const documentElement = document.createElement(
+				'div'
+			) as unknown as AnalyticsTypes.HTMLElement;
 
 			setDataset(documentElement, {
 				analyticsAssetAction: action,
 				analyticsAssetId: 'assetId',
 				analyticsAssetSubtype: 'basic-document',
 				analyticsAssetTitle: 'assetTitle',
-				analyticsAssetType: documentType,
+				analyticsAssetType: AnalyticsTypes.ElementType.FileEntry,
 			});
 
 			const linkElement = document.createElement('a');
@@ -228,7 +241,9 @@ describe('Documents Plugin', () => {
 		};
 
 		it('is not fired when impression a document with an incorrect action value', async () => {
-			const element = createDocumentsElementWithAction('unknown');
+			const element = createDocumentsElementWithAction(
+				'unknown' as AnalyticsTypes.ElementAction
+			);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
 
@@ -246,10 +261,16 @@ describe('Documents Plugin', () => {
 		});
 
 		[
-			{action: 'impression', eventId: 'documentImpressionMade'},
-			{action: 'download', eventId: 'documentImpressionMade'},
+			{
+				action: AnalyticsTypes.ElementAction.Impression,
+				eventId: AnalyticsTypes.EventId.DocumentImpressionMade,
+			},
+			{
+				action: AnalyticsTypes.ElementAction.Download,
+				eventId: AnalyticsTypes.EventId.DocumentImpressionMade,
+			},
 		].forEach(async (props) => {
-			it(`is fired ${props.eventId} when view a document with action ${props.action} and type: ${documentType}`, async () => {
+			it(`is fired ${props.eventId} when view a document with action ${props.action} and type: ${AnalyticsTypes.ElementType.FileEntry}`, async () => {
 				const element = createDocumentsElementWithAction(props.action);
 
 				const domContentLoaded = new Event('DOMContentLoaded');
@@ -272,7 +293,7 @@ describe('Documents Plugin', () => {
 							fileEntryId: 'assetId',
 							subtype: 'basic-document',
 							title: 'assetTitle',
-							type: documentType,
+							type: AnalyticsTypes.ElementType.FileEntry,
 						}),
 					})
 				);

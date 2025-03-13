@@ -3,13 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
+import {INITIAL_ANALYTICS_CONFIG} from '../helpers';
 
 const applicationId = 'Form';
 
-const createDynamicFormElement = async (attrs) => {
+const createDynamicFormElement = async (attrs: any) => {
 	const element = document.createElement('div');
 
 	for (let index = 0; index < Object.keys(attrs).length; index++) {
@@ -30,8 +33,8 @@ const createDynamicFormElement = async (attrs) => {
 };
 
 describe('Forms Plugin', () => {
-	let Analytics;
-	let duration;
+	let Analytics: AnalyticsClient;
+	let duration: number;
 
 	beforeEach(() => {
 
@@ -47,10 +50,16 @@ describe('Forms Plugin', () => {
 		}
 
 		if (!global.performance.mark) {
+
+			// @ts-ignore
+
 			global.performance.mark = () => {};
 		}
 
 		if (!global.performance.measure) {
+
+			// @ts-ignore
+
 			global.performance.measure = () => {};
 		}
 
@@ -58,18 +67,24 @@ describe('Forms Plugin', () => {
 			global.performance.getEntriesByName = () => [
 				{
 					duration: duration || 1,
+					entryType: '',
+					name: '',
+					startTime: 0,
+					toJSON() {
+						throw new Error('Function not implemented.');
+					},
 				},
 			];
 		}
 
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create();
+		Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 	});

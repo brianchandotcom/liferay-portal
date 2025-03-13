@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
@@ -11,6 +13,7 @@ import {
 	viewDurationByCharacters,
 	viewDurationByWords,
 } from '../../src/plugins/read';
+import {INITIAL_ANALYTICS_CONFIG} from '../helpers';
 
 const ENGLISH_TEXT =
 	'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain';
@@ -41,7 +44,7 @@ const createMetaTag = () => {
 jest.useFakeTimers();
 
 describe('Read Plugin', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeAll(createMetaTag);
 
@@ -54,6 +57,8 @@ describe('Read Plugin', () => {
 		});
 
 		// Avoid: "Error: Not implemented: window.scrollTo."
+
+		// @ts-ignore
 
 		window.scrollTo = (_x, y) => {
 			window.pageYOffset = y;
@@ -70,12 +75,12 @@ describe('Read Plugin', () => {
 
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create();
+		Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 	});
@@ -114,6 +119,7 @@ describe('Read Plugin', () => {
 			document.dispatchEvent(domContentLoaded);
 
 			window.scrollTo(0, SCROLL_HEIGHT);
+
 			await document.dispatchEvent(new Event('scroll'));
 
 			jest.advanceTimersByTime(expectedReadDuration / 2);
@@ -137,6 +143,7 @@ describe('Read Plugin', () => {
 			document.dispatchEvent(domContentLoaded);
 
 			window.scrollTo(0, PAGE_HEIGHT / 2);
+
 			await document.dispatchEvent(new Event('scroll'));
 
 			jest.advanceTimersByTime(expectedReadDuration + 1000);
@@ -160,8 +167,8 @@ describe('Read Plugin', () => {
 
 			// Restart Analytics
 
-			Analytics.dispose();
-			Analytics = AnalyticsClient.create();
+			AnalyticsClient.dispose();
+			Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 
 			const blogElement = createMainContent();
 			const expectedReadDuration = Math.trunc(

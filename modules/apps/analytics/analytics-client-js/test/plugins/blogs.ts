@@ -4,17 +4,20 @@
  */
 
 import userEvent from '@testing-library/user-event';
+
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
-import {blogTypes} from '../../src/plugins/blogs';
-import {wait} from '../helpers';
+import {Analytics as AnalyticsTypes} from '../../src/types';
+import {INITIAL_ANALYTICS_CONFIG, wait} from '../helpers';
 
 const applicationId = 'Blog';
 
 const googleUrl = 'http://google.com/';
 
-const createBlogElement = (assetId, assetTitle) => {
+const createBlogElement = (assetId?: string, assetTitle?: string) => {
 	const blogElement = document.createElement('div');
 
 	blogElement.dataset.analyticsAssetId = assetId || 'assetId';
@@ -28,7 +31,7 @@ const createBlogElement = (assetId, assetTitle) => {
 	return blogElement;
 };
 
-function createDynamicBlogElement(attrs) {
+function createDynamicBlogElement(attrs: any) {
 	const element = document.createElement('div');
 
 	for (let index = 0; index < Object.keys(attrs).length; index++) {
@@ -40,19 +43,19 @@ function createDynamicBlogElement(attrs) {
 
 	document.body.appendChild(element);
 
-	const paragraph = document.createElement('p');
+	const link = document.createElement('a');
 
-	paragraph.href = googleUrl;
+	link.href = googleUrl;
 
-	setInnerHTML(paragraph, 'Paragraph inside a Blog');
+	link.innerText = 'Link inside a Blog';
 
-	element.appendChild(paragraph);
+	element.appendChild(link);
 
-	return [element, paragraph];
+	return [element, link];
 }
 
 describe('Blogs Plugin', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeEach(() => {
 
@@ -64,12 +67,12 @@ describe('Blogs Plugin', () => {
 
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create();
+		Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 	});
@@ -168,7 +171,7 @@ describe('Blogs Plugin', () => {
 
 			linkInsideBlog.href = googleUrl;
 
-			setInnerHTML(linkInsideBlog, text);
+			linkInsideBlog.innerText = text;
 
 			blogElement.appendChild(linkInsideBlog);
 
@@ -193,15 +196,15 @@ describe('Blogs Plugin', () => {
 		it('is fired when clicking any other element inside a blog', async () => {
 			const blogElement = createBlogElement();
 
-			const paragraphInsideBlog = document.createElement('p');
+			const linkInsideBlog = document.createElement('a');
 
-			paragraphInsideBlog.href = googleUrl;
+			linkInsideBlog.href = googleUrl;
 
-			setInnerHTML(paragraphInsideBlog, 'Paragraph inside a Blog');
+			linkInsideBlog.innerText = 'Link inside a Blog';
 
-			blogElement.appendChild(paragraphInsideBlog);
+			blogElement.appendChild(linkInsideBlog);
 
-			await userEvent.click(paragraphInsideBlog);
+			await userEvent.click(linkInsideBlog);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -209,7 +212,7 @@ describe('Blogs Plugin', () => {
 					eventId: 'blogClicked',
 					properties: expect.objectContaining({
 						entryId: 'assetId',
-						tagName: 'p',
+						tagName: 'a',
 					}),
 				}),
 			]);
@@ -257,14 +260,25 @@ describe('Blogs Plugin', () => {
 	});
 
 	describe('blog events with actions', () => {
-		const createBlogElementWithAction = (action, type) => {
-			const setDataset = (element, data) => {
+		const createBlogElementWithAction = (
+			action: AnalyticsTypes.ElementAction,
+			type: AnalyticsTypes.ElementType
+		) => {
+			const setDataset = (
+				element: AnalyticsTypes.HTMLElement,
+				data: AnalyticsTypes.HTMLElement['dataset']
+			) => {
 				Object.entries(data).forEach(([key, value]) => {
+
+					// @ts-ignore
+
 					element.dataset[key] = value;
 				});
 			};
 
-			const blogElement = document.createElement('div');
+			const blogElement = document.createElement(
+				'div'
+			) as unknown as AnalyticsTypes.HTMLElement;
 
 			setDataset(blogElement, {
 				analyticsAssetAction: action,
@@ -282,17 +296,21 @@ describe('Blogs Plugin', () => {
 		};
 
 		it('is not fired when view blog with an incorrect action value', async () => {
-			const element = createBlogElementWithAction('unknown', 'blog');
+			const element = createBlogElementWithAction(
+				'unknown' as AnalyticsTypes.ElementAction,
+				AnalyticsTypes.ElementType.Blog
+			);
 
 			jest.spyOn(element, 'getBoundingClientRect').mockImplementation(
-				() => ({
-					bottom: 500,
-					height: 500,
-					left: 0,
-					right: 500,
-					top: 0,
-					width: 500,
-				})
+				() =>
+					({
+						bottom: 500,
+						height: 500,
+						left: 0,
+						right: 500,
+						top: 0,
+						width: 500,
+					}) as DOMRect
 			);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
@@ -310,10 +328,19 @@ describe('Blogs Plugin', () => {
 			document.body.removeChild(element);
 		});
 
-		blogTypes.forEach(async (type) => {
+		[
+			AnalyticsTypes.ElementType.Blog,
+			AnalyticsTypes.ElementType.BlogsEntry,
+		].forEach(async (type) => {
 			[
-				{action: 'view', eventId: 'blogViewed'},
-				{action: 'impression', eventId: 'blogImpressionMade'},
+				{
+					action: AnalyticsTypes.ElementAction.View,
+					eventId: AnalyticsTypes.EventId.BlogViewed,
+				},
+				{
+					action: AnalyticsTypes.ElementAction.Impression,
+					eventId: AnalyticsTypes.EventId.BlogImpressionMade,
+				},
 			].forEach(async (props) => {
 				it(`is fired ${props.eventId} when view a blog with action ${props.action} and type: ${type}`, async () => {
 					const element = createBlogElementWithAction(
@@ -324,14 +351,17 @@ describe('Blogs Plugin', () => {
 					jest.spyOn(
 						element,
 						'getBoundingClientRect'
-					).mockImplementation(() => ({
-						bottom: 500,
-						height: 500,
-						left: 0,
-						right: 500,
-						top: 0,
-						width: 500,
-					}));
+					).mockImplementation(
+						() =>
+							({
+								bottom: 500,
+								height: 500,
+								left: 0,
+								right: 500,
+								top: 0,
+								width: 500,
+							}) as DOMRect
+					);
 
 					const domContentLoaded = new Event('DOMContentLoaded');
 

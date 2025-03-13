@@ -4,15 +4,19 @@
  */
 
 import userEvent from '@testing-library/user-event';
+
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import AnalyticsClient from '../../src/analytics';
+import {INITIAL_ANALYTICS_CONFIG} from '../helpers';
 
 const applicationId = 'Custom';
 
 const googleUrl = 'http://google.com/';
 
-const createCustomAssetElement = (assetId, asseTitle) => {
+const createCustomAssetElement = (assetId?: string, asseTitle?: string) => {
 	const customAssetElement = document.createElement('div');
 
 	customAssetElement.dataset.analyticsAssetCategory = 'custom-asset-category';
@@ -36,17 +40,15 @@ const createCustomAssetElementWithForm = () => {
 	customAssetElement.dataset.analyticsAssetTitle = 'Custom Asset Title 1';
 	customAssetElement.dataset.analyticsAssetType = 'custom';
 
-	setInnerHTML(
-		customAssetElement,
-		'<form><input type="text" /><button type="submit" /></form>'
-	);
+	customAssetElement.innerHTML =
+		'<form><input type="text" /><button type="submit" /></form>';
 
 	document.body.appendChild(customAssetElement);
 
 	return customAssetElement;
 };
 
-const createDynamicCustomAssetElement = (attrs) => {
+const createDynamicCustomAssetElement = (attrs: any) => {
 	const element = document.createElement('div');
 
 	element.dataset.analyticsAssetCategory = 'custom-asset-category';
@@ -57,19 +59,19 @@ const createDynamicCustomAssetElement = (attrs) => {
 
 	document.body.appendChild(element);
 
-	const paragraph = document.createElement('p');
+	const link = document.createElement('a');
 
-	paragraph.href = googleUrl;
+	link.href = googleUrl;
 
-	setInnerHTML(paragraph, 'Paragraph inside a Custom Asset');
+	link.innerText = 'Link inside a Custom Asset';
 
-	element.appendChild(paragraph);
+	element.appendChild(link);
 
-	return [element, paragraph];
+	return [element, link];
 };
 
 describe('Custom Asset Plugin', () => {
-	let Analytics;
+	let Analytics: AnalyticsClient;
 
 	beforeEach(() => {
 
@@ -82,12 +84,12 @@ describe('Custom Asset Plugin', () => {
 
 		fetchMock.mock('*', () => 200);
 
-		Analytics = AnalyticsClient.create();
+		Analytics = AnalyticsClient.create(INITIAL_ANALYTICS_CONFIG);
 	});
 
 	afterEach(() => {
 		Analytics.reset();
-		Analytics.dispose();
+		AnalyticsClient.dispose();
 
 		fetchMock.restore();
 	});
@@ -213,7 +215,7 @@ describe('Custom Asset Plugin', () => {
 
 			linkInsideCustomAsset.href = googleUrl;
 
-			setInnerHTML(linkInsideCustomAsset, text);
+			linkInsideCustomAsset.innerText = text;
 
 			customAssetElement.appendChild(linkInsideCustomAsset);
 
@@ -238,18 +240,15 @@ describe('Custom Asset Plugin', () => {
 		it('is fired when clicking any other element inside a custom asset', async () => {
 			const customAssetElement = createCustomAssetElement();
 
-			const paragraphInsideCustomAsset = document.createElement('p');
+			const linkInsideCustomAsset = document.createElement('a');
 
-			paragraphInsideCustomAsset.href = googleUrl;
+			linkInsideCustomAsset.href = googleUrl;
 
-			setInnerHTML(
-				paragraphInsideCustomAsset,
-				'Paragraph inside a Custom Asset'
-			);
+			linkInsideCustomAsset.innerText = 'Link inside a Custom Asset';
 
-			customAssetElement.appendChild(paragraphInsideCustomAsset);
+			customAssetElement.appendChild(linkInsideCustomAsset);
 
-			await userEvent.click(paragraphInsideCustomAsset);
+			await userEvent.click(linkInsideCustomAsset);
 
 			expect(Analytics.getEvents()).toEqual([
 				expect.objectContaining({
@@ -257,7 +256,7 @@ describe('Custom Asset Plugin', () => {
 					eventId: 'assetClicked',
 					properties: expect.objectContaining({
 						assetId: 'assetId',
-						tagName: 'p',
+						tagName: 'a',
 					}),
 				}),
 			]);
@@ -276,7 +275,7 @@ describe('Custom Asset Plugin', () => {
 
 			linkInsideCustomAsset.href = '#';
 
-			setInnerHTML(linkInsideCustomAsset, text);
+			linkInsideCustomAsset.innerText = text;
 
 			linkInsideCustomAsset.setAttribute(
 				'data-analytics-asset-action',

@@ -59,6 +59,7 @@ export default function Input({
 				id={id}
 				onBlur={() => onValueChange(value)}
 				onChange={(event) => setValue(event.target.value)}
+				required={required}
 				type="text"
 				value={value}
 				{...inputProps}

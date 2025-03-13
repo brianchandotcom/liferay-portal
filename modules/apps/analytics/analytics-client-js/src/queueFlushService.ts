@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import EventMessageQueue from './queues/eventMessageQueue';
+import EventsQueue from './queues/eventsQueue';
+import {Analytics} from './types';
 import {
 	FLUSH_INTERVAL,
 	LIMIT_FAILED_ATTEMPTS,
@@ -26,7 +29,18 @@ import {getRetryDelay} from './utils/delay';
  * be proccessed and a delay will be added to loop.
  */
 class QueueFlushService {
-	constructor(config = {}) {
+	attemptNumber: number;
+	initialFlushInterval: number;
+	processing: boolean;
+	queues: {
+		instance: EventsQueue | EventMessageQueue;
+		name: string;
+		priority?: number;
+	}[];
+	flushInterval: number;
+	processInterval: NodeJS.Timeout | null = null;
+
+	constructor(config: Analytics.Config) {
 		this.attemptNumber = 1;
 		this.initialFlushInterval = config.flushInterval || FLUSH_INTERVAL;
 		this.processing = false;
@@ -39,10 +53,11 @@ class QueueFlushService {
 
 	/**
 	 * Add a queue to be processed by the client
-	 * @param {MessageQueue} queueInstance
-	 * @param {QueueConfig} config
 	 */
-	addQueue(queueInstance, config = {}) {
+	addQueue(
+		queueInstance: EventsQueue | EventMessageQueue,
+		config: Analytics.Config | {} = {}
+	) {
 		this.queues.push(
 			Object.assign(config, {
 				instance: queueInstance,
@@ -54,16 +69,13 @@ class QueueFlushService {
 
 	/**
 	 * Remove a queue
-	 * @param {string} queueName
 	 */
-	removeQueue(queueName) {
+	removeQueue(queueName: string) {
 		this.queues = this.queues.filter(({name}) => queueName !== name);
 	}
 
 	/**
 	 * Function to order queues by priority
-	 * @param {Object} queueA
-	 * @param {Object} queueB
 	 */
 	_prioritize(
 		{priority: pA = QUEUE_PRIORITY_DEFAULT},
@@ -133,7 +145,11 @@ class QueueFlushService {
 							return Promise.allSettled(queue.onFlush()).then(
 								(result) => {
 									this._onFlushSuccess();
-									queue.onFlushSuccess(result);
+
+									queue.onFlushSuccess(
+										result as unknown as Analytics.FlushResult[]
+									);
+
 									releaseLock();
 
 									return Promise.resolve();

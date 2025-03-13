@@ -109,13 +109,10 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -184,16 +181,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 		else {
 			role.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
-
-		role.setStatusByUserId(user.getUserId());
-		role.setStatusByUserName(user.getFullName());
-
-		if (serviceContext != null) {
-			role.setStatusDate(serviceContext.getModifiedDate(new Date()));
-		}
-		else {
-			role.setStatusDate(new Date());
 		}
 
 		role.setExpandoBridgeAttributes(serviceContext);
@@ -1974,52 +1961,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setTitleMap(titleMap);
 		role.setDescriptionMap(descriptionMap);
 		role.setSubtype(subtype);
+
+		if (role.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			role.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
+
 		role.setExpandoBridgeAttributes(serviceContext);
 
-		role = rolePersistence.update(role);
-
-		if (role.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-			return role;
-		}
-
-		long userId = role.getUserId();
-
-		if (serviceContext != null) {
-			userId = serviceContext.getUserId();
-		}
-
-		return updateStatus(
-			userId, role.getRoleId(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext, Collections.emptyMap());
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public Role updateStatus(
-			long userId, long roleId, int status, ServiceContext serviceContext,
-			Map<String, Serializable> workflowContext)
-		throws PortalException {
-
-		Role role = getRole(roleId);
-
-		if (role.getStatus() == status) {
-			return role;
-		}
-
-		role.setStatus(status);
-
-		User user = _userLocalService.getUser(userId);
-
-		role.setStatusByUserId(user.getUserId());
-		role.setStatusByUserName(user.getFullName());
-
-		if (serviceContext == null) {
-			serviceContext = new ServiceContext();
-		}
-
-		role.setStatusDate(serviceContext.getModifiedDate(new Date()));
-
-		return updateRole(role);
+		return rolePersistence.update(role);
 	}
 
 	@Override

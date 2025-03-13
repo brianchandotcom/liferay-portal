@@ -494,9 +494,8 @@ public class RoleLocalServiceTest {
 				TestPropsValues.getUserId(), Role.class.getName(), 0,
 				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
 
-			_assertStatus(
-				WorkflowConstants.STATUS_INCOMPLETE, TestPropsValues.getUser(),
-				role);
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
 		}
 	}
 
@@ -757,17 +756,15 @@ public class RoleLocalServiceTest {
 				TestPropsValues.getUserId(), Role.class.getName(), 0,
 				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
 
-			_assertStatus(
-				WorkflowConstants.STATUS_INCOMPLETE, TestPropsValues.getUser(),
-				role);
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
 
 			role = _roleLocalService.updateRole(
 				role.getRoleId(), role.getName(), role.getTitleMap(),
 				role.getDescriptionMap(), role.getSubtype(), null);
 
-			_assertStatus(
-				WorkflowConstants.STATUS_APPROVED, TestPropsValues.getUser(),
-				role);
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, role.getStatus());
 		}
 	}
 
@@ -800,15 +797,6 @@ public class RoleLocalServiceTest {
 		_team = _teamLocalService.addTeam(
 			user.getUserId(), _organization.getGroupId(),
 			RandomTestUtil.randomString(), null, new ServiceContext());
-	}
-
-	private void _assertStatus(
-		int expectedStatus, User expectedUser, Role role) {
-
-		Assert.assertEquals(expectedStatus, role.getStatus());
-		Assert.assertEquals(expectedUser.getUserId(), role.getStatusByUserId());
-		Assert.assertEquals(
-			expectedUser.getFullName(), role.getStatusByUserName());
 	}
 
 	private void _testLoggingAuditMessageProcessorConfigurationEnabled()

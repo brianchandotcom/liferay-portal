@@ -304,6 +304,12 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().getObjectEntryVersions(objectEntryId);
 	}
 
+	public static List<ObjectEntryVersion> getObjectEntryVersions(
+		long objectEntryId, int start, int end) {
+
+		return getService().getObjectEntryVersions(objectEntryId, start, end);
+	}
+
 	/**
 	 * Returns the number of object entry versions.
 	 *
@@ -311,6 +317,10 @@ public class ObjectEntryVersionLocalServiceUtil {
 	 */
 	public static int getObjectEntryVersionsCount() {
 		return getService().getObjectEntryVersionsCount();
+	}
+
+	public static int getObjectEntryVersionsCount(long objectEntryId) {
+		return getService().getObjectEntryVersionsCount(objectEntryId);
 	}
 
 	/**

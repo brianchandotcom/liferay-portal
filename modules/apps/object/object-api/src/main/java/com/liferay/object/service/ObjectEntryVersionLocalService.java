@@ -263,6 +263,10 @@ public interface ObjectEntryVersionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectEntryVersion> getObjectEntryVersions(long objectEntryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntryVersion> getObjectEntryVersions(
+		long objectEntryId, int start, int end);
+
 	/**
 	 * Returns the number of object entry versions.
 	 *
@@ -270,6 +274,9 @@ public interface ObjectEntryVersionLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectEntryVersionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectEntryVersionsCount(long objectEntryId);
 
 	/**
 	 * Returns the OSGi service identifier.

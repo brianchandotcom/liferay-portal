@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {STORAGE_KEY_CONTEXTS} from './constants';
+import {Analytics} from '../types';
 import {convertMapToArr} from './map';
 import {getItem, setItem} from './storage';
 
-const getContexts = (contextStorageKey = STORAGE_KEY_CONTEXTS) => {
-	const storedContextKvArr = getItem(contextStorageKey);
+const getContexts = (
+	contextStorageKey: Analytics.Keys = Analytics.Keys.Contexts
+) => {
+	const storedContextKvArr =
+		getItem<[string, Analytics.Context][]>(contextStorageKey);
 
 	const storedContexts = new Map();
 
@@ -21,7 +24,10 @@ const getContexts = (contextStorageKey = STORAGE_KEY_CONTEXTS) => {
 	return storedContexts;
 };
 
-const setContexts = (contextsMap, contextStorageKey = STORAGE_KEY_CONTEXTS) => {
+const setContexts = (
+	contextsMap: Map<number, Analytics.Context>,
+	contextStorageKey: Analytics.Keys = Analytics.Keys.Contexts
+) => {
 	setItem(contextStorageKey, convertMapToArr(contextsMap));
 };
 

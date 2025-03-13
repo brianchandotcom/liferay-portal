@@ -3,17 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {STORAGE_KEY_CONTEXTS, STORAGE_KEY_STORAGE_VERSION} from './constants';
+import {Analytics} from '../types';
 import {setContexts} from './contexts';
 import {getItem, setItem} from './storage';
 
 export const AC_CLIENT_STORAGE_VERSION = 1.0;
 
-const upgradeStorageSteps = [
+const upgradeStorageSteps: [number, () => void][] = [
 	[
 		1.0,
 		() => {
-			const storedContextKvArr = getItem(STORAGE_KEY_CONTEXTS);
+			const storedContextKvArr = getItem<Analytics.Context[][]>(
+				Analytics.Keys.Contexts
+			);
 
 			if (storedContextKvArr && !Array.isArray(storedContextKvArr[0])) {
 				const storedContexts = new Map();
@@ -25,13 +27,13 @@ const upgradeStorageSteps = [
 ];
 
 function getStorageVersion() {
-	const storageVersion = getItem(STORAGE_KEY_STORAGE_VERSION);
+	const storageVersion = getItem<string>(Analytics.Keys.StorageVersion);
 
 	return storageVersion ? parseFloat(storageVersion) : 0;
 }
 
 function setStorageVersion(version = AC_CLIENT_STORAGE_VERSION) {
-	return setItem(STORAGE_KEY_STORAGE_VERSION, version.toString());
+	return setItem(Analytics.Keys.StorageVersion, version.toString());
 }
 
 function upgradeStorage() {

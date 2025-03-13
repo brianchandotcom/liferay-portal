@@ -3,41 +3,39 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getClosestAssetElement} from '../utils/assets';
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
+import {getClosestAssetElement} from './assets';
 import {convertUTCDateToLocalDate} from './date';
 
-const onReady = (fn) => {
+const onReady = (fn: Function) => {
 	if (
 		document.readyState === 'interactive' ||
-		document.readyState === 'complete' ||
-		document.readyState === 'loaded'
+		document.readyState === 'complete'
 	) {
 		fn();
 	}
 	else {
-		document.addEventListener('DOMContentLoaded', fn);
+		document.addEventListener('DOMContentLoaded', fn as EventListener);
 	}
 
-	return () => document.removeEventListener('DOMContentLoaded', fn);
+	return () =>
+		document.removeEventListener('DOMContentLoaded', fn as EventListener);
 };
 
 /**
  * Creates an event listener for all event types in events array.
- *
- * @param {Array.string} events Array of event type.
- * @param {Function} fn The event listener callback.
- * @returns {Function} The function to remove all the event listers that were added from events param.
  */
-const onEvents = (events, fn) => {
-	if (events) {
-		events.forEach((eventName) => document.addEventListener(eventName, fn));
+const onEvents = (events: (keyof DocumentEventMap)[], fn: Function) => {
+	events.forEach((eventName) =>
+		document.addEventListener(eventName, fn as EventListener)
+	);
 
-		return () => {
-			events.forEach((eventName) => {
-				document.removeEventListener(eventName, fn);
-			});
-		};
-	}
+	return () => {
+		events.forEach((eventName) => {
+			document.removeEventListener(eventName, fn as EventListener);
+		});
+	};
 };
 
 const clickEvent = ({
@@ -47,9 +45,27 @@ const clickEvent = ({
 	getPayload,
 	isTrackable,
 	type,
+}: {
+	analytics: Analytics;
+	applicationId: AnalyticsType.ApplicationId;
+	eventType: AnalyticsType.EventId;
+	getPayload: (
+		element: AnalyticsType.HTMLElement
+	) => AnalyticsType.EventProps;
+	isTrackable: (element: AnalyticsType.HTMLElement) => boolean;
+	type: AnalyticsType.ElementType | AnalyticsType.ElementType[];
 }) => {
-	const onClick = ({target}) => {
-		const element = getClosestAssetElement(target, type);
+	const onClick = (event: MouseEvent) => {
+		const target = event.target as AnalyticsType.HTMLElement & {
+			control?: boolean;
+			href?: string;
+			innerText?: string;
+			src?: string;
+		};
+		const element = getClosestAssetElement(
+			target,
+			type
+		) as AnalyticsType.HTMLElement;
 
 		if (!isTrackable(element) || target.control) {
 			return;
@@ -57,7 +73,8 @@ const clickEvent = ({
 
 		const tagName = target.tagName.toLowerCase();
 
-		const payload = getPayload(element);
+		const payload = element ? getPayload(element) : {};
+
 		Object.assign(payload, {tagName});
 
 		if (tagName === 'a') {
@@ -83,19 +100,13 @@ const clickEvent = ({
 /**
  * Serializes data and returns the result appending a timestamp
  * to the returned data as well.
- *
- * @param {string} eventId The event Id
- * @param {string} applicationId The application Id
- * @param {Object} properties Additional properties to serialize
- * @protected
- * @returns {Object}
  */
 export function normalizeEvent(
-	eventId,
-	applicationId,
-	properties,
-	contextHash
-) {
+	eventId: AnalyticsType.EventId,
+	applicationId: AnalyticsType.ApplicationId,
+	properties: AnalyticsType.EventProps,
+	contextHash: string
+): AnalyticsType.Event {
 	const date = new Date();
 	const eventDate = date.toISOString();
 	const eventLocalDate = convertUTCDateToLocalDate(date).toISOString();
@@ -112,12 +123,8 @@ export function normalizeEvent(
 
 /**
  * Sort comparator for ISO 8601 eventDates in ascending order.
- *
- * @param {Object} a - First event to compare.
- * @param {Object} b - Second event to compare.
- * @returns {Number}    Comparison result.
  */
-const sortByEventDate = (a, b) => {
+const sortByEventDate = (a: {eventDate: string}, b: {eventDate: string}) => {
 	if (a.eventDate < b.eventDate) {
 		return -1;
 	}
@@ -129,7 +136,10 @@ const sortByEventDate = (a, b) => {
 	return 0;
 };
 
-const removeDups = (results, items) => {
+const removeDups = (
+	results: AnalyticsType.FlushResult[],
+	items: AnalyticsType.Event[]
+) => {
 	const events = results.flatMap(({value}) => value.events);
 
 	return items.filter(

@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Analytics} from '../types';
+
 /**
  * Returns the current scroll position of the page
- * @returns {number} Scroll position of the page
  */
 function getCurrentScrollPosition() {
 	return window.pageYOffset || document.documentElement.scrollTop;
@@ -13,7 +14,6 @@ function getCurrentScrollPosition() {
 
 /**
  * Returns the entire height of the document
- * @returns {number} The normalized document height of the document
  */
 function getDocumentHeight() {
 	const heights = [
@@ -25,11 +25,16 @@ function getDocumentHeight() {
 	return Math.max.apply(null, heights);
 }
 
-function getDimensions(element) {
+function getDimensions(element?: Analytics.HTMLElement) {
 	const height = getDocumentHeight();
 	const top = getCurrentScrollPosition();
 
-	let positions = {
+	let positions: {
+		bottom: number;
+		height: number;
+		top: number;
+	} = {
+		bottom: 0,
 		height,
 		top,
 	};
@@ -48,7 +53,7 @@ function getDimensions(element) {
 	return positions;
 }
 
-function isPartiallyInViewport(element) {
+function isPartiallyInViewport(element: Analytics.HTMLElement) {
 	const {bottom, left, right, top} = element.getBoundingClientRect();
 
 	const innerHeight =
@@ -63,6 +68,9 @@ function isPartiallyInViewport(element) {
 }
 
 class ScrollTracker {
+	steps: number | null;
+	stepsReached: number[] | null;
+
 	constructor(steps = 4) {
 		this.steps = steps;
 		this.stepsReached = [];
@@ -73,7 +81,7 @@ class ScrollTracker {
 		this.stepsReached = null;
 	}
 
-	getDepthValue(element) {
+	getDepthValue(element?: Analytics.HTMLElement) {
 		const {bottom, height, top} = getDimensions(element);
 		const visibleArea = window.innerHeight;
 
@@ -93,10 +101,8 @@ class ScrollTracker {
 	 * Calculates the depth of the element on the page. If the
 	 * element is not passed as a parameter the calculation must be
 	 * performed to get the page depth
-	 * @param {Object} element The Blog DOM element
-	 * @returns {number} depth percentage from 0 to 100
 	 */
-	getDepth(element) {
+	getDepth(element?: Analytics.HTMLElement) {
 		const value = this.getDepthValue(element);
 
 		const depth = Math.round(value * 100);
@@ -108,15 +114,17 @@ class ScrollTracker {
 	 * Processes the current scroll location and calculates the scroll depth level
 	 * If the client reaches one of the pre-defined levels that is yet unreached
 	 * it sends an analytics event
-	 * @param {Function} The callback function that will process the depth reached.
 	 */
-	onDepthReached(fn, element) {
+	onDepthReached(
+		fn: (depth: number) => void,
+		element?: Analytics.HTMLElement
+	) {
 		const depth = this.getDepth(element);
-		const step = Math.floor(100 / this.steps);
+		const step = Math.floor(100 / (this.steps as number));
 
 		const depthLevel = Math.floor(depth / step);
 
-		if (this.stepsReached.every((val) => val < depthLevel)) {
+		if (this.stepsReached?.every((val) => val < depthLevel)) {
 			this.stepsReached.push(depthLevel);
 
 			if (depthLevel > 0) {

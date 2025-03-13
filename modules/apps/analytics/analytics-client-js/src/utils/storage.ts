@@ -5,10 +5,12 @@
 
 import ProcessLock from 'browser-tabs-lock';
 
-const getItem = (key) => {
+import {Analytics} from '../types';
+
+const getItem = <T>(key: string) => {
 	const Liferay = window.Liferay;
 
-	let data;
+	let data: T;
 
 	try {
 		let item;
@@ -16,14 +18,14 @@ const getItem = (key) => {
 		if (Liferay?.Util?.LocalStorage) {
 			item = Liferay.Util.LocalStorage.getItem(
 				key,
-				Liferay.Util.LocalStorage.TYPES.PERFORMANCE
+				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string
 			);
 		}
 		else {
 			item = localStorage.getItem(key);
 		}
 
-		data = JSON.parse(item);
+		data = JSON.parse(item as string);
 	}
 	catch (error) {
 		return;
@@ -32,7 +34,7 @@ const getItem = (key) => {
 	return data;
 };
 
-const setItem = (key, value) => {
+const setItem = <T>(key: string, value: T) => {
 	const Liferay = window.Liferay;
 
 	try {
@@ -40,7 +42,7 @@ const setItem = (key, value) => {
 			Liferay.Util.LocalStorage.setItem(
 				key,
 				JSON.stringify(value),
-				Liferay.Util.LocalStorage.TYPES.PERFORMANCE
+				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string
 			);
 		}
 		else {
@@ -52,14 +54,14 @@ const setItem = (key, value) => {
 	}
 };
 
-const removeItem = (key) => {
+const removeItem = (key: string) => {
 	const Liferay = window.Liferay;
 
 	try {
 		if (Liferay?.Util?.LocalStorage) {
 			Liferay.Util.LocalStorage.removeItem(
 				key,
-				Liferay.Util.LocalStorage.TYPES.PERFORMANCE
+				Liferay?.Util?.LocalStorage?.TYPES?.PERFORMANCE as string
 			);
 		}
 		else {
@@ -73,11 +75,8 @@ const removeItem = (key) => {
 
 /**
  * Get the stringified size of a value in kilobytes.
- *
- * @param {String} val - Stringifiable value.
- * @returns {Number} - Storage size in of value.
  */
-const getStorageSizeInKb = (val) => {
+const getStorageSizeInKb = (val: any) => {
 	return Number((JSON.stringify(val).length * 2) / 1024);
 };
 
@@ -87,15 +86,11 @@ const getStorageSizeInKb = (val) => {
  * Note: Because we are using a ProcessLock, no other process should
  * be able to acquire a lock for a particular key to run its callback
  * until the process with the active lock releases it.
- *
- * @param {string} storageKey - The storage key to verify size for.
- * @param {Number} limit - Limit of storage size for given storageKey.
- * @returns {Promise}
  */
-const verifyStorageLimitForKey = (storageKey, limit) => {
-	const storedValue = getItem(storageKey);
+const verifyStorageLimitForKey = (storageKey: string, limit: number) => {
+	const storedValue = getItem<Analytics.Event[]>(storageKey);
 
-	if (!storedValue.length) {
+	if (!storedValue?.length) {
 		return Promise.resolve();
 	}
 

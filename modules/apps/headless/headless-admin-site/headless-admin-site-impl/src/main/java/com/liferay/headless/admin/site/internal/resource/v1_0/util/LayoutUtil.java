@@ -9,20 +9,15 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.PageElementTypeUtil;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
@@ -30,7 +25,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -112,7 +106,8 @@ public class LayoutUtil {
 			layout, contentPageSpecification.getSettings(), serviceContext);
 
 		_updatePageExperiences(
-			layout, contentPageSpecification.getPageExperiences());
+			layout, contentPageSpecification.getPageExperiences(),
+			serviceContext);
 
 		return LayoutLocalServiceUtil.updateStatus(
 			serviceContext.getUserId(), layout.getPlid(), status,
@@ -139,32 +134,6 @@ public class LayoutUtil {
 			layout.getIconImage(), null, _getStyleBookEntryId(layout, settings),
 			_getFaviconFileEntryId(layout, settings),
 			_getMasterLayoutPlid(layout, settings), serviceContext);
-	}
-
-	private static void _addChildPageElements(
-		LayoutStructure layoutStructure, PageElement pageElement) {
-
-		if (ArrayUtil.isEmpty(pageElement.getPageElements())) {
-			return;
-		}
-
-		for (PageElement childPageElement : pageElement.getPageElements()) {
-			if ((childPageElement.getParentExternalReferenceCode() != null) &&
-				!Objects.equals(
-					childPageElement.getParentExternalReferenceCode(),
-					pageElement.getExternalReferenceCode())) {
-
-				throw new UnsupportedOperationException();
-			}
-
-			layoutStructure.addLayoutStructureItem(
-				childPageElement.getExternalReferenceCode(),
-				PageElementTypeUtil.toInternalType(childPageElement.getType()),
-				pageElement.getExternalReferenceCode(),
-				GetterUtil.getInteger(childPageElement.getPosition(), -1));
-
-			_addChildPageElements(layoutStructure, childPageElement);
-		}
 	}
 
 	private static long _getFaviconFileEntryId(Layout layout, Settings settings)
@@ -277,44 +246,6 @@ public class LayoutUtil {
 		return styleBookEntry.getStyleBookEntryId();
 	}
 
-	private static void _updateLayoutContent(
-			Layout layout, PageExperience pageExperience,
-			SegmentsExperience segmentsExperience)
-		throws Exception {
-
-		if (segmentsExperience == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(
-				segmentsExperience.getSegmentsExperienceId()));
-
-		LayoutStructure newLayoutStructure = new LayoutStructure();
-
-		newLayoutStructure.addRootLayoutStructureItem(
-			layoutStructure.getMainItemId());
-
-		for (PageElement pageElement : pageExperience.getPageElements()) {
-			newLayoutStructure.addLayoutStructureItem(
-				pageElement.getExternalReferenceCode(),
-				PageElementTypeUtil.toInternalType(pageElement.getType()),
-				layoutStructure.getMainItemId(),
-				GetterUtil.getInteger(pageElement.getPosition(), -1));
-
-			_addChildPageElements(newLayoutStructure, pageElement);
-		}
-
-		LayoutLocalServiceUtil.updateLayoutContent(
-			newLayoutStructure.toString(), layout,
-			segmentsExperience.getSegmentsExperienceId());
-	}
-
 	private static Layout _updateLookAndFeel(Layout layout, Settings settings)
 		throws Exception {
 
@@ -421,7 +352,8 @@ public class LayoutUtil {
 	}
 
 	private static void _updatePageExperiences(
-			Layout layout, PageExperience[] pageExperiences)
+			Layout layout, PageExperience[] pageExperiences,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		List<SegmentsExperience> segmentsExperiences =
@@ -444,10 +376,15 @@ public class LayoutUtil {
 		}
 
 		for (PageExperience pageExperience : pageExperiences) {
-			_updateLayoutContent(
-				layout, pageExperience,
-				segmentsExperiencesMap.get(
-					pageExperience.getExternalReferenceCode()));
+			SegmentsExperience segmentsExperience = segmentsExperiencesMap.get(
+				pageExperience.getExternalReferenceCode());
+
+			if (segmentsExperience == null) {
+				throw new UnsupportedOperationException();
+			}
+
+			SegmentsExperienceUtil.updateSegmentsExperience(
+				layout, pageExperience, segmentsExperience, serviceContext);
 		}
 	}
 

@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -158,24 +159,22 @@ public class SimilarResultsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			ThemeDisplay themeDisplay) {
 
-		List<SimilarResultsDocumentDisplayContext>
-			similarResultsDocumentDisplayContexts = new ArrayList<>();
+		return TransformUtil.transform(
+			documents,
+			document -> {
+				SimilarResultsDocumentDisplayContext
+					similarResultsDocumentDisplayContext = _buildSummary(
+						document, similarResultsRoute, renderRequest,
+						renderResponse, themeDisplay);
 
-		for (Document document : documents) {
-			SimilarResultsDocumentDisplayContext
-				similarResultsDocumentDisplayContext = _buildSummary(
-					document, similarResultsRoute, renderRequest,
-					renderResponse, themeDisplay);
+				if (!similarResultsDocumentDisplayContext.
+						isTemporarilyUnavailable()) {
 
-			if (!similarResultsDocumentDisplayContext.
-					isTemporarilyUnavailable()) {
+					return similarResultsDocumentDisplayContext;
+				}
 
-				similarResultsDocumentDisplayContexts.add(
-					similarResultsDocumentDisplayContext);
-			}
-		}
-
-		return similarResultsDocumentDisplayContexts;
+				return null;
+			});
 	}
 
 	private SimilarResultsDocumentDisplayContext _buildSummary(

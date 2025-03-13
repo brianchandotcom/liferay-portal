@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.exception.DuplicateSharingEntryException;
+import com.liferay.sharing.exception.DuplicateSharingEntryExternalReferenceCodeException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
@@ -131,6 +133,8 @@ public class SharingEntryLocalServiceImpl
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException {
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		_validateSharingEntryActions(sharingEntryActions);
 
@@ -724,6 +728,26 @@ public class SharingEntryLocalServiceImpl
 
 			throw new InvalidSharingEntryExpirationDateException(
 				"Expiration date is in the past");
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		SharingEntry sharingEntry =
+			sharingEntryLocalService.fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+
+		if (sharingEntry != null) {
+			throw new DuplicateSharingEntryExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate file entry external reference code ",
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

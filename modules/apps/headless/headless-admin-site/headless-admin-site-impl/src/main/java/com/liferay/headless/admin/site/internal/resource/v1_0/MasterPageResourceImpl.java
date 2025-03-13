@@ -229,17 +229,6 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			return _addMasterPage(groupId, masterPage);
 		}
 
-		if (Validator.isNotNull(masterPage.getMarkedAsDefault()) &&
-			!Objects.equals(
-				GetterUtil.getBoolean(masterPage.getMarkedAsDefault()),
-				layoutPageTemplateEntry.isDefaultTemplate())) {
-
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					GetterUtil.getBoolean(masterPage.getMarkedAsDefault()));
-		}
-
 		long previewFileEntryId = _getPreviewFileEntryId(groupId, masterPage);
 
 		if (previewFileEntryId !=
@@ -330,6 +319,17 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 						WorkflowConstants.STATUS_APPROVED);
 			}
+		}
+
+		if (Validator.isNotNull(masterPage.getMarkedAsDefault()) &&
+			!Objects.equals(
+				GetterUtil.getBoolean(masterPage.getMarkedAsDefault()),
+				layoutPageTemplateEntry.isDefaultTemplate())) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					GetterUtil.getBoolean(masterPage.getMarkedAsDefault()));
 		}
 
 		return _masterPageDTOConverter.toDTO(

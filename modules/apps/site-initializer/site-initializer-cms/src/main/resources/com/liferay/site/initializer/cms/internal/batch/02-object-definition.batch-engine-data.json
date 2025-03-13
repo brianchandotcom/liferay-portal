@@ -24,7 +24,7 @@
 			"label": {
 				"en_US": "Basic Document"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "BasicDocument",
 			"objectActions": [
 			],
@@ -118,7 +118,7 @@
 			"label": {
 				"en_US": "Basic Web Content"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "BasicWebContent",
 			"objectFields": [
 				{
@@ -190,7 +190,7 @@
 			"label": {
 				"en_US": "Blog"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "Blog",
 			"objectFields": [
 				{
@@ -322,7 +322,7 @@
 			"label": {
 				"en_US": "External Video"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "ExternalVideo",
 			"objectFields": [
 				{
@@ -373,7 +373,7 @@
 			"label": {
 				"en_US": "Knowledge Base"
 			},
-			"modifiable": false,
+			"modifiable": true,
 			"name": "KnowledgeBase",
 			"objectFields": [
 				{

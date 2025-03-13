@@ -157,15 +157,19 @@ public class JUnitBatchBuildTestrayCaseResult
 				sb.append("\n\n");
 			}
 
-			sb.append(errorMessages.size());
-			sb.append(" Failed ");
-			sb.append(
-				JenkinsResultsParserUtil.getNounForm(
-					errorMessages.size(), "tests", "test"));
-			sb.append("\n    ");
-			sb.append(
-				JenkinsResultsParserUtil.join(
-					"\n     ", new ArrayList<>(errorMessages.keySet())));
+			if (errorMessages.size() == 1) {
+				List<String> values = new ArrayList<>(errorMessages.values());
+
+				sb.append(values.get(0));
+			}
+			else {
+				sb.append(errorMessages.size());
+				sb.append(" Failed tests");
+				sb.append("\n    ");
+				sb.append(
+					JenkinsResultsParserUtil.join(
+						"\n     ", new ArrayList<>(errorMessages.keySet())));
+			}
 		}
 
 		if (sb.length() > 0) {

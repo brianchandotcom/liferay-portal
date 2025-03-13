@@ -34,6 +34,10 @@
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetTagModelArgumentsResolver" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagPersistence" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagFinder" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetTagGroupRelLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetTagGroupRelLocalService" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetTagGroupRelServiceImpl" id="com.liferay.asset.kernel.service.AssetTagGroupRelService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagGroupRelModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetTagGroupRelModelArgumentsResolver" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagGroupRelPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagGroupRelPersistence" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyLocalService" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyModelArgumentsResolver" id="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyModelArgumentsResolver" />

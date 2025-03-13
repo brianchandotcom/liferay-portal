@@ -8,6 +8,7 @@ package com.liferay.portal.dao.sql.transformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 
@@ -33,6 +34,20 @@ public class SQLServerSQLTransformerLogic extends BaseSQLTransformerLogic {
 		}
 
 		setFunctions(functions);
+	}
+
+	@Override
+	protected String replaceAggregation(Matcher matcher) {
+		if (matcher.find()) {
+			String type = matcher.group(1);
+
+			if (Objects.equals(type, "BOOLEAN")) {
+				return matcher.replaceAll(
+					"CASE WHEN $2(CAST($3 AS INT)) = 1 THEN 1 ELSE 0 END");
+			}
+		}
+
+		return super.replaceAggregation(matcher);
 	}
 
 	@Override

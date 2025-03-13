@@ -22,6 +22,12 @@ public class LambdaCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.SWITCH_RULE) {
+			return;
+		}
+
 		DetailAST lastChildDetailAST = detailAST.getLastChild();
 
 		if (lastChildDetailAST.getType() != TokenTypes.SLIST) {

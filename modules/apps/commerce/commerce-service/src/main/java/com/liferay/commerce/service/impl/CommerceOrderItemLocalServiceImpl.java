@@ -5,9 +5,11 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
@@ -16,6 +18,7 @@ import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
 import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.exception.ProductBundleException;
+import com.liferay.commerce.internal.context.CommerceContextFactoryImpl;
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
@@ -158,8 +161,9 @@ public class CommerceOrderItemLocalServiceImpl
 		_updateWorkflow(user.getUserId(), commerceOrder);
 
 		CommerceProductPrice commerceProductPrice = _getCommerceProductPrice(
-			cpInstance.getCPDefinitionId(), cpInstance.getCPInstanceId(), json,
-			quantity, unitOfMeasureKey, commerceContext);
+			commerceOrder, cpInstance.getCPDefinitionId(),
+			cpInstance.getCPInstanceId(), json, quantity, unitOfMeasureKey,
+			commerceContext);
 
 		BigDecimal unitOfMeasureIncrementalOrderQuantity =
 			commerceProductPrice.getUnitOfMeasureIncrementalOrderQuantity();
@@ -198,6 +202,7 @@ public class CommerceOrderItemLocalServiceImpl
 				unitOfMeasureIncrementalOrderQuantity, RoundingMode.HALF_UP);
 
 			commerceProductPrice = _getCommerceProductPrice(
+				commerceOrder,
 				commerceOptionValueCPInstance.getCPDefinitionId(),
 				commerceOptionValueCPInstance.getCPInstanceId(),
 				commerceOptionValue.toJSON(), currentQuantity,
@@ -224,7 +229,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 			commerceProductPrice = _getStaticCommerceProductPrice(
 				commerceOptionValue.getCPInstanceId(),
-				commerceContext.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(),
 				childCommerceOrderItem.getCommerceOrder(), currentQuantity,
 				commerceOptionValue.getPrice(), BigDecimal.ONE,
 				commerceOptionValue.getUnitOfMeasureKey());
@@ -937,10 +942,12 @@ public class CommerceOrderItemLocalServiceImpl
 				continue;
 			}
 
+			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 			CommerceProductPrice staticCommerceProductPrice =
 				_getStaticCommerceProductPrice(
 					commerceOptionValue.getCPInstanceId(),
-					commerceContext.getCommerceCurrency(),
+					commerceOrder.getCommerceCurrency(),
 					childCommerceOrderItem.getCommerceOrder(), currentQuantity,
 					commerceOptionValue.getPrice(), BigDecimal.ONE,
 					childCommerceOrderItem.getUnitOfMeasureKey());
@@ -1068,11 +1075,14 @@ public class CommerceOrderItemLocalServiceImpl
 					childCommerceOrderItem, null, commerceContext);
 			}
 			else {
+				CommerceOrder commerceOrder =
+					commerceOrderItem.getCommerceOrder();
+
 				_setCommerceOrderItemPrice(
 					childCommerceOrderItem,
 					_getStaticCommerceProductPrice(
 						commerceOptionValue.getCPInstanceId(),
-						commerceContext.getCommerceCurrency(),
+						commerceOrder.getCommerceCurrency(),
 						childCommerceOrderItem.getCommerceOrder(),
 						childCommerceOrderItem.getQuantity(),
 						commerceOptionValue.getPrice(), BigDecimal.ONE,
@@ -1531,16 +1541,32 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	private CommerceProductPrice _getCommerceProductPrice(
-			long cpDefinitionId, long cpInstanceId, String json,
-			BigDecimal quantity, String unitOfMeasureKey,
+			CommerceOrder commerceOrder, long cpDefinitionId, long cpInstanceId,
+			String json, BigDecimal quantity, String unitOfMeasureKey,
 			CommerceContext commerceContext)
 		throws PortalException {
+
+		long accountEntryId = 0;
+
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+		if (accountEntry != null) {
+			accountEntryId = accountEntry.getAccountEntryId();
+		}
+
+		CommerceContextFactory commerceContextFactory =
+			_commerceContextFactorySnapshot.get();
 
 		CommerceProductPriceRequest commerceProductPriceRequest =
 			new CommerceProductPriceRequest();
 
 		commerceProductPriceRequest.setCalculateTax(true);
-		commerceProductPriceRequest.setCommerceContext(commerceContext);
+		commerceProductPriceRequest.setCommerceContext(
+			commerceContextFactory.create(
+				accountEntryId, commerceContext.getCommerceChannelGroupId(),
+				commerceOrder.getCommerceCurrencyCode(),
+				commerceOrder.getCommerceOrderId(),
+				commerceOrder.getCompanyId()));
 		commerceProductPriceRequest.setCommerceOptionValues(
 			_getStaticOptionValuesNotLinkedToSku(cpDefinitionId, json));
 		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);
@@ -2204,6 +2230,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (commerceProductPrice == null) {
 			commerceProductPrice = _getCommerceProductPrice(
+				commerceOrderItem.getCommerceOrder(),
 				commerceOrderItem.getCPDefinitionId(),
 				commerceOrderItem.getCPInstanceId(),
 				commerceOrderItem.getJson(), commerceOrderItem.getQuantity(),
@@ -2392,7 +2419,7 @@ public class CommerceOrderItemLocalServiceImpl
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			CommerceProductPrice commerceProductPrice =
 				_getCommerceProductPrice(
-					cpInstance.getCPDefinitionId(),
+					commerceOrder, cpInstance.getCPDefinitionId(),
 					cpInstance.getCPInstanceId(), commerceOrderItem.getJson(),
 					quantity, unitOfMeasureKey, null);
 
@@ -2482,6 +2509,7 @@ public class CommerceOrderItemLocalServiceImpl
 		if (commerceOrder.isOpen()) {
 			if (commerceProductPrice == null) {
 				commerceProductPrice = _getCommerceProductPrice(
+					commerceOrderItem.getCommerceOrder(),
 					commerceOrderItem.getCPDefinitionId(),
 					commerceOrderItem.getCPInstanceId(),
 					commerceOrderItem.getJson(), quantity,
@@ -2644,6 +2672,9 @@ public class CommerceOrderItemLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderItemLocalServiceImpl.class);
 
+	private static final Snapshot<CommerceContextFactory>
+		_commerceContextFactorySnapshot = new Snapshot<>(
+			CommerceContextFactoryImpl.class, CommerceContextFactory.class);
 	private static final Snapshot<CommerceOrderLocalService>
 		_commerceOrderLocalServiceSnapshot = new Snapshot<>(
 			CommerceOrderItemLocalServiceImpl.class,

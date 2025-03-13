@@ -11,8 +11,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
@@ -87,6 +85,23 @@ public class DeletionSystemEventImporter {
 	private DeletionSystemEventImporter() {
 	}
 
+	private PortletDataHandler _getPortletDataHandlerForPortlet(
+		String portletId) {
+
+		try (ServiceTrackerList<PortletDataHandler> portletDataHandlers =
+				ServiceTrackerListFactory.open(
+					SystemBundleUtil.getBundleContext(),
+					PortletDataHandler.class,
+					"(javax.portlet.name=" + portletId + ")")) {
+
+			for (PortletDataHandler portletDataHandler : portletDataHandlers) {
+				return portletDataHandler;
+			}
+		}
+
+		return null;
+	}
+
 	private void _importBatchDeletions(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -106,46 +121,13 @@ public class DeletionSystemEventImporter {
 				continue;
 			}
 
-			String portletIdPrefix =
-				"com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_";
+			if (_isBatchPortlet(portletId)) {
+				PortletDataHandler portletDataHandler =
+					_getPortletDataHandlerForPortlet(portletId);
 
-			if (portletId.startsWith(portletIdPrefix)) {
-				String part = portletId.substring(portletIdPrefix.length());
-
-				String className =
-					"com.liferay.object.model.ObjectDefinition#" + part;
-
-				ObjectDefinition objectDefinition =
-					ObjectDefinitionLocalServiceUtil.
-						fetchObjectDefinitionByClassName(
-							portletDataContext.getCompanyId(), className);
-
-				if (objectDefinition != null) {
-					_importDeletionsOfObjectsDefinition(
-						portletDataContext, objectDefinition, portletId);
-				}
-			}
-		}
-	}
-
-	private void _importDeletionsOfObjectsDefinition(
-			PortletDataContext portletDataContext,
-			ObjectDefinition objectDefinition, String portletId)
-		throws Exception {
-
-		String fileName = objectDefinition.getName() + "_deletions.json";
-
-		String content = portletDataContext.getZipEntryAsString(fileName);
-
-		if (Validator.isNotNull(content)) {
-			try (ServiceTrackerList<PortletDataHandler> pdhs =
-					ServiceTrackerListFactory.open(
-						SystemBundleUtil.getBundleContext(),
-						PortletDataHandler.class,
-						"(javax.portlet.name=" + portletId + ")")) {
-
-				for (PortletDataHandler pdh : pdhs) {
-					pdh.deleteData(portletDataContext, portletId, null);
+				if (portletDataHandler != null) {
+					portletDataHandler.deleteData(
+						portletDataContext, portletId, null);
 				}
 			}
 		}
@@ -176,6 +158,16 @@ public class DeletionSystemEventImporter {
 						" with UUID ", element.attributeValue("uuid")),
 					exception);
 			}
+		}
+	}
+
+	private boolean _isBatchPortlet(String portletId) {
+		try (ServiceTrackerList resources = ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(), null,
+				"(&(batch.engine.scope=company)(batch.engine.task.item.delegate=true)(batch.engine.task.item.delegate.portlet.id=" +
+					portletId + "))")) {
+
+			return !resources.isEmpty();
 		}
 	}
 

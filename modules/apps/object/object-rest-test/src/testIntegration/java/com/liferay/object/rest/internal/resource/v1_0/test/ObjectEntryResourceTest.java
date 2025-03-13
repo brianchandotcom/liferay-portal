@@ -8835,7 +8835,8 @@ public class ObjectEntryResourceTest {
 			Assert.assertFalse(validateResult.getSuccess());
 
 			Assert.assertEquals(
-				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+				error1,
+				validateResult.getValidateErrors()[0].getErrorMessage());
 
 			validateResult = objectEntryResource.postScopeScopeKeyValidate(
 				String.valueOf(TestPropsValues.getGroupId()),
@@ -8847,7 +8848,8 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertTrue(validateResult.getSuccess());
 
-			Assert.assertTrue(ArrayUtil.isEmpty(validateResult.getValidateErrors()));
+			Assert.assertTrue(
+				ArrayUtil.isEmpty(validateResult.getValidateErrors()));
 
 			validateResult = objectEntryResource.postScopeScopeKeyValidate(
 				String.valueOf(TestPropsValues.getGroupId()),
@@ -8859,10 +8861,12 @@ public class ObjectEntryResourceTest {
 			Assert.assertFalse(validateResult.getSuccess());
 
 			Assert.assertEquals(
-				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+				error1,
+				validateResult.getValidateErrors()[0].getErrorMessage());
 
 			Assert.assertEquals(
-				error2, validateResult.getValidateErrors()[1].getErrorMessage());
+				error2,
+				validateResult.getValidateErrors()[1].getErrorMessage());
 
 			Assert.assertEquals(
 				textObjectField.getName(),
@@ -8983,7 +8987,8 @@ public class ObjectEntryResourceTest {
 			Assert.assertFalse(validateResult.getSuccess());
 
 			Assert.assertEquals(
-				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+				error1,
+				validateResult.getValidateErrors()[0].getErrorMessage());
 
 			validateResult = objectEntryResource.postValidate(
 				_getValidateRequest(
@@ -8994,7 +8999,8 @@ public class ObjectEntryResourceTest {
 
 			Assert.assertTrue(validateResult.getSuccess());
 
-			Assert.assertTrue(ArrayUtil.isEmpty(validateResult.getValidateErrors()));
+			Assert.assertTrue(
+				ArrayUtil.isEmpty(validateResult.getValidateErrors()));
 
 			validateResult = objectEntryResource.postValidate(
 				_getValidateRequest(
@@ -9005,10 +9011,12 @@ public class ObjectEntryResourceTest {
 			Assert.assertFalse(validateResult.getSuccess());
 
 			Assert.assertEquals(
-				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+				error1,
+				validateResult.getValidateErrors()[0].getErrorMessage());
 
 			Assert.assertEquals(
-				error2, validateResult.getValidateErrors()[1].getErrorMessage());
+				error2,
+				validateResult.getValidateErrors()[1].getErrorMessage());
 
 			Assert.assertEquals(
 				textObjectField.getName(),

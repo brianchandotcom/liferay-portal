@@ -1654,6 +1654,78 @@
 				"xml": {
 					"name": "UserGroupBrief"
 				}
+			},
+			"ValidateError": {
+				"properties": {
+					"errorMessage": {
+						"type": "string"
+					},
+					"objectFieldName": {
+						"type": "string"
+					},
+					"validationKey": {
+						"type": "string"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.ValidateError",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "ValidateError"
+				}
+			},
+			"ValidateRequest": {
+				"properties": {
+					"entry": {
+						"$ref": "#/components/schemas/Object2"
+					},
+					"validationKeys": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.ValidateRequest",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "ValidateRequest"
+				}
+			},
+			"ValidateResult": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"validateErrors": {
+						"items": {
+							"$ref": "#/components/schemas/ValidateError"
+						},
+						"type": "array"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.ValidateResult",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "ValidateResult"
+				}
 			}
 		}
 	},
@@ -2290,6 +2362,45 @@
 						"description": "default response"
 					}
 				}
+			}
+		},
+		"/validate": {
+			"post": {
+				"operationId": "postValidate",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ValidateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ValidateRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidateResult"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidateResult"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object2"
+				]
 			}
 		},
 		"/{object2Id}": {

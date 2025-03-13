@@ -50,6 +50,14 @@ public class AssetTagGroupRelLocalServiceWrapper
 			assetTagGroupRel);
 	}
 
+	@Override
+	public AssetTagGroupRel addAssetTagGroupRel(long groupId, long tagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetTagGroupRelLocalService.addAssetTagGroupRel(
+			groupId, tagId);
+	}
+
 	/**
 	 * Creates a new asset tag group rel with the primary key. Does not add the asset tag group rel to the database.
 	 *
@@ -109,6 +117,16 @@ public class AssetTagGroupRelLocalServiceWrapper
 
 		return _assetTagGroupRelLocalService.deleteAssetTagGroupRel(
 			assetTagGroupRelId);
+	}
+
+	@Override
+	public void deleteAssetTagGroupRelsByGroupId(long groupId) {
+		_assetTagGroupRelLocalService.deleteAssetTagGroupRelsByGroupId(groupId);
+	}
+
+	@Override
+	public void deleteAssetTagGroupRelsByTagId(long tagId) {
+		_assetTagGroupRelLocalService.deleteAssetTagGroupRelsByTagId(tagId);
 	}
 
 	/**
@@ -304,6 +322,21 @@ public class AssetTagGroupRelLocalServiceWrapper
 		return _assetTagGroupRelLocalService.getAssetTagGroupRels(start, end);
 	}
 
+	@Override
+	public java.util.List<AssetTagGroupRel> getAssetTagGroupRelsByGroupyId(
+		long groupId) {
+
+		return _assetTagGroupRelLocalService.getAssetTagGroupRelsByGroupyId(
+			groupId);
+	}
+
+	@Override
+	public java.util.List<AssetTagGroupRel> getAssetTagGroupRelsByTagId(
+		long tagId) {
+
+		return _assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(tagId);
+	}
+
 	/**
 	 * Returns all the asset tag group rels matching the UUID and company.
 	 *
@@ -378,6 +411,13 @@ public class AssetTagGroupRelLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetTagGroupRelLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void setAssetTagGroupRels(long tagId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_assetTagGroupRelLocalService.setAssetTagGroupRels(tagId, groupIds);
 	}
 
 	/**

@@ -5,6 +5,11 @@
 
 package com.liferay.asset.kernel.service;
 
+import com.liferay.asset.kernel.model.AssetTagGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for AssetTagGroupRel. This utility wraps
  * <code>com.liferay.portlet.asset.service.impl.AssetTagGroupRelServiceImpl</code> and is an
@@ -24,14 +29,31 @@ public class AssetTagGroupRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portlet.asset.service.impl.AssetTagGroupRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static AssetTagGroupRel addAssetTagGroupRel(long groupId, long tagId)
+		throws PortalException {
+
+		return getService().addAssetTagGroupRel(groupId, tagId);
+	}
+
+	public static List<AssetTagGroupRel> getAssetTagGroupRelsByTagId(long tagId)
+		throws PortalException {
+
+		return getService().getAssetTagGroupRelsByTagId(tagId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void setAssetTagGroupRels(long tagId, long[] groupIds)
+		throws PortalException {
+
+		getService().setAssetTagGroupRels(tagId, groupIds);
 	}
 
 	public static AssetTagGroupRelService getService() {

@@ -3,11 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {STORAGE_KEY_MESSAGE_IDENTITY} from '../utils/constants';
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import BaseSendMessageQueue from './baseSendMessageQueue';
 
 class IdentityMessageQueue extends BaseSendMessageQueue {
-	constructor({analyticsInstance, name = STORAGE_KEY_MESSAGE_IDENTITY}) {
+	constructor({
+		analyticsInstance,
+		name = AnalyticsType.Queues.IdentityMessage,
+	}: {
+		analyticsInstance: Analytics;
+		name?: AnalyticsType.Queues;
+	}) {
 		super({
 			analyticsInstance,
 			flushTo: analyticsInstance.config.identityEndpoint,

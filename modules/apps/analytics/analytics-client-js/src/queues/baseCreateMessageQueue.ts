@@ -3,25 +3,42 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import {v4 as uuidv4} from 'uuid';
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {getContexts} from '../utils/contexts';
 import {removeDups} from '../utils/events';
 import {setItem} from '../utils/storage';
 import BaseQueue from './baseQueue';
 
 class BaseCreateMessageQueue extends BaseQueue {
-	constructor({analyticsInstance, flushTo, name}) {
+	analyticsInstance: Analytics;
+	flushTo: AnalyticsType.Queues;
+
+	constructor({
+		analyticsInstance,
+		flushTo,
+		name,
+	}: {
+		analyticsInstance: Analytics;
+		flushTo: AnalyticsType.Queues;
+		name: AnalyticsType.Queues;
+	}) {
 		super({analyticsInstance, name});
+
+		this.analyticsInstance = analyticsInstance;
 		this.flushTo = flushTo;
 	}
 
 	onFlush() {
-		const items = this.getItems();
+		const items = this.getItems<AnalyticsType.Event>();
 		const storedContexts = getContexts();
 		const eventsByContextHash = this._groupEventsByContextHash(items);
 		const userId = this.analyticsInstance._getUserId();
-		const promisesArr = [];
+		const promisesArr: Promise<Analytics>[] = [];
 
 		storedContexts.forEach((context, hash) => {
 			const events = eventsByContextHash[hash];
@@ -34,7 +51,7 @@ class BaseCreateMessageQueue extends BaseQueue {
 							events,
 							userId,
 						})
-					)
+					) as unknown as Promise<Analytics>
 				);
 			}
 		});
@@ -42,12 +59,15 @@ class BaseCreateMessageQueue extends BaseQueue {
 		return promisesArr;
 	}
 
-	onFlushSuccess(results) {
-		const items = this.getItems();
-		const filteredResults = results.filter(
+	onFlushSuccess(results?: AnalyticsType.FlushResult[]) {
+		const items = this.getItems<AnalyticsType.Event>();
+		const filteredResults = results?.filter(
 			(message) => message && message.value && message.value.events
 		);
-		const updatedItems = removeDups(filteredResults, items);
+		const updatedItems = removeDups(
+			filteredResults as AnalyticsType.FlushResult[],
+			items
+		);
 
 		setItem(this.name, updatedItems);
 
@@ -57,14 +77,17 @@ class BaseCreateMessageQueue extends BaseQueue {
 
 	/**
 	 * Add all of the context and identifier information to an event batch.
-	 *
-	 * @param {AnalyticsEvent}
-	 * @returns {AnalyticsMessage}
 	 */
-	_createMessage({context, events, userId}) {
-		const {channelId} = context;
-
-		delete context.channelId;
+	_createMessage({
+		context,
+		events,
+		userId,
+	}: {
+		context: AnalyticsType.Context;
+		events: AnalyticsType.Event[];
+		userId: string;
+	}) {
+		const {channelId, ...otherProps} = context;
 
 		const {
 			dataSourceId,
@@ -73,7 +96,7 @@ class BaseCreateMessageQueue extends BaseQueue {
 
 		return {
 			channelId,
-			context,
+			context: {...otherProps},
 			dataSourceId,
 			emailAddressHashed,
 			events,
@@ -86,24 +109,29 @@ class BaseCreateMessageQueue extends BaseQueue {
 	 * Returns an object with keys being context hash and values
 	 * being events with that context hash.
 	 *
-	 * @example {
-	 * 				1A2B3: [event, event],
-	 * 				4A5B6: [event, event]
-	 * 			}
-	 * @param {Array.<AnalyticsEvent>}
-	 * @returns {Object}
+	 * @example
+	 * {
+	 * 	1A2B3: [event, event],
+	 * 	4A5B6: [event, event]
+	 * }
 	 */
-	_groupEventsByContextHash(events) {
-		return events.reduce((contextEventMap, event) => {
-			if (contextEventMap[event.contextHash]) {
-				contextEventMap[event.contextHash].push(event);
-			}
-			else {
-				contextEventMap[event.contextHash] = [event];
-			}
+	_groupEventsByContextHash(events: AnalyticsType.Event[]) {
+		return events.reduce(
+			(
+				contextEventMap: {[key: string]: AnalyticsType.Event[]},
+				event
+			) => {
+				if (contextEventMap[event.contextHash]) {
+					contextEventMap[event.contextHash].push(event);
+				}
+				else {
+					contextEventMap[event.contextHash] = [event];
+				}
 
-			return contextEventMap;
-		}, {});
+				return contextEventMap;
+			},
+			{} as {[key: string]: AnalyticsType.Event[]}
+		);
 	}
 }
 

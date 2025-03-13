@@ -5,18 +5,31 @@
 
 import ProcessLock from 'browser-tabs-lock';
 
+import Analytics from '../analytics';
+import {Analytics as AnalyticsType} from '../types';
 import {QUEUE_STORAGE_LIMIT} from '../utils/constants';
 import {getRetryDelay} from '../utils/delay';
 import {getItem, setItem, verifyStorageLimitForKey} from '../utils/storage';
 
 class BaseQueue {
-	constructor({analyticsInstance, name}) {
+	maxSize: number;
+	name: AnalyticsType.Queues;
+	lock: ProcessLock;
+	analyticsInstance: Analytics;
+
+	constructor({
+		analyticsInstance,
+		name,
+	}: {
+		analyticsInstance: Analytics;
+		name: AnalyticsType.Queues;
+	}) {
 		this.maxSize = QUEUE_STORAGE_LIMIT;
 		this.name = name;
 		this.lock = new ProcessLock();
 		this.analyticsInstance = analyticsInstance;
 
-		if (!getItem(this.name)) {
+		if (!getItem<string>(this.name)) {
 			setItem(this.name, []);
 		}
 
@@ -25,11 +38,8 @@ class BaseQueue {
 
 	/**
 	 * Adds an item to the queue.
-	 *
-	 * @param {AnalyticsMessage} item
-	 * @returns {Promise}
 	 */
-	addItem(item) {
+	addItem(item: AnalyticsType.Event | AnalyticsType.Identity) {
 		this._enqueue(item);
 
 		verifyStorageLimitForKey(this.name, this.maxSize);
@@ -37,11 +47,13 @@ class BaseQueue {
 
 	/**
 	 * Remove an item from the queue by id.
-	 *
-	 * @param {string} id - The Message ID.
 	 */
-	_dequeue(id) {
-		const queue = this.getItems();
+	_dequeue(id: string) {
+		const queue = this.getItems<
+			AnalyticsType.Message & {
+				item?: AnalyticsType.Message;
+			}
+		>();
 
 		setItem(
 			this.name,
@@ -57,12 +69,11 @@ class BaseQueue {
 
 	/**
 	 * Add a message to the queue and process messages.
-	 *
-	 * @param {Message} entry
-	 * @param {boolean} - Whether _processMessages should run immediately after enqueuing message.
 	 */
-	_enqueue(entry) {
-		const queue = this.getItems();
+	_enqueue(entry: AnalyticsType.Event | AnalyticsType.Identity) {
+		const queue = this.getItems<
+			AnalyticsType.Event | AnalyticsType.Identity
+		>();
 
 		queue.push(entry);
 
@@ -71,15 +82,14 @@ class BaseQueue {
 
 	/**
 	 * Get queued messages.
-	 *
-	 * @returns {Array.<AnalyticsMessage>}
 	 */
-	getItems() {
-		return getItem(this.name) || [];
+	getItems<T>(): T[] {
+		return getItem<T[]>(this.name) || [];
 	}
 
 	hasItems() {
-		return !!this.getItems().length;
+		return !!this.getItems<AnalyticsType.Event | AnalyticsType.Identity>()
+			.length;
 	}
 
 	acquireLock() {

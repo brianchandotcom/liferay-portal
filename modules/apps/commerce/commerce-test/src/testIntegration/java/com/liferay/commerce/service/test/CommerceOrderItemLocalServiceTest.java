@@ -10,6 +10,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.ProductBundleException;
@@ -19,6 +21,8 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.price.CommerceProductPrice;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -135,6 +139,11 @@ public class CommerceOrderItemLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
+		for (CommerceCurrency commerceCurrency : _commerceCurrencies) {
+			_commerceCurrencyLocalService.deleteCommerceCurrency(
+				commerceCurrency.getCommerceCurrencyId());
+		}
+
 		List<CommerceInventoryBookedQuantity>
 			commerceInventoryBookedQuantities =
 				_commerceInventoryBookedQuantityLocalService.
@@ -220,6 +229,88 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertEquals(
 			commerceOrderItem.getCommerceOrderItemId(),
 			actualCommerceOrderItem.getCommerceOrderItemId());
+	}
+
+	@Test
+	public void testAddCommerceOrderItemUsesOrderCurrencyCode()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Add a SKU (product instance) to an order"
+		).given(
+			"A group"
+		).and(
+			"A user"
+		).and(
+			"A published SKU"
+		).when(
+			"There is availability for the SKU"
+		).then(
+			"The order item added to the order should be in the same currency"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			_commerceCatalog.getGroupId(), BigDecimal.TEN);
+
+		_cpInstances.add(cpInstance);
+
+		_commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_commerceInventoryWarehouseItems.add(
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+				_user.getUserId(), _commerceInventoryWarehouse,
+				BigDecimal.valueOf(2), cpInstance.getSku(), StringPool.BLANK));
+
+		Assert.assertNotNull(_commerceCurrency);
+
+		Assert.assertNotNull(_accountEntry);
+
+		_commerceChannelRel = CommerceTestUtil.addWarehouseCommerceChannelRel(
+			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			_commerceChannel.getCommerceChannelId());
+
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyTestUtil.addCommerceCurrency(
+				_commerceChannel.getCompanyId());
+
+		_commerceCurrencies.add(commerceCurrency);
+
+		commerceCurrency =
+			_commerceCurrencyLocalService.updateCommerceCurrencyRate(
+				commerceCurrency.getCommerceCurrencyId(), BigDecimal.TEN);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_accountEntry.getAccountEntryId(), commerceCurrency.getCode(),
+				0);
+
+		_commerceOrders.add(commerceOrder);
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemLocalService.addCommerceOrderItem(
+				_user.getUserId(), commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), null, BigDecimal.ONE, 0,
+				BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+				_serviceContext);
+
+		_commerceOrderItems.add(commerceOrderItem);
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			_accountEntry, commerceCurrency, _commerceChannel, _user, _group,
+			commerceOrder);
+
+		CommerceProductPrice commerceProductPrice =
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				cpInstance.getCPInstanceId(), BigDecimal.ONE, StringPool.BLANK,
+				commerceContext);
+
+		CommerceMoney commerceMoney = commerceProductPrice.getFinalPrice();
+
+		Assert.assertEquals(
+			commerceMoney.getPrice(), commerceOrderItem.getFinalPrice());
 	}
 
 	@Test(expected = CommerceOrderValidatorException.class)
@@ -1762,9 +1853,14 @@ public class CommerceOrderItemLocalServiceTest {
 	private CommerceChannelRel _commerceChannelRel;
 
 	private CommerceContext _commerceContext;
+	private final List<CommerceCurrency> _commerceCurrencies =
+		new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Inject
 	private CommerceInventoryBookedQuantityLocalService
@@ -1794,6 +1890,9 @@ public class CommerceOrderItemLocalServiceTest {
 
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Inject
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@DeleteAfterTestRun
 	private List<CPDefinitionOptionRel> _cpDefinitionOptionRels =

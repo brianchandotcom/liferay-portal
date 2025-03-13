@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Analytics} from '../types';
+
 /**
  * Updates context with browser resolution information
- * @param {Object} request Request object to alter
- * @returns {Object} The updated request object
  */
-function resolution(request) {
+function resolution(request: {context: Analytics.Context}) {
 	const devicePixelRatio = window.devicePixelRatio || 1;
 
 	const screenHeight =

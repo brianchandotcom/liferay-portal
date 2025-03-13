@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Analytics} from '../types';
+
 const openGraphTagPatterns = [
 	/^og:.*/,
 	/^music:/,
@@ -15,10 +17,8 @@ const openGraphTagPatterns = [
 
 /**
  * Determines whether the given element is a valid OpenGraph meta tag
- * @param {Object} element
- * @returns {boolean}
  */
-function isOpenGraphElement(element) {
+function isOpenGraphElement(element: Element) {
 	let openGraphMetaTag = false;
 
 	if (element && element.getAttribute) {
@@ -36,18 +36,16 @@ function isOpenGraphElement(element) {
 
 /**
  * Updates context with OpenGraph information
- * @param {Object} request Request object to alter
- * @param {Object} analytics Analytics instance
- * @returns {Object} The updated request object
  */
-function openGraph(request) {
+function openGraph(request: {context: Analytics.Context}) {
 	const elements = [].slice.call(document.querySelectorAll('meta'));
-	const openGraphElements = elements.filter(isOpenGraphElement);
+	const openGraphElements = elements.filter(isOpenGraphElement) as Element[];
 
 	const openGraphData = openGraphElements.reduce(
 		(data, meta) =>
 			Object.assign(data, {
-				[meta.getAttribute('property')]: meta.getAttribute('content'),
+				[meta.getAttribute('property') as string]:
+					meta.getAttribute('content'),
 			}),
 		{}
 	);

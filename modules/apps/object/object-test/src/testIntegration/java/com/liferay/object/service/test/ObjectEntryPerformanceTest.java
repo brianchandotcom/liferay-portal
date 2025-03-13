@@ -97,114 +97,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	@Test
-	public void testGetObjectEntries()
-		throws Exception {
-
-		_publishCustomObjectDefinitionByObjectDefinitionLocalService();
-
-		_addObjectEntriesByObjectEntryManager(_objectEntryCount);
-
-		try (Closeable closeable = new PerformanceTimer(
-				60000,
-				"Get all the Object Entries by ObjectEntryLocalService with " +
-					"CustomObjectDefinitionId:" +
-						_customObjectDefinition.getObjectDefinitionId())) {
-
-			_objectEntries = _objectEntryLocalService.getObjectEntries(
-				0, _customObjectDefinition.getObjectDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-
-		_deleteObjectEntriesByObjectEntryLocalService();
-	}
-
-	@Test
-	public void testImportAndDeleteByRestAPI()
-		throws Exception {
-
-		_setUpCompanyForObjectRestAPITest();
-		_setUpObjectFolderFromJSON();
-		_testImportObjectEntryByObjectRestAPI();
-		_testDeleteObjectEntryByObjectRestAPI();
-	}
-
-	private void _addObjectEntriesByObjectEntryManager(Integer numberOfEntries)
-		throws Exception {
-
-		ObjectEntryManager objectEntryManager =
-			_objectEntryManagerRegistry.getObjectEntryManager(
-				_customObjectDefinition.getStorageType());
-
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, TestPropsValues.getUser());
-
-		for (int counter = 0; counter < numberOfEntries; counter++) {
-			objectEntryManager.addObjectEntry(
-				dtoConverterContext, _customObjectDefinition,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"performance", RandomTestUtil.randomString()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-		}
-	}
-
-	private String _createObjectEntryJSON() throws Exception {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (int i = 0; i < _objectEntryCount; i++) {
-			jsonArray.put(JSONUtil.put("alpha", "foo"));
-		}
-
-		return jsonArray.toString();
-	}
-
-	private void _deleteObjectEntriesByObjectEntryLocalService()
-		throws Exception {
-
-		for (com.liferay.object.model.ObjectEntry objectEntry :
-				_objectEntries) {
-
-			_objectEntryLocalService.deleteObjectEntry(objectEntry);
-		}
-	}
-
-	private JSONArray _getObjectEntryIdJSONArray() throws Exception {
-		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-		httpInvoker.userNameAndPassword(_getUserNameAndPassword());
-		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-		httpInvoker.path(
-			_getPath("/o/c/foos/?fields=id&pageSize=" + _objectEntryCount));
-
-		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			httpResponse.getContent());
-
-		return (JSONArray)jsonObject.get("items");
-	}
-
-	private String _getPath(String pathSuffix) {
-		return StringBundler.concat(
-			"http://", _VIRTUAL_HOST_NAME, ":8080", pathSuffix);
-	}
-
-	private String _getUserNameAndPassword() {
-		return StringBundler.concat(
-			"test@", _VIRTUAL_HOST_NAME, ":",
-			PropsValues.DEFAULT_ADMIN_PASSWORD);
-	}
-
-	private void _publishCustomObjectDefinitionByObjectDefinitionLocalService()
-		throws Exception {
-
+	public void testGetObjectEntries() throws Exception {
 		_customObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false,
@@ -218,9 +111,49 @@ public class ObjectEntryPerformanceTest {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_customObjectDefinition.getObjectDefinitionId());
+
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				_customObjectDefinition.getStorageType());
+
+		DTOConverterContext dtoConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, TestPropsValues.getUser());
+
+		for (int i = 0; i < _objectEntryCount; i++) {
+			objectEntryManager.addObjectEntry(
+				dtoConverterContext, _customObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"performance", RandomTestUtil.randomString()
+						).build();
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+		}
+
+		try (Closeable closeable = new PerformanceTimer(
+				60000,
+				"Get all the Object Entries by ObjectEntryLocalService with " +
+					"CustomObjectDefinitionId:" +
+						_customObjectDefinition.getObjectDefinitionId())) {
+
+			_objectEntries = _objectEntryLocalService.getObjectEntries(
+				0, _customObjectDefinition.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		for (com.liferay.object.model.ObjectEntry objectEntry :
+				_objectEntries) {
+
+			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+		}
 	}
 
-	private void _setUpCompanyForObjectRestAPITest() throws Exception {
+	@Test
+	public void testImportAndDeleteByRestAPI() throws Exception {
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.REQUIRED);
@@ -248,15 +181,14 @@ public class ObjectEntryPerformanceTest {
 		catch (Throwable throwable) {
 			throw new Exception(throwable);
 		}
-	}
 
-	private void _setUpObjectFolderFromJSON() throws Exception {
-		ObjectFolderResource.Builder builder =
+		ObjectFolderResource.Builder objectFolderResourceBuilder =
 			_objectFolderResourceFactory.create();
 
-		ObjectFolderResource objectFolderResource = builder.user(
-			UserTestUtil.getAdminUser(_company.getCompanyId())
-		).build();
+		ObjectFolderResource objectFolderResource =
+			objectFolderResourceBuilder.user(
+				UserTestUtil.getAdminUser(_company.getCompanyId())
+			).build();
 
 		objectFolderResource.setContextCompany(_company);
 
@@ -273,6 +205,30 @@ public class ObjectEntryPerformanceTest {
 
 		objectFolderResource.putObjectFolderByExternalReferenceCode(
 			objectFolder.getExternalReferenceCode(), objectFolder);
+
+		_testImportObjectEntryByObjectRestAPI();
+		_testDeleteObjectEntryByObjectRestAPI();
+	}
+
+	private String _createObjectEntryJSON() throws Exception {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (int i = 0; i < _objectEntryCount; i++) {
+			jsonArray.put(JSONUtil.put("alpha", "foo"));
+		}
+
+		return jsonArray.toString();
+	}
+
+	private String _getPath(String pathSuffix) {
+		return StringBundler.concat(
+			"http://", _VIRTUAL_HOST_NAME, ":8080", pathSuffix);
+	}
+
+	private String _getUserNameAndPassword() {
+		return StringBundler.concat(
+			"test@", _VIRTUAL_HOST_NAME, ":",
+			PropsValues.DEFAULT_ADMIN_PASSWORD);
 	}
 
 	private void _testDeleteObjectEntryByObjectRestAPI() throws Exception {
@@ -281,16 +237,29 @@ public class ObjectEntryPerformanceTest {
 				StringBundler.concat(
 					" Delete ", _objectEntryCount, " Object Entries"))) {
 
-			JSONArray jsonArray = _getObjectEntryIdJSONArray();
+			HttpInvoker httpInvoker1 = HttpInvoker.newHttpInvoker();
 
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+			httpInvoker1.userNameAndPassword(_getUserNameAndPassword());
+			httpInvoker1.httpMethod(HttpInvoker.HttpMethod.GET);
 
-			httpInvoker.body(jsonArray.toString(), "application/json");
-			httpInvoker.userNameAndPassword(_getUserNameAndPassword());
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-			httpInvoker.path(_getPath(_PATH_SUFFIX));
+			httpInvoker1.path(
+				_getPath("/o/c/foos/?fields=id&pageSize=" + _objectEntryCount));
 
-			httpInvoker.invoke();
+			HttpInvoker.HttpResponse httpResponse = httpInvoker1.invoke();
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				httpResponse.getContent());
+
+			JSONArray jsonArray = (JSONArray)jsonObject.get("items");
+
+			HttpInvoker httpInvoker2 = HttpInvoker.newHttpInvoker();
+
+			httpInvoker2.body(jsonArray.toString(), "application/json");
+			httpInvoker2.userNameAndPassword(_getUserNameAndPassword());
+			httpInvoker2.httpMethod(HttpInvoker.HttpMethod.DELETE);
+			httpInvoker2.path(_getPath(_PATH_SUFFIX));
+
+			httpInvoker2.invoke();
 
 			long currentObjectEntryCount = _objectEntryCount;
 

@@ -7529,7 +7529,7 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="modules-integration-sqlserver2019-jdk21_zulu">
-        <run-modules-integration-test database.type="sqlserver" database.version="2019" />
+		<run-modules-integration-test database.type="sqlserver" database.version="2019" />
 	</target>
 
 	<target name="modules-integration-sqlserver2022">

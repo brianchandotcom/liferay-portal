@@ -3110,6 +3110,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutPersistence.update(layout);
 	}
 
+	@Override
+	public void updateLayoutContent(
+			String data, Layout layout, long segmentsExperienceId)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Updates the look and feel of the layout.
 	 *

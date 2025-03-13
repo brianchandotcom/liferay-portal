@@ -159,6 +159,17 @@ create table AssetTag (
 	primary key (tagId, ctCollectionId)
 );
 
+create table AssetTagGroupRel (
+	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	assetTagGroupRelId LONG not null,
+	groupId LONG,
+	companyId LONG,
+	tagId LONG,
+	primary key (assetTagGroupRelId, ctCollectionId)
+);
+
 create table AssetVocabulary (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,

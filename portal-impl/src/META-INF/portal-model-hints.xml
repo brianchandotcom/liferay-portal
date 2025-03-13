@@ -166,6 +166,15 @@
 		<field name="assetCount" type="int" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
+	<model name="com.liferay.asset.kernel.model.AssetTagGroupRel">
+		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
+		<field name="uuid" type="String" />
+		<field name="assetTagGroupRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="tagId" type="long" />
+	</model>
 	<model name="com.liferay.asset.kernel.model.AssetVocabulary">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />

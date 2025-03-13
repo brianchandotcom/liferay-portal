@@ -49,6 +49,10 @@ create unique index IX_B421E018 on AssetTag (groupId, uuid_[$COLUMN_LENGTH:75$],
 create index IX_C43137AF on AssetTag (name[$COLUMN_LENGTH:75$]);
 create index IX_562A3FC4 on AssetTag (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_7C87D905 on AssetTagGroupRel (groupId, tagId);
+create index IX_EE11675B on AssetTagGroupRel (tagId);
+create unique index IX_5A27ECFE on AssetTagGroupRel (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
+
 create index IX_B22D908C on AssetVocabulary (companyId);
 create unique index IX_E06DEF51 on AssetVocabulary (groupId, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_32F2132B on AssetVocabulary (groupId, ctCollectionId, name[$COLUMN_LENGTH:75$]);

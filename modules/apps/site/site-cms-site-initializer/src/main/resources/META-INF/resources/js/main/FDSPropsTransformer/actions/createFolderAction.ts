@@ -14,6 +14,7 @@ type FolderData = {
 
 export default function createFolderAction(data: FolderData) {
 	openModal({
+		center: true,
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			CreationModalContent({
 				...data,

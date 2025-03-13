@@ -6,13 +6,41 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.LayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Eudaldo Alonso
  */
 public class LayoutStructureUtil {
+
+	public static LayoutStructureItem addLayoutStructureItem(
+			LayoutStructure layoutStructure,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
+			PageElement pageElement)
+		throws Exception {
+
+		LayoutStructureItemImporter layoutStructureItemImporter =
+			LayoutStructureItemImporterUtil.getLayoutStructureItemImporter(
+				pageElement.getType());
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructureItemImporter.addLayoutStructureItem(
+				layoutStructure, layoutStructureItemImporterContext,
+				pageElement);
+
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			addLayoutStructureItem(
+				layoutStructure, layoutStructureItemImporterContext,
+				childPageElement);
+		}
+
+		return layoutStructureItem;
+	}
 
 	public static String getParentExternalReferenceCode(
 		PageElement pageElement, LayoutStructure layoutStructure) {

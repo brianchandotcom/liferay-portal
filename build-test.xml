@@ -700,7 +700,6 @@ module.framework.properties.osgi.console=11312</echo>
 
 							pg_dump \
 								--dbname=lportal \
-								--username=${database.postgresql.username} \
 								--encoding=UTF8 \
 								--exclude-table=^L_[0-9]+_* \
 								--exclude-table=^l_[0-9]+_* \
@@ -712,7 +711,8 @@ module.framework.properties.osgi.console=11312</echo>
 								--no-subscriptions \
 								--no-unlogged-table-data \
 								--schema==${database.schema.name} \
-								--schema-only
+								--schema-only \
+								--username=${database.postgresql.username}
 								> ${docker.src.file.path}
 						]]>
 					</echo>
@@ -8899,7 +8899,7 @@ war.path=${app.server.portal.dir}/</echo>
 							sed -i "/^CREATE RULE delete_$table/,/);$/d" "${upgraded_sql_file}"
 						done < ${selenium.output.dir.name}/tables-to-remove.txt
 
-						diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C5 '^.{123} [|><]( |$)' || true
+						diff -B -W250 -y ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -C5 -E '^.{123} [|><]( |$)' || true
 					}
 
 					main

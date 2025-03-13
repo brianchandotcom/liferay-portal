@@ -13,12 +13,9 @@ import com.liferay.frontend.data.set.sample.web.internal.display.context.helper.
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,13 +57,7 @@ public class FDSSampleDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _fdsRequestHelper.getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String portalURL = "/o/c/fdssamples/{id}";
+		String endPoint = "/o/c/fdssamples/{id}";
 
 		FDSActionDropdownItem sidePanel1FDSActionDropdownItem =
 			new FDSActionDropdownItem(
@@ -128,8 +119,8 @@ public class FDSSampleDisplayContext {
 				"#test-copy", "copy", "sampleMoveFolderMessage", "Sample Copy",
 				null, null, null),
 			new FDSActionDropdownItem(
-				portalURL, "truck", "asyncSuccess", "Async Success", "get",
-				null, "async"),
+				endPoint, "truck", "asyncSuccess", "Async Success", "get", null,
+				"async"),
 			new FDSActionDropdownItem(
 				"http://localhost", "times-circle",
 				"asyncErrorConnectionRefused", "Async Connection Refused",
@@ -147,7 +138,7 @@ public class FDSSampleDisplayContext {
 				"rectangle-split", "open-side-panel-without-title",
 				"Side Panel With No Title", null, null, "sidePanel"),
 			new FDSActionDropdownItem(
-				portalURL + "/abc", "staging", "asyncErrorResourceNotFound",
+				endPoint + "/abc", "staging", "asyncErrorResourceNotFound",
 				"Async Resource Not Found", "get", null, "async"),
 			new FDSActionDropdownItem(
 				null, "reload", "reload", "Reload Data", null, null, null),

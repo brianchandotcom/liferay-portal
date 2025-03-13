@@ -5,15 +5,14 @@
 
 /**
  * Debounces function execution.
- * @param {!function()} fn
- * @param {number} delay
- * @returns {!function()}
  */
-function debounce(fn, delay) {
+function debounce(fn: Function, delay: number): Function {
 	return function debounced() {
 		const args = arguments;
+
 		cancelDebounce(debounced);
-		debounced.id = setTimeout(() => {
+
+		(debounced as any).id = setTimeout(() => {
 			fn.apply(null, args);
 		}, delay);
 	};
@@ -21,10 +20,9 @@ function debounce(fn, delay) {
 
 /**
  * Cancels the scheduled debounced function.
- * @param {function()} debounced
  */
-function cancelDebounce(debounced) {
-	clearTimeout(debounced.id);
+function cancelDebounce(debounced: Function) {
+	clearTimeout((debounced as any).id);
 }
 
 export default debounce;

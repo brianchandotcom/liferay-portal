@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-function transformAssetTypeToSelector(assetType, suffix = '') {
+import {Analytics} from '../types';
+
+function transformAssetTypeToSelector(
+	assetType: Analytics.ElementType | Analytics.ElementType[],
+	suffix: string = ''
+) {
 	if (typeof assetType === 'object') {
 		return assetType
 			.map((type) => `[data-analytics-asset-type="${type}"]${suffix}`)
@@ -15,14 +20,18 @@ function transformAssetTypeToSelector(assetType, suffix = '') {
 
 /**
  * Returns first webContent element ancestor of given element.
- * @param {Object} element The DOM element
- * @returns {Object} The webContent element
  */
-function getClosestAssetElement(element, assetType) {
+function getClosestAssetElement(
+	element: Analytics.HTMLElement,
+	assetType: Analytics.ElementType | Analytics.ElementType[]
+): Analytics.HTMLElement | null {
 	return closest(element, transformAssetTypeToSelector(assetType));
 }
 
-function closest(element, selector) {
+function closest(
+	element: Analytics.HTMLElement,
+	selector: string
+): Analytics.HTMLElement | null {
 	if (element.closest) {
 		return element.closest(selector);
 	}
@@ -36,7 +45,8 @@ function closest(element, selector) {
 			return element;
 		}
 
-		element = element.parentElement || element.parentNode;
+		element = (element.parentElement ||
+			element.parentNode) as Analytics.HTMLElement;
 	} while (element !== null && element.nodeType === 1);
 
 	return null;
@@ -44,23 +54,25 @@ function closest(element, selector) {
 
 /**
  * Return all words from an element
- * @param {Object} element
- * @returns {number} the total of words
  */
-function getNumberOfWords({innerText}) {
+function getNumberOfWords({innerText}: Analytics.HTMLElement) {
 	const words = innerText.split(/\s+/).filter(Boolean);
 
 	return innerText !== '' ? words.length : 0;
 }
 
-function isTrackable(element, customDatasetList) {
-	const datasetList = customDatasetList || [
-		'analyticsAssetId',
-		'analyticsAssetTitle',
-		'analyticsAssetType',
+function isTrackable(
+	element: Analytics.HTMLElement | null,
+	customDatasetList?: Analytics.DataSetList[]
+) {
+	const defaultDatasetList = [
+		Analytics.DataSetList.AnalyticsAssetId,
+		Analytics.DataSetList.AnalyticsAssetTitle,
+		Analytics.DataSetList.AnalyticsAssetType,
 	];
+	const datasetList = customDatasetList || defaultDatasetList;
 
-	return (
+	return !!(
 		element && datasetList.every((dataset) => dataset in element.dataset)
 	);
 }
@@ -77,5 +89,5 @@ export {
  * Polyfill for .matches in IE11
  */
 if (!Element.prototype.matches) {
-	Element.prototype.matches = Element.prototype.msMatchesSelector;
+	Element.prototype.matches = (Element.prototype as any).msMatchesSelector;
 }

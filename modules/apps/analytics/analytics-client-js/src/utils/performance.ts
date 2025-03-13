@@ -5,24 +5,23 @@
 
 /**
  * Get Duration between marks
- * @param {string} measureName
- * @param {string} startMark
- * @param {string} [endMark=undefined]
- * @returns {number}
  */
-export function getDuration(measureName, startMark, endMark = undefined) {
+export function getDuration(
+	measureName: string,
+	startMark: string,
+	endMark?: string
+) {
 	window.performance.measure(measureName, startMark, endMark);
 
-	const {duration} = window.performance.getEntriesByName(measureName).pop();
+	const entry = window.performance.getEntriesByName(measureName).pop();
 
-	return ~~duration;
+	return entry && typeof entry.duration === 'number' ? ~~entry.duration : 0;
 }
 
 /**
  * Create mark
- * @param {string} markName
  */
-export function createMark(markName) {
+export function createMark(markName: string) {
 	window.performance.clearMarks(markName);
 	window.performance.mark(markName);
 }

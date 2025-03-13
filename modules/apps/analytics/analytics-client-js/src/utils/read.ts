@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {READ_MINIMUM_SCROLL_DEPTH} from '../utils/constants';
+import {READ_MINIMUM_SCROLL_DEPTH} from './constants';
 
 /**
  * Returns if there is vertical scroll bar on the client.
- * @returns {boolean} True if there is vertical scroll bar
  */
 function hasVerticalScrollBar() {
 	const {clientHeight, scrollHeight} = document.documentElement;
@@ -16,6 +15,10 @@ function hasVerticalScrollBar() {
 }
 
 class ReadTracker {
+	depthReached: boolean;
+	timeoutId?: NodeJS.Timeout;
+	timeReached: boolean;
+
 	constructor() {
 		this.timeReached = false;
 		this.depthReached = !hasVerticalScrollBar();
@@ -32,11 +35,8 @@ class ReadTracker {
 
 	/**
 	 * Set the expected time to be considered read
-	 *
-	 * @param {Function} fn The callback function that will process if the depth and time are reached.
-	 * @param {number} expectedViewDuration The expected view duration to be considered read
 	 */
-	setExpectedViewDuration(fn, expectedViewDuration) {
+	setExpectedViewDuration(fn: () => void, expectedViewDuration: number) {
 		if (expectedViewDuration && !this.timeoutId) {
 			this.timeoutId = setTimeout(
 				() => this.onTimeReached(fn),
@@ -47,9 +47,8 @@ class ReadTracker {
 
 	/**
 	 * Set depth reached
-	 * @param {Function} fn The callback function that will process if the depth and time are reached.
 	 */
-	onDepthReached(fn) {
+	onDepthReached(fn: () => void) {
 		if (!this.depthReached) {
 			this.depthReached = true;
 			this.checkIsRead(fn);
@@ -58,9 +57,8 @@ class ReadTracker {
 
 	/**
 	 * Set time reached
-	 * @param {Function} fn The callback function that will process if the depth and time are reached.
 	 */
-	onTimeReached(fn) {
+	onTimeReached(fn: () => void) {
 		this.timeReached = true;
 		this.checkIsRead(fn);
 	}
@@ -68,9 +66,8 @@ class ReadTracker {
 	/**
 	 * Check if the client reached both conditions to be considered read
 	 * If the client reaches both it sends an analytics event
-	 * @param {Function} fn The callback function that will process if the depth and time are reached.
 	 */
-	checkIsRead(fn) {
+	checkIsRead(fn: () => void) {
 		if (this.timeReached && this.depthReached) {
 			fn();
 		}

@@ -146,8 +146,13 @@ const AppOutlet = () => {
 				}
 
 				if (
-					placedOrder.orderTypeExternalReferenceCode ===
-					ORDER_TYPES.DXPAPP
+					[
+						ORDER_TYPES.CLIENT_EXTENSION,
+						ORDER_TYPES.COMPOSITE_APP,
+						ORDER_TYPES.DXPAPP,
+					].includes(
+						placedOrder.orderTypeExternalReferenceCode as ORDER_TYPES
+					)
 				) {
 					return [
 						...tabs,

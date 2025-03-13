@@ -57,7 +57,6 @@ export function NextSteps() {
 	const orderTypeExternalReferenceCode = cart?.orderTypeExternalReferenceCode;
 
 	const isCloudApp = orderTypeExternalReferenceCode === ORDER_TYPES.CLOUDAPP;
-	const isDxpApp = orderTypeExternalReferenceCode === ORDER_TYPES.DXPAPP;
 
 	const {isPaidApp} = getProductPriceModel(product);
 
@@ -199,7 +198,7 @@ export function NextSteps() {
 						isCloudApp ? 'go-to-my-apps' : 'go-to-dashboard'
 					)}
 					continueButtonText={i18n.translate(
-						isDxpApp ? 'download-app' : 'continue-to-install'
+						isCloudApp ? 'continue-to-install' : 'download-app'
 					)}
 					onClickBack={() => {
 						Liferay.Util.navigate(
@@ -219,7 +218,7 @@ export function NextSteps() {
 							);
 						}
 
-						if (isDxpApp) {
+						if (!isCloudApp) {
 							Liferay.Util.navigate(
 								Liferay.ThemeDisplay.getLayoutURL().replace(
 									'/next-steps',

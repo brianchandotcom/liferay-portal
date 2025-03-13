@@ -5,11 +5,11 @@
 
 import Analytics from '../../src/analytics';
 import BaseQueue from '../../src/queues/baseQueue';
-import {STORAGE_KEY_MESSAGES} from '../../src/utils/constants';
+import {Analytics as AnalyticsType} from '../../src/types';
 import {setItem} from '../../src/utils/storage';
 import {INITIAL_ANALYTICS_CONFIG, getDummyEvent} from '../helpers';
 
-const getMockItem = (id = 0, data = {}) => {
+const getMockItem = (id: string | number, data: any = {}) => {
 	return {
 		dataSourceId: 'foo-datasource',
 		events: [getDummyEvent()],
@@ -21,7 +21,7 @@ const getMockItem = (id = 0, data = {}) => {
 const analyticsInstance = Analytics.create(INITIAL_ANALYTICS_CONFIG);
 
 describe('BaseQueue', () => {
-	let baseQueue;
+	let baseQueue: BaseQueue;
 
 	afterEach(() => {
 		baseQueue.reset();
@@ -30,20 +30,24 @@ describe('BaseQueue', () => {
 	beforeEach(() => {
 		baseQueue = new BaseQueue({
 			analyticsInstance,
-			name: 'baseQueue',
+			name: AnalyticsType.Queues.Messages,
 		});
 	});
 
 	it('adds an item to its queue', async () => {
 		expect(baseQueue.getItems().length).toEqual(0);
 
-		await baseQueue.addItem(getMockItem('test-1'));
+		await baseQueue.addItem(
+			getMockItem('test-1') as unknown as AnalyticsType.Event
+		);
 
 		expect(baseQueue.getItems().length).toEqual(1);
 	});
 
 	it('Dequeues an item after add', async () => {
-		await baseQueue.addItem(getMockItem('test-3'));
+		await baseQueue.addItem(
+			getMockItem('test-3') as unknown as AnalyticsType.Event
+		);
 
 		expect(baseQueue.getItems().length).toEqual(1);
 
@@ -55,14 +59,17 @@ describe('BaseQueue', () => {
 	it('Dequeues first entry when the storage limit is reached', async () => {
 		const mockItems = [1, 2, 3, 4, 5].map(getMockItem);
 
-		setItem(STORAGE_KEY_MESSAGES, mockItems); // slightly larger than .5kb
+		setItem(AnalyticsType.Queues.Messages, mockItems); // slightly larger than .5kb
 
 		baseQueue.maxSize = 0.5;
 
-		const newMessage = getMockItem('6');
+		const newMessage = getMockItem(
+			'6'
+		) as unknown as AnalyticsType.Identity;
 
 		await baseQueue.addItem(newMessage);
-		const itemsArray = baseQueue.getItems();
+
+		const itemsArray = baseQueue.getItems<AnalyticsType.Identity>();
 
 		expect(itemsArray).toEqual(expect.not.arrayContaining([mockItems[0]]));
 
@@ -70,7 +77,9 @@ describe('BaseQueue', () => {
 	});
 
 	it('Resets the queue', async () => {
-		await baseQueue.addItem(getMockItem('test'));
+		await baseQueue.addItem(
+			getMockItem('test') as unknown as AnalyticsType.Event
+		);
 
 		expect(baseQueue.getItems().length).toEqual(1);
 

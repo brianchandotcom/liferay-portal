@@ -48,9 +48,7 @@ public class CompileModulesBatchTestClassGroup
 			getExcludesJobProperties());
 		List<PathMatcher> includesPathMatchers = getIncludesPathMatchers();
 
-		if (testRelevantChanges &&
-			!(includeStableTestSuite && isStableTestSuiteBatch())) {
-
+		if (testRelevantChanges) {
 			List<File> modifiedModuleDirsList =
 				portalGitWorkingDirectory.getModifiedModuleDirsList(
 					excludesPathMatchers, includesPathMatchers);

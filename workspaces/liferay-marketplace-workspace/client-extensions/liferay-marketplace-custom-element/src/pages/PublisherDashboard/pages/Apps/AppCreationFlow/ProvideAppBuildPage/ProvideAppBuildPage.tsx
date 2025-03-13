@@ -43,7 +43,6 @@ import {
 	PRODUCT_WORKFLOW_STATUS_CODE,
 } from '../../../../../../enums/Product';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
-import {base64ToText, fileToBase64} from '../../../../../../utils/file';
 import ResourceRequirements from './ResourceRequirements';
 import UploadAppPackagesComponent from './components/UploadAppPackages';
 import {ProductTypeOptions} from './constants/productTypes';
@@ -255,9 +254,7 @@ export function ProvideAppBuildPage({
 
 			for (const appPackage of appPackagesByVersion) {
 				items.push({
-					attachment: base64ToText(
-						(await fileToBase64(appPackage.file)) as string
-					),
+					attachment: appPackage.file,
 					fileName: appPackage.fileName,
 					id: appPackage.id,
 					version: versionKey,
@@ -295,7 +292,7 @@ export function ProvideAppBuildPage({
 			formData.append('file', blob, fileName);
 			formData.append(
 				'productVirtualSettingsFileEntry',
-				JSON.stringify({attachment, version})
+				JSON.stringify({version})
 			);
 
 			const appPackagesByVersion = buildAppPackages[version];

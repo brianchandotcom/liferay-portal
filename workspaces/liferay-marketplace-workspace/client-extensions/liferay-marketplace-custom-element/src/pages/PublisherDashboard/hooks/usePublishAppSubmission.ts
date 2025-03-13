@@ -22,7 +22,6 @@ import {ProductVocabulary} from '../../../enums/ProductVocabulary';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
-import {base64ToText, fileToBase64} from '../../../utils/file';
 
 type ProductConfig = {
 	isDraft: boolean;
@@ -53,9 +52,7 @@ const addOrUpdateImages = async (
 				id: uploadedProductImage.id,
 			}),
 			...(image?.file && {
-				attachment: base64ToText(
-					(await fileToBase64(image.file)) as string
-				),
+				attachment: image.file,
 			}),
 			externalReferenceCode: image.id,
 			galleryEnabled: false,
@@ -186,9 +183,7 @@ const usePublishAppSubmission = (
 				await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
 					_product.externalReferenceCode,
 					{
-						attachment: base64ToText(
-							(await fileToBase64(file.file)) as string
-						),
+						attachment: file.file,
 						galleryEnabled: false,
 						neverExpire: true,
 						priority: 0,
@@ -230,9 +225,7 @@ const usePublishAppSubmission = (
 			await headlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
 				product.externalReferenceCode,
 				{
-					attachment: base64ToText(
-						(await fileToBase64(file.file)) as string
-					),
+					attachment: file.file,
 					galleryEnabled: false,
 					neverExpire: true,
 					priority: 0,

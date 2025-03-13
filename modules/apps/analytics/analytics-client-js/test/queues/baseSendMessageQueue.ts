@@ -3,17 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// @ts-ignore - Check possibility to install package in ts format
+
 import fetchMock from 'fetch-mock';
 
 import Analytics from '../../src/analytics';
 import BaseSendMessageQueue from '../../src/queues/baseSendMessageQueue';
-import {STORAGE_KEY_CONTEXTS} from '../../src/utils/constants';
+import {Analytics as AnalyticsType} from '../../src/types';
 import {setItem} from '../../src/utils/storage';
 import {INITIAL_ANALYTICS_CONFIG, getDummyEvent} from '../helpers';
 
 const analyticsInstance = Analytics.create(INITIAL_ANALYTICS_CONFIG);
 
-const getMockItem = (id = 0, data = {}) => {
+const getMockItem = (id: number, data = {}) => {
 	return {
 		dataSourceId: 'foo-datasource',
 		events: [getDummyEvent()],
@@ -23,7 +25,7 @@ const getMockItem = (id = 0, data = {}) => {
 };
 
 describe('BaseSendMessageQueue', () => {
-	let baseSendMessageQueue;
+	let baseSendMessageQueue: BaseSendMessageQueue;
 
 	afterEach(() => {
 		fetchMock.restore();
@@ -39,16 +41,18 @@ describe('BaseSendMessageQueue', () => {
 		baseSendMessageQueue = new BaseSendMessageQueue({
 			analyticsInstance,
 			flushTo: analyticsInstance.config.endpointUrl,
-			name: 'BaseSendMessageQueue',
+			name: AnalyticsType.Queues.Messages,
 		});
 	});
 
 	it('On Flush', async () => {
 		expect(baseSendMessageQueue.getItems().length).toEqual(0);
 
-		setItem(STORAGE_KEY_CONTEXTS, [['context', {}]]);
+		setItem(AnalyticsType.Keys.Contexts, [['context', {}]]);
 
-		await baseSendMessageQueue.addItem(getMockItem(1));
+		await baseSendMessageQueue.addItem(
+			getMockItem(1) as unknown as AnalyticsType.Event
+		);
 
 		const messages = await Promise.all(baseSendMessageQueue.onFlush());
 

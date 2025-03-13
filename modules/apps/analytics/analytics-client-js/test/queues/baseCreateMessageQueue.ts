@@ -6,30 +6,32 @@
 import Analytics from '../../src/analytics';
 import BaseCreateMessageQueue from '../../src/queues/baseCreateMessageQueue';
 import BaseQueue from '../../src/queues/baseQueue';
-import {STORAGE_KEY_CONTEXTS} from '../../src/utils/constants';
+import {Analytics as AnalyticsType} from '../../src/types';
 import {setItem} from '../../src/utils/storage';
 import {INITIAL_ANALYTICS_CONFIG, getDummyEvent} from '../helpers';
 
 const analyticsInstance = Analytics.create(INITIAL_ANALYTICS_CONFIG);
-const flushTo = 'TEST_STORAGE_MESSAGE';
 
 describe('BaseCreateMessageQueue', () => {
-	let baseCreateMessageQueue;
+	let baseCreateMessageQueue: BaseCreateMessageQueue;
 
 	afterEach(() => {
 		baseCreateMessageQueue.reset();
 	});
 
 	beforeEach(() => {
-		analyticsInstance[flushTo] = new BaseQueue({
+
+		// @ts-ignore
+
+		analyticsInstance[AnalyticsType.Queues.Messages] = new BaseQueue({
 			analyticsInstance,
-			name: 'flushToQueue',
+			name: 'flushToQueue' as AnalyticsType.Queues,
 		});
 
 		baseCreateMessageQueue = new BaseCreateMessageQueue({
 			analyticsInstance,
-			flushTo,
-			name: 'BaseCreateMessageQueue',
+			flushTo: AnalyticsType.Queues.Messages,
+			name: 'BaseCreateMessageQueue' as AnalyticsType.Queues,
 		});
 	});
 
@@ -37,21 +39,26 @@ describe('BaseCreateMessageQueue', () => {
 		await baseCreateMessageQueue.addItem(
 			getDummyEvent(1, {
 				contextHash: 'context',
-			})
+			}) as unknown as AnalyticsType.Event
 		);
 
 		const message = baseCreateMessageQueue._createMessage({
-			context: {channelId: '4321', page: 'Test Page'},
+			context: {
+				channelId: '4321',
+				dataSourceId: '1234',
+				page: 'Test Page',
+			},
 			events: [
 				getDummyEvent(1, {
 					contextHash: 'context',
-				}),
+				}) as unknown as AnalyticsType.Event,
 			],
 			userId: 'userIdTest',
 		});
 
 		expect(message).toHaveProperty('channelId', '4321');
 		expect(message).toHaveProperty('context', {
+			dataSourceId: '1234',
 			page: 'Test Page',
 		});
 		expect(message).toHaveProperty('dataSourceId', '1234');
@@ -61,12 +68,12 @@ describe('BaseCreateMessageQueue', () => {
 	it('On Flush', async () => {
 		expect(baseCreateMessageQueue.getItems().length).toEqual(0);
 
-		setItem(STORAGE_KEY_CONTEXTS, [['context', {}]]);
+		setItem(AnalyticsType.Keys.Contexts, [['context', {}]]);
 
 		await baseCreateMessageQueue.addItem(
 			getDummyEvent(1, {
 				contextHash: 'context',
-			})
+			}) as unknown as AnalyticsType.Event
 		);
 
 		const messages = await Promise.all(baseCreateMessageQueue.onFlush());
@@ -77,7 +84,7 @@ describe('BaseCreateMessageQueue', () => {
 	it('On Flush should return messages grouped by contexts', async () => {
 		expect(baseCreateMessageQueue.getItems().length).toEqual(0);
 
-		setItem(STORAGE_KEY_CONTEXTS, [
+		setItem(AnalyticsType.Keys.Contexts, [
 			['context', {}],
 			['context2', {}],
 		]);
@@ -85,13 +92,13 @@ describe('BaseCreateMessageQueue', () => {
 		await baseCreateMessageQueue.addItem(
 			getDummyEvent(1, {
 				contextHash: 'context',
-			})
+			}) as unknown as AnalyticsType.Event
 		);
 
 		await baseCreateMessageQueue.addItem(
 			getDummyEvent(2, {
 				contextHash: 'context2',
-			})
+			}) as unknown as AnalyticsType.Event
 		);
 
 		const messages = await Promise.all(baseCreateMessageQueue.onFlush());

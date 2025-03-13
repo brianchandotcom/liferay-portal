@@ -323,7 +323,8 @@ public class CompanyLocalServiceDBPartitionTest
 						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
-					_getCompanyIdsBySQL(), company.getCompanyId())) {
+					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
+					company.getCompanyId())) {
 
 				companyLocalService.deleteCompany(company);
 			}
@@ -374,7 +375,8 @@ public class CompanyLocalServiceDBPartitionTest
 						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
-					_getCompanyIdsBySQL(), company.getCompanyId())) {
+					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
+					company.getCompanyId())) {
 
 				companyLocalService.deleteCompany(company);
 			}
@@ -438,7 +440,8 @@ public class CompanyLocalServiceDBPartitionTest
 						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
-					_getCompanyIdsBySQL(), company.getCompanyId())) {
+					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
+					company.getCompanyId())) {
 
 				companyLocalService.deleteCompany(company);
 			}

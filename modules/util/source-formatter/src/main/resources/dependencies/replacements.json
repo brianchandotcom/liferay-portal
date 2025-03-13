@@ -3791,6 +3791,18 @@
 	},
 	{
 		"classNames": [
+			"CommerceInventoryBookedQuantityLocalService",
+			"CommerceInventoryBookedQuantityLocalServiceUtil"
+		],
+		"from": "getCommerceBookedQuantity(long paramName, String paramName)",
+		"issueKey": "LPD-48784",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "getCommerceInventoryBookedQuantity(param#0#, param#1#, StringPool.BLANK)"
+	},
+	{
+		"classNames": [
 			"DLFileEntryLocalService",
 			"DLFileEntryLocalServiceUtil"
 		],

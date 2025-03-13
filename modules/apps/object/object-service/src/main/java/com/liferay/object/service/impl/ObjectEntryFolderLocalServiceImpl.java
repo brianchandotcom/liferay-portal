@@ -209,6 +209,14 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder fetchObjectEntryFolder(
+		String externalReferenceCode, long groupId, long companyId) {
+
+		return objectEntryFolderPersistence.fetchByERC_G_C(
+			externalReferenceCode, groupId, companyId);
+	}
+
+	@Override
 	public List<ObjectEntryFolder> getObjectEntryFolders(
 		long groupId, long companyId, long parentObjectEntryFolderId, int start,
 		int end) {

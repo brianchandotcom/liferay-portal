@@ -138,7 +138,7 @@ test(
 
 		// Add four fields
 
-		const types = ['Text', 'Long Text', 'Upload', 'Integer'] as const;
+		const types = ['Text', 'Long Text', 'Upload', 'Numeric'] as const;
 
 		for (const type of types) {
 			await structureBuilderPage.addField(type);

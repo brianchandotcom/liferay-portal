@@ -52,6 +52,7 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionP
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -1301,7 +1302,8 @@ public class DDMStructureLocalServiceImpl
 
 	@Override
 	public String prepareLocalizedDefinitionForImport(
-		DDMStructure structure, Locale defaultImportLocale) {
+			DDMStructure structure, Locale defaultImportLocale)
+		throws PortalException {
 
 		DDMForm ddmForm = _ddm.updateDDMFormDefaultLocale(
 			structure.getDDMForm(), defaultImportLocale);
@@ -2034,14 +2036,29 @@ public class DDMStructureLocalServiceImpl
 			});
 	}
 
-	private String _serializeJSONDDMForm(DDMForm ddmForm) {
-		DDMFormSerializerSerializeRequest.Builder builder =
-			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+	private String _serializeJSONDDMForm(DDMForm ddmForm)
+		throws PortalException {
 
-		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			_jsonDDMFormSerializer.serialize(builder.build());
+		try {
+			DDMFormFieldUtil.sortNestedDDMFormFields(
+				ddmForm.getDDMFormFields());
 
-		return ddmFormSerializerSerializeResponse.getContent();
+			DDMFormSerializerSerializeRequest.Builder builder =
+				DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+
+			DDMFormSerializerSerializeResponse
+				ddmFormSerializerSerializeResponse =
+					_jsonDDMFormSerializer.serialize(builder.build());
+
+			return ddmFormSerializerSerializeResponse.getContent();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to serialize DDM form to JSON", exception);
+			}
+
+			throw new StructureDefinitionException(exception);
+		}
 	}
 
 	private void _syncStructureTemplatesFields(DDMStructure structure) {

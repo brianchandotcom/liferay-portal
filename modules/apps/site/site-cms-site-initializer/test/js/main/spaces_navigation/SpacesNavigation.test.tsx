@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import SpacesNavigation from '../../../src/main/resources/META-INF/resources/js/spaces_navigation/SpacesNavigation';
+import {SpacesNavigation} from '../../../../src/main/resources/META-INF/resources/js/';
 
 type SpacesNavigationProps = {
 	showAddButton?: boolean;

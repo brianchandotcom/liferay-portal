@@ -290,6 +290,148 @@ test('CSP connect-src blocks connections', async ({
 	expect(cspErrors.length).toBeGreaterThanOrEqual(9);
 });
 
+test("CSP frame-src allow frames from 'self'", async ({
+	apiHelpers,
+	contentSecurityPolicyPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await contentSecurityPolicyPage.gotoAndConfigurePolicy("frame-src 'self';");
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-html',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	const portalURL = liferayConfig.environment.baseUrl;
+
+	await pageEditorPage.editHTMLEditable({
+		editableId: 'element-html',
+		fragmentId: await pageEditorPage.getFragmentId('HTML'),
+		value: `<iframe src="${portalURL}" />`,
+	});
+
+	await pageEditorPage.publishPage();
+
+	const errors = [];
+
+	page.on('console', (message) => {
+		if (message.type() === 'error') {
+			const text = message.text();
+			if (text.includes(`Refused to frame '${portalURL}'`)) {
+				errors.push(text);
+			}
+		}
+	});
+
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+	expect(errors).toEqual([]);
+});
+
+test('CSP frame-src allows frames from specific domains', async ({
+	apiHelpers,
+	contentSecurityPolicyPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await contentSecurityPolicyPage.gotoAndConfigurePolicy(
+		"frame-src 'self' http://www.able.com:8080;"
+	);
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-html',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.editHTMLEditable({
+		editableId: 'element-html',
+		fragmentId: await pageEditorPage.getFragmentId('HTML'),
+		value: `<iframe src="http://www.able.com:8080/" />`,
+	});
+
+	await pageEditorPage.publishPage();
+
+	const errors = [];
+
+	page.on('console', (message) => {
+		if (message.type() === 'error') {
+			const text = message.text();
+			if (text.includes("Refused to frame 'http://www.able.com:8080/'")) {
+				errors.push(text);
+			}
+		}
+	});
+
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+	expect(errors).toEqual([]);
+});
+
+test('CSP frame-src blocks frames', async ({
+	apiHelpers,
+	contentSecurityPolicyPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	await contentSecurityPolicyPage.gotoAndConfigurePolicy("frame-src 'self';");
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-html',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.editHTMLEditable({
+		editableId: 'element-html',
+		fragmentId: await pageEditorPage.getFragmentId('HTML'),
+		value: `<iframe src="http://www.able.com:8080/" />`,
+	});
+
+	await pageEditorPage.publishPage();
+
+	const errors = [];
+
+	page.on('console', (message) => {
+		if (message.type() === 'error') {
+			const text = message.text();
+			if (text.includes('http://www.able.com:8080/')) {
+				errors.push(text);
+			}
+		}
+	});
+
+	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+	expect(errors.length).toEqual(2);
+});
+
 test("CSP img-src allow images from 'self'", async ({
 	apiHelpers,
 	contentSecurityPolicyPage,

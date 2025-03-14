@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -90,21 +91,22 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					PortalInstancePool.getDefaultCompanyId())) {
 
-			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"a" + RandomTestUtil.randomString()
-					).build()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				objectDefinition.getUserId());
+			_objectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						new TextObjectFieldBuilder(
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).name(
+							"a" + RandomTestUtil.randomString()
+						).build()),
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					objectDefinition.getUserId());
 		}
 
-		_createView(objectDefinition.getDBTableName());
-		_createView(objectDefinition.getExtensionDBTableName());
+		_createView(_objectDefinition.getDBTableName());
+		_createView(_objectDefinition.getExtensionDBTableName());
 
 		List<String> viewNames = _getViewNames();
 
@@ -112,11 +114,11 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 			viewNames.contains(StringUtil.toLowerCase(dbTableName)));
 		Assert.assertTrue(
 			viewNames.contains(
-				StringUtil.toLowerCase(objectDefinition.getDBTableName())));
+				StringUtil.toLowerCase(_objectDefinition.getDBTableName())));
 		Assert.assertTrue(
 			viewNames.contains(
 				StringUtil.toLowerCase(
-					objectDefinition.getExtensionDBTableName())));
+					_objectDefinition.getExtensionDBTableName())));
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator, _CLASS_NAME);
@@ -129,11 +131,11 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 			viewNames.contains(StringUtil.toLowerCase(dbTableName)));
 		Assert.assertFalse(
 			viewNames.contains(
-				StringUtil.toLowerCase(objectDefinition.getDBTableName())));
+				StringUtil.toLowerCase(_objectDefinition.getDBTableName())));
 		Assert.assertFalse(
 			viewNames.contains(
 				StringUtil.toLowerCase(
-					objectDefinition.getExtensionDBTableName())));
+					_objectDefinition.getExtensionDBTableName())));
 	}
 
 	private void _createView(String tableName) throws Exception {
@@ -184,6 +186,9 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

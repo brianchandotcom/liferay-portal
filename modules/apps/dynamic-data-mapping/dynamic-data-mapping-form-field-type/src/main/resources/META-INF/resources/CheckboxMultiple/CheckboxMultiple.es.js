@@ -70,10 +70,12 @@ const CheckboxMultiple = ({
 	predefinedValue,
 	value: initialValue,
 }) => {
-	const [value, setValue] = useState(initialValue);
+	const [value, setValue] = useState(initialValue ?? predefinedValue);
 
 	useEffect(() => {
-		setValue(initialValue);
+		if (initialValue?.length > 0) {
+			setValue(initialValue);
+		}
 	}, [initialValue]);
 
 	const displayValues =

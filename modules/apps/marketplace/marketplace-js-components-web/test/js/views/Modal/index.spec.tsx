@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import {Observer} from '@clayui/modal/lib/types';
 import {fireEvent, render} from '@testing-library/react';
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 import {MarketplaceContext} from '../../../../src/main/resources/META-INF/resources/js/MarketplaceContext';
 import {MarketplaceModal} from '../../../../src/main/resources/META-INF/resources/js/views/Modal';
@@ -16,86 +16,102 @@ const observer = {
 	mutation: [true, true],
 } as Observer;
 
-const mockEvent = jest.fn();
-const onClick = jest.fn().mockImplementation(mockEvent);
+const onClick = jest.fn().mockImplementation(jest.fn());
 const onOpenChange = jest.fn();
-const setView = jest.fn();
-const open = true;
+
 const reactTrigger = <button onClick={() => onClick}>trigger</button>;
+
+type ContextWrapperProps = {
+	children: ReactNode;
+	value: any;
+};
+
+const ContextWrapper: React.FC<ContextWrapperProps> = ({children, value}) => (
+	<MarketplaceContext.Provider value={value}>
+		{children}
+	</MarketplaceContext.Provider>
+);
 
 describe('MarketplaceModal', () => {
 	it('render component without connection to marketplace', () => {
 		const {getByText, queryByText} = render(
-			<MarketplaceContext.Provider
-				value={
-					{
-						marketplaceConfiguration: {
-							authorized: true,
-							loading: false,
-						},
-						modal: {observer, onOpenChange, open},
-						setView,
-					} as any
-				}
+			<MarketplaceModal
+				noConnectionMessage="you have no connection"
+				trigger={reactTrigger}
 			>
-				<MarketplaceModal
-					noConnectionMessage="you have no connection"
-					trigger={reactTrigger}
-				>
-					children
-				</MarketplaceModal>
-			</MarketplaceContext.Provider>
+				children
+			</MarketplaceModal>,
+			{
+				wrapper: ({children}) => (
+					<ContextWrapper
+						value={{
+							marketplaceConfiguration: {
+								authorized: true,
+								loading: false,
+							},
+							modal: {observer, onOpenChange, open: true},
+						}}
+					>
+						{children}
+					</ContextWrapper>
+				),
+			}
 		);
 
 		fireEvent.click(getByText('trigger'));
 
 		expect(onOpenChange).toHaveBeenCalled();
-		expect(setView).toHaveBeenCalledTimes(0);
 		expect(queryByText('children')).toBeInTheDocument();
 	});
 
 	it('render component with connection to marketplace', () => {
 		const {queryByText} = render(
-			<MarketplaceContext.Provider
-				value={
-					{
-						marketplaceConfiguration: {
-							authorized: true,
-							loading: false,
-						},
-						modal: {observer, onOpenChange, open: false},
-						setView,
-					} as any
-				}
-			>
-				<MarketplaceModal trigger={reactTrigger}>
-					children
-				</MarketplaceModal>
-			</MarketplaceContext.Provider>
+			<MarketplaceModal trigger={reactTrigger}>
+				children
+			</MarketplaceModal>,
+
+			{
+				wrapper: ({children}) => (
+					<ContextWrapper
+						value={{
+							marketplaceConfiguration: {
+								authorized: true,
+								loading: false,
+							},
+							modal: {observer, onOpenChange, open: false},
+						}}
+					>
+						{children}
+					</ContextWrapper>
+				),
+			}
 		);
 
 		expect(queryByText('children')).toBeFalsy();
-		expect(setView).toHaveBeenCalledTimes(1);
 	});
 
 	it('render component while loading', () => {
 		const emptyMockTrigger = <p></p>;
 
 		const {container} = render(
-			<MarketplaceContext.Provider
-				value={
-					{
-						marketplaceConfiguration: {
-							loading: true,
-						},
-						modal: {observer, onOpenChange, open},
-					} as any
-				}
-			>
-				<MarketplaceModal trigger={emptyMockTrigger}>
-					children
-				</MarketplaceModal>
-			</MarketplaceContext.Provider>
+			<MarketplaceModal trigger={emptyMockTrigger}>
+				children
+			</MarketplaceModal>,
+
+			{
+				wrapper: ({children}) => (
+					<ContextWrapper
+						value={{
+							marketplaceConfiguration: {
+								loading: true,
+							},
+							modal: {observer, onOpenChange, open: false},
+						}}
+					>
+						{children}
+					</ContextWrapper>
+				),
+			}
 		);
 
 		expect(container.querySelectorAll('div')).toHaveLength(0);

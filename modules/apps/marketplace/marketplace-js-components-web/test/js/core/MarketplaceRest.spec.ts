@@ -276,7 +276,7 @@ describe('MarketplaceRest', () => {
 		expect(response).toMatchObject(mockCart);
 	});
 
-	it('testing safe json parse', () => {
+	it('safe json parse', () => {
 		expect(safeJSONParse('{"test": "success"}')).toMatchObject({
 			test: 'success',
 		});
@@ -314,7 +314,7 @@ describe('MarketplaceRest', () => {
 		expect(fetch).toHaveBeenCalledTimes(2);
 	});
 
-	it('fetching placed orders', async () => {
+	it('fetch placed orders', async () => {
 		const {fetch} = require('frontend-js-web');
 
 		const mockResponse = {success: true};
@@ -335,7 +335,7 @@ describe('MarketplaceRest', () => {
 		expect(response).toMatchObject(mockResponse);
 	});
 
-	it('fetching placed orders without search parameters', async () => {
+	it('fetch placed orders without search parameters', async () => {
 		const {fetch} = require('frontend-js-web');
 
 		const mockResponse = {success: true};
@@ -351,7 +351,7 @@ describe('MarketplaceRest', () => {
 		expect(responseWithoutParams).toMatchObject(mockResponse);
 	});
 
-	it('fetching project usage', async () => {
+	it('fetch project usage', async () => {
 		const {fetch} = require('frontend-js-web');
 
 		const mockResponse = {success: true};
@@ -361,5 +361,52 @@ describe('MarketplaceRest', () => {
 		const response = await marketplaceRest.getProjectUsage();
 
 		expect(response).toMatchObject(mockResponse);
+	});
+
+	it('fetch token only once when multiple requests are made simultaneously', async () => {
+		const {fetch} = require('frontend-js-web');
+
+		const expiredToken = {
+			accessToken: 'old_token',
+			accessTokenExpirationTime: 1000,
+		};
+
+		const newToken = {
+			accessToken: 'new_token',
+			accessTokenExpirationTime: new Date().getTime() + 60000,
+		};
+
+		getItemFn = jest
+			.fn()
+			.mockImplementation(() => JSON.stringify(expiredToken));
+
+		setItemFn = jest
+			.fn()
+			.mockImplementation(() => JSON.stringify(newToken));
+
+		globalThis.Liferay.Util.SessionStorage.getItem = getItemFn;
+		globalThis.Liferay.Util.SessionStorage.setItem = setItemFn;
+
+		fetch.mockResponse(JSON.stringify(newToken));
+
+		const [token1, token2, token3] = await Promise.all([
+			marketplaceRest.getMarketplaceToken(),
+			marketplaceRest.getMarketplaceToken(),
+			marketplaceRest.getMarketplaceToken(),
+		]);
+
+		expect(token1).toEqual(newToken);
+		expect(token2).toEqual(newToken);
+		expect(token3).toEqual(newToken);
+
+		expect(fetch).toHaveBeenCalledTimes(1);
+
+		expect(
+			globalThis.Liferay.Util.SessionStorage.setItem
+		).toHaveBeenCalledWith(
+			expect.any(String),
+			JSON.stringify(newToken),
+			expect.any(String)
+		);
 	});
 });

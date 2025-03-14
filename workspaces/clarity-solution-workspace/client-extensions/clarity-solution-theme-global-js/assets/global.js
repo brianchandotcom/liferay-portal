@@ -29,10 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	increaseButton.style.cursor = "pointer";
 	increaseButton.style.fontSize = "12px";
 	increaseButton.addEventListener("click", function () {
-	    if (currentFontSize < 24) {
-	        currentFontSize += 2;
-	        document.documentElement.style.fontSize = `${currentFontSize}px`;
-	    }
+		if (currentFontSize < 24) {
+			currentFontSize += 2;
+			document.documentElement.style.fontSize = `${currentFontSize}px`;
+		}
 	});	
 
 	const decreaseButton = document.createElement("button");
@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
 	decreaseButton.style.cursor = "pointer";
 	decreaseButton.style.fontSize = "12px";
 	decreaseButton.addEventListener("click", function () {
-	    if (currentFontSize > 12) {
-	        currentFontSize -= 2;
-	        document.documentElement.style.fontSize = `${currentFontSize}px`;
-	    }
+		if (currentFontSize > 12) {
+			currentFontSize -= 2;
+			document.documentElement.style.fontSize = `${currentFontSize}px`;
+		}
 	});	
 
 	const grayscaleToggle = document.createElement("div");
@@ -61,18 +61,18 @@ document.addEventListener("DOMContentLoaded", function () {
 	grayscaleToggle.style.cursor = "pointer";
 	grayscaleToggle.style.border = "1px solid #ccc";
 	grayscaleToggle.addEventListener("click", function (event) {
-	    const clickX = event.offsetX;
-	    const toggleWidth = grayscaleToggle.offsetWidth;	
-	    if (clickX < toggleWidth / 2) {
-	        document.documentElement.style.filter = "grayscale(100%)";
-	    } else {
-	        document.documentElement.style.filter = "none";
-	    }
+		const clickX = event.offsetX;
+		const toggleWidth = grayscaleToggle.offsetWidth;	
+		if (clickX < toggleWidth / 2) {
+			document.documentElement.style.filter = "grayscale(100%)";
+		} else {
+			document.documentElement.style.filter = "none";
+		}
 	});
 
 	controlPanel.appendChild(decreaseButton);
 	controlPanel.appendChild(increaseButton);
-	controlPanel.appendChild(grayscaleToggle);	
+	controlPanel.appendChild(grayscaleToggle);
 	
 	document.body.appendChild(controlPanel);
 });

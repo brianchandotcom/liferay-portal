@@ -1,0 +1,335 @@
+# Default values for the Liferay Helm Chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This is for setting the node selection constraints.
+# See: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
+affinity: {}
+
+# See: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+autoscaling:
+  enabled: false
+  maxReplicas: 100
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+configmap:
+  # Annotations to add to the configmap
+  annotations: {}
+    # helm.sh/resource-policy: keep
+
+  # Data to add to the configmap
+  data:
+    portal-custom.properties: |
+      # include-and-override=portal-developer.properties
+
+  # By setting this to true all the default configmap entries files will not be
+  # emitted and only those defined in 'configmap.data' will be used.
+  overrideDefaults: false
+
+# Add custom labels to all chart resources
+customLabels:
+  origin: liferay-cloud
+
+dependencies:
+- name: database
+  portalBundleDenyList: []
+  portalComponentDenyList: []
+  portalProperties: ""
+  # external - use an externally provided impl
+  # deployment - use the deployment template
+  # statefulset - use the statefulset template
+  source: external
+
+# Use this to pass environment variables directly to the DXP container.
+# See: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+env:
+- name: POD_ID
+  valueFrom:
+    fieldRef:
+      fieldPath: status.podIP
+- name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
+  value: "${env.POD_ID}"
+- name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_UDP_QUOTE__CLOSEBRACKET_
+  value: "${env.POD_ID}"
+- name: LIFERAY_PORTAL_PERIOD_INSTANCE_PERIOD_INET_PERIOD_SOCKET_PERIOD_ADDRESS
+  value: "${env.POD_ID}:8080"
+- name: LIFERAY_DISABLE_TRIAL_LICENSE
+  value: "false"
+- name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
+  value: "true"
+
+# Mount extra environment variables to the main container entirely from a configmaps/secrets
+envFrom: {}
+
+# This is to override the chart name.
+fullnameOverride: ""
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  # This sets the pull policy for images.
+  pullPolicy: IfNotPresent
+  # This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  pullSecrets: []
+  repository: liferay/dxp
+  tag: latest
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  rules: []
+  tls: []
+
+initContainers:
+- containerTemplate: |
+    - command:
+      - /bin/sh
+      - -c
+      - |
+        if [ ! -f /temp/liferay/data/license/*.li ]; then
+          mkdir -p /temp/liferay/deploy
+          cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
+        fi
+      image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+      imagePullPolicy: {{ .image.pullPolicy }}
+      name: liferay-pre-populate-default-license
+      volumeMounts:
+      - mountPath: /temp
+        name: liferay-pvc
+- containerTemplate: |
+    - command:
+      - /bin/sh
+      - -c
+      - |
+        if [ -z "$( ls -A '/temp/liferay/data' )" ]; then
+          mkdir -p /temp/liferay/data
+          cp -frv /opt/liferay/data/* /temp/liferay/data
+        fi
+      image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+      imagePullPolicy: {{ .image.pullPolicy }}
+      name: liferay-pre-populate-default-data
+      volumeMounts:
+      - mountPath: /temp
+        name: liferay-pvc
+- containerTemplate: |
+    - command:
+      - /bin/sh
+      - -c
+      - |
+        trap 'echo "Received signal to Terminate"; exit 0' SIGINT SIGTERM
+        {{- range .dependencies }}
+        {{- if eq .source "statefulset" }}
+        until nc -vz -w 2 liferay-{{ .name }} {{ (index .statefulset.service.ports 0).port }}; do
+          echo "Waiting for liferay-{{ .name }} service"
+          sleep 2
+        done
+        {{- end }}
+        {{- end }}
+      image: busybox:latest
+      imagePullPolicy: IfNotPresent
+      name: liferay-wait-on-services
+
+livenessProbe:
+  failureThreshold: 2
+  httpGet:
+    path: /c/portal/robots
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+# This is to override the chart name.
+nameOverride: ""
+
+# This is the simplest form of no selection constraint.
+# See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+nodeSelector: {}
+
+# This is for setting Kubernetes Annotations to a Pod.
+# See: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+
+# This is for setting Kubernetes Labels to a Pod.
+# See: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+podSecurityContext:
+  fsGroup: 1000
+  runAsNonRoot: true
+  runAsUser: 1000
+
+portalBundleDenyList: []
+
+portalComponentDenyList: []
+
+portalProperties: |
+  company.default.name=Liferay DXP
+  # company.default.virtual.host.mail.domain=liferay.com
+  # company.default.virtual.host.name=liferay.com
+  # company.default.web.id=liferay.com
+  database.indexes.update.on.startup=true
+  default.admin.email.address.prefix=liferay
+  default.admin.password=liferay
+  default.admin.screen.name=liferay
+  notification.email.template.enabled=false
+  passwords.default.policy.change.required=false
+  passwords.default.policy.lockout.duration=3600
+  passwords.default.policy.lockout=true
+  passwords.default.policy.max.failure=20
+  passwords.default.policy.reset.failure.count=3600
+  portal.instance.protocol=http
+  schema.module.build.auto.upgrade=true
+  setup.wizard.enabled=false
+  upgrade.database.auto.run=true
+  upgrade.log.context.enabled=true
+  upgrade.report.dir=${liferay.home}/reports
+  upgrade.report.dl.storage.size.timeout=0
+  upgrade.report.enabled=true
+  virtual.hosts.valid.hosts=*
+  web.server.forwarded.host.enabled=true
+  web.server.forwarded.protocol.enabled=true
+  web.server.http.port=80
+  web.server.https.port=443
+  web.server.protocol=http
+
+ports:
+- containerPort: 8080
+  name: http
+  protocol: TCP
+- containerPort: 8000
+  name: debug
+  protocol: TCP
+- containerPort: 7800
+  name: cluster
+  protocol: TCP
+
+readinessProbe:
+  failureThreshold: 2
+  httpGet:
+    path: /c/portal/robots
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
+# Set the number of dxp replicas (0 or more)
+# See: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This is for setting the resource requests and limits of the pods.
+# See: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+resources: {}
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+
+# This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
+serviceAccount:
+  # Annotations to add to the service account
+  annotations: {}
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  annotations: {}
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: http
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+
+startupProbe:
+  failureThreshold: 30
+  httpGet:
+    path: /c/portal/robots
+    port: http
+  initialDelaySeconds: 20
+  periodSeconds: 5
+
+# Tolerations allow the scheduler to schedule pods with matching taints.
+# See: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+tolerations: []
+
+updateStrategy:
+  type: RollingUpdate
+
+# Additional volumeMounts on the main dxp container
+volumeMounts:
+- mountPath: /opt/liferay/data
+  name: liferay-pvc
+  subPath: liferay/data
+- mountPath: /opt/liferay/deploy
+  name: liferay-pvc
+  subPath: liferay/deploy
+- mountPath: /opt/liferay/liferay.pid
+  name: liferay-pvc
+  subPath: liferay/liferay.pid
+- mountPath: /opt/liferay/logs
+  name: liferay-pvc
+  subPath: liferay/logs
+- mountPath: /opt/liferay/osgi/configs
+  name: liferay-pvc
+  subPath: osgi/configs
+- mountPath: /opt/liferay/osgi/modules
+  name: liferay-pvc
+  subPath: osgi/modules
+- mountPath: /opt/liferay/osgi/configs/com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+  name: liferay-file-resources
+  readOnly: true
+  subPath: com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+- mountPath: /opt/liferay/osgi/state
+  name: liferay-pvc
+  subPath: osgi/state
+- mountPath: /opt/liferay/portal-ext.properties
+  name: liferay-file-resources
+  readOnly: true
+  subPath: portal-ext.properties
+- mountPath: /opt/liferay/portal-custom.properties
+  name: liferay-file-resources
+  readOnly: true
+  subPath: portal-custom.properties
+- mountPath: /opt/liferay/tomcat/logs
+  name: liferay-pvc
+  subPath: tomcat/logs
+- mountPath: /opt/liferay/tomcat/temp
+  name: liferay-pvc
+  subPath: tomcat/temp
+- mountPath: /opt/liferay/tomcat/work
+  name: liferay-pvc
+  subPath: tomcat/work
+- mountPath: /opt/liferay/reports
+  name: liferay-pvc
+  subPath: liferay/reports
+- mountPath: /opt/liferay/routes
+  name: liferay-pvc
+  subPath: liferay/routes
+
+volumeClaimTemplates:
+- metadata:
+    name: liferay-pvc
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+
+# Additional volumes on the main dxp container
+volumes:
+- configMap:
+    name: liferay
+    optional: true
+  name: liferay-file-resources
+

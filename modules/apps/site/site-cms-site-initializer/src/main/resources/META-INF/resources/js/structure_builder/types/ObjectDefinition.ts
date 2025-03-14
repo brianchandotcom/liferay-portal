@@ -22,6 +22,7 @@ export type ObjectField = {
 };
 
 export type ObjectDefinition = {
+	enableIndexSearch: boolean;
 	enableLocalization: boolean;
 	enableObjectEntryDraft: boolean;
 	externalReferenceCode: string;

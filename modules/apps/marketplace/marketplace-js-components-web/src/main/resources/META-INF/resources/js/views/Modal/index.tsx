@@ -5,7 +5,7 @@
 
 import React, {ReactNode} from 'react';
 
-import {MarketplaceView, useMarketplaceContext} from '../../MarketplaceContext';
+import {useMarketplaceContext} from '../../MarketplaceContext';
 import {ConnectionWithMarketplaceNeededModal} from './ConnectionWithMarketplaceNeededModal';
 import MarketplaceModalView from './MarketplaceModal';
 
@@ -25,12 +25,7 @@ export function MarketplaceModal({
 	const {
 		marketplaceConfiguration,
 		modal: {observer, onOpenChange, open},
-		setView,
 	} = useMarketplaceContext();
-
-	if (marketplaceConfiguration.authorized && open === false) {
-		setView(MarketplaceView.PRODUCTS);
-	}
 
 	const Modal = marketplaceConfiguration.authorized
 		? MarketplaceModalView

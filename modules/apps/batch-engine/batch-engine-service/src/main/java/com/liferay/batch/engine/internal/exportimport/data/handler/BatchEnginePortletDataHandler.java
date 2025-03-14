@@ -204,7 +204,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				});
 		}
 		catch (Throwable throwable) {
-			throw new RuntimeException(throwable);
+			throw new PortletDataException(throwable);
 		}
 
 		batchEngineImportTask =

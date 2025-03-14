@@ -13,6 +13,7 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -28,7 +28,6 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -128,19 +127,14 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 	private List<JournalArticle> _getJournalArticles(SearchHits searchHits)
 		throws PortalException {
 
-		List<JournalArticle> journalArticles = new ArrayList<>();
+		return TransformUtil.transform(
+			searchHits.getSearchHits(),
+			searchHit -> {
+				Document document = searchHit.getDocument();
 
-		List<SearchHit> searchHitsList = searchHits.getSearchHits();
-
-		for (SearchHit searchHit : searchHitsList) {
-			Document document = searchHit.getDocument();
-
-			journalArticles.add(
-				_journalArticleService.getLatestArticle(
-					document.getLong(Field.ENTRY_CLASS_PK)));
-		}
-
-		return journalArticles;
+				return _journalArticleService.getLatestArticle(
+					document.getLong(Field.ENTRY_CLASS_PK));
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

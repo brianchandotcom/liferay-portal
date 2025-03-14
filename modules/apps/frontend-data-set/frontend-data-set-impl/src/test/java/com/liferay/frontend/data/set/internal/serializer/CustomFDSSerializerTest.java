@@ -1106,10 +1106,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 								"label", LABELS[2]
 							).put(
 								"sortable", false
-							))
-					).put(
-						"thumbnail", "table"
-					)
+							)))
+				).put(
+					"thumbnail", "table"
 				)
 			).toString(),
 			_customFDSSerializer.serializeViews(

@@ -6,6 +6,8 @@
 package com.liferay.object.rest.resource.v1_0;
 
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.ValidateRequest;
+import com.liferay.object.rest.dto.v1_0.ValidateResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -110,6 +112,13 @@ public interface ObjectEntryResource {
 			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
 				String scopeKey, String externalReferenceCode,
 				String objectActionName)
+		throws Exception;
+
+	public ValidateResult postScopeScopeKeyValidate(
+			String scopeKey, ValidateRequest validateRequest)
+		throws Exception;
+
+	public ValidateResult postValidate(ValidateRequest validateRequest)
 		throws Exception;
 
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;

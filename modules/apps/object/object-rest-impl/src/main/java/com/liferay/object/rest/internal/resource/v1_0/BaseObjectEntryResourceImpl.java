@@ -6,6 +6,8 @@
 package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.ValidateRequest;
+import com.liferay.object.rest.dto.v1_0.ValidateResult;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -778,6 +780,47 @@ public abstract class BaseObjectEntryResourceImpl
 				@javax.ws.rs.PathParam("objectActionName")
 				String objectActionName)
 		throws Exception {
+	}
+
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "scopeKey"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/scopes/{scopeKey}/validate")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ValidateResult postScopeScopeKeyValidate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("scopeKey")
+			String scopeKey,
+			ValidateRequest validateRequest)
+		throws Exception {
+
+		return new ValidateResult();
+	}
+
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntry")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/validate")
+	@javax.ws.rs.POST
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ValidateResult postValidate(ValidateRequest validateRequest)
+		throws Exception {
+
+		return new ValidateResult();
 	}
 
 	@io.swagger.v3.oas.annotations.Parameters(

@@ -613,7 +613,7 @@ paths:
             tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/validate":
         post:
-            operationId: postValidateScopeKey
+            operationId: postScopeScopeKeyValidate
             parameters:
                 - in: path
                   name: scopeKey

@@ -28,6 +28,7 @@ import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntr
 import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryKeywordQueryContributor;
 import com.liferay.object.internal.search.spi.model.query.contributor.ObjectEntryModelPreFilterContributor;
 import com.liferay.object.internal.search.spi.model.result.contributor.ObjectEntryModelSummaryContributor;
+import com.liferay.object.internal.security.permission.ObjectEntrySharingPermissionChecker;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryModelResourcePermission;
 import com.liferay.object.internal.security.permission.resource.ObjectEntryPortletResourcePermissionLogic;
 import com.liferay.object.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
@@ -66,6 +67,7 @@ import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -90,6 +92,8 @@ import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContrib
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
+import com.liferay.sharing.security.permission.SharingPermissionChecker;
+import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.exporter.UADExporter;
@@ -100,6 +104,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -137,6 +143,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ResourceActions resourceActions, UserLocalService userLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		SearchLocalizationHelper searchLocalizationHelper,
+		SharingModelResourcePermissionConfigurator
+			sharingModelResourcePermissionConfigurator,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
@@ -168,6 +176,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_userLocalService = userLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_searchLocalizationHelper = searchLocalizationHelper;
+		_sharingModelResourcePermissionConfigurator =
+			sharingModelResourcePermissionConfigurator;
 		_workflowStatusModelPreFilterContributor =
 			workflowStatusModelPreFilterContributor;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
@@ -420,18 +430,37 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						_objectDefinitionLocalService,
 						_organizationLocalService));
 
+			ConsumerSupplier<ModelResourcePermissionLogic<ObjectEntry>>
+				consumerSupplier = new ConsumerSupplier<>();
+
+			ModelResourcePermission<ObjectEntry> modelResourcePermission =
+				new ObjectEntryModelResourcePermission(
+					_accountEntryLocalService,
+					_accountEntryOrganizationRelLocalService,
+					_groupLocalService, objectDefinition.getClassName(),
+					_objectActionLocalService, _objectDefinitionLocalService,
+					_objectEntryLocalService, consumerSupplier,
+					_objectFieldLocalService, portletResourcePermission,
+					_resourcePermissionLocalService,
+					_userGroupRoleLocalService);
+
+			_sharingModelResourcePermissionConfigurator.configure(
+				modelResourcePermission, consumerSupplier);
+
 			serviceRegistrations.add(
 				_bundleContext.registerService(
-					ModelResourcePermission.class,
-					new ObjectEntryModelResourcePermission(
-						_accountEntryLocalService,
-						_accountEntryOrganizationRelLocalService,
-						_groupLocalService, objectDefinition.getClassName(),
-						_objectActionLocalService,
-						_objectDefinitionLocalService, _objectEntryLocalService,
-						_objectFieldLocalService, portletResourcePermission,
-						_resourcePermissionLocalService,
-						_userGroupRoleLocalService),
+					SharingPermissionChecker.class,
+					new ObjectEntrySharingPermissionChecker(
+						modelResourcePermission),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"com.liferay.object", "true"
+					).put(
+						"model.class.name", objectDefinition.getClassName()
+					).build()));
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					ModelResourcePermission.class, modelResourcePermission,
 					HashMapDictionaryBuilder.<String, Object>put(
 						"com.liferay.object", "true"
 					).put(
@@ -600,9 +629,28 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final SearchLocalizationHelper _searchLocalizationHelper;
 	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
 		new ConcurrentHashMap<>();
+	private final SharingModelResourcePermissionConfigurator
+		_sharingModelResourcePermissionConfigurator;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 	private final UserLocalService _userLocalService;
 	private final ModelPreFilterContributor
 		_workflowStatusModelPreFilterContributor;
+
+	private static class ConsumerSupplier<T>
+		implements Consumer<T>, Supplier<T> {
+
+		@Override
+		public void accept(T t) {
+			_t = t;
+		}
+
+		@Override
+		public T get() {
+			return _t;
+		}
+
+		private T _t;
+
+	}
 
 }

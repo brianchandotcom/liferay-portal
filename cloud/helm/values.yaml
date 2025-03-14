@@ -58,7 +58,10 @@ env:
       value: "true"
 
 # See: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
-envFrom: {}
+envFrom:
+    - secretRef:
+          name: liferay
+          optional: true
 
 fullnameOverride: ""
 

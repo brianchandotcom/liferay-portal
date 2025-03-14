@@ -660,7 +660,7 @@ public class DBPartitionUtil {
 	private static void _copySchema(
 			Connection connection, String sourcePartitionName,
 			String targetPartitionName)
-		throws Exception {
+		throws SQLException {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
@@ -976,7 +976,7 @@ public class DBPartitionUtil {
 
 	private static List<String> _getColumnNames(
 			Connection connection, String partitionName, String tableName)
-		throws Exception {
+		throws SQLException {
 
 		List<String> columnNames = new ArrayList<>();
 

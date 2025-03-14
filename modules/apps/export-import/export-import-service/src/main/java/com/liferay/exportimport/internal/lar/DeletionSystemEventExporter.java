@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.internal.lar;
 
+import com.liferay.batch.engine.BatchEngineDeletionHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
@@ -14,10 +15,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -26,16 +23,13 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -48,7 +42,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -119,7 +112,7 @@ public class DeletionSystemEventExporter {
 				"/deletion-system-events.xml",
 			document.formattedString());
 
-		_exportBatchDeletions(portletDataContext);
+		BatchEngineDeletionHelperUtil.exportDeletions(portletDataContext);
 
 		if (ListUtil.isNotEmpty(exportedSystemEventIds) &&
 			ExportImportThreadLocal.isStagingInProcess()) {
@@ -215,40 +208,10 @@ public class DeletionSystemEventExporter {
 	private DeletionSystemEventExporter() {
 	}
 
-	private void _exportBatchDeletions(PortletDataContext portletDataContext) {
-		for (String key :
-				portletDataContext.getNewPrimaryKeysMaps(
-				).keySet()) {
-
-			if (key.endsWith(_BATCH_DELETE_CLASS_NAME_POSTFIX)) {
-				String className = key.substring(
-					0,
-					key.length() - _BATCH_DELETE_CLASS_NAME_POSTFIX.length());
-
-				Map<String, String> map =
-					(Map<String, String>)
-						portletDataContext.getNewPrimaryKeysMap(key);
-
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-				for (String erc : map.keySet()) {
-					jsonArray.put(
-						JSONUtil.put(
-							"externalReferenceCode", String.valueOf(erc)));
-				}
-
-				String delegateName = _getDelegateName(
-					className, portletDataContext);
-
-				portletDataContext.addZipEntry(
-					delegateName + "_deletions.json", jsonArray.toString());
-			}
-		}
-	}
-
 	private void _exportDeletionSystemEvent(
 		PortletDataContext portletDataContext, SystemEvent systemEvent,
-		Element deletionSystemEventsElement) {
+		Element deletionSystemEventsElement,
+		Set<String> batchDeleteSupportedClassNames) {
 
 		Element deletionSystemEventElement =
 			deletionSystemEventsElement.addElement("deletion-system-event");
@@ -266,15 +229,9 @@ public class DeletionSystemEventExporter {
 			"classExternalReferenceCode",
 			systemEvent.getClassExternalReferenceCode());
 
-		if (_isBatchDeletion(className)) {
-			String key = className + _BATCH_DELETE_CLASS_NAME_POSTFIX;
-
-			Map<String, String> newPrimaryKeysMap =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					key);
-
-			newPrimaryKeysMap.put(
-				systemEvent.getClassExternalReferenceCode(), "");
+		if (batchDeleteSupportedClassNames.contains(className)) {
+			BatchEngineDeletionHelperUtil.addDeletionEvent(
+				portletDataContext, systemEvent);
 		}
 
 		if (className.equals(FragmentEntry.class.getName())) {
@@ -349,6 +306,9 @@ public class DeletionSystemEventExporter {
 
 		List<Long> systemEventIds = new ArrayList<>();
 
+		Set<String> batchDeleteSupportedClassNames =
+			BatchEngineDeletionHelperUtil.getBatchDeleteSupportedClassNames();
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			SystemEventLocalServiceUtil.getActionableDynamicQuery();
 
@@ -360,7 +320,8 @@ public class DeletionSystemEventExporter {
 		actionableDynamicQuery.setPerformActionMethod(
 			(SystemEvent systemEvent) -> {
 				_exportDeletionSystemEvent(
-					portletDataContext, systemEvent, rootElement);
+					portletDataContext, systemEvent, rootElement,
+					batchDeleteSupportedClassNames);
 
 				systemEventIds.add(systemEvent.getSystemEventId());
 			});
@@ -369,33 +330,6 @@ public class DeletionSystemEventExporter {
 
 		return systemEventIds;
 	}
-
-	private String _getDelegateName(
-		String className, PortletDataContext portletDataContext) {
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(
-				portletDataContext.getCompanyId(), className);
-
-		if (objectDefinition != null) {
-			return objectDefinition.getName();
-		}
-
-		return className;
-	}
-
-	private boolean _isBatchDeletion(String className) {
-		try (ServiceTrackerList resources = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(), null,
-				"(&(batch.engine.scope=company)(batch.engine.task.item.delegate=true)(batch.engine.task.item.delegate.item.class.name=" +
-					className + "))")) {
-
-			return !resources.isEmpty();
-		}
-	}
-
-	private static final String _BATCH_DELETE_CLASS_NAME_POSTFIX =
-		"_batchDeleteERCs";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventExporter.class);

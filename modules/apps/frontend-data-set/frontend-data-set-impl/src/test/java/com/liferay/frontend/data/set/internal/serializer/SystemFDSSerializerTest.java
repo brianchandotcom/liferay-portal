@@ -430,6 +430,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				new BaseClientExtensionFDSFilter() {
 
 					@Override
+					public String getCETExternalReferenceCode() {
+						return "";
+					}
+
+					@Override
 					public String getId() {
 						return IDS[0];
 					}

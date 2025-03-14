@@ -72,7 +72,7 @@ Create the name of the service account to use
 */}}
 {{- define "liferay.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "liferay.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "liferay.name" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

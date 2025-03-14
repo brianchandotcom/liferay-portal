@@ -288,15 +288,15 @@ const InviteTeamMembersPage = ({
 
 				for (const inviteRole of inviteMemberRolesSelected) {
 					try {
-						await addContactRoleNameByEmailByProject({
-							accountKey: project.accountKey,
-							emailURI: encodeURI(inviteMember.email),
-							firstName: inviteMember.givenName,
-							lastName: inviteMember.familyName,
+						await addContactRoleNameByEmailByProject(
+							project.accountKey,
+							encodeURI(inviteMember.email),
+							inviteMember.givenName,
+							inviteMember.familyName,
 							oAuthToken,
 							provisioningServerAPI,
-							roleName: inviteRole.raysourceName
-						});
+							inviteRole.raysourceName
+						);
 
 						await assignUserAccountWithAccountRole({
 							context,

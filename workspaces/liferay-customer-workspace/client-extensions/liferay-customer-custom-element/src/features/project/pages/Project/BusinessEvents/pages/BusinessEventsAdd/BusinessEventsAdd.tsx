@@ -145,6 +145,16 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
+	const isDescriptionRequired = useMemo(
+		() => businessEvent.eventType?.key === 'otherEvent',
+		[businessEvent.eventType]
+	);
+
+	const isNewLiferayVersionRequired = useMemo(
+		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
+		[businessEvent.eventType]
+	);
+
 	const isSaasOnly = useMemo(
 		() =>
 			subscriptionGroups?.length === 1 &&
@@ -152,54 +162,42 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		[subscriptionGroups]
 	);
 
-	const isDescriptionRequired = useMemo(
-		() => isSaasOnly || businessEvent.eventType?.key === 'otherEvent',
-		[isSaasOnly, businessEvent.eventType]
-	);
-
-	const isNewLiferayVersionRequired = useMemo(
-		() =>
-			!isSaasOnly &&
-			['migration', 'upgrade'].includes(
-				businessEvent.eventType?.key || ''
-			),
-		[isSaasOnly, businessEvent.eventType]
-	);
-
 	const {versionOfLiferaySoftwareList} = useGetVersionOfLiferaySoftwareList();
 
 	useEffect(() => {
-		const hasTouched = !!Object.keys(touched).length;
+		const hasCurrentLiferayVersion =
+			values.businessEvent.currentLiferayVersion.key;
+
+		const hasDescription = values.businessEvent.description;
 		const hasError = errors && Object.keys(errors).length;
 		const hasEventName = values.businessEvent.name;
 		const hasEventType = values.businessEvent.eventType.key;
-		const hasCurrentLiferayVersion =
-			values.businessEvent.currentLiferayVersion.key;
 		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
-		const hasDescription = values.businessEvent.description;
 		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
+		const hasTouched = Boolean(Object.keys(touched).length);
 
-		let areAllRequiredFieldsFilled = !!(
-			hasEventName &&
-			hasEventType &&
-			hasTargetGoLiveDate
-		);
-		if (!isSaasOnly) {
-			areAllRequiredFieldsFilled =
-				areAllRequiredFieldsFilled && hasCurrentLiferayVersion;
+		let hasAllRequiredFieldsFilled =
+			Boolean(hasEventName) &&
+			Boolean(hasEventType) &&
+			Boolean(hasTargetGoLiveDate);
+
+		if (isDescriptionRequired) {
+			hasAllRequiredFieldsFilled =
+				hasAllRequiredFieldsFilled && hasDescription;
 		}
 
 		if (isNewLiferayVersionRequired) {
-			areAllRequiredFieldsFilled =
-				areAllRequiredFieldsFilled && hasNewLiferayVersion;
+			hasAllRequiredFieldsFilled =
+				hasAllRequiredFieldsFilled && hasNewLiferayVersion;
 		}
-		if (isDescriptionRequired) {
-			areAllRequiredFieldsFilled =
-				areAllRequiredFieldsFilled && hasDescription;
+
+		if (!isSaasOnly) {
+			hasAllRequiredFieldsFilled =
+				hasAllRequiredFieldsFilled && hasCurrentLiferayVersion;
 		}
 
 		setBaseButtonDisabled(
-			!hasTouched || !!hasError || !areAllRequiredFieldsFilled
+			!hasAllRequiredFieldsFilled || Boolean(hasError) || !hasTouched
 		);
 	}, [
 		errors,
@@ -207,11 +205,11 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		isNewLiferayVersionRequired,
 		isSaasOnly,
 		touched,
-		values.businessEvent.name,
-		values.businessEvent.eventType,
 		values.businessEvent.currentLiferayVersion,
-		values.businessEvent.newLiferayVersion,
 		values.businessEvent.description,
+		values.businessEvent.eventType,
+		values.businessEvent.name,
+		values.businessEvent.newLiferayVersion,
 		values.businessEvent.targetGoLiveDate,
 	]);
 
@@ -226,7 +224,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		if (gmtTimeZonesList?.length) {
-			setGMTTimeZonesOptions([emptyOption, ...gmtTimeZonesList]);
+			setGMTTimeZonesOptions([
+				{...emptyOption, disabled: false},
+				...gmtTimeZonesList,
+			]);
 		}
 	}, [emptyOption, gmtTimeZonesList]);
 
@@ -317,7 +318,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 						{subscriptionGroups && !isSaasOnly && (
 							<Select
 								badgeClassName="ml-3 mr-3"
-								className="text-capitalize"
 								groupStyle="pb-1"
 								label={i18n.translate(
 									'your-current-liferay-version'
@@ -331,7 +331,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 						{isNewLiferayVersionRequired && (
 							<Select
 								badgeClassName="ml-3 mr-3"
-								className="text-capitalize"
 								groupStyle="pb-1"
 								label={i18n.translate('new-version')}
 								name="businessEvent.newLiferayVersion.key"

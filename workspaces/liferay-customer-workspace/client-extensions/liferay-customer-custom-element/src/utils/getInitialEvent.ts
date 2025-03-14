@@ -22,7 +22,7 @@ export default function getInitialEvent() {
 		},
 		r_accountEntryToBusinessEvents_accountEntryId: '',
 		targetGoLiveDate: '',
-		time: '',
+		targetGoLiveTime: '',
 		timeZone: {
 			key: '',
 		},

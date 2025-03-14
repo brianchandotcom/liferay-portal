@@ -92,8 +92,6 @@ const FilterNavigation: React.FC<IProps> = ({
 							) => (
 								<React.Fragment key={`${j}-${title || j}`}>
 									{' '}
-
-									{/* Key should always exist */}
 									{type === 'divider' && (
 										<li
 											aria-hidden="true"

@@ -98,7 +98,7 @@ const BusinessEventsItemActivityHistory = () => {
 			onClick: () => {},
 		},
 		{
-			customOptionStyle: 'pr-5',
+			customOptionStyle: 'cancel-event-option pr-5',
 			icon: <ClayIcon symbol="trash" />,
 			label: i18n.translate('cancel-event'),
 			onClick: () => {

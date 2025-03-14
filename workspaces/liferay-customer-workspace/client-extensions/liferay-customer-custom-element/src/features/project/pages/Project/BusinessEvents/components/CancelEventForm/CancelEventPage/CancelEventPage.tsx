@@ -76,15 +76,14 @@ const CancelEventPage: React.FC<IProps> = ({
 	};
 
 	useEffect(() => {
-		const hasBusinessEvent = businessEvent;
-		const hasComment = values.comment;
-		const hasError = errors && Object.keys(errors).length;
-		const hasTouched = !!Object.keys(touched).length;
+		const hasAllRequiredFieldsFilled =
+			Boolean(businessEvent) && Boolean(values.comment);
 
-		const areAllRequiredFieldsFilled = !!(hasBusinessEvent && hasComment);
+		const hasError = errors && Object.keys(errors).length;
+		const hasTouched = Boolean(Object.keys(touched).length);
 
 		setBaseButtonDisabled(
-			!hasTouched || !!hasError || !areAllRequiredFieldsFilled
+			!hasAllRequiredFieldsFilled || Boolean(hasError) || !hasTouched
 		);
 	}, [businessEvent, errors, touched, values.comment]);
 

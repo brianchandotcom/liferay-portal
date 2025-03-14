@@ -15,6 +15,9 @@ import {
 } from '~/utils/validations.form';
 
 import './TimePicker.css';
+
+import getIconSpriteMap from '~/utils/getIconSpriteMap';
+
 import Badge from '../Badge';
 
 interface IProps {
@@ -103,6 +106,7 @@ const TimePicker: React.FC<IProps> = ({
 				<ClayTimePicker
 					onBlur={handleBlur}
 					onChange={handleChange}
+					spritemap={getIconSpriteMap()}
 					use12Hours={false}
 					value={field.value || defaultValue}
 				/>

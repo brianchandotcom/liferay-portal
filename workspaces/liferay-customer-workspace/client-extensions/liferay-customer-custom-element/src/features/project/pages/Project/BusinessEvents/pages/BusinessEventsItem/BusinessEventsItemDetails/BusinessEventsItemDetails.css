@@ -1,3 +1,17 @@
+.cancel-event-option {
+	border-top: 0.063rem solid var(--color-neutral-2);
+	color: var(--color-state-error-darken-1) !important;
+}
+
+.cancel-event-option:hover {
+	background-color: var(--color-state-error-lighten-2);
+	color: var(--color-state-error-darken-1) !important;
+
+	.lexicon-icon {
+		color: var(--color-state-error-darken-1) !important;
+	}
+}
+
 .event-detail-container {
 	.event-detail-title {
 		font-size: 0.813rem;

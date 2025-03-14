@@ -36,6 +36,7 @@ export interface IBusinessEvent {
 		key: string;
 		name: string;
 	};
+	dateModified: string;
 	description?: string;
 	details?: string;
 	eventStatus?: {
@@ -112,6 +113,11 @@ export interface IProject {
 
 export interface IRoleBrief {
 	name: string;
+}
+
+export interface ITimeInput {
+	hours: string;
+	minutes: string;
 }
 
 export interface IUserAccount {

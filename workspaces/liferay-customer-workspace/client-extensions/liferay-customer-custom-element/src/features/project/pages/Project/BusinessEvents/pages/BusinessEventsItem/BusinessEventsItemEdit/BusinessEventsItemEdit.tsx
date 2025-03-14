@@ -7,83 +7,140 @@ import {ClayInput, ClayRadio, ClaySelect} from '@clayui/form';
 
 import './BusinessEventsItemEdit.css';
 
-import {Nav} from '@clayui/core';
+import {Nav, useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayMultiSelect from '@clayui/multi-select';
 import NavigationBar from '@clayui/navigation-bar';
-import {Input as TimeInput} from '@clayui/time-picker/lib';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
-import {Button, DatePicker, Select, TimePicker} from '~/components';
+import {Button, DatePicker, Input, Select, TimePicker} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '~/features/project/context';
 import useGetBusinessEventTypesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetBusinessEventTypesList';
 import useGetGMTTimeZonesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetGMTTimeZonesList';
 import useGetVersionOfLiferaySoftwareList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetVersionOfLiferaySoftwareList';
+import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 import {Liferay} from '~/services/liferay';
 import {getBusinessEventById} from '~/services/liferay/api';
 import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
-import {getFormattedTime} from '~/utils/getFormattedTime';
-import {IBusinessEvent} from '~/utils/types';
+import {IBusinessEvent, IOption} from '~/utils/types';
 
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
+import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
+import BusinessEventsConfirmationPopup from './components/BusinessEventsConfirmationPopup';
 
 interface IProps {
 	businessEvent: IBusinessEvent;
 	errors?: Record<string, any>;
+	originalBusinessEvent: IBusinessEvent;
 	setFieldValue: (
 		field: string,
 		value: any,
 		shouldValidate?: boolean
 	) => void;
+	touched?: any;
+	values: any;
 }
 
 const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	businessEvent,
 	errors,
+	originalBusinessEvent,
 	setFieldValue,
+	touched,
+	values,
 }) => {
-	const {client} = useAppPropertiesContext();
-
-	const [{project}] = useCustomerPortal();
-
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
 
+	const {businessEventTypesList} = useGetBusinessEventTypesList();
+
+	const {client} = useAppPropertiesContext();
+
+	const emptyOption = useMemo(
+		() => ({
+			disabled: true,
+			label: i18n.translate('select-the-option'),
+			value: '',
+		}),
+		[]
+	);
+
+	const {gmtTimeZonesList} = useGetGMTTimeZonesList();
+
+	const [gmtTimeZonesOptions, setGMTTimeZonesOptions] = useState<IOption[]>(
+		[]
+	);
+
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
+
 	const [hasImpactingEvents, setHasImpactingEvents] = useState<string>('no');
+
+	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
+		useState<boolean>(false);
+
+	const [{project, subscriptionGroups}] = useCustomerPortal();
+
+	const isDescriptionRequired = useMemo(
+		() => businessEvent.eventType?.key === 'otherEvent',
+		[businessEvent.eventType]
+	);
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const isNewLiferayVersionRequired = useMemo(
+		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
+		[businessEvent.eventType]
+	);
+
+	const isSaasOnly = useMemo(
+		() =>
+			subscriptionGroups?.length === 1 &&
+			subscriptionGroups[0].name === PRODUCT_TYPES.liferayExperienceCloud,
+		[subscriptionGroups]
+	);
+
+	const navigate = useNavigate();
+
+	const {observer, onClose} = useModal({
+		onClose: () => setIsModalOpen(false),
+	});
+
+	const {versionOfLiferaySoftwareList} = useGetVersionOfLiferaySoftwareList();
+
+	const [
+		versionOfLiferaySoftwareOptions,
+		setVersionOfLiferaySoftwareOptions,
+	] = useState<IOption[]>([]);
 
 	const handleRadioChange = (value: string) => {
 		setHasImpactingEvents(value);
 	};
 
-	const navigate = useNavigate();
-
-	const {businessEventTypesList} = useGetBusinessEventTypesList();
-	const {gmtTimeZonesList} = useGetGMTTimeZonesList();
-	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
-	const {versionOfLiferaySoftwareList} = useGetVersionOfLiferaySoftwareList();
-
 	const handleSubmit = async () => {
 		const updatedBusinessEvent = {...businessEvent};
 
-		if (updatedBusinessEvent.targetGoLiveDate) {
-			const formattedDate = getFormattedTime(
-				updatedBusinessEvent.targetGoLiveDate
-			);
+		const formattedBusinessEvent = {
+			associatedTickets: updatedBusinessEvent.associatedTickets,
+			currentLiferayVersion:
+				updatedBusinessEvent.currentLiferayVersion?.key,
+			description: updatedBusinessEvent.description,
+			eventType: updatedBusinessEvent.eventType?.key,
+			newLiferayVersion: updatedBusinessEvent.newLiferayVersion?.key,
 
-			if (updatedBusinessEvent.targetGoLiveTime) {
-				const targetGoLiveTime =
-					updatedBusinessEvent.targetGoLiveTime as unknown as TimeInput;
-				updatedBusinessEvent.targetGoLiveDateTime = `${formattedDate}T${targetGoLiveTime.hours}:${targetGoLiveTime.minutes}:00.000`;
-			}
-			else {
-				updatedBusinessEvent.targetGoLiveDateTime = `${formattedDate}T00:00:00.000`;
-			}
-		}
+			targetGoLiveDateTime: getFormattedGoLiveDateTime(
+				updatedBusinessEvent.targetGoLiveDate,
+				updatedBusinessEvent.targetGoLiveTime
+			),
+
+			timeZone: updatedBusinessEvent.timeZone?.key,
+		};
 
 		try {
+			setIsLoadingSubmitButton(true);
+
 			await client.mutate<{
 				updateBusinessEvent: IBusinessEvent;
 			}>({
@@ -93,7 +150,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 				},
 				mutation: updateBusinessEvent,
 				variables: {
-					businessEvent: updatedBusinessEvent,
+					businessEvent: formattedBusinessEvent,
 					businessEventId: businessEvent.id,
 				},
 			});
@@ -108,6 +165,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			});
 		}
 		catch (error) {
+			setIsLoadingSubmitButton(false);
+
 			Liferay.Util.openToast({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
@@ -117,10 +176,107 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	};
 
 	useEffect(() => {
-		const hasError = errors && Object.keys(errors).length;
+		if (!isDescriptionRequired) {
+			setFieldValue('businessEvent.description', '');
+		}
+		else {
+			originalBusinessEvent.description
+				? setFieldValue(
+						'businessEvent.description',
+						originalBusinessEvent.description
+					)
+				: setFieldValue('businessEvent.description', '');
+		}
+	}, [
+		isDescriptionRequired,
+		originalBusinessEvent.description,
+		setFieldValue,
+	]);
 
-		setBaseButtonDisabled(!!hasError);
-	}, [errors]);
+	useEffect(() => {
+		if (!isNewLiferayVersionRequired) {
+			setFieldValue('businessEvent.newLiferayVersion.key', '');
+		}
+		else {
+			originalBusinessEvent.newLiferayVersion
+				? setFieldValue(
+						'businessEvent.newLiferayVersion.key',
+						originalBusinessEvent.newLiferayVersion.key
+					)
+				: setFieldValue('businessEvent.newLiferayVersion.key', '');
+		}
+	}, [
+		isNewLiferayVersionRequired,
+		originalBusinessEvent.newLiferayVersion,
+		setFieldValue,
+	]);
+
+	useEffect(() => {
+		if (gmtTimeZonesList?.length) {
+			setGMTTimeZonesOptions([
+				{...emptyOption, disabled: false},
+				...gmtTimeZonesList,
+			]);
+		}
+	}, [emptyOption, gmtTimeZonesList]);
+
+	useEffect(() => {
+		if (versionOfLiferaySoftwareList?.length) {
+			setVersionOfLiferaySoftwareOptions([
+				emptyOption,
+				...versionOfLiferaySoftwareList,
+			]);
+		}
+	}, [emptyOption, versionOfLiferaySoftwareList]);
+
+	useEffect(() => {
+		const hasCurrentLiferayVersion =
+			values.businessEvent.currentLiferayVersion.key;
+
+		const hasDescription = values.businessEvent.description;
+		const hasError = errors && Object.keys(errors).length;
+		const hasEventName = values.businessEvent.name;
+		const hasEventType = values.businessEvent.eventType.key;
+		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
+		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
+		const hasTouched = Boolean(Object.keys(touched).length);
+
+		let hasAllRequiredFieldsFilled =
+			Boolean(hasEventName) &&
+			Boolean(hasEventType) &&
+			Boolean(hasTargetGoLiveDate);
+
+		if (isDescriptionRequired) {
+			hasAllRequiredFieldsFilled =
+				hasAllRequiredFieldsFilled && hasDescription;
+		}
+
+		if (isNewLiferayVersionRequired) {
+			hasAllRequiredFieldsFilled =
+				hasAllRequiredFieldsFilled && hasNewLiferayVersion;
+		}
+
+		if (!isSaasOnly) {
+			hasAllRequiredFieldsFilled =
+				hasAllRequiredFieldsFilled && hasCurrentLiferayVersion;
+		}
+
+		setBaseButtonDisabled(
+			!hasAllRequiredFieldsFilled || Boolean(hasError) || !hasTouched
+		);
+	}, [
+		errors,
+		isDescriptionRequired,
+		isNewLiferayVersionRequired,
+		isSaasOnly,
+		touched,
+		values.businessEvent.currentLiferayVersion,
+		values.businessEvent.description,
+		values.businessEvent.eventType,
+		values.businessEvent.name,
+		values.businessEvent.newLiferayVersion,
+		values.businessEvent.targetGoLiveDate,
+	]);
 
 	return hasAllEventsPermissions ? (
 		<div>
@@ -156,11 +312,30 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 						>
 							{i18n.translate('cancel')}
 						</Button>
+
 						<Button
 							className="ml-3"
-							disabled={baseButtonDisabled}
+							disabled={
+								baseButtonDisabled || isLoadingSubmitButton
+							}
 							displayType="primary"
-							onClick={handleSubmit}
+							isLoading={isLoadingSubmitButton}
+							onClick={() => {
+								const newTargetGoLiveDateTime =
+									getFormattedGoLiveDateTime(
+										businessEvent.targetGoLiveDate,
+										businessEvent.targetGoLiveTime
+									);
+								if (
+									newTargetGoLiveDateTime !==
+									originalBusinessEvent.targetGoLiveDateTime
+								) {
+									setIsModalOpen(true);
+								}
+								else {
+									handleSubmit();
+								}
+							}}
 						>
 							{i18n.translate('save-changes')}
 						</Button>
@@ -168,10 +343,19 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 				</div>
 			</div>
 
+			{isModalOpen && (
+				<BusinessEventsConfirmationPopup
+					handleSubmit={handleSubmit}
+					message={i18n.translate(
+						'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
+					)}
+					observer={observer}
+					onClose={onClose}
+				/>
+			)}
+
 			<div className="mb-4">
-				<NavigationBar
-					triggerLabel={i18n.translate('activity-history')}
-				>
+				<NavigationBar triggerLabel={i18n.translate('event-details')}>
 					<Nav.Item>
 						<Nav.Link
 							active={true}
@@ -179,11 +363,6 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 								'event-details'
 							)}`}
 							className="be-nav-link text-neutral-10"
-							onClick={() =>
-								navigate(
-									`/${project?.accountKey}/business-events/${businessEvent.id}`
-								)
-							}
 						>
 							{i18n.translate('event-details')}
 						</Nav.Link>
@@ -197,74 +376,85 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 						<>
 							<div className="event-edit-field mb-4">
 								<Select
-									badgeClassName="ml-3 mr-3"
+									className="ml-3 mr-3"
 									groupStyle="pb-1"
 									label={i18n.translate('event-type')}
-									name="businessEvent.eventType"
-									onChange={(value: any) =>
-										setFieldValue(
-											'businessEvent.eventType',
-											value
-										)
-									}
+									name="businessEvent.eventType.key"
 									options={businessEventTypesList}
 									required
 								/>
 							</div>
 
-							<div className="event-edit-field mb-4">
-								<Select
-									badgeClassName="ml-3 mr-3"
-									groupStyle="pb-1"
-									label={i18n.translate(
-										'your-current-liferay-version'
-									)}
-									name="businessEvent.currentLiferayVersion"
-									onChange={(value: any) =>
-										setFieldValue(
-											'businessEvent.currentLiferayVersion',
-											value
-										)
-									}
-									options={versionOfLiferaySoftwareList}
-									required
-								/>
-							</div>
+							{subscriptionGroups && !isSaasOnly && (
+								<div className="event-edit-field mb-4">
+									<Select
+										className="ml-3 mr-3"
+										groupStyle="pb-1"
+										label={i18n.translate(
+											'your-current-liferay-version'
+										)}
+										name="businessEvent.currentLiferayVersion.key"
+										options={
+											versionOfLiferaySoftwareOptions
+										}
+										required
+									/>
+								</div>
+							)}
 
-							<div className="event-edit-field mb-4">
-								<Select
-									badgeClassName="ml-3 mr-3"
-									groupStyle="pb-1"
-									label={i18n.translate('new-version')}
-									name="businessEvent.newLiferayVersion"
-									onChange={(value: any) =>
-										setFieldValue(
-											'businessEvent.newLiferayVersion',
-											value
-										)
-									}
-									options={versionOfLiferaySoftwareList}
-									required
-								/>
-							</div>
+							{isNewLiferayVersionRequired && (
+								<div className="event-edit-field mb-4">
+									<Select
+										badgeClassName="ml-3 mr-3"
+										className="ml-3 mr-3"
+										groupStyle="pb-1"
+										label={i18n.translate('new-version')}
+										name="businessEvent.newLiferayVersion.key"
+										options={
+											versionOfLiferaySoftwareOptions
+										}
+										required
+									/>
+								</div>
+							)}
+
+							{isDescriptionRequired && (
+								<div className="event-edit-field mb-4">
+									<Input
+										badgeClassName="ml-3 mr-3"
+										component="textarea"
+										groupStyle="pb-1"
+										label={i18n.translate(
+											'event-description'
+										)}
+										name="businessEvent.description"
+										placeholder={i18n.translate(
+											'event-description'
+										)}
+										required
+										type="text"
+									/>
+								</div>
+							)}
 
 							<div className="event-edit-field mb-4">
 								<ClayInput.Group className="m-0">
 									<ClayInput.GroupItem className="m-0">
 										<DatePicker
 											badgeClassName="ml-3 mr-3"
-											dateFormat="MM/dd/yyyy"
+											className="ml-3 mr-3"
+											dateFormat="MM-dd-yyyy"
 											groupStyle="pb-1"
 											label={i18n.translate(
 												'target-go-live-date'
 											)}
 											name="businessEvent.targetGoLiveDate"
-											onChange={(value) =>
+											onChange={(value: string) => {
 												setFieldValue(
 													'businessEvent.targetGoLiveDate',
 													value
-												)
-											}
+												);
+											}}
 											placeholder={i18n.translate(
 												'mm-dd-yyyy'
 											)}
@@ -277,8 +467,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 											groupStyle="pb-1"
 											id="select-businessEvent.timeZone"
 											label={i18n.translate('time-zone')}
-											name="businessEvent.timeZone"
-											options={gmtTimeZonesList}
+											name="businessEvent.timeZone.key"
+											options={gmtTimeZonesOptions}
 										/>
 									</ClayInput.GroupItem>
 
@@ -299,7 +489,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 							</div>
 
 							<div className="event-edit-field mb-4">
-								<div>
+								<div className="pb-2">
 									{i18n.translate(
 										'are-there-any-support-tickets-impacting-this-event'
 									)}
@@ -400,9 +590,29 @@ const BusinessEventsItemEdit: React.FC = () => {
 		return <div>{i18n.translate('no-data-found')}</div>;
 	}
 
+	const targetGoLiveTime = businessEvent.targetGoLiveDateTime
+		?.split('T')[1]
+		.substring(0, 5);
+
 	return (
 		<Formik
-			initialValues={{businessEvent}}
+			initialValues={{
+				businessEvent: {
+					...businessEvent,
+					currentLiferayVersion:
+						businessEvent.currentLiferayVersion || {key: ''},
+					newLiferayVersion: businessEvent.newLiferayVersion || {
+						key: '',
+					},
+					targetGoLiveDate:
+						businessEvent.targetGoLiveDateTime?.split('T')[0],
+					targetGoLiveTime: {
+						hours: targetGoLiveTime?.split(':')[0],
+						minutes: targetGoLiveTime?.split(':')[1],
+					},
+					timeZone: businessEvent.timeZone || {key: ''},
+				},
+			}}
 			onSubmit={() => {}}
 			validateOnChange
 		>
@@ -413,7 +623,10 @@ const BusinessEventsItemEdit: React.FC = () => {
 							.businessEvent as unknown as IBusinessEvent
 					}
 					errors={formikProps.errors}
+					originalBusinessEvent={businessEvent}
 					setFieldValue={formikProps.setFieldValue}
+					touched={formikProps.touched}
+					values={formikProps.values}
 				/>
 			)}
 		</Formik>

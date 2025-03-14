@@ -19,6 +19,11 @@ import PopoverIconButton from '~/features/project/components/PopoverIconButton';
 import i18n from '~/utils/I18n';
 import {IOption} from '~/utils/types';
 
+interface ISelectOption {
+	key: string;
+	name: string;
+}
+
 interface IProps {
 	badgeClassName?: string;
 	className?: string;
@@ -29,6 +34,7 @@ interface IProps {
 	link?: string;
 	linkText?: string;
 	name: string;
+	objectValue?: ISelectOption;
 	onBlur?: () => void;
 	onChange?: (value: string) => void;
 	options: IOption[];
@@ -48,6 +54,7 @@ const Select: React.FC<IProps> = ({
 	link,
 	linkText,
 	name,
+	objectValue,
 	onChange,
 	onBlur,
 	options,
@@ -89,10 +96,25 @@ const Select: React.FC<IProps> = ({
 	const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		const value = event.target.value;
 
-		helpers.setValue(value);
+		if (objectValue) {
+			const selectedOption = options.find(
+				(option) => option.value === value
+			);
 
-		if (onChange) {
-			onChange(value);
+			if (selectedOption) {
+				helpers.setValue(String(selectedOption.value));
+			}
+
+			if (onChange && selectedOption) {
+				onChange(String(selectedOption.value));
+			}
+		}
+		else {
+			helpers.setValue(value);
+
+			if (onChange) {
+				onChange(value);
+			}
 		}
 	};
 
@@ -133,7 +155,13 @@ const Select: React.FC<IProps> = ({
 						name={name}
 						onBlur={handleBlur}
 						onChange={handleChange}
-						value={field.value}
+						value={
+							objectValue
+								? field.value
+									? field.value.key
+									: ''
+								: field.value
+						}
 					>
 						{options.map(({disabled, label, value}, index) => (
 							<ClaySelect.Option

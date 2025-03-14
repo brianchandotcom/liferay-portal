@@ -16,6 +16,8 @@ import {
 
 import './DatePicker.css';
 
+import getIconSpriteMap from '~/utils/getIconSpriteMap';
+
 interface IProps {
 	badgeClassName?: string;
 	className?: string;
@@ -102,6 +104,7 @@ const DatePicker: React.FC<IProps> = ({
 					onBlur={handleBlur}
 					onChange={handleChange}
 					placeholder={placeholder}
+					spritemap={getIconSpriteMap()}
 					value={field.value}
 				/>
 			</label>

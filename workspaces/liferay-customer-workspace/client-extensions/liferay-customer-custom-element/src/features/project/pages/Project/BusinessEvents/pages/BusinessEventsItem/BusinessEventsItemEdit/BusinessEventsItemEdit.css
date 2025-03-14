@@ -1,3 +1,7 @@
+.be-nav-link {
+	pointer-events: none;
+}
+
 .event-edit-container .event-edit-field {
 	width: 35rem;
 }

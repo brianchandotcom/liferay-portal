@@ -18,6 +18,7 @@ import Table, {IRow} from '~/components/Table';
 import TableHeader from '~/components/Table/TableHeader';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '~/features/project/context';
+import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 import {Liferay} from '~/services/liferay';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {getFormattedDate} from '~/utils/getFormattedDate';
@@ -63,7 +64,7 @@ const columns = [
 ];
 
 const BusinessEvents = () => {
-	const [{project}] = useCustomerPortal();
+	const [{project, subscriptionGroups}] = useCustomerPortal();
 
 	const [filters, setFilters] = useState<IState>({
 		availableFilters: INITIAL_FILTER,
@@ -72,6 +73,7 @@ const BusinessEvents = () => {
 	});
 
 	const [businessEvents, setBusinessEvents] = useState<IBusinessEvent[]>([]);
+	const [loading, setLoading] = useState(true);
 
 	const {client} = useAppPropertiesContext();
 
@@ -89,29 +91,51 @@ const BusinessEvents = () => {
 		},
 	});
 
-	const generateFilterQuery = useCallback((filters: IState) => {
-		const queryParams: string[] = [];
+	const generateFilterQuery = useCallback(
+		(filters: IState) => {
+			const queryParams: string[] = [];
 
-		if (filters.selectedFilters && !!filters.selectedFilters.length) {
-			filters.selectedFilters.forEach((filter) => {
-				if (filter.values && !!filter.values.length) {
-					const filterQuery = `(${filter.values
-						.map(
-							(value: {key: string; name: string}) =>
-								`${filter.key} eq '${value.key}'`
-						)
-						.join(' or ')})`;
-					queryParams.push(filterQuery);
-				}
-			});
-		}
+			if (project?.id) {
+				queryParams.push(
+					`r_accountEntryToBusinessEvents_accountEntryId eq '${project.id}'`
+				);
+			}
 
-		if (filters.searchTerm?.trim()) {
-			queryParams.push(`(contains(name, '${filters.searchTerm}'))`);
-		}
+			if (
+				filters.selectedFilters &&
+				Boolean(filters.selectedFilters.length)
+			) {
+				filters.selectedFilters.forEach((filter) => {
+					if (filter.values && Boolean(filter.values.length)) {
+						const filterQuery = `(${filter.values
+							.map(
+								(value: {key: string; name: string}) =>
+									`${filter.key} eq '${value.key}'`
+							)
+							.join(' or ')})`;
+						queryParams.push(filterQuery);
+					}
+				});
+			}
 
-		return queryParams.length ? `filter=${queryParams.join(' and ')}` : '';
-	}, []);
+			if (filters.searchTerm?.trim()) {
+				queryParams.push(`(contains(name, '${filters.searchTerm}'))`);
+			}
+
+			const oneYearAgo = new Date();
+
+			oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+			queryParams.push(
+				`(eventStatus ne 'canceled' or (eventStatus eq 'canceled' and dateModified ge ${oneYearAgo.toISOString()}))`
+			);
+
+			return queryParams.length
+				? `filter=${queryParams.join(' and ')}`
+				: '';
+		},
+		[project?.id]
+	);
 
 	const filterQuery = useMemo(
 		() => generateFilterQuery(filters),
@@ -119,13 +143,18 @@ const BusinessEvents = () => {
 	);
 
 	const fetchBusinessEvents = useCallback(async () => {
+		setLoading(true);
+
 		try {
 			const businessEventsResponse = await getBusinessEvents(filterQuery);
 
 			setBusinessEvents(businessEventsResponse.items);
 		}
 		catch (error) {
-			console.error('Error', error);
+			console.error('Error fetching business events:', error);
+		}
+		finally {
+			setLoading(false);
 		}
 	}, [filterQuery]);
 
@@ -156,8 +185,21 @@ const BusinessEvents = () => {
 	}, []);
 
 	useEffect(() => {
+		if (!project?.id) {
+			setLoading(true);
+
+			return;
+		}
+
 		fetchBusinessEvents();
-	}, [fetchBusinessEvents, filterQuery]);
+	}, [fetchBusinessEvents, filterQuery, project?.id]);
+
+	const isSaasOnly = useMemo(
+		() =>
+			subscriptionGroups?.length === 1 &&
+			subscriptionGroups[0].name === PRODUCT_TYPES.liferayExperienceCloud,
+		[subscriptionGroups]
+	);
 
 	const rows = useMemo(() => {
 		if (businessEvents?.length > 0) {
@@ -196,7 +238,7 @@ const BusinessEvents = () => {
 							onClick: () => {},
 						},
 						{
-							customOptionStyle: 'pr-5 be-cancel-event-option',
+							customOptionStyle: 'be-cancel-event-option pr-5',
 							label: i18n.translate('cancel-event'),
 							onClick: () => {
 								onOpenChange(true);
@@ -205,6 +247,61 @@ const BusinessEvents = () => {
 						}
 					);
 				}
+
+				const isOtherEventType =
+					businessEvent?.eventType?.key === 'otherEvent';
+				const isGoLiveType = businessEvent?.eventType?.key === 'goLive';
+
+				const DetailsColumn = () => {
+					if (isOtherEventType) {
+						return (
+							<div className="text-neutral-10">
+								{businessEvent?.description}
+							</div>
+						);
+					}
+
+					if (isGoLiveType && !isSaasOnly) {
+						return (
+							<div className="text-neutral-10">
+								{businessEvent?.currentLiferayVersion?.name}
+							</div>
+						);
+					}
+
+					if (!isGoLiveType && !isOtherEventType) {
+						if (isSaasOnly) {
+							return (
+								<div className="align-items-center d-flex">
+									<ClayIcon
+										className="mr-2 text-success"
+										symbol="order-arrow-up"
+									/>
+									<div className="text-neutral-10">
+										{businessEvent?.newLiferayVersion?.name}
+									</div>
+								</div>
+							);
+						}
+
+						return (
+							<div className="align-items-center d-flex">
+								<div className="text-neutral-10">
+									{businessEvent?.currentLiferayVersion?.name}
+								</div>
+								<ClayIcon
+									className="mx-2 text-neutral-4"
+									symbol="order-arrow-right"
+								/>
+								<div className="text-neutral-10">
+									{businessEvent?.newLiferayVersion?.name}
+								</div>
+							</div>
+						);
+					}
+
+					return null;
+				};
 
 				return {
 					actions: (
@@ -233,11 +330,7 @@ const BusinessEvents = () => {
 							{businessEvent?.associatedTickets}
 						</div>
 					),
-					details: (
-						<div className="text-neutral-10">
-							{businessEvent?.description}
-						</div>
-					),
+					details: <DetailsColumn />,
 					eventName: (
 						<div>
 							<div className="font-weight-semi-bold text-neutral-10">
@@ -284,12 +377,15 @@ const BusinessEvents = () => {
 	}, [
 		businessEvents,
 		hasAllEventsPermissions,
+		isSaasOnly,
 		navigate,
 		onOpenChange,
 		project?.accountKey,
 	]);
 
-	return (
+	return loading ? (
+		<div className="py-4">{i18n.translate('loading')}</div>
+	) : (
 		<div className="py-4">
 			<div>
 				<h1 className="font-weight-bold text-neutral-10">
@@ -316,17 +412,32 @@ const BusinessEvents = () => {
 			</div>
 
 			<div>
-				<Table columns={columns} rows={rows as unknown as IRow[]} />
-
-				{selectedBusinessEvent && open && (
-					<ClayModal center disableAutoClose observer={observer}>
-						<CancelEventForm
-							businessEvent={selectedBusinessEvent}
-							client={client}
-							closeFunction={onOpenChange}
-							onCancel={handleEventCanceled}
+				{businessEvents.length ? (
+					<>
+						<Table
+							columns={columns}
+							rows={rows as unknown as IRow[]}
 						/>
-					</ClayModal>
+
+						{selectedBusinessEvent && open && (
+							<ClayModal
+								center
+								disableAutoClose
+								observer={observer}
+							>
+								<CancelEventForm
+									businessEvent={selectedBusinessEvent}
+									client={client}
+									closeFunction={onOpenChange}
+									onCancel={handleEventCanceled}
+								/>
+							</ClayModal>
+						)}
+					</>
+				) : (
+					<div className="p-3">
+						{i18n.translate('no-business-events-were-found')}
+					</div>
 				)}
 			</div>
 		</div>

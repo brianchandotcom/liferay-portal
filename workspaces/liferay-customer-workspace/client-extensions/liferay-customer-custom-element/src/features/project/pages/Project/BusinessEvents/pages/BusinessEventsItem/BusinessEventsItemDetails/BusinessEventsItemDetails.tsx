@@ -20,6 +20,8 @@ import {getFormattedTime} from '~/utils/getFormattedTime';
 import {IBusinessEvent} from '~/utils/types';
 
 import CancelEventForm from '../../../components/CancelEventForm';
+
+import './BusinessEventsItemDetails.css';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 
 const BusinessEventsItemDetails = () => {
@@ -31,9 +33,8 @@ const BusinessEventsItemDetails = () => {
 
 	const {client} = useAppPropertiesContext();
 
-	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
-
 	const [loading, setLoading] = useState(true);
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const {observer, onOpenChange, open} = useModal();
 
@@ -100,7 +101,7 @@ const BusinessEventsItemDetails = () => {
 			onClick: () => {},
 		},
 		{
-			customOptionStyle: 'pr-5',
+			customOptionStyle: 'cancel-event-option pr-5',
 			icon: <ClayIcon symbol="trash" />,
 			label: i18n.translate('cancel-event'),
 			onClick: () => {
@@ -108,6 +109,8 @@ const BusinessEventsItemDetails = () => {
 			},
 		},
 	];
+
+	const isOtherEventType = businessEvent?.eventType?.key === 'otherEvent';
 
 	return (
 		<div>
@@ -136,7 +139,7 @@ const BusinessEventsItemDetails = () => {
 						!['canceled', 'completed'].includes(
 							businessEvent.eventStatus?.key!
 						) && (
-							<div>
+							<div className="be-actions">
 								<ButtonDropDown
 									items={userOptions}
 									label="Actions"
@@ -178,7 +181,7 @@ const BusinessEventsItemDetails = () => {
 				<div className="event-detail-container">
 					{businessEvent?.eventType && (
 						<div className="event-detail-item mb-4">
-							<div className="event-detail-title mb-1 text-neutral-8">
+							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('event-type')}
 							</div>
 
@@ -190,7 +193,7 @@ const BusinessEventsItemDetails = () => {
 
 					{businessEvent?.currentLiferayVersion && (
 						<div className="event-detail-item mb-4">
-							<div className="event-detail-title mb-1 text-neutral-8">
+							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('current-version')}
 							</div>
 
@@ -202,7 +205,7 @@ const BusinessEventsItemDetails = () => {
 
 					{businessEvent?.newLiferayVersion && (
 						<div className="event-detail-item mb-4">
-							<div className="event-detail-title mb-1 text-neutral-8">
+							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('new-version')}
 							</div>
 
@@ -212,9 +215,21 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
+					{isOtherEventType && businessEvent?.description && (
+						<div className="event-detail-item mb-4">
+							<div className="event-detail-title font-weight-semi-bold mb-2 text-neutral-8">
+								{i18n.translate('details')}
+							</div>
+
+							<div className="d-inline-block text-neutral-9">
+								{businessEvent?.description}
+							</div>
+						</div>
+					)}
+
 					{businessEvent?.targetGoLiveDateTime && (
 						<div className="event-detail-item mb-4">
-							<div className="event-detail-title mb-1 text-neutral-8">
+							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('target-go-live-date')}
 							</div>
 
@@ -238,7 +253,7 @@ const BusinessEventsItemDetails = () => {
 
 					{businessEvent?.actualGoLiveDateTime && (
 						<div className="event-detail-item mb-4">
-							<div className="event-detail-title mb-1 text-neutral-8">
+							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('actual-go-live-date')}
 							</div>
 
@@ -262,7 +277,7 @@ const BusinessEventsItemDetails = () => {
 
 					{businessEvent?.associatedTickets && (
 						<div className="event-detail-item mb-4">
-							<div className="event-detail-title mb-1 text-neutral-8">
+							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
 								{i18n.translate('associated-tickets')}
 							</div>
 

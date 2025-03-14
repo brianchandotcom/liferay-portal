@@ -1,5 +1,35 @@
+.be-breadcrumbs a {
+	color: var(--color-action-neutral-default);
+	font-size: 0.875rem;
+	text-decoration: none;
+}
+
 .be-cancel-event-option {
-	border-top: 1px solid var(--color-neutral-2);
+	border-top: 0.063rem solid var(--color-neutral-2);
+}
+
+.be-header-sub-label {
+	color: var(--color-state-neutral-darken-1);
+	font-weight: 400;
+}
+
+.be-status {
+	background-color: var(--color-neutral-5);
+	border-radius: var(--border-radius-sm);
+	color: var(--color-neutral-0);
+	font-size: var(--font-size-sm);
+}
+
+.be-status-canceled {
+	background-color: var(--color-state-error);
+}
+
+.be-status-open {
+	background-color: var(--color-state-success);
+}
+
+.be-status-overdue {
+	background-color: var(--color-state-warning);
 }
 
 .be-subtitle {

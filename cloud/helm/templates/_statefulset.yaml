@@ -1,0 +1,188 @@
+{{/*
+Create a StatefulSet workload.
+*/}}
+{{- define "liferay.statefulset" -}}
+{{- $suffix := ternary "" (printf "-%s" .name) (eq .name "") }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: {{ include "liferay.name" .root }}{{ $suffix }}
+    {{- include "liferay.labels" .root | nindent 4 }}
+  name: {{ include "liferay.fullname" .root }}{{ $suffix }}
+  namespace: {{ include "liferay.namespace" .root | quote }}
+spec:
+  replicas: {{ .statefulset.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "liferay.name" .root }}{{ $suffix }}
+      {{- include "liferay.selectorLabels" .root | nindent 6 }}
+  serviceName: {{ include "liferay.fullname" .root }}{{ $suffix }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "liferay.name" .root }}{{ $suffix }}
+        {{- include "liferay.labels" .root | nindent 8 }}
+    spec:
+      {{- with .statefulset.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - # Main container
+        {{- with .statefulset.env }}
+        env:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .statefulset.envFrom }}
+        envFrom:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        image: {{ printf "%s:%s" .statefulset.image.repository (.statefulset.image.tag | toString) }}
+        imagePullPolicy: {{ .statefulset.image.pullPolicy }}
+        {{- with .statefulset.livenessProbe }}
+        livenessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        name: {{ include "liferay.name" .root }}{{ $suffix }}
+        {{- with .statefulset.ports }}
+        ports:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .statefulset.readinessProbe }}
+        readinessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .statefulset.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .statefulset.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .statefulset.startupProbe }}
+        startupProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .statefulset.volumeMounts }}
+        volumeMounts:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .statefulset.pullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- if .statefulset.initContainers }}
+      {{- $statefulset := .statefulset }}
+      initContainers:
+      {{- range .statefulset.initContainers }}
+      {{- if .containerTemplate }}
+      {{ tpl .containerTemplate $statefulset | nindent 6 }}
+      {{- else }}
+      - {{ toYaml . | nindent 8 }}
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- with .statefulset.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .statefulset.schedulingGates }}
+      schedulingGates:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .statefulset.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "liferay.serviceAccountName" .root }}
+      {{- with .statefulset.tolerations }}
+      tolerations:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .statefulset.volumes }}
+      volumes:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  {{- with .statefulset.updateStrategy }}
+  updateStrategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .statefulset.volumeClaimTemplates }}
+  volumeClaimTemplates:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  {{- with .statefulset.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    app: {{ include "liferay.name" .root }}{{ $suffix }}
+    {{- include "liferay.labels" .root | nindent 4 }}
+  name: {{ include "liferay.fullname" .root }}{{ $suffix }}
+  namespace: {{ include "liferay.namespace" .root | quote }}
+spec:
+  {{- with .statefulset.service.ports }}
+  ports:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+  selector:
+    app: {{ include "liferay.name" .root }}{{ $suffix }}
+    {{- include "liferay.selectorLabels" .root | nindent 4 }}
+  type: {{ .statefulset.service.type }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  {{- with .statefulset.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    app: {{ include "liferay.name" .root }}{{ $suffix }}
+    {{- include "liferay.labels" .root | nindent 4 }}
+  name: {{ include "liferay.fullname" .root }}{{ $suffix }}-headless
+  namespace: {{ include "liferay.namespace" .root | quote }}
+spec:
+  clusterIP: None # This is what makes it headless
+  {{- with .statefulset.service.ports }}
+  ports:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+  selector:
+    app: {{ include "liferay.name" .root }}{{ $suffix }}
+    {{- include "liferay.selectorLabels" .root | nindent 4 }}
+  type: {{ .statefulset.service.type }}
+{{- if .statefulset.ingress.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  {{- with .statefulset.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    app: {{ include "liferay.name" .root }}{{ $suffix }}
+    {{- include "liferay.labels" .root | nindent 4 }}
+  name: {{ include "liferay.fullname" .root }}{{ $suffix }}
+  namespace: {{ include "liferay.namespace" .root | quote }}
+spec:
+  {{- with .statefulset.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  rules:
+  {{- with .statefulset.ingress.rules }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+  {{- with .statefulset.ingress.tls }}
+  tls:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end -}}

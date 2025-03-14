@@ -166,9 +166,18 @@ public class PortalPreferencesLocalServiceImpl
 			ownerId, ownerType);
 
 		if (portalPreferences == null) {
-			portalPreferences =
-				portalPreferencesLocalService.addPortalPreferences(
-					ownerId, ownerType, defaultPreferences);
+			try {
+				portalPreferences =
+					portalPreferencesLocalService.addPortalPreferences(
+						ownerId, ownerType, defaultPreferences);
+			}
+			catch (Throwable throwable) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(throwable);
+				}
+
+				portalPreferences = fetchPortalPreferences(ownerId, ownerType);
+			}
 		}
 
 		PortalPreferencesImpl portalPreferencesImpl =

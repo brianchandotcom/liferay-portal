@@ -21,6 +21,7 @@ export type ObjectField = {
 };
 
 export type ObjectDefinition = {
+	enableIndexSearch: boolean;
 	enableObjectEntryDraft: boolean;
 	externalReferenceCode: string;
 	id?: number;

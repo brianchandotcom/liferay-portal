@@ -5,19 +5,16 @@
 
 package com.liferay.exportimport.internal.lar;
 
+import com.liferay.batch.engine.BatchEngineDeletionHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -85,23 +82,6 @@ public class DeletionSystemEventImporter {
 	private DeletionSystemEventImporter() {
 	}
 
-	private PortletDataHandler _getPortletDataHandlerForPortlet(
-		String portletId) {
-
-		try (ServiceTrackerList<PortletDataHandler> portletDataHandlers =
-				ServiceTrackerListFactory.open(
-					SystemBundleUtil.getBundleContext(),
-					PortletDataHandler.class,
-					"(javax.portlet.name=" + portletId + ")")) {
-
-			for (PortletDataHandler portletDataHandler : portletDataHandlers) {
-				return portletDataHandler;
-			}
-		}
-
-		return null;
-	}
-
 	private void _importBatchDeletions(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -121,14 +101,9 @@ public class DeletionSystemEventImporter {
 				continue;
 			}
 
-			if (_isBatchPortlet(portletId)) {
-				PortletDataHandler portletDataHandler =
-					_getPortletDataHandlerForPortlet(portletId);
-
-				if (portletDataHandler != null) {
-					portletDataHandler.deleteData(
-						portletDataContext, portletId, null);
-				}
+			if (BatchEngineDeletionHelperUtil.isBatchPortlet(portletId)) {
+				BatchEngineDeletionHelperUtil.importDeletions(
+					portletDataContext, portletId);
 			}
 		}
 	}
@@ -158,16 +133,6 @@ public class DeletionSystemEventImporter {
 						" with UUID ", element.attributeValue("uuid")),
 					exception);
 			}
-		}
-	}
-
-	private boolean _isBatchPortlet(String portletId) {
-		try (ServiceTrackerList resources = ServiceTrackerListFactory.open(
-				SystemBundleUtil.getBundleContext(), null,
-				"(&(batch.engine.scope=company)(batch.engine.task.item.delegate=true)(batch.engine.task.item.delegate.portlet.id=" +
-					portletId + "))")) {
-
-			return !resources.isEmpty();
 		}
 	}
 

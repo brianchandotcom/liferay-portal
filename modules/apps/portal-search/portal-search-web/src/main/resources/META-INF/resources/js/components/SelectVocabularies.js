@@ -216,7 +216,11 @@ function SelectVocabularies({
 			: SELECT_OPTIONS.SELECT
 	);
 	const [selectedKeys, setSelectedKeys] = useState(
-		initialSelectedERCsRef.current
+		new Set(
+			initialSelectedVocabularyERCs === SELECT_OPTIONS.ALL
+				? []
+				: convertToIDArray(initialSelectedVocabularyERCs)
+		)
 	);
 	const [vocabularyTree, setVocabularyTree] = useState(null);
 	const [vocabularyTreeERCs, setVocabularyTreeERCs] = useState([]);

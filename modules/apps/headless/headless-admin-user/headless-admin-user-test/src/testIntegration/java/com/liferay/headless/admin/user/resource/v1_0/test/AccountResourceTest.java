@@ -25,11 +25,13 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.expando.kernel.exception.NoSuchValueException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountContactInformation;
 import com.liferay.headless.admin.user.client.dto.v1_0.Creator;
@@ -1045,6 +1047,20 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		return true;
 	}
 
+	private Object _getCustomFieldValueData(Account account, String name)
+		throws Exception {
+
+		for (CustomField customField : account.getCustomFields()) {
+			if (StringUtil.equals(customField.getName(), name)) {
+				CustomValue customValue = customField.getCustomValue();
+
+				return customValue.getData();
+			}
+		}
+
+		throw new NoSuchValueException();
+	}
+
 	private Account _postAccount() throws Exception {
 		return _postAccount(randomAccount());
 	}
@@ -1150,25 +1166,54 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	}
 
 	private void _testGetAccountsPageWithCustomFields() throws Exception {
-		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
-			testGroup.getCompanyId(),
+		ExpandoTable expandoTable = ExpandoTestUtil.addTable(
 			_classNameLocalService.getClassNameId(AccountEntry.class),
 			"CUSTOM_FIELDS");
 
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
-			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
+		ExpandoColumn textExpandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, "A" + RandomTestUtil.randomString(),
 			ExpandoColumnConstants.STRING);
 
 		UnicodeProperties unicodeProperties =
-			expandoColumn.getTypeSettingsProperties();
+			textExpandoColumn.getTypeSettingsProperties();
 
 		unicodeProperties.setProperty(
 			ExpandoColumnConstants.INDEX_TYPE,
 			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
 
-		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+		textExpandoColumn.setTypeSettingsProperties(unicodeProperties);
 
-		_expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+		_expandoColumnLocalService.updateExpandoColumn(textExpandoColumn);
+
+		double randomDouble = RandomTestUtil.randomDouble();
+
+		ExpandoColumn doubleArrayExpandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, "A" + RandomTestUtil.randomString(),
+			ExpandoColumnConstants.DOUBLE_ARRAY,
+			new double[] {
+				randomDouble, RandomTestUtil.randomDouble(),
+				RandomTestUtil.randomDouble()
+			});
+
+		long randomLong = RandomTestUtil.randomLong();
+
+		ExpandoColumn longArrayExpandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, "A" + RandomTestUtil.randomString(),
+			ExpandoColumnConstants.LONG_ARRAY,
+			new long[] {
+				randomLong, RandomTestUtil.randomLong(),
+				RandomTestUtil.randomLong()
+			});
+
+		String randomString = RandomTestUtil.randomString();
+
+		ExpandoColumn stringArrayExpandoColumn = ExpandoTestUtil.addColumn(
+			expandoTable, "A" + RandomTestUtil.randomString(),
+			ExpandoColumnConstants.STRING_ARRAY,
+			new String[] {
+				randomString, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString()
+			});
 
 		Account account = randomAccount();
 
@@ -1184,7 +1229,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 							}
 						};
 						dataType = "Text";
-						name = expandoColumn.getName();
+						name = textExpandoColumn.getName();
 					}
 				}
 			});
@@ -1194,7 +1239,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Page<Account> page = accountResource.getAccountsPage(
 			null,
 			StringBundler.concat(
-				"(customFields/", expandoColumn.getName(), " eq '",
+				"(customFields/", textExpandoColumn.getName(), " eq '",
 				RandomTestUtil.randomString(), "')"),
 			Pagination.of(1, 2), null);
 
@@ -1203,14 +1248,35 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		page = accountResource.getAccountsPage(
 			null,
 			StringBundler.concat(
-				"(customFields/", expandoColumn.getName(), " eq '", value,
+				"(customFields/", textExpandoColumn.getName(), " eq '", value,
 				"')"),
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 
-		assertEquals(
-			Collections.singletonList(account), (List<Account>)page.getItems());
+		List<Account> accounts = (List<Account>)page.getItems();
+
+		assertEquals(Collections.singletonList(account), accounts);
+
+		Account actualAccount = accounts.get(0);
+
+		Assert.assertEquals(
+			Arrays.toString(new double[] {0.0}),
+			Arrays.toString(
+				(Object[])_getCustomFieldValueData(
+					actualAccount, doubleArrayExpandoColumn.getName())));
+
+		Assert.assertEquals(
+			Arrays.toString(new long[] {0}),
+			Arrays.toString(
+				(Object[])_getCustomFieldValueData(
+					actualAccount, longArrayExpandoColumn.getName())));
+
+		Assert.assertEquals(
+			Arrays.toString(new String[] {"false"}),
+			Arrays.toString(
+				(Object[])_getCustomFieldValueData(
+					actualAccount, stringArrayExpandoColumn.getName())));
 	}
 
 	private void _testGetAccountWithNestedFields() throws Exception {

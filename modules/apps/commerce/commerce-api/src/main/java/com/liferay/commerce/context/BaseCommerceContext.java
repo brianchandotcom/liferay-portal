@@ -148,7 +148,7 @@ public class BaseCommerceContext implements CommerceContext {
 	@Override
 	public long getCommerceChannelId() throws PortalException {
 		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByGroupId(
+			_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
 				_commerceChannelGroupId);
 
 		if (commerceChannel == null) {

@@ -37,7 +37,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.concurrent.Callable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -192,10 +191,17 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				_taskItemDelegateName);
 
 		try {
+			BatchEngineImportTask finalBatchEngineImportTask =
+				batchEngineImportTask;
+
 			TransactionInvokerUtil.invoke(
 				transactionConfig,
-				new BatchEngineImportTaskExecutorCallable(
-					batchEngineImportTask));
+				() -> {
+					_batchEngineImportTaskExecutor.execute(
+						finalBatchEngineImportTask);
+
+					return null;
+				});
 		}
 		catch (Throwable throwable) {
 			throw new RuntimeException(throwable);
@@ -268,25 +274,5 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final String _fileName;
 	private final String _itemClassName;
 	private final String _taskItemDelegateName;
-
-	private class BatchEngineImportTaskExecutorCallable
-		implements Callable<Void> {
-
-		public BatchEngineImportTaskExecutorCallable(
-			BatchEngineImportTask batchEngineImportTask) {
-
-			_batchEngineImportTask = batchEngineImportTask;
-		}
-
-		@Override
-		public Void call() {
-			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
-
-			return null;
-		}
-
-		private final BatchEngineImportTask _batchEngineImportTask;
-
-	}
 
 }

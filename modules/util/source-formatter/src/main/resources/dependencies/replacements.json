@@ -3860,6 +3860,15 @@
 	},
 	{
 		"classNames": [
+			"CPSpecificationOptionLocalService",
+			"CPSpecificationOptionLocalServiceUtil"
+		],
+		"from": "addCPSpecificationOption(long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, boolean paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-49731",
+		"to": "addCPSpecificationOption(null, param#0#, param#1#, null, param#2#, param#3#, param#4#, param#5#, 0, param#6#)"
+	},
+	{
+		"classNames": [
 			"CommerceOrderItem"
 		],
 		"from": "getDeliveryGroup",
@@ -3882,15 +3891,6 @@
 		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
 		"issueKey": "LPD-50175",
 		"to": "fetchAccountEntryByExternalReferenceCode(param#1#, param#0#)"
-	},
-	{
-		"classNames": [
-			"CPSpecificationOptionLocalService",
-			"CPSpecificationOptionLocalServiceUtil"
-		],
-		"from": "addCPSpecificationOption(long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, boolean paramName, String paramName, ServiceContext paramName)",
-		"issueKey": "LPD-51394",
-		"to": "addCPSpecificationOption(null, param#0#, param#1#, null, param#2#, param#3#, param#4#, param#5#, 0, param#6#)"
 	},
 	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",

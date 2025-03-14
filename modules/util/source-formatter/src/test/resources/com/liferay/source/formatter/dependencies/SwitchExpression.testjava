@@ -10,7 +10,7 @@ package com.liferay.source.formatter.dependencies;
  */
 public class SwitchExpression {
 
-	public void method(String month) {
+	public String method(String month) {
 		return switch (month) {
 			case "Jan", "Feb", "Mar" -> "Q1";
 			case "Apr", "May", "Jun" -> "Q2";

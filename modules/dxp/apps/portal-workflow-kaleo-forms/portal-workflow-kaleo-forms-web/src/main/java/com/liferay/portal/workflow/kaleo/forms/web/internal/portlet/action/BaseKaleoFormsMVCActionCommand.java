@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -229,28 +230,26 @@ public abstract class BaseKaleoFormsMVCActionCommand
 		List<DDMFormFieldValue> reviewedDDMFormFieldValues,
 		List<DDMFormFieldValue> beforeReviewDDMFormFieldValues) {
 
-		List<DDMFormFieldValue> removedByReviewerDDMFormFieldValues =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			beforeReviewDDMFormFieldValues,
+			beforeReviewDDMFormFieldValue -> {
+				DDMFormFieldValue actualDDMFormFieldValue =
+					_getNameAndInstanceIdDDMFormFieldValue(
+						reviewedDDMFormFieldValues,
+						beforeReviewDDMFormFieldValue.getName(),
+						beforeReviewDDMFormFieldValue.getInstanceId());
 
-		for (DDMFormFieldValue beforeReviewDDMFormFieldValue :
-				beforeReviewDDMFormFieldValues) {
+				if (actualDDMFormFieldValue == null) {
+					DDMFormField ddmFormField =
+						beforeReviewDDMFormFieldValue.getDDMFormField();
 
-			DDMFormFieldValue actualDDMFormFieldValue =
-				_getNameAndInstanceIdDDMFormFieldValue(
-					reviewedDDMFormFieldValues,
-					beforeReviewDDMFormFieldValue.getName(),
-					beforeReviewDDMFormFieldValue.getInstanceId());
+					if (!ddmFormField.isReadOnly()) {
+						return beforeReviewDDMFormFieldValue;
+					}
 
-			if (actualDDMFormFieldValue == null) {
-				DDMFormField ddmFormField =
-					beforeReviewDDMFormFieldValue.getDDMFormField();
-
-				if (!ddmFormField.isReadOnly()) {
-					removedByReviewerDDMFormFieldValues.add(
-						beforeReviewDDMFormFieldValue);
+					return null;
 				}
-			}
-			else {
+
 				List<DDMFormFieldValue>
 					nestedRemovedByReviewerDDMFormFieldValues =
 						_getRemovedByReviewerDDMFormFieldValues(
@@ -259,17 +258,15 @@ public abstract class BaseKaleoFormsMVCActionCommand
 							beforeReviewDDMFormFieldValue.
 								getNestedDDMFormFieldValues());
 
-				if (!nestedRemovedByReviewerDDMFormFieldValues.isEmpty()) {
-					beforeReviewDDMFormFieldValue.setNestedDDMFormFields(
-						nestedRemovedByReviewerDDMFormFieldValues);
-
-					removedByReviewerDDMFormFieldValues.add(
-						beforeReviewDDMFormFieldValue);
+				if (nestedRemovedByReviewerDDMFormFieldValues.isEmpty()) {
+					return null;
 				}
-			}
-		}
 
-		return removedByReviewerDDMFormFieldValues;
+				beforeReviewDDMFormFieldValue.setNestedDDMFormFields(
+					nestedRemovedByReviewerDDMFormFieldValues);
+
+				return beforeReviewDDMFormFieldValue;
+			});
 	}
 
 	private void _removeRemovedByReviewerDDMFormFieldValues(

@@ -95,13 +95,6 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 		_checkClassName(detailAST, osgiCommandScopes.get(0));
 
-		List<String> osgiCommandFunctions = _getProperties(
-			annotationArrayInitDetailAST, "osgi.command.function");
-
-		if (osgiCommandFunctions.isEmpty()) {
-			return;
-		}
-
 		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
 			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
 
@@ -115,6 +108,9 @@ public class OSGiCommandsCheck extends BaseCheck {
 				return modifiersDetailAST.branchContains(
 					TokenTypes.LITERAL_PUBLIC);
 			});
+
+		List<String> osgiCommandFunctions = _getProperties(
+			annotationArrayInitDetailAST, "osgi.command.function");
 
 		_checkIncorrectPublicMethodName(
 			methodDefinitionDetailASTList, osgiCommandFunctions);

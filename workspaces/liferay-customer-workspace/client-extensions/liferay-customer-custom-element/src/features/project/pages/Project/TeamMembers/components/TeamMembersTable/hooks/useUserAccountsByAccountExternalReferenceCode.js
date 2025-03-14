@@ -323,15 +323,15 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 									accountRole.raysourceName
 								);
 
-							await addContactRoleNameByEmailByProject({
-								accountKey: project.accountKey,
-								emailURI: encodeURI(userAccount.emailAddress),
+							await addContactRoleNameByEmailByProject(
+								project.accountKey,
+								encodeURI(userAccount.emailAddress),
 								firstName,
 								lastName,
 								oAuthToken,
 								provisioningServerAPI,
-								roleName: oldAccountRoleRaysourceName,
-							});
+								oldAccountRoleRaysourceName
+							);
 
 							await assignUserAccountWithAccountRole({
 								context,

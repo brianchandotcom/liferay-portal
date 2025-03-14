@@ -6,7 +6,7 @@
 package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Currency;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -35,7 +35,7 @@ public class CurrencyDTOConverter
 		throws Exception {
 
 		CommerceCurrency commerceCurrency =
-			_commerceCurrencyService.getCommerceCurrency(
+			_commerceCurrencyLocalService.getCommerceCurrency(
 				(Long)dtoConverterContext.getId());
 
 		return new Currency() {
@@ -65,6 +65,6 @@ public class CurrencyDTOConverter
 	}
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 }

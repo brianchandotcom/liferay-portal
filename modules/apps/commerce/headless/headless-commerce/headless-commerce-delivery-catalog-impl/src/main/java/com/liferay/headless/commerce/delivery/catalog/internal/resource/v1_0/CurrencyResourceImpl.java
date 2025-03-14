@@ -6,11 +6,11 @@
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Currency;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.CurrencyResource;
 import com.liferay.portal.kernel.search.Field;
@@ -78,7 +78,7 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				int count =
-					_commerceChannelRelService.
+					_commerceChannelRelLocalService.
 						getCommerceCurrencyCommerceChannelRelsCount(
 							commerceChannel.getCommerceChannelId(), null);
 
@@ -96,7 +96,7 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 			},
 			sorts,
 			document -> _toCurrency(
-				_commerceCurrencyService.getCommerceCurrency(
+				_commerceCurrencyLocalService.getCommerceCurrency(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -117,10 +117,10 @@ public class CurrencyResourceImpl extends BaseCurrencyResourceImpl {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceChannelRelService _commerceChannelRelService;
+	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.CurrencyDTOConverter)"

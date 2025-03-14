@@ -49,7 +49,11 @@ function getJestConfig({rootDir = '<rootDir>'}) {
 			url: 'http://localhost',
 		},
 		testMatch: [`${rootDir}/test/**/*.{js,ts,tsx}`],
-		testPathIgnorePatterns: ['/node_modules/', `${rootDir}/test/stories/`],
+		testPathIgnorePatterns: [
+			'/node_modules/',
+			`${rootDir}/test/stories/`,
+			'/test/__lib__/',
+		],
 		testResultsProcessor: '@liferay/jest-junit-reporter',
 		transform: {
 

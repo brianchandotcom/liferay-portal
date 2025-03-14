@@ -1587,9 +1587,29 @@ public class DBPartitionUtil {
 
 			@Override
 			public int executeUpdate(String sql) throws SQLException {
-				Connection connection = statement.getConnection();
-
 				String lowerCaseSQL = StringUtil.toLowerCase(sql);
+
+				if (CompanyThreadLocal.getNonsystemCompanyId() !=
+						PortalInstancePool.getDefaultCompanyId()) {
+
+					int count = StringUtil.count(
+						lowerCaseSQL, _DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
+
+					if ((count > 0) &&
+						!StringUtil.startsWith(lowerCaseSQL, "create schema") &&
+						!StringUtil.startsWith(lowerCaseSQL, "drop schema")) {
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(sql);
+						}
+
+						throw new IllegalArgumentException(
+							_DATABASE_PARTITION_SCHEMA_NAME_PREFIX +
+								" cannot be used in a statement executeUpdate");
+					}
+				}
+
+				Connection connection = statement.getConnection();
 
 				String[] query = sql.split(StringPool.SPACE);
 

@@ -53,6 +53,9 @@ async function getJestModuleNameMapper({cwd = process.cwd()}) {
 	projects.forEach((project) => {
 		const packageJson = path.join(project, 'package.json');
 		const {main, name} = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
+
+		mappings[`^${name}/test/__lib__/(.*)`] = `${project}/test/__lib__/$1`;
+
 		if (main) {
 			const entry = path.join(project, ...SRC_PATH, main);
 

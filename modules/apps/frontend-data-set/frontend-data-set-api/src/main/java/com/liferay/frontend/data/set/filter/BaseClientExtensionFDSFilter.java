@@ -10,6 +10,8 @@ package com.liferay.frontend.data.set.filter;
  */
 public abstract class BaseClientExtensionFDSFilter implements FDSFilter {
 
+	public abstract String getCETExternalReferenceCode();
+
 	public abstract String getModuleURL();
 
 	@Override

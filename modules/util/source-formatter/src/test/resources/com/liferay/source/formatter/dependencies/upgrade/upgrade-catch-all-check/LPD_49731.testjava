@@ -1,0 +1,25 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+/**
+ * @author Micaelle Silva
+ */
+public class LPD_49731 {
+
+	public void method(
+		long userId, long cpOptionCategoryId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, boolean facetable, String key,
+		ServiceContext serviceContext) {
+
+		CPSpecificationOptionLocalServiceUtil.addCPSpecificationOption(userId, cpOptionCategoryId, titleMap, descriptionMap, facetable, key, serviceContext);
+		_cpSpecificationOptionLocalService.addCPSpecificationOption(123, cpOptionCategoryId, titleMap, descriptionMap, facetable, key, serviceContext);
+		_cpSpecificationOptionLocalService.addCPSpecificationOption(userId, cpOptionCategoryId, titleMap, descriptionMap, facetable, key, serviceContext);
+	}
+	
+	@Reference
+	private CPSpecificationOptionLocalService _cpSpecificationOptionLocalService;
+}

@@ -226,6 +226,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -640,6 +641,11 @@ public class ObjectEntryLocalServiceImpl
 		deleteRelatedObjectEntries(
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
 			objectEntry.getPrimaryKey());
+
+		_sharingEntryLocalService.deleteSharingEntries(
+			_classNameLocalService.getClassNameId(
+				objectDefinition.getClassName()),
+			objectEntry.getObjectEntryId());
 
 		if (!objectDefinition.isActive() ||
 			!objectDefinition.isEnableIndexSearch()) {
@@ -6076,6 +6082,9 @@ public class ObjectEntryLocalServiceImpl
 
 	private ServiceTrackerList<ObjectEntryValuesContributor>
 		_serviceTrackerList;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private Sorts _sorts;

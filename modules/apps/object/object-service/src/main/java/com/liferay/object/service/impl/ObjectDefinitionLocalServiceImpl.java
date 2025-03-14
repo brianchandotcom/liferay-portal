@@ -162,6 +162,7 @@ import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 
 import java.sql.PreparedStatement;
 
@@ -974,6 +975,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_organizationLocalService, _ploEntryLocalService, _portal,
 				_portletLocalService, _resourceActions, _userLocalService,
 				_resourcePermissionLocalService, _searchLocalizationHelper,
+				_sharingModelResourcePermissionConfigurator,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService);
 
@@ -3133,6 +3135,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private SearchLocalizationHelper _searchLocalizationHelper;
+
+	@Reference
+	private SharingModelResourcePermissionConfigurator
+		_sharingModelResourcePermissionConfigurator;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

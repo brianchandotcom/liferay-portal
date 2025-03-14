@@ -13,14 +13,6 @@ import {
 } from '../../../src/main/resources/META-INF/resources/js';
 import {ModalContent} from '../../../src/main/resources/META-INF/resources/js/components/import/ImportOptionsModal';
 
-Liferay.ThemeDisplay.getPathContext = () => '';
-
-jest.mock(
-	'/o/frontend-js-dependencies-web/__liferay__/exports/axe-core.js',
-	() => jest.requireActual('axe-core'),
-	{virtual: true}
-);
-
 const renderComponent = async ({
 	onCloseModal = () => null,
 	onImport = () => null,

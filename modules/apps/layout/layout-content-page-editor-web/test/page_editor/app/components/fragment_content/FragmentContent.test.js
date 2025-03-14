@@ -40,6 +40,7 @@ const getFragmentEntryLink = ({
 			'editable-id': {},
 		},
 	},
+	fragmentEntryType = 'component',
 } = {}) => ({
 	comments: [],
 	configuration: {
@@ -73,6 +74,7 @@ const getFragmentEntryLink = ({
 	},
 	editableValues,
 	fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
+	fragmentEntryType,
 	name: 'Heading',
 });
 
@@ -234,5 +236,23 @@ describe('FragmentContent', () => {
 		const editableContent = document.body.querySelector('#editable-id');
 
 		expect(editableContent.dataset.tooltipFloating).toBe('true');
+	});
+
+	it('does not hide old widget topper for embedded widgets', async () => {
+		const fragmentEntryLink = getFragmentEntryLink({
+			content:
+				'<lfr-editable class="page-editor__editable" id="editable-id" type="text">Default content</lfr-editable>',
+			fragmentEntryType: 'whatever-that-is-not-widget',
+		});
+
+		await act(async () => {
+			renderFragmentContent({fragmentEntryLink});
+		});
+
+		expect(
+			document.querySelector(
+				'.page-editor__fragment-content--portlet-topper-hidden'
+			)
+		).not.toBeInTheDocument();
 	});
 });

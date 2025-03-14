@@ -1,9 +1,8 @@
 {
-	"@generated": "e39d480ddf707c8df90d5ac9e774088c5b6bb456",
+	"@generated": "62036d24c4fc5067ac4422d8d72fa8c0db92c2b5",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
 		"checkJs": false,
 		"composite": true,
 		"declarationDir": "../../../../../../../../.tsc/types",

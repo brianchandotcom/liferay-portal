@@ -13,6 +13,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {messageBoardsPagesTest} from '../../fixtures/messageBoardsTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {siteStagingPageTest} from '../../fixtures/siteStagingPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
@@ -53,6 +54,7 @@ export const testAdmin = mergeTests(
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
+	messageBoardsPagesTest,
 	productMenuPageTest,
 	siteStagingPageTest,
 	usersAndOrganizationsPagesTest
@@ -1733,6 +1735,31 @@ testAdmin(
 			dialog.accept().catch(() => {});
 		});
 
+		const checkVisibility = async (visibilityFlags: boolean[]) => {
+			const statuses = [
+				exportUserDataPage.blogsStatus,
+				exportUserDataPage.documentsAndMediaStatus,
+				exportUserDataPage.messageBoardsStatus,
+				exportUserDataPage.webContentStatus,
+				exportUserDataPage.wikiStatus,
+			];
+
+			if (visibilityFlags.length !== statuses.length) {
+				throw new Error(
+					`Expected ${statuses.length} visibility flags but got ${visibilityFlags.length}`
+				);
+			}
+
+			for (let i = 0; i < statuses.length; i++) {
+				if (visibilityFlags[i]) {
+					await expect(statuses[i]).toBeVisible();
+				}
+				else {
+					await expect(statuses[i]).not.toBeVisible();
+				}
+			}
+		};
+
 		const userAccount =
 			await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -1839,31 +1866,6 @@ testAdmin(
 			else {
 				await checkVisibility([true, true, true, true, true]);
 				await exportUserDataPage.verifyPaginationResult(1, 5, 5);
-			}
-		}
-
-		async function checkVisibility(visibilityFlags: boolean[]) {
-			const statuses = [
-				exportUserDataPage.blogsStatus,
-				exportUserDataPage.documentsAndMediaStatus,
-				exportUserDataPage.messageBoardsStatus,
-				exportUserDataPage.webContentStatus,
-				exportUserDataPage.wikiStatus,
-			];
-
-			if (visibilityFlags.length !== statuses.length) {
-				throw new Error(
-					`Expected ${statuses.length} visibility flags but got ${visibilityFlags.length}`
-				);
-			}
-
-			for (let i = 0; i < statuses.length; i++) {
-				if (visibilityFlags[i]) {
-					await expect(statuses[i]).toBeVisible();
-				}
-				else {
-					await expect(statuses[i]).not.toBeVisible();
-				}
 			}
 		}
 	}
@@ -2045,5 +2047,176 @@ testAdmin(
 		await expect(page.getByText(userAccount.name)).toHaveCount(0);
 		await expect(page.getByText(attachment1.title)).toHaveCount(0);
 		await expect(page.getByText(attachment2.title)).toHaveCount(0);
+	}
+);
+
+testAdmin(
+	'Can anonymize a related asset',
+	{tag: '@LPD-51202'},
+	async ({
+		apiHelpers,
+		messageBoardsEditThreadPage,
+		messageBoardsPage,
+		page,
+		personalDataErasurePage,
+		userAssociatedDataEditMessageBoardThreadPage,
+		userAssociatedDataMessageBoardPage,
+		usersAndOrganizationsPage,
+	}) => {
+		test.setTimeout(120000);
+
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount.alternateName);
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: 'Blog' + getRandomInt(),
+		});
+
+		const document = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			)
+		);
+
+		const threadSubject = 'Thread' + getRandomInt();
+
+		await messageBoardsEditThreadPage.gotoAndPublishNewBasicThread(
+			threadSubject,
+			getRandomString(),
+			site.friendlyUrlPath
+		);
+
+		await waitForAlert(page);
+
+		await userAssociatedDataMessageBoardPage.actionButton.click();
+		await userAssociatedDataMessageBoardPage.editMenuItem.click();
+
+		await expect(
+			userAssociatedDataEditMessageBoardThreadPage.relatedAssetsButton
+		).toBeVisible();
+
+		await userAssociatedDataEditMessageBoardThreadPage.relatedAssetsButton.click();
+
+		await expect(async () => {
+			await userAssociatedDataEditMessageBoardThreadPage.selectButton.click();
+			await expect(
+				userAssociatedDataEditMessageBoardThreadPage.blogEntryMenuItem
+			).toBeVisible();
+		}).toPass();
+
+		await userAssociatedDataEditMessageBoardThreadPage.blogEntryMenuItem.click();
+
+		await expect(
+			await userAssociatedDataEditMessageBoardThreadPage.tableRowCheckBox(
+				blog.headline
+			)
+		).toBeVisible();
+
+		await (
+			await userAssociatedDataEditMessageBoardThreadPage.tableRowCheckBox(
+				blog.headline
+			)
+		).check();
+		await userAssociatedDataEditMessageBoardThreadPage.doneButton.click();
+
+		await expect(async () => {
+			await userAssociatedDataEditMessageBoardThreadPage.selectButton.click();
+			await expect(
+				userAssociatedDataEditMessageBoardThreadPage.basicDocumentMenuItem
+			).toBeVisible();
+		}).toPass();
+
+		await userAssociatedDataEditMessageBoardThreadPage.basicDocumentMenuItem.click();
+
+		await page.waitForTimeout(1000);
+
+		await expect(
+			await userAssociatedDataEditMessageBoardThreadPage.tableRowCheckBox(
+				document.title
+			)
+		).toBeVisible();
+
+		await (
+			await userAssociatedDataEditMessageBoardThreadPage.tableRowCheckBox(
+				document.title
+			)
+		).check();
+		await userAssociatedDataEditMessageBoardThreadPage.doneButton.click();
+		await userAssociatedDataEditMessageBoardThreadPage.publishButton.click();
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await waitForAlert(page);
+
+		await personalDataErasurePage.blogsRadioButton.check();
+		await (
+			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
+				blog.headline
+			)
+		).check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.anonymizeMenuItem.click();
+
+		await waitForAlert(page);
+
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+
+		await expect(page.getByText(userAccount.name)).toHaveCount(1);
+
+		await userAssociatedDataMessageBoardPage
+			.threadSubjectLink(threadSubject)
+			.click();
+		await userAssociatedDataEditMessageBoardThreadPage
+			.relatedAssetLink(blog.headline)
+			.click();
+
+		await expect(page.getByText(anonymousUserName)).toHaveCount(1);
+
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+		await userAssociatedDataMessageBoardPage
+			.threadSubjectLink(threadSubject)
+			.click();
+		await userAssociatedDataEditMessageBoardThreadPage
+			.relatedAssetLink(document.title)
+			.click();
+
+		await expect(page.getByText(userAccount.name)).toHaveCount(1);
 	}
 );

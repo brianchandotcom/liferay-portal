@@ -13,6 +13,8 @@ import {PersonalDataErasurePage} from '../pages/user-associated-data-web/Persona
 import {UserAssociatedDataBlogPage} from '../pages/user-associated-data-web/blog-web/UserAssociatedDataBlogPage';
 import {UserAssociatedDataDocumentLibraryPage} from '../pages/user-associated-data-web/document-library-web/UserAssociatedDataDocumentLibraryPage';
 import {UserAssociatedDataJournalPage} from '../pages/user-associated-data-web/journal-article-web/UserAssociatedDataJournalPage';
+import {UserAssociatedDataEditMessageBoardThreadPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataEditMessageBoardThreadPage';
+import {UserAssociatedDataMessageBoardPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataMessageBoardPage';
 import {UserAssociatedDataSiteStagingPage} from '../pages/user-associated-data-web/site-staging-web/UserAssociatedDataSiteStagingPage';
 import {AssignUsersPage} from '../pages/users-admin-web/AssignUsersPage';
 import {EditOrganizationPage} from '../pages/users-admin-web/EditOrganizationPage';
@@ -42,7 +44,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	teamsPage: TeamsPage;
 	userAssociatedDataBlogPage: UserAssociatedDataBlogPage;
 	userAssociatedDataDocumentLibraryPage: UserAssociatedDataDocumentLibraryPage;
+	userAssociatedDataEditMessageBoardThreadPage: UserAssociatedDataEditMessageBoardThreadPage;
 	userAssociatedDataJournalPage: UserAssociatedDataJournalPage;
+	userAssociatedDataMessageBoardPage: UserAssociatedDataMessageBoardPage;
 	userAssociatedDataSiteStagingPage: UserAssociatedDataSiteStagingPage;
 	userLocaleOptionsPage: UserLocaleOptionsPage;
 	userPersonalSitePage: UserPersonalSitePage;
@@ -93,8 +97,14 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	userAssociatedDataDocumentLibraryPage: async ({page}, use) => {
 		await use(new UserAssociatedDataDocumentLibraryPage(page));
 	},
+	userAssociatedDataEditMessageBoardThreadPage: async ({page}, use) => {
+		await use(new UserAssociatedDataEditMessageBoardThreadPage(page));
+	},
 	userAssociatedDataJournalPage: async ({page}, use) => {
 		await use(new UserAssociatedDataJournalPage(page));
+	},
+	userAssociatedDataMessageBoardPage: async ({page}, use) => {
+		await use(new UserAssociatedDataMessageBoardPage(page));
 	},
 	userAssociatedDataSiteStagingPage: async ({page}, use) => {
 		await use(new UserAssociatedDataSiteStagingPage(page));

@@ -147,11 +147,11 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 			String methodName = getName(methodDefinitionDetailAST);
 
-			if (!osgiCommandFunctions.contains(methodName)) {
-				log(
-					methodDefinitionDetailAST,
-					_MSG_INCORRECT_PUBLIC_METHOD_NAME);
+			if (osgiCommandFunctions.contains(methodName)) {
+				continue;
 			}
+
+			log(methodDefinitionDetailAST, _MSG_INCORRECT_PUBLIC_METHOD_NAME);
 		}
 	}
 
@@ -166,17 +166,21 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 			String methodName = getName(methodDefinitionDetailAST);
 
-			if (!methodNames.contains(methodName)) {
-				methodNames.add(methodName);
+			if (methodNames.contains(methodName)) {
+				continue;
 			}
+
+			methodNames.add(methodName);
 		}
 
 		for (String osgiCommandFunction : osgiCommandFunctions) {
-			if (!methodNames.contains(osgiCommandFunction)) {
-				log(
-					detailAST, _MSG_MISSING_IMPLEMENTED_COMMAND_FUNCTION,
-					osgiCommandFunction);
+			if (methodNames.contains(osgiCommandFunction)) {
+				continue;
 			}
+
+			log(
+				detailAST, _MSG_MISSING_IMPLEMENTED_COMMAND_FUNCTION,
+				osgiCommandFunction);
 		}
 	}
 
@@ -195,9 +199,11 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 			String typeName = getTypeName(variableDefinitionDetailAST, false);
 
-			if (typeName.endsWith("OSGiCommands")) {
-				log(variableDefinitionDetailAST, _MSG_AVOID_OSGI_REFERENCE);
+			if (!typeName.endsWith("OSGiCommands")) {
+				continue;
 			}
+
+			log(variableDefinitionDetailAST, _MSG_AVOID_OSGI_REFERENCE);
 		}
 	}
 
@@ -217,9 +223,11 @@ public class OSGiCommandsCheck extends BaseCheck {
 				StringUtil.unquote(firstChildDetailAST.getText()),
 				CharPool.EQUAL);
 
-			if (property[0].equals(name)) {
-				osgiCommandProperties.add(property[1]);
+			if (!property[0].equals(name)) {
+				continue;
 			}
+
+			osgiCommandProperties.add(property[1]);
 		}
 
 		return osgiCommandProperties;

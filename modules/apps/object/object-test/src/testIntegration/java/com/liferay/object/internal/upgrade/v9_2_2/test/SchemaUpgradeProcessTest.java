@@ -16,13 +16,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -40,7 +42,6 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,17 +57,12 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 		BaseDBPartitionTestCase.setUpClass();
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		_company = _companyLocalService.addCompany(
-			null, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0,
-			true, true, null, null, null, null, null, null);
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		if (_company != null) {
-			_companyLocalService.deleteCompany(_company);
+		DB db = DBManagerUtil.getDB();
+
+		for (String viewName : _viewNames) {
+			db.runSQL("drop view if exists " + viewName);
 		}
 	}
 
@@ -144,16 +140,14 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 		String defaultPartitionName = DBPartitionUtil.getPartitionName(
 			PortalInstancePool.getDefaultCompanyId());
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					_company.getCompanyId());
-			Statement statement = connection.createStatement()) {
-
+		try (Statement statement = connection.createStatement()) {
 			statement.execute(
 				StringBundler.concat(
 					"create or replace view ", tableName, " as select * from ",
 					defaultPartitionName, StringPool.PERIOD, tableName));
 		}
+
+		_viewNames.add(tableName);
 	}
 
 	private List<String> _getViewNames() throws Exception {
@@ -161,7 +155,7 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					_company.getCompanyId())) {
+					TestPropsValues.getCompanyId())) {
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -183,20 +177,17 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 	private static final String _CLASS_NAME =
 		"com.liferay.object.internal.upgrade.v9_2_2.SchemaUpgradeProcess";
 
-	private static final String _VIRTUAL_HOSTNAME =
-		RandomTestUtil.randomString() + ".localtest.me";
-
 	@Inject(
 		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private final List<String> _viewNames = new ArrayList<>();
 
 }

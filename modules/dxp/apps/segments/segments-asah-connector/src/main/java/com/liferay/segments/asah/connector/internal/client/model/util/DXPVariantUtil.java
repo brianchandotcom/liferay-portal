@@ -5,6 +5,7 @@
 
 package com.liferay.segments.asah.connector.internal.client.model.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -14,7 +15,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,18 +48,10 @@ public class DXPVariantUtil {
 			List<SegmentsExperimentRel> segmentsExperimentRels)
 		throws PortalException {
 
-		List<DXPVariant> dxpVariants = new ArrayList<>();
-
-		for (SegmentsExperimentRel segmentsExperimentRel :
-				segmentsExperimentRels) {
-
-			dxpVariants.add(
-				toDXPVariant(
-					locale, segmentsExperienceLocalService,
-					segmentsExperimentRel));
-		}
-
-		return dxpVariants;
+		return TransformUtil.transform(
+			segmentsExperimentRels,
+			segmentsExperimentRel -> toDXPVariant(
+				locale, segmentsExperienceLocalService, segmentsExperimentRel));
 	}
 
 	public static DXPVariants toDXPVariants(

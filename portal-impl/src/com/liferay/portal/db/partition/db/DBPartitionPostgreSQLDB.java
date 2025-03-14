@@ -129,7 +129,9 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 
 		DB db = DBManagerUtil.getDB();
 
-		try (SafeCloseable safeCloseable = _setPartition(fromPartitionName)) {
+		try (SafeCloseable safeCloseable = _setPartitionName(
+				fromPartitionName)) {
+
 			String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
 				connection, fromTableName);
 
@@ -228,7 +230,7 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 		connection.setSchema(partitionName);
 	}
 
-	private SafeCloseable _setPartition(String partitionName) {
+	private SafeCloseable _setPartitionName(String partitionName) {
 		_partitionName.set(partitionName);
 
 		return () -> _partitionName.set(null);

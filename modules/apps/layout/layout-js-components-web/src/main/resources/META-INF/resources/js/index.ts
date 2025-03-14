@@ -36,7 +36,6 @@ export {
 	useHasStyleErrors,
 } from './contexts/StyleErrorsContext';
 export {default as useControlledState} from './hooks/useControlledState';
-export {default as checkAccessibility} from './tests/checkAccessibility';
 export {default as SegmentExperience} from './types/SegmentExperience';
 export {default as convertRGBtoHex} from './utils/convertRGBtoHex';
 export {default as isNullOrUndefined} from './utils/isNullOrUndefined';

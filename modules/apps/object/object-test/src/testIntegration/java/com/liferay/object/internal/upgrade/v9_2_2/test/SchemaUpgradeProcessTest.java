@@ -17,7 +17,7 @@ import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -54,7 +54,7 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		Company company = CompanyLocalServiceUtil.addCompany(
+		_company = _companyLocalService.addCompany(
 			null, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0,
 			true, true, null, null, null, null, null, null);
 
@@ -157,9 +157,13 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
+	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
 	private String _partitionName;
 
 }

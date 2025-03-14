@@ -5,9 +5,6 @@
 
 package com.liferay.object.internal.upgrade.v9_2_2;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -50,11 +47,7 @@ public class SchemaUpgradeProcess extends UpgradeProcess {
 					(tableNameLowerCase.contains("_x_") ||
 					 tableNameLowerCase.startsWith("o_"))) {
 
-					runSQL(
-						StringBundler.concat(
-							"drop view if exists ",
-							DBPartitionUtil.getPartitionName(companyId),
-							StringPool.PERIOD, tableName));
+					runSQL("drop view if exists " + tableName);
 				}
 			}
 		}

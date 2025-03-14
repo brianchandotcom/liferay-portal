@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {contentSecurityPolicyPagesTest} from '../../fixtures/contentSecurityPolicyPagesTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
@@ -20,10 +19,6 @@ import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDe
 export const test = mergeTests(
 	apiHelpersTest,
 	contentSecurityPolicyPagesTest,
-	featureFlagsTest({
-		'LPS-134060': {enabled: true},
-		'LPS-178052': {enabled: true},
-	}),
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest

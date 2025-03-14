@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Hits;
@@ -24,12 +25,14 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -145,6 +148,55 @@ public class SharingEntrySearchDLTest {
 		}
 	}
 
+	@Test
+	public void testUserCanSearchSharedPrivateDocumentSharedToUserGroup()
+		throws Exception {
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		try {
+			_userGroupLocalService.addUserUserGroup(
+				_groupUser.getUserId(), userGroup);
+
+			_sharingEntryLocalService.addSharingEntry(
+				null, TestPropsValues.getUserId(), userGroup.getUserGroupId(),
+				0, _classNameId, _fileEntry.getFileEntryId(),
+				_group.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), null,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+			Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
+				DLFileEntryConstants.getClassName());
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(_groupUser);
+
+			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+					_groupUser, permissionChecker)) {
+
+				SearchContext searchContext = new SearchContext();
+
+				searchContext.setCompanyId(_fileEntry.getCompanyId());
+				searchContext.setGroupIds(
+					new long[] {_fileEntry.getRepositoryId()});
+				searchContext.setKeywords(_title);
+				searchContext.setUserId(_groupUser.getUserId());
+
+				Hits hits = indexer.search(searchContext);
+
+				Assert.assertEquals(hits.toString(), 1, hits.getLength());
+			}
+		}
+		finally {
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserUserGroup(
+					_groupUser.getUserId(), userGroup);
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
+		}
+	}
+
 	private long _classNameId;
 
 	@Inject
@@ -165,5 +217,8 @@ public class SharingEntrySearchDLTest {
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 	private String _title;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

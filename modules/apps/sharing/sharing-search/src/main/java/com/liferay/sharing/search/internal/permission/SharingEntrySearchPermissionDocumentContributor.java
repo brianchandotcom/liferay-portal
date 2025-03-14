@@ -5,6 +5,7 @@
 
 package com.liferay.sharing.search.internal.permission;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -53,15 +54,29 @@ public class SharingEntrySearchPermissionDocumentContributor
 			return;
 		}
 
-		long[] userIds = new long[sharingEntries.size()];
+		document.addKeyword(
+			"sharedToUserId",
+			TransformUtil.transformToLongArray(
+				sharingEntries,
+				sharingEntry -> {
+					if (sharingEntry.getToUserId() == 0) {
+						return null;
+					}
 
-		for (int i = 0; i < userIds.length; i++) {
-			SharingEntry sharingEntry = sharingEntries.get(i);
+					return sharingEntry.getToUserId();
+				}));
 
-			userIds[i] = sharingEntry.getToUserId();
-		}
+		document.addKeyword(
+			"sharedToUserGroupId",
+			TransformUtil.transformToLongArray(
+				sharingEntries,
+				sharingEntry -> {
+					if (sharingEntry.getToUserGroupId() == 0) {
+						return null;
+					}
 
-		document.addKeyword("sharedToUserId", userIds);
+					return sharingEntry.getToUserGroupId();
+				}));
 	}
 
 	@Reference

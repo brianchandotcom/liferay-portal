@@ -359,14 +359,14 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 const BusinessEventsItemEdit: React.FC = () => {
 	const {id} = useParams<{id: string}>();
-	const [businessEvent, setBusinessEvent] = useState<IBusinessEvent | null>(
-		null
-	);
+	const [businessEvent, setBusinessEvent] = useState<
+		IBusinessEvent | undefined
+	>(undefined);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		if (id) {
-			const fetchEvent = async () => {
+			const fetchBusinessEvent = async () => {
 				try {
 					setLoading(true);
 
@@ -377,14 +377,14 @@ const BusinessEventsItemEdit: React.FC = () => {
 				catch (error) {
 					console.error('Error', error);
 
-					setBusinessEvent(null);
+					setBusinessEvent(undefined);
 				}
 				finally {
 					setLoading(false);
 				}
 			};
 
-			fetchEvent();
+			fetchBusinessEvent();
 		}
 	}, [id]);
 

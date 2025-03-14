@@ -6,46 +6,69 @@
 import {Nav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayModal, {useModal} from '@clayui/modal';
 import NavigationBar from '@clayui/navigation-bar';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
+import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
+import {Liferay} from '~/services/liferay';
 import {getBusinessEventById} from '~/services/liferay/api';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
+import CancelEventForm from '../../../components/CancelEventForm';
+import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
+
 const BusinessEventsItemActivityHistory = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
-	const [businessEvent, setBusinessEvent] = useState<IBusinessEvent | null>(
-		null
-	);
+
+	const [businessEvent, setBusinessEvent] = useState<
+		IBusinessEvent | undefined
+	>(undefined);
+
+	const {client} = useAppPropertiesContext();
+
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
+
 	const [loading, setLoading] = useState(true);
+
+	const {observer, onOpenChange, open} = useModal();
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (id) {
-			const fetchEvent = async () => {
-				try {
-					setLoading(true);
+	const fetchBusinessEvent = useCallback(async () => {
+		try {
+			setLoading(true);
 
-					const eventData = await getBusinessEventById(id);
+			const eventData = await getBusinessEventById(id!);
 
-					setBusinessEvent(eventData);
-				}
-				catch (error) {
-					console.error('Error', error);
+			setBusinessEvent(eventData);
+		}
+		catch (error) {
+			console.error('Error', error);
 
-					setBusinessEvent(null);
-				}
-				finally {
-					setLoading(false);
-				}
-			};
-
-			fetchEvent();
+			setBusinessEvent(undefined);
+		}
+		finally {
+			setLoading(false);
 		}
 	}, [id]);
+
+	const handleEventCanceled = useCallback(() => {
+		fetchBusinessEvent();
+
+		Liferay.Util.openToast({
+			message: i18n.translate('business-event-canceled-successfully'),
+			type: 'success',
+		});
+	}, [fetchBusinessEvent]);
+
+	useEffect(() => {
+		if (id) {
+			fetchBusinessEvent();
+		}
+	}, [fetchBusinessEvent, id]);
 
 	if (loading) {
 		return (
@@ -78,7 +101,9 @@ const BusinessEventsItemActivityHistory = () => {
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="trash" />,
 			label: i18n.translate('cancel-event'),
-			onClick: () => {},
+			onClick: () => {
+				onOpenChange(true);
+			},
 		},
 	];
 
@@ -105,9 +130,17 @@ const BusinessEventsItemActivityHistory = () => {
 					<div className="font-weight-bold text-neutral-10">
 						<h3>{businessEvent.name}</h3>
 					</div>
-					<div>
-						<ButtonDropDown items={userOptions} label="Actions" />
-					</div>
+					{hasAllEventsPermissions &&
+						!['canceled', 'completed'].includes(
+							businessEvent.eventStatus?.key!
+						) && (
+							<div>
+								<ButtonDropDown
+									items={userOptions}
+									label="Actions"
+								/>
+							</div>
+						)}
 				</div>
 			</div>
 
@@ -140,6 +173,17 @@ const BusinessEventsItemActivityHistory = () => {
 			</div>
 
 			<div className="mt-4"></div>
+
+			{businessEvent && open && (
+				<ClayModal center disableAutoClose observer={observer}>
+					<CancelEventForm
+						businessEvent={businessEvent}
+						client={client}
+						closeFunction={onOpenChange}
+						onCancel={handleEventCanceled}
+					/>
+				</ClayModal>
+			)}
 		</div>
 	);
 };

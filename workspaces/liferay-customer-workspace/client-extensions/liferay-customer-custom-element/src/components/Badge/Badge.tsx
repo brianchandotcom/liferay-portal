@@ -7,16 +7,26 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
 interface IProps {
+	alertType?: 'danger' | 'info' | 'success' | 'warning';
 	badgeClassName?: string;
 	children?: any;
 }
 
-const Badge = ({badgeClassName, children, ...props}: IProps) => {
+const Badge = ({
+	alertType = 'danger',
+	badgeClassName,
+	children,
+	...props
+}: IProps) => {
 	return (
 		<div
 			{...props}
 			className={classNames(
-				'alert alert-danger p-sm-2 text-danger text-paragraph-sm',
+				'alert',
+				'alert-' + alertType,
+				'p-sm-2',
+				'text-' + alertType,
+				'text-paragraph-sm',
 				{
 					[badgeClassName as string]: badgeClassName,
 				}

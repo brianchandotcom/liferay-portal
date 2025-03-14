@@ -15,6 +15,7 @@ interface IProps {
 	className?: string;
 	footerProps?: React.PropsWithChildren<any>;
 	headerProps?: {
+		button?: React.ReactNode;
 		greetings?: string;
 		headerClass?: string;
 		helper?: string;

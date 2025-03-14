@@ -9,18 +9,22 @@ import './BusinessEvents.css';
 
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import {IFilterOption} from '~/components/Filter/Filter';
 import Table, {IRow} from '~/components/Table';
 import TableHeader from '~/components/Table/TableHeader';
+import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '~/features/project/context';
+import {Liferay} from '~/services/liferay';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
 import {IBusinessEvent} from '~/utils/types';
 
+import CancelEventForm from './components/CancelEventForm';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
 import {INITIAL_FILTER} from './utils/constants/initialFilter';
 
@@ -69,9 +73,21 @@ const BusinessEvents = () => {
 
 	const [businessEvents, setBusinessEvents] = useState<IBusinessEvent[]>([]);
 
+	const {client} = useAppPropertiesContext();
+
+	const [selectedBusinessEvent, setSelectedBusinessEvent] = useState<
+		IBusinessEvent | undefined
+	>(undefined);
+
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const navigate = useNavigate();
+
+	const {observer, onOpenChange, open} = useModal({
+		onClose: () => {
+			setSelectedBusinessEvent(undefined);
+		},
+	});
 
 	const generateFilterQuery = useCallback((filters: IState) => {
 		const queryParams: string[] = [];
@@ -102,6 +118,26 @@ const BusinessEvents = () => {
 		[filters, generateFilterQuery]
 	);
 
+	const fetchBusinessEvents = useCallback(async () => {
+		try {
+			const businessEventsResponse = await getBusinessEvents(filterQuery);
+
+			setBusinessEvents(businessEventsResponse.items);
+		}
+		catch (error) {
+			console.error('Error', error);
+		}
+	}, [filterQuery]);
+
+	const handleEventCanceled = useCallback(() => {
+		fetchBusinessEvents();
+
+		Liferay.Util.openToast({
+			message: i18n.translate('business-event-canceled-successfully'),
+			type: 'success',
+		});
+	}, [fetchBusinessEvents]);
+
 	const handleFilterChange = useCallback(
 		(newFilterOptions: IFilterOption[]) => {
 			setFilters((prevFilters) => ({
@@ -120,20 +156,8 @@ const BusinessEvents = () => {
 	}, []);
 
 	useEffect(() => {
-		const fetchBusinessEvents = async () => {
-			try {
-				const businessEventsResponse =
-					await getBusinessEvents(filterQuery);
-
-				setBusinessEvents(businessEventsResponse.items);
-			}
-			catch (error) {
-				console.error('Error', error);
-			}
-		};
-
 		fetchBusinessEvents();
-	}, [filterQuery]);
+	}, [fetchBusinessEvents, filterQuery]);
 
 	const rows = useMemo(() => {
 		if (businessEvents?.length > 0) {
@@ -150,7 +174,12 @@ const BusinessEvents = () => {
 					},
 				];
 
-				if (hasAllEventsPermissions) {
+				if (
+					hasAllEventsPermissions &&
+					!['canceled', 'completed'].includes(
+						businessEvent.eventStatus?.key!
+					)
+				) {
 					userOptions.push(
 						{
 							customOptionStyle: 'pr-5',
@@ -169,7 +198,10 @@ const BusinessEvents = () => {
 						{
 							customOptionStyle: 'pr-5 be-cancel-event-option',
 							label: i18n.translate('cancel-event'),
-							onClick: () => {},
+							onClick: () => {
+								onOpenChange(true);
+								setSelectedBusinessEvent(businessEvent);
+							},
 						}
 					);
 				}
@@ -253,6 +285,7 @@ const BusinessEvents = () => {
 		businessEvents,
 		hasAllEventsPermissions,
 		navigate,
+		onOpenChange,
 		project?.accountKey,
 	]);
 
@@ -284,6 +317,17 @@ const BusinessEvents = () => {
 
 			<div>
 				<Table columns={columns} rows={rows as unknown as IRow[]} />
+
+				{selectedBusinessEvent && open && (
+					<ClayModal center disableAutoClose observer={observer}>
+						<CancelEventForm
+							businessEvent={selectedBusinessEvent}
+							client={client}
+							closeFunction={onOpenChange}
+							onCancel={handleEventCanceled}
+						/>
+					</ClayModal>
+				)}
 			</div>
 		</div>
 	);

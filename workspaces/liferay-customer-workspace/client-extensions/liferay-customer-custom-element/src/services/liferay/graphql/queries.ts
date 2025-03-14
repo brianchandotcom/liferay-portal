@@ -800,6 +800,7 @@ export const updateBusinessEvent = gql`
 				path: "/c/businessevents/{args.businessEventId}"
 			) {
 			actualGoLiveDateTime
+			associatedTickets
 			currentLiferayVersion
 			description
 			eventType
@@ -807,6 +808,7 @@ export const updateBusinessEvent = gql`
 			name
 			newLiferayVersion
 			targetGoLiveDateTime
+			timeZone
 		}
 	}
 `;

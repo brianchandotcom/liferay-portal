@@ -16,3 +16,7 @@
 .cp-required-info {
 	width: 680px;
 }
+
+.match-parent {
+	width: 100%;
+}

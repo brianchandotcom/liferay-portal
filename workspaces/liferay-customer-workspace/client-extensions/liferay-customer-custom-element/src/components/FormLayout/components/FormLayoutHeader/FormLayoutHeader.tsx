@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 interface IProps {
+	button?: React.ReactNode;
 	greetings?: string;
 	headerClass?: string;
 	helper?: string;
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 const FormLayoutHeader: React.FC<IProps> = ({
+	button,
 	greetings,
 	headerClass,
 	helper,
@@ -21,11 +23,15 @@ const FormLayoutHeader: React.FC<IProps> = ({
 }) => {
 	return (
 		<header className={classNames('p-4', headerClass)}>
-			{greetings && (
-				<div className="h6 mb-1 text-brand-primary text-small-caps">
-					{greetings}
-				</div>
-			)}
+			<div className="d-flex justify-content-between">
+				{greetings && (
+					<div className="h6 mb-1 text-brand-primary text-small-caps">
+						{greetings}
+					</div>
+				)}
+
+				{button}
+			</div>
 
 			<h2
 				className={classNames('text-neutral-10', {

@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {checkAccessibility} from '@liferay/layout-js-components-web';
+import checkAccessibility from '@liferay/layout-js-components-web/test/__lib__/checkAccessibility';
 import {act, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';

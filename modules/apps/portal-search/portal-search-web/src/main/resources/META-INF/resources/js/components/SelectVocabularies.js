@@ -223,7 +223,8 @@ function SelectVocabularies({
 		)
 	);
 	const [vocabularyTree, setVocabularyTree] = useState(null);
-	const [vocabularyTreeERCs, setVocabularyTreeERCs] = useState([]);
+	const [hiddenSelectedVocabularies, setHiddenSelectedVocabularies] =
+		useState([]);
 	const [vocabularyTreeLoading, setVocabularyTreeLoading] = useState(false);
 
 	useEffect(() => {
@@ -295,7 +296,7 @@ function SelectVocabularies({
 										({externalReferenceCode, id, name}) => {
 											const erc = `${itemsFilteredForSites[index].externalReferenceCode}&&${externalReferenceCode}`;
 
-											ercs.push(erc);
+											ercs.push(erc); // Collect ERCs to allow removal of hidden selected vocabularies
 
 											return {
 												erc,
@@ -307,12 +308,26 @@ function SelectVocabularies({
 							}))
 						);
 
-						setVocabularyTreeERCs(ercs);
+						setHiddenSelectedVocabularies(
+							Array.from(initialSelectedERCsRef.current).filter(
+								(erc) => !ercs.includes(erc)
+							)
+						);
 					})
 					.catch(() => setVocabularyTree([]));
 			})
 			.catch(() => setVocabularyTree([]))
 			.finally(() => setVocabularyTreeLoading(false));
+	};
+
+	const _handleRemoveHiddenVocabularies = () => {
+		const newList = new Set(selectedKeys);
+
+		hiddenSelectedVocabularies.forEach((erc) => {
+			newList.delete(erc);
+		});
+
+		setSelectedKeys(newList);
 	};
 
 	const _handleSelectionChange = (value) => {
@@ -323,9 +338,9 @@ function SelectVocabularies({
 		}
 	};
 
-	const _isDisplayInfoSelectedVocabulariesHidden = () =>
-		Array.from(initialSelectedERCsRef.current).some(
-			(erc) => !vocabularyTreeERCs.includes(erc)
+	const _isHiddenVocabulariesRemoved = () =>
+		Array.from(selectedKeys).some((erc) =>
+			hiddenSelectedVocabularies.includes(erc)
 		);
 
 	return (
@@ -371,14 +386,14 @@ function SelectVocabularies({
 			</ClayRadioGroup>
 
 			{selection === SELECT_OPTIONS.SELECT &&
-				_isDisplayInfoSelectedVocabulariesHidden() && (
+				!!hiddenSelectedVocabularies.length && (
 					<ClayAlert
 						displayType="info"
 						style={{opacity: 1}}
 						title={`${Liferay.Language.get('info')}:`}
 					>
 						{Liferay.Language.get(
-							'select-vocabularies-configuration-view-permission-alert'
+							'select-vocabularies-configuration-alert'
 						)}
 
 						<LearnMessage
@@ -386,6 +401,19 @@ function SelectVocabularies({
 							resource="portal-search-web"
 							resourceKey="tag-and-category-facet"
 						/>
+
+						{_isHiddenVocabulariesRemoved() && (
+							<ClayAlert.Footer>
+								<ClayButton
+									alert
+									onClick={_handleRemoveHiddenVocabularies}
+								>
+									{Liferay.Language.get(
+										'remove-hidden-vocabularies'
+									)}
+								</ClayButton>
+							</ClayAlert.Footer>
+						)}
 					</ClayAlert>
 				)}
 

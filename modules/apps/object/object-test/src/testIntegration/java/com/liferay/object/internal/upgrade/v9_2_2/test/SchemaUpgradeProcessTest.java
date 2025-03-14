@@ -6,6 +6,7 @@
 package com.liferay.object.internal.upgrade.v9_2_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -61,6 +61,7 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 		_company = _companyLocalService.addCompany(
 			null, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0,
 			true, true, null, null, null, null, null, null);
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -71,9 +72,17 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), User.class.getSimpleName());
+		ObjectDefinition objectDefinition = null;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					PortalInstancePool.getDefaultCompanyId(),
+					User.class.getSimpleName());
+		}
 
 		String dbTableName = StringBundler.concat(
 			objectDefinition.getDBTableName(), "x_",
@@ -81,15 +90,22 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 		_createView(dbTableName);
 
-		objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"a" + RandomTestUtil.randomString()
-				).build()));
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				objectDefinition.getUserId());
+		}
 
 		_createView(objectDefinition.getDBTableName());
 		_createView(objectDefinition.getExtensionDBTableName());

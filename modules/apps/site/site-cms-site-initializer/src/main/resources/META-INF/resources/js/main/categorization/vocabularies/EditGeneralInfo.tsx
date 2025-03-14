@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {LanguagePicker, Provider} from '@clayui/core';
 import ClayForm, {
 	ClayCheckbox,
@@ -12,6 +13,7 @@ import ClayForm, {
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {IVocabulary} from '../types/IVocabulary';
@@ -30,13 +32,17 @@ const VISIBILITY_OPTIONS = [
 export default function EditGeneralInfo({
 	defaultLanguageId,
 	locales,
+	nameInputError,
 	onChangeVocabulary,
+	setNameInputError,
 	spritemap,
 	vocabulary,
 }: {
 	defaultLanguageId: string;
 	locales: any[];
+	nameInputError: string;
 	onChangeVocabulary: Function;
+	setNameInputError: Function;
 	spritemap: string;
 	vocabulary: IVocabulary;
 }) {
@@ -45,25 +51,35 @@ export default function EditGeneralInfo({
 	const [toggled, setToggle] = useState<boolean>(true);
 
 	const onChangeDescription = (newDescription: string) => {
-		if (newDescription) {
-			onChangeVocabulary(() => ({
-				...vocabulary,
-				description_i18n: {
-					...vocabulary.description_i18n,
-					[languageId]: newDescription,
-				},
-			}));
-		}
+		onChangeVocabulary(() => ({
+			...vocabulary,
+			description_i18n: {
+				...vocabulary.description_i18n,
+				[languageId]: newDescription,
+			},
+		}));
 	};
 
 	const onChangeName = (newName: string) => {
-			onChangeVocabulary(() => ({
-				...vocabulary,
-				name_i18n: {
-					...vocabulary.name_i18n,
-					[languageId]: newName,
-				},
-			}));
+		if (newName) {
+			setNameInputError('');
+		}
+		else {
+			setNameInputError(
+				sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					Liferay.Language.get('name')
+				)
+			);
+		}
+
+		onChangeVocabulary(() => ({
+			...vocabulary,
+			name_i18n: {
+				...vocabulary.name_i18n,
+				[languageId]: newName,
+			},
+		}));
 	};
 
 	return (
@@ -91,7 +107,7 @@ export default function EditGeneralInfo({
 					</div>
 				</div>
 
-				<div>
+				<div className={nameInputError ? 'has-error' : ''}>
 					<label>
 						{Liferay.Language.get('name')}
 
@@ -110,6 +126,12 @@ export default function EditGeneralInfo({
 						type="text"
 						value={vocabulary.name_i18n[languageId] || ''}
 					/>
+
+					{nameInputError && (
+						<ClayAlert displayType="danger" variant="feedback">
+							{nameInputError}
+						</ClayAlert>
+					)}
 				</div>
 
 				<div>

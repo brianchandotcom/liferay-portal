@@ -4,7 +4,7 @@
  */
 
 export type AssetType = {
-	icon: string;
+	icon?: string;
 	label: string;
 	required: boolean;
 	value: string;

@@ -49,13 +49,36 @@ export default function EditVocabulary({
 					description: '',
 					name: '',
 					name_i18n: {
-						'en-US': '',
+						[defaultLanguageId]: '',
 					},
 				}
 	);
+	const [nameInputError, setNameInputError] = useState<string>('');
+
+	const _handleValidateInputs = () => {
+		if (nameInputError === '') {
+			return true;
+		}
+
+		if (vocabulary.name === '') {
+			setNameInputError(
+				sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					Liferay.Language.get('name')
+				)
+			);
+		}
+
+		setActiveVerticalNavKey(NAVIGATION_TABS.GENERAL);
+
+		return false;
+	};
 
 	const _handleSave = async () => {
 		try {
+			if (!_handleValidateInputs()) {
+				return;
+			}
 
 			await VocabularyService.createVocabulary(siteId, vocabulary);
 
@@ -174,7 +197,9 @@ export default function EditVocabulary({
 								<EditGeneralInfo
 									defaultLanguageId={defaultLanguageId}
 									locales={locales}
+									nameInputError={nameInputError}
 									onChangeVocabulary={setVocabulary}
+									setNameInputError={setNameInputError}
 									spritemap={spritemap}
 									vocabulary={vocabulary}
 								/>

@@ -6,13 +6,17 @@
 import {AssetType} from './AssetType';
 
 export interface IVocabulary {
-	assetTypes: AssetType[];
+	assetTypes?: AssetType[];
 	description?: string;
-	description_i18n?: Liferay.Language.LocalizedValue<string>;
+	description_i18n?: {
+		[key: string]: string;
+	};
 	id?: number;
 	name: string;
-	name_i18n: Liferay.Language.LocalizedValue<string>;
+	name_i18n: {
+		[key: string]: string;
+	};
 	numberOfCategories?: number;
 	siteId?: number;
-	visibilityType: number;
+	visibilityType?: number;
 }

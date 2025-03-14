@@ -6,6 +6,7 @@
 package com.liferay.saml.addon.keep.alive.web.internal.struts;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -31,7 +32,6 @@ import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -128,44 +128,44 @@ public class KeepAliveStrutsAction implements StrutsAction {
 			return Collections.emptyList();
 		}
 
-		List<String> keepAliveURLs = new ArrayList<>();
-
 		String entityId = ParamUtil.getString(httpServletRequest, "entityId");
 
 		List<SamlIdpSpSession> samlIdpSpSessions =
 			_samlIdpSpSessionLocalService.getSamlIdpSpSessions(
 				samlIdpSsoSession.getSamlIdpSsoSessionId());
 
-		for (SamlIdpSpSession samlIdpSpSession : samlIdpSpSessions) {
-			SamlPeerBinding samlPeerBinding =
-				_samlPeerBindingLocalService.getSamlPeerBinding(
-					samlIdpSpSession.getSamlPeerBindingId());
+		return TransformUtil.transform(
+			samlIdpSpSessions,
+			samlIdpSpSession -> {
+				SamlPeerBinding samlPeerBinding =
+					_samlPeerBindingLocalService.getSamlPeerBinding(
+						samlIdpSpSession.getSamlPeerBindingId());
 
-			if (entityId.equals(samlPeerBinding.getSamlPeerEntityId())) {
-				continue;
-			}
+				if (entityId.equals(samlPeerBinding.getSamlPeerEntityId())) {
+					return null;
+				}
 
-			SamlIdpSpConnection samlIdpSpConnection =
-				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
-					samlIdpSpSession.getCompanyId(),
-					samlPeerBinding.getSamlPeerEntityId());
+				SamlIdpSpConnection samlIdpSpConnection =
+					_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
+						samlIdpSpSession.getCompanyId(),
+						samlPeerBinding.getSamlPeerEntityId());
 
-			ExpandoBridge expandoBridge =
-				samlIdpSpConnection.getExpandoBridge();
+				ExpandoBridge expandoBridge =
+					samlIdpSpConnection.getExpandoBridge();
 
-			String keepAliveURL = (String)expandoBridge.getAttribute(
-				SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
+				String keepAliveURL = (String)expandoBridge.getAttribute(
+					SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 
-			if (!Validator.isBlank(keepAliveURL) &&
-				!keepAliveURL.equals(
-					SamlKeepAliveConstants.
-						EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL)) {
+				if (!Validator.isBlank(keepAliveURL) &&
+					!keepAliveURL.equals(
+						SamlKeepAliveConstants.
+							EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL)) {
 
-				keepAliveURLs.add(keepAliveURL);
-			}
-		}
+					return keepAliveURL;
+				}
 
-		return keepAliveURLs;
+				return null;
+			});
 	}
 
 	private static final String _BASE64_1X1_GIF =

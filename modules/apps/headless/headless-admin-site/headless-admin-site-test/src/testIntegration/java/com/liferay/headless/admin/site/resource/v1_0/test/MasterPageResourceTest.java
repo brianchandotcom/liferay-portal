@@ -745,6 +745,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				PageSpecification.Status publishedLayoutStatus)
 		throws Exception {
 
+		MasterPage masterPage = randomMasterPage();
+
 		ContentPageSpecification draftContentPageSpecification =
 			new ContentPageSpecification() {
 				{
@@ -765,8 +767,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
 				}
 			};
-
-		MasterPage masterPage = randomMasterPage();
 
 		masterPage.setPageSpecifications(
 			() -> new PageSpecification[] {

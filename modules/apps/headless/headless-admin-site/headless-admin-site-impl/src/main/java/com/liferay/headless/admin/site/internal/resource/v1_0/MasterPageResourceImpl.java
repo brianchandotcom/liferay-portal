@@ -304,9 +304,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		ContentPageSpecification draftContentPageSpecification = null;
 		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
-		ContentPageSpecification draftContentPageSpecification = null;
 
 		if (Validator.isNull(
 				publishedContentPageSpecification.
@@ -325,9 +325,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				publishedContentPageSpecification.
 					getDraftContentPageSpecificationExternalReferenceCode()) ||
 			!Objects.equals(
+				draftContentPageSpecification.getExternalReferenceCode(),
 				publishedContentPageSpecification.
-					getDraftContentPageSpecificationExternalReferenceCode(),
-				draftContentPageSpecification.getExternalReferenceCode())) {
+					getDraftContentPageSpecificationExternalReferenceCode())) {
 
 			throw new UnsupportedOperationException();
 		}

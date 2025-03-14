@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.addon.keep.alive.web.internal.constants.SamlKeepAliveConstants;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
-import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
@@ -130,12 +129,9 @@ public class KeepAliveStrutsAction implements StrutsAction {
 
 		String entityId = ParamUtil.getString(httpServletRequest, "entityId");
 
-		List<SamlIdpSpSession> samlIdpSpSessions =
-			_samlIdpSpSessionLocalService.getSamlIdpSpSessions(
-				samlIdpSsoSession.getSamlIdpSsoSessionId());
-
 		return TransformUtil.transform(
-			samlIdpSpSessions,
+			_samlIdpSpSessionLocalService.getSamlIdpSpSessions(
+				samlIdpSsoSession.getSamlIdpSsoSessionId()),
 			samlIdpSpSession -> {
 				SamlPeerBinding samlPeerBinding =
 					_samlPeerBindingLocalService.getSamlPeerBinding(

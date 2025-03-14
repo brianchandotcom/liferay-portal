@@ -492,12 +492,9 @@ public class CustomFDSSerializer
 				).put(
 					"name", "table"
 				).put(
-					"schema",
-					JSONUtil.put(
-						"fields", fieldsJSONArray
-					).put(
-						"thumbnail", "table"
-					)
+					"schema", JSONUtil.put("fields", fieldsJSONArray)
+				).put(
+					"thumbnail", "table"
 				);
 			}
 		);

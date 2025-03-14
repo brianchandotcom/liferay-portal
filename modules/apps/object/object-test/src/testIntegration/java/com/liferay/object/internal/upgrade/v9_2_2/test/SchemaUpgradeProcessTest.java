@@ -10,6 +10,7 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
@@ -17,6 +18,7 @@ import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -64,8 +66,6 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 		if (_company != null) {
 			_companyLocalService.deleteCompany(_company);
 		}
-		_partitionName = DBPartitionUtil.getPartitionName(
-			company.getCompanyId());
 	}
 
 	@Test
@@ -127,11 +127,14 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 		String defaultPartitionName = DBPartitionUtil.getPartitionName(
 			PortalInstancePool.getDefaultCompanyId());
 
-		try (Statement statement = connection.createStatement()) {
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId());
+			Statement statement = connection.createStatement()) {
+
 			statement.execute(
 				StringBundler.concat(
-					"create or replace view ", _partitionName,
-					StringPool.PERIOD, tableName, " as select * from ",
+					"create or replace view ", tableName, " as select * from ",
 					defaultPartitionName, StringPool.PERIOD, tableName));
 		}
 	}
@@ -170,6 +173,5 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private String _partitionName;
 
 }

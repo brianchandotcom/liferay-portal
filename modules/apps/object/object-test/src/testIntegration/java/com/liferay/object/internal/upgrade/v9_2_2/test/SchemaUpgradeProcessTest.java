@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -58,6 +59,11 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 			null, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, _VIRTUAL_HOSTNAME, 0,
 			true, true, null, null, null, null, null, null);
 
+	@After
+	public void tearDown() throws Exception {
+		if (_company != null) {
+			_companyLocalService.deleteCompany(_company);
+		}
 		_partitionName = DBPartitionUtil.getPartitionName(
 			company.getCompanyId());
 	}

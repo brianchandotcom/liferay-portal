@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.ContactService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -158,8 +157,9 @@ public class UserResourceDTOConverter
 					});
 				setCreator(
 					() -> {
-						Contact contact = _contactService.getContact(
-							user.getContactId());
+						if (contact == null) {
+							return null;
+						}
 
 						return NestedFieldsSupplier.supply(
 							"creator",
@@ -583,9 +583,6 @@ public class UserResourceDTOConverter
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private ContactService _contactService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

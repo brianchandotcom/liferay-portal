@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -142,14 +143,22 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 	private List<String> _getViewNames() throws Exception {
 		List<String> viewNames = new ArrayList<>();
 
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
 
-		ResultSet resultSet = databaseMetaData.getTables(
-			_partitionName, null, null, new String[] {"VIEW"});
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-		while (resultSet.next()) {
-			viewNames.add(
-				StringUtil.toLowerCase(resultSet.getString("TABLE_NAME")));
+			DBInspector dbInspector = new DBInspector(connection);
+
+			ResultSet resultSet = databaseMetaData.getTables(
+				dbInspector.getCatalog(), dbInspector.getSchema(), null,
+				new String[] {"VIEW"});
+
+			while (resultSet.next()) {
+				viewNames.add(
+					StringUtil.toLowerCase(resultSet.getString("TABLE_NAME")));
+			}
 		}
 
 		return viewNames;

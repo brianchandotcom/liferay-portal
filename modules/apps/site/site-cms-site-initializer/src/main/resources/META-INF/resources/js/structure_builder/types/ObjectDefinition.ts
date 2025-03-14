@@ -29,7 +29,7 @@ export type ObjectDefinition = {
 	objectFields?: ObjectField[];
 	objectFolderExternalReferenceCode?: string;
 	pluralLabel: Liferay.Language.LocalizedValue<string>;
-	scope: 'company' | 'site';
+	scope: 'company' | 'depot' | 'site';
 	status?: {
 		label: string;
 	};

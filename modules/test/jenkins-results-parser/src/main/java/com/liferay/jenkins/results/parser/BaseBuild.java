@@ -1452,7 +1452,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean hasMaximumInvocationCount() {
-		if (_invocations.size() >= _MAXIMUM_INVOCATION_COUNT) {
+		if (_invocations.size() >= _getMaximumInvocationCount()) {
 			return true;
 		}
 
@@ -3145,6 +3145,24 @@ public abstract class BaseBuild implements Build {
 
 	private void _archiveTestReportJSON() {
 		_archive(null, false, "testReport/api/json");
+	}
+
+	private int _getMaximumInvocationCount() {
+		try {
+			Properties properties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String propertyName = "reinvoke.rule.max.invocation.count";
+
+			if (properties.containsKey(propertyName)) {
+				return Integer.parseInt(properties.getProperty(propertyName));
+			}
+
+			return _MAXIMUM_INVOCATION_COUNT;
+		}
+		catch (IOException ioException) {
+			return _MAXIMUM_INVOCATION_COUNT;
+		}
 	}
 
 	private List<Element> _getStopWatchRecordTableRowElements(

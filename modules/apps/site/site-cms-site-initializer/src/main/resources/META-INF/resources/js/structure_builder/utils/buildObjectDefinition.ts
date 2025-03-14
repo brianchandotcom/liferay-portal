@@ -30,6 +30,12 @@ export default function buildObjectDefinition({
 		enableObjectEntryDraft: true,
 		externalReferenceCode: erc,
 		label,
+		objectDefinitionSettings: [
+			{
+				name: 'acceptedGroupExternalReferenceCodes',
+				value: config.acceptedGroupExternalReferenceCodes,
+			},
+		],
 		objectFields: buildFields(fields),
 		pluralLabel: label,
 		scope: 'depot',

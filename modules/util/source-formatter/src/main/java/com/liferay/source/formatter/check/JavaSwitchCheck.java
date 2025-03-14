@@ -34,6 +34,6 @@ public class JavaSwitchCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _switchStatementPattern = Pattern.compile(
-		"\tswitch \\(.*\\) \\{");
+		"[\t ]switch \\(.*\\) \\{");
 
 }

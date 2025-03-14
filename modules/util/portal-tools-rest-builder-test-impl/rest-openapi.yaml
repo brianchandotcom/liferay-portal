@@ -495,7 +495,7 @@ paths:
                                 type: array
                     description:
                         "OK"
-            tags: [ "Filter" ]
+            tags: ["Filter"]
     /reserved-word:
         post:
             operationId: postReservedWord
@@ -754,7 +754,7 @@ paths:
                                 type: array
                     description:
                         "OK"
-            tags: [ "Sort" ]
+            tags: ["Sort"]
     /test-entities:
         get:
             operationId: getTestEntitiesPage

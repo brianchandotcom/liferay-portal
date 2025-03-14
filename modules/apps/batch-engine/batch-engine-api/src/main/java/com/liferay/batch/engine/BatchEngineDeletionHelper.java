@@ -25,4 +25,10 @@ public interface BatchEngineDeletionHelper {
 
 	public Set<String> getBatchDeleteSupportedClassNames();
 
+	public void importDeletions(
+			PortletDataContext portletDataContext, String portletId)
+		throws Exception;
+
+	public boolean isBatchPortlet(String portletId);
+
 }

@@ -12,6 +12,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
@@ -96,6 +97,33 @@ public class BatchEngineDeletionHelperImpl
 		return classNames;
 	}
 
+	@Override
+	public void importDeletions(
+			PortletDataContext portletDataContext, String portletId)
+		throws Exception {
+
+		PortletDataHandler portletDataHandler =
+			_getPortletDataHandlerForPortlet(portletId);
+
+		if (portletDataHandler != null) {
+			portletDataHandler.deleteData(portletDataContext, portletId, null);
+		}
+	}
+
+	@Override
+	public boolean isBatchPortlet(String portletId) {
+		try (ServiceTrackerList resources = ServiceTrackerListFactory.open(
+				SystemBundleUtil.getBundleContext(), null,
+				StringBundler.concat(
+					"(&(batch.engine.scope=company)",
+					"(batch.engine.task.item.delegate=true)",
+					"(batch.engine.task.item.delegate.portlet.id=", portletId,
+					"))"))) {
+
+			return !resources.isEmpty();
+		}
+	}
+
 	private BatchEnginePortletDataHandler _getBatchEnginePortletDataHandler(
 		String className) {
 
@@ -122,6 +150,23 @@ public class BatchEngineDeletionHelperImpl
 						}
 					}
 				}
+			}
+		}
+
+		return null;
+	}
+
+	private PortletDataHandler _getPortletDataHandlerForPortlet(
+		String portletId) {
+
+		try (ServiceTrackerList<PortletDataHandler> portletDataHandlers =
+				ServiceTrackerListFactory.open(
+					SystemBundleUtil.getBundleContext(),
+					PortletDataHandler.class,
+					"(javax.portlet.name=" + portletId + ")")) {
+
+			for (PortletDataHandler portletDataHandler : portletDataHandlers) {
+				return portletDataHandler;
 			}
 		}
 

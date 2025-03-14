@@ -50,7 +50,6 @@ public class AssetVocabularyGroupRelTableReferenceDefinitionTest
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
-
 		_group = GroupTestUtil.addGroup();
 	}
 

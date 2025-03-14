@@ -7,7 +7,7 @@ import {act, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
-import {checkAccessibility} from '@liferay/layout-js-components-web';
+import checkAccessibility from '@liferay/layout-js-components-web/test/__lib__/checkAccessibility';
 
 import ContentTypeModal, {
 	ModalContent,

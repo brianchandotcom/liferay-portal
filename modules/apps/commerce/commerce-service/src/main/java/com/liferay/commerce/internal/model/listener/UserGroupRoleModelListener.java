@@ -120,7 +120,7 @@ public class UserGroupRoleModelListener
 						return false;
 					}
 				}),
-			userGroupRole -> _accountRoleLocalService.getAccountRoleByRoleId(
+			userGroupRole -> _accountRoleLocalService.fetchAccountRoleByRoleId(
 				userGroupRole.getRoleId()));
 
 		for (AccountRole accountRole : accountRoles) {

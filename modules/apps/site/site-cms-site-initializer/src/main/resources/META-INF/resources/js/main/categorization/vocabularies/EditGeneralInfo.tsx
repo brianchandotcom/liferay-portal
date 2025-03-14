@@ -14,6 +14,8 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
+import {IVocabulary} from '../types/IVocabulary';
+
 const VISIBILITY_OPTIONS = [
 	{
 		label: Liferay.Language.get('public'),
@@ -28,14 +30,41 @@ const VISIBILITY_OPTIONS = [
 export default function EditGeneralInfo({
 	defaultLanguageId,
 	locales,
+	onChangeVocabulary,
 	spritemap,
+	vocabulary,
 }: {
 	defaultLanguageId: string;
 	locales: any[];
+	onChangeVocabulary: Function;
 	spritemap: string;
+	vocabulary: IVocabulary;
 }) {
-	const [isChecked, setIsChecked] = useState(true);
-	const [toggled, setToggle] = useState(true);
+	const [isChecked, setIsChecked] = useState<boolean>(true);
+	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
+	const [toggled, setToggle] = useState<boolean>(true);
+
+	const onChangeDescription = (newDescription: string) => {
+		if (newDescription) {
+			onChangeVocabulary(() => ({
+				...vocabulary,
+				description_i18n: {
+					...vocabulary.description_i18n,
+					[languageId]: newDescription,
+				},
+			}));
+		}
+	};
+
+	const onChangeName = (newName: string) => {
+			onChangeVocabulary(() => ({
+				...vocabulary,
+				name_i18n: {
+					...vocabulary.name_i18n,
+					[languageId]: newName,
+				},
+			}));
+	};
 
 	return (
 		<div className="vertical-nav-content-wrapper">
@@ -50,6 +79,12 @@ export default function EditGeneralInfo({
 							<LanguagePicker
 								defaultLocaleId={defaultLanguageId}
 								locales={locales}
+								onSelectedLocaleChange={(
+									localId: React.Key
+								) => {
+									setLanguageId(localId as string);
+								}}
+								selectedLocaleId={languageId}
 								small
 							/>
 						</Provider>
@@ -70,15 +105,28 @@ export default function EditGeneralInfo({
 
 					<ClayInput
 						id={Liferay.Language.get('name')}
+						onChange={({target: {value}}) => onChangeName(value)}
 						required
 						type="text"
+						value={vocabulary.name_i18n[languageId] || ''}
 					/>
 				</div>
 
 				<div>
 					<label>{Liferay.Language.get('description')}</label>
 
-					<ClayInput component="textarea" type="text" />
+					<ClayInput
+						component="textarea"
+						onChange={({target: {value}}) =>
+							onChangeDescription(value)
+						}
+						type="text"
+						value={
+							vocabulary.description_i18n
+								? vocabulary.description_i18n[languageId] || ''
+								: ''
+						}
+					/>
 				</div>
 
 				<label className="toggle-switch">

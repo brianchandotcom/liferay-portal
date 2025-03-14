@@ -5,12 +5,18 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,6 +28,42 @@ public class ViewVocabulariesDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
+	public List<AssetRendererFactory<?>> getAvailableAssetRendererFactories() {
+		return ListUtil.filter(
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+				_themeDisplay.getCompanyId()),
+			AssetRendererFactory::isCategorizable);
+	}
+
+	public List<Map<String, String>> getClassNameIdOptions() {
+		List<Map<String, String>> selectOptions = new ArrayList<>();
+
+		List<AssetRendererFactory<?>> availableAssetRendererFactories =
+			getAvailableAssetRendererFactories();
+
+		for (AssetRendererFactory<?> availableAssetRendererFactory :
+				availableAssetRendererFactories) {
+
+			selectOptions.add(
+				HashMapBuilder.put(
+					"icon", availableAssetRendererFactory.getIconCssClass()
+				).put(
+					"label",
+					ResourceActionsUtil.getModelResource(
+						_themeDisplay.getLocale(),
+						availableAssetRendererFactory.getClassName())
+				).put(
+					"restricted", Boolean.FALSE.toString()
+				).put(
+					"value",
+					String.valueOf(
+						availableAssetRendererFactory.getClassNameId())
+				).build());
+		}
+
+		return selectOptions;
+	}
+
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"addVocabularyURL",
@@ -30,6 +72,10 @@ public class ViewVocabulariesDisplayContext {
 					_themeDisplay.getScopeGroupId(), false,
 					"/categorization/new_vocabulary"),
 				_themeDisplay)
+		).put(
+			"assetTypes", getClassNameIdOptions()
+		).put(
+			"siteId", _themeDisplay.getScopeGroupId()
 		).put(
 			"tagsURL",
 			PortalUtil.getLayoutFullURL(

@@ -11,7 +11,9 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import VocabularyService from '../services/VocabularyService';
 import {AssetType} from '../types/AssetType';
+import {IVocabulary} from '../types/IVocabulary';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';
 import EditGeneralInfo from './EditGeneralInfo';
 
@@ -24,19 +26,58 @@ export default function EditVocabulary({
 	assetTypes,
 	backURL,
 	defaultLanguageId,
+	initialVocabulary,
 	locales,
+	siteId,
 	spritemap,
-	vocabulary,
 }: {
 	assetTypes: AssetType[];
 	backURL: string;
 	defaultLanguageId: string;
+	initialVocabulary: IVocabulary;
 	locales: any[];
+	siteId: number;
 	spritemap: string;
 }) {
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		NAVIGATION_TABS.GENERAL
 	);
+	const [vocabulary, setVocabulary] = useState<IVocabulary>(
+		initialVocabulary
+			? initialVocabulary
+			: {
+					description: '',
+					name: '',
+					name_i18n: {
+						'en-US': '',
+					},
+				}
+	);
+
+	const _handleSave = async () => {
+		try {
+
+			await VocabularyService.createVocabulary(siteId, vocabulary);
+
+			await navigate(backURL);
+
+			Liferay.Util.openToast({
+				message: Liferay.Util.sub(
+					Liferay.Language.get('x-was-published-successfully'),
+					vocabulary.name
+				),
+				type: 'success',
+			});
+		}
+		catch (error) {
+			Liferay.Util.openToast({
+				message: Liferay.Language.get(
+					'an-unexpected-system-error-occurred'
+				),
+				type: 'danger',
+			});
+		}
+	};
 
 	const _handleVerticalNavChange = (verticalNav: string) => {
 		setActiveVerticalNavKey(verticalNav);
@@ -78,7 +119,11 @@ export default function EditVocabulary({
 						</ManagementToolbar.Item>
 
 						<ManagementToolbar.Item>
-							<ClayButton displayType="primary" size="sm">
+							<ClayButton
+								displayType="primary"
+								onClick={_handleSave}
+								size="sm"
+							>
 								{Liferay.Language.get('save')}
 							</ClayButton>
 						</ManagementToolbar.Item>
@@ -129,12 +174,16 @@ export default function EditVocabulary({
 								<EditGeneralInfo
 									defaultLanguageId={defaultLanguageId}
 									locales={locales}
+									onChangeVocabulary={setVocabulary}
 									spritemap={spritemap}
+									vocabulary={vocabulary}
 								/>
 							)}
 
 							{activeVerticalNavKey === 'assetTypes' && (
-								<EditAssociatedAssetTypes assetTypes={assetTypes} />
+								<EditAssociatedAssetTypes
+									assetTypes={assetTypes}
+								/>
 							)}
 						</ClayLayout.Col>
 					</ClayLayout.Row>

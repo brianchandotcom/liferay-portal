@@ -20,6 +20,31 @@
 	text-decoration: none;
 }
 
+.card {
+	background-color: #fff;
+	box-shadow: none;
+}
+
+.card-buttons {
+	cursor: pointer;
+}
+
+.card-description {
+	background-color: #ffff;
+}
+
+.card-description-container {
+	margin-top: 20px;
+}
+
+.card-description-text {
+	color: #5a5a5a;
+}
+
+.card-title {
+	display: inline-block;
+}
+
 .card-title-description {
 	border-bottom: 5px solid #5791ff;
 }
@@ -35,25 +60,22 @@
 	font-size: 13px;
 }
 
-.gallery-image {
-	border: 3px solid transparent;
-	cursor: pointer;
-	height: 80px;
-	object-fit: cover;
-	transition: border 0.3s ease;
-	width: 80px;
+.clay-modal-refector .modal {
+	height: auto;
 }
 
-.gallery-image.selected {
-	border: 3px solid #0b5fff;
+.clay-modal-refector .modal-dialog.modal-full-screen {
+	display: flex;
+	justify-content: center;
 }
 
-.marketplace-card-buttons {
-	cursor: pointer !important;
+.clay-modal-refector .modal-dialog-centered .modal-dialog,
+.modal-dialog-centered.modal-dialog {
+	min-height: unset !important;
 }
 
-.marketplace-card-description-text {
-	color: #5a5a5a;
+.clay-modal-refector .modal-full-screen .modal-content {
+	height: unset !important;
 }
 
 .marketplace-carousel {
@@ -91,6 +113,19 @@
 		max-width: 100%;
 		object-fit: contain;
 		transition: transform 0.5s ease-in-out;
+	}
+
+	.gallery-image {
+		border: 3px solid transparent;
+		cursor: pointer;
+		height: 80px;
+		object-fit: cover;
+		transition: border 0.3s ease;
+		width: 80px;
+	}
+
+	.gallery-image.selected {
+		border: 3px solid #0b5fff;
 	}
 }
 
@@ -177,22 +212,19 @@
 	}
 }
 
-.marketplace-modal.modal {
-	height: auto;
+.modal-content {
+	background-color: #f7f7f8;
+	overflow-y: auto;
 }
 
-.marketplace-modal.modal-dialog.modal-full-screen {
-	display: flex;
-	justify-content: center;
+.modal-link {
+	color: #007bff;
+	font-weight: bold;
+	text-decoration: none;
 }
 
-.marketplace-modal.modal-dialog-centered .modal-dialog,
-.modal-dialog-centered.modal-dialog {
-	min-height: unset !important;
-}
-
-.marketplace-modal.modal-full-screen .modal-content {
-	height: unset !important;
+.modal-link:hover {
+	text-decoration: underline;
 }
 
 .object-fit-contain {

@@ -23,6 +23,7 @@ urls.add(openSsoLogoutURL);
 urls.add(openSsoServiceURL);
 %>
 
+<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
 <c:choose>
 	<c:when test="<%= !OpenSSOUtil.isValidUrls(urls.toArray(new String[0])) %>">
 		<liferay-ui:message key="liferay-has-failed-to-connect-to-the-opensso-server" />
@@ -37,3 +38,4 @@ urls.add(openSsoServiceURL);
 		<liferay-ui:message key="liferay-has-successfully-connected-to-the-opensso-server" />
 	</c:otherwise>
 </c:choose>
+</c:if>

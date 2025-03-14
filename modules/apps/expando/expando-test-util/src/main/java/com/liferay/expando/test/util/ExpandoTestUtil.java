@@ -44,6 +44,14 @@ public class ExpandoTestUtil {
 			table.getTableId(), columnName, type, defaultData);
 	}
 
+	public static ExpandoColumn addColumn(
+			ExpandoTable table, String columnName, int type, Object defaultData)
+		throws Exception {
+
+		return ExpandoColumnLocalServiceUtil.addColumn(
+			table.getTableId(), columnName, type, defaultData);
+	}
+
 	public static ExpandoTable addTable(long classNameId, String tableName)
 		throws Exception {
 

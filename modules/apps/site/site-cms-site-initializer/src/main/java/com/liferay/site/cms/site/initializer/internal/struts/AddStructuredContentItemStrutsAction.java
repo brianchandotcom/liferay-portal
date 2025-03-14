@@ -84,7 +84,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		if (!Objects.equals(
 				objectDefinition.getScope(),
-				ObjectDefinitionConstants.SCOPE_SITE)) {
+				ObjectDefinitionConstants.SCOPE_DEPOT)) {
 
 			return null;
 		}

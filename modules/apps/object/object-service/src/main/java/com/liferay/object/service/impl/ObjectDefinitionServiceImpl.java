@@ -167,7 +167,7 @@ public class ObjectDefinitionServiceImpl
 
 		return objectDefinitionPersistence.filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, true, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
+			ObjectDefinitionConstants.SCOPE_DEPOT,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 	}

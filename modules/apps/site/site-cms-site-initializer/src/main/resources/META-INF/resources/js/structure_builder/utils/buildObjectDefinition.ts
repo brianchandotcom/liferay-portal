@@ -31,7 +31,7 @@ export default function buildObjectDefinition({
 		label,
 		objectFields: buildFields(fields),
 		pluralLabel: label,
-		scope: 'site',
+		scope: 'depot',
 	};
 
 	if (id) {

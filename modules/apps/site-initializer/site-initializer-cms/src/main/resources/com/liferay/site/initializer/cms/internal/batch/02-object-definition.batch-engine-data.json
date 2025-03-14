@@ -99,7 +99,7 @@
 				"en_US": "Basic Documents"
 			},
 			"portlet": false,
-			"scope": "site",
+			"scope": "depot",
 			"status": {
 				"code": 0
 			},
@@ -171,7 +171,7 @@
 				"en_US": "Basic Web Contents"
 			},
 			"portlet": false,
-			"scope": "site",
+			"scope": "depot",
 			"status": {
 				"code": 0
 			},
@@ -303,7 +303,7 @@
 				"en_US": "Blogs"
 			},
 			"portlet": false,
-			"scope": "site",
+			"scope": "depot",
 			"status": {
 				"code": 0
 			},
@@ -354,7 +354,7 @@
 				"en_US": "External Videos"
 			},
 			"portlet": false,
-			"scope": "site",
+			"scope": "depot",
 			"status": {
 				"code": 0
 			},
@@ -426,7 +426,7 @@
 				"en_US": "Knowledge Bases"
 			},
 			"portlet": false,
-			"scope": "site",
+			"scope": "depot",
 			"status": {
 				"code": 0
 			},

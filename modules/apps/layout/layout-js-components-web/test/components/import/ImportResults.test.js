@@ -12,14 +12,6 @@ import {
 	checkAccessibility,
 } from '../../../src/main/resources/META-INF/resources/js/index';
 
-Liferay.ThemeDisplay.getPathContext = () => '';
-
-jest.mock(
-	'/o/frontend-js-dependencies-web/__liferay__/exports/axe-core.js',
-	() => jest.requireActual('axe-core'),
-	{virtual: true}
-);
-
 const SUCCESS_RESULT = {
 	success: [
 		{

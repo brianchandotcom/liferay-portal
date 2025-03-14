@@ -40,6 +40,24 @@ public class BatchEngineDeletionHelperUtil {
 		return batchEngineDeletionHelper.getBatchDeleteSupportedClassNames();
 	}
 
+	public static void importDeletions(
+			PortletDataContext portletDataContext, String portletId)
+		throws Exception {
+
+		BatchEngineDeletionHelper batchEngineDeletionHelper =
+			_batchEngineDeletionHelper.get();
+
+		batchEngineDeletionHelper.importDeletions(
+			portletDataContext, portletId);
+	}
+
+	public static boolean isBatchPortlet(String portletId) {
+		BatchEngineDeletionHelper batchEngineDeletionHelper =
+			_batchEngineDeletionHelper.get();
+
+		return batchEngineDeletionHelper.isBatchPortlet(portletId);
+	}
+
 	private static final Snapshot<BatchEngineDeletionHelper>
 		_batchEngineDeletionHelper = new Snapshot<>(
 			BatchEngineDeletionHelperUtil.class,

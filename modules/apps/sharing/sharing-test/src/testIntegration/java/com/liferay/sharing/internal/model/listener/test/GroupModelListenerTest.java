@@ -8,15 +8,18 @@ package com.liferay.sharing.internal.model.listener.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -62,28 +65,46 @@ public class GroupModelListenerTest {
 	public void testDeletingGroupDeletesSharingEntries() throws Exception {
 		long classPK = _group.getGroupId();
 
-		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
-			_classNameLocalService.getClassNameId(Group.class.getName()),
-			classPK, _group.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
-		List<SharingEntry> groupSharingEntries =
-			_sharingEntryLocalService.getGroupSharingEntries(
-				_group.getGroupId());
+		try {
+			_sharingEntryLocalService.addSharingEntry(
+				null, TestPropsValues.getUserId(), 0, _groupUser.getUserId(),
+				_classNameLocalService.getClassNameId(Group.class.getName()),
+				classPK, _group.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), null,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
-		Assert.assertEquals(
-			groupSharingEntries.toString(), 1, groupSharingEntries.size());
+			_sharingEntryLocalService.addSharingEntry(
+				null, TestPropsValues.getUserId(), userGroup.getUserGroupId(),
+				0, _classNameLocalService.getClassNameId(Group.class.getName()),
+				classPK, _group.getGroupId(), true,
+				Arrays.asList(SharingEntryAction.VIEW), null,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
-		_groupLocalService.deleteGroup(_group.getGroupId());
+			List<SharingEntry> groupSharingEntries =
+				_sharingEntryLocalService.getGroupSharingEntries(
+					_group.getGroupId());
 
-		groupSharingEntries = _sharingEntryLocalService.getGroupSharingEntries(
-			_group.getGroupId());
+			Assert.assertEquals(
+				groupSharingEntries.toString(), 2, groupSharingEntries.size());
 
-		Assert.assertEquals(
-			groupSharingEntries.toString(), 0, groupSharingEntries.size());
+			_groupLocalService.deleteGroup(_group.getGroupId());
+
+			groupSharingEntries =
+				_sharingEntryLocalService.getGroupSharingEntries(
+					_group.getGroupId());
+
+			Assert.assertEquals(
+				groupSharingEntries.toString(), 0, groupSharingEntries.size());
+		}
+		finally {
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
+		}
 	}
 
 	@Test
@@ -162,5 +183,8 @@ public class GroupModelListenerTest {
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

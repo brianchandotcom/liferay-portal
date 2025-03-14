@@ -52,6 +52,7 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionP
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMDataDefinitionConverter;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -204,6 +205,14 @@ public class DDMStructureLocalServiceImpl
 		throws PortalException {
 
 		// Structure
+
+		try {
+			DDMFormFieldUtil.sortNestedDDMFormFields(
+				ddmForm.getDDMFormFields());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 
 		User user = _userLocalService.getUser(userId);
 

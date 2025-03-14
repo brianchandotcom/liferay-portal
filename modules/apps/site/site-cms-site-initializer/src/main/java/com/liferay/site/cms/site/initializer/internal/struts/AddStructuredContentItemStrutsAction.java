@@ -5,6 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.struts;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -18,25 +20,27 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -47,6 +51,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,27 +89,28 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			return null;
 		}
 
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		long classNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
-				fetchDefaultLayoutPageTemplateEntry(groupId, classNameId, 0);
+				fetchDefaultLayoutPageTemplateEntry(
+					themeDisplay.getScopeGroupId(), classNameId, 0);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
 		if (layoutPageTemplateEntry == null) {
 			layoutPageTemplateEntry = _addDefaultLayoutPageTemplateEntry(
-				classNameId, groupId, objectDefinition.getName(),
-				serviceContext);
+				classNameId, themeDisplay.getScopeGroupId(),
+				objectDefinition.getName(), serviceContext);
 		}
 
-		Group group = _groupLocalService.getGroup(groupId);
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		Group group = themeDisplay.getScopeGroup();
 
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);
@@ -114,9 +120,12 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
+		long groupId = _getGroupId(httpServletRequest, serviceContext);
+
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
-			themeDisplay.getScopeGroupId(), objectDefinitionId,
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			groupId, objectDefinitionId,
+			_getObjectEntryFolderId(
+				themeDisplay.getCompanyId(), groupId, objectDefinition),
 			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()),
 			Collections.emptyMap(), serviceContext);
 
@@ -220,6 +229,57 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		return layoutPageTemplateEntry;
 	}
 
+	private long _getGroupId(
+			HttpServletRequest httpServletRequest,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long assetLibraryId = ParamUtil.getLong(
+			httpServletRequest, "assetLibraryId");
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			assetLibraryId);
+
+		if (depotEntry != null) {
+			return depotEntry.getGroupId();
+		}
+
+		List<DepotEntry> depotEntries = _depotEntryLocalService.getDepotEntries(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (!depotEntries.isEmpty()) {
+			depotEntry = depotEntries.get(0);
+		}
+		else {
+			depotEntry = _depotEntryLocalService.addDepotEntry(
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), "Default"
+				).build(),
+				new HashMap<>(), serviceContext);
+		}
+
+		return depotEntry.getGroupId();
+	}
+
+	private long _getObjectEntryFolderId(
+		long companyId, long groupId, ObjectDefinition objectDefinition) {
+
+		String externalReferenceCode = "L_CONTENTS";
+
+		if (Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				"L_CMS_FILE_TYPES")) {
+
+			externalReferenceCode = "L_FILES";
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.fetchObjectEntryFolder(
+				externalReferenceCode, groupId, companyId);
+
+		return objectEntryFolder.getObjectEntryFolderId();
+	}
+
 	private String _getURLSeparator() {
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.
@@ -236,14 +296,14 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 	}
 
 	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
 	private FormManager _formManager;
 
 	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -261,6 +321,9 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

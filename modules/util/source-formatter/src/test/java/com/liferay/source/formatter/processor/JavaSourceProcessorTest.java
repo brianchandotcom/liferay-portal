@@ -875,6 +875,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testTextBlock() throws Exception {
+		test("TextBlock.testjava", "Do not use text block", 14);
+	}
+
+	@Test
 	public void testThrowsSystemException() throws Exception {
 		test("ThrowsSystemException.testjava");
 	}

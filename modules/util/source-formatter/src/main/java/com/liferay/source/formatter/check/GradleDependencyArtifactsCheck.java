@@ -233,6 +233,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 					getLineNumber(content, pos));
 			}
 			else if (name.startsWith("com.liferay") &&
+					 !name.startsWith("com.liferay.jakarta.portlet-api") &&
 					 !name.startsWith("com.liferay.portletmvc4spring") &&
 					 !name.startsWith("com.liferay.gradle") &&
 					 !_isMasterOnlyFile(absolutePath)) {

@@ -14,10 +14,6 @@ public class JavaTextBlock extends BaseJavaExpression {
 		_name = name;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
 	@Override
 	protected String getString(
 		String indent, String prefix, String suffix, int maxLineLength,

@@ -5,7 +5,7 @@
 
 package com.liferay.asset.vocabulary.item.selector.web.internal;
 
-import com.liferay.asset.vocabulary.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
+import com.liferay.asset.vocabulary.item.selector.AssetVocabularyItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

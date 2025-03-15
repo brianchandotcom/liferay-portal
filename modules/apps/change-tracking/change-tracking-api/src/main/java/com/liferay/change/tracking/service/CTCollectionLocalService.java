@@ -154,6 +154,10 @@ public interface CTCollectionLocalService
 		throws PortalException;
 
 	public void discardCTEntry(
+			long ctCollectionId, List<CTEntry> ctEntries, boolean force)
+		throws PortalException;
+
+	public void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK,
 			boolean force)
 		throws PortalException;
@@ -349,7 +353,17 @@ public interface CTCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Long, List<CTEntry>> getRelatedCTEntriesMap(
+			long ctCollectionId, List<CTEntry> ctEntries)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<CTEntry>> getRelatedCTEntriesMap(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<CTEntry>> getRelatedCTEntriesMap(
+			long ctCollectionId, long[] ctEntryIds)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -66,8 +66,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -766,7 +764,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					return expectedActions;
 				}
 
-				<#if parameters?contains("Filter filter")>
+				<#if parameters?contains("com.liferay.portal.kernel.search.filter.Filter filter")>
 					<#assign generateSearchTestRule = true />
 
 					@Test
@@ -1080,7 +1078,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					}
 				</#if>
 
-				<#if parameters?contains("Sort[] sorts")>
+				<#if parameters?contains("com.liferay.portal.kernel.search.Sort[] sorts")>
 					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithSortDateTime() throws Exception {
 						test${javaMethodSignature.methodName?cap_first}WithSort(

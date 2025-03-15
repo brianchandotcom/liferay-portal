@@ -875,6 +875,11 @@
 			<property name="description" value="Finds missing LiferayUnitTestRule." />
 			<message key="test.rule.missing" value="Missing test rule &quot;LiferayUnitTestRule&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.TextBlockCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds usage of text block." />
+			<message key="text.block.avoid" value="Do not use text block" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ThreadContextClassLoaderCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks usage of `Thread.setContextClassLoader`." />

@@ -15,7 +15,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +70,6 @@ public class ViewRelatedEntriesDisplayContext {
 		_ctCollectionId = ParamUtil.getLong(renderRequest, "ctCollectionId");
 		_ctEntryIds = StringUtil.split(
 			ParamUtil.getString(httpServletRequest, "id"), 0L);
-		_force = ParamUtil.getBoolean(renderRequest, "force");
 		_modelClassNameId = ParamUtil.getLong(
 			renderRequest, "modelClassNameId");
 		_modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
@@ -86,41 +84,21 @@ public class ViewRelatedEntriesDisplayContext {
 	public <T extends BaseModel<T>> Map<String, Object> getReactData()
 		throws Exception {
 
-		Map<Long, List<CTEntry>> relatedCTEntriesMap = new HashMap<>();
+		List<Long> ctEntryIds = ListUtil.fromArray(_ctEntryIds);
 
 		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
-			relatedCTEntriesMap.putAll(
-				_ctCollectionLocalService.getRelatedCTEntriesMap(
-					_ctCollectionId, _modelClassNameId, _modelClassPK));
-		}
+			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+				_ctCollectionId, _modelClassNameId, _modelClassPK);
 
-		for (long ctEntryId : _ctEntryIds) {
-			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
-
-			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-				_ctDisplayRendererRegistry.getCTSQLMode(
-					_ctCollectionId, ctEntry);
-
-			T model = _ctDisplayRendererRegistry.fetchCTModel(
-				ctEntry.getCtCollectionId(), ctSQLMode,
-				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
-
-			if ((model == null) ||
-				!_ctDisplayRendererRegistry.isMovable(
-					model, ctEntry.getModelClassNameId())) {
-
-				continue;
+			if (ctEntry != null) {
+				ctEntryIds.add(ctEntry.getCtEntryId());
 			}
-
-			Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
-				_ctCollectionLocalService.getRelatedCTEntriesMap(
-					_ctCollectionId, ctEntry.getModelClassNameId(),
-					ctEntry.getModelClassPK());
-
-			currentRelatedCTEntriesMap.forEach(
-				(key, value) -> relatedCTEntriesMap.merge(
-					key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
 		}
+
+		Map<Long, List<CTEntry>> relatedCTEntriesMap =
+			_ctCollectionLocalService.getRelatedCTEntriesMap(
+				_ctCollectionId,
+				ListUtil.toLongArray(ctEntryIds, GetterUtil::getLong));
 
 		Set<CTEntry> ctEntries = new HashSet<>();
 
@@ -236,8 +214,6 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"ctEntryIds", StringUtil.merge(_ctEntryIds)
 		).setParameter(
-			"force", _force
-		).setParameter(
 			"modelClassNameId", _modelClassNameId
 		).setParameter(
 			"modelClassPK", _modelClassPK
@@ -286,7 +262,6 @@ public class ViewRelatedEntriesDisplayContext {
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final long[] _ctEntryIds;
 	private final CTEntryLocalService _ctEntryLocalService;
-	private final boolean _force;
 	private final HttpServletRequest _httpServletRequest;
 	private final long _modelClassNameId;
 	private final long _modelClassPK;

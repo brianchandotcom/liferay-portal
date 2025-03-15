@@ -531,7 +531,7 @@ public class AnalyticsCloudClient {
 				InetAddressUtil.getInetAddressByName(domain)) ||
 			!StringUtil.endsWith(domain, analyticsCloudDomainAllowed)) {
 
-			throw new DataSourceConnectionException("Invalid token URL host");
+			throw new DataSourceConnectionException("Invalid URL host");
 		}
 	}
 

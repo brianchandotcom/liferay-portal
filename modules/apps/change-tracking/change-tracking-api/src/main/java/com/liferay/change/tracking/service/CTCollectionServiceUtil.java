@@ -54,6 +54,14 @@ public class CTCollectionServiceUtil {
 	}
 
 	public static void discardCTEntry(
+			long ctCollectionId,
+			List<com.liferay.change.tracking.model.CTEntry> ctEntries)
+		throws PortalException {
+
+		getService().discardCTEntry(ctCollectionId, ctEntries);
+	}
+
+	public static void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws PortalException {
 

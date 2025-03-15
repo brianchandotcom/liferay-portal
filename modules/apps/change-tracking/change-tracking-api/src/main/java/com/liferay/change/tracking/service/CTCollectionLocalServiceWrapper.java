@@ -188,6 +188,17 @@ public class CTCollectionLocalServiceWrapper
 
 	@Override
 	public void discardCTEntry(
+			long ctCollectionId,
+			java.util.List<com.liferay.change.tracking.model.CTEntry> ctEntries,
+			boolean force)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionLocalService.discardCTEntry(
+			ctCollectionId, ctEntries, force);
+	}
+
+	@Override
+	public void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK,
 			boolean force)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -489,11 +500,27 @@ public class CTCollectionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-			getRelatedCTEntries(long ctCollectionId, long[] ctEntryIds)
+			getRelatedCTEntries(
+				long ctCollectionId, long[] ctEntryIds,
+				boolean filterConflictedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.getRelatedCTEntries(
-			ctCollectionId, ctEntryIds);
+			ctCollectionId, ctEntryIds, filterConflictedEntries);
+	}
+
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.change.tracking.model.CTEntry>>
+				getRelatedCTEntriesMap(
+					long ctCollectionId,
+					java.util.List<com.liferay.change.tracking.model.CTEntry>
+						ctEntries,
+					boolean filterConflictedEntries)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.getRelatedCTEntriesMap(
+			ctCollectionId, ctEntries, filterConflictedEntries);
 	}
 
 	@Override
@@ -501,11 +528,24 @@ public class CTCollectionLocalServiceWrapper
 		<Long, java.util.List<com.liferay.change.tracking.model.CTEntry>>
 				getRelatedCTEntriesMap(
 					long ctCollectionId, long modelClassNameId,
-					long modelClassPK)
+					long modelClassPK, boolean filterConflictedEntries)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctCollectionLocalService.getRelatedCTEntriesMap(
-			ctCollectionId, modelClassNameId, modelClassPK);
+			ctCollectionId, modelClassNameId, modelClassPK,
+			filterConflictedEntries);
+	}
+
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.change.tracking.model.CTEntry>>
+				getRelatedCTEntriesMap(
+					long ctCollectionId, long[] ctEntryIds,
+					boolean filterConflictedEntries)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctCollectionLocalService.getRelatedCTEntriesMap(
+			ctCollectionId, ctEntryIds, filterConflictedEntries);
 	}
 
 	@Override

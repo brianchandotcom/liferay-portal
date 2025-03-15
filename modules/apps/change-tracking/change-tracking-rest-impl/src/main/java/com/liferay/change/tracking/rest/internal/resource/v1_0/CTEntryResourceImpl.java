@@ -294,22 +294,6 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 						return null;
 					}
 
-					CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-						_ctDisplayRendererRegistry.getCTSQLMode(
-							ctEntry.getCtCollectionId(), ctEntry);
-
-					T model = _ctDisplayRendererRegistry.fetchCTModel(
-						ctEntry.getCtCollectionId(), ctSQLMode,
-						ctEntry.getModelClassNameId(),
-						ctEntry.getModelClassPK());
-
-					if ((model == null) ||
-						!_ctDisplayRendererRegistry.isMovable(
-							model, ctEntry.getModelClassNameId())) {
-
-						return null;
-					}
-
 					return addAction(
 						ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
 						"getCTEntry", _ctCollectionModelResourcePermission);

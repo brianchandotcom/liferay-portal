@@ -370,7 +370,7 @@ public class CTCollectionLocalServiceImpl
 		throws PortalException {
 
 		List<CTEntry> ctEntries = getRelatedCTEntries(
-			fromCTCollectionId, ctEntryIds);
+			fromCTCollectionId, ctEntryIds, false);
 
 		return checkConflicts(
 			companyId, ctEntries, fromCTCollectionId, fromCTCollectionName,
@@ -582,8 +582,7 @@ public class CTCollectionLocalServiceImpl
 
 	@Override
 	public void discardCTEntry(
-			long ctCollectionId, long modelClassNameId, long modelClassPK,
-			boolean force)
+			long ctCollectionId, List<CTEntry> ctEntries, boolean force)
 		throws PortalException {
 
 		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
@@ -594,30 +593,29 @@ public class CTCollectionLocalServiceImpl
 				"Change tracking collection " + ctCollection + " is read only");
 		}
 
-		List<CTEntry> ctEntries = new ArrayList<>();
-
-		Map<Long, List<CTEntry>> relateCTEntriesMap = _getRelatedCTEntriesMap(
-			ctCollection, modelClassNameId, modelClassPK);
+		Map<Long, List<CTEntry>> relateCTEntriesMap = getRelatedCTEntriesMap(
+			ctCollection.getCtCollectionId(), ctEntries, true);
 
 		for (Map.Entry<Long, List<CTEntry>> entry :
 				relateCTEntriesMap.entrySet()) {
 
-			ctEntries.addAll(entry.getValue());
-
 			_discardCTEntries(ctCollection, entry.getKey(), entry.getValue());
 		}
 
-		Indexer<CTEntry> indexer = _indexerRegistry.getIndexer(CTEntry.class);
-
-		if (indexer != null) {
-			_indexWriterHelper.deleteDocuments(
-				ctCollection.getCompanyId(),
-				TransformUtil.transform(
-					ctEntries, ctEntry -> _uidFactory.getUID(ctEntry)),
-				indexer.isCommitImmediately());
-		}
-
 		_ctClosureFactory.clearCache(ctCollection.getCtCollectionId());
+	}
+
+	@Override
+	public void discardCTEntry(
+			long ctCollectionId, long modelClassNameId, long modelClassPK,
+			boolean force)
+		throws PortalException {
+
+		CTEntry ctEntry = _ctEntryPersistence.findByC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+
+		discardCTEntry(
+			ctCollectionId, Collections.singletonList(ctEntry), force);
 	}
 
 	@Override
@@ -704,56 +702,107 @@ public class CTCollectionLocalServiceImpl
 
 	@Override
 	public List<CTEntry> getRelatedCTEntries(
-			long ctCollectionId, long[] ctEntryIds)
+			long ctCollectionId, long[] ctEntryIds,
+			boolean filterConflictedEntries)
 		throws PortalException {
 
-		CTCollection ctCollection = fetchCTCollection(ctCollectionId);
+		Map<Long, List<CTEntry>> relatedCTEntriesMap = getRelatedCTEntriesMap(
+			ctCollectionId, _ctEntryLocalService.getCTEntries(ctEntryIds),
+			filterConflictedEntries);
 
-		if (ctCollection == null) {
-			return Collections.emptyList();
+		Set<CTEntry> relatedCTEntries = new HashSet<>();
+
+		for (List<CTEntry> ctEntryList : relatedCTEntriesMap.values()) {
+			relatedCTEntries.addAll(ctEntryList);
 		}
 
-		Long[] ctEntryIdLongs = new Long[ctEntryIds.length];
-
-		for (int i = 0; i < ctEntryIds.length; i++) {
-			ctEntryIdLongs[i] = ctEntryIds[i];
-		}
-
-		List<CTEntry> ctEntries = _ctEntryLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				CTEntryTable.INSTANCE
-			).from(
-				CTEntryTable.INSTANCE
-			).where(
-				CTEntryTable.INSTANCE.ctCollectionId.eq(
-					ctCollectionId
-				).and(
-					CTEntryTable.INSTANCE.ctEntryId.in(ctEntryIdLongs)
-				)
-			));
-
-		for (CTEntry ctEntry : ctEntries) {
-			Map<Long, List<CTEntry>> relatedCTEntriesMap =
-				_getRelatedCTEntriesMap(
-					ctCollection, ctEntry.getModelClassNameId(),
-					ctEntry.getModelClassPK());
-
-			for (List<CTEntry> relatedEntries : relatedCTEntriesMap.values()) {
-				ctEntries.addAll(relatedEntries);
-			}
-		}
-
-		return ctEntries;
+		return new ArrayList<>(relatedCTEntries);
 	}
 
 	@Override
 	public Map<Long, List<CTEntry>> getRelatedCTEntriesMap(
-			long ctCollectionId, long modelClassNameId, long modelClassPK)
+			long ctCollectionId, List<CTEntry> ctEntries,
+			boolean filterConflictedEntries)
 		throws PortalException {
 
-		return _getRelatedCTEntriesMap(
-			ctCollectionPersistence.findByPrimaryKey(ctCollectionId),
-			modelClassNameId, modelClassPK);
+		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
+			ctCollectionId);
+
+		Map<Long, List<CTEntry>> relatedCTEntriesMap = new HashMap<>();
+
+		for (CTEntry ctEntry : ctEntries) {
+			if (!filterConflictedEntries &&
+				!_isMoveable(ctCollectionId, ctEntry)) {
+
+				continue;
+			}
+
+			Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
+				_fetchRelatedCTEntriesMap(
+					ctCollection, ctEntry.getModelClassNameId(),
+					ctEntry.getModelClassPK());
+
+			currentRelatedCTEntriesMap.forEach(
+				(key, value) -> relatedCTEntriesMap.merge(
+					key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
+		}
+
+		if (!filterConflictedEntries) {
+			return relatedCTEntriesMap;
+		}
+
+		for (CTEntry ctEntry : ctEntries) {
+			List<CTEntry> peerCTEntries = _ctEntryLocalService.getCTEntries(
+				ctCollectionId, ctEntry.getModelClassNameId());
+
+			for (CTEntry peerCTEntry : peerCTEntries) {
+				List<CTEntry> relatedCTEntries = relatedCTEntriesMap.get(
+					peerCTEntry.getModelClassNameId());
+
+				if ((relatedCTEntries != null) &&
+					relatedCTEntries.contains(peerCTEntry)) {
+
+					continue;
+				}
+
+				Map<Long, List<CTEntry>> peerRelatedCTEntriesMap =
+					_fetchRelatedCTEntriesMap(
+						ctCollection, peerCTEntry.getModelClassNameId(),
+						peerCTEntry.getModelClassPK());
+
+				peerRelatedCTEntriesMap.forEach(
+					(key1, peerRelatedCTEntries) ->
+						relatedCTEntriesMap.computeIfPresent(
+							key1,
+							(key2, currentCTEntries) -> ListUtil.remove(
+								currentCTEntries, peerRelatedCTEntries)));
+			}
+		}
+
+		return relatedCTEntriesMap;
+	}
+
+	public Map<Long, List<CTEntry>> getRelatedCTEntriesMap(
+			long ctCollectionId, long modelClassNameId, long modelClassPK,
+			boolean filterConflictedEntries)
+		throws PortalException {
+
+		CTEntry ctEntry = _ctEntryPersistence.findByC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+
+		return getRelatedCTEntriesMap(
+			ctCollectionId, Collections.singletonList(ctEntry),
+			filterConflictedEntries);
+	}
+
+	public Map<Long, List<CTEntry>> getRelatedCTEntriesMap(
+			long ctCollectionId, long[] ctEntryIds,
+			boolean filterConflictedEntries)
+		throws PortalException {
+
+		return getRelatedCTEntriesMap(
+			ctCollectionId, _ctEntryLocalService.getCTEntries(ctEntryIds),
+			filterConflictedEntries);
 	}
 
 	@Override
@@ -890,22 +939,8 @@ public class CTCollectionLocalServiceImpl
 					" is read only");
 		}
 
-		Map<Long, List<CTEntry>> relatedCTEntriesMap = new HashMap<>();
-
-		for (CTEntry ctEntry : ctEntries) {
-			if (!_isMoveable(fromCTCollectionId, ctEntry)) {
-				return;
-			}
-
-			Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
-				_getRelatedCTEntriesMap(
-					fromCTCollection, ctEntry.getModelClassNameId(),
-					ctEntry.getModelClassPK());
-
-			currentRelatedCTEntriesMap.forEach(
-				(key, value) -> relatedCTEntriesMap.merge(
-					key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
-		}
+		Map<Long, List<CTEntry>> relatedCTEntriesMap = getRelatedCTEntriesMap(
+			fromCTCollection.getCtCollectionId(), ctEntries, false);
 
 		List<CTEntry> combinedCTEntries = new ArrayList<>();
 
@@ -930,16 +965,8 @@ public class CTCollectionLocalServiceImpl
 				toCTCollectionId, entry.getKey(), entry.getValue());
 		}
 
-		for (CTEntry ctEntry : ctEntries) {
-			Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
-				_getRelatedCTEntriesMap(
-					toCTCollection, ctEntry.getModelClassNameId(),
-					ctEntry.getModelClassPK());
-
-			currentRelatedCTEntriesMap.forEach(
-				(key, value) -> relatedCTEntriesMap.merge(
-					key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
-		}
+		relatedCTEntriesMap = getRelatedCTEntriesMap(
+			toCTCollection.getCtCollectionId(), ctEntries, false);
 
 		combinedCTEntries = new ArrayList<>();
 
@@ -966,82 +993,11 @@ public class CTCollectionLocalServiceImpl
 			long modelClassNameId, long modelClassPK)
 		throws PortalException {
 
-		CTCollection fromCTCollection =
-			ctCollectionPersistence.findByPrimaryKey(fromCTCollectionId);
-
-		if ((fromCTCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
-			(fromCTCollection.getStatus() !=
-				WorkflowConstants.STATUS_EXPIRED) &&
-			(fromCTCollection.getStatus() !=
-				WorkflowConstants.STATUS_PENDING)) {
-
-			throw new CTCollectionStatusException(
-				"Change tracking collection " + fromCTCollection +
-					" is read only");
-		}
-
-		CTCollection toCTCollection = ctCollectionPersistence.findByPrimaryKey(
-			toCTCollectionId);
-
-		if (toCTCollection.isReadOnly()) {
-			throw new CTCollectionStatusException(
-				"Change tracking collection " + toCTCollection +
-					" is read only");
-		}
-
-		CTEntry ctEntry = _ctEntryPersistence.findByC_MCNI_MCPK(
-			fromCTCollectionId, modelClassNameId, modelClassPK);
-
-		if (!_isMoveable(fromCTCollectionId, ctEntry)) {
-			return;
-		}
-
-		Map<Long, List<CTEntry>> relatedCTEntriesMap = _getRelatedCTEntriesMap(
-			fromCTCollection, modelClassNameId, modelClassPK);
-
-		List<CTEntry> ctEntries = new ArrayList<>();
-
-		for (List<CTEntry> curCTEntries : relatedCTEntriesMap.values()) {
-			ctEntries.addAll(curCTEntries);
-		}
-
-		Map<Long, List<ConflictInfo>> conflictInfoMap = checkConflicts(
-			fromCTCollection.getCompanyId(), ctEntries, fromCTCollectionId,
-			fromCTCollection.getName(), toCTCollectionId,
-			toCTCollection.getName());
-
-		if (!conflictInfoMap.isEmpty()) {
-			throw new CTPublishConflictException("Conflict detected");
-		}
-
-		for (Map.Entry<Long, List<CTEntry>> entry :
-				relatedCTEntriesMap.entrySet()) {
-
-			_moveCTEntries(
-				fromCTCollection.getCompanyId(), fromCTCollectionId,
-				toCTCollectionId, entry.getKey(), entry.getValue());
-		}
-
-		relatedCTEntriesMap = _getRelatedCTEntriesMap(
-			toCTCollection, modelClassNameId, modelClassPK);
-
-		ctEntries = new ArrayList<>();
-
-		for (List<CTEntry> curCTEntries : relatedCTEntriesMap.values()) {
-			ctEntries.addAll(curCTEntries);
-		}
-
-		conflictInfoMap = checkConflicts(
-			fromCTCollection.getCompanyId(), ctEntries, toCTCollectionId,
-			toCTCollection.getName(), CTConstants.CT_COLLECTION_ID_PRODUCTION,
-			"Production");
-
-		if (!conflictInfoMap.isEmpty()) {
-			throw new CTPublishConflictException("Conflict detected");
-		}
-
-		_ctClosureFactory.clearCache(fromCTCollectionId);
-		_ctClosureFactory.clearCache(toCTCollectionId);
+		moveCTEntries(
+			fromCTCollectionId, toCTCollectionId,
+			Collections.singletonList(
+				_ctEntryLocalService.fetchCTEntry(
+					fromCTCollectionId, modelClassNameId, modelClassPK)));
 	}
 
 	@Override
@@ -1269,6 +1225,10 @@ public class CTCollectionLocalServiceImpl
 	private void _discardCTEntries(
 		CTCollection ctCollection, long classNameId, List<CTEntry> ctEntries) {
 
+		if (ListUtil.isEmpty(ctEntries)) {
+			return;
+		}
+
 		CTService<?> ctService = _ctServiceRegistry.getCTService(classNameId);
 
 		ctService.updateWithUnsafeFunction(
@@ -1360,7 +1320,7 @@ public class CTCollectionLocalServiceImpl
 		}
 	}
 
-	private Map<Long, List<CTEntry>> _getRelatedCTEntriesMap(
+	private Map<Long, List<CTEntry>> _fetchRelatedCTEntriesMap(
 			CTCollection ctCollection, long modelClassNameId, long modelClassPK)
 		throws PortalException {
 
@@ -1455,22 +1415,26 @@ public class CTCollectionLocalServiceImpl
 			_ctDisplayRendererRegistry.getCTSQLMode(ctCollectionId, ctEntry);
 
 		T model = _ctDisplayRendererRegistry.fetchCTModel(
-			ctEntry.getCtCollectionId(), ctSQLMode,
-			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+			ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
+			ctEntry.getModelClassPK());
 
-		if ((model == null) ||
-			!_ctDisplayRendererRegistry.isMovable(
+		if ((model != null) &&
+			_ctDisplayRendererRegistry.isMovable(
 				model, ctEntry.getModelClassNameId())) {
 
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private void _moveCTEntries(
 		long companyId, long fromCTCollectionId, long toCTCollectionId,
 		long classNameId, List<CTEntry> ctEntries) {
+
+		if (ListUtil.isEmpty(ctEntries)) {
+			return;
+		}
 
 		CTService<?> ctService = _ctServiceRegistry.getCTService(classNameId);
 

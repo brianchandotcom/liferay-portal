@@ -136,6 +136,19 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CTEntry> getCTEntries(long[] ctEntryIds) {
+		return ctEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				CTEntryTable.INSTANCE
+			).from(
+				CTEntryTable.INSTANCE
+			).where(
+				CTEntryTable.INSTANCE.ctEntryId.in(
+					ArrayUtil.toArray(ctEntryIds))
+			));
+	}
+
+	@Override
 	public long getCTRowCTCollectionId(CTEntry ctEntry) throws PortalException {
 		CTCollection ctCollection = _ctCollectionPersistence.findByPrimaryKey(
 			ctEntry.getCtCollectionId());

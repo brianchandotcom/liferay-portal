@@ -60,13 +60,14 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 			(toCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
 			try {
-				if ((modelClassNameId > 0) && (modelClassPK > 0)) {
-					_ctCollectionService.moveCTEntry(
-						fromCTCollectionId, toCTCollectionId, modelClassNameId,
-						modelClassPK);
-				}
-
 				List<CTEntry> ctEntries = new ArrayList<>();
+
+				if ((modelClassNameId > 0) && (modelClassPK > 0)) {
+					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+						fromCTCollectionId, modelClassNameId, modelClassPK);
+
+					ctEntries.add(ctEntry);
+				}
 
 				for (long ctEntryId : ctEntryIds) {
 					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(

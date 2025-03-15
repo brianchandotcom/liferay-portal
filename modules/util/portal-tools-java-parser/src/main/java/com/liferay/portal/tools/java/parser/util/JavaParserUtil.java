@@ -58,6 +58,7 @@ import com.liferay.portal.tools.java.parser.JavaSwitchStatement;
 import com.liferay.portal.tools.java.parser.JavaSynchronizedStatement;
 import com.liferay.portal.tools.java.parser.JavaTerm;
 import com.liferay.portal.tools.java.parser.JavaTernaryOperator;
+import com.liferay.portal.tools.java.parser.JavaTextBlock;
 import com.liferay.portal.tools.java.parser.JavaThrowStatement;
 import com.liferay.portal.tools.java.parser.JavaTryStatement;
 import com.liferay.portal.tools.java.parser.JavaType;
@@ -1216,6 +1217,9 @@ public class JavaParserUtil {
 		else if (detailAST.getType() == TokenTypes.QUESTION) {
 			javaExpression = _parseJavaTernaryOperator(detailAST);
 		}
+		else if (detailAST.getType() == TokenTypes.TEXT_BLOCK_LITERAL_BEGIN) {
+			javaExpression = _parseJavaTextBlock(detailAST.getFirstChild());
+		}
 		else if (detailAST.getType() == TokenTypes.TYPECAST) {
 			javaExpression = _parseJavaTypeCast(detailAST);
 		}
@@ -1243,6 +1247,12 @@ public class JavaParserUtil {
 		}
 
 		return javaExpression;
+	}
+
+	private static JavaTextBlock _parseJavaTextBlock(
+			DetailAST textBlockLiteralBeginDetailAST) {
+
+		return new JavaTextBlock(textBlockLiteralBeginDetailAST.getText());
 	}
 
 	private static JavaLoopStatement _parseJavaForStatement(

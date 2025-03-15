@@ -6,8 +6,8 @@
 package com.liferay.asset.tags.item.selector.web.internal;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
-import com.liferay.asset.tags.item.selector.criterion.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.web.internal.display.context.AssetTagsDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;

@@ -1249,12 +1249,6 @@ public class JavaParserUtil {
 		return javaExpression;
 	}
 
-	private static JavaTextBlock _parseJavaTextBlock(
-			DetailAST textBlockLiteralBeginDetailAST) {
-
-		return new JavaTextBlock(textBlockLiteralBeginDetailAST.getText());
-	}
-
 	private static JavaLoopStatement _parseJavaForStatement(
 		DetailAST literalForDetailAST) {
 
@@ -1822,6 +1816,12 @@ public class JavaParserUtil {
 		return new JavaTernaryOperator(
 			conditionJavaExpression, falseValueJavaExpression,
 			trueValueJavaExpression);
+	}
+
+	private static JavaTextBlock _parseJavaTextBlock(
+		DetailAST textBlockContentDetailAST) {
+
+		return new JavaTextBlock(textBlockContentDetailAST.getText());
 	}
 
 	private static JavaThrowStatement _parseJavaThrowStatement(

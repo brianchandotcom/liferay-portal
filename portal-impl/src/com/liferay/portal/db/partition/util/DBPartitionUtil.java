@@ -1589,16 +1589,15 @@ public class DBPartitionUtil {
 			public int executeUpdate(String sql) throws SQLException {
 				String lowerCaseSQL = StringUtil.toLowerCase(sql);
 
-				if (CompanyThreadLocal.getNonsystemCompanyId() !=
-						PortalInstancePool.getDefaultCompanyId()) {
+				if ((CompanyThreadLocal.getNonsystemCompanyId() !=
+						PortalInstancePool.getDefaultCompanyId()) &&
+					!StringUtil.startsWith(lowerCaseSQL, "create schema") &&
+					!StringUtil.startsWith(lowerCaseSQL, "drop schema")) {
 
 					int count = StringUtil.count(
 						lowerCaseSQL, _DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
 
-					if ((count > 0) &&
-						!StringUtil.startsWith(lowerCaseSQL, "create schema") &&
-						!StringUtil.startsWith(lowerCaseSQL, "drop schema")) {
-
+					if (count > 0) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(sql);
 						}

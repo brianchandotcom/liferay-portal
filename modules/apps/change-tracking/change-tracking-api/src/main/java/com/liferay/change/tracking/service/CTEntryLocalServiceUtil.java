@@ -284,6 +284,10 @@ public class CTEntryLocalServiceUtil {
 		return getService().getCTEntries(ctCollectionId, modelClassNameId);
 	}
 
+	public static List<CTEntry> getCTEntries(long[] ctEntryIds) {
+		return getService().getCTEntries(ctEntryIds);
+	}
+
 	/**
 	 * Returns the number of ct entries.
 	 *

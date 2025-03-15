@@ -172,6 +172,15 @@ public class CTCollectionLocalServiceUtil {
 	}
 
 	public static void discardCTEntry(
+			long ctCollectionId,
+			List<com.liferay.change.tracking.model.CTEntry> ctEntries,
+			boolean force)
+		throws PortalException {
+
+		getService().discardCTEntry(ctCollectionId, ctEntries, force);
+	}
+
+	public static void discardCTEntry(
 			long ctCollectionId, long modelClassNameId, long modelClassPK,
 			boolean force)
 		throws PortalException {
@@ -428,11 +437,27 @@ public class CTCollectionLocalServiceUtil {
 
 	public static Map<Long, List<com.liferay.change.tracking.model.CTEntry>>
 			getRelatedCTEntriesMap(
+				long ctCollectionId,
+				List<com.liferay.change.tracking.model.CTEntry> ctEntries)
+		throws PortalException {
+
+		return getService().getRelatedCTEntriesMap(ctCollectionId, ctEntries);
+	}
+
+	public static Map<Long, List<com.liferay.change.tracking.model.CTEntry>>
+			getRelatedCTEntriesMap(
 				long ctCollectionId, long modelClassNameId, long modelClassPK)
 		throws PortalException {
 
 		return getService().getRelatedCTEntriesMap(
 			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	public static Map<Long, List<com.liferay.change.tracking.model.CTEntry>>
+			getRelatedCTEntriesMap(long ctCollectionId, long[] ctEntryIds)
+		throws PortalException {
+
+		return getService().getRelatedCTEntriesMap(ctCollectionId, ctEntryIds);
 	}
 
 	public static boolean hasUnapprovedChanges(long ctCollectionId)

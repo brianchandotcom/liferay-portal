@@ -981,7 +981,6 @@ public class DBPartitionUtil {
 		List<String> columnNames = new ArrayList<>();
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
 		DBInspector dbInspector = new DBInspector(connection);
 
 		try (ResultSet resultSet = databaseMetaData.getColumns(

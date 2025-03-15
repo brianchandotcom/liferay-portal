@@ -511,6 +511,42 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testDatabasePartitionSchemaNamePrefixUsage() throws Exception {
+		String partitionName = DBPartitionUtil.getPartitionName(COMPANY_IDS[0]);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					CompanyConstants.SYSTEM)) {
+
+			db.runSQL(
+				StringBundler.concat(
+					"drop view if exists ", partitionName, ".TestView"));
+		}
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					COMPANY_IDS[0])) {
+
+			db.runSQL(
+				StringBundler.concat(
+					"drop view if exists ", partitionName, ".TestView"));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			String databasePartitionSchemaNamePrefix =
+				ReflectionTestUtil.getFieldValue(
+					DBPartitionUtil.class,
+					"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX");
+
+			Assert.assertEquals(
+				databasePartitionSchemaNamePrefix +
+					" cannot be used in a statement executeUpdate",
+				illegalArgumentException.getMessage());
+		}
+	}
+
+	@Test
 	public void testDeployRemotePortlet() throws Exception {
 		String portletName = RandomTestUtil.randomString();
 

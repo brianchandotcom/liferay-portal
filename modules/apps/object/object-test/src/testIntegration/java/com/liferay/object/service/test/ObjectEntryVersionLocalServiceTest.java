@@ -17,9 +17,12 @@ import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -401,8 +404,9 @@ public class ObjectEntryVersionLocalServiceTest {
 	}
 
 	private void _assertEquals(
-		List<ObjectEntryVersion> expectedObjectEntryVersions,
-		List<ObjectEntryVersion> actualObjectEntryVersions) {
+			List<ObjectEntryVersion> expectedObjectEntryVersions,
+			List<ObjectEntryVersion> actualObjectEntryVersions)
+		throws Exception {
 
 		Assert.assertEquals(
 			actualObjectEntryVersions.toString(),
@@ -415,9 +419,41 @@ public class ObjectEntryVersionLocalServiceTest {
 			ObjectEntryVersion actualObjectEntryVersion =
 				actualObjectEntryVersions.get(i);
 
-			Assert.assertEquals(
-				expectedObjectEntryVersion.getContent(),
+			JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
+				expectedObjectEntryVersion.getContent());
+			JSONObject actualJSONObject = JSONFactoryUtil.createJSONObject(
 				actualObjectEntryVersion.getContent());
+
+			for (String key : expectedJSONObject.keySet()) {
+				Object expectedValue = expectedJSONObject.get(key);
+				Object actualValue = actualJSONObject.get(key);
+
+				if (expectedValue instanceof JSONObject) {
+					Assert.assertTrue(
+						StringBundler.concat(
+							"Expected: ", key, " = ", expectedValue,
+							" but was: ", key, " = ", actualValue),
+						JSONUtil.equals(
+							(JSONObject)expectedValue,
+							(JSONObject)actualValue));
+				}
+				else if (expectedValue instanceof JSONArray) {
+					Assert.assertTrue(
+						StringBundler.concat(
+							"Expected: ", key, " = ", expectedValue,
+							" but was: ", key, " = ", actualValue),
+						JSONUtil.equals(
+							(JSONArray)expectedValue, (JSONArray)actualValue));
+				}
+				else {
+					Assert.assertEquals(
+						StringBundler.concat(
+							"Expected: ", key, " = ", expectedValue,
+							" but was: ", key, " = ", actualValue),
+						expectedValue, actualValue);
+				}
+			}
+
 			Assert.assertEquals(
 				expectedObjectEntryVersion.getVersion(),
 				actualObjectEntryVersion.getVersion());
@@ -440,6 +476,13 @@ public class ObjectEntryVersionLocalServiceTest {
 				"externalReferenceCode", externalReferenceCode
 			).put(
 				"keywords", JSONUtil.putAll()
+			).put(
+				"objectEntryFolderExternalReferenceCode", StringPool.BLANK
+			).put(
+				"objectEntryFolderId",
+				Long.valueOf(
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT)
 			).put(
 				"properties", jsonObject
 			).put(

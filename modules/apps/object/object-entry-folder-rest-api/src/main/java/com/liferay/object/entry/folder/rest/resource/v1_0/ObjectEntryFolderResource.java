@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.delivery.resource.v1_0;
+package com.liferay.object.entry.folder.rest.resource.v1_0;
 
-import com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder;
+import com.liferay.object.entry.folder.rest.dto.v1_0.ObjectEntryFolder;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -40,9 +40,9 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * To access this resource, run:
  *
- *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/headless-delivery/v1.0
+ *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o/object-entry-folder-rest/v1.0
  *
- * @author Javier Gamarra
+ * @author Alicia García
  * @generated
  */
 @CTAware
@@ -50,23 +50,49 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ObjectEntryFolderResource {
 
-	public Page<ObjectEntryFolder> getAssetLibraryObjectEntryFoldersPage(
-			Long assetLibraryId, Boolean flatten, String search,
+	public void deleteObjectEntryFolder(Long objectEntryFolderId)
+		throws Exception;
+
+	public Response deleteObjectEntryFolderBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectEntryFolder getObjectEntryFolder(Long objectEntryFolderId)
+		throws Exception;
+
+	public ObjectEntryFolder patchObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public void deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntryFolder
+			getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+				String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public ObjectEntryFolder
+			patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+				String scopeKey, String externalReferenceCode,
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public ObjectEntryFolder
+			putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+				String scopeKey, String externalReferenceCode,
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public Page<ObjectEntryFolder> getScopeScopeKeyObjectEntryFoldersPage(
+			String scopeKey, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
-	public Response postAssetLibraryObjectEntryFoldersPageExportBatch(
-			Long assetLibraryId, String search, Filter filter, Sort[] sorts,
-			String callbackURL, String contentType, String fieldNames)
-		throws Exception;
-
-	public ObjectEntryFolder postAssetLibraryObjectEntryFolder(
-			Long assetLibraryId, ObjectEntryFolder objectEntryFolder)
-		throws Exception;
-
-	public Response postAssetLibraryObjectEntryFolderBatch(
-			Long assetLibraryId, String callbackURL, Object object)
+	public ObjectEntryFolder postScopeScopeKeyObjectEntryFolder(
+			String scopeKey, ObjectEntryFolder objectEntryFolder)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

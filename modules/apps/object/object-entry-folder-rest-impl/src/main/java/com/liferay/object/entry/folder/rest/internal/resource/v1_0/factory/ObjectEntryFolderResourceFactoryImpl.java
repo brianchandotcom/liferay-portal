@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.delivery.internal.resource.v1_0.factory;
+package com.liferay.object.entry.folder.rest.internal.resource.v1_0.factory;
 
-import com.liferay.headless.delivery.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource;
+import com.liferay.object.entry.folder.rest.internal.security.permission.LiberalPermissionChecker;
+import com.liferay.object.entry.folder.rest.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -51,11 +51,11 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceScope;
 
 /**
- * @author Javier Gamarra
+ * @author Alicia García
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/headless-delivery/v1.0/ObjectEntryFolder",
+	property = "resource.locator.key=/object-entry-folder-rest/v1.0/ObjectEntryFolder",
 	service = ObjectEntryFolderResource.Factory.class
 )
 @Generated("")

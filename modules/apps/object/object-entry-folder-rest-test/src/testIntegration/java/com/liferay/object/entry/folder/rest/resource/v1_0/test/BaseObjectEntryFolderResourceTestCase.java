@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.delivery.resource.v1_0.test;
+package com.liferay.object.entry.folder.rest.resource.v1_0.test;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,28 +13,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
-import com.liferay.headless.delivery.client.dto.v1_0.Field;
-import com.liferay.headless.delivery.client.dto.v1_0.ObjectEntryFolder;
-import com.liferay.headless.delivery.client.http.HttpInvoker;
-import com.liferay.headless.delivery.client.pagination.Page;
-import com.liferay.headless.delivery.client.pagination.Pagination;
-import com.liferay.headless.delivery.client.resource.v1_0.ObjectEntryFolderResource;
-import com.liferay.headless.delivery.client.serdes.v1_0.ObjectEntryFolderSerDes;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
+import com.liferay.object.entry.folder.rest.client.dto.v1_0.ObjectEntryFolder;
+import com.liferay.object.entry.folder.rest.client.http.HttpInvoker;
+import com.liferay.object.entry.folder.rest.client.pagination.Page;
+import com.liferay.object.entry.folder.rest.client.pagination.Pagination;
+import com.liferay.object.entry.folder.rest.client.resource.v1_0.ObjectEntryFolderResource;
+import com.liferay.object.entry.folder.rest.client.serdes.v1_0.ObjectEntryFolderSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -47,10 +50,16 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Method;
+
+import java.net.URI;
 
 import java.text.Format;
 
@@ -61,13 +70,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.PathSegment;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -77,8 +93,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
 /**
- * @author Javier Gamarra
+ * @author Alicia García
  * @generated
  */
 @Generated("")
@@ -86,8 +105,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -102,17 +123,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
-
-		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null,
-			new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
 
 		_objectEntryFolderResource.setContextCompany(testCompany);
 
@@ -187,10 +197,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		ObjectEntryFolder objectEntryFolder = randomObjectEntryFolder();
 
-		objectEntryFolder.setAssetLibraryKey(regex);
 		objectEntryFolder.setExternalReferenceCode(regex);
 		objectEntryFolder.setLabel(regex);
 		objectEntryFolder.setName(regex);
+		objectEntryFolder.setScopeKey(regex);
 
 		String json = ObjectEntryFolderSerDes.toJSON(objectEntryFolder);
 
@@ -198,37 +208,843 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		objectEntryFolder = ObjectEntryFolderSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, objectEntryFolder.getAssetLibraryKey());
 		Assert.assertEquals(
 			regex, objectEntryFolder.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectEntryFolder.getLabel());
 		Assert.assertEquals(regex, objectEntryFolder.getName());
+		Assert.assertEquals(regex, objectEntryFolder.getScopeKey());
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPage() throws Exception {
-		Long assetLibraryId =
-			testGetAssetLibraryObjectEntryFoldersPage_getAssetLibraryId();
-		Long irrelevantAssetLibraryId =
-			testGetAssetLibraryObjectEntryFoldersPage_getIrrelevantAssetLibraryId();
+	public void testDeleteObjectEntryFolder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder objectEntryFolder =
+			testDeleteObjectEntryFolder_addObjectEntryFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectEntryFolderResource.deleteObjectEntryFolderHttpResponse(
+				objectEntryFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.getObjectEntryFolderHttpResponse(
+				objectEntryFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.getObjectEntryFolderHttpResponse(0L));
+	}
+
+	protected ObjectEntryFolder
+			testDeleteObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteObjectEntryFolder() throws Exception {
+
+		// No namespace
+
+		ObjectEntryFolder objectEntryFolder1 =
+			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectEntryFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									objectEntryFolder1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectEntryFolder"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectEntryFolder",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"objectEntryFolderId",
+								objectEntryFolder1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace objectEntryFolder_v1_0
+
+		ObjectEntryFolder objectEntryFolder2 =
+			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"objectEntryFolder_v1_0",
+						new GraphQLField(
+							"deleteObjectEntryFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectEntryFolderId",
+										objectEntryFolder2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/objectEntryFolder_v1_0",
+				"Object/deleteObjectEntryFolder"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectEntryFolder_v1_0",
+					new GraphQLField(
+						"objectEntryFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									objectEntryFolder2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ObjectEntryFolder
+			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	@Test
+	public void testGetObjectEntryFolder() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testGetObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				postObjectEntryFolder.getId());
+
+		assertEquals(postObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testGetObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				postObjectEntryFolder.getId());
+
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				testCompany,
+				"com.liferay.object.entry.folder.rest.dto.v1_0.ObjectEntryFolder"
+			).acceptLanguage(
+				new AcceptLanguage() {
+
+					@Override
+					public List<Locale> getLocales() {
+						return Arrays.asList(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public String getPreferredLanguageId() {
+						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					}
+
+					@Override
+					public Locale getPreferredLocale() {
+						return LocaleUtil.getDefault();
+					}
+
+				}
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				testVulcanCRUDItemDelegate_getHttpServletRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).uriInfo(
+				testVulcanCRUDItemDelegate_getUriInfo()
+			).user(
+				testVulcanCRUDItemDelegate_getUser()
+			).build();
+
+		Object item = vulcanCRUDItemDelegate.getItem(
+			postObjectEntryFolder.getId());
+
+		assertEquals(
+			getObjectEntryFolder,
+			ObjectEntryFolderSerDes.toDTO(item.toString()));
+	}
+
+	protected HttpServletRequest
+		testVulcanCRUDItemDelegate_getHttpServletRequest() {
+
+		return new MockHttpServletRequest() {
+
+			@Override
+			public StringBuffer getRequestURL() {
+				return new StringBuffer(
+					StringBundler.concat(
+						"http://localhost:8080/o/v1.0/",
+						RandomTestUtil.randomString(), "/",
+						RandomTestUtil.randomString()));
+			}
+
+		};
+	}
+
+	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
+		String applicationPath = RandomTestUtil.randomString() + "/";
+		String resourcePath = RandomTestUtil.randomString();
+
+		return new UriInfo() {
+
+			@Override
+			public String getPath() {
+				return resourcePath;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return getPath();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return getPathSegments();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return URI.create(
+					"http://localhost:8080/o/" + applicationPath +
+						resourcePath);
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return UriBuilder.fromUri(getRequestUri());
+			}
+
+			@Override
+			public URI getAbsolutePath() {
+				return getRequestUri();
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return getRequestUriBuilder();
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/" + applicationPath);
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri(getBaseUri());
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return getPathParameters();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return getQueryParameters();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return getMatchedURIs();
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public URI resolve(URI requestUri) {
+				return getBaseUri().resolve(requestUri);
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return getBaseUri().relativize(uri);
+			}
+
+		};
+	}
+
+	protected com.liferay.portal.kernel.model.User
+		testVulcanCRUDItemDelegate_getUser() {
+
+		return _testCompanyAdminUser;
+	}
+
+	protected ObjectEntryFolder testGetObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectEntryFolder() throws Exception {
+		ObjectEntryFolder objectEntryFolder =
+			testGraphQLGetObjectEntryFolder_addObjectEntryFolder();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				objectEntryFolder,
+				ObjectEntryFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectEntryFolder",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"objectEntryFolderId",
+											objectEntryFolder.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/objectEntryFolder"))));
+
+		// Using the namespace objectEntryFolder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectEntryFolder,
+				ObjectEntryFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectEntryFolder_v1_0",
+								new GraphQLField(
+									"objectEntryFolder",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"objectEntryFolderId",
+												objectEntryFolder.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/objectEntryFolder_v1_0",
+						"Object/objectEntryFolder"))));
+	}
+
+	@Test
+	public void testGraphQLGetObjectEntryFolderNotFound() throws Exception {
+		Long irrelevantObjectEntryFolderId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectEntryFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									irrelevantObjectEntryFolderId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace objectEntryFolder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectEntryFolder_v1_0",
+						new GraphQLField(
+							"objectEntryFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectEntryFolderId",
+										irrelevantObjectEntryFolderId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ObjectEntryFolder
+			testGraphQLGetObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	@Test
+	public void testPatchObjectEntryFolder() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder randomPatchObjectEntryFolder =
+			randomPatchObjectEntryFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder patchObjectEntryFolder =
+			objectEntryFolderResource.patchObjectEntryFolder(
+				postObjectEntryFolder.getId(), randomPatchObjectEntryFolder);
+
+		ObjectEntryFolder expectedPatchObjectEntryFolder =
+			postObjectEntryFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				patchObjectEntryFolder.getId());
+
+		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected ObjectEntryFolder
+			testPatchObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder objectEntryFolder =
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectEntryFolderResource.
+				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						objectEntryFolder),
+					objectEntryFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						objectEntryFolder),
+					objectEntryFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						objectEntryFolder),
+					objectEntryFolder.getExternalReferenceCode()));
+	}
+
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolder.getScopeKey();
+	}
+
+	protected ObjectEntryFolder
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(postObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolder.getScopeKey();
+	}
+
+	protected ObjectEntryFolder
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder =
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				objectEntryFolder,
+				ObjectEntryFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"scopeScopeKeyObjectEntryFolderByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"scopeKey",
+											"\"" +
+												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+													objectEntryFolder) + "\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												objectEntryFolder.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/scopeScopeKeyObjectEntryFolderByExternalReferenceCode"))));
+
+		// Using the namespace objectEntryFolder_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectEntryFolder,
+				ObjectEntryFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectEntryFolder_v1_0",
+								new GraphQLField(
+									"scopeScopeKeyObjectEntryFolderByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"scopeKey",
+												"\"" +
+													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+														objectEntryFolder) +
+															"\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													objectEntryFolder.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/objectEntryFolder_v1_0",
+						"Object/scopeScopeKeyObjectEntryFolderByExternalReferenceCode"))));
+	}
+
+	protected String
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolder.getScopeKey();
+	}
+
+	@Test
+	public void testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantScopeKey = "\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"scopeScopeKeyObjectEntryFolderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put("scopeKey", irrelevantScopeKey);
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace objectEntryFolder_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectEntryFolder_v1_0",
+						new GraphQLField(
+							"scopeScopeKeyObjectEntryFolderByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put("scopeKey", irrelevantScopeKey);
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ObjectEntryFolder
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	@Test
+	public void testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomPatchObjectEntryFolder =
+			randomPatchObjectEntryFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder patchObjectEntryFolder =
+			objectEntryFolderResource.
+				patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					postObjectEntryFolder.getScopeKey(),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomPatchObjectEntryFolder);
+
+		ObjectEntryFolder expectedPatchObjectEntryFolder =
+			postObjectEntryFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					patchObjectEntryFolder.getScopeKey(),
+					patchObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected ObjectEntryFolder
+			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder putObjectEntryFolder =
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
+		assertValid(putObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						putObjectEntryFolder),
+					putObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(randomObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+
+		ObjectEntryFolder newObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_createObjectEntryFolder();
+
+		putObjectEntryFolder =
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						newObjectEntryFolder),
+					newObjectEntryFolder.getExternalReferenceCode(),
+					newObjectEntryFolder);
+
+		assertEquals(newObjectEntryFolder, putObjectEntryFolder);
+		assertValid(putObjectEntryFolder);
+
+		getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						putObjectEntryFolder),
+					putObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(newObjectEntryFolder, getObjectEntryFolder);
+
+		Assert.assertEquals(
+			newObjectEntryFolder.getExternalReferenceCode(),
+			putObjectEntryFolder.getExternalReferenceCode());
+	}
+
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolder.getScopeKey();
+	}
+
+	protected ObjectEntryFolder
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_createObjectEntryFolder()
+		throws Exception {
+
+		return randomObjectEntryFolder();
+	}
+
+	protected ObjectEntryFolder
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetScopeScopeKeyObjectEntryFoldersPage() throws Exception {
+		String scopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
+		String irrelevantScopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getIrrelevantScopeKey();
 
 		Page<ObjectEntryFolder> page =
-			objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-				assetLibraryId, null, null, null, null, Pagination.of(1, 10),
-				null);
+			objectEntryFolderResource.getScopeScopeKeyObjectEntryFoldersPage(
+				scopeKey, null, null, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
-		if (irrelevantAssetLibraryId != null) {
+		if (irrelevantScopeKey != null) {
 			ObjectEntryFolder irrelevantObjectEntryFolder =
-				testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-					irrelevantAssetLibraryId,
-					randomIrrelevantObjectEntryFolder());
+				testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+					irrelevantScopeKey, randomIrrelevantObjectEntryFolder());
 
 			page =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					irrelevantAssetLibraryId, null, null, null, null,
-					Pagination.of(1, (int)totalCount + 1), null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						irrelevantScopeKey, null, null, null, null,
+						Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -237,20 +1053,20 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				(List<ObjectEntryFolder>)page.getItems());
 			assertValid(
 				page,
-				testGetAssetLibraryObjectEntryFoldersPage_getExpectedActions(
-					irrelevantAssetLibraryId));
+				testGetScopeScopeKeyObjectEntryFoldersPage_getExpectedActions(
+					irrelevantScopeKey));
 		}
 
 		ObjectEntryFolder objectEntryFolder1 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, randomObjectEntryFolder());
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, randomObjectEntryFolder());
 
 		ObjectEntryFolder objectEntryFolder2 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, randomObjectEntryFolder());
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, randomObjectEntryFolder());
 
-		page = objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-			assetLibraryId, null, null, null, null, Pagination.of(1, 10), null);
+		page = objectEntryFolderResource.getScopeScopeKeyObjectEntryFoldersPage(
+			scopeKey, null, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -260,31 +1076,28 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			objectEntryFolder2, (List<ObjectEntryFolder>)page.getItems());
 		assertValid(
 			page,
-			testGetAssetLibraryObjectEntryFoldersPage_getExpectedActions(
-				assetLibraryId));
+			testGetScopeScopeKeyObjectEntryFoldersPage_getExpectedActions(
+				scopeKey));
+
+		objectEntryFolderResource.deleteObjectEntryFolder(
+			objectEntryFolder1.getId());
+
+		objectEntryFolderResource.deleteObjectEntryFolder(
+			objectEntryFolder2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetAssetLibraryObjectEntryFoldersPage_getExpectedActions(
-				Long assetLibraryId)
+			testGetScopeScopeKeyObjectEntryFoldersPage_getExpectedActions(
+				String scopeKey)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
-
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/object-entry-folders/batch".
-				replace("{assetLibraryId}", String.valueOf(assetLibraryId)));
-
-		expectedActions.put("createBatch", createBatchAction);
 
 		return expectedActions;
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithFilterDateTimeEquals()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -294,21 +1107,23 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			return;
 		}
 
-		Long assetLibraryId =
-			testGetAssetLibraryObjectEntryFoldersPage_getAssetLibraryId();
+		String scopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
 
 		ObjectEntryFolder objectEntryFolder1 = randomObjectEntryFolder();
 
 		objectEntryFolder1 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, objectEntryFolder1);
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, objectEntryFolder1);
 
 		for (EntityField entityField : entityFields) {
 			Page<ObjectEntryFolder> page =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null,
-					getFilterString(entityField, "between", objectEntryFolder1),
-					Pagination.of(1, 2), null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null,
+						getFilterString(
+							entityField, "between", objectEntryFolder1),
+						Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(objectEntryFolder1),
@@ -317,38 +1132,38 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithFilterDoubleEquals()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithFilterDoubleEquals()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithFilter(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithFilter(
 			"eq", EntityField.Type.DOUBLE);
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithFilterStringContains()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithFilterStringContains()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithFilter(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithFilter(
 			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithFilterStringEquals()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithFilterStringEquals()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithFilter(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithFilter(
 			"eq", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithFilterStringStartsWith()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithFilterStringStartsWith()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithFilter(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithFilter(
 			"startswith", EntityField.Type.STRING);
 	}
 
-	protected void testGetAssetLibraryObjectEntryFoldersPageWithFilter(
+	protected void testGetScopeScopeKeyObjectEntryFoldersPageWithFilter(
 			String operator, EntityField.Type type)
 		throws Exception {
 
@@ -358,24 +1173,26 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			return;
 		}
 
-		Long assetLibraryId =
-			testGetAssetLibraryObjectEntryFoldersPage_getAssetLibraryId();
+		String scopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
 
 		ObjectEntryFolder objectEntryFolder1 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, randomObjectEntryFolder());
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, randomObjectEntryFolder());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectEntryFolder objectEntryFolder2 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, randomObjectEntryFolder());
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, randomObjectEntryFolder());
 
 		for (EntityField entityField : entityFields) {
 			Page<ObjectEntryFolder> page =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null,
-					getFilterString(entityField, operator, objectEntryFolder1),
-					Pagination.of(1, 2), null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null,
+						getFilterString(
+							entityField, operator, objectEntryFolder1),
+						Pagination.of(1, 2), null);
 
 			assertEquals(
 				Collections.singletonList(objectEntryFolder1),
@@ -384,30 +1201,30 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithPagination()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithPagination()
 		throws Exception {
 
-		Long assetLibraryId =
-			testGetAssetLibraryObjectEntryFoldersPage_getAssetLibraryId();
+		String scopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
 
 		Page<ObjectEntryFolder> objectEntryFolderPage =
-			objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-				assetLibraryId, null, null, null, null, null, null);
+			objectEntryFolderResource.getScopeScopeKeyObjectEntryFoldersPage(
+				scopeKey, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			objectEntryFolderPage.getTotalCount());
 
 		ObjectEntryFolder objectEntryFolder1 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, randomObjectEntryFolder());
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, randomObjectEntryFolder());
 
 		ObjectEntryFolder objectEntryFolder2 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, randomObjectEntryFolder());
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, randomObjectEntryFolder());
 
 		ObjectEntryFolder objectEntryFolder3 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, randomObjectEntryFolder());
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, randomObjectEntryFolder());
 
 		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
@@ -415,12 +1232,13 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<ObjectEntryFolder> page1 =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -428,32 +1246,35 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				objectEntryFolder1, (List<ObjectEntryFolder>)page1.getItems());
 
 			Page<ObjectEntryFolder> page2 =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectEntryFolder2, (List<ObjectEntryFolder>)page2.getItems());
 
 			Page<ObjectEntryFolder> page3 =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(
-						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit),
-					null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(
+							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+							pageSizeLimit),
+						null);
 
 			assertContains(
 				objectEntryFolder3, (List<ObjectEntryFolder>)page3.getItems());
 		}
 		else {
 			Page<ObjectEntryFolder> page1 =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(1, totalCount + 2), null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(1, totalCount + 2), null);
 
 			List<ObjectEntryFolder> objectEntryFolders1 =
 				(List<ObjectEntryFolder>)page1.getItems();
@@ -463,9 +1284,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				objectEntryFolders1.size());
 
 			Page<ObjectEntryFolder> page2 =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(2, totalCount + 2), null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -476,9 +1298,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				objectEntryFolders2.toString(), 1, objectEntryFolders2.size());
 
 			Page<ObjectEntryFolder> page3 =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(1, (int)totalCount + 3), null);
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(
 				objectEntryFolder1, (List<ObjectEntryFolder>)page3.getItems());
@@ -490,10 +1313,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithSortDateTime()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithSortDateTime()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithSort(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, objectEntryFolder1, objectEntryFolder2) -> {
 				BeanTestUtil.setProperty(
@@ -503,10 +1326,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithSortDouble()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithSortDouble()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithSort(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, objectEntryFolder1, objectEntryFolder2) -> {
 				BeanTestUtil.setProperty(
@@ -517,10 +1340,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithSortInteger()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithSortInteger()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithSort(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, objectEntryFolder1, objectEntryFolder2) -> {
 				BeanTestUtil.setProperty(
@@ -531,10 +1354,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
-	public void testGetAssetLibraryObjectEntryFoldersPageWithSortString()
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithSortString()
 		throws Exception {
 
-		testGetAssetLibraryObjectEntryFoldersPageWithSort(
+		testGetScopeScopeKeyObjectEntryFoldersPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, objectEntryFolder1, objectEntryFolder2) -> {
 				Class<?> clazz = objectEntryFolder1.getClass();
@@ -583,7 +1406,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			});
 	}
 
-	protected void testGetAssetLibraryObjectEntryFoldersPageWithSort(
+	protected void testGetScopeScopeKeyObjectEntryFoldersPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer
 				<EntityField, ObjectEntryFolder, ObjectEntryFolder, Exception>
@@ -596,8 +1419,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			return;
 		}
 
-		Long assetLibraryId =
-			testGetAssetLibraryObjectEntryFoldersPage_getAssetLibraryId();
+		String scopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
 
 		ObjectEntryFolder objectEntryFolder1 = randomObjectEntryFolder();
 		ObjectEntryFolder objectEntryFolder2 = randomObjectEntryFolder();
@@ -608,23 +1431,24 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		}
 
 		objectEntryFolder1 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, objectEntryFolder1);
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, objectEntryFolder1);
 
 		objectEntryFolder2 =
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				assetLibraryId, objectEntryFolder2);
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, objectEntryFolder2);
 
 		Page<ObjectEntryFolder> page =
-			objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-				assetLibraryId, null, null, null, null, null, null);
+			objectEntryFolderResource.getScopeScopeKeyObjectEntryFoldersPage(
+				scopeKey, null, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<ObjectEntryFolder> ascPage =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":asc");
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
 
 			assertContains(
 				objectEntryFolder1,
@@ -634,10 +1458,11 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				(List<ObjectEntryFolder>)ascPage.getItems());
 
 			Page<ObjectEntryFolder> descPage =
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					assetLibraryId, null, null, null, null,
-					Pagination.of(1, (int)page.getTotalCount() + 1),
-					entityField.getName() + ":desc");
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
 
 			assertContains(
 				objectEntryFolder2,
@@ -649,33 +1474,34 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	protected ObjectEntryFolder
-			testGetAssetLibraryObjectEntryFoldersPage_addObjectEntryFolder(
-				Long assetLibraryId, ObjectEntryFolder objectEntryFolder)
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				String scopeKey, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		return objectEntryFolderResource.postAssetLibraryObjectEntryFolder(
-			assetLibraryId, objectEntryFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected Long testGetAssetLibraryObjectEntryFoldersPage_getAssetLibraryId()
+	protected String testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey()
 		throws Exception {
 
-		return testDepotEntry.getDepotEntryId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected Long
-			testGetAssetLibraryObjectEntryFoldersPage_getIrrelevantAssetLibraryId()
+	protected String
+			testGetScopeScopeKeyObjectEntryFoldersPage_getIrrelevantScopeKey()
 		throws Exception {
 
 		return null;
 	}
 
 	@Test
-	public void testPostAssetLibraryObjectEntryFolder() throws Exception {
+	public void testPostScopeScopeKeyObjectEntryFolder() throws Exception {
 		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
 
 		ObjectEntryFolder postObjectEntryFolder =
-			testPostAssetLibraryObjectEntryFolder_addObjectEntryFolder(
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				randomObjectEntryFolder);
 
 		assertEquals(randomObjectEntryFolder, postObjectEntryFolder);
@@ -683,13 +1509,12 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	protected ObjectEntryFolder
-			testPostAssetLibraryObjectEntryFolder_addObjectEntryFolder(
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		return objectEntryFolderResource.postAssetLibraryObjectEntryFolder(
-			testGetAssetLibraryObjectEntryFoldersPage_getAssetLibraryId(),
-			objectEntryFolder);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -806,14 +1631,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
-				if (objectEntryFolder.getAssetLibraryKey() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (objectEntryFolder.getCreator() == null) {
 					valid = false;
@@ -880,6 +1697,14 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 					"parentObjectEntryFolderId", additionalAssertFieldName)) {
 
 				if (objectEntryFolder.getParentObjectEntryFolderId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("scopeKey", additionalAssertFieldName)) {
+				if (objectEntryFolder.getScopeKey() == null) {
 					valid = false;
 				}
 
@@ -955,8 +1780,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder.
-						class)) {
+					com.liferay.object.entry.folder.rest.dto.v1_0.
+						ObjectEntryFolder.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -1155,6 +1980,17 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("scopeKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectEntryFolder1.getScopeKey(),
+						objectEntryFolder2.getScopeKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectEntryFolder1.getViewableBy(),
@@ -1277,52 +2113,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("assetLibraryKey")) {
-			Object object = objectEntryFolder.getAssetLibraryKey();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
 		}
 
 		if (entityFieldName.equals("creator")) {
@@ -1556,6 +2346,52 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("scopeKey")) {
+			Object object = objectEntryFolder.getScopeKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1606,8 +2442,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	protected ObjectEntryFolder randomObjectEntryFolder() throws Exception {
 		return new ObjectEntryFolder() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
@@ -1618,6 +2452,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				numberOfObjectEntries = RandomTestUtil.randomInt();
 				numberOfObjectEntryFolders = RandomTestUtil.randomInt();
 				parentObjectEntryFolderId = RandomTestUtil.randomLong();
+				scopeKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -1640,7 +2476,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	protected ObjectEntryFolderResource objectEntryFolderResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
-	protected DepotEntry testDepotEntry;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 
 	protected static class BeanTestUtil {
@@ -1845,7 +2680,29 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 	@Inject
 	private
-		com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource
-			_objectEntryFolderResource;
+		com.liferay.object.entry.folder.rest.resource.v1_0.
+			ObjectEntryFolderResource _objectEntryFolderResource;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private ScopeChecker _scopeChecker;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject
+	private VulcanCRUDItemDelegateBuilderRegistry
+		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }

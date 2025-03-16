@@ -99,6 +99,7 @@ paths:
         delete:
             description:
                 Deletes the object entry folder and returns a 204 if the operation succeeds.
+            operationId: deleteObjectEntryFolder
             parameters:
                 - in: path
                   name: objectEntryFolderId
@@ -115,6 +116,7 @@ paths:
         get:
             description:
                 Retrieves the object entry folder.
+            operationId: getObjectEntryFolder
             parameters:
                 - in: path
                   name: objectEntryFolderId
@@ -147,6 +149,7 @@ paths:
         patch:
             description:
                 Updates only the fields received in the request body, leaving any other fields untouched.
+            operationId: patchObjectEntryFolder
             parameters:
                 - in: path
                   name: objectEntryFolderId
@@ -174,6 +177,7 @@ paths:
             tags: ["ObjectEntryFolder"]
     "/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}":
         delete:
+            operationId: deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: scopeKey
@@ -192,6 +196,7 @@ paths:
                         application/xml: {}
             tags: ["ObjectEntryFolder"]
         get:
+            operationId: getScopeScopeKeyObjectEntryFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: scopeKey
@@ -226,6 +231,7 @@ paths:
                                 $ref: "#/components/schemas/ObjectEntryFolder"
             tags: ["ObjectEntryFolder"]
         patch:
+            operationId: patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: scopeKey
@@ -256,6 +262,7 @@ paths:
                                 $ref: "#/components/schemas/ObjectEntryFolder"
             tags: ["ObjectEntryFolder"]
         put:
+            operationId: putScopeScopeKeyObjectEntryFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: scopeKey
@@ -287,6 +294,7 @@ paths:
             tags: ["ObjectEntryFolder"]
     "/scopes/{scopeKey}/object-entry-folders":
         get:
+            operationId: getScopeScopeKeyObjectEntryFoldersPage
             parameters:
                 - in: path
                   name: scopeKey
@@ -350,6 +358,7 @@ paths:
                                 type: array
             tags: ["ObjectEntryFolder"]
         post:
+            operationId: postScopeScopeKeyObjectEntryFolder
             parameters:
                 - in: path
                   name: scopeKey

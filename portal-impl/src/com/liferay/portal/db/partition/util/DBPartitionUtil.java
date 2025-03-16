@@ -910,7 +910,9 @@ public class DBPartitionUtil {
 							_moveData(
 								_defaultPartitionName, extractedPartitionName,
 								tableName,
-								_getColumnNames(connection, tableName),
+								_getColumnNames(
+									connection, _defaultPartitionName,
+									tableName),
 								statement, " where companyId = 0", false);
 						}
 					}

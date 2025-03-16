@@ -689,9 +689,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
-
+		try {
 			if (!DBPartition.isPartitionEnabled()) {
 				DBPartitionUtil.extractCompany(companyId);
 

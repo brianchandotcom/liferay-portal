@@ -865,9 +865,6 @@ public class DBPartitionUtil {
 
 				preparedStatement.executeUpdate();
 
-				List<Long> companyIds = ListUtil.fromArray(
-					PortalInstancePool.getCompanyIds());
-
 				DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 				DBInspector dbInspector = new DBInspector(connection);
@@ -894,7 +891,10 @@ public class DBPartitionUtil {
 							continue;
 						}
 
-						if (dbInspector.isObjectTable(companyIds, tableName) &&
+						if (dbInspector.isObjectTable(
+								ListUtil.fromArray(
+									PortalInstancePool.getCompanyIds()),
+								tableName) &&
 							!tableName.contains(String.valueOf(companyId))) {
 
 							continue;

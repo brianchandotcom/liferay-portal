@@ -514,8 +514,6 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				accountBrief ->
 					accountBrief.getId() == accountEntry3.getAccountEntryId()));
 
-		Assert.assertNotNull(getAccountGroup.getCreator());
-
 		Creator creator = getAccountGroup.getCreator();
 
 		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
@@ -649,22 +647,19 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				"headless-admin-user/v1.0/account-groups/batch",
 				Http.Method.POST));
 
-		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
-			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
-				randomAccountGroup.getExternalReferenceCode(),
-				TestPropsValues.getCompanyId());
-
-		Assert.assertNotNull(serviceBuilderAccountGroup);
-
 		AccountEntry serviceBuilderAccountEntry2 =
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				accountBrief1.getExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
 
-		Assert.assertNotNull(serviceBuilderAccountEntry2);
 		Assert.assertEquals(
 			serviceBuilderAccountEntry1.getAccountEntryId(),
 			serviceBuilderAccountEntry2.getAccountEntryId());
+
+		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
+			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
+				randomAccountGroup.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
 
 		List<AccountGroupRel> serviceBuilderAccountGroupRels =
 			_accountGroupRelLocalService.getAccountGroupRels(
@@ -683,7 +678,6 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				accountBrief2.getExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
 
-		Assert.assertNotNull(serviceBuilderAccountEntry3);
 		Assert.assertEquals(
 			accountBrief2.getName(), serviceBuilderAccountEntry3.getName());
 		Assert.assertEquals(
@@ -703,7 +697,6 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				permission1.getRoleExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
 
-		Assert.assertNotNull(serviceBuilderRole2);
 		Assert.assertEquals(
 			serviceBuilderRole1.getRoleId(), serviceBuilderRole2.getRoleId());
 
@@ -735,7 +728,6 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 				permission2.getRoleExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
 
-		Assert.assertNotNull(serviceBuilderRole3);
 		Assert.assertEquals(
 			permission2.getRoleName(), serviceBuilderRole3.getName());
 		Assert.assertEquals(

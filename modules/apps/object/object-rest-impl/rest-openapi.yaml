@@ -25,6 +25,14 @@ components:
                     type: object
                 oldValue:
                     type: object
+        EntryValidation:
+            properties:
+                entry:
+                    $ref: "#/components/schemas/ObjectEntry"
+                validationKeys:
+                    items:
+                        type: string
+                    type: array
         FileEntry:
             properties:
                 externalReferenceCode:
@@ -222,7 +230,7 @@ components:
                     readOnly: true
                     type: integer
             type: object
-        ValidateError:
+        ValidationError:
             properties:
                 errorMessage:
                     type: string
@@ -230,22 +238,6 @@ components:
                     type: string
                 validationKey:
                     type: string
-        ValidateRequest:
-            properties:
-                entry:
-                    $ref: "#/components/schemas/ObjectEntry"
-                validationKeys:
-                    items:
-                        type: string
-                    type: array
-        ValidateResult:
-            properties:
-                success:
-                    type: boolean
-                validateErrors:
-                    items:
-                        $ref: "#/components/schemas/ValidateError"
-                    type: array
 info:
     license:
         name: "Apache 2.0"
@@ -669,19 +661,23 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ValidateRequest"
+                            $ref: "#/components/schemas/EntryValidation"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ValidateRequest"
+                            $ref: "#/components/schemas/EntryValidation"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/ValidateResult"
+                                items:
+                                    $ref: "#/components/schemas/ValidationError"
+                                type: array
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/ValidateResult"
+                                items:
+                                    $ref: "#/components/schemas/ValidationError"
+                                type: array
             tags: ["ObjectEntry"]
     "/validate":
         post:
@@ -690,19 +686,23 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/ValidateRequest"
+                            $ref: "#/components/schemas/EntryValidation"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/ValidateRequest"
+                            $ref: "#/components/schemas/EntryValidation"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/ValidateResult"
+                                items:
+                                    $ref: "#/components/schemas/ValidationError"
+                                type: array
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/ValidateResult"
+                                items:
+                                    $ref: "#/components/schemas/ValidationError"
+                                type: array
             tags: ["ObjectEntry"]
     "/{objectEntryId}":
         delete:

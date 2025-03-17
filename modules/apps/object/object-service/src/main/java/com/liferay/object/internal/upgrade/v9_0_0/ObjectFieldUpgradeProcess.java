@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Collections;
+
 /**
  * @author Pedro Leite
  */
@@ -60,11 +62,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				String indexName = IndexMetadataFactoryUtil.createIndexName(
 					dbTableName, columnNames);
 
-				if (hasIndex(dbTableName, indexName)) {
-					runSQL(
-						StringBundler.concat(
-							"drop index ", indexName, " on ", dbTableName));
-				}
+				dropIndexes(Collections.singletonList(indexName), dbTableName);
 			}
 		}
 	}

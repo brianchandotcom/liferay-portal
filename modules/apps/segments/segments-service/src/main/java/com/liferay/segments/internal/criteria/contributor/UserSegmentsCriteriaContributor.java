@@ -65,19 +65,26 @@ public class UserSegmentsCriteriaContributor
 
 		String newFilterString = filterString;
 
-		Matcher matcher = _pattern.matcher(filterString);
+		Matcher matcher1 = _pattern1.matcher1(filterString);
 
-		while (matcher.find()) {
-			long roleId = _getRoleId(matcher.group());
+		while (matcher1.find()) {
+			long roleId = _getRoleId(matcher1.group());
 
 			newFilterString = StringUtil.replace(
-				newFilterString, matcher.group(),
+				newFilterString, matcher1.group(),
 				String.join(
 					StringPool.BLANK, StringPool.OPEN_PARENTHESIS,
-					matcher.group(), _getGroupIdsFilterString(roleId),
+					matcher1.group(), _getGroupIdsFilterString(roleId),
 					_getOrganizationIdsFilterString(roleId),
 					_getUserGroupIdsFilterString(roleId),
 					StringPool.CLOSE_PARENTHESIS));
+		}
+
+		Matcher matcher2 = _pattern2.matcher(filterString);
+
+		while (matcher2.find()) {
+			newFilterString = StringUtil.replace(
+				newFilterString, matcher2.group(), "dateModifiedTruncated");
 		}
 
 		criteria.addFilter(getType(), newFilterString, conjunction);
@@ -249,8 +256,9 @@ public class UserSegmentsCriteriaContributor
 		return String.join(" or ", conditions);
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _pattern1 = Pattern.compile(
 		"roleIds eq '\\d+'");
+	private static final Pattern _pattern2 = Pattern.compile("dateModified");
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,

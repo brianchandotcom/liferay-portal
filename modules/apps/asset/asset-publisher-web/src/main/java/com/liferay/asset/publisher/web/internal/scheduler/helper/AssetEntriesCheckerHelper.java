@@ -205,10 +205,29 @@ public class AssetEntriesCheckerHelper {
 			return Collections.emptyList();
 		}
 
-		PermissionChecker permissionChecker = null;
-
 		try {
-			permissionChecker = PermissionCheckerFactoryUtil.create(user);
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			return TransformUtil.transform(
+				assetEntries,
+				assetEntry -> {
+					try {
+						if (AssetEntryPermission.contains(
+								permissionChecker, assetEntry,
+								ActionKeys.VIEW)) {
+
+							return assetEntry;
+						}
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
+					}
+
+					return null;
+				});
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -217,25 +236,6 @@ public class AssetEntriesCheckerHelper {
 
 			return Collections.emptyList();
 		}
-
-		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
-
-		for (AssetEntry assetEntry : assetEntries) {
-			try {
-				if (AssetEntryPermission.contains(
-						permissionChecker, assetEntry, ActionKeys.VIEW)) {
-
-					filteredAssetEntries.add(assetEntry);
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-
-		return filteredAssetEntries;
 	}
 
 	private List<AssetEntry> _getAssetEntries(

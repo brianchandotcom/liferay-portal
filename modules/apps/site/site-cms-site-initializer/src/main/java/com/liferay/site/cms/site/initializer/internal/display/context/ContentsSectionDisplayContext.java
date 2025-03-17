@@ -119,7 +119,14 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 				).buildString(),
 				"password-policies", "permissions",
 				_language.get(httpServletRequest, "permissions"), "get", null,
-				"modal-permissions"));
+				"modal-permissions"),
+			new FDSActionDropdownItem(
+				_language.get(
+					httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				null, "trash", "delete",
+				_language.get(httpServletRequest, "delete"), "delete", "delete",
+				"headless"));
 	}
 
 	@Override

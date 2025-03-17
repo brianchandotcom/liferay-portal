@@ -91,6 +91,17 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 		).build();
 	}
 
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				_language.get(
+					httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				null, "trash", "delete",
+				_language.get(httpServletRequest, "delete"), "delete", "delete",
+				"headless"));
+	}
+
 	@Override
 	public String[] getObjectDefinitionFolderExternalReferenceCodes() {
 		return cmsSiteInitializerConfiguration.

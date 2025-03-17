@@ -65,6 +65,29 @@ components:
                     enum: [none, server, global]
                     type: string
             type: object
+        AuthenticationScheme:
+            description:
+                The authentication schemes supported by the service provider.
+            properties:
+                description:
+                    readOnly: true
+                    type: string
+                documentationUri:
+                    readOnly: true
+                    type: string
+                name:
+                    readOnly: true
+                    type: string
+                primary:
+                    readOnly: true
+                    type: boolean
+                specUri:
+                    readOnly: true
+                    type: string
+                type:
+                    readOnly: true
+                    type: string
+            type: object
         BaseScim:
             description:
                 Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
@@ -87,6 +110,15 @@ components:
                     items:
                         type: string
                     type: array
+            type: object
+        Filter:
+            properties:
+                maxResults:
+                    readOnly: true
+                    type: integer
+                supported:
+                    readOnly: true
+                    type: boolean
             type: object
         Group:
             allOf:
@@ -283,6 +315,64 @@ components:
                     items:
                         type: string
                     type: array
+            type: object
+        ServiceProviderConfig:
+            properties:
+                authenticationSchemes:
+                    items:
+                        $ref: "#/components/schemas/AuthenticationScheme"
+                    type: array
+                bulk:
+                    properties:
+                        maxOperations:
+                            readOnly: true
+                            type: integer
+                        maxPayloadSize:
+                            readOnly: true
+                            type: integer
+                        supported:
+                            readOnly: true
+                            type: boolean
+                    type: object
+                changePassword:
+                    properties:
+                        supported:
+                            readOnly: true
+                            type: boolean
+                    type: object
+                documentationUri:
+                    readOnly: true
+                    type: string
+                etag:
+                    properties:
+                        supported:
+                            readOnly: true
+                            type: boolean
+                    type: object
+                filter:
+                    $ref: "#/components/schemas/Filter"
+                meta:
+                    $ref: "#/components/schemas/Meta"
+                patch:
+                    properties:
+                        supported:
+                            readOnly: true
+                            type: boolean
+                    type: object
+                schemas:
+                    items:
+                        enum: [ "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig" ]
+                        readOnly: true
+                        type: string
+                    type: array
+                sort:
+                    $ref: "#/components/schemas/Sort"
+            type: object
+        Sort:
+            properties:
+                supported:
+                    readOnly: true
+                    type: boolean
             type: object
         User:
             allOf:
@@ -683,6 +773,23 @@ paths:
                     description:
                         Schema not found.
             tags: ["Schema"]
+    /v2/ServiceProviderConfig:
+        get:
+            description:
+                Gives serviceProviderConfig info.
+            operationId: getV2ServiceProviderConfig
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/ServiceProviderConfig"
+                    description:
+                        The ServiceProviderConfig info.
+            tags: [ "ServiceProviderConfig" ]
     /v2/Users:
         get:
             description:

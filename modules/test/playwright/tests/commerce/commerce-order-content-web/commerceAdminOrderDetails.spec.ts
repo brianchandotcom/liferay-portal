@@ -534,6 +534,8 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 		await commerceAdminOrderDetailsPage.orderItemQuantityColumn('3')
 	).toBeVisible();
 
+	await commerceAdminOrderDetailsPage.orderItemFrameCloseButton.click();
+
 	await (
 		await commerceAdminOrderDetailsPage.orderDetailsTab('Notes')
 	).click();

@@ -240,90 +240,92 @@
 										},
 										"pageElements": [
 											{
-                                                "definition": {
-                                                    "indexed": true,
-                                                    "layout": {
-                                                        "align": "Center",
-                                                        "contentDisplay": "FlexRow",
-                                                        "justify": "End"
-                                                    },
-                                                    "name": "Header User Actions"
-                                                },
-                                                "pageElements": [
-                                                    {
-                                                        "definition": {
-                                                            "fragment": {
-                                                                "key": "search-button",
-                                                                "siteKey": "[$GROUP_KEY$]"
-                                                            },
-                                                            "fragmentConfig": {
-                                                                "iconName": "search",
-                                                                "iconSize": "1rem"
-                                                            },
-                                                            "fragmentFields": [
-                                                                {
-                                                                    "id": "link",
-                                                                    "value": {
-                                                                        "fragmentLink": {
-                                                                            "value": {
-                                                                                "href": {
-                                                                                    "mapping": {
-                                                                                        "itemReference": {
-                                                                                            "className": "com.liferay.portal.kernel.model.Layout",
-                                                                                            "fields": [
-                                                                                                {
-                                                                                                    "fieldName": "friendlyURL",
-                                                                                                    "fieldValue": "/search"
-                                                                                                },
-                                                                                                {
-                                                                                                    "fieldName": "privatePage",
-                                                                                                    "fieldValue": "false"
-                                                                                                },
-                                                                                                {
-                                                                                                    "fieldName": "siteKey",
-                                                                                                    "fieldValue": "[$GROUP_KEY$]"
-                                                                                                }
-                                                                                            ]
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "indexed": true
-                                                        },
-                                                        "type": "Fragment"
-                                                    },
-                                                    {
-                                                        "definition": {
-                                                            "fragment": {
-                                                                "key": "login-and-user-menu",
-                                                                "siteKey": "[$GROUP_KEY$]"
-                                                            },
-                                                            "fragmentConfig": {
-                                                                "iconName": "user",
-                                                                "iconSize": "1rem",
-                                                                "loginPage": "/web/[$GROUP_KEY$]/sign-in"
-                                                            },
-                                                            "fragmentFields": [],
-                                                            "indexed": true
-                                                        },
-                                                        "type": "Fragment"
-                                                    },
-                                                    {
-                                                        "definition": {
-                                                            "widgetInstance": {
-                                                                "widgetConfig": {},
-                                                                "widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"
-                                                            }
-                                                        },
-                                                        "type": "Widget"
-                                                    }
-                                                ],
-                                                "type": "Section"
-                                            }
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "End"
+													},
+													"name": "Header User Actions"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "search-button",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"iconName": "search",
+																"iconSize": "1rem"
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"mapping": {
+																						"itemReference": {
+																							"className": "com.liferay.portal.kernel.model.Layout",
+																							"fields": [
+																								{
+																									"fieldName": "friendlyURL",
+																									"fieldValue": "/search"
+																								},
+																								{
+																									"fieldName": "privatePage",
+																									"fieldValue": "false"
+																								},
+																								{
+																									"fieldName": "siteKey",
+																									"fieldValue": "[$GROUP_KEY$]"
+																								}
+																							]
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "login-and-user-menu",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"iconName": "user",
+																"iconSize": "1rem",
+																"loginPage": "/web/[$GROUP_KEY$]/sign-in"
+															},
+															"fragmentFields": [
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
 										],
 										"type": "Column"
 									}

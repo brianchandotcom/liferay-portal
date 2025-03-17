@@ -7469,31 +7469,25 @@ public class JournalArticleLocalServiceImpl
 			localeSet.addAll(descriptionMap.keySet());
 		}
 
-		List<JournalArticleLocalization> journalArticleLocalizations =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			localeSet,
+			locale -> {
+				String title = titleMap.get(locale);
 
-		for (Locale locale : localeSet) {
-			String title = titleMap.get(locale);
+				String description = null;
 
-			String description = null;
+				if (descriptionMap != null) {
+					description = descriptionMap.get(locale);
+				}
 
-			if (descriptionMap != null) {
-				description = descriptionMap.get(locale);
-			}
+				if (Validator.isNull(title) && Validator.isNull(description)) {
+					return null;
+				}
 
-			if (Validator.isNull(title) && Validator.isNull(description)) {
-				continue;
-			}
-
-			JournalArticleLocalization journalArticleLocalization =
-				_addArticleLocalizedFields(
+				return _addArticleLocalizedFields(
 					companyId, articlePK, title, description,
 					LocaleUtil.toLanguageId(locale));
-
-			journalArticleLocalizations.add(journalArticleLocalization);
-		}
-
-		return journalArticleLocalizations;
+			});
 	}
 
 	private JournalArticleLocalization _addArticleLocalizedFields(

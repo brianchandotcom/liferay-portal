@@ -66,7 +66,7 @@ public class RoleIndexerTest {
 
 	@Test
 	public void testSearchByType() throws Exception {
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_DEPOT);
 
 		SearchContext searchContext = new SearchContext();
 
@@ -76,6 +76,21 @@ public class RoleIndexerTest {
 		Hits hits = _indexer.search(searchContext);
 
 		Document document = HitsAssert.assertOnlyOne(hits);
+
+		Assert.assertEquals(
+			String.valueOf(role.getRoleId()),
+			document.get(Field.ENTRY_CLASS_PK));
+
+		role = RoleTestUtil.addRole(RoleConstants.TYPE_ORGANIZATION);
+
+		searchContext = new SearchContext();
+
+		searchContext.setCompanyId(role.getCompanyId());
+		searchContext.setKeywords(role.getName());
+
+		hits = _indexer.search(searchContext);
+
+		document = HitsAssert.assertOnlyOne(hits);
 
 		Assert.assertEquals(
 			String.valueOf(role.getRoleId()),

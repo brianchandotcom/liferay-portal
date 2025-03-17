@@ -11,13 +11,21 @@ metadata:
     namespace: {{ include "liferay.namespace" . }}
 data:
     {{- if not .Values.configmap.overrideDefaults }}
-    portal-ext.properties: |
-        include-and-override=portal-custom.properties
+    com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config: |
+        apiServerHost="$[env:KUBERNETES_SERVICE_HOST]"
+        apiServerPort="$[env:KUBERNETES_SERVICE_PORT]"
+        apiServerSSL=b"true"
+        caCertData="$[secret:ca.crt]"
+        namespace="$[secret:namespace]"
+        saToken="$[secret:token]"
 
-        {{ .Values.portalProperties | nindent 8 }}
+    portal-ext.properties: |
+        {{- if .Values.portalProperties }}
+        {{- .Values.portalProperties | nindent 8 }}
+        {{- end }}
         {{- range $i := .Values.dependencies }}
         {{- if $i.portalProperties }}
-        {{ $i.portalProperties | nindent 8 }}
+        {{- $i.portalProperties | nindent 8 }}
         {{- end }}
         {{- end }}
 
@@ -49,94 +57,27 @@ data:
             {{- end }}
         ]
 
-        company.default.virtual.host.sync.on.startup=true
-
-        # SRE-5860 Enable TCP keep alive
-        configuration.override.com.liferay.portal.http.internal.configuration.HttpConfiguration_tcpKeepAliveEnabled=B"true"
-
-        configuration.override.com.liferay.redirect.internal.configuration.RedirectURLConfiguration_securityMode="domain"
-
-        # As a System admin, I would like to use Site/Instance OSGi configurations across different systems
-        feature.flag.LPS-155284=true
-
-        # SRE-5749 enable FeatureFlag LPS-202104
-        feature.flag.LPS-202104=true
-
-        {{- if  or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled }}
-        #
-        # Clustering
-        #
+        {{ if or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled -}}
         cluster.link.autodetect.address=
         cluster.link.channel.properties.control=/opt/liferay/unicast.xml
         cluster.link.channel.properties.transport.0=/opt/liferay/unicast.xml
         cluster.link.enabled=true
         enterprise.product.notification.enabled=false
         portlet.session.replicate.enabled=true
-        {{- end }}
+        {{ end }}
 
-        module.framework.properties.org.apache.felix.configadmin.plugin.interpolation.secretsdir=/opt/liferay/osgi/configs,/var/run/secrets/kubernetes.io/serviceaccount
+        {{- tpl (.Files.Get "resources/portal-cloud.properties") $ | nindent 8 }}
 
-    com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config: |
-        apiServerHost="$[env:KUBERNETES_SERVICE_HOST]"
-        apiServerPort="$[env:KUBERNETES_SERVICE_PORT]"
-        apiServerSSL=b"true"
-        caCertData="$[secret:ca.crt]"
-        namespace="$[secret:namespace]"
-        saToken="$[secret:token]"
-
-    {{ if  or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled }}
+    {{ if or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled }}
     000_jdk_java_options.sh: |
         #!/usr/bin/env bash
         export JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} --add-opens=jdk.naming.dns/com.sun.jndi.dns=java.naming"
 
     unicast.xml: |
-        <!--
-                TCP based stack, with flow control and message bundling. This is usually used when IP
-                multicasting cannot be used in a network, e.g. because it is disabled (routers discard multicast).
-                Note that TCP.bind_addr and TCPPING.initial_hosts should be set, possibly via system properties, e.g.
-                -Djgroups.bind_addr=192.168.5.2 and -Djgroups.tcpping.initial_hosts=192.168.5.2[7800]
-                author: Bela Ban
-        -->
-        <config
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns="urn:org:jgroups"
-                xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups.xsd">
-
-                <TCP
-                        bind_port="{{ .Values.service.clusterPort }}"
-                        max_bundle_size="64K"
-                        port_range="1"
-                        recv_buf_size="${tcp.recv_buf_size:5M}"
-                        send_buf_size="${tcp.send_buf_size:5M}"
-                        sock_conn_timeout="300"
-                        thread_pool.enabled="true"
-                        thread_pool.min_threads="2"
-                        thread_pool.max_threads="8"
-                        thread_pool.keep_alive_time="5000"/>
-
-                <dns.DNS_PING
-                        dns_query="_cluster._tcp.{{ include "liferay.fullname" . }}-headless"
-                        dns_record_type="SRV" />
-                <MERGE3  min_interval="10000" max_interval="30000"/>
-                <FD_SOCK/>
-                <FD timeout="3000" max_tries="3" />
-                <VERIFY_SUSPECT timeout="1500"  />
-                <BARRIER />
-                <pbcast.NAKACK2 use_mcast_xmit="false" discard_delivered_msgs="true"/>
-                <UNICAST3 />
-                <pbcast.STABLE
-                        stability_delay="1000" desired_avg_gossip="50000" max_bytes="4M"/>
-
-                <pbcast.GMS
-                        print_local_addr="true" join_timeout="2000" view_bundling="true"/>
-
-                <MFC max_credits="2M" min_threshold="0.4"/>
-                <FRAG2 frag_size="60K"  />
-                <!--RSVP resend_interval="2000" timeout="10000"/-->
-                <pbcast.STATE_TRANSFER/>
-        </config>
+        {{- tpl (.Files.Get "resources/unicast.xml") . | nindent 8 }}
+    {{- end }}
     {{- end }}
 
-    {{- end }}
-
+    {{- if .Values.configmap.data }}
     {{- toYaml .Values.configmap.data | nindent 4 }}
+    {{- end }}

@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {SpacesNavigation} from '../../../../src/main/resources/META-INF/resources/js/';
@@ -21,18 +21,19 @@ const renderComponent = ({
 
 describe('SpacesNavigation', () => {
 	it('renders "Spaces" title', () => {
-		const {getByText} = renderComponent();
-		expect(getByText('spaces')).toBeInTheDocument();
+		renderComponent();
+		expect(screen.getByText('spaces')).toBeInTheDocument();
 	});
 
 	it('renders "Add Space" button when showAddButton is true', () => {
-		const {getByRole} = renderComponent({showAddButton: true});
-		expect(getByRole('button', {name: 'add-space'})).toBeInTheDocument();
+		renderComponent({showAddButton: true});
+		expect(
+			screen.getByRole('button', {name: 'add-space'})
+		).toBeInTheDocument();
 	});
 
 	it('renders "All Spaces (X)"', async () => {
-		const {getByText} = renderComponent();
-
-		expect(getByText('all-spaces-x')).toBeInTheDocument();
+		renderComponent();
+		expect(screen.getByText('all-spaces-x')).toBeInTheDocument();
 	});
 });

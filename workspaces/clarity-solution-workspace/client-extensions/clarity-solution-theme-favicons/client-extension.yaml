@@ -2,6 +2,9 @@ assemble:
     - from: assets/favicons
       hashify: favicon_*.ico
       into: static
+    - from: assets/js
+      hashify: global.js
+      into: static
 clarity-solution-theme-favicon-dark:
     name: Clarity Solution Theme Favicon Dark
     type: themeFavicon
@@ -14,3 +17,7 @@ clarity-solution-theme-favicon-primary:
     name: Clarity Solution Theme Favicon Primary
     type: themeFavicon
     url: favicon_primary.*.ico
+clarity-solution-theme-global-js:
+    name: Clarity Solution Theme Global JS
+    type: globalJS
+    url: global.*.js

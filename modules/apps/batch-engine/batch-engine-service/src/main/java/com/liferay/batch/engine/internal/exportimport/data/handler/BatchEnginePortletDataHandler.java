@@ -157,7 +157,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				null, _className, _getBytes(_fileName, inputStream), "JSON",
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyMap(),
-				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL,
+				BatchEngineImportTaskConstants.
+					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
 				BatchEngineTaskOperation.CREATE.name(),
 				HashMapBuilder.<String, Serializable>put(
 					"batchRestrictFields",

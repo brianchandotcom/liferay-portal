@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.DialectDetector;
@@ -430,8 +429,6 @@ public class DBPartitionUtil {
 
 			preparedStatement.executeUpdate();
 
-			List<Long> companyIds = ListUtil.fromArray(
-				PortalInstancePool.getCompanyIds());
 			DBInspector dbInspector = new DBInspector(connection);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -446,7 +443,7 @@ public class DBPartitionUtil {
 				while (resultSet.next()) {
 					String tableName = resultSet.getString("TABLE_NAME");
 
-					if (dbInspector.isObjectTable(companyIds, tableName)) {
+					if (dbInspector.isObjectTable(tableName)) {
 						continue;
 					}
 
@@ -891,10 +888,7 @@ public class DBPartitionUtil {
 							continue;
 						}
 
-						if (dbInspector.isObjectTable(
-								ListUtil.fromArray(
-									PortalInstancePool.getCompanyIds()),
-								tableName) &&
+						if (dbInspector.isObjectTable(tableName) &&
 							!tableName.contains(String.valueOf(companyId))) {
 
 							continue;

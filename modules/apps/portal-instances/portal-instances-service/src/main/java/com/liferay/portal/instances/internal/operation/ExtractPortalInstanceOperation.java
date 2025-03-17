@@ -76,14 +76,14 @@ public class ExtractPortalInstanceOperation
 				Company company = _companyLocalService.extractCompany(
 					companyId);
 
-				_copyConfigurations(companyId);
+				_extractConfigurations(companyId);
 
 				return company;
 			},
 			properties);
 	}
 
-	private void _copyConfigurations(long companyId) throws Exception {
+	private void _extractConfigurations(long companyId) throws Exception {
 		if (DBPartition.isPartitionEnabled()) {
 			return;
 		}
@@ -115,12 +115,10 @@ public class ExtractPortalInstanceOperation
 			}
 		}
 
-		for (ScopedConfiguration currentScopedConfiguration :
-				scopedConfigurations) {
-
-			DBPartitionUtil.insertExtractedConfiguration(
-				companyId, currentScopedConfiguration.getConfigurationId(),
-				currentScopedConfiguration.getDictionary());
+		for (ScopedConfiguration scopedConfiguration : scopedConfigurations) {
+			DBPartitionUtil.extractConfiguration(
+				companyId, scopedConfiguration.getConfigurationId(),
+				scopedConfiguration.getDictionary());
 		}
 	}
 

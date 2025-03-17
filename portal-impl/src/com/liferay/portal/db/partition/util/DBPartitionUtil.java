@@ -137,6 +137,31 @@ public class DBPartitionUtil {
 		return true;
 	}
 
+	public static void extractConfiguration(
+			long companyId, String configurationId, String dictionary)
+		throws SQLException {
+
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		Connection connection = CurrentConnectionUtil.getConnection(dataSource);
+
+		if (connection == null) {
+			connection = dataSource.getConnection();
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"insert into ", _getExtractedPartitionName(companyId),
+					".Configuration_ (configurationId, dictionary",
+					") values (?, ?)"))) {
+
+			preparedStatement.setString(1, configurationId);
+			preparedStatement.setString(2, dictionary);
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
 	public static boolean extractDBPartition(long companyId)
 		throws PortalException {
 
@@ -286,31 +311,6 @@ public class DBPartitionUtil {
 		}
 
 		return true;
-	}
-
-	public static void insertExtractedConfiguration(
-			long companyId, String configurationId, String dictionary)
-		throws SQLException {
-
-		DataSource dataSource = InfrastructureUtil.getDataSource();
-
-		Connection connection = CurrentConnectionUtil.getConnection(dataSource);
-
-		if (connection == null) {
-			connection = dataSource.getConnection();
-		}
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"insert into ", _getExtractedPartitionName(companyId),
-					".Configuration_ (configurationId, dictionary",
-					") values (?, ?)"))) {
-
-			preparedStatement.setString(1, configurationId);
-			preparedStatement.setString(2, dictionary);
-
-			preparedStatement.executeUpdate();
-		}
 	}
 
 	public static boolean removeDBPartition(long companyId)

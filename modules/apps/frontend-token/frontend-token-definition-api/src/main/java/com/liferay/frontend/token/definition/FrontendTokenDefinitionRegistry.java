@@ -5,7 +5,6 @@
 
 package com.liferay.frontend.token.definition;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 
@@ -16,8 +15,7 @@ import java.util.List;
  */
 public interface FrontendTokenDefinitionRegistry {
 
-	public FrontendTokenDefinition getFrontendTokenDefinition(Layout layout)
-		throws PortalException;
+	public FrontendTokenDefinition getFrontendTokenDefinition(Layout layout);
 
 	public FrontendTokenDefinition getFrontendTokenDefinition(
 		LayoutSet layoutSet);

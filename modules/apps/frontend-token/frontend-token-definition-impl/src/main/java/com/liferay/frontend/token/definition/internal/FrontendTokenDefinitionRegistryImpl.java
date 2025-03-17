@@ -69,9 +69,7 @@ public class FrontendTokenDefinitionRegistryImpl
 	implements FrontendTokenDefinitionRegistry {
 
 	@Override
-	public FrontendTokenDefinition getFrontendTokenDefinition(Layout layout)
-		throws PortalException {
-
+	public FrontendTokenDefinition getFrontendTokenDefinition(Layout layout) {
 		String cetExternalReferenceCode = null;
 
 		if (FeatureFlagManagerUtil.isEnabled(
@@ -86,15 +84,25 @@ public class FrontendTokenDefinitionRegistryImpl
 			}
 
 			if (layout.getMasterLayoutPlid() > 0) {
-				Layout masterLayout = _layoutLocalService.getLayout(
-					layout.getMasterLayoutPlid());
+				try {
+					Layout masterLayout = _layoutLocalService.getLayout(
+						layout.getMasterLayoutPlid());
 
-				cetExternalReferenceCode = _getCETExternalReferenceCode(
-					masterLayout.getClassNameId(), masterLayout.getClassPK());
+					cetExternalReferenceCode = _getCETExternalReferenceCode(
+						masterLayout.getClassNameId(),
+						masterLayout.getClassPK());
 
-				if (cetExternalReferenceCode != null) {
-					return _getThemeCSSCETFrontendTokenDefinition(
-						masterLayout.getCompanyId(), cetExternalReferenceCode);
+					if (cetExternalReferenceCode != null) {
+						return _getThemeCSSCETFrontendTokenDefinition(
+							masterLayout.getCompanyId(),
+							cetExternalReferenceCode);
+					}
+				}
+				catch (PortalException portalException) {
+					_log.error(
+						"Unable to get the master layout for layout with " +
+							"layoutId: " + layout.getLayoutId(),
+						portalException);
 				}
 			}
 		}
@@ -110,9 +118,21 @@ public class FrontendTokenDefinitionRegistryImpl
 				layoutSet.getCompanyId(), cetExternalReferenceCode);
 		}
 
-		Theme theme = layout.getTheme();
+		Theme theme = null;
 
-		return _getBundleFrontendTokenDefinition(theme.getThemeId());
+		try {
+			theme = layout.getTheme();
+
+			return _getBundleFrontendTokenDefinition(theme.getThemeId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get the theme for layout with layoutId: " +
+					layout.getLayoutId(),
+				portalException);
+		}
+
+		return null;
 	}
 
 	public FrontendTokenDefinition getFrontendTokenDefinition(

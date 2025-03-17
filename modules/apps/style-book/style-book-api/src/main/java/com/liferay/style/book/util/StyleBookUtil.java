@@ -8,11 +8,8 @@ package com.liferay.style.book.util;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -69,28 +66,26 @@ public class StyleBookUtil {
 	public static StyleBookEntry getStyleFromThemeStyleBookEntry(
 		Layout layout, Locale locale) {
 
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			_frontendTokenDefinitionRegistrySnapshot.get();
+
 		return getStyleFromThemeStyleBookEntry(
-			_getFrontendTokenDefinition(layout), layout.getGroupId(), locale);
+			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout),
+			layout.getGroupId(), locale);
 	}
 
 	public static String getThemeName(Layout layout, Locale locale) {
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
 			_frontendTokenDefinitionRegistrySnapshot.get();
 
-		try {
-			FrontendTokenDefinition frontendTokenDefinition =
-				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					layout);
+		FrontendTokenDefinition frontendTokenDefinition =
+			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout);
 
-			if (frontendTokenDefinition != null) {
-				return _getThemeName(frontendTokenDefinition, locale);
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error("Unable to get the theme name", portalException);
+		if (frontendTokenDefinition != null) {
+			return _getThemeName(frontendTokenDefinition, locale);
 		}
 
-		return LanguageUtil.get(locale, "theme");
+		return null;
 	}
 
 	public static String getThemeName(
@@ -112,24 +107,6 @@ public class StyleBookUtil {
 		}
 
 		return false;
-	}
-
-	private static FrontendTokenDefinition _getFrontendTokenDefinition(
-		Layout layout) {
-
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
-			_frontendTokenDefinitionRegistrySnapshot.get();
-
-		try {
-			return frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				layout);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to get the frontendTokenDefinition", portalException);
-		}
-
-		return null;
 	}
 
 	private static FrontendTokenDefinition _getFrontendTokenDefinition(
@@ -158,8 +135,6 @@ public class StyleBookUtil {
 			locale, "x-theme-css-client-extension",
 			frontendTokenDefinition.getThemeName(locale));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(StyleBookUtil.class);
 
 	private static final Snapshot<FrontendTokenDefinitionRegistry>
 		_frontendTokenDefinitionRegistrySnapshot = new Snapshot<>(

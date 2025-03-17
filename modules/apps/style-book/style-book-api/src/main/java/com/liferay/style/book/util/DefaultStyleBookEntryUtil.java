@@ -8,11 +8,8 @@ package com.liferay.style.book.util;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -33,26 +30,15 @@ public class DefaultStyleBookEntryUtil {
 			return styleBookEntry;
 		}
 
-		try {
-			FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
-				_frontendTokenDefinitionRegistrySnapshot.get();
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			_frontendTokenDefinitionRegistrySnapshot.get();
 
-			FrontendTokenDefinition frontendTokenDefinition =
-				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					layout);
+		FrontendTokenDefinition frontendTokenDefinition =
+			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout);
 
-			styleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					StagingUtil.getLiveGroupId(layout.getGroupId()),
-					frontendTokenDefinition.getThemeId());
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to get the layout's default style book entry",
-				portalException);
-		}
-
-		return styleBookEntry;
+		return StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+			StagingUtil.getLiveGroupId(layout.getGroupId()),
+			frontendTokenDefinition.getThemeId());
 	}
 
 	public static StyleBookEntry getDefaultStyleBookEntry(Layout layout) {
@@ -121,9 +107,6 @@ public class DefaultStyleBookEntryUtil {
 
 		return styleBookEntry;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultStyleBookEntryUtil.class);
 
 	private static final Snapshot<FrontendTokenDefinitionRegistry>
 		_frontendTokenDefinitionRegistrySnapshot = new Snapshot<>(

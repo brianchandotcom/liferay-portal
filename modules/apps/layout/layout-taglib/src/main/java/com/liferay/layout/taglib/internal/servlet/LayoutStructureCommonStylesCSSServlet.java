@@ -20,6 +20,7 @@ import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -279,10 +280,21 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
 			ServletContextUtil.getFrontendTokenDefinitionRegistry();
 
-		FrontendTokenDefinition frontendTokenDefinition =
-			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_layoutSetLocalService.fetchLayoutSet(
-					group.getGroupId(), group.isLayoutSetPrototype()));
+		FrontendTokenDefinition frontendTokenDefinition = null;
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				layout.getCompanyId(), "LPD-30204")) {
+
+			frontendTokenDefinition =
+				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					layout);
+		}
+		else {
+			frontendTokenDefinition =
+				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					_layoutSetLocalService.fetchLayoutSet(
+						group.getGroupId(), group.isLayoutSetPrototype()));
+		}
 
 		if (frontendTokenDefinition == null) {
 			return _jsonFactory.createJSONObject();

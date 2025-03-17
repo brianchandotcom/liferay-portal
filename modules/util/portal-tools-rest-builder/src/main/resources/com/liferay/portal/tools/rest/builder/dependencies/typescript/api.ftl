@@ -35,7 +35,7 @@ export class ${className} {
 				 * @param ${parameter.name}
 			 </#list>
 		 </#if>
-		 <#if operationData.bodyParameters??>
+		 <#if operationData.bodyParameters?has_content>
 		 	<#if (operationData.bodyParameters?keys?size == 1)>
 			 	<#list operationData.bodyParameters?keys as requestBodyContentType>
 					<#assign firstRequestBodyContentType = requestBodyContentType />
@@ -49,18 +49,18 @@ export class ${className} {
 		 </#if>
 		 * @param headers Optional custom request headers
 		 */
-		public async ${operationData.operationId}<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>WithContentType</#if>(
+		public async ${operationData.operationId}<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size > 1)>WithContentType</#if>(
 			<#if operationData.parameters??>
 				<#list operationData.parameters as parameter>
 					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
 				</#list>
-				<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size == 1)>
+				<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size == 1)>
 					<#list operationData.bodyParameters[firstRequestBodyContentType] as bodyParameter>
 						${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType},
 					</#list>
 				</#if>
 			</#if>
-			<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>
+			<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size > 1)>
 				requestBody:
 					<#list operationData.bodyParameters?keys as requestBodyContentType>
 						{
@@ -118,7 +118,7 @@ export class ${className} {
 				? '?' + new URLSearchParams(localVarQueryParameters).toString()
 				: '';
 
-			<#if operationData.bodyParameters??>
+			<#if operationData.bodyParameters?has_content>
 				let body;
 				<#if (operationData.bodyParameters?keys?size > 1)>
 					<#list operationData.bodyParameters?keys as requestBodyContentType>
@@ -168,14 +168,14 @@ export class ${className} {
 							</#if>
 						}
 					</#if>
-					<#if operationData.bodyParameters??>
+					<#if operationData.bodyParameters?has_content>
 						,(requestBody && requestBody.type !== 'multipart/form-data') ? {
 							'Content-Type': requestBody.type
 						} : {}
 					</#if>
 					,headers || {}
 					)
-				<#if operationData.bodyParameters??>
+				<#if operationData.bodyParameters?has_content>
 					,body: body
 				</#if>
 			});
@@ -205,7 +205,7 @@ export class ${className} {
 			}
 		}
 
-		<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>
+		<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size > 1)>
 			<#list operationData.bodyParameters?keys as requestBodyContentType>
 				<#if requestBodyContentType == 'application/json'>
 					/**

@@ -74,7 +74,6 @@ public class PendingCommerceOrderItemsFDSAPIURLResolverTest {
 				"/v1.0/carts/{cartId}/items", _mockHttpServletRequest),
 			StringBundler.concat(
 				"/v1.0/carts/", _commerceOrder.getCommerceOrderId(), "/items"));
-
 	}
 
 	private static final MockedStatic<CommerceOrderInfoItemUtil>
@@ -84,7 +83,7 @@ public class PendingCommerceOrderItemsFDSAPIURLResolverTest {
 	@Mock
 	private CommerceOrder _commerceOrder;
 
-	private MockHttpServletRequest _mockHttpServletRequest =
+	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
 
 	@InjectMocks

@@ -2893,7 +2893,10 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 					</if>
 				</then>
 				<elseif>
-					<equals arg1="${app.server.type}" arg2="wildfly" />
+					<or>
+						<equals arg1="${app.server.type}" arg2="jboss" />
+						<equals arg1="${app.server.type}" arg2="wildfly" />
+					</or>
 					<then>
 						<propertycopy from="jdbc.${database.type}.driver" name="jdbc.driver" />
 
@@ -2936,6 +2939,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 															<connection-url>${database.url}</connection-url>
 															<driver>${database.type}</driver>
 															${security.line}
+															<transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
 														</datasource>
 												]]>
 									</replacevalue>
@@ -2994,6 +2998,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 									</jdbc-driver-params>
 									<jdbc-connection-pool-params>
 										<initial-capacity>5</initial-capacity>
+										<isolation-level>TRANSACTION_READ_COMMITTED</isolation-level>
 										<max-capacity>100</max-capacity>
 										<min-capacity>5</min-capacity>
 										<test-table-name>SQL SELECT 1</test-table-name>

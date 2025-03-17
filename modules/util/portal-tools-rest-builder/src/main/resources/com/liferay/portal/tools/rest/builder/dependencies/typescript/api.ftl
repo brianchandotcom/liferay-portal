@@ -170,5 +170,58 @@ export class ${className} {
 				);
 			}
 		}
+
+		<#if operationData.bodyParameters??>
+			<#list operationData.bodyParameters?keys as requestBodyContentType>
+				<#if requestBodyContentType == 'application/json'>
+					/**
+					 * ${operationData.description!} - Default method with JSON body
+					 <#if operationData.parameters??>
+						 <#list operationData.parameters as parameter>
+							 * @param ${parameter.name} ${parameter.description!}
+						 </#list>
+					 </#if>
+					 <#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
+						 * @param ${bodyParameter.name} ${bodyParameter.description!}
+					 </#list>
+					 */
+					public async ${operationData.operationId}(
+						<#if operationData.parameters??>
+							<#list operationData.parameters as parameter>
+								${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
+							</#list>
+						</#if>
+						<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
+							${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType},
+						</#list>
+						headers?: {[name: string]: string}
+					): Promise<{
+						<#if operationData.returnDataType??>
+							body: ${operationData.returnDataType};
+						<#else>
+							body?: any;
+						</#if>
+						response: Response;
+					}> {
+						return this.${operationData.operationId}Extended(
+							<#if operationData.parameters??>
+								<#list operationData.parameters as parameter>
+									${parameter.name},
+								</#list>
+							</#if>
+							{
+								type: 'application/json',
+								parameters: {
+									<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
+										${bodyParameter.name}: ${bodyParameter.name}<#if bodyParameter?has_next>,</#if>
+									</#list>
+								}
+							},
+							headers
+						);
+					}
+				</#if>
+			</#list>
+		</#if>
 	</#list>
 }

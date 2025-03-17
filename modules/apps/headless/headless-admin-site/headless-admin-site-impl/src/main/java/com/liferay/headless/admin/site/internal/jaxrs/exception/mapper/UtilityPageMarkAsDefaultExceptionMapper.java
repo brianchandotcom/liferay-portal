@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 @Provider
-public class DefaultUtilityPageExceptionMapper
+public class UtilityPageMarkAsDefaultExceptionMapper
 	extends BaseExceptionMapper<DefaultLayoutUtilityPageEntryException> {
 
 	@Override

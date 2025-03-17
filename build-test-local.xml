@@ -331,7 +331,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.run\.property\.query\[functional-tomcat-mysql57*\]\[portal-release-acceptance\]=\\)((\n.*?)*)(portal\.acceptance == )(true)"
+			match="(test\.batch\.run\.property\.query\[functional-tomcat*\]\[portal-release-acceptance\]=\\)((\n.*?)*)(portal\.acceptance == )(true)"
 			replace="\1\2\4${custom.suite}"
 		/>
 

@@ -36,9 +36,13 @@ public class DefaultStyleBookEntryUtil {
 		FrontendTokenDefinition frontendTokenDefinition =
 			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout);
 
-		return StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-			StagingUtil.getLiveGroupId(layout.getGroupId()),
-			frontendTokenDefinition.getThemeId());
+		if (frontendTokenDefinition != null) {
+			return StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+				StagingUtil.getLiveGroupId(layout.getGroupId()),
+				frontendTokenDefinition.getThemeId());
+		}
+
+		return null;
 	}
 
 	public static StyleBookEntry getDefaultStyleBookEntry(Layout layout) {

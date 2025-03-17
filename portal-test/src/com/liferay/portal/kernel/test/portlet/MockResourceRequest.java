@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -15,8 +15,8 @@ import javax.portlet.PortletContext;
 import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
 import javax.portlet.ResourceURL;
+
 import javax.servlet.DispatcherType;
 
 /**
@@ -28,11 +28,6 @@ public class MockResourceRequest
 	public MockResourceRequest() {
 	}
 
-	public MockResourceRequest(ResourceURL resourceURL) {
-		_resourceID = resourceURL.getResourceID();
-		_cacheability = resourceURL.getCacheability();
-	}
-
 	public MockResourceRequest(
 		PortalContext portalContext, PortletContext portletContext) {
 
@@ -41,6 +36,11 @@ public class MockResourceRequest
 
 	public MockResourceRequest(PortletContext portletContext) {
 		super(portletContext);
+	}
+
+	public MockResourceRequest(ResourceURL resourceURL) {
+		_resourceID = resourceURL.getResourceID();
+		_cacheability = resourceURL.getCacheability();
 	}
 
 	public MockResourceRequest(String resourceID) {

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.test.portlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortalContext;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletContext;
@@ -24,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortalContext;
@@ -52,11 +54,10 @@ public class MockPortletRequest implements PortletRequest {
 	public MockPortletRequest(
 		PortalContext portalContext, PortletContext portletContext) {
 
-		_portalContext =
-			(portalContext != null) ? portalContext : new MockPortalContext();
-		_portletContext =
-			(portletContext != null) ? portletContext :
-				new MockPortletContext();
+		_portalContext = Objects.requireNonNullElse(
+			portalContext, new MockPortalContext());
+		_portletContext = Objects.requireNonNullElse(
+			portletContext, new MockPortletContext());
 	}
 
 	public MockPortletRequest(PortletContext portletContext) {
@@ -162,7 +163,11 @@ public class MockPortletRequest implements PortletRequest {
 	public String getParameter(String name) {
 		String[] array = _parameters.get(name);
 
-		return ((array != null) && (array.length > 0)) ? array[0] : null;
+		if (ArrayUtil.isNotEmpty(array)) {
+			return array[0];
+		}
+
+		return null;
 	}
 
 	@Override
@@ -254,7 +259,7 @@ public class MockPortletRequest implements PortletRequest {
 
 		List<String> list = _properties.get(key);
 
-		if ((list != null) && !list.isEmpty()) {
+		if (ListUtil.isNotEmpty(list)) {
 			return list.get(0);
 		}
 

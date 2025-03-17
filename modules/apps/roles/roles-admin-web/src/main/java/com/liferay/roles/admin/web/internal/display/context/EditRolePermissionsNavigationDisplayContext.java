@@ -19,6 +19,7 @@ import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelpe
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -173,6 +174,22 @@ public class EditRolePermissionsNavigationDisplayContext {
 		).setParameter(
 			"p_p_isolated", "true"
 		).buildString();
+	}
+
+	private List<NavigationItem> _getMarketplacePanelCategoryNavigationItems() {
+		return TransformUtil.transform(
+			_panelAppRegistry.getPanelApps(PanelCategoryKeys.MARKETPLACE),
+			panelApp -> {
+				Portlet panelAppPortlet =
+					PortletLocalServiceUtil.getPortletById(
+						_themeDisplay.getCompanyId(), panelApp.getPortletId());
+
+				return NavigationItem.create(
+					PortalUtil.getPortletLongTitle(
+						panelAppPortlet, _servletContext, _locale),
+					_getPortletResourceNavigationItemConsumer(
+						panelAppPortlet.getPortletId()));
+			});
 	}
 
 	private List<NavigationItem> _getObjectsNavigationItems() {
@@ -381,6 +398,15 @@ public class EditRolePermissionsNavigationDisplayContext {
 						navigationItem.addNavigationItems(
 							_getPanelCategoryNavigationItems(
 								PanelCategoryKeys.COMMERCE));
+						navigationItem.setInitialExpanded(true);
+					}));
+
+			topLevelNavigationItem.addNavigationItems(
+				NavigationItem.create(
+					LanguageUtil.get(_locale, "marketplace"),
+					navigationItem -> {
+						navigationItem.addNavigationItems(
+							_getMarketplacePanelCategoryNavigationItems());
 						navigationItem.setInitialExpanded(true);
 					}));
 

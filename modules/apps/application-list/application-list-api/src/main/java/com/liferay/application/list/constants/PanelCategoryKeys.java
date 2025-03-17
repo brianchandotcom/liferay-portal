@@ -70,6 +70,8 @@ public interface PanelCategoryKeys {
 
 	public static final String HIDDEN = "hidden";
 
+	public static final String MARKETPLACE = "marketplace";
+
 	public static final String ROOT = "root";
 
 	public static final String SITE_ADMINISTRATION = "site_administration";

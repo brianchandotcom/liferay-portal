@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -37,6 +38,28 @@ public class ObjectEntryAssetRendererTest {
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testGetTitle() throws Exception {
+		String title = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_objectEntry.getTitleValue("en_US", true)
+		).thenReturn(
+			title
+		);
+
+		AssetRenderer<ObjectEntry> assetRenderer =
+			_getObjectEntryAssetRenderer();
+
+		Assert.assertEquals(title, assetRenderer.getTitle(LocaleUtil.US));
+
+		Mockito.verify(
+			_objectEntry, Mockito.times(1)
+		).getTitleValue(
+			"en_US", true
+		);
+	}
 
 	@Test
 	public void testGetURLViewInContext() throws Exception {

@@ -102,6 +102,9 @@ public class ObjectEntryLayoutDisplayPageObjectProviderTest {
 
 		Assert.assertEquals(
 			localizedValues.get("en_US"),
+			layoutDisplayPageObjectProvider.getTitle(LocaleUtil.SPAIN));
+		Assert.assertEquals(
+			localizedValues.get("en_US"),
 			layoutDisplayPageObjectProvider.getTitle(LocaleUtil.US));
 		Assert.assertEquals(
 			localizedValues.get("pt_BR"),

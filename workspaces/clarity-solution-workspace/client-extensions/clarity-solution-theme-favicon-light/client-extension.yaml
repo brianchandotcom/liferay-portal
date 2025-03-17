@@ -1,8 +1,0 @@
-assemble:
-    - from: assets
-      hashify: favicon.ico
-      into: static
-clarity-solution-theme-favicon-light:
-    name: Clarity Solution Theme Favicon Light
-    type: themeFavicon
-    url: favicon.*.ico

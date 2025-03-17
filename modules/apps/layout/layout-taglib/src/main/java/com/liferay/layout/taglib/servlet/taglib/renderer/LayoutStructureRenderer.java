@@ -135,7 +135,7 @@ public class LayoutStructureRenderer {
 				"infoItemActionComponent",
 				_renderLayoutStructureDisplayContext.
 					getInfoItemActionComponentContext(),
-				"{InfoItemActionHandler} from layout-taglib");
+				"{InfoItemActionHandler} from layout-taglib/render");
 		}
 
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
@@ -150,7 +150,7 @@ public class LayoutStructureRenderer {
 				"RulesHandlerComponent",
 				_renderLayoutStructureDisplayContext.
 					getRulesHandlerComponentContext(),
-				"{RulesHandler} from layout-taglib");
+				"{RulesHandler} from layout-taglib/render");
 		}
 	}
 
@@ -512,7 +512,7 @@ public class LayoutStructureRenderer {
 			paginationBarTag.setCssClass("pb-2 pt-3");
 			paginationBarTag.setPropsTransformer(
 				"{NumericCollectionPaginationPropsTransformer} from " +
-					"layout-taglib");
+					"layout-taglib/render");
 			paginationBarTag.setShowDeltasDropDown(false);
 			paginationBarTag.setTotalItems(
 				renderCollectionLayoutStructureItemDisplayContext.
@@ -583,7 +583,7 @@ public class LayoutStructureRenderer {
 					"collectionId",
 					collectionStyledLayoutStructureItem.getItemId()
 				).build(),
-				"{SimpleCollectionPagination} from layout-taglib");
+				"{SimpleCollectionPagination} from layout-taglib/render");
 		}
 
 		jspWriter.write("</div>");
@@ -958,7 +958,7 @@ public class LayoutStructureRenderer {
 				"formId",
 				formStepContainerStyledLayoutStructureItem.getParentItemId()
 			).build(),
-			"{FormStepHandler} from layout-taglib");
+			"{FormStepHandler} from layout-taglib/render");
 	}
 
 	private void _renderFormStyledLayoutStructureItem(

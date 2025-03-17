@@ -14,9 +14,9 @@ export class FormBuilderSidePanelPage {
 	readonly htmlAutocompleteAttributeField: Locator;
 	readonly label: Locator;
 	readonly objectFieldSelect: Locator;
+	readonly page: Page;
 	readonly paragraphFieldTextarea: Locator;
 	readonly paragraphFieldTitle: Locator;
-	readonly page: Page;
 	readonly predefinedValueField: Locator;
 	readonly requiredFieldToggleSwitch: Locator;
 
@@ -39,11 +39,11 @@ export class FormBuilderSidePanelPage {
 		);
 		this.label = page.getByLabel('Label', {exact: true}).first();
 		this.objectFieldSelect = page.getByLabel('Object Field');
+		this.page = page;
 		this.paragraphFieldTextarea = page
 			.frameLocator('iframe')
 			.locator('.cke_editable');
 		this.paragraphFieldTitle = page.getByPlaceholder('Enter a title.');
-		this.page = page;
 		this.predefinedValueField = page.getByLabel('Predefined Value');
 		this.requiredFieldToggleSwitch = page.getByText('Required Field');
 	}
@@ -62,13 +62,6 @@ export class FormBuilderSidePanelPage {
 		await this.backButton.click();
 	}
 
-	async selectObjectField(objectFieldLabel: string) {
-		await this.objectFieldSelect.click();
-
-		const option = this.getSelectOptionLocator(objectFieldLabel);
-		await option.click();
-	}
-
 	async fillParagraphField({text}: {text: string}) {
 		await this.paragraphFieldTextarea.fill(text);
 
@@ -77,6 +70,13 @@ export class FormBuilderSidePanelPage {
 		await this.paragraphFieldTextarea.press('End');
 
 		await this.page.waitForLoadState('networkidle');
+	}
+
+	async selectObjectField(objectFieldLabel: string) {
+		await this.objectFieldSelect.click();
+
+		const option = this.getSelectOptionLocator(objectFieldLabel);
+		await option.click();
 	}
 
 	getSelectOptionLocator(optionLabel: string) {

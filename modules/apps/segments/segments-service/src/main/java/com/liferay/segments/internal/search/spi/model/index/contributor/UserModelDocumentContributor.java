@@ -16,6 +16,10 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -34,6 +38,9 @@ public class UserModelDocumentContributor
 		try {
 			long[] segmentsEntryIds = _getSegmentsEntryIds(user);
 
+			document.addDate(
+				"dateModifiedTruncated", _getDateModifiedTruncated(user));
+
 			if (ArrayUtil.isNotEmpty(segmentsEntryIds)) {
 				document.addKeyword("segmentsEntryIds", segmentsEntryIds);
 			}
@@ -44,6 +51,23 @@ public class UserModelDocumentContributor
 					"Unable to index user " + user.getUserId(), exception);
 			}
 		}
+	}
+
+	private Date _getDateModifiedTruncated(User user) {
+		Date dateModified = user.getModifiedDate();
+
+		TimeZone timeZone = TimeZone.getDefault();
+
+		Calendar calendar = Calendar.getInstance(timeZone, LocaleUtil.US);
+
+		calendar.setTime(dateModified);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
 	}
 
 	private long[] _getSegmentsEntryIds(User user) throws Exception {

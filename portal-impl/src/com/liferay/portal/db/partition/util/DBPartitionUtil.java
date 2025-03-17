@@ -888,8 +888,8 @@ public class DBPartitionUtil {
 							continue;
 						}
 
-						if (dbInspector.isObjectTable(tableName) &&
-							!tableName.contains(String.valueOf(companyId))) {
+						if (dbInspector.isObjectTable(
+								List.of(companyId), tableName)) {
 
 							continue;
 						}

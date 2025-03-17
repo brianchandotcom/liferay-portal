@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -261,10 +263,12 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		// Add pending object entry
 
-		_workflowDefinitionLinkService.addWorkflowDefinitionLink(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
-			_objectDefinition.getClassName(), 0, 0,
-			_workflowDefinition.getName(), _workflowDefinition.getVersion());
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+				_objectDefinition.getClassName(), 0, 0,
+				_workflowDefinition.getName(),
+				_workflowDefinition.getVersion());
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -400,6 +404,9 @@ public class ObjectEntryVersionLocalServiceTest {
 					WorkflowConstants.STATUS_PENDING, 2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
 	}
 
 	private void _assertEquals(
@@ -505,6 +512,10 @@ public class ObjectEntryVersionLocalServiceTest {
 
 	@Inject
 	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	@Inject
 	private WorkflowDefinitionLinkService _workflowDefinitionLinkService;

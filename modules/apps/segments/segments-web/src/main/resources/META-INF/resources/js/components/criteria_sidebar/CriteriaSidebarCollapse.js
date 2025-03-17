@@ -32,7 +32,19 @@ function getDefaultValue(property) {
 		defaultValue = jsDatetoYYYYMMDD(new Date());
 	}
 	else if (type === PROPERTY_TYPES.DATE_TIME) {
-		defaultValue = new Date().toISOString();
+		const now = new Date();
+		const utcDate = new Date(
+			Date.UTC(
+				now.getUTCFullYear(),
+				now.getUTCMonth(),
+				now.getUTCDate(),
+				0,
+				0,
+				0,
+				0
+			)
+		);
+		defaultValue = utcDate.toISOString();
 	}
 	else if (type === PROPERTY_TYPES.BOOLEAN) {
 		defaultValue = 'true';

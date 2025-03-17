@@ -44,8 +44,17 @@ export default function PageDesignOptionsSidebar() {
 				changeMasterLayout({
 					masterLayoutPlid: masterLayout.masterLayoutPlid,
 				})
-			).then(({styleBooks}) => {
+			).then(({styleBooks = []}) => {
 				setStyleBooks(styleBooks);
+
+				if (!styleBooks.length) {
+					setSelectedStyleBook({
+						styleBookEntryId: '0',
+						tokenValues: {},
+					});
+
+					return;
+				}
 
 				if (Liferay.FeatureFlags['LPD-30204']) {
 
@@ -209,6 +218,16 @@ const OptionList = ({options = [], icon, type}) => {
 					: Liferay.Language.get(
 							'this-page-is-using-a-different-theme-than-the-one-set-for-all-pages'
 						)}
+			</ClayAlert>
+		);
+	}
+
+	if (type === OPTIONS_TYPES.styleBook && !options.length) {
+		return (
+			<ClayAlert className="mt-3" displayType="info">
+				{Liferay.Language.get(
+					'the-current-theme-does-not-support-style-books'
+				)}
 			</ClayAlert>
 		);
 	}

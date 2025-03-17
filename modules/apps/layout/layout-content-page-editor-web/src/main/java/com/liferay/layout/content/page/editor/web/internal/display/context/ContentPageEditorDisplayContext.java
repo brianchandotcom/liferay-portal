@@ -1869,8 +1869,10 @@ public class ContentPageEditorDisplayContext {
 
 		List<StyleBookEntry> styleBookEntries = new ArrayList<>();
 
+		FrontendTokenDefinition frontendTokenDefinition = null;
+
 		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
-			FrontendTokenDefinition frontendTokenDefinition =
+			frontendTokenDefinition =
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 					themeDisplay.getLayout());
 
@@ -1882,47 +1884,53 @@ public class ContentPageEditorDisplayContext {
 			}
 		}
 		else {
+			frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					themeDisplay.getLayoutSet());
+
 			styleBookEntries = _styleBookEntryLocalService.getStyleBookEntries(
 				_staging.getLiveGroupId(themeDisplay.getScopeGroupId()),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				StyleBookEntryNameComparator.getInstance(true));
 		}
 
-		styleBooks.add(
-			HashMapBuilder.<String, Object>put(
-				"imagePreviewURL",
-				() -> {
-					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultMasterStyleBookEntry();
+		if (frontendTokenDefinition != null) {
+			styleBooks.add(
+				HashMapBuilder.<String, Object>put(
+					"imagePreviewURL",
+					() -> {
+						StyleBookEntry defaultStyleBookEntry =
+							_getDefaultMasterStyleBookEntry();
 
-					if (defaultStyleBookEntry != null) {
-						return defaultStyleBookEntry.getImagePreviewURL(
-							themeDisplay);
+						if (defaultStyleBookEntry != null) {
+							return defaultStyleBookEntry.getImagePreviewURL(
+								themeDisplay);
+						}
+
+						return StringPool.BLANK;
 					}
+				).put(
+					"name",
+					DefaultStyleBookEntryUtil.getStyleBookEntryName(
+						themeDisplay.getLayout(), themeDisplay.getLocale(),
+						StyleBookUtil.getStyleFromThemeStyleBookEntry(
+							themeDisplay.getLayout(), themeDisplay.getLocale()))
+				).put(
+					"styleBookEntryId", "0"
+				).put(
+					"subtitle",
+					() -> {
+						StyleBookEntry defaultStyleBookEntry =
+							_getDefaultMasterStyleBookEntry();
 
-					return StringPool.BLANK;
-				}
-			).put(
-				"name",
-				DefaultStyleBookEntryUtil.getStyleBookEntryName(
-					themeDisplay.getLayout(), themeDisplay.getLocale(),
-					StyleBookUtil.getStyleFromThemeStyleBookEntry(
-						themeDisplay.getLayout(), themeDisplay.getLocale()))
-			).put(
-				"styleBookEntryId", "0"
-			).put(
-				"subtitle",
-				() -> {
-					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultMasterStyleBookEntry();
+						if (defaultStyleBookEntry != null) {
+							return defaultStyleBookEntry.getName();
+						}
 
-					if (defaultStyleBookEntry != null) {
-						return defaultStyleBookEntry.getName();
+						return null;
 					}
-
-					return null;
-				}
-			).build());
+				).build());
+		}
 
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 			styleBooks.add(

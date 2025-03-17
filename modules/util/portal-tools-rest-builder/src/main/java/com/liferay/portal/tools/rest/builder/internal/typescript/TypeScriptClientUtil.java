@@ -355,6 +355,80 @@ public class TypeScriptClientUtil {
 		Map<ResponseCode, Response> responses = operation.getResponses();
 
 		return HashMapBuilder.<String, Object>put(
+			"bodyParameters",
+			() -> {
+				RequestBody requestBody = operation.getRequestBody();
+
+				if (requestBody == null) {
+					return null;
+				}
+
+				Map<String, Content> content = requestBody.getContent();
+
+				if ((content == null) || content.isEmpty()) {
+					return null;
+				}
+
+				Map<String, List<Map<String, Object>>> contentRequestBodyDatas =
+					new HashMap<>();
+
+				for (Map.Entry<String, Content> entry : content.entrySet()) {
+					if (entry.getValue() == null) {
+						continue;
+					}
+
+					Schema schema = entry.getValue(
+					).getSchema();
+
+					if (schema == null) {
+						continue;
+					}
+
+					List<Map<String, Object>> requestBodyDatas =
+						new ArrayList<>();
+
+					if (schema.getPropertySchemas() != null) {
+						schema.getPropertySchemas(
+						).forEach(
+							(name, propertySchema) -> requestBodyDatas.add(
+								HashMapBuilder.<String, Object>put(
+									"dataType",
+									_getDataType(importClasses, propertySchema)
+								).put(
+									"name", StringUtil.replace(name, '-', '_')
+								).put(
+									"required", false
+								).put(
+									"type", "form"
+								).build())
+						);
+					}
+					else {
+						String dataType = _getDataType(importClasses, schema);
+
+						requestBodyDatas.add(
+							HashMapBuilder.<String, Object>put(
+								"dataType", dataType
+							).put(
+								"name",
+								StringUtil.replace(
+									Validator.isNull(schema.getReference()) ?
+										"body" : dataType,
+									'-', '_')
+							).put(
+								"required", false
+							).put(
+								"type", "body"
+							).build());
+					}
+
+					contentRequestBodyDatas.put(
+						entry.getKey(), requestBodyDatas);
+				}
+
+				return contentRequestBodyDatas;
+			}
+		).put(
 			"description", operation.getDescription()
 		).put(
 			"httpMethod",
@@ -362,7 +436,34 @@ public class TypeScriptClientUtil {
 		).put(
 			"operationId", operation.getOperationId()
 		).put(
-			"parameters", _getParameterDatas(operation, importClasses)
+			"parameters",
+			() -> {
+				if (operation.getParameters() == null) {
+					return null;
+				}
+
+				List<Map<String, Object>> parameterDatas = new ArrayList<>();
+
+				for (Parameter parameter : operation.getParameters()) {
+					parameterDatas.add(
+						HashMapBuilder.<String, Object>put(
+							"dataType",
+							_getDataType(importClasses, parameter.getSchema())
+						).put(
+							"name",
+							StringUtil.replace(
+								parameter.getName(), '-', StringPool.UNDERLINE)
+						).put(
+							"required",
+							Validator.isNotNull(parameter.isRequired()) &&
+							parameter.isRequired()
+						).put(
+							"type", parameter.getIn()
+						).build());
+				}
+
+				return parameterDatas;
+			}
 		).put(
 			"path",
 			() -> {
@@ -703,99 +804,6 @@ public class TypeScriptClientUtil {
 		}
 
 		return "any";
-	}
-
-	private static List<Map<String, Object>> _getParameterDatas(
-		Operation operation, Set<String> importClasses) {
-
-		List<Map<String, Object>> parameterDatas = new ArrayList<>();
-
-		if (operation.getParameters() != null) {
-			for (Parameter parameter : operation.getParameters()) {
-				parameterDatas.add(
-					HashMapBuilder.<String, Object>put(
-						"dataType",
-						_getDataType(importClasses, parameter.getSchema())
-					).put(
-						"name",
-						StringUtil.replace(
-							parameter.getName(), '-', StringPool.UNDERLINE)
-					).put(
-						"required",
-						Validator.isNotNull(parameter.isRequired()) &&
-						parameter.isRequired()
-					).put(
-						"type", parameter.getIn()
-					).build());
-			}
-		}
-
-		RequestBody requestBody = operation.getRequestBody();
-
-		if (requestBody == null) {
-			return parameterDatas;
-		}
-
-		Map<String, Content> content = requestBody.getContent();
-
-		if ((content == null) || content.isEmpty()) {
-			return parameterDatas;
-		}
-
-		Collection<Content> contents = content.values();
-
-		Iterator<Content> iterator = contents.iterator();
-
-		Content firstBodyContent = iterator.next();
-
-		if (firstBodyContent == null) {
-			return parameterDatas;
-		}
-
-		Schema schema = firstBodyContent.getSchema();
-
-		if (schema == null) {
-			return parameterDatas;
-		}
-
-		if (schema.getPropertySchemas() != null) {
-			schema.getPropertySchemas(
-			).forEach(
-				(name, propertySchema) -> parameterDatas.add(
-					HashMapBuilder.<String, Object>put(
-						"dataType", _getDataType(importClasses, propertySchema)
-					).put(
-						"name", StringUtil.replace(name, '-', '_')
-					).put(
-						"required", false
-					).put(
-						"type", "form"
-					).build())
-			);
-		}
-
-		// TODO Retrieve "required" property inside requestBody
-
-		else {
-			String dataType = _getDataType(importClasses, schema);
-
-			parameterDatas.add(
-				HashMapBuilder.<String, Object>put(
-					"dataType", dataType
-				).put(
-					"name",
-					StringUtil.replace(
-						Validator.isNull(schema.getReference()) ? "body" :
-							dataType,
-						'-', '_')
-				).put(
-					"required", false
-				).put(
-					"type", "body"
-				).build());
-		}
-
-		return parameterDatas;
 	}
 
 }

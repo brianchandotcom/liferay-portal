@@ -40,13 +40,31 @@ export class ${className} {
 			 </#list>
 		 </#if>
 		 */
-		public async ${operationData.operationId}(
+		public async ${operationData.operationId}Extended(
 			<#if operationData.parameters??>
 				<#list operationData.parameters as parameter>
 					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
 				</#list>
 			</#if>
-			headers: {[name: string]: string} = {}
+			<#if operationData.bodyParameters??>
+				requestBody:
+					<#list operationData.bodyParameters?keys as requestBodyContentType>
+						{
+									type: '${requestBodyContentType}',
+									parameters: {
+										<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
+											${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType}<#if bodyParameter?has_next>,</#if>
+										</#list>
+									}
+						}
+						<#if requestBodyContentType?has_next>
+							|
+						<#else>
+							,
+						</#if>
+					</#list>
+			</#if>
+			headers?: {[name: string]: string}
 		): Promise<{
 			<#if operationData.returnDataType??>
 				body: ${operationData.returnDataType};
@@ -68,10 +86,10 @@ export class ${className} {
 						if (${parameter.name} === null || ${parameter.name} === undefined) {
 							throw new Error('Required parameter ${parameter.name} was null or undefined when calling ${operationData.operationId}.');
 						}
+
 					</#if>
 				</#list>
 			</#if>
-
 			const localVarQueryParameters: any = {};
 
 			<#list operationData.parameters as parameter>
@@ -86,76 +104,75 @@ export class ${className} {
 				? '?' + new URLSearchParams(localVarQueryParameters).toString()
 				: '';
 
-			const localVarFormParams: any = {};
-
-			<#list operationData.parameters as parameter>
-				<#if stringUtil.equals(parameter.type, "form")>
-					if (${parameter.name} !== undefined) {
-						<#if stringUtil.equals(parameter.dataType, "RequestFile")>
-							localVarFormParams['${parameter.name}'] = ${parameter.name};
+			<#if operationData.bodyParameters??>
+				let body;
+				<#list operationData.bodyParameters?keys as requestBodyContentType>
+					if (requestBody.type === '${requestBodyContentType}') {
+						<#if requestBodyContentType == 'multipart/form-data'>
+							const formData = new FormData();
+							<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
+								<#if stringUtil.equals(bodyParameter.dataType, "RequestFile")>
+									formData.append('${bodyParameter.name}', requestBody.parameters.${bodyParameter.name});
+								<#else>
+									formData.append('${bodyParameter.name}', JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
+								</#if>
+							</#list>
+							body = formData;
 						<#else>
-							localVarFormParams['${parameter.name}'] = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
+							body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${operationData.bodyParameters[requestBodyContentType][0].name}, "${operationData.bodyParameters[requestBodyContentType][0].dataType}"));
 						</#if>
 					}
-				</#if>
-			</#list>
-
-			let body;
-
-			<#list operationData.parameters as parameter>
-				<#if stringUtil.equals(parameter.type, "body")>
-					body = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
-				</#if>
-			</#list>
-
-			if (Object.keys(localVarFormParams).length) {
-				const formData = new FormData();
-				for (const key in localVarFormParams) {
-					formData.append(key, localVarFormParams[key]);
-				}
-				body = formData;
-			}
+				</#list>
+			</#if>
 
 			const response = await fetch(localVarPath + queryString, {
 				method: '${operationData.httpMethod}',
 				headers:
-					Object.assign({}, this._defaultHeaders, headers
+					Object.assign({}, this._defaultHeaders
 					<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
-						,!headers.Accept ? {
+						,{
 							<#if operationData.responseContentTypes?seq_contains("application/json")>
 								Accept: 'application/json'
 							<#else>
 								Accept: '${operationData.responseContentTypes[0]}'
 							</#if>
+						}
+					</#if>
+					<#if operationData.bodyParameters??>
+						,(requestBody && requestBody.type !== 'multipart/form-data') ? {
+							'Content-Type': requestBody.type
 						} : {}
 					</#if>
-				),
-				body: body
+					,headers || {}
+					)
+				<#if operationData.bodyParameters??>
+					,body: body
+				</#if>
 			});
 
 			if (response.ok) {
-                const contentType = response.headers.get('content-type') || '';
+				const contentType = response.headers.get('content-type') || '';
 
-                <#if operationData.returnDataType??>
-                    if (contentType.includes('application/json')) {
-                        return {body: ObjectSerializer.deserialize(await response.json(), "${operationData.returnDataType}"), response};
-                    } else {
-                        return {body: await response.text() as any, response};
-                    }
-                <#else>
-                    if (contentType.includes('application/json')) {
-                        return {body: await response.json(), response};
-                    } else {
-                        return {body: await response.text(), response};
-                    }
-                </#if>
-            } else {
-                throw new HttpError(
-                    await response.text(),
-                    response,
-                    response.status
-                );
-            }
+				<#if operationData.returnDataType??>
+					if (contentType.includes('application/json')) {
+						return {body: ObjectSerializer.deserialize(await response.json(), "${operationData.returnDataType}"), response};
+					} else {
+						return {body: await response.text() as any, response};
+					}
+				<#else>
+					if (contentType.includes('application/json')) {
+						return {body: await response.json(), response};
+					} else {
+						return {body: await response.text(), response};
+					}
+				</#if>
+			} else {
+				throw new HttpError(
+					await response.text(),
+					response,
+					response.status
+				);
+			}
 		}
 	</#list>
 }

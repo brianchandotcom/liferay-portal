@@ -1,0 +1,62 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Regisson Aguiar
+ */
+public class LPD_40539 {
+
+	public void method() {
+		CountryLocalServiceUtil.deleteCommerceCountries(123);
+		CountryLocalServiceUtil.getCommerceCountries(123);
+		CountryLocalServiceUtil.getCommerceCountriesCount(123);
+		CountryServiceUtil.getCommerceCountries(123);
+		CountryServiceUtil.getCommerceCountriesCount(123);
+
+		_countryLocalService.deleteCommerceCountries(123);
+		_countryLocalService.getCommerceCountries(123);
+		_countryLocalService.getCommerceCountriesCount(123);
+		_countryService.getCommerceCountries(123);
+		_countryService.getCommerceCountriesCount(123);
+	}
+
+	public void method(Country country, Region region) {
+		country.getCommerceCountryId();
+		region.getCommerceRegionId();
+	}
+
+	public void method(long companyId) {
+		RegionLocalServiceUtil.deleteCommerceRegions(companyId);
+		RegionLocalServiceUtil.getCommerceRegionByUuidAndCompanyId(companyId);
+		RegionLocalServiceUtil.getCommerceRegions(companyId);
+		RegionLocalServiceUtil.getCommerceRegionsCount(companyId);
+		RegionServiceUtil.getCommerceRegions(companyId);
+		RegionServiceUtil.getCommerceRegionsCount(companyId);
+
+		_regionLocalService.deleteCommerceRegions(companyId);
+		_regionLocalService.getCommerceRegionByUuidAndCompanyId(companyId);
+		_regionLocalService.getCommerceRegions(companyId);
+		_regionLocalService.getCommerceRegionsCount(companyId);
+		_regionService.getCommerceRegions(companyId);
+		_regionService.getCommerceRegionsCount(companyId);
+	}
+
+	@Reference
+	private CountryLocalService _countryLocalService;
+
+	@Reference
+	private CountryService _countryService;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
+
+	@Reference
+	private RegionService _regionService;
+
+}

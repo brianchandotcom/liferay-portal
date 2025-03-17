@@ -1,0 +1,62 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Regisson Aguiar
+ */
+public class LPD_40539 {
+
+	public void method() {
+		CountryLocalServiceUtil.deleteCompanyCountries(123);
+		CountryLocalServiceUtil.getCompanyCountries(123);
+		CountryLocalServiceUtil.getCompanyCountriesCount(123);
+		CountryServiceUtil.getCompanyCountries(123);
+		CountryServiceUtil.getCompanyCountriesCount(123);
+
+		_countryLocalService.deleteCompanyCountries(123);
+		_countryLocalService.getCompanyCountries(123);
+		_countryLocalService.getCompanyCountriesCount(123);
+		_countryService.getCompanyCountries(123);
+		_countryService.getCompanyCountriesCount(123);
+	}
+
+	public void method(Country country, Region region) {
+		country.getCountryId();
+		region.getRegionId();
+	}
+
+	public void method(long companyId) {
+		RegionLocalServiceUtil.deleteCountryRegions(companyId);
+		RegionLocalServiceUtil.getRegionByUuidAndCompanyId(companyId);
+		RegionLocalServiceUtil.getRegions(companyId);
+		RegionLocalServiceUtil.getRegionsCount(companyId);
+		RegionServiceUtil.getRegions(companyId);
+		RegionServiceUtil.getRegionsCount(companyId);
+
+		_regionLocalService.deleteCountryRegions(companyId);
+		_regionLocalService.getRegionByUuidAndCompanyId(companyId);
+		_regionLocalService.getRegions(companyId);
+		_regionLocalService.getRegionsCount(companyId);
+		_regionService.getRegions(companyId);
+		_regionService.getRegionsCount(companyId);
+	}
+
+	@Reference
+	private CountryLocalService _countryLocalService;
+
+	@Reference
+	private CountryService _countryService;
+
+	@Reference
+	private RegionLocalService _regionLocalService;
+
+	@Reference
+	private RegionService _regionService;
+
+}

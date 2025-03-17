@@ -294,6 +294,14 @@ public abstract class BaseDBProcess implements DBProcess {
 		return dbInspector.hasTable(tableName);
 	}
 
+	protected void dropIndexes(List<String> indexNames, String tableName)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		db.dropIndexes(connection, indexNames, tableName);
+	}
+
 	protected List<IndexMetadata> dropIndexes(
 			String tableName, String columnName)
 		throws Exception {

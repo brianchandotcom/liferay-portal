@@ -316,6 +316,29 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public void dropIndexes(
+			Connection connection, List<String> indexNames, String tableName)
+		throws Exception {
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		for (String indexName : indexNames) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					String.format(
+						"Dropping index %s from table %s", indexName,
+						tableName));
+			}
+
+			if (dbInspector.hasIndex(tableName, indexName)) {
+				runSQL(
+					StringBundler.concat(
+						"drop index ", indexName, " on ", tableName));
+			}
+		}
+	}
+
+	@Override
 	public List<IndexMetadata> dropIndexes(
 			Connection connection, String tableName, String columnName)
 		throws IOException, SQLException {

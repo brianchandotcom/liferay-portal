@@ -68,6 +68,10 @@ public interface DB {
 			Connection connection, String tableName, String newTableName)
 		throws Exception;
 
+	public void dropIndexes(
+			Connection connection, List<String> indexNames, String tableName)
+		throws Exception;
+
 	public List<IndexMetadata> dropIndexes(
 			Connection connection, String tableName, String columnName)
 		throws IOException, SQLException;

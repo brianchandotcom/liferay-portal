@@ -10,10 +10,12 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
+import {classicPageTest} from './fixtures/classicPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	ckeditorSamplePageTest,
+	classicPageTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
@@ -25,98 +27,137 @@ export const test = mergeTests(
 test.beforeEach(async ({ckeditorSamplePage, site}) => {
 	await ckeditorSamplePage.createAndGotoSitePage({site});
 
+	const productMenuToggle =
+		ckeditorSamplePage.page.getByLabel('Close Product Menu');
+
+	if (await productMenuToggle.isVisible()) {
+		await productMenuToggle.click();
+	}
+
 	await ckeditorSamplePage.selectTab('CKEditor 5');
 	await ckeditorSamplePage.selectTab('Classic');
 });
 
 test(
-	'Assert editor is rendered with features based on configuration',
+	'Toolbar contains all advanced preset controls',
 	{tag: '@LPD-11235'},
-	async ({page}) => {
-		await test.step('Check initial UI', async () => {
-			await expect(
-				page.getByText('Lorem ipsum dolor sit amet')
-			).toBeVisible();
+	async ({classicPage}) => {
+		await expect(
+			classicPage.editable.getByText('Lorem ipsum dolor sit amet')
+		).toBeVisible();
 
-			await expect(
-				page.locator(
-					'p[data-placeholder="This placeholder is set from EditorConfigContributor."]'
-				)
-			).toBeAttached();
+		await expect(
+			classicPage.page.locator(
+				'p[data-placeholder="This placeholder is set from EditorConfigContributor."]'
+			)
+		).toBeAttached();
 
-			const editorToolbar = page.getByLabel('Editor toolbar');
+		await expect(classicPage.toolbar).toBeVisible();
 
-			await expect(editorToolbar).toBeVisible();
+		const advancedPresetControls = [
+			'Undo',
+			'Redo',
+			'Styles',
+			'Normal',
+			'Bold',
+			'Italic',
+			'Underline',
+			'Strikethrough',
+			'Font Color',
+			'Font Background Color',
+			'Remove Format',
+			'Numbered List',
+			'Bulleted List',
+			'Increase indent',
+			'Decrease indent',
+			'Block quote',
+			'Link',
+			'Insert table',
+			'Image',
+			'Video',
+			'Horizontal line',
+			'Text alignment',
+			'Source',
+		];
 
-			const expectedButtons = [
-				'Undo',
-				'Redo',
-				'Styles',
-				'Normal',
-				'Bold',
-				'Italic',
-				'Underline',
-				'Strikethrough',
-				'Font Color',
-				'Font Background Color',
-				'Remove Format',
-				'Numbered List',
-				'Bulleted List',
-				'Increase indent',
-				'Decrease indent',
-				'Block quote',
-				'Link',
-				'Insert table',
-				'Image',
-				'Horizontal line',
-				'Text alignment',
-				'Source',
-			];
+		const controls = await classicPage.toolbar
+			.getByRole('button')
+			.locator('.ck-button__label')
+			.allInnerTexts();
 
-			const availableButtons = await editorToolbar
-				.getByRole('button')
-				.locator('.ck-button__label')
-				.allInnerTexts();
+		expect(controls).toEqual(advancedPresetControls);
+	}
+);
 
-			expect(availableButtons).toEqual(expectedButtons);
+test(
+	'Select image from document library',
+	{tag: '@LPD-11235'},
+	async ({classicPage}) => {
+		await classicPage.toolbar.getByRole('button', {name: 'Image'}).click();
+
+		const itemSelectorFrame = classicPage.itemSelectorFrame;
+
+		// Attached droppable area is an indicator that loading in iframe is done.
+
+		const droppableArea = itemSelectorFrame.getByText(
+			'Drag & Drop Your Images'
+		);
+
+		await expect(droppableArea).toBeAttached();
+
+		await itemSelectorFrame
+			.getByRole('link', {name: 'Sites and Libraries'})
+			.click();
+
+		await itemSelectorFrame.getByLabel('Liferay').click();
+
+		await expect(droppableArea).toBeAttached();
+
+		await itemSelectorFrame
+			.getByRole('link', {name: 'Provided by Liferay'})
+			.click();
+
+		await itemSelectorFrame
+			.locator('.image-card[data-title="moon.png"]')
+			.click();
+
+		await expect(
+			classicPage.editable.locator(
+				'img[src="/documents/d/guest/moon-png"]'
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Select video by modal URL input',
+	{tag: '@LPD-11235'},
+	async ({classicPage}) => {
+		await classicPage.toolbar.getByRole('button', {name: 'Video'}).click();
+
+		const itemSelectorFrame = classicPage.itemSelectorFrame;
+
+		const videoURLInput = itemSelectorFrame.getByLabel('Video URL');
+
+		await expect(videoURLInput).toBeEnabled();
+
+		const addButton = itemSelectorFrame.getByRole('button', {
+			exact: true,
+			name: 'Add',
 		});
 
-		await test.step('Select an image from document library', async () => {
-			await page.getByRole('button', {name: 'Image'}).click();
+		await expect(addButton).toBeDisabled();
 
-			const itemSelectorFrame = page.frameLocator(
-				'iframe[title="Select Item"]'
-			);
+		await videoURLInput.fill('https://www.youtube.com/watch?v=2EPZxIC5ogU');
 
-			// Attached droppable area is an indicator that loading in iframe is done.
+		await expect(addButton).toBeEnabled();
 
-			const droppableArea = itemSelectorFrame.getByText(
-				'Drag & Drop Your Images'
-			);
+		await addButton.click();
 
-			await expect(droppableArea).toBeAttached();
-
-			await itemSelectorFrame
-				.getByRole('link', {name: 'Sites and Libraries'})
-				.click();
-
-			await itemSelectorFrame.getByLabel('Liferay DXP').click();
-
-			await expect(droppableArea).toBeAttached();
-
-			await itemSelectorFrame
-				.getByRole('link', {name: 'Provided by Liferay'})
-				.click();
-
-			await itemSelectorFrame
-				.locator('.image-card[data-title="moon.png"]')
-				.click();
-
-			await expect(
-				page.locator(
-					'.ck-editor__editable img[src="/documents/d/guest/moon-png"]'
-				)
-			).toBeVisible();
-		});
+		await expect(
+			classicPage.editable
+				.frameLocator('iframe')
+				.getByLabel('YouTube Video Player')
+		).toBeVisible();
 	}
 );

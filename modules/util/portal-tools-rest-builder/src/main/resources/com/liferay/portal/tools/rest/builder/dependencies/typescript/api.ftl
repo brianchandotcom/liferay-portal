@@ -32,17 +32,34 @@ export class ${className} {
 		 * ${operationData.description!}
 		 <#if operationData.parameters??>
 			 <#list operationData.parameters as parameter>
-				 * @param ${parameter.name} ${parameter.description!}
+				 * @param ${parameter.name}
 			 </#list>
 		 </#if>
+		 <#if operationData.bodyParameters??>
+		 	<#if (operationData.bodyParameters?keys?size == 1)>
+			 	<#list operationData.bodyParameters?keys as requestBodyContentType>
+					<#assign firstRequestBodyContentType = requestBodyContentType />
+			 	</#list>
+			 	<#list operationData.bodyParameters[firstRequestBodyContentType] as bodyParameter>
+				 	* @param ${bodyParameter.name}
+			 	</#list>
+		 	<#else>
+		 		* @param requestBody Request body that can be one of multiple content types
+		 	</#if>
+		 </#if>
 		 */
-		public async ${operationData.operationId}Extended(
+		public async ${operationData.operationId}<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>Extended</#if>(
 			<#if operationData.parameters??>
 				<#list operationData.parameters as parameter>
 					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
 				</#list>
+				<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size == 1)>
+					<#list operationData.bodyParameters[firstRequestBodyContentType] as bodyParameter>
+						${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType},
+					</#list>
+				</#if>
 			</#if>
-			<#if operationData.bodyParameters??>
+			<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>
 				requestBody:
 					<#list operationData.bodyParameters?keys as requestBodyContentType>
 						{
@@ -102,23 +119,39 @@ export class ${className} {
 
 			<#if operationData.bodyParameters??>
 				let body;
-				<#list operationData.bodyParameters?keys as requestBodyContentType>
-					if (requestBody.type === '${requestBodyContentType}') {
-						<#if requestBodyContentType == 'multipart/form-data'>
-							const formData = new FormData();
-							<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
-								<#if stringUtil.equals(bodyParameter.dataType, "File")>
-									formData.append('${bodyParameter.name}', requestBody.parameters.${bodyParameter.name});
-								<#else>
-									formData.append('${bodyParameter.name}', JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
-								</#if>
-							</#list>
-							body = formData;
-						<#else>
-							body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${operationData.bodyParameters[requestBodyContentType][0].name}, "${operationData.bodyParameters[requestBodyContentType][0].dataType}"));
-						</#if>
-					}
-				</#list>
+				<#if (operationData.bodyParameters?keys?size > 1)>
+					<#list operationData.bodyParameters?keys as requestBodyContentType>
+						if (requestBody.type === '${requestBodyContentType}') {
+							<#if requestBodyContentType == 'multipart/form-data'>
+								const formData = new FormData();
+								<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
+									<#if stringUtil.equals(bodyParameter.dataType, "File")>
+										formData.append('${bodyParameter.name}', requestBody.parameters.${bodyParameter.name});
+									<#else>
+										formData.append('${bodyParameter.name}', JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
+									</#if>
+								</#list>
+								body = formData;
+							<#else>
+								body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${operationData.bodyParameters[requestBodyContentType][0].name}, "${operationData.bodyParameters[requestBodyContentType][0].dataType}"));
+							</#if>
+						}
+					</#list>
+				<#else>
+					<#if firstRequestBodyContentType == 'multipart/form-data'>
+						const formData = new FormData();
+						<#list operationData.bodyParameters[firstRequestBodyContentType] as bodyParameter>
+							<#if stringUtil.equals(bodyParameter.dataType, "File")>
+								formData.append('${bodyParameter.name}', requestBody.parameters.${bodyParameter.name});
+							<#else>
+								formData.append('${bodyParameter.name}', JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
+							</#if>
+						</#list>
+						body = formData;
+					<#else>
+						body = JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${operationData.bodyParameters[firstRequestBodyContentType][0].name}, "${operationData.bodyParameters[firstRequestBodyContentType][0].dataType}"));
+					</#if>
+				</#if>
 			</#if>
 
 			const response = await fetch(localVarPath + queryString, {
@@ -171,18 +204,18 @@ export class ${className} {
 			}
 		}
 
-		<#if operationData.bodyParameters??>
+		<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>
 			<#list operationData.bodyParameters?keys as requestBodyContentType>
 				<#if requestBodyContentType == 'application/json'>
 					/**
-					 * ${operationData.description!} - Default method with JSON body
+					 * ${operationData.description!} - Default method for JSON body
 					 <#if operationData.parameters??>
 						 <#list operationData.parameters as parameter>
-							 * @param ${parameter.name} ${parameter.description!}
+							 * @param ${parameter.name}
 						 </#list>
 					 </#if>
 					 <#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
-						 * @param ${bodyParameter.name} ${bodyParameter.description!}
+						 * @param ${bodyParameter.name}
 					 </#list>
 					 */
 					public async ${operationData.operationId}(

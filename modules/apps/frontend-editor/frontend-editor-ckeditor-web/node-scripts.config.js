@@ -27,6 +27,7 @@ module.exports = {
 			'ImageBlock',
 			'ImageCaption',
 			'ImageInline',
+			'ImageResize',
 			'ImageStyle',
 			'ImageToolbar',
 			'Indent',

@@ -139,11 +139,6 @@ public class CommerceOrderItemLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		for (CommerceCurrency commerceCurrency : _commerceCurrencies) {
-			_commerceCurrencyLocalService.deleteCommerceCurrency(
-				commerceCurrency.getCommerceCurrencyId());
-		}
-
 		List<CommerceInventoryBookedQuantity>
 			commerceInventoryBookedQuantities =
 				_commerceInventoryBookedQuantityLocalService.
@@ -1853,8 +1848,9 @@ public class CommerceOrderItemLocalServiceTest {
 	private CommerceChannelRel _commerceChannelRel;
 
 	private CommerceContext _commerceContext;
-	private final List<CommerceCurrency> _commerceCurrencies =
-		new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private List<CommerceCurrency> _commerceCurrencies = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;

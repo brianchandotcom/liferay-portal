@@ -98,6 +98,9 @@ public class ObjectEntryPerformanceTest {
 		_objectEntryDeletionExpectedMaxTime = GetterUtil.getInteger(
 			properties.getProperty("object.entries.deletion.expected.maxTime"));
 
+		_objectEntryGetExpectedMaxTime = GetterUtil.getInteger(
+			properties.getProperty("object.entries.get.expected.maxTime"));
+
 		_objectEntryImportExpectedMaxTime = GetterUtil.getInteger(
 			properties.getProperty("object.entries.import.expected.maxTime"));
 	}
@@ -141,7 +144,7 @@ public class ObjectEntryPerformanceTest {
 		}
 
 		try (Closeable closeable = new PerformanceTimer(
-				60000,
+				_objectEntryGetExpectedMaxTime,
 				"Get all the Object Entries by ObjectEntryLocalService with " +
 					"CustomObjectDefinitionId:" +
 						_customObjectDefinition.getObjectDefinitionId())) {
@@ -296,6 +299,7 @@ public class ObjectEntryPerformanceTest {
 
 	private static int _objectEntryCount;
 	private static long _objectEntryDeletionExpectedMaxTime;
+	private static long _objectEntryGetExpectedMaxTime;
 	private static long _objectEntryImportExpectedMaxTime;
 
 	@DeleteAfterTestRun

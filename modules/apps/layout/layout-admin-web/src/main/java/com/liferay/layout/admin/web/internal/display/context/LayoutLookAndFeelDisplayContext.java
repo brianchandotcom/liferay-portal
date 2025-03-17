@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.List;
@@ -247,26 +246,9 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public String getStyleBookEntryName() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
-
-		StyleBookEntry defaultStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(selLayout);
-
-		if (defaultStyleBookEntry == null) {
-			return LanguageUtil.get(_httpServletRequest, "styles-from-theme");
-		}
-
-		if (selLayout.getStyleBookEntryId() > 0) {
-			return defaultStyleBookEntry.getName();
-		}
-
-		if (hasEditableMasterLayout() &&
-			(selLayout.getMasterLayoutPlid() > 0)) {
-
-			return LanguageUtil.get(_httpServletRequest, "styles-from-master");
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "styles-by-default");
+		return DefaultStyleBookEntryUtil.getStyleBookEntryName(
+			_layoutsAdminDisplayContext.getSelLayout(),
+			_themeDisplay.getLocale(), null);
 	}
 
 	public List<TabsItem> getTabsItems() {

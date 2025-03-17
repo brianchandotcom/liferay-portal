@@ -100,12 +100,10 @@ export default function PageDesignOptionsSidebar() {
 			getTabs(
 				masterLayoutPlid,
 				selectedStyleBook,
-				defaultStyleBook,
 				onSelectMasterLayout,
 				onSelectStyleBook
 			),
 		[
-			defaultStyleBook,
 			masterLayoutPlid,
 			onSelectMasterLayout,
 			onSelectStyleBook,
@@ -281,38 +279,13 @@ const OptionList = ({options = [], icon, type}) => {
 	);
 };
 
-function getDefaultStyleBookLabel(defaultStyleBook, masterLayoutPlid) {
-	const inheritingFromMaster =
-		masterLayoutPlid !== '0' && config.layoutType !== LAYOUT_TYPES.master;
-	const usingThemeStylebook = !defaultStyleBook.name;
-
-	if (usingThemeStylebook) {
-		return Liferay.Language.get('styles-from-theme');
-	}
-
-	if (inheritingFromMaster) {
-		return Liferay.Language.get('styles-from-master');
-	}
-
-	return Liferay.Language.get('styles-by-default');
-}
-
 function getTabs(
 	masterLayoutPlid,
 	selectedStyleBook,
-	defaultStyleBook,
 	onSelectMasterLayout,
 	onSelectStyleBook
 ) {
-	const styleBooks = [
-		{
-			imagePreviewURL: defaultStyleBook.imagePreviewURL,
-			name: getDefaultStyleBookLabel(defaultStyleBook, masterLayoutPlid),
-			styleBookEntryId: '0',
-			subtitle: defaultStyleBook.name,
-		},
-		...config.styleBooks,
-	];
+	const styleBooks = config.styleBooks;
 
 	const tabs = [];
 

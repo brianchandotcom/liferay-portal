@@ -10,12 +10,9 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -132,8 +129,9 @@ public class StyleBookDisplayContext {
 				}
 				else {
 					styleBookEntries.add(
-						_getStyleFromThemeStyleBookEntry(
-							themeDisplay.getScopeGroupId()));
+						StyleBookUtil.getStyleFromThemeStyleBookEntry(
+							themeDisplay.getLayout(),
+							themeDisplay.getLocale()));
 				}
 			}
 			else {
@@ -232,59 +230,13 @@ public class StyleBookDisplayContext {
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 					themeDisplay.getCompanyId())) {
 
-			StyleBookEntry styleFromThemeStyleBookEntry =
-				StyleBookEntryLocalServiceUtil.create();
-
-			styleFromThemeStyleBookEntry.setHeadId(-1);
-			styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
-			styleFromThemeStyleBookEntry.setGroupId(groupId);
-			styleFromThemeStyleBookEntry.setName(
-				LanguageUtil.format(
-					_httpServletRequest, "styles-from-x",
-					StyleBookUtil.getThemeName(
-						themeDisplay.getCompanyId(), themeDisplay.getLocale(),
-						frontendTokenDefinition.getThemeId())));
-			styleFromThemeStyleBookEntry.setThemeId(
-				frontendTokenDefinition.getThemeId());
-
-			StyleBookEntry defaultStyleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					groupId, frontendTokenDefinition.getThemeId());
-
-			if (defaultStyleBookEntry == null) {
-				styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
-			}
-
-			styleFromThemeStyleBookEntries.add(styleFromThemeStyleBookEntry);
+			styleFromThemeStyleBookEntries.add(
+				StyleBookUtil.getStyleFromThemeStyleBookEntry(
+					frontendTokenDefinition, groupId,
+					themeDisplay.getLocale()));
 		}
 
 		return styleFromThemeStyleBookEntries;
-	}
-
-	private StyleBookEntry _getStyleFromThemeStyleBookEntry(long groupId) {
-		StyleBookEntry styleFromThemeStyleBookEntry =
-			StyleBookEntryLocalServiceUtil.create();
-
-		styleFromThemeStyleBookEntry.setHeadId(-1);
-		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
-		styleFromThemeStyleBookEntry.setGroupId(groupId);
-		styleFromThemeStyleBookEntry.setName(
-			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			groupId, false);
-
-		styleFromThemeStyleBookEntry.setThemeId(layoutSet.getThemeId());
-
-		StyleBookEntry defaultStyleBookEntry =
-			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-				groupId, layoutSet.getThemeId());
-
-		if (defaultStyleBookEntry == null) {
-			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
-		}
-
-		return styleFromThemeStyleBookEntry;
 	}
 
 	private boolean _isSearch() {

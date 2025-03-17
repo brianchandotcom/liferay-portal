@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -26,7 +25,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
-import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
+import com.liferay.style.book.util.StyleBookUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import java.util.Collections;
@@ -128,23 +127,9 @@ public class StyleBookEntryItemSelectorViewDescriptor
 	}
 
 	private List<StyleBookEntry> _getStyleBookEntries() throws PortalException {
-		StyleBookEntry styleFromThemeStyleBookEntry =
-			StyleBookEntryLocalServiceUtil.create();
-
-		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
-
-		StyleBookEntry defaultStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(_getSelLayout());
-
-		if (defaultStyleBookEntry == null) {
-			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
-		}
-
-		styleFromThemeStyleBookEntry.setName(
-			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
-
 		List<StyleBookEntry> styleBookEntries = ListUtil.fromArray(
-			styleFromThemeStyleBookEntry);
+			StyleBookUtil.getStyleFromThemeStyleBookEntry(
+				_getSelLayout(), _themeDisplay.getLocale()));
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-30204")) {

@@ -9,11 +9,14 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -22,6 +25,53 @@ import java.util.Objects;
  * @author Evan Thibodeau
  */
 public class StyleBookUtil {
+
+	public static StyleBookEntry getStyleFromThemeStyleBookEntry(
+		FrontendTokenDefinition frontendTokenDefinition, long groupId,
+		Locale locale) {
+
+		StyleBookEntry styleFromThemeStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.create();
+
+		styleFromThemeStyleBookEntry.setHeadId(-1);
+		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
+		styleFromThemeStyleBookEntry.setGroupId(groupId);
+
+		if (frontendTokenDefinition == null) {
+			return styleFromThemeStyleBookEntry;
+		}
+
+		styleFromThemeStyleBookEntry.setThemeId(
+			frontendTokenDefinition.getThemeId());
+
+		StyleBookEntry defaultStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+				groupId, frontendTokenDefinition.getThemeId());
+
+		if (defaultStyleBookEntry == null) {
+			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+			styleFromThemeStyleBookEntry.setName(
+				LanguageUtil.format(
+					locale, "styles-from-x",
+					_getThemeName(frontendTokenDefinition, locale)));
+		}
+		else {
+			styleFromThemeStyleBookEntry.setName(
+				LanguageUtil.get(locale, "styles-from-theme"));
+		}
+
+		return styleFromThemeStyleBookEntry;
+	}
+
+	public static StyleBookEntry getStyleFromThemeStyleBookEntry(
+		Layout layout, Locale locale) {
+
+		return getStyleFromThemeStyleBookEntry(
+			_getFrontendTokenDefinition(layout), layout.getGroupId(), locale);
+	}
 
 	public static String getThemeName(Layout layout, Locale locale) {
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
@@ -62,6 +112,24 @@ public class StyleBookUtil {
 		}
 
 		return false;
+	}
+
+	private static FrontendTokenDefinition _getFrontendTokenDefinition(
+		Layout layout) {
+
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			_frontendTokenDefinitionRegistrySnapshot.get();
+
+		try {
+			return frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				layout);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get the frontendTokenDefinition", portalException);
+		}
+
+		return null;
 	}
 
 	private static FrontendTokenDefinition _getFrontendTokenDefinition(

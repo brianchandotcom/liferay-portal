@@ -127,6 +127,7 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
+import com.liferay.style.book.util.StyleBookUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import java.util.ArrayList;
@@ -306,31 +307,6 @@ public class ContentPageEditorDisplayContext {
 				"defaultSegmentsExperienceId",
 				segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 					themeDisplay.getPlid())
-			).put(
-				"defaultStyleBookEntryImagePreviewURL",
-				() -> {
-					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultMasterStyleBookEntry();
-
-					if (defaultStyleBookEntry != null) {
-						return defaultStyleBookEntry.getImagePreviewURL(
-							themeDisplay);
-					}
-
-					return StringPool.BLANK;
-				}
-			).put(
-				"defaultStyleBookEntryName",
-				() -> {
-					StyleBookEntry defaultStyleBookEntry =
-						_getDefaultMasterStyleBookEntry();
-
-					if (defaultStyleBookEntry != null) {
-						return defaultStyleBookEntry.getName();
-					}
-
-					return null;
-				}
 			).put(
 				"deleteFormStepURL",
 				getFragmentEntryActionURL(
@@ -1899,6 +1875,42 @@ public class ContentPageEditorDisplayContext {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				StyleBookEntryNameComparator.getInstance(true));
 		}
+
+		styleBooks.add(
+			HashMapBuilder.<String, Object>put(
+				"imagePreviewURL",
+				() -> {
+					StyleBookEntry defaultStyleBookEntry =
+						_getDefaultMasterStyleBookEntry();
+
+					if (defaultStyleBookEntry != null) {
+						return defaultStyleBookEntry.getImagePreviewURL(
+							themeDisplay);
+					}
+
+					return StringPool.BLANK;
+				}
+			).put(
+				"name",
+				DefaultStyleBookEntryUtil.getStyleBookEntryName(
+					themeDisplay.getLayout(), themeDisplay.getLocale(),
+					StyleBookUtil.getStyleFromThemeStyleBookEntry(
+						themeDisplay.getLayout(), themeDisplay.getLocale()))
+			).put(
+				"styleBookEntryId", "0"
+			).put(
+				"subtitle",
+				() -> {
+					StyleBookEntry defaultStyleBookEntry =
+						_getDefaultMasterStyleBookEntry();
+
+					if (defaultStyleBookEntry != null) {
+						return defaultStyleBookEntry.getName();
+					}
+
+					return null;
+				}
+			).build());
 
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 			styleBooks.add(

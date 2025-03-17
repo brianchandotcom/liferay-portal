@@ -326,6 +326,22 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			String defaultStyleBookEntryName = LanguageUtil.get(
 				_httpServletRequest, "styles-from-theme");
 
+			if (FeatureFlagManagerUtil.isEnabled(
+					_themeDisplay.getCompanyId(), "LPD-30204")) {
+
+				defaultStyleBookEntry =
+					StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+						_styleBookEntry.getGroupId(),
+						_styleBookEntry.getThemeId());
+
+				defaultStyleBookEntryName = LanguageUtil.format(
+					_themeDisplay.getLocale(), "styles-from-x",
+					StyleBookUtil.getThemeName(
+						_styleBookEntry.getCompanyId(),
+						_themeDisplay.getLocale(),
+						_styleBookEntry.getThemeId()));
+			}
+
 			if (defaultStyleBookEntry != null) {
 				defaultStyleBookEntryName = defaultStyleBookEntry.getName();
 			}

@@ -7,8 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import {ModalContent} from '../../../src/main/resources/META-INF/resources/js/components/import/ImportOptionsModal';
-import {ImportOptionsModal} from '../../../src/main/resources/META-INF/resources/js/index';
+import ImportOptionsModal, {
+	ModalContent,
+} from '../../../src/main/resources/META-INF/resources/js/components/import/ImportOptionsModal';
 import checkAccessibility from '../../__lib__/checkAccessibility';
 
 const renderComponent = async ({

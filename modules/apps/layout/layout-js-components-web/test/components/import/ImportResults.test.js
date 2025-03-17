@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import {ImportResults} from '../../../src/main/resources/META-INF/resources/js/index';
+import ImportResults from '../../../src/main/resources/META-INF/resources/js/components/import/ImportResults';
 import checkAccessibility from '../../__lib__/checkAccessibility';
 
 const SUCCESS_RESULT = {

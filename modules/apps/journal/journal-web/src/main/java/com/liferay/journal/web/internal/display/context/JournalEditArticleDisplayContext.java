@@ -407,8 +407,6 @@ public class JournalEditArticleDisplayContext {
 		).put(
 			"languages",
 			() -> {
-				List<Map<String, Object>> languages = new ArrayList<>();
-
 				Set<String> uniqueLanguageIds = new LinkedHashSet<>();
 
 				uniqueLanguageIds.add(getSelectedLanguageId());
@@ -418,18 +416,15 @@ public class JournalEditArticleDisplayContext {
 						LocaleUtil.toLanguageId(availableLocale));
 				}
 
-				for (String languageId : uniqueLanguageIds) {
-					languages.add(
-						HashMapBuilder.<String, Object>put(
-							"icon",
-							StringUtil.toLowerCase(
-								StringUtil.replace(languageId, '_', '-'))
-						).put(
-							"label", languageId
-						).build());
-				}
-
-				return languages;
+				return TransformUtil.transform(
+					uniqueLanguageIds,
+					languageId -> HashMapBuilder.<String, Object>put(
+						"icon",
+						StringUtil.toLowerCase(
+							StringUtil.replace(languageId, '_', '-'))
+					).put(
+						"label", languageId
+					).build());
 			}
 		).put(
 			"strings",

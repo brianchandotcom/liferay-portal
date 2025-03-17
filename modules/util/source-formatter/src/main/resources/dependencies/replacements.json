@@ -3446,6 +3446,93 @@
 		"to": "FallbackKeysSettingsUtil.getSettings(param#0#)"
 	},
 	{
+		"classNames": [
+			"CountryLocalService",
+			"CountryLocalServiceUtil"
+		],
+		"from": "deleteCommerceCountries",
+		"issueKey": "LPD-40539",
+		"to": "deleteCompanyCountries"
+	},
+	{
+		"classNames": [
+			"RegionLocalService",
+			"RegionLocalServiceUtil"
+		],
+		"from": "deleteCommerceRegions",
+		"issueKey": "LPD-40539",
+		"to": "deleteCountryRegions"
+	},
+	{
+		"classNames": [
+			"CountryLocalService",
+			"CountryLocalServiceUtil",
+			"CountryService",
+			"CountryServiceUtil"
+		],
+		"from": "getCommerceCountries",
+		"issueKey": "LPD-40539",
+		"to": "getCompanyCountries"
+	},
+	{
+		"classNames": [
+			"CountryLocalService",
+			"CountryLocalServiceUtil",
+			"CountryService",
+			"CountryServiceUtil"
+		],
+		"from": "getCommerceCountriesCount",
+		"issueKey": "LPD-40539",
+		"to": "getCompanyCountriesCount"
+	},
+	{
+		"classNames": [
+			"Country"
+		],
+		"from": "getCommerceCountryId",
+		"issueKey": "LPD-40539",
+		"to": "getCountryId"
+	},
+	{
+		"classNames": [
+			"RegionLocalService",
+			"RegionLocalServiceUtil"
+		],
+		"from": "getCommerceRegionByUuidAndCompanyId",
+		"issueKey": "LPD-40539",
+		"to": "getRegionByUuidAndCompanyId"
+	},
+	{
+		"classNames": [
+			"Region"
+		],
+		"from": "getCommerceRegionId",
+		"issueKey": "LPD-40539",
+		"to": "getRegionId"
+	},
+	{
+		"classNames": [
+			"RegionLocalService",
+			"RegionLocalServiceUtil",
+			"RegionService",
+			"RegionServiceUtil"
+		],
+		"from": "getCommerceRegions",
+		"issueKey": "LPD-40539",
+		"to": "getRegions"
+	},
+	{
+		"classNames": [
+			"RegionLocalService",
+			"RegionLocalServiceUtil",
+			"RegionService",
+			"RegionServiceUtil"
+		],
+		"from": "getCommerceRegionsCount",
+		"issueKey": "LPD-40539",
+		"to": "getRegionsCount"
+	},
+	{
 		"classNames": "CommercePaymentMethodGroupRel",
 		"from": "getEngineKey",
 		"issueKey": "LPD-40549",

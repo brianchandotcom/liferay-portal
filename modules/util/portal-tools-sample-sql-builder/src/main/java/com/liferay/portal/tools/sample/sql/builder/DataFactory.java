@@ -6243,8 +6243,8 @@ public class DataFactory {
 
 		portletPreferenceValueModel.setPortletPreferencesId(
 			portletPreferencesModel.getPortletPreferencesId());
-		portletPreferenceValueModel.setName(name);
 		portletPreferenceValueModel.setIndex(index);
+		portletPreferenceValueModel.setName(name);
 
 		if (value.length() >
 				PortletPreferenceValueImpl.SMALL_VALUE_MAX_LENGTH) {

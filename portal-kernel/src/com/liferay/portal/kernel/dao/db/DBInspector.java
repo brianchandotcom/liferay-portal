@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -277,6 +278,26 @@ public class DBInspector {
 		String lowerCaseTableName = StringUtil.toLowerCase(tableName);
 
 		for (long companyId : companyIds) {
+
+			// See ObjectDefinitionImpl#getExtensionDBTableName and
+			// ObjectDefinitionLocalServiceImpl#_getDBTableName
+
+			if (lowerCaseTableName.endsWith("_x_" + companyId) ||
+				lowerCaseTableName.startsWith("l_" + companyId + "_") ||
+				lowerCaseTableName.startsWith("o_" + companyId + "_") ||
+				lowerCaseTableName.startsWith("r_")) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean isObjectTable(String tableName) {
+		String lowerCaseTableName = StringUtil.toLowerCase(tableName);
+
+		for (long companyId : PortalInstancePool.getCompanyIds()) {
 
 			// See ObjectDefinitionImpl#getExtensionDBTableName and
 			// ObjectDefinitionLocalServiceImpl#_getDBTableName

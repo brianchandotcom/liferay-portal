@@ -44,17 +44,25 @@ const productId = fragmentElement
 	.trim();
 
 const getHelpModal = () => `
-<div class="mb-5">
-	<p class="pb-1" style="color: #54555F;">Fragments are directly installed from DXP.</p>
-
-	<p style="color: #54555F;">In order to install fragments please follow these steps:</p>
-
-	<ol>
-		<li class="pb-1" style="color: #54555F;">Link your DXP environment to your Liferay Marketplace Acccount. Check this <a href="https://learn.liferay.com/w/dxp/liferay-development/marketplace/connecting-liferay-dxp-to-marketplace" target="_blank">documentation</a> to learn how to link the DXP to Marketplace</li>
-
-		<li style="color: #54555F;">Install fragments directly from page builder. Check <a href="https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-fragments-from-the-marketplace" target="_blank">here</a> how to do that</li>
-	</ol>
-</div>
+	<div class="mb-5">
+		<p class="pb-1" style="color: #54555F;">Fragments are installed directly from DXP.</p>
+	
+		<p style="color: #54555F;">In order to install fragments please follow these steps:</p>
+	
+		<ol>
+			<li class="pb-1" style="color: #54555F;">
+				Link your DXP environment to your Liferay Marketplace Account. Check this 
+				<a href="https://learn.liferay.com/w/dxp/liferay-development/marketplace/connecting-liferay-dxp-to-marketplace" target="_blank">
+				documentation</a> to learn how to link the DXP to Marketplace.
+			</li>
+	
+			<li style="color: #54555F;">
+				Install fragments directly from Page Builder. 
+				Check <a href="https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-fragments-from-the-marketplace" target="_blank">
+				here</a> to learn how.
+			</li>
+		</ol>
+	</div>
 `;
 
 const getProductPrice = (product) => {

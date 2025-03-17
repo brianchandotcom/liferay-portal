@@ -10,9 +10,7 @@ autoscaling:
     # targetMemoryUtilizationPercentage: 80
 
 configmap:
-    data:
-        portal-custom.properties: |
-            # include-and-override=portal-developer.properties
+    data: {}
 
     # By setting this to true all the default configmap data entries files will
     # not be emitted and only those defined in 'configmap.data' will be used.
@@ -160,26 +158,7 @@ portalBundleDenyList: []
 
 portalComponentDenyList: []
 
-portalProperties: |
-    database.indexes.update.on.startup=true
-    notification.email.template.enabled=false
-    passwords.default.policy.change.required=true
-    passwords.default.policy.lockout.duration=3600
-    passwords.default.policy.lockout=true
-    passwords.default.policy.max.failure=20
-    passwords.default.policy.reset.failure.count=3600
-    schema.module.build.auto.upgrade=true
-    setup.wizard.enabled=false
-    upgrade.database.auto.run=true
-    upgrade.log.context.enabled=true
-    upgrade.report.dir=${liferay.home}/reports
-    upgrade.report.dl.storage.size.timeout=0
-    upgrade.report.enabled=true
-    virtual.hosts.valid.hosts=*
-    web.server.forwarded.host.enabled=true
-    web.server.forwarded.protocol.enabled=true
-    web.server.http.port=80
-    web.server.https.port=443
+portalProperties:
 
 # See: https://kubernetes.io/docs/tutorials/services/connect-applications-service/
 ports:
@@ -235,6 +214,10 @@ service:
           port: 8080
           protocol: TCP
           targetPort: http
+        - name: cluster
+          port: 7800
+          protocol: TCP
+          targetPort: cluster
     type: ClusterIP
 
 # See: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
@@ -284,10 +267,6 @@ volumeMounts:
       name: liferay-configmap
       readOnly: true
       subPath: portal-ext.properties
-    - mountPath: /opt/liferay/portal-custom.properties
-      name: liferay-configmap
-      readOnly: true
-      subPath: portal-custom.properties
     - mountPath: /opt/liferay/tomcat/logs
       name: liferay-persistent-volume
       subPath: tomcat/logs

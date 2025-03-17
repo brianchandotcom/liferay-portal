@@ -1,6 +1,5 @@
 {{- $main := dict "name" "" "statefulset" .Values "root" $ }}
 {{ include "liferay.statefulset" $main }}
-
 {{- range $i := .Values.dependencies }}
 {{- if eq $i.source "statefulset" }}
 ---

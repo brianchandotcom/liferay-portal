@@ -1546,6 +1546,11 @@ public class CommerceOrderItemLocalServiceImpl
 			CommerceContext commerceContext)
 		throws PortalException {
 
+		CommerceProductPriceRequest commerceProductPriceRequest =
+			new CommerceProductPriceRequest();
+
+		commerceProductPriceRequest.setCalculateTax(true);
+
 		long accountEntryId = 0;
 
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
@@ -1557,16 +1562,13 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceContextFactory commerceContextFactory =
 			_commerceContextFactorySnapshot.get();
 
-		CommerceProductPriceRequest commerceProductPriceRequest =
-			new CommerceProductPriceRequest();
-
-		commerceProductPriceRequest.setCalculateTax(true);
 		commerceProductPriceRequest.setCommerceContext(
 			commerceContextFactory.create(
 				accountEntryId, commerceContext.getCommerceChannelGroupId(),
 				commerceOrder.getCommerceCurrencyCode(),
 				commerceOrder.getCommerceOrderId(),
 				commerceOrder.getCompanyId()));
+
 		commerceProductPriceRequest.setCommerceOptionValues(
 			_getStaticOptionValuesNotLinkedToSku(cpDefinitionId, json));
 		commerceProductPriceRequest.setCpInstanceId(cpInstanceId);

@@ -1,84 +1,66 @@
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/
 affinity: {}
-
-# See: https://kubernetes.io/docs/concepts/workloads/autoscaling/
+annotations: {}
 autoscaling:
+    annotations: {}
     enabled: false
     maxReplicas: 100
     minReplicas: 1
-    targetCPUUtilizationPercentage: 80
-    # targetMemoryUtilizationPercentage: 80
-
+    metrics:
+        - resource:
+              name: cpu
+              target:
+                  averageUtilization: 80
+                  type: Utilization
+          type: Resource
 configmap:
+    annotations: {}
     data: {}
-
-    # By setting this to true all the default configmap data entries files will
-    # not be emitted and only those defined in 'configmap.data' will be used.
     overrideDefaults: false
-
-# Use these custom values to extend the defaults without overwriting them
 customEnv: []
 customEnvFrom: []
 customInitContainers: []
 customLabels:
     origin: liferay-cloud
 customPorts: []
+customPullSecrets: []
 customVolumeClaimTemplates: []
 customVolumeMounts: []
 customVolumes: []
-
 dependencies:
     - name: database
       portalBundleDenyList: []
       portalComponentDenyList: []
       portalProperties: ""
-
-      # external - use an externally provided impl
-      # deployment - use the deployment template
-      # statefulset - use the statefulset template
       source: external
-
-# See: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
 env:
-    - name: POD_ID
-      valueFrom:
-          fieldRef:
-              fieldPath: status.podIP
     - name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
       value: "${env.POD_ID}"
     - name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_UDP_QUOTE__CLOSEBRACKET_
       value: "${env.POD_ID}"
     - name: LIFERAY_PORTAL_PERIOD_INSTANCE_PERIOD_INET_PERIOD_SOCKET_PERIOD_ADDRESS
       value: "${env.POD_ID}:8080"
-    - name: LIFERAY_DISABLE_TRIAL_LICENSE
-      value: "false"
     - name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
       value: "true"
-
-# See: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+    - name: POD_ID
+      valueFrom:
+          fieldRef:
+              fieldPath: status.podIP
 envFrom:
     - secretRef:
           name: liferay
           optional: true
-
 fullnameOverride: ""
-
-# See: https://kubernetes.io/docs/concepts/containers/images/
 image:
     pullPolicy: IfNotPresent
     pullSecrets: []
     repository: liferay/dxp
     tag: latest
-
-# See: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
     annotations: {}
     className: ""
     enabled: false
     rules: []
     tls: []
-
-# See: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 initContainers:
     - containerTemplate: |
         - command:
@@ -127,8 +109,6 @@ initContainers:
           image: busybox:latest
           imagePullPolicy: IfNotPresent
           name: liferay-wait-on-services
-
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 livenessProbe:
     failureThreshold: 2
     httpGet:
@@ -136,43 +116,28 @@ livenessProbe:
         port: http
     initialDelaySeconds: 10
     periodSeconds: 5
-
 nameOverride: ""
-
-# See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
 nodeSelector: {}
-
-# See: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations: {}
-
-# See: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
-
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 podSecurityContext:
     fsGroup: 1000
     runAsNonRoot: true
     runAsUser: 1000
-
 portalBundleDenyList: []
-
 portalComponentDenyList: []
-
 portalProperties:
-
-# See: https://kubernetes.io/docs/tutorials/services/connect-applications-service/
 ports:
-    - containerPort: 8080
-      name: http
+    - containerPort: 7800
+      name: cluster
       protocol: TCP
     - containerPort: 8000
       name: debug
       protocol: TCP
-    - containerPort: 7800
-      name: cluster
+    - containerPort: 8080
+      name: http
       protocol: TCP
-
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+pullSecrets: []
 readinessProbe:
     failureThreshold: 2
     httpGet:
@@ -180,47 +145,40 @@ readinessProbe:
         port: http
     initialDelaySeconds: 10
     periodSeconds: 5
-
-# See: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
-
-# See: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 resources: {}
-
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+schedulingGates: []
 securityContext:
     capabilities:
         drop:
             - ALL
     readOnlyRootFilesystem: true
-
-# See: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
-    # Annotations to add to the service account
     annotations: {}
-    # Automatically mount a ServiceAccount's API credentials?
     automount: true
-    # Specifies whether a service account should be created
     create: true
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
     name: ""
-
-# See: https://kubernetes.io/docs/concepts/services-networking/service/
+    role:
+        annotations: {}
+        rules:
+            - apiGroups:
+                  - ""
+              resources:
+                  - configmaps
+              verbs:
+                  - "*"
 service:
     annotations: {}
     ports:
-        - name: http
-          port: 8080
-          protocol: TCP
-          targetPort: http
         - name: cluster
           port: 7800
           protocol: TCP
           targetPort: cluster
+        - name: http
+          port: 8080
+          protocol: TCP
+          targetPort: http
     type: ClusterIP
-
-# See: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 startupProbe:
     failureThreshold: 30
     httpGet:
@@ -228,65 +186,9 @@ startupProbe:
         port: http
     initialDelaySeconds: 20
     periodSeconds: 5
-
-# See: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
-
-# See: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
 updateStrategy:
     type: RollingUpdate
-
-# See: https://kubernetes.io/docs/concepts/storage/volumes/
-volumeMounts:
-    - mountPath: /opt/liferay/data
-      name: liferay-persistent-volume
-      subPath: liferay/data
-    - mountPath: /opt/liferay/deploy
-      name: liferay-persistent-volume
-      subPath: liferay/deploy
-    - mountPath: /opt/liferay/liferay.pid
-      name: liferay-persistent-volume
-      subPath: liferay/liferay.pid
-    - mountPath: /opt/liferay/logs
-      name: liferay-persistent-volume
-      subPath: liferay/logs
-    - mountPath: /opt/liferay/osgi/configs
-      name: liferay-persistent-volume
-      subPath: osgi/configs
-    - mountPath: /opt/liferay/osgi/modules
-      name: liferay-persistent-volume
-      subPath: osgi/modules
-    - mountPath: /opt/liferay/osgi/configs/com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
-      name: liferay-configmap
-      readOnly: true
-      subPath: com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
-    - mountPath: /opt/liferay/osgi/state
-      name: liferay-persistent-volume
-      subPath: osgi/state
-    - mountPath: /opt/liferay/portal-ext.properties
-      name: liferay-configmap
-      readOnly: true
-      subPath: portal-ext.properties
-    - mountPath: /opt/liferay/tomcat/logs
-      name: liferay-persistent-volume
-      subPath: tomcat/logs
-    - mountPath: /opt/liferay/tomcat/temp
-      name: liferay-persistent-volume
-      subPath: tomcat/temp
-    - mountPath: /opt/liferay/tomcat/work
-      name: liferay-persistent-volume
-      subPath: tomcat/work
-    - mountPath: /opt/liferay/reports
-      name: liferay-persistent-volume
-      subPath: liferay/reports
-    - mountPath: /opt/liferay/routes
-      name: liferay-persistent-volume
-      subPath: liferay/routes
-    - mountPath: /opt/liferay/work
-      name: liferay-persistent-volume
-      subPath: liferay/work
-
-# See: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#volume-claim-templates
 volumeClaimTemplates:
     - metadata:
           name: liferay-persistent-volume
@@ -296,8 +198,52 @@ volumeClaimTemplates:
           resources:
               requests:
                   storage: 1Gi
-
-# See: https://kubernetes.io/docs/concepts/storage/volumes/
+volumeMounts:
+    - mountPath: /opt/liferay/deploy
+      name: liferay-persistent-volume
+      subPath: liferay/deploy
+    - mountPath: /opt/liferay/data
+      name: liferay-persistent-volume
+      subPath: liferay/data
+    - mountPath: /opt/liferay/liferay.pid
+      name: liferay-persistent-volume
+      subPath: liferay/liferay.pid
+    - mountPath: /opt/liferay/logs
+      name: liferay-persistent-volume
+      subPath: liferay/logs
+    - mountPath: /opt/liferay/osgi/configs
+      name: liferay-persistent-volume
+      subPath: osgi/configs
+    - mountPath: /opt/liferay/osgi/configs/com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+      name: liferay-configmap
+      subPath: com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+    - mountPath: /opt/liferay/osgi/modules
+      name: liferay-persistent-volume
+      subPath: osgi/modules
+    - mountPath: /opt/liferay/osgi/state
+      name: liferay-persistent-volume
+      subPath: osgi/state
+    - mountPath: /opt/liferay/portal-ext.properties
+      name: liferay-configmap
+      subPath: portal-ext.properties
+    - mountPath: /opt/liferay/reports
+      name: liferay-persistent-volume
+      subPath: liferay/reports
+    - mountPath: /opt/liferay/routes
+      name: liferay-persistent-volume
+      subPath: liferay/routes
+    - mountPath: /opt/liferay/tomcat/logs
+      name: liferay-persistent-volume
+      subPath: tomcat/logs
+    - mountPath: /opt/liferay/tomcat/temp
+      name: liferay-persistent-volume
+      subPath: tomcat/temp
+    - mountPath: /opt/liferay/tomcat/work
+      name: liferay-persistent-volume
+      subPath: tomcat/work
+    - mountPath: /opt/liferay/work
+      name: liferay-persistent-volume
+      subPath: liferay/work
 volumes:
     - configMap:
         name: liferay

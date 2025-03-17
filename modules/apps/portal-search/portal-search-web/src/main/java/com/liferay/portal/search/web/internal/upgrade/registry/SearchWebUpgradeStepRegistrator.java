@@ -5,11 +5,14 @@
 
 package com.liferay.portal.search.web.internal.upgrade.registry;
 
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.search.web.internal.upgrade.v2_0_0.SearchPortletUpgradeProcess;
+import com.liferay.portal.search.web.internal.upgrade.v2_1_0.CategoryFacetPortletUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -18,6 +21,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  * @author Petteri Karttunen
+ * @author Joshua Cords
  */
 @Component(service = UpgradeStepRegistrator.class)
 public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
@@ -50,9 +54,20 @@ public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"2.0.1", "2.0.2",
 			new com.liferay.portal.search.web.internal.upgrade.v2_0_2.
 				SearchPortletUpgradeProcess());
+
+		registry.register(
+			"2.0.2", "2.1.0",
+			new CategoryFacetPortletUpgradeProcess(
+				_assetVocabularyLocalService, _groupLocalService));
 	}
 
 	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

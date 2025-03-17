@@ -6232,6 +6232,7 @@ public class DataFactory {
 
 		portletPreferenceValueModel.setPortletPreferenceValueId(
 			_portletPreferenceValueIdCounter.get());
+		portletPreferenceValueModel.setCompanyId(_companyId);
 		portletPreferenceValueModel.setPortletPreferencesId(
 			portletPreferencesModel.getPortletPreferencesId());
 		portletPreferenceValueModel.setName(name);

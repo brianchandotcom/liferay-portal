@@ -1,0 +1,1312 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "page-loading-indicator",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"loadingTextKey": ""
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"cssClasses": [
+										"learn-banner"
+									],
+									"fragmentStyle": {
+										"height": "418px",
+										"width": "100%"
+									},
+									"indexed": true,
+									"layout": {
+									},
+									"name": "Header Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+											"fragmentStyle": {
+												"maxWidth": "var(--container-max-md)",
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "5",
+												"textAlign": "center"
+											},
+											"indexed": true,
+											"layout": {
+												"paddingBottom": 2,
+												"paddingLeft": 2,
+												"paddingRight": 2,
+												"paddingTop": 4,
+												"widthType": "Fixed"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"place-content-center"
+													],
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n }",
+													"fragment": {
+														"key": "dialect-text",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+														"textType": "h1",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Liferay Education"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "4",
+														"textAlign": "center"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"place-content-center"
+													],
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+													"fragment": {
+														"key": "dialect-text",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph-lg",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Become a Liferay master with guided content created by Liferay experts."
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "4",
+														"marginLeft": "auto",
+														"marginRight": "auto",
+														"textAlign": "center"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"cssClasses": [
+														"learn-search"
+													],
+													"fragmentStyle": {
+														"marginLeft": "auto",
+														"marginRight": "auto",
+														"maxWidth": "700px"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"destination": "/search",
+															"searchScope": "this-site"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"cssClasses": [
+										"learn-education",
+										"education-home__sections-container"
+									],
+									"fragmentStyle": {
+										"marginTop": "-6rem",
+										"maxWidth": "var(--container-max-lg)",
+										"paddingBottom": "4",
+										"paddingTop": "4",
+										"width": "100%"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "3",
+												"paddingRight": "3"
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"paddingBottom": 2,
+										"paddingTop": 2,
+										"widthType": "Fixed"
+									},
+									"name": "Content Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"learn-education-section"
+											],
+											"customCSSViewports": [
+												{
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+													"id": "portraitMobile"
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "4"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingLeft": "0",
+														"width": ""
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"indexed": true,
+											"layout": {
+												"marginBottom": 2
+											},
+											"name": "Courses"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"education-home__section-header"
+													],
+													"customCSSViewports": [
+														{
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+															"id": "portraitMobile"
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "borderRadiusLg",
+														"marginBottom": "4",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginTop": "7",
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"id": "portraitMobile"
+														}
+													],
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "SpaceBetween",
+														"marginBottom": 2,
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													},
+													"name": "Section Header Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"cssClasses": [
+																"header-banner-info"
+															],
+															"customCSSViewports": [
+																{
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"id": "portraitMobile"
+																}
+															],
+															"fragmentStyle": {
+																"maxWidth": "60%"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"maxWidth": "100%",
+																		"width": ""
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"customCSSViewports": [
+																		{
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_courses.svg$]"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"marginBottom": "0",
+																				"maxWidth": ""
+																			},
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"indexed": true,
+																	"layout": {
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Guest"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Courses"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontWeight": "fontWeightBold",
+																				"textColor": "colorNeutral0"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"maxWidth": "",
+																						"paddingBottom": "4px"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"customCSSViewports": [
+																				{
+																					"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Guest"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Learn at your own pace with self-directed courses that guide you through specific topics in-depth."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"textColor": "colorNeutral0"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"maxWidth": "",
+																						"minWidth": "",
+																						"paddingBottom": "1",
+																						"width": ""
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-button"
+															},
+															"fragmentConfig": {
+																"buttonSize": "sm",
+																"buttonType": "outline-primary",
+																"type": "link"
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value_i18n": {
+																						"en_US": "courses"
+																					}
+																				}
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "View All Courses"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "6px",
+																"fontFamily": "fontFamilySansSerif",
+																"fontWeight": "fontWeightLight"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"marginBottom": "0",
+																		"paddingBottom": "0px"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+											"fragmentStyle": {
+												"marginBottom": "6"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexRow",
+												"marginBottom": 6,
+												"widthType": "Fixed"
+											},
+											"name": "Courses Content Cards"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"education-home__cards-list"
+													],
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n\n\n}",
+													"customCSSViewports": [
+														{
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+															"id": "portraitMobile"
+														}
+													],
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_courses_list"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"cssClasses": [
+												"cta-courses__home"
+											],
+											"fragment": {
+												"key": "call-to-action-partners",
+												"siteKey": "Guest"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value": "https://learn-uat.liferay.com/c/portal/login"
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Sign in Here"
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Looking for Partner Courses?&nbsp;"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginTop": "-72px"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-spacer"
+											},
+											"fragmentConfig": {
+												"height": "py-5"
+											},
+											"fragmentFields": [
+											],
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"height": "120px"
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"cssClasses": [
+												"learn-education-section"
+											],
+											"fragmentStyle": {
+												"marginBottom": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"marginBottom": 2
+											},
+											"name": "Learning Paths"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"section-header",
+														"education-home__section-header"
+													],
+													"customCSSViewports": [
+														{
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+															"id": "portraitMobile"
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "borderRadiusLg",
+														"marginBottom": "4",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"paddingBottom": "4",
+																"paddingLeft": "4",
+																"paddingRight": "4",
+																"paddingTop": "4"
+															},
+															"id": "portraitMobile"
+														}
+													],
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "SpaceBetween",
+														"marginBottom": 2,
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													},
+													"name": "Section Header Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"customCSSViewports": [
+																{
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"id": "portraitMobile"
+																}
+															],
+															"fragmentStyle": {
+																"maxWidth": "60%"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"maxWidth": "100%"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_paths.svg$]"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSSViewports": [
+																		{
+																			"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																			"id": "portraitMobile"
+																		}
+																	],
+																	"indexed": true,
+																	"layout": {
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Guest"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Learning Paths"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontSize": "0.875rem",
+																				"fontWeight": "fontWeightBold",
+																				"textColor": "colorNeutral0"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingBottom": "4px"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Guest"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Take a structured learning path tailored to your role and experience level, ensuring you gain the Liferay skills you need."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"textColor": "colorNeutral0"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"paddingBottom": "1"
+																					},
+																					"id": "portraitMobile"
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-button"
+															},
+															"fragmentConfig": {
+																"buttonSize": "sm",
+																"buttonType": "outline-primary",
+																"type": "link"
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value_i18n": {
+																						"en_US": "learning-paths"
+																					}
+																				}
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "View All Learning Paths"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "6px",
+																"fontFamily": "fontFamilySansSerif",
+																"fontWeight": "fontWeightLight"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexRow",
+												"widthType": "Fixed"
+											},
+											"name": "Learning Paths Content Cards"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"customCSSViewports": [
+														{
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+															"id": "portraitMobile"
+														}
+													],
+													"fragmentStyle": {
+														"minWidth": "100%"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_learn_paths_list"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+											"fragment": {
+												"key": "call-to-action-partners",
+												"siteKey": "Guest"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value": "https://learn-uat.liferay.com/c/portal/login"
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Sign in Here"
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Looking for Partner Learning Paths?&nbsp;"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-spacer"
+											},
+											"fragmentConfig": {
+												"height": "py-5"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"cssClasses": [
+												"learn-education-section"
+											],
+											"fragmentStyle": {
+												"marginBottom": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"marginBottom": 2
+											},
+											"name": "Certifications"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"section-header",
+														"education-home__section-header"
+													],
+													"customCSSViewports": [
+														{
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+															"id": "portraitMobile"
+														}
+													],
+													"fragmentStyle": {
+														"borderRadius": "borderRadiusLg",
+														"marginBottom": "4",
+														"paddingBottom": "3",
+														"paddingLeft": "3",
+														"paddingRight": "3",
+														"paddingTop": "3"
+													},
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"justify": "SpaceBetween",
+														"marginBottom": 2,
+														"paddingBottom": 1,
+														"paddingLeft": 1,
+														"paddingRight": 1,
+														"paddingTop": 1
+													},
+													"name": "Section Header Container"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"customCSSViewports": [
+																{
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"id": "portraitMobile"
+																}
+															],
+															"fragmentStyle": {
+																"maxWidth": "60%"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"maxWidth": "100%"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
+															"indexed": true,
+															"layout": {
+																"contentDisplay": "FlexRow"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-image"
+																	},
+																	"fragmentConfig": {
+																		"imageSize": "w-0"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "image-square",
+																			"value": {
+																				"fragmentImage": {
+																					"url": {
+																						"value_i18n": {
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_certification.svg$]"
+																						}
+																					}
+																				},
+																				"fragmentLink": {
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"marginRight": "3"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Guest"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h2",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Certifications"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"fontWeight": "fontWeightBold",
+																				"textColor": "colorNeutral0"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Guest"
+																			},
+																			"fragmentConfig": {
+																				"textType": "text-paragraph",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Elevate your Liferay skills, showcase your expertise, and unlock new opportunities with our industry recognized certifications."
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"fontFamily": "fontFamilySansSerif",
+																				"textColor": "colorNeutral0"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-button"
+															},
+															"fragmentConfig": {
+																"buttonSize": "sm",
+																"buttonType": "outline-primary",
+																"type": "link"
+															},
+															"fragmentFields": [
+																{
+																	"id": "link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"value_i18n": {
+																						"en_US": "https://learn-uat.liferay.com/education/certifications"
+																					}
+																				},
+																				"target": "Self"
+																			}
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "View All Certifications"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"backgroundColor": "colorNeutral0",
+																"borderRadius": "6px",
+																"fontFamily": "fontFamilySansSerif",
+																"fontWeight": "fontWeightLight"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexRow",
+												"widthType": "Fixed"
+											},
+											"name": "Certifications Content Cards"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"customCSSViewports": [
+														{
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+															"id": "landscapeMobile"
+														}
+													],
+													"fragmentStyle": {
+														"width": "100%"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_certification_list"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "call-to-action-partners",
+												"siteKey": "Guest"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value": "https://learn-uat.liferay.com/c/portal/login"
+																}
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Looking for Partner Certifications?"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-spacer"
+											},
+											"fragmentConfig": {
+												"height": "py-5"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "liferay-learn"
+		},
+		"themeName": "Dialect"
+	},
+	"version": 1.0
+}

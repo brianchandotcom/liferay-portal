@@ -56,8 +56,8 @@ public class RoleModelPreFilterContributor
 		long[] types = GetterUtil.getLongValues(
 			searchContext.getAttribute("types"),
 			new long[] {
-				RoleConstants.TYPE_ORGANIZATION, RoleConstants.TYPE_REGULAR,
-				RoleConstants.TYPE_SITE
+				RoleConstants.TYPE_DEPOT, RoleConstants.TYPE_ORGANIZATION,
+				RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
 			});
 
 		if (ArrayUtil.isNotEmpty(types)) {

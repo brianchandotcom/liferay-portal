@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.navigation.item.selector.criterion;
+package com.liferay.site.navigation.item.selector;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
-public class SiteNavigationMenuItemSelectorCriterion
+public class SiteNavigationMenuItemItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 }

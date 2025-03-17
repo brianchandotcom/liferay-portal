@@ -6,6 +6,7 @@
 package com.liferay.portal.db.partition.util;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -343,7 +344,11 @@ public class DBPartitionUtil {
 
 		String partitionName = getPartitionName(companyId);
 
-		try (Statement statement = connection.createStatement()) {
+		_upgrading.set(true);
+
+		try (SafeCloseable safeCloseable = () -> _upgrading.set(false);
+			Statement statement = connection.createStatement()) {
+
 			statement.execute(
 				_dbPartitionDB.getDropViewSQL(partitionName, viewName));
 
@@ -1592,7 +1597,8 @@ public class DBPartitionUtil {
 				if ((CompanyThreadLocal.getNonsystemCompanyId() !=
 						PortalInstancePool.getDefaultCompanyId()) &&
 					!StringUtil.startsWith(lowerCaseSQL, "create schema") &&
-					!StringUtil.startsWith(lowerCaseSQL, "drop schema")) {
+					!StringUtil.startsWith(lowerCaseSQL, "drop schema") &&
+					!_upgrading.get()) {
 
 					int count = StringUtil.count(
 						lowerCaseSQL, _DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
@@ -1694,5 +1700,7 @@ public class DBPartitionUtil {
 	private static DBPartitionDB _dbPartitionDB;
 	private static volatile long _defaultCompanyId;
 	private static String _defaultPartitionName;
+	private static final ThreadLocal<Boolean> _upgrading =
+		new CentralizedThreadLocal<>(Boolean.class.getName(), () -> false);
 
 }

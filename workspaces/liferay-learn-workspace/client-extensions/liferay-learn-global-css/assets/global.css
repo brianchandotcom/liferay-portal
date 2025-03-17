@@ -841,6 +841,14 @@ pre[class*='language-'] {
 		font-size: var(--text-paragraph-font-size, 1rem);
 		line-height: 24px;
 	}
+
+	.btn {
+		align-items: center;
+    	border-radius: 0.5rem !important;
+    	display: flex;
+    	gap: 0.625rem;
+    	justify-content: center;
+	}
 }
 
 .learn-card,

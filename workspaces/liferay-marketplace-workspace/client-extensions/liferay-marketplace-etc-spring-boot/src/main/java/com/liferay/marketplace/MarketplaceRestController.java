@@ -91,9 +91,20 @@ public class MarketplaceRestController extends BaseRestController {
 			);
 
 		if (Objects.equals(
+				order.getOrderTypeExternalReferenceCode(),
+				"CLIENT_EXTENSION") ||
+			Objects.equals(
 				order.getOrderTypeExternalReferenceCode(), "CLOUDAPP")) {
 
 			_setUpCloudProductPurchase(order, orderItemPage);
+		}
+
+		if (Objects.equals(
+				order.getOrderTypeExternalReferenceCode(), "COMPOSITE_APP")) {
+
+			_marketplaceService.updateOrder(
+				null, order.getId(),
+				MarketplaceConstants.ORDER_STATUS_COMPLETED);
 		}
 
 		if (Objects.equals(

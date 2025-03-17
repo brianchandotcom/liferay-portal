@@ -1,0 +1,382 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"cssClasses": [
+								"courses-lp"
+							],
+							"fragmentStyle": {
+								"fontFamily": "\"Source Sans 3\", system-ui",
+								"height": "100%",
+								"minHeight": "100vh",
+								"width": "100%"
+							},
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"cssClasses": [
+										"learn-banner"
+									],
+									"indexed": true,
+									"layout": {
+									},
+									"name": "Header Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"header-courses"
+											],
+											"indexed": true,
+											"layout": {
+											},
+											"name": "Header all"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"maxWidth": "var(--container-max-xl)",
+														"paddingBottom": "5",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "5",
+														"width": "100%"
+													},
+													"indexed": true,
+													"layout": {
+														"paddingBottom": 4,
+														"paddingLeft": 2,
+														"paddingRight": 2,
+														"paddingTop": 4,
+														"widthType": "Fixed"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"maxWidth": "var(--container-max-sm)",
+																"textColor": ""
+															},
+															"indexed": true,
+															"layout": {
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "dialect-text",
+																		"siteKey": "Guest"
+																	},
+																	"fragmentConfig": {
+																		"textType": "text-paragraph-lg",
+																		"truncateText": false
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Education"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"backgroundColor": "",
+																		"fontSize": "1rem",
+																		"fontWeight": "600",
+																		"marginBottom": "3",
+																		"textColor": ""
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+																	"indexed": true,
+																	"layout": {
+																		"align": "Center",
+																		"contentDisplay": "FlexRow"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-image"
+																			},
+																			"fragmentConfig": {
+																				"imageSize": "w-0"
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "image-square",
+																					"value": {
+																						"fragmentImage": {
+																							"url": {
+																								"value_i18n": {
+																									"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_courses.svg$]"
+																								}
+																							}
+																						},
+																						"fragmentLink": {
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"marginRight": "var(--spacer-3)"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "dialect-text",
+																				"siteKey": "Guest"
+																			},
+																			"fragmentConfig": {
+																				"textType": "h1",
+																				"truncateText": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Courses"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"backgroundColor": "",
+																				"fontFamily": "\"Source Sans 3\", system-ui",
+																				"fontWeight": "700"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"fontWeight": "400",
+														"maxWidth": "var(--container-max-xl)",
+														"paddingBottom": "10",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"width": "100%"
+													},
+													"indexed": true,
+													"layout": {
+														"paddingLeft": 2,
+														"paddingRight": 2,
+														"widthType": "Fixed"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+															"fragment": {
+																"key": "dialect-text",
+																"siteKey": "Guest"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph-sm",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Learn at your own pace with self-directed courses that guide you through specific topics in-depth."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightNormal",
+																"marginBottom": "3",
+																"maxWidth": "800px",
+																"width": "100%"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"cssClasses": [
+										"learn-education"
+									],
+									"fragmentStyle": {
+										"marginTop": "-5rem",
+										"maxWidth": "var(--container-max-xl)",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"width": "100%"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "0",
+												"paddingRight": "0"
+											},
+											"id": "tablet"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"paddingLeft": 2,
+										"paddingRight": 2,
+										"widthType": "Fixed"
+									},
+									"name": "Content Container"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"maxWidth": "1024px"
+											},
+											"indexed": true,
+											"layout": {
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"properties": "type=course"
+														},
+														"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_landingpage_view"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "call-to-action-partners",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"value": "https://learn-uat.liferay.com/c/portal/login"
+																		}
+																	}
+																}
+															}
+														},
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "page-loading-indicator",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"loadingTextKey": ""
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "liferay-learn"
+		},
+		"themeName": "Dialect"
+	},
+	"version": 1.1
+}

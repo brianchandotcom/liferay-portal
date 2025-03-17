@@ -411,10 +411,18 @@ public class TypeScriptClientUtil {
 								"dataType", dataType
 							).put(
 								"name",
-								StringUtil.replace(
-									Validator.isNull(schema.getReference()) ?
-										"body" : dataType,
-									'-', '_')
+								() -> {
+									if (Validator.isNull(
+											schema.getReference())) {
+
+										return "body";
+									}
+
+									return StringUtil.replace(
+										StringUtil.lowerCaseFirstLetter(
+											dataType),
+										'-', '_');
+								}
 							).put(
 								"required", false
 							).put(

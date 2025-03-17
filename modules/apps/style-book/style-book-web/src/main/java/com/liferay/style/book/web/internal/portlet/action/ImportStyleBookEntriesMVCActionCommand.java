@@ -8,6 +8,7 @@ package com.liferay.style.book.web.internal.portlet.action;
 import com.liferay.frontend.token.definition.FrontendToken;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -99,22 +100,6 @@ public class ImportStyleBookEntriesMVCActionCommand
 
 			SessionMessages.add(actionRequest, "success");
 
-			Set<String> frontendTokenNames = new HashSet<>();
-
-			FrontendTokenDefinition frontendTokenDefinition =
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					_layoutSetLocalService.fetchLayoutSet(
-						themeDisplay.getSiteGroupId(), false));
-
-			if (frontendTokenDefinition != null) {
-				Collection<FrontendToken> frontendTokens =
-					frontendTokenDefinition.getFrontendTokens();
-
-				for (FrontendToken frontendToken : frontendTokens) {
-					frontendTokenNames.add(frontendToken.getName());
-				}
-			}
-
 			for (StyleBookEntryZipProcessorImportResultEntry
 					styleBookEntryZipProcessorImportResultEntry :
 						styleBookEntryZipProcessorImportResultEntries) {
@@ -128,7 +113,9 @@ public class ImportStyleBookEntriesMVCActionCommand
 							INVALID) &&
 					(styleBookEntry != null) &&
 					!_isValidFrontendTokenDefinition(
-						frontendTokenNames, styleBookEntry)) {
+						_getFrontendTokenNames(
+							themeDisplay, styleBookEntry.getThemeId()),
+						styleBookEntry)) {
 
 					SessionMessages.add(
 						actionRequest,
@@ -143,6 +130,39 @@ public class ImportStyleBookEntriesMVCActionCommand
 		}
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	private Set<String> _getFrontendTokenNames(
+		ThemeDisplay themeDisplay, String themeId) {
+
+		Set<String> frontendTokenNames = new HashSet<>();
+
+		FrontendTokenDefinition frontendTokenDefinition = null;
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-30204")) {
+
+			frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					themeDisplay.getCompanyId(), themeId);
+		}
+		else {
+			frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					_layoutSetLocalService.fetchLayoutSet(
+						themeDisplay.getSiteGroupId(), false));
+		}
+
+		if (frontendTokenDefinition != null) {
+			Collection<FrontendToken> frontendTokens =
+				frontendTokenDefinition.getFrontendTokens();
+
+			for (FrontendToken frontendToken : frontendTokens) {
+				frontendTokenNames.add(frontendToken.getName());
+			}
+		}
+
+		return frontendTokenNames;
 	}
 
 	private List<StyleBookEntryZipProcessorImportResultEntry>

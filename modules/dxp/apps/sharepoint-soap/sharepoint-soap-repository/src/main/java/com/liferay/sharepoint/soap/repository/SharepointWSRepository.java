@@ -23,6 +23,7 @@ import com.liferay.document.library.repository.external.ExtRepositorySearchResul
 import com.liferay.document.library.repository.external.cache.ConnectionBuilder;
 import com.liferay.document.library.repository.external.cache.ConnectionCache;
 import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -408,20 +409,10 @@ public class SharepointWSRepository
 
 			String filePath = fileSharepointObject.getPath();
 
-			List<SharepointVersion> sharepointVersions =
-				sharepointConnection.getSharepointVersions(filePath);
-
-			List<ExtRepositoryFileVersion> sharepointWSVersions =
-				new ArrayList<>();
-
-			for (SharepointVersion sharepointVersion : sharepointVersions) {
-				SharepointWSFileVersion sharepointWSFileVersion =
-					new SharepointWSFileVersion(sharepointVersion);
-
-				sharepointWSVersions.add(sharepointWSFileVersion);
-			}
-
-			return sharepointWSVersions;
+			return TransformUtil.transform(
+				sharepointConnection.getSharepointVersions(filePath),
+				sharepointVersion -> new SharepointWSFileVersion(
+					sharepointVersion));
 		}
 		catch (SharepointException | SharepointRuntimeException exception) {
 			throw new SystemException(exception);
@@ -518,20 +509,11 @@ public class SharepointWSRepository
 			SharepointConnection.ObjectTypeFilter objectTypeFilter =
 				_toObjectTypeFilter(extRepositoryObjectType);
 
-			List<SharepointObject> sharepointObjects =
+			return TransformUtil.transform(
 				sharepointConnection.getSharepointObjects(
-					folderPath, objectTypeFilter);
-
-			List<T> extRepositoryObjects = new ArrayList<>();
-
-			for (SharepointObject sharepointObject : sharepointObjects) {
-				T extRepositoryObject = _toExtRepositoryObject(
-					extRepositoryObjectType, sharepointObject);
-
-				extRepositoryObjects.add(extRepositoryObject);
-			}
-
-			return extRepositoryObjects;
+					folderPath, objectTypeFilter),
+				sharepointObject -> _toExtRepositoryObject(
+					extRepositoryObjectType, sharepointObject));
 		}
 		catch (SharepointException | SharepointRuntimeException exception) {
 			throw new SystemException(exception);
@@ -768,26 +750,23 @@ public class SharepointWSRepository
 			ExtRepositoryQueryMapper extRepositoryQueryMapper)
 		throws PortalException {
 
-		List<ExtRepositorySearchResult<?>> extRepositorySearchResults =
-			new ArrayList<>();
-
 		List<SharepointObject> sharepointObjects = _search(
 			searchContext, query, extRepositoryQueryMapper);
 
-		sharepointObjects = _filter(searchContext, sharepointObjects);
+		sharepointObjects = ListUtil.subList(
+			sharepointObjects, searchContext.getStart(),
+			searchContext.getEnd());
 
-		for (SharepointObject sharepointObject : sharepointObjects) {
-			ExtRepositoryObject extRepositoryObject = _toExtRepositoryObject(
-				ExtRepositoryObjectType.OBJECT, sharepointObject);
+		return TransformUtil.transform(
+			sharepointObjects,
+			sharepointObject -> {
+				ExtRepositoryObject extRepositoryObject =
+					_toExtRepositoryObject(
+						ExtRepositoryObjectType.OBJECT, sharepointObject);
 
-			ExtRepositorySearchResult<?> extRepositorySearchResult =
-				new ExtRepositorySearchResult<>(
+				return new ExtRepositorySearchResult<>(
 					extRepositoryObject, 1, StringPool.BLANK);
-
-			extRepositorySearchResults.add(extRepositorySearchResult);
-		}
-
-		return extRepositorySearchResults;
+			});
 	}
 
 	@Override
@@ -812,14 +791,6 @@ public class SharepointWSRepository
 		catch (SharepointException | SharepointRuntimeException exception) {
 			throw new SystemException(exception);
 		}
-	}
-
-	private List<SharepointObject> _filter(
-		SearchContext searchContext, List<SharepointObject> sharepointObjects) {
-
-		return ListUtil.subList(
-			sharepointObjects, searchContext.getStart(),
-			searchContext.getEnd());
 	}
 
 	private int _getPort(URL url) {

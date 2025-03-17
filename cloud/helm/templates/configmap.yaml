@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: {{ include "liferay.name" . }}
-    namespace: {{ include "liferay.namespace" . }}
-    labels:
-        {{- include "liferay.labels" . | nindent 8 }}
     {{- with .Values.configmap.annotations }}
     annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+    labels:
+        {{- include "liferay.labels" . | nindent 8 }}
+    name: {{ include "liferay.name" . }}
+    namespace: {{ include "liferay.namespace" . }}
 data:
     {{- if not .Values.configmap.overrideDefaults }}
     portal-ext.properties: |

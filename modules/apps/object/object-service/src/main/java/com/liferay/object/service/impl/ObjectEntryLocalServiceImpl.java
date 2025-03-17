@@ -324,9 +324,11 @@ public class ObjectEntryLocalServiceImpl
 
 		long objectEntryId = counterLocalService.increment();
 
+		Set<Long> dlFileEntryIds = new HashSet<>();
+
 		_validateValues(
-			null, user.isGuestUser(), groupId, objectDefinition, objectEntryId,
-			serviceContext, userId, values);
+			dlFileEntryIds, null, user.isGuestUser(), groupId, objectDefinition,
+			objectEntryId, serviceContext, userId, values);
 
 		defaultLanguageId = _getDefaultLanguageId(defaultLanguageId, groupId);
 
@@ -433,6 +435,8 @@ public class ObjectEntryLocalServiceImpl
 				clearObjectEntryIdsMap);
 		}
 
+		_deleteTempFileEntries(dlFileEntryIds);
+
 		return _addObjectEntryVersion(objectEntry);
 	}
 
@@ -471,13 +475,17 @@ public class ObjectEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		Set<Long> dlFileEntryIds = new HashSet<>();
+
 		_validateValues(
-			null, user.isGuestUser(), 0, objectDefinition, primaryKey,
-			serviceContext, userId, values);
+			dlFileEntryIds, null, user.isGuestUser(), 0, objectDefinition,
+			primaryKey, serviceContext, userId, values);
 
 		insertIntoOrUpdateExtensionTable(
 			userId, objectDefinition.getObjectDefinitionId(), primaryKey,
 			values);
+
+		_deleteTempFileEntries(dlFileEntryIds);
 	}
 
 	@Override
@@ -1634,9 +1642,12 @@ public class ObjectEntryLocalServiceImpl
 		_contributeValues(
 			objectEntry.getGroupId(), objectDefinition, userId, values);
 
+		Set<Long> dlFileEntryIds = new HashSet<>();
+
 		_validateValues(
-			objectEntry, user.isGuestUser(), objectEntry.getGroupId(),
-			objectDefinition, objectEntryId, serviceContext, userId, values);
+			dlFileEntryIds, objectEntry, user.isGuestUser(),
+			objectEntry.getGroupId(), objectDefinition, objectEntryId,
+			serviceContext, userId, values);
 
 		int workflowAction = serviceContext.getWorkflowAction();
 
@@ -1717,6 +1728,8 @@ public class ObjectEntryLocalServiceImpl
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, objectDefinition,
 			objectEntry, originalObjectEntry, serviceContext.getLanguageId(),
 			user);
+
+		_deleteTempFileEntries(dlFileEntryIds);
 
 		if (objectEntry.isPending() || originalObjectEntry.isDraft()) {
 			_updateLatestObjectEntryVersion(objectEntry);
@@ -1964,72 +1977,63 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values)
 		throws PortalException {
 
-		try {
-			String fileSource = ObjectFieldSettingUtil.getValue(
-				"fileSource", objectField.getObjectFieldSettings());
+		String fileSource = ObjectFieldSettingUtil.getValue(
+			"fileSource", objectField.getObjectFieldSettings());
 
-			if (Objects.equals(fileSource, "documentsAndMedia")) {
-				return;
-			}
+		if (Objects.equals(fileSource, "documentsAndMedia")) {
+			return;
+		}
 
-			DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
+		DLFolder dlFileEntryFolder = dlFileEntry.getFolder();
 
-			DLFolder dlFolder = _attachmentManager.getDLFolder(
-				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-				objectField.getObjectFieldId(), serviceContext, userId);
+		DLFolder dlFolder = _attachmentManager.getDLFolder(
+			dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+			objectField.getObjectFieldId(), serviceContext, userId);
 
-			if (Objects.equals(
-					dlFileEntryFolder.getFolderId(), dlFolder.getFolderId())) {
+		if (Objects.equals(
+				dlFileEntryFolder.getFolderId(), dlFolder.getFolderId())) {
 
-				return;
-			}
+			return;
+		}
 
-			String originalFileName = TempFileEntryUtil.getOriginalTempFileName(
-				dlFileEntry.getFileName());
+		String originalFileName = TempFileEntryUtil.getOriginalTempFileName(
+			dlFileEntry.getFileName());
 
-			serviceContext.setAttribute(
-				"className", objectDefinition.getClassName());
-			serviceContext.setAttribute("classPK", objectEntryId);
+		serviceContext.setAttribute(
+			"className", objectDefinition.getClassName());
+		serviceContext.setAttribute("classPK", objectEntryId);
 
-			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				null, userId, dlFolder.getRepositoryId(),
-				dlFolder.getFolderId(),
-				DLUtil.getUniqueFileName(
-					dlFileEntry.getGroupId(), dlFolder.getFolderId(),
-					originalFileName, true),
-				dlFileEntry.getMimeType(),
-				DLUtil.getUniqueTitle(
-					dlFileEntry.getGroupId(), dlFolder.getFolderId(),
-					FileUtil.stripExtension(originalFileName)),
-				StringPool.BLANK, null, null, dlFileEntry.getContentStream(),
-				dlFileEntry.getSize(), null, null, null, serviceContext);
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, userId, dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			DLUtil.getUniqueFileName(
+				dlFileEntry.getGroupId(), dlFolder.getFolderId(),
+				originalFileName, true),
+			dlFileEntry.getMimeType(),
+			DLUtil.getUniqueTitle(
+				dlFileEntry.getGroupId(), dlFolder.getFolderId(),
+				FileUtil.stripExtension(originalFileName)),
+			StringPool.BLANK, null, null, dlFileEntry.getContentStream(),
+			dlFileEntry.getSize(), null, null, null, serviceContext);
 
-			if (objectField.isLocalized()) {
-				Map<String, Serializable> localizedValues =
-					(Map<String, Serializable>)values.get(
-						objectField.getI18nObjectFieldName());
+		if (objectField.isLocalized()) {
+			Map<String, Serializable> localizedValues =
+				(Map<String, Serializable>)values.get(
+					objectField.getI18nObjectFieldName());
 
-				for (Map.Entry<String, Serializable> entry :
-						localizedValues.entrySet()) {
+			for (Map.Entry<String, Serializable> entry :
+					localizedValues.entrySet()) {
 
-					if (dlFileEntry.getFileEntryId() != GetterUtil.getLong(
-							entry.getValue())) {
+				if (dlFileEntry.getFileEntryId() != GetterUtil.getLong(
+						entry.getValue())) {
 
-						continue;
-					}
-
-					entry.setValue(fileEntry.getFileEntryId());
+					continue;
 				}
-			}
-			else {
-				values.put(objectField.getName(), fileEntry.getFileEntryId());
+
+				entry.setValue(fileEntry.getFileEntryId());
 			}
 		}
-		finally {
-			if (dlFileEntry != null) {
-				TempFileEntryUtil.deleteTempFileEntry(
-					dlFileEntry.getFileEntryId());
-			}
+		else {
+			values.put(objectField.getName(), fileEntry.getFileEntryId());
 		}
 	}
 
@@ -2473,6 +2477,14 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		FinderCacheUtil.clearDSLQueryCache(dbTableName);
+	}
+
+	private void _deleteTempFileEntries(Set<Long> dlFileEntryIds)
+		throws PortalException {
+
+		for (Long dlFileEntryId : dlFileEntryIds) {
+			TempFileEntryUtil.deleteTempFileEntry(dlFileEntryId);
+		}
 	}
 
 	private void _executeObjectActions(
@@ -5626,11 +5638,11 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateValues(
-			ObjectEntry existingObjectEntry, boolean guestUser, long groupId,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			ObjectField objectField, ServiceContext serviceContext, long userId,
-			Serializable value, String valueLanguageId,
-			Map<String, Serializable> values)
+			Set<Long> dlFileEntryIds, ObjectEntry existingObjectEntry,
+			boolean guestUser, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, ObjectField objectField,
+			ServiceContext serviceContext, long userId, Serializable value,
+			String valueLanguageId, Map<String, Serializable> values)
 		throws PortalException {
 
 		if (Validator.isNull(value) && !objectField.isLocalized() &&
@@ -5665,6 +5677,11 @@ public class ObjectEntryLocalServiceImpl
 
 						return;
 					}
+
+					dlFileEntryIds.add(dlFileEntry.getFileEntryId());
+				}
+				else {
+					dlFileEntryIds.add(dlFileEntry.getFileEntryId());
 				}
 
 				_addFileEntry(
@@ -5846,9 +5863,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateValues(
-			ObjectEntry existingObjectEntry, boolean guestUser, long groupId,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			ServiceContext serviceContext, long userId,
+			Set<Long> dlFileEntryIds, ObjectEntry existingObjectEntry,
+			boolean guestUser, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
 		throws PortalException {
 
@@ -5861,10 +5878,10 @@ public class ObjectEntryLocalServiceImpl
 				values.containsKey(objectField.getName())) {
 
 				_validateValues(
-					existingObjectEntry, guestUser, groupId, objectDefinition,
-					objectEntryId, objectField, serviceContext, userId,
-					values.get(objectField.getName()), StringPool.BLANK,
-					values);
+					dlFileEntryIds, existingObjectEntry, guestUser, groupId,
+					objectDefinition, objectEntryId, objectField,
+					serviceContext, userId, values.get(objectField.getName()),
+					StringPool.BLANK, values);
 
 				continue;
 			}
@@ -5879,9 +5896,10 @@ public class ObjectEntryLocalServiceImpl
 
 			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
 				_validateValues(
-					existingObjectEntry, guestUser, groupId, objectDefinition,
-					objectEntryId, objectField, serviceContext, userId,
-					entry.getValue(), entry.getKey(), values);
+					dlFileEntryIds, existingObjectEntry, guestUser, groupId,
+					objectDefinition, objectEntryId, objectField,
+					serviceContext, userId, entry.getValue(), entry.getKey(),
+					values);
 			}
 		}
 	}

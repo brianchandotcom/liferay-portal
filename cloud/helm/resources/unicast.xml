@@ -1,12 +1,5 @@
-<!--
-    TCP based stack, with flow control and message bundling. This is usually used when IP
-    multicasting cannot be used in a network, e.g. because it is disabled (routers discard multicast).
-    Note that TCP.bind_addr and TCPPING.initial_hosts should be set, possibly via system properties,
+<?xml version="1.0" encoding="UTF-8"?>
 
-    e.g.
-        -Djgroups.bind_addr=192.168.5.2 and -Djgroups.tcpping.initial_hosts=192.168.5.2[7800]
-        author: Bela Ban
--->
 <config
     xmlns="urn:org:jgroups"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

@@ -1,11 +1,12 @@
-{{/*
-Create a StatefulSet workload.
-*/}}
 {{- define "liferay.statefulset" -}}
 {{- $suffix := ternary "" (printf "-%s" .name) (eq .name "") }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
+    {{- with .statefulset.annotations }}
+    annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     labels:
         app: {{ include "liferay.name" .root }}{{ $suffix }}
         {{- include "liferay.labels" .root | nindent 8 }}
@@ -29,7 +30,7 @@ spec:
                 {{- toYaml . | nindent 16 }}
             {{- end }}
             containers:
-                - # Main container
+                - #
                   {{- if or .statefulset.env .statefulset.customEnv }}
                   env:
                       {{- with .statefulset.env }}
@@ -105,7 +106,7 @@ spec:
                 {{- if .containerTemplate }}
                 {{- tpl .containerTemplate $statefulset | nindent 16 }}
                 {{- else }}
-                - # Init Container
+                - #
                   {{- toYaml . | nindent 18 }}
                 {{- end }}
                 {{- end }}
@@ -113,7 +114,7 @@ spec:
                 {{- if .containerTemplate }}
                 {{- tpl .containerTemplate $statefulset | nindent 16 }}
                 {{- else }}
-                - # Custom Init Container
+                - #
                   {{- toYaml . | nindent 18 }}
                 {{- end }}
                 {{- end }}
@@ -193,7 +194,7 @@ metadata:
     name: {{ include "liferay.name" .root }}{{ $suffix }}-headless
     namespace: {{ include "liferay.namespace" .root }}
 spec:
-    clusterIP: None # This is what makes it headless
+    clusterIP: None
     {{- with .statefulset.service.ports }}
     ports:
         {{- toYaml . | nindent 8 }}
@@ -201,7 +202,7 @@ spec:
     selector:
         app: {{ include "liferay.name" .root }}{{ $suffix }}
         {{- include "liferay.selectorLabels" .root | nindent 8 }}
-    type: {{ .statefulset.service.type }}
+    type: ClusterIP
 {{- if and .statefulset.ingress .statefulset.ingress.enabled }}
 ---
 apiVersion: networking.k8s.io/v1

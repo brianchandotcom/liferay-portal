@@ -295,8 +295,8 @@ public class ObjectEntryPerformanceTest {
 	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
 	private static int _objectEntryCount;
-	private static int _objectEntryDeletionExpectedMaxTime;
-	private static int _objectEntryImportExpectedMaxTime;
+	private static long _objectEntryDeletionExpectedMaxTime;
+	private static long _objectEntryImportExpectedMaxTime;
 
 	@DeleteAfterTestRun
 	private Company _company;

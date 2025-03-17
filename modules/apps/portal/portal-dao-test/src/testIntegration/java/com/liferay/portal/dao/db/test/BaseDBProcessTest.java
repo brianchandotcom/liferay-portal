@@ -462,6 +462,17 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	}
 
 	@Test
+	public void testDropIndexes() throws Exception {
+		_addIndex(new String[] {"typeVarchar", "typeBoolean"});
+
+		Assert.assertTrue(hasIndex(_TABLE_NAME, _INDEX_NAME));
+
+		dropIndexes(Collections.singletonList(_INDEX_NAME), _TABLE_NAME);
+
+		Assert.assertFalse(hasIndex(_TABLE_NAME, _INDEX_NAME));
+	}
+
+	@Test
 	public void testDropNonexistentTable() throws Exception {
 		dropTable("nonexistentTable");
 	}

@@ -181,7 +181,7 @@ public class DateTimeObjectFieldBusinessType
 		Object value = ObjectFieldBusinessType.super.getValue(
 			objectField, userId, values);
 
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			return null;
 		}
 

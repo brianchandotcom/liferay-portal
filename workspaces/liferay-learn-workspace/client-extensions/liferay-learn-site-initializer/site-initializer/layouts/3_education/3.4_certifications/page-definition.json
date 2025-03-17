@@ -1,0 +1,424 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"cssClasses": [
+								"learn-banner"
+							],
+							"indexed": true,
+							"layout": {
+							},
+							"name": "Header Container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"maxWidth": "var(--container-max-xl)",
+										"paddingBottom": "5",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"paddingTop": "5",
+										"width": "100%"
+									},
+									"indexed": true,
+									"layout": {
+										"paddingBottom": 4,
+										"paddingLeft": 2,
+										"paddingRight": 2,
+										"paddingTop": 4,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"maxWidth": "var(--container-max-sm)",
+												"paddingLeft": "3",
+												"textColor": ""
+											},
+											"indexed": true,
+											"layout": {
+												"paddingLeft": 1
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-text",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph-lg",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Education"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundColor": "",
+														"fontSize": "1rem",
+														"fontWeight": "600",
+														"marginBottom": "3",
+														"textColor": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-3);\n}",
+													"indexed": true,
+													"layout": {
+														"align": "Center",
+														"contentDisplay": "FlexRow",
+														"flexWrap": "Wrap"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-image"
+															},
+															"fragmentConfig": {
+																"imageSize": "w-0"
+															},
+															"fragmentFields": [
+																{
+																	"id": "image-square",
+																	"value": {
+																		"fragmentImage": {
+																			"description": {
+																				"value_i18n": {
+																					"en_US": ""
+																				}
+																			},
+																			"url": {
+																				"value_i18n": {
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/education_certification.svg$]"
+																				}
+																			}
+																		},
+																		"fragmentLink": {
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginRight": "var(--spacer-3)"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "dialect-text",
+																"siteKey": "Guest"
+															},
+															"fragmentConfig": {
+																"textType": "h1",
+																"truncateText": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Certifications"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"backgroundColor": ""
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"maxWidth": "var(--container-max-xl)",
+										"paddingBottom": "10",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"width": "100%"
+									},
+									"indexed": true,
+									"layout": {
+										"paddingLeft": 2,
+										"paddingRight": 2,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+											"fragment": {
+												"key": "dialect-text",
+												"siteKey": "Guest"
+											},
+											"fragmentConfig": {
+												"textType": "text-paragraph-sm",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Liferay certifications are industry-recognized credentials that validate your expertise in designing, developing, and deploying solutions on the Liferay platform. Earning a certification demonstrates your skills to employers and clients, boosting your career prospects and increasing your earning potential. Certification exams typically involve a combination of multiple-choice questions and practical scenarios to assess your knowledge and problem-solving abilities. While the specifics vary by certification, most certifications are valid for at least one year. Invest in your future and become a certified Liferay expert!"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"maxWidth": "800px",
+												"paddingLeft": "3",
+												"width": "100%"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"cssClasses": [
+												"certification-buttons"
+											],
+											"fragmentStyle": {
+												"borderRadius": "8px",
+												"marginTop": "2rem",
+												"paddingLeft": "3"
+											},
+											"indexed": true,
+											"layout": {
+												"paddingLeft": 1
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-button",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+														"buttonSize": "",
+														"inverted": true,
+														"style": "primary",
+														"type": "solid",
+														"uppercase": false
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/verify-assessment-page"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Verify an Assessment"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"width": "12rem"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"cssClasses": [
+								"learn-education"
+							],
+							"fragmentStyle": {
+								"marginTop": "-5em",
+								"maxWidth": "1600px",
+								"width": "100%"
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"paddingLeft": "0",
+										"paddingRight": "0"
+									},
+									"id": "portraitMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							},
+							"name": "Content Container"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"maxWidth": "1024px",
+										"paddingLeft": "4",
+										"paddingRight": "4"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"paddingLeft": 2,
+										"paddingRight": 2
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "type=certification"
+												},
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_landingpage_view"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "call-to-action-partners",
+												"siteKey": "Guest"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value": "https://learn-uat.liferay.com/c/portal/login"
+																}
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Looking for Partner Certifications?"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "liferay-learn"
+		},
+		"themeName": "Dialect"
+	},
+	"version": 1.1
+}

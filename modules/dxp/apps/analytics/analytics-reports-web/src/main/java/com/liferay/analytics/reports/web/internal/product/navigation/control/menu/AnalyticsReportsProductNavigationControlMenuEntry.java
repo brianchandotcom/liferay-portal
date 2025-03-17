@@ -414,8 +414,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			sb.append("<div class=\"d-flex justify-content-between p-3 ");
 			sb.append("sidebar-header\">");
 			sb.append("<h1 class=\"sr-only\">");
-			sb.append(
-				_language.get(httpServletRequest, "content-performance"));
+			sb.append(_language.get(httpServletRequest, "content-performance"));
 			sb.append("</h1>");
 			sb.append("<span class=\"font-weight-bold\">");
 			sb.append(_language.get(httpServletRequest, "content-performance"));

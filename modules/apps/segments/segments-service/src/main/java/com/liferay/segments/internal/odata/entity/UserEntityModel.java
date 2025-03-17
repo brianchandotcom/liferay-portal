@@ -44,6 +44,9 @@ public class UserEntityModel extends BaseExpandoEntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new DateTimeEntityField(
+				"dateModifiedTruncated", locale -> "dateModifiedTruncated",
+				locale -> "dateModifiedTruncated"),
 			new IdEntityField(
 				"ancestorOrganizationIds", locale -> "ancestorOrganizationIds",
 				String::valueOf),

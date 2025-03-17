@@ -179,14 +179,13 @@ public abstract class BaseBackgroundTaskTestCase {
 		safeCloseables.add(
 			LocaleThreadLocal.setDefaultLocaleWithSafeCloseable(
 				_defaultLocale));
+		safeCloseables.add(() -> LocaleThreadLocal.setDefaultLocale(null));
+		safeCloseables.add(() -> LocaleThreadLocal.setThemeDisplayLocale(null));
+		safeCloseables.add(() -> PrincipalThreadLocal.setName(null));
 
 		LocaleThreadLocal.setSiteDefaultLocale(_siteDefaultLocale);
 		LocaleThreadLocal.setThemeDisplayLocale(_themeDisplayLocale);
 		PrincipalThreadLocal.setName(_PRINCIPAL_NAME);
-
-		safeCloseables.add(() -> LocaleThreadLocal.setDefaultLocale(null));
-		safeCloseables.add(() -> LocaleThreadLocal.setThemeDisplayLocale(null));
-		safeCloseables.add(() -> PrincipalThreadLocal.setName(null));
 
 		return () -> {
 			for (SafeCloseable safeCloseable : safeCloseables) {

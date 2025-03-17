@@ -9,7 +9,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
+import com.liferay.site.navigation.item.selector.SiteNavigationMenuItemItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
 import com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemItemSelectorViewDisplayContext;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;

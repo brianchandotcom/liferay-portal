@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import SpaceSticker from '../../../../src/main/resources/META-INF/resources/js/main/components/SpaceSticker';
@@ -13,30 +13,36 @@ const spaceTitle = 'First space';
 
 describe('SpaceSticker', () => {
 	it('renders the first letter of the name in uppercase', () => {
-		const {getByText} = render(<SpaceSticker name={spaceTitle} />);
+		render(<SpaceSticker name={spaceTitle} />);
+
 		expect(
-			getByText(spaceTitle.charAt(0).toUpperCase())
+			screen.getByText(spaceTitle.charAt(0).toUpperCase())
 		).toBeInTheDocument();
 	});
 
 	it('renders the full name next to the sticker', () => {
-		const {getByText} = render(<SpaceSticker name={spaceTitle} />);
-		expect(getByText(spaceTitle)).toBeInTheDocument();
+		render(<SpaceSticker name={spaceTitle} />);
+
+		expect(screen.getByText(spaceTitle)).toBeInTheDocument();
 	});
 
 	it('applies the provided style to the ClaySticker', () => {
 		const {container} = render(
 			<SpaceSticker displayType="outline-3" name={spaceTitle} />
 		);
-		expect(
-			container.getElementsByClassName('sticker-outline-3').length
-		).toBe(1);
+
+		expect(container.getElementsByClassName('sticker')[0]).toHaveClass(
+			'sticker-outline-3'
+		);
 	});
 
 	it('applies the provided size prop to the ClaySticker', () => {
 		const {container} = render(
 			<SpaceSticker name={spaceTitle} size="sm" />
 		);
-		expect(container.getElementsByClassName('sticker-sm').length).toBe(1);
+
+		expect(container.getElementsByClassName('sticker')[0]).toHaveClass(
+			'sticker-sm'
+		);
 	});
 });

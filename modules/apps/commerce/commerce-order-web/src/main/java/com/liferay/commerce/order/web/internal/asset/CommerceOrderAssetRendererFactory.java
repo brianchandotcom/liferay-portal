@@ -68,6 +68,11 @@ public class CommerceOrderAssetRendererFactory
 	}
 
 	@Override
+	public String getIconCssClass() {
+		return "list";
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}

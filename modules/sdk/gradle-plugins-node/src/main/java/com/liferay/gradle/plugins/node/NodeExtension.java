@@ -344,6 +344,6 @@ public class NodeExtension {
 	private Object _scriptFile;
 	private Object _useNpm = true;
 	private Object _yarnUrl;
-	private Object _yarnVersion = "1.13.0";
+	private Object _yarnVersion = "1.22.22";
 
 }

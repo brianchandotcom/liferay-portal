@@ -95,11 +95,11 @@ public class ObjectEntryPerformanceTest {
 		_objectEntryCount = GetterUtil.getInteger(
 			properties.getProperty("object.entries.count"));
 
-		_objectEntryImportExpectedMaxTime = GetterUtil.getInteger(
-			properties.getProperty("object.entries.import.expected.maxTime"));
-
 		_objectEntryDeletionExpectedMaxTime = GetterUtil.getInteger(
 			properties.getProperty("object.entries.deletion.expected.maxTime"));
+
+		_objectEntryImportExpectedMaxTime = GetterUtil.getInteger(
+			properties.getProperty("object.entries.import.expected.maxTime"));
 	}
 
 	@Test

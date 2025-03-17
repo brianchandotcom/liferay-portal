@@ -26,6 +26,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly orderItemActions: Locator;
 	readonly orderItemActionEdit: Locator;
 	readonly orderItemFrame: FrameLocator;
+	readonly orderItemFrameCloseButton: Locator;
 	readonly orderItemDecimalQuantity: Locator;
 	readonly orderItemQuantityColumn: (quantity: string) => Promise<Locator>;
 	readonly orderItemSaveButton: Locator;
@@ -90,6 +91,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.orderItemActions = page.getByRole('button', {name: 'Actions'});
 		this.orderItemActionEdit = page.getByRole('menuitem', {name: 'Edit'});
 		this.orderItemFrame = page.frameLocator('iframe');
+		this.orderItemFrameCloseButton = this.orderItemFrame
+			.locator('button.side-panel-iframe-close')
+			.first();
 		this.orderItemDecimalQuantity =
 			this.orderItemFrame.getByLabel('Decimal Quantity');
 		this.orderItemSaveButton = this.orderItemFrame.getByRole('button', {

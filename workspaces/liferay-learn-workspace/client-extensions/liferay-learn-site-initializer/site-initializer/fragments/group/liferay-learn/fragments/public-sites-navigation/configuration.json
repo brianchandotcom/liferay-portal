@@ -1,0 +1,80 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Sites Menu",
+					"label": "Show Sites Menu",
+					"name": "showSitesMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Language Menu",
+					"label": "Show Language Menu",
+					"name": "showLanguageMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Search",
+					"label": "Show Search",
+					"name": "showSearch",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Help",
+					"label": "Show Help",
+					"name": "showHelp",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Account Menu",
+					"label": "Show Account Menu",
+					"name": "showAccountMenu",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show Site Name",
+					"label": "Show Site Name",
+					"name": "showSiteName",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "Show CTA",
+					"label": "Show CTA",
+					"name": "showCta",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "Dark Nav",
+					"label": "Dark Nav",
+					"name": "darkNav",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"description": "search-blueprint-id",
+					"label": "Search Blueprint ID",
+					"name": "searchBlueprintId",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

@@ -1,4 +1,4 @@
-.account-dropdown {
+.account-dropdown-nav {
 	margin: 0.25rem;
 	position: relative;
 	z-index: 10;
@@ -181,7 +181,6 @@
 	input:focus ~ .account-dropdown-toggle,
 	input:focus-visible ~ .account-dropdown-toggle {
 		background: var(--utility-nav-item-text-color-background, #EDF3FE);
-		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 		transition: all 0.1s linear;
 		
 		.account-dropdown-icon,

@@ -1,0 +1,93 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "regular",
+					"label": "panel-type",
+					"name": "panelType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "regular",
+								"value": "regular"
+							},
+							{
+								"label": "full-width",
+								"value": "full-width"
+							},
+							{
+								"label": "mega-menu",
+								"value": "mega-menu"
+							}
+						]
+					}
+				},
+				{
+					"defaultValue": false,
+					"label": "display-on-hover",
+					"name": "displayOnHover",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "keep-panel-open-in-edit-mode",
+					"name": "keepOpen",
+					"type": "checkbox"
+				}
+			],
+			"label": "dropdown-options"
+		}
+	]
+}

@@ -1,9 +1,10 @@
 {
 	"configurationPath": "configuration.json",
 	"cssPath": "index.css",
+	"fragmentEntryKey": "public-sites-navigation-dropdown",
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Logo",
+	"name": "public-sites-navigation-dropdown",
 	"type": "component"
 }

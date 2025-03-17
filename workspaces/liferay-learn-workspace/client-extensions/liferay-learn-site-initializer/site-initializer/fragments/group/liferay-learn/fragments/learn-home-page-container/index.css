@@ -48,10 +48,16 @@
 .learn-home-cards-container {
 	.card-row {
 		gap: 2.5rem;
+
+		@media (max-width: 991px) {
+			flex-direction: column !important;
+		}
 	}
 
 	.learn-home-card {
 		cursor: pointer;
+		height: 100%;
+		min-height: 313px;
 
 		&:hover {
 			background-color: var(--color-action-primary-hover-10, #edf3fe) !important;

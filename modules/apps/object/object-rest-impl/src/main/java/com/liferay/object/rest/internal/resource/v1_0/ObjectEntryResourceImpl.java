@@ -8,10 +8,9 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.dto.v1_0.EntryValidation;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.dto.v1_0.ValidateError;
-import com.liferay.object.rest.dto.v1_0.ValidateRequest;
-import com.liferay.object.rest.dto.v1_0.ValidateResult;
+import com.liferay.object.rest.dto.v1_0.ValidationError;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -44,6 +43,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.NotSupportedException;
@@ -396,8 +396,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public ValidateResult postScopeScopeKeyValidate(
-			String scopeKey, ValidateRequest validateRequest)
+	public Page<ValidationError> postScopeScopeKeyValidatePage(
+			String scopeKey, EntryValidation entryValidation)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -406,11 +406,12 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _validateObjectEntry(scopeKey, validateRequest);
+		return _validateObjectEntry(scopeKey, entryValidation);
 	}
 
 	@Override
-	public ValidateResult postValidate(ValidateRequest validateRequest)
+	public Page<ValidationError> postValidatePage(
+			EntryValidation entryValidation)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -419,7 +420,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _validateObjectEntry(null, validateRequest);
+		return _validateObjectEntry(null, entryValidation);
 	}
 
 	@Override
@@ -723,8 +724,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		return null;
 	}
 
-	private ValidateResult _validateObjectEntry(
-			String scopeKey, ValidateRequest validateRequest)
+	private Page<ValidationError> _validateObjectEntry(
+			String scopeKey, EntryValidation entryValidation)
 		throws Exception {
 
 		ObjectEntryManager objectEntryManager =
@@ -734,42 +735,29 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		try {
 			objectEntryManager.validateObjectEntry(
 				_getDTOConverterContext(null), _objectDefinition,
-				validateRequest.getEntry(),
-				Arrays.asList(validateRequest.getValidationKeys()), scopeKey);
+				entryValidation.getEntry(),
+				Arrays.asList(entryValidation.getValidationKeys()), scopeKey);
 		}
 		catch (ObjectValidationRuleEngineException
 					objectValidationRuleEngineException) {
 
-			return new ValidateResult() {
-				{
-					setSuccess(() -> false);
-					setValidateErrors(
-						() -> transformToArray(
-							objectValidationRuleEngineException.
-								getObjectValidationRuleResults(),
-							objectValidationRuleResult -> new ValidateError() {
-								{
-									setErrorMessage(
-										objectValidationRuleResult::
-											getErrorMessage);
-									setObjectFieldName(
-										objectValidationRuleResult::
-											getObjectFieldName);
-									setValidationKey(
-										objectValidationRuleResult::
-											getValidationKey);
-								}
-							},
-							ValidateError.class));
-				}
-			};
+			return Page.of(
+				transform(
+					objectValidationRuleEngineException.
+						getObjectValidationRuleResults(),
+					objectValidationRuleResult -> new ValidationError() {
+						{
+							setErrorMessage(
+								objectValidationRuleResult::getErrorMessage);
+							setObjectFieldName(
+								objectValidationRuleResult::getObjectFieldName);
+							setValidationKey(
+								objectValidationRuleResult::getValidationKey);
+						}
+					}));
 		}
 
-		return new ValidateResult() {
-			{
-				setSuccess(() -> true);
-			}
-		};
+		return Page.of(Collections.emptyList());
 	}
 
 	private final DTOConverterRegistry _dtoConverterRegistry;

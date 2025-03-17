@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '9a5335532af04c2fe0bad2d5345c973dc211470092d9e7263175749aaac3208c',
+	hash: 'b3841cf4213a6ccaa90b6a2931622f59cfb77efa8c2b8db58b20ccc85247d682',
 	imports: {
 		'@liferay/accessibility-settings-state-web': [],
 		'@liferay/address-web': [],
@@ -155,6 +155,7 @@ module.exports = {
 		],
 		'item-selector-taglib': [],
 		'item-selector-web': [],
+		'layout-taglib': ['./render'],
 		'portal-search-web': ['./search-bar'],
 		'social-bookmarks-taglib': [],
 	},

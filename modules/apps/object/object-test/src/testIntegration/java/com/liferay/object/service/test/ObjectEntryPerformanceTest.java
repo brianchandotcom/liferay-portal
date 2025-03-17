@@ -95,11 +95,11 @@ public class ObjectEntryPerformanceTest {
 		_objectEntryCount = GetterUtil.getInteger(
 			properties.getProperty("object.entries.count"));
 
-		_expectedImportTime = GetterUtil.getInteger(
-			properties.getProperty("expected.import.time"));
+		_objectEntryImportExpectedMaxTime = GetterUtil.getInteger(
+			properties.getProperty("object.entries.import.expected.maxTime"));
 
-		_expectedDeletionTime = GetterUtil.getInteger(
-			properties.getProperty("expected.deletion.time"));
+		_objectEntryDeletionExpectedMaxTime = GetterUtil.getInteger(
+			properties.getProperty("object.entries.deletion.expected.maxTime"));
 	}
 
 	@Test
@@ -199,7 +199,7 @@ public class ObjectEntryPerformanceTest {
 			objectFolder.getExternalReferenceCode(), objectFolder);
 
 		try (PerformanceTimer performanceTimer1 = new PerformanceTimer(
-				_expectedImportTime,
+				_objectEntryImportExpectedMaxTime,
 				StringBundler.concat(
 					" Import ", _objectEntryCount, " Object Entries"))) {
 
@@ -224,7 +224,7 @@ public class ObjectEntryPerformanceTest {
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				_expectedDeletionTime,
+				_objectEntryDeletionExpectedMaxTime,
 				StringBundler.concat(
 					" Delete ", _objectEntryCount, " Object Entries"))) {
 
@@ -294,9 +294,9 @@ public class ObjectEntryPerformanceTest {
 
 	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
-	private static int _expectedDeletionTime;
-	private static int _expectedImportTime;
 	private static int _objectEntryCount;
+	private static int _objectEntryDeletionExpectedMaxTime;
+	private static int _objectEntryImportExpectedMaxTime;
 
 	@DeleteAfterTestRun
 	private Company _company;

@@ -104,7 +104,7 @@ public class CommerceTaxCategoryMappingServiceImpl
 	}
 
 	@Override
-	public CommerceTaxCategoryMapping updateCommerceTaxCategoryMapping(
+	public CommerceTaxCategoryMapping updateExternalReferenceCode(
 			long commerceTaxCategoryMappingId, String externalReferenceCode)
 		throws PortalException {
 
@@ -115,7 +115,7 @@ public class CommerceTaxCategoryMappingServiceImpl
 		_checkCommerceChannel(commerceTaxCategoryMapping.getGroupId());
 
 		return commerceTaxCategoryMappingLocalService.
-			updateCommerceTaxCategoryMapping(
+			updateExternalReferenceCode(
 				commerceTaxCategoryMappingId, externalReferenceCode);
 	}
 

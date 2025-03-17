@@ -85,7 +85,7 @@ public class CommerceTaxCategoryMappingLocalServiceImpl
 	}
 
 	@Override
-	public CommerceTaxCategoryMapping updateCommerceTaxCategoryMapping(
+	public CommerceTaxCategoryMapping updateExternalReferenceCode(
 			long commerceTaxCategoryMappingId, String externalReferenceCode)
 		throws PortalException {
 

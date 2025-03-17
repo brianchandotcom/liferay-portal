@@ -1,5 +1,5 @@
 {
-	"@generated": "332b151201cbd0063777f431b879d29af131182e",
+	"@generated": "0a5e0a9ea6c307b9947878206e0c0ab666b41d9a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -15,7 +15,13 @@
 				"../../../../../../../accessibility/accessibility-settings-state-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"@liferay/frontend-js-state-web": [
-				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
+				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/main/index.ts"
+			],
+			"@liferay/frontend-js-state-web/impl": [
+				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/impl/index.ts"
+			],
+			"@liferay/frontend-js-state-web/react": [
+				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/react/index.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",

@@ -1,5 +1,5 @@
 {
-	"@generated": "70c2d82e96b99c04ea27da84de63d8142db44182",
+	"@generated": "9c0378b21e12abd69e74fc42a98c215d93f924f8",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -18,7 +18,13 @@
 				"../../../../../../../../../apps/frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"@liferay/frontend-js-state-web": [
-				"../../../../../../../../../apps/frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/index.ts"
+				"../../../../../../../../../apps/frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/main/index.ts"
+			],
+			"@liferay/frontend-js-state-web/impl": [
+				"../../../../../../../../../apps/frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/impl/index.ts"
+			],
+			"@liferay/frontend-js-state-web/react": [
+				"../../../../../../../../../apps/frontend-js/frontend-js-state-web/src/main/resources/META-INF/resources/react/index.ts"
 			],
 			"commerce-frontend-js": [
 				"../../../../../../../../../apps/commerce/commerce-frontend-js/src/main/resources/META-INF/resources/index.js"

@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.item.selector.criterion.SegmentsExperienceItemSelectorCriterion;
+import com.liferay.segments.item.selector.SegmentsExperienceItemSelectorCriterion;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 

@@ -7,7 +7,7 @@ package com.liferay.segments.item.selector.web.internal;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.segments.item.selector.criterion.SegmentsExperienceItemSelectorCriterion;
+import com.liferay.segments.item.selector.SegmentsExperienceItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

@@ -11,7 +11,7 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.segments.item.selector.criterion.SegmentsExperienceItemSelectorCriterion;
+import com.liferay.segments.item.selector.SegmentsExperienceItemSelectorCriterion;
 
 import java.io.IOException;
 

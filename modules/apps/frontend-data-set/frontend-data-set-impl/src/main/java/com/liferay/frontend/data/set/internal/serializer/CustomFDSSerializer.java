@@ -8,8 +8,10 @@ package com.liferay.frontend.data.set.internal.serializer;
 import com.liferay.client.extension.type.FDSCellRendererCET;
 import com.liferay.client.extension.type.FDSFilterCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.internal.url.FDSAPIURLBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
@@ -582,6 +584,9 @@ public class CustomFDSSerializer
 	@Reference
 	protected CETManager cetManager;
 
+	@Reference
+	protected FDSFilterRegistry fdsFilterRegistry;
+
 	private JSONObject _getDateJSONObject(Object object) {
 		if (object == null) {
 			return null;
@@ -726,11 +731,11 @@ public class CustomFDSSerializer
 			return _serializeFilterDateOrDateTime(fieldName, properties, type);
 		}
 
-		String source = MapUtil.getString(properties, "source");
+		String sourceType = MapUtil.getString(properties, "sourceType");
 
-		if (Validator.isNotNull(source)) {
+		if (Validator.isNotNull(sourceType)) {
 			return _serializeFilterSelection(
-				fieldName, httpServletRequest, properties, source);
+				fieldName, httpServletRequest, properties, sourceType);
 		}
 
 		return null;
@@ -824,10 +829,28 @@ public class CustomFDSSerializer
 
 	private JSONObject _serializeFilterSelection(
 			String fieldName, HttpServletRequest httpServletRequest,
-			Map<String, Object> properties, String source)
+			Map<String, Object> properties, String sourceType)
 		throws Exception {
 
-		String sourceType = MapUtil.getString(properties, "sourceType");
+		if (Objects.equals(
+				sourceType, FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
+
+			JSONArray jsonArray = _systemFDSSerializer.serializeFilters(
+				MapUtil.getString(
+					properties,
+					"r_dataSetToDataSetSelectionFilters_l_dataSetERC"),
+				httpServletRequest);
+
+			if (!JSONUtil.isEmpty(jsonArray)) {
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+					if (Objects.equals(fieldName, jsonObject.getString("id"))) {
+						return jsonObject;
+					}
+				}
+			}
+		}
 
 		JSONObject jsonObject = JSONUtil.put(
 			"autocompleteEnabled", true
@@ -836,7 +859,7 @@ public class CustomFDSSerializer
 		).put(
 			"id",
 			() -> {
-				if (Objects.equals(sourceType, "API_REST_APPLICATION")) {
+				if (!Objects.equals(sourceType, "OBJECT_PICKLIST")) {
 					return fieldName;
 				}
 
@@ -857,9 +880,9 @@ public class CustomFDSSerializer
 			"type", "selection"
 		);
 
-		if (Validator.isNotNull(sourceType) &&
-			Objects.equals(sourceType, "API_REST_APPLICATION")) {
+		String source = MapUtil.getString(properties, "source");
 
+		if (Objects.equals(sourceType, "API_REST_APPLICATION")) {
 			return jsonObject.put(
 				"apiURL", source
 			).put(
@@ -888,76 +911,82 @@ public class CustomFDSSerializer
 			);
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (Objects.equals(sourceType, "OBJECT_PICKLIST")) {
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionLocalService.
+					getListTypeDefinitionByExternalReferenceCode(
+						source, PortalUtil.getCompanyId(httpServletRequest));
 
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionLocalService.
-				getListTypeDefinitionByExternalReferenceCode(
-					source, themeDisplay.getCompanyId());
+			List<ListTypeEntry> listTypeEntries =
+				_listTypeEntryLocalService.getListTypeEntries(
+					listTypeDefinition.getListTypeDefinitionId());
 
-		List<ListTypeEntry> listTypeEntries =
-			_listTypeEntryLocalService.getListTypeEntries(
-				listTypeDefinition.getListTypeDefinitionId());
+			return jsonObject.put(
+				"items",
+				JSONUtil.toJSONArray(
+					listTypeEntries,
+					listTypeEntry -> JSONUtil.put(
+						"key", listTypeEntry.getKey()
+					).put(
+						"label",
+						listTypeEntry.getName(
+							PortalUtil.getLocale(httpServletRequest))
+					).put(
+						"value", listTypeEntry.getKey()
+					))
+			).put(
+				"preloadedData",
+				() -> {
+					JSONArray selectedItemsJSONArray =
+						_jsonFactory.createJSONArray();
 
-		return jsonObject.put(
-			"items",
-			JSONUtil.toJSONArray(
-				listTypeEntries,
-				listTypeEntry -> JSONUtil.put(
-					"key", listTypeEntry.getKey()
-				).put(
-					"label", listTypeEntry.getName(themeDisplay.getLocale())
-				).put(
-					"value", listTypeEntry.getKey()
-				))
-		).put(
-			"preloadedData",
-			() -> {
-				JSONArray selectedItemsJSONArray =
-					_jsonFactory.createJSONArray();
+					JSONArray preselectedValuesJSONArray =
+						_jsonFactory.createJSONArray(
+							MapUtil.getString(properties, "preselectedValues"));
 
-				JSONArray preselectedValuesJSONArray =
-					_jsonFactory.createJSONArray(
-						MapUtil.getString(properties, "preselectedValues"));
+					for (int i = 0; i < preselectedValuesJSONArray.length();
+						 i++) {
 
-				for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
-					JSONObject preselectedValueJSONObject =
-						preselectedValuesJSONArray.getJSONObject(i);
+						JSONObject preselectedValueJSONObject =
+							preselectedValuesJSONArray.getJSONObject(i);
 
-					for (ListTypeEntry listTypeEntry : listTypeEntries) {
-						if (!Objects.equals(
-								listTypeEntry.getExternalReferenceCode(),
-								preselectedValueJSONObject.getString(
-									"value"))) {
+						for (ListTypeEntry listTypeEntry : listTypeEntries) {
+							if (!Objects.equals(
+									listTypeEntry.getExternalReferenceCode(),
+									preselectedValueJSONObject.getString(
+										"value"))) {
 
-							continue;
+								continue;
+							}
+
+							selectedItemsJSONArray.put(
+								JSONUtil.put(
+									"label",
+									listTypeEntry.getName(
+										PortalUtil.getLocale(
+											httpServletRequest))
+								).put(
+									"value", listTypeEntry.getKey()
+								));
 						}
-
-						selectedItemsJSONArray.put(
-							JSONUtil.put(
-								"label",
-								listTypeEntry.getName(themeDisplay.getLocale())
-							).put(
-								"value", listTypeEntry.getKey()
-							));
 					}
-				}
 
-				if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
-					return null;
-				}
+					if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
+						return null;
+					}
 
-				return JSONUtil.put(
-					"exclude",
-					() -> Boolean.FALSE.equals(
-						(Boolean)properties.get("include"))
-				).put(
-					"selectedItems", selectedItemsJSONArray
-				);
-			}
-		);
+					return JSONUtil.put(
+						"exclude",
+						() -> Boolean.FALSE.equals(
+							(Boolean)properties.get("include"))
+					).put(
+						"selectedItems", selectedItemsJSONArray
+					);
+				}
+			);
+		}
+
+		return null;
 	}
 
 	private JSONObject _serializeViewSchema(
@@ -994,6 +1023,11 @@ public class CustomFDSSerializer
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference(
+		target = "(frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM + ")"
+	)
+	private FDSSerializer _systemFDSSerializer;
 
 	private static class ObjectEntryComparator
 		implements Comparator<ObjectEntry> {

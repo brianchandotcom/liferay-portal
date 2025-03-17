@@ -584,7 +584,7 @@ public class ImportSystemDataSetMVCResourceCommand
 					"to", jsonObject.getString("to")
 				).put(
 					"type", fdsFilter.getEntityFieldType()
-				);;
+				);
 			}
 			else if (fdsFilter instanceof BaseSelectionFDSFilter) {
 				BaseSelectionFDSFilter selectionFdsFilter =
@@ -610,6 +610,17 @@ public class ImportSystemDataSetMVCResourceCommand
 						"source", selectionFdsFilter.getAPIURL()
 					).put(
 						"sourceType", "API_REST_APPLICATION"
+					);
+				}
+
+				if (ListUtil.isNotEmpty(
+						selectionFdsFilter.getSelectionFDSFilterItems(
+							_portal.getLocale(httpServletRequest)))) {
+
+					values.put(
+						"source", StringPool.BLANK
+					).put(
+						"sourceType", FDSEntryItemImportPolicy.ITEM_PROXY
 					);
 				}
 

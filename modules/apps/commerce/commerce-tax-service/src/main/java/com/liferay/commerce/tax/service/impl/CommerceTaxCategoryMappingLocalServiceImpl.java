@@ -36,22 +36,22 @@ public class CommerceTaxCategoryMappingLocalServiceImpl
 			long cpTaxCategoryId, String externalReferenceCode)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		_validate(cpTaxCategoryId, commerceTaxMethodId);
-
-		long commerceTaxFixedRateId = counterLocalService.increment();
 
 		CommerceTaxCategoryMapping commerceTaxCategoryMapping =
 			commerceTaxCategoryMappingPersistence.create(
-				commerceTaxFixedRateId);
+				counterLocalService.increment());
 
 		commerceTaxCategoryMapping.setExternalReferenceCode(
 			externalReferenceCode);
 		commerceTaxCategoryMapping.setGroupId(groupId);
+
+		User user = _userLocalService.getUser(userId);
+
 		commerceTaxCategoryMapping.setCompanyId(user.getCompanyId());
 		commerceTaxCategoryMapping.setUserId(user.getUserId());
 		commerceTaxCategoryMapping.setUserName(user.getFullName());
+
 		commerceTaxCategoryMapping.setCommerceTaxMethodId(commerceTaxMethodId);
 		commerceTaxCategoryMapping.setCPTaxCategoryId(cpTaxCategoryId);
 

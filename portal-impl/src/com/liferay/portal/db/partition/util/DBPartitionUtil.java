@@ -1007,6 +1007,9 @@ public class DBPartitionUtil {
 		String extractedPartitionName = _getExtractedPartitionName(companyId);
 
 		statement.executeUpdate(
+			_dbPartitionDB.getDropViewSQL(extractedPartitionName, tableName));
+
+		statement.executeUpdate(
 			_dbPartitionDB.getCreateTableSQL(
 				connection, _defaultPartitionName, extractedPartitionName,
 				tableName));

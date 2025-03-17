@@ -155,7 +155,7 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	}
 
 	@Test
-	public void testFileEntryShouldSaveCorrectMimeTypeForGpxExtension()
+	public void testFileEntryShouldSaveCorrectMimeTypeForGPXExtension()
 		throws Exception {
 
 		String fileName = "test.gpx";

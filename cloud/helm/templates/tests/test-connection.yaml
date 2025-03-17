@@ -3,10 +3,10 @@ kind: Pod
 metadata:
     annotations:
         "helm.sh/hook": test
-    name: {{ include "liferay.name" . }}-test-connection
-    namespace: {{ include "liferay.namespace" . }}
     labels:
         {{- include "liferay.labels" . | nindent 8 }}
+    name: {{ include "liferay.name" . }}-test-connection
+    namespace: {{ include "liferay.namespace" . }}
 spec:
     containers:
         - command:

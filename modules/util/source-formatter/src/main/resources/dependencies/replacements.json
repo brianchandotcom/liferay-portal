@@ -3687,6 +3687,14 @@
 	},
 	{
 		"classNames": [
+			"PortletSharedSearchSettings"
+		],
+		"from": "getParameterValues71",
+		"issueKey": "LPD-48215",
+		"to": "getParameterValues"
+	},
+	{
+		"classNames": [
 			"CommerceOrderItem"
 		],
 		"from": "getBookedQuantityId",

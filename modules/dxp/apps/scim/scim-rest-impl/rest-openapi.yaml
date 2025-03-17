@@ -237,7 +237,7 @@ components:
                         A multi-valued list of complex objects containing the requested resources.
                     oneOf:
                         - $ref: "#/components/schemas/Group"
-                        - $ref: "#/components/schemas/SchemaDefinition"
+                        - $ref: "#/components/schemas/Schema"
                         - $ref: "#/components/schemas/User"
                     type: object
                 itemsPerPage:

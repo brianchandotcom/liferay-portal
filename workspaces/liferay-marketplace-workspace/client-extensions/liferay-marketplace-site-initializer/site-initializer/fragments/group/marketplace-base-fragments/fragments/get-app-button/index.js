@@ -16,18 +16,18 @@ const getAppDescriptionElement = fragmentElement.querySelector(
 );
 const tooltipElement = fragmentElement.querySelector('.clay-tooltip-bottom');
 
-const isFragmentApp = (productSpecifications = []) =>
-	productSpecifications.some(
-		(productSpecification) =>
-			productSpecification.specificationKey === 'type' &&
-			productSpecification.value === 'fragment'
-	);
-
 const isFreeApp = (productSpecifications = []) =>
 	productSpecifications.some(
 		(productSpecification) =>
 			productSpecification.specificationKey === 'price-model' &&
 			productSpecification.value === 'Free'
+	);
+
+const isLowCodeConfiguration = (productSpecifications = []) =>
+	productSpecifications.some(
+		(productSpecification) =>
+			productSpecification.specificationKey === 'type' &&
+			productSpecification.value === 'low-code-configuration'
 	);
 
 const trackAnalytics = (key, options) => {
@@ -43,22 +43,19 @@ const productId = fragmentElement
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
 
-const getFragmentModal = () => `
+const getHelpModal = () => `
 <div class="mb-5">
-	<p class="pb-3" style="color: #54555F;">Currently, it is not possible to install a fragment directly from the Marketplace. To do so, you need to use the DXP. Click link below to learn how to proceed.</p>
+	<p class="pb-1" style="color: #54555F;">Fragments are directly installed from DXP.</p>
 
-	<a href="https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-fragments-from-the-marketplace">https://learn.liferay.com</a>
+	<p style="color: #54555F;">In order to install fragments please follow these steps:</p>
+
+	<ol>
+		<li class="pb-1" style="color: #54555F;">Link your DXP environment to your Liferay Marketplace Acccount. Check this <a href="https://learn.liferay.com/w/dxp/liferay-development/marketplace/connecting-liferay-dxp-to-marketplace" target="_blank">documentation</a> to learn how to link the DXP to Marketplace</li>
+
+		<li style="color: #54555F;">Install fragments directly from page builder. Check <a href="https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-fragments-from-the-marketplace" target="_blank">here</a> how to do that</li>
+	</ol>
 </div>
 `;
-
-const openFragmentModal = () => {
-	Liferay.Util.openModal({
-		bodyHTML: getFragmentModal(),
-		center: true,
-		headerHTML: 'How to Install a Fragment',
-		size: 'md',
-	});
-};
 
 const getProductPrice = (product) => {
 	const {productSpecifications = []} = product;
@@ -98,10 +95,21 @@ const getProductPrice = (product) => {
 	return `${price} ${licenseTypeText}`;
 };
 
+const openGetHelpModal = () => {
+	Liferay.Util.openModal({
+		bodyHTML: getHelpModal(),
+		center: true,
+		headerHTML: 'How to Install a Low Code App',
+		size: 'md',
+	});
+};
+
 const customizeGetAppButton = (product) => {
+	const isLowCodeApp = isLowCodeConfiguration(product.productSpecifications);
+
 	getAppButtonElement.onclick = () => {
-		if (isFragmentApp(product.productSpecifications)) {
-			openFragmentModal();
+		if (isLowCodeApp) {
+			openGetHelpModal();
 
 			return;
 		}

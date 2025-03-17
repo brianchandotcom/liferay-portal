@@ -31,7 +31,7 @@ export class ${className} {
 		/**
 		 * ${operationData.description!}
 		 <#if operationData.parameters??>
-			 <#list operationData.parameters as parameter>
+		 	<#list operationData.parameters as parameter>
 				 * @param ${parameter.name}
 			 </#list>
 		 </#if>
@@ -47,6 +47,7 @@ export class ${className} {
 		 		* @param requestBody Request body that can be one of multiple content types
 		 	</#if>
 		 </#if>
+		 * @param headers Optional custom request headers
 		 */
 		public async ${operationData.operationId}<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>Extended</#if>(
 			<#if operationData.parameters??>

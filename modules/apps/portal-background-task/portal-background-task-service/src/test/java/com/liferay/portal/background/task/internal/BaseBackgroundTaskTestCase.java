@@ -6,6 +6,7 @@
 package com.liferay.portal.background.task.internal;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -29,7 +30,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -164,14 +167,32 @@ public abstract class BaseBackgroundTaskTestCase {
 			_themeDisplayLocale, threadLocalValues.get("themeDisplayLocale"));
 	}
 
-	protected void initalizeThreadLocals() {
-		CompanyThreadLocal.setCompanyId(COMPANY_ID);
-		ClusterInvokeThreadLocal.setEnabled(true);
-		GroupThreadLocal.setGroupId(_GROUP_ID);
-		LocaleThreadLocal.setDefaultLocale(_defaultLocale);
+	protected SafeCloseable initalizeThreadLocals() {
+		List<SafeCloseable> safeCloseables = new ArrayList<>();
+
+		safeCloseables.add(
+			CompanyThreadLocal.setCompanyIdWithSafeCloseable(COMPANY_ID));
+		safeCloseables.add(
+			ClusterInvokeThreadLocal.setEnabledWithSafeCloseable(true));
+		safeCloseables.add(
+			GroupThreadLocal.setGroupIdWithSafeCloseable(_GROUP_ID));
+		safeCloseables.add(
+			LocaleThreadLocal.setDefaultLocaleWithSafeCloseable(
+				_defaultLocale));
+
 		LocaleThreadLocal.setSiteDefaultLocale(_siteDefaultLocale);
 		LocaleThreadLocal.setThemeDisplayLocale(_themeDisplayLocale);
 		PrincipalThreadLocal.setName(_PRINCIPAL_NAME);
+
+		safeCloseables.add(() -> LocaleThreadLocal.setDefaultLocale(null));
+		safeCloseables.add(() -> LocaleThreadLocal.setThemeDisplayLocale(null));
+		safeCloseables.add(() -> PrincipalThreadLocal.setName(null));
+
+		return () -> {
+			for (SafeCloseable safeCloseable : safeCloseables) {
+				safeCloseable.close();
+			}
+		};
 	}
 
 	protected HashMap<String, Serializable> initializeThreadLocalValues() {

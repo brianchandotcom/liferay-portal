@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.security.auth;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.Props;
@@ -46,19 +47,21 @@ public class CompanyInheritableThreadLocalCallableTest {
 	}
 
 	private void _test(Long companyId, boolean locked) throws Exception {
-		CompanyThreadLocal.setCompanyId(companyId);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
-		Assert.assertEquals(
-			companyId,
-			new CompanyInheritableThreadLocalCallable<Long>(
-				CompanyThreadLocal::getCompanyId
-			).call());
+			Assert.assertEquals(
+				companyId,
+				new CompanyInheritableThreadLocalCallable<Long>(
+					CompanyThreadLocal::getCompanyId
+				).call());
 
-		Assert.assertEquals(
-			locked,
-			new CompanyInheritableThreadLocalCallable<>(
-				CompanyThreadLocal::isLocked
-			).call());
+			Assert.assertEquals(
+				locked,
+				new CompanyInheritableThreadLocalCallable<>(
+					CompanyThreadLocal::isLocked
+				).call());
+		}
 	}
 
 }

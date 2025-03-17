@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.sharing.exception.DuplicateSharingEntryExternalReferenceCodeException;
+import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.exception.InvalidSharingEntryActionException;
 import com.liferay.sharing.exception.InvalidSharingEntryExpirationDateException;
 import com.liferay.sharing.exception.InvalidSharingEntryUserException;
@@ -253,7 +253,7 @@ public class SharingEntryLocalServiceTest {
 			Collections.emptyList(), null, _serviceContext);
 	}
 
-	@Test(expected = DuplicateSharingEntryExternalReferenceCodeException.class)
+	@Test(expected = DuplicateSharingEntryException.class)
 	public void testAddSharingEntryWithExistingExternalReferenceCode()
 		throws Exception {
 

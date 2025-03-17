@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.exception;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -14,22 +15,43 @@ public class LayoutPageTemplateEntryDefaultTemplateException
 	extends PortalException {
 
 	public LayoutPageTemplateEntryDefaultTemplateException() {
+		_type = LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
 	}
 
 	public LayoutPageTemplateEntryDefaultTemplateException(String msg) {
 		super(msg);
+
+		_type = LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
+	}
+
+	public LayoutPageTemplateEntryDefaultTemplateException(
+		String msg, int type) {
+
+		super(msg);
+
+		_type = type;
 	}
 
 	public LayoutPageTemplateEntryDefaultTemplateException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
+
+		_type = LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
 	}
 
 	public LayoutPageTemplateEntryDefaultTemplateException(
 		Throwable throwable) {
 
 		super(throwable);
+
+		_type = LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
 	}
+
+	public int getType() {
+		return _type;
+	}
+
+	private final int _type;
 
 }

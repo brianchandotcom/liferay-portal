@@ -373,8 +373,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			new WidgetLayoutStructureItemImporter(
 				_fragmentEntryLinkLocalService, _fragmentEntryProcessorRegistry,
 				_portletConfigurationImporterHelper, _portletLocalService,
-				_portletPermissionsImporterHelper, _portletRegistry,
-				_segmentsExperienceLocalService));
+				_portletPermissionsImporterHelper, _portletRegistry));
 	}
 
 	private void _addClientExtensionEntryRel(

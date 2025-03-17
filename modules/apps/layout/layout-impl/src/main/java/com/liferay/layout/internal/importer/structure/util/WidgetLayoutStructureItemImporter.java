@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -51,8 +50,7 @@ public class WidgetLayoutStructureItemImporter
 		PortletConfigurationImporterHelper portletConfigurationImporterHelper,
 		PortletLocalService portletLocalService,
 		PortletPermissionsImporterHelper portletPermissionsImporterHelper,
-		PortletRegistry portletRegistry,
-		SegmentsExperienceLocalService segmentsExperienceLocalService) {
+		PortletRegistry portletRegistry) {
 
 		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_fragmentEntryProcessorRegistry = fragmentEntryProcessorRegistry;
@@ -61,7 +59,6 @@ public class WidgetLayoutStructureItemImporter
 		_portletLocalService = portletLocalService;
 		_portletPermissionsImporterHelper = portletPermissionsImporterHelper;
 		_portletRegistry = portletRegistry;
-		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
 	@Override
@@ -74,6 +71,7 @@ public class WidgetLayoutStructureItemImporter
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			layoutStructureItemImporterContext.getLayout(), pageElement,
+			layoutStructureItemImporterContext.getSegmentsExperienceId(),
 			warningMessages);
 
 		if (fragmentEntryLink == null) {
@@ -160,7 +158,8 @@ public class WidgetLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
-			Layout layout, PageElement pageElement, Set<String> warningMessages)
+			Layout layout, PageElement pageElement, long segmentsExperienceId,
+			Set<String> warningMessages)
 		throws Exception {
 
 		Map<String, Object> definitionMap = getDefinitionMap(
@@ -200,10 +199,6 @@ public class WidgetLayoutStructureItemImporter
 		if (Validator.isNull(widgetInstanceId)) {
 			widgetInstanceId = StringUtil.randomId();
 		}
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
 
 		widgetInstanceId = _getPortletInstanceId(
 			layout, portlet, widgetInstanceId, segmentsExperienceId);
@@ -282,7 +277,5 @@ public class WidgetLayoutStructureItemImporter
 	private final PortletPermissionsImporterHelper
 		_portletPermissionsImporterHelper;
 	private final PortletRegistry _portletRegistry;
-	private final SegmentsExperienceLocalService
-		_segmentsExperienceLocalService;
 
 }

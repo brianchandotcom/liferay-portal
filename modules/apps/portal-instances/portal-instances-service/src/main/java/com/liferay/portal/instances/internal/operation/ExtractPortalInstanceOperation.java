@@ -99,19 +99,21 @@ public class ExtractPortalInstanceOperation
 			ScopedConfiguration scopedConfiguration = _getScopedConfiguration(
 				entry.getKey(), dictionaryString);
 
-			if (scopedConfiguration != null) {
-				if (Objects.equals(
-						scopedConfiguration.getScope(),
-						ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE)) {
+			if (scopedConfiguration == null) {
+				continue;
+			}
 
-					scopedConfigurations.add(scopedConfiguration);
+			if (Objects.equals(
+					scopedConfiguration.getScope(),
+					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE)) {
 
-					continue;
-				}
+				scopedConfigurations.add(scopedConfiguration);
 
-				if (_isApplicable(scopedConfiguration, companyId)) {
-					scopedConfigurations.add(scopedConfiguration);
-				}
+				continue;
+			}
+
+			if (_isApplicable(scopedConfiguration, companyId)) {
+				scopedConfigurations.add(scopedConfiguration);
 			}
 		}
 

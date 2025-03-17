@@ -42,7 +42,6 @@
 					productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?accountId=${accountEntryId}&nestedFields=productSpecifications,categories")
 
 					productCategories = productDetail.categories
-					productSpecifications = productDetail.productSpecifications
 				/>
 
 				<a class="col-4" href="${friendlyURL}">
@@ -65,14 +64,6 @@
 									<#assign categoryCount++ />
 								</#list>
 							</#if>
-
-							<div class="align-items-end product-specs d-flex justify-content-start mt-3">
-								<#list productSpecifications as spec>
-									<#if spec??>
-										<p class="product-spec text-uppercase mr-3 mb-0">${spec.value}</p>
-									</#if>
-								</#list>
-							</div>
 						</div>
 					</div>
 				</a>

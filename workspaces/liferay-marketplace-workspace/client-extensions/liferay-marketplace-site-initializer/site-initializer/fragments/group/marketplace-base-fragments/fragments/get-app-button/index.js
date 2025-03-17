@@ -60,6 +60,44 @@ const openFragmentModal = () => {
 	});
 };
 
+const getProductPrice = (product) => {
+	const {productSpecifications = []} = product;
+
+	if (isFreeApp(productSpecifications)) {
+		return 'Free';
+	}
+
+	const skus = product.skus.filter(({purchasable}) => purchasable);
+
+	const hasTrialSku = skus.some(({skuOptions}) =>
+		skuOptions.find((skuOption) =>
+			['trial', 'yes'].includes(skuOption.skuOptionValueKey)
+		)
+	);
+
+	const standardSku = skus.find(({skuOptions}) =>
+		skuOptions.some((skuOption) =>
+			['standard', 'no'].includes(skuOption.skuOptionValueKey)
+		)
+	);
+
+	const licenseType = productSpecifications.find(
+		(productSpecification) =>
+			productSpecification.specificationKey === 'license-type'
+	);
+
+	const licenseTypeText =
+		licenseType?.value === 'Perpetual' ? 'One-Time' : 'Annually';
+
+	const standardPrice = standardSku
+		? standardSku?.price?.priceFormatted?.replace(' ', '').replace(',', '.')
+		: '';
+
+	const price = `${hasTrialSku ? '30-day trial or' : ''} ${standardPrice}`;
+
+	return `${price} ${licenseTypeText}`;
+};
+
 const customizeGetAppButton = (product) => {
 	getAppButtonElement.onclick = () => {
 		if (isFragmentApp(product.productSpecifications)) {

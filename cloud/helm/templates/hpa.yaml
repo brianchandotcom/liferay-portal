@@ -2,29 +2,20 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
+    {{- with .Values.autoscaling.annotations }}
+    annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     labels:
         {{- include "liferay.labels" . | nindent 8 }}
     name: {{ include "liferay.name" . }}
     namespace: {{ include "liferay.namespace" . }}
 spec:
     maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+    {{- with .Values.autoscaling.metrics }}
     metrics:
-        {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
-        - type: Resource
-          resource:
-              name: cpu
-              target:
-                  type: Utilization
-                  averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
-        {{- end }}
-        {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
-        - type: Resource
-          resource:
-              name: memory
-              target:
-                  type: Utilization
-                  averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     minReplicas: {{ .Values.autoscaling.minReplicas }}
     scaleTargetRef:
         apiVersion: apps/v1

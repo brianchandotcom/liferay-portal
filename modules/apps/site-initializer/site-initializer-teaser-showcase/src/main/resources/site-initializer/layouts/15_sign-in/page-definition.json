@@ -215,7 +215,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "secondary"
+			"key": "primary"
 		}
 	},
 	"version": 1.1

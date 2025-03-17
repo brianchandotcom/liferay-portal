@@ -20,6 +20,7 @@ import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -51,6 +52,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryVersionService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -824,6 +826,33 @@ public class DefaultObjectEntryManagerImpl
 		return updateObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntryId,
 			existingObjectEntry);
+	}
+
+	@Override
+	public ObjectEntry restoreObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId,
+			Integer version)
+		throws Exception {
+
+		return _restoreVersionedObjectEntry(
+			dtoConverterContext, objectDefinition,
+			getObjectEntryByVersion(
+				dtoConverterContext, objectEntryId, version));
+	}
+
+	@Override
+	public ObjectEntry restoreObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Integer version)
+		throws Exception {
+
+		return _restoreVersionedObjectEntry(
+			dtoConverterContext, objectDefinition,
+			getObjectEntryByVersion(
+				dtoConverterContext, externalReferenceCode, objectDefinition,
+				version));
 	}
 
 	@Override
@@ -1743,6 +1772,31 @@ public class DefaultObjectEntryManagerImpl
 			primaryKey2, serviceContext);
 	}
 
+	private ObjectEntry _restoreVersionedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getCustomObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			if (ObjectFieldUtil.isReadOnly(
+					ddmExpressionFactory, objectField,
+					objectEntry.getProperties())) {
+
+				properties.remove(objectField.getName());
+			}
+		}
+
+		return updateObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry.getId(),
+			objectEntry);
+	}
+
 	private Date _toDate(Locale locale, String valueString) {
 		if (Validator.isNull(valueString)) {
 			return null;
@@ -2066,6 +2120,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelatedModelsProviderRegistry

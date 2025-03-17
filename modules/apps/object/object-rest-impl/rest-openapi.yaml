@@ -487,6 +487,31 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
+    "/by-external-reference-code/{externalReferenceCode}/by-version/{version}/restore":
+        put:
+            operationId: putByExternalReferenceCodeByVersionRestore
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: version
+                  required: true
+                  schema:
+                      format: int32
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+            tags: ["ObjectEntry"]
     "/by-external-reference-code/{externalReferenceCode}/versions":
         get:
             operationId: getByExternalReferenceCodeVersionsPage
@@ -833,6 +858,32 @@ paths:
     "/{objectEntryId}/by-version/{version}":
         get:
             operationId: getObjectEntryByVersion
+            parameters:
+                - in: path
+                  name: objectEntryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: version
+                  required: true
+                  schema:
+                      format: int32
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+            tags: ["ObjectEntry"]
+    "/{objectEntryId}/by-version/{version}/restore":
+        put:
+            operationId: putObjectEntryByVersionRestore
             parameters:
                 - in: path
                   name: objectEntryId

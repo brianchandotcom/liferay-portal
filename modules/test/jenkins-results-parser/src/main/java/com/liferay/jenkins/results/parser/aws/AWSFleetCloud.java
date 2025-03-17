@@ -7,7 +7,11 @@ package com.liferay.jenkins.results.parser.aws;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Michael Hashimoto
@@ -92,6 +96,22 @@ public class AWSFleetCloud {
 
 	public JenkinsMaster getJenkinsMaster() {
 		return _jenkinsMaster;
+	}
+
+	public List<String> getLabels() {
+		List<String> labels = new ArrayList<>();
+
+		String labelString = getLabelString();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(labelString)) {
+			return labels;
+		}
+
+		for (String label : labelString.split(" ")) {
+			labels.add(label.trim());
+		}
+
+		return labels;
 	}
 
 	public String getLabelString() {

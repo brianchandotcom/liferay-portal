@@ -54,29 +54,30 @@ export class ${className} {
 				<#list operationData.parameters as parameter>
 					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
 				</#list>
-				<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size == 1)>
+			</#if>
+			<#if operationData.bodyParameters?has_content>
+				<#if (operationData.bodyParameters?keys?size == 1)>
 					<#list operationData.bodyParameters[firstRequestBodyContentType] as bodyParameter>
 						${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType},
 					</#list>
+				<#else>
+					requestBody:
+						<#list operationData.bodyParameters?keys as requestBodyContentType>
+							{
+								type: '${requestBodyContentType}',
+								parameters: {
+									<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
+										${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType}<#if bodyParameter?has_next>,</#if>
+									</#list>
+								}
+							}
+							<#if requestBodyContentType?has_next>
+								|
+							<#else>
+								,
+							</#if>
+						</#list>
 				</#if>
-			</#if>
-			<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size > 1)>
-				requestBody:
-					<#list operationData.bodyParameters?keys as requestBodyContentType>
-						{
-									type: '${requestBodyContentType}',
-									parameters: {
-										<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
-											${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType}<#if bodyParameter?has_next>,</#if>
-										</#list>
-									}
-						}
-						<#if requestBodyContentType?has_next>
-							|
-						<#else>
-							,
-						</#if>
-					</#list>
 			</#if>
 			headers?: {[name: string]: string}
 		): Promise<{
@@ -121,7 +122,11 @@ export class ${className} {
 			<#if operationData.bodyParameters?has_content>
 				let body;
 				<#if (operationData.bodyParameters?keys?size > 1)>
+					<#assign hasMultipartContentType = false />
 					<#list operationData.bodyParameters?keys as requestBodyContentType>
+						<#if requestBodyContentType == 'multipart/form-data'>
+							<#assign hasMultipartContentType = true />
+						</#if>
 						if (requestBody.type === '${requestBodyContentType}') {
 							<#if requestBodyContentType == 'multipart/form-data'>
 								const formData = new FormData();
@@ -169,9 +174,16 @@ export class ${className} {
 						}
 					</#if>
 					<#if operationData.bodyParameters?has_content>
-						,(requestBody && requestBody.type !== 'multipart/form-data') ? {
-							'Content-Type': requestBody.type
-						} : {}
+						<#if (operationData.bodyParameters?keys?size > 1)>
+							<#if hasMultipartContentType>
+								,(requestBody.type !== 'multipart/form-data') ?
+									{'Content-Type': requestBody.type} : {}
+							<#else>
+								,{'Content-Type': requestBody.type}
+							</#if>
+						<#elseif firstRequestBodyContentType != 'multipart/form-data'>
+							,{'Content-Type': ${firstRequestBodyContentType}}
+						</#if>
 					</#if>
 					,headers || {}
 					)

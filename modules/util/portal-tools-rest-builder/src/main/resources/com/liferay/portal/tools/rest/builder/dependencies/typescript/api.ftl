@@ -49,7 +49,7 @@ export class ${className} {
 		 </#if>
 		 * @param headers Optional custom request headers
 		 */
-		public async ${operationData.operationId}<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>Extended</#if>(
+		public async ${operationData.operationId}<#if operationData.bodyParameters?? && (operationData.bodyParameters?keys?size > 1)>WithContentType</#if>(
 			<#if operationData.parameters??>
 				<#list operationData.parameters as parameter>
 					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
@@ -237,7 +237,7 @@ export class ${className} {
 						</#if>
 						response: Response;
 					}> {
-						return this.${operationData.operationId}Extended(
+						return this.${operationData.operationId}WithContentType(
 							<#if operationData.parameters??>
 								<#list operationData.parameters as parameter>
 									${parameter.name},

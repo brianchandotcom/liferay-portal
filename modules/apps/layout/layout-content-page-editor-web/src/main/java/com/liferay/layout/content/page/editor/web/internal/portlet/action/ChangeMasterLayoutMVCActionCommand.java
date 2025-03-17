@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -15,6 +16,9 @@ import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUt
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -29,8 +33,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
+import com.liferay.style.book.util.StyleBookUtil;
+import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -90,8 +98,8 @@ public class ChangeMasterLayoutMVCActionCommand
 
 		if (masterLayoutPlid == 0) {
 			return JSONUtil.put(
-				"styleBook",
-				_getStyleBookJSONObject(updatedLayout, themeDisplay));
+				"styleBooks",
+				_getStyleBooksJSONArray(updatedLayout, themeDisplay));
 		}
 
 		LayoutStructure layoutStructure =
@@ -126,7 +134,7 @@ public class ChangeMasterLayoutMVCActionCommand
 		).put(
 			"masterLayoutData", layoutStructure.toJSONObject()
 		).put(
-			"styleBook", _getStyleBookJSONObject(updatedLayout, themeDisplay)
+			"styleBooks", _getStyleBooksJSONArray(updatedLayout, themeDisplay)
 		);
 	}
 
@@ -135,41 +143,91 @@ public class ChangeMasterLayoutMVCActionCommand
 		return false;
 	}
 
-	private JSONObject _getStyleBookJSONObject(
+	private JSONArray _getStyleBooksJSONArray(
 			Layout layout, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		StyleBookEntry defaultMasterStyleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(layout);
+		JSONArray styleBooksJSONArray = _jsonFactory.createJSONArray();
 
-		String defaultStyleBookEntryName = StringPool.BLANK;
-		String defaultStyleBookEntryImagePreviewURL = StringPool.BLANK;
+		List<StyleBookEntry> styleBookEntries = new ArrayList<>();
 
-		if (defaultMasterStyleBookEntry != null) {
-			defaultStyleBookEntryName = defaultMasterStyleBookEntry.getName();
-			defaultStyleBookEntryImagePreviewURL =
-				defaultMasterStyleBookEntry.getImagePreviewURL(themeDisplay);
+		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+			FrontendTokenDefinition frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					layout);
+
+			if (frontendTokenDefinition != null) {
+				styleBookEntries =
+					_styleBookEntryLocalService.getStyleBookEntries(
+						layout.getGroupId(),
+						frontendTokenDefinition.getThemeId());
+			}
+		}
+		else {
+			styleBookEntries = _styleBookEntryLocalService.getStyleBookEntries(
+				layout.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				StyleBookEntryNameComparator.getInstance(true));
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
-			"defaultStyleBookEntryImagePreviewURL",
-			defaultStyleBookEntryImagePreviewURL
-		).put(
-			"defaultStyleBookEntryName", defaultStyleBookEntryName
-		);
+		StyleBookEntry defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(layout);
 
-		StyleBookEntry styleBookEntry =
-			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(layout);
+		styleBooksJSONArray.put(
+			JSONUtil.put(
+				"imagePreviewURL",
+				() -> {
+					if (defaultStyleBookEntry != null) {
+						return defaultStyleBookEntry.getImagePreviewURL(
+							themeDisplay);
+					}
 
-		return jsonObject.put(
-			"styleBookEntryId", layout.getStyleBookEntryId()
-		).put(
-			"tokenValues",
-			StyleBookEntryUtil.getFrontendTokensValues(
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					layout.getLayoutSet()),
-				themeDisplay.getLocale(), styleBookEntry)
-		);
+					return StringPool.BLANK;
+				}
+			).put(
+				"name",
+				DefaultStyleBookEntryUtil.getStyleBookEntryName(
+					layout, themeDisplay.getLocale(),
+					StyleBookUtil.getStyleFromThemeStyleBookEntry(
+						layout, themeDisplay.getLocale()))
+			).put(
+				"styleBookEntryId", "0"
+			).put(
+				"subtitle",
+				() -> {
+					if (defaultStyleBookEntry != null) {
+						return defaultStyleBookEntry.getName();
+					}
+
+					return null;
+				}
+			).put(
+				"tokenValues",
+				StyleBookEntryUtil.getFrontendTokensValues(
+					_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+						layout),
+					themeDisplay.getLocale(), defaultStyleBookEntry)
+			));
+
+		for (StyleBookEntry styleBookEntry : styleBookEntries) {
+			styleBooksJSONArray.put(
+				JSONUtil.put(
+					"imagePreviewURL",
+					styleBookEntry.getImagePreviewURL(themeDisplay)
+				).put(
+					"name", styleBookEntry.getName()
+				).put(
+					"styleBookEntryId",
+					String.valueOf(styleBookEntry.getStyleBookEntryId())
+				).put(
+					"tokenValues",
+					StyleBookEntryUtil.getFrontendTokensValues(
+						_frontendTokenDefinitionRegistry.
+							getFrontendTokenDefinition(layout),
+						themeDisplay.getLocale(), styleBookEntry)
+				));
+		}
+
+		return styleBooksJSONArray;
 	}
 
 	@Reference
@@ -189,5 +247,8 @@ public class ChangeMasterLayoutMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

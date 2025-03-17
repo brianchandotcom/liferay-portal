@@ -32,10 +32,7 @@ export default function PageDesignOptionsSidebar() {
 	const selectedStyleBook = useStyleBook();
 	const setSelectedStyleBook = useSetStyleBook();
 
-	const [defaultStyleBook, setDefaultStyleBook] = useState({
-		imagePreviewURL: config.defaultStyleBookEntryImagePreviewURL,
-		name: config.defaultStyleBookEntryName,
-	});
+	const [styleBooks, setStyleBooks] = useState(config.styleBooks);
 
 	const masterLayoutPlid = useSelector(
 		(state) => state.masterLayout?.masterLayoutPlid
@@ -47,29 +44,44 @@ export default function PageDesignOptionsSidebar() {
 				changeMasterLayout({
 					masterLayoutPlid: masterLayout.masterLayoutPlid,
 				})
-			).then(({styleBook}) => {
-				const {
-					defaultStyleBookEntryImagePreviewURL,
-					defaultStyleBookEntryName,
-					styleBookEntryId,
-					tokenValues,
-				} = styleBook;
+			).then(({styleBooks}) => {
+				setStyleBooks(styleBooks);
 
-				setDefaultStyleBook({
-					imagePreviewURL: defaultStyleBookEntryImagePreviewURL,
-					name: defaultStyleBookEntryName,
-				});
+				if (Liferay.FeatureFlags['LPD-30204']) {
 
-				// Changing the master layout should only affect the selected stylebook
-				// only if styleBookEntryId is equal to 0 which means that the stylebook is
-				// inherited
+					// Changing the master layout should affect the selected
+					// stylebook if the selected styleBookEntryId is equal to 0
+					// which means that the stylebook is inherited or if the
+					// selected stylebook is not found in the available style
+					// books which means that the style book is based on a
+					// different theme
 
-				if (styleBookEntryId === '0') {
-					setSelectedStyleBook({styleBookEntryId, tokenValues});
+					if (
+						selectedStyleBook.styleBookEntryId === '0' ||
+						!(
+							styleBooks.findIndex(
+								(styleBook) =>
+									styleBook.styleBookEntryId ===
+									selectedStyleBook.styleBookEntryId
+							) >= 0
+						)
+					) {
+						setSelectedStyleBook({...styleBooks[0]});
+					}
+				}
+				else {
+
+					// Changing the master layout should only affect the
+					// selected stylebook if the styleBookEntryId is equal to 0
+					// which means that the stylebook is inherited
+
+					if (selectedStyleBook.styleBookEntryId === '0') {
+						setSelectedStyleBook({...styleBooks[0]});
+					}
 				}
 			});
 		},
-		[dispatch, setSelectedStyleBook]
+		[dispatch, selectedStyleBook.styleBookEntryId, setSelectedStyleBook]
 	);
 
 	const onSelectStyleBook = useCallback(
@@ -101,13 +113,15 @@ export default function PageDesignOptionsSidebar() {
 				masterLayoutPlid,
 				selectedStyleBook,
 				onSelectMasterLayout,
-				onSelectStyleBook
+				onSelectStyleBook,
+				styleBooks
 			),
 		[
 			masterLayoutPlid,
 			onSelectMasterLayout,
 			onSelectStyleBook,
 			selectedStyleBook,
+			styleBooks,
 		]
 	);
 
@@ -283,10 +297,9 @@ function getTabs(
 	masterLayoutPlid,
 	selectedStyleBook,
 	onSelectMasterLayout,
-	onSelectStyleBook
+	onSelectStyleBook,
+	styleBooks
 ) {
-	const styleBooks = config.styleBooks;
-
 	const tabs = [];
 
 	if (config.layoutType !== LAYOUT_TYPES.master) {

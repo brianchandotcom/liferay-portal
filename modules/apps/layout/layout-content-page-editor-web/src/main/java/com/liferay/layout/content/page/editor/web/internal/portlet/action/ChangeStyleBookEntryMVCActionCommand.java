@@ -10,6 +10,7 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -79,13 +80,24 @@ public class ChangeStyleBookEntryMVCActionCommand
 				layoutTypeSettingsUnicodeProperties.toString());
 		}
 
-		Group group = themeDisplay.getScopeGroup();
+		FrontendTokenDefinition frontendTokenDefinition = null;
 
-		FrontendTokenDefinition frontendTokenDefinition =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				_layoutSetLocalService.fetchLayoutSet(
-					themeDisplay.getSiteGroupId(),
-					group.isLayoutSetPrototype()));
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-30204")) {
+
+			frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					themeDisplay.getLayout());
+		}
+		else {
+			Group group = themeDisplay.getScopeGroup();
+
+			frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					_layoutSetLocalService.fetchLayoutSet(
+						themeDisplay.getSiteGroupId(),
+						group.isLayoutSetPrototype()));
+		}
 
 		StyleBookEntry styleBookEntry = null;
 

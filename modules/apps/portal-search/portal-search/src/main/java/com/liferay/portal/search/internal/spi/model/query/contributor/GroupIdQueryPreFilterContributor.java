@@ -65,37 +65,17 @@ public class GroupIdQueryPreFilterContributor
 				continue;
 			}
 
-			long parentGroupId = groupId;
-
-			if (group.isLayout()) {
-				parentGroupId = group.getParentGroupId();
-			}
-
-			groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
-
-			groupIds[i] = parentGroupId;
-
-			if (group.isLayout() || searchContext.isScopeStrict()) {
-				scopeGroupIdsTermsFilter.addValue(String.valueOf(groupId));
-			}
+			_addTermsFilters(
+				group, groupIds, groupIdsTermsFilter, groupId, i,
+				scopeGroupIdsTermsFilter, searchContext);
 		}
 
-		if ((groupIds.length == 1) && groupIdsTermsFilter.isEmpty() && (groupIds[0] >= 0)) {
-			Group group = _getGroup(groupIds[0]);
+		if ((groupIds.length == 1) && groupIdsTermsFilter.isEmpty() &&
+			(groupIds[0] >= 0)) {
 
-			long parentGroupId = groupIds[0];
-
-			if (group.isLayout()) {
-				parentGroupId = group.getParentGroupId();
-			}
-
-			groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
-
-			groupIds[0] = parentGroupId;
-
-			if (group.isLayout() || searchContext.isScopeStrict()) {
-				scopeGroupIdsTermsFilter.addValue(String.valueOf(groupIds[0]));
-			}
+			_addTermsFilters(
+				_getGroup(groupIds[0]), groupIds, groupIdsTermsFilter,
+				groupIds[0], 0, scopeGroupIdsTermsFilter, searchContext);
 		}
 
 		if (!groupIdsTermsFilter.isEmpty()) {
@@ -138,6 +118,26 @@ public class GroupIdQueryPreFilterContributor
 
 		if (ownerUserId > 0) {
 			booleanFilter.addRequiredTerm(Field.USER_ID, ownerUserId);
+		}
+	}
+
+	private void _addTermsFilters(
+		Group group, long[] groupIds, TermsFilter groupIdsTermsFilter,
+		long groupId, int i, TermsFilter scopeGroupIdsTermsFilter,
+		SearchContext searchContext) {
+
+		long parentGroupId = groupId;
+
+		if (group.isLayout()) {
+			parentGroupId = group.getParentGroupId();
+		}
+
+		groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
+
+		groupIds[i] = parentGroupId;
+
+		if (group.isLayout() || searchContext.isScopeStrict()) {
+			scopeGroupIdsTermsFilter.addValue(String.valueOf(groupId));
 		}
 	}
 

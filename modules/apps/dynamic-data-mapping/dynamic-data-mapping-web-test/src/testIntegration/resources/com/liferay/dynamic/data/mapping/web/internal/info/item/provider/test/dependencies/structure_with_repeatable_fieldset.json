@@ -74,6 +74,7 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
+			"rows": "[{\"columns\":[{\"fields\":[\"Text\"],\"size\":12}]},{\"columns\":[{\"fields\":[\"Image\"],\"size\":12}]}]",
 			"showLabel": true,
 			"type": "fieldset",
 			"upgradedStructure": false

@@ -802,9 +802,7 @@ public class TypeScriptClientUtil {
 					return "Date";
 				}
 				else if (Objects.equals(schema.getFormat(), "binary")) {
-					importClasses.add("RequestFile");
-
-					return "RequestFile";
+					return "File";
 				}
 			}
 

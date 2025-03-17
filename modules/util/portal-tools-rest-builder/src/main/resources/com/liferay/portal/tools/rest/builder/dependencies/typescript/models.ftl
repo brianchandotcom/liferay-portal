@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 <#list schemaMap?keys?sort as key>
 	import {${key}} from './${key?uncap_first}';
 </#list>
@@ -12,16 +10,6 @@ import localVarRequest from 'request';
  * @author ${configYAML.author}
  * @generated
  */
-
-export interface RequestDetailedFile {
-	options?: {
-		contentType?: string;
-		filename?: string;
-	};
-	value: Buffer;
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
 /* tslint:disable:no-unused-variable */
 const primitives = [

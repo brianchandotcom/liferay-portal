@@ -2,15 +2,11 @@ import {ObjectSerializer} from '../model/models';
 
 <#if importClasses??>
 	<#list importClasses?sort as import>
-		<#if stringUtil.equals(import, "RequestFile")>
-			<#assign importRequestFile = true />
-		<#else>
-			import {${import}} from '../model/${import?uncap_first}';
-		</#if>
+		import {${import}} from '../model/${import?uncap_first}';
 	</#list>
 </#if>
 
-import {HttpError<#if importRequestFile??>, RequestFile</#if>} from './apis';
+import {HttpError} from './apis';
 
 /**
  * @author ${configYAML.author}
@@ -111,7 +107,7 @@ export class ${className} {
 						<#if requestBodyContentType == 'multipart/form-data'>
 							const formData = new FormData();
 							<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
-								<#if stringUtil.equals(bodyParameter.dataType, "RequestFile")>
+								<#if stringUtil.equals(bodyParameter.dataType, "File")>
 									formData.append('${bodyParameter.name}', requestBody.parameters.${bodyParameter.name});
 								<#else>
 									formData.append('${bodyParameter.name}', JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));

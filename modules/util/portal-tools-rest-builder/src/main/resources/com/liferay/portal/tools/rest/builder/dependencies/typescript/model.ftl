@@ -1,5 +1,3 @@
-import {RequestFile} from './models';
-
 <#if importClasses??>
 	<#list importClasses?sort as import>
 		<#if import?lower_case != modelName?lower_case>

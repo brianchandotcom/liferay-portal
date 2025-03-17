@@ -90,7 +90,8 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 		}
 
 		try {
-			return _objectEntry.getTitleValue(LocaleUtil.toLanguageId(locale));
+			return _objectEntry.getTitleValue(
+				LocaleUtil.toLanguageId(locale), true);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

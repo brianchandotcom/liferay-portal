@@ -26,6 +26,7 @@ export enum EFilterType {
 }
 
 export enum ESelectionFilterSourceType {
+	ITEM_PROXY = 'ITEM_PROXY',
 	OBJECT_PICKLIST = 'OBJECT_PICKLIST',
 	API_REST_APPLICATION = 'API_REST_APPLICATION',
 }
@@ -135,7 +136,7 @@ export interface IFilterTypeProps {
 		Header: JSXElementConstructor<any>;
 	};
 	availableFieldsFilter: (field: IField) => boolean;
-	displayType: string;
+	displayType: string | ((filter: IFilter) => string);
 	fdsViewRelationship: string;
 	fdsViewRelationshipId: string;
 	label: string;

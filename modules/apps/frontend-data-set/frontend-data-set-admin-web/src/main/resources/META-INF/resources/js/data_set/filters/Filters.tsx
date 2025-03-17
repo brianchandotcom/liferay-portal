@@ -22,6 +22,7 @@ import {
 	EFieldFormat,
 	EFieldType,
 	EFilterType,
+	ESelectionFilterSourceType,
 	IDataSet,
 	IDateFilter,
 	IField,
@@ -73,7 +74,13 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 		availableFieldsFilter: (item: IField) =>
 			(item.type === EFieldType.STRING && !item.format) ||
 			item.type === EFieldType.INTEGER,
-		displayType: Liferay.Language.get('dynamic-filter'),
+		displayType: (filter: IFilter) => {
+			if (filter.sourceType === ESelectionFilterSourceType.ITEM_PROXY) {
+				return Liferay.Language.get('system-filter');
+			}
+
+			return Liferay.Language.get('selection-filter');
+		},
 		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTERS,
 		fdsViewRelationshipId:
 			OBJECT_RELATIONSHIP.DATA_SET_SELECTION_FILTERS_ID,
@@ -212,16 +219,26 @@ function Filters({
 			let filtersOrdered: FilterCollection = [];
 
 			Object.keys(FILTER_TYPES).forEach((type) => {
+				const filterTypeProps: IFilterTypeProps =
+					FILTER_TYPES[type as EFilterType];
+
 				const filtersArray =
-					responseJSON[
-						FILTER_TYPES[type as EFilterType].fdsViewRelationship
-					];
+					responseJSON[filterTypeProps.fdsViewRelationship];
 
 				filtersArray.forEach((filter: any) => {
+					let displayType: string = '';
+
+					if (typeof filterTypeProps.displayType === 'string') {
+						displayType = filterTypeProps.displayType;
+					}
+
+					if (typeof filterTypeProps.displayType === 'function') {
+						displayType = filterTypeProps.displayType(filter);
+					}
+
 					filtersOrdered.push({
 						...filter,
-						displayType:
-							FILTER_TYPES[type as EFilterType].displayType,
+						displayType,
 						filterType: type as EFilterType,
 					});
 				});

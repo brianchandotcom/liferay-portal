@@ -582,7 +582,9 @@ public class ImportSystemDataSetMVCResourceCommand
 					"from", jsonObject.getString("from")
 				).put(
 					"to", jsonObject.getString("to")
-				);
+				).put(
+					"type", fdsFilter.getEntityFieldType()
+				);;
 			}
 			else if (fdsFilter instanceof BaseSelectionFDSFilter) {
 				BaseSelectionFDSFilter selectionFdsFilter =

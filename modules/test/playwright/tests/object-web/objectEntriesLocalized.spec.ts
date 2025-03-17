@@ -1133,4 +1133,78 @@ test.describe('Required localized object fields', () => {
 			page.getByText('This field is required.', {exact: true})
 		).toBeVisible();
 	});
+
+	test('verify that labels of single/multi select picklist options are present when the field is required', async ({
+		apiHelpers,
+		formFieldsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
+
+		const {listTypeDefinitionItems, objectFields, titleObjectFieldName} =
+			await mockObjectFields({
+				apiHelpers,
+				localizeAllLocalizable: true,
+				objectFieldBusinessTypes: ['picklist', 'multiselectPicklist'],
+			});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				label: {
+					en_US: objectDefinitionLabel,
+				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+				titleObjectFieldName,
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.addObjectEntryButton.click();
+
+		await expect(
+			page.getByRole('button', {name: 'en-us'}).first()
+		).toBeVisible();
+
+		await formFieldsPage.addSelectItem(listTypeDefinitionItems[0], 0);
+
+		await formFieldsPage.addSelectItem(listTypeDefinitionItems[0], 1);
+
+		await expect(
+			page.getByText('This field is required.', {exact: true})
+		).not.toBeVisible();
+
+		await expect(
+			page.getByRole('gridcell', {
+				exact: true,
+				name: listTypeDefinitionItems[0],
+			})
+		).toBeVisible();
+
+		await page.getByRole('combobox').nth(1).click();
+
+		listTypeDefinitionItems.forEach((item) => {
+			expect(page.getByRole('option', {name: item})).toBeVisible();
+		});
+	});
 });

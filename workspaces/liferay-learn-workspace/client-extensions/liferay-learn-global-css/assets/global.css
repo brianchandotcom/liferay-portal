@@ -254,6 +254,12 @@ pre[class*='language-'] {
 	}
 
 	.education-home__section-header {
+		@media (max-width: 575px) {			
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+		}
+
 		background:
 			linear-gradient(
 				91.07deg,
@@ -1199,6 +1205,10 @@ pre[class*='language-'] {
 		vertical-align: middle;
 		width: 14px;
 	}
+
+	@media (max-width: 576px) {
+		max-width: fit-content;
+	}
 }
 
 .learn-nav-bar {
@@ -1610,6 +1620,13 @@ pre[class*='language-'] {
 	color: var(--color-neutral-10, #282934) !important;
 	font-size: 1.125rem;
 	text-transform: none;
+}
+
+
+.place-content-center {
+	* { 
+		place-content: center;
+	}
 }
 
 .search-bar-suggestions

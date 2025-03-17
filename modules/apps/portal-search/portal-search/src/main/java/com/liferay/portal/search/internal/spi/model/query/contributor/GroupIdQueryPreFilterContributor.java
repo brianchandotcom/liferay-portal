@@ -80,6 +80,24 @@ public class GroupIdQueryPreFilterContributor
 			}
 		}
 
+		if ((groupIds.length == 1) && groupIdsTermsFilter.isEmpty() && (groupIds[0] >= 0)) {
+			Group group = _getGroup(groupIds[0]);
+
+			long parentGroupId = groupIds[0];
+
+			if (group.isLayout()) {
+				parentGroupId = group.getParentGroupId();
+			}
+
+			groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
+
+			groupIds[0] = parentGroupId;
+
+			if (group.isLayout() || searchContext.isScopeStrict()) {
+				scopeGroupIdsTermsFilter.addValue(String.valueOf(groupIds[0]));
+			}
+		}
+
 		if (!groupIdsTermsFilter.isEmpty()) {
 			scopeBooleanFilter.add(
 				groupIdsTermsFilter, BooleanClauseOccur.MUST);

@@ -64,10 +64,13 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -713,16 +716,51 @@ public class LayoutsImporterTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksCountByPlid(
 				draftLayout.getGroupId(), draftLayout.getPlid()));
 
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					draftLayout.getGroupId(), draftLayout.getPlid());
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+		String pageElementJSON = JSONUtil.put(
+			"definition",
+			JSONUtil.put(
+				"widgetInstance",
+				JSONUtil.put(
+					"widgetName",
+					LayoutPageTemplateAdminWebPortletKeys.
+						LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_NONINSTANCEABLE_TEST_PORTLET))
+		).put(
+			"type", "Widget"
+		).toString();
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
+
+		try {
+			_layoutsImporter.importPageElement(
+				draftLayout, layoutStructure, layoutStructure.getMainItemId(),
+				pageElementJSON, 0, true,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
+			Assert.fail();
+		}
+		catch (PortletIdException portletIdException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portletIdException);
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				null, TestPropsValues.getUserId(), _group1.getGroupId(), 0,
 				draftLayout.getPlid(), RandomTestUtil.randomLocaleStringMap(),
 				false, new UnicodeProperties(true), _serviceContext1);
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					draftLayout.getGroupId(), draftLayout.getPlid());
 
 		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
 			_layoutPageTemplateStructureRelLocalService.
@@ -743,7 +781,7 @@ public class LayoutsImporterTest {
 						StringPool.BLANK, _serviceContext1);
 		}
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
+		layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructureRel.getData());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
@@ -751,18 +789,8 @@ public class LayoutsImporterTest {
 		try {
 			_layoutsImporter.importPageElement(
 				draftLayout, layoutStructure, layoutStructure.getMainItemId(),
-				JSONUtil.put(
-					"definition",
-					JSONUtil.put(
-						"widgetInstance",
-						JSONUtil.put(
-							"widgetName",
-							LayoutPageTemplateAdminWebPortletKeys.
-								LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_NONINSTANCEABLE_TEST_PORTLET))
-				).put(
-					"type", "Widget"
-				).toString(),
-				0, true, segmentsExperience.getSegmentsExperienceId());
+				pageElementJSON, 0, true,
+				segmentsExperience.getSegmentsExperienceId());
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -795,6 +823,25 @@ public class LayoutsImporterTest {
 			LayoutPageTemplateAdminWebPortletKeys.
 				LAYOUT_PAGE_TEMPLATE_ADMIN_WEB_NONINSTANCEABLE_TEST_PORTLET,
 			jsonObject.getString("portletId"));
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
+
+		try {
+			_layoutsImporter.importPageElement(
+				draftLayout, layoutStructure, layoutStructure.getMainItemId(),
+				pageElementJSON, 0, true,
+				segmentsExperience.getSegmentsExperienceId());
+
+			Assert.fail();
+		}
+		catch (PortletIdException portletIdException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portletIdException);
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test
@@ -1972,6 +2019,9 @@ public class LayoutsImporterTest {
 	private static final String _RESOURCES_PATH_PAGE_TEMPLATES =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
 			"/dependencies/page-templates";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutsImporterTest.class);
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;

@@ -5,7 +5,7 @@
 
 package com.liferay.info.field.item.selector.web.internal;
 
-import com.liferay.info.field.item.selector.criterion.InfoFieldItemSelectorCriterion;
+import com.liferay.info.field.item.selector.InfoFieldItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

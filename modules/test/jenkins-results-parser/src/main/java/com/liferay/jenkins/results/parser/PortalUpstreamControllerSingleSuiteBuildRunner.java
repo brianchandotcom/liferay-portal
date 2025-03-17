@@ -19,14 +19,19 @@ public class PortalUpstreamControllerSingleSuiteBuildRunner
 	}
 
 	@Override
-	protected String getJobURL(String testSuite) {
-		String jobName = "test-portal-upstream";
+	protected String getInvocationJobName() {
+		return "test-portal-upstream";
+	}
+
+	@Override
+	protected String getInvocationJobURL(String testSuite) {
+		String invocationJobName = getInvocationJobName();
 
 		String masterURL = null;
 
 		try {
 			masterURL = JenkinsResultsParserUtil.getBuildProperty(
-				jobName, testSuite);
+				invocationJobName, testSuite);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -39,7 +44,8 @@ public class PortalUpstreamControllerSingleSuiteBuildRunner
 				null, 1, 24, 2);
 		}
 
-		return JenkinsResultsParserUtil.combine(masterURL, "/job/", jobName);
+		return JenkinsResultsParserUtil.combine(
+			masterURL, "/job/", invocationJobName);
 	}
 
 }

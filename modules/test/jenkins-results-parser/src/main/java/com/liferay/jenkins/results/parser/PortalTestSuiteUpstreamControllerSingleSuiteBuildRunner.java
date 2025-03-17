@@ -80,11 +80,11 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 
 		String testSuiteName = buildData.getTestSuiteName();
 
-		String jobURL = getJobURL(testSuiteName);
+		String invocationJobURL = getInvocationJobURL(testSuiteName);
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(jobURL);
+		sb.append(invocationJobURL);
 
 		sb.append("/buildWithParameters?");
 
@@ -130,6 +130,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		invocationParameters.put(
 			"PORTAL_UPSTREAM_BRANCH_NAME",
 			buildData.getPortalUpstreamBranchName());
+		invocationParameters.put("SLAVE_LABEL", getSlaveLabel(testSuiteName));
 		invocationParameters.put(
 			"TEST_PORTAL_BUILD_PROFILE",
 			getTestPortalBuildProfile(testSuiteName));
@@ -184,7 +185,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		sb = new StringBuilder();
 
 		sb.append("<a href=\"");
-		sb.append(JenkinsResultsParserUtil.getRemoteURL(jobURL));
+		sb.append(JenkinsResultsParserUtil.getRemoteURL(invocationJobURL));
 		sb.append("\"><strong>IN QUEUE</strong></a>");
 		sb.append("<ul><li><strong>Git ID:</strong> ");
 		sb.append("<a href=\"https://github.com/");

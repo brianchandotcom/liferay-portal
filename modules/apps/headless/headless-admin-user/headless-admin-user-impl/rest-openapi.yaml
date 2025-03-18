@@ -1073,6 +1073,85 @@ components:
                     readOnly: true
                     type: string
             type: object
+        SharedAsset:
+            # @review
+            description:
+                Represents a shared asset.
+            properties:
+                actionIds:
+                    description:
+                        The shared asset actions.
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
+                assetType:
+                    description:
+                        The shared asset type.
+                    readOnly: true
+                    type: string
+                className:
+                    readOnly: true
+                    type: string
+                classPK:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The shared asset creator.
+                    readOnly: true
+                dateCreated:
+                    description:
+                        The shared asset creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The shared asset modified date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The shared asset external reference code.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The shared asset ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                shareable:
+                    description:
+                        Whether the shared asset is shareable or not
+                    readOnly: true
+                    type: boolean
+                siteName:
+                    description:
+                        The name of the site to which this shared asset is scoped.
+                    readOnly: true
+                    type: string
+                title:
+                    description:
+                        The shared asset title.
+                    readOnly: true
+                    type: string
+            type: object
         Site:
             # @review
             description:
@@ -4067,6 +4146,94 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
             tags: ["UserAccount"]
+    "/my-user-account/shared-assets/shared-by-me":
+        get:
+            operationId: getMyUserAccountSharedAssetsSharedByMePage
+            parameters:
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SharedAsset"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SharedAsset"
+                                type: array
+            tags: ["SharedAsset"]
+    "/my-user-account/shared-assets/shared-with-me":
+        get:
+            operationId: getMyUserAccountSharedAssetsSharedWithMePage
+            parameters:
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SharedAsset"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SharedAsset"
+                                type: array
+            tags: ["SharedAsset"]
     "/my-user-account/sites":
         get:
             operationId: getMyUserAccountSitesPage

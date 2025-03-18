@@ -663,7 +663,12 @@ public class FinderCacheImpl
 		}
 
 		boolean ctAware = false;
+
 		boolean sharded = false;
+
+		if (DBPartition.isPartitionEnabled()) {
+			sharded = DBPartition.isPartitionedModel(modelImplClassName);
+		}
 
 		ArgumentsResolverHolder argumentsResolverHolder =
 			_serviceTrackerMap.getService(modelImplClassName);

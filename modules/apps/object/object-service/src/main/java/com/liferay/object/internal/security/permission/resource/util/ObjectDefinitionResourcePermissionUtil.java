@@ -16,9 +16,11 @@ import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -62,28 +64,34 @@ public class ObjectDefinitionResourcePermissionUtil {
 			rootDescendantNodeObjectDefinitionClassNames,
 			standaloneObjectActions);
 
-		resourceActions.populateModelResources(document);
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				objectDefinition.getCompanyId())) {
 
-		Portlet portlet = portletLocalService.getPortletById(
-			objectDefinition.getCompanyId(), objectDefinition.getPortletId());
+			resourceActions.populateModelResources(document);
 
-		if (portlet != null) {
-			resourceActions.populatePortletResource(
-				portlet,
-				ObjectDefinitionResourcePermissionUtil.class.getClassLoader(),
-				document);
+			Portlet portlet = portletLocalService.getPortletById(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getPortletId());
+
+			if (portlet != null) {
+				resourceActions.populatePortletResource(
+					portlet,
+					ObjectDefinitionResourcePermissionUtil.class.
+						getClassLoader(),
+					document);
+			}
+
+			for (String rootDescendantNodeObjectDefinitionClassName :
+					rootDescendantNodeObjectDefinitionClassNames) {
+
+				resourceActions.removeModelResource(
+					rootDescendantNodeObjectDefinitionClassName,
+					ActionKeys.PERMISSIONS);
+			}
+
+			_objectDefinitionResourceActionDocumentsMap.put(
+				objectDefinition, document);
 		}
-
-		for (String rootDescendantNodeObjectDefinitionClassName :
-				rootDescendantNodeObjectDefinitionClassNames) {
-
-			resourceActions.removeModelResource(
-				rootDescendantNodeObjectDefinitionClassName,
-				ActionKeys.PERMISSIONS);
-		}
-
-		_objectDefinitionResourceActionDocumentsMap.put(
-			objectDefinition, document);
 	}
 
 	public static void populateRootDescendantNodeModelResources(
@@ -114,27 +122,33 @@ public class ObjectDefinitionResourcePermissionUtil {
 			objectDefinitionPersistence.findByPrimaryKey(
 				rootObjectDefinitionId);
 
-		resourceActions.populateModelResources(
-			SAXReaderUtil.read(
-				StringUtil.replace(
-					StringUtil.read(
-						ObjectDefinitionResourcePermissionUtil.class.
-							getClassLoader(),
-						"resource-actions/resource-actions-root-descendant-" +
-							"node.xml.tpl"),
-					new String[] {
-						"[$MODEL_NAME$]", "[$PERMISSIONS_GUEST_UNSUPPORTED$]",
-						"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]"
-					},
-					new String[] {
-						rootDescendantNodeObjectDefinition.getClassName(),
-						objectActionPermissionKeys, objectActionPermissionKeys,
-						rootObjectDefinition.getPortletId()
-					})));
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				rootObjectDefinition.getCompanyId())) {
 
-		resourceActions.removeModelResource(
-			rootDescendantNodeObjectDefinition.getClassName(),
-			ActionKeys.PERMISSIONS);
+			resourceActions.populateModelResources(
+				SAXReaderUtil.read(
+					StringUtil.replace(
+						StringUtil.read(
+							ObjectDefinitionResourcePermissionUtil.class.
+								getClassLoader(),
+							"resource-actions/resource-actions-root-" +
+								"descendant-node.xml.tpl"),
+						new String[] {
+							"[$MODEL_NAME$]",
+							"[$PERMISSIONS_GUEST_UNSUPPORTED$]",
+							"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]"
+						},
+						new String[] {
+							rootDescendantNodeObjectDefinition.getClassName(),
+							objectActionPermissionKeys,
+							objectActionPermissionKeys,
+							rootObjectDefinition.getPortletId()
+						})));
+
+			resourceActions.removeModelResource(
+				rootDescendantNodeObjectDefinition.getClassName(),
+				ActionKeys.PERMISSIONS);
+		}
 	}
 
 	public static void removeResourceActions(
@@ -182,19 +196,23 @@ public class ObjectDefinitionResourcePermissionUtil {
 			return;
 		}
 
-		resourceActions.removeModelResources(
-			SAXReaderUtil.read(
-				StringUtil.replace(
-					StringUtil.read(
-						ObjectDefinitionResourcePermissionUtil.class.
-							getClassLoader(),
-						"resource-actions/resource-actions-root-descendant-" +
-							"node.xml.tpl"),
-					new String[] {"[$MODEL_NAME$]", "[$PORTLET_NAME$]"},
-					new String[] {
-						rootDescendantNodeObjectDefinition.getClassName(),
-						rootObjectDefinition.getPortletId()
-					})));
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				rootObjectDefinition.getCompanyId())) {
+
+			resourceActions.removeModelResources(
+				SAXReaderUtil.read(
+					StringUtil.replace(
+						StringUtil.read(
+							ObjectDefinitionResourcePermissionUtil.class.
+								getClassLoader(),
+							"resource-actions/resource-actions-root-" +
+								"descendant-node.xml.tpl"),
+						new String[] {"[$MODEL_NAME$]", "[$PORTLET_NAME$]"},
+						new String[] {
+							rootDescendantNodeObjectDefinition.getClassName(),
+							rootObjectDefinition.getPortletId()
+						})));
+		}
 	}
 
 	private static String _getObjectActionPermissionKeys(

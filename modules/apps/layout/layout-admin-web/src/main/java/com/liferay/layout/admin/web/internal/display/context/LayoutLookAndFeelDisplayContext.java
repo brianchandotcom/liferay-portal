@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.List;
@@ -246,9 +248,18 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public String getStyleBookEntryName() {
+		StyleBookEntry styleBookEntry = null;
+
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		if (selLayout.getStyleBookEntryId() > 0) {
+			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				selLayout.getStyleBookEntryId());
+		}
+
 		return DefaultStyleBookEntryUtil.getStyleBookEntryName(
 			_layoutsAdminDisplayContext.getSelLayout(),
-			_themeDisplay.getLocale(), null);
+			_themeDisplay.getLocale(), styleBookEntry);
 	}
 
 	public List<TabsItem> getTabsItems() {

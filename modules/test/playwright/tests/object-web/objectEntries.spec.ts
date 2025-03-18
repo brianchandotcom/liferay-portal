@@ -9,6 +9,7 @@ import {
 	ObjectField,
 	ObjectRelationship,
 	ObjectRelationshipApi,
+	ObjectValidationRuleApi,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -27,6 +28,8 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
+import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 import {getFDSDateFormat, getPageEditorDateFormat} from './utils/dateFormat';
 import evaluateKeepCheckingAfterFound from './utils/keepCheckingAfterFound';
@@ -323,6 +326,101 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 		await expect(page.getByText('ca-es', {exact: true})).toBeVisible();
 		await expect(page.getByText('ca-ES', {exact: true})).toBeVisible();
+	});
+});
+
+test.describe('Manage object entries through Object Definition widget', () => {
+	test('verify that previous validation alerts are removed from the page when editing the entry', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				className: 'com.liferay.object.model.ObjectDefinition#1234',
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+				titleObjectFieldName: 'textField',
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectValidationRuleApiClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleApi
+		);
+
+		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+			objectDefinition.externalReferenceCode,
+			{
+				active: true,
+				engine: 'ddm',
+				errorLabel: {
+					en_US: 'The field is empty',
+				},
+				name: {
+					en_US: 'Validation 1',
+				},
+				objectValidationRuleSettings: [],
+				script: 'not(isEmpty(textField))',
+				system: false,
+			}
+		);
+		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+			objectDefinition.externalReferenceCode,
+			{
+				active: true,
+				engine: 'ddm',
+				errorLabel: {
+					en_US: 'The URL is invalid',
+				},
+				name: {
+					en_US: 'Validation 2',
+				},
+				objectValidationRuleSettings: [],
+				script: 'isEmpty(textField) OR isURL(textField)',
+				system: false,
+			}
+		);
+
+		const objectDefinitionWidgetDefinition = getWidgetDefinition({
+			id: getRandomString(),
+			widgetName:
+				'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_1234',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				objectDefinitionWidgetDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await viewObjectEntriesPage.clickAddObjectEntry();
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(page.getByText('The field is empty')).toBeVisible();
+
+		const objectFieldValue = getRandomString();
+
+		await page.getByLabel('textField').fill(objectFieldValue);
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(page.getByText('The field is empty')).not.toBeVisible();
+		await expect(page.getByText('The URL is invalid')).toBeVisible();
 	});
 });
 

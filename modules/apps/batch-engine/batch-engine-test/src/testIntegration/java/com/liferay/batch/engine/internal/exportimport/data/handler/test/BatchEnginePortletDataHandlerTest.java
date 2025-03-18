@@ -243,11 +243,11 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry4);
 
-		Map<String, String[]> exportParams =
+		Map<String, String[]> parameterMap =
 			_getExportIndividualDeletionsParameterMap(
 				Collections.singletonList(_objectDefinition1));
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+		File file = _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					TestPropsValues.getUserId(),
@@ -255,7 +255,7 @@ public class BatchEnginePortletDataHandlerTest {
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildExportLayoutSettingsMap(
 							TestPropsValues.getUser(), _companyGroupId, false,
-							new long[0], exportParams)));
+							new long[0], parameterMap)));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -264,14 +264,14 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
-				_companyGroupId, larFile
+				_companyGroupId, file
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		exportParams = _getExportIndividualDeletionsParameterMap(
+		parameterMap = _getExportIndividualDeletionsParameterMap(
 			Collections.singletonList(_objectDefinition2));
 
-		larFile = _exportImportLocalService.exportLayoutsAsFile(
+		file = _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					TestPropsValues.getUserId(),
@@ -279,21 +279,21 @@ public class BatchEnginePortletDataHandlerTest {
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildExportLayoutSettingsMap(
 							TestPropsValues.getUser(), _companyGroupId, true,
-							new long[0], exportParams)));
+							new long[0], parameterMap)));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
-				_companyGroupId, larFile
+				_companyGroupId, file
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		exportParams = _getExportIndividualDeletionsParameterMap(
+		parameterMap = _getExportIndividualDeletionsParameterMap(
 			Arrays.asList(_objectDefinition1, _objectDefinition2));
 
-		larFile = _exportImportLocalService.exportLayoutsAsFile(
+		file = _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					TestPropsValues.getUserId(),
@@ -301,7 +301,7 @@ public class BatchEnginePortletDataHandlerTest {
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildExportLayoutSettingsMap(
 							TestPropsValues.getUser(), _companyGroupId, false,
-							new long[0], exportParams)));
+							new long[0], parameterMap)));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -311,7 +311,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
 			_classExternalReferenceCodesJSONArray(
-				_companyGroupId, larFile
+				_companyGroupId, file
 			).toString(),
 			JSONCompareMode.STRICT);
 	}

@@ -11,8 +11,6 @@ import com.liferay.asset.kernel.model.AssetTagGroupRel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.asset.service.base.AssetTagGroupRelLocalServiceBaseImpl;
 
@@ -35,20 +33,13 @@ public class AssetTagGroupRelLocalServiceImpl
 			return assetTagGroupRel;
 		}
 
-		assetTagGroupRel = createAssetTagGroupRel(
+		assetTagGroupRel = assetTagGroupRelPersistence.create(
 			counterLocalService.increment());
 
 		assetTagGroupRel.setGroupId(groupId);
 		assetTagGroupRel.setTagId(tagId);
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			assetTagGroupRel.setUuid(serviceContext.getUuid());
-		}
-
-		assetTagGroupRel = addAssetTagGroupRel(assetTagGroupRel);
+		assetTagGroupRel = assetTagGroupRelPersistence.update(assetTagGroupRel);
 
 		_reindexAssetTag(tagId);
 

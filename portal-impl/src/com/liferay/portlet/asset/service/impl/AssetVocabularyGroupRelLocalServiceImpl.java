@@ -37,7 +37,7 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 			return assetVocabularyGroupRel;
 		}
 
-		assetVocabularyGroupRel = createAssetVocabularyGroupRel(
+		assetVocabularyGroupRel = assetVocabularyGroupRelPersistence.create(
 			counterLocalService.increment());
 
 		assetVocabularyGroupRel.setGroupId(groupId);
@@ -50,7 +50,7 @@ public class AssetVocabularyGroupRelLocalServiceImpl
 			assetVocabularyGroupRel.setUuid(serviceContext.getUuid());
 		}
 
-		assetVocabularyGroupRel = addAssetVocabularyGroupRel(
+		assetVocabularyGroupRel = assetVocabularyGroupRelPersistence.update(
 			assetVocabularyGroupRel);
 
 		_reindexAssetVocabulary(vocabularyId);

@@ -167,7 +167,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -335,7 +334,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		OrganizationLocalService organizationLocalService,
 		OrganizationResource.Factory organizationResourceFactory,
 		PLOEntryLocalService ploEntryLocalService, Portal portal,
-		PortletPreferencesLocalService portletPreferencesLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
@@ -432,7 +430,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_organizationResourceFactory = organizationResourceFactory;
 		_ploEntryLocalService = ploEntryLocalService;
 		_portal = portal;
-		_portletPreferencesLocalService = portletPreferencesLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
@@ -2857,9 +2854,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 							draftLayout.getGroupId(),
 							new long[] {segmentsExperienceId},
 							draftLayout.getPlid());
-					_portletPreferencesLocalService.deletePortletPreferences(
-						0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						draftLayout.getPlid());
 				}
 
 				for (int i = 0; i < jsonArray.length(); i++) {
@@ -6118,8 +6112,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final OrganizationResource.Factory _organizationResourceFactory;
 	private final PLOEntryLocalService _ploEntryLocalService;
 	private final Portal _portal;
-	private final PortletPreferencesLocalService
-		_portletPreferencesLocalService;
 	private final Map<String, String> _releaseInfoStringUtilReplaceValues;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService

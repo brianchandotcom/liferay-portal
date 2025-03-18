@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -161,11 +160,11 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_objectfolderResourceFactory, _objectRelationshipLocalService,
 			_objectRelationshipResourceFactory, _organizationLocalService,
 			_organizationResourceFactory, _ploEntryLocalService, _portal,
-			_portletPreferencesLocalService, _resourceActionLocalService,
-			_resourcePermissionLocalService, _roleLocalService,
-			_sapEntryLocalService, _segmentsEntryLocalService,
-			_segmentsExperienceLocalService, siteBundle,
-			_bundleContext.getBundle(), _siteNavigationMenuItemLocalService,
+			_resourceActionLocalService, _resourcePermissionLocalService,
+			_roleLocalService, _sapEntryLocalService,
+			_segmentsEntryLocalService, _segmentsExperienceLocalService,
+			siteBundle, _bundleContext.getBundle(),
+			_siteNavigationMenuItemLocalService,
 			_siteNavigationMenuItemTypeRegistry,
 			_siteNavigationMenuLocalService,
 			_structuredContentFolderResourceFactory,
@@ -394,9 +393,6 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

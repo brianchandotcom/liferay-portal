@@ -89,6 +89,8 @@ public class OpenAPIResourceImpl {
 
 			add(SchemaResourceImpl.class);
 
+			add(ServiceProviderConfigResourceImpl.class);
+
 			add(UserResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

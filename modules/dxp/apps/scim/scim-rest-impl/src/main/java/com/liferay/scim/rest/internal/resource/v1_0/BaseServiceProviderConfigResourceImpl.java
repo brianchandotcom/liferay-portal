@@ -22,7 +22,7 @@ import com.liferay.portal.vulcan.util.UriInfoUtil;
 import com.liferay.scim.rest.dto.v1_0.Filter;
 import com.liferay.scim.rest.dto.v1_0.Operation;
 import com.liferay.scim.rest.dto.v1_0.User;
-import com.liferay.scim.rest.resource.v1_0.SchemaResource;
+import com.liferay.scim.rest.resource.v1_0.ServiceProviderConfigResource;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,51 +41,29 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseSchemaResourceImpl implements SchemaResource {
+public abstract class BaseServiceProviderConfigResourceImpl
+	implements ServiceProviderConfigResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/Schemas'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/ServiceProviderConfig'  -u 'test@liferay.com:test'
 	 */
-	@io.swagger.v3.oas.annotations.Operation(description = "Lists schemas.")
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Schema")}
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Gives serviceProviderConfig info."
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/v2/Schemas")
-	@javax.ws.rs.Produces("application/scim+json")
-	@Override
-	public Object getV2Schemas() throws Exception {
-		return null;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/scim/v1.0/v2/Schemas/{id}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
+	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "id"
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "ServiceProviderConfig"
 			)
 		}
 	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Schema")}
-	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/v2/Schemas/{id}")
+	@javax.ws.rs.Path("/v2/ServiceProviderConfig")
 	@javax.ws.rs.Produces("application/scim+json")
 	@Override
-	public Object getV2SchemaById(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
-			String id)
-		throws Exception {
-
+	public Object getV2ServiceProviderConfig() throws Exception {
 		return null;
 	}
 
@@ -288,6 +266,6 @@ public abstract class BaseSchemaResourceImpl implements SchemaResource {
 	protected SortParserProvider sortParserProvider;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseSchemaResourceImpl.class);
+		LogFactoryUtil.getLog(BaseServiceProviderConfigResourceImpl.class);
 
 }

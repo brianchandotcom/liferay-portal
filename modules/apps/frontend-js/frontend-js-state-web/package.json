@@ -2,7 +2,7 @@
 	"dependencies": {
 		"react": "18.2.0"
 	},
-	"main": "index.ts",
+	"main": "main/index.ts",
 	"name": "@liferay/frontend-js-state-web",
 	"scripts": {
 		"build": "node-scripts build",

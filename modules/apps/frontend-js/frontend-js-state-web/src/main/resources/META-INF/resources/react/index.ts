@@ -3,8 +3,4 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {default as State} from './State';
-export type {Atom, Selector} from './State';
-
 export {default as useLiferayState} from './hooks/useLiferayState';
-export type {Immutable} from './types';

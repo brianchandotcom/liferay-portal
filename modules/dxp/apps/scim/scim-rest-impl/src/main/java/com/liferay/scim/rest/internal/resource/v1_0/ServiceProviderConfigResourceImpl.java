@@ -11,15 +11,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.ServiceProviderConfigResource;
-
-import java.util.Map;
-
-import javax.ws.rs.core.Response;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -31,7 +25,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.ConflictException;
 import org.wso2.charon3.core.exceptions.InternalErrorException;
-import org.wso2.charon3.core.exceptions.NotFoundException;
 import org.wso2.charon3.core.protocol.ResponseCodeConstants;
 import org.wso2.charon3.core.protocol.SCIMResponse;
 import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
@@ -50,36 +43,7 @@ public class ServiceProviderConfigResourceImpl
 
 	@Override
 	public Object getV2ServiceProviderConfig() throws Exception {
-		return _buildResponse(_getSCIMResponse());
-	}
-
-	private Response _buildResponse(SCIMResponse scimResponse) {
-		Response.ResponseBuilder responseBuilder = Response.status(
-			scimResponse.getResponseStatus());
-
-		if (scimResponse.getResponseMessage() != null) {
-			responseBuilder.entity(scimResponse.getResponseMessage());
-		}
-
-		Map<String, String> map = scimResponse.getHeaderParamMap();
-
-		if (MapUtil.isNotEmpty(map)) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				responseBuilder.header(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return responseBuilder.build();
-	}
-
-	private Map<String, String> _getResponseHeaders() throws NotFoundException {
-		return HashMapBuilder.put(
-			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
-		).put(
-			SCIMConstants.LOCATION_HEADER,
-			AbstractResourceManager.getResourceEndpointURL(
-				SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT)
-		).build();
+		return ScimUtil.buildResponse(_getSCIMResponse());
 	}
 
 	private SCIMResponse _getSCIMResponse() throws Exception {
@@ -91,7 +55,9 @@ public class ServiceProviderConfigResourceImpl
 				serviceContext.getCompanyId(), _configurationAdmin);
 
 			return new SCIMResponse(
-				ResponseCodeConstants.CODE_OK, _read(), _getResponseHeaders());
+				ResponseCodeConstants.CODE_OK, _read(),
+				ScimUtil.getResponseHeaders(
+					SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT));
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(

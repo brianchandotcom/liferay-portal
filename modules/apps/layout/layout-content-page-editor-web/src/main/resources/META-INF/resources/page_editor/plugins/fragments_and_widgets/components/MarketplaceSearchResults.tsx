@@ -171,7 +171,7 @@ function SearchResults({
 
 	return (
 		<>
-			{!loading && results?.items.length ? (
+			{results?.items.length ? (
 				<ul
 					aria-label={Liferay.Language.get('marketplace-fragments')}
 					className="list-unstyled px-3"

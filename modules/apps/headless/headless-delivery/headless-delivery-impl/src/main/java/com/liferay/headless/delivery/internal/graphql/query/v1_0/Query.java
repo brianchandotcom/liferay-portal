@@ -27,7 +27,6 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
-import com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
@@ -56,7 +55,6 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
-import com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
@@ -267,14 +265,6 @@ public class Query {
 
 		_navigationMenuResourceComponentServiceObjects =
 			navigationMenuResourceComponentServiceObjects;
-	}
-
-	public static void setObjectEntryFolderResourceComponentServiceObjects(
-		ComponentServiceObjects<ObjectEntryFolderResource>
-			objectEntryFolderResourceComponentServiceObjects) {
-
-		_objectEntryFolderResourceComponentServiceObjects =
-			objectEntryFolderResourceComponentServiceObjects;
 	}
 
 	public static void setSitePageResourceComponentServiceObjects(
@@ -3250,38 +3240,6 @@ public class Query {
 			navigationMenuResource -> new NavigationMenuPage(
 				navigationMenuResource.getSiteNavigationMenuPermissionsPage(
 					Long.valueOf(siteKey), roleNames)));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetLibraryObjectEntryFolders(aggregation: ___, assetLibraryId: ___, filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ObjectEntryFolderPage assetLibraryObjectEntryFolders(
-			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
-			@GraphQLName("flatten") Boolean flatten,
-			@GraphQLName("search") String search,
-			@GraphQLName("aggregation") List<String> aggregations,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectEntryFolderResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectEntryFolderResource -> new ObjectEntryFolderPage(
-				objectEntryFolderResource.getAssetLibraryObjectEntryFoldersPage(
-					Long.valueOf(assetLibraryId), flatten, search,
-					_aggregationBiFunction.apply(
-						objectEntryFolderResource, aggregations),
-					_filterBiFunction.apply(
-						objectEntryFolderResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(
-						objectEntryFolderResource, sortsString))));
 	}
 
 	/**
@@ -6647,44 +6605,6 @@ public class Query {
 
 	}
 
-	@GraphQLName("ObjectEntryFolderPage")
-	public class ObjectEntryFolderPage {
-
-		public ObjectEntryFolderPage(Page objectEntryFolderPage) {
-			actions = objectEntryFolderPage.getActions();
-
-			facets = objectEntryFolderPage.getFacets();
-
-			items = objectEntryFolderPage.getItems();
-			lastPage = objectEntryFolderPage.getLastPage();
-			page = objectEntryFolderPage.getPage();
-			pageSize = objectEntryFolderPage.getPageSize();
-			totalCount = objectEntryFolderPage.getTotalCount();
-		}
-
-		@GraphQLField
-		protected Map<String, Map<String, String>> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
-
-		@GraphQLField
-		protected java.util.Collection<ObjectEntryFolder> items;
-
-		@GraphQLField
-		protected long lastPage;
-
-		@GraphQLField
-		protected long page;
-
-		@GraphQLField
-		protected long pageSize;
-
-		@GraphQLField
-		protected long totalCount;
-
-	}
-
 	@GraphQLName("SitePagePage")
 	public class SitePagePage {
 
@@ -7489,22 +7409,6 @@ public class Query {
 		navigationMenuResource.setRoleLocalService(_roleLocalService);
 	}
 
-	private void _populateResourceContext(
-			ObjectEntryFolderResource objectEntryFolderResource)
-		throws Exception {
-
-		objectEntryFolderResource.setContextAcceptLanguage(_acceptLanguage);
-		objectEntryFolderResource.setContextCompany(_company);
-		objectEntryFolderResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		objectEntryFolderResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		objectEntryFolderResource.setContextUriInfo(_uriInfo);
-		objectEntryFolderResource.setContextUser(_user);
-		objectEntryFolderResource.setGroupLocalService(_groupLocalService);
-		objectEntryFolderResource.setRoleLocalService(_roleLocalService);
-	}
-
 	private void _populateResourceContext(SitePageResource sitePageResource)
 		throws Exception {
 
@@ -7636,8 +7540,6 @@ public class Query {
 		_messageBoardThreadResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NavigationMenuResource>
 		_navigationMenuResourceComponentServiceObjects;
-	private static ComponentServiceObjects<ObjectEntryFolderResource>
-		_objectEntryFolderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SitePageResource>
 		_sitePageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>

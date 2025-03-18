@@ -56,9 +56,11 @@ export default function ManagementBar() {
 					</ClayLink>
 				</ManagementToolbar.Item>
 
-				<ManagementToolbar.Item>
-					<SaveButton />
-				</ManagementToolbar.Item>
+				{status !== 'published' ? (
+					<ManagementToolbar.Item>
+						<SaveButton />
+					</ManagementToolbar.Item>
+				) : null}
 
 				<ManagementToolbar.Item>
 					<PublishButton />
@@ -115,8 +117,6 @@ function SaveButton() {
 			),
 			type: 'success',
 		});
-
-		dispatch({type: 'save-structure'});
 	};
 
 	const onSave = async () => {
@@ -143,7 +143,7 @@ function SaveButton() {
 
 	return (
 		<AsyncButton
-			displayType={status === 'published' ? 'primary' : 'secondary'}
+			displayType="secondary"
 			label={Liferay.Language.get('save')}
 			onClick={onSave}
 		/>
@@ -162,10 +162,6 @@ function PublishButton() {
 	const status = useSelector(selectStructureStatus);
 	const structureId = useSelector(selectStructureId);
 
-	if (status === 'published') {
-		return null;
-	}
-
 	const onPublish = async () => {
 		const valid = validate();
 
@@ -174,15 +170,42 @@ function PublishButton() {
 		}
 
 		try {
-			await StructureService.updateStructure({
-				erc,
-				fields,
-				id: structureId,
-				label,
-				name,
-			});
+			if (status === 'new') {
+				const {id} = await StructureService.createStructure({
+					erc,
+					fields,
+					label,
+					name,
+				});
 
-			await StructureService.publishStructure({id: structureId});
+				await StructureService.publishStructure({id});
+
+				dispatch({id, type: 'publish-structure'});
+			}
+			else if (status === 'draft') {
+				await StructureService.updateStructure({
+					erc,
+					fields,
+					id: structureId,
+					label,
+					name,
+				});
+
+				await StructureService.publishStructure({id: structureId});
+
+				dispatch({type: 'publish-structure'});
+			}
+			else if (status === 'published') {
+				await StructureService.updateStructure({
+					erc,
+					fields,
+					id: structureId,
+					label,
+					name,
+				});
+
+				dispatch({type: 'publish-structure'});
+			}
 
 			openToast({
 				message: Liferay.Util.sub(
@@ -191,8 +214,6 @@ function PublishButton() {
 				),
 				type: 'success',
 			});
-
-			dispatch({type: 'publish-structure'});
 		}
 		catch (error) {
 			const {message} = error as Error;
@@ -203,7 +224,6 @@ function PublishButton() {
 
 	return (
 		<AsyncButton
-			disabled={status === 'new'}
 			displayType="primary"
 			label={Liferay.Language.get('publish')}
 			onClick={onPublish}

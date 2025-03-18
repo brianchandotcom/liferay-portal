@@ -796,8 +796,8 @@ public class SharingEntryLocalServiceImpl
 
 		if ((toUserGroupId > 0) && (toUserId > 0)) {
 			throw new InvalidSharingEntryUserAndUserGroupException(
-				"Creating a sharing entry for a user and a user group at the " +
-					"same time is not allowed");
+				"A sharing entry cannot be associated with a user and a user " +
+					"group at the same time");
 		}
 
 		if ((toUserId > 0) && (fromUserId == toUserId)) {

@@ -24,11 +24,7 @@
 		"supported": true
 	},
 	"meta": {
-		"created": "2025-03-13T00:00Z",
-		"lastModified": "2025-03-13T00:00Z",
-		"location": "https://example.com/v2/ServiceProviderConfig",
 		"resourceType": "ServiceProviderConfig",
-		"version": "1"
 	},
 	"patch": {
 		"supported": true

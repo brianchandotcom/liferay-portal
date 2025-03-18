@@ -81,15 +81,6 @@ public class ScimUtil {
 	public static final String LIFERAY_USER_SCHEMA_EXTENSION_URI =
 		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User";
 
-	public static Map<String, String> getResponseHeaders(String resourceName) throws NotFoundException {
-		return HashMapBuilder.put(
-			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
-		).put(
-			SCIMConstants.LOCATION_HEADER,
-			AbstractResourceManager.getResourceEndpointURL(resourceName)
-		).build();
-	}
-
 	public static Response buildResponse(SCIMResponse scimResponse) {
 		Response.ResponseBuilder responseBuilder = Response.status(
 			scimResponse.getResponseStatus());
@@ -107,6 +98,17 @@ public class ScimUtil {
 		}
 
 		return responseBuilder.build();
+	}
+
+	public static Map<String, String> getResponseHeaders(String resourceName)
+		throws NotFoundException {
+
+		return HashMapBuilder.put(
+			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
+		).put(
+			SCIMConstants.LOCATION_HEADER,
+			AbstractResourceManager.getResourceEndpointURL(resourceName)
+		).build();
 	}
 
 	public static ScimClientOAuth2ApplicationConfiguration

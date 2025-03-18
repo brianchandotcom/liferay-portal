@@ -11,12 +11,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.ServiceProviderConfigResource;
-
-import java.util.Map;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -28,7 +25,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.ConflictException;
 import org.wso2.charon3.core.exceptions.InternalErrorException;
-import org.wso2.charon3.core.exceptions.NotFoundException;
 import org.wso2.charon3.core.protocol.ResponseCodeConstants;
 import org.wso2.charon3.core.protocol.SCIMResponse;
 import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
@@ -60,7 +56,8 @@ public class ServiceProviderConfigResourceImpl
 
 			return new SCIMResponse(
 				ResponseCodeConstants.CODE_OK, _read(),
-				ScimUtil.getResponseHeaders(SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT));
+				ScimUtil.getResponseHeaders(
+					SCIMConstants.SERVICE_PROVIDER_CONFIG_ENDPOINT));
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(

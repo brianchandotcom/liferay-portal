@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.internal.util.ScimUtil;
@@ -44,7 +43,7 @@ import org.wso2.charon3.core.schema.SCIMConstants;
 	properties = "OSGI-INF/liferay/rest/v1_0/schema.properties",
 	scope = ServiceScope.PROTOTYPE, service = SchemaResource.class
 )
-public class 	SchemaResourceImpl extends BaseSchemaResourceImpl {
+public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 	@Override
 	public Object getV2SchemaById(String id) throws Exception {
@@ -103,7 +102,8 @@ public class 	SchemaResourceImpl extends BaseSchemaResourceImpl {
 			if (Validator.isNull(id)) {
 				return new SCIMResponse(
 					ResponseCodeConstants.CODE_OK, _getSchemasJSON(),
-					ScimUtil.getResponseHeaders(SCIMConstants.SCHEMAS_ENDPOINT));
+					ScimUtil.getResponseHeaders(
+						SCIMConstants.SCHEMAS_ENDPOINT));
 			}
 
 			String schemaJSON = _getSchemaJSON(id);
@@ -114,7 +114,8 @@ public class 	SchemaResourceImpl extends BaseSchemaResourceImpl {
 			}
 
 			return new SCIMResponse(
-				ResponseCodeConstants.CODE_OK, schemaJSON, ScimUtil.getResponseHeaders(SCIMConstants.SCHEMAS_ENDPOINT));
+				ResponseCodeConstants.CODE_OK, schemaJSON,
+				ScimUtil.getResponseHeaders(SCIMConstants.SCHEMAS_ENDPOINT));
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(

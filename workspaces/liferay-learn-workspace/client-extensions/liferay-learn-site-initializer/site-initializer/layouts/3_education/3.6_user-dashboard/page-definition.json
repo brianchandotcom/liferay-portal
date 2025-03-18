@@ -1,0 +1,251 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"cssClasses": [
+								"user-dashboard"
+							],
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"paddingTop": "4"
+									},
+									"indexed": true,
+									"layout": {
+										"paddingLeft": 2,
+										"paddingRight": 2,
+										"paddingTop": 2,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"header-banner"
+											],
+											"fragmentStyle": {
+												"borderRadius": "borderRadiusLg",
+												"height": "120px"
+											},
+											"indexed": true,
+											"layout": {
+												"contentDisplay": "FlexRow",
+												"justify": "SpaceBetween"
+											},
+											"name": "Header Banner"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"height": "120px",
+														"paddingBottom": "4",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "4"
+													},
+													"indexed": true,
+													"layout": {
+														"contentDisplay": "FlexRow",
+														"paddingBottom": 2,
+														"paddingLeft": 2,
+														"paddingRight": 2,
+														"paddingTop": 2
+													},
+													"name": "Header Content"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "user-banner",
+																"siteKey": "Guest"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+															],
+															"indexed": true,
+															"name": "LMS User Banner"
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/vectors/waves.svg$]"
+																		}
+																	}
+																},
+																"fragmentLink": {
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"paddingBottom": "4",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"paddingTop": "4"
+									},
+									"indexed": true,
+									"layout": {
+										"contentDisplay": "FlexRow",
+										"justify": "Center",
+										"paddingBottom": 2,
+										"paddingLeft": 2,
+										"paddingRight": 2,
+										"paddingTop": 2,
+										"widthType": "Fixed"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"container-user-dashboard"
+											],
+											"indexed": true,
+											"layout": {
+												"contentDisplay": "FlexRow",
+												"widthType": "Fixed"
+											}
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"user-information"
+													],
+													"fragment": {
+														"key": "lms-user-menu",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"fragmentStyle": {
+														"backgroundColor": "colorNeutral1",
+														"borderRadius": "borderRadiusLg",
+														"fontFamily": "\"Source Sans 3\"",
+														"marginRight": "4",
+														"maxHeight": "170px",
+														"paddingBottom": "4",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "4",
+														"width": "30%"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"indexed": true,
+													"layout": {
+														"widthType": "Fixed"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_dashboard_view"
+															}
+														},
+														"type": "Widget"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "page-loading-indicator",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"loadingTextKey": ""
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "liferay-learn"
+		},
+		"themeName": "Dialect"
+	},
+	"version": 1.1
+}

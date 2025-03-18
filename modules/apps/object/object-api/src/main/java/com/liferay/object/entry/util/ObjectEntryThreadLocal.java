@@ -33,6 +33,10 @@ public class ObjectEntryThreadLocal {
 		return _expandoBridgeAttributes.get();
 	}
 
+	public static Long getObjectEntryFolderId() {
+		return _objectEntryFolderId.get();
+	}
+
 	public static boolean isDisassociateRelatedModels() {
 		return _disassociateRelatedModels.get();
 	}
@@ -68,6 +72,12 @@ public class ObjectEntryThreadLocal {
 		_expandoBridgeAttributes.set(expandoValues);
 	}
 
+	public static SafeCloseable setObjectEntryFolderIdWithSafeCloseable(
+		Long objectEntryFolderId) {
+
+		return _objectEntryFolderId.setWithSafeCloseable(objectEntryFolderId);
+	}
+
 	public static void setSkipObjectEntryResourcePermission(
 		boolean skipObjectEntryResourcePermission) {
 
@@ -94,6 +104,9 @@ public class ObjectEntryThreadLocal {
 	private static final ThreadLocal<Map<String, Serializable>>
 		_expandoBridgeAttributes = new CentralizedThreadLocal<>(
 			ObjectEntryThreadLocal.class + "._expandoBridgeAttributes");
+	private static final CentralizedThreadLocal<Long> _objectEntryFolderId =
+		new CentralizedThreadLocal<>(
+			ObjectEntryThreadLocal.class + "._objectEntryFolderId", () -> null);
 	private static final ThreadLocal<Boolean>
 		_skipObjectEntryResourcePermission = new CentralizedThreadLocal<>(
 			ObjectEntryThreadLocal.class +

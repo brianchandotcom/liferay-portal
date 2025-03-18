@@ -66,16 +66,17 @@ public class GroupIdQueryPreFilterContributor
 			}
 
 			_addTermsFilters(
-				group, groupIds, groupIdsTermsFilter, groupId, i,
+				group, groupId, groupIds, groupIdsTermsFilter, i,
 				scopeGroupIdsTermsFilter, searchContext);
 		}
 
-		if ((groupIds.length == 1) && groupIdsTermsFilter.isEmpty() &&
-			(groupIds[0] >= 0)) {
+		if ((groupIds.length == 1) && (groupIds[0] > 0) &&
+			groupIdsTermsFilter.isEmpty()) {
 
 			_addTermsFilters(
-				_getGroup(groupIds[0]), groupIds, groupIdsTermsFilter,
-				groupIds[0], 0, scopeGroupIdsTermsFilter, searchContext);
+				_getGroup(groupIds[0]), groupIds[0], groupIds,
+				groupIdsTermsFilter, 0, scopeGroupIdsTermsFilter,
+				searchContext);
 		}
 
 		if (!groupIdsTermsFilter.isEmpty()) {
@@ -122,9 +123,9 @@ public class GroupIdQueryPreFilterContributor
 	}
 
 	private void _addTermsFilters(
-		Group group, long[] groupIds, TermsFilter groupIdsTermsFilter,
-		long groupId, int i, TermsFilter scopeGroupIdsTermsFilter,
-		SearchContext searchContext) {
+		Group group, long groupId, long[] groupIds,
+		TermsFilter groupIdsTermsFilter, int index,
+		TermsFilter scopeGroupIdsTermsFilter, SearchContext searchContext) {
 
 		long parentGroupId = groupId;
 
@@ -134,7 +135,7 @@ public class GroupIdQueryPreFilterContributor
 
 		groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
 
-		groupIds[i] = parentGroupId;
+		groupIds[index] = parentGroupId;
 
 		if (group.isLayout() || searchContext.isScopeStrict()) {
 			scopeGroupIdsTermsFilter.addValue(String.valueOf(groupId));

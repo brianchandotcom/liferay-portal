@@ -1518,7 +1518,6 @@ public class CompanyLocalServiceTest {
 		List<String> objectNames = new ArrayList<>();
 
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
-
 		String partitionName = CompanyLocalServiceTestUtil.getPartitionName(
 			companyId);
 

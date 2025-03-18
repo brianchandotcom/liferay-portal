@@ -40,6 +40,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
@@ -350,9 +351,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			Assert.assertEquals(
 				tableNames.size(), _getTablesCount(sourcePartitionName));
-
 			Assert.assertEquals(0, _getViewsCount(extractedPartitionName));
-
 			Assert.assertEquals(0, _getViewsCount(sourcePartitionName));
 
 			for (String tableName : tableNames) {
@@ -404,8 +403,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		insertPartitionRequiredData();
 
 		try {
-			HashMap<Long, List<String>> viewNames = new HashMap<>();
-			HashMap<Long, Integer> tablesCount = new HashMap<>();
+			Map<Long, Integer> tablesCount = new HashMap<>();
+			Map<Long, List<String>> viewNames = new HashMap<>();
 
 			for (long companyId : COMPANY_IDS) {
 				List<String> views = _getObjectNames(

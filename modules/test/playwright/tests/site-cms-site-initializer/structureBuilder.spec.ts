@@ -39,22 +39,21 @@ test(
 			name: label,
 		});
 
+		// Check we can't publish without adding a field
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('At least one field must be added'),
+			trigger: structureBuilderPage.saveButton,
+		});
+
 		// Save structure
+
+		await structureBuilderPage.addField('Text');
+		await structureBuilderPage.addField('Text');
 
 		const {id} = await structureBuilderPage.saveStructure();
 
 		await expect(page.locator('.alert-danger')).not.toBeVisible();
-
-		// Check we can't publish without adding a field
-
-		await expect(async () => {
-			await structureBuilderPage.publishStructure();
-		}).not.toPass();
-
-		// Add two fields
-
-		await structureBuilderPage.addField('Text');
-		await structureBuilderPage.addField('Text');
 
 		// Remove a field
 

@@ -6850,7 +6850,7 @@ information. Make sure to commit in all format-javadoc results.
 	<target name="js-unit">
 		<run-batch-test>
 			<test-action>
-				<property name="failure.count" value="0" />
+				<property name="js.unit.failure.count" value="0" />
 
 				<for delimiter=" " list="${modules.test.class.group}" param="modules.test.class" trim="true">
 					<sequential>
@@ -6866,10 +6866,10 @@ information. Make sure to commit in all format-javadoc results.
 								<echo>${gradle.failure}</echo>
 
 								<math
-									operand1="${failure.count}"
+									operand1="${js.unit.failure.count}"
 									operand2="1"
 									operation="+"
-									result="failure.count"
+									result="js.unit.failure.count"
 								/>
 							</catch>
 						</trycatch>
@@ -6892,10 +6892,10 @@ information. Make sure to commit in all format-javadoc results.
 
 				<if>
 					<not>
-						<equals arg1="${failure.count}" arg2="0" />
+						<equals arg1="${js.unit.failure.count}" arg2="0" />
 					</not>
 					<then>
-						<fail message="${failure.count} JS unit tests have failed." />
+						<fail message="${js.unit.failure.count} JS unit tests have failed." />
 					</then>
 				</if>
 			</test-action>

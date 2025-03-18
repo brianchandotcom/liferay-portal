@@ -10944,17 +10944,46 @@ send_user $expect_out(buffer)]]></echo>
 		<get-test-app-server-lib-portal-dir />
 
 		<if>
-			<equals arg1="${database.type}" arg2="mysql" />
+			<not>
+				<isset property="custom.database.url" />
+			</not>
 			<then>
-				<sql autocommit="${sql.autocommit}" classpath="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${sql.output.file}" password="${database.mysql.password}" print="true" showheaders="false" showtrailers="false" src="${sql.input.file}" url="${database.mysql.url}" userid="${database.mysql.username}" />
+				<get-testcase-property property.name="custom.database.url" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${database.type}" arg2="postgresql" />
+			<isset property="custom.database.url" />
 			<then>
-				<sql autocommit="${sql.autocommit}" classpath="${test.app.server.lib.portal.dir}/${jdbc.postgresql.driver}" driver="${database.postgresql.driver}" onerror="continue" output="${sql.output.file}" password="${database.postgresql.password}" print="true" showheaders="false" showtrailers="false" src="${sql.input.file}" url="${database.postgresql.url}" userid="${database.postgresql.username}" />
+				<if>
+					<equals arg1="${database.type}" arg2="mysql" />
+					<then>
+						<sql autocommit="${sql.autocommit}" classpath="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${sql.output.file}" password="${database.mysql.password}" print="true" showheaders="false" showtrailers="false" src="${sql.input.file}" url="${custom.database.url}" userid="${database.mysql.username}" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${database.type}" arg2="postgresql" />
+					<then>
+						<sql autocommit="${sql.autocommit}" classpath="${test.app.server.lib.portal.dir}/${jdbc.postgresql.driver}" driver="${database.postgresql.driver}" onerror="continue" output="${sql.output.file}" password="${database.postgresql.password}" print="true" showheaders="false" showtrailers="false" src="${sql.input.file}" url="${custom.database.url}" userid="${database.postgresql.username}" />
+					</then>
+				</if>
 			</then>
+			<else>
+				<if>
+					<equals arg1="${database.type}" arg2="mysql" />
+					<then>
+						<sql autocommit="${sql.autocommit}" classpath="${test.app.server.lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${sql.output.file}" password="${database.mysql.password}" print="true" showheaders="false" showtrailers="false" src="${sql.input.file}" url="${database.mysql.url}" userid="${database.mysql.username}" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${database.type}" arg2="postgresql" />
+					<then>
+						<sql autocommit="${sql.autocommit}" classpath="${test.app.server.lib.portal.dir}/${jdbc.postgresql.driver}" driver="${database.postgresql.driver}" onerror="continue" output="${sql.output.file}" password="${database.postgresql.password}" print="true" showheaders="false" showtrailers="false" src="${sql.input.file}" url="${database.postgresql.url}" userid="${database.postgresql.username}" />
+					</then>
+				</if>
+			</else>
 		</if>
 	</target>
 

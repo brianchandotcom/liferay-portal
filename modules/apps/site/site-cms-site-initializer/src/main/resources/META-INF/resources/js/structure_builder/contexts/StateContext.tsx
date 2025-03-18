@@ -61,7 +61,6 @@ type AddFieldAction = {field: Field; type: 'add-field'};
 
 type CreateStructureAction = {
 	id: number;
-	name: string;
 	type: 'create-structure';
 };
 
@@ -132,7 +131,6 @@ function reducer(state: State, action: Action): State {
 				...state,
 				error: INITIAL_STATE.error,
 				id: action.id,
-				name: action.name,
 				status: 'draft' as Status,
 			};
 		}

@@ -332,9 +332,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testExtractCompany() throws Exception {
 		long companyId = PortalInstancePool.getDefaultCompanyId();
 
-		String sourcePartitionName = getPartitionName(companyId);
-
 		try {
+			String sourcePartitionName = getPartitionName(companyId);
+
 			List<String> tableNames = _getObjectNames(
 				"TABLE", sourcePartitionName);
 
@@ -427,9 +427,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			extractDBPartitions();
 
 			for (long companyId : COMPANY_IDS) {
+				List<String> companyViewNames = viewNames.get(companyId);
 				String extractedPartitionName = getExtractedPartitionName(
 					companyId);
-				List<String> companyViewNames = viewNames.get(companyId);
 
 				Assert.assertEquals(
 					tablesCount.get(companyId) + companyViewNames.size(),
@@ -686,7 +686,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private int _getQuartzTableCount(long companyId, String tableName)
 		throws Exception {
 
-		String whereClause;
+		String whereClause = null;
 
 		if (StringUtil.endsWith(tableName, "JOB_DETAILS")) {
 			whereClause = " where job_name like '%@" + companyId + "'";
@@ -706,7 +706,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 
-		throw new Exception("Table does not exist");
+		throw new Exception(
+			StringBundler.concat(
+				"Company ID ", companyId, " and table name ", tableName,
+				" does not exist"));
 	}
 
 	private int _getTablesCount(String partitionName) throws Exception {

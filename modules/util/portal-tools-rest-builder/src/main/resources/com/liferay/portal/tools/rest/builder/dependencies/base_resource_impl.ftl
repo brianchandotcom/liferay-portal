@@ -397,19 +397,23 @@ public abstract class Base${schemaName}ResourceImpl
 					/>,
 					assetLibraryId, portletName, roleNames);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "PermissionsPage")>
-				<#assign generateGetPermissionCheckerMethods = true />
+				<#if freeMarkerTool.hasParameter(javaMethodSignature, "siteId")>
+					<#assign generateGetPermissionCheckerMethods = true />
 
-				String portletName = getPermissionCheckerPortletName(siteId);
+					String portletName = getPermissionCheckerPortletName(siteId);
 
-				PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
+					PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
 
-				return toPermissionPage(
-					<@getActions
-						resourceId="siteId"
-						resourceName="portletName"
-						source="Site" + schemaName
-					/>,
-					siteId, portletName, roleNames);
+					return toPermissionPage(
+						<@getActions
+							resourceId="siteId"
+							resourceName="portletName"
+							source="Site" + schemaName
+						/>,
+						siteId, portletName, roleNames);
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
 					<#assign generateGetPermissionCheckerMethods = true />
@@ -448,21 +452,25 @@ public abstract class Base${schemaName}ResourceImpl
 					/>
 				</@updateResourcePermissions>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "PermissionsPage")>
-				<#assign generateGetPermissionCheckerMethods = true />
+				<#if freeMarkerTool.hasParameter(javaMethodSignature, "siteId")>
+					<#assign generateGetPermissionCheckerMethods = true />
 
-				String portletName = getPermissionCheckerPortletName(siteId);
+					String portletName = getPermissionCheckerPortletName(siteId);
 
-				<@updateResourcePermissions
-					groupId = "siteId"
-					resourceId = "siteId"
-					resourceName = "portletName"
-				>
-					<@getActions
-						resourceId="siteId"
-						resourceName="portletName"
-						source="Site" + schemaName
-					/>
-				</@updateResourcePermissions>
+					<@updateResourcePermissions
+						groupId = "siteId"
+						resourceId = "siteId"
+						resourceName = "portletName"
+					>
+						<@getActions
+							resourceId="siteId"
+							resourceName="portletName"
+							source="Site" + schemaName
+						/>
+					</@updateResourcePermissions>
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||

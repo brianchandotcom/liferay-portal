@@ -135,7 +135,8 @@ public class DisplayPageActionDropdownItemsProvider {
 					).add(
 						() ->
 							_layoutPageTemplateEntry.isApproved() &&
-							(_layoutPageTemplateEntry.getClassNameId() > 0) &&
+							Validator.isNotNull(
+								_layoutPageTemplateEntry.getClassName()) &&
 							hasUpdatePermission,
 						_getMarkAsDefaultDisplayPageActionUnsafeConsumer()
 					).add(

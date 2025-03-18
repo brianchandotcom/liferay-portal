@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
@@ -348,12 +349,16 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			classNameId
 		).and(
 			() -> {
-				String searchClassName =
-					_infoSearchClassMapperRegistry.getSearchClassName(
-						_portal.getClassName(classNameId));
+				String className = _portal.fetchClassName(classNameId);
+
+				if (Validator.isNull(className)) {
+					return AssetEntryTable.INSTANCE.classNameId.eq(classNameId);
+				}
 
 				return AssetEntryTable.INSTANCE.classNameId.eq(
-					_portal.getClassNameId(searchClassName));
+					_portal.getClassNameId(
+						_infoSearchClassMapperRegistry.getSearchClassName(
+							className)));
 			}
 		).and(
 			AssetDisplayPageEntryTable.INSTANCE.layoutPageTemplateEntryId.eq(

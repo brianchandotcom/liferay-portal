@@ -228,6 +228,8 @@ public interface Portal {
 	 */
 	public String escapeRedirect(String url);
 
+	public String fetchClassName(long classNameId);
+
 	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *

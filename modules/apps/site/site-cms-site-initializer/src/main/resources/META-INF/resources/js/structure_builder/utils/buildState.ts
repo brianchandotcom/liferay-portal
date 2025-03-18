@@ -37,17 +37,24 @@ export default function buildState(
 
 		const uuid = getUuid();
 
-		fields.set(uuid, {
+		const field = {
 			erc: objectField.externalReferenceCode,
 			indexableConfig,
 			label: objectField.label,
+			listTypeDefinitionId: objectField.listTypeDefinitionId?.toString(),
 			localized: objectField.localized,
 			name: objectField.name,
 			required: objectField.required,
 			settings: getSettings(objectField),
 			type: DB_TYPE_FIELD_TYPE[objectField.DBType],
 			uuid,
-		});
+		};
+
+		if (objectField.businessType === 'Picklist') {
+			field.type = DB_TYPE_FIELD_TYPE.SingleSelect;
+		}
+
+		fields.set(uuid, field);
 	});
 
 	const isPublished = objectDefinition.status?.label === 'approved';

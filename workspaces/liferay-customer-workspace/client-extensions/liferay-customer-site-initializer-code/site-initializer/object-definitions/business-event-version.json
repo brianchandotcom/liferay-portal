@@ -19,7 +19,6 @@
 			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION_CHANGES",
 			"localized": false,
 			"name": "change",
-			"objectFieldSettings": [],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -39,132 +38,11 @@
 			},
 			"localized": false,
 			"name": "comment",
-			"objectFieldSettings": [],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
 			"state": false,
 			"system": false,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Create Date"
-			},
-			"localized": false,
-			"name": "createDate",
-			"objectFieldSettings": [],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Date",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Author"
-			},
-			"localized": false,
-			"name": "creator",
-			"objectFieldSettings": [],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "External Reference Code"
-			},
-			"localized": false,
-			"name": "externalReferenceCode",
-			"objectFieldSettings": [],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"indexed": true,
-			"indexedAsKeyword": true,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "ID"
-			},
-			"localized": false,
-			"name": "id",
-			"objectFieldSettings": [],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Long",
-			"unique": false
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Modified Date"
-			},
-			"localized": false,
-			"name": "modifiedDate",
-			"objectFieldSettings": [],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Date",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Status"
-			},
-			"localized": false,
-			"name": "status",
-			"objectFieldSettings": [],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
 			"type": "String",
 			"unique": false
 		}

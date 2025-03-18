@@ -739,6 +739,9 @@ public class OpenAPIParserUtil {
 					new AbstractMap.SimpleImmutableEntry<>("boolean", null),
 					Boolean.class.getName());
 				put(
+					new AbstractMap.SimpleImmutableEntry<>("customField", null),
+					"com.liferay.portal.vulcan.custom.field.CustomField");
+				put(
 					new AbstractMap.SimpleImmutableEntry<>("integer", "int32"),
 					Integer.class.getName());
 				put(

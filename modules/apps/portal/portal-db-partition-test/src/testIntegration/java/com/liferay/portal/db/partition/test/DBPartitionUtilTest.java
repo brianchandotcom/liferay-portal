@@ -345,7 +345,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			Assert.assertEquals(
 				_JOBS_COUNT, _getJobsCount(defaultPartitionName));
 
-			extractCompany(new long[] {companyId});
+			extractCompany(companyId);
 
 			String extractedPartitionName = getExtractedPartitionName(
 				companyId);

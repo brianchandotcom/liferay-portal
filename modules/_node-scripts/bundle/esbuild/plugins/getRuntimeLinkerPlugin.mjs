@@ -25,11 +25,11 @@ export default function getRuntimeLinkerPlugin(
 
 	const map = {};
 
-	map[path.posix.relative('.', path.resolve(mainEntryPoint))] = 'main';
+	map[path.posix.relative('.', path.resolve(mainEntryPoint))] = '';
 
 	for (const [submodule, submoduleEntryPoint] of Object.entries(submodules)) {
 		map[path.posix.relative('.', path.resolve(submoduleEntryPoint))] =
-			submodule;
+			`/${submodule}`;
 	}
 
 	// Return the plugin implementation
@@ -55,11 +55,11 @@ export default function getRuntimeLinkerPlugin(
 
 					const mapPath = map[fileRelPath];
 
-					if (!mapPath) {
+					if (mapPath === undefined) {
 						return undefined;
 					}
 
-					const moduleName = `${projectDescription.name}/${mapPath}`;
+					const moduleName = `${projectDescription.name}${mapPath}`;
 
 					return {
 						path: getImportBridgePath(moduleName, 'main'),

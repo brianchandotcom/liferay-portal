@@ -346,7 +346,7 @@ public class CustomFDSSerializer
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		return TransformUtil.transform(
+		List<FDSSortItem> customFDSSortItems = TransformUtil.transform(
 			getSortedRelatedObjectEntries(
 				fdsName, httpServletRequest,
 				(ObjectEntry objectEntry) -> _isActive(objectEntry),
@@ -374,6 +374,42 @@ public class CustomFDSSerializer
 					label
 				).build();
 			});
+
+		List<FDSSortItem> systemFDSSortItems =
+			_systemFDSSerializer.serializeSorts(fdsName, httpServletRequest);
+
+		List<FDSSortItem> fdsSortItems = new ArrayList<>();
+
+		for (FDSSortItem customFDSSortItem : customFDSSortItems) {
+			if (Objects.equals(
+					customFDSSortItem.get("direction"),
+					FDSEntryItemImportPolicy.GROUP_PROXY.toString())) {
+
+				fdsSortItems.addAll(
+					_systemFDSSerializer.serializeSorts(
+						fdsName, httpServletRequest));
+			}
+			else if (Objects.equals(
+						customFDSSortItem.get("direction"),
+						FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
+
+				for (FDSSortItem systemFDSSortItem : systemFDSSortItems) {
+					if (Objects.equals(
+							systemFDSSortItem.get("key"),
+							customFDSSortItem.get("key"))) {
+
+						fdsSortItems.add(systemFDSSortItem);
+
+						break;
+					}
+				}
+			}
+			else {
+				fdsSortItems.add(customFDSSortItem);
+			}
+		}
+
+		return fdsSortItems;
 	}
 
 	@Override

@@ -1049,7 +1049,8 @@ public class DDMStructureLocalServiceUtil {
 	}
 
 	public static String prepareLocalizedDefinitionForImport(
-		DDMStructure structure, java.util.Locale defaultImportLocale) {
+			DDMStructure structure, java.util.Locale defaultImportLocale)
+		throws PortalException {
 
 		return getService().prepareLocalizedDefinitionForImport(
 			structure, defaultImportLocale);

@@ -883,7 +883,8 @@ public interface DDMStructureLocalService
 		long groupId, long classNameId, String structureKey);
 
 	public String prepareLocalizedDefinitionForImport(
-		DDMStructure structure, Locale defaultImportLocale);
+			DDMStructure structure, Locale defaultImportLocale)
+		throws PortalException;
 
 	public void revertStructure(
 			long userId, long structureId, String version,

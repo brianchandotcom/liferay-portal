@@ -1353,8 +1353,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 		}
 
 		_updateUserUserGroups(
-			ldapImportContext.getLdapServerId(), user.getUserId(),
-			newUserGroupIds);
+			ldapImportContext.getLdapServerId(), newUserGroupIds,
+			user.getUserId());
 	}
 
 	private User _importUser(
@@ -2029,7 +2029,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 	}
 
 	private void _updateUserUserGroups(
-			long ldapServerId, long userId, Set<Long> userGroupIds)
+			long ldapServerId, Set<Long> userGroupIds, long userId)
 		throws Exception {
 
 		List<Long> deleteUserGroupIds = new ArrayList<>();

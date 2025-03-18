@@ -45,6 +45,7 @@ export class ObjectAdminApiHelper {
 	}
 
 	async postRandomObjectDefinition({
+		className,
 		objectFields,
 		objectFolderExternalReferenceCode,
 		panelCategoryKey,
@@ -52,6 +53,7 @@ export class ObjectAdminApiHelper {
 		status,
 		titleObjectFieldName,
 	}: {
+		className?: string;
 		objectFields?: Partial<ObjectField>[];
 		objectFolderExternalReferenceCode?: string;
 		panelCategoryKey?: string;
@@ -64,6 +66,7 @@ export class ObjectAdminApiHelper {
 
 		const requestBody: ObjectDefinition = {
 			active: true,
+			className,
 			externalReferenceCode: objectDefinitionExternalReferenceCode,
 			label: {
 				en_US: objectDefinitionExternalReferenceCode,

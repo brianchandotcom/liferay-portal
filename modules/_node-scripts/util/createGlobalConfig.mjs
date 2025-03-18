@@ -14,7 +14,7 @@ export async function createGlobalConfig(hashOnly = false) {
 
 	let allDependencies = {};
 	let allSymbols = {};
-	let allImports = {};
+	const allImports = {};
 
 	for (const projectDir of projectDirs) {
 		const {
@@ -49,18 +49,6 @@ export async function createGlobalConfig(hashOnly = false) {
 			allSymbols = {...allSymbols, ...symbols};
 		}
 	}
-
-	// Filters down modules to only those explicitly imported or if provides an export
-
-	allImports = Object.keys(allImports).reduce((acc, moduleName) => {
-		const val = allImports[moduleName];
-
-		if (val.length || allDependencies[moduleName]) {
-			acc[moduleName] = val;
-		}
-
-		return acc;
-	}, {});
 
 	const sha256 = crypto.createHash('sha256');
 

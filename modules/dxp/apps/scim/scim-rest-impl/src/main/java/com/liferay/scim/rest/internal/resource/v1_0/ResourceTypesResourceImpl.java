@@ -78,7 +78,19 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 		return responseBuilder.build();
 	}
 
-	private String _getResourceTypeJSON(String id) throws AbstractCharonException {
+	private Map<String, String> _getHeaders() throws NotFoundException {
+		return HashMapBuilder.put(
+			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
+		).put(
+			SCIMConstants.LOCATION_HEADER,
+			AbstractResourceManager.getResourceEndpointURL(
+				SCIMConstants.RESOURCE_TYPE_ENDPOINT)
+		).build();
+	}
+
+	private String _getResourceTypeJSON(String id)
+		throws AbstractCharonException {
+
 		if (_resourceTypesFlieName.containsKey(id)) {
 			JSONObject resourceTypeJSONObject = _read(
 				_resourceTypesFlieName.get(id));
@@ -116,16 +128,6 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 		).toString();
 	}
 
-	private Map<String, String> _getHeaders() throws NotFoundException {
-		return HashMapBuilder.put(
-			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
-		).put(
-			SCIMConstants.LOCATION_HEADER,
-			AbstractResourceManager.getResourceEndpointURL(
-				SCIMConstants.RESOURCE_TYPE_ENDPOINT)
-		).build();
-	}
-
 	private SCIMResponse _getSCIMResponse(String id) {
 		try {
 			ServiceContext serviceContext =
@@ -148,8 +150,7 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 			}
 
 			return new SCIMResponse(
-				ResponseCodeConstants.CODE_OK, resourceTypeJSON,
-				_getHeaders());
+				ResponseCodeConstants.CODE_OK, resourceTypeJSON, _getHeaders());
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(

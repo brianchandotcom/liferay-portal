@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLUtil;
@@ -76,7 +75,7 @@ public class FrontendTokenDefinitionRegistryImpl
 				layout.getCompanyId(), "LPD-30204")) {
 
 			cetExternalReferenceCode = _getCETExternalReferenceCode(
-				layout.getClassNameId(), layout.getClassPK());
+				layout.getClassNameId(), layout.getPlid());
 
 			if (cetExternalReferenceCode != null) {
 				return _getThemeCSSCETFrontendTokenDefinition(
@@ -84,25 +83,13 @@ public class FrontendTokenDefinitionRegistryImpl
 			}
 
 			if (layout.getMasterLayoutPlid() > 0) {
-				try {
-					Layout masterLayout = _layoutLocalService.getLayout(
-						layout.getMasterLayoutPlid());
+				cetExternalReferenceCode = _getCETExternalReferenceCode(
+					_portal.getClassNameId(Layout.class),
+					layout.getMasterLayoutPlid());
 
-					cetExternalReferenceCode = _getCETExternalReferenceCode(
-						masterLayout.getClassNameId(),
-						masterLayout.getClassPK());
-
-					if (cetExternalReferenceCode != null) {
-						return _getThemeCSSCETFrontendTokenDefinition(
-							masterLayout.getCompanyId(),
-							cetExternalReferenceCode);
-					}
-				}
-				catch (PortalException portalException) {
-					_log.error(
-						"Unable to get the master layout for layout with " +
-							"layoutId: " + layout.getLayoutId(),
-						portalException);
+				if (cetExternalReferenceCode != null) {
+					return _getThemeCSSCETFrontendTokenDefinition(
+						layout.getCompanyId(), cetExternalReferenceCode);
 				}
 			}
 		}
@@ -535,9 +522,6 @@ public class FrontendTokenDefinitionRegistryImpl
 		_frontendTokenDefinitionsDCLSingleton = new DCLSingleton<>();
 	private final Map<Long, Map<String, FrontendTokenDefinition>>
 		_frontendTokenDefinitionsMap = new ConcurrentHashMap<>();
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

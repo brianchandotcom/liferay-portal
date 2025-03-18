@@ -7,9 +7,12 @@ package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -17,6 +20,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -217,6 +221,58 @@ public class DepotAdminMembershipsDisplayContextTest {
 			0, depotAdminMembershipsDisplayContext.getDepotGroupsCount());
 	}
 
+	@Test
+	public void testGetInheritedDepotsGroupCount() throws Exception {
+		Organization organization = Mockito.mock(Organization.class);
+
+		List<Organization> organizations = Collections.singletonList(
+			organization);
+
+		Mockito.when(
+			_user.getOrganizations()
+		).thenReturn(
+			organizations
+		);
+
+		UserGroup userGroup = Mockito.mock(UserGroup.class);
+
+		List<UserGroup> userGroups = Collections.singletonList(userGroup);
+
+		Mockito.when(
+			_user.getUserGroups()
+		).thenReturn(
+			userGroups
+		);
+
+		List<Group> groups = Arrays.asList(
+			_getDepotGroup(), _getNondepotGroup());
+
+		MockedStatic<GroupLocalServiceUtil> groupLocalServiceUtilMockedStatic =
+			Mockito.mockStatic(GroupLocalServiceUtil.class);
+
+		groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.getOrganizationsRelatedGroups(
+				organizations)
+		).thenReturn(
+			groups
+		);
+
+		DepotAdminMembershipsDisplayContext
+			depotAdminMembershipsDisplayContext =
+				new DepotAdminMembershipsDisplayContext(
+					Mockito.mock(ItemSelector.class),
+					_getLiferayPortletRequest(
+						new ThemeDisplayBuilder(
+						).withPermissionChecker(
+							_getPermissionCheckerWithCompanyAdmin()
+						).build()),
+					null);
+
+		Assert.assertEquals(
+			1,
+			depotAdminMembershipsDisplayContext.getInheritedDepotGroupsCount());
+	}
+
 	private Group _getDepotGroup() {
 		Group group = Mockito.mock(Group.class);
 
@@ -248,6 +304,24 @@ public class DepotAdminMembershipsDisplayContextTest {
 		);
 
 		return liferayPortletRequest;
+	}
+
+	private Group _getNondepotGroup() {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.isSite()
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			group.isDepot()
+		).thenReturn(
+			false
+		);
+
+		return group;
 	}
 
 	private PermissionChecker _getPermissionCheckerWithCompanyAdmin() {

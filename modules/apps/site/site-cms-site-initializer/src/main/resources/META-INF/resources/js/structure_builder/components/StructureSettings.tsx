@@ -72,7 +72,9 @@ function StructureSettings() {
 				{Liferay.Language.get('content')}
 			</ClayLabel>
 
-			<ClayForm.Group className={classNames({'has-error': !label})}>
+			<ClayForm.Group
+				className={classNames('ml-n3', {'has-error': !label})}
+			>
 				<InputLocalized
 					aria-label={Liferay.Language.get('structure-label')}
 					className="form-control-inline structure-builder__title-input"

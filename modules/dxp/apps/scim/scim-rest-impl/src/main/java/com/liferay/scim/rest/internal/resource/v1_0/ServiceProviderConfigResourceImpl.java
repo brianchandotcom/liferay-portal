@@ -117,7 +117,7 @@ public class ServiceProviderConfigResourceImpl
 					URLUtil.toString(
 						bundle.getResource(
 							"META-INF/service-provider-config" +
-							"/service-provider-config.json")));
+								"/service-provider-config.json")));
 
 			JSONObject metaJSONObject =
 				serviceProviderConfigJSONObject.getJSONObject("meta");

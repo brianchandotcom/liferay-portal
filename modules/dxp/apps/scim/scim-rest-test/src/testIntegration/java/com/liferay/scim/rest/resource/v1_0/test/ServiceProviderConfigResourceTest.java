@@ -52,7 +52,7 @@ public class ServiceProviderConfigResourceTest
 
 		_pid = ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.scim.rest.internal.configuration." +
-			"ScimClientOAuth2ApplicationConfiguration",
+				"ScimClientOAuth2ApplicationConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", TestPropsValues.getCompanyId()
 			).put(

@@ -70,6 +70,17 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public Page<ObjectEntry> getObjectEntries(
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			Pagination pagination)
+		throws Exception;
+
+	public Page<ObjectEntry> getObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Pagination pagination)
+		throws Exception;
+
+	public Page<ObjectEntry> getObjectEntries(
 			long companyId, ObjectDefinition objectDefinition, String scopeKey,
 			Aggregation aggregation, DTOConverterContext dtoConverterContext,
 			Expression filterExpression, Pagination pagination, String search,
@@ -91,17 +102,6 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, Long objectEntryId,
 			String objectRelationshipName, Pagination pagination)
-		throws Exception;
-
-	public Page<ObjectEntry> getObjectEntryVersions(
-			DTOConverterContext dtoConverterContext, long objectEntryId,
-			Pagination pagination)
-		throws Exception;
-
-	public Page<ObjectEntry> getObjectEntryVersions(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Pagination pagination)
 		throws Exception;
 
 	public Page<Object> getRelatedSystemObjectEntries(

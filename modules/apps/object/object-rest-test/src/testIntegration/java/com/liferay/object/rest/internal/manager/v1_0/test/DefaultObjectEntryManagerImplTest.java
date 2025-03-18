@@ -4255,10 +4255,9 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition1, objectEntry1,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Page<ObjectEntry> page =
-			_defaultObjectEntryManager.getObjectEntryVersions(
-				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1, null);
+		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
+			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
+			_objectDefinition1, null);
 
 		assertEquals(
 			(List<ObjectEntry>)page.getItems(),
@@ -4279,7 +4278,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry1.getExternalReferenceCode(), _objectDefinition1,
 			objectEntry2, ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		page = _defaultObjectEntryManager.getObjectEntryVersions(
+		page = _defaultObjectEntryManager.getObjectEntries(
 			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1, null);
 

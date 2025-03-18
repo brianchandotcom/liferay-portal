@@ -542,7 +542,7 @@
 								"definition": {
 									"formConfig": {
 										"formReference": {
-											"className": "com.liferay.object.model.ObjectDefinition#B6M4",
+											"className": "[$OBJECT_DEFINITION_CLASS_NAME:UserExperience$]",
 											"classType": 0
 										},
 										"formType": "simple",

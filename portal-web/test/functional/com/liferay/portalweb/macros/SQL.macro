@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Execute ${sqlStatement} with autocommit ${autoCommit}"
-	macro executeSettingAutoCommitSQLStatement(autoCommit = null, sqlStatement = null, customDatabaseUrl = null) {
+	macro executeSettingAutoCommitSQLStatement(autoCommit = null, sqlStatement = null, customDatabaseURL = null) {
 		Variables.assertDefined(parameterList = "${autoCommit},${sqlStatement}");
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -63,8 +63,8 @@ definition {
 
 		FileUtil.write("${liferayHome}/${inputFile}", ${sqlStatement});
 
-		if (isSet(customDatabaseUrl)) {
-			AntCommands.runCommand("build-test.xml", "execute-sql -Dcustom.database.url=${customDatabaseUrl} -Dsql.autocommit=${autoCommit} -Dsql.input.file=${liferayHome}/${inputFile} -Dsql.output.file=${liferayHome}/${outputFile}");
+		if (isSet(customDatabaseURL)) {
+			AntCommands.runCommand("build-test.xml", "execute-sql -Dcustom.database.url=${customDatabaseURL} -Dsql.autocommit=${autoCommit} -Dsql.input.file=${liferayHome}/${inputFile} -Dsql.output.file=${liferayHome}/${outputFile}");
 		}
 		else {
 			AntCommands.runCommand("build-test.xml", "execute-sql -Dsql.autocommit=${autoCommit} -Dsql.input.file=${liferayHome}/${inputFile} -Dsql.output.file=${liferayHome}/${outputFile}");
@@ -76,12 +76,12 @@ definition {
 	}
 
 	@summary = "Execute ${sqlStatement}"
-	macro executeSQLStatement(sqlStatement = null, customDatabaseUrl = null) {
+	macro executeSQLStatement(sqlStatement = null, customDatabaseURL = null) {
 		Variables.assertDefined(parameterList = ${sqlStatement});
 
 		var result = SQL.executeSettingAutoCommitSQLStatement(
 			autoCommit = "false",
-			customDatabaseUrl = ${customDatabaseUrl},
+			customDatabaseURL = ${customDatabaseURL},
 			sqlStatement = ${sqlStatement});
 
 		return ${result};

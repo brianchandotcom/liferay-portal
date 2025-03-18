@@ -69,15 +69,17 @@ definition {
 		var databaseType = PropsUtil.get("database.type");
 
 		if (${databaseType} == "mysql") {
-			var originalDatabaseUrl = PropsUtil.get("database.mysql.url");
+			var originalDatabaseURL = PropsUtil.get("database.mysql.url");
 		}
 		else {
-			var originalDatabaseUrl = PropsUtil.get("database.postgresql.url");
+			var originalDatabaseURL = PropsUtil.get("database.postgresql.url");
 		}
 
-		var databaseUrl = StringUtil.replace(${originalDatabaseUrl}, "lportal", "lportal_target");
+		var databaseURL = StringUtil.replace(${originalDatabaseURL}, "lportal", "lportal_target");
 
-		var companyId = SQL.executeSQLStatement(sqlStatement = "SELECT companyId FROM Company LIMIT 1;", customDatabaseUrl = ${databaseUrl});
+		var companyId = SQL.executeSQLStatement(
+			customDatabaseURL = ${databaseURL},
+			sqlStatement = "SELECT companyId FROM Company LIMIT 1;");
 
 		return ${companyId};
 	}

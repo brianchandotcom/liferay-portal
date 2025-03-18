@@ -24,7 +24,7 @@
 		"supported": true
 	},
 	"meta": {
-		"resourceType": "ServiceProviderConfig",
+		"resourceType": "ServiceProviderConfig"
 	},
 	"patch": {
 		"supported": true

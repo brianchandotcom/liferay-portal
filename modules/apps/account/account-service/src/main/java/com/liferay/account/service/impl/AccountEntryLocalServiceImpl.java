@@ -189,6 +189,7 @@ public class AccountEntryLocalServiceImpl
 
 		accountEntry.setType(type);
 		accountEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		accountEntry.setExpandoBridgeAttributes(serviceContext);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
 
@@ -219,10 +220,6 @@ public class AccountEntryLocalServiceImpl
 			// Asset
 
 			_updateAsset(accountEntry, serviceContext);
-
-			// Expando
-
-			accountEntry.setExpandoBridgeAttributes(serviceContext);
 
 			workflowServiceContext = (ServiceContext)serviceContext.clone();
 		}
@@ -688,10 +685,7 @@ public class AccountEntryLocalServiceImpl
 
 		accountEntry.setTaxIdNumber(taxIdNumber);
 		accountEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		if (serviceContext != null) {
-			accountEntry.setExpandoBridgeAttributes(serviceContext);
-		}
+		accountEntry.setExpandoBridgeAttributes(serviceContext);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
 

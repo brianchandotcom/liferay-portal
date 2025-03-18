@@ -87,6 +87,7 @@ async function performLogin(
 export async function performLoginViaApi(
 	page: Page,
 	screenName: LoginScreenName | string,
+	loginUrl: string = liferayConfig.environment.baseUrl,
 	domain = '@liferay.com',
 	rememberMe = true
 ) {
@@ -99,16 +100,16 @@ export async function performLoginViaApi(
 	});
 
 	try {
-		await page.goto('/');
+		await page.goto(loginUrl);
 
-		const url = `${liferayConfig.environment.baseUrl}/c/portal/login`;
+		const url = `${loginUrl}/c/portal/login`;
 
 		await page.request.post(url, {
 			data: params.toString(),
 			headers: await getHeader(page, 'application/x-www-form-urlencoded'),
 		});
 
-		await page.goto('/');
+		await page.goto(loginUrl);
 
 		const apiHelpers = new ApiHelpers(page);
 

@@ -1,0 +1,19 @@
+{
+	"friendlyURL": "/education/verify-assessment",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "Verify Assessment"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -837,10 +837,13 @@ pre[class*='language-'] {
 		position: absolute;
 		right: 0;
 	}
+	
+	&:not(.has-font-weight-setted) h1 {
+		font-weight: 600;
+	}
 
 	h1 {
 		font-size: 3rem;
-		font-weight: 600;
 	}
 
 	p {

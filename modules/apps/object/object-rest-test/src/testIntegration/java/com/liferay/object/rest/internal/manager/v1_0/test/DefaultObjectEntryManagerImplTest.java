@@ -4256,7 +4256,7 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		Page<ObjectEntry> page =
-			_defaultObjectEntryManager.getObjectEntryVersions(
+			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1, null);
 
@@ -4279,7 +4279,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry1.getExternalReferenceCode(), _objectDefinition1,
 			objectEntry2, ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		page = _defaultObjectEntryManager.getObjectEntryVersions(
+		page = _defaultObjectEntryManager.getVersionedObjectEntries(
 			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1, null);
 

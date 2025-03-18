@@ -96,7 +96,7 @@ function SearchResultsPanel({searchValue}: {searchValue: string}) {
 			'filter': marketplaceRest.settings?.references?.fragmentsFilter,
 			'images.accountId': '-1',
 			'nestedFields': 'productSpecifications,skus,categories,images',
-			'page': String(page),
+			'page': `${page}`,
 			'pageSize': '20',
 			'search': searchValueRef.current,
 			'skus.accountId': '-1',
@@ -162,7 +162,12 @@ function SearchResults({
 	const listRef = useRef<HTMLUListElement | null>(null);
 
 	useEffect(() => {
-		if (listRef.current && results?.items.length) {
+		if (
+			listRef.current &&
+			results &&
+			results.page === 1 &&
+			results.items.length
+		) {
 			const firstListItem = listRef.current.firstChild as HTMLLIElement;
 
 			firstListItem?.focus();

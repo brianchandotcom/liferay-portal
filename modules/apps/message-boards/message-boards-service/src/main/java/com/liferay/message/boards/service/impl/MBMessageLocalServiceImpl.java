@@ -2358,12 +2358,23 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return uniqueUrlSubject;
 		}
 
-		if (!StringUtil.endsWith(uniqueUrlSubject, StringPool.DASH)) {
-			urlSubject = urlSubject + StringPool.DASH;
-		}
+		int maxLength = ModelHintsUtil.getMaxLength(
+			MBMessage.class.getName(), "urlSubject");
 
 		for (int i = 1; mbMessage != null; i++) {
-			uniqueUrlSubject = urlSubject + i;
+			String suffix = StringPool.DASH + i;
+
+			if (urlSubject.length() > (maxLength - suffix.length())) {
+				urlSubject = urlSubject.substring(
+					0, maxLength - suffix.length());
+			}
+
+			if (urlSubject.endsWith(StringPool.DASH)) {
+				uniqueUrlSubject = urlSubject + i;
+			}
+			else {
+				uniqueUrlSubject = urlSubject + suffix;
+			}
 
 			mbMessage = mbMessagePersistence.fetchByG_US(
 				groupId, uniqueUrlSubject);

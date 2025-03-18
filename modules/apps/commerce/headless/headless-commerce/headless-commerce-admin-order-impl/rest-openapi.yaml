@@ -256,9 +256,8 @@ components:
                     minimum: 0
                     type: integer
                 customFields:
-                    items:
-                        $ref: "#/components/schemas/CustomField"
-                    type: array
+                    additionalProperties: true
+                    type: object
                 deliveryTermDescription:
                     example: Orders delivery terms description
                     readOnly: true

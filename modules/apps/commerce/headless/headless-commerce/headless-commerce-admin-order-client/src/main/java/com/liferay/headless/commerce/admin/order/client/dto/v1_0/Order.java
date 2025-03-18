@@ -405,16 +405,16 @@ public class Order implements Cloneable, Serializable {
 
 	protected Long currencyId;
 
-	public CustomField[] getCustomFields() {
+	public Map<String, ?> getCustomFields() {
 		return customFields;
 	}
 
-	public void setCustomFields(CustomField[] customFields) {
+	public void setCustomFields(Map<String, ?> customFields) {
 		this.customFields = customFields;
 	}
 
 	public void setCustomFields(
-		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
+		UnsafeSupplier<Map<String, ?>, Exception> customFieldsUnsafeSupplier) {
 
 		try {
 			customFields = customFieldsUnsafeSupplier.get();
@@ -424,7 +424,7 @@ public class Order implements Cloneable, Serializable {
 		}
 	}
 
-	protected CustomField[] customFields;
+	protected Map<String, ?> customFields;
 
 	public String getDeliveryTermDescription() {
 		return deliveryTermDescription;

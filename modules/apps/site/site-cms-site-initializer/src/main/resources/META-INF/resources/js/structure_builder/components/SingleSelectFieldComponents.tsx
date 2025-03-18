@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
@@ -34,6 +35,9 @@ function FirstSectionComponent({field}: {field: Field}) {
 	const singleSelectField = field as SingleSelectField;
 
 	const [picklists, setPicklists] = useState<Picklist[]>([]);
+	const [selectedKey, setSelectedKey] = useState<React.Key>(
+		singleSelectField.listTypeDefinitionId
+	);
 
 	const dispatch = useStateDispatch();
 	const publishedFields = useSelector(selectPublishedFields);
@@ -74,28 +78,50 @@ function FirstSectionComponent({field}: {field: Field}) {
 						disabled={isPublished}
 						id={id}
 						items={picklists}
-						onSelectionChange={(
-							listTypeDefinitionId: React.Key
-						) => {
+						onSelectionChange={(selectedKey: React.Key) => {
 							dispatch({
-								listTypeDefinitionId:
-									listTypeDefinitionId as string,
+								listTypeDefinitionId: selectedKey as string,
 								type: 'update-field',
 								uuid: field.uuid,
 							});
+
+							setSelectedKey(selectedKey);
 						}}
-						selectedKey={singleSelectField.listTypeDefinitionId}
+						selectedKey={selectedKey}
 					>
 						{(item) => <Option key={item.id}>{item.name}</Option>}
 					</Picker>
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem shrink>
-					<ClayButton displayType="secondary">
-						{Liferay.Language.get('new-picklist')}
+					{selectedKey ? (
+						<ClayDropDownWithItems
+							items={[
+								{
+									label: Liferay.Language.get('edit'),
+									symbolLeft: 'pencil',
+								},
+								{type: 'divider'},
+								{
+									label: Liferay.Language.get('new-picklist'),
+									symbolRight: 'shortcut',
+								},
+							]}
+							trigger={
+								<ClayButtonWithIcon
+									displayType="secondary"
+									symbol="ellipsis-v"
+									title={Liferay.Language.get('more-actions')}
+								/>
+							}
+						/>
+					) : (
+						<ClayButton displayType="secondary">
+							{Liferay.Language.get('new-picklist')}
 
-						<ClayIcon className="ml-2" symbol="shortcut" />
-					</ClayButton>
+							<ClayIcon className="ml-2" symbol="shortcut" />
+						</ClayButton>
+					)}
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 		</ClayForm.Group>

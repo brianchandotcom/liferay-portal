@@ -418,7 +418,9 @@ public abstract class BaseOrderResourceImpl
 			existingOrder.setCurrencyId(order.getCurrencyId());
 		}
 
-		existingOrder.setCustomFields(order.getCustomFields());
+		if (order.getCustomFields() != null) {
+			existingOrder.setCustomFields(order.getCustomFields());
+		}
 
 		if (order.getDeliveryTermExternalReferenceCode() != null) {
 			existingOrder.setDeliveryTermExternalReferenceCode(

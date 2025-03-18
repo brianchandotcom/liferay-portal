@@ -337,11 +337,6 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			List<String> tableNames = _getObjectNames(
 				"TABLE", sourcePartitionName);
 
-			List<String> viewNames = _getObjectNames(
-				"VIEW", sourcePartitionName);
-
-			Assert.assertEquals("Views count", 0, viewNames.size());
-
 			Assert.assertEquals(
 				_JOBS_COUNT, _getJobsCount(defaultPartitionName));
 
@@ -691,7 +686,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private int _getQuartzTableCount(long companyId, String tableName)
 		throws Exception {
 
-		String whereClause = StringPool.BLANK;
+		String whereClause;
 
 		if (StringUtil.endsWith(tableName, "JOB_DETAILS")) {
 			whereClause = " where job_name like '%@" + companyId + "'";

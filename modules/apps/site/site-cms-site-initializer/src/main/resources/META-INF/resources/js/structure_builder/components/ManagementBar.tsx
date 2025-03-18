@@ -80,7 +80,7 @@ function SaveButton() {
 	const validate = useValidate();
 
 	const create = async () => {
-		const {id, name} = await StructureService.createStructure({
+		const {id} = await StructureService.createStructure({
 			erc: structureERC,
 			fields,
 			label,
@@ -95,7 +95,7 @@ function SaveButton() {
 			type: 'success',
 		});
 
-		dispatch({id, name, type: 'create-structure'});
+		dispatch({id, type: 'create-structure'});
 	};
 
 	const update = async () => {

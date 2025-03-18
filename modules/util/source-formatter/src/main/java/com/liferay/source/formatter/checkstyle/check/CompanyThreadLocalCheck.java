@@ -28,9 +28,69 @@ public class CompanyThreadLocalCheck extends BaseCheck {
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
 			log(methodCallDetailAST, _MSG_AVOID_SET_COMPANY_ID_CALL);
 		}
+
+		_checkMissingCloseCall(detailAST);
+	}
+
+	private void _checkMissingCloseCall(DetailAST detailAST) {
+		DetailAST variableDefinitionDetailAST = null;
+		String variableName = "";
+
+		List<DetailAST> methodCallDetailASTList = getMethodCalls(
+			detailAST, "CompanyThreadLocal",
+			new String[] {"lock", "setCompanyIdWithSafeCloseable"});
+
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			DetailAST parentDetailAST = methodCallDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.ASSIGN) {
+				variableName = getName(parentDetailAST);
+
+				if (variableName == null) {
+					continue;
+				}
+
+				variableDefinitionDetailAST = getVariableDefinitionDetailAST(
+					detailAST, variableName, true);
+
+				if (variableDefinitionDetailAST == null) {
+					continue;
+				}
+			}
+			else if (parentDetailAST.getType() == TokenTypes.EXPR) {
+				parentDetailAST = parentDetailAST.getParent();
+
+				if (parentDetailAST.getType() != TokenTypes.ASSIGN) {
+					continue;
+				}
+
+				parentDetailAST = parentDetailAST.getParent();
+
+				if (parentDetailAST.getType() != TokenTypes.VARIABLE_DEF) {
+					continue;
+				}
+
+				variableDefinitionDetailAST = parentDetailAST;
+
+				variableName = getName(variableDefinitionDetailAST);
+			}
+
+			methodCallDetailASTList = getMethodCalls(
+				detailAST, variableName, "close");
+
+			if (!methodCallDetailASTList.isEmpty()) {
+				continue;
+			}
+
+			log(
+				variableDefinitionDetailAST, _MSG_MISSING_CLOSE_CALL,
+				variableName);
+		}
 	}
 
 	private static final String _MSG_AVOID_SET_COMPANY_ID_CALL =
 		"set.company.id.call.avoid";
+
+	private static final String _MSG_MISSING_CLOSE_CALL = "close.call.missing";
 
 }

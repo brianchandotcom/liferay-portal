@@ -306,6 +306,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.CompanyThreadLocalCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on `CompanyThreadLocal`." />
+			<message key="close.call.missing" value="Missing calling &quot;close&quot; to variable &quot;{0}&quot;" />
 			<message key="set.company.id.call.avoid" value="Do not use &quot;CompanyThreadLocal.setCompanyId&quot;, use &quot;CompanyThreadLocal.lock&quot; or &quot;CompanyThreadLocal.setCompanyIdWithSafeCloseable&quot; instead" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ComponentAnnotationCheck">

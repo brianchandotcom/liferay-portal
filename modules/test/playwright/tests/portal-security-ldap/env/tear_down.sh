@@ -13,9 +13,9 @@ function main {
 }
 
 function ldap_tear_down {
-	ldapdelete -cx -D "cn=admin,dc=example,dc=com" -w "secret" -f ${CURRENT_DIR_NAME}/removeGroups.ldif
+	ldapdelete -cx -D "cn=admin,dc=example,dc=com" -f ${CURRENT_DIR_NAME}/removeGroups.ldif -w "secret"
 
-	ldapdelete -cx -D "cn=admin,dc=example,dc=com" -w "secret" -f ${CURRENT_DIR_NAME}/removeUsers.ldif
+	ldapdelete -cx -D "cn=admin,dc=example,dc=com" -f ${CURRENT_DIR_NAME}/removeUsers.ldif -w "secret"
 
 	kill -INT `cat /usr/local/var/run/slapd.pid`
 }

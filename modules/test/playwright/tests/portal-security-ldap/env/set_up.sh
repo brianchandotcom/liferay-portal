@@ -16,7 +16,7 @@ function ldap_set_up {
 		echo "Command succeeded"
 	fi
 
-	ldapadd -cx -D "cn=admin,dc=example,dc=com" -w "secret" -f ${CURRENT_DIR_NAME}/exampleCompany.ldif
+	ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${CURRENT_DIR_NAME}/exampleCompany.ldif -w "secret"
 
 	if [ $? -ne 0 ]; then
 		echo "Command failed with exit status $?"
@@ -24,7 +24,7 @@ function ldap_set_up {
 		echo "Command succeeded"
 	fi
 
-	ldapadd -cx -D "cn=admin,dc=example,dc=com" -w "secret" -f ${CURRENT_DIR_NAME}/admin.ldif
+	ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${CURRENT_DIR_NAME}/admin.ldif -w "secret"
 
 	if [ $? -ne 0 ]; then
 		echo "Command failed with exit status $?"
@@ -32,7 +32,7 @@ function ldap_set_up {
 		echo "Command succeeded"
 	fi
 
-	ldapadd -cx -D "cn=admin,dc=example,dc=com" -w "secret" -f ${CURRENT_DIR_NAME}/addUsers.ldif
+	ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${CURRENT_DIR_NAME}/addUsers.ldif -w "secret"
 
 	if [ $? -ne 0 ]; then
 		echo "Command failed with exit status $?"
@@ -40,7 +40,7 @@ function ldap_set_up {
 		echo "Command succeeded"
 	fi
 
-	ldapadd -cx -D "cn=admin,dc=example,dc=com" -w "secret" -f ${CURRENT_DIR_NAME}/addGroups.ldif
+	ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${CURRENT_DIR_NAME}/addGroups.ldif -w "secret"
 
 	if [ $? -ne 0 ]; then
 		echo "Command failed with exit status $?"

@@ -36,13 +36,6 @@ public class SharingEntrySearchPermissionFilterContributor
 			return;
 		}
 
-		TermsFilter sharedToUserIdTermsFilter = new TermsFilter(
-			"sharedToUserId");
-
-		sharedToUserIdTermsFilter.addValue(String.valueOf(userId));
-
-		booleanFilter.add(sharedToUserIdTermsFilter, BooleanClauseOccur.SHOULD);
-
 		TermsFilter sharedToUserGroupIdTermsFilter = new TermsFilter(
 			"sharedToUserGroupId");
 
@@ -54,6 +47,13 @@ public class SharingEntrySearchPermissionFilterContributor
 
 		booleanFilter.add(
 			sharedToUserGroupIdTermsFilter, BooleanClauseOccur.SHOULD);
+
+		TermsFilter sharedToUserIdTermsFilter = new TermsFilter(
+			"sharedToUserId");
+
+		sharedToUserIdTermsFilter.addValue(String.valueOf(userId));
+
+		booleanFilter.add(sharedToUserIdTermsFilter, BooleanClauseOccur.SHOULD);
 	}
 
 	@Reference

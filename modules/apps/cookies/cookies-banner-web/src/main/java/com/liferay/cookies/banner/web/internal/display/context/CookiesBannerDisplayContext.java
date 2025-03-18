@@ -11,6 +11,7 @@ import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryCo
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -103,6 +104,10 @@ public class CookiesBannerDisplayContext
 
 		if (Validator.isNotNull(privacyPolicyLink)) {
 			return privacyPolicyLink;
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-10588")) {
+			return StringPool.POUND;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

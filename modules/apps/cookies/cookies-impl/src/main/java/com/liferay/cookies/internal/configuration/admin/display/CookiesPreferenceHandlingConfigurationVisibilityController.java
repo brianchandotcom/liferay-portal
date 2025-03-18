@@ -7,6 +7,7 @@ package com.liferay.cookies.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationVisibilityController;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.io.Serializable;
 
@@ -28,7 +29,7 @@ public class CookiesPreferenceHandlingConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		return false;
+		return !FeatureFlagManagerUtil.isEnabled("LPD-10588");
 	}
 
 }

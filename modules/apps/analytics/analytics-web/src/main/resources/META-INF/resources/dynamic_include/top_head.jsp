@@ -20,6 +20,8 @@
 		<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS) %>;
 	var analyticsCookiesConsentMode =
 		<%= (boolean)request.getAttribute(AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE) %>;
+	var analyticsFeatureFlagEnabled =
+		<%= FeatureFlagManagerUtil.isEnabled("LPD-10588") %>;
 
 	var cookieManagers = {
 		'cookie.onetrust': {
@@ -91,7 +93,7 @@
 				return performanceCookieEnabled === 'true';
 			},
 			enabled: () => {
-				return Promise.resolve(true);
+				return Promise.resolve(analyticsFeatureFlagEnabled);
 			},
 			onConsentChange: (callbackFn) => {
 				Liferay.on('cookieBannerSetCookie', callbackFn);

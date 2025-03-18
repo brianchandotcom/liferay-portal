@@ -70,21 +70,22 @@ export default function ManagementBar() {
 
 function SaveButton() {
 	const dispatch = useStateDispatch();
+	const validate = useValidate();
+
+	const erc = useSelector(selectStructureERC);
 	const fields = useSelector(selectStructureFields);
 	const label = useSelector(selectStructureLabel);
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
+	const name = useSelector(selectStructureName);
 	const status = useSelector(selectStructureStatus);
 	const structureId = useSelector(selectStructureId);
-	const structureName = useSelector(selectStructureName);
-	const structureERC = useSelector(selectStructureERC);
-	const validate = useValidate();
 
 	const create = async () => {
 		const {id} = await StructureService.createStructure({
-			erc: structureERC,
+			erc,
 			fields,
 			label,
-			name: structureName,
+			name,
 		});
 
 		openToast({
@@ -100,11 +101,11 @@ function SaveButton() {
 
 	const update = async () => {
 		await StructureService.updateStructure({
-			erc: structureERC,
+			erc,
 			fields,
 			id: structureId,
 			label,
-			name: structureName,
+			name,
 		});
 
 		openToast({
@@ -151,14 +152,15 @@ function SaveButton() {
 
 function PublishButton() {
 	const dispatch = useStateDispatch();
+	const validate = useValidate();
+
 	const erc = useSelector(selectStructureERC);
 	const fields = useSelector(selectStructureFields);
-	const id = useSelector(selectStructureId);
 	const label = useSelector(selectStructureLabel);
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const name = useSelector(selectStructureName);
 	const status = useSelector(selectStructureStatus);
-	const validate = useValidate();
+	const structureId = useSelector(selectStructureId);
 
 	if (status === 'published') {
 		return null;
@@ -175,12 +177,12 @@ function PublishButton() {
 			await StructureService.updateStructure({
 				erc,
 				fields,
-				id,
+				id: structureId,
 				label,
 				name,
 			});
 
-			await StructureService.publishStructure({id});
+			await StructureService.publishStructure({id: structureId});
 
 			openToast({
 				message: Liferay.Util.sub(

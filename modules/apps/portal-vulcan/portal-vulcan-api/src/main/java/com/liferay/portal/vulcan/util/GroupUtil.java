@@ -32,27 +32,9 @@ public class GroupUtil {
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService) {
 
-		Group group = groupLocalService.fetchGroup(companyId, assetLibraryKey);
-
-		if (group == null) {
-			try {
-				DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
-					GetterUtil.getLong(assetLibraryKey));
-
-				if (depotEntry == null) {
-					return null;
-				}
-
-				group = depotEntry.getGroup();
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-
-				return null;
-			}
-		}
+		Group group = _getGroup(
+			assetLibraryKey, companyId, depotEntryLocalService,
+			groupLocalService);
 
 		if (_checkGroup(group)) {
 			return group.getGroupId();
@@ -101,6 +83,41 @@ public class GroupUtil {
 		}
 
 		return false;
+	}
+
+	private static Group _getGroup(
+		String assetLibraryKey, long companyId,
+		DepotEntryLocalService depotEntryLocalService,
+		GroupLocalService groupLocalService) {
+
+		Group group = groupLocalService.fetchGroup(
+			Long.valueOf(assetLibraryKey));
+
+		if (group != null) {
+			return group;
+		}
+
+		group = groupLocalService.fetchGroup(companyId, assetLibraryKey);
+
+		if (group != null) {
+			return group;
+		}
+
+		try {
+			DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
+				GetterUtil.getLong(assetLibraryKey));
+
+			if (depotEntry != null) {
+				return depotEntry.getGroup();
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	private static boolean _isDepotOrSite(Group group) {

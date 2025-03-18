@@ -35,7 +35,7 @@ export type State = {
 	invalids: Set<Uuid>;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
-	publishedFields: Set<Field['name']>;
+	publishedFields: Set<Uuid>;
 	selection: Uuid[];
 	status: Status;
 	uuid: Uuid;
@@ -177,7 +177,7 @@ function reducer(state: State, action: Action): State {
 				...state,
 				error: INITIAL_STATE.error,
 				publishedFields: new Set(
-					Array.from(state.fields.values()).map((field) => field.name)
+					Array.from(state.fields.values()).map((field) => field.uuid)
 				),
 				status: 'published' as Status,
 			};

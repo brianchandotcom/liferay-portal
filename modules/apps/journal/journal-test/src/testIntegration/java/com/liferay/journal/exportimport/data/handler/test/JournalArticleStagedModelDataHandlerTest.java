@@ -194,6 +194,83 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Test
+	public void testArticleKeepsExternalReferenceCode() throws Exception {
+		initExport();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalArticle);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(
+			journalArticle);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		boolean portletImportInProcess =
+			ExportImportThreadLocal.isPortletImportInProcess();
+
+		try {
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(
+				portletImportInProcess);
+		}
+
+		JournalArticle importedJournalArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			journalArticle.getExternalReferenceCode(),
+			importedJournalArticle.getExternalReferenceCode());
+
+		initExport();
+
+		journalArticle = JournalTestUtil.updateArticle(
+			journalArticle, RandomTestUtil.randomString());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalArticle);
+
+		initImport();
+
+		exportedStagedModel = readExportedStagedModel(journalArticle);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		portletImportInProcess =
+			ExportImportThreadLocal.isPortletImportInProcess();
+
+		try {
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(
+				portletImportInProcess);
+		}
+
+		importedJournalArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			journalArticle.getExternalReferenceCode(),
+			importedJournalArticle.getExternalReferenceCode());
+	}
+
+	@Test
 	public void testArticlesWithSameResourceUUID() throws Exception {
 		initExport();
 

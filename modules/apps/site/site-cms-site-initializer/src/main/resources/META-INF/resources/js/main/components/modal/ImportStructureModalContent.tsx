@@ -1,0 +1,44 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import ClayModal from '@clayui/modal';
+import React from 'react';
+
+export default function ImportStructureModalContent({
+	closeModal,
+}: {
+	closeModal: () => void;
+}) {
+	return (
+		<>
+			<ClayModal.Header>
+				{Liferay.Language.get('import-and-override-structure')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<h1>modal content for the import</h1>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={closeModal}
+							type="button"
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton displayType="primary">
+							{Liferay.Language.get('import-and-override')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+}

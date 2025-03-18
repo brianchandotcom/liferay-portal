@@ -5,6 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import importStructureAction from './actions/importStructureAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
@@ -40,6 +41,11 @@ export default function StructuresFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 			],
+		},
+		onActionDropdownItemClick({action}: {action: {data: {id: string}}}) {
+			if (action.data.id === 'import') {
+				importStructureAction();
+			}
 		},
 	};
 }

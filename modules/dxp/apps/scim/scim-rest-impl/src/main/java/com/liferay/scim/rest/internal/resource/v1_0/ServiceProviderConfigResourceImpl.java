@@ -101,7 +101,7 @@ public class ServiceProviderConfigResourceImpl
 			}
 
 			throw new InternalErrorException(
-				"Error reading service-provider-config.json file");
+				"Unable to read service-provider-config.json file");
 		}
 	}
 

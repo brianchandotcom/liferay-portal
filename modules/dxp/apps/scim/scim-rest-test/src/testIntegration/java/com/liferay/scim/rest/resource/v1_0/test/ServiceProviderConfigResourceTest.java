@@ -88,12 +88,10 @@ public class ServiceProviderConfigResourceTest
 		Assert.assertEquals(100, filterJSONObject.getInt("maxResults"));
 		Assert.assertTrue(filterJSONObject.getBoolean("supported"));
 
-		Assert.assertTrue(
-			serviceProviderConfigJSONObject.getJSONObject(
-				"patch"
-			).getBoolean(
-				"supported"
-			));
+		JSONObject patchJSONObject =
+			serviceProviderConfigJSONObject.getJSONObject("patch");
+
+		Assert.assertTrue(patchJSONObject.getBoolean("supported"));
 
 		JSONArray schemasJSONArray =
 			serviceProviderConfigJSONObject.getJSONArray("schemas");

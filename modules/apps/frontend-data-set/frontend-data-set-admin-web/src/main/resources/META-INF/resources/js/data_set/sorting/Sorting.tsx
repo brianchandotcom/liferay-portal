@@ -696,6 +696,11 @@ const Sorting = ({
 						actions={[
 							{
 								icon: 'pencil',
+								isVisible: ({item}: {item: any}): boolean =>
+									item?.orderType ===
+										ORDER_TYPE.ASCENDING.value ||
+									item?.orderType ===
+										ORDER_TYPE.DESCENDING.value,
 								label: Liferay.Language.get('edit'),
 								onClick: handleEdit,
 							},

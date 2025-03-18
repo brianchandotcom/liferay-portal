@@ -20,6 +20,9 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItem;
+import com.liferay.frontend.data.set.sort.FDSSorts;
+import com.liferay.frontend.data.set.sort.FDSSortsRegistry;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
@@ -187,6 +190,14 @@ public class ImportSystemDataSetMVCResourceCommand
 		if (ListUtil.isNotEmpty(fdsFilters)) {
 			_addFDSFilterObjectEntries(
 				fdsFilters, _portal.getHttpServletRequest(resourceRequest),
+				objectEntry);
+		}
+
+		FDSSorts fdsSorts = _fdsSortsRegistry.getFDSSorts(fdsName);
+
+		if (fdsSorts != null) {
+			_addFDSSortObjectEntries(
+				fdsSorts, _portal.getHttpServletRequest(resourceRequest),
 				objectEntry);
 		}
 
@@ -833,6 +844,87 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 	}
 
+	private void _addFDSSortObjectEntries(
+			FDSSorts fdsSorts, HttpServletRequest httpServletRequest,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		List<FDSSortItem> fdsSortItems = fdsSorts.getFDSSortItems(
+			httpServletRequest);
+
+		if (ListUtil.isEmpty(fdsSortItems)) {
+			return;
+		}
+
+		ObjectDefinition dataSetSortObjectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DATA_SET_SORT",
+					_portal.getCompanyId(httpServletRequest));
+
+		if (fdsSorts.getFDSEntryItemImportPolicy() !=
+				FDSEntryItemImportPolicy.GROUP_PROXY) {
+
+			for (FDSSortItem fdsSortItem : fdsSortItems) {
+				_objectEntryService.addObjectEntry(
+					0, dataSetSortObjectDefinition.getObjectDefinitionId(),
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					null,
+					HashMapBuilder.<String, Serializable>put(
+						"default",
+						() -> _getOptionalValue(fdsSortItem.get("active"))
+					).put(
+						"fieldName",
+						() -> _getOptionalValue(fdsSortItem.get("key"))
+					).put(
+						"label_i18n",
+						() -> _getLocalizeableValue(
+							dataSetSortObjectDefinition.getDefaultLanguageId(),
+							_getOptionalValue(fdsSortItem.get("label")))
+					).put(
+						"orderType",
+						() -> {
+							if (fdsSorts.getFDSEntryItemImportPolicy() ==
+									FDSEntryItemImportPolicy.DETACHED) {
+
+								return _getOptionalValue(
+									fdsSortItem.get("direction"));
+							}
+
+							return FDSEntryItemImportPolicy.ITEM_PROXY;
+						}
+					).put(
+						"r_dataSetToDataSetSorts_l_dataSetId",
+						objectEntry.getObjectEntryId()
+					).build(),
+					new ServiceContext());
+			}
+		}
+		else {
+			_objectEntryService.addObjectEntry(
+				0, dataSetSortObjectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"default", false
+				).put(
+					"fieldName", "*"
+				).put(
+					"label_i18n",
+					() -> _getLocalizeableValue(
+						dataSetSortObjectDefinition.getDefaultLanguageId(), "*")
+				).put(
+					"orderType", FDSEntryItemImportPolicy.GROUP_PROXY
+				).put(
+					"r_dataSetToDataSetSorts_l_dataSetId",
+					objectEntry.getObjectEntryId()
+				).build(),
+				new ServiceContext());
+		}
+	}
+
 	private Serializable _getLocalizeableValue(
 		String languageId, Object value) {
 
@@ -861,6 +953,9 @@ public class ImportSystemDataSetMVCResourceCommand
 
 	@Reference
 	private FDSItemsActionsRegistry _fdsItemsActionsRegistry;
+
+	@Reference
+	private FDSSortsRegistry _fdsSortsRegistry;
 
 	@Reference
 	private FDSViewRegistry _fdsViewRegistry;

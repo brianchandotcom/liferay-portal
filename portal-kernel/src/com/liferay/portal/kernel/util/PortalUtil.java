@@ -255,6 +255,10 @@ public class PortalUtil {
 		return _portal.escapeRedirect(url);
 	}
 
+	public static String fetchClassName(long classNameId) {
+		return _portal.fetchClassName(classNameId);
+	}
+
 	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *

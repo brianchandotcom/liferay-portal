@@ -1014,6 +1014,18 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String fetchClassName(long classNameId) {
+		ClassName className = ClassNameLocalServiceUtil.fetchClassName(
+			classNameId);
+
+		if (className == null) {
+			return StringPool.BLANK;
+		}
+
+		return className.getValue();
+	}
+
+	@Override
 	public String generateRandomKey(
 		HttpServletRequest httpServletRequest, String input) {
 

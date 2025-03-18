@@ -23,7 +23,7 @@ const mockItems = [
 		batchId: '1',
 		completeDate: null,
 		createDate: '2019-10-09T00:00',
-		emailAddress: 't.smith@nosaints.com',
+		emailAddresses: ['t.smith@nosaints.com'],
 		id: '10',
 		status: GDPRRequestStatuses.Running,
 		type: GDPRRequestTypes.Delete
@@ -32,7 +32,7 @@ const mockItems = [
 		batchId: '2',
 		completeDate: null,
 		createDate: '2019-10-09T00:00',
-		emailAddress: 'alice.bryant@example.com',
+		emailAddresses: ['alice.bryant@example.com'],
 		id: '20',
 		status: GDPRRequestStatuses.Running,
 		type: GDPRRequestTypes.Unsuppress
@@ -41,7 +41,7 @@ const mockItems = [
 		batchId: '3',
 		completeDate: '2019-10-05T00:00',
 		createDate: '2019-09-09T00:00',
-		emailAddress: 'scott.gilbert@example.com',
+		emailAddresses: ['scott.gilbert@example.com'],
 		id: '30',
 		status: GDPRRequestStatuses.Expired,
 		type: GDPRRequestTypes.Suppress
@@ -50,7 +50,7 @@ const mockItems = [
 		batchId: '4',
 		completeDate: '2019-11-10T00:00',
 		createDate: '2019-11-09T00:00',
-		emailAddress: 'foo@bar.com',
+		emailAddresses: ['foo@bar.com'],
 		id: '4',
 		status: GDPRRequestStatuses.Completed,
 		type: GDPRRequestTypes.Suppress
@@ -59,7 +59,7 @@ const mockItems = [
 		batchId: '5',
 		completeDate: null,
 		createDate: '2019-09-09T00:00',
-		emailAddress: 'lillie.foster@example.com',
+		emailAddresses: [']lillie.foster@example.com'],
 		id: '50',
 		status: GDPRRequestStatuses.Error,
 		type: GDPRRequestTypes.Access
@@ -68,7 +68,7 @@ const mockItems = [
 		batchId: '6',
 		completeDate: null,
 		createDate: '2019-09-09T00:00',
-		emailAddress: 'bazbuz@example.com',
+		emailAddresses: ['bazbuz@example.com'],
 		id: '60',
 		status: GDPRRequestStatuses.Pending,
 		type: GDPRRequestTypes.Delete
@@ -77,7 +77,7 @@ const mockItems = [
 		batchId: '7',
 		completeDate: '2019-12-05T00:00',
 		createDate: '2019-12-05T00:00',
-		emailAddress: 'scott.gilbert@example.com',
+		emailAddresses: ['scott.gilbert@example.com'],
 		id: '70',
 		status: GDPRRequestStatuses.Completed,
 		type: GDPRRequestTypes.Access

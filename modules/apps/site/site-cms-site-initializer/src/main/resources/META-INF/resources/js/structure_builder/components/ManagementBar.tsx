@@ -82,43 +82,6 @@ function SaveButton() {
 	const status = useSelector(selectStructureStatus);
 	const structureId = useSelector(selectStructureId);
 
-	const create = async () => {
-		const {id} = await StructureService.createStructure({
-			erc,
-			fields,
-			label,
-			name,
-		});
-
-		openToast({
-			message: Liferay.Util.sub(
-				Liferay.Language.get('x-was-created-successfully'),
-				localizedLabel
-			),
-			type: 'success',
-		});
-
-		dispatch({id, type: 'create-structure'});
-	};
-
-	const update = async () => {
-		await StructureService.updateStructure({
-			erc,
-			fields,
-			id: structureId,
-			label,
-			name,
-		});
-
-		openToast({
-			message: Liferay.Util.sub(
-				Liferay.Language.get('x-was-updated-successfully'),
-				localizedLabel
-			),
-			type: 'success',
-		});
-	};
-
 	const onSave = async () => {
 		const valid = validate();
 
@@ -128,11 +91,32 @@ function SaveButton() {
 
 		try {
 			if (status === 'new') {
-				await create();
+				const {id} = await StructureService.createStructure({
+					erc,
+					fields,
+					label,
+					name,
+				});
+
+				dispatch({id, type: 'create-structure'});
 			}
 			else {
-				await update();
+				await StructureService.updateStructure({
+					erc,
+					fields,
+					id: structureId,
+					label,
+					name,
+				});
 			}
+
+			openToast({
+				message: Liferay.Util.sub(
+					Liferay.Language.get('x-was-saved-successfully'),
+					localizedLabel
+				),
+				type: 'success',
+			});
 		}
 		catch (error) {
 			const {message} = error as Error;

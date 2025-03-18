@@ -41,8 +41,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.portlet.RenderRequest;
 
@@ -84,6 +87,27 @@ public class JournalContentImpl implements JournalContent {
 					new MethodHandler(
 						_clearArticleCacheMethodKey, groupId, articleId,
 						ddmTemplateKey),
+					true);
+
+			clusterRequest.setFireAndForget(true);
+
+			ClusterExecutorUtil.execute(clusterRequest);
+		}
+	}
+
+	@Override
+	public void clearCache(
+		long groupId, String articleId, String ddmTemplateKey,
+		String[] languageIds) {
+
+		_clearCache(groupId, articleId, ddmTemplateKey, languageIds);
+
+		if (ClusterInvokeThreadLocal.isEnabled()) {
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(
+						_clearArticleLocalizationCacheMethodKey, groupId,
+						articleId, ddmTemplateKey, languageIds),
 					true);
 
 			clusterRequest.setFireAndForget(true);
@@ -473,6 +497,27 @@ public class JournalContentImpl implements JournalContent {
 				groupId, articleId, ddmTemplateKey));
 	}
 
+	private static void _clearCache(
+		long groupId, String articleId, String ddmTemplateKey,
+		String[] languageIds) {
+
+		Set<JournalContentKey> keys = _journalArticlePortalCacheIndexer.getKeys(
+			JournalContentArticleKeyIndexEncoder.encode(
+				groupId, articleId, ddmTemplateKey));
+
+		if ((keys == null) || keys.isEmpty()) {
+			return;
+		}
+
+		Set<String> languageIdsSet = new HashSet<>(Arrays.asList(languageIds));
+
+		for (JournalContentKey key : keys) {
+			if (languageIdsSet.contains(key._languageId)) {
+				_portalCache.remove(key);
+			}
+		}
+	}
+
 	private static void _clearCache(String ddmTemplateKey) {
 		_journalTemplatePortalCacheIndexer.removeKeys(ddmTemplateKey);
 	}
@@ -494,6 +539,10 @@ public class JournalContentImpl implements JournalContent {
 	private static final MethodKey _clearArticleCacheMethodKey = new MethodKey(
 		JournalContentImpl.class, "_clearCache", long.class, String.class,
 		String.class);
+	private static final MethodKey _clearArticleLocalizationCacheMethodKey =
+		new MethodKey(
+			JournalContentImpl.class, "_clearCache", long.class, String.class,
+			String.class, String[].class);
 	private static final MethodKey _clearTemplateCacheMethodKey = new MethodKey(
 		JournalContentImpl.class, "_clearCache", String.class);
 	private static PortalCacheIndexer

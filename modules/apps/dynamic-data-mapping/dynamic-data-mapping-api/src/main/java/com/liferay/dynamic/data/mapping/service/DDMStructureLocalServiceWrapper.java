@@ -1154,7 +1154,8 @@ public class DDMStructureLocalServiceWrapper
 
 	@Override
 	public String prepareLocalizedDefinitionForImport(
-		DDMStructure structure, java.util.Locale defaultImportLocale) {
+			DDMStructure structure, java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmStructureLocalService.prepareLocalizedDefinitionForImport(
 			structure, defaultImportLocale);

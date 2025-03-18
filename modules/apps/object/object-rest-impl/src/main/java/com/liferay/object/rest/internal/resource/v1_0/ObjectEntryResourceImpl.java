@@ -197,7 +197,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					_objectDefinition.getStorageType()));
 
-		return defaultObjectEntryManager.getObjectEntryVersions(
+		return defaultObjectEntryManager.getVersionedObjectEntries(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, pagination);
 	}
@@ -244,7 +244,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					_objectDefinition.getStorageType()));
 
-		return defaultObjectEntryManager.getObjectEntryVersions(
+		return defaultObjectEntryManager.getVersionedObjectEntries(
 			_getDTOConverterContext(objectEntryId), objectEntryId, pagination);
 	}
 

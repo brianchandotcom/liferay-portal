@@ -652,48 +652,6 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
-	public Page<ObjectEntry> getObjectEntryVersions(
-			DTOConverterContext dtoConverterContext, long objectEntryId,
-			Pagination pagination)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry objectEntry =
-			objectEntryLocalService.getObjectEntry(objectEntryId);
-
-		return Page.of(
-			TransformUtil.transform(
-				_objectEntryVersionService.getObjectEntryVersions(
-					objectEntryId, _getStartPosition(pagination),
-					_getEndPosition(pagination)),
-				objectEntryVersion -> {
-					dtoConverterContext.setAttribute(
-						"objectEntryVersion", objectEntryVersion);
-
-					return _objectEntryDTOConverter.toDTO(
-						dtoConverterContext, objectEntry);
-				}),
-			pagination,
-			_objectEntryVersionService.getObjectEntryVersionsCount(
-				objectEntryId));
-	}
-
-	@Override
-	public Page<ObjectEntry> getObjectEntryVersions(
-			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			Pagination pagination)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry objectEntry =
-			objectEntryLocalService.getObjectEntry(
-				externalReferenceCode,
-				objectDefinition.getObjectDefinitionId());
-
-		return getObjectEntryVersions(
-			dtoConverterContext, objectEntry.getObjectEntryId(), pagination);
-	}
-
-	@Override
 	public Page<Object> getRelatedSystemObjectEntries(
 			ObjectDefinition objectDefinition, Long objectEntryId,
 			String objectRelationshipName, Pagination pagination)
@@ -769,6 +727,48 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getCompanyId()),
 			_dtoConverterRegistry, systemObjectDefinitionManager,
 			dtoConverterContext.getUser());
+	}
+
+	@Override
+	public Page<ObjectEntry> getVersionedObjectEntries(
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			Pagination pagination)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			objectEntryLocalService.getObjectEntry(objectEntryId);
+
+		return Page.of(
+			TransformUtil.transform(
+				_objectEntryVersionService.getObjectEntryVersions(
+					objectEntryId, _getStartPosition(pagination),
+					_getEndPosition(pagination)),
+				objectEntryVersion -> {
+					dtoConverterContext.setAttribute(
+						"objectEntryVersion", objectEntryVersion);
+
+					return _objectEntryDTOConverter.toDTO(
+						dtoConverterContext, objectEntry);
+				}),
+			pagination,
+			_objectEntryVersionService.getObjectEntryVersionsCount(
+				objectEntryId));
+	}
+
+	@Override
+	public Page<ObjectEntry> getVersionedObjectEntries(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			Pagination pagination)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			objectEntryLocalService.getObjectEntry(
+				externalReferenceCode,
+				objectDefinition.getObjectDefinitionId());
+
+		return getVersionedObjectEntries(
+			dtoConverterContext, objectEntry.getObjectEntryId(), pagination);
 	}
 
 	@Override

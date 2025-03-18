@@ -84,7 +84,7 @@ public class CompanyThreadLocalCheck extends BaseCheck {
 
 			log(
 				variableDefinitionDetailAST, _MSG_MISSING_CLOSE_CALL,
-				variableName);
+				variableName, variableName);
 		}
 	}
 

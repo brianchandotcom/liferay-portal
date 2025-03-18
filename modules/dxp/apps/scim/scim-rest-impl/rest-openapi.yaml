@@ -361,7 +361,7 @@ components:
                     type: object
                 schemas:
                     items:
-                        enum: [ "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig" ]
+                        enum: ["urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"]
                         readOnly: true
                         type: string
                     type: array
@@ -789,7 +789,7 @@ paths:
                                     - $ref: "#/components/schemas/ServiceProviderConfig"
                     description:
                         The ServiceProviderConfig info.
-            tags: [ "ServiceProviderConfig" ]
+            tags: ["ServiceProviderConfig"]
     /v2/Users:
         get:
             description:

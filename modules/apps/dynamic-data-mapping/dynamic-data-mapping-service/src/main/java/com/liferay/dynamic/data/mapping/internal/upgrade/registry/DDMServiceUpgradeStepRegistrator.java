@@ -52,6 +52,7 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_2.DLFileEntryDDMFo
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3.BrowserSnifferTemplateUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_5.DDMTemplateLinkUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1.DDMFieldAttributeUpgradeProcess;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v7_0_4.PollsToDDMUpgradeProcess;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
@@ -691,6 +692,8 @@ public class DDMServiceUpgradeStepRegistrator
 			"7.0.2", "7.0.3",
 			UpgradeProcessFactory.dropColumns(
 				"DDMFormInstance", "expirationDate"));
+
+		registry.register("7.0.3", "7.0.4", new PollsToDDMUpgradeProcess());
 	}
 
 	@Activate

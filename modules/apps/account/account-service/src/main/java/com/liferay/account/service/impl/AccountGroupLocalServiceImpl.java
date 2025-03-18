@@ -314,7 +314,7 @@ public class AccountGroupLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountGroup updateAccountGroup(
-			String externalReferenceCode, long accountGroupId,
+			long accountGroupId, String externalReferenceCode,
 			String description, String name, ServiceContext serviceContext)
 		throws PortalException {
 

@@ -303,6 +303,11 @@
 			<message key="company.local.service.use.sql" value="Use &quot;CompanyLocalService.forEachCompany&quot; instead of SQL" />
 			<message key="portal.instances.use" value="Use &quot;PortalInstancePool.getCompanyIds&quot; instead to fetch company IDs" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.CompanyThreadLocalCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Performs several checks on `CompanyThreadLocal`." />
+			<message key="set.company.id.call.avoid" value="Do not use &quot;CompanyThreadLocal.setCompanyId&quot;, use &quot;CompanyThreadLocal.lock&quot; or &quot;CompanyThreadLocal.setCompanyIdWithSafeCloseable&quot; instead" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ComponentAnnotationCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Performs several checks on classes with @Component annotation." />

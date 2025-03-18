@@ -5,6 +5,8 @@
  */
 --%>
 
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -45,3 +47,12 @@ for (Entry<String, String> entry : map.entrySet()) {
 		type="more"
 	/>
 </aui:form>
+
+<c:choose>
+	<c:when test="<%= Validator.isNull(sb) %>">
+		<liferay-ui:message key="not-set" />
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:message key="reset" />
+	</c:otherwise>
+</c:choose>

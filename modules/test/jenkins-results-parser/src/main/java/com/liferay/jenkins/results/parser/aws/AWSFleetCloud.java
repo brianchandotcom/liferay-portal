@@ -6,12 +6,12 @@
 package com.liferay.jenkins.results.parser.aws;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
-
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto

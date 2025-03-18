@@ -116,7 +116,8 @@ public class CompanyLocalServiceTestUtil {
 
 	public static String getPartitionName(long companyId) {
 		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
-			return _DEFAULT_PARTITION_NAME;
+			return ReflectionTestUtil.getFieldValue(
+				DBPartitionUtil.class, "_defaultPartitionName");
 		}
 
 		String databasePartitionSchemaNamePrefix =
@@ -125,13 +126,6 @@ public class CompanyLocalServiceTestUtil {
 				"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX");
 
 		return databasePartitionSchemaNamePrefix + companyId;
-	}
-
-	private static final String _DEFAULT_PARTITION_NAME;
-
-	static {
-		_DEFAULT_PARTITION_NAME = ReflectionTestUtil.getFieldValue(
-			DBPartitionUtil.class, "_defaultPartitionName");
 	}
 
 }

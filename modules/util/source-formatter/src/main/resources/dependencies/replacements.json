@@ -3240,6 +3240,94 @@
 	},
 	{
 		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "deleteCommerceAccounts",
+		"issueKey": "LPD-34771",
+		"to": "deleteAccountEntriesByCompanyId"
+	},
+	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "getPersonalAccountEntry",
+		"issueKey": "LPD-34771",
+		"to": "fetchPersonAccountEntry"
+	},
+	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "getUserCommerceAccounts(long paramName, Long paramName, int paramName, String paramName, Boolean paramName, int paramName, int paramName)",
+		"issueKey": "LPD-34771",
+		"to": "getUserAccountEntries(param#0#, param#1#, param#3#, null, null, param#5#, param#6#)"
+	},
+	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "getUserCommerceAccounts(long paramName, Long paramName, int paramName, String paramName, int paramName, int paramName)",
+		"issueKey": "LPD-34771",
+		"to": "getUserAccountEntries(param#0#, param#1#, param#3#, null, param#4#, param#5#)"
+	},
+	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "getUserCommerceAccountsCount(long paramName, Long paramName, int paramName, String paramName)",
+		"issueKey": "LPD-34771",
+		"to": "getUserAccountEntriesCount(param#0#, param#1#, param#3#, null)"
+	},
+	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "getUserCommerceAccountsCount(long paramName, Long paramName, int paramName, String paramName, Boolean paramName)",
+		"issueKey": "LPD-34771",
+		"to": "getUserAccountEntriesCount(param#0#, param#1#, param#3#, null, null)"
+	},
+	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "updateAccountEntry(long paramName, String paramName, boolean paramName, byte[] paramName, String paramName, String paramName, boolean paramName, long paramName, long paramName, ServiceContext paramName)",
+		"issueKey": "LPD-34771",
+		"to": "updateAccountEntry(param#0#, null, param#1#, null, !param#2#, null, param#4#, param#3#, param#5#, null, param#9#)"
+	},
+	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "updateAccountEntry(long paramName, String paramName, boolean paramName, byte[] paramName, String paramName, String paramName, boolean paramName, long paramName, long paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-34771",
+		"to": "updateAccountEntry(param#0#, null, param#1#, null, !param#2#, null, param#4#, param#3#, param#5#, null, param#10#)"
+	},
+	{
+		"classNames": [
 			"Country"
 		],
 		"from": "getCommerceCountryId",

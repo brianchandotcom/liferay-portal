@@ -12,8 +12,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -498,6 +500,44 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Test
+	public void testRelatedCTEntriesMapWithConflictedEntries()
+		throws Exception {
+
+		JournalArticle journalArticle = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection1.getCtCollectionId())) {
+
+			journalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			journalArticle = JournalTestUtil.updateArticle(journalArticle);
+		}
+
+		CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
+			_ctCollection1.getCtCollectionId(), _journalArticleClassNameId,
+			journalArticle.getId());
+
+		Assert.assertNotNull(ctEntry);
+
+		List<CTEntry> relatedCTEntriesWithConflictedEntries =
+			_ctCollectionLocalService.getRelatedCTEntries(
+				_ctCollection1.getCtCollectionId(),
+				new long[] {ctEntry.getCtEntryId()}, false);
+
+		List<CTEntry> relatedCTEntriesWithoutConflictedEntries =
+			_ctCollectionLocalService.getRelatedCTEntries(
+				_ctCollection1.getCtCollectionId(),
+				new long[] {ctEntry.getCtEntryId()}, true);
+
+		Assert.assertTrue(
+			relatedCTEntriesWithConflictedEntries.size() >
+				relatedCTEntriesWithoutConflictedEntries.size());
+	}
+
+	@Test
 	public void testUndoCTCollection() throws Exception {
 		Layout addedLayout = null;
 
@@ -621,6 +661,9 @@ public class CTCollectionLocalServiceTest {
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private static CTEntryLocalService _ctEntryLocalService;
 
 	@Inject
 	private static CTProcessLocalService _ctProcessLocalService;

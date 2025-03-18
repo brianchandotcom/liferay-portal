@@ -207,7 +207,7 @@ public class CTCollectionLocalServicePerformanceTest {
 			_ctCollectionLocalService.getRelatedCTEntriesMap(
 				_ctCollection1.getCtCollectionId(),
 				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid());
+				layout.getPlid(), false);
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(10000)) {

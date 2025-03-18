@@ -67,7 +67,7 @@ public abstract class BaseTableReferenceDefinitionTestCase {
 			Map<Long, List<CTEntry>> discardCTEntries =
 				_ctCollectionLocalService.getRelatedCTEntriesMap(
 					_ctCollection.getCtCollectionId(), modelClassNameId,
-					ctModel.getPrimaryKey());
+					ctModel.getPrimaryKey(), true);
 
 			List<CTEntry> ctEntries = discardCTEntries.get(modelClassNameId);
 

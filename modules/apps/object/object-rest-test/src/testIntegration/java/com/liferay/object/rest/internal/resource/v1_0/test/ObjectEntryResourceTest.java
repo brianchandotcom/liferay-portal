@@ -56,11 +56,11 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.rest.dto.v1_0.EntryValidation;
 import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.Scope;
-import com.liferay.object.rest.dto.v1_0.ValidateRequest;
-import com.liferay.object.rest.dto.v1_0.ValidateResult;
+import com.liferay.object.rest.dto.v1_0.ValidationError;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
@@ -173,6 +173,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
+import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
@@ -8765,7 +8766,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-37056")
 	@Test
-	public void testPostScopeScopeKeyValidate() throws Exception {
+	public void testPostScopeScopeKeyValidatePage() throws Exception {
 		ObjectField textObjectField = _objectFieldLocalService.getObjectField(
 			_siteScopedObjectDefinition1.getObjectDefinitionId(),
 			_OBJECT_FIELD_NAME_1);
@@ -8803,7 +8804,7 @@ public class ObjectEntryResourceTest {
 
 	@FeatureFlags("LPD-37056")
 	@Test
-	public void testPostValidate() throws Exception {
+	public void testPostValidatePage() throws Exception {
 		ObjectField textObjectField = _objectFieldLocalService.getObjectField(
 			_objectDefinition1.getObjectDefinitionId(),
 			_OBJECT_FIELD_NAME_TEXT);
@@ -13304,17 +13305,17 @@ public class ObjectEntryResourceTest {
 		return URLCodec.encodeURL(string);
 	}
 
-	private ValidateResult _executeValidate(
+	private Page<ValidationError> _executeValidate(
 			String scopeKey, ObjectEntryResource objectEntryResource,
-			ValidateRequest validateRequest)
+			EntryValidation entryValidation)
 		throws Exception {
 
 		if (scopeKey != null) {
-			return objectEntryResource.postScopeScopeKeyValidate(
-				scopeKey, validateRequest);
+			return objectEntryResource.postScopeScopeKeyValidatePage(
+				scopeKey, entryValidation);
 		}
 
-		return objectEntryResource.postValidate(validateRequest);
+		return objectEntryResource.postValidatePage(entryValidation);
 	}
 
 	private DLFolder _getDLFolder(
@@ -13363,6 +13364,27 @@ public class ObjectEntryResourceTest {
 		}
 
 		return objectDefinition.getRESTContextPath();
+	}
+
+	private EntryValidation _getEntryValidation(
+		Map<String, Object> values, String... validationKeys) {
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
+
+		objectEntry.setProperties((values != null) ? values : new HashMap<>());
+
+		String[] localValidationKeys = validationKeys;
+
+		return new EntryValidation() {
+			{
+				if (localValidationKeys != null) {
+					setValidationKeys(() -> localValidationKeys);
+				}
+
+				setEntry(() -> objectEntry);
+			}
+		};
 	}
 
 	private JSONObject _getFileEntryJSONObject(
@@ -13631,27 +13653,6 @@ public class ObjectEntryResourceTest {
 		}
 
 		return Type.MANY_TO_MANY;
-	}
-
-	private ValidateRequest _getValidateRequest(
-		Map<String, Object> values, String... validationKeys) {
-
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
-
-		objectEntry.setProperties((values != null) ? values : new HashMap<>());
-
-		String[] localValidationKeys = validationKeys;
-
-		return new ValidateRequest() {
-			{
-				if (localValidationKeys != null) {
-					setValidationKeys(() -> localValidationKeys);
-				}
-
-				setEntry(() -> objectEntry);
-			}
-		};
 	}
 
 	private JSONObject
@@ -16210,7 +16211,7 @@ public class ObjectEntryResourceTest {
 					(scopeKey != null) ? scopeKey : ""),
 				() -> _executeValidate(
 					scopeKey, objectEntryResource,
-					_getValidateRequest(
+					_getEntryValidation(
 						HashMapBuilder.<String, Object>put(
 							objectField.getName(), StringUtil.randomString()
 						).build(),
@@ -16218,53 +16219,62 @@ public class ObjectEntryResourceTest {
 
 			_setUpPermissionThreadLocal(TestPropsValues.getUser());
 
-			ValidateResult validateResult = _executeValidate(
+			Page<ValidationError> validationErrorsPage = _executeValidate(
 				scopeKey, objectEntryResource,
-				_getValidateRequest(
+				_getEntryValidation(
 					HashMapBuilder.<String, Object>put(
 						objectField.getName(), StringUtil.randomString()
 					).build(),
 					objectValidationRule.getExternalReferenceCode()));
 
-			Assert.assertFalse(validateResult.getSuccess());
+			List<ValidationError> validationErrors =
+				(List<ValidationError>)validationErrorsPage.getItems();
 
+			Assert.assertFalse(validationErrors.isEmpty());
 			Assert.assertEquals(
 				error1,
-				validateResult.getValidateErrors()[0].getErrorMessage());
+				validationErrors.get(
+					0
+				).getErrorMessage());
 
-			validateResult = _executeValidate(
+			validationErrorsPage = _executeValidate(
 				scopeKey, objectEntryResource,
-				_getValidateRequest(
+				_getEntryValidation(
 					HashMapBuilder.<String, Object>put(
 						objectField.getName(), "foo"
 					).build(),
 					objectValidationRule.getExternalReferenceCode()));
 
-			Assert.assertTrue(validateResult.getSuccess());
-
 			Assert.assertTrue(
-				ArrayUtil.isEmpty(validateResult.getValidateErrors()));
+				validationErrorsPage.getItems(
+				).isEmpty());
 
-			validateResult = _executeValidate(
+			validationErrorsPage = _executeValidate(
 				scopeKey, objectEntryResource,
-				_getValidateRequest(
+				_getEntryValidation(
 					HashMapBuilder.<String, Object>put(
 						objectField.getName(), RandomTestUtil.randomInt()
 					).build()));
 
-			Assert.assertFalse(validateResult.getSuccess());
+			validationErrors =
+				(List<ValidationError>)validationErrorsPage.getItems();
 
+			Assert.assertFalse(validationErrors.isEmpty());
 			Assert.assertEquals(
 				error1,
-				validateResult.getValidateErrors()[0].getErrorMessage());
-
+				validationErrors.get(
+					0
+				).getErrorMessage());
 			Assert.assertEquals(
 				error2,
-				validateResult.getValidateErrors()[1].getErrorMessage());
-
+				validationErrors.get(
+					1
+				).getErrorMessage());
 			Assert.assertEquals(
 				objectField.getName(),
-				validateResult.getValidateErrors()[1].getObjectFieldName());
+				validationErrors.get(
+					1
+				).getObjectFieldName());
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(

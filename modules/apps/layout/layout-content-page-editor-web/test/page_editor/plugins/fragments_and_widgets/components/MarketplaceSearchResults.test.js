@@ -221,7 +221,7 @@ describe('MarketplaceSearchResults', () => {
 	});
 
 	it('handles "load more results" functionality', async () => {
-		renderMarketplaceSearchResults({});
+		const {container} = renderMarketplaceSearchResults({});
 
 		fireEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
@@ -236,12 +236,22 @@ describe('MarketplaceSearchResults', () => {
 				1
 			);
 			expect(screen.getAllByRole('menuitem').length).toBe(2);
+			expect(screen.getByText('Product 1')).toBeInTheDocument();
+			expect(screen.getByText('Product 2')).toBeInTheDocument();
+
 			mockMarketplaceInstance.getProducts.mockResolvedValue({
 				items: [getProduct(3), getProduct(4)],
 				lastPage: 2,
 				page: 2,
 			});
+
 			fireEvent.click(loadMoreResultsButton);
+
+			expect(
+				container.getElementsByClassName('loading-animation').length
+			).toBe(1);
+			expect(screen.getByText('Product 1')).toBeInTheDocument();
+			expect(screen.getByText('Product 2')).toBeInTheDocument();
 		});
 
 		await waitFor(() => {
@@ -251,11 +261,16 @@ describe('MarketplaceSearchResults', () => {
 			expect(mockMarketplaceInstance.getProducts).toHaveBeenCalledTimes(
 				2
 			);
+
 			expect(screen.getAllByRole('menuitem').length).toBe(4);
+			expect(screen.getByText('Product 1')).toBeInTheDocument();
+			expect(screen.getByText('Product 2')).toBeInTheDocument();
+			expect(screen.getByText('Product 3')).toBeInTheDocument();
+			expect(screen.getByText('Product 4')).toBeInTheDocument();
 		});
 	});
 
-	it('focuses the first item and handles keyboard navigation', async () => {
+	it('focuses the first item only on initial load and handles keyboard navigation', async () => {
 		renderMarketplaceSearchResults({});
 
 		fireEvent.click(
@@ -269,8 +284,31 @@ describe('MarketplaceSearchResults', () => {
 			expect(menuItems[0]).toHaveFocus();
 			fireEvent.keyDown(menuItems[0], {code: 'ArrowDown'});
 			expect(menuItems[1]).toHaveFocus();
-			fireEvent.keyDown(menuItems[1], {code: 'ArrowUp'});
-			expect(menuItems[0]).toHaveFocus();
+
+			mockMarketplaceInstance.getProducts.mockResolvedValue({
+				items: [getProduct(3), getProduct(4)],
+				lastPage: 2,
+				page: 2,
+			});
+
+			fireEvent.click(
+				screen.getByRole('button', {name: 'load-more-results'})
+			);
+		});
+
+		await waitFor(() => {
+			const menuItems = screen.getAllByRole('menuitem');
+			expect(menuItems.length).toBe(4);
+
+			expect(menuItems[0]).not.toHaveFocus();
+			expect(menuItems[1]).toHaveFocus();
+
+			fireEvent.keyDown(menuItems[1], {code: 'ArrowDown'});
+			expect(menuItems[2]).toHaveFocus();
+			fireEvent.keyDown(menuItems[2], {code: 'ArrowDown'});
+			expect(menuItems[3]).toHaveFocus();
+			fireEvent.keyDown(menuItems[3], {code: 'ArrowUp'});
+			expect(menuItems[2]).toHaveFocus();
 		});
 	});
 

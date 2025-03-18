@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAdminLiferayExperienceCloud_accountEntryId",
 	"label": {
-		"en-US": "Admin Liferay Experience Cloud"
+		"en_US": "Admin Liferay Experience Cloud"
 	},
 	"name": "AdminLiferayExperienceCloud",
 	"objectFields": [
@@ -11,7 +11,17 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Full Name"
+				"en_US": "Email Address"
+			},
+			"name": "emailAddress",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Full Name"
 			},
 			"name": "fullName",
 			"required": true
@@ -21,19 +31,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Github Username"
+				"en_US": "Github Username"
 			},
 			"name": "githubUsername",
-			"required": true
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Email Address"
-			},
-			"name": "emailAddress",
 			"required": true
 		},
 		{
@@ -41,7 +41,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Liferay Experience Cloud Environment"
+				"en_US": "Liferay Experience Cloud Environment"
 			},
 			"name": "liferayExperienceCloudEnvironmentId",
 			"required": true

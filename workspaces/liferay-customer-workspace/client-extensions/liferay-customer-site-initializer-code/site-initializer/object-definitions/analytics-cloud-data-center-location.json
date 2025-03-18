@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en-US": "Analytics Cloud Data Center Location"
+		"en_US": "Analytics Cloud Data Center Location"
 	},
 	"name": "AnalyticsCloudDataCenterLocation",
 	"objectFields": [
@@ -9,7 +9,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Name"
+				"en_US": "Name"
 			},
 			"name": "name",
 			"required": true
@@ -19,7 +19,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Value"
+				"en_US": "Value"
 			},
 			"name": "value",
 			"required": true

@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en-US": "DXPC Data Center Region"
+		"en_US": "DXPC Data Center Region"
 	},
 	"name": "DXPCDataCenterRegion",
 	"objectFields": [
@@ -9,7 +9,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Name"
+				"en_US": "Name"
 			},
 			"name": "name",
 			"required": true
@@ -19,7 +19,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Value"
+				"en_US": "Value"
 			},
 			"name": "value",
 			"required": true

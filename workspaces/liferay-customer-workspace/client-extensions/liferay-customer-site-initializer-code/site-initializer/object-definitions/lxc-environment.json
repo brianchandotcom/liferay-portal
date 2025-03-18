@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_liferayExperienceCloudEnvironment_accountEntryId",
 	"label": {
-		"en-US": "Liferay Experience Cloud Environment"
+		"en_US": "Liferay Experience Cloud Environment"
 	},
 	"name": "LiferayExperienceCloudEnvironment",
 	"objectFields": [
@@ -11,7 +11,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": false
@@ -21,7 +21,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Analytics Cloud Owner"
+				"en_US": "Analytics Cloud Owner"
 			},
 			"name": "analyticsCloudOwner",
 			"required": false
@@ -31,17 +31,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Incident Management Full Name"
-			},
-			"name": "incidentManagementFullName",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Incident Management Email Address"
+				"en_US": "Incident Management Email Address"
 			},
 			"name": "incidentManagementEmailAddress",
 			"required": false
@@ -51,7 +41,17 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Primary Region"
+				"en_US": "Incident Management Full Name"
+			},
+			"name": "incidentManagementFullName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Primary Region"
 			},
 			"name": "primaryRegion",
 			"required": false
@@ -61,7 +61,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Project ID"
+				"en_US": "Project ID"
 			},
 			"name": "projectId",
 			"required": true

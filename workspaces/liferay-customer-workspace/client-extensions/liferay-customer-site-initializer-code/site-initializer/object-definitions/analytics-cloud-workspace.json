@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAnalyticsCloudWorkspace_accountEntryId",
 	"label": {
-		"en-US": "Analytics Cloud Workspace"
+		"en_US": "Analytics Cloud Workspace"
 	},
 	"name": "AnalyticsCloudWorkspace",
 	"objectFields": [
@@ -11,7 +11,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": false
@@ -21,47 +21,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Owner Email Address"
-			},
-			"name": "ownerEmailAddress",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Workspace Name"
-			},
-			"name": "workspaceName",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Data Center Location"
-			},
-			"name": "dataCenterLocation",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Workspace Friendly URL"
-			},
-			"name": "workspaceFriendlyUrl",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Allowed Email Domains"
+				"en_US": "Allowed Email Domains"
 			},
 			"name": "allowedEmailDomains",
 			"required": false
@@ -71,7 +31,27 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Time Zone"
+				"en_US": "Data Center Location"
+			},
+			"name": "dataCenterLocation",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Owner Email Address"
+			},
+			"name": "ownerEmailAddress",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Time Zone"
 			},
 			"name": "timeZone",
 			"required": false
@@ -81,9 +61,29 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Workspace Group ID"
+				"en_US": "Workspace Friendly URL"
+			},
+			"name": "workspaceFriendlyUrl",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Workspace Group ID"
 			},
 			"name": "workspaceGroupId",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Workspace Name"
+			},
+			"name": "workspaceName",
 			"required": false
 		}
 	],

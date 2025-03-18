@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en-US": "Team Members Invitation"
+		"en_US": "Team Members Invitation"
 	},
 	"name": "TeamMembersInvitation",
 	"objectFields": [
@@ -9,27 +9,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Given Name"
-			},
-			"name": "givenName",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Family Name"
-			},
-			"name": "familyName",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Email"
+				"en_US": "Email"
 			},
 			"name": "email",
 			"required": false
@@ -39,7 +19,27 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Role"
+				"en_US": "Family Name"
+			},
+			"name": "familyName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Given Name"
+			},
+			"name": "givenName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Role"
 			},
 			"name": "role",
 			"required": false

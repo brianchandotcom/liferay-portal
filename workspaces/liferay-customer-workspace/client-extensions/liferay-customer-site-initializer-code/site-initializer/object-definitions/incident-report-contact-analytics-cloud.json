@@ -2,28 +2,28 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToIncidentReportContactAC_accountEntryId",
 	"label": {
-		"en-US": "Incident Report Contact Analytics Cloud"
+		"en_US": "Incident Report Contact Analytics Cloud"
 	},
 	"name": "IncidentReportContactAnalyticsCloud",
 	"objectFields": [
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Email Address"
-			},
-			"name": "emailAddress",
-			"required": true
-		},
 		{
 			"DBType": "Long",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Analytics Cloud Workspace"
+				"en_US": "Analytics Cloud Workspace"
 			},
 			"name": "analyticsCloudWorkspaceId",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Email Address"
+			},
+			"name": "emailAddress",
 			"required": true
 		}
 	],

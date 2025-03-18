@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToKoroneikiAccount_accountEntryId",
 	"label": {
-		"en-US": "Koroneiki Account"
+		"en_US": "Koroneiki Account"
 	},
 	"name": "KoroneikiAccount",
 	"objectFields": [
@@ -11,7 +11,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": true
@@ -21,7 +21,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "AC Workspace Group ID"
+				"en_US": "AC Workspace Group ID"
 			},
 			"name": "acWorkspaceGroupId",
 			"required": false
@@ -31,7 +31,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Allow Self Provisioning"
+				"en_US": "Allow Self Provisioning"
 			},
 			"name": "allowSelfProvisioning",
 			"required": false
@@ -41,7 +41,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Code"
+				"en_US": "Code"
 			},
 			"name": "code",
 			"required": false
@@ -51,7 +51,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Data Region"
+				"en_US": "Data Region"
 			},
 			"name": "dataRegion",
 			"required": false
@@ -61,19 +61,19 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "DXP Version"
+				"en_US": "DXP Version"
 			},
 			"name": "dxpVersion",
 			"required": false
 		},
 		{
-			"DBType": "Integer",
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Max Requestors"
+				"en_US": "Liferay Contact Email Address"
 			},
-			"name": "maxRequestors",
+			"name": "liferayContactEmailAddress",
 			"required": false
 		},
 		{
@@ -81,237 +81,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Name"
-			},
-			"name": "name",
-			"required": false
-		},
-		{
-			"DBType": "Boolean",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partner"
-			},
-			"name": "partner",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Current"
-			},
-			"name": "partnershipCurrent",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Current Start Date"
-			},
-			"name": "partnershipCurrentStartDate",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Current End Date"
-			},
-			"name": "partnershipCurrentEndDate",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Expired"
-			},
-			"name": "partnershipExpired",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Expired Start Date"
-			},
-			"name": "partnershipExpiredStartDate",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Expired End Date"
-			},
-			"name": "partnershipExpiredEndDate",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Future"
-			},
-			"name": "partnershipFuture",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Future Start Date"
-			},
-			"name": "partnershipFutureStartDate",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Partnership Future End Date"
-			},
-			"name": "partnershipFutureEndDate",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Region"
-			},
-			"name": "region",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Salesforce Account Key"
-			},
-			"name": "salesforceAccountKey",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Salesforce Project Key"
-			},
-			"name": "salesforceProjectKey",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Current"
-			},
-			"name": "slaCurrent",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Current Start Date"
-			},
-			"name": "slaCurrentStartDate",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Current End Date"
-			},
-			"name": "slaCurrentEndDate",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Expired"
-			},
-			"name": "slaExpired",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Expired Start Date"
-			},
-			"name": "slaExpiredStartDate",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Expired End Date"
-			},
-			"name": "slaExpiredEndDate",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Future"
-			},
-			"name": "slaFuture",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Future Start Date"
-			},
-			"name": "slaFutureStartDate",
-			"required": false
-		},
-		{
-			"DBType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "SLA Future End Date"
-			},
-			"name": "slaFutureEndDate",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Liferay Contact Name"
+				"en_US": "Liferay Contact Name"
 			},
 			"name": "liferayContactName",
 			"required": false
@@ -321,9 +91,19 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Liferay Contact Role"
+				"en_US": "Liferay Contact Role"
 			},
 			"name": "liferayContactRole",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Max Requestors"
+			},
+			"name": "maxRequestors",
 			"required": false
 		},
 		{
@@ -331,9 +111,229 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Liferay Contact Email Address"
+				"en_US": "Name"
 			},
-			"name": "liferayContactEmailAddress",
+			"name": "name",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partner"
+			},
+			"name": "partner",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Current"
+			},
+			"name": "partnershipCurrent",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Current End Date"
+			},
+			"name": "partnershipCurrentEndDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Current Start Date"
+			},
+			"name": "partnershipCurrentStartDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Expired"
+			},
+			"name": "partnershipExpired",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Expired End Date"
+			},
+			"name": "partnershipExpiredEndDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Expired Start Date"
+			},
+			"name": "partnershipExpiredStartDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Future"
+			},
+			"name": "partnershipFuture",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Future End Date"
+			},
+			"name": "partnershipFutureEndDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Partnership Future Start Date"
+			},
+			"name": "partnershipFutureStartDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Region"
+			},
+			"name": "region",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Salesforce Account Key"
+			},
+			"name": "salesforceAccountKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Salesforce Project Key"
+			},
+			"name": "salesforceProjectKey",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Current"
+			},
+			"name": "slaCurrent",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Current End Date"
+			},
+			"name": "slaCurrentEndDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Current Start Date"
+			},
+			"name": "slaCurrentStartDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Expired"
+			},
+			"name": "slaExpired",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Expired End Date"
+			},
+			"name": "slaExpiredEndDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Expired Start Date"
+			},
+			"name": "slaExpiredStartDate",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Future"
+			},
+			"name": "slaFuture",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Future End Date"
+			},
+			"name": "slaFutureEndDate",
+			"required": false
+		},
+		{
+			"DBType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "SLA Future Start Date"
+			},
+			"name": "slaFutureStartDate",
 			"required": false
 		}
 	],

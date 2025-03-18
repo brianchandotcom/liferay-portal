@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToDXPCloudEnvironment_accountEntryId",
 	"label": {
-		"en-US": "DXP Cloud Environment"
+		"en_US": "DXP Cloud Environment"
 	},
 	"name": "DXPCloudEnvironment",
 	"objectFields": [
@@ -11,7 +11,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": false
@@ -21,7 +21,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Data Center Region"
+				"en_US": "Data Center Region"
 			},
 			"name": "dataCenterRegion",
 			"required": false
@@ -31,9 +31,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Project ID"
+				"en_US": "Disaster Data Center Region"
 			},
-			"name": "projectId",
+			"name": "disasterDataCenterRegion",
 			"required": false
 		},
 		{
@@ -41,9 +41,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Disaster Data Center Region"
+				"en_US": "Project ID"
 			},
-			"name": "disasterDataCenterRegion",
+			"name": "projectId",
 			"required": false
 		}
 	],

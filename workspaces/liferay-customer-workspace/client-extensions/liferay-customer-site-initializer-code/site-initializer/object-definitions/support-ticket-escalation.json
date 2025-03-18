@@ -10,28 +10,6 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Tickets ID's"
-			},
-			"name": "ticketsIDs",
-			"required": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Phone Number"
-			},
-			"name": "phoneNumber",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "If opening on behalf of another user, please share the appropriate email address to contact:"
 			},
 			"name": "customerEmailAddress",
@@ -54,6 +32,28 @@
 			],
 			"required": true,
 			"type": "Clob"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Phone Number"
+			},
+			"name": "phoneNumber",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Tickets ID's"
+			},
+			"name": "ticketsIDs",
+			"required": true,
+			"type": "String"
 		}
 	],
 	"panelCategoryKey": "applications_menu.applications.content",

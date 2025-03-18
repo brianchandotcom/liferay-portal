@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscription_accountEntryId",
 	"label": {
-		"en-US": "Account Subscription"
+		"en_US": "Account Subscription"
 	},
 	"name": "AccountSubscription",
 	"objectFields": [
@@ -11,7 +11,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": true
@@ -21,7 +21,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Subscription Group ERC"
+				"en_US": "Account Subscription Group ERC"
 			},
 			"name": "accountSubscriptionGroupERC",
 			"required": false
@@ -31,7 +31,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "End Date"
+				"en_US": "End Date"
 			},
 			"name": "endDate",
 			"required": false
@@ -41,7 +41,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Has Disaster Data Center Region"
+				"en_US": "Has Disaster Data Center Region"
 			},
 			"listTypeDefinitionId": 0,
 			"name": "hasDisasterDataCenterRegion",
@@ -53,7 +53,7 @@
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
 			"label": {
-				"en-US": "Instance Size"
+				"en_US": "Instance Size"
 			},
 			"name": "instanceSize",
 			"required": false
@@ -63,7 +63,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Name"
+				"en_US": "Name"
 			},
 			"name": "name",
 			"required": false
@@ -73,7 +73,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Product Key"
+				"en_US": "Product Key"
 			},
 			"name": "productKey",
 			"required": false
@@ -83,7 +83,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Quantity"
+				"en_US": "Quantity"
 			},
 			"name": "quantity",
 			"required": false
@@ -93,7 +93,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Start Date"
+				"en_US": "Start Date"
 			},
 			"name": "startDate",
 			"required": false
@@ -103,7 +103,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Status"
+				"en_US": "Status"
 			},
 			"name": "subscriptionStatus",
 			"required": false

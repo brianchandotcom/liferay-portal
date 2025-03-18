@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscriptionGroup_accountEntryId",
 	"label": {
-		"en-US": "Account Subscription Group"
+		"en_US": "Account Subscription Group"
 	},
 	"name": "AccountSubscriptionGroup",
 	"objectFields": [
@@ -11,27 +11,17 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": true
-		},
-		{
-			"DBType": "Boolean",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Has Activation"
-			},
-			"name": "hasActivation",
-			"required": false
 		},
 		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Activation Product Name"
+				"en_US": "Activation Product Name"
 			},
 			"name": "activationProductName",
 			"required": false
@@ -41,9 +31,29 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Activation Status"
+				"en_US": "Activation Status"
 			},
 			"name": "activationStatus",
+			"required": false
+		},
+		{
+			"DBType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Has Activation"
+			},
+			"name": "hasActivation",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Manage Contacts URL"
+			},
+			"name": "manageContactsURL",
 			"required": false
 		},
 		{
@@ -51,7 +61,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Menu Order"
+				"en_US": "Menu Order"
 			},
 			"name": "menuOrder",
 			"required": false
@@ -61,17 +71,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Manage Contacts URL"
-			},
-			"name": "manageContactsURL",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Name"
+				"en_US": "Name"
 			},
 			"name": "name",
 			"required": false
@@ -81,7 +81,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Tab Order"
+				"en_US": "Tab Order"
 			},
 			"name": "tabOrder",
 			"required": false

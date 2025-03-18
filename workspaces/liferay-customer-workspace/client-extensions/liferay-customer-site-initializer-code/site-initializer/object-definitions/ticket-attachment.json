@@ -1,7 +1,7 @@
 {
 	"enableObjectEntryDraft": true,
 	"label": {
-		"en-US": "Ticket Attachment"
+		"en_US": "Ticket Attachment"
 	},
 	"name": "TicketAttachment",
 	"objectFields": [
@@ -10,47 +10,17 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": true
 		},
 		{
-			"DBType": "Long",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Zendesk Ticket"
-			},
-			"name": "zendeskTicketId",
-			"required": true
-		},
-		{
 			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Storage Provider"
-			},
-			"name": "storageProvider",
-			"required": true
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Google Cloud Storage Bucket Name"
-			},
-			"name": "gcsBucketName",
-			"required": true
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "File Name"
+				"en_US": "File Name"
 			},
 			"name": "fileName",
 			"required": true
@@ -60,7 +30,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "File Size"
+				"en_US": "File Size"
 			},
 			"name": "fileSize",
 			"required": true
@@ -70,7 +40,17 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "MD5 Checksum"
+				"en_US": "Google Cloud Storage Bucket Name"
+			},
+			"name": "gcsBucketName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MD5 Checksum"
 			},
 			"name": "md5Checksum",
 			"required": false
@@ -80,10 +60,30 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Type"
+				"en_US": "Storage Provider"
+			},
+			"name": "storageProvider",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type"
 			},
 			"name": "type",
 			"required": false
+		},
+		{
+			"DBType": "Long",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Zendesk Ticket"
+			},
+			"name": "zendeskTicketId",
+			"required": true
 		}
 	],
 	"panelCategoryKey": "applications_menu.applications.content",

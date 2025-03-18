@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountFlag_accountEntryId",
 	"label": {
-		"en-US": "Account Flag"
+		"en_US": "Account Flag"
 	},
 	"name": "AccountFlag",
 	"objectFields": [
@@ -11,19 +11,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
-			"required": true
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Name"
-			},
-			"name": "name",
 			"required": true
 		},
 		{
@@ -31,10 +21,20 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Finished"
+				"en_US": "Finished"
 			},
 			"name": "finished",
 			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true
 		}
 	],
 	"panelCategoryKey": "applications_menu.applications.content",

@@ -8,132 +8,6 @@
 	"name": "BusinessEvent",
 	"objectFields": [
 		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Author"
-			},
-			"localized": false,
-			"name": "creator",
-			"objectFieldSettings": [
-			],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Create Date"
-			},
-			"localized": false,
-			"name": "createDate",
-			"objectFieldSettings": [
-			],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Date",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "External Reference Code"
-			},
-			"localized": false,
-			"name": "externalReferenceCode",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "String",
-			"unique": false
-		},
-		{
-			"DBType": "Long",
-			"businessType": "LongInteger",
-			"indexed": true,
-			"indexedAsKeyword": true,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "ID"
-			},
-			"localized": false,
-			"name": "id",
-			"objectFieldSettings": [
-			],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Long",
-			"unique": false
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Modified Date"
-			},
-			"localized": false,
-			"name": "modifiedDate",
-			"objectFieldSettings": [
-			],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "Date",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "",
-			"label": {
-				"en_US": "Status"
-			},
-			"localized": false,
-			"name": "status",
-			"objectFieldSettings": [
-			],
-			"readOnly": "true",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": true,
-			"type": "String",
-			"unique": false
-		},
-		{
 			"DBType": "DateTime",
 			"businessType": "DateTime",
 			"indexed": true,
@@ -176,6 +50,48 @@
 			"required": false,
 			"state": false,
 			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"localized": false,
+			"name": "createDate",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Author"
+			},
+			"localized": false,
+			"name": "creator",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
 			"type": "String",
 			"unique": false
 		},
@@ -224,6 +140,75 @@
 		},
 		{
 			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Event Status"
+			},
+			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_STATUSES",
+			"localized": false,
+			"name": "eventStatus",
+			"objectFieldSettings": [
+				{
+					"name": "defaultValueType",
+					"value": "inputAsValue"
+				}
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Event Type"
+			},
+			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_TYPES",
+			"localized": false,
+			"name": "eventType",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": false,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"localized": false,
+			"name": "externalReferenceCode",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "String",
 			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -241,6 +226,48 @@
 			"state": false,
 			"system": false,
 			"type": "String",
+			"unique": false
+		},
+		{
+			"DBType": "Long",
+			"businessType": "LongInteger",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "ID"
+			},
+			"localized": false,
+			"name": "id",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Long",
+			"unique": false
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"localized": false,
+			"name": "modifiedDate",
+			"objectFieldSettings": [
+			],
+			"readOnly": "true",
+			"readOnlyConditionExpression": "",
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "Date",
 			"unique": false
 		},
 		{
@@ -288,27 +315,22 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Picklist",
-			"indexed": true,
+			"businessType": "Text",
+			"indexed": false,
 			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
+			"indexedLanguageId": "",
 			"label": {
-				"en_US": "Event Status"
+				"en_US": "Status"
 			},
-			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_STATUSES",
 			"localized": false,
-			"name": "eventStatus",
+			"name": "status",
 			"objectFieldSettings": [
-				{
-					"name": "defaultValueType",
-					"value": "inputAsValue"
-				}
 			],
-			"readOnly": "false",
+			"readOnly": "true",
 			"readOnlyConditionExpression": "",
 			"required": false,
 			"state": false,
-			"system": false,
+			"system": true,
 			"type": "String",
 			"unique": false
 		},
@@ -335,28 +357,6 @@
 			"state": false,
 			"system": false,
 			"type": "DateTime",
-			"unique": false
-		},
-		{
-			"DBType": "String",
-			"businessType": "Picklist",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Event Type"
-			},
-			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_TYPES",
-			"localized": false,
-			"name": "eventType",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
-			"readOnlyConditionExpression": "",
-			"required": false,
-			"state": false,
-			"system": false,
-			"type": "String",
 			"unique": false
 		},
 		{

@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en-US": "Banned Email Domain"
+		"en_US": "Banned Email Domain"
 	},
 	"name": "BannedEmailDomain",
 	"objectFields": [
@@ -9,7 +9,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Domain"
+				"en_US": "Domain"
 			},
 			"name": "domain",
 			"required": true

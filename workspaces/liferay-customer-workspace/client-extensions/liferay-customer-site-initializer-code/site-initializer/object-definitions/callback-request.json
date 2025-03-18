@@ -9,29 +9,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Name"
+				"en_US": "Country Code"
 			},
-			"name": "name",
-			"required": true
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Email Address"
-			},
-			"name": "emailAddress",
-			"required": true
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Phone Number"
-			},
-			"name": "phoneNumber",
+			"name": "countryCode",
 			"required": true
 		},
 		{
@@ -59,9 +39,29 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Country Code"
+				"en_US": "Email Address"
 			},
-			"name": "countryCode",
+			"name": "emailAddress",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Phone Number"
+			},
+			"name": "phoneNumber",
 			"required": true
 		},
 		{

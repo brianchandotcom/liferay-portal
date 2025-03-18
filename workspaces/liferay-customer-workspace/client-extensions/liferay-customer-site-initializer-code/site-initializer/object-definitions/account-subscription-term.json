@@ -2,7 +2,7 @@
 	"accountEntryRestricted": true,
 	"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountSubscriptionTerm_accountEntryId",
 	"label": {
-		"en-US": "Account Subscription Term"
+		"en_US": "Account Subscription Term"
 	},
 	"name": "AccountSubscriptionTerm",
 	"objectFields": [
@@ -11,7 +11,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Key"
+				"en_US": "Account Key"
 			},
 			"name": "accountKey",
 			"required": true
@@ -21,7 +21,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Subscription ERC"
+				"en_US": "Account Subscription ERC"
 			},
 			"name": "accountSubscriptionERC",
 			"required": false
@@ -31,7 +31,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Account Subscription Group ERC"
+				"en_US": "Account Subscription Group ERC"
 			},
 			"name": "accountSubscriptionGroupERC",
 			"required": false
@@ -41,7 +41,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "End Date"
+				"en_US": "End Date"
 			},
 			"name": "endDate",
 			"required": false
@@ -51,7 +51,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Instance Size"
+				"en_US": "Instance Size"
 			},
 			"name": "instanceSize",
 			"required": false
@@ -61,7 +61,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Provisioned"
+				"en_US": "Provisioned"
 			},
 			"name": "provisioned",
 			"required": false
@@ -71,7 +71,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Quantity"
+				"en_US": "Quantity"
 			},
 			"name": "quantity",
 			"required": false
@@ -81,7 +81,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Start Date"
+				"en_US": "Start Date"
 			},
 			"name": "startDate",
 			"required": false
@@ -91,7 +91,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Status"
+				"en_US": "Status"
 			},
 			"name": "subscriptionTermStatus",
 			"required": false

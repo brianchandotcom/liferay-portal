@@ -1,6 +1,6 @@
 {
 	"label": {
-		"en-US": "Replacement Activation Key Request"
+		"en_US": "Replacement Activation Key Request"
 	},
 	"name": "ReplacementActivationKeyRequest",
 	"objectFields": [
@@ -9,7 +9,7 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Acknowledgement"
+				"en_US": "Acknowledgement"
 			},
 			"name": "acknowledgement",
 			"required": true
@@ -19,49 +19,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Active Liferay Subscription?"
+				"en_US": "Active Liferay Subscription?"
 			},
 			"name": "activeLiferaySubscription",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Company Name"
-			},
-			"name": "companyName",
-			"required": true
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Contact Email Address"
-			},
-			"name": "contactEmailAddress",
-			"required": true
-		},
-		{
-			"DBType": "Clob",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Please explain why you need a replacement activation key"
-			},
-			"name": "explainReplacementActivationKey",
-			"required": true
-		},
-		{
-			"DBType": "Clob",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Please provide the server information, as applicable, depending on your version of Liferay Portal or Liferay DXP"
-			},
-			"name": "serverInformation",
 			"required": false
 		},
 		{
@@ -76,6 +36,46 @@
 			"name": "clustered",
 			"required": true,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Company Name"
+			},
+			"name": "companyName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Contact Email Address"
+			},
+			"name": "contactEmailAddress",
+			"required": true
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Please explain why you need a replacement activation key"
+			},
+			"name": "explainReplacementActivationKey",
+			"required": true
+		},
+		{
+			"DBType": "Clob",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Please provide the server information, as applicable, depending on your version of Liferay Portal or Liferay DXP"
+			},
+			"name": "serverInformation",
+			"required": false
 		},
 		{
 			"DBType": "String",
@@ -96,11 +96,11 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Version of Liferay Software"
+				"en_US": "Type of Server"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Version of Liferay Software$]",
-			"name": "versionOfLiferaySoftware",
-			"required": false,
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type of Server$]",
+			"name": "typeOfServer",
+			"required": true,
 			"type": "String"
 		},
 		{
@@ -109,11 +109,11 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Type of Server"
+				"en_US": "Version of Liferay Software"
 			},
-			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Type of Server$]",
-			"name": "typeOfServer",
-			"required": true,
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:Version of Liferay Software$]",
+			"name": "versionOfLiferaySoftware",
+			"required": false,
 			"type": "String"
 		}
 	],

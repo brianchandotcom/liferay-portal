@@ -234,10 +234,10 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 	@Test
 	public void testInlinePermissionsToUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_groupUser, permissionChecker)) {
@@ -263,12 +263,10 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 			Assert.assertEquals(1, getModelCount(_group));
 		}
 		finally {
-			if (userGroup != null) {
-				_userGroupLocalService.deleteUserUserGroup(
-					_groupUser.getUserId(), userGroup);
+			_userGroupLocalService.deleteUserUserGroup(
+				_groupUser.getUserId(), userGroup);
 
-				_userGroupLocalService.deleteUserGroup(userGroup);
-			}
+			_userGroupLocalService.deleteUserGroup(userGroup);
 		}
 	}
 
@@ -313,19 +311,15 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 					model.getModelClassName(), "1234", null, null, null));
 		}
 		finally {
-			if (userGroup1 != null) {
-				_userGroupLocalService.deleteUserUserGroup(
-					TestPropsValues.getUserId(), userGroup1);
+			_userGroupLocalService.deleteUserUserGroup(
+				TestPropsValues.getUserId(), userGroup1);
 
-				_userGroupLocalService.deleteUserGroup(userGroup1);
-			}
+			_userGroupLocalService.deleteUserGroup(userGroup1);
 
-			if (userGroup2 != null) {
-				_userGroupLocalService.deleteUserUserGroup(
-					TestPropsValues.getUserId(), userGroup2);
+			_userGroupLocalService.deleteUserUserGroup(
+				TestPropsValues.getUserId(), userGroup2);
 
-				_userGroupLocalService.deleteUserGroup(userGroup2);
-			}
+			_userGroupLocalService.deleteUserGroup(userGroup2);
 		}
 	}
 

@@ -274,12 +274,11 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 	@Test
 	public void testModelClassNameReturnsPermissionSQL() throws Exception {
+		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
+		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
+
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
-
-		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
-
-		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				TestPropsValues.getUser(), permissionChecker)) {
@@ -317,12 +316,14 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 			if (userGroup1 != null) {
 				_userGroupLocalService.deleteUserUserGroup(
 					TestPropsValues.getUserId(), userGroup1);
+
 				_userGroupLocalService.deleteUserGroup(userGroup1);
 			}
 
 			if (userGroup2 != null) {
 				_userGroupLocalService.deleteUserUserGroup(
 					TestPropsValues.getUserId(), userGroup2);
+
 				_userGroupLocalService.deleteUserGroup(userGroup2);
 			}
 		}

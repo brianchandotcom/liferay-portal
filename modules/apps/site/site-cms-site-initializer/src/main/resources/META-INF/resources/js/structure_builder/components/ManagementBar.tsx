@@ -211,10 +211,22 @@ function PublishButton() {
 
 function useValidate() {
 	const dispatch = useStateDispatch();
+	const fields = useSelector(selectStructureFields);
 	const invalids = useSelector(selectInvalids);
 	const selection = useSelector(selectSelection);
 
 	return useCallback(() => {
+		if (!fields.length) {
+			dispatch({
+				error: Liferay.Language.get(
+					'at-least-one-field-must-be-added-to-save-or-publish-the-structure'
+				),
+				type: 'set-error',
+			});
+
+			return false;
+		}
+
 		if (!invalids.size) {
 			return true;
 		}
@@ -234,5 +246,5 @@ function useValidate() {
 		}
 
 		return false;
-	}, [dispatch, invalids, selection]);
+	}, [dispatch, fields, invalids, selection]);
 }

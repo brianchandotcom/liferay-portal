@@ -54,7 +54,7 @@ public class DepotEntryInfoItemFieldValuesProvider
 			).build();
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			return ReflectionUtil.throwException(exception);
 		}
 	}
 

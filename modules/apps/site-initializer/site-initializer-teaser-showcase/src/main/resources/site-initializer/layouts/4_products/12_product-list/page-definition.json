@@ -66,6 +66,7 @@
 					},
 					{
 						"definition": {
+							"customCSS": "\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet {\n    padding: 0 !important;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-collapse {\n    padding-left: 0 !important;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-body .panel-body {\n    padding: 0 !important;\n}\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet {\n    padding: 0 !important;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet .panel-body {\n    padding: 0 !important;\n    padding-top: 0.3rem !important;\n}",
 							"fragmentStyle": {
 								"marginBottom": "5",
 								"marginLeft": "7",
@@ -172,6 +173,7 @@
 											},
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$] {\n\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet {\n    padding: 0;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-collapse {\n    padding-left: 0;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet .panel-body .panel-body {\n    padding: 0;\n}\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet {\n    padding: 0;\n}\n\n.lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpoptionfacetsportlet .panel-body {\n    padding: 0;\n    padding-top: 0.3rem;\n}",
 													"widgetInstance": {
 														"widgetConfig": {
 															"displayStyleGroupId": "[$GROUP_ID$]"

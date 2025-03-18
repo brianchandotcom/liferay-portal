@@ -4,22 +4,26 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import ManagementBar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/ManagementBar';
 import {State} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 import StructureService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/StructureService';
+import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
+import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 import {MockStateProvider} from '../mocks/MockStateProvider';
 
 type Props = {
 	state?: Partial<State>;
 };
 
+const DEFAULT_FIELDS = new Map([[getUuid(), {} as Field]]);
+
 const renderComponent = ({state}: Props = {}) => {
 	return render(
-		<MockStateProvider state={state}>
+		<MockStateProvider state={{...state, fields: DEFAULT_FIELDS}}>
 			<ManagementBar />
 		</MockStateProvider>
 	);
@@ -27,22 +31,21 @@ const renderComponent = ({state}: Props = {}) => {
 
 describe('ManagementBar', () => {
 	beforeAll(() => {
-		StructureService.createStructure = jest.fn();
+		StructureService.createStructure = jest.fn().mockResolvedValue({id: 1});
 		StructureService.updateStructure = jest.fn();
+		StructureService.publishStructure = jest.fn();
 	});
 
 	beforeEach(() => {
 		jest.clearAllMocks();
 	});
 
-	it('Publish button is not shown and save button is displayed as primary if structure is published', async () => {
+	it('Save button is not shown if structure is published', async () => {
 		renderComponent({state: {status: 'published'}});
 
-		const publishButton = screen.queryByText('publish');
-		const saveButton = screen.getByText('save');
+		const saveButton = screen.queryByText('save');
 
-		expect(publishButton).not.toBeInTheDocument();
-		expect(saveButton).toHaveClass('btn-primary');
+		expect(saveButton).not.toBeInTheDocument();
 	});
 
 	it('Save button calls correct endpoint when status is new', async () => {
@@ -52,7 +55,10 @@ describe('ManagementBar', () => {
 
 		await userEvent.click(saveButton);
 
-		expect(StructureService.createStructure).toBeCalled();
+		await waitFor(() => {
+			expect(StructureService.createStructure).toBeCalled();
+		});
+
 		expect(StructureService.updateStructure).not.toBeCalled();
 	});
 
@@ -63,21 +69,55 @@ describe('ManagementBar', () => {
 
 		await userEvent.click(saveButton);
 
+		await waitFor(() => {
+			expect(StructureService.updateStructure).toBeCalled();
+		});
+
 		expect(StructureService.createStructure).not.toBeCalled();
-		expect(StructureService.updateStructure).toBeCalled();
 	});
 
-	it('Save button calls correct endpoint when status is published', async () => {
+	it('Publish button calls correct endpoint when status is new', async () => {
+		renderComponent({state: {status: 'new'}});
 
-		// Status is published
+		const publishButton = screen.getByText('publish');
 
-		renderComponent({state: {status: 'published'}});
+		await userEvent.click(publishButton);
 
-		const saveButton = screen.getByText('save');
+		await waitFor(() => {
+			expect(StructureService.createStructure).toBeCalled();
+			expect(StructureService.publishStructure).toBeCalled();
+		});
 
-		await userEvent.click(saveButton);
+		expect(StructureService.updateStructure).not.toBeCalled();
+	});
+
+	it('Publish button calls correct endpoint when status is draft', async () => {
+		renderComponent({state: {status: 'draft'}});
+
+		const publishButton = screen.getByText('publish');
+
+		await userEvent.click(publishButton);
+
+		await waitFor(() => {
+			expect(StructureService.updateStructure).toBeCalled();
+			expect(StructureService.publishStructure).toBeCalled();
+		});
 
 		expect(StructureService.createStructure).not.toBeCalled();
-		expect(StructureService.updateStructure).toBeCalled();
+	});
+
+	it('Publish button calls correct endpoint when status is published', async () => {
+		renderComponent({state: {status: 'published'}});
+
+		const publishButton = screen.getByText('publish');
+
+		await userEvent.click(publishButton);
+
+		await waitFor(() => {
+			expect(StructureService.updateStructure).toBeCalled();
+		});
+
+		expect(StructureService.publishStructure).not.toBeCalled();
+		expect(StructureService.createStructure).not.toBeCalled();
 	});
 });

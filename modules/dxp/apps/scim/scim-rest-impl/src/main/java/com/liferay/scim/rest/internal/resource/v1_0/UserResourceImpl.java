@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -23,9 +22,8 @@ import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.dto.v1_0.User;
 import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.internal.manager.UserResourceManagerImpl;
+import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.UserResource;
-
-import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
@@ -36,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 import org.wso2.charon3.core.extensions.UserManager;
-import org.wso2.charon3.core.protocol.SCIMResponse;
 import org.wso2.charon3.core.protocol.endpoints.UserResourceManager;
 
 /**
@@ -50,12 +47,13 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Override
 	public Response deleteV2User(String id) throws Exception {
-		return _buildResponse(_userResourceManager.delete(id, _userManager));
+		return ScimUtil.buildResponse(
+			_userResourceManager.delete(id, _userManager));
 	}
 
 	@Override
 	public Object getV2UserById(String id) throws Exception {
-		return _buildResponse(
+		return ScimUtil.buildResponse(
 			_userResourceManager.get(id, _userManager, null, null));
 	}
 
@@ -63,7 +61,7 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	public Object getV2Users(Integer count, Integer startIndex, Filter filter)
 		throws Exception {
 
-		return _buildResponse(
+		return ScimUtil.buildResponse(
 			_userResourceManager.listWithGET(
 				_userManager,
 				ParamUtil.getString(contextHttpServletRequest, "filter", null),
@@ -72,21 +70,21 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 	@Override
 	public Response patchV2User(String id, PatchOp patchOp) throws Exception {
-		return _buildResponse(
+		return ScimUtil.buildResponse(
 			_userResourceManager.updateWithPATCH(
 				id, patchOp.toString(), _userManager, null, null));
 	}
 
 	@Override
 	public Response postV2User(User user) throws Exception {
-		return _buildResponse(
+		return ScimUtil.buildResponse(
 			_userResourceManager.create(
 				user.toString(), _userManager, null, null));
 	}
 
 	@Override
 	public Response putV2User(String id, User user) throws Exception {
-		return _buildResponse(
+		return ScimUtil.buildResponse(
 			_userResourceManager.updateWithPUT(
 				id, user.toString(), _userManager, null, null));
 	}
@@ -99,25 +97,6 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 			_expandoValueLocalService, _searcher, _searchRequestBuilderFactory,
 			_userGroupLocalService, _userGroupService, _userLocalService,
 			_userService);
-	}
-
-	private Response _buildResponse(SCIMResponse scimResponse) {
-		Response.ResponseBuilder responseBuilder = Response.status(
-			scimResponse.getResponseStatus());
-
-		if (scimResponse.getResponseMessage() != null) {
-			responseBuilder.entity(scimResponse.getResponseMessage());
-		}
-
-		Map<String, String> map = scimResponse.getHeaderParamMap();
-
-		if (MapUtil.isNotEmpty(map)) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				responseBuilder.header(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return responseBuilder.build();
 	}
 
 	private static final UserResourceManager _userResourceManager =

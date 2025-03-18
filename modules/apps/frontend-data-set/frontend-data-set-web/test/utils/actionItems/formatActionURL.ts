@@ -8,6 +8,7 @@ import formatActionURL from '../../../src/main/resources/META-INF/resources/util
 const testItem = {
 	id: 1235,
 	name: 'test_item_name',
+	url: 'https://www.liferay.com',
 };
 
 describe('formatActionURL helper', () => {
@@ -137,5 +138,23 @@ describe('formatActionURL helper', () => {
 		);
 
 		expect(anotherFormattedURL).toEqual('/test/page?p_p_id=random');
+	});
+
+	it('does not encode the value when the URL is fully wrapped with braces', () => {
+		const URLFullyWrapped = '{url}';
+		const target = 'link';
+		const formattedURL = formatActionURL(URLFullyWrapped, testItem, target);
+
+		expect(formattedURL).toEqual(testItem.url);
+	});
+
+	it('encodes only the value inside braces when part of the URL is wrapped with braces', () => {
+		const partialURL = '{id}/test/{url}';
+		const target = 'link';
+		const formattedURL = formatActionURL(partialURL, testItem, target);
+
+		expect(formattedURL).toEqual(
+			`${testItem.id}/test/${encodeURIComponent(testItem.url)}`
+		);
 	});
 });

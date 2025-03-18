@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
@@ -141,8 +142,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_defaultDDMStructureHelper, _depotEntryGroupRelLocalService,
 			_depotEntryLocalService, _dlFileEntryTypeLocalService, _dlURLHelper,
 			_documentFolderResourceFactory, _documentResourceFactory,
-			_expandoValueLocalService, _fragmentsImporter, _groupLocalService,
-			_journalArticleLocalService, _jsonFactory, _keywordResourceFactory,
+			_expandoValueLocalService, _fragmentEntryLinkLocalService,
+			_fragmentsImporter, _groupLocalService, _journalArticleLocalService,
+			_jsonFactory, _keywordResourceFactory,
 			_knowledgeBaseArticleResourceFactory,
 			_knowledgeBaseFolderResourceFactory, _layoutLocalService,
 			_layoutPageTemplateEntryLocalService, _layoutsImporter,
@@ -275,6 +277,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;

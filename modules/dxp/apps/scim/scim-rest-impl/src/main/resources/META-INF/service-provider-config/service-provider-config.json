@@ -1,0 +1,42 @@
+{
+	"authenticationSchemes": [
+		{
+			"description": "Authentication scheme using the OAuth Bearer Token Standard",
+			"documentationUri": "https://learn.liferay.com/web/guest/w/dxp/headless-delivery/using-oauth2",
+			"name": "OAuth Bearer Token",
+			"primary": true,
+			"specUri": "http://www.rfc-editor.org/info/rfc6750",
+			"type": "oauthbearertoken"
+		}
+	],
+	"bulk": {
+		"supported": false
+	},
+	"changePassword": {
+		"supported": false
+	},
+	"documentationUri": "https://learn.liferay.com/w/dxp/installation-and-upgrades/securing-liferay/system-for-cross-domain-identity-management-scim",
+	"etag": {
+		"supported": false
+	},
+	"filter": {
+		"maxResults": 100,
+		"supported": true
+	},
+	"meta": {
+		"created": "2025-03-13T00:00Z",
+		"lastModified": "2025-03-13T00:00Z",
+		"location": "https://example.com/v2/ServiceProviderConfig",
+		"resourceType": "ServiceProviderConfig",
+		"version": "1"
+	},
+	"patch": {
+		"supported": true
+	},
+	"schemas": [
+		"urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+	],
+	"sort": {
+		"supported": false
+	}
+}

@@ -8,6 +8,7 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -55,9 +56,16 @@ public class DeleteArticleTranslationsMVCActionCommand
 				article.getGroupId(), article.getArticleId(),
 				article.getVersion(), languageId);
 		}
+
+		_journalContent.clearCache(
+			article.getGroupId(), article.getArticleId(),
+			article.getDDMTemplateKey(), languageIds);
 	}
 
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private JournalContent _journalContent;
 
 }

@@ -74,6 +74,9 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 
 		_company = CompanyTestUtil.addCompany();
 
+		_companyPartitionName = DBPartitionUtil.getPartitionName(
+			_company.getCompanyId());
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
@@ -261,9 +264,8 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 					"DROP_TABLE_IF_EXISTS(" + defaultPartitionName +
 						".TestTable)");
 				db.runSQL(
-					"DROP_TABLE_IF_EXISTS(" +
-						DBPartitionUtil.getPartitionName(
-							_company.getCompanyId()) + ".TestTable2)");
+					"DROP_TABLE_IF_EXISTS(" + _companyPartitionName +
+						".TestTable2)");
 			}
 		}
 	}
@@ -296,9 +298,8 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 						PortalInstancePool.getDefaultCompanyId())) {
 
 				db.runSQL(
-					"drop view if exists " +
-						DBPartitionUtil.getPartitionName(
-							_company.getCompanyId()) + ".TestView");
+					"drop view if exists " + _companyPartitionName +
+						".TestView");
 			}
 		}
 	}
@@ -308,6 +309,7 @@ public class DBPartitionDBSchemaDefinitionExporterTest
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
+	private static String _companyPartitionName;
 	private static ObjectDefinition _objectDBPartitionDefinition1;
 	private static ObjectDefinition _objectDBPartitionDefinition2;
 

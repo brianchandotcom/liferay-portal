@@ -229,8 +229,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Page<DataDefinition> page =
 			dataDefinitionResource.
 				getDataDefinitionByContentTypeContentTypePage(
-					contentType, RandomTestUtil.randomString(),
-					Pagination.of(1, 10), null);
+					contentType, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -1198,8 +1197,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Page<DataDefinition> page =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeContentTypePage(
-					siteId, contentType, RandomTestUtil.randomString(),
-					Pagination.of(1, 10), null);
+					siteId, contentType, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 

@@ -189,7 +189,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 	public void testGetCommerceChannelsPage() throws Exception {
 		Page<CommerceChannel> page =
 			commerceChannelResource.getCommerceChannelsPage(
-				RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+				null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 

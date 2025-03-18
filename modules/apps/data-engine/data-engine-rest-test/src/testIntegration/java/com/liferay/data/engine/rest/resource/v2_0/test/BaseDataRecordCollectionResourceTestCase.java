@@ -370,8 +370,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Page<DataRecordCollection> page =
 			dataRecordCollectionResource.
 				getDataDefinitionDataRecordCollectionsPage(
-					dataDefinitionId, RandomTestUtil.randomString(),
-					Pagination.of(1, 10));
+					dataDefinitionId, null, Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 

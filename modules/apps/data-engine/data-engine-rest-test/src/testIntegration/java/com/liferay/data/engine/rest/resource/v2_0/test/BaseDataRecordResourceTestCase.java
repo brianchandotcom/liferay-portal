@@ -211,8 +211,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page =
 			dataRecordResource.getDataDefinitionDataRecordsPage(
-				dataDefinitionId, null, RandomTestUtil.randomString(),
-				Pagination.of(1, 10), null);
+				dataDefinitionId, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -572,8 +571,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		Page<DataRecord> page =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(
-				dataRecordCollectionId, null, RandomTestUtil.randomString(),
-				Pagination.of(1, 10), null);
+				dataRecordCollectionId, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 

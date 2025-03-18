@@ -6,11 +6,11 @@
 package com.liferay.client.extension.web.internal.portlet;
 
 import com.liferay.client.extension.type.IFrameCET;
+import com.liferay.portal.kernel.test.portlet.MockPortletPreferences;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletPreferences;
 
 import java.io.CharArrayWriter;
 import java.io.IOException;

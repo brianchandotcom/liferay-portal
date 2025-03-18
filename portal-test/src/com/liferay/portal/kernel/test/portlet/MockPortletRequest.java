@@ -10,10 +10,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortalContext;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletContext;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletPreferences;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletSession;
 
 import java.security.Principal;
 

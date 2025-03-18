@@ -23,7 +23,7 @@ export default gql`
 				batchId
 				completeDate
 				createDate
-				emailAddress
+				emailAddresses
 				id
 				status
 				type

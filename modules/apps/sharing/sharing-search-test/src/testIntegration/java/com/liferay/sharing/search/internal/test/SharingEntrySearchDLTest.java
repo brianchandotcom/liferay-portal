@@ -189,12 +189,10 @@ public class SharingEntrySearchDLTest {
 			}
 		}
 		finally {
-			if (userGroup != null) {
-				_userGroupLocalService.deleteUserUserGroup(
-					_groupUser.getUserId(), userGroup);
+			_userGroupLocalService.deleteUserUserGroup(
+				_groupUser.getUserId(), userGroup);
 
-				_userGroupLocalService.deleteUserGroup(userGroup);
-			}
+			_userGroupLocalService.deleteUserGroup(userGroup);
 		}
 	}
 

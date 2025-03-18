@@ -1,0 +1,19 @@
+{
+	"friendlyURL": "/user-dashboard",
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "User Dashboard"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

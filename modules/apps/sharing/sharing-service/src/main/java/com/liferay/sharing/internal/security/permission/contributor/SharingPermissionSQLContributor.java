@@ -149,7 +149,6 @@ public class SharingPermissionSQLContributor
 
 		sb.append("(SharingEntry.toUserId = ");
 		sb.append(permissionChecker.getUserId());
-
 		sb.append(")) AND (SharingEntry.classNameId = ");
 		sb.append(_classNameLocalService.getClassNameId(className));
 		sb.append("))");

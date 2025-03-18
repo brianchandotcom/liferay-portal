@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -14,8 +14,6 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.scim.rest.dto.v1_0.Filter;
-import com.liferay.scim.rest.dto.v1_0.PatchOp;
-import com.liferay.scim.rest.dto.v1_0.QueryAttributes;
 import com.liferay.scim.rest.dto.v1_0.Sort;
 import com.liferay.scim.rest.dto.v1_0.User;
 
@@ -29,7 +27,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -44,25 +41,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface UserResource {
+public interface ServiceProviderConfigResource {
 
-	public Object getV2Users(
-			Integer count, Integer startIndex,
-			com.liferay.portal.kernel.search.filter.Filter filter)
-		throws Exception;
-
-	public Response postV2User(User user) throws Exception;
-
-	public Response postV2UserSearch(QueryAttributes queryAttributes)
-		throws Exception;
-
-	public Response deleteV2User(String id) throws Exception;
-
-	public Object getV2UserById(String id) throws Exception;
-
-	public Response patchV2User(String id, PatchOp patchOp) throws Exception;
-
-	public Response putV2User(String id, User user) throws Exception;
+	public Object getV2ServiceProviderConfig() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -126,7 +107,7 @@ public interface UserResource {
 	@ProviderType
 	public interface Builder {
 
-		public UserResource build();
+		public ServiceProviderConfigResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

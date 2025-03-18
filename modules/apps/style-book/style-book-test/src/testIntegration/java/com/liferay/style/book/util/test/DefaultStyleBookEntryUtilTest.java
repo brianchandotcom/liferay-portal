@@ -123,7 +123,23 @@ public class DefaultStyleBookEntryUtilTest {
 				masterLayoutBasedLayout, null, null));
 	}
 
-	@FeatureFlags(enable = false, value = "LPD-30204")
+	@Test
+	public void testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry1()
+		throws Exception {
+
+		_testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry(
+			"styles-from-theme");
+	}
+
+	@FeatureFlags("LPD-30204")
+	@Test
+	public void testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry2()
+		throws Exception {
+
+		_testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry(
+			"styles-from-x");
+	}
+
 	@Test
 	public void testGetStyleBookEntryNameWithoutMasterLayout1() {
 		Assert.assertEquals(
@@ -172,6 +188,24 @@ public class DefaultStyleBookEntryUtilTest {
 			masterLayoutPageTemplateEntry.getPlid());
 
 		return _layoutLocalService.updateLayout(masterLayoutBasedLayout);
+	}
+
+	private void
+			_testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry(
+				String expectedMessage)
+		throws Exception {
+
+		Layout layoutWithMasterLayout = _getLayoutBasedOnMasterLayout();
+
+		_styleBookEntryLocalService.addStyleBookEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), false, null, RandomTestUtil.randomString(),
+			null, _THEME_ID, null);
+
+		Assert.assertEquals(
+			expectedMessage,
+			DefaultStyleBookEntryUtil.getStyleBookEntryName(
+				layoutWithMasterLayout, null, null));
 	}
 
 	private static final String _THEME_ID = RandomTestUtil.randomString();

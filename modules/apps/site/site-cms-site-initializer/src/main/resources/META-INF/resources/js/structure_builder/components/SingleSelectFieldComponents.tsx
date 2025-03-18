@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -54,31 +55,49 @@ function FirstSectionComponent({field}: {field: Field}) {
 
 	return (
 		<ClayForm.Group className="mb-2">
-			<label htmlFor={id}>
-				{Liferay.Language.get('picklist')}
+			<ClayInput.Group className="align-items-end">
+				<ClayInput.GroupItem>
+					<label htmlFor={id}>
+						{Liferay.Language.get('picklist')}
 
-				<ClayIcon className="ml-1 reference-mark" symbol="asterisk" />
-			</label>
+						<ClayIcon
+							className="ml-1 reference-mark"
+							symbol="asterisk"
+						/>
+					</label>
 
-			<Picker
-				aria-label={sub(
-					Liferay.Language.get('select-x'),
-					Liferay.Language.get('picklist')
-				)}
-				disabled={isPublished}
-				id={id}
-				items={picklists}
-				onSelectionChange={(listTypeDefinitionId: React.Key) => {
-					dispatch({
-						listTypeDefinitionId: listTypeDefinitionId as string,
-						type: 'update-field',
-						uuid: field.uuid,
-					});
-				}}
-				selectedKey={singleSelectField.listTypeDefinitionId}
-			>
-				{(item) => <Option key={item.id}>{item.name}</Option>}
-			</Picker>
+					<Picker
+						aria-label={sub(
+							Liferay.Language.get('select-x'),
+							Liferay.Language.get('picklist')
+						)}
+						disabled={isPublished}
+						id={id}
+						items={picklists}
+						onSelectionChange={(
+							listTypeDefinitionId: React.Key
+						) => {
+							dispatch({
+								listTypeDefinitionId:
+									listTypeDefinitionId as string,
+								type: 'update-field',
+								uuid: field.uuid,
+							});
+						}}
+						selectedKey={singleSelectField.listTypeDefinitionId}
+					>
+						{(item) => <Option key={item.id}>{item.name}</Option>}
+					</Picker>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem shrink>
+					<ClayButton displayType="secondary">
+						{Liferay.Language.get('new-picklist')}
+
+						<ClayIcon className="ml-2" symbol="shortcut" />
+					</ClayButton>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 		</ClayForm.Group>
 	);
 }

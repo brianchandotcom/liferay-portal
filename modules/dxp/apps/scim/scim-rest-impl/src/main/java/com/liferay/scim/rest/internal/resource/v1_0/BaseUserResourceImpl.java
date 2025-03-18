@@ -19,6 +19,7 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
+import com.liferay.scim.rest.dto.v1_0.Filter;
 import com.liferay.scim.rest.dto.v1_0.Operation;
 import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.dto.v1_0.QueryAttributes;

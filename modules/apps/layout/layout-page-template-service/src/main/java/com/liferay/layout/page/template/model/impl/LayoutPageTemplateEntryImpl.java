@@ -12,12 +12,22 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Jürgen Kappler
  */
 public class LayoutPageTemplateEntryImpl
 	extends LayoutPageTemplateEntryBaseImpl {
+
+	@Override
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		return PortalUtil.fetchClassName(getClassNameId());
+	}
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {

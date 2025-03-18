@@ -144,7 +144,7 @@ public class SharingPermissionSQLContributor
 				StringUtil.merge(
 					TransformUtil.transformToLongArray(
 						userGroups, UserGroup::getUserGroupId),
-					","));
+					StringPool.COMMA));
 			sb.append(")");
 		}
 

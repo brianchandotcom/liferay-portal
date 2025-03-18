@@ -50,6 +50,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -63,6 +65,7 @@ import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
 import org.wso2.charon3.core.objects.plainobjects.ScimName;
+import org.wso2.charon3.core.protocol.SCIMResponse;
 import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
 import org.wso2.charon3.core.schema.AttributeSchema;
 import org.wso2.charon3.core.schema.SCIMConstants;
@@ -77,6 +80,34 @@ public class ScimUtil {
 
 	public static final String LIFERAY_USER_SCHEMA_EXTENSION_URI =
 		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User";
+
+	public static Map<String, String> getResponseHeaders(String resourceName) throws NotFoundException {
+		return HashMapBuilder.put(
+			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
+		).put(
+			SCIMConstants.LOCATION_HEADER,
+			AbstractResourceManager.getResourceEndpointURL(resourceName)
+		).build();
+	}
+
+	public static Response buildResponse(SCIMResponse scimResponse) {
+		Response.ResponseBuilder responseBuilder = Response.status(
+			scimResponse.getResponseStatus());
+
+		if (scimResponse.getResponseMessage() != null) {
+			responseBuilder.entity(scimResponse.getResponseMessage());
+		}
+
+		Map<String, String> map = scimResponse.getHeaderParamMap();
+
+		if (MapUtil.isNotEmpty(map)) {
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				responseBuilder.header(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return responseBuilder.build();
+	}
 
 	public static ScimClientOAuth2ApplicationConfiguration
 		getScimClientOAuth2ApplicationConfiguration(

@@ -14,15 +14,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.SchemaResource;
 
 import java.util.Map;
-
-import javax.ws.rs.core.Response;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -47,45 +44,16 @@ import org.wso2.charon3.core.schema.SCIMConstants;
 	properties = "OSGI-INF/liferay/rest/v1_0/schema.properties",
 	scope = ServiceScope.PROTOTYPE, service = SchemaResource.class
 )
-public class SchemaResourceImpl extends BaseSchemaResourceImpl {
+public class 	SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 	@Override
 	public Object getV2SchemaById(String id) throws Exception {
-		return _buildResponse(_getSCIMResponse(id));
+		return ScimUtil.buildResponse(_getSCIMResponse(id));
 	}
 
 	@Override
 	public Object getV2Schemas() throws Exception {
 		return getV2SchemaById(null);
-	}
-
-	private Response _buildResponse(SCIMResponse scimResponse) {
-		Response.ResponseBuilder responseBuilder = Response.status(
-			scimResponse.getResponseStatus());
-
-		if (scimResponse.getResponseMessage() != null) {
-			responseBuilder.entity(scimResponse.getResponseMessage());
-		}
-
-		Map<String, String> map = scimResponse.getHeaderParamMap();
-
-		if (MapUtil.isNotEmpty(map)) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				responseBuilder.header(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return responseBuilder.build();
-	}
-
-	private Map<String, String> _getHeaders() throws NotFoundException {
-		return HashMapBuilder.put(
-			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
-		).put(
-			SCIMConstants.LOCATION_HEADER,
-			AbstractResourceManager.getResourceEndpointURL(
-				SCIMConstants.SCHEMAS_ENDPOINT)
-		).build();
 	}
 
 	private String _getSchemaJSON(String id) throws AbstractCharonException {
@@ -135,7 +103,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 			if (Validator.isNull(id)) {
 				return new SCIMResponse(
 					ResponseCodeConstants.CODE_OK, _getSchemasJSON(),
-					_getHeaders());
+					ScimUtil.getResponseHeaders(SCIMConstants.SCHEMAS_ENDPOINT));
 			}
 
 			String schemaJSON = _getSchemaJSON(id);
@@ -146,7 +114,7 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 			}
 
 			return new SCIMResponse(
-				ResponseCodeConstants.CODE_OK, schemaJSON, _getHeaders());
+				ResponseCodeConstants.CODE_OK, schemaJSON, ScimUtil.getResponseHeaders(SCIMConstants.SCHEMAS_ENDPOINT));
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(

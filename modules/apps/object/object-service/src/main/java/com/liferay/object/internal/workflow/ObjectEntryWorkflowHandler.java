@@ -6,6 +6,7 @@
 package com.liferay.object.internal.workflow;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -78,13 +79,10 @@ public class ObjectEntryWorkflowHandler
 			long companyId, long groupId, long classPK)
 		throws PortalException {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			classPK);
-
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
 				companyId, groupId, ObjectEntryFolder.class.getName(),
-				objectEntry.getObjectEntryFolderId(),
+				_getObjectEntryFolderId(classPK),
 				ObjectDefinitionConstants.OBJECT_DEFINITION_ID_ALL, true);
 
 		if (workflowDefinitionLink != null) {
@@ -139,6 +137,20 @@ public class ObjectEntryWorkflowHandler
 
 		return _objectEntryLocalService.updateStatus(
 			userId, objectEntry, status, serviceContext);
+	}
+
+	private long _getObjectEntryFolderId(long classPK) throws PortalException {
+		Long objectEntryFolderId =
+			ObjectEntryThreadLocal.getObjectEntryFolderId();
+
+		if (objectEntryFolderId != null) {
+			return objectEntryFolderId;
+		}
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			classPK);
+
+		return objectEntry.getObjectEntryFolderId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

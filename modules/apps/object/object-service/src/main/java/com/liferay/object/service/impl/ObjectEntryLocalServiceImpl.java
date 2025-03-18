@@ -420,7 +420,12 @@ public class ObjectEntryLocalServiceImpl
 		_addFriendlyURLEntry(
 			objectDefinition, objectEntry, serviceContext, values);
 
-		_startWorkflowInstance(userId, objectEntry, serviceContext, false);
+		try (SafeCloseable safeCloseable =
+				ObjectEntryThreadLocal.setObjectEntryFolderIdWithSafeCloseable(
+					objectEntryFolderId)) {
+
+			_startWorkflowInstance(userId, objectEntry, serviceContext, false);
+		}
 
 		_updateResourcePermissions(
 			objectDefinition, objectEntry, serviceContext);

@@ -15,78 +15,79 @@
 	"name": "UserExperience",
 	"objectActions": [
 		{
+			"active": true,
 			"conditionExpression": "",
-			"objectActionExecutorKey": "update-object-entry",
+			"description": "",
 			"errorMessage": {
 				"en_US": "Sorry, it seems that something happened"
 			},
-			"active": true,
-			"description": "",
 			"label": {
 				"en_US": "Standalone User Confirmation"
 			},
-			"system": false,
-			"objectActionTriggerKey": "standalone",
 			"name": "standaloneUserConfirmation",
+			"objectActionExecutorKey": "update-object-entry",
+			"objectActionTriggerKey": "standalone",
 			"parameters": {
 				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
 				"predefinedValues": [
 					{
-						"name": "answered",
+						"businessType": "Boolean",
 						"inputAsValue": false,
 						"label": {
 							"en_US": "Answered"
 						},
-						"businessType": "Boolean",
+						"name": "answered",
 						"value": "true"
 					}
 				]
 			},
 			"status": {
-				"label_i18n": "Success",
 				"code": 1,
-				"label": "success"
-			}
+				"label": "success",
+				"label_i18n": "Success"
+			},
+			"system": false
 		},
 		{
+			"active": true,
 			"conditionExpression": "",
-			"objectActionExecutorKey": "update-object-entry",
+			"description": "",
 			"errorMessage": {
 				"en_US": "Sorry, it seems that something happened"
 			},
-			"active": true,
-			"description": "",
 			"label": {
 				"en_US": "Standalone User Disconfirmation"
 			},
-			"system": false,
-			"objectActionTriggerKey": "standalone",
 			"name": "standaloneUserDisconfirmation",
+			"objectActionExecutorKey": "update-object-entry",
+			"objectActionTriggerKey": "standalone",
 			"parameters": {
 				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
 				"predefinedValues": [
 					{
-						"name": "answered",
+						"businessType": "Boolean",
 						"inputAsValue": false,
 						"label": {
 							"en_US": "Answer confirmed by the user"
 						},
-						"businessType": "Boolean",
+						"name": "answered",
 						"value": "false"
 					}
 				]
 			},
 			"status": {
-				"label_i18n": "Success",
 				"code": 1,
-				"label": "success"
-			}
+				"label": "success",
+				"label_i18n": "Success"
+			},
+			"system": false
 		},
 		{
 			"active": true,
 			"conditionExpression": "",
 			"description": "",
-			"errorMessage": {},
+			"errorMessage": {
+			},
 			"label": {
 				"en_US": "Update User and Date"
 			},
@@ -136,7 +137,8 @@
 			},
 			"localized": false,
 			"name": "answered",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -156,7 +158,8 @@
 			},
 			"localized": false,
 			"name": "answerFromClarity",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -201,7 +204,8 @@
 			},
 			"localized": false,
 			"name": "date",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -212,7 +216,8 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "MY-EXPERIENCES",
-	"objectValidationRules": [],
+	"objectValidationRules": [
+	],
 	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {

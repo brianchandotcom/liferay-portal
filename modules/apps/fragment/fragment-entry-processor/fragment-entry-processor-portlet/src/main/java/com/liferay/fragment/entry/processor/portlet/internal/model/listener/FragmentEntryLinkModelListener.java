@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.entry.processor.portlet.internal.model.listener;
 
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -39,10 +38,6 @@ public class FragmentEntryLinkModelListener
 	@Override
 	public void onAfterRemove(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
-
-		if (ExportImportThreadLocal.isImportInProcess()) {
-			return;
-		}
 
 		List<String> portletIds =
 			_portletRegistry.getFragmentEntryLinkPortletIds(fragmentEntryLink);

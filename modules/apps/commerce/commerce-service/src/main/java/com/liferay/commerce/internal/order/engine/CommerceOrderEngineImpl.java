@@ -490,7 +490,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		dtoConverterContext.setAttribute("secure", Boolean.FALSE);
 
 		JSONObject commerceOrderJSONObject = _jsonFactory.createJSONObject(
-			String.valueOf(
+			_jsonFactory.looseSerializeDeep(
 				commerceOrderDTOConverter.toDTO(dtoConverterContext)));
 
 		JSONArray commerceOrderItemsJSONArray = _jsonFactory.createJSONArray();

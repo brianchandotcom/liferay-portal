@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.test.portlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portlet.test.MockPortletRequestDispatcher;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +26,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -182,7 +185,42 @@ public class MockPortletContext implements PortletContext {
 					"start with '/'");
 		}
 
-		return new MockPortletRequestDispatcher();
+		return new PortletRequestDispatcher() {
+
+			@Override
+			public void forward(
+				PortletRequest portletRequest,
+				PortletResponse portletResponse) {
+
+				if (portletResponse instanceof
+						MockMimeResponse mockMimeResponse) {
+
+					mockMimeResponse.setForwardedUrl(path);
+				}
+			}
+
+			@Override
+			public void include(
+				PortletRequest portletRequest,
+				PortletResponse portletResponse) {
+
+				if (portletResponse instanceof
+						MockMimeResponse mockMimeResponse) {
+
+					mockMimeResponse.setIncludedUrl(path);
+				}
+			}
+
+			@Override
+			public void include(
+				RenderRequest renderRequest, RenderResponse renderResponse) {
+
+				include(
+					(PortletRequest)renderRequest,
+					(PortletResponse)renderResponse);
+			}
+
+		};
 	}
 
 	@Override

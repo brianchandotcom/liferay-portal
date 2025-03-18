@@ -407,12 +407,12 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			Map<Long, List<String>> viewNames = new HashMap<>();
 
 			for (long companyId : COMPANY_IDS) {
-				List<String> views = _getObjectNames(
+				List<String> companyViewNames = _getObjectNames(
 					"VIEW", getPartitionName(companyId));
 
-				viewNames.put(companyId, views);
+				viewNames.put(companyId, companyViewNames);
 
-				Assert.assertNotEquals(0, views.size());
+				Assert.assertNotEquals(0, companyViewNames.size());
 
 				tablesCount.put(
 					companyId, _getTablesCount(getPartitionName(companyId)));
@@ -429,10 +429,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			for (long companyId : COMPANY_IDS) {
 				String extractedPartitionName = getExtractedPartitionName(
 					companyId);
-				List<String> views = viewNames.get(companyId);
+				List<String> companyViewNames = viewNames.get(companyId);
 
 				Assert.assertEquals(
-					tablesCount.get(companyId) + views.size(),
+					tablesCount.get(companyId) + companyViewNames.size(),
 					_getTablesCount(extractedPartitionName));
 
 				Assert.assertEquals(
@@ -440,7 +440,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					_getTablesCount(getPartitionName(companyId)));
 				Assert.assertEquals(0, _getViewsCount(extractedPartitionName));
 				Assert.assertEquals(
-					views.size(), _getViewsCount(getPartitionName(companyId)));
+					companyViewNames.size(),
+					_getViewsCount(getPartitionName(companyId)));
 
 				for (String viewName : viewNames.get(companyId)) {
 					if (!isCopyableQuartzTable(viewName)) {

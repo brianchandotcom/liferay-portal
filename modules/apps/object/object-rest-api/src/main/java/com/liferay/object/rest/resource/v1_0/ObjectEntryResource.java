@@ -5,7 +5,9 @@
 
 package com.liferay.object.rest.resource.v1_0;
 
+import com.liferay.object.rest.dto.v1_0.EntryValidation;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.ValidationError;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -112,6 +114,14 @@ public interface ObjectEntryResource {
 			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
 				String scopeKey, String externalReferenceCode,
 				String objectActionName)
+		throws Exception;
+
+	public Page<ValidationError> postScopeScopeKeyValidatePage(
+			String scopeKey, EntryValidation entryValidation)
+		throws Exception;
+
+	public Page<ValidationError> postValidatePage(
+			EntryValidation entryValidation)
 		throws Exception;
 
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;

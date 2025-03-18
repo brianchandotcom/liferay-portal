@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
@@ -135,6 +136,7 @@ public class SiteInitializerExtension {
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
 		ExpandoValueLocalService expandoValueLocalService,
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
@@ -216,8 +218,9 @@ public class SiteInitializerExtension {
 			defaultDDMStructureHelper, depotEntryGroupRelLocalService,
 			depotEntryLocalService, dlFileEntryTypeLocalService, dlURLHelper,
 			documentFolderResourceFactory, documentResourceFactory,
-			expandoValueLocalService, fragmentsImporter, groupLocalService,
-			journalArticleLocalService, jsonFactory, keywordResourceFactory,
+			expandoValueLocalService, fragmentEntryLinkLocalService,
+			fragmentsImporter, groupLocalService, journalArticleLocalService,
+			jsonFactory, keywordResourceFactory,
 			knowledgeBaseArticleResourceFactory,
 			knowledgeBaseFolderResourceFactory, layoutLocalService,
 			layoutPageTemplateEntryLocalService, layoutsImporter,

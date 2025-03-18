@@ -59,6 +59,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
@@ -296,6 +297,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
 		ExpandoValueLocalService expandoValueLocalService,
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
@@ -387,6 +389,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
 		_expandoValueLocalService = expandoValueLocalService;
+		_fragmentEntryLinkLocalService = fragmentEntryLinkLocalService;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
@@ -2849,6 +2852,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 							layoutPageTemplateStructure.
 								getLayoutPageTemplateStructureId(),
 							segmentsExperienceId, layoutStructure.toString());
+					_fragmentEntryLinkLocalService.
+						deleteLayoutPageTemplateEntryFragmentEntryLinks(
+							draftLayout.getGroupId(),
+							new long[] {segmentsExperienceId},
+							draftLayout.getPlid());
 					_portletPreferencesLocalService.deletePortletPreferences(
 						0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 						draftLayout.getPlid());
@@ -6062,6 +6070,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
 	private final ExpandoValueLocalService _expandoValueLocalService;
+	private final FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;

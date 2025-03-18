@@ -140,6 +140,12 @@ export type NumericField = BaseField & {
 	type: 'integer';
 } & UniqueValuesSettingsField;
 
+export type SingleSelectField = BaseField & {
+	listTypeDefinitionId: string;
+	settings: {};
+	type: 'single-select';
+};
+
 export type TextField = BaseField & {
 	type: 'text';
 } & MaxLengthSettingsField &
@@ -161,13 +167,21 @@ export type Field =
 	| DateTimeField
 	| LongTextField
 	| NumericField
+	| SingleSelectField
 	| TextField
 	| UploadField
 	| (BaseField & {
 			settings: {};
 			type: Exclude<
 				FieldType,
-				['datetime', 'long-text', 'numeric', 'text', 'upload']
+				[
+					'datetime',
+					'long-text',
+					'numeric',
+					'single-select',
+					'text',
+					'upload',
+				]
 			>;
 	  });
 
@@ -215,6 +229,13 @@ export function getDefaultField(type: FieldType): Field {
 				maximumFileSize: 100,
 			},
 			type: 'upload',
+		};
+	}
+	else if (type === 'single-select') {
+		return {
+			...base,
+			listTypeDefinitionId: '',
+			type: 'single-select',
 		};
 	}
 

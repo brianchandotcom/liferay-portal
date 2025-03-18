@@ -62,7 +62,7 @@ function SortDropdown() {
 						/>
 					</span>
 
-					{Liferay.Language.get('order')}
+					{Liferay.Language.get('order[sort]')}
 
 					<ClayIcon
 						className="inline-item inline-item-after"

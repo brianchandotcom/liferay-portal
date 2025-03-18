@@ -11,6 +11,21 @@ const HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
+async function get(url: string) {
+	const response = await fetch(url, {
+		headers: HEADERS,
+		method: 'GET',
+	});
+
+	if (response.ok) {
+		return await response.json();
+	}
+
+	const {title} = await response.json();
+
+	throw new Error(title);
+}
+
 async function post<T>(url: string, data?: T) {
 	const response = await fetch(url, {
 		body: JSON.stringify(data),
@@ -43,4 +58,4 @@ async function put<T>(url: string, data?: T) {
 	throw new Error(title);
 }
 
-export default {post, put};
+export default {get, post, put};

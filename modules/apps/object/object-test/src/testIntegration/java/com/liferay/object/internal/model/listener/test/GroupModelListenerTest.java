@@ -27,6 +27,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -46,6 +48,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -196,8 +199,11 @@ public class GroupModelListenerTest {
 
 			String acceptedGroupIds = objectDefinitionSetting.getValue();
 
+			List<Long> acceptedGroupIdsList = TransformUtil.transformToList(
+				acceptedGroupIds.split("\\s*,\\s*"), GetterUtil::getLong);
+
 			Assert.assertFalse(
-				acceptedGroupIds.contains(String.valueOf(group.getGroupId())));
+				acceptedGroupIdsList.contains(group.getGroupId()));
 		}
 
 		_objectRelationshipLocalService.deleteObjectRelationship(

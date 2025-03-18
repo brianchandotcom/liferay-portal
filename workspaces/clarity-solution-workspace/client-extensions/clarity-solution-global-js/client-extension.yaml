@@ -3,6 +3,6 @@ assemble:
       hashify: global.js
       into: static
 clarity-solution-theme-global-js:
-    name: Clarity Solution Theme Global JS
+    name: Clarity Solution Global JS
     type: globalJS
     url: global.*.js

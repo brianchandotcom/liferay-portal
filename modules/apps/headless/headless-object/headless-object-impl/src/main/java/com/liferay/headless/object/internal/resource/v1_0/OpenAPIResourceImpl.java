@@ -1,9 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.delivery.internal.resource.v1_0;
+package com.liferay.headless.object.internal.resource.v1_0;
 
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Javier Gamarra
+ * @author Alicia García
  * @generated
  */
 @Component(
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.delivery.client', and version '4.0.93'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Headless Delivery", version = "v1.0")
+	info = @Info(license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -85,59 +85,7 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(BlogPostingResourceImpl.class);
-
-			add(BlogPostingImageResourceImpl.class);
-
-			add(CommentResourceImpl.class);
-
-			add(ContentElementResourceImpl.class);
-
-			add(ContentSetElementResourceImpl.class);
-
-			add(ContentStructureResourceImpl.class);
-
-			add(ContentTemplateResourceImpl.class);
-
-			add(DocumentResourceImpl.class);
-
-			add(DocumentDataDefinitionTypeResourceImpl.class);
-
-			add(DocumentFolderResourceImpl.class);
-
-			add(DocumentMetadataSetResourceImpl.class);
-
-			add(DocumentShortcutResourceImpl.class);
-
-			add(KnowledgeBaseArticleResourceImpl.class);
-
-			add(KnowledgeBaseAttachmentResourceImpl.class);
-
-			add(KnowledgeBaseFolderResourceImpl.class);
-
-			add(LanguageResourceImpl.class);
-
-			add(MessageBoardAttachmentResourceImpl.class);
-
-			add(MessageBoardMessageResourceImpl.class);
-
-			add(MessageBoardSectionResourceImpl.class);
-
-			add(MessageBoardThreadResourceImpl.class);
-
-			add(NavigationMenuResourceImpl.class);
-
-			add(SitePageResourceImpl.class);
-
-			add(StructuredContentResourceImpl.class);
-
-			add(StructuredContentFolderResourceImpl.class);
-
-			add(WikiNodeResourceImpl.class);
-
-			add(WikiPageResourceImpl.class);
-
-			add(WikiPageAttachmentResourceImpl.class);
+			add(ObjectEntryFolderResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

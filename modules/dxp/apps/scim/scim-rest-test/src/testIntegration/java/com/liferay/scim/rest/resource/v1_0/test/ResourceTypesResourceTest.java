@@ -104,8 +104,7 @@ public class ResourceTypesResourceTest
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			httpResponse.getContent());
 
-		JSONArray schemasJSONArray = jsonObject.getJSONArray(
-			"schemas");
+		JSONArray schemasJSONArray = jsonObject.getJSONArray("schemas");
 
 		Assert.assertEquals(
 			"urn:ietf:params:scim:api:messages:2.0:ListResponse",
@@ -114,8 +113,7 @@ public class ResourceTypesResourceTest
 		Assert.assertEquals(2, jsonObject.getLong("totalResults"));
 		Assert.assertEquals(2, jsonObject.getLong("itemsPerPage"));
 
-		JSONArray resourcesJSONArray = jsonObject.getJSONArray(
-			"Resources");
+		JSONArray resourcesJSONArray = jsonObject.getJSONArray("Resources");
 
 		Assert.assertEquals(2, resourcesJSONArray.length());
 

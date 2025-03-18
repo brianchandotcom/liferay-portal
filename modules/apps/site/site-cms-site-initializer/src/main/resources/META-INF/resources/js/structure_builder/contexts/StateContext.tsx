@@ -68,11 +68,7 @@ type DeleteFieldAction = {type: 'delete-field'; uuid: Uuid};
 
 type DeleteSelectionAction = {type: 'delete-selection'};
 
-type PublishStructureAction = {type: 'publish-structure'};
-
-type SaveStructureAction = {
-	type: 'save-structure';
-};
+type PublishStructureAction = {id?: number; type: 'publish-structure'};
 
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
@@ -107,7 +103,6 @@ export type Action =
 	| DeleteFieldAction
 	| DeleteSelectionAction
 	| PublishStructureAction
-	| SaveStructureAction
 	| SetErrorAction
 	| SetSelection
 	| UpdateFieldAction
@@ -178,7 +173,7 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'publish-structure': {
-			return {
+			const nextState = {
 				...state,
 				error: INITIAL_STATE.error,
 				publishedFields: new Set(
@@ -186,21 +181,12 @@ function reducer(state: State, action: Action): State {
 				),
 				status: 'published' as Status,
 			};
-		}
-		case 'save-structure': {
-			let nextPublishedFields = state.publishedFields;
 
-			if (state.status === 'published') {
-				nextPublishedFields = new Set(
-					Array.from(state.fields.values()).map((field) => field.name)
-				);
+			if (action.id) {
+				return {...nextState, id: action.id};
 			}
 
-			return {
-				...state,
-				error: INITIAL_STATE.error,
-				publishedFields: nextPublishedFields,
-			};
+			return nextState;
 		}
 		case 'set-error':
 			return {

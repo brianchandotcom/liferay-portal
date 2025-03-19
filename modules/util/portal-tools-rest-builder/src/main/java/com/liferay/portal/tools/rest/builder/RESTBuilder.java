@@ -181,6 +181,7 @@ public class RESTBuilder {
 		if (Validator.isNotNull(_configYAML.getClientDir())) {
 			_createClientAggregationFile(context);
 			_createClientBaseJSONParserFile(context);
+			_createClientCustomFieldFiles(context);
 			_createClientFacetFile(context);
 			_createClientHttpInvokerFile(context);
 			_createClientPageFile(context);
@@ -593,6 +594,16 @@ public class RESTBuilder {
 
 		_createClientFile(
 			context, "", "client_base_json_parser", "json", "BaseJSONParser");
+	}
+
+	private void _createClientCustomFieldFiles(Map<String, Object> context)
+		throws Exception {
+
+		_createClientFile(
+			context, "", "client_custom_field", "custom/field", "CustomField");
+		_createClientFile(
+			context, "", "client_custom_value", "custom/field", "CustomValue");
+		_createClientFile(context, "", "client_geo", "custom/field", "Geo");
 	}
 
 	private void _createClientDTOFile(

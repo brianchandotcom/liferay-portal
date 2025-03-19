@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {defineConfig, devices} from '@playwright/test';
+import {ReporterDescription, defineConfig, devices} from '@playwright/test';
 
 import 'dotenv/config';
 
@@ -130,7 +130,10 @@ import {config as customerConfig} from './tests/workspaces/liferay-customer-work
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
 import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/config';
+
 const setupProjects = [pageManagementSiteSetup, pageManagementSiteTeardown];
+
+const resultsPath = 'test-results/TEST-playwright.xml';
 
 export default defineConfig({
 	expect: {
@@ -273,9 +276,19 @@ export default defineConfig({
 		[
 			'junit',
 			{
-				outputFile: 'test-results/TEST-playwright.xml',
+				outputFile: resultsPath,
 			},
 		],
+		...(process.env.ci
+			? ([
+					[
+						'./reporters/FlakyTestReporter',
+						{
+							resultsPath,
+						},
+					],
+				] as ReporterDescription[])
+			: []),
 	],
 	retries: process.env.CI ? 1 : 0,
 	testDir: './tests',

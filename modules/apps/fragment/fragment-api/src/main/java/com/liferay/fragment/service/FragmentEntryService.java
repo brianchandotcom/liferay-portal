@@ -50,7 +50,7 @@ public interface FragmentEntryService extends BaseService {
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js,
 			String configuration, long previewFileEntryId, int type, int status,
-			ServiceContext serviceContext)
+			boolean marketplace, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntry addFragmentEntry(
@@ -59,7 +59,7 @@ public interface FragmentEntryService extends BaseService {
 			String css, String html, String js, boolean cacheable,
 			String configuration, String icon, long previewFileEntryId,
 			boolean readOnly, int type, String typeOptions, int status,
-			ServiceContext serviceContext)
+			boolean marketplace, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntry copyFragmentEntry(

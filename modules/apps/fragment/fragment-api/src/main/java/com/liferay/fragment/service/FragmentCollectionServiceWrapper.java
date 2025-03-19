@@ -44,12 +44,13 @@ public class FragmentCollectionServiceWrapper
 	public FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long groupId,
 			String fragmentCollectionKey, String name, String description,
+			boolean marketplace,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentCollectionService.addFragmentCollection(
 			externalReferenceCode, groupId, fragmentCollectionKey, name,
-			description, serviceContext);
+			description, marketplace, serviceContext);
 	}
 
 	@Override

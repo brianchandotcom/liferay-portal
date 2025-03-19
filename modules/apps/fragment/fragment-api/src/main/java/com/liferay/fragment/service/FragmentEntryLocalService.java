@@ -87,7 +87,7 @@ public interface FragmentEntryLocalService
 			String css, String html, String js, boolean cacheable,
 			String configuration, String icon, long previewFileEntryId,
 			boolean readOnly, int type, String typeOptions, int status,
-			ServiceContext serviceContext)
+			boolean marketplace, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

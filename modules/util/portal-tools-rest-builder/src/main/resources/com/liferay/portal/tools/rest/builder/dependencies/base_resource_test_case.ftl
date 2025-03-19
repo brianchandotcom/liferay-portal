@@ -12,7 +12,8 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
 import ${configYAML.apiPackagePath}.client.pagination.Pagination;
@@ -221,7 +222,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)/>
+	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas) />
 
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		@Test
@@ -295,7 +296,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, schema)
 		generateGetMultipartFilesMethod = false
 		generateSearchTestRule = false
-		injectBatchEngineImportTaskLocalService = false
 		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
 	/>
 
@@ -315,7 +315,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 					getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 					getterJavaMethodParametersMap = {}
 					idParameterName = "id"
-					injectBatchEngineImportTaskLocalService = true
 				/>
 				<#if !properties?keys?seq_contains("id")>
 					<#assign idParameterName = "${schemaVarName}Id" />
@@ -379,8 +378,18 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						Assert.assertEquals(202, response.getStatusCode());
 
+						ImportTaskResource importTaskResource = ImportTaskResource.builder(
+							).authentication(
+								_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+							).endpoint(
+								testCompany.getVirtualHostname(), 8080, "http"
+							).locale(
+								LocaleUtil.getDefault()
+							).build();
+
 						while (true) {
-							String executeStatus = _batchEngineImportTaskLocalService.getBatchEngineImportTask(JSONFactoryUtil.createJSONObject(response.getContent()).getLong("id")).getExecuteStatus();
+							ImportTask importTask = importTaskResource.getImportTask(JSONFactoryUtil.createJSONObject(response.getContent()).getLong("id"));
+							String executeStatus = importTask.getExecuteStatus().toString();
 
 							if (StringUtil.equals(executeStatus, "COMPLETED") || StringUtil.equals(executeStatus, "FAILED")) {
 								Assert.assertEquals(expectedExecuteStatus, executeStatus);
@@ -3926,11 +3935,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	@Inject
 	private ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource _${schemaVarName}Resource;
-
-	<#if injectBatchEngineImportTaskLocalService>
-		@Inject
-		private BatchEngineImportTaskLocalService _batchEngineImportTaskLocalService;
-	</#if>
 
 	<#if generateCRUD>
 		@Inject

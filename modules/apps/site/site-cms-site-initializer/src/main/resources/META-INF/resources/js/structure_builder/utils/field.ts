@@ -88,6 +88,7 @@ export const DB_TYPE_FIELD_TYPE: Record<string, FieldType> = {
 	DateTime: 'datetime',
 	Integer: 'integer',
 	Long: 'upload',
+	Multiselect: 'multiselect',
 	RichText: 'rich-text',
 	SingleSelect: 'single-select',
 	String: 'text',
@@ -136,6 +137,12 @@ export type LongTextField = BaseField & {
 	type: 'long-text';
 } & MaxLengthSettingsField;
 
+export type MultiselectField = BaseField & {
+	listTypeDefinitionId: string;
+	settings: {};
+	type: 'multiselect';
+};
+
 export type NumericField = BaseField & {
 	type: 'integer';
 } & UniqueValuesSettingsField;
@@ -166,6 +173,7 @@ export type UploadField = BaseField & {
 export type Field =
 	| DateTimeField
 	| LongTextField
+	| MultiselectField
 	| NumericField
 	| SingleSelectField
 	| TextField
@@ -177,6 +185,7 @@ export type Field =
 				[
 					'datetime',
 					'long-text',
+					'multiselect',
 					'numeric',
 					'single-select',
 					'text',
@@ -236,6 +245,13 @@ export function getDefaultField(type: FieldType): Field {
 			...base,
 			listTypeDefinitionId: '',
 			type: 'single-select',
+		};
+	}
+	else if (type === 'multiselect') {
+		return {
+			...base,
+			listTypeDefinitionId: '',
+			type: 'multiselect',
 		};
 	}
 

@@ -15,7 +15,7 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
 import ListTypeService from '../services/ListTypeService';
-import {Field, SingleSelectField} from '../utils/field';
+import {Field, MultiselectField, SingleSelectField} from '../utils/field';
 
 type Picklist = {
 	id: React.Key;
@@ -23,11 +23,11 @@ type Picklist = {
 };
 
 export default function PicklistPicker({field}: {field: Field}) {
-	const singleSelectField = field as SingleSelectField;
+	const selectField = field as SingleSelectField | MultiselectField;
 
 	const [picklists, setPicklists] = useState<Picklist[]>([]);
 	const [selectedKey, setSelectedKey] = useState<React.Key>(
-		singleSelectField.listTypeDefinitionId
+		selectField.listTypeDefinitionId
 	);
 
 	const dispatch = useStateDispatch();
@@ -100,6 +100,9 @@ export default function PicklistPicker({field}: {field: Field}) {
 							]}
 							trigger={
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'more-actions'
+									)}
 									displayType="secondary"
 									symbol="ellipsis-v"
 									title={Liferay.Language.get('more-actions')}

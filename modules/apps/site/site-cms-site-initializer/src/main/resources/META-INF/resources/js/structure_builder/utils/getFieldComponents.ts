@@ -5,6 +5,7 @@
 
 import getDateTimeFieldComponents from '../components/DateTimeFieldComponents';
 import getLongTextFieldComponents from '../components/LongTextFieldComponents';
+import getMultiSelectFieldComponents from '../components/MultiSelectFieldComponents';
 import getNumericFieldComponents from '../components/NumericFieldComponents';
 import getSingleSelectFieldComponents from '../components/SingleSelectFieldComponents';
 import getTextFieldComponents from '../components/TextFieldComponents';
@@ -23,7 +24,7 @@ const GETTERS: Record<FieldType, () => Partial<FieldComponents>> = {
 	'decimal': () => ({}),
 	'integer': getNumericFieldComponents,
 	'long-text': getLongTextFieldComponents,
-	'multiselect': () => ({}),
+	'multiselect': getMultiSelectFieldComponents,
 	'rich-text': () => ({}),
 	'single-select': getSingleSelectFieldComponents,
 	'text': getTextFieldComponents,

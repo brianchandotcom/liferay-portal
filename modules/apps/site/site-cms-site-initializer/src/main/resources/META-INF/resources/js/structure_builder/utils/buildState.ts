@@ -53,6 +53,9 @@ export default function buildState(
 		if (objectField.businessType === 'Picklist') {
 			field.type = DB_TYPE_FIELD_TYPE.SingleSelect;
 		}
+		else if (objectField.businessType === 'MultiselectPicklist') {
+			field.type = DB_TYPE_FIELD_TYPE.Multiselect;
+		}
 
 		fields.set(uuid, field);
 	});

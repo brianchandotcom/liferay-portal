@@ -7,6 +7,7 @@ package com.liferay.segments.internal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.Calendar;

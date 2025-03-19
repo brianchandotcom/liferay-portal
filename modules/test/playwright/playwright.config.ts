@@ -103,6 +103,7 @@ import {config as portletConfigurationWebConfig} from './tests/portlet-configura
 import {config as productNavigationProductMenuWeb} from './tests/product-navigation-product-menu-web/config';
 import {config as productNavigationUserPersonalBarWebConfig} from './tests/product-navigation-user-personal-bar-web/config';
 import {config as questionsWebConfig} from './tests/questions-web/config';
+import {config as redirectWebConfig} from './tests/redirect-web/config';
 import {config as rolesAdminWebConfig} from './tests/roles-admin-web/config';
 import {config as rssWebConfig} from './tests/rss-web/config';
 import {config as samlWebConfig} from './tests/saml-web/config';
@@ -243,6 +244,7 @@ export default defineConfig({
 		productNavigationProductMenuWeb,
 		productNavigationUserPersonalBarWebConfig,
 		questionsWebConfig,
+		redirectWebConfig,
 		rolesAdminWebConfig,
 		rssWebConfig,
 		samlWebConfig,

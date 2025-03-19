@@ -89,12 +89,19 @@ public class AssetLibraryDTOConverter
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getNameMap()));
 				setNumberOfUserAccounts(
-					() -> _userLocalService.getGroupUsersCount(
-						group.getGroupId()));
+					() -> NestedFieldsSupplier.supply(
+						"numberOfUserAccounts",
+						nestedField -> _userLocalService.getGroupUsersCount(
+							group.getGroupId())));
 				setNumberOfUserGroups(
-					() -> _userGroupLocalService.getGroupUserGroupsCount(
-						group.getGroupId()));
-				setSettings(() -> _toSettings(group));
+					() -> NestedFieldsSupplier.supply(
+						"numberOfUserGroups",
+						nestedField ->
+							_userGroupLocalService.getGroupUserGroupsCount(
+								group.getGroupId())));
+				setSettings(
+					() -> NestedFieldsSupplier.supply(
+						"settings", nestedField -> _toSettings(group)));
 			}
 		};
 	}

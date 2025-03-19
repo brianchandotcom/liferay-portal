@@ -7,7 +7,9 @@ import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
+
+const JSON_EXTENSION = '.json';
 
 export default function ImportStructureModalContent({
 	closeModal,
@@ -15,14 +17,36 @@ export default function ImportStructureModalContent({
 	closeModal: () => void;
 }) {
 	const [warning, setWarning] = useState(true);
-	const [jsonFile, setJsonFile] = useState(null);
+	const [jsonFile, setJsonFile] = useState<File | null>(null);
+	const fileInputRef = useRef<HTMLInputElement>();
 
-	const onAddButtonClick = () => {
-		console.log('onAddButtonClick');
-		setJsonFile('something');
+	const resetFileInput = () => {
+		if (fileInputRef && fileInputRef.current) {
+			fileInputRef.current.value = '';
+		}
+
+		setJsonFile(null);
 	};
 
-	const inputId = 'jsonInputId';
+	const onChangeClick = () => {
+		fileInputRef.current?.click();
+
+		resetFileInput();
+	};
+
+	const handleFileInputChange = async ({
+		target,
+	}: React.ChangeEvent<HTMLInputElement>) => {
+		if (
+			!target.value.endsWith(JSON_EXTENSION) ||
+			!target.files ||
+			target.files?.length === 0
+		) {
+			return;
+		}
+
+		setJsonFile(target.files[0]);
+	};
 
 	return (
 		<>
@@ -48,11 +72,27 @@ export default function ImportStructureModalContent({
 			<ClayModal.Body>
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
-						<label htmlFor={inputId}>
+						<label htmlFor="jsonInputId">
 							{Liferay.Language.get('json-file')}
 						</label>
 
-						<ClayInput id={inputId} value={jsonFile || ''} />
+						<ClayInput
+							id="jsonInputId"
+							value={jsonFile?.name || ''}
+						/>
+
+						<ClayInput
+							accept={JSON_EXTENSION}
+							className="d-none"
+							id="fileInputId"
+							name="fileInputId"
+							onChange={handleFileInputChange}
+
+							// @ts-ignore
+
+							ref={fileInputRef}
+							type="file"
+						/>
 					</ClayInput.GroupItem>
 
 					<ClayInput.GroupItem className="mt-4" shrink>
@@ -64,6 +104,7 @@ export default function ImportStructureModalContent({
 									)}
 									className="lfr-portal-tooltip"
 									displayType="secondary"
+									onClick={onChangeClick}
 									symbol="change"
 									title={Liferay.Language.get('change-file')}
 									type="button"
@@ -75,6 +116,7 @@ export default function ImportStructureModalContent({
 									)}
 									className="lfr-portal-tooltip"
 									displayType="unstyled"
+									onClick={resetFileInput}
 									symbol="trash"
 									title={Liferay.Language.get('remove-file')}
 									type="button"
@@ -85,7 +127,7 @@ export default function ImportStructureModalContent({
 								aria-label={Liferay.Language.get('add')}
 								className="lfr-portal-tooltip"
 								displayType="secondary"
-								onClick={onAddButtonClick}
+								onClick={() => fileInputRef.current?.click()}
 								symbol="plus"
 								title={Liferay.Language.get('add')}
 								type="button"

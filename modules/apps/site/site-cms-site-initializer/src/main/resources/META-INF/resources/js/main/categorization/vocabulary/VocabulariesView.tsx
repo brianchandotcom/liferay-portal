@@ -6,6 +6,8 @@
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+import {CategorizationToolbar} from '../CategorizationToolbar';
+
 export default function VocabulariesView() {
 	const creationMenu = {
 		primaryItems: [
@@ -34,13 +36,19 @@ export default function VocabulariesView() {
 	};
 
 	return (
-		<FrontendDataSet
-			creationMenu={creationMenu}
-			emptyState={emptyState}
-			id="VocabulariesView"
-			showManagementBar={false}
-			showSearch={false}
-			views={views}
-		/>
+		<>
+			<CategorizationToolbar
+				activeTab="vocabularies"
+			/>
+
+			<FrontendDataSet
+				creationMenu={creationMenu}
+				emptyState={emptyState}
+				id="VocabulariesView"
+				showManagementBar={false}
+				showSearch={false}
+				views={views}
+			/>
+		</>
 	);
 }

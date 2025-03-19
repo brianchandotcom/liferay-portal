@@ -158,7 +158,9 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     {{- end }}
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -180,7 +182,9 @@ spec:
         app: {{ include "liferay.name" .root }}{{ $suffix }}
         {{- include "liferay.selectorLabels" .root | nindent 8 }}
     type: {{ .statefulset.service.type }}
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -204,7 +208,9 @@ spec:
         {{- include "liferay.selectorLabels" .root | nindent 8 }}
     type: ClusterIP
 {{- if and .statefulset.ingress .statefulset.ingress.enabled }}
+
 ---
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

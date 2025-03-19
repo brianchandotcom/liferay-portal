@@ -1,5 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
 data:
     {{- if not .Values.configmap.overrideDefaults }}
     com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config: |
@@ -9,7 +8,6 @@ data:
         caCertData="$[secret:ca.crt]"
         namespace="$[secret:namespace]"
         saToken="$[secret:token]"
-
     portal-ext.properties: |
         {{- if .Values.portalProperties }}
         {{- .Values.portalProperties | nindent 8 }}
@@ -19,7 +17,6 @@ data:
         {{- $i.portalProperties | nindent 8 }}
         {{- end }}
         {{- end }}
-
         configuration.override.com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration_blacklistBundleSymbolicNames=[\
             {{- $PREFIX := "" }}
             {{- range $bundle := .Values.portalBundleDenyList }}
@@ -33,7 +30,6 @@ data:
             {{- end }}
             {{- end }}
         ]
-
         configuration.override.com.liferay.portal.component.blacklist.internal.configuration.ComponentBlacklistConfiguration_blacklistComponentNames=[\
             {{- $PREFIX := "" }}
             {{- range $component := .Values.portalComponentDenyList }}
@@ -47,7 +43,6 @@ data:
             {{- end }}
             {{- end }}
         ]
-
         {{ if or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled -}}
         cluster.link.autodetect.address=
         cluster.link.channel.properties.control=/opt/liferay/unicast.xml
@@ -56,22 +51,19 @@ data:
         enterprise.product.notification.enabled=false
         portlet.session.replicate.enabled=true
         {{ end }}
-
         {{- tpl (.Files.Get "resources/portal-cloud.properties") $ | nindent 8 }}
-
     {{ if or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled }}
     000_jdk_java_options.sh: |
         #!/usr/bin/env bash
         export JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} --add-opens=jdk.naming.dns/com.sun.jndi.dns=java.naming"
-
     unicast.xml: |
         {{- tpl (.Files.Get "resources/unicast.xml") . | nindent 8 }}
     {{- end }}
     {{- end }}
-
     {{- if .Values.configmap.data }}
     {{- toYaml .Values.configmap.data | nindent 4 }}
     {{- end }}
+kind: ConfigMap
 metadata:
     {{- with .Values.configmap.annotations }}
     annotations:

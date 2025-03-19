@@ -22,12 +22,12 @@
 {{- end }}
 
 {{- define "liferay.labels" -}}
-helm.sh/chart: {{ include "liferay.chart" . }}
 {{ include "liferay.selectorLabels" . }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+helm.sh/chart: {{ include "liferay.chart" . }}
 {{- include "liferay.customLabels" . }}
 {{- end }}
 

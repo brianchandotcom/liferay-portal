@@ -1567,6 +1567,37 @@ pre[class*='language-'] {
 }
 
 .page-tabs {
+	.tab-panel .tab-panel-item {
+		.page-tabs__panel {
+			gap: var(--spacer-4);
+
+			.page-tabs__panel-item {
+				border: 1px solid rgba(231, 239, 255, 1);
+				color: inherit;
+				text-decoration: none;
+
+				&:hover {
+					background-color: var(--color-action-primary-hover-10, #EDF3FE) !important;
+					border-color: var(--color-brand-primary-darken-1, #0053F0) !important;
+					border-radius: 10px !important;
+					border-width: 1px !important;
+				}
+
+				.component-text.h1 {
+					font-size: 18px !important;
+					font-weight: 600 !important;
+					line-height: 20px !important;
+				}
+
+				.component-text.display-1 {
+					font-size: 14px !important;
+					font-weight: 400 !important;
+					line-height: 17px !important;
+				}
+			}
+		}
+	}
+
 	@media (max-width: 576px) {
 		.navbar-nav .nav-item {
 			width: 50%;

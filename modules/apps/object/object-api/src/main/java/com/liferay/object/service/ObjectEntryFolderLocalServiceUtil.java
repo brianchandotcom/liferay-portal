@@ -289,6 +289,14 @@ public class ObjectEntryFolderLocalServiceUtil {
 		return getService().getObjectEntryFolder(objectEntryFolderId);
 	}
 
+	public static ObjectEntryFolder getObjectEntryFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long companyId)
+		throws PortalException {
+
+		return getService().getObjectEntryFolderByExternalReferenceCode(
+			externalReferenceCode, groupId, companyId);
+	}
+
 	/**
 	 * Returns the object entry folder matching the UUID and group.
 	 *

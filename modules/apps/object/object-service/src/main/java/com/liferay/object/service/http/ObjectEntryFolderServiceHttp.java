@@ -128,6 +128,49 @@ public class ObjectEntryFolderServiceHttp {
 	}
 
 	public static com.liferay.object.model.ObjectEntryFolder
+			deleteObjectEntryFolderByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryFolderServiceUtil.class,
+				"deleteObjectEntryFolderByExternalReferenceCode",
+				_deleteObjectEntryFolderByExternalReferenceCodeParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, groupId, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectEntryFolder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectEntryFolder
 			getObjectEntryFolder(
 				HttpPrincipal httpPrincipal, long objectEntryFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -135,10 +178,53 @@ public class ObjectEntryFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryFolderServiceUtil.class, "getObjectEntryFolder",
-				_getObjectEntryFolderParameterTypes2);
+				_getObjectEntryFolderParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryFolderId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectEntryFolder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectEntryFolder
+			getObjectEntryFolderByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryFolderServiceUtil.class,
+				"getObjectEntryFolderByExternalReferenceCode",
+				_getObjectEntryFolderByExternalReferenceCodeParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, groupId, companyId);
 
 			Object returnObj = null;
 
@@ -177,7 +263,7 @@ public class ObjectEntryFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryFolderServiceUtil.class, "getObjectEntryFolders",
-				_getObjectEntryFoldersParameterTypes3);
+				_getObjectEntryFoldersParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, companyId, parentObjectEntryFolderId, start,
@@ -221,7 +307,7 @@ public class ObjectEntryFolderServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryFolderServiceUtil.class,
 				"getObjectEntryFoldersCount",
-				_getObjectEntryFoldersCountParameterTypes4);
+				_getObjectEntryFoldersCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, companyId, parentObjectEntryFolderId);
@@ -264,7 +350,7 @@ public class ObjectEntryFolderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryFolderServiceUtil.class, "updateObjectEntryFolder",
-				_updateObjectEntryFolderParameterTypes5);
+				_updateObjectEntryFolderParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryFolderId, parentObjectEntryFolderId,
@@ -308,13 +394,19 @@ public class ObjectEntryFolderServiceHttp {
 		};
 	private static final Class<?>[] _deleteObjectEntryFolderParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getObjectEntryFolderParameterTypes2 =
+	private static final Class<?>[]
+		_deleteObjectEntryFolderByExternalReferenceCodeParameterTypes2 =
+			new Class[] {String.class, long.class, long.class};
+	private static final Class<?>[] _getObjectEntryFolderParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getObjectEntryFoldersParameterTypes3 =
+	private static final Class<?>[]
+		_getObjectEntryFolderByExternalReferenceCodeParameterTypes4 =
+			new Class[] {String.class, long.class, long.class};
+	private static final Class<?>[] _getObjectEntryFoldersParameterTypes5 =
 		new Class[] {long.class, long.class, long.class, int.class, int.class};
-	private static final Class<?>[] _getObjectEntryFoldersCountParameterTypes4 =
+	private static final Class<?>[] _getObjectEntryFoldersCountParameterTypes6 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _updateObjectEntryFolderParameterTypes5 =
+	private static final Class<?>[] _updateObjectEntryFolderParameterTypes7 =
 		new Class[] {long.class, long.class, java.util.Map.class, String.class};
 
 }

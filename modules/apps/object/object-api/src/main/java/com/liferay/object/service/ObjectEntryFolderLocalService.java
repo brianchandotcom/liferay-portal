@@ -248,6 +248,11 @@ public interface ObjectEntryFolderLocalService
 	public ObjectEntryFolder getObjectEntryFolder(long objectEntryFolderId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntryFolder getObjectEntryFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the object entry folder matching the UUID and group.
 	 *

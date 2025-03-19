@@ -2280,7 +2280,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if ((users.size() > 1) && _log.isWarnEnabled()) {
 			_log.warn(
 				StringBundler.concat(
-					"Multiple users exist with company ID ", companyId,
+					"More than one user uses company ID ", companyId,
 					" and facebook ID ", facebookId));
 		}
 
@@ -2319,8 +2319,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		if (users.size() > 1) {
-			_log.error(
-				"Portrait ID " + portraitId + " is used by more than one user");
+			_log.error("More than one user uses portrait ID " + portraitId);
 		}
 
 		return users.get(users.size() - 1);

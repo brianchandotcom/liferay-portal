@@ -1551,8 +1551,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			if (groups.size() > 1) {
 				_log.error(
-					"Live group " + liveGroupId +
-						" has more than one staging group");
+					"More than one staging group uses live group ID " +
+						liveGroupId);
 			}
 
 			return groups.get(groups.size() - 1);
@@ -5466,7 +5466,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				if ((originalValue != null) && _log.isWarnEnabled()) {
 					_log.warn(
-						"Duplicated staging group for group with id " +
+						"More than one staging group uses live group ID " +
 							result[0]);
 				}
 			}

@@ -483,7 +483,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		return _toUserAccount(
 			_userService.getUserByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode));
+				externalReferenceCode, contextCompany.getCompanyId()));
 	}
 
 	@Override
@@ -797,7 +797,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		throws Exception {
 
 		User user = _userService.getUserByExternalReferenceCode(
-			contextCompany.getCompanyId(), externalReferenceCode);
+			externalReferenceCode, contextCompany.getCompanyId());
 
 		return patchUserAccount(user.getUserId(), userAccount);
 	}

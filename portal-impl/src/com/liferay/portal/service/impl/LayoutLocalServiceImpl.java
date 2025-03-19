@@ -1087,8 +1087,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return null;
 		}
 
-		if (layouts.size() > 1) {
-			_log.error("More than one draft layout uses layout ID " + plid);
+		if ((layouts.size() > 1) && _log.isWarnEnabled()) {
+			_log.warn("More than one draft layout uses layout ID " + plid);
 		}
 
 		return layouts.get(layouts.size() - 1);
@@ -1152,8 +1152,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return null;
 		}
 
-		if (layouts.size() > 1) {
-			_log.error("More than one layout uses icon image ID " + iconImageId);
+		if ((layouts.size() > 1) && _log.isWarnEnabled()) {
+			_log.warn("More than one layout uses icon image ID " + iconImageId);
 		}
 
 		return layouts.get(layouts.size() - 1);

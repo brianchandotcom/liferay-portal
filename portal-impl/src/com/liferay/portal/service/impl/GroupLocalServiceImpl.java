@@ -1549,10 +1549,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				return null;
 			}
 
-			if (groups.size() > 1) {
-				_log.error(
+			if ((groups.size() > 1) && _log.isWarnEnabled()) {
+				_log.warn(
 					"More than one staging group uses live group ID " +
-						liveGroupId);
+					liveGroupId);
 			}
 
 			return groups.get(groups.size() - 1);

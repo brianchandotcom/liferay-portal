@@ -62,7 +62,7 @@ public class UserOrganizationSegmentsCriteriaContributor
 			Matcher matcher = _pattern.matcher(filterString);
 
 			while (matcher.find()) {
-				filterString = StringUtil.replace(
+				newFilterString = StringUtil.replace(
 					filterString, matcher.group(), "dateModifiedTruncated");
 			}
 

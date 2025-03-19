@@ -65,7 +65,7 @@ public class UserSegmentsCriteriaContributor
 
 		String newFilterString = filterString;
 
-		Matcher matcher1 = _pattern1.matcher1(filterString);
+		Matcher matcher1 = _pattern1.matcher(filterString);
 
 		while (matcher1.find()) {
 			long roleId = _getRoleId(matcher1.group());

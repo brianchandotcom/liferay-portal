@@ -34,7 +34,7 @@ interface FieldBaseProps {
 	warningMessage?: string;
 }
 
-function RequiredMask() {
+export function RequiredMask() {
 	return (
 		<>
 			<span className="ml-1 reference-mark text-warning">

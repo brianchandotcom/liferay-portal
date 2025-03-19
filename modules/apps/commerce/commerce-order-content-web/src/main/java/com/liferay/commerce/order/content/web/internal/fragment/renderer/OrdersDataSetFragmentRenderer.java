@@ -309,18 +309,20 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 					null, null));
 		}
 		else if (fdsName.equals(CommerceOrderFragmentFDSNames.PLACED_ORDERS)) {
+			List<FDSActionDropdownItem> fdsActionDropdownItems =
+				new ArrayList<>();
+
 			String commerceOrderFriendlyURL =
 				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
 					_friendlyURLSeparatorProviderSnapshot.get(),
 					httpServletRequest);
-			List<FDSActionDropdownItem> fdsActionDropdownItems =
-				new ArrayList<>();
 
 			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					commerceOrderFriendlyURL + "{id}", "view", "view",
 					_language.get(httpServletRequest, "view"), null, null,
 					"link"));
+
 			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					StringPool.BLANK, "pencil", "rename",

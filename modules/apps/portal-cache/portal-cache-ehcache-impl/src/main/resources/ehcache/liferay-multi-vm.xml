@@ -1,222 +1,178 @@
-<ehcache
-	dynamicConfig="true"
-	monitoring="off"
-	name="liferay-multi-vm"
-	updateCheck="false"
+<config
+	xmlns="http://www.ehcache.org/v3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+	xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.10.xsd"
 >
 
 	<!--
 	Caches in this file can be clustered and are configured to be clustered.
 	-->
 
-	<defaultCache
-		eternal="false"
-		maxElementsInMemory="200000"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</defaultCache>
+	<!-- Default cache template for caches -->
+
+	<cache-template name="default">
+		<key-type>java.io.Serializable</key-type>
+		<value-type>java.io.Serializable</value-type>
+		<expiry>
+			<tti>600</tti>
+		</expiry>
+		<heap>200000</heap>
+	</cache-template>
+
+	<!-- Default cache -->
+
+	<cache alias="default" uses-template="default" />
 
 	<!-- Entity cache -->
 
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.AccountImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.AccountImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ContactImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ContactImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.PortletPreferencesImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.PortletPreferencesImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ResourceActionImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ResourceActionImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="1000000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ResourcePermissionImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ResourcePermissionImpl"
+		uses-template="default"
 	>
+		<heap>1000000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.UserImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.UserImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 
 	<!-- FinderCache -->
 
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferencesImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferencesImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferencesImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferencesImpl.List1"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferencesImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferencesImpl.List2"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl.List1"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.PortletPreferenceValueImpl.List2"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourceActionImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourceActionImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourceActionImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourceActionImpl.List1"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourceActionImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourceActionImpl.List2"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourcePermissionImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourcePermissionImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourcePermissionImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourcePermissionImpl.List1"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourcePermissionImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourcePermissionImpl.List2"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl.List1"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl.List2"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
 
 	<!-- Other -->
 
 	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.security.permission.PermissionCacheUtil_PERMISSION"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.portal.security.permission.PermissionCacheUtil_PERMISSION"
+		uses-template="default"
 	>
+		<heap>100000</heap>
 	</cache>
-</ehcache>
+</config>

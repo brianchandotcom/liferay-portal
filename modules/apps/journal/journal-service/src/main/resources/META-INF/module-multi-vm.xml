@@ -1,17 +1,16 @@
-<ehcache
-	dynamicConfig="true"
-	monitoring="off"
-	name="module-multi-vm"
-	updateCheck="false"
+<config
+	xmlns="http://www.ehcache.org/v3"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+	xsi:schemaLocation="http://www.ehcache.org/v3 https://www.ehcache.org/schema/ehcache-core-3.10.xsd"
 >
 	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.journal.util.JournalContent"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
+		alias="com.liferay.journal.util.JournalContent"
 	>
+		<key-type>java.io.Serializable</key-type>
+		<value-type>java.io.Serializable</value-type>
+		<expiry>
+			<tti>600</tti>
+		</expiry>
+		<heap>10000</heap>
 	</cache>
-</ehcache>
+</config>

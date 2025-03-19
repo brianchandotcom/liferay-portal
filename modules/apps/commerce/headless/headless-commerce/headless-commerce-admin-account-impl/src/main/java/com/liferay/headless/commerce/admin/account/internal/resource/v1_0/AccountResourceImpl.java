@@ -102,7 +102,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
 			throw new NoSuchEntryException(
@@ -135,7 +135,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), accountExternalReferenceCode);
+				accountExternalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
 			throw new NoSuchEntryException(
@@ -171,7 +171,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
 			throw new NoSuchEntryException(
@@ -227,7 +227,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
 			throw new NoSuchEntryException(
@@ -297,7 +297,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
 			throw new NoSuchEntryException(
@@ -336,8 +336,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		else if (account.getExternalReferenceCode() != null) {
 			accountEntry =
 				_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-					contextCompany.getCompanyId(),
-					account.getExternalReferenceCode());
+					account.getExternalReferenceCode(),
+					contextCompany.getCompanyId());
 		}
 
 		if (accountEntry == null) {

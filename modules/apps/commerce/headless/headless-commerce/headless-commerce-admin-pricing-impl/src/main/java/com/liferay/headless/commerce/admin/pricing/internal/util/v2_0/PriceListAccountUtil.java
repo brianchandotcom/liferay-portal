@@ -46,8 +46,8 @@ public class PriceListAccountUtil {
 		else {
 			accountEntry =
 				accountEntryService.fetchAccountEntryByExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					priceListAccount.getAccountExternalReferenceCode());
+					priceListAccount.getAccountExternalReferenceCode(),
+					serviceContext.getCompanyId());
 
 			if (accountEntry == null) {
 				throw new NoSuchEntryException(

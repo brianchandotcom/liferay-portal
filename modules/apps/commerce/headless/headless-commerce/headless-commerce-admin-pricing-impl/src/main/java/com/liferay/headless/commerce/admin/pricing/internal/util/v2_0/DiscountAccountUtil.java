@@ -43,8 +43,8 @@ public class DiscountAccountUtil {
 		else {
 			accountEntry =
 				accountEntryService.fetchAccountEntryByExternalReferenceCode(
-					serviceContext.getCompanyId(),
-					discountAccount.getAccountExternalReferenceCode());
+					discountAccount.getAccountExternalReferenceCode(),
+					serviceContext.getCompanyId());
 
 			if (accountEntry == null) {
 				throw new NoSuchEntryException(

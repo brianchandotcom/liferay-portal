@@ -142,10 +142,10 @@ public class ProductConfigurationListAccountResourceImpl
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				cpConfigurationList.getCompanyId(),
 				GetterUtil.getString(
 					productConfigurationListAccount.
-						getAccountExternalReferenceCode()));
+						getAccountExternalReferenceCode()),
+				cpConfigurationList.getCompanyId());
 
 		if (accountEntry == null) {
 			accountEntry = _accountEntryService.getAccountEntry(

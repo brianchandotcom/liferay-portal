@@ -148,8 +148,8 @@ public class OrderRuleAccountResourceImpl
 		else {
 			accountEntry =
 				_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-					contextCompany.getCompanyId(),
-					orderRuleAccount.getAccountExternalReferenceCode());
+					orderRuleAccount.getAccountExternalReferenceCode(),
+					contextCompany.getCompanyId());
 		}
 
 		return accountEntry;

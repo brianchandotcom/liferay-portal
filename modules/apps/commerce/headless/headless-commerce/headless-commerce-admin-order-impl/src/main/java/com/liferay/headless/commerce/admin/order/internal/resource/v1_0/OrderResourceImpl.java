@@ -318,8 +318,8 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 			accountEntry =
 				_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-					commerceChannel.getCompanyId(),
-					order.getAccountExternalReferenceCode());
+					order.getAccountExternalReferenceCode(),
+					commerceChannel.getCompanyId());
 		}
 
 		if (accountEntry == null) {

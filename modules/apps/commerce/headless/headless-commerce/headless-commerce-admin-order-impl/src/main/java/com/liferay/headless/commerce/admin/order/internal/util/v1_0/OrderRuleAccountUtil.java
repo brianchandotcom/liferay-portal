@@ -37,8 +37,8 @@ public class OrderRuleAccountUtil {
 		else {
 			accountEntry =
 				accountEntryService.fetchAccountEntryByExternalReferenceCode(
-					corEntry.getCompanyId(),
-					orderRuleAccount.getAccountExternalReferenceCode());
+					orderRuleAccount.getAccountExternalReferenceCode(),
+					corEntry.getCompanyId());
 
 			if (accountEntry == null) {
 				String accountExternalReferenceCode =

@@ -307,9 +307,8 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(),
-				GetterUtil.getString(
-					channel.getAccountExternalReferenceCode()));
+				GetterUtil.getString(channel.getAccountExternalReferenceCode()),
+				contextCompany.getCompanyId());
 
 		if (accountEntry != null) {
 			return accountEntry.getAccountEntryId();

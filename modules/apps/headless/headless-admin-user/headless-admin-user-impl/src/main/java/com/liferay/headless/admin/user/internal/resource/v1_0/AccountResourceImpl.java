@@ -599,7 +599,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(), externalReferenceCode);
+				externalReferenceCode, contextCompany.getCompanyId());
 
 		if (accountEntry == null) {
 			return putAccount(0L, account);
@@ -997,8 +997,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		AccountEntry accountEntry =
 			_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-				contextCompany.getCompanyId(),
-				account.getParentAccountExternalReferenceCode());
+				account.getParentAccountExternalReferenceCode(),
+				contextCompany.getCompanyId());
 
 		if (accountEntry != null) {
 			return accountEntry.getAccountEntryId();

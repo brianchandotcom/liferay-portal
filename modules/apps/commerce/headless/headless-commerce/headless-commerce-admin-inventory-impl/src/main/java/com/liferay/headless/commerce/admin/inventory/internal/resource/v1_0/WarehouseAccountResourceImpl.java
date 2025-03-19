@@ -205,8 +205,8 @@ public class WarehouseAccountResourceImpl
 		else {
 			accountEntry =
 				_accountEntryService.fetchAccountEntryByExternalReferenceCode(
-					commerceInventoryWarehouse.getCompanyId(),
-					warehouseAccount.getAccountExternalReferenceCode());
+					warehouseAccount.getAccountExternalReferenceCode(),
+					commerceInventoryWarehouse.getCompanyId());
 
 			if (accountEntry == null) {
 				throw new NoSuchEntryException(

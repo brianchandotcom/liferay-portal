@@ -22,6 +22,7 @@ Export-Package:\
 	com.liferay.object.entry.contributor,\
 	com.liferay.object.entry.folder.util,\
 	com.liferay.object.entry.util,\
+	com.liferay.object.entry.validation,\
 	com.liferay.object.exception,\
 	com.liferay.object.field.attachment,\
 	com.liferay.object.field.builder,\

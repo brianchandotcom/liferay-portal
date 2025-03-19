@@ -424,7 +424,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		if (workflowDefinitionLinks.size() > 1) {
 			_log.error(
 				StringBundler.concat(
-					"Duplicate workflow definition links exist with group ID ",
+					"More than one workflow definition link uses group ID ",
 					groupId, ", company ID ", companyId, ", class name ID ",
 					classNameId, ", class PK ", classPK, ", and type PK ",
 					typePK));

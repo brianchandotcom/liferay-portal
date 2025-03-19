@@ -65,17 +65,18 @@ public class ResourceTypesResourceTest
 			resourceTypesResource.getV2ResourceTypeByIdHttpResponse(
 				RandomTestUtil.randomString()));
 
-		for (String resourceType : _resourceTypesIds) {
+		for (String resourceTypeId : _resourceTypeIds) {
 			HttpInvoker.HttpResponse httpResponse =
 				resourceTypesResource.getV2ResourceTypeByIdHttpResponse(
-					resourceType);
+					resourceTypeId);
 
 			assertHttpResponseStatusCode(200, httpResponse);
 
 			JSONObject schemaJSONObject = _jsonFactory.createJSONObject(
 				httpResponse.getContent());
 
-			Assert.assertEquals(resourceType, schemaJSONObject.getString("id"));
+			Assert.assertEquals(
+				resourceTypeId, schemaJSONObject.getString("id"));
 
 			JSONArray schemasJSONArray = schemaJSONObject.getJSONArray(
 				"schemas");
@@ -123,8 +124,7 @@ public class ResourceTypesResourceTest
 			JSONObject schemaJSONObject = iterator.next();
 
 			Assert.assertTrue(
-				_resourceTypesSchemas.contains(
-					schemaJSONObject.getString("schema")));
+				_schemaIds.contains(schemaJSONObject.getString("schema")));
 		}
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
@@ -138,8 +138,8 @@ public class ResourceTypesResourceTest
 	@Inject
 	private JSONFactory _jsonFactory;
 
-	private final List<String> _resourceTypesIds = List.of("Group", "User");
-	private final List<String> _resourceTypesSchemas = List.of(
+	private final List<String> _resourceTypeIds = List.of("Group", "User");
+	private final List<String> _schemaIds = List.of(
 		"urn:ietf:params:scim:schemas:core:2.0:Group",
 		"urn:ietf:params:scim:schemas:core:2.0:User");
 

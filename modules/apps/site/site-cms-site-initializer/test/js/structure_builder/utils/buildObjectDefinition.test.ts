@@ -5,6 +5,7 @@
 
 import buildObjectDefinition from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildObjectDefinition';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
+import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
 const DATE_TIME_FIELD: Field = {
 	erc: 'datetime-field',
@@ -17,6 +18,7 @@ const DATE_TIME_FIELD: Field = {
 		timeStorage: 'convertToUTC',
 	},
 	type: 'datetime',
+	uuid: getUuid(),
 };
 
 const TEXT_FIELD: Field = {
@@ -28,6 +30,7 @@ const TEXT_FIELD: Field = {
 	required: true,
 	settings: {},
 	type: 'text',
+	uuid: getUuid(),
 };
 
 describe('buildObjectDefinition', () => {
@@ -41,6 +44,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableLocalization: true,
 			enableObjectEntryDraft: true,
 			externalReferenceCode: 'structureERC',
 			id: 1,
@@ -76,6 +80,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableLocalization: true,
 			enableObjectEntryDraft: true,
 			externalReferenceCode: 'structureERC',
 			id: 1,

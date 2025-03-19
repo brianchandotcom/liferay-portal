@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
@@ -13,13 +12,7 @@ import getRandomString from '../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {FIELD_TYPES} from './pages/StructureBuilderPage';
 
-const test = mergeTests(
-	cmsPagesTest,
-	featureFlagsTest({
-		'LPD-32050': {enabled: true},
-	}),
-	loginTest()
-);
+const test = mergeTests(cmsPagesTest, loginTest());
 
 test(
 	'Structures can be saved and published',
@@ -242,7 +235,7 @@ test(
 		// Check the text field is created with the correct settings
 
 		const textObjectField = objectFields.find(
-			(objectField) => objectField.name === 'textEdited'
+			({name}) => name === 'textEdited'
 		);
 
 		expect(textObjectField).toBeDefined();

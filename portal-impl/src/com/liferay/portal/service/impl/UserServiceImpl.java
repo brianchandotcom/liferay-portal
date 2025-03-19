@@ -1525,27 +1525,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user;
 	}
 
-	/**
-	 * Returns the user with the external reference code.
-	 *
-	 * @param  companyId the primary key of the user's company
-	 * @param  externalReferenceCode the user's external reference code
-	 * @return the user with the external reference code
-	 */
-	@Override
-	public User getUserByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		User user = userLocalService.getUserByExternalReferenceCode(
-			externalReferenceCode, companyId);
-
-		UserPermissionUtil.check(
-			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
-
-		return user;
-	}
-
 	@Override
 	public User getUserByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
+import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 const JSON_EXTENSION = '.json';
@@ -99,26 +100,34 @@ export default function ImportStructureModalContent({
 						{jsonFile ? (
 							<>
 								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'change-file'
+									aria-label={sub(
+										Liferay.Language.get('change-x'),
+										Liferay.Language.get('file')
 									)}
 									className="lfr-portal-tooltip"
 									displayType="secondary"
 									onClick={onChangeClick}
 									symbol="change"
-									title={Liferay.Language.get('change-file')}
+									title={sub(
+										Liferay.Language.get('change-x'),
+										Liferay.Language.get('file')
+									)}
 									type="button"
 								/>
 
 								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'remove-file'
+									aria-label={sub(
+										Liferay.Language.get('remove-x'),
+										Liferay.Language.get('file')
 									)}
 									className="lfr-portal-tooltip"
 									displayType="unstyled"
 									onClick={resetFileInput}
 									symbol="trash"
-									title={Liferay.Language.get('remove-file')}
+									title={sub(
+										Liferay.Language.get('remove-x'),
+										Liferay.Language.get('file')
+									)}
 									type="button"
 								/>
 							</>

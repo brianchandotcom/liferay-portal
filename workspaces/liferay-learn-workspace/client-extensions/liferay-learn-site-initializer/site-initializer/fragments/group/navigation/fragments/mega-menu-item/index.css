@@ -14,6 +14,7 @@
 	transition: all var(--transition-base);
 
 	.mega-menu-item-html {
+		align-self: start;
 		flex-shrink: 0;
 		height: 2rem;
 		margin-left: 0.5rem;

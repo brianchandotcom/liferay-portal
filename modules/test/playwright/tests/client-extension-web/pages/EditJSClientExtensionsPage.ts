@@ -24,13 +24,11 @@ export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
 	}
 
 	async addScriptAttribute(name: string, type: string, value: string) {
-		if (this.currentAttributeIndex !== 0) {
-			const addNewAttributeButton = this.page
-				.getByLabel('Add New Attribute')
-				.last();
+		const addAttributeGroupButton = this.page.getByRole('button', {
+			name: 'Add Attribute Group',
+		});
 
-			await addNewAttributeButton.click();
-		}
+		await addAttributeGroupButton.click();
 
 		await this.page
 			.locator(`#${this.portletName}_name_${this.currentAttributeIndex}`)

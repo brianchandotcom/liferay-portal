@@ -4,7 +4,8 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 
@@ -14,6 +15,14 @@ export default function ImportStructureModalContent({
 	closeModal: () => void;
 }) {
 	const [warning, setWarning] = useState(true);
+	const [jsonFile, setJsonFile] = useState(null);
+
+	const onAddButtonClick = () => {
+		console.log('onAddButtonClick');
+		setJsonFile('something');
+	};
+
+	const inputId = 'jsonInputId';
 
 	return (
 		<>
@@ -37,7 +46,53 @@ export default function ImportStructureModalContent({
 			)}
 
 			<ClayModal.Body>
-				<h1>modal content for the import</h1>
+				<ClayInput.Group>
+					<ClayInput.GroupItem>
+						<label htmlFor={inputId}>
+							{Liferay.Language.get('json-file')}
+						</label>
+
+						<ClayInput id={inputId} value={jsonFile || ''} />
+					</ClayInput.GroupItem>
+
+					<ClayInput.GroupItem className="mt-4" shrink>
+						{jsonFile ? (
+							<>
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'change-file'
+									)}
+									className="lfr-portal-tooltip"
+									displayType="secondary"
+									symbol="change"
+									title={Liferay.Language.get('change-file')}
+									type="button"
+								/>
+
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'remove-file'
+									)}
+									className="lfr-portal-tooltip"
+									displayType="unstyled"
+									symbol="trash"
+									title={Liferay.Language.get('remove-file')}
+									type="button"
+								/>
+							</>
+						) : (
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('add')}
+								className="lfr-portal-tooltip"
+								displayType="secondary"
+								onClick={onAddButtonClick}
+								symbol="plus"
+								title={Liferay.Language.get('add')}
+								type="button"
+							/>
+						)}
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

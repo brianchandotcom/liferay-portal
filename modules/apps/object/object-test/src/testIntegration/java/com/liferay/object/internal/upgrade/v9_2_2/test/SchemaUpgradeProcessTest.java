@@ -23,12 +23,17 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -44,6 +49,8 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,6 +59,18 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"),
+			new LiferayIntegrationTestRule() {
+				{
+					skipTestRule(CompanyProviderClassTestRule.INSTANCE);
+				}
+			},
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -69,17 +88,10 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		ObjectDefinition objectDefinition = null;
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					PortalInstancePool.getDefaultCompanyId())) {
-
-			objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					PortalInstancePool.getDefaultCompanyId(),
-					User.class.getSimpleName());
-		}
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				PortalInstancePool.getDefaultCompanyId(),
+				User.class.getSimpleName());
 
 		String dbTableName = StringBundler.concat(
 			objectDefinition.getDBTableName(), "x_",
@@ -87,23 +99,17 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 		_createView(dbTableName);
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					PortalInstancePool.getDefaultCompanyId())) {
-
-			_objectDefinition =
-				ObjectDefinitionTestUtil.publishObjectDefinition(
-					Collections.singletonList(
-						new TextObjectFieldBuilder(
-						).labelMap(
-							LocalizedMapUtil.getLocalizedMap(
-								RandomTestUtil.randomString())
-						).name(
-							"a" + RandomTestUtil.randomString()
-						).build()),
-					ObjectDefinitionConstants.SCOPE_COMPANY,
-					objectDefinition.getUserId());
-		}
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"a" + RandomTestUtil.randomString()
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			objectDefinition.getUserId());
 
 		_createView(_objectDefinition.getDBTableName());
 		_createView(_objectDefinition.getExtensionDBTableName());
@@ -139,14 +145,14 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _createView(String tableName) throws Exception {
-		String defaultPartitionName = DBPartitionUtil.getPartitionName(
-			PortalInstancePool.getDefaultCompanyId());
+		String partitionName = DBPartitionUtil.getPartitionName(
+			TestPropsValues.getCompanyId());
 
 		try (Statement statement = connection.createStatement()) {
 			statement.execute(
 				StringBundler.concat(
-					"create or replace view ", tableName, " as select * from ",
-					defaultPartitionName, StringPool.PERIOD, tableName));
+					"create or replace view ", partitionName, StringPool.PERIOD,
+					tableName, " as select * from ", tableName));
 		}
 
 		_viewNames.add(tableName);

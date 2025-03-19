@@ -281,7 +281,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		randomPatchProduct = randomProduct();
 
-		randomPatchProduct.setExpirationDate(RandomTestUtil.nextDate());
+		randomPatchProduct.setExpirationDate(
+			randomPatchProduct.getDisplayDate());
 		randomPatchProduct.setNeverExpire(false);
 
 		postProduct = testPostProduct_addProduct(randomPatchProduct);

@@ -1568,9 +1568,10 @@ pre[class*='language-'] {
 
 .page-tabs {
 	.tab-panel .tab-panel-item {
-		.page-tabs__panel {
+		.page-tabs__panel, 
+		.page-tabs__panel > div {
 			gap: var(--spacer-4);
-
+	
 			.page-tabs__panel-item {
 				border: 1px solid rgba(231, 239, 255, 1);
 				color: inherit;

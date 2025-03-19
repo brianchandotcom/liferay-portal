@@ -263,7 +263,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry2.getExternalReferenceCode(),
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
-			_classExternalReferenceCodesJSONArray(
+			_getClassExternalReferenceCodesJSONArray(
 				_companyGroupId, file
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -285,7 +285,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
-			_classExternalReferenceCodesJSONArray(
+			_getClassExternalReferenceCodesJSONArray(
 				_companyGroupId, file
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -310,7 +310,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry3.getExternalReferenceCode(),
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
-			_classExternalReferenceCodesJSONArray(
+			_getClassExternalReferenceCodesJSONArray(
 				_companyGroupId, file
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -331,7 +331,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private JSONArray _classExternalReferenceCodesJSONArray(
+	private JSONArray _getClassExternalReferenceCodesJSONArray(
 			long groupId, File larFile)
 		throws Exception {
 

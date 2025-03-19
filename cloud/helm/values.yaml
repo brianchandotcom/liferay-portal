@@ -199,12 +199,12 @@ volumeClaimTemplates:
               requests:
                   storage: 1Gi
 volumeMounts:
-    - mountPath: /opt/liferay/deploy
-      name: liferay-persistent-volume
-      subPath: liferay/deploy
     - mountPath: /opt/liferay/data
       name: liferay-persistent-volume
       subPath: liferay/data
+    - mountPath: /opt/liferay/deploy
+      name: liferay-persistent-volume
+      subPath: liferay/deploy
     - mountPath: /opt/liferay/liferay.pid
       name: liferay-persistent-volume
       subPath: liferay/liferay.pid

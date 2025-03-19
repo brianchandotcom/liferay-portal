@@ -6,9 +6,9 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {FieldBase} from 'frontend-js-components-web';
+import {FieldFeedback, RequiredMask} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export const TYPE_BOOLEAN = 'TYPE_BOOLEAN';
@@ -28,8 +28,8 @@ interface IProps {
 	disabled?: boolean;
 	index: number;
 	name: string;
-	onAddClick: (index: number) => void;
 	onAttributeChange: (index: number, updatedValue: Object) => void;
+	onErrorChange: (index: number, error: boolean) => void;
 	onRemoveClick: (index: number) => void;
 	portletNamespace: string;
 	type: string;
@@ -40,8 +40,8 @@ export default function AttributeFields({
 	disabled,
 	index,
 	name,
-	onAddClick,
 	onAttributeChange,
+	onErrorChange,
 	onRemoveClick,
 	portletNamespace,
 	type,
@@ -50,59 +50,66 @@ export default function AttributeFields({
 	const nameId = `${portletNamespace}name_${index}`;
 	const typeId = `${portletNamespace}type_${index}`;
 	const valueId = `${portletNamespace}value_${index}`;
+	const fieldFeedbackId = `${portletNamespace}fieldFeedback_${index}`;
 
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+	const handleErrorChange = (error: string | null) => {
+		onErrorChange(index, !!error);
+		setErrorMessage(error);
+	};
+
+	const validateAttributeName = (value: string) => {
+		if (value.toLowerCase() === 'src') {
+			handleErrorChange(
+				Liferay.Language.get('use-the-javascript-url-field')
+			);
+		}
+		else if (!value.length) {
+			handleErrorChange(
+				Liferay.Language.get('attribute-field-is-required')
+			);
+		}
+		else {
+			handleErrorChange(null);
+		}
+	};
+
 	return (
-		<ClayLayout.Row className="mb-3">
-			<ClayLayout.Col
-				className={classNames({'has-error': errorMessage})}
-				size={4}
-			>
-				<FieldBase
-					className="mb-0"
-					disabled={disabled}
-
-					// @ts-ignore
-
-					errorMessage={errorMessage}
-					id={nameId}
-
-					// @ts-ignore
-
-					label={
-						<>
-							{Liferay.Language.get('attribute')}
-
-							<span className="sr-only">
-								{Liferay.Language.get('spaces-are-not-allowed')}
-							</span>
-						</>
-					}
-					required
+		<ClayForm.Group>
+			<ClayInput.Group>
+				<ClayInput.GroupItem
+					className={classNames({'has-error': errorMessage})}
 				>
+					<label
+						className={disabled ? 'disabled' : ''}
+						htmlFor={nameId}
+					>
+						{Liferay.Language.get('attribute')}
+
+						<span className="sr-only">
+							{Liferay.Language.get('spaces-are-not-allowed')}
+						</span>
+
+						<RequiredMask />
+					</label>
+
 					<ClayInput
-						aria-describedby={`${nameId}fieldFeedback`}
+						aria-describedby={fieldFeedbackId}
 						aria-required={true}
 						data-testid={`testId_${index}`}
 						defaultValue={name}
 						disabled={disabled}
 						id={nameId}
+						onBlur={(event) =>
+							validateAttributeName(event.target.value)
+						}
 						onChange={(event) => {
 							const value = event.target.value
 								.split(/\s/)
 								.join('');
 
-							if (value.toLowerCase() === 'src') {
-								setErrorMessage(
-									Liferay.Language.get(
-										'use-the-javascript-url-field'
-									)
-								);
-							}
-							else {
-								setErrorMessage(null);
-							}
+							validateAttributeName(value);
 
 							onAttributeChange(index, {
 								name: value,
@@ -111,16 +118,16 @@ export default function AttributeFields({
 						type="text"
 						value={name}
 					/>
-				</FieldBase>
-			</ClayLayout.Col>
+				</ClayInput.GroupItem>
 
-			<ClayLayout.Col size={4}>
-				<FieldBase
-					className="mb-0"
-					disabled={disabled}
-					id={typeId}
-					label={Liferay.Language.get('type')}
-				>
+				<ClayInput.GroupItem>
+					<label
+						className={disabled ? 'disabled' : ''}
+						htmlFor={typeId}
+					>
+						{Liferay.Language.get('type')}
+					</label>
+
 					<Picker
 						aria-labelledby="picker-label"
 						defaultSelectedKey={type}
@@ -144,11 +151,16 @@ export default function AttributeFields({
 							<Option key={item.value}>{item.label}</Option>
 						)}
 					</Picker>
-				</FieldBase>
-			</ClayLayout.Col>
+				</ClayInput.GroupItem>
 
-			<ClayLayout.Col size={4}>
-				<ClayForm.Group className="d-flex flex-column-reverse justify-content-end">
+				<ClayInput.GroupItem>
+					<label
+						className={disabled ? 'disabled' : ''}
+						htmlFor={valueId}
+					>
+						{Liferay.Language.get('value')}
+					</label>
+
 					{type !== TYPE_BOOLEAN ? (
 						<ClayInput
 							disabled={disabled}
@@ -182,53 +194,34 @@ export default function AttributeFields({
 							)}
 						</Picker>
 					)}
+				</ClayInput.GroupItem>
 
-					<div className="d-flex justify-content-between">
-						<label
-							className={disabled ? 'disabled' : ''}
-							htmlFor={valueId}
-						>
-							{Liferay.Language.get('value')}
-						</label>
+				<ClayInput.GroupItem shrink>
+					<ClayButtonWithIcon
+						aria-label={sub(
+							Liferay.Language.get('remove-attribute-x'),
+							name
+						)}
+						borderless
+						className="align-self-end"
+						disabled={disabled}
+						displayType="secondary"
+						monospaced
+						onClick={() => onRemoveClick(index)}
+						symbol="trash"
+						title={Liferay.Language.get('remove')}
+						type="button"
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 
-						<div>
-							{index > 0 && (
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'remove-attribute'
-									)}
-									className="btn btn-primary btn-xs dm-field-repeatable-delete-button rounded-pill"
-									disabled={disabled}
-									onClick={() => onRemoveClick(index)}
-									symbol="hr"
-									title={Liferay.Language.get('remove')}
-									type="button"
-								/>
-							)}
-
-							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get(
-									'add-new-attribute'
-								)}
-								className="btn btn-primary btn-xs dm-field-repeatable-add-button ml-1 rounded-pill"
-								disabled={disabled}
-								onClick={() =>
-									name.trim()
-										? onAddClick(index)
-										: setErrorMessage(
-												Liferay.Language.get(
-													'attribute-field-is-required'
-												)
-											)
-								}
-								symbol="plus"
-								title={Liferay.Language.get('add')}
-								type="button"
-							/>
-						</div>
-					</div>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
+			{errorMessage && (
+				<FieldFeedback
+					className={classNames({'has-error': errorMessage})}
+					errorMessage={errorMessage}
+					id={fieldFeedbackId}
+				/>
+			)}
+		</ClayForm.Group>
 	);
 }

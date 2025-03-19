@@ -564,7 +564,7 @@
 											"fragmentConfig": {
 												"inputFieldId": "ObjectField_comment",
 												"inputLabel": {
-													"en_US": "Do you have any question about products, orders, shipments, etc.? You will receive an answer as soon as possible"
+													"en_US": "Do you have any questions about products, orders, shipments, etc.? You will receive an answer as soon as possible."
 												},
 												"numberOfLines": 2,
 												"placeholder": "",

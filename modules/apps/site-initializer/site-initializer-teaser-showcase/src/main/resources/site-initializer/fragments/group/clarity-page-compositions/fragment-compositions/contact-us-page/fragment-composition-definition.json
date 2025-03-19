@@ -60,7 +60,7 @@
 															},
 															"text": {
 																"value_i18n": {
-																	"en_US": "We would love to hear from you"
+																	"en_US": "We would love to hear from you!"
 																}
 															}
 														}
@@ -89,7 +89,7 @@
 															},
 															"text": {
 																"value_i18n": {
-																	"en_US": "If you would like to contact us, please fill the information below to direct your inquiry"
+																	"en_US": "If you would like to contact us, please fill in the information below to direct your inquiry."
 																}
 															}
 														}

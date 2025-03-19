@@ -538,7 +538,7 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Customer first, make Clairy worthy of customer trust"
+																						"en_US": "Customer-first makes Clarity worthy of customer trust."
 																					}
 																				}
 																			}
@@ -760,7 +760,7 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "All-round development, provide customers with more choices"
+																						"en_US": "All-round development provides customers with more choices."
 																					}
 																				}
 																			}
@@ -824,7 +824,7 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "dership"
+														"en_US": "Leadership"
 													}
 												}
 											}

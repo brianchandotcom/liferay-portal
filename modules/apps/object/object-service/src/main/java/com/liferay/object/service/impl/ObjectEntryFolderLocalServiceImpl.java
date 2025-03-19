@@ -209,6 +209,15 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder getObjectEntryFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long companyId)
+		throws PortalException {
+
+		return objectEntryFolderPersistence.findByERC_G_C(
+			externalReferenceCode, groupId, companyId);
+	}
+
+	@Override
 	public List<ObjectEntryFolder> getObjectEntryFolders(
 		long groupId, long companyId, long parentObjectEntryFolderId, int start,
 		int end) {

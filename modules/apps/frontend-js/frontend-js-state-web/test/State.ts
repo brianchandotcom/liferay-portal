@@ -5,13 +5,12 @@
 
 /* eslint-disable @liferay/no-use-strict-in-module */
 
-import State from '../src/main/resources/META-INF/resources/State';
-import {withEnv} from './helpers';
-
-import type {
+import {
 	Atom,
 	Selector,
-} from '../src/main/resources/META-INF/resources/State';
+	default as State,
+} from '../src/main/resources/META-INF/resources/impl/State';
+import {withEnv} from './helpers';
 
 describe('State', () => {
 	beforeEach(() => {

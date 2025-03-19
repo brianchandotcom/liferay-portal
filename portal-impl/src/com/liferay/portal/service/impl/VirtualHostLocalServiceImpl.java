@@ -83,8 +83,8 @@ public class VirtualHostLocalServiceImpl
 			return null;
 		}
 
-		if (defaultVirtualHosts.size() > 1) {
-			_log.error(
+		if ((defaultVirtualHosts.size() > 1) && _log.isWarnEnabled()) {
+			_log.warn(
 				"Company " + companyId +
 					" has more than one default virtual host");
 		}

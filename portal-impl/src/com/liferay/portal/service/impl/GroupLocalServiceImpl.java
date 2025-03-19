@@ -1549,8 +1549,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				return null;
 			}
 
-			if (groups.size() > 1) {
-				_log.error(
+			if ((groups.size() > 1) && _log.isWarnEnabled()) {
+				_log.warn(
 					"Live group " + liveGroupId +
 						" has more than one staging group");
 			}

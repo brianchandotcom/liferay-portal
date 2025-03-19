@@ -2318,8 +2318,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return null;
 		}
 
-		if (users.size() > 1) {
-			_log.error(
+		if ((users.size() > 1) && _log.isWarnEnabled()) {
+			_log.warn(
 				"Portrait ID " + portraitId + " is used by more than one user");
 		}
 

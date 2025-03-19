@@ -4495,6 +4495,7 @@ public class FragmentCollectionPersistenceImpl
 		ctMergeColumnNames.add("fragmentCollectionKey");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("marketplace");
 		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

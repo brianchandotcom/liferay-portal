@@ -72,7 +72,8 @@ public class FragmentCollectionModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"fragmentCollectionKey", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"description", Types.VARCHAR}, {"marketplace", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,11 +94,12 @@ public class FragmentCollectionModelImpl
 		TABLE_COLUMNS_MAP.put("fragmentCollectionKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("marketplace", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCollectionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null,primary key (fragmentCollectionId, ctCollectionId))";
+		"create table FragmentCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCollectionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,marketplace BOOLEAN,lastPublishDate DATE null,primary key (fragmentCollectionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentCollection";
 
@@ -289,6 +291,8 @@ public class FragmentCollectionModelImpl
 			attributeGetterFunctions.put(
 				"description", FragmentCollection::getDescription);
 			attributeGetterFunctions.put(
+				"marketplace", FragmentCollection::getMarketplace);
+			attributeGetterFunctions.put(
 				"lastPublishDate", FragmentCollection::getLastPublishDate);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
@@ -364,6 +368,10 @@ public class FragmentCollectionModelImpl
 				"description",
 				(BiConsumer<FragmentCollection, String>)
 					FragmentCollection::setDescription);
+			attributeSetterBiConsumers.put(
+				"marketplace",
+				(BiConsumer<FragmentCollection, Boolean>)
+					FragmentCollection::setMarketplace);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<FragmentCollection, Date>)
@@ -694,6 +702,27 @@ public class FragmentCollectionModelImpl
 
 	@JSON
 	@Override
+	public boolean getMarketplace() {
+		return _marketplace;
+	}
+
+	@JSON
+	@Override
+	public boolean isMarketplace() {
+		return _marketplace;
+	}
+
+	@Override
+	public void setMarketplace(boolean marketplace) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_marketplace = marketplace;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -788,6 +817,7 @@ public class FragmentCollectionModelImpl
 			getFragmentCollectionKey());
 		fragmentCollectionImpl.setName(getName());
 		fragmentCollectionImpl.setDescription(getDescription());
+		fragmentCollectionImpl.setMarketplace(isMarketplace());
 		fragmentCollectionImpl.setLastPublishDate(getLastPublishDate());
 
 		fragmentCollectionImpl.resetOriginalValues();
@@ -828,6 +858,8 @@ public class FragmentCollectionModelImpl
 			this.<String>getColumnOriginalValue("name"));
 		fragmentCollectionImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
+		fragmentCollectionImpl.setMarketplace(
+			this.<Boolean>getColumnOriginalValue("marketplace"));
 		fragmentCollectionImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 
@@ -993,6 +1025,8 @@ public class FragmentCollectionModelImpl
 			fragmentCollectionCacheModel.description = null;
 		}
 
+		fragmentCollectionCacheModel.marketplace = isMarketplace();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1080,6 +1114,7 @@ public class FragmentCollectionModelImpl
 	private String _fragmentCollectionKey;
 	private String _name;
 	private String _description;
+	private boolean _marketplace;
 	private Date _lastPublishDate;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1129,6 +1164,7 @@ public class FragmentCollectionModelImpl
 			"fragmentCollectionKey", _fragmentCollectionKey);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("marketplace", _marketplace);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
@@ -1181,7 +1217,9 @@ public class FragmentCollectionModelImpl
 
 		columnBitmasks.put("description", 8192L);
 
-		columnBitmasks.put("lastPublishDate", 16384L);
+		columnBitmasks.put("marketplace", 16384L);
+
+		columnBitmasks.put("lastPublishDate", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

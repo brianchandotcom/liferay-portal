@@ -145,6 +145,8 @@ public class FragmentCollectionPersistenceTest {
 
 		newFragmentCollection.setDescription(RandomTestUtil.randomString());
 
+		newFragmentCollection.setMarketplace(RandomTestUtil.randomBoolean());
+
 		newFragmentCollection.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_fragmentCollections.add(_persistence.update(newFragmentCollection));
@@ -196,6 +198,9 @@ public class FragmentCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentCollection.getDescription(),
 			newFragmentCollection.getDescription());
+		Assert.assertEquals(
+			existingFragmentCollection.isMarketplace(),
+			newFragmentCollection.isMarketplace());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingFragmentCollection.getLastPublishDate()),
@@ -328,7 +333,7 @@ public class FragmentCollectionPersistenceTest {
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"fragmentCollectionKey", true, "name", true, "description", true,
-			"lastPublishDate", true);
+			"marketplace", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -673,6 +678,8 @@ public class FragmentCollectionPersistenceTest {
 		fragmentCollection.setName(RandomTestUtil.randomString());
 
 		fragmentCollection.setDescription(RandomTestUtil.randomString());
+
+		fragmentCollection.setMarketplace(RandomTestUtil.randomBoolean());
 
 		fragmentCollection.setLastPublishDate(RandomTestUtil.nextDate());
 

@@ -50,6 +50,7 @@ public class FragmentCollectionWrapper
 		attributes.put("fragmentCollectionKey", getFragmentCollectionKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("marketplace", isMarketplace());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -142,6 +143,12 @@ public class FragmentCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Boolean marketplace = (Boolean)attributes.get("marketplace");
+
+		if (marketplace != null) {
+			setMarketplace(marketplace);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -244,6 +251,16 @@ public class FragmentCollectionWrapper
 	@Override
 	public Date getLastPublishDate() {
 		return model.getLastPublishDate();
+	}
+
+	/**
+	 * Returns the marketplace of this fragment collection.
+	 *
+	 * @return the marketplace of this fragment collection
+	 */
+	@Override
+	public boolean getMarketplace() {
+		return model.getMarketplace();
 	}
 
 	/**
@@ -370,6 +387,16 @@ public class FragmentCollectionWrapper
 		return model.hasResources();
 	}
 
+	/**
+	 * Returns <code>true</code> if this fragment collection is marketplace.
+	 *
+	 * @return <code>true</code> if this fragment collection is marketplace; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isMarketplace() {
+		return model.isMarketplace();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -479,6 +506,16 @@ public class FragmentCollectionWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	 * Sets whether this fragment collection is marketplace.
+	 *
+	 * @param marketplace the marketplace of this fragment collection
+	 */
+	@Override
+	public void setMarketplace(boolean marketplace) {
+		model.setMarketplace(marketplace);
 	}
 
 	/**

@@ -20,6 +20,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="marketplace" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentComposition">

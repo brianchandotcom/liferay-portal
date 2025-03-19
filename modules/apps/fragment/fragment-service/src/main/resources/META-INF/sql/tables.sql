@@ -13,6 +13,7 @@ create table FragmentCollection (
 	fragmentCollectionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
 	description STRING null,
+	marketplace BOOLEAN,
 	lastPublishDate DATE null,
 	primary key (fragmentCollectionId, ctCollectionId)
 );

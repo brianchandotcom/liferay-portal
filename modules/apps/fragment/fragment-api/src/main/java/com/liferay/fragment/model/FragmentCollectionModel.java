@@ -295,6 +295,27 @@ public interface FragmentCollectionModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the marketplace of this fragment collection.
+	 *
+	 * @return the marketplace of this fragment collection
+	 */
+	public boolean getMarketplace();
+
+	/**
+	 * Returns <code>true</code> if this fragment collection is marketplace.
+	 *
+	 * @return <code>true</code> if this fragment collection is marketplace; <code>false</code> otherwise
+	 */
+	public boolean isMarketplace();
+
+	/**
+	 * Sets whether this fragment collection is marketplace.
+	 *
+	 * @param marketplace the marketplace of this fragment collection
+	 */
+	public void setMarketplace(boolean marketplace);
+
+	/**
 	 * Returns the last publish date of this fragment collection.
 	 *
 	 * @return the last publish date of this fragment collection

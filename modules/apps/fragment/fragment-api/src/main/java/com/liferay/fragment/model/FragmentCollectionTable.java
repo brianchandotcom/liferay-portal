@@ -65,6 +65,9 @@ public class FragmentCollectionTable
 	public final Column<FragmentCollectionTable, String> description =
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<FragmentCollectionTable, Boolean> marketplace =
+		createColumn(
+			"marketplace", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentCollectionTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

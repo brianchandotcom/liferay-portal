@@ -69,7 +69,7 @@ public class FragmentCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class FragmentCollectionCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", marketplace=");
+		sb.append(marketplace);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -177,6 +179,8 @@ public class FragmentCollectionCacheModel
 			fragmentCollectionImpl.setDescription(description);
 		}
 
+		fragmentCollectionImpl.setMarketplace(marketplace);
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentCollectionImpl.setLastPublishDate(null);
 		}
@@ -211,6 +215,8 @@ public class FragmentCollectionCacheModel
 		fragmentCollectionKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		marketplace = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -273,6 +279,7 @@ public class FragmentCollectionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeBoolean(marketplace);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -290,6 +297,7 @@ public class FragmentCollectionCacheModel
 	public String fragmentCollectionKey;
 	public String name;
 	public String description;
+	public boolean marketplace;
 	public long lastPublishDate;
 
 }

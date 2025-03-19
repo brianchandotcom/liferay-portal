@@ -34,7 +34,7 @@ public class CompanyThreadLocalCheck extends BaseCheck {
 
 	private void _checkMissingCloseCall(DetailAST detailAST) {
 		DetailAST variableDefinitionDetailAST = null;
-		String variableName = "";
+		String variableName = null;
 
 		List<DetailAST> methodCallDetailASTList = getMethodCalls(
 			detailAST, "CompanyThreadLocal",
@@ -52,10 +52,6 @@ public class CompanyThreadLocalCheck extends BaseCheck {
 
 				variableDefinitionDetailAST = getVariableDefinitionDetailAST(
 					detailAST, variableName, true);
-
-				if (variableDefinitionDetailAST == null) {
-					continue;
-				}
 			}
 			else if (parentDetailAST.getType() == TokenTypes.EXPR) {
 				parentDetailAST = parentDetailAST.getParent();
@@ -73,6 +69,12 @@ public class CompanyThreadLocalCheck extends BaseCheck {
 				variableDefinitionDetailAST = parentDetailAST;
 
 				variableName = getName(variableDefinitionDetailAST);
+			}
+
+			if ((variableDefinitionDetailAST == null) ||
+				(variableName == null)) {
+
+				continue;
 			}
 
 			methodCallDetailASTList = getMethodCalls(

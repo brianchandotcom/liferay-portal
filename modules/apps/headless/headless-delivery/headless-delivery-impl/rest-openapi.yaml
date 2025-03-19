@@ -93,7 +93,7 @@ components:
                     description:
                         A list of the custom fields associated with the blog post.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -1107,25 +1107,6 @@ components:
                 -   id
                 -   customCSS
             type: object
-        CustomField:
-            # @review
-            description:
-                Represents the value of each custom field. Fields can contain different information types (e.g.,
-                geolocation, strings, etc.).
-            properties:
-                customValue:
-                    $ref: "#/components/schemas/CustomValue"
-                    description:
-                        The field's value.
-                dataType:
-                    description:
-                        The field type (e.g., image, text, etc.).
-                    readOnly: true
-                    type: string
-                name:
-                    description:
-                        The field's internal name. This is valid for comparisons and unique in the structured content.
-                    type: string
         CustomMetaTag:
             # @review
             description:
@@ -1148,28 +1129,6 @@ components:
                     description:
                         The localized custom metatag's values.
                     type: object
-            type: object
-        CustomValue:
-            # @review
-            description:
-                Represents a custom value.
-            properties:
-                data:
-                    # @review
-                    description:
-                        The field's content value for simple types.
-                    type: object
-                data_i18n:
-                    additionalProperties:
-                        type: string
-                    # @review
-                    description:
-                        The localized field's content values for simple types.
-                    type: object
-                geo:
-                    $ref: "#/components/schemas/Geo"
-                    description:
-                        A point determined by latitude and longitude.
             type: object
         DisplayPageActionExecutionResult:
             # @review
@@ -1322,7 +1281,7 @@ components:
                     description:
                         A list of the custom fields associated with the document.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -1640,7 +1599,7 @@ components:
                     description:
                         A list of the custom fields associated with the folder.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -2554,21 +2513,6 @@ components:
                 -   fragmentViewportStyle
                 -   id
             type: object
-        Geo:
-            description:
-                A point determined by latitude and longitude.
-            properties:
-                latitude:
-                    description:
-                        The latitude of a point in space.
-                    format: double
-                    type: number
-                longitude:
-                    description:
-                        The longitude of a point in space.
-                    format: double
-                    type: number
-            type: object
         KnowledgeBaseArticle:
             description:
                 Represents a Knowledge Base article (`KBArticle`), the main entity in the Knowledge Base API.
@@ -2602,7 +2546,7 @@ components:
                     description:
                         A list of the custom fields associated with the article.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -2811,7 +2755,7 @@ components:
                     description:
                         A list of the custom fields associated with the folder.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -3045,7 +2989,7 @@ components:
                     description:
                         A list of the custom fields associated with the blog post.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -3179,7 +3123,7 @@ components:
                     description:
                         A list of the custom fields associated with the section.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -3285,7 +3229,7 @@ components:
                     description:
                         A list of the custom fields associated with the thread.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -3549,7 +3493,7 @@ components:
                     description:
                         A list of the custom fields associated with the navigation menu item.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     # @review
@@ -5227,7 +5171,7 @@ components:
                     description:
                         Custom fields associated with the page.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     # @review
@@ -5483,7 +5427,7 @@ components:
                     description:
                         A list of the custom fields associated with the structured content.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -5677,7 +5621,7 @@ components:
                     description:
                         A list of the custom fields associated with the folder.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:
@@ -6006,7 +5950,7 @@ components:
                     description:
                         A list of the custom fields associated with the wiki page.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:

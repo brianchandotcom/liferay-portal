@@ -175,7 +175,7 @@ components:
                     type: string
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 displayDate:
                     example: 2017-07-21
@@ -258,7 +258,7 @@ components:
                     type: string
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 displayDate:
                     example: 2017-07-21
@@ -327,7 +327,7 @@ components:
                     type: string
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 displayDate:
                     example: 2017-07-21
@@ -547,38 +547,6 @@ components:
                 -   code
                 -   name
             type: object
-        CustomField:
-            # @review
-            description:
-                Represents the value of each custom field. Fields can contain different information types (e.g.,
-                geolocation, strings, etc.).
-            properties:
-                customValue:
-                    $ref: "#/components/schemas/CustomValue"
-                dataType:
-                    description:
-                        The field type (e.g., image, text, etc.).
-                    readOnly: true
-                    type: string
-                name:
-                    description:
-                        The field's internal name. This is valid for comparisons and unique in the structured content.
-                    type: string
-        CustomValue:
-            properties:
-                data:
-                    description:
-                        The field's content for simple types.
-                    type: object
-                data_i18n:
-                    additionalProperties:
-                        type: string
-                    type: object
-                geo:
-                    $ref: "#/components/schemas/Geo"
-                    description:
-                        A point determined by latitude and longitude.
-            type: object
         Diagram:
             properties:
                 attachmentBase64:
@@ -647,21 +615,6 @@ components:
                 -   errorDescription
                 -   message
                 -   status
-            type: object
-        Geo:
-            description:
-                A point determined by latitude and longitude.
-            properties:
-                latitude:
-                    description:
-                        The latitude of a point in space.
-                    format: double
-                    type: number
-                longitude:
-                    description:
-                        The longitude of a point in space.
-                    format: double
-                    type: number
             type: object
         GroupedProduct:
             properties:
@@ -790,7 +743,7 @@ components:
                     type: object
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 id:
                     example: 33130
@@ -855,7 +808,7 @@ components:
                     type: integer
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 description:
                     type: object
@@ -968,7 +921,7 @@ components:
                     type: object
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 externalReferenceCode:
                     example: AB-34098-789-N
@@ -1073,7 +1026,7 @@ components:
                     type: string
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 defaultSku:
                     example: Blue handle, 00001l, 70cm, lifetime warranty
@@ -1710,7 +1663,7 @@ components:
                     type: integer
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 definedExternally:
                     example: true
@@ -2156,7 +2109,7 @@ components:
                     type: number
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 depth:
                     example: 1.1

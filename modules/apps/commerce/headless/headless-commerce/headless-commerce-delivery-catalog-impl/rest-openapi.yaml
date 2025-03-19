@@ -51,7 +51,7 @@ components:
                     type: object
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     readOnly: true
                     type: array
                 dateCreated:
@@ -130,7 +130,7 @@ components:
                     type: string
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     readOnly: true
                     type: array
                 displayDate:
@@ -316,40 +316,6 @@ components:
                 -   code
                 -   name
             type: object
-        CustomField:
-            description:
-                Represents the value of each custom field. Fields can contain different information types (e.g.,
-                geolocation, strings, etc.).
-            properties:
-                customValue:
-                    $ref: "#/components/schemas/CustomValue"
-                dataType:
-                    description:
-                        The field type (e.g., image, text, etc.).
-                    readOnly: true
-                    type: string
-                name:
-                    description:
-                        The field's internal name. This is valid for comparisons and unique in the structured content.
-                    readOnly: true
-                    type: string
-        CustomValue:
-            properties:
-                data:
-                    description:
-                        The field's content for simple types.
-                    readOnly: true
-                    type: object
-                data_i18n:
-                    additionalProperties:
-                        type: string
-                    readOnly: true
-                    type: object
-                geo:
-                    $ref: "#/components/schemas/Geo"
-                    description:
-                        A point determined by latitude and longitude.
-                    readOnly: true
         DDMOption:
             properties:
                 key:
@@ -390,23 +356,6 @@ components:
                 -   errorDescription
                 -   message
                 -   status
-            type: object
-        Geo:
-            description:
-                A point determined by latitude and longitude.
-            properties:
-                latitude:
-                    description:
-                        The latitude of a point in space.
-                    format: double
-                    readOnly: true
-                    type: number
-                longitude:
-                    description:
-                        The longitude of a point in space.
-                    format: double
-                    readOnly: true
-                    type: number
             type: object
         LinkedProduct:
             properties:
@@ -600,7 +549,7 @@ components:
                     type: string
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 description:
                     type: string
@@ -983,7 +932,7 @@ components:
                     type: boolean
                 customFields:
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     readOnly: true
                     type: array
                 depth:

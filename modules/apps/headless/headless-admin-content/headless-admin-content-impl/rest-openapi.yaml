@@ -42,7 +42,7 @@ components:
                     description:
                         The custom fields associated to the page that renders the Display Page Template.
                     items:
-                        $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     description:

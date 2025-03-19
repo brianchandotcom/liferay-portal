@@ -230,7 +230,7 @@ definition {
 	@description = "This is a use case for LPS-150460 TC-1. User is able to trigger propagation of the site template to all connected sites automatically."
 	@priority = 4
 	test AssertAutomaticSiteTemplatePropagation {
-		property database.types = "mysql";
+		property database.types = "mysql,postgresql";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -530,7 +530,7 @@ definition {
 	@description = "This is a use case for LPS-150460 TC-2. User can trigger Site template propagation upon visiting a connected site."
 	@priority = 3
 	test AssertSiteTemplatePropagationWhenOpeningSite {
-		property database.types = "mysql";
+		property database.types = "mysql,postgresql";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

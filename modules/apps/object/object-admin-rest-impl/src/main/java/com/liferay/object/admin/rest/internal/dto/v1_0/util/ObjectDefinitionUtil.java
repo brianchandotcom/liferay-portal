@@ -160,6 +160,15 @@ public class ObjectDefinitionUtil {
 					serviceBuilderObjectDefinition::isEnableObjectEntryDraft);
 				setEnableObjectEntryHistory(
 					serviceBuilderObjectDefinition::isEnableObjectEntryHistory);
+				setEnableObjectEntryVersioning(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+							return null;
+						}
+
+						return serviceBuilderObjectDefinition.
+							isEnableObjectEntryVersioning();
+					});
 				setExternalReferenceCode(
 					serviceBuilderObjectDefinition::getExternalReferenceCode);
 				setId(serviceBuilderObjectDefinition::getObjectDefinitionId);

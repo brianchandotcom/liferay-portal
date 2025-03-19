@@ -96,6 +96,8 @@ components:
                     type: boolean
                 enableObjectEntryHistory:
                     type: boolean
+                enableObjectEntryVersioning:
+                    type: boolean
                 externalReferenceCode:
                     type: string
                 id:

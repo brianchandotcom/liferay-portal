@@ -65,6 +65,8 @@ public class ObjectDefinitionWrapper
 		attributes.put("enableObjectEntryDraft", isEnableObjectEntryDraft());
 		attributes.put(
 			"enableObjectEntryHistory", isEnableObjectEntryHistory());
+		attributes.put(
+			"enableObjectEntryVersioning", isEnableObjectEntryVersioning());
 		attributes.put("label", getLabel());
 		attributes.put("modifiable", isModifiable());
 		attributes.put("name", getName());
@@ -246,6 +248,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableObjectEntryHistory != null) {
 			setEnableObjectEntryHistory(enableObjectEntryHistory);
+		}
+
+		Boolean enableObjectEntryVersioning = (Boolean)attributes.get(
+			"enableObjectEntryVersioning");
+
+		if (enableObjectEntryVersioning != null) {
+			setEnableObjectEntryVersioning(enableObjectEntryVersioning);
 		}
 
 		String label = (String)attributes.get("label");
@@ -507,6 +516,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableObjectEntryHistory() {
 		return model.getEnableObjectEntryHistory();
+	}
+
+	/**
+	 * Returns the enable object entry versioning of this object definition.
+	 *
+	 * @return the enable object entry versioning of this object definition
+	 */
+	@Override
+	public boolean getEnableObjectEntryVersioning() {
+		return model.getEnableObjectEntryVersioning();
 	}
 
 	@Override
@@ -1063,6 +1082,16 @@ public class ObjectDefinitionWrapper
 		return model.isEnableObjectEntryHistory();
 	}
 
+	/**
+	 * Returns <code>true</code> if this object definition is enable object entry versioning.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry versioning; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableObjectEntryVersioning() {
+		return model.isEnableObjectEntryVersioning();
+	}
+
 	@Override
 	public boolean isLinkedToObjectFolder(long objectFolderId) {
 		return model.isLinkedToObjectFolder(objectFolderId);
@@ -1296,6 +1325,18 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableObjectEntryHistory(boolean enableObjectEntryHistory) {
 		model.setEnableObjectEntryHistory(enableObjectEntryHistory);
+	}
+
+	/**
+	 * Sets whether this object definition is enable object entry versioning.
+	 *
+	 * @param enableObjectEntryVersioning the enable object entry versioning of this object definition
+	 */
+	@Override
+	public void setEnableObjectEntryVersioning(
+		boolean enableObjectEntryVersioning) {
+
+		model.setEnableObjectEntryVersioning(enableObjectEntryVersioning);
 	}
 
 	/**

@@ -46,6 +46,16 @@ export class HeadlessCommerceDeliveryCatalogApiHelper {
 		);
 	}
 
+	async getChannelProductSkusPage(
+		channelId: number,
+		productId: number,
+		searchParams = new URLSearchParams()
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}/products/${productId}/skus?${searchParams.toString()}`
+		);
+	}
+
 	async postWishList(
 		wishList: TWishList,
 		channelId: number,

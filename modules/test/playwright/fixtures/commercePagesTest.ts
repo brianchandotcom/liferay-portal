@@ -48,6 +48,8 @@ import {CommerceAdminProductDetailsVisibilityPage} from '../pages/commerce/comme
 import {CommerceAdminProductPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductPage';
 import {CommerceSpecificationsPage} from '../pages/commerce/commerce-product-options-web/commerceSpecificationsPage';
 import {CommerceAdminShipmentsPage} from '../pages/commerce/commerce-shipment-web/commerceAdminShipmentsPage';
+import {CommerceThemeClassicCatalogPage} from '../pages/commerce/commerce-theme-classic/commerceThemeClassicCatalogPage';
+import {CommerceThemeClassicOrdersPage} from '../pages/commerce/commerce-theme-classic/commerceThemeClassicOrdersPage';
 import {CommerceThemeMiniumCatalogPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumCatalogPage';
 import {CommerceThemeMiniumPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumPage';
 import {CommerceWishListPage} from '../pages/commerce/commerce-wish-list-web/commerceWishListPage';
@@ -94,6 +96,8 @@ const commercePagesTest = test.extend<{
 	commerceMiniCartPage: CommerceMiniCartPage;
 	commercePaymentsPage: CommercePaymentsPage;
 	commerceSpecificationsPage: CommerceSpecificationsPage;
+	commerceThemeClassicCatalogPage: CommerceThemeClassicCatalogPage;
+	commerceThemeClassicOrdersPage: CommerceThemeClassicOrdersPage;
 	commerceThemeMiniumCatalogPage: CommerceThemeMiniumCatalogPage;
 	commerceThemeMiniumPage: CommerceThemeMiniumPage;
 	commerceWishListPage: CommerceWishListPage;
@@ -219,6 +223,12 @@ const commercePagesTest = test.extend<{
 	},
 	commerceSpecificationsPage: async ({page}, use) => {
 		await use(new CommerceSpecificationsPage(page));
+	},
+	commerceThemeClassicCatalogPage: async ({page}, use) => {
+		await use(new CommerceThemeClassicCatalogPage(page));
+	},
+	commerceThemeClassicOrdersPage: async ({page}, use) => {
+		await use(new CommerceThemeClassicOrdersPage(page));
 	},
 	commerceThemeMiniumCatalogPage: async ({page}, use) => {
 		await use(new CommerceThemeMiniumCatalogPage(page));

@@ -524,6 +524,11 @@ export class DataApiHelpers extends ApiHelpers {
 					item.id
 				);
 			}
+			else if (item.type === 'price-list') {
+				await this.headlessCommerceAdminPricing.deletePriceList(
+					item.id
+				);
+			}
 			else if (item.type === 'product') {
 				await this.headlessCommerceAdminCatalog.deleteProduct(item.id);
 			}

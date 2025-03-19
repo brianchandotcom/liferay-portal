@@ -136,7 +136,7 @@ public class ${schemaName}SerDes {
 					<#elseif stringUtil.equals(propertyType, "Object")>
 						if (${schemaVarName}.get${capitalizedPropertyName}() instanceof String) {
 							sb.append("\"");
-							sb.append((String)${schemaVarName}.get${capitalizedPropertyName}());
+							sb.append(_escape((String)${schemaVarName}.get${capitalizedPropertyName}()));
 							sb.append("\"");
 						}
 						else {

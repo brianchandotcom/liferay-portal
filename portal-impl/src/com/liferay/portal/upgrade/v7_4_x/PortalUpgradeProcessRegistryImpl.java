@@ -598,6 +598,11 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 18, 0), AssetTagGroupRelTable.create());
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 19, 0),
+			UpgradeProcessFactory.addColumns(
+				"Address", "subtype VARCHAR(75) null"));
 	}
 
 }

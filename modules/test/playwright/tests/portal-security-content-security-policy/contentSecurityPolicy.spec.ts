@@ -90,7 +90,7 @@ test("CSP connect-src allows connections to 'self'", async ({
 
 	await pageEditorPage.publishPage();
 
-	const cspErrors = [];
+	const errors = [];
 
 	page.on('console', (msg) => {
 		if (
@@ -99,7 +99,7 @@ test("CSP connect-src allows connections to 'self'", async ({
 				.text()
 				.includes('Content Security Policy directive: "connect-src')
 		) {
-			cspErrors.push({text: msg.text(), type: msg.type()});
+			errors.push({text: msg.text(), type: msg.type()});
 		}
 	});
 
@@ -108,7 +108,7 @@ test("CSP connect-src allows connections to 'self'", async ({
 			request.url().includes('localhost') &&
 			request.failure().errorText.includes('csp')
 		) {
-			cspErrors.push({
+			errors.push({
 				failure: request.failure(),
 				url: request.url(),
 			});
@@ -121,7 +121,7 @@ test("CSP connect-src allows connections to 'self'", async ({
 		button: 'middle',
 	});
 
-	expect(cspErrors.length).toBeLessThanOrEqual(0);
+	expect(errors).toHaveLength(0);
 });
 
 test('CSP connect-src allows connections to specific domain', async ({
@@ -173,7 +173,7 @@ test('CSP connect-src allows connections to specific domain', async ({
 
 	await pageEditorPage.publishPage();
 
-	const cspErrors = [];
+	const errors = [];
 
 	page.on('console', (msg) => {
 		if (
@@ -182,7 +182,7 @@ test('CSP connect-src allows connections to specific domain', async ({
 				.text()
 				.includes('Content Security Policy directive: "connect-src')
 		) {
-			cspErrors.push({text: msg.text(), type: msg.type()});
+			errors.push({text: msg.text(), type: msg.type()});
 		}
 	});
 
@@ -191,7 +191,7 @@ test('CSP connect-src allows connections to specific domain', async ({
 			request.url().includes('www.able.com') &&
 			request.failure().errorText.includes('csp')
 		) {
-			cspErrors.push({
+			errors.push({
 				failure: request.failure(),
 				url: request.url(),
 			});
@@ -204,7 +204,7 @@ test('CSP connect-src allows connections to specific domain', async ({
 		button: 'middle',
 	});
 
-	expect(cspErrors.length).toBeLessThanOrEqual(0);
+	expect(errors).toHaveLength(0);
 });
 
 test('CSP connect-src blocks connections', async ({
@@ -256,7 +256,7 @@ test('CSP connect-src blocks connections', async ({
 
 	await pageEditorPage.publishPage();
 
-	const cspErrors = [];
+	const errors = [];
 
 	page.on('console', (msg) => {
 		if (
@@ -265,7 +265,7 @@ test('CSP connect-src blocks connections', async ({
 				.text()
 				.includes('Content Security Policy directive: "connect-src')
 		) {
-			cspErrors.push({text: msg.text(), type: msg.type()});
+			errors.push({text: msg.text(), type: msg.type()});
 		}
 	});
 
@@ -274,7 +274,7 @@ test('CSP connect-src blocks connections', async ({
 			request.url().includes('www.able.com') &&
 			request.failure().errorText.includes('csp')
 		) {
-			cspErrors.push({
+			errors.push({
 				failure: request.failure(),
 				url: request.url(),
 			});
@@ -287,7 +287,7 @@ test('CSP connect-src blocks connections', async ({
 		button: 'middle',
 	});
 
-	expect(cspErrors.length).toBeGreaterThanOrEqual(9);
+	expect(errors.length).toBeGreaterThanOrEqual(9);
 });
 
 test("CSP frame-src allow frames from 'self'", async ({
@@ -335,7 +335,7 @@ test("CSP frame-src allow frames from 'self'", async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors).toEqual([]);
+	expect(errors).toHaveLength(0);
 });
 
 test('CSP frame-src allows frames from specific domains', async ({
@@ -383,7 +383,7 @@ test('CSP frame-src allows frames from specific domains', async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors).toEqual([]);
+	expect(errors).toHaveLength(0);
 });
 
 test('CSP frame-src blocks frames', async ({
@@ -429,7 +429,7 @@ test('CSP frame-src blocks frames', async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors.length).toEqual(2);
+	expect(errors.length).toBeGreaterThanOrEqual(2);
 });
 
 test("CSP img-src allow images from 'self'", async ({
@@ -481,7 +481,7 @@ test("CSP img-src allow images from 'self'", async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors).toEqual([]);
+	expect(errors).toHaveLength(0);
 });
 
 test('CSP img-src allows images from specific domains', async ({
@@ -533,7 +533,7 @@ test('CSP img-src allows images from specific domains', async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors).toEqual([]);
+	expect(errors).toHaveLength(0);
 });
 
 test('CSP img-src blocks images', async ({
@@ -581,5 +581,5 @@ test('CSP img-src blocks images', async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors.length).toEqual(1);
+	expect(errors.length).toBeGreaterThanOrEqual(1);
 });

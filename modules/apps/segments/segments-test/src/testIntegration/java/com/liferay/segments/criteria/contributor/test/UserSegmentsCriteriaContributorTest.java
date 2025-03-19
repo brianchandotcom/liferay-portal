@@ -215,6 +215,24 @@ public class UserSegmentsCriteriaContributorTest {
 	}
 
 	@Test
+	public void testGetCriteriaJSONObjectWithDateModifiedTruncated()
+		throws Exception {
+
+		SegmentsCriteriaContributor segmentsCriteriaContributor =
+			_getSegmentsCriteriaContributor();
+
+		Criteria criteria = new Criteria();
+
+		segmentsCriteriaContributor.contribute(
+			criteria, "dateModified eq 2025-03-14T00:00:00.000Z",
+			Criteria.Conjunction.AND);
+
+		Assert.assertEquals(
+			"dateModifiedTruncated eq 2025-03-14T00:00:00.000Z",
+			criteria.getFilterString(Criteria.Type.MODEL));
+	}
+
+	@Test
 	public void testGetFieldsWithComplexEntity() throws Exception {
 		_addExpandoColumn(
 			_expandoTable, RandomTestUtil.randomString(),

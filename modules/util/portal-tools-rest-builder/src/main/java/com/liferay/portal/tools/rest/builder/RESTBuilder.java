@@ -584,37 +584,15 @@ public class RESTBuilder {
 	private void _createClientAggregationFile(Map<String, Object> context)
 		throws Exception {
 
-		File file = new File(
-			StringBundler.concat(
-				_configYAML.getClientDir(), "/",
-				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
-				"/client/aggregation/Aggregation.java"));
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(file),
-				"client_aggregation", context));
+		_createClientFile(
+			context, "", "client_aggregation", "aggregation", "Aggregation");
 	}
 
 	private void _createClientBaseJSONParserFile(Map<String, Object> context)
 		throws Exception {
 
-		File file = new File(
-			StringBundler.concat(
-				_configYAML.getClientDir(), "/",
-				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
-				"/client/json/BaseJSONParser.java"));
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(file),
-				"client_base_json_parser", context));
+		_createClientFile(
+			context, "", "client_base_json_parser", "json", "BaseJSONParser");
 	}
 
 	private void _createClientDTOFile(
@@ -622,19 +600,8 @@ public class RESTBuilder {
 			String schemaName)
 		throws Exception {
 
-		File file = new File(
-			StringBundler.concat(
-				_configYAML.getClientDir(), "/",
-				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
-				"/client/dto/", escapedVersion, "/", schemaName, ".java"));
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(file), "client_dto",
-				context));
+		_createClientFile(
+			context, escapedVersion, "client_dto", "dto", schemaName);
 	}
 
 	private void _createClientEnumFile(
@@ -642,73 +609,48 @@ public class RESTBuilder {
 			String schemaName)
 		throws Exception {
 
-		File file = new File(
-			StringBundler.concat(
-				_configYAML.getClientDir(), "/",
-				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
-				"/client/constant/", escapedVersion, "/", schemaName, ".java"));
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(file), "client_enum",
-				context));
+		_createClientFile(
+			context, escapedVersion, "client_enum", "constant", schemaName);
 	}
 
 	private void _createClientFacetFile(Map<String, Object> context)
+		throws Exception {
+
+		_createClientFile(context, "", "client_facet", "aggregation", "Facet");
+	}
+
+	private void _createClientFile(
+			Map<String, Object> context, String escapedVersion, String name,
+			String path, String schemaName)
 		throws Exception {
 
 		File file = new File(
 			StringBundler.concat(
 				_configYAML.getClientDir(), "/",
 				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
-				"/client/aggregation/Facet.java"));
+				"/client/", path, "/", escapedVersion, "/", schemaName,
+				".java"));
 
 		_files.add(file);
 
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(file), "client_facet",
+				_copyrightFile, FileUtil.getCopyrightYear(file), name,
 				context));
 	}
 
 	private void _createClientHttpInvokerFile(Map<String, Object> context)
 		throws Exception {
 
-		File file = new File(
-			StringBundler.concat(
-				_configYAML.getClientDir(), "/",
-				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
-				"/client/http/HttpInvoker.java"));
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(file),
-				"client_http_invoker", context));
+		_createClientFile(
+			context, "", "client_http_invoker", "http", "HttpInvoker");
 	}
 
 	private void _createClientPageFile(Map<String, Object> context)
 		throws Exception {
 
-		File file = new File(
-			StringBundler.concat(
-				_configYAML.getClientDir(), "/",
-				StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'),
-				"/client/pagination/Page.java"));
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(file), "client_page",
-				context));
+		_createClientFile(context, "", "client_page", "pagination", "Page");
 	}
 
 	private void _createClientPaginationFile(Map<String, Object> context)

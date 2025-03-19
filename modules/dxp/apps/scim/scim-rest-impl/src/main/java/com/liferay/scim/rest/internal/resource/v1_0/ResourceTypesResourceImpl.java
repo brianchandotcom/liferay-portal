@@ -58,9 +58,9 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 	private String _getResourceTypeJSON(String id)
 		throws AbstractCharonException {
 
-		if (_resourceTypesFlieName.containsKey(id)) {
+		if (_resourceTypeFileNames.containsKey(id)) {
 			JSONObject resourceTypeJSONObject = _read(
-				_resourceTypesFlieName.get(id));
+				_resourceTypeFileNames.get(id));
 
 			return resourceTypeJSONObject.toString();
 		}
@@ -78,7 +78,7 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 				for (Map.Entry<String, String> entry :
-						_resourceTypesFlieName.entrySet()) {
+						_resourceTypeFileNames.entrySet()) {
 
 					jsonArray.put(_read(entry.getValue()));
 				}
@@ -91,7 +91,7 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 		).put(
 			"startIndex", 1
 		).put(
-			"totalResults", _resourceTypesFlieName.size()
+			"totalResults", _resourceTypeFileNames.size()
 		).toString();
 	}
 
@@ -179,7 +179,7 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 	@Reference
 	private JSONFactory _jsonFactory;
 
-	private final Map<String, String> _resourceTypesFlieName = Map.of(
+	private final Map<String, String> _resourceTypeFileNames = Map.of(
 		"Group", "group.json", "User", "user.json");
 
 }

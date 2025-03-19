@@ -244,7 +244,7 @@ const CodeMirrorEditor = React.forwardRef(
 		}, [editor, inputChannel]);
 
 		return (
-			<div className="d-flex flex-column flex-grow-1 position-relative">
+			<div className="d-flex flex-column flex-grow-1 overflow-auto position-relative">
 				{isFocused ? (
 					<CodeMirrorKeyboardMessage keyIsEnabled={isEnabled} />
 				) : null}

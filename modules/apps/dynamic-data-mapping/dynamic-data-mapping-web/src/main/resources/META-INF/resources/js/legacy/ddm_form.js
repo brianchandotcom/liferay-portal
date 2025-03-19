@@ -2424,7 +2424,7 @@ AUI.add(
 					const imageSelectorURL = form.get('imageSelectorURL');
 
 					let retVal = instance.getDocumentLibraryURL(
-						'com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion'
+						'com.liferay.journal.item.selector.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion'
 					);
 
 					if (imageSelectorURL) {

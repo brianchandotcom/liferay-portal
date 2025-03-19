@@ -12,7 +12,7 @@ import com.liferay.item.selector.PortletItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
+import com.liferay.journal.item.selector.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.internal.constants.JournalItemSelectorWebKeys;
 import com.liferay.journal.item.selector.web.internal.display.context.JournalItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.Language;

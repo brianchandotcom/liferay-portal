@@ -1,0 +1,31 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+
+/**
+ * @author Alan Huang
+ */
+public class CompanyThreadLocalUsage {
+
+	public void method1(String companyId) {
+		CompanyThreadLocal.setCompanyId(companyId);
+	}
+
+	public void method2(String companyId) {
+		_safeCloseable1 = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			companyId);
+	}
+
+	public void method3(String companyId) {
+		_safeCloseable2 = CompanyThreadLocal.lock(companyId);
+	}
+
+	private static SafeCloseable _safeCloseable1;
+	private static SafeCloseable _safeCloseable2;
+
+}

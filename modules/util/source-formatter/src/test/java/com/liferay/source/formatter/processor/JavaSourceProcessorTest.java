@@ -110,6 +110,32 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testCompanyThreadLocalUsage() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"CompanyThreadLocalUsage.testjava"
+			).addExpectedMessage(
+				StringBundler.concat(
+					"Do not use \"CompanyThreadLocal.setCompanyId\", use ",
+					"\"CompanyThreadLocal.lock\" or \"CompanyThreadLocal.",
+					"setCompanyIdWithSafeCloseable\" instead"),
+				16
+			).addExpectedMessage(
+				StringBundler.concat(
+					"Missing calling \"close\" to variable ",
+					"\"_safeCloseable1\", use \"_safeCloseable1.close\" or ",
+					"try-with-resources statement instead"),
+				28
+			).addExpectedMessage(
+				StringBundler.concat(
+					"Missing calling \"close\" to variable ",
+					"\"_safeCloseable2\", use \"_safeCloseable2.close\" or ",
+					"try-with-resources statement instead"),
+				29
+			));
+	}
+
+	@Test
 	public void testConstructorParameterOrder() throws Exception {
 		test("ConstructorParameterOrder.testjava");
 	}

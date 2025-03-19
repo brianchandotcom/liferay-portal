@@ -69,7 +69,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(81);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -121,6 +121,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(enableObjectEntryDraft);
 		sb.append(", enableObjectEntryHistory=");
 		sb.append(enableObjectEntryHistory);
+		sb.append(", enableObjectEntryVersioning=");
+		sb.append(enableObjectEntryVersioning);
 		sb.append(", label=");
 		sb.append(label);
 		sb.append(", modifiable=");
@@ -233,6 +235,8 @@ public class ObjectDefinitionCacheModel
 		objectDefinitionImpl.setEnableObjectEntryDraft(enableObjectEntryDraft);
 		objectDefinitionImpl.setEnableObjectEntryHistory(
 			enableObjectEntryHistory);
+		objectDefinitionImpl.setEnableObjectEntryVersioning(
+			enableObjectEntryVersioning);
 
 		if (label == null) {
 			objectDefinitionImpl.setLabel("");
@@ -355,6 +359,8 @@ public class ObjectDefinitionCacheModel
 		enableObjectEntryDraft = objectInput.readBoolean();
 
 		enableObjectEntryHistory = objectInput.readBoolean();
+
+		enableObjectEntryVersioning = objectInput.readBoolean();
 		label = objectInput.readUTF();
 
 		modifiable = objectInput.readBoolean();
@@ -451,6 +457,8 @@ public class ObjectDefinitionCacheModel
 		objectOutput.writeBoolean(enableObjectEntryDraft);
 
 		objectOutput.writeBoolean(enableObjectEntryHistory);
+
+		objectOutput.writeBoolean(enableObjectEntryVersioning);
 
 		if (label == null) {
 			objectOutput.writeUTF("");
@@ -551,6 +559,7 @@ public class ObjectDefinitionCacheModel
 	public boolean enableLocalization;
 	public boolean enableObjectEntryDraft;
 	public boolean enableObjectEntryHistory;
+	public boolean enableObjectEntryVersioning;
 	public String label;
 	public boolean modifiable;
 	public String name;

@@ -509,6 +509,28 @@ public interface ObjectDefinitionModel
 	public void setEnableObjectEntryHistory(boolean enableObjectEntryHistory);
 
 	/**
+	 * Returns the enable object entry versioning of this object definition.
+	 *
+	 * @return the enable object entry versioning of this object definition
+	 */
+	public boolean getEnableObjectEntryVersioning();
+
+	/**
+	 * Returns <code>true</code> if this object definition is enable object entry versioning.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry versioning; <code>false</code> otherwise
+	 */
+	public boolean isEnableObjectEntryVersioning();
+
+	/**
+	 * Sets whether this object definition is enable object entry versioning.
+	 *
+	 * @param enableObjectEntryVersioning the enable object entry versioning of this object definition
+	 */
+	public void setEnableObjectEntryVersioning(
+		boolean enableObjectEntryVersioning);
+
+	/**
 	 * Returns the label of this object definition.
 	 *
 	 * @return the label of this object definition

@@ -105,6 +105,10 @@ public class ObjectDefinitionTable extends BaseTable<ObjectDefinitionTable> {
 		enableObjectEntryHistory = createColumn(
 			"enableObjectEntryHistory", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<ObjectDefinitionTable, Boolean>
+		enableObjectEntryVersioning = createColumn(
+			"enableObjectEntryVersioning", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, String> label = createColumn(
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectDefinitionTable, Boolean> modifiable =

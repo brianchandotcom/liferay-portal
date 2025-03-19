@@ -48,6 +48,7 @@ create table ObjectDefinition (
 	enableLocalization BOOLEAN,
 	enableObjectEntryDraft BOOLEAN,
 	enableObjectEntryHistory BOOLEAN,
+	enableObjectEntryVersioning BOOLEAN,
 	label STRING null,
 	modifiable BOOLEAN,
 	name VARCHAR(75) null,

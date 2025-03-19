@@ -175,6 +175,9 @@ public class ObjectDefinitionPersistenceTest {
 		newObjectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setEnableObjectEntryVersioning(
+			RandomTestUtil.randomBoolean());
+
 		newObjectDefinition.setLabel(RandomTestUtil.randomString());
 
 		newObjectDefinition.setModifiable(RandomTestUtil.randomBoolean());
@@ -283,6 +286,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntryHistory(),
 			newObjectDefinition.isEnableObjectEntryHistory());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableObjectEntryVersioning(),
+			newObjectDefinition.isEnableObjectEntryVersioning());
 		Assert.assertEquals(
 			existingObjectDefinition.getLabel(),
 			newObjectDefinition.getLabel());
@@ -545,8 +551,9 @@ public class ObjectDefinitionPersistenceTest {
 			"dbTableName", true, "enableCategorization", true, "enableComments",
 			true, "enableFriendlyURLCustomization", true, "enableIndexSearch",
 			true, "enableLocalization", true, "enableObjectEntryDraft", true,
-			"enableObjectEntryHistory", true, "label", true, "modifiable", true,
-			"name", true, "panelAppOrder", true, "panelCategoryKey", true,
+			"enableObjectEntryHistory", true, "enableObjectEntryVersioning",
+			true, "label", true, "modifiable", true, "name", true,
+			"panelAppOrder", true, "panelCategoryKey", true,
 			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
 			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
 			true, "system", true, "version", true, "status", true);
@@ -913,6 +920,9 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableObjectEntryHistory(
+			RandomTestUtil.randomBoolean());
+
+		objectDefinition.setEnableObjectEntryVersioning(
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setLabel(RandomTestUtil.randomString());

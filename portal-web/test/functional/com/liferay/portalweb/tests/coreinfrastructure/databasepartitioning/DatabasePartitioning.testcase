@@ -481,7 +481,7 @@ definition {
 		}
 	}
 
-	test ExtractDeleteCompanySwitchToDBPartitionAndAddDBPartitionCompanyWithInitialEmptyDB {
+	test ExtractNonPartitionedCompanyAndAddDBPartition {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property custom.properties = "database.partition.schema.name.prefix=ltest_${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";

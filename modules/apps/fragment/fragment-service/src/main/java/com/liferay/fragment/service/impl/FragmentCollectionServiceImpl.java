@@ -59,7 +59,7 @@ public class FragmentCollectionServiceImpl
 	public FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long groupId,
 			String fragmentCollectionKey, String name, String description,
-			ServiceContext serviceContext)
+			boolean marketplace, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -68,7 +68,7 @@ public class FragmentCollectionServiceImpl
 
 		return fragmentCollectionLocalService.addFragmentCollection(
 			externalReferenceCode, getUserId(), groupId, fragmentCollectionKey,
-			name, description, serviceContext);
+			name, description, marketplace, serviceContext);
 	}
 
 	@Override

@@ -3,20 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import '../../../css/categorization/Categorization.scss';
+
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayToolbar from '@clayui/toolbar';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 export default function CategorizationToolbar({
 	activeTab,
-	onChangeTab,
-	tabs,
+	tagsURL,
+	vocabularyURL,
 }: {
 	activeTab: string;
-	onChangeTab: Function;
-	tabs: string[];
+	tagsURL: string;
+	vocabularyURL: string;
 }) {
 	return (
 		<div>
@@ -64,16 +67,23 @@ export default function CategorizationToolbar({
 				fluidSize={false}
 				triggerLabel={activeTab}
 			>
-				{tabs.map((tab) => (
-					<ClayNavigationBar.Item
-						active={activeTab === tab}
-						key={tab}
-					>
-						<ClayButton onClick={() => onChangeTab(tab)}>
-							{tab}
-						</ClayButton>
-					</ClayNavigationBar.Item>
-				))}
+				<ClayNavigationBar.Item
+					active={activeTab === 'vocabularies'}
+					key={Liferay.Language.get('vocabularies')}
+				>
+					<ClayButton onClick={() => navigate(vocabularyURL)}>
+						{Liferay.Language.get('vocabularies')}
+					</ClayButton>
+				</ClayNavigationBar.Item>
+
+				<ClayNavigationBar.Item
+					active={activeTab === 'tags'}
+					key={Liferay.Language.get('tags')}
+				>
+					<ClayButton onClick={() => navigate(tagsURL)}>
+						{Liferay.Language.get('tags')}
+					</ClayButton>
+				</ClayNavigationBar.Item>
 			</ClayNavigationBar>
 		</div>
 	);

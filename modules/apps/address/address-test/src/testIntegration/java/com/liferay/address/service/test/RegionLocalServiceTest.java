@@ -87,11 +87,11 @@ public class RegionLocalServiceTest {
 
 		Address address = _addressLocalService.addAddress(
 			null, user.getUserId(), null, user.getContactId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			region.getRegionId(), region.getCountryId(),
-			RandomTestUtil.randomLong(), false, false, "1234567890",
+			region.getCountryId(), RandomTestUtil.randomLong(),
+			region.getRegionId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			false, RandomTestUtil.randomString(), null, null, null,
+			RandomTestUtil.randomString(), "1234567890",
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(region.getCountryId(), address.getCountryId());

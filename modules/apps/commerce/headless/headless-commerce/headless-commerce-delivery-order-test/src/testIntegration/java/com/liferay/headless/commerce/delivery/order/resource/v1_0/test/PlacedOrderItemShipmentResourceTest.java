@@ -148,12 +148,12 @@ public class PlacedOrderItemShipmentResourceTest
 		Address localShippingAddress = _addressLocalService.addAddress(
 			RandomTestUtil.randomString(), _user.getUserId(),
 			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+			_country.getCountryId(), 0, _region.getRegionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), _region.getRegionId(),
-			_country.getCountryId(), 0, true, false,
-			RandomTestUtil.randomString(), _serviceContext);
+			_serviceContext);
 
 		_addresses.add(localShippingAddress);
 

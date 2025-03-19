@@ -79,13 +79,13 @@ public class AccountEntryServiceTest {
 
 		Address address = _addressLocalService.addAddress(
 			null, _accountEntry1.getUserId(), AccountEntry.class.getName(),
-			_accountEntry1.getAccountEntryId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, RandomTestUtil.randomString(), null, 0, 0,
+			_accountEntry1.getAccountEntryId(), 0,
 			_listTypeLocalService.getListTypeId(
 				_accountEntry1.getCompanyId(), "personal",
 				ListTypeConstants.CONTACT_ADDRESS),
-			false, false, "1234567890",
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			false, RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString(), null, null, null, null, "1234567890",
 			ServiceContextTestUtil.getServiceContext());
 
 		User user = UserTestUtil.addCompanyAdminUser(_company);

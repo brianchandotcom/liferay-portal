@@ -627,13 +627,13 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 			_addressLocalService.addAddress(
 				address.getExternalReferenceCode(), contextUser.getUserId(),
-				AccountEntry.class.getName(), accountId, address.getName(),
-				address.getDescription(), address.getStreet1(),
-				address.getStreet2(), address.getStreet3(), address.getCity(),
-				address.getZip(), address.getRegionId(), address.getCountryId(),
-				address.getListTypeId(), address.isMailing(),
-				address.isPrimary(), postalAddress.getPhoneNumber(),
-				_createServiceContext(account));
+				AccountEntry.class.getName(), accountId, address.getCountryId(),
+				address.getListTypeId(), address.getRegionId(),
+				address.getCity(), address.getDescription(),
+				address.isMailing(), address.getName(), address.isPrimary(),
+				address.getStreet1(), address.getStreet2(),
+				address.getStreet3(), null, address.getZip(),
+				postalAddress.getPhoneNumber(), _createServiceContext(account));
 		}
 	}
 

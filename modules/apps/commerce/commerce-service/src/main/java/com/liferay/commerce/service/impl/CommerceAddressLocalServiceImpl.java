@@ -130,9 +130,9 @@ public class CommerceAddressLocalServiceImpl
 		return CommerceAddressImpl.fromAddress(
 			_addressLocalService.addAddress(
 				externalReferenceCode, user.getUserId(), className, classPK,
-				name, description, street1, street2, street3, city, zip,
-				regionId, countryId, CommerceAddressImpl.toAddressTypeId(type),
-				false, false, phoneNumber, serviceContext));
+				countryId, CommerceAddressImpl.toAddressTypeId(type), regionId,
+				city, description, false, name, false, street1, street2,
+				street3, null, zip, phoneNumber, serviceContext));
 	}
 
 	@Override
@@ -675,10 +675,10 @@ public class CommerceAddressLocalServiceImpl
 		_validate(name, street1, city, zip, countryId, type);
 
 		address = _addressLocalService.updateAddress(
-			commerceAddressId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId,
-			CommerceAddressImpl.toAddressTypeId(type), address.isMailing(),
-			address.isPrimary(), phoneNumber);
+			null, commerceAddressId, countryId,
+			CommerceAddressImpl.toAddressTypeId(type), regionId, city,
+			description, address.isMailing(), name, address.isPrimary(),
+			street1, street2, street3, null, zip, phoneNumber);
 
 		return CommerceAddressImpl.fromAddress(address);
 	}

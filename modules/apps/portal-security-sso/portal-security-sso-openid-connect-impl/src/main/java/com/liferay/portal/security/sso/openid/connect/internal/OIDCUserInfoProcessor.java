@@ -168,19 +168,21 @@ public class OIDCUserInfoProcessor {
 
 		_addressLocalService.addAddress(
 			null, user.getUserId(), Contact.class.getName(),
-			user.getContactId(), null, null,
+			user.getContactId(), (country == null) ? 0 : country.getCountryId(),
+			listType.getListTypeId(),
+			(region == null) ? 0 : region.getRegionId(),
+			_getClaimString(
+				"city", addressMapperJSONObject, userInfoJSONObject),
+			null, false, null, false,
 			(streetClaimStringParts.length > 0) ? streetClaimStringParts[0] :
 				null,
 			(streetClaimStringParts.length > 1) ? streetClaimStringParts[1] :
 				null,
 			(streetClaimStringParts.length > 2) ? streetClaimStringParts[2] :
 				null,
-			_getClaimString(
-				"city", addressMapperJSONObject, userInfoJSONObject),
+			null,
 			_getClaimString("zip", addressMapperJSONObject, userInfoJSONObject),
-			(region == null) ? 0 : region.getRegionId(),
-			(country == null) ? 0 : country.getCountryId(),
-			listType.getListTypeId(), false, false, null, serviceContext);
+			null, serviceContext);
 	}
 
 	private void _addPhone(

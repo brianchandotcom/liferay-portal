@@ -240,29 +240,27 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			postalAddress.getPrimary(), oldPrimary);
 
 		address = _addressService.updateAddress(
-			address.getAddressId(),
+			GetterUtil.getString(
+				postalAddress.getExternalReferenceCode(),
+				address.getExternalReferenceCode()),
+			address.getAddressId(), address.getCountryId(),
+			address.getListTypeId(), address.getRegionId(),
+			GetterUtil.getString(
+				postalAddress.getAddressLocality(), address.getCity()),
+			address.getDescription(), address.isMailing(),
 			GetterUtil.getString(postalAddress.getName(), address.getName()),
-			address.getDescription(),
+			newPrimary,
 			GetterUtil.getString(
 				postalAddress.getStreetAddressLine1(), address.getStreet1()),
 			GetterUtil.getString(
 				postalAddress.getStreetAddressLine2(), address.getStreet2()),
 			GetterUtil.getString(
 				postalAddress.getStreetAddressLine3(), address.getStreet3()),
-			GetterUtil.getString(
-				postalAddress.getAddressLocality(), address.getCity()),
+			null,
 			GetterUtil.getString(
 				postalAddress.getPostalCode(), address.getZip()),
-			address.getRegionId(), address.getCountryId(),
-			address.getListTypeId(), address.isMailing(), newPrimary,
 			GetterUtil.getString(
 				postalAddress.getPhoneNumber(), address.getPhoneNumber()));
-
-		address = _addressService.updateExternalReferenceCode(
-			address,
-			GetterUtil.getString(
-				postalAddress.getExternalReferenceCode(),
-				address.getExternalReferenceCode()));
 
 		if (!newPrimary && oldPrimary) {
 			List<Address> addresses = _addressService.getAddresses(
@@ -273,15 +271,17 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 					(currentAddress.getAddressId() != address.getAddressId())) {
 
 					_addressService.updateAddress(
-						currentAddress.getAddressId(), currentAddress.getName(),
-						currentAddress.getDescription(),
-						currentAddress.getStreet1(),
-						currentAddress.getStreet2(),
-						currentAddress.getStreet3(), currentAddress.getCity(),
-						currentAddress.getZip(), currentAddress.getRegionId(),
+						currentAddress.getExternalReferenceCode(),
+						currentAddress.getAddressId(),
 						currentAddress.getCountryId(),
 						currentAddress.getListTypeId(),
-						currentAddress.isMailing(), true,
+						currentAddress.getRegionId(), currentAddress.getCity(),
+						currentAddress.getDescription(),
+						currentAddress.isMailing(), currentAddress.getName(),
+						true, currentAddress.getStreet1(),
+						currentAddress.getStreet2(),
+						currentAddress.getStreet3(),
+						currentAddress.getSubtype(), currentAddress.getZip(),
 						currentAddress.getPhoneNumber());
 
 					break;
@@ -324,14 +324,14 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		Address address = _addressService.addAddress(
 			postalAddress.getExternalReferenceCode(),
-			AccountEntry.class.getName(), accountId, postalAddress.getName(),
-			null, postalAddress.getStreetAddressLine1(),
+			AccountEntry.class.getName(), accountId, country.getCountryId(),
+			_getListTypeId(null, postalAddress), regionId,
+			postalAddress.getAddressLocality(), null, false,
+			postalAddress.getName(), postalAddress.getPrimary(),
+			postalAddress.getStreetAddressLine1(),
 			postalAddress.getStreetAddressLine2(),
-			postalAddress.getStreetAddressLine3(),
-			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
-			regionId, country.getCountryId(),
-			_getListTypeId(null, postalAddress), false,
-			postalAddress.getPrimary(), postalAddress.getPhoneNumber(),
+			postalAddress.getStreetAddressLine3(), null,
+			postalAddress.getPostalCode(), postalAddress.getPhoneNumber(),
 			ServiceContextFactory.getInstance(contextHttpServletRequest));
 
 		return PostalAddressUtil.toPostalAddress(
@@ -352,20 +352,17 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		long regionId = _getRegionId(postalAddress, country);
 
 		address = _addressService.updateAddress(
-			address.getAddressId(), postalAddress.getName(),
-			address.getDescription(), postalAddress.getStreetAddressLine1(),
-			postalAddress.getStreetAddressLine2(),
-			postalAddress.getStreetAddressLine3(),
-			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
-			regionId, country.getCountryId(),
-			_getListTypeId(address, postalAddress), address.isMailing(),
-			postalAddress.getPrimary(), postalAddress.getPhoneNumber());
-
-		address = _addressService.updateExternalReferenceCode(
-			address,
 			GetterUtil.getString(
 				postalAddress.getExternalReferenceCode(),
-				address.getExternalReferenceCode()));
+				address.getExternalReferenceCode()),
+			address.getAddressId(), country.getCountryId(),
+			_getListTypeId(address, postalAddress), regionId,
+			postalAddress.getAddressLocality(), address.getDescription(),
+			address.isMailing(), postalAddress.getName(),
+			postalAddress.getPrimary(), postalAddress.getStreetAddressLine1(),
+			postalAddress.getStreetAddressLine2(),
+			postalAddress.getStreetAddressLine3(), null,
+			postalAddress.getPostalCode(), postalAddress.getPhoneNumber());
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
@@ -496,11 +493,12 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		Address address = addresses.get(0);
 
 		_addressService.updateAddress(
-			address.getAddressId(), address.getName(), address.getDescription(),
-			address.getStreet1(), address.getStreet2(), address.getStreet3(),
-			address.getCity(), address.getZip(), address.getRegionId(),
+			address.getExternalReferenceCode(), address.getAddressId(),
 			address.getCountryId(), address.getListTypeId(),
-			address.isMailing(), true, address.getPhoneNumber());
+			address.getRegionId(), address.getCity(), address.getDescription(),
+			address.isMailing(), address.getName(), true, address.getStreet1(),
+			address.getStreet2(), address.getStreet3(), address.getSubtype(),
+			address.getZip(), address.getPhoneNumber());
 	}
 
 	@Reference

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -116,34 +115,25 @@ public class EditAccountEntryAddressMVCActionCommand
 	private Address _addAccountEntryAddress(ActionRequest actionRequest)
 		throws Exception {
 
-		long accountEntryId = ParamUtil.getLong(
-			actionRequest, "accountEntryId");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		String street1 = ParamUtil.getString(actionRequest, "street1");
-		String street2 = ParamUtil.getString(actionRequest, "street2");
-		String street3 = ParamUtil.getString(actionRequest, "street3");
-		String city = ParamUtil.getString(actionRequest, "city");
-		String zip = ParamUtil.getString(actionRequest, "zip");
-		long addressRegionId = ParamUtil.getLong(
-			actionRequest, "addressRegionId");
-		long addressCountryId = ParamUtil.getLong(
-			actionRequest, "addressCountryId");
-		long addressListTypeId = ParamUtil.getLong(
-			actionRequest, "addressListTypeId");
-		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			User.class.getName(), actionRequest);
-
 		return _addressLocalService.addAddress(
 			null, themeDisplay.getUserId(), AccountEntry.class.getName(),
-			accountEntryId, name, description, street1, street2, street3, city,
-			zip, addressRegionId, addressCountryId, addressListTypeId, false,
-			false, phoneNumber, serviceContext);
+			ParamUtil.getLong(actionRequest, "accountEntryId"),
+			ParamUtil.getLong(actionRequest, "addressCountryId"),
+			ParamUtil.getLong(actionRequest, "addressListTypeId"),
+			ParamUtil.getLong(actionRequest, "addressRegionId"),
+			ParamUtil.getString(actionRequest, "city"),
+			ParamUtil.getString(actionRequest, "description"), false,
+			ParamUtil.getString(actionRequest, "name"), false,
+			ParamUtil.getString(actionRequest, "street1"),
+			ParamUtil.getString(actionRequest, "street2"),
+			ParamUtil.getString(actionRequest, "street3"), null,
+			ParamUtil.getString(actionRequest, "zip"),
+			ParamUtil.getString(actionRequest, "phoneNumber"),
+			ServiceContextFactory.getInstance(
+				User.class.getName(), actionRequest));
 	}
 
 	private void _checkPermission(ActionRequest actionRequest)
@@ -164,25 +154,29 @@ public class EditAccountEntryAddressMVCActionCommand
 		long accountEntryAddressId = ParamUtil.getLong(
 			actionRequest, "accountEntryAddressId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		String street1 = ParamUtil.getString(actionRequest, "street1");
-		String street2 = ParamUtil.getString(actionRequest, "street2");
-		String street3 = ParamUtil.getString(actionRequest, "street3");
-		String city = ParamUtil.getString(actionRequest, "city");
-		String zip = ParamUtil.getString(actionRequest, "zip");
-		long addressRegionId = ParamUtil.getLong(
-			actionRequest, "addressRegionId");
+		Address address = _addressLocalService.getAddress(
+			accountEntryAddressId);
+
 		long addressCountryId = ParamUtil.getLong(
 			actionRequest, "addressCountryId");
 		long addressListTypeId = ParamUtil.getLong(
 			actionRequest, "addressListTypeId");
+		long addressRegionId = ParamUtil.getLong(
+			actionRequest, "addressRegionId");
+		String city = ParamUtil.getString(actionRequest, "city");
+		String description = ParamUtil.getString(actionRequest, "description");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String street1 = ParamUtil.getString(actionRequest, "street1");
+		String street2 = ParamUtil.getString(actionRequest, "street2");
+		String street3 = ParamUtil.getString(actionRequest, "street3");
+		String zip = ParamUtil.getString(actionRequest, "zip");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
 		_addressLocalService.updateAddress(
-			accountEntryAddressId, name, description, street1, street2, street3,
-			city, zip, addressRegionId, addressCountryId, addressListTypeId,
-			false, false, phoneNumber);
+			address.getExternalReferenceCode(), accountEntryAddressId,
+			addressCountryId, addressListTypeId, addressRegionId, city,
+			description, address.isMailing(), name, address.isPrimary(),
+			street1, street2, street3, address.getSubtype(), zip, phoneNumber);
 	}
 
 	@Reference(

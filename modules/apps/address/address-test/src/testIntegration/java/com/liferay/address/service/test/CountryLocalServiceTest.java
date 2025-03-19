@@ -91,11 +91,11 @@ public class CountryLocalServiceTest {
 
 		Address address = _addressLocalService.addAddress(
 			null, user.getUserId(), null, user.getContactId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0,
-			country.getCountryId(), RandomTestUtil.randomLong(), false, false,
-			"1234567890", ServiceContextTestUtil.getServiceContext());
+			country.getCountryId(), RandomTestUtil.randomLong(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			null, null, null, RandomTestUtil.randomString(), "1234567890",
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(country.getCountryId(), address.getCountryId());
 

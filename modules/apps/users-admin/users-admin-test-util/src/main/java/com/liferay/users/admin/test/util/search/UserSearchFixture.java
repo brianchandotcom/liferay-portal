@@ -103,11 +103,12 @@ public class UserSearchFixture {
 		Region region = regions.get(0);
 
 		Address address = AddressLocalServiceUtil.addAddress(
-			null, user.getUserId(), modelClassName, contactId, null, null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), region.getRegionId(), countryId,
-			listTypeId, false, false, null, new ServiceContext());
+			null, user.getUserId(), modelClassName, contactId, countryId,
+			listTypeId, region.getRegionId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			false, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			null, new ServiceContext());
 
 		_addresses.add(address);
 

@@ -142,14 +142,15 @@ public class CommerceOrderGeneratorTest {
 
 		Address address = _addressLocalService.addAddress(
 			StringPool.BLANK, _user.getUserId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
-			StringPool.BLANK, RandomTestUtil.randomString(), StringPool.BLANK,
-			StringPool.BLANK, RandomTestUtil.randomString(), StringPool.BLANK,
-			_region.getRegionId(), _country.getCountryId(),
+			accountEntry.getAccountEntryId(), _country.getCountryId(),
 			_listTypeLocalService.getListTypeId(
 				accountEntry.getCompanyId(), "business",
 				ListTypeConstants.CONTACT_ADDRESS),
-			false, false, RandomTestUtil.randomString(), _serviceContext);
+			_region.getRegionId(), RandomTestUtil.randomString(),
+			StringPool.BLANK, false, RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, RandomTestUtil.randomString(),
+			_serviceContext);
 
 		_addresses.add(address);
 

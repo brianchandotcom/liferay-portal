@@ -93,12 +93,11 @@ public class AccountChannelEntryResourceTest
 
 		_address = AddressLocalServiceUtil.addAddress(
 			RandomTestUtil.randomString(), _user.getUserId(),
-			User.class.getName(), _user.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			String.valueOf(30133), _region.getRegionId(),
-			_country.getCountryId(), 2, false, false,
+			User.class.getName(), _user.getUserId(), _country.getCountryId(), 2,
+			_region.getRegionId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			false, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, String.valueOf(30133),
 			RandomTestUtil.randomString(), serviceContext);
 
 		_commerceCurrency =

@@ -264,11 +264,13 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 			_address = _addressLocalService.addAddress(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				0, 0, 0, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), false,
+				RandomTestUtil.randomString(), false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), 0, 0, 0, false, false,
-				RandomTestUtil.randomString(), _serviceContext);
+				_serviceContext);
 		}
 
 		Channel channel = channelResource.postChannel(randomChannel());

@@ -1425,34 +1425,30 @@ public class UsersAdminUtil {
 		for (Address address : addresses) {
 			long addressId = address.getAddressId();
 
-			String name = address.getName();
-			String description = address.getDescription();
-			String street1 = address.getStreet1();
-			String street2 = address.getStreet2();
-			String street3 = address.getStreet3();
-			String city = address.getCity();
-			String zip = address.getZip();
-			long regionId = address.getRegionId();
-			long countryId = address.getCountryId();
-			long listTypeId = address.getListTypeId();
-			boolean mailing = address.isMailing();
-			boolean primary = address.isPrimary();
-			String phoneNumber = address.getPhoneNumber();
-
 			if (addressId <= 0) {
 				address = AddressServiceUtil.addAddress(
 					address.getExternalReferenceCode(), className, classPK,
-					name, description, street1, street2, street3, city, zip,
-					regionId, countryId, listTypeId, mailing, primary,
-					phoneNumber, new ServiceContext());
+					address.getCountryId(), address.getListTypeId(),
+					address.getRegionId(), address.getCity(),
+					address.getDescription(), address.isMailing(),
+					address.getName(), address.isPrimary(),
+					address.getStreet1(), address.getStreet2(),
+					address.getStreet3(), address.getSubtype(),
+					address.getZip(), address.getPhoneNumber(),
+					new ServiceContext());
 
 				addressId = address.getAddressId();
 			}
 			else {
 				AddressServiceUtil.updateAddress(
-					addressId, name, description, street1, street2, street3,
-					city, zip, regionId, countryId, listTypeId, mailing,
-					primary, phoneNumber);
+					address.getExternalReferenceCode(), addressId,
+					address.getCountryId(), address.getListTypeId(),
+					address.getRegionId(), address.getCity(),
+					address.getDescription(), address.isMailing(),
+					address.getName(), address.isPrimary(),
+					address.getStreet1(), address.getStreet2(),
+					address.getStreet3(), address.getSubtype(),
+					address.getZip(), address.getPhoneNumber());
 			}
 
 			addressIds.add(addressId);

@@ -105,12 +105,12 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 		_address = _addressLocalService.addAddress(
 			RandomTestUtil.randomString(), _user.getUserId(),
 			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+			_country.getCountryId(), 0, _region.getRegionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString(), true, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), _region.getRegionId(),
-			_country.getCountryId(), 0, false, true,
-			RandomTestUtil.randomString(), _serviceContext);
+			_serviceContext);
 
 		_commerceCurrency = _commerceCurrencyLocalService.addCommerceCurrency(
 			null, _user.getUserId(), RandomTestUtil.randomString(),

@@ -41,15 +41,15 @@ public class OrganizationTestUtil {
 
 		return AddressLocalServiceUtil.addAddress(
 			null, organization.getUserId(), organization.getModelClassName(),
-			organization.getOrganizationId(), null, null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomLong(),
+			organization.getOrganizationId(), RandomTestUtil.nextLong(),
 			_getListTypeId(
 				organization.getCompanyId(),
 				ListTypeConstants.ORGANIZATION_ADDRESS),
-			false, false, null, new ServiceContext());
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			false, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			null, new ServiceContext());
 	}
 
 	public static Country addCountry(

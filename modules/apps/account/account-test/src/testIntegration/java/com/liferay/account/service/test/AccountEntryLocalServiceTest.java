@@ -546,13 +546,13 @@ public class AccountEntryLocalServiceTest {
 
 		Address address = _addressLocalService.addAddress(
 			null, accountEntry.getUserId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, RandomTestUtil.randomString(), null, 0, 0,
+			accountEntry.getAccountEntryId(), 0,
 			_listTypeLocalService.getListTypeId(
 				accountEntry.getCompanyId(), "personal",
 				ListTypeConstants.CONTACT_ADDRESS),
-			false, false, "1234567890",
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			false, RandomTestUtil.randomString(), false,
+			RandomTestUtil.randomString(), null, null, null, null, "1234567890",
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertNotNull(address);

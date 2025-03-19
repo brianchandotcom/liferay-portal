@@ -138,12 +138,11 @@ public class AccountEntryImplTest {
 		User user = TestPropsValues.getUser();
 
 		return _addressLocalService.addAddress(
-			null, user.getUserId(), null, user.getContactId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null,
-			RandomTestUtil.randomString(), null, 0L, 0L,
-			RandomTestUtil.randomLong(), false, false, "1234567890",
-			ServiceContextTestUtil.getServiceContext());
+			null, user.getUserId(), null, user.getContactId(), 0L,
+			RandomTestUtil.randomLong(), 0L, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, RandomTestUtil.randomString(),
+			false, RandomTestUtil.randomString(), null, null, null, null,
+			"1234567890", ServiceContextTestUtil.getServiceContext());
 	}
 
 	private Group _getAccountEntryGroup(AccountEntry accountEntry) {

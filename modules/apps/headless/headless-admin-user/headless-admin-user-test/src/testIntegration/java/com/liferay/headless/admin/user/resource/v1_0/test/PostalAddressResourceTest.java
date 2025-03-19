@@ -340,14 +340,14 @@ public class PostalAddressResourceTest
 		return _toPostalAddress(
 			AddressLocalServiceUtil.addAddress(
 				postalAddress.getExternalReferenceCode(), _user.getUserId(),
-				className, classPK, null, null,
+				className, classPK, _country.getCountryId(),
+				_getListTypeId(listTypeId), 0,
+				postalAddress.getAddressLocality(), null, false,
+				postalAddress.getName(), postalAddress.getPrimary(),
 				postalAddress.getStreetAddressLine1(),
 				postalAddress.getStreetAddressLine2(),
-				postalAddress.getStreetAddressLine3(),
-				postalAddress.getAddressLocality(),
-				postalAddress.getPostalCode(), 0, _country.getCountryId(),
-				_getListTypeId(listTypeId), false, postalAddress.getPrimary(),
-				null, new ServiceContext()));
+				postalAddress.getStreetAddressLine3(), null,
+				postalAddress.getPostalCode(), null, new ServiceContext()));
 	}
 
 	private long _getListTypeId(String listTypeId) {

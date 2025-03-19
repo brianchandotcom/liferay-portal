@@ -480,13 +480,13 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 			address = _addressLocalService.addAddress(
 				null, user.getUserId(), Contact.class.getName(),
-				user.getContactId(), name, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), null, null,
-				RandomTestUtil.randomString(), null, 0, 0,
+				user.getContactId(), 0,
 				_listTypeLocalService.getListTypeId(
 					testCompany.getCompanyId(), "personal",
 					ListTypeConstants.CONTACT_ADDRESS),
-				false, false, null, ServiceContextTestUtil.getServiceContext());
+				0, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, name, false, RandomTestUtil.randomString(), null, null,
+				null, null, null, ServiceContextTestUtil.getServiceContext());
 		}
 
 		com.liferay.change.tracking.model.CTEntry serviceBuilderCTEntry =

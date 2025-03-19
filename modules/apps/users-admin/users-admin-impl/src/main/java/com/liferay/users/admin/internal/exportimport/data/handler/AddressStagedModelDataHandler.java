@@ -100,19 +100,23 @@ public class AddressStagedModelDataHandler
 
 			importedAddress = _addressLocalService.addAddress(
 				null, userId, address.getClassName(), address.getClassPK(),
-				null, null, address.getStreet1(), address.getStreet2(),
-				address.getStreet3(), address.getCity(), address.getZip(),
-				address.getRegionId(), address.getCountryId(),
-				address.getListTypeId(), address.isMailing(),
-				address.isPrimary(), null, serviceContext);
+				address.getCountryId(), address.getListTypeId(),
+				address.getRegionId(), address.getCity(), null,
+				address.isMailing(), null, address.isPrimary(),
+				address.getStreet1(), address.getStreet2(),
+				address.getStreet3(), null, address.getZip(), null,
+				serviceContext);
 		}
 		else {
 			importedAddress = _addressLocalService.updateAddress(
-				existingAddress.getAddressId(), address.getStreet1(),
-				address.getStreet2(), address.getStreet3(), address.getCity(),
-				address.getZip(), address.getRegionId(), address.getCountryId(),
-				address.getListTypeId(), address.isMailing(),
-				address.isPrimary());
+				existingAddress.getExternalReferenceCode(),
+				existingAddress.getAddressId(), address.getCountryId(),
+				address.getListTypeId(), address.getRegionId(),
+				address.getCity(), existingAddress.getDescription(),
+				address.isMailing(), existingAddress.getName(),
+				address.isPrimary(), address.getStreet1(), address.getStreet2(),
+				address.getStreet3(), existingAddress.getSubtype(),
+				address.getZip(), existingAddress.getPhoneNumber());
 		}
 
 		portletDataContext.importClassedModel(address, importedAddress);

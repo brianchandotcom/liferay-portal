@@ -18,8 +18,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -94,6 +99,32 @@ public class AssetLibraryDTOConverter
 		};
 	}
 
+	private MimeTypeLimit[] _toMimeTypeLimits(
+		UnicodeProperties unicodeProperties) {
+
+		List<MimeTypeLimit> mimeTypeLimits = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
+			String key = entry.getKey();
+
+			if (!key.startsWith("mimeTypeLimit-")) {
+				continue;
+			}
+
+			mimeTypeLimits.add(
+				new MimeTypeLimit() {
+					{
+						setMaximumSize(
+							() -> GetterUtil.getInteger(entry.getValue()));
+						setMimeType(
+							() -> key.substring("mimeTypeLimit-".length()));
+					}
+				});
+		}
+
+		return mimeTypeLimits.toArray(new MimeTypeLimit[0]);
+	}
+
 	private Settings _toSettings(Group group) {
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 
@@ -107,9 +138,7 @@ public class AssetLibraryDTOConverter
 				setLogoColor(
 					() -> GetterUtil.get(
 						unicodeProperties.get("logoColor"), "color-0"));
-				setMimeTypeLimits(
-					() -> new MimeTypeLimit[0] // TODO
-				);
+				setMimeTypeLimits(() -> _toMimeTypeLimits(unicodeProperties));
 				setSharingEnabled(
 					() -> GetterUtil.getBoolean(
 						unicodeProperties.get("sharingEnabled")));

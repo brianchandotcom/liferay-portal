@@ -35,10 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "Each SCIM resource (Users, Groups, etc.) includes the following common attributes.",
-	value = "ResourceType"
-)
+@GraphQLName("ResourceType")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ResourceType")
 public class ResourceType implements Serializable {

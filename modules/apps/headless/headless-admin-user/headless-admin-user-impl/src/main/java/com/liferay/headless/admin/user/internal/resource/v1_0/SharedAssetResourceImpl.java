@@ -5,9 +5,32 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.SharedAsset;
 import com.liferay.headless.admin.user.resource.v1_0.SharedAssetResource;
+import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.service.SharingEntryService;
+
+import java.util.HashMap;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -18,4 +41,112 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = SharedAssetResource.class
 )
 public class SharedAssetResourceImpl extends BaseSharedAssetResourceImpl {
+
+	@Override
+	public Page<SharedAsset> getMyUserAccountSharedAssetsSharedByMePage(
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			new HashMap<>(), _getSharedByMeBooleanQueryUnsafeConsumer(), filter,
+			SharingEntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames("sharingEntryId"),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toSharedAsset(
+				_sharingEntryService.getSharingEntry(
+					GetterUtil.getLong(document.get("sharingEntryId")))));
+	}
+
+	@Override
+	public Page<SharedAsset> getMyUserAccountSharedAssetsSharedWithMePage(
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			new HashMap<>(), _getSharedWithMeBooleanQueryUnsafeConsumer(),
+			filter, SharingEntry.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames("sharingEntryId"),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toSharedAsset(
+				_sharingEntryService.getSharingEntry(
+					GetterUtil.getLong(document.get("sharingEntryId")))));
+	}
+
+	private UnsafeConsumer<BooleanQuery, Exception>
+		_getSharedByMeBooleanQueryUnsafeConsumer() {
+
+		return booleanQuery -> {
+			BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
+
+			booleanFilter.add(
+				new TermFilter(
+					"userId", String.valueOf(contextUser.getUserId())),
+				BooleanClauseOccur.MUST);
+		};
+	}
+
+	private UnsafeConsumer<BooleanQuery, Exception>
+		_getSharedWithMeBooleanQueryUnsafeConsumer() {
+
+		return booleanQuery -> {
+			BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
+
+			TermsFilter toUserGroupIdTermsFilter = new TermsFilter(
+				"toUserGroupId");
+
+			toUserGroupIdTermsFilter.addValues(
+				transformToArray(
+					_userGroupLocalService.getUserUserGroups(
+						contextUser.getUserId()),
+					userGroup -> String.valueOf(userGroup.getUserGroupId()),
+					String.class));
+
+			booleanFilter.add(
+				toUserGroupIdTermsFilter, BooleanClauseOccur.SHOULD);
+
+			TermsFilter toUserIdTermsFilter = new TermsFilter("toUserId");
+
+			toUserIdTermsFilter.addValue(
+				String.valueOf(contextUser.getUserId()));
+
+			booleanFilter.add(toUserIdTermsFilter, BooleanClauseOccur.SHOULD);
+		};
+	}
+
+	private SharedAsset _toSharedAsset(SharingEntry sharingEntry)
+		throws Exception {
+
+		return _sharedAssetDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), new HashMap<>(),
+				_dtoConverterRegistry, sharingEntry.getSharingEntryId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser),
+			sharingEntry);
+	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.user.internal.dto.v1_0.converter.SharedAssetDTOConverter)"
+	)
+	private DTOConverter<SharingEntry, SharedAsset> _sharedAssetDTOConverter;
+
+	@Reference
+	private SharingEntryService _sharingEntryService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
+
 }

@@ -12,24 +12,13 @@ import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
 
+import {disableFormSubmitButton} from '../../clientExtensionUtil';
+
 type TFeedback = {displayType: DisplayType; message: string};
 
 const EMPTY_FEEDBACK: TFeedback = {
 	displayType: 'info',
 	message: '',
-};
-
-const disableFormSubmitButton = (
-	disabled: boolean,
-	portletNamespace: string
-) => {
-	const submitButton = document.getElementById(
-		portletNamespace + 'editClientExtensionEntrySubmitButton'
-	) as HTMLButtonElement;
-
-	if (submitButton) {
-		submitButton.disabled = disabled;
-	}
 };
 
 const readInputFile = (file: File) => {

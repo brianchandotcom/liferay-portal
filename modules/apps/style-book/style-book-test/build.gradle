@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationImplementation project(":apps:change-tracking:change-tracking-test-util")
+	testIntegrationImplementation project(":apps:frontend-token:frontend-token-definition-api")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:style-book:style-book-api")

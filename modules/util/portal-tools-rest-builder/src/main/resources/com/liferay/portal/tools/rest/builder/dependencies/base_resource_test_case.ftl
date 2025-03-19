@@ -221,14 +221,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#assign
-		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
-		idParameterName = "id"
-	/>
-
-	<#if !properties?keys?seq_contains("id")>
-		<#assign idParameterName = "${schemaVarName}Id" />
-	</#if>
+	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)/>
 
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		@Test
@@ -321,8 +314,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#assign
 					getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 					getterJavaMethodParametersMap = {}
+					idParameterName = "id"
 					injectBatchEngineImportTaskLocalService = true
 				/>
+				<#if !properties?keys?seq_contains("id")>
+					<#assign idParameterName = "${schemaVarName}Id" />
+				</#if>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 
@@ -4121,7 +4118,12 @@ ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 			<#if defaultParameter>
 				<@getDefaultParameter javaMethodParameter = javaMethodParameter />
 			<#else>
-				${schemaVarName}${varIndex}.get${idParameterName?cap_first}()
+				${schemaVarName}${varIndex}.
+					<#if properties?keys?seq_contains("id")>
+						getId()
+					<#else>
+						get${schemaName}Id()
+					</#if>
 			</#if>
 		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, getJavaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 			<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, getJavaMethodSignature.path, schemaName)>

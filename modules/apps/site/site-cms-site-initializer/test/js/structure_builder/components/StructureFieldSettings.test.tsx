@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom';
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -16,12 +16,24 @@ import {
 	State,
 	Uuid,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
+import ListTypeService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/ListTypeService';
 import {
 	Field,
 	getDefaultField,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 import {MockStateProvider} from '../mocks/MockStateProvider';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/structure_builder/services/ListTypeService',
+	() => ({
+		getListTypeDefinitions: jest.fn(() =>
+			Promise.resolve({
+				items: [{id: 'papayaId', name: 'papaya'}],
+			})
+		),
+	})
+);
 
 const TEXT_FIELD_UUID = getUuid();
 
@@ -47,6 +59,7 @@ const DEFAULT_STATE: State = {
 	error: null,
 	fields: new Map([[TEXT_FIELD_UUID, FIELD]]),
 	id: null,
+	invalids: new Set(),
 	label: 'untitled-structure',
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
@@ -414,6 +427,64 @@ describe('StructureFieldSettings', () => {
 				fileSource: 'userComputer',
 				maximumFileSize: 200,
 			},
+			type: 'update-field',
+			uuid,
+		});
+	});
+
+	it('updates the single select field with the selected picklist', async () => {
+		const mockDispatch = jest.fn();
+		const uuid = getUuid();
+
+		renderComponent({
+			dispatch: mockDispatch,
+			state: {
+				...DEFAULT_STATE,
+				fields: new Map([
+					[uuid, {...getDefaultField('single-select'), uuid}],
+				]),
+			},
+			uuid,
+		});
+
+		await waitFor(() =>
+			expect(ListTypeService.getListTypeDefinitions).toHaveBeenCalled()
+		);
+
+		await userEvent.click(screen.getByLabelText('picklist'));
+		await userEvent.click(screen.getByText('papaya'));
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			listTypeDefinitionId: 'papayaId',
+			type: 'update-field',
+			uuid,
+		});
+	});
+
+	it('updates the multiselect field with the selected picklist', async () => {
+		const mockDispatch = jest.fn();
+		const uuid = getUuid();
+
+		renderComponent({
+			dispatch: mockDispatch,
+			state: {
+				...DEFAULT_STATE,
+				fields: new Map([
+					[uuid, {...getDefaultField('multiselect'), uuid}],
+				]),
+			},
+			uuid,
+		});
+
+		await waitFor(() =>
+			expect(ListTypeService.getListTypeDefinitions).toHaveBeenCalled()
+		);
+
+		await userEvent.click(screen.getByLabelText('picklist'));
+		await userEvent.click(screen.getByText('papaya'));
+
+		expect(mockDispatch).toHaveBeenCalledWith({
+			listTypeDefinitionId: 'papayaId',
 			type: 'update-field',
 			uuid,
 		});

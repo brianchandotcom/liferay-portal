@@ -4,6 +4,7 @@ Bundle-Version: 19.0.0
 Export-Package:\
 	com.liferay.frontend.data.set,\
 	com.liferay.frontend.data.set.action,\
+	com.liferay.frontend.data.set.action.util,\
 	com.liferay.frontend.data.set.constants,\
 	com.liferay.frontend.data.set.filter,\
 	com.liferay.frontend.data.set.model,\

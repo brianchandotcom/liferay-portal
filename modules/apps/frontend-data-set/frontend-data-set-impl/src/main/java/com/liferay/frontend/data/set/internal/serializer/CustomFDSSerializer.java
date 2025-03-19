@@ -9,6 +9,7 @@ import com.liferay.client.extension.type.FDSCellRendererCET;
 import com.liferay.client.extension.type.FDSFilterCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
+import com.liferay.frontend.data.set.action.util.FDSActionUtil;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
@@ -183,7 +184,7 @@ public class CustomFDSSerializer
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		List<DropdownItem> dropdownItems = TransformUtil.transform(
+		List<DropdownItem> customDropdownItems = TransformUtil.transform(
 			getSortedRelatedObjectEntries(
 				fdsName, httpServletRequest,
 				(ObjectEntry objectEntry) ->
@@ -197,7 +198,8 @@ public class CustomFDSSerializer
 					new FDSActionDropdownItem(
 						String.valueOf(properties.get("url")),
 						String.valueOf(properties.get("icon")),
-						objectEntry.getExternalReferenceCode(),
+						FDSActionUtil.getFDSCreationActionId(
+							objectEntry.getExternalReferenceCode()),
 						String.valueOf(properties.get("label")), null,
 						String.valueOf(properties.get("permissionKey")),
 						String.valueOf(properties.get("target")));
@@ -212,8 +214,37 @@ public class CustomFDSSerializer
 				return fdsActionDropdownItem;
 			});
 
-		for (DropdownItem dropdownItem : dropdownItems) {
-			creationMenu.addPrimaryDropdownItem(dropdownItem);
+		CreationMenu systemCreationMenu =
+			_systemFDSSerializer.serializeCreationMenu(
+				fdsName, httpServletRequest);
+
+		List<DropdownItem> systemDropdownItems =
+			(List<DropdownItem>)systemCreationMenu.get("primaryItems");
+
+		for (DropdownItem customDropdownItem : customDropdownItems) {
+			if (Objects.equals(
+					customDropdownItem.get("target"),
+					FDSEntryItemImportPolicy.GROUP_PROXY.toString())) {
+
+				for (DropdownItem systemDropdownItem : systemDropdownItems) {
+					creationMenu.addPrimaryDropdownItem(systemDropdownItem);
+				}
+			}
+			else if (Objects.equals(
+						customDropdownItem.get("target"),
+						FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
+
+				for (DropdownItem systemDropdownItem : systemDropdownItems) {
+					if (systemDropdownItem.hasSameId(customDropdownItem)) {
+						creationMenu.addPrimaryDropdownItem(systemDropdownItem);
+
+						break;
+					}
+				}
+			}
+			else {
+				creationMenu.addPrimaryDropdownItem(customDropdownItem);
+			}
 		}
 
 		return creationMenu;
@@ -245,44 +276,87 @@ public class CustomFDSSerializer
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		return TransformUtil.transform(
-			getSortedRelatedObjectEntries(
-				fdsName, httpServletRequest,
-				(ObjectEntry objectEntry) ->
-					Objects.equals(_getType(objectEntry), "item") &&
-					_isActive(objectEntry),
-				"itemActionsOrder", "dataSetToDataSetActions"),
-			objectEntry -> {
-				Map<String, Object> properties = objectEntry.getProperties();
+		List<FDSActionDropdownItem> customFDSActionDropdownItems =
+			TransformUtil.transform(
+				getSortedRelatedObjectEntries(
+					fdsName, httpServletRequest,
+					(ObjectEntry objectEntry) ->
+						Objects.equals(_getType(objectEntry), "item") &&
+						_isActive(objectEntry),
+					"itemActionsOrder", "dataSetToDataSetActions"),
+				objectEntry -> {
+					Map<String, Object> properties =
+						objectEntry.getProperties();
 
-				FDSActionDropdownItem fdsActionDropdownItem =
-					new FDSActionDropdownItem(
-						String.valueOf(properties.get("confirmationMessage")),
-						String.valueOf(properties.get("url")),
-						String.valueOf(properties.get("icon")),
-						objectEntry.getExternalReferenceCode(),
-						String.valueOf(properties.get("label")),
-						String.valueOf(properties.get("method")),
-						String.valueOf(properties.get("permissionKey")),
-						String.valueOf(properties.get("target")));
+					FDSActionDropdownItem fdsActionDropdownItem =
+						new FDSActionDropdownItem(
+							String.valueOf(
+								properties.get("confirmationMessage")),
+							String.valueOf(properties.get("url")),
+							String.valueOf(properties.get("icon")),
+							FDSActionUtil.getFDSItemActionId(
+								objectEntry.getExternalReferenceCode()),
+							String.valueOf(properties.get("label")),
+							String.valueOf(properties.get("method")),
+							String.valueOf(properties.get("permissionKey")),
+							String.valueOf(properties.get("target")));
 
-				fdsActionDropdownItem.putData(
-					"disableHeader",
-					(boolean)Validator.isNull(properties.get("title")));
-				fdsActionDropdownItem.putData(
-					"errorMessage", properties.get("errorMessage"));
-				fdsActionDropdownItem.putData(
-					"requestBody", properties.get("requestBody"));
-				fdsActionDropdownItem.putData(
-					"size", properties.get("modalSize"));
-				fdsActionDropdownItem.putData(
-					"status", properties.get("confirmationMessageType"));
-				fdsActionDropdownItem.putData(
-					"successMessage", properties.get("successMessage"));
-				fdsActionDropdownItem.putData("title", properties.get("title"));
+					fdsActionDropdownItem.putData(
+						"disableHeader",
+						(boolean)Validator.isNull(properties.get("title")));
+					fdsActionDropdownItem.putData(
+						"errorMessage", properties.get("errorMessage"));
+					fdsActionDropdownItem.putData(
+						"requestBody", properties.get("requestBody"));
+					fdsActionDropdownItem.putData(
+						"size", properties.get("modalSize"));
+					fdsActionDropdownItem.putData(
+						"status", properties.get("confirmationMessageType"));
+					fdsActionDropdownItem.putData(
+						"successMessage", properties.get("successMessage"));
+					fdsActionDropdownItem.putData(
+						"title", properties.get("title"));
 
-				return fdsActionDropdownItem;
-			});
+					return fdsActionDropdownItem;
+				});
+
+		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
+
+		List<FDSActionDropdownItem> systemFDSActionDropdownItems =
+			_systemFDSSerializer.serializeItemsActions(
+				fdsName, httpServletRequest);
+
+		for (FDSActionDropdownItem customFDSActionDropdownItem :
+				customFDSActionDropdownItems) {
+
+			if (Objects.equals(
+					customFDSActionDropdownItem.get("target"),
+					FDSEntryItemImportPolicy.GROUP_PROXY.toString())) {
+
+				fdsActionDropdownItems.addAll(systemFDSActionDropdownItems);
+			}
+			else if (Objects.equals(
+						customFDSActionDropdownItem.get("target"),
+						FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
+
+				for (FDSActionDropdownItem systemFDSActionDropdownItem :
+						systemFDSActionDropdownItems) {
+
+					if (systemFDSActionDropdownItem.hasSameId(
+							customFDSActionDropdownItem)) {
+
+						fdsActionDropdownItems.add(systemFDSActionDropdownItem);
+
+						break;
+					}
+				}
+			}
+			else {
+				fdsActionDropdownItems.add(customFDSActionDropdownItem);
+			}
+		}
+
+		return fdsActionDropdownItems;
 	}
 
 	@Override

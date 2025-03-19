@@ -5,6 +5,8 @@
 
 package com.liferay.segments.provider.test;
 
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -40,7 +42,10 @@ import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,6 +68,39 @@ public class DefaultSegmentsEntryProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetOrganizationSegmentsWithDateModified() throws Exception {
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		_user2.setModifiedDate(_getDateBefore(_user1));
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_user1 = UserTestUtil.addOrganizationUser(
+			organization, RoleConstants.ORGANIZATION_USER);
+
+		Criteria criteria = new Criteria();
+		String filterString = String.format(
+			"dateModified eq %s",
+			ISO8601Utils.format(_getDateModifiedTruncated(_user1)));
+
+		_userOrganizationSegmentsCriteriaContributor.contribute(
+			criteria, filterString, Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+
+		Assert.assertArrayEquals(
+			new long[] {segmentsEntry.getSegmentsEntryId()}, segmentsEntryIds);
+		Assert.assertEquals(
+			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
+			segmentsEntryIds.length);
 	}
 
 	@Test
@@ -902,6 +940,70 @@ public class DefaultSegmentsEntryProviderTest {
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
 			segmentsEntryIds.length);
+	}
+
+	@Test
+	public void testGetSegmentsWithDateModified() throws Exception {
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		_user2.setModifiedDate(_getDateBefore(_user1));
+
+		Criteria criteria = new Criteria();
+		String filterString = String.format(
+			"dateModified eq %s",
+			ISO8601Utils.format(_getDateModifiedTruncated(_user1)));
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria, filterString, Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+
+		Assert.assertArrayEquals(
+			new long[] {segmentsEntry.getSegmentsEntryId()}, segmentsEntryIds);
+		Assert.assertEquals(
+			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
+			segmentsEntryIds.length);
+	}
+
+	private Date _getDateBefore(User user) {
+		Date dateModified = user.getModifiedDate();
+
+		TimeZone timeZone = TimeZone.getDefault();
+
+		Calendar calendar = Calendar.getInstance(timeZone, LocaleUtil.US);
+
+		calendar.setTime(dateModified);
+
+		calendar.add(Calendar.DAY_OF_MONTH, -1);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
+	}
+
+	private Date _getDateModifiedTruncated(User user) {
+		Date dateModified = user.getModifiedDate();
+
+		TimeZone timeZone = TimeZone.getDefault();
+
+		Calendar calendar = Calendar.getInstance(timeZone, LocaleUtil.US);
+
+		calendar.setTime(dateModified);
+
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		return calendar.getTime();
 	}
 
 	@Inject

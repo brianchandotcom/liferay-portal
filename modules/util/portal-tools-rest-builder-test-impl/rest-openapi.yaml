@@ -66,6 +66,29 @@ components:
                     enum: [-1em, -0.95em, 1em, 0.95em]
                     type: string
             type: object
+        ErcSiteTestEntity:
+            properties:
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                externalReferenceCode:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                siteExternalReferenceCode:
+                    type: string
+            type: object
         Filter:
             properties:
                 maxResults:
@@ -692,6 +715,57 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["SiteTestEntity"]
+    /sites/{siteExternalReferenceCode}/erc-site-test-entities:
+        get:
+            operationId: getSiteErcSiteTestEntitiesPage
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ErcSiteTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ErcSiteTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["ErcSiteTestEntity"]
+        post:
+            operationId: postSiteErcSiteTestEntity
+            parameters:
+                - in: path
+                  name: siteExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ErcSiteTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ErcSiteTestEntity"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ErcSiteTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ErcSiteTestEntity"
+            tags: ["ErcSiteTestEntity"]
     /sites/{siteId}/site-test-entities:
         get:
             operationId: getSiteSiteTestEntitiesPage

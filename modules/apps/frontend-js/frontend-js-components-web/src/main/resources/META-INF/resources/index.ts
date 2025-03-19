@@ -12,6 +12,7 @@ export {default as CodeMirrorKeyboardMessage} from './code_mirror_keyboard_messa
 export {default as FeatureIndicator} from './feature_indicator/FeatureIndicator';
 
 export {default as FieldBase} from './forms/common/FieldBase';
+export {RequiredMask} from './forms/common/FieldBase';
 export {default as FieldFeedback} from './forms/common/FieldFeedback';
 
 export {default as InputLocalized} from './forms/input/InputLocalized';

@@ -1033,22 +1033,6 @@ public class UserServiceWrapper
 		return _userService.getUserByEmailAddress(companyId, emailAddress);
 	}
 
-	/**
-	 * Returns the user with the external reference code.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param externalReferenceCode the user's external reference code
-	 * @return the user with the external reference code
-	 */
-	@Override
-	public User getUserByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userService.getUserByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
 	@Override
 	public User getUserByExternalReferenceCode(
 			String externalReferenceCode, long companyId)

@@ -977,21 +977,6 @@ public class UserServiceUtil {
 		return getService().getUserByEmailAddress(companyId, emailAddress);
 	}
 
-	/**
-	 * Returns the user with the external reference code.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param externalReferenceCode the user's external reference code
-	 * @return the user with the external reference code
-	 */
-	public static User getUserByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return getService().getUserByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
 	public static User getUserByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

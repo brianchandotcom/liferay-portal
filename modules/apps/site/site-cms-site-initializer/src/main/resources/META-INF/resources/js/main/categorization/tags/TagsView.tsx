@@ -6,6 +6,8 @@
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+import {CategorizationToolbar} from '../CategorizationToolbar';
+
 export default function TagsView() {
 	const creationMenu = {
 		primaryItems: [
@@ -32,13 +34,19 @@ export default function TagsView() {
 	};
 
 	return (
-		<FrontendDataSet
-			creationMenu={creationMenu}
-			emptyState={emptyState}
-			id="TagsView"
-			showManagementBar={false}
-			showSearch={false}
-			views={views}
-		/>
+		<>
+			<CategorizationToolbar
+				activeTab="tags"
+			/>
+
+			<FrontendDataSet
+				creationMenu={creationMenu}
+				emptyState={emptyState}
+				id="TagsView"
+				showManagementBar={false}
+				showSearch={false}
+				views={views}
+			/>
+		</>
 	);
 }

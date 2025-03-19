@@ -4,7 +4,6 @@ autoscaling:
     annotations: {}
     enabled: false
     maxReplicas: 100
-    minReplicas: 1
     metrics:
         - resource:
               name: cpu
@@ -12,6 +11,7 @@ autoscaling:
                   averageUtilization: 80
                   type: Utilization
           type: Resource
+    minReplicas: 1
 configmap:
     annotations: {}
     data: {}
@@ -63,52 +63,52 @@ ingress:
     tls: []
 initContainers:
     - containerTemplate: |
-        - command:
-            - /bin/sh
-            - -c
-            - |
-                if [ ! -f /temp/liferay/data/license/*.li ]; then
-                    mkdir -p /temp/liferay/deploy
-                    cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
-                fi
-          image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
-          imagePullPolicy: {{ .image.pullPolicy }}
-          name: liferay-pre-populate-default-license
-          volumeMounts:
-              - mountPath: /temp
-                name: liferay-persistent-volume
+          - command:
+                - /bin/sh
+                - -c
+                - |
+                      if [ ! -f /temp/liferay/data/license/*.li ]; then
+                          mkdir -p /temp/liferay/deploy
+                          cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
+                      fi
+            image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+            imagePullPolicy: {{ .image.pullPolicy }}
+            name: liferay-pre-populate-default-license
+            volumeMounts:
+                - mountPath: /temp
+                  name: liferay-persistent-volume
     - containerTemplate: |
-        - command:
-            - /bin/sh
-            - -c
-            - |
-                if [ -z "$( ls -A '/temp/liferay/data' )" ]; then
-                    mkdir -p /temp/liferay/data
-                    cp -frv /opt/liferay/data/* /temp/liferay/data
-                fi
-          image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
-          imagePullPolicy: {{ .image.pullPolicy }}
-          name: liferay-pre-populate-default-data
-          volumeMounts:
-              - mountPath: /temp
-                name: liferay-persistent-volume
+          - command:
+                - /bin/sh
+                - -c
+                - |
+                      if [ -z "$( ls -A '/temp/liferay/data' )" ]; then
+                          mkdir -p /temp/liferay/data
+                          cp -frv /opt/liferay/data/* /temp/liferay/data
+                      fi
+            image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+            imagePullPolicy: {{ .image.pullPolicy }}
+            name: liferay-pre-populate-default-data
+            volumeMounts:
+                - mountPath: /temp
+                  name: liferay-persistent-volume
     - containerTemplate: |
-        - command:
-            - /bin/sh
-            - -c
-            - |
-                trap 'echo "Received signal to Terminate"; exit 0' SIGINT SIGTERM
-                {{- range .dependencies }}
-                {{- if eq .source "statefulset" }}
-                until nc -vz -w 2 liferay-{{ .name }} {{ (index .statefulset.service.ports 0).port }}; do
-                    echo "Waiting for liferay-{{ .name }} service"
-                    sleep 2
-                done
-                {{- end }}
-                {{- end }}
-          image: busybox:latest
-          imagePullPolicy: IfNotPresent
-          name: liferay-wait-on-services
+          - command:
+                - /bin/sh
+                - -c
+                - |
+                      trap 'echo "Received signal to Terminate"; exit 0' SIGINT SIGTERM
+                      {{- range .dependencies }}
+                      {{- if eq .source "statefulset" }}
+                      until nc -vz -w 2 liferay-{{ .name }} {{ (index .statefulset.service.ports 0).port }}; do
+                          echo "Waiting for liferay-{{ .name }} service"
+                          sleep 2
+                      done
+                      {{- end }}
+                      {{- end }}
+            image: busybox:latest
+            imagePullPolicy: IfNotPresent
+            name: liferay-wait-on-services
 livenessProbe:
     failureThreshold: 2
     httpGet:
@@ -153,6 +153,18 @@ securityContext:
         drop:
             - ALL
     readOnlyRootFilesystem: true
+service:
+    annotations: {}
+    ports:
+        - name: cluster
+          port: 7800
+          protocol: TCP
+          targetPort: cluster
+        - name: http
+          port: 8080
+          protocol: TCP
+          targetPort: http
+    type: ClusterIP
 serviceAccount:
     annotations: {}
     automount: true
@@ -167,18 +179,6 @@ serviceAccount:
                   - configmaps
               verbs:
                   - "*"
-service:
-    annotations: {}
-    ports:
-        - name: cluster
-          port: 7800
-          protocol: TCP
-          targetPort: cluster
-        - name: http
-          port: 8080
-          protocol: TCP
-          targetPort: http
-    type: ClusterIP
 startupProbe:
     failureThreshold: 30
     httpGet:
@@ -246,6 +246,6 @@ volumeMounts:
       subPath: liferay/work
 volumes:
     - configMap:
-        name: liferay
-        optional: true
+          name: liferay
+          optional: true
       name: liferay-configmap

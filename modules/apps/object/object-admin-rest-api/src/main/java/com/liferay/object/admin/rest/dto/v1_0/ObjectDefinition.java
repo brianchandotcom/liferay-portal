@@ -726,6 +726,51 @@ public class ObjectDefinition implements Serializable {
 	private Supplier<Boolean> _enableObjectEntryHistorySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getEnableObjectEntryVersioning() {
+		if (_enableObjectEntryVersioningSupplier != null) {
+			enableObjectEntryVersioning =
+				_enableObjectEntryVersioningSupplier.get();
+
+			_enableObjectEntryVersioningSupplier = null;
+		}
+
+		return enableObjectEntryVersioning;
+	}
+
+	public void setEnableObjectEntryVersioning(
+		Boolean enableObjectEntryVersioning) {
+
+		this.enableObjectEntryVersioning = enableObjectEntryVersioning;
+
+		_enableObjectEntryVersioningSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEnableObjectEntryVersioning(
+		UnsafeSupplier<Boolean, Exception>
+			enableObjectEntryVersioningUnsafeSupplier) {
+
+		_enableObjectEntryVersioningSupplier = () -> {
+			try {
+				return enableObjectEntryVersioningUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableObjectEntryVersioning;
+
+	@JsonIgnore
+	private Supplier<Boolean> _enableObjectEntryVersioningSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -2020,6 +2065,18 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableObjectEntryHistory\": ");
 
 			sb.append(enableObjectEntryHistory);
+		}
+
+		Boolean enableObjectEntryVersioning = getEnableObjectEntryVersioning();
+
+		if (enableObjectEntryVersioning != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableObjectEntryVersioning\": ");
+
+			sb.append(enableObjectEntryVersioning);
 		}
 
 		String externalReferenceCode = getExternalReferenceCode();

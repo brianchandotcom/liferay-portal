@@ -35,6 +35,7 @@
 			'enableLocalization'?: boolean;
 			'enableObjectEntryDraft'?: boolean;
 			'enableObjectEntryHistory'?: boolean;
+			'enableObjectEntryVersioning'?: boolean;
 			'externalReferenceCode'?: string;
 			'id'?: number;
 			'label'?: {[key: string]: string;};
@@ -146,6 +147,11 @@
 		{
 			baseName: "enableObjectEntryHistory",
 			name: "enableObjectEntryHistory",
+			type: "boolean",
+		},
+		{
+			baseName: "enableObjectEntryVersioning",
+			name: "enableObjectEntryVersioning",
 			type: "boolean",
 		},
 		{

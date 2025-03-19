@@ -19,7 +19,7 @@ export default function ImportStructureModalContent({
 }) {
 	const [warning, setWarning] = useState(true);
 	const [jsonFile, setJsonFile] = useState<File | null>(null);
-	const fileInputRef = useRef<HTMLInputElement>();
+	const fileInputRef = useRef<HTMLInputElement | null>(null);
 
 	const resetFileInput = () => {
 		if (fileInputRef && fileInputRef.current) {
@@ -82,15 +82,11 @@ export default function ImportStructureModalContent({
 							value={jsonFile?.name || ''}
 						/>
 
-						<ClayInput
+						<input
 							accept={JSON_EXTENSION}
 							className="d-none"
 							id="fileInputId"
-							name="fileInputId"
 							onChange={handleFileInputChange}
-
-							// @ts-ignore
-
 							ref={fileInputRef}
 							type="file"
 						/>

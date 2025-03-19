@@ -7,40 +7,46 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
+import com.liferay.site.cms.site.initializer.internal.display.context.VocabularyViewDisplayContext;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sam Ziemer
+ * @author Noor Najjar
  */
 @Component(
 	configurationPid = "com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration",
 	service = FragmentRenderer.class
 )
-public class CategorizationSectionFragmentRenderer
+public class VocabularyViewFragmentRenderer
 	extends BaseSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "sections";
+		return "vocabularies";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "categorization");
+		return _language.get(locale, "vocabularies");
 	}
 
 	@Override
@@ -51,27 +57,42 @@ public class CategorizationSectionFragmentRenderer
 		throws IOException {
 
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/vocabulary_view.jsp");
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			String redirectURL = PortalUtil.getLayoutFullURL(
-				_layoutLocalService.getLayoutByFriendlyURL(
-					themeDisplay.getScopeGroupId(), false,
-					"/categorization/view_vocabularies"),
-				themeDisplay);
+			httpServletRequest.setAttribute(
+				VocabularyViewDisplayContext.class.getName(),
+				new VocabularyViewDisplayContext(
+					_cmsSiteInitializerConfiguration, httpServletRequest,
+					themeDisplay));
 
-			httpServletResponse.sendRedirect(redirectURL);
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_cmsSiteInitializerConfiguration = ConfigurableUtil.createConfigurable(
+			CMSSiteInitializerConfiguration.class, properties);
+	}
+
+	private volatile CMSSiteInitializerConfiguration
+		_cmsSiteInitializerConfiguration;
+
 	@Reference
 	private Language _language;
 
-	@Reference
-	private LayoutLocalService _layoutLocalService;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
+	)
+	private ServletContext _servletContext;
 
 }

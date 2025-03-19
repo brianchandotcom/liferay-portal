@@ -193,7 +193,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String externalReferenceCode, Integer version)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -212,7 +212,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String externalReferenceCode, Pagination pagination)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -259,7 +259,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long objectEntryId, Pagination pagination)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -289,7 +289,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long objectEntryId, Integer version)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -478,7 +478,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String externalReferenceCode, Integer version)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -571,7 +571,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long objectEntryId, Integer version)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
 			throw new UnsupportedOperationException();
 		}
 

@@ -319,7 +319,9 @@ public class ObjectEntryDTOConverter
 							TaxonomyCategoryBrief.class);
 					});
 				setVersion(
-					() -> _toVersion(serviceBuilderObjectEntry.getVersion()));
+					() -> _toVersion(
+						objectDefinition,
+						serviceBuilderObjectEntry.getVersion()));
 			}
 		};
 
@@ -371,7 +373,8 @@ public class ObjectEntryDTOConverter
 		objectEntry.setTaxonomyCategoryBriefs(
 			contentObjectEntry::getTaxonomyCategoryBriefs);
 		objectEntry.setVersion(
-			() -> _toVersion(objectEntryVersion.getVersion()));
+			() -> _toVersion(
+				objectDefinition, objectEntryVersion.getVersion()));
 
 		return objectEntry;
 	}
@@ -1195,8 +1198,8 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private Version _toVersion(int version) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+	private Version _toVersion(ObjectDefinition objectDefinition, int version) {
+		if (!objectDefinition.isEnableObjectEntryVersioning()) {
 			return null;
 		}
 

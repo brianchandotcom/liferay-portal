@@ -5,17 +5,29 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeHidden} from '../../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../../../utils/structured-content/getBasicWebContentStructureId';
 import {samplePageTest} from '../../../../frontend-taglib/fixtures/samplePageTest';
+import getPageDefinition from '../../../../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../../../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 const test = mergeTests(
+	apiHelpersTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
 	samplePageTest
 );
 
@@ -111,6 +123,133 @@ test(
 				.first();
 
 			await expect(pageLink).toHaveRole('menuitem');
+		});
+	}
+);
+
+test(
+	'Dropdown menu adjusts to screen size',
+	{tag: '@LPD-50471'},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		const widgetId = getRandomString();
+
+		const widgetDefinition = getWidgetDefinition({
+			id: widgetId,
+			widgetName:
+				'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([widgetDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await test.step('Configure asset publisher to display pagination', async () => {
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.goToWidgetConfiguration(widgetId);
+
+			const configurationIframe = page.frameLocator(
+				'iframe[title="Configuration"]'
+			);
+
+			const assetSelectionTab = configurationIframe.getByRole('tab', {
+				name: 'Asset Selection',
+			});
+			await assetSelectionTab.waitFor({state: 'visible'});
+			await assetSelectionTab.click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+
+				target: configurationIframe
+					.frameLocator('iframe[title="Select Collection"]')
+					.getByRole('link', {name: 'Collection Providers'}),
+				timeout: 2000,
+				trigger: configurationIframe.getByRole('button', {
+					exact: true,
+					name: 'Select Collection',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: configurationIframe.locator('.modal-dialog'),
+				timeout: 2000,
+				trigger: configurationIframe
+					.frameLocator('iframe[title="Select Collection"]')
+					.getByRole('button', {name: 'Select Recent Content'}),
+			});
+
+			await configurationIframe
+				.getByRole('tab', {name: 'Display Settings'})
+				.click();
+
+			const itemDisplayInput = configurationIframe.getByLabel(
+				'Number of Items to Display'
+			);
+
+			await itemDisplayInput.waitFor({state: 'visible'});
+
+			await itemDisplayInput.click();
+
+			await itemDisplayInput.fill('1');
+
+			await configurationIframe
+				.getByLabel('Pagination Type')
+				.selectOption('Regular');
+
+			await configurationIframe
+				.getByRole('button', {name: 'Save'})
+				.click();
+
+			await configurationIframe
+				.getByRole('button', {name: 'Cancel'})
+				.click();
+
+			await page.getByLabel('Publish', {exact: true}).click();
+		});
+
+		await test.step('Create web content articles and test dropdown', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}/${layout.friendlyUrlPath}`
+			);
+
+			for (let i = 1; i <= 10; i++) {
+				const contentStructureId =
+					await getBasicWebContentStructureId(apiHelpers);
+				const randomTitle = getRandomString();
+
+				const webContent =
+					await apiHelpers.jsonWebServicesJournal.addWebContent({
+						ddmStructureId: contentStructureId,
+						groupId: site.id,
+						titleMap: {en_US: randomTitle},
+					});
+
+				apiHelpers.data.push({
+					id: `${site.id}_${webContent.articleId}`,
+					type: 'webContent',
+				});
+			}
+
+			await page.reload();
+
+			await page.setViewportSize({height: 600, width: 200});
+
+			const dropdownButton = await page.locator(
+				'[title="Show Intermediate Pages"]'
+			);
+
+			await dropdownButton.waitFor({state: 'visible'});
+
+			await dropdownButton.click();
+
+			const dropdownMenu = page.getByLabel('Page 4');
+
+			await dropdownMenu.waitFor({state: 'visible'});
+
+			await expect(dropdownMenu).toBeInViewport();
 		});
 	}
 );

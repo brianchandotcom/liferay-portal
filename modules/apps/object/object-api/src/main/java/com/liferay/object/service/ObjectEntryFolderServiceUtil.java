@@ -50,11 +50,28 @@ public class ObjectEntryFolderServiceUtil {
 		return getService().deleteObjectEntryFolder(objectEntryFolderId);
 	}
 
+	public static ObjectEntryFolder
+			deleteObjectEntryFolderByExternalReferenceCode(
+				String externalReferenceCode, long groupId, long companyId)
+		throws PortalException {
+
+		return getService().deleteObjectEntryFolderByExternalReferenceCode(
+			externalReferenceCode, groupId, companyId);
+	}
+
 	public static ObjectEntryFolder getObjectEntryFolder(
 			long objectEntryFolderId)
 		throws PortalException {
 
 		return getService().getObjectEntryFolder(objectEntryFolderId);
+	}
+
+	public static ObjectEntryFolder getObjectEntryFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long companyId)
+		throws PortalException {
+
+		return getService().getObjectEntryFolderByExternalReferenceCode(
+			externalReferenceCode, groupId, companyId);
 	}
 
 	public static List<ObjectEntryFolder> getObjectEntryFolders(

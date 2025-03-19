@@ -7,7 +7,6 @@ package com.liferay.headless.admin.content.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.content.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.admin.content.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.admin.content.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.content.internal.dto.v1_0.util.DisplayPageTemplateSettingsUtil;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -20,6 +19,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;

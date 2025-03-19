@@ -18,5 +18,5 @@
 
 	<aui:input helpMessage="users-recovery-queries-required-help" label="required" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_REQUIRED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_REQUIRED, PropsValues.USERS_REMINDER_QUERIES_REQUIRED) %>" />
 
-	<aui:input helpMessage="users-recovery-queries-questions-help" label="users-recovery-queries-questions" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS) %>" />
+	<aui:input helpMessage="users-recovery-queries-questions-help" label="questions" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS) %>" />
 </aui:fieldset>

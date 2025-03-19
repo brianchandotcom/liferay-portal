@@ -83,7 +83,7 @@ public class VirtualHostLocalServiceImpl
 			return null;
 		}
 
-		if (defaultVirtualHosts.size() > 1) {
+		if ((defaultVirtualHosts.size() > 1) && _log.isWarnEnabled()) {
 			_log.error(
 				"More than one default virtual host uses company ID " +
 					companyId);

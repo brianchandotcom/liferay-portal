@@ -66,7 +66,7 @@ for (const sample of SAMPLES) {
 }
 
 export const testInstanceScoped = mergeTests(
-	clientExtensionsPageTest,
+	editJSClientExtensionsPageTest,
 	featureFlagsTest({
 		'LPD-30371': {enabled: true},
 	}),
@@ -76,7 +76,7 @@ export const testInstanceScoped = mergeTests(
 
 testInstanceScoped(
 	'Assert that the instance scoped client extensions are injected into site pages, site control panel pages, and instance control panel pages',
-	async ({clientExtensionsPage, page, styleBooksPage}) => {
+	async ({editJSClientExtensionsPage, page, styleBooksPage}) => {
 		const scriptLocator = page.locator(`script[src="${SAMPLES[2].url}"]`);
 
 		await testInstanceScoped.step(
@@ -91,7 +91,7 @@ testInstanceScoped(
 		await testInstanceScoped.step(
 			'Assert that the client extension is imported into an instance control panel page',
 			async () => {
-				await clientExtensionsPage.goto();
+				await editJSClientExtensionsPage.goto();
 
 				await expect(scriptLocator).toBeAttached();
 			}
@@ -137,13 +137,11 @@ test('Create a new JS client extension with a script element attribute', async (
 		'https://www.example.com/script.js'
 	);
 
-	await page
-		.getByRole('textbox', {
-			name: 'Attribute',
-		})
-		.fill('id');
-
-	await page.getByLabel('Value', {exact: true}).fill(clientExtensionValue);
+	await editJSClientExtensionsPage.addScriptAttribute(
+		'id',
+		'string',
+		clientExtensionValue
+	);
 
 	await editJSClientExtensionsPage.publish();
 
@@ -173,13 +171,11 @@ test('JS client extension does not allow "src" as a script element attribute', a
 }) => {
 	await editJSClientExtensionsPage.goto();
 
-	await page
-		.getByRole('textbox', {
-			name: 'Attribute',
-		})
-		.fill('src');
+	await editJSClientExtensionsPage.addScriptAttribute('src', 'string', '');
 
 	expect(page.getByText('Use the "JavaScript URL" field.')).toBeVisible();
+
+	expect(editJSClientExtensionsPage.publishButton).toBeDisabled();
 });
 
 test('Assert the help link is pointing to the correct url', async ({

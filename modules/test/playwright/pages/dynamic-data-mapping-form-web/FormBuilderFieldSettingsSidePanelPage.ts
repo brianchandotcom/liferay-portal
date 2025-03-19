@@ -48,6 +48,15 @@ export class FormBuilderFieldSettingsSidePanelPage {
 		await this.page.waitForTimeout(2000);
 	}
 
+	async fillMultiplePredefinedValues(values: string[]) {
+		for (const value of values) {
+			await this.page
+				.getByRole('combobox', {name: 'Predefined Value'})
+				.click();
+			await this.page.getByRole('option', {name: value}).click();
+		}
+	}
+
 	async selectCreateListSetting(
 		option: 'From Autofill' | 'From Data Provider' | 'Manually'
 	) {

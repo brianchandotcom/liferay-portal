@@ -56,6 +56,98 @@ test.beforeEach(({page}) => {
 	page.setViewportSize({height: 1080, width: 1920});
 });
 
+test('Assert that multiple selection field associated with a show rule mantains its predefined value on change', async ({
+	formBuilderFieldSettingsSidePanelPage,
+	formBuilderPage,
+	formBuilderSidePanelPage,
+	page,
+	rulesBuilderPage,
+}) => {
+	await formBuilderPage.goToNew();
+
+	await expect(formBuilderPage.newFormHeading).toBeVisible();
+
+	await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+	await formBuilderSidePanelPage.addFieldByDoubleClick('Single Selection');
+
+	await formBuilderFieldSettingsSidePanelPage.addOptions(2, 'single option ');
+
+	await formBuilderSidePanelPage.clickBackButton();
+
+	await formBuilderSidePanelPage.addFieldByDoubleClick('Multiple Selection');
+
+	await formBuilderFieldSettingsSidePanelPage.addOptions(
+		4,
+		'multiple option '
+	);
+
+	await formBuilderSidePanelPage.advancedTab.click();
+
+	await formBuilderFieldSettingsSidePanelPage.fillMultiplePredefinedValues([
+		'multiple option 0',
+		'multiple option 3',
+	]);
+
+	await page.waitForTimeout(1000);
+
+	await rulesBuilderPage.rulesTab.click();
+
+	await rulesBuilderPage.addElementsButton.click();
+
+	await rulesBuilderPage.selectConditionLeftFormField('Single Selection');
+
+	await rulesBuilderPage.selectConditionOperator('Is Equal To');
+
+	await rulesBuilderPage.selectConditionOperatorValueSource('Value');
+
+	await rulesBuilderPage.selectConditionRightFormField('single option 0');
+
+	await rulesBuilderPage.selectAction('Show');
+
+	await page.getByRole('combobox').nth(5).click();
+
+	await page.getByRole('option', {name: 'Multiple Selection'}).click();
+
+	await rulesBuilderPage.saveButton.click();
+
+	await formBuilderPage.formTab.click();
+
+	const formPreviewPagePromise = page.waitForEvent('popup');
+
+	await formBuilderPage.previewButton.click();
+
+	const formPreviewPage = await formPreviewPagePromise;
+
+	await formPreviewPage
+		.locator('label')
+		.filter({hasText: 'single option 0'})
+		.click();
+
+	const multpleOption = (optionNumber: number) =>
+		formPreviewPage.getByLabel(`multiple option ${optionNumber}`);
+
+	await expect(multpleOption(0)).toBeChecked();
+
+	await expect(multpleOption(1)).not.toBeChecked();
+
+	await expect(multpleOption(2)).not.toBeChecked();
+
+	await expect(multpleOption(3)).toBeChecked();
+
+	await formPreviewPage.getByLabel('multiple option 1').click();
+
+	await expect(multpleOption(0)).toBeChecked();
+
+	await expect(multpleOption(1)).toBeChecked();
+
+	await expect(multpleOption(2)).not.toBeChecked();
+
+	await expect(multpleOption(3)).toBeChecked();
+
+	await formPreviewPage.close();
+});
+
 test('Assert that Show action rule is not triggered when typing into an unrelated field', async ({
 	formBuilderPage,
 	formBuilderSidePanelPage,

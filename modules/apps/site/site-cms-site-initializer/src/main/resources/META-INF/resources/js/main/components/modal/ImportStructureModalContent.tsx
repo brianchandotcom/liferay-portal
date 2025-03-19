@@ -157,7 +157,7 @@ export default function ImportStructureModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary">
+						<ClayButton disabled={!jsonFile} displayType="primary">
 							{Liferay.Language.get('import-and-override')}
 						</ClayButton>
 					</ClayButton.Group>

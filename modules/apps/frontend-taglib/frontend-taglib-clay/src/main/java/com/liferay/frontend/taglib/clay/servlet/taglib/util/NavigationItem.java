@@ -5,10 +5,12 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -16,6 +18,17 @@ import javax.portlet.PortletURL;
  * @author Chema Balsas
  */
 public class NavigationItem extends HashMap<String, Object> {
+
+	public boolean hasSameId(NavigationItem navigationItem) {
+		if (!containsKey("data") || !navigationItem.containsKey("data")) {
+			return false;
+		}
+
+		return Objects.equals(
+			MapUtil.getString((Map<String, Object>)get("data"), "id"),
+			MapUtil.getString(
+				(Map<String, Object>)navigationItem.get("data"), "id"));
+	}
 
 	public void putData(String key, Object value) {
 		Map<String, Object> data = (Map<String, Object>)get("data");

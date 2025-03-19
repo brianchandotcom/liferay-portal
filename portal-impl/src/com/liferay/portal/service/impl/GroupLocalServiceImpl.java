@@ -5466,8 +5466,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				if ((originalValue != null) && _log.isWarnEnabled()) {
 					_log.warn(
-						"Duplicated staging group for group with id " +
-							result[0]);
+						StringBundler.concat(
+							"Live group ", result[0], " has more than one ",
+							"staging group"));
 				}
 			}
 

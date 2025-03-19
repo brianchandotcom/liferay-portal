@@ -2280,7 +2280,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		if ((users.size() > 1) && _log.isWarnEnabled()) {
 			_log.warn(
 				StringBundler.concat(
-					"Multiple users exist with company ID ", companyId,
+					"More than one user uses company ID ", companyId,
 					" and facebook ID ", facebookId));
 		}
 

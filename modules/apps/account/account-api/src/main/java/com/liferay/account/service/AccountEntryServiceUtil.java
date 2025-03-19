@@ -100,11 +100,11 @@ public class AccountEntryServiceUtil {
 	}
 
 	public static AccountEntry fetchAccountEntryByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().fetchAccountEntryByExternalReferenceCode(
-			companyId, externalReferenceCode);
+			externalReferenceCode, companyId);
 	}
 
 	public static List<AccountEntry> getAccountEntries(

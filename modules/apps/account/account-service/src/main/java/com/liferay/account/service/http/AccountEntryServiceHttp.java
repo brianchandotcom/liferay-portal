@@ -399,8 +399,8 @@ public class AccountEntryServiceHttp {
 
 	public static com.liferay.account.model.AccountEntry
 			fetchAccountEntryByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long companyId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -410,7 +410,7 @@ public class AccountEntryServiceHttp {
 				_fetchAccountEntryByExternalReferenceCodeParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, externalReferenceCode);
+				methodKey, externalReferenceCode, companyId);
 
 			Object returnObj = null;
 
@@ -939,7 +939,7 @@ public class AccountEntryServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchAccountEntryByExternalReferenceCodeParameterTypes9 = new Class[] {
-			long.class, String.class
+			String.class, long.class
 		};
 	private static final Class<?>[] _getAccountEntriesParameterTypes10 =
 		new Class[] {

@@ -64,16 +64,16 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 			schemaResource.getV2SchemaByIdHttpResponse(
 				RandomTestUtil.randomString()));
 
-		for (String schema : _schemaIds) {
+		for (String schemaId : _schemaIds) {
 			HttpInvoker.HttpResponse httpResponse =
-				schemaResource.getV2SchemaByIdHttpResponse(schema);
+				schemaResource.getV2SchemaByIdHttpResponse(schemaId);
 
 			assertHttpResponseStatusCode(200, httpResponse);
 
 			JSONObject schemaJSONObject = _jsonFactory.createJSONObject(
 				httpResponse.getContent());
 
-			Assert.assertEquals(schema, schemaJSONObject.getString("id"));
+			Assert.assertEquals(schemaId, schemaJSONObject.getString("id"));
 
 			JSONArray schemasJSONArray = schemaJSONObject.getJSONArray(
 				"schemas");

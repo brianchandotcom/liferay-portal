@@ -1,0 +1,37 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-43000",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"externalReferenceCode": "L_ACCOUNT_BILLING_ADDRESS_SUBTYPES",
+			"listTypeEntries": [
+			],
+			"name": "Account Billing Address Subtypes",
+			"system": false
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT_BILLING_AND_SHIPPING_ADDRESS_SUBTYPES",
+			"listTypeEntries": [
+			],
+			"name": "Account Billing And Shipping Address Subtypes",
+			"system": false
+		},
+		{
+			"externalReferenceCode": "L_ACCOUNT_SHIPPING_ADDRESS_SUBTYPES",
+			"listTypeEntries": [
+			],
+			"name": "Account Shipping Address Subtypes",
+			"system": false
+		}
+	]
+}

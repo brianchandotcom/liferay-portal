@@ -11,3 +11,4 @@ export {default as CategorizationMainView} from './main/categorization/Categoriz
 export {default as SpacesSticker} from './main/components/SpaceSticker';
 export {default as SpacesNavigation} from './main/spaces_navigation/SpacesNavigation';
 export {default as StructureBuilder} from './structure_builder/components/StructureBuilder';
+export {default as VocabulariesView} from './main/categorization/vocabulary/VocabulariesView';

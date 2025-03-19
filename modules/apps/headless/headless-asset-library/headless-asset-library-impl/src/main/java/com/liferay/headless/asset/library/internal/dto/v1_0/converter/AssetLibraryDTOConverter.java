@@ -14,13 +14,12 @@ import com.liferay.headless.asset.library.internal.resource.v1_0.BaseAssetLibrar
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.Map;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -101,68 +100,22 @@ public class AssetLibraryDTOConverter
 		return new Settings() {
 			{
 				setAutoTaggingEnabled(
-					() -> {
-						for (Map.Entry<String, String> entry :
-								unicodeProperties.entrySet()) {
-
-							String key = entry.getKey();
-
-							if (key.equals("autoTaggingEnabled")) {
-								return true;
-							}
-						}
-
-						return false;
-					});
+					() -> GetterUtil.getBoolean(
+						unicodeProperties.get("autoTaggingEnabled")));
 				setAvailableLanguageIds(group::getAvailableLanguageIds);
 				setDefaultLanguageId(group::getDefaultLanguageId);
 				setLogoColor(
-					() -> {
-						for (Map.Entry<String, String> entry :
-								unicodeProperties.entrySet()) {
-
-							String key = entry.getKey();
-
-							if (key.equals("logoColor")) {
-								return entry.getKey();
-							}
-						}
-
-						// see https://liferay.atlassian.net/browse/LPD-39975
-
-						return "color-0";
-					});
+					() -> GetterUtil.get(
+						unicodeProperties.get("logoColor"), "color-0"));
 				setMimeTypeLimits(
 					() -> new MimeTypeLimit[0] // TODO
 				);
 				setSharingEnabled(
-					() -> {
-						for (Map.Entry<String, String> entry :
-								unicodeProperties.entrySet()) {
-
-							String key = entry.getKey();
-
-							if (key.equals("sharingEnabled")) {
-								return true;
-							}
-						}
-
-						return false;
-					});
+					() -> GetterUtil.getBoolean(
+						unicodeProperties.get("sharingEnabled")));
 				setUseCustomLanguages(
-					() -> {
-						for (Map.Entry<String, String> entry :
-								unicodeProperties.entrySet()) {
-
-							String key = entry.getKey();
-
-							if (key.equals("useCustomLanguages")) {
-								return true;
-							}
-						}
-
-						return false;
-					});
+					() -> GetterUtil.getBoolean(
+						unicodeProperties.get("useCustomLanguages")));
 			}
 		};
 	}

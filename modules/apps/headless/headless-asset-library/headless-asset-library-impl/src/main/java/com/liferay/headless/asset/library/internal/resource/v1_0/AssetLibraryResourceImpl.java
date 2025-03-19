@@ -12,6 +12,7 @@ import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.Settings;
 import com.liferay.headless.asset.library.internal.util.DepotEntryManagerUtil;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
@@ -140,36 +141,23 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 			assetLibraryId);
 
-		String name = assetLibrary.getName();
-
 		Group group = depotEntry.getGroup();
 
-		if (name == null) {
-			name = group.getName(contextAcceptLanguage.getPreferredLocale());
-		}
+		String name = _getValue(
+			assetLibrary::getName,
+			() -> group.getName(contextAcceptLanguage.getPreferredLocale()));
+		Map<String, String> nameMap = _getValue(
+			assetLibrary::getName_i18n,
+			() -> LocalizedMapUtil.getI18nMap(group.getNameMap()));
+		String description = _getValue(
+			assetLibrary::getDescription,
+			() -> group.getDescription(
+				contextAcceptLanguage.getPreferredLocale()));
+		Map<String, String> descriptionMap = _getValue(
+			assetLibrary::getDescription_i18n,
+			() -> LocalizedMapUtil.getI18nMap(group.getDescriptionMap()));
 
-		Map<String, String> nameMap = assetLibrary.getName_i18n();
-
-		if (nameMap == null) {
-			nameMap = LocalizedMapUtil.getI18nMap(group.getNameMap());
-		}
-
-		String description = assetLibrary.getDescription();
-
-		if (description == null) {
-			description = group.getDescription(
-				contextAcceptLanguage.getPreferredLocale());
-		}
-
-		Map<String, String> descriptionMap = assetLibrary.getDescription_i18n();
-
-		if (descriptionMap == null) {
-			descriptionMap = LocalizedMapUtil.getI18nMap(
-				group.getDescriptionMap());
-		}
-
-		// TODO transform the assetLibrary::settings in unicodeProperties where
-		//  needed
+		// TODO transform the assetLibrary::settings in unicodeProperties
 
 		return _toAssetLibrary(
 			_depotEntryService.updateDepotEntry(
@@ -261,6 +249,20 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		serviceContext.setModifiedDate(new Date());
 
 		return serviceContext;
+	}
+
+	private <T, E extends Exception> T _getValue(
+			UnsafeSupplier<T, E> valueUnsafeSupplier,
+			UnsafeSupplier<T, E> defaultValueUnsafeSupplier)
+		throws Exception {
+
+		T value = valueUnsafeSupplier.get();
+
+		if (value == null) {
+			return defaultValueUnsafeSupplier.get();
+		}
+
+		return value;
 	}
 
 	private AssetLibrary _toAssetLibrary(DepotEntry depotEntry)

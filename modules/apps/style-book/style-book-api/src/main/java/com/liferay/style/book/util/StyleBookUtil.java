@@ -66,20 +66,13 @@ public class StyleBookUtil {
 	public static StyleBookEntry getStyleFromThemeStyleBookEntry(
 		Layout layout, Locale locale) {
 
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
-			_frontendTokenDefinitionRegistrySnapshot.get();
-
 		return getStyleFromThemeStyleBookEntry(
-			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout),
-			layout.getGroupId(), locale);
+			_getFrontendTokenDefinition(layout), layout.getGroupId(), locale);
 	}
 
 	public static String getThemeName(Layout layout, Locale locale) {
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
-			_frontendTokenDefinitionRegistrySnapshot.get();
-
 		FrontendTokenDefinition frontendTokenDefinition =
-			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout);
+			_getFrontendTokenDefinition(layout);
 
 		if (frontendTokenDefinition != null) {
 			return _getThemeName(frontendTokenDefinition, locale);
@@ -107,6 +100,16 @@ public class StyleBookUtil {
 		}
 
 		return false;
+	}
+
+	private static FrontendTokenDefinition _getFrontendTokenDefinition(
+		Layout layout) {
+
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			_frontendTokenDefinitionRegistrySnapshot.get();
+
+		return frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+			layout);
 	}
 
 	private static FrontendTokenDefinition _getFrontendTokenDefinition(

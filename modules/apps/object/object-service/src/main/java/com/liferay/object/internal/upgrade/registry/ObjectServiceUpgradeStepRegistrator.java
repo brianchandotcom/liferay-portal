@@ -565,6 +565,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns("ObjectEntry", "version INTEGER"));
 
 		registry.register("10.9.0", "10.9.1", new ClassNameUpgradeProcess());
+
+		registry.register(
+			"10.9.1", "10.10.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectDefinition", "enableObjectEntryVersioning BOOLEAN"));
 	}
 
 	@Reference

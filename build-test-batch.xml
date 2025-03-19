@@ -7314,15 +7314,6 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="modules-integration-db-partition-extract-and-insert-postgresql153">
-		<run-modules-integration-test
-			database.partition.enabled="true"
-			database.type="postgresql"
-			database.version="15.3"
-			test.extract.and.insert="true"
-		/>
-	</target>
-
 	<target name="modules-integration-db-partition-extract-and-insert-postgresql163">
 		<run-modules-integration-test
 			database.partition.enabled="true"

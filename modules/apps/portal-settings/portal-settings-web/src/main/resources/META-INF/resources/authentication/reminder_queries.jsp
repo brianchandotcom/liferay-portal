@@ -16,7 +16,7 @@
 
 	<aui:input helpMessage="users-recovery-queries-display-in-plain-text-help" label="users-recovery-queries-display-in-plain-text" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT, PropsValues.USERS_REMINDER_QUERIES_DISPLAY_IN_PLAIN_TEXT) %>" />
 
-	<aui:input helpMessage="users-recovery-queries-required-help" label="users-recovery-queries-required" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_REQUIRED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_REQUIRED, PropsValues.USERS_REMINDER_QUERIES_REQUIRED) %>" />
+	<aui:input helpMessage="users-recovery-queries-required-help" label="required" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_REQUIRED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_REQUIRED, PropsValues.USERS_REMINDER_QUERIES_REQUIRED) %>" />
 
 	<aui:input helpMessage="users-recovery-queries-questions-help" label="users-recovery-queries-questions" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_QUESTIONS) %>" />
 </aui:fieldset>

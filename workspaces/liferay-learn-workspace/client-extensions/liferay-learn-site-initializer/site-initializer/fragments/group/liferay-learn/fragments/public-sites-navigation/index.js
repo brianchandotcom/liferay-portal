@@ -9,8 +9,6 @@
  * Consts and DOM Elements
  */
 
-const inputElements = ['input', 'textarea'];
-
 const fragmentSearchElements = {
 	searchSubmitLink: fragmentElement.querySelector('.search-submit'),
 	searchSubmitURL: fragmentElement.querySelector('.search-submit').href,
@@ -27,6 +25,8 @@ const fragmentSearchElements = {
 	suggestions: fragmentElement.querySelector('.suggestions'),
 };
 
+const inputElements = ['input', 'textarea'];
+
 const menuElements = {
 	menuButton: document.querySelector('.cta-menu-hamburguer'),
 	menuIconLines: document.querySelectorAll(
@@ -36,11 +36,11 @@ const menuElements = {
 	menuTextOpen: document.querySelector('.menu-button-text-open'),
 };
 
+const searchInput = document.getElementById('searchInput');
 const siteSearchWrapper = document.getElementById('siteSearchWrapper');
 const documentationEducationDropdown = document.querySelector(
 	'.documentation-education-dropdown'
 );
-const searchInput = document.getElementById('searchInput');
 
 let debounceTimer;
 

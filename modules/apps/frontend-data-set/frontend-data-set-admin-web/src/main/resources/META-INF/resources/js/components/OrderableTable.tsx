@@ -249,53 +249,59 @@ const Row = ({
 				);
 			})}
 
-			{actions && (
-				<ClayTable.Cell className="actions-cell">
-					<ClayDropDown
-						trigger={
-							<ClayButton
-								className="component-action"
-								displayType="unstyled"
-							>
-								<ClayIcon symbol="ellipsis-v" />
+			<ClayTable.Cell className="actions-cell">
+				{actions &&
+					!!actions.filter(
+						(action) =>
+							!action.isVisible || action.isVisible({item})
+					).length && (
+						<ClayDropDown
+							trigger={
+								<ClayButton
+									className="component-action"
+									displayType="unstyled"
+								>
+									<ClayIcon symbol="ellipsis-v" />
 
-								<span className="sr-only">
-									{Liferay.Language.get('actions')}
-								</span>
-							</ClayButton>
-						}
-					>
-						<ClayDropDown.ItemList>
-							{actions.map(
-								({icon, isVisible, label, onClick}) => {
-									if (isVisible && !isVisible({item})) {
-										return;
+									<span className="sr-only">
+										{Liferay.Language.get('actions')}
+									</span>
+								</ClayButton>
+							}
+						>
+							<ClayDropDown.ItemList>
+								{actions.map(
+									({icon, isVisible, label, onClick}) => {
+										if (isVisible && !isVisible({item})) {
+											return;
+										}
+
+										return (
+											<ClayDropDown.Item
+												key={label}
+												onClick={() =>
+													onClick({
+														item,
+													})
+												}
+											>
+												{icon && (
+													<span className="pr-2">
+														<ClayIcon
+															symbol={icon}
+														/>
+													</span>
+												)}
+
+												{label}
+											</ClayDropDown.Item>
+										);
 									}
-
-									return (
-										<ClayDropDown.Item
-											key={label}
-											onClick={() =>
-												onClick({
-													item,
-												})
-											}
-										>
-											{icon && (
-												<span className="pr-2">
-													<ClayIcon symbol={icon} />
-												</span>
-											)}
-
-											{label}
-										</ClayDropDown.Item>
-									);
-								}
-							)}
-						</ClayDropDown.ItemList>
-					</ClayDropDown>
-				</ClayTable.Cell>
-			)}
+								)}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					)}
+			</ClayTable.Cell>
 		</ClayTable.Row>
 	);
 };

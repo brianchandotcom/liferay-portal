@@ -14,6 +14,10 @@ import {
 	IFilterTypeProps,
 } from '../../../utils/types';
 
+const isVisible = ({item}: {item: any}): boolean => {
+	return item?.sourceType !== ESelectionFilterSourceType.ITEM_PROXY;
+};
+
 const FilterList = ({
 	createFilter,
 	deleteFilter,
@@ -38,17 +42,13 @@ const FilterList = ({
 			actions={[
 				{
 					icon: 'pencil',
-					isVisible: ({item}: {item: any}): boolean => {
-						return (
-							item?.sourceType !==
-							ESelectionFilterSourceType.ITEM_PROXY
-						);
-					},
+					isVisible,
 					label: Liferay.Language.get('edit'),
 					onClick: editFilter,
 				},
 				{
 					icon: 'trash',
+					isVisible,
 					label: Liferay.Language.get('delete'),
 					onClick: deleteFilter,
 				},

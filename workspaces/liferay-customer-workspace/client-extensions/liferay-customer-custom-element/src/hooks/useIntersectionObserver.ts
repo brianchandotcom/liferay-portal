@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 
 const INTERSECTION_OPTIONS = {
 	root: null,
@@ -11,7 +11,7 @@ const INTERSECTION_OPTIONS = {
 };
 
 export default function useIntersectionObserver() {
-	const trackedRefCurrent = useRef(null);
+	const trackedRefCurrent = useRef<HTMLDivElement | null>(null);
 	const [isIntersecting, setIsIntersecting] = useState(false);
 
 	const memoizedSetIntersecting = useCallback((entities: any[]) => {
@@ -20,24 +20,25 @@ export default function useIntersectionObserver() {
 		setIsIntersecting(target.isIntersecting);
 	}, []);
 
-	useEffect(() => {
-		const observedElement = trackedRefCurrent.current;
+	const setTrackedRefCurrent = useCallback(
+		(node: HTMLDivElement) => {
+			const observer = new IntersectionObserver(
+				memoizedSetIntersecting,
+				INTERSECTION_OPTIONS
+			);
 
-		const observer = new IntersectionObserver(
-			memoizedSetIntersecting,
-			INTERSECTION_OPTIONS
-		);
-
-		if (observedElement) {
-			observer.observe(observedElement);
-		}
-
-		return () => {
-			if (observedElement) {
-				observer.unobserve(observedElement);
+			if (trackedRefCurrent.current) {
+				observer.unobserve(trackedRefCurrent.current);
 			}
-		};
-	}, [memoizedSetIntersecting, trackedRefCurrent]);
 
-	return [trackedRefCurrent, isIntersecting];
+			trackedRefCurrent.current = node;
+
+			if (trackedRefCurrent.current) {
+				observer.observe(trackedRefCurrent.current);
+			}
+		},
+		[memoizedSetIntersecting]
+	);
+
+	return [setTrackedRefCurrent, isIntersecting];
 }

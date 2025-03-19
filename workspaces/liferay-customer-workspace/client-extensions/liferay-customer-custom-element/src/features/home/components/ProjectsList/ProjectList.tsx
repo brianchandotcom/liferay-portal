@@ -34,7 +34,7 @@ const ProjectList: React.FC<IProps> = ({
 	loading,
 	onIntersect,
 }) => {
-	const [trackedRefCurrent, isIntersecting] = useIntersectionObserver();
+	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
 	const isLastPage = koroneikiAccounts?.page === koroneikiAccounts?.lastPage;
 
 	const allowFetching = !isLastPage && !fetching;
@@ -107,7 +107,7 @@ const ProjectList: React.FC<IProps> = ({
 				koroneikiAccounts={koroneikiAccounts}
 			/>
 
-			<div ref={trackedRefCurrent as any}></div>
+			<div ref={setTrackedRefCurrent as any}></div>
 		</div>
 	);
 };

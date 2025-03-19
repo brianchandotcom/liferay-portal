@@ -2849,6 +2849,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							layoutPageTemplateStructure.
 								getLayoutPageTemplateStructureId(),
 							segmentsExperienceId, layoutStructure.toString());
+
 					_fragmentEntryLinkLocalService.
 						deleteLayoutPageTemplateEntryFragmentEntryLinks(
 							draftLayout.getGroupId(),

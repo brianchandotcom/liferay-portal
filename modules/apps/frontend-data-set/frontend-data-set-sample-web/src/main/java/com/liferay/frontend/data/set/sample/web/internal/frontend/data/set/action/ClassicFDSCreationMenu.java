@@ -40,8 +40,6 @@ public class ClassicFDSCreationMenu implements FDSCreationMenu {
 			).putData(
 				"modalSize", "full-screen"
 			).putData(
-				"permissionKey", "update"
-			).putData(
 				"title", _language.get(httpServletRequest, "calendar")
 			).setHref(
 				"#"

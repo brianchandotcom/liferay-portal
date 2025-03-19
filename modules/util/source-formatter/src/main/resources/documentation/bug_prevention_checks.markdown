@@ -31,6 +31,7 @@ CSPTagMissingAttributesCheck | .ftl, .jsp, .jspf, .jspx or .vm | Checks for miss
 ClassNameIdCheck | .java | Avoid caching noncompany scoped class name IDs. |
 [CodeownersFileLocationCheck](check/codeowners_file_location_check.markdown#codeownersfilelocationcheck) | CODEOWNERS | Checks that `CODEOWNERS` files are located in `.github` directory. |
 [CompanyIterationCheck](check/company_iteration_check.markdown#companyiterationcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies. |
+[CompanyThreadLocalCheck](check/company_thread_local_check.markdown#companythreadlocalcheck) | .java | Checks usage of `CompanyThreadLocal`. |
 CompatClassImportsCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks that classes are imported from `compat` modules, when possible. |
 ComponentAnnotationCheck | .java | Performs several checks on classes with @Component annotation. |
 [ComponentExposureCheck](check/component_exposure_check.markdown#componentexposurecheck) | .java | Avoid exposing static component. |

@@ -21,6 +21,7 @@ CapsNameCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-c
 ChainingCheck | [Styling](styling_checks.markdown#styling-checks) | Checks that method chaining can be used when possible. |
 ClassNameIdCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Avoid caching noncompany scoped class name IDs. |
 [CompanyIterationCheck](check/company_iteration_check.markdown#companyiterationcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that `CompanyLocalService.forEachCompany` or `CompanyLocalService.forEachCompanyId` is used when iterating over companies. |
+[CompanyThreadLocalCheck](check/company_thread_local_check.markdown#companythreadlocalcheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks usage of `CompanyThreadLocal`. |
 CompatClassImportsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that classes are imported from `compat` modules, when possible. |
 ComponentAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on classes with @Component annotation. |
 [ComponentExposureCheck](check/component_exposure_check.markdown#componentexposurecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Avoid exposing static component. |

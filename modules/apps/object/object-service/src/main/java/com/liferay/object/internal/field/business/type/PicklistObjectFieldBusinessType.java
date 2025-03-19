@@ -25,6 +25,7 @@ import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -139,11 +140,23 @@ public class PicklistObjectFieldBusinessType
 				LocalizedValue localizedValue = new LocalizedValue(
 					objectFieldRenderingContext.getLocale());
 
-				localizedValue.addString(
-					objectFieldRenderingContext.getLocale(),
-					String.valueOf(
-						ObjectFieldSettingUtil.getDefaultValue(
-							null, objectField, null)));
+				Locale defaultLocale = objectFieldRenderingContext.getLocale();
+				String defaultValue = String.valueOf(
+					ObjectFieldSettingUtil.getDefaultValue(
+						null, objectField, null));
+
+				if (objectField.isLocalized()) {
+					localizedValue.addString(
+						defaultLocale,
+						_jsonFactory.createJSONObject(
+							HashMapBuilder.put(
+								defaultLocale, defaultValue
+							).build()
+						).toJSONString());
+				}
+				else {
+					localizedValue.addString(defaultLocale, defaultValue);
+				}
 
 				return localizedValue;
 			}
@@ -378,6 +391,9 @@ public class PicklistObjectFieldBusinessType
 
 		return value;
 	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

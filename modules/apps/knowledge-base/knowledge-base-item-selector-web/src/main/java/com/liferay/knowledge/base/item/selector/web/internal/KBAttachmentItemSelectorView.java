@@ -10,7 +10,7 @@ import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
+import com.liferay.knowledge.base.item.selector.KBAttachmentItemSelectorCriterion;
 import com.liferay.knowledge.base.item.selector.web.internal.constants.KBItemSelectorWebKeys;
 import com.liferay.knowledge.base.item.selector.web.internal.display.context.KBAttachmentItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.util.ListUtil;

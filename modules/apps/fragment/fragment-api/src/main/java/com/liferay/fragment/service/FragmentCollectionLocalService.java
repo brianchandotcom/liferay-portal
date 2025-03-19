@@ -86,7 +86,7 @@ public interface FragmentCollectionLocalService
 	public FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long userId, long groupId,
 			String fragmentCollectionKey, String name, String description,
-			ServiceContext serviceContext)
+			boolean marketplace, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

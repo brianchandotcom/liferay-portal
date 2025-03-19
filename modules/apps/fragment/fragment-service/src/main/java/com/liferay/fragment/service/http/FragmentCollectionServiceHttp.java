@@ -89,7 +89,7 @@ public class FragmentCollectionServiceHttp {
 			addFragmentCollection(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long groupId, String fragmentCollectionKey, String name,
-				String description,
+				String description, boolean marketplace,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -100,7 +100,8 @@ public class FragmentCollectionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, groupId,
-				fragmentCollectionKey, name, description, serviceContext);
+				fragmentCollectionKey, name, description, marketplace,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1031,6 +1032,7 @@ public class FragmentCollectionServiceHttp {
 	private static final Class<?>[] _addFragmentCollectionParameterTypes1 =
 		new Class[] {
 			String.class, long.class, String.class, String.class, String.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteFragmentCollectionParameterTypes2 =

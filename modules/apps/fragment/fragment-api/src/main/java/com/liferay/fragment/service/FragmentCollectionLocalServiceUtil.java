@@ -67,12 +67,13 @@ public class FragmentCollectionLocalServiceUtil {
 	public static FragmentCollection addFragmentCollection(
 			String externalReferenceCode, long userId, long groupId,
 			String fragmentCollectionKey, String name, String description,
+			boolean marketplace,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addFragmentCollection(
 			externalReferenceCode, userId, groupId, fragmentCollectionKey, name,
-			description, serviceContext);
+			description, marketplace, serviceContext);
 	}
 
 	/**

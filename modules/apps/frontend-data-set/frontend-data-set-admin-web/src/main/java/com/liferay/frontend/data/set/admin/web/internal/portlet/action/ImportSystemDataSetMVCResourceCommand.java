@@ -12,6 +12,7 @@ import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
+import com.liferay.frontend.data.set.action.util.FDSActionUtil;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.filter.BaseClientExtensionFDSFilter;
 import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
@@ -141,10 +142,10 @@ public class ImportSystemDataSetMVCResourceCommand
 
 		if (fdsCreationMenu != null) {
 			_addFDSCreationMenuObjectEntries(
-				objectEntry.getObjectEntryId(),
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
 				fdsCreationMenu, _portal.getHttpServletRequest(resourceRequest),
-				dataSetActionObjectDefinition.getObjectDefinitionId());
+				dataSetActionObjectDefinition.getObjectDefinitionId(),
+				objectEntry);
 		}
 
 		FDSItemsActions fdsItemsActions =
@@ -152,10 +153,10 @@ public class ImportSystemDataSetMVCResourceCommand
 
 		if (fdsItemsActions != null) {
 			_addFDSItemsActionsObjectEntries(
-				objectEntry.getObjectEntryId(),
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
 				fdsItemsActions, _portal.getHttpServletRequest(resourceRequest),
-				dataSetActionObjectDefinition.getObjectDefinitionId());
+				dataSetActionObjectDefinition.getObjectDefinitionId(),
+				objectEntry);
 		}
 
 		List<FDSView> fdsViews = _fdsViewRegistry.getFDSViews(fdsName);
@@ -428,9 +429,9 @@ public class ImportSystemDataSetMVCResourceCommand
 	}
 
 	private void _addFDSCreationMenuObjectEntries(
-			long dataSetId, String defaultLanguageId,
-			FDSCreationMenu fdsCreationMenu,
-			HttpServletRequest httpServletRequest, long objectDefinitionId)
+			String defaultLanguageId, FDSCreationMenu fdsCreationMenu,
+			HttpServletRequest httpServletRequest, long objectDefinitionId,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		CreationMenu creationMenu = fdsCreationMenu.getCreationMenu(
@@ -454,7 +455,8 @@ public class ImportSystemDataSetMVCResourceCommand
 							defaultLanguageId,
 							_getOptionalValue(dropdownItem.get("label")))
 					).put(
-						"r_dataSetToDataSetActions_l_dataSetId", dataSetId
+						"r_dataSetToDataSetActions_l_dataSetId",
+						objectEntry.getObjectEntryId()
 					).put(
 						"target", String.valueOf(dropdownItem.get("target"))
 					).put(
@@ -519,7 +521,10 @@ public class ImportSystemDataSetMVCResourceCommand
 				}
 
 				_objectEntryService.addOrUpdateObjectEntry(
-					String.valueOf(id), 0, objectDefinitionId,
+					FDSActionUtil.createFDSCreationActionERC(
+						objectEntry.getExternalReferenceCode(),
+						String.valueOf(id)),
+					0, objectDefinitionId,
 					ObjectEntryFolderConstants.
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 					HashMapBuilder.<String, Serializable>put(
@@ -531,7 +536,8 @@ public class ImportSystemDataSetMVCResourceCommand
 							defaultLanguageId,
 							_getOptionalValue(dropdownItem.get("label")))
 					).put(
-						"r_dataSetToDataSetActions_l_dataSetId", dataSetId
+						"r_dataSetToDataSetActions_l_dataSetId",
+						objectEntry.getObjectEntryId()
 					).put(
 						"target", FDSEntryItemImportPolicy.ITEM_PROXY
 					).put(
@@ -547,7 +553,8 @@ public class ImportSystemDataSetMVCResourceCommand
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
 				HashMapBuilder.<String, Serializable>put(
-					"r_dataSetToDataSetActions_l_dataSetId", dataSetId
+					"r_dataSetToDataSetActions_l_dataSetId",
+					objectEntry.getObjectEntryId()
 				).put(
 					"target", FDSEntryItemImportPolicy.GROUP_PROXY
 				).put(
@@ -705,9 +712,9 @@ public class ImportSystemDataSetMVCResourceCommand
 	}
 
 	private void _addFDSItemsActionsObjectEntries(
-			long dataSetId, String defaultLanguageId,
-			FDSItemsActions fdsItemsActions,
-			HttpServletRequest httpServletRequest, long objectDefinitionId)
+			String defaultLanguageId, FDSItemsActions fdsItemsActions,
+			HttpServletRequest httpServletRequest, long objectDefinitionId,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
@@ -761,7 +768,8 @@ public class ImportSystemDataSetMVCResourceCommand
 						"permissionKey",
 						() -> _getOptionalValue(data.get("permissionKey"))
 					).put(
-						"r_dataSetToDataSetActions_l_dataSetId", dataSetId
+						"r_dataSetToDataSetActions_l_dataSetId",
+						objectEntry.getObjectEntryId()
 					).put(
 						"requestBody",
 						() -> _getOptionalValue(data.get("requestBody"))
@@ -804,7 +812,10 @@ public class ImportSystemDataSetMVCResourceCommand
 				}
 
 				_objectEntryService.addOrUpdateObjectEntry(
-					String.valueOf(id), 0, objectDefinitionId,
+					FDSActionUtil.createFDSItemActionERC(
+						objectEntry.getExternalReferenceCode(),
+						String.valueOf(id)),
+					0, objectDefinitionId,
 					ObjectEntryFolderConstants.
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 					HashMapBuilder.<String, Serializable>put(
@@ -818,7 +829,8 @@ public class ImportSystemDataSetMVCResourceCommand
 							_getOptionalValue(
 								fdsActionDropdownItem.get("label")))
 					).put(
-						"r_dataSetToDataSetActions_l_dataSetId", dataSetId
+						"r_dataSetToDataSetActions_l_dataSetId",
+						objectEntry.getObjectEntryId()
 					).put(
 						"target", FDSEntryItemImportPolicy.ITEM_PROXY
 					).put(
@@ -834,7 +846,8 @@ public class ImportSystemDataSetMVCResourceCommand
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
 				HashMapBuilder.<String, Serializable>put(
-					"r_dataSetToDataSetActions_l_dataSetId", dataSetId
+					"r_dataSetToDataSetActions_l_dataSetId",
+					objectEntry.getObjectEntryId()
 				).put(
 					"target", FDSEntryItemImportPolicy.GROUP_PROXY
 				).put(

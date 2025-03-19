@@ -8,7 +8,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:asset:asset-category-property-api")
 	testIntegrationImplementation project(":apps:asset:asset-entry-rel-api")
 	testIntegrationImplementation project(":apps:asset:asset-test-util")
-	testIntegrationImplementation project(":apps:batch-engine:batch-engine-api")
 	testIntegrationImplementation project(":apps:depot:depot-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-client")

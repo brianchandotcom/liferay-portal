@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Data Engine REST Test
 Bundle-SymbolicName: com.liferay.data.engine.rest.test
 Bundle-Version: 1.0.0
--includeresource: com.liferay.data.engine.rest.client.jar=com.liferay.data.engine.rest.client-*.jar;lib:=true
+-includeresource:\
+	com.liferay.data.engine.rest.client.jar=com.liferay.data.engine.rest.client-*.jar;lib:=true,\
+	com.liferay.headless.batch.engine.client.jar=com.liferay.headless.batch.engine.client-*.jar;lib:=true

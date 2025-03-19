@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Headless Form Test
 Bundle-SymbolicName: com.liferay.headless.form.test
 Bundle-Version: 1.0.0
--includeresource: com.liferay.headless.form.client.jar=com.liferay.headless.form.client-*.jar;lib:=true
+-includeresource:\
+	com.liferay.headless.batch.engine.client.jar=com.liferay.headless.batch.engine.client-*.jar;lib:=true,\
+	com.liferay.headless.form.client.jar=com.liferay.headless.form.client-*.jar;lib:=true

@@ -287,8 +287,6 @@ components:
                     type: integer
             type: object
         ResourceType:
-            description:
-                Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
             properties:
                 description:
                     description:

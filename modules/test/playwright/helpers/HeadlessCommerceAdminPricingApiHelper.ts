@@ -60,7 +60,16 @@ class TPriceEntry {
 	skuId: number;
 	price: number;
 	priceEntryId?: number;
+	priceFormatted?: string;
 	priceListId: number;
+}
+
+class TPriceList {
+	catalogId: number;
+	currencyCode: string;
+	id?: number;
+	name: string;
+	type: string;
 }
 
 export class HeadlessCommerceAdminPricingApiHelper {
@@ -86,6 +95,12 @@ export class HeadlessCommerceAdminPricingApiHelper {
 	async deletePriceEntry(priceEntryId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/price-entries/${priceEntryId}`
+		);
+	}
+
+	async deletePriceList(priceListId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceListId}`
 		);
 	}
 
@@ -193,5 +208,23 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 
 		return discountSku;
+	}
+
+	async postPriceList(priceList?: TPriceList) {
+		priceList = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists`,
+			{
+				data: priceList,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: priceList.id,
+				type: 'price-list',
+			});
+		}
+
+		return priceList;
 	}
 }

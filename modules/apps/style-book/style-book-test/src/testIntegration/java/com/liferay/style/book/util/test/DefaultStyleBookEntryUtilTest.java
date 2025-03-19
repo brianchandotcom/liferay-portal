@@ -60,10 +60,7 @@ public class DefaultStyleBookEntryUtilTest {
 	public void testGetStyleBookEntryNameWithDefaultStyleBookEntry()
 		throws Exception {
 
-		_styleBookEntryLocalService.addStyleBookEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(), true, null, RandomTestUtil.randomString(),
-			null, _THEME_ID, null);
+		_newStyleBookEntry(true);
 
 		Assert.assertEquals(
 			"styles-by-default",
@@ -77,10 +74,7 @@ public class DefaultStyleBookEntryUtilTest {
 
 		Layout masterLayoutBasedLayout = _getMasterLayoutBasedLayout();
 
-		_styleBookEntryLocalService.addStyleBookEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(), true, null, RandomTestUtil.randomString(),
-			null, _THEME_ID, null);
+		_newStyleBookEntry(true);
 
 		Assert.assertEquals(
 			"styles-by-default",
@@ -99,6 +93,23 @@ public class DefaultStyleBookEntryUtilTest {
 	}
 
 	@Test
+	public void testGetStyleBookEntryNameWithMasterLayoutWithoutStyleBookEntry1()
+		throws Exception {
+
+		_testGetStyleBookEntryNameWithMasterLayoutWithoutStyleBookEntry(
+			"styles-from-theme");
+	}
+
+	@FeatureFlags("LPD-30204")
+	@Test
+	public void testGetStyleBookEntryNameWithMasterLayoutWithoutStyleBookEntry2()
+		throws Exception {
+
+		_testGetStyleBookEntryNameWithMasterLayoutWithoutStyleBookEntry(
+			"styles-from-x");
+	}
+
+	@Test
 	public void testGetStyleBookEntryNameWithMasterLayoutWithStyleBookEntry()
 		throws Exception {
 
@@ -107,11 +118,7 @@ public class DefaultStyleBookEntryUtilTest {
 		Layout masterLayout = _layoutLocalService.getLayout(
 			masterLayoutBasedLayout.getMasterLayoutPlid());
 
-		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.addStyleBookEntry(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, _THEME_ID, null);
+		StyleBookEntry styleBookEntry = _newStyleBookEntry(false);
 
 		masterLayout.setStyleBookEntryId(styleBookEntry.getStyleBookEntryId());
 
@@ -121,23 +128,6 @@ public class DefaultStyleBookEntryUtilTest {
 			"styles-from-master",
 			DefaultStyleBookEntryUtil.getStyleBookEntryName(
 				masterLayoutBasedLayout, null, null));
-	}
-
-	@Test
-	public void testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry1()
-		throws Exception {
-
-		_testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry(
-			"styles-from-theme");
-	}
-
-	@FeatureFlags("LPD-30204")
-	@Test
-	public void testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry2()
-		throws Exception {
-
-		_testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry(
-			"styles-from-x");
 	}
 
 	@Test
@@ -190,20 +180,26 @@ public class DefaultStyleBookEntryUtilTest {
 		return _layoutLocalService.updateLayout(masterLayoutBasedLayout);
 	}
 
+	private StyleBookEntry _newStyleBookEntry(boolean defaultStyleBookEntry)
+		throws Exception {
+
+		return _styleBookEntryLocalService.addStyleBookEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_group.getGroupId(), defaultStyleBookEntry, null,
+			RandomTestUtil.randomString(), null, _THEME_ID, null);
+	}
+
 	private void
-			_testGetStyleBookEntryNameWithoutDefaultStyleBookEntryAndWithMasterLayoutWithoutStyleBookEntry(
-				String expectedMessage)
+			_testGetStyleBookEntryNameWithMasterLayoutWithoutStyleBookEntry(
+				String expectedStyleBookEntryName)
 		throws Exception {
 
 		Layout layoutWithMasterLayout = _getLayoutBasedOnMasterLayout();
 
-		_styleBookEntryLocalService.addStyleBookEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-			null, _THEME_ID, null);
+		_newStyleBookEntry(false);
 
 		Assert.assertEquals(
-			expectedMessage,
+			expectedStyleBookEntryName,
 			DefaultStyleBookEntryUtil.getStyleBookEntryName(
 				layoutWithMasterLayout, null, null));
 	}

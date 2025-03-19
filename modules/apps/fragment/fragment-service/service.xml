@@ -26,6 +26,7 @@
 		<column name="fragmentCollectionKey" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="marketplace" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

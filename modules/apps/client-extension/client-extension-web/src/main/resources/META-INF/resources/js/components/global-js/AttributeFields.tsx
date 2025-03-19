@@ -26,10 +26,11 @@ const TYPE_ITEMS = [
 
 interface IProps {
 	disabled?: boolean;
+	id: string;
 	index: number;
 	name: string;
 	onAttributeChange: (index: number, updatedValue: Object) => void;
-	onErrorChange: (index: number, error: boolean) => void;
+	onErrorChange: (id: string, error: boolean) => void;
 	onRemoveClick: (index: number) => void;
 	portletNamespace: string;
 	type: string;
@@ -38,6 +39,7 @@ interface IProps {
 
 export default function AttributeFields({
 	disabled,
+	id,
 	index,
 	name,
 	onAttributeChange,
@@ -55,7 +57,7 @@ export default function AttributeFields({
 	const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
 	const handleErrorChange = (error: string | null) => {
-		onErrorChange(index, !!error);
+		onErrorChange(id, !!error);
 		setErrorMessage(error);
 	};
 

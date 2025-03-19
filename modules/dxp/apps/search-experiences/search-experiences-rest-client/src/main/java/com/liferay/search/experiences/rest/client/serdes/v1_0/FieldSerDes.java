@@ -54,7 +54,7 @@ public class FieldSerDes {
 
 			if (field.getDefaultValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)field.getDefaultValue());
+				sb.append(_escape((String)field.getDefaultValue()));
 				sb.append("\"");
 			}
 			else {

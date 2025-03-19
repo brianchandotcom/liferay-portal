@@ -62,7 +62,9 @@ public class EmbeddingProviderConfigurationSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)embeddingProviderConfiguration.getAttributes());
+					_escape(
+						(String)
+							embeddingProviderConfiguration.getAttributes()));
 				sb.append("\"");
 			}
 			else {

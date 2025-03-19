@@ -55,7 +55,7 @@ public class SortConfigurationSerDes {
 
 			if (sortConfiguration.getSorts() instanceof String) {
 				sb.append("\"");
-				sb.append((String)sortConfiguration.getSorts());
+				sb.append(_escape((String)sortConfiguration.getSorts()));
 				sb.append("\"");
 			}
 			else {

@@ -73,7 +73,8 @@ public class ObjectValidationRuleSettingSerDes {
 
 			if (objectValidationRuleSetting.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)objectValidationRuleSetting.getValue());
+				sb.append(
+					_escape((String)objectValidationRuleSetting.getValue()));
 				sb.append("\"");
 			}
 			else {

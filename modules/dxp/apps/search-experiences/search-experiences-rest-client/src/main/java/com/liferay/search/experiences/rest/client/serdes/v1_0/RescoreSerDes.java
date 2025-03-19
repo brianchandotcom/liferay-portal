@@ -53,7 +53,7 @@ public class RescoreSerDes {
 
 			if (rescore.getQuery() instanceof String) {
 				sb.append("\"");
-				sb.append((String)rescore.getQuery());
+				sb.append(_escape((String)rescore.getQuery()));
 				sb.append("\"");
 			}
 			else {
@@ -70,7 +70,7 @@ public class RescoreSerDes {
 
 			if (rescore.getQueryWeight() instanceof String) {
 				sb.append("\"");
-				sb.append((String)rescore.getQueryWeight());
+				sb.append(_escape((String)rescore.getQueryWeight()));
 				sb.append("\"");
 			}
 			else {
@@ -87,7 +87,7 @@ public class RescoreSerDes {
 
 			if (rescore.getRescoreQueryWeight() instanceof String) {
 				sb.append("\"");
-				sb.append((String)rescore.getRescoreQueryWeight());
+				sb.append(_escape((String)rescore.getRescoreQueryWeight()));
 				sb.append("\"");
 			}
 			else {
@@ -118,7 +118,7 @@ public class RescoreSerDes {
 
 			if (rescore.getWindowSize() instanceof String) {
 				sb.append("\"");
-				sb.append((String)rescore.getWindowSize());
+				sb.append(_escape((String)rescore.getWindowSize()));
 				sb.append("\"");
 			}
 			else {

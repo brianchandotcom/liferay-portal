@@ -69,7 +69,7 @@ public class ActionExecutionResultSerDes {
 
 			if (actionExecutionResult.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)actionExecutionResult.getValue());
+				sb.append(_escape((String)actionExecutionResult.getValue()));
 				sb.append("\"");
 			}
 			else {

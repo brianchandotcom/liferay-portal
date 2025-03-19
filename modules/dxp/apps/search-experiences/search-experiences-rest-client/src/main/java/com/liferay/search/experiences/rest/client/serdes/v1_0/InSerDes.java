@@ -67,7 +67,7 @@ public class InSerDes {
 
 			if (in.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)in.getValue());
+				sb.append(_escape((String)in.getValue()));
 				sb.append("\"");
 			}
 			else {

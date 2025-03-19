@@ -65,7 +65,7 @@ public class FragmentImageSerDes {
 
 			if (fragmentImage.getDescription() instanceof String) {
 				sb.append("\"");
-				sb.append((String)fragmentImage.getDescription());
+				sb.append(_escape((String)fragmentImage.getDescription()));
 				sb.append("\"");
 			}
 			else {
@@ -92,7 +92,7 @@ public class FragmentImageSerDes {
 
 			if (fragmentImage.getTitle() instanceof String) {
 				sb.append("\"");
-				sb.append((String)fragmentImage.getTitle());
+				sb.append(_escape((String)fragmentImage.getTitle()));
 				sb.append("\"");
 			}
 			else {
@@ -109,7 +109,7 @@ public class FragmentImageSerDes {
 
 			if (fragmentImage.getUrl() instanceof String) {
 				sb.append("\"");
-				sb.append((String)fragmentImage.getUrl());
+				sb.append(_escape((String)fragmentImage.getUrl()));
 				sb.append("\"");
 			}
 			else {

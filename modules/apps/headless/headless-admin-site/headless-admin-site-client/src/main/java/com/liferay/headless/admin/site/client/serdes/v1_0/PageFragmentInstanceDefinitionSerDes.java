@@ -232,8 +232,10 @@ public class PageFragmentInstanceDefinitionSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)
-						pageFragmentInstanceDefinition.getFragmentReference());
+					_escape(
+						(String)
+							pageFragmentInstanceDefinition.
+								getFragmentReference()));
 				sb.append("\"");
 			}
 			else {

@@ -56,7 +56,7 @@ public class FragmentLinkSerDes {
 
 			if (fragmentLink.getHref() instanceof String) {
 				sb.append("\"");
-				sb.append((String)fragmentLink.getHref());
+				sb.append(_escape((String)fragmentLink.getHref()));
 				sb.append("\"");
 			}
 			else {

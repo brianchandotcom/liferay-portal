@@ -57,7 +57,9 @@ public class PageDropZoneDefinitionSerDes {
 					String) {
 
 				sb.append("\"");
-				sb.append((String)pageDropZoneDefinition.getFragmentSettings());
+				sb.append(
+					_escape(
+						(String)pageDropZoneDefinition.getFragmentSettings()));
 				sb.append("\"");
 			}
 			else {

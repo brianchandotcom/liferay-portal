@@ -58,8 +58,10 @@ public class TaxonomyCategoryBriefSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)
-						taxonomyCategoryBrief.getEmbeddedTaxonomyCategory());
+					_escape(
+						(String)
+							taxonomyCategoryBrief.
+								getEmbeddedTaxonomyCategory()));
 				sb.append("\"");
 			}
 			else {

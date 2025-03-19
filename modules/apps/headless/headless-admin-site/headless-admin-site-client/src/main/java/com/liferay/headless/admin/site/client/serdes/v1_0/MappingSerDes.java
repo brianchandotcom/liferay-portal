@@ -67,7 +67,7 @@ public class MappingSerDes {
 
 			if (mapping.getItemReference() instanceof String) {
 				sb.append("\"");
-				sb.append((String)mapping.getItemReference());
+				sb.append(_escape((String)mapping.getItemReference()));
 				sb.append("\"");
 			}
 			else {

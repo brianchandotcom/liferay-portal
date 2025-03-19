@@ -57,7 +57,9 @@ public class FriendlyUrlHistorySerDes {
 					String) {
 
 				sb.append("\"");
-				sb.append((String)friendlyUrlHistory.getFriendlyUrlPath_i18n());
+				sb.append(
+					_escape(
+						(String)friendlyUrlHistory.getFriendlyUrlPath_i18n()));
 				sb.append("\"");
 			}
 			else {

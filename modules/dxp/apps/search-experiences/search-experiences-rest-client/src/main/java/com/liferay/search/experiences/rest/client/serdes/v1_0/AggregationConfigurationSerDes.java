@@ -57,7 +57,7 @@ public class AggregationConfigurationSerDes {
 
 			if (aggregationConfiguration.getAggs() instanceof String) {
 				sb.append("\"");
-				sb.append((String)aggregationConfiguration.getAggs());
+				sb.append(_escape((String)aggregationConfiguration.getAggs()));
 				sb.append("\"");
 			}
 			else {

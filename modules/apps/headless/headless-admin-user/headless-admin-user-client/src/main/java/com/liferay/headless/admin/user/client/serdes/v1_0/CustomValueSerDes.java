@@ -55,7 +55,7 @@ public class CustomValueSerDes {
 
 			if (customValue.getData() instanceof String) {
 				sb.append("\"");
-				sb.append((String)customValue.getData());
+				sb.append(_escape((String)customValue.getData()));
 				sb.append("\"");
 			}
 			else {

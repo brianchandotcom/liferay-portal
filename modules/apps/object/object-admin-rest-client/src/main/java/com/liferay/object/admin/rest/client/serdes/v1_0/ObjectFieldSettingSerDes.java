@@ -89,7 +89,7 @@ public class ObjectFieldSettingSerDes {
 
 			if (objectFieldSetting.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)objectFieldSetting.getValue());
+				sb.append(_escape((String)objectFieldSetting.getValue()));
 				sb.append("\"");
 			}
 			else {

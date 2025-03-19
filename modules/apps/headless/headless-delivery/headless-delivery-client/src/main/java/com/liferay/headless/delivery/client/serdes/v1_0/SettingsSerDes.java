@@ -82,7 +82,7 @@ public class SettingsSerDes {
 
 			if (settings.getFavIcon() instanceof String) {
 				sb.append("\"");
-				sb.append((String)settings.getFavIcon());
+				sb.append(_escape((String)settings.getFavIcon()));
 				sb.append("\"");
 			}
 			else {
@@ -203,7 +203,7 @@ public class SettingsSerDes {
 
 			if (settings.getThemeSettings() instanceof String) {
 				sb.append("\"");
-				sb.append((String)settings.getThemeSettings());
+				sb.append(_escape((String)settings.getThemeSettings()));
 				sb.append("\"");
 			}
 			else {

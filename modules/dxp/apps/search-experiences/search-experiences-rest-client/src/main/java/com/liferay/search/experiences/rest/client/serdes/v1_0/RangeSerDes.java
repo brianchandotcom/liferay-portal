@@ -67,7 +67,7 @@ public class RangeSerDes {
 
 			if (range.getGt() instanceof String) {
 				sb.append("\"");
-				sb.append((String)range.getGt());
+				sb.append(_escape((String)range.getGt()));
 				sb.append("\"");
 			}
 			else {
@@ -84,7 +84,7 @@ public class RangeSerDes {
 
 			if (range.getGte() instanceof String) {
 				sb.append("\"");
-				sb.append((String)range.getGte());
+				sb.append(_escape((String)range.getGte()));
 				sb.append("\"");
 			}
 			else {
@@ -101,7 +101,7 @@ public class RangeSerDes {
 
 			if (range.getLt() instanceof String) {
 				sb.append("\"");
-				sb.append((String)range.getLt());
+				sb.append(_escape((String)range.getLt()));
 				sb.append("\"");
 			}
 			else {
@@ -118,7 +118,7 @@ public class RangeSerDes {
 
 			if (range.getLte() instanceof String) {
 				sb.append("\"");
-				sb.append((String)range.getLte());
+				sb.append(_escape((String)range.getLte()));
 				sb.append("\"");
 			}
 			else {

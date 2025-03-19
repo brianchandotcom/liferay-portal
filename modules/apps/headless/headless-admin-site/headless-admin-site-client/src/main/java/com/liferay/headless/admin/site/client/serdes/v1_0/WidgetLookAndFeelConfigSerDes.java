@@ -60,7 +60,10 @@ public class WidgetLookAndFeelConfigSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)widgetLookAndFeelConfig.getAdvancedStylingConfig());
+					_escape(
+						(String)
+							widgetLookAndFeelConfig.
+								getAdvancedStylingConfig()));
 				sb.append("\"");
 			}
 			else {
@@ -80,8 +83,10 @@ public class WidgetLookAndFeelConfigSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)
-						widgetLookAndFeelConfig.getBackgroundStylesConfig());
+					_escape(
+						(String)
+							widgetLookAndFeelConfig.
+								getBackgroundStylesConfig()));
 				sb.append("\"");
 			}
 			else {
@@ -101,7 +106,9 @@ public class WidgetLookAndFeelConfigSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)widgetLookAndFeelConfig.getBorderStylesConfig());
+					_escape(
+						(String)
+							widgetLookAndFeelConfig.getBorderStylesConfig()));
 				sb.append("\"");
 			}
 			else {
@@ -118,7 +125,9 @@ public class WidgetLookAndFeelConfigSerDes {
 
 			if (widgetLookAndFeelConfig.getGeneralConfig() instanceof String) {
 				sb.append("\"");
-				sb.append((String)widgetLookAndFeelConfig.getGeneralConfig());
+				sb.append(
+					_escape(
+						(String)widgetLookAndFeelConfig.getGeneralConfig()));
 				sb.append("\"");
 			}
 			else {
@@ -138,8 +147,10 @@ public class WidgetLookAndFeelConfigSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)
-						widgetLookAndFeelConfig.getMarginAndPaddingConfig());
+					_escape(
+						(String)
+							widgetLookAndFeelConfig.
+								getMarginAndPaddingConfig()));
 				sb.append("\"");
 			}
 			else {
@@ -159,7 +170,8 @@ public class WidgetLookAndFeelConfigSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)widgetLookAndFeelConfig.getTextStylesConfig());
+					_escape(
+						(String)widgetLookAndFeelConfig.getTextStylesConfig()));
 				sb.append("\"");
 			}
 			else {

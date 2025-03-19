@@ -91,7 +91,7 @@ public class ObjectDefinitionSettingSerDes {
 
 			if (objectDefinitionSetting.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)objectDefinitionSetting.getValue());
+				sb.append(_escape((String)objectDefinitionSetting.getValue()));
 				sb.append("\"");
 			}
 			else {

@@ -63,8 +63,10 @@ public class PageCollectionItemDefinitionSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)
-						pageCollectionItemDefinition.getCollectionItemConfig());
+					_escape(
+						(String)
+							pageCollectionItemDefinition.
+								getCollectionItemConfig()));
 				sb.append("\"");
 			}
 			else {

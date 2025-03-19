@@ -55,7 +55,7 @@ public class QueryResponseSerDes {
 
 			if (queryResponse.getResources() instanceof String) {
 				sb.append("\"");
-				sb.append((String)queryResponse.getResources());
+				sb.append(_escape((String)queryResponse.getResources()));
 				sb.append("\"");
 			}
 			else {

@@ -95,7 +95,7 @@ public class SearchResponseSerDes {
 
 			if (searchResponse.getRequest() instanceof String) {
 				sb.append("\"");
-				sb.append((String)searchResponse.getRequest());
+				sb.append(_escape((String)searchResponse.getRequest()));
 				sb.append("\"");
 			}
 			else {
@@ -126,7 +126,7 @@ public class SearchResponseSerDes {
 
 			if (searchResponse.getResponse() instanceof String) {
 				sb.append("\"");
-				sb.append((String)searchResponse.getResponse());
+				sb.append(_escape((String)searchResponse.getResponse()));
 				sb.append("\"");
 			}
 			else {

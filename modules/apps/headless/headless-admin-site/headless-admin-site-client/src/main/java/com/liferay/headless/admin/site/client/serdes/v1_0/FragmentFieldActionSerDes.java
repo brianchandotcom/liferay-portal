@@ -55,7 +55,7 @@ public class FragmentFieldActionSerDes {
 
 			if (fragmentFieldAction.getAction() instanceof String) {
 				sb.append("\"");
-				sb.append((String)fragmentFieldAction.getAction());
+				sb.append(_escape((String)fragmentFieldAction.getAction()));
 				sb.append("\"");
 			}
 			else {
@@ -92,7 +92,7 @@ public class FragmentFieldActionSerDes {
 
 			if (fragmentFieldAction.getText() instanceof String) {
 				sb.append("\"");
-				sb.append((String)fragmentFieldAction.getText());
+				sb.append(_escape((String)fragmentFieldAction.getText()));
 				sb.append("\"");
 			}
 			else {

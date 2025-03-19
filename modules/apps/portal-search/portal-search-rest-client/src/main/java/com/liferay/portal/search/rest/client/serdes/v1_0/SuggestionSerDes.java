@@ -53,7 +53,7 @@ public class SuggestionSerDes {
 
 			if (suggestion.getAttributes() instanceof String) {
 				sb.append("\"");
-				sb.append((String)suggestion.getAttributes());
+				sb.append(_escape((String)suggestion.getAttributes()));
 				sb.append("\"");
 			}
 			else {

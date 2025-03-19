@@ -55,7 +55,7 @@ public class ContentSetElementSerDes {
 
 			if (contentSetElement.getContent() instanceof String) {
 				sb.append("\"");
-				sb.append((String)contentSetElement.getContent());
+				sb.append(_escape((String)contentSetElement.getContent()));
 				sb.append("\"");
 			}
 			else {

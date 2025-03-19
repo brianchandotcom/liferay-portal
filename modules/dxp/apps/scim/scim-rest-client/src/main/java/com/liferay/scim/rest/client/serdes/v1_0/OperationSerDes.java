@@ -81,7 +81,7 @@ public class OperationSerDes {
 
 			if (operation.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)operation.getValue());
+				sb.append(_escape((String)operation.getValue()));
 				sb.append("\"");
 			}
 			else {

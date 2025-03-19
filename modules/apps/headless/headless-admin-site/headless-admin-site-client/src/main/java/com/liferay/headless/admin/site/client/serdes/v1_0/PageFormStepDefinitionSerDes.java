@@ -55,7 +55,9 @@ public class PageFormStepDefinitionSerDes {
 
 			if (pageFormStepDefinition.getFormStepConfig() instanceof String) {
 				sb.append("\"");
-				sb.append((String)pageFormStepDefinition.getFormStepConfig());
+				sb.append(
+					_escape(
+						(String)pageFormStepDefinition.getFormStepConfig()));
 				sb.append("\"");
 			}
 			else {

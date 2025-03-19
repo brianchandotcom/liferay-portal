@@ -55,7 +55,7 @@ public class PageElementSerDes {
 
 			if (pageElement.getDefinition() instanceof String) {
 				sb.append("\"");
-				sb.append((String)pageElement.getDefinition());
+				sb.append(_escape((String)pageElement.getDefinition()));
 				sb.append("\"");
 			}
 			else {

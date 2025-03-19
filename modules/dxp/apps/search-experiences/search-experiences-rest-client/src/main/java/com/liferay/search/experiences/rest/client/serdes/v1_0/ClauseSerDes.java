@@ -153,7 +153,7 @@ public class ClauseSerDes {
 
 			if (clause.getQuery() instanceof String) {
 				sb.append("\"");
-				sb.append((String)clause.getQuery());
+				sb.append(_escape((String)clause.getQuery()));
 				sb.append("\"");
 			}
 			else {

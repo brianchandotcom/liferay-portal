@@ -67,7 +67,7 @@ public class ContainsSerDes {
 
 			if (contains.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)contains.getValue());
+				sb.append(_escape((String)contains.getValue()));
 				sb.append("\"");
 			}
 			else {

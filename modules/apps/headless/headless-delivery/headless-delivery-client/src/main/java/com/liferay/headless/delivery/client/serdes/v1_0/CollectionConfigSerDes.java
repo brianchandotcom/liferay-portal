@@ -55,7 +55,8 @@ public class CollectionConfigSerDes {
 
 			if (collectionConfig.getCollectionReference() instanceof String) {
 				sb.append("\"");
-				sb.append((String)collectionConfig.getCollectionReference());
+				sb.append(
+					_escape((String)collectionConfig.getCollectionReference()));
 				sb.append("\"");
 			}
 			else {

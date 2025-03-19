@@ -61,7 +61,7 @@ public class SubscriptionSerDes {
 
 			if (subscription.getContentId() instanceof String) {
 				sb.append("\"");
-				sb.append((String)subscription.getContentId());
+				sb.append(_escape((String)subscription.getContentId()));
 				sb.append("\"");
 			}
 			else {

@@ -75,7 +75,7 @@ public class CompareRunsSerDes {
 
 			if (compareRuns.getValues() instanceof String) {
 				sb.append("\"");
-				sb.append((String)compareRuns.getValues());
+				sb.append(_escape((String)compareRuns.getValues()));
 				sb.append("\"");
 			}
 			else {

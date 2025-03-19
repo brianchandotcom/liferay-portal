@@ -125,7 +125,7 @@ public class DSRecipientSerDes {
 
 			if (dsRecipient.getTabs() instanceof String) {
 				sb.append("\"");
-				sb.append((String)dsRecipient.getTabs());
+				sb.append(_escape((String)dsRecipient.getTabs()));
 				sb.append("\"");
 			}
 			else {

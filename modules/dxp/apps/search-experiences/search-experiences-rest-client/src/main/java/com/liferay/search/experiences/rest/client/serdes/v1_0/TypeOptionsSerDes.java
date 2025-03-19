@@ -80,7 +80,7 @@ public class TypeOptionsSerDes {
 
 			if (typeOptions.getMax() instanceof String) {
 				sb.append("\"");
-				sb.append((String)typeOptions.getMax());
+				sb.append(_escape((String)typeOptions.getMax()));
 				sb.append("\"");
 			}
 			else {
@@ -97,7 +97,7 @@ public class TypeOptionsSerDes {
 
 			if (typeOptions.getMin() instanceof String) {
 				sb.append("\"");
-				sb.append((String)typeOptions.getMin());
+				sb.append(_escape((String)typeOptions.getMin()));
 				sb.append("\"");
 			}
 			else {
@@ -154,7 +154,7 @@ public class TypeOptionsSerDes {
 
 			if (typeOptions.getStep() instanceof String) {
 				sb.append("\"");
-				sb.append((String)typeOptions.getStep());
+				sb.append(_escape((String)typeOptions.getStep()));
 				sb.append("\"");
 			}
 			else {

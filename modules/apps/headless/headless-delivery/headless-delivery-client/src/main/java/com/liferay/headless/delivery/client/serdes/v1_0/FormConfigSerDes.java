@@ -53,7 +53,7 @@ public class FormConfigSerDes {
 
 			if (formConfig.getFormReference() instanceof String) {
 				sb.append("\"");
-				sb.append((String)formConfig.getFormReference());
+				sb.append(_escape((String)formConfig.getFormReference()));
 				sb.append("\"");
 			}
 			else {
@@ -70,7 +70,9 @@ public class FormConfigSerDes {
 
 			if (formConfig.getFormSuccessSubmissionResult() instanceof String) {
 				sb.append("\"");
-				sb.append((String)formConfig.getFormSuccessSubmissionResult());
+				sb.append(
+					_escape(
+						(String)formConfig.getFormSuccessSubmissionResult()));
 				sb.append("\"");
 			}
 			else {

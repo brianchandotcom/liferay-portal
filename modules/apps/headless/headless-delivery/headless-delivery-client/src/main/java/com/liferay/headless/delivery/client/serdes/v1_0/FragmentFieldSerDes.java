@@ -69,7 +69,7 @@ public class FragmentFieldSerDes {
 
 			if (fragmentField.getValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)fragmentField.getValue());
+				sb.append(_escape((String)fragmentField.getValue()));
 				sb.append("\"");
 			}
 			else {

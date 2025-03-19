@@ -53,7 +53,7 @@ public class ParameterSerDes {
 
 			if (parameter.getDefaultValue() instanceof String) {
 				sb.append("\"");
-				sb.append((String)parameter.getDefaultValue());
+				sb.append(_escape((String)parameter.getDefaultValue()));
 				sb.append("\"");
 			}
 			else {
@@ -84,7 +84,7 @@ public class ParameterSerDes {
 
 			if (parameter.getMax() instanceof String) {
 				sb.append("\"");
-				sb.append((String)parameter.getMax());
+				sb.append(_escape((String)parameter.getMax()));
 				sb.append("\"");
 			}
 			else {
@@ -101,7 +101,7 @@ public class ParameterSerDes {
 
 			if (parameter.getMin() instanceof String) {
 				sb.append("\"");
-				sb.append((String)parameter.getMin());
+				sb.append(_escape((String)parameter.getMin()));
 				sb.append("\"");
 			}
 			else {

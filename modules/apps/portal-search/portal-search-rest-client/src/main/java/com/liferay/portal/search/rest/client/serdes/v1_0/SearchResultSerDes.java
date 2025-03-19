@@ -115,7 +115,7 @@ public class SearchResultSerDes {
 
 			if (searchResult.getEmbedded() instanceof String) {
 				sb.append("\"");
-				sb.append((String)searchResult.getEmbedded());
+				sb.append(_escape((String)searchResult.getEmbedded()));
 				sb.append("\"");
 			}
 			else {

@@ -55,7 +55,7 @@ public class BackgroundImageSerDes {
 
 			if (backgroundImage.getDescription() instanceof String) {
 				sb.append("\"");
-				sb.append((String)backgroundImage.getDescription());
+				sb.append(_escape((String)backgroundImage.getDescription()));
 				sb.append("\"");
 			}
 			else {
@@ -72,7 +72,7 @@ public class BackgroundImageSerDes {
 
 			if (backgroundImage.getTitle() instanceof String) {
 				sb.append("\"");
-				sb.append((String)backgroundImage.getTitle());
+				sb.append(_escape((String)backgroundImage.getTitle()));
 				sb.append("\"");
 			}
 			else {
@@ -89,7 +89,7 @@ public class BackgroundImageSerDes {
 
 			if (backgroundImage.getUrl() instanceof String) {
 				sb.append("\"");
-				sb.append((String)backgroundImage.getUrl());
+				sb.append(_escape((String)backgroundImage.getUrl()));
 				sb.append("\"");
 			}
 			else {

@@ -63,7 +63,8 @@ public class SuggestionsContributorResultsSerDes {
 
 				sb.append("\"");
 				sb.append(
-					(String)suggestionsContributorResults.getAttributes());
+					_escape(
+						(String)suggestionsContributorResults.getAttributes()));
 				sb.append("\"");
 			}
 			else {

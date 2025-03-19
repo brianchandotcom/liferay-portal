@@ -74,7 +74,7 @@ interface IProps {
 }
 
 type Errors = {
-	[key: number]: any;
+	[key: string]: any;
 };
 
 export default function ScriptElementAttributesFormField({
@@ -110,15 +110,15 @@ export default function ScriptElementAttributesFormField({
 		});
 	};
 
-	const handleErrorChange = (index: number, error: boolean) => {
+	const handleErrorChange = (id: string, error: boolean) => {
 		if (error) {
-			setErrors((prevErrors) => ({...prevErrors, [index]: true}));
+			setErrors((prevErrors) => ({...prevErrors, [id]: true}));
 		}
 		else {
 			setErrors((prevErrors) => {
 				const newErrors = {...prevErrors};
 
-				delete newErrors[index];
+				delete newErrors[id];
 
 				return newErrors;
 			});
@@ -126,6 +126,8 @@ export default function ScriptElementAttributesFormField({
 	};
 
 	const handleRemoveClick = (index: number) => {
+		handleErrorChange(attributes[index].id, false);
+
 		setAttributes((prevAttributes) => [
 			...prevAttributes.slice(0, index),
 			...prevAttributes.slice(index + 1),
@@ -150,6 +152,7 @@ export default function ScriptElementAttributesFormField({
 			{attributes.map((attribute, index) => (
 				<AttributeFields
 					disabled={disabled}
+					id={attribute.id}
 					index={index}
 					key={attribute.id}
 					name={attribute.name}

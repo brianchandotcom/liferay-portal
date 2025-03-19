@@ -31,16 +31,16 @@ public class AddressServiceUtil {
 	 */
 	public static Address addAddress(
 			String externalReferenceCode, String className, long classPK,
-			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, long listTypeId, boolean mailing, boolean primary,
-			String phoneNumber, ServiceContext serviceContext)
+			long countryId, long listTypeId, long regionId, String city,
+			String description, boolean mailing, String name, boolean primary,
+			String street1, String street2, String street3, String subtype,
+			String zip, String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAddress(
-			externalReferenceCode, className, classPK, name, description,
-			street1, street2, street3, city, zip, regionId, countryId,
-			listTypeId, mailing, primary, phoneNumber, serviceContext);
+			externalReferenceCode, className, classPK, countryId, listTypeId,
+			regionId, city, description, mailing, name, primary, street1,
+			street2, street3, subtype, zip, phoneNumber, serviceContext);
 	}
 
 	public static void deleteAddress(long addressId) throws PortalException {
@@ -75,15 +75,17 @@ public class AddressServiceUtil {
 	}
 
 	public static Address updateAddress(
-			long addressId, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber)
+			String externalReferenceCode, long addressId, long countryId,
+			long listTypeId, long regionId, String city, String description,
+			boolean mailing, String name, boolean primary, String street1,
+			String street2, String street3, String subtype, String zip,
+			String phoneNumber)
 		throws PortalException {
 
 		return getService().updateAddress(
-			addressId, name, description, street1, street2, street3, city, zip,
-			regionId, countryId, listTypeId, mailing, primary, phoneNumber);
+			externalReferenceCode, addressId, countryId, listTypeId, regionId,
+			city, description, mailing, name, primary, street1, street2,
+			street3, subtype, zip, phoneNumber);
 	}
 
 	public static Address updateExternalReferenceCode(

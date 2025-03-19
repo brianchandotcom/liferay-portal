@@ -24,6 +24,7 @@ create table Address (
 	street1 VARCHAR(255) null,
 	street2 VARCHAR(255) null,
 	street3 VARCHAR(255) null,
+	subtype VARCHAR(75) null,
 	validationDate DATE null,
 	validationStatus INTEGER,
 	zip VARCHAR(75) null,

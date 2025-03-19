@@ -83,10 +83,11 @@ public interface AddressLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Address addAddress(
 			String externalReferenceCode, long userId, String className,
-			long classPK, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber, ServiceContext serviceContext)
+			long classPK, long countryId, long listTypeId, long regionId,
+			String city, String description, boolean mailing, String name,
+			boolean primary, String street1, String street2, String street3,
+			String subtype, String zip, String phoneNumber,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public Address copyAddress(
@@ -360,18 +361,13 @@ public interface AddressLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Address updateAddress(Address address);
 
-	public Address updateAddress(
-			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId,
-			long listTypeId, boolean mailing, boolean primary)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public Address updateAddress(
-			long addressId, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber)
+			String externalReferenceCode, long addressId, long countryId,
+			long listTypeId, long regionId, String city, String description,
+			boolean mailing, String name, boolean primary, String street1,
+			String street2, String street3, String subtype, String zip,
+			String phoneNumber)
 		throws PortalException;
 
 	public Address updateExternalReferenceCode(

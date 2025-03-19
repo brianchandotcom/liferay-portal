@@ -45,10 +45,10 @@ public interface AddressService extends BaseService {
 	 */
 	public Address addAddress(
 			String externalReferenceCode, String className, long classPK,
-			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, long listTypeId, boolean mailing, boolean primary,
-			String phoneNumber, ServiceContext serviceContext)
+			long countryId, long listTypeId, long regionId, String city,
+			String description, boolean mailing, String name, boolean primary,
+			String street1, String street2, String street3, String subtype,
+			String zip, String phoneNumber, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteAddress(long addressId) throws PortalException;
@@ -73,10 +73,11 @@ public interface AddressService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public Address updateAddress(
-			long addressId, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber)
+			String externalReferenceCode, long addressId, long countryId,
+			long listTypeId, long regionId, String city, String description,
+			boolean mailing, String name, boolean primary, String street1,
+			String street2, String street3, String subtype, String zip,
+			String phoneNumber)
 		throws PortalException;
 
 	public Address updateExternalReferenceCode(

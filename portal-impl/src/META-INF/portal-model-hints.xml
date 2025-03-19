@@ -532,6 +532,7 @@
 		<field name="street3" type="String">
 			<hint name="max-length">255</hint>
 		</field>
+		<field name="subtype" type="String" />
 		<field name="validationDate" type="Date" />
 		<field name="validationStatus" type="int" />
 		<field name="zip" type="String" />

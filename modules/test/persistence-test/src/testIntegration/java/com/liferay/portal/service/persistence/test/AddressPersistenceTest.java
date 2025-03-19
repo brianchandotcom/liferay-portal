@@ -164,6 +164,8 @@ public class AddressPersistenceTest {
 
 		newAddress.setStreet3(RandomTestUtil.randomString());
 
+		newAddress.setSubtype(RandomTestUtil.randomString());
+
 		newAddress.setValidationDate(RandomTestUtil.nextDate());
 
 		newAddress.setValidationStatus(RandomTestUtil.nextInt());
@@ -226,6 +228,8 @@ public class AddressPersistenceTest {
 			existingAddress.getStreet2(), newAddress.getStreet2());
 		Assert.assertEquals(
 			existingAddress.getStreet3(), newAddress.getStreet3());
+		Assert.assertEquals(
+			existingAddress.getSubtype(), newAddress.getSubtype());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingAddress.getValidationDate()),
 			Time.getShortTimestamp(newAddress.getValidationDate()));
@@ -393,8 +397,8 @@ public class AddressPersistenceTest {
 			"countryId", true, "listTypeId", true, "regionId", true, "city",
 			true, "description", true, "latitude", true, "longitude", true,
 			"mailing", true, "name", true, "primary", true, "street1", true,
-			"street2", true, "street3", true, "validationDate", true,
-			"validationStatus", true, "zip", true);
+			"street2", true, "street3", true, "subtype", true, "validationDate",
+			true, "validationStatus", true, "zip", true);
 	}
 
 	@Test
@@ -713,6 +717,8 @@ public class AddressPersistenceTest {
 		address.setStreet2(RandomTestUtil.randomString());
 
 		address.setStreet3(RandomTestUtil.randomString());
+
+		address.setSubtype(RandomTestUtil.randomString());
 
 		address.setValidationDate(RandomTestUtil.nextDate());
 

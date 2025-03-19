@@ -473,6 +473,21 @@ public interface AddressModel
 	public void setStreet3(String street3);
 
 	/**
+	 * Returns the subtype of this address.
+	 *
+	 * @return the subtype of this address
+	 */
+	@AutoEscape
+	public String getSubtype();
+
+	/**
+	 * Sets the subtype of this address.
+	 *
+	 * @param subtype the subtype of this address
+	 */
+	public void setSubtype(String subtype);
+
+	/**
 	 * Returns the validation date of this address.
 	 *
 	 * @return the validation date of this address

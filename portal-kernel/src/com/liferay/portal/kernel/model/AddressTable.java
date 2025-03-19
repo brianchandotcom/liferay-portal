@@ -75,6 +75,8 @@ public class AddressTable extends BaseTable<AddressTable> {
 		"street2", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, String> street3 = createColumn(
 		"street3", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, String> subtype = createColumn(
+		"subtype", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Date> validationDate = createColumn(
 		"validationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Integer> validationStatus = createColumn(

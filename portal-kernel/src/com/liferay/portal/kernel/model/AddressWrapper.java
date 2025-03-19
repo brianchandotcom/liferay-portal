@@ -60,6 +60,7 @@ public class AddressWrapper
 		attributes.put("street1", getStreet1());
 		attributes.put("street2", getStreet2());
 		attributes.put("street3", getStreet3());
+		attributes.put("subtype", getSubtype());
 		attributes.put("validationDate", getValidationDate());
 		attributes.put("validationStatus", getValidationStatus());
 		attributes.put("zip", getZip());
@@ -218,6 +219,12 @@ public class AddressWrapper
 
 		if (street3 != null) {
 			setStreet3(street3);
+		}
+
+		String subtype = (String)attributes.get("subtype");
+
+		if (subtype != null) {
+			setSubtype(subtype);
 		}
 
 		Date validationDate = (Date)attributes.get("validationDate");
@@ -502,6 +509,16 @@ public class AddressWrapper
 	@Override
 	public String getStreet3() {
 		return model.getStreet3();
+	}
+
+	/**
+	 * Returns the subtype of this address.
+	 *
+	 * @return the subtype of this address
+	 */
+	@Override
+	public String getSubtype() {
+		return model.getSubtype();
 	}
 
 	/**
@@ -832,6 +849,16 @@ public class AddressWrapper
 	@Override
 	public void setStreet3(String street3) {
 		model.setStreet3(street3);
+	}
+
+	/**
+	 * Sets the subtype of this address.
+	 *
+	 * @param subtype the subtype of this address
+	 */
+	@Override
+	public void setSubtype(String subtype) {
+		model.setSubtype(subtype);
 	}
 
 	/**

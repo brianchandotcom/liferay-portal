@@ -78,7 +78,8 @@ public class AddressModelImpl
 		{"longitude", Types.DOUBLE}, {"mailing", Types.BOOLEAN},
 		{"name", Types.VARCHAR}, {"primary_", Types.BOOLEAN},
 		{"street1", Types.VARCHAR}, {"street2", Types.VARCHAR},
-		{"street3", Types.VARCHAR}, {"validationDate", Types.TIMESTAMP},
+		{"street3", Types.VARCHAR}, {"subtype", Types.VARCHAR},
+		{"validationDate", Types.TIMESTAMP},
 		{"validationStatus", Types.INTEGER}, {"zip", Types.VARCHAR}
 	};
 
@@ -111,13 +112,14 @@ public class AddressModelImpl
 		TABLE_COLUMNS_MAP.put("street1", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street2", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street3", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("subtype", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("validationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("validationStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Address (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG,listTypeId LONG,regionId LONG,city VARCHAR(75) null,description STRING null,latitude DOUBLE,longitude DOUBLE,mailing BOOLEAN,name VARCHAR(255) null,primary_ BOOLEAN,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,validationDate DATE null,validationStatus INTEGER,zip VARCHAR(75) null,primary key (addressId, ctCollectionId))";
+		"create table Address (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG,listTypeId LONG,regionId LONG,city VARCHAR(75) null,description STRING null,latitude DOUBLE,longitude DOUBLE,mailing BOOLEAN,name VARCHAR(255) null,primary_ BOOLEAN,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,subtype VARCHAR(75) null,validationDate DATE null,validationStatus INTEGER,zip VARCHAR(75) null,primary key (addressId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Address";
 
@@ -352,6 +354,7 @@ public class AddressModelImpl
 			attributeGetterFunctions.put("street1", Address::getStreet1);
 			attributeGetterFunctions.put("street2", Address::getStreet2);
 			attributeGetterFunctions.put("street3", Address::getStreet3);
+			attributeGetterFunctions.put("subtype", Address::getSubtype);
 			attributeGetterFunctions.put(
 				"validationDate", Address::getValidationDate);
 			attributeGetterFunctions.put(
@@ -432,6 +435,8 @@ public class AddressModelImpl
 				"street2", (BiConsumer<Address, String>)Address::setStreet2);
 			attributeSetterBiConsumers.put(
 				"street3", (BiConsumer<Address, String>)Address::setStreet3);
+			attributeSetterBiConsumers.put(
+				"subtype", (BiConsumer<Address, String>)Address::setSubtype);
 			attributeSetterBiConsumers.put(
 				"validationDate",
 				(BiConsumer<Address, Date>)Address::setValidationDate);
@@ -1029,6 +1034,26 @@ public class AddressModelImpl
 
 	@JSON
 	@Override
+	public String getSubtype() {
+		if (_subtype == null) {
+			return "";
+		}
+		else {
+			return _subtype;
+		}
+	}
+
+	@Override
+	public void setSubtype(String subtype) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subtype = subtype;
+	}
+
+	@JSON
+	@Override
 	public Date getValidationDate() {
 		return _validationDate;
 	}
@@ -1165,6 +1190,7 @@ public class AddressModelImpl
 		addressImpl.setStreet1(getStreet1());
 		addressImpl.setStreet2(getStreet2());
 		addressImpl.setStreet3(getStreet3());
+		addressImpl.setSubtype(getSubtype());
 		addressImpl.setValidationDate(getValidationDate());
 		addressImpl.setValidationStatus(getValidationStatus());
 		addressImpl.setZip(getZip());
@@ -1218,6 +1244,7 @@ public class AddressModelImpl
 		addressImpl.setStreet1(this.<String>getColumnOriginalValue("street1"));
 		addressImpl.setStreet2(this.<String>getColumnOriginalValue("street2"));
 		addressImpl.setStreet3(this.<String>getColumnOriginalValue("street3"));
+		addressImpl.setSubtype(this.<String>getColumnOriginalValue("subtype"));
 		addressImpl.setValidationDate(
 			this.<Date>getColumnOriginalValue("validationDate"));
 		addressImpl.setValidationStatus(
@@ -1418,6 +1445,14 @@ public class AddressModelImpl
 			addressCacheModel.street3 = null;
 		}
 
+		addressCacheModel.subtype = getSubtype();
+
+		String subtype = addressCacheModel.subtype;
+
+		if ((subtype != null) && (subtype.length() == 0)) {
+			addressCacheModel.subtype = null;
+		}
+
 		Date validationDate = getValidationDate();
 
 		if (validationDate != null) {
@@ -1524,6 +1559,7 @@ public class AddressModelImpl
 	private String _street1;
 	private String _street2;
 	private String _street3;
+	private String _subtype;
 	private Date _validationDate;
 	private int _validationStatus;
 	private String _zip;
@@ -1584,6 +1620,7 @@ public class AddressModelImpl
 		_columnOriginalValues.put("street1", _street1);
 		_columnOriginalValues.put("street2", _street2);
 		_columnOriginalValues.put("street3", _street3);
+		_columnOriginalValues.put("subtype", _subtype);
 		_columnOriginalValues.put("validationDate", _validationDate);
 		_columnOriginalValues.put("validationStatus", _validationStatus);
 		_columnOriginalValues.put("zip", _zip);
@@ -1661,11 +1698,13 @@ public class AddressModelImpl
 
 		columnBitmasks.put("street3", 16777216L);
 
-		columnBitmasks.put("validationDate", 33554432L);
+		columnBitmasks.put("subtype", 33554432L);
 
-		columnBitmasks.put("validationStatus", 67108864L);
+		columnBitmasks.put("validationDate", 67108864L);
 
-		columnBitmasks.put("zip", 134217728L);
+		columnBitmasks.put("validationStatus", 134217728L);
+
+		columnBitmasks.put("zip", 268435456L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

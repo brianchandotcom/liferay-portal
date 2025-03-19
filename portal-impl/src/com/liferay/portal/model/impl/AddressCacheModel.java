@@ -67,7 +67,7 @@ public class AddressCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -119,6 +119,8 @@ public class AddressCacheModel
 		sb.append(street2);
 		sb.append(", street3=");
 		sb.append(street3);
+		sb.append(", subtype=");
+		sb.append(subtype);
 		sb.append(", validationDate=");
 		sb.append(validationDate);
 		sb.append(", validationStatus=");
@@ -230,6 +232,13 @@ public class AddressCacheModel
 			addressImpl.setStreet3(street3);
 		}
 
+		if (subtype == null) {
+			addressImpl.setSubtype("");
+		}
+		else {
+			addressImpl.setSubtype(subtype);
+		}
+
 		if (validationDate == Long.MIN_VALUE) {
 			addressImpl.setValidationDate(null);
 		}
@@ -291,6 +300,7 @@ public class AddressCacheModel
 		street1 = objectInput.readUTF();
 		street2 = objectInput.readUTF();
 		street3 = objectInput.readUTF();
+		subtype = objectInput.readUTF();
 		validationDate = objectInput.readLong();
 
 		validationStatus = objectInput.readInt();
@@ -393,6 +403,13 @@ public class AddressCacheModel
 			objectOutput.writeUTF(street3);
 		}
 
+		if (subtype == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(subtype);
+		}
+
 		objectOutput.writeLong(validationDate);
 
 		objectOutput.writeInt(validationStatus);
@@ -430,6 +447,7 @@ public class AddressCacheModel
 	public String street1;
 	public String street2;
 	public String street3;
+	public String subtype;
 	public long validationDate;
 	public int validationStatus;
 	public String zip;

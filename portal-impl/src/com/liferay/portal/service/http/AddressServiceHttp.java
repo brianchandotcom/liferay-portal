@@ -43,10 +43,10 @@ public class AddressServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Address addAddress(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, long listTypeId,
-			boolean mailing, boolean primary, String phoneNumber,
+			String className, long classPK, long countryId, long listTypeId,
+			long regionId, String city, String description, boolean mailing,
+			String name, boolean primary, String street1, String street2,
+			String street3, String subtype, String zip, String phoneNumber,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -56,9 +56,9 @@ public class AddressServiceHttp {
 				_addAddressParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, className, classPK, name,
-				description, street1, street2, street3, city, zip, regionId,
-				countryId, listTypeId, mailing, primary, phoneNumber,
+				methodKey, externalReferenceCode, className, classPK, countryId,
+				listTypeId, regionId, city, description, mailing, name, primary,
+				street1, street2, street3, subtype, zip, phoneNumber,
 				serviceContext);
 
 			Object returnObj = null;
@@ -251,11 +251,11 @@ public class AddressServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Address updateAddress(
-			HttpPrincipal httpPrincipal, long addressId, String name,
-			String description, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId,
-			long listTypeId, boolean mailing, boolean primary,
-			String phoneNumber)
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long addressId, long countryId, long listTypeId, long regionId,
+			String city, String description, boolean mailing, String name,
+			boolean primary, String street1, String street2, String street3,
+			String subtype, String zip, String phoneNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -264,9 +264,9 @@ public class AddressServiceHttp {
 				_updateAddressParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, addressId, name, description, street1, street2,
-				street3, city, zip, regionId, countryId, listTypeId, mailing,
-				primary, phoneNumber);
+				methodKey, externalReferenceCode, addressId, countryId,
+				listTypeId, regionId, city, description, mailing, name, primary,
+				street1, street2, street3, subtype, zip, phoneNumber);
 
 			Object returnObj = null;
 
@@ -384,10 +384,11 @@ public class AddressServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(AddressServiceHttp.class);
 
 	private static final Class<?>[] _addAddressParameterTypes0 = new Class[] {
-		String.class, String.class, long.class, String.class, String.class,
-		String.class, String.class, String.class, String.class, String.class,
-		long.class, long.class, long.class, boolean.class, boolean.class,
-		String.class, com.liferay.portal.kernel.service.ServiceContext.class
+		String.class, String.class, long.class, long.class, long.class,
+		long.class, String.class, String.class, boolean.class, String.class,
+		boolean.class, String.class, String.class, String.class, String.class,
+		String.class, String.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _deleteAddressParameterTypes1 =
 		new Class[] {long.class};
@@ -401,9 +402,10 @@ public class AddressServiceHttp {
 		new Class[] {String.class, long.class, long[].class};
 	private static final Class<?>[] _updateAddressParameterTypes5 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, long.class, long.class,
-			long.class, boolean.class, boolean.class, String.class
+			String.class, long.class, long.class, long.class, long.class,
+			String.class, String.class, boolean.class, String.class,
+			boolean.class, String.class, String.class, String.class,
+			String.class, String.class, String.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes6 = new Class[] {

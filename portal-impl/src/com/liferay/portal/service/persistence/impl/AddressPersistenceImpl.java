@@ -7668,6 +7668,7 @@ public class AddressPersistenceImpl
 		ctMergeColumnNames.add("street1");
 		ctMergeColumnNames.add("street2");
 		ctMergeColumnNames.add("street3");
+		ctMergeColumnNames.add("subtype");
 		ctMergeColumnNames.add("validationDate");
 		ctMergeColumnNames.add("validationStatus");
 		ctMergeColumnNames.add("zip");

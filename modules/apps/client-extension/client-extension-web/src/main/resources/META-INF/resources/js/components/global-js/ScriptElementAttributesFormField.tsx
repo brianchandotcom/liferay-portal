@@ -8,6 +8,9 @@ import ClayButton from '@clayui/button';
 // @ts-nocheck
 
 import React, {useEffect, useState} from 'react';
+
+// @ts-ignore - Check possibility to install package in ts format
+
 import {v4 as uuidv4} from 'uuid';
 
 import {disableFormSubmitButton} from '../../clientExtensionUtil';
@@ -91,16 +94,20 @@ export default function ScriptElementAttributesFormField({
 	}, [numberOfErrors, portletNamespace]);
 
 	const handleAddClick = () => {
-		setAttributes(attributes.toSpliced(attributes.length, 0, emptyRow()));
+		setAttributes((prevAttributes) => [...prevAttributes, emptyRow()]);
 	};
 
 	const handleAttributeChange = (
 		index: number,
 		updatedValue: PartialAttribute
 	) => {
-		setAttributes((prevList) =>
-			prevList.with(index, {...prevList[index], ...updatedValue})
-		);
+		setAttributes((prevAttributes) => {
+			const newAttributes = [...prevAttributes];
+
+			newAttributes[index] = {...newAttributes[index], ...updatedValue};
+
+			return newAttributes;
+		});
 	};
 
 	const handleErrorChange = (index: number, error: boolean) => {
@@ -119,7 +126,10 @@ export default function ScriptElementAttributesFormField({
 	};
 
 	const handleRemoveClick = (index: number) => {
-		setAttributes(attributes.toSpliced(index, 1));
+		setAttributes((prevAttributes) => [
+			...prevAttributes.slice(0, index),
+			...prevAttributes.slice(index + 1),
+		]);
 	};
 
 	return (

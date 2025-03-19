@@ -2135,26 +2135,25 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						Assert.assertNotNull(put${schemaName}.getPermissions());
 					</#if>
-				</#if>
 
-				<#if javaMethodSignature.methodName?ends_with("ByExternalReferenceCode")>
-					${schemaName} new${schemaName} = test${javaMethodSignature.methodName?cap_first}_create${schemaName}();
+					<#if javaMethodSignature.methodName?ends_with("ByExternalReferenceCode")>
+						${schemaName} new${schemaName} = test${javaMethodSignature.methodName?cap_first}_create${schemaName}();
 
-					put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-						<@getPutParameters
-							hasMultipartFiles = false
-							javaMethodSignature = javaMethodSignature
-							newSchemaVarNamePrefix = "new"
-							schemaName = schemaName
-							schemaVarName = schemaVarName
-							schemaVarNamePrefix = "new"
-						/>
-					);
+						put${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+							<@getPutParameters
+								hasMultipartFiles = false
+								javaMethodSignature = javaMethodSignature
+								newSchemaVarNamePrefix = "new"
+								schemaName = schemaName
+								schemaVarName = schemaVarName
+								schemaVarNamePrefix = "new"
+							/>
+						);
 
-					assertEquals(new${schemaName}, put${schemaName});
-					assertValid(put${schemaName});
+						assertEquals(new${schemaName}, put${schemaName});
+						assertValid(put${schemaName});
 
-					get${schemaName} =
+						get${schemaName} =
 
 					<#assign getJavaMethodSignatureMethodName = javaMethodSignature.methodName?replace("put", "get", "f") />
 
@@ -2177,9 +2176,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 							/>);
 					</#if>
 
-					assertEquals(new${schemaName}, get${schemaName});
+						assertEquals(new${schemaName}, get${schemaName});
 
-					Assert.assertEquals(new${schemaName}.getExternalReferenceCode(), put${schemaName}.getExternalReferenceCode());
+						Assert.assertEquals(new${schemaName}.getExternalReferenceCode(), put${schemaName}.getExternalReferenceCode());
+					</#if>
 				</#if>
 			}
 

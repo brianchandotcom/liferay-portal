@@ -7,13 +7,11 @@ document.addEventListener('click', (event) => {
 	const dropdownContent = document.querySelector('.account-dropdown-content');
 	const dropdownNav = document.querySelector('.account-dropdown-nav');
 
-	const checkbox = dropdownNav.querySelector("input[type='checkbox']");
-
 	if (
 		!dropdownNav.contains(event.target) &&
 		dropdownContent &&
 		dropdownContent.style.display !== 'none'
 	) {
-		checkbox.checked = false;
+		dropdownNav.querySelector("input[type='checkbox']").checked = false;
 	}
 });

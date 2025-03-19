@@ -13,16 +13,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.ResourceTypesResource;
 
 import java.util.Map;
-
-import javax.ws.rs.core.Response;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -51,41 +47,12 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 
 	@Override
 	public Object getV2ResourceTypeById(String id) throws Exception {
-		return _buildResponse(_getSCIMResponse(id));
+		return ScimUtil.buildResponse(_getSCIMResponse(id));
 	}
 
 	@Override
 	public Object getV2ResourceTypes() throws Exception {
-		return _buildResponse(_getSCIMResponse(null));
-	}
-
-	private Response _buildResponse(SCIMResponse scimResponse) {
-		Response.ResponseBuilder responseBuilder = Response.status(
-			scimResponse.getResponseStatus());
-
-		if (scimResponse.getResponseMessage() != null) {
-			responseBuilder.entity(scimResponse.getResponseMessage());
-		}
-
-		Map<String, String> map = scimResponse.getHeaderParamMap();
-
-		if (MapUtil.isNotEmpty(map)) {
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				responseBuilder.header(entry.getKey(), entry.getValue());
-			}
-		}
-
-		return responseBuilder.build();
-	}
-
-	private Map<String, String> _getHeaders() throws NotFoundException {
-		return HashMapBuilder.put(
-			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
-		).put(
-			SCIMConstants.LOCATION_HEADER,
-			AbstractResourceManager.getResourceEndpointURL(
-				SCIMConstants.RESOURCE_TYPE_ENDPOINT)
-		).build();
+		return getV2ResourceTypeById(null);
 	}
 
 	private String _getResourceTypeJSON(String id)
@@ -139,7 +106,7 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 			if (Validator.isNull(id)) {
 				return new SCIMResponse(
 					ResponseCodeConstants.CODE_OK, _getResourceTypesJSON(),
-					_getHeaders());
+					ScimUtil.getHeaders(SCIMConstants.RESOURCE_TYPE_ENDPOINT));
 			}
 
 			String resourceTypeJSON = _getResourceTypeJSON(id);
@@ -150,7 +117,8 @@ public class ResourceTypesResourceImpl extends BaseResourceTypesResourceImpl {
 			}
 
 			return new SCIMResponse(
-				ResponseCodeConstants.CODE_OK, resourceTypeJSON, _getHeaders());
+				ResponseCodeConstants.CODE_OK, resourceTypeJSON,
+				ScimUtil.getHeaders(SCIMConstants.RESOURCE_TYPE_ENDPOINT));
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(

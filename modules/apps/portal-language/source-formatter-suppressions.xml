@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="CompanyThreadLocalCheck" files="portal-language-test/src/testIntegration/java/com/liferay/portal/language/test/LanguageImplGetAvailableLocalesTest\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="ResourceBundleCheck" files="portal-language-extender/src/main/java/com/liferay/portal/language/extender/internal/LanguageResourcesExtension\.java" />
 	</source-check>

@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="ClassNameIdCheck" files="layout-api/src/main/java/com/liferay/layout/util/structure/FormStyledLayoutStructureItem\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="layout-impl/src/main/java/com/liferay/layout/internal/util/LayoutServiceContextHelperImpl\.java" />
 		<suppress checks="IllegalImportsCheck" files="layout-content-page-editor-web/src/main/java/com/liferay/layout/content/page/editor/web/internal/adaptive/media/LayoutAdaptiveMediaProcessorImpl.java" />
 		<suppress checks="IllegalImportsCheck" files="layout-impl/src/main/java/com/liferay/layout/internal/struts/GetPagePreviewStrutsAction.java" />
 		<suppress checks="IllegalImportsCheck" files="layout-impl/src/main/java/com/liferay/layout/internal/template/util/DefaultLayoutConverter.java" />

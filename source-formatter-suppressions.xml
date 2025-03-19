@@ -19,6 +19,13 @@
 		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/dao/db/DBInspector\.java" />
 		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/instance/PortalInstancePool\.java" />
 		<suppress checks="CompanyIterationCheck" files="portal-kernel/src/com/liferay/portal/kernel/upgrade/BaseCompanyIdUpgradeProcess\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/security/access/control/AccessControlImpl\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/servlet/filters/secure/BaseAuthFilter\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="portal-impl/src/com/liferay/portal/util/PortalInstances\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="portal-kernel/src/com/liferay/portal/kernel/cluster/ClusterableInvokerUtil\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/security/auth/CompanyThreadLocalTest\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CompanyProviderClassTestRule\.java" />
+		<suppress checks="CompanyThreadLocalCheck" files="portal-test/src/com/liferay/portal/kernel/test/util/CompanyTestUtil\.java" />
 		<suppress checks="ConcatCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CodeCoverageAssertor\.java" />
 		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContext\.java" />

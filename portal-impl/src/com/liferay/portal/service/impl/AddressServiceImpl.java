@@ -26,10 +26,10 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	@Override
 	public Address addAddress(
 			String externalReferenceCode, String className, long classPK,
-			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, long listTypeId, boolean mailing, boolean primary,
-			String phoneNumber, ServiceContext serviceContext)
+			long countryId, long listTypeId, long regionId, String city,
+			String description, boolean mailing, String name, boolean primary,
+			String street1, String street2, String street3, String subtype,
+			String zip, String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -47,9 +47,9 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 
 		return addressLocalService.addAddress(
 			externalReferenceCode, permissionChecker.getUserId(), className,
-			classPK, name, description, street1, street2, street3, city, zip,
-			regionId, countryId, listTypeId, mailing, primary, phoneNumber,
-			serviceContext);
+			classPK, countryId, listTypeId, regionId, city, description,
+			mailing, name, primary, street1, street2, street3, subtype, zip,
+			phoneNumber, serviceContext);
 	}
 
 	@Override
@@ -112,10 +112,11 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 
 	@Override
 	public Address updateAddress(
-			long addressId, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber)
+			String externalReferenceCode, long addressId, long countryId,
+			long listTypeId, long regionId, String city, String description,
+			boolean mailing, String name, boolean primary, String street1,
+			String street2, String street3, String subtype, String zip,
+			String phoneNumber)
 		throws PortalException {
 
 		Address address = addressPersistence.findByPrimaryKey(addressId);
@@ -134,8 +135,9 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 			address.getClassPK(), actionId);
 
 		return addressLocalService.updateAddress(
-			addressId, name, description, street1, street2, street3, city, zip,
-			regionId, countryId, listTypeId, mailing, primary, phoneNumber);
+			externalReferenceCode, addressId, countryId, listTypeId, regionId,
+			city, description, mailing, name, primary, street1, street2,
+			street3, subtype, zip, phoneNumber);
 	}
 
 	@Override

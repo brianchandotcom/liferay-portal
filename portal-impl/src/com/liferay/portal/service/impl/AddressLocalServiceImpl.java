@@ -64,10 +64,11 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	@Override
 	public Address addAddress(
 			String externalReferenceCode, long userId, String className,
-			long classPK, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber, ServiceContext serviceContext)
+			long classPK, long countryId, long listTypeId, long regionId,
+			String city, String description, boolean mailing, String name,
+			boolean primary, String street1, String street2, String street3,
+			String subtype, String zip, String phoneNumber,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userPersistence.findByPrimaryKey(userId);
@@ -99,6 +100,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		address.setStreet1(street1);
 		address.setStreet2(street2);
 		address.setStreet3(street3);
+		address.setSubtype(subtype);
 		address.setZip(zip);
 
 		address = addressPersistence.update(address);
@@ -121,13 +123,14 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		return addressLocalService.addAddress(
 			null, serviceContext.getUserId(), className, classPK,
-			sourceAddress.getName(), sourceAddress.getDescription(),
-			sourceAddress.getStreet1(), sourceAddress.getStreet2(),
-			sourceAddress.getStreet3(), sourceAddress.getCity(),
-			sourceAddress.getZip(), sourceAddress.getRegionId(),
 			sourceAddress.getCountryId(), sourceAddress.getListTypeId(),
-			sourceAddress.isMailing(), sourceAddress.isPrimary(),
-			sourceAddress.getPhoneNumber(), serviceContext);
+			sourceAddress.getRegionId(), sourceAddress.getCity(),
+			sourceAddress.getDescription(), sourceAddress.isMailing(),
+			sourceAddress.getName(), sourceAddress.isPrimary(),
+			sourceAddress.getStreet1(), sourceAddress.getStreet2(),
+			sourceAddress.getStreet3(), sourceAddress.getSubtype(),
+			sourceAddress.getZip(), sourceAddress.getPhoneNumber(),
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -248,28 +251,14 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		return searchAddresses(searchContext);
 	}
 
-	@Override
-	public Address updateAddress(
-			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId,
-			long listTypeId, boolean mailing, boolean primary)
-		throws PortalException {
-
-		Address address = addressPersistence.findByPrimaryKey(addressId);
-
-		return addressLocalService.updateAddress(
-			addressId, address.getName(), address.getDescription(), street1,
-			street2, street3, city, zip, regionId, countryId, listTypeId,
-			mailing, primary, address.getPhoneNumber());
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Address updateAddress(
-			long addressId, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber)
+			String externalReferenceCode, long addressId, long countryId,
+			long listTypeId, long regionId, String city, String description,
+			boolean mailing, String name, boolean primary, String street1,
+			String street2, String street3, String subtype, String zip,
+			String phoneNumber)
 		throws PortalException {
 
 		validate(
@@ -278,6 +267,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		Address address = addressPersistence.findByPrimaryKey(addressId);
 
+		address.setExternalReferenceCode(externalReferenceCode);
 		address.setCountryId(countryId);
 		address.setListTypeId(listTypeId);
 		address.setRegionId(regionId);
@@ -289,6 +279,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		address.setStreet1(street1);
 		address.setStreet2(street2);
 		address.setStreet3(street3);
+		address.setSubtype(subtype);
 		address.setZip(zip);
 
 		address = addressPersistence.update(address);

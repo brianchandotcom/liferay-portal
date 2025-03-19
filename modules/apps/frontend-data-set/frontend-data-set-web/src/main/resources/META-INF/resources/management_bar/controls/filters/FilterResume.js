@@ -52,7 +52,7 @@ function FilterResume(props) {
 			>
 				<li className="dropdown-subheader">{props.label}</li>
 
-				<Filter {...props} />
+				<Filter {...props} onClose={() => setOpen(false)} />
 			</ClayDropDown>
 
 			<ClayButton

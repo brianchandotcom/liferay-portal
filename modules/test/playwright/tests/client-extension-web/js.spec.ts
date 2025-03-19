@@ -178,6 +178,19 @@ test('JS client extension does not allow "src" as a script element attribute', a
 	expect(editJSClientExtensionsPage.publishButton).toBeDisabled();
 });
 
+test('JS client extension does not allow a script element attribute with an empty name', async ({
+	editJSClientExtensionsPage,
+	page,
+}) => {
+	await editJSClientExtensionsPage.goto();
+
+	await editJSClientExtensionsPage.addScriptAttribute('', 'string', 'value');
+
+	expect(page.getByText('Attribute field is required.')).toBeVisible();
+
+	expect(editJSClientExtensionsPage.publishButton).toBeDisabled();
+});
+
 test('Assert the help link is pointing to the correct url', async ({
 	editJSClientExtensionsPage,
 	page,

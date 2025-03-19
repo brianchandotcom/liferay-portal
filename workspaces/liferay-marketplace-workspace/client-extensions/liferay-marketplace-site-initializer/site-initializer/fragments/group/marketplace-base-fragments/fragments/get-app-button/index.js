@@ -52,7 +52,7 @@ const getHelpModal = () => `
 		<ol>
 			<li class="pb-1" style="color: #54555F;">
 				Link your DXP environment to your Liferay Marketplace Account. Check this 
-				<a href="https://learn.liferay.com/w/dxp/liferay-development/marketplace/connecting-liferay-dxp-to-marketplace" target="_blank">
+				<a href="https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/using-marketplace#appendix-installing-the-marketplace-plugin" target="_blank">
 				documentation</a> to learn how to link the DXP to Marketplace.
 			</li>
 	

@@ -166,12 +166,18 @@ export function ProvideAppBuildPage({
 		);
 
 		fullyManagedOption.forEach((managedOption) => {
-			newCategories.push({
-				externalReferenceCode: managedOption?.externalReferenceCode,
-				id: managedOption.id,
-				name: managedOption.name,
-				vocabulary: ProductVocabulary.LIFERAY_PLATFORM_OFFERING,
-			});
+			if (
+				!categories.items.find(
+					(category) => category.name === managedOption.name
+				)
+			) {
+				newCategories.push({
+					externalReferenceCode: managedOption?.externalReferenceCode,
+					id: managedOption.id,
+					name: managedOption.name,
+					vocabulary: ProductVocabulary.LIFERAY_PLATFORM_OFFERING,
+				});
+			}
 		});
 
 		if (appType.value === ProductType.CLOUD) {

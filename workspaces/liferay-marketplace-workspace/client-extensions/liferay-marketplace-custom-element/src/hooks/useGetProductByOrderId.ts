@@ -5,6 +5,7 @@
 
 import useSWR, {SWRConfiguration} from 'swr';
 
+import MarketplaceDeliveryOrder from '../entity/DeliveryOrder';
 import {PRODUCT_IMAGE_FALLBACK_CATEGORIES} from '../enums/Product';
 import {Liferay} from '../liferay/liferay';
 import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
@@ -57,7 +58,12 @@ const useGetProductByOrderId = (
 					);
 			}
 
+			const marketplaceDeliveryOrder = new MarketplaceDeliveryOrder(
+				placedOrder
+			);
+
 			return {
+				marketplaceDeliveryOrder,
 				placedOrder,
 				product,
 			};

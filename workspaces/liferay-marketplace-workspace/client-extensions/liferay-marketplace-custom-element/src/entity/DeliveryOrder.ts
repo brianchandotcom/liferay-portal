@@ -3,22 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ORDER_TYPES} from '../enums/Order';
+import {ORDER_TYPES, ORDER_WORKFLOW_STATUS_CODE} from '../enums/Order';
 import {safeJSONParse} from '../utils/util';
-import {Statuses as OrderStatuses} from '../components/OrderStatus';
 
 export default class MarketplaceDeliveryOrder {
 	constructor(private order: PlacedOrder) {}
 
 	get createDate() {
 		return this.order.createDate;
-	}
-
-	get orderOptions() {
-		return safeJSONParse<Array<{key: string; value: string[]}>>(
-			this.order.placedOrderItems?.[0]?.options,
-			[]
-		);
 	}
 
 	get isDownloadable() {
@@ -30,13 +22,20 @@ export default class MarketplaceDeliveryOrder {
 	}
 
 	get isFreeApp() {
+		const orderOptions = safeJSONParse<
+			Array<{key: string; value: string[]}>
+		>(this.order.placedOrderItems?.[0]?.options, []);
+
 		return (
 			this.order.placedOrderItems?.[0]?.price?.price === 0 &&
-			!this.orderOptions.some(({value}) => value.includes('trial'))
+			!orderOptions.some(({value}) => value.includes('trial'))
 		);
 	}
 
-	get orderStatusIsNotCompleted() {
-		return this.order.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
+	get isOrderStatusCompleted() {
+		return (
+			this.order.orderStatusInfo?.code ===
+			ORDER_WORKFLOW_STATUS_CODE.COMPLETED
+		);
 	}
 }

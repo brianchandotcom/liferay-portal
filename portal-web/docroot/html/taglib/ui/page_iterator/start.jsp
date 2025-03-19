@@ -275,7 +275,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 							</button>
 
-							<div class="dropdown-menu dropdown-menu-top-center">
+							<div class="dropdown-menu dropdown-menu-top dropdown-menu-width-shrink">
 								<ul aria-expanded="false" class="inline-scroller link-list" id="dropdown-pages-1" role="menu">
 
 									<%
@@ -317,7 +317,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 							</button>
 
-							<div class="dropdown-menu dropdown-menu-top-center">
+							<div class="dropdown-menu dropdown-menu-top dropdown-menu-width-shrink">
 								<ul aria-expanded="false" class="inline-scroller link-list" data-max-index="<%= pages - 2 %>" id="dropdown-pages-2" role="menu">
 
 									<%
@@ -366,7 +366,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 									<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 								</button>
 
-								<div class="dropdown-menu dropdown-menu-top-center">
+								<div class="dropdown-menu dropdown-menu-top dropdown-menu-width-shrink">
 									<ul aria-expanded="false" class="inline-scroller link-list" data-max-index="<%= cur - 1 %>" id="dropdown-pages-3">
 						</c:if>
 
@@ -418,7 +418,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 									<span class="sr-only"><liferay-ui:message key="intermediate-pages" />&nbsp;<liferay-ui:message key="use-tab-to-navigate" /></span>
 								</button>
 
-								<div class="dropdown-menu dropdown-menu-top-center">
+								<div class="dropdown-menu dropdown-menu-top dropdown-menu-width-shrink">
 									<ul aria-expanded="false" class="inline-scroller link-list" data-current-index="<%= cur + 2 %>" id="dropdown-pages-4">
 						</c:if>
 

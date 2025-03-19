@@ -15,6 +15,7 @@ VocabularyViewDisplayContext vocabularyViewDisplayContext = (VocabularyViewDispl
 	<div id="<%= CMSSiteInitializerFDSNames.CATEGORIZATION_SECTION %>">
 		<react:component
 			module="{VocabulariesView} from site-cms-site-initializer"
+			props="<%= vocabularyViewDisplayContext.getReactData() %>"
 		/>
 	</div>
 </div>

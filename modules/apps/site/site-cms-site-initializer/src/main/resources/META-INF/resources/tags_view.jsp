@@ -15,6 +15,7 @@ TagsViewDisplayContext tagsViewDisplayContext = (TagsViewDisplayContext)request.
 	<div id="<%= CMSSiteInitializerFDSNames.CATEGORIZATION_SECTION %>">
 		<react:component
 			module="{TagsView} from site-cms-site-initializer"
+			props="<%= tagsViewDisplayContext.getReactData() %>"
 		/>
 	</div>
 </div>

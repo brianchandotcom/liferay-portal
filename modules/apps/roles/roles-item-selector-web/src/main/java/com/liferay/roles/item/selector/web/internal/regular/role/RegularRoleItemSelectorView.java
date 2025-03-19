@@ -7,7 +7,7 @@ package com.liferay.roles.item.selector.web.internal.regular.role;
 
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.roles.item.selector.regular.role.RegularRoleItemSelectorCriterion;
+import com.liferay.roles.item.selector.RegularRoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.web.internal.BaseRoleItemSelectorView;
 
 import java.util.Locale;

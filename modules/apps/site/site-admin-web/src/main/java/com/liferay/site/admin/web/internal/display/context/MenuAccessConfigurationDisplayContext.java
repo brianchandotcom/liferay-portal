@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.search.RoleSearch;
-import com.liferay.roles.item.selector.regular.role.RegularRoleItemSelectorCriterion;
-import com.liferay.roles.item.selector.site.role.SiteRoleItemSelectorCriterion;
+import com.liferay.roles.item.selector.RegularRoleItemSelectorCriterion;
+import com.liferay.roles.item.selector.SiteRoleItemSelectorCriterion;
 import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 
 import java.util.ArrayList;

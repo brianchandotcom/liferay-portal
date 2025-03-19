@@ -296,7 +296,7 @@ public class ${schemaName}SerDes {
 				</#if>
 
 				if (Objects.equals(jsonParserFieldName, "${fieldName}")) {
-					<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.permission.", "${configYAML.apiPackagePath}.client.permission.") />
+					<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.", "${configYAML.apiPackagePath}.client.") />
 
 					<#if stringUtil.startsWith(propertyType, "Map<") || stringUtil.equals(propertyType, "Object[]")>
 						return true;
@@ -362,7 +362,7 @@ public class ${schemaName}SerDes {
 							<#assign capitalizedPropertyName = properties[propertyName] />
 						</#if>
 
-						<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.permission.", "${configYAML.apiPackagePath}.client.permission.") />
+						<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.", "${configYAML.apiPackagePath}.client.") />
 
 						<#if stringUtil.equals(propertyType, "BigDecimal")>
 							${schemaVarName}.set${capitalizedPropertyName}(new BigDecimal((String)jsonParserFieldValue));
@@ -390,9 +390,9 @@ public class ${schemaName}SerDes {
 							${schemaVarName}.set${capitalizedPropertyName}(toIntegers((Object[])jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "String[]")>
 							${schemaVarName}.set${capitalizedPropertyName}(toStrings((Object[])jsonParserFieldValue));
-						<#elseif stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.permission.Permission")>
+						<#elseif stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.custom.field.CustomField") || stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.permission.Permission")>
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyType}.toDTO((String)jsonParserFieldValue));
-						<#elseif stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.permission.Permission[]")>
+						<#elseif stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.custom.field.CustomField[]") || stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.permission.Permission[]")>
 							Object[] jsonParserFieldValues = (Object[])jsonParserFieldValue;
 
 							${propertyType?remove_ending("[]")}[] ${propertyName}Array = new ${propertyType?remove_ending("[]")}[jsonParserFieldValues.length];

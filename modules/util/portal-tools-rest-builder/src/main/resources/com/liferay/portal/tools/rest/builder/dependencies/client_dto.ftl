@@ -51,7 +51,7 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 			<#assign capitalizedPropertyName = properties[propertyName] />
 		</#if>
 
-		<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.permission.", "${configYAML.apiPackagePath}.client.permission.") />
+		<#assign propertyType = properties[propertyName]?replace("com.liferay.portal.vulcan.", "${configYAML.apiPackagePath}.client.") />
 
 		public ${propertyType} get${capitalizedPropertyName}() {
 			return ${propertyName};

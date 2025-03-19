@@ -21,6 +21,7 @@ function alignMenu() {
 	const parent =
 		document.querySelector('.page-editor__layout-viewport__resizer') ||
 		document.body;
+
 	const parentRect = parent.getBoundingClientRect();
 	const wrapperRect = document
 		.querySelector('#wrapper')
@@ -124,9 +125,7 @@ function toggleMenu() {
 		return;
 	}
 
-	const isMenuVisible = menu.style.display === 'block';
-
-	if (isMenuVisible) {
+	if (menu.style.display === 'block') {
 		menu.style.display = 'none';
 		toggle.setAttribute('aria-expanded', 'false');
 		menuDropdownCaret.classList.remove('rotated'); // Remove rotação do caret

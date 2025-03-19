@@ -5,10 +5,9 @@
 
 /* eslint-disable no-undef */
 
-/**
- * Consts and DOM Elements
- */
-
+const documentationEducationDropdown = document.querySelector(
+	'.documentation-education-dropdown'
+);
 const fragmentSearchElements = {
 	searchSubmitLink: fragmentElement.querySelector('.search-submit'),
 	searchSubmitURL: fragmentElement.querySelector('.search-submit').href,
@@ -24,9 +23,7 @@ const fragmentSearchElements = {
 	),
 	suggestions: fragmentElement.querySelector('.suggestions'),
 };
-
 const inputElements = ['input', 'textarea'];
-
 const menuElements = {
 	menuButton: document.querySelector('.cta-menu-hamburguer'),
 	menuIconLines: document.querySelectorAll(
@@ -35,20 +32,12 @@ const menuElements = {
 	menuTextClose: document.querySelector('.menu-button-text-close'),
 	menuTextOpen: document.querySelector('.menu-button-text-open'),
 };
-
 const searchInput = document.getElementById('searchInput');
 const siteSearchWrapper = document.getElementById('siteSearchWrapper');
-const documentationEducationDropdown = document.querySelector(
-	'.documentation-education-dropdown'
-);
 
 let debounceTimer;
 
-/**
- * Auxiliary Functions
- */
-
-async function postData(url = '', data = {}) {
+async function postData(data = {}, url = '') {
 	const response = await Liferay.Util.fetch(url, {
 		body: JSON.stringify(data),
 		credentials: 'include',
@@ -86,6 +75,7 @@ function checkScreenSize() {
 
 function debounce(callback, time) {
 	window.clearTimeout(debounceTimer);
+
 	debounceTimer = window.setTimeout(callback, time);
 }
 
@@ -93,15 +83,19 @@ function getBreadcrumbFromURL(url) {
 	if (!url) {
 		return '';
 	}
+
 	url = url
 		.replaceAll('/web/guest/w/', 'home/')
 		.replaceAll('/web/guest/', 'home/')
 		.replaceAll('/', ' / ')
 		.replaceAll('-', ' ');
+
 	const ancronymList = ['api', 'ccr', 'dxp', 'mvc', ' ui ', 'url'];
+
 	ancronymList.forEach((word) => {
 		url = url.replace(new RegExp(word, 'ig'), word.toUpperCase());
 	});
+
 	const excludeWords = ['a', 'and', 'of', 'the', 'to', 'via'];
 
 	return url
@@ -115,26 +109,31 @@ function getBreadcrumbFromURL(url) {
 }
 
 function performSearch(query) {
-	const postDataURL = `/o/portal-search-rest/v1.0/suggestions?currentURL=${
-		window.location.href
-	}&destinationFriendlyURL=/search&groupId=${Liferay.ThemeDisplay.getScopeGroupId()}&plid=${Liferay.ThemeDisplay.getPlid()}&scope=this-site&search=${query}`;
-	postData(postDataURL, [
-		{
-			attributes: {
-				includeAssetSearchSummary: true,
-				includeassetURL: true,
-				sxpBlueprintId: configuration.searchBlueprintId,
+	postData(
+		[
+			{
+				attributes: {
+					includeAssetSearchSummary: true,
+					includeassetURL: true,
+					sxpBlueprintId: configuration.searchBlueprintId,
+				},
+				contributorName: 'sxpBlueprint',
+				displayGroupName: 'Public Nav Search Recommendations',
+				size: '3',
 			},
-			contributorName: 'sxpBlueprint',
-			displayGroupName: 'Public Nav Search Recommendations',
-			size: '3',
-		},
-	])
+		],
+		`/o/portal-search-rest/v1.0/suggestions?currentURL=
+			${window.location.href}&destinationFriendlyURL=/search&groupId=
+			${Liferay.ThemeDisplay.getScopeGroupId()}&plid=
+			${Liferay.ThemeDisplay.getPlid()}&scope=this-site&search=
+			${query}`
+	)
 		.then((data) => {
 			if (data?.items?.[0]) {
-				const items = JSON.parse(JSON.stringify(data.items[0]));
 				fragmentSearchElements.searchSuggestions.innerHTML = '';
-				const searchTermRegExp = new RegExp('(' + query + ')', 'gi');
+
+				const items = JSON.parse(JSON.stringify(data.items[0]));
+
 				items.suggestions.forEach((suggestion) => {
 					const suggestionLink = document.importNode(
 						fragmentSearchElements.searchSuggestionItemTemplate.content.querySelector(
@@ -146,10 +145,12 @@ function performSearch(query) {
 						/\?.*$/,
 						''
 					);
+
 					suggestionLink.href = assetURL;
 					const suggestionTitle = suggestionLink.querySelector(
 						'.search-suggestion-item-title'
 					);
+
 					suggestionTitle.textContent = suggestion.text;
 					const suggestionContent = suggestionLink.querySelector(
 						'.search-suggestion-item-content'
@@ -159,7 +160,7 @@ function performSearch(query) {
 					if (contentText) {
 						contentText = contentText.substring(0, 500);
 						suggestionContent.innerHTML = contentText.replace(
-							searchTermRegExp,
+							new RegExp('(' + query + ')', 'gi'),
 							`<b>$1</b>`
 						);
 					}
@@ -167,6 +168,7 @@ function performSearch(query) {
 					const suggestionURL = suggestionLink.querySelector(
 						'.search-suggestion-item-link'
 					);
+
 					suggestionURL.textContent = getBreadcrumbFromURL(assetURL);
 					fragmentSearchElements.searchSuggestions.appendChild(
 						suggestionLink
@@ -200,6 +202,7 @@ function resetMenuIcon() {
 
 function toggleMenuAnimation() {
 	const isOpen = menuElements.menuButton.classList.contains('open');
+
 	menuElements.menuIconLines.forEach((line, index) => {
 		line.style.opacity = index === 1 && isOpen ? '0' : '1';
 		line.style.transform = isOpen
@@ -214,12 +217,14 @@ function toggleMenuAnimation() {
 function updateSearch() {
 	fragmentSearchElements.searchSuggestions.innerHTML = '';
 	const searchValue = fragmentSearchElements.searchSuggestionsInput.value;
+
 	if (searchValue) {
 		fragmentSearchElements.seeAllResultsLink.href =
 			fragmentSearchElements.searchSubmitURL + '?q=' + searchValue;
 		fragmentSearchElements.searchSubmitLink.href =
 			fragmentSearchElements.searchSubmitURL + '?q=' + searchValue;
 		fragmentSearchElements.suggestions.classList.add('performing-search');
+
 		performSearch(searchValue);
 	}
 	else {
@@ -232,14 +237,11 @@ function updateSearch() {
 	}
 }
 
-/**
- * Event Listeners
- */
-
 window.addEventListener('load', () => {
 	if (!navigation?.default?.DropdownProvider) {
 		return;
 	}
+
 	fragmentSearchElements.searchSuggestionsInput.value = '';
 	[
 		['.account-info', '.account-info', 'menu-open'],

@@ -7,12 +7,22 @@ import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
 import {openConfirmModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
+import PendingOrderIdDataRenderer, {
+	wipeCurrencyAndNavigate,
+} from '../data_renderers/PendingOrderIdDataRenderer';
 import {openOrderNameModal} from './util';
 
 const DeliveryCartAPI = CommerceServiceProvider.DeliveryCartAPI('v1');
 
 const PendingOrdersFDSPropsTransformer = (props) => ({
 	...props,
+	customDataRenderers: {
+		pendingOrderIdDataRenderer: (itemProps) =>
+			PendingOrderIdDataRenderer({
+				...itemProps,
+				orderDetailURL: props.additionalProps.orderDetailURL,
+			}),
+	},
 	onActionDropdownItemClick: ({
 		action: {
 			data: {id: actionId},
@@ -116,6 +126,13 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 				isOpen: true,
 				orderId: cartId,
 				orderName,
+			});
+		}
+
+		if (actionId === 'view') {
+			wipeCurrencyAndNavigate({
+				cartId,
+				orderDetailURL: props.additionalProps.orderDetailURL,
 			});
 		}
 	},

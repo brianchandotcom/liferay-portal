@@ -35,7 +35,8 @@ public class PendingCommerceOrderFragmentTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"id", "order-id",
 			fdsTableSchemaField -> {
-				fdsTableSchemaField.setContentRenderer("actionLink");
+				fdsTableSchemaField.setContentRenderer(
+					"pendingOrderIdDataRenderer");
 				fdsTableSchemaField.setSortable(true);
 			}
 		).add(

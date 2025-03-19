@@ -289,15 +289,10 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 	private List<FDSActionDropdownItem> _getFDSActionDropdownItems(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		String commerceOrderFriendlyURL =
-			CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
-				_friendlyURLSeparatorProviderSnapshot.get(),
-				httpServletRequest);
-
 		if (fdsName.equals(CommerceOrderFragmentFDSNames.PENDING_ORDERS)) {
 			return Arrays.asList(
 				new FDSActionDropdownItem(
-					commerceOrderFriendlyURL + "{id}", "view", "view",
+					StringPool.BLANK, "view", "view",
 					_language.get(httpServletRequest, "view"), null, null,
 					"link"),
 				new FDSActionDropdownItem(
@@ -314,6 +309,10 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 					null, null));
 		}
 		else if (fdsName.equals(CommerceOrderFragmentFDSNames.PLACED_ORDERS)) {
+			String commerceOrderFriendlyURL =
+				CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
+					_friendlyURLSeparatorProviderSnapshot.get(),
+					httpServletRequest);
 			List<FDSActionDropdownItem> fdsActionDropdownItems =
 				new ArrayList<>();
 

@@ -37,7 +37,7 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 				_language.get(httpServletRequest, "are-you-sure"), "danger",
 				null, "#", "home", "navigateHome",
 				_language.get(httpServletRequest, "nav-link"), null, null,
-				"view", null, null, "link", null, "item"));
+				"get", null, null, "link", null, "item"));
 	}
 
 	@Override

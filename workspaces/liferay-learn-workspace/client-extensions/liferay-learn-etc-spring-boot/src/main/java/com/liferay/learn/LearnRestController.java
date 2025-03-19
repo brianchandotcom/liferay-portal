@@ -215,20 +215,23 @@ public class LearnRestController extends BaseRestController {
 					scoreSheetJSONObject.getString("type"),
 					"selectMultipleChoice")) {
 
+				JSONObject jsonObject = quizAnswersJSONObject.getJSONObject(
+					String.valueOf(quizQuestionJSONObject.getLong("id")));
+
+				scoreSheetJSONObject.put("selectedAnswer", jsonObject);
+
 				quizQuestionScore = _getQuizQuestionScore(
-					quizAnswersJSONObject.getJSONObject(
-						String.valueOf(quizQuestionJSONObject.getLong("id"))
-					).toMap(),
-					quizQuestionJSONObject, scoreSheetJSONObject);
+					jsonObject.toMap(), quizQuestionJSONObject,
+					scoreSheetJSONObject);
 			}
 			else {
+				long id = quizAnswersJSONObject.getLong(
+					String.valueOf(quizQuestionJSONObject.getLong("id")));
+
+				scoreSheetJSONObject.put("selectedAnswer", id);
+
 				quizQuestionScore = _getQuizQuestionScore(
-					Collections.singletonMap(
-						String.valueOf(
-							quizAnswersJSONObject.getLong(
-								String.valueOf(
-									quizQuestionJSONObject.getLong("id")))),
-						true),
+					Collections.singletonMap(String.valueOf(id), true),
 					quizQuestionJSONObject, scoreSheetJSONObject);
 			}
 

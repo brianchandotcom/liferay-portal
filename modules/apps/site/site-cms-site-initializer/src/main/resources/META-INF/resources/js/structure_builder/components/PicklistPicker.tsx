@@ -66,7 +66,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 							Liferay.Language.get('select-x'),
 							Liferay.Language.get('picklist')
 						)}
-						disabled={isPublished}
+						disabled={isPublished || !picklists.length}
 						id={id}
 						items={picklists}
 						onSelectionChange={(selectedKey: React.Key) => {

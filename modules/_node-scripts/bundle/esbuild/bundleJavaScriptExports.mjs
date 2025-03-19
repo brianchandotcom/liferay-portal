@@ -12,8 +12,8 @@ import {
 } from '../../util/constants.mjs';
 import getFlatName from '../../util/getFlatName.mjs';
 import getEntryPoint from './getEntryPoint.mjs';
-import getExternals from './getExternals.mjs';
 import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
+import getExternalsPlugin from './plugins/getExternalsPlugin.mjs';
 import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
 import relocateSourcemap from './relocateSourcemap.mjs';
 import runEsbuild from './runEsbuild.mjs';
@@ -54,11 +54,11 @@ async function bundle(
 	const esbuildConfig = {
 		bundle: true,
 		entryPoints: [entryPoint],
-		external: getExternals(globalImports, projectWebContextPath, 'exports'),
 		format: 'esm',
 		outdir: BUILD_MAIN_EXPORTS_PATH,
 		plugins: [
 			getExactAliasPlugin(globalImports, 'exports', [moduleName]),
+			getExternalsPlugin(),
 			getImportBridgesPlugin(globalImports, overridenPackageSymbols),
 		],
 		sourcemap: true,

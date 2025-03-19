@@ -13,9 +13,9 @@ import {
 	BUNDLE_REPORTS_PATH,
 } from '../../util/constants.mjs';
 import objectSF from '../../util/objectSF.mjs';
-import getExternals from './getExternals.mjs';
 import getCssLoaderPlugin from './plugins/getCssLoaderPlugin.mjs';
 import getExactAliasPlugin from './plugins/getExactAliasPlugin.mjs';
+import getExternalsPlugin from './plugins/getExternalsPlugin.mjs';
 import getImportBridgesPlugin from './plugins/getImportBridgesPlugin.mjs';
 import getLiferayLanguageGetPlugin from './plugins/getLiferayLanguageGetPlugin.mjs';
 import getRuntimeLinkerPlugin from './plugins/getRuntimeLinkerPlugin.mjs';
@@ -46,7 +46,6 @@ export default async function bundleJavaScriptMain(
 			})),
 			{in: path.resolve(mainEntryPoint), out: 'index'},
 		],
-		external: getExternals(globalImports, projectWebContextPath, 'main'),
 		format: 'esm',
 		loader: {
 			'.js': 'jsx',
@@ -57,6 +56,7 @@ export default async function bundleJavaScriptMain(
 		plugins: [
 			getCssLoaderPlugin(globalImports, 'main'),
 			getExactAliasPlugin(globalImports, 'main'),
+			getExternalsPlugin(),
 			getImportBridgesPlugin(globalImports, overridenPackageSymbols),
 			getLiferayLanguageGetPlugin(projectWebContextPath, languageJSON),
 			getRuntimeLinkerPlugin(

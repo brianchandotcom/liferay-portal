@@ -73,6 +73,16 @@ export class ObjectLayoutsPage {
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
 	}
 
+	async addObjectLayoutObjectField(option: string) {
+		await this.fieldSelect.waitFor({state: 'visible'});
+		await this.iframeLocator
+			.getByRole('option')
+			.filter({hasText: option})
+			.click();
+		await this.saveAddFieldButton.click();
+		await this.setObjectLayoutAsDefault();
+	}
+
 	async createObjectLayout(objectLayoutName: string) {
 		await this.addObjectLayoutButton.click();
 		await this.layoutNameInput.fill(objectLayoutName);
@@ -108,11 +118,15 @@ export class ObjectLayoutsPage {
 		await this.saveUpdateLayoutButton.click();
 	}
 
-	async createObjectLayoutContent(
-		objectLayoutBlockName: string,
-		objectLayoutName: string,
-		objectLayoutTabName: string
-	) {
+	async createObjectLayoutContent({
+		objectLayoutBlockName,
+		objectLayoutName,
+		objectLayoutTabName,
+	}: {
+		objectLayoutBlockName: string;
+		objectLayoutName: string;
+		objectLayoutTabName: string;
+	}) {
 		await this.openObjectLayoutConfiguration(objectLayoutName);
 		await this.createObjectLayoutTab(objectLayoutTabName);
 		await this.createObjectLayoutBlock(objectLayoutBlockName);
@@ -137,5 +151,10 @@ export class ObjectLayoutsPage {
 	async openObjectLayoutObjectField() {
 		await this.addField.click();
 		await this.fieldSelect.click();
+	}
+
+	async setObjectLayoutAsDefault() {
+		await this.iframeLocator.getByRole('tab', {name: 'Info'}).click();
+		await this.iframeLocator.getByLabel('Mark as Default').click();
 	}
 }

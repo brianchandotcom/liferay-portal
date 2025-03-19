@@ -7,7 +7,7 @@ package com.liferay.roles.item.selector.web.internal.organization.role;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.roles.item.selector.organization.role.OrganizationRoleItemSelectorCriterion;
+import com.liferay.roles.item.selector.OrganizationRoleItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

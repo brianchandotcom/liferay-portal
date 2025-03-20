@@ -14,12 +14,12 @@ import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DBColumnSizeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DuplicateRemovalUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalUpgradeProcess;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
 import com.liferay.portal.upgrade.v7_4_x.util.AssetTagGroupRelTable;
@@ -607,14 +607,14 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 18, 1),
-			new DefaultDuplicateRemovalUpgradeProcess(
+			new DuplicateRemovalUpgradeProcess(
 				"PortalPreferences", "ownerType, ownerId"),
-			new DefaultDuplicateRemovalUpgradeProcess(
+			new DuplicateRemovalUpgradeProcess(
 				"PortletItem", "groupId, classNameId, portletId, name"),
-			new DefaultDuplicateRemovalUpgradeProcess(
+			new DuplicateRemovalUpgradeProcess(
 				"SocialActivitySetting",
 				"groupId, classNameId, activityType, name, ctCollectionId"),
-			new DefaultDuplicateRemovalUpgradeProcess(
+			new DuplicateRemovalUpgradeProcess(
 				"Ticket", "key_", "ticketId", "asc"));
 	}
 

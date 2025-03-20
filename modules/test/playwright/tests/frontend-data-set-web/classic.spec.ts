@@ -10,8 +10,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {liferayConfig} from '../../liferay.config';
 import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
-import {liferayConfig} from "../../liferay.config";
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -51,7 +51,8 @@ test(
 				'First Name',
 				'Last Name',
 				'Email Address',
-			]);})
+			]);
+		});
 
 		await test.step('Check headers are localized in Spanish', async () => {
 			const url = `${liferayConfig.environment.baseUrl}/es/web${site.friendlyUrlPath}${fdsSamplePageLayout.friendlyUrlPath}`;
@@ -59,9 +60,9 @@ test(
 			await page.goto(url);
 
 			await fdsSamplePage.selectTab('Classic');
-			
+
 			await expect(page.getByText('test@liferay.com')).toBeVisible();
-			
+
 			expect(
 				await fdsSamplePage.table.headerCells.allInnerTexts()
 			).toEqual(['Nombre', 'Apellido', 'Dirección de correo', '']);

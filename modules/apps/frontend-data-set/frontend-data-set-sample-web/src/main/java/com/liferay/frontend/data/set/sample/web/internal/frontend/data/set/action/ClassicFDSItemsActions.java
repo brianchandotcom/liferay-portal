@@ -58,7 +58,8 @@ public class ClassicFDSItemsActions implements FDSItemsActions {
 				null, null, null,
 				Arrays.asList(
 					new FDSActionDropdownItemFilter("active", true),
-					new FDSActionDropdownItemFilter("emailAddress", "manager.user@liferay.com")),
+					new FDSActionDropdownItemFilter(
+						"emailAddress", "manager.user@liferay.com")),
 				"#", "cog", "activity",
 				_language.get(httpServletRequest, "activity"), null, null, null,
 				null, null, "link", null, "item"));

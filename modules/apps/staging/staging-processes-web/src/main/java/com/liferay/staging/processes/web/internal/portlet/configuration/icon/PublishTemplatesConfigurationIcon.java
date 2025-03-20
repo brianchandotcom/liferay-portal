@@ -102,11 +102,7 @@ public class PublishTemplatesConfigurationIcon
 
 		User user = themeDisplay.getUser();
 
-		if (user.isGuestUser()) {
-			return false;
-		}
-
-		return true;
+		return !user.isGuestUser();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

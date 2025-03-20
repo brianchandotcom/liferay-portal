@@ -102,10 +102,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 	}
 
-	public synchronized void addRecentBatch(int batchSize) {
-		addRecentBatch(batchSize, null);
-	}
-
 	public synchronized void addRecentBatch(
 		int batchSize, String labelExpression) {
 
@@ -484,69 +480,73 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public Map<String, JSONObject> getQueuedBuildURLs() {
-		return new HashMap<>(_queuedBuildURLs);
+		Map<String, JSONObject> queuedBuildURLs = new HashMap<>();
+
+		List<QueueItem> queueItems = getQueueItems();
+
+		if (queueItems.isEmpty()) {
+			return queuedBuildURLs;
+		}
+
+		for (QueueItem queueItem : queueItems) {
+			if (!queueItem.isValidQueueItem()) {
+				continue;
+			}
+
+			String queueItemURL = queueItem.getURL();
+
+			if (queueItemURL == null) {
+				continue;
+			}
+
+			queuedBuildURLs.put(queueItemURL, queueItem.getJSONObject());
+		}
+
+		return queuedBuildURLs;
 	}
 
 	public List<JSONObject> getQueueItemJSONObjects() {
-		synchronized (_queueItemJSONObjects) {
-			if (_queueUpdateTime != null) {
-				long currentTime =
-					JenkinsResultsParserUtil.getCurrentTimeMillis();
+		List<JSONObject> queueItemJSONObjects = new ArrayList<>();
 
-				long queueUpdateDuration = currentTime - _queueUpdateTime;
+		List<QueueItem> queueItems = getQueueItems();
 
-				if (queueUpdateDuration <= _MAXIMUM_QUEUE_UPDATE_DURATION) {
-					return _queueItemJSONObjects;
-				}
-			}
-
-			_queueItemJSONObjects.clear();
-
-			try {
-				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					JenkinsResultsParserUtil.combine(
-						String.valueOf(getURL()), "/queue/api/json?tree=",
-						"items[actions[parameters[name,value]],id,task[url]]"),
-					false, 5000);
-
-				JSONArray queueItemsJSONArray = jsonObject.getJSONArray(
-					"items");
-
-				if (queueItemsJSONArray == null) {
-					_queueUpdateTime =
-						JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-					return _queueItemJSONObjects;
-				}
-
-				for (int i = 0; i < queueItemsJSONArray.length(); i++) {
-					_queueItemJSONObjects.add(
-						queueItemsJSONArray.getJSONObject(i));
-				}
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-
-			_queueUpdateTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
-
-			return _queueItemJSONObjects;
+		if (queueItems.isEmpty()) {
+			return queueItemJSONObjects;
 		}
+
+		for (QueueItem queueItem : queueItems) {
+			queueItemJSONObjects.add(queueItem.getJSONObject());
+		}
+
+		return queueItemJSONObjects;
 	}
 
 	public synchronized List<QueueItem> getQueueItems() {
+		if (_queueUpdateTime != null) {
+			long currentTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+			long queueUpdateDuration = currentTime - _queueUpdateTime;
+
+			if (queueUpdateDuration <= _MAXIMUM_QUEUE_UPDATE_DURATION) {
+				return _queueItems;
+			}
+		}
+
+		_queueItems.clear();
+
 		try {
 			JSONObject queueAPIJSONObject =
 				JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.combine(
-						getRemoteURL(), "/queue/api/json?tree=",
-						"items[actions[parameters[name,value]],id,",
-						"inQueueSince,task[name,url],url,why]"),
+						getURL(), "/queue/api/json?tree=items[actions[",
+						"parameters[name,value]],id,inQueueSince,",
+						"task[name,url],url,why]"),
 					false, 5000);
 
-			_queueItems.clear();
-
 			if (!queueAPIJSONObject.has("items")) {
+				_queueUpdateTime =
+					JenkinsResultsParserUtil.getCurrentTimeMillis();
+
 				return _queueItems;
 			}
 
@@ -556,6 +556,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				_queueItems.add(
 					new QueueItem(this, itemsJSONArray.getJSONObject(i)));
 			}
+
+			_queueUpdateTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 			return _queueItems;
 		}
@@ -780,14 +782,11 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_jenkinsSlavesMap.clear();
 			_labelBatchSizes.clear();
 			_labelExpressionLabels.clear();
-			_queuedBuildURLs.clear();
-			_queueItems.clear();
 
 			return;
 		}
 
 		JSONObject computerAPIJSONObject = null;
-		JSONObject queueAPIJSONObject = null;
 
 		try {
 			computerAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
@@ -797,13 +796,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					"executors[currentExecutable[url]],idle,offline,",
 					"offlineCauseReason]"),
 				false, 5000);
-
-			queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.combine(
-					getURL(), "/queue/api/json?tree=items[actions[",
-					"parameters[name,value]],inQueueSince,task[name,url],url,",
-					"why]"),
-				false, 5000);
 		}
 		catch (Exception exception) {
 			_assignedLabels.clear();
@@ -811,8 +803,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_jenkinsSlavesMap.clear();
 			_labelBatchSizes.clear();
 			_labelExpressionLabels.clear();
-			_queuedBuildURLs.clear();
-			_queueItems.clear();
 
 			System.out.println("Unable to read " + _masterURL);
 
@@ -903,62 +893,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		_buildURLs.clear();
 
 		_buildURLs.addAll(buildURLs);
-
-		if (!queueAPIJSONObject.has("items")) {
-			return;
-		}
-
-		Map<String, JSONObject> queuedBuildURLs = new HashMap<>();
-
-		JSONArray itemsJSONArray = queueAPIJSONObject.getJSONArray("items");
-
-		for (int i = 0; i < itemsJSONArray.length(); i++) {
-			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
-
-			_queueItems.add(new QueueItem(this, itemJSONObject));
-
-			if (!itemJSONObject.has("task")) {
-				continue;
-			}
-
-			JSONObject taskJSONObject = itemJSONObject.getJSONObject("task");
-
-			String taskName = taskJSONObject.getString("name");
-
-			if (taskName.equals("verification-node")) {
-				continue;
-			}
-
-			if (itemJSONObject.has("why")) {
-				String why = itemJSONObject.optString("why");
-
-				if (taskName.startsWith("label=")) {
-					String offlineSlaveWhy = JenkinsResultsParserUtil.combine(
-						"‘", taskName.substring("label=".length()),
-						"’ is offline");
-
-					if (why.contains(offlineSlaveWhy)) {
-						continue;
-					}
-				}
-
-				if (why.startsWith("There are no nodes") ||
-					why.contains("already in progress")) {
-
-					continue;
-				}
-
-				if (itemJSONObject.has("url")) {
-					queuedBuildURLs.put(
-						getURL() + "/" + itemJSONObject.getString("url"),
-						itemJSONObject);
-				}
-			}
-		}
-
-		_queuedBuildURLs.clear();
-
-		_queuedBuildURLs.putAll(queuedBuildURLs);
 	}
 
 	public static class QueueItem {
@@ -1026,9 +960,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				return null;
 			}
 
-			return JenkinsResultsParserUtil.combine(
-				_jenkinsMaster.getRemoteURL(), "/",
-				_jsonObject.getString("url"));
+			return _jenkinsMaster.getURL() + _jsonObject.getString("url");
 		}
 
 		public String getWhy() {
@@ -1337,6 +1269,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		List<String> labels = _getLabels(labelExpression);
 
 		for (QueueItem queueItem : getQueueItems()) {
+			if (!queueItem.isValidQueueItem()) {
+				continue;
+			}
+
 			if (JenkinsResultsParserUtil.matchesLabels(
 					queueItem.getLabelExpression(), labels)) {
 
@@ -1359,11 +1295,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		for (Map.Entry<String, Map<Long, Integer>> labelBatchSizesEntry :
 				_labelBatchSizes.entrySet()) {
 
-			String currentLabel = labelBatchSizesEntry.getKey();
+			String label = labelBatchSizesEntry.getKey();
 
-			if ((labelExpression != null) &&
-				!labelExpression.equals(currentLabel)) {
-
+			if ((labelExpression != null) && !labelExpression.equals(label)) {
 				continue;
 			}
 
@@ -1391,7 +1325,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				batchSizes.remove(expiredTimestamp);
 			}
 
-			_labelBatchSizes.put(currentLabel, batchSizes);
+			_labelBatchSizes.put(label, batchSizes);
 		}
 
 		return recentBatchSizesTotal;
@@ -1505,9 +1439,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final String _masterRemoteURL;
 	private final String _masterURL;
 	private boolean _offline;
-	private final Map<String, JSONObject> _queuedBuildURLs =
-		Collections.synchronizedMap(new HashMap<String, JSONObject>());
-	private final List<JSONObject> _queueItemJSONObjects = new ArrayList<>();
 	private final List<QueueItem> _queueItems = new ArrayList<>();
 	private Long _queueUpdateTime;
 	private final Integer _slaveRAM;

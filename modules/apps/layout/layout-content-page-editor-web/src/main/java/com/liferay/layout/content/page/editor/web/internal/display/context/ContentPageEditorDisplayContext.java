@@ -8,6 +8,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorCriterion;
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorReturnType;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
@@ -80,6 +81,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -353,6 +355,22 @@ public class ContentPageEditorDisplayContext {
 				"fragmentCompositionNameMaxLength",
 				() -> ModelHintsUtil.getMaxLength(
 					FragmentComposition.class.getName(), "name")
+			).put(
+				"fragmentPortletNamespace",
+				portal.getPortletNamespace(FragmentPortletKeys.FRAGMENT)
+			).put(
+				"fragmentsImportURL",
+				() -> ResourceURLBuilder.createResourceURL(
+					PortletURLFactoryUtil.create(
+						httpServletRequest, FragmentPortletKeys.FRAGMENT,
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"fragmentCollectionId",
+					ParamUtil.getString(
+						httpServletRequest, "fragmentCollectionId")
+				).setResourceID(
+					"/fragment/import"
+				).buildString()
 			).put(
 				"frontendTokens",
 				() -> {

@@ -7,23 +7,21 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="fds-with-custom-management-bar-bg">
-	<div class="container-fluid container-fluid-max-xxl">
-		<react:component
-			module="{SystemDataSets} from frontend-data-set-admin-web"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()
-				).put(
-					"getSystemDataSetsURL", fdsAdminDisplayContext.getSystemDataSetsURL()
-				).put(
-					"importSystemDataSetURL", fdsAdminDisplayContext.getImportSystemDataSetURL()
-				).put(
-					"namespace", liferayPortletResponse.getNamespace()
-				).put(
-					"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
-				).build()
-			%>'
-		/>
-	</div>
+<div class="container-fluid container-fluid-max-xxl">
+	<react:component
+		module="{SystemDataSets} from frontend-data-set-admin-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()
+			).put(
+				"getSystemDataSetsURL", fdsAdminDisplayContext.getSystemDataSetsURL()
+			).put(
+				"importSystemDataSetURL", fdsAdminDisplayContext.getImportSystemDataSetURL()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
+			).build()
+		%>'
+	/>
 </div>

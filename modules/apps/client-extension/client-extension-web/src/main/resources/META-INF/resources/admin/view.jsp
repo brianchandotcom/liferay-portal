@@ -12,13 +12,12 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 %>
 
 <aui:style type="text/css">
-	.fds-with-custom-management-bar-bg {
+	.portlet-body {
 		overflow: hidden;
 	}
 
-	.fds-with-custom-management-bar-bg .management-bar-wrapper {
+	.management-bar-wrapper {
 		background: #fff;
-		border-bottom: 1px solid #e7e7ed;
 		margin-left: -100%;
 		margin-right: -100%;
 		padding-left: 100%;
@@ -26,17 +25,15 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 	}
 </aui:style>
 
-<div class="fds-with-custom-management-bar-bg">
-	<div class="container-fluid container-fluid-max-xxl">
-		<frontend-data-set:classic-display
-			actionParameterName="externalReferenceCode"
-			creationMenu="<%= clientExtensionAdminDisplayContext.getCreationMenu() %>"
-			dataProviderKey="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
-			id="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
-			itemsPerPage="<%= 10 %>"
-			selectedItemsKey="externalReferenceCode"
-			style="fluid"
-			uniformActionsDisplay="<%= true %>"
-		/>
-	</div>
+<div class="container-fluid container-fluid-max-xxl">
+	<frontend-data-set:classic-display
+		actionParameterName="externalReferenceCode"
+		creationMenu="<%= clientExtensionAdminDisplayContext.getCreationMenu() %>"
+		dataProviderKey="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
+		id="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
+		itemsPerPage="<%= 10 %>"
+		selectedItemsKey="externalReferenceCode"
+		style="fluid"
+		uniformActionsDisplay="<%= true %>"
+	/>
 </div>

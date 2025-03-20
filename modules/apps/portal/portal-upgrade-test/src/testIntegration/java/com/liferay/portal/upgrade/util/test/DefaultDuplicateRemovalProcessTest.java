@@ -110,7 +110,8 @@ public class DefaultDuplicateRemovalProcessTest {
 				"TestTable", "column1, column2, column3, column4");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess",
+				"com.liferay.portal.kernel.upgrade.util." +
+					"BaseDuplicateRemovalProcess",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();
@@ -141,7 +142,8 @@ public class DefaultDuplicateRemovalProcessTest {
 				"primaryKeyColumn", "asc");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess",
+				"com.liferay.portal.kernel.upgrade.util." +
+					"BaseDuplicateRemovalProcess",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();

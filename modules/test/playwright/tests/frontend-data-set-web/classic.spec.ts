@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {fdsSamplePageTest} from './fixtures/fdsSamplePageTest';
+import {liferayConfig} from "../../liferay.config";
 
 const test = mergeTests(
 	dataApiHelpersTest,
@@ -26,40 +27,41 @@ const test = mergeTests(
 );
 
 let fdsSamplePageURL: string;
+let fdsSamplePageLayout: Layout;
 
-test.beforeEach(async ({fdsSamplePage, site}) => {
-	const {url} = await fdsSamplePage.setupFDSSampleWidget({site});
+test.beforeEach(async ({fdsSamplePage, page, site}) => {
+	const {layout, url} = await fdsSamplePage.setupFDSSampleWidget({site});
+
+	fdsSamplePageLayout = layout;
 
 	fdsSamplePageURL = url;
-
-	await fdsSamplePage.selectTab('Classic');
-
-	await expect(fdsSamplePage.table.headerCells).toHaveCount(4);
-	await expect(fdsSamplePage.table.headerCells).toContainText([
-		'First Name',
-		'Last Name',
-		'Email Address',
-	]);
-});
-
-
-// Marko
-test.beforeEach(async ({fdsSamplePage, page, site}) => {
-	const locale = 'es';
-
-	await fdsSamplePage.setupFDSSampleWidget({locale, site});
 
 	await fdsSamplePage.selectTab('Classic');
 
 	await expect(page.getByText('test@liferay.com')).toBeVisible();
 });
 
-// Marko
 test(
 	'Assert the details shown in the FDS table',
 	{tag: '@LPS-162792'},
-	async ({fdsSamplePage}) => {
+	async ({fdsSamplePage, page, site}) => {
+		await test.step('Check headers are localized in English', async () => {
+			await expect(fdsSamplePage.table.headerCells).toHaveCount(4);
+			await expect(fdsSamplePage.table.headerCells).toContainText([
+				'First Name',
+				'Last Name',
+				'Email Address',
+			]);})
+
 		await test.step('Check headers are localized in Spanish', async () => {
+			const url = `${liferayConfig.environment.baseUrl}/es/web${site.friendlyUrlPath}${fdsSamplePageLayout.friendlyUrlPath}`;
+
+			await page.goto(url);
+
+			await fdsSamplePage.selectTab('Classic');
+			
+			await expect(page.getByText('test@liferay.com')).toBeVisible();
+			
 			expect(
 				await fdsSamplePage.table.headerCells.allInnerTexts()
 			).toEqual(['Nombre', 'Apellido', 'Dirección de correo', '']);

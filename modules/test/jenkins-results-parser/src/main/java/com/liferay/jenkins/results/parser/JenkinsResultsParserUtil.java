@@ -4171,7 +4171,7 @@ public class JenkinsResultsParserUtil {
 			return true;
 		}
 
-		if ((labels == null) || (labels.isEmpty())) {
+		if ((labels == null) || labels.isEmpty()) {
 			return false;
 		}
 

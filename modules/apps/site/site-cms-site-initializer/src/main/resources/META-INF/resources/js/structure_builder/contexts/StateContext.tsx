@@ -119,7 +119,7 @@ function reducer(state: State, action: Action): State {
 
 			nextFields.set(field.uuid, {...field, name});
 
-			return {...state, fields: nextFields};
+			return {...state, fields: nextFields, selection: [field.uuid]};
 		}
 		case 'create-structure': {
 			return {

@@ -27,20 +27,15 @@ import java.util.Map;
 public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 	public DuplicateRemovalUpgradeProcess(String tableName, String columns) {
-		_tableName = tableName;
-		_columns = columns;
-
-		_orderByClause = null;
+		this(tableName, columns, null);
 	}
 
 	public DuplicateRemovalUpgradeProcess(
-		String tableName, String columns, String orderByColumns,
-		String sortOrder) {
+		String tableName, String columns, String orderByClause) {
 
 		_tableName = tableName;
 		_columns = columns;
-
-		_orderByClause = _getOrderByClause(orderByColumns, sortOrder);
+		_orderByClause = orderByClause;
 	}
 
 	@Override
@@ -174,44 +169,6 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		}
 
 		return indexesDuplicatesList;
-	}
-
-	private String _getOrderByClause(String orderByColumns, String sortOrder) {
-		if ((orderByColumns != null) || (sortOrder != null)) {
-			StringBuilder ordeByClause = new StringBuilder();
-
-			ordeByClause.append("ORDER BY ");
-
-			String[] orderByArray = orderByColumns.split(", ");
-
-			for (int i = 0; i < orderByArray.length; i++) {
-				while (i < (orderByArray.length - 1)) {
-					ordeByClause.append(
-						orderByArray[i]
-					).append(
-						" "
-					);
-
-					ordeByClause.append(
-						sortOrder
-					).append(
-						", "
-					);
-				}
-
-				ordeByClause.append(
-					orderByArray[i]
-				).append(
-					" "
-				);
-
-				ordeByClause.append(sortOrder);
-			}
-
-			return ordeByClause.toString();
-		}
-
-		return null;
 	}
 
 	private void _logDeletedDuplicates(Map<String, String> duplicate) {

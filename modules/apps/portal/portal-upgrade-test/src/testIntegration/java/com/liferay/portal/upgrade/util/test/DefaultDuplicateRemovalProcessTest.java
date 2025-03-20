@@ -18,13 +18,13 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalProcess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalProcess;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -107,12 +107,11 @@ public class DefaultDuplicateRemovalProcessTest {
 
 		DefaultDuplicateRemovalProcess upgradeProcess =
 			new DefaultDuplicateRemovalProcess(
-				"TestTable",
-				"column1, column2, column3, column4");
+				"TestTable", "column1, column2, column3, column4");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-			"com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess",
-			LoggerTestUtil.OFF)) {
+				"com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess",
+				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();
 		}
@@ -120,9 +119,9 @@ public class DefaultDuplicateRemovalProcessTest {
 		_assertDuplicates(true);
 
 		try (Connection connection = DataAccess.getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement(
-				 "SELECT primaryKeyColumn FROM TestTable");
-			 ResultSet resultSet = preparedStatement.executeQuery()) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"SELECT primaryKeyColumn FROM TestTable");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
 
@@ -138,13 +137,12 @@ public class DefaultDuplicateRemovalProcessTest {
 
 		DefaultDuplicateRemovalProcess upgradeProcess =
 			new DefaultDuplicateRemovalProcess(
-				"TestTable",
-				"column1, column2, column3, column4",
+				"TestTable", "column1, column2, column3, column4",
 				"primaryKeyColumn", "asc");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-			"com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess",
-			LoggerTestUtil.OFF)) {
+				"com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess",
+				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();
 		}
@@ -152,9 +150,9 @@ public class DefaultDuplicateRemovalProcessTest {
 		_assertDuplicates(true);
 
 		try (Connection connection = DataAccess.getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement(
-				 "SELECT primaryKeyColumn FROM TestTable");
-			 ResultSet resultSet = preparedStatement.executeQuery()) {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"SELECT primaryKeyColumn FROM TestTable");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
 
@@ -163,19 +161,18 @@ public class DefaultDuplicateRemovalProcessTest {
 	}
 
 	private void _assertDuplicates(boolean removed) throws SQLException {
-		String countSQL = StringBundler.concat(
-			"SELECT COUNT(*) FROM TestTable GROUP BY column1, ",
-			"column2, column3, column4 ",
-			"HAVING COUNT(*) > 1");
+		String countSQL =
+			"SELECT COUNT(*) FROM TestTable GROUP BY column1, column2, " +
+				"column3, column4 HAVING COUNT(*) > 1";
 
 		if (removed) {
 			_companyLocalService.forEachCompany(
 				company -> {
 					try (Connection connection = DataAccess.getConnection();
-						 PreparedStatement preparedStatement =
-							 connection.prepareStatement(countSQL);
-						 ResultSet resultSet =
-							 preparedStatement.executeQuery()) {
+						PreparedStatement preparedStatement =
+							connection.prepareStatement(countSQL);
+						ResultSet resultSet =
+							preparedStatement.executeQuery()) {
 
 						Assert.assertFalse(resultSet.next());
 					}
@@ -185,10 +182,10 @@ public class DefaultDuplicateRemovalProcessTest {
 			_companyLocalService.forEachCompany(
 				company -> {
 					try (Connection connection = DataAccess.getConnection();
-						 PreparedStatement preparedStatement =
-							 connection.prepareStatement(countSQL);
-						 ResultSet resultSet =
-							 preparedStatement.executeQuery()) {
+						PreparedStatement preparedStatement =
+							connection.prepareStatement(countSQL);
+						ResultSet resultSet =
+							preparedStatement.executeQuery()) {
 
 						Assert.assertTrue(resultSet.next());
 
@@ -202,7 +199,7 @@ public class DefaultDuplicateRemovalProcessTest {
 	private static CompanyLocalService _companyLocalService;
 
 	private static DB _db;
-	private static long _minPrimaryKey;
 	private static long _maxPrimaryKey;
+	private static long _minPrimaryKey;
 
 }

@@ -168,7 +168,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	public int getAvailableSlavesCount() {
 		List<AWSFleetCloud> awsFleetClouds = getAWSFleetClouds();
 
-		int totalQueueCount = _queueCount + _getRecentBatchSizesTotal();
+		int totalQueueCount =
+			_getQueueCount(null) + _getRecentBatchSizesTotal();
 
 		if (!awsFleetClouds.isEmpty()) {
 			AWSFleetCloud awsFleetCloud = awsFleetClouds.get(0);
@@ -183,7 +184,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	public float getAverageQueueLength() {
 		List<AWSFleetCloud> awsFleetClouds = getAWSFleetClouds();
 
-		int totalQueueCount = _queueCount + _getRecentBatchSizesTotal();
+		int totalQueueCount =
+			_getQueueCount(null) + _getRecentBatchSizesTotal();
 
 		if (!awsFleetClouds.isEmpty()) {
 			AWSFleetCloud awsFleetCloud = awsFleetClouds.get(0);
@@ -555,6 +557,36 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 	}
 
+	public synchronized List<QueueItem> getQueueItems() {
+		try {
+			JSONObject queueAPIJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.combine(
+						getRemoteURL(), "/queue/api/json?tree=",
+						"items[actions[parameters[name,value]],id,",
+						"inQueueSince,task[name,url],url,why]"),
+					false, 5000);
+
+			_queueItems.clear();
+
+			if (!queueAPIJSONObject.has("items")) {
+				return _queueItems;
+			}
+
+			JSONArray itemsJSONArray = queueAPIJSONObject.getJSONArray("items");
+
+			for (int i = 0; i < itemsJSONArray.length(); i++) {
+				_queueItems.add(
+					new QueueItem(this, itemsJSONArray.getJSONObject(i)));
+			}
+
+			return _queueItems;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	public JenkinsSlave getRandomJenkinsSlave() {
 		List<JenkinsSlave> jenkinsSlaves = new ArrayList<>(getJenkinsSlaves());
 
@@ -839,8 +871,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_buildURLs.clear();
 			_jenkinsSlavesMap.clear();
 			_labelBatchSizes.clear();
-			_queueCount = 0;
 			_queuedBuildURLs.clear();
+			_queueItems.clear();
 			_reportedAvailableSlavesCount = 0;
 
 			return;
@@ -859,18 +891,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 						"offlineCauseReason]")),
 				false, 5000);
 
-			String queueAPIQuery = "tree=items[task[name,url],url,why]";
-
-			if (!minimal) {
-				queueAPIQuery =
-					"tree=items[actions[parameters[name,value]]," +
-						"inQueueSince,task[name,url],url,why]";
-			}
+			String queueAPIQuery =
+				"tree=items[actions[parameters[name,value]]," +
+					"inQueueSince,task[name,url],url,why]";
 
 			queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						_masterURL, "/queue/api/json?" + queueAPIQuery)),
+				JenkinsResultsParserUtil.combine(
+					getRemoteURL(), "/queue/api/json?" + queueAPIQuery),
 				false, 5000);
 		}
 		catch (Exception exception) {
@@ -878,8 +905,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_buildURLs.clear();
 			_jenkinsSlavesMap.clear();
 			_labelBatchSizes.clear();
-			_queueCount = 0;
 			_queuedBuildURLs.clear();
+			_queueItems.clear();
 			_reportedAvailableSlavesCount = 0;
 
 			System.out.println("Unable to read " + _masterURL);
@@ -971,8 +998,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		_buildURLs.addAll(buildURLs);
 
-		_queueCount = 0;
-
 		if (!queueAPIJSONObject.has("items")) {
 			return;
 		}
@@ -983,6 +1008,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		for (int i = 0; i < itemsJSONArray.length(); i++) {
 			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+
+			_queueItems.add(new QueueItem(this, itemJSONObject));
 
 			if (!itemJSONObject.has("task")) {
 				continue;
@@ -1021,8 +1048,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 						itemJSONObject);
 				}
 			}
-
-			_queueCount++;
 		}
 
 		_queuedBuildURLs.clear();
@@ -1240,6 +1265,52 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return retryable.executeWithRetries();
 	}
 
+	private List<String> _getLabels(String labelExpression) {
+		Set<String> labels = new HashSet<>();
+
+		labels.addAll(getAssignedLabels());
+
+		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
+			if (jenkinsSlave.isEC2FleetNodeComputer()) {
+				continue;
+			}
+
+			labels.addAll(jenkinsSlave.getAssignedLabels());
+		}
+
+		for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
+			labels.addAll(awsFleetCloud.getLabels());
+		}
+
+		List<String> matchingLabels = new ArrayList<>();
+
+		for (String label : labels) {
+			if (JenkinsResultsParserUtil.matchesLabels(
+					labelExpression, Arrays.asList(label))) {
+
+				matchingLabels.add(label);
+			}
+		}
+
+		return matchingLabels;
+	}
+
+	private int _getQueueCount(String labelExpression) {
+		int queueCount = 0;
+
+		List<String> labels = _getLabels(labelExpression);
+
+		for (QueueItem queueItem : getQueueItems()) {
+			if (JenkinsResultsParserUtil.matchesLabels(
+					queueItem.getLabelExpression(), labels)) {
+
+				queueCount++;
+			}
+		}
+
+		return queueCount;
+	}
+
 	private synchronized int _getRecentBatchSizesTotal() {
 		return _getRecentBatchSizesTotal(null);
 	}
@@ -1354,10 +1425,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final String _masterName;
 	private final String _masterRemoteURL;
 	private final String _masterURL;
-	private int _queueCount;
 	private final Map<String, JSONObject> _queuedBuildURLs =
 		Collections.synchronizedMap(new HashMap<String, JSONObject>());
 	private final List<JSONObject> _queueItemJSONObjects = new ArrayList<>();
+	private final List<QueueItem> _queueItems = new ArrayList<>();
 	private Long _queueUpdateTime;
 	private int _reportedAvailableSlavesCount;
 	private final Integer _slaveRAM;

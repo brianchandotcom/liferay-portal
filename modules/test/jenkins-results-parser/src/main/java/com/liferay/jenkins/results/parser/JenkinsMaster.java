@@ -797,6 +797,11 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	@Override
+	public boolean isIdle() {
+		return _idle;
+	}
+
+	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
 			"{availableSlavesCount=", String.valueOf(getAvailableSlavesCount()),

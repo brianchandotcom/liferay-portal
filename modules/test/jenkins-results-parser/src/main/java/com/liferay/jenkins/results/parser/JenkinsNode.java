@@ -20,4 +20,6 @@ public interface JenkinsNode<T> extends Comparable<T> {
 
 	public String getName();
 
+	public boolean isIdle();
+
 }

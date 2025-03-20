@@ -208,6 +208,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		return false;
 	}
 
+	@Override
 	public boolean isIdle() {
 		return _idle;
 	}

@@ -11,7 +11,17 @@ import AttributeFields from '../../src/main/resources/META-INF/resources/js/comp
 const onAttributeChange = jest.fn();
 
 const mockAttributeFields = () => (
-	<AttributeFields index={0} onAttributeChange={onAttributeChange} value="" />
+	<AttributeFields
+		id="testId"
+		index={0}
+		name=""
+		onAttributeChange={onAttributeChange}
+		onErrorChange={jest.fn()}
+		onRemoveClick={jest.fn()}
+		portletNamespace="portletNamespace"
+		type="TYPE_STRING"
+		value=""
+	/>
 );
 
 describe('AttributeFields', () => {

@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -185,7 +187,13 @@ public class BatchEnginePortletDataHandlerTest {
 		ObjectEntry duplicateObjectEntry = _addObjectEntry(
 			_objectDefinition1, objectFieldValue);
 
-		_importLayouts();
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.strategy." +
+					"OnErrorContinueBatchEngineImportStrategy",
+				LoggerTestUtil.OFF)) {
+
+			_importLayouts();
+		}
 
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(

@@ -60,7 +60,11 @@ public class DatabaseUtilTest extends BaseTestCase {
 
 		mockGetCompanyInfos(companyIds);
 
-		DatabaseUtil.exportLiferayDatabase(connection, companyIds.get(0));
+		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
+			connection, companyIds.get(0));
+
+		Assert.assertEquals(
+			companyIds.get(0), liferayDatabase.getExportedCompanyId());
 	}
 
 	@Test

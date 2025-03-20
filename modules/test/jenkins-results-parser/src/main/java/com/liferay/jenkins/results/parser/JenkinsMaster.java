@@ -770,6 +770,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public synchronized void update(boolean minimal) {
+		if (_isUpdated()) {
+			return;
+		}
+
 		if (!isAvailable()) {
 			_assignedLabels.clear();
 			_buildURLs.clear();
@@ -1426,6 +1430,19 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return usableNodeCount;
 	}
 
+	private synchronized boolean _isUpdated() {
+		if ((_updateTimestamp == -1) ||
+			((System.currentTimeMillis() - _updateTimestamp) >
+				_MAXIMUM_UPDATE_DURATION)) {
+
+			_updateTimestamp = System.currentTimeMillis();
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private static final long _AVAILABLE_TIMEOUT = 1000 * 60 * 5;
 
 	private static final long _AWS_FLEET_CLOUD_UPDATE_DURATION =
@@ -1436,6 +1453,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private static final long _MAXIMUM_BUILD_UPDATE_DURATION = 30 * 1000;
 
 	private static final long _MAXIMUM_QUEUE_UPDATE_DURATION = 15 * 1000;
+
+	private static final long _MAXIMUM_UPDATE_DURATION = 1000 * 15;
 
 	private static final Pattern _globalEnvironmentVariablesPattern =
 		Pattern.compile("[^\\{]+(?<json>\\{.*\\})\\s+");
@@ -1496,5 +1515,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private Long _queueUpdateTime;
 	private final Integer _slaveRAM;
 	private final Integer _slavesPerHost;
+	private long _updateTimestamp = -1;
 
 }

@@ -6,7 +6,7 @@ application:
     name: "Liferay.Scim.REST"
 author: "Olivér Kecskeméty"
 clientDir: "../scim-rest-client/src/main/java"
-compatibilityVersion: 7
+compatibilityVersion: 8
 forcePredictableOperationId: false
 generateGraphQL: false
 testDir: "../scim-rest-test/src/testIntegration/java"

@@ -12,7 +12,7 @@ export interface SearchBuilderConstructor {
 
 /**
  * @description
- * Based in the following article https://help.liferay.com/hc/pt/articles/360031163631-Filter-Sort-and-Search
+ * Based on the following article https://learn.liferay.com/w/dxp/headless-delivery/consuming-apis/api-query-parameters
  */
 
 export default class SearchBuilder {

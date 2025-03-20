@@ -26,8 +26,6 @@ function alignMenu() {
 	const wrapperRect = document
 		.querySelector('#wrapper')
 		?.getBoundingClientRect();
-	const isRTL =
-		Liferay.Language.direction?.[themeDisplay?.getLanguageId()] === 'rtl';
 
 	menu.style.top = `${toggleBoundingClientRect.bottom}px`;
 
@@ -39,9 +37,11 @@ function alignMenu() {
 		menu.style.width = `${regularMenuWidth}px`;
 
 		if (
-			toggleBoundingClientRect.left + regularMenuWidth >= window.innerWidth ||
+			toggleBoundingClientRect.left + regularMenuWidth >=
+				window.innerWidth ||
 			(wrapperRect &&
-				toggleBoundingClientRect.left + regularMenuWidth >= wrapperRect.width)
+				toggleBoundingClientRect.left + regularMenuWidth >=
+					wrapperRect.width)
 		) {
 			menu.style.right = `${window.innerWidth - toggleBoundingClientRect.right}px`;
 		}
@@ -49,11 +49,15 @@ function alignMenu() {
 			menu.style.right = null;
 		}
 
-		if (isRTL && toggleBoundingClientRect.right - regularMenuWidth < 0) {
+		if (
+			Liferay.Language.direction?.[themeDisplay?.getLanguageId()] ===
+				'rtl' &&
+			toggleBoundingClientRect.right - regularMenuWidth < 0
+		) {
 			menu.style.left = `${toggleBoundingClientRect.left}px`;
 		}
 	}
-	else if (configuration.panelType === 'full-width') {
+	else {
 		menu.style.width = `${fragmentElement.getBoundingClientRect().width}px`;
 	}
 }
@@ -128,7 +132,7 @@ function toggleMenu() {
 	if (menu.style.display === 'block') {
 		menu.style.display = 'none';
 		toggle.setAttribute('aria-expanded', 'false');
-		menuDropdownCaret.classList.remove('rotated'); // Remove rotação do caret
+		menuDropdownCaret.classList.remove('rotated');
 
 		window.removeEventListener('resize', handleWindowEvent);
 		window.removeEventListener('scroll', handleWindowEvent);
@@ -138,7 +142,7 @@ function toggleMenu() {
 	else {
 		menu.style.display = 'block';
 		toggle.setAttribute('aria-expanded', 'true');
-		menuDropdownCaret.classList.add('rotated'); // Adiciona rotação ao caret
+		menuDropdownCaret.classList.add('rotated');
 
 		alignMenu();
 

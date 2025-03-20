@@ -615,7 +615,7 @@ public class PortalUpgradeProcessRegistryImpl
 				"SocialActivitySetting",
 				"groupId, classNameId, activityType, name, ctCollectionId"),
 			new DuplicateRemovalUpgradeProcess(
-				"Ticket", "key_", "ticketId", "asc"));
+				"Ticket", "key_", "ticketId asc"));
 	}
 
 }

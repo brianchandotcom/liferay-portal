@@ -74,6 +74,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		}
 
 		if (_orderByClause != null) {
+			sb.append("order by ");
 			sb.append(_orderByClause);
 		}
 

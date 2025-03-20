@@ -46,10 +46,21 @@ test(
 			trigger: structureBuilderPage.saveButton,
 		});
 
-		// Save structure
+		// Add fields and check they are selected by default
 
 		await structureBuilderPage.addField('Text');
-		await structureBuilderPage.addField('Text');
+
+		await expect(
+			page.locator('.breadcrumb-link', {hasText: 'Text'})
+		).toBeVisible();
+
+		await structureBuilderPage.addField('Long Text');
+
+		await expect(
+			page.locator('.breadcrumb-link', {hasText: 'Long Text'})
+		).toBeVisible();
+
+		// Save the structure
 
 		const {id} = await structureBuilderPage.saveStructure();
 
@@ -57,7 +68,7 @@ test(
 
 		// Remove a field
 
-		await structureBuilderPage.deleteField({label: 'Text', nth: 1});
+		await structureBuilderPage.deleteField({label: 'Long Text'});
 
 		// Publish it
 

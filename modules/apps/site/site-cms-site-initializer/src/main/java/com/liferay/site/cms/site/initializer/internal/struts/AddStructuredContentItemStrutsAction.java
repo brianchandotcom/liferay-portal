@@ -214,6 +214,8 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 							"title", backLayout.getTitle()
 						)
 					).put(
+						"showNotification", true
+					).put(
 						"type", "page"
 					)),
 				formStyledLayoutStructureItem.getItemId());

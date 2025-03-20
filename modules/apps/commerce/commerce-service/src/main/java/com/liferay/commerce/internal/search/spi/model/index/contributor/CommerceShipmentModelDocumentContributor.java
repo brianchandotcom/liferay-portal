@@ -46,6 +46,8 @@ public class CommerceShipmentModelDocumentContributor
 			document.addNumberSortable(
 				Field.ENTRY_CLASS_PK, commerceShipment.getCommerceShipmentId());
 			document.addKeyword(Field.STATUS, commerceShipment.getStatus());
+			document.addKeyword("carrier", commerceShipment.getCarrier());
+			document.addTextSortable("carrier", commerceShipment.getCarrier());
 			document.addKeyword(
 				"commerceAccountId", commerceShipment.getCommerceAccountId());
 			document.addKeyword(
@@ -63,6 +65,8 @@ public class CommerceShipmentModelDocumentContributor
 			document.addKeyword(
 				"commerceOrderIds",
 				_getCommerceOrderIds(commerceShipment.getCommerceShipmentId()));
+			document.addDateSortable(
+				"expectedDate", commerceShipment.getExpectedDate());
 			document.addNumber(
 				"itemsCount",
 				_commerceShipmentItemLocalService.getCommerceShipmentItemsCount(

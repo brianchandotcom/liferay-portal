@@ -676,67 +676,28 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					continue;
 				}
 
-				JSONArray actionsJSONArray = buildJSONObject.optJSONArray(
-					"actions");
+				Map<String, String> parameters = _getParameters(
+					buildJSONObject);
 
-				if (actionsJSONArray == JSONObject.NULL) {
-					continue;
+				boolean matchingBuildParameters = true;
+
+				for (Map.Entry<String, String> buildParameter :
+						buildParameters.entrySet()) {
+
+					String parameterValue = parameters.get(
+						buildParameter.getKey());
+
+					if (!Objects.equals(
+							buildParameter.getValue(), parameterValue)) {
+
+						matchingBuildParameters = false;
+
+						break;
+					}
 				}
 
-				for (int j = 0; j < actionsJSONArray.length(); j++) {
-					JSONObject actionJSONObject =
-						actionsJSONArray.optJSONObject(j);
-
-					if ((actionJSONObject == JSONObject.NULL) ||
-						!Objects.equals(
-							actionJSONObject.optString("_class"),
-							"hudson.model.ParametersAction")) {
-
-						continue;
-					}
-
-					JSONArray parametersJSONArray =
-						actionJSONObject.optJSONArray("parameters");
-
-					if (parametersJSONArray == JSONObject.NULL) {
-						continue;
-					}
-
-					Map<String, String> parameters = new HashMap<>();
-
-					for (int k = 0; k < parametersJSONArray.length(); k++) {
-						JSONObject parameterJSONObject =
-							parametersJSONArray.optJSONObject(k);
-
-						if (parameterJSONObject == JSONObject.NULL) {
-							continue;
-						}
-
-						parameters.put(
-							parameterJSONObject.getString("name"),
-							parameterJSONObject.getString("value"));
-					}
-
-					boolean matchingBuildParameters = true;
-
-					for (Map.Entry<String, String> buildParameter :
-							buildParameters.entrySet()) {
-
-						String parameterValue = parameters.get(
-							buildParameter.getKey());
-
-						if (!Objects.equals(
-								buildParameter.getValue(), parameterValue)) {
-
-							matchingBuildParameters = false;
-
-							break;
-						}
-					}
-
-					if (matchingBuildParameters) {
-						return true;
-					}
+				if (matchingBuildParameters) {
+					return true;
 				}
 			}
 		}
@@ -775,67 +736,27 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					continue;
 				}
 
-				JSONArray actionsJSONArray = itemJSONObject.optJSONArray(
-					"actions");
+				Map<String, String> parameters = _getParameters(itemJSONObject);
 
-				if (actionsJSONArray == JSONObject.NULL) {
-					continue;
+				boolean matchingBuildParameters = true;
+
+				for (Map.Entry<String, String> buildParameter :
+						buildParameters.entrySet()) {
+
+					String parameterValue = parameters.get(
+						buildParameter.getKey());
+
+					if (!Objects.equals(
+							buildParameter.getValue(), parameterValue)) {
+
+						matchingBuildParameters = false;
+
+						break;
+					}
 				}
 
-				for (int j = 0; j < actionsJSONArray.length(); j++) {
-					JSONObject actionJSONObject =
-						actionsJSONArray.optJSONObject(j);
-
-					if ((actionJSONObject == JSONObject.NULL) ||
-						!Objects.equals(
-							actionJSONObject.optString("_class"),
-							"hudson.model.ParametersAction")) {
-
-						continue;
-					}
-
-					JSONArray parametersJSONArray =
-						actionJSONObject.optJSONArray("parameters");
-
-					if (parametersJSONArray == JSONObject.NULL) {
-						continue;
-					}
-
-					Map<String, String> parameters = new HashMap<>();
-
-					for (int k = 0; k < parametersJSONArray.length(); k++) {
-						JSONObject parameterJSONObject =
-							parametersJSONArray.optJSONObject(k);
-
-						if (parameterJSONObject == JSONObject.NULL) {
-							continue;
-						}
-
-						parameters.put(
-							parameterJSONObject.getString("name"),
-							parameterJSONObject.getString("value"));
-					}
-
-					boolean matchingBuildParameters = true;
-
-					for (Map.Entry<String, String> buildParameter :
-							buildParameters.entrySet()) {
-
-						String parameterValue = parameters.get(
-							buildParameter.getKey());
-
-						if (!Objects.equals(
-								buildParameter.getValue(), parameterValue)) {
-
-							matchingBuildParameters = false;
-
-							break;
-						}
-					}
-
-					if (matchingBuildParameters) {
-						return true;
-					}
+				if (matchingBuildParameters) {
+					return true;
 				}
 			}
 		}
@@ -1293,6 +1214,56 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		return matchingLabels;
+	}
+
+	private Map<String, String> _getParameters(JSONObject jsonObject) {
+		Map<String, String> parameters = new HashMap<>();
+
+		if (jsonObject == null) {
+			return parameters;
+		}
+
+		JSONArray actionsJSONArray = jsonObject.optJSONArray("actions");
+
+		if (actionsJSONArray == null) {
+			return parameters;
+		}
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionJSONObject = actionsJSONArray.optJSONObject(i);
+
+			if ((actionJSONObject == JSONObject.NULL) ||
+				!Objects.equals(
+					actionJSONObject.optString("_class"),
+					"hudson.model.ParametersAction")) {
+
+				continue;
+			}
+
+			JSONArray parametersJSONArray = actionJSONObject.optJSONArray(
+				"parameters");
+
+			if (parametersJSONArray == JSONObject.NULL) {
+				continue;
+			}
+
+			for (int k = 0; k < parametersJSONArray.length(); k++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.optJSONObject(k);
+
+				if (parameterJSONObject == JSONObject.NULL) {
+					continue;
+				}
+
+				parameters.put(
+					parameterJSONObject.getString("name"),
+					parameterJSONObject.getString("value"));
+			}
+
+			break;
+		}
+
+		return parameters;
 	}
 
 	private int _getQueueCount(String labelExpression) {

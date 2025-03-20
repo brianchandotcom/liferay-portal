@@ -12,7 +12,7 @@ data:
         caCertData="$[secret:ca.crt]"
         namespace="$[secret:namespace]"
         saToken="$[secret:token]"
-    portal-ext.properties: |
+    portal-cloud.properties: |
         {{- if .Values.portalProperties }}
         {{- .Values.portalProperties | nindent 8 }}
         {{- end }}
@@ -56,6 +56,9 @@ data:
         portlet.session.replicate.enabled=true
         {{ end }}
         {{- tpl (.Files.Get "resources/portal-cloud.properties") $ | nindent 8 }}
+    portal-ext.properties: |
+        include-and-override=portal-liferay-online-config.properties
+        include-and-override=portal-cloud.properties
     {{ if or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled }}
     unicast.xml: |
         {{- tpl (.Files.Get "resources/unicast.xml") . | nindent 8 }}

@@ -220,6 +220,9 @@ volumeMounts:
     - mountPath: /opt/liferay/osgi/state
       name: liferay-persistent-volume
       subPath: osgi/state
+    - mountPath: /opt/liferay/portal-cloud.properties
+      name: liferay-configmap
+      subPath: portal-cloud.properties
     - mountPath: /opt/liferay/portal-ext.properties
       name: liferay-configmap
       subPath: portal-ext.properties

@@ -434,11 +434,11 @@ describe('StructureFieldSettings', () => {
 		expect(
 			screen.getByLabelText('accept-unique-values-only')
 		).toBeDisabled();
+		expect(screen.getByLabelText('erc')).toBeDisabled();
 		expect(screen.getByLabelText('field-name')).toBeDisabled();
 		expect(screen.getByLabelText('localizable')).toBeDisabled();
 		expect(screen.getByLabelText('mandatory')).toBeDisabled();
 
-		expect(screen.getByLabelText('erc')).not.toBeDisabled();
 		expect(screen.getByLabelText('limit-characters')).not.toBeDisabled();
 	});
 });

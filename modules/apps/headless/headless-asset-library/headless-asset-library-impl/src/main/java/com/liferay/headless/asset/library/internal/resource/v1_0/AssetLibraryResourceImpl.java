@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -156,8 +158,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		Map<String, String> descriptionMap = _getValue(
 			assetLibrary::getDescription_i18n,
 			() -> LocalizedMapUtil.getI18nMap(group.getDescriptionMap()));
-
-		// TODO transform the assetLibrary::settings in unicodeProperties
+		UnicodeProperties unicodeProperties = _getValue(
+			() -> _toUnicodeProperties(assetLibrary.getSettings()),
+			() -> _getUnicodeProperties(
+				group.getExternalReferenceCode(),
+				contextCompany.getCompanyId()));
 
 		return _toAssetLibrary(
 			_depotEntryService.updateDepotEntry(
@@ -170,10 +175,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				DepotEntryManagerUtil.getDepotCustomizationMap(
 					group.getExternalReferenceCode(),
 					contextCompany.getCompanyId()),
-				_depotEntryManager.getUnicodeProperties(
-					group.getExternalReferenceCode(),
-					contextCompany.getCompanyId()),
-				_getServiceContext()));
+				unicodeProperties, _getServiceContext()));
 	}
 
 	@Override
@@ -229,6 +231,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					assetLibrary.getDescription(),
 					assetLibrary.getDescription_i18n()),
+				_toUnicodeProperties(assetLibrary.getSettings()),
 				_getServiceContext()));
 	}
 
@@ -249,6 +252,19 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		serviceContext.setModifiedDate(new Date());
 
 		return serviceContext;
+	}
+
+	private UnicodeProperties _getUnicodeProperties(
+		String externalReferenceCode, long companyId) {
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		if (group != null) {
+			return group.getTypeSettingsProperties();
+		}
+
+		return new UnicodeProperties(true);
 	}
 
 	private <T, E extends Exception> T _getValue(
@@ -291,6 +307,31 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				_dtoConverterRegistry, depotEntry.getGroupId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
+	}
+
+	private UnicodeProperties _toUnicodeProperties(Settings settings) {
+		if (settings == null) {
+			return null;
+		}
+
+		return UnicodePropertiesBuilder.create(
+			true
+		).put(
+			"autoTaggingEnabled",
+			GetterUtil.getString(
+				Boolean.toString(settings.getAutoTaggingEnabled()), "false")
+		).put(
+			"logoColor",
+			GetterUtil.getString(settings.getLogoColor(), "color-0")
+		).put(
+			"sharingEnabled",
+			GetterUtil.getString(
+				Boolean.toString(settings.getSharingEnabled()), "false")
+		).put(
+			"useCustomLanguages",
+			GetterUtil.getString(
+				Boolean.toString(settings.getUseCustomLanguages()), "false")
+		).build();
 	}
 
 	@Reference(

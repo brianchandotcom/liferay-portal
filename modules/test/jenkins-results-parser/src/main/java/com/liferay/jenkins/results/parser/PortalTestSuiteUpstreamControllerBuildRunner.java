@@ -197,6 +197,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 			Map<String, String> invocationParameters = new HashMap<>();
 
+			invocationParameters.putAll(buildData.getBuildParameters());
+
 			invocationParameters.put("CI_TEST_SUITE", testSuiteName);
 			invocationParameters.put(
 				"JENKINS_GITHUB_BRANCH_NAME",
@@ -248,8 +250,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			invocationParameters.put(
 				"TESTRAY_SLACK_USERNAME",
 				getTestraySlackUsername(testSuiteName));
-
-			invocationParameters.putAll(buildData.getBuildParameters());
 
 			for (Map.Entry<String, String> invocationParameter :
 					invocationParameters.entrySet()) {

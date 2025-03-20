@@ -28,7 +28,7 @@ export const CHART_ID = 'individualActivity';
 const ACTIVITY_ACTIONS_TITLE_LANG_MAP = {
 	[ActivityActions.Comments]: Liferay.Language.get('commented-on-x'),
 	[ActivityActions.Downloads]: Liferay.Language.get('downloaded-x'),
-	[ActivityActions.Previews]: Liferay.Language.get('previewed-x'),
+	[ActivityActions.Impressions]: Liferay.Language.get('impression-made-on-x'),
 	[ActivityActions.Submissions]: Liferay.Language.get('submitted-x'),
 	[ActivityActions.Visits]: Liferay.Language.get('visited-x')
 };
@@ -42,9 +42,9 @@ const ACTIVITY_ACTIONS_DESCRIPTION_LANG_MAP = {
 		plural: Liferay.Language.get('x-downloads'),
 		singular: Liferay.Language.get('x-download')
 	},
-	[ActivityActions.Previews]: {
-		plural: Liferay.Language.get('x-previews'),
-		singular: Liferay.Language.get('x-preview')
+	[ActivityActions.Impressions]: {
+		plural: Liferay.Language.get('x-impressions'),
+		singular: Liferay.Language.get('x-impression')
 	},
 	[ActivityActions.Submissions]: {
 		plural: Liferay.Language.get('x-submissions'),

@@ -2918,6 +2918,16 @@ public class JenkinsResultsParserUtil {
 		String baseInvocationURL, String blacklist, int invokedBatchSize,
 		String jobName, int minimumRAM, int maximumSlavesPerHost) {
 
+		return getMostAvailableMasterURL(
+			baseInvocationURL, blacklist, invokedBatchSize, jobName, null,
+			minimumRAM, maximumSlavesPerHost);
+	}
+
+	public static String getMostAvailableMasterURL(
+		String baseInvocationURL, String blacklist, int invokedBatchSize,
+		String jobName, String labelExpression, int minimumRAM,
+		int maximumSlavesPerHost) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(getJenkinsLoadBalancerURL());
@@ -2937,6 +2947,11 @@ public class JenkinsResultsParserUtil {
 		if (!isNullOrEmpty(jobName)) {
 			sb.append("&jobName=");
 			sb.append(fixURL(jobName));
+		}
+
+		if (!isNullOrEmpty(labelExpression)) {
+			sb.append("&labelExpression=");
+			sb.append(fixURL(labelExpression));
 		}
 
 		if (minimumRAM > 0) {

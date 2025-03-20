@@ -79,7 +79,8 @@ public class ShardedEhcachePortalCache<K extends Serializable, V>
 
 							_cacheManager.createCache(
 								shardedPortalCacheName,
-								baseEhcachePortalCacheManager.newBuilder());
+								baseEhcachePortalCacheManager.
+									getDefaultCacheConfiguration());
 						}
 					}
 				}

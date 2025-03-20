@@ -11,7 +11,6 @@ import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.internal.EhcacheExpiryPolicy;
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheConfiguration;
-import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -47,20 +46,18 @@ public class EhcachePortalCacheManagerConfigurator {
 		_defaultReplicatorPropertiesString = defaultReplicatorPropertiesString;
 	}
 
-	public ObjectValuePair
-		<Configuration, EhcachePortalCacheManagerConfiguration>
-			getConfigurationObjectValuePair(
-				URL configurationURL, ClassLoader classLoader) {
+	public ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+		getConfigurationObjectValuePair(
+			URL configurationURL, ClassLoader classLoader) {
 
 		return getConfigurationObjectValuePair(
 			configurationURL, classLoader, false);
 	}
 
-	public ObjectValuePair
-		<Configuration, EhcachePortalCacheManagerConfiguration>
-			getConfigurationObjectValuePair(
-				URL configurationURL, ClassLoader classLoader,
-				boolean reconfigure) {
+	public ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+		getConfigurationObjectValuePair(
+			URL configurationURL, ClassLoader classLoader,
+			boolean reconfigure) {
 
 		if (configurationURL == null) {
 			throw new NullPointerException("Configuration path is null");
@@ -69,16 +66,14 @@ public class EhcachePortalCacheManagerConfigurator {
 		XmlConfiguration xmlConfiguration = new XmlConfiguration(
 			configurationURL, classLoader);
 
-		EhcachePortalCacheManagerConfiguration
-			ehcachePortalCacheManagerConfiguration = _parseConfiguration(
-				xmlConfiguration);
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
+			_parseConfiguration(xmlConfiguration);
 
-		_populateCacheReplicator(
-			ehcachePortalCacheManagerConfiguration, reconfigure);
+		_populateCacheReplicator(portalCacheManagerConfiguration, reconfigure);
 
 		return new ObjectValuePair<>(
 			_replaceExpiryPolicy(xmlConfiguration),
-			ehcachePortalCacheManagerConfiguration);
+			portalCacheManagerConfiguration);
 	}
 
 	protected Properties parseProperties(
@@ -121,7 +116,7 @@ public class EhcachePortalCacheManagerConfigurator {
 		return false;
 	}
 
-	private EhcachePortalCacheManagerConfiguration _parseConfiguration(
+	private PortalCacheManagerConfiguration _parseConfiguration(
 		XmlConfiguration xmlConfiguration) {
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
@@ -130,45 +125,35 @@ public class EhcachePortalCacheManagerConfigurator {
 		Map<String, CacheConfiguration<?, ?>> cacheConfigurations =
 			xmlConfiguration.getCacheConfigurations();
 
+		PortalCacheConfiguration defaultPortalCacheConfiguration = null;
+
 		for (Map.Entry<String, CacheConfiguration<?, ?>> entry :
 				cacheConfigurations.entrySet()) {
 
 			String portalCacheName = entry.getKey();
 
-			if (portalCacheName.equals(
-					PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT)) {
-
-				continue;
-			}
-
 			CacheConfiguration<?, ?> cacheConfiguration = entry.getValue();
 
-			portalCacheConfigurations.add(
+			EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
 				new EhcachePortalCacheConfiguration(
 					portalCacheName, new HashSet<>(),
 					cacheConfiguration.getKeyType(),
 					cacheConfiguration.getValueType(),
-					_isRequireSerialization(cacheConfiguration)));
+					_isRequireSerialization(cacheConfiguration));
+
+			if (portalCacheName.equals(
+					PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT)) {
+
+				defaultPortalCacheConfiguration =
+					ehcachePortalCacheConfiguration;
+			}
+			else {
+				portalCacheConfigurations.add(ehcachePortalCacheConfiguration);
+			}
 		}
 
-		CacheConfiguration<?, ?> defaultCacheConfiguration =
-			cacheConfigurations.get(
-				PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT);
-
-		PortalCacheConfiguration defaultPortalCacheConfiguration = null;
-
-		if (defaultCacheConfiguration != null) {
-			defaultPortalCacheConfiguration =
-				new EhcachePortalCacheConfiguration(
-					PortalCacheConfiguration.PORTAL_CACHE_NAME_DEFAULT,
-					new HashSet<>(), defaultCacheConfiguration.getKeyType(),
-					defaultCacheConfiguration.getValueType(),
-					_isRequireSerialization(defaultCacheConfiguration));
-		}
-
-		return new EhcachePortalCacheManagerConfiguration(
-			defaultCacheConfiguration, defaultPortalCacheConfiguration,
-			portalCacheConfigurations);
+		return new PortalCacheManagerConfiguration(
+			defaultPortalCacheConfiguration, portalCacheConfigurations);
 	}
 
 	private void _populateCacheReplicator(

@@ -55,7 +55,6 @@ public abstract class BaseSectionDisplayContext {
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
 		sb.append("filter=objectDefinitionFolder in ('");
-
 		sb.append(
 			StringUtil.merge(
 				objectDefinitionFolderExternalReferenceCodes, "','"));

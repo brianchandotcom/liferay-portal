@@ -13,7 +13,7 @@ export default function ProtectedRoute({component: Component, ...rest}) {
 			render={(props) =>
 				themeDisplay.isSignedIn() &&
 				(!Liferay.Session ||
-					Liferay.Session.get('sessionState') === 'active') ? (
+					Liferay.Session.sessionState === 'active') ? (
 					<Component {...props} />
 				) : (
 					<Redirect to={{pathname: '/'}} />

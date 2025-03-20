@@ -29,7 +29,7 @@ class Session {
 		path: string;
 		secure: boolean;
 	};
-	private _sessionState: TSessionState;
+	private sessionState: TSessionState;
 	private _intervalId?: number | NodeJS.Timeout;
 	private _initTimestamp?: string;
 	private _warningLength: number;
@@ -65,7 +65,7 @@ class Session {
 		this._initPageTitle = document.title;
 		this._initTimestamp = Date.now().toString();
 		this._pageTitle = document.title;
-		this._sessionState = 'active';
+		this.sessionState = 'active';
 		this._timestamp = '';
 		this._warningLength = config.warningLength * 1000 || this.sessionLength;
 		this._warningText = Liferay.Util.sub(
@@ -121,7 +121,7 @@ class Session {
 			if (this._initTimestamp !== this._timestamp) {
 				this._setTimestamp();
 
-				if (this._sessionState !== 'active') {
+				if (this.sessionState !== 'active') {
 					this.setSessionState('active');
 				}
 			}
@@ -136,7 +136,7 @@ class Session {
 				elapsed >= this.sessionLength - this.sessionTimeoutOffset;
 			const hasWarned = elapsed >= this._getWarningTime();
 
-			if (hasExpired && this._sessionState !== 'expired') {
+			if (hasExpired && this.sessionState !== 'expired') {
 				this.expire();
 			}
 			else if (this.autoExtend && hasExpiredTimeoutOffset) {
@@ -145,7 +145,7 @@ class Session {
 			else if (
 				!this.autoExtend &&
 				hasWarned &&
-				this._sessionState !== 'warned'
+				this.sessionState !== 'warned'
 			) {
 				this.warn();
 			}
@@ -343,7 +343,7 @@ class Session {
 	}
 
 	setSessionState(newVal: TSessionState) {
-		const prevVal = this._sessionState;
+		const prevVal = this.sessionState;
 
 		if (newVal === 'warned') {
 			this._uiSetWarned();
@@ -362,7 +362,7 @@ class Session {
 			}
 		}
 
-		this._sessionState = newVal;
+		this.sessionState = newVal;
 	}
 
 	async openToast(args: OpenToastProps) {

@@ -29,9 +29,10 @@ export function makeFetch({
 	return fetch(url, fetchData)
 		.then((response) => response.json())
 		.catch((error) => {
-			const sessionStatus = Liferay.Session.get('sessionState');
-
-			if (sessionStatus === 'expired' || error.status === 401) {
+			if (
+				Liferay.Session.sessionState === 'expired' ||
+				error.status === 401
+			) {
 				window.location.reload();
 			}
 			else {

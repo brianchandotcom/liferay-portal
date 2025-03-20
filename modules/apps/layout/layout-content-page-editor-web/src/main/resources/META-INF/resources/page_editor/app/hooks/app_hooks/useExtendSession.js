@@ -13,7 +13,7 @@ export default function useExtendSession() {
 	useEffect(() => {
 		if (Liferay.Session && config.autoExtendSessionEnabled) {
 			const sessionLength =
-				Liferay.Session.get('sessionLength') || DEFAULT_SESSION_LENGTH;
+				Liferay.Session.sessionLength || DEFAULT_SESSION_LENGTH;
 
 			const interval = setInterval(() => {
 				Liferay.Session.extend();

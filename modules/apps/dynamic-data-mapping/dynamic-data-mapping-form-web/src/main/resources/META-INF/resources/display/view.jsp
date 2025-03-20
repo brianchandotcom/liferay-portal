@@ -379,7 +379,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 
 								var tenSeconds = 10000;
 
-								var time = Liferay.Session.get('sessionLength') || tenSeconds;
+								var time = Liferay.Session.sessionLength || tenSeconds;
 
 								window.<portlet:namespace />intervalId = setInterval(
 									<portlet:namespace />extendSession,

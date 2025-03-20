@@ -181,10 +181,10 @@ export class StructureBuilderPage {
 		const APIClient = await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
 		const {
-			response: {statusCode},
+			response: {status},
 		} = await APIClient.deleteObjectDefinition(id);
 
-		expect(statusCode).toBe(204);
+		expect(status).toBe(204);
 	}
 
 	async publishStructure() {

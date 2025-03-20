@@ -99,7 +99,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
             <span
               class="title"
             >
-              Previews
+              Impressions
             </span>
             <div>
               <span>

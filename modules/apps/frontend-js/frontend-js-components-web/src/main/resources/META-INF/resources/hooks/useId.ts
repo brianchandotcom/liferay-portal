@@ -4,9 +4,6 @@
  */
 
 import {useMemo} from 'react';
-
-// @ts-ignore
-
 import {v4 as uuidv4} from 'uuid';
 
 /**

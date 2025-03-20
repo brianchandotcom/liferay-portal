@@ -8,9 +8,6 @@ import {render} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {buildFragment} from 'frontend-js-web';
 import React, {MouseEvent, ReactNode} from 'react';
-
-// @ts-ignore
-
 import {v4 as uuidv4} from 'uuid';
 
 import './notification.scss';

@@ -4,13 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-
-// @ts-nocheck
-
 import React, {useEffect, useState} from 'react';
-
-// @ts-ignore - Check possibility to install package in ts format
-
 import {v4 as uuidv4} from 'uuid';
 
 import {disableFormSubmitButton} from '../../clientExtensionUtil';

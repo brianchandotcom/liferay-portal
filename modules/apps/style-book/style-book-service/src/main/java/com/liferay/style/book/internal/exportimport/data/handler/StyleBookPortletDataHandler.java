@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.style.book.constants.StyleBookConstants;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.List;
 
@@ -60,6 +61,24 @@ public class StyleBookPortletDataHandler extends BasePortletDataHandler {
 				StyleBookEntry.class.getName()));
 		setPublishToLiveByDefault(true);
 		setStagingControls(getExportControls());
+	}
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		if (portletDataContext.addPrimaryKey(
+				StyleBookPortletDataHandler.class, "deleteData")) {
+
+			return portletPreferences;
+		}
+
+		_styleBookEntryLocalService.deleteStyleBookEntries(
+			portletDataContext.getScopeGroupId());
+
+		return portletPreferences;
 	}
 
 	@Override
@@ -152,5 +171,8 @@ public class StyleBookPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

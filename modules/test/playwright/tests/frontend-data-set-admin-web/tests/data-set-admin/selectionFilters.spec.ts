@@ -21,6 +21,9 @@ const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
 const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME =
 	'Selection Picklist filter without preselected values';
+
+// @ts-ignore
+
 const PICKLIST_VALUE_KEY = uuidv4().replaceAll('-', '');
 const PICKLIST_VALUE_NAME = getRandomString();
 

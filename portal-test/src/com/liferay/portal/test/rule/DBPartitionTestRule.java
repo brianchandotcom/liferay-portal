@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,19 +41,28 @@ public class DBPartitionTestRule implements TestRule {
 				TestPropsValues.COMPANY_WEB_ID);
 
 			if (company == null) {
+				String companyWebId;
+
+				if (GetterUtil.getBoolean(
+						TestPropsUtil.get("test.extract.and.insert.company"))) {
+
+					companyWebId = RandomTestUtil.randomString() + ".com";
+				}
+				else {
+					companyWebId = TestPropsValues.COMPANY_WEB_ID;
+				}
+
 				PortalInstances.addCompany(
 					"",
 					() -> CompanyLocalServiceUtil.addCompany(
-						null, TestPropsValues.COMPANY_WEB_ID,
-						TestPropsValues.COMPANY_WEB_ID,
-						TestPropsValues.COMPANY_WEB_ID, 0, true, true, null,
-						null, null, null, null, null));
+						null, companyWebId, companyWebId, companyWebId, 0, true,
+						true, null, null, null, null, null, null));
 
 				if (GetterUtil.getBoolean(
 						TestPropsUtil.get("test.extract.and.insert.company"))) {
 
 					company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-						TestPropsValues.COMPANY_WEB_ID);
+						companyWebId);
 
 					CompanyLocalServiceUtil.extractCompany(
 						company.getCompanyId());
@@ -61,8 +71,9 @@ public class DBPartitionTestRule implements TestRule {
 						company.getCompanyId());
 
 					CompanyLocalServiceUtil.addDBPartitionCompany(
-						company.getCompanyId(), company.getName(),
-						company.getVirtualHostname(), company.getWebId());
+						company.getCompanyId(), TestPropsValues.COMPANY_WEB_ID,
+						TestPropsValues.COMPANY_WEB_ID,
+						TestPropsValues.COMPANY_WEB_ID);
 				}
 			}
 		}

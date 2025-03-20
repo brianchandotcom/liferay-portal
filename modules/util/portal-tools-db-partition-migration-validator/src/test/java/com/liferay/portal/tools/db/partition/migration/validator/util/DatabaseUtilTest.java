@@ -63,8 +63,10 @@ public class DatabaseUtilTest extends BaseTestCase {
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			connection, companyIds.get(0));
 
+		Long companyId = companyIds.get(0);
+
 		Assert.assertEquals(
-			companyIds.get(0), liferayDatabase.getExportedCompanyId());
+			companyId.longValue(), liferayDatabase.getExportedCompanyId());
 	}
 
 	@Test

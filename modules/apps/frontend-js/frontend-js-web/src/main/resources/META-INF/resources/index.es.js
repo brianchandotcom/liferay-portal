@@ -22,6 +22,7 @@ export {default as delegate} from './liferay/delegate/delegate.es';
 export {default as Disposable} from './liferay/events/Disposable';
 export {default as EventEmitter} from './liferay/events/EventEmitter';
 export {default as EventHandler} from './liferay/events/EventHandler';
+export {default as Session} from './liferay/session';
 export {default as STATUS_CODE} from './liferay/status_code';
 export {default as throttle} from './liferay/throttle.es';
 export {default as addParams} from './liferay/util/add_params';

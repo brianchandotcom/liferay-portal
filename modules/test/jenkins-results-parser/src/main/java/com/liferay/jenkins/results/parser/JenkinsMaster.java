@@ -169,35 +169,29 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public int getAvailableSlavesCount() {
-		List<AWSFleetCloud> awsFleetClouds = getAWSFleetClouds();
+		return getAvailableSlavesCount(null);
+	}
 
-		int totalQueueCount =
-			_getQueueCount(null) + _getRecentBatchSizesTotal();
+	public int getAvailableSlavesCount(String labelExpression) {
+		int idleNodeCount = _getIdleNodeCount(labelExpression);
+		int queueCount = _getQueueCount(labelExpression);
+		int recentBatchSizesTotal = _getRecentBatchSizesTotal(labelExpression);
 
-		if (!awsFleetClouds.isEmpty()) {
-			AWSFleetCloud awsFleetCloud = awsFleetClouds.get(0);
-
-			return awsFleetCloud.getMaxSize() - getBusyJenkinsSlavesCount() -
-				totalQueueCount;
-		}
-
-		return getIdleJenkinsSlavesCount() - totalQueueCount;
+		return idleNodeCount - queueCount - recentBatchSizesTotal;
 	}
 
 	public float getAverageQueueLength() {
-		List<AWSFleetCloud> awsFleetClouds = getAWSFleetClouds();
+		return getAverageQueueLength(null);
+	}
 
-		int totalQueueCount =
-			_getQueueCount(null) + _getRecentBatchSizesTotal();
+	public float getAverageQueueLength(String labelExpression) {
+		int busyNodeCount = _getBusyNodeCount(labelExpression);
+		int queueCount = _getQueueCount(labelExpression);
+		int recentBatchSizesTotal = _getRecentBatchSizesTotal(labelExpression);
+		int usableNodeCount = _getUsableNodeCount(labelExpression);
 
-		if (!awsFleetClouds.isEmpty()) {
-			AWSFleetCloud awsFleetCloud = awsFleetClouds.get(0);
-
-			return ((float)totalQueueCount + getBusyJenkinsSlavesCount()) /
-				awsFleetCloud.getMaxSize();
-		}
-
-		return (float)totalQueueCount / getOnlineJenkinsSlavesCount();
+		return ((float)busyNodeCount + queueCount + recentBatchSizesTotal) /
+			usableNodeCount;
 	}
 
 	public List<AWSFleetCloud> getAWSFleetClouds() {

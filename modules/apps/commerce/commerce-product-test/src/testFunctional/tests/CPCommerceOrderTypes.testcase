@@ -1012,15 +1012,11 @@ definition {
 		}
 
 		task ("Then I should be able to select the Test Order Type for my new order.") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
 			Select(
 				locator1 = "Select#TYPE",
 				value1 = "Test Order Type");
 
-			Button.click(button = "Add Order");
-
-			SelectFrameTop();
+			Click(locator1 = "//div[contains(@class,'modal-item')]//button[contains(.,'Submit')]");
 
 			AssertElementPresent(
 				key_orderType = "Test Order Type",

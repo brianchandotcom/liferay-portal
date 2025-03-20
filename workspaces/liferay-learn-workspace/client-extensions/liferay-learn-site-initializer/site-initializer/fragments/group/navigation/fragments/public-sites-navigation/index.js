@@ -150,13 +150,15 @@ function performSearch(query) {
 					);
 
 					suggestionTitle.textContent = suggestion.text;
-					const suggestionContent = suggestionLink.querySelector(
-						'.search-suggestion-item-content'
-					);
 					let contentText = suggestion.attributes.assetSearchSummary;
 
 					if (contentText) {
 						contentText = contentText.substring(0, 500);
+
+						const suggestionContent = suggestionLink.querySelector(
+							'.search-suggestion-item-content'
+						);
+
 						suggestionContent.innerHTML = contentText.replace(
 							new RegExp('(' + query + ')', 'gi'),
 							`<b>$1</b>`
@@ -181,6 +183,7 @@ function performSearch(query) {
 					'search-results-found'
 				);
 			}
+
 			fragmentSearchElements.suggestions.classList.remove(
 				'loading-search',
 				'search-error'

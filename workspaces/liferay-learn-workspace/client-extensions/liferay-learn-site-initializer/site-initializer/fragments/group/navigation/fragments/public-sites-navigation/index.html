@@ -7,14 +7,14 @@
 	navClass = configuration.darkNav?string("dark-nav", "light-nav")
 /]
 
-<nav class="${navClass} d-flex nav flex-column public-sites-navigation">
+<nav class="${navClass} d-flex flex-column nav public-sites-navigation">
 	<div class="utility-nav-container">
 		<div class="align-items-center d-flex justify-content-between py-1 utility-nav w-100">
 			<div class="d-flex sites-languages-container">
 				[#if configuration.showSitesMenu]
 					<div class="d-flex sites-container">
 						<div class="d-flex p-2 sites" tabindex="6">
-							<span class="align-self-center pr-1 opacity-50 sites-icon">[@clay["icon"] symbol="sites"/]</span>
+							<span class="align-self-center opacity-50 pr-1 sites-icon">[@clay["icon"] symbol="sites"/]</span>
 
 							<div class="d-flex font-weight-semi-bold liferay-sites position-relative">
 								<div class="liferay-sites-text opacity-80">
@@ -30,10 +30,12 @@
 						</div>
 					</div>
 				[/#if]
+
 				[#if configuration.showLanguageMenu]
 					<div class="language-selector-container ml-2">
 						<div class="language language-selector pl-2 py-2 utility-nav-link" tabindex="7">
 							<div class="language-selector-globe-icon opacity-50">[@clay["icon"] symbol="globe-lines"/]</div>
+
 							<div class="language-selector-text opacity-80">
 								[#assign current_locale = locale ]
 
@@ -71,14 +73,16 @@
 			<div class="align-items-center d-flex search-account-container">
 				[#if configuration.showSearch]
 					<a class="search-icon-container" href="javascript:;">
-						<span class="search-icon opacity-50" id="searchIcon" tabindex="8">[@clay["icon"] symbol="search"/]</span>
+						<span class="opacity-50 search-icon" id="searchIcon" tabindex="8">[@clay["icon"] symbol="search"/]</span>
 					</a>
 				[/#if]
+
 				[#if configuration.showHelp]
 					<a class="question-icon-container" href="https://help.liferay.com" target="_blank">
-						<span class="question-icon opacity-50" id="questionIcon" tabindex="9">[@clay["icon"] symbol="question-circle"/]</span>
+						<span class="opacity-50 question-icon" id="questionIcon" tabindex="9">[@clay["icon"] symbol="question-circle"/]</span>
 					</a>
 				[/#if]
+
 				[#if configuration.showAccountMenu]
 					<lfr-drop-zone class="utility-nav-container-content"></lfr-drop-zone>
 				[/#if]
@@ -210,7 +214,7 @@
 						${languageUtil.get(locale, "see-all-results", "See All Results")}
 					</a>
 
-					<span class="pl-1 d-inline-block search-suggestions-see-all-results-arrow">[@clay["icon"] symbol="order-arrow-right"/]</span>
+					<span class="d-inline-block pl-1 search-suggestions-see-all-results-arrow">[@clay["icon"] symbol="order-arrow-right"/]</span>
 				</div>
 			</div>
 

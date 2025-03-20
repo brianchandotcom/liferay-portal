@@ -1030,6 +1030,122 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		_queuedBuildURLs.putAll(queuedBuildURLs);
 	}
 
+	public static class QueueItem {
+
+		public long getId() {
+			return _jsonObject.getLong("id");
+		}
+
+		public long getInQueueSince() {
+			return _jsonObject.getLong("inQueueSince");
+		}
+
+		public JSONObject getJSONObject() {
+			return _jsonObject;
+		}
+
+		public String getLabelExpression() {
+			Map<String, String> parameters = getParameters();
+
+			String label = parameters.get("SLAVE_LABEL");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(label)) {
+				label = parameters.get("NODE_NAME");
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(label)) {
+				String taskName = getTaskName();
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(taskName) &&
+					taskName.startsWith("label=")) {
+
+					label = taskName.substring("label=".length());
+				}
+			}
+
+			return label;
+		}
+
+		public Map<String, String> getParameters() {
+			return _getParameters(_jsonObject);
+		}
+
+		public String getTaskName() {
+			JSONObject taskJSONObject = _jsonObject.optJSONObject("task");
+
+			if (taskJSONObject == null) {
+				return null;
+			}
+
+			return taskJSONObject.optString("name");
+		}
+
+		public String getTaskURL() {
+			JSONObject taskJSONObject = _jsonObject.optJSONObject("task");
+
+			if (taskJSONObject == null) {
+				return null;
+			}
+
+			return taskJSONObject.optString("url");
+		}
+
+		public String getURL() {
+			if (!_jsonObject.has("url")) {
+				return null;
+			}
+
+			return JenkinsResultsParserUtil.combine(
+				_jenkinsMaster.getRemoteURL(), "/",
+				_jsonObject.getString("url"));
+		}
+
+		public String getWhy() {
+			return _jsonObject.optString("why");
+		}
+
+		public boolean isValidQueueItem() {
+			String taskName = getTaskName();
+
+			if (taskName.equals("verification-node")) {
+				return false;
+			}
+
+			String why = getWhy();
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(why)) {
+				if (taskName.startsWith("label=")) {
+					String offlineSlaveWhy = JenkinsResultsParserUtil.combine(
+						"‘", taskName.substring("label=".length()),
+						"’ is offline");
+
+					if (why.contains(offlineSlaveWhy)) {
+						return false;
+					}
+				}
+
+				if (why.startsWith("There are no nodes") ||
+					why.contains("already in progress")) {
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		protected QueueItem(
+			JenkinsMaster jenkinsMaster, JSONObject jsonObject) {
+
+			_jenkinsMaster = jenkinsMaster;
+			_jsonObject = jsonObject;
+		}
+
+		private final JenkinsMaster _jenkinsMaster;
+		private final JSONObject _jsonObject;
+
+	}
+
 	protected static long maxRecentBatchAge = 120 * 1000;
 
 	private JenkinsMaster(String masterName) {

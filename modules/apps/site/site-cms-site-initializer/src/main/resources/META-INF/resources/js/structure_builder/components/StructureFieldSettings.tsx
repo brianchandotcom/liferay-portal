@@ -183,6 +183,7 @@ function GeneralTab({field}: {field: Field}) {
 
 			<div className="mt-4">
 				<ERCInput
+					disabled={isPublished}
 					onValueChange={(value) => {
 						dispatch({
 							erc: value,

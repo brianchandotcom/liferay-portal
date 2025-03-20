@@ -10,9 +10,11 @@ import {FieldFeedback, useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 export default function ERCInput({
+	disabled,
 	onValueChange,
 	value: initialValue,
 }: {
+	disabled?: boolean;
 	onValueChange: (value: string) => void;
 	value: string;
 }) {
@@ -43,6 +45,7 @@ export default function ERCInput({
 			</label>
 
 			<ClayInput
+				disabled={disabled}
 				id={id}
 				onBlur={() => onValueChange(value)}
 				onChange={(event) => setValue(event.target.value)}

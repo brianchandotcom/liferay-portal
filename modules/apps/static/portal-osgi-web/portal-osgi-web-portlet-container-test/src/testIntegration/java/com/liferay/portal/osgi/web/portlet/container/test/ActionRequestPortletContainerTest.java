@@ -365,11 +365,7 @@ public class ActionRequestPortletContainerTest
 
 		@Override
 		public boolean isValidSharedSecret(String sharedSecret) {
-			if (_SHARED_SECRET.equals(sharedSecret)) {
-				return true;
-			}
-
-			return false;
+			return _SHARED_SECRET.equals(sharedSecret);
 		}
 
 	}

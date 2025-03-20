@@ -21,11 +21,7 @@ public class DefaultJarInstaller implements FileInstaller {
 	public boolean canTransformURL(File artifact) {
 		String name = artifact.getName();
 
-		if (name.endsWith(".jar")) {
-			return true;
-		}
-
-		return false;
+		return name.endsWith(".jar");
 	}
 
 	@Override

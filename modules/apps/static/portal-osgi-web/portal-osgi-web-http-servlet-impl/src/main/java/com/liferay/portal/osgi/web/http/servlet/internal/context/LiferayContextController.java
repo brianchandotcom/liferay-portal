@@ -737,14 +737,8 @@ public class LiferayContextController extends ContextController {
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
 
 		if (contextSelect == null) {
-			if (_contextName.equals(
-					HttpWhiteboardConstants.
-						HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME)) {
-
-				return true;
-			}
-
-			return false;
+			return _contextName.equals(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME);
 		}
 
 		if (_contextName.equals(contextSelect)) {

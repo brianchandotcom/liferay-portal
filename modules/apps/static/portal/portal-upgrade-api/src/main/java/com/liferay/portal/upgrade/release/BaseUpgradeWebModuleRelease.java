@@ -72,11 +72,7 @@ public abstract class BaseUpgradeWebModuleRelease extends UpgradeProcess {
 			}
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return true;
-				}
-
-				return false;
+				return resultSet.next();
 			}
 		}
 	}

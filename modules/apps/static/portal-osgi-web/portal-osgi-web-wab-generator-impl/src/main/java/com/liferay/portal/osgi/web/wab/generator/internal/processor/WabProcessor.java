@@ -1326,11 +1326,7 @@ public class WabProcessor {
 
 				String fileName = file.getName();
 
-				if (fileName.endsWith(".tld")) {
-					return true;
-				}
-
-				return false;
+				return fileName.endsWith(".tld");
 			});
 
 		for (File file : files) {

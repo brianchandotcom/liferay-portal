@@ -255,11 +255,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			}
 		}
 
-		if (oldDictionary.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return oldDictionary.isEmpty();
 	}
 
 	private String _escapeFilterValue(String string) {

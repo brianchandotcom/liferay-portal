@@ -314,11 +314,7 @@ public class ServletContextHelperRegistrationImpl
 			return false;
 		}
 
-		if (classResource.startsWith(array[-index - 2])) {
-			return true;
-		}
-
-		return false;
+		return classResource.startsWith(array[-index - 2]);
 	}
 
 	private ServiceRegistration<?> _createDefaultServlet() {

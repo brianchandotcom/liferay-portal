@@ -25,14 +25,9 @@ public class ListenerDefinition {
 
 		ListenerDefinition listenerDefinition = (ListenerDefinition)object;
 
-		if (Objects.equals(
-				_eventListener.getClass(),
-				listenerDefinition._eventListener.getClass())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_eventListener.getClass(),
+			listenerDefinition._eventListener.getClass());
 	}
 
 	public EventListener getEventListener() {

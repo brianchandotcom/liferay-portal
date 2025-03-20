@@ -136,11 +136,7 @@ public class ConfigurationDBPartitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected boolean isSkipUpgradeProcess() {
-		if (!DBPartition.isPartitionEnabled()) {
-			return true;
-		}
-
-		return false;
+		return !DBPartition.isPartitionEnabled();
 	}
 
 	private ScopeConfiguration _getScopeConfiguration(

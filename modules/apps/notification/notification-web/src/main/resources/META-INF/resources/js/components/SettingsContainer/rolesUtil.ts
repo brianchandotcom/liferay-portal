@@ -97,15 +97,15 @@ export function getUserNotificationRoles(
 	const roles = {
 		children: rolesItems
 			.filter(({name}) => name !== 'Guest')
-			.map(({externalReferenceCode, name}) => {
+			.map(({name}) => {
 				const selectedRole = !!recipients.find(
-					({roleName}) => roleName === externalReferenceCode
+					({roleName}) => roleName === name
 				);
 
 				return {
 					checked: selectedRole,
 					label: name,
-					value: externalReferenceCode,
+					value: name,
 				};
 			}),
 		label: '',

@@ -9,7 +9,8 @@ import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
-import com.liferay.headless.asset.library.internal.util.DepotEntryManager;
+import com.liferay.headless.asset.library.dto.v1_0.Settings;
+import com.liferay.headless.asset.library.internal.util.DepotEntryManagerUtil;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -178,7 +179,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(), description,
 					descriptionMap),
-				_depotEntryManager.getDepotCustomizationMap(
+				DepotEntryManagerUtil.getDepotCustomizationMap(
 					group.getExternalReferenceCode(),
 					contextCompany.getCompanyId()),
 				_depotEntryManager.getUnicodeProperties(
@@ -231,7 +232,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		return _toAssetLibrary(
-			_depotEntryManager.addOrUpdateDepotEntry(
+			DepotEntryManagerUtil.addOrUpdateDepotEntry(
 				externalReferenceCode,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
@@ -294,9 +295,6 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		target = "(component.name=com.liferay.headless.asset.library.internal.dto.v1_0.converter.AssetLibraryDTOConverter)"
 	)
 	private DTOConverter<DepotEntry, AssetLibrary> _assetLibraryDTOConverter;
-
-	@Reference
-	private DepotEntryManager _depotEntryManager;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

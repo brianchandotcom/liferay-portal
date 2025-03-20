@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -315,11 +317,6 @@ public class ImportSystemDataSetMVCResourceCommand
 			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
 		throws Exception {
 
-		Locale locale = _portal.getLocale(httpServletRequest);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
 		ObjectDefinition dataSetTableSectionObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
@@ -327,23 +324,12 @@ public class ImportSystemDataSetMVCResourceCommand
 					_portal.getCompanyId(httpServletRequest));
 
 		FDSTableSchema fdsTableSchema = baseTableFDSView.getFDSTableSchema(
-			locale);
+			_portal.getLocale(httpServletRequest));
 
 		Map<String, FDSTableSchemaField> fieldsMap =
 			fdsTableSchema.getFDSTableSchemaFieldsMap();
 
 		for (FDSTableSchemaField fdsTableSchemaField : fieldsMap.values()) {
-			String label = fdsTableSchemaField.getLabel();
-
-			if (fdsTableSchemaField.isLocalizeLabel()) {
-				label = LanguageUtil.get(
-					resourceBundle, fdsTableSchemaField.getLabel());
-			}
-
-			if (Validator.isNull(label)) {
-				label = StringPool.BLANK;
-			}
-
 			HashMapBuilder.HashMapWrapper<String, Serializable> values =
 				HashMapBuilder.<String, Serializable>put(
 					"externalReferenceCode",
@@ -356,13 +342,43 @@ public class ImportSystemDataSetMVCResourceCommand
 						fdsTableSchemaField.getFieldName(), ".LANG")
 				).put(
 					"label_i18n",
-					HashMapBuilder.put(
-						dataSetTableSectionObjectDefinition.
-							getDefaultLanguageId(),
-						label
-					).put(
-						locale.toLanguageTag(), label
-					).build()
+					() -> {
+						String label = fdsTableSchemaField.getLabel();
+
+						if (!fdsTableSchemaField.isLocalizeLabel()) {
+							Locale locale =
+								_portal.getLocale(httpServletRequest);
+
+							return HashMapBuilder.put(
+								dataSetTableSectionObjectDefinition.
+									getDefaultLanguageId(),
+								label
+							).put(
+								LocaleUtil.toLanguageId(locale), label
+							).build();
+						}
+
+						HashMap<String, String> labels = new HashMap<>();
+
+						for (Locale locale : LanguageUtil.getAvailableLocales()) {
+
+							ResourceBundle resourceBundle =
+								ResourceBundleUtil.getBundle(
+									"content.Language", locale,
+									getClass());
+
+							String translatedLabel = LanguageUtil.get(
+								resourceBundle, label);
+
+							if (Validator.isNull(translatedLabel)) {
+								translatedLabel = StringPool.BLANK;
+							}
+
+							labels.put(LocaleUtil.toLanguageId(locale), translatedLabel);
+						}
+
+						return labels;
+					}
 				).put(
 					"r_dataSetToDataSetTableSections_l_dataSetId",
 					objectEntry.getObjectEntryId()
@@ -370,7 +386,7 @@ public class ImportSystemDataSetMVCResourceCommand
 					"renderer",
 					() -> {
 						if (fdsTableSchemaField.
-								isContentRendererClientExtension()) {
+							isContentRendererClientExtension()) {
 
 							/* it is not possible to get client extension ERC from module URL
 							 univocally, so this CX will have to be configured from DSM */

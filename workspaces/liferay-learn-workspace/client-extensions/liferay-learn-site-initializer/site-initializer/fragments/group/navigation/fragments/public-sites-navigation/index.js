@@ -112,7 +112,7 @@ function performSearch(query) {
 			{
 				attributes: {
 					includeAssetSearchSummary: true,
-					includeassetURL: true,
+					includeAssetURL: true,
 					sxpBlueprintId: configuration.searchBlueprintId,
 				},
 				contributorName: 'sxpBlueprint',

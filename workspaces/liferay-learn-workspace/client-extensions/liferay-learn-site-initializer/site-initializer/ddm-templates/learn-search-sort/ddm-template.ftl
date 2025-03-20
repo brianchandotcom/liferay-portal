@@ -1,4 +1,4 @@
-<div class="form-group-autofit">
+<div class="d-flex flex-column form-group-autofit learn-sort-portlet">
 	<div class="c-pb-3 form-group-item form-group-item-label form-group-item-shrink">
 		<label>
 			<span class="text-truncate-inline">
@@ -54,3 +54,32 @@
 		}
 	}
 </script>
+
+<style>
+	.learn-sort-portlet .form-group-autofit {
+		flex-direction: column;
+		margin-bottom: 0;
+	}
+
+	.learn-sort-portlet .form-group-autofit:hover {
+		background-color: var(--color-neutral-1)
+	}
+
+	.learn-sort-portlet .form-group-item {
+		height: auto; margin-bottom: 0;
+	}
+
+	.learn-sort-portlet .form-group-item label {
+		display: flex;
+		color: var(--gray-600, #6b6c7e);
+		font-size: 13px;
+		font-weight: 400;
+		gap: 12px;align-items: center;
+	}
+
+	.learn-sort-portlet #sort-title {
+		font-size: 0.875rem;
+		font-weight: var(--font-weight-semi-bold, 600);
+		text-transform: uppercase;
+	}
+</style>

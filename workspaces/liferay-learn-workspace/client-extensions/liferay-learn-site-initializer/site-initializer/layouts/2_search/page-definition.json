@@ -8,7 +8,6 @@
 					},
 					"name": "Main Content Container"
 				},
-				"id": "af34d83b-d249-e8c2-a63b-a0b502d2c976",
 				"pageElements": [
 					{
 						"definition": {
@@ -30,7 +29,6 @@
 							},
 							"name": "Header Container"
 						},
-						"id": "5c347c4c-9728-bdce-fcaa-9413e5730790",
 						"pageElements": [
 							{
 								"definition": {
@@ -45,7 +43,6 @@
 									},
 									"name": "Search Container"
 								},
-								"id": "cb99f884-29fd-0921-3b57-cc4dd8f7cede",
 								"pageElements": [
 									{
 										"definition": {
@@ -72,11 +69,11 @@
 												}
 											],
 											"fragmentStyle": {
-												"backgroundColor": ""
+												"textAlign": "center",
+												"width": "100%"
 											},
 											"indexed": true
 										},
-										"id": "3ba223c2-57cc-7c98-b55f-18e17be67f6a",
 										"type": "Fragment"
 									},
 									{
@@ -92,7 +89,6 @@
 												"widgetConfig": {
 													"destination": "/search",
 													"displayStyle": "default",
-													"displayStyleGroupId": "32484264",
 													"federatedSearchKey": "",
 													"invisible": "false",
 													"keywordsParameterName": "q",
@@ -107,7 +103,6 @@
 												"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
 											}
 										},
-										"id": "456d5c0d-b28e-3f95-8139-ae1e48230c5d",
 										"type": "Widget"
 									}
 								],
@@ -129,7 +124,6 @@
 							},
 							"name": "Tabs Container"
 						},
-						"id": "0cf3f6d4-5c95-d78f-c94a-8a1cab615128",
 						"pageElements": [
 							{
 								"definition": {
@@ -141,11 +135,9 @@
 										"widthType": "Fixed"
 									}
 								},
-								"id": "445dc07f-7102-6437-bce7-c5b5ff6f8dcc",
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\n  @media screen and (max-width: 992px) {\n\t\t.facet-value-mobile {\n\t\t\tgap: var(--spacer-2, 0.5rem);\n\t\t}\n\t\t.facet-value-mobile .term-text {\n\t\t\topacity: 0.80;\n\t\t}\n\t\t.tab-list-mobile,.dropdown-menu {\n\t\t\tmax-width: none;\n\t\t\tpadding: var(--spacer-2, 0.5rem);\n\t\t\twidth: 100%;\n\t\t}\n\t\t#tab-list {\n\t\t\tdisplay: none !important;\n\t\t}\n\t\t#tab-list-mobile {\n\t\t\talign-items: center;\n\t\t\tdisplay: flex !important;\n\t\t\twidth: 100%;\n\t\t}\n\t}\n  \n  #tab-list-mobile {\n\t\tdisplay: none;\n\t}\n\n  #tab-list-mobile::after {\n\t\tcontent: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='%23999AA3' class='lexicon-icon lexicon-icon-caret-bottom' role='presentation' viewBox='0 0 512 512'%3E%3Cpath class='lexicon-icon-outline' d='M103.5,204.3l136.1,136.1c9,9,23.7,9,32.7,0l136.1-136.1c14.6-14.6,4.3-39.5-16.4-39.5H119.9C99.2,164.8,88.9,189.7,103.5,204.3L103.5,204.3z'%3E%3C/path%3E%3C/svg%3E\");\n\t\tposition: absolute;\n\t\tright: 1rem;\n\t}\n \n  .tab-list {\n\t  display: flex;\n\t\tborder-radius: 99px;\n    background: var(--Neutral-01, #F7F7F8);\n    height: 52px;\n\t\talign-items:center;\n\t\tpadding: 4px 6px;\n\t}\n\t\n\t.facet-value{\n\t  flex:1;\n\t}\n  \n\t.selected-item-mobile-tab::after {\n\t\tcontent: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='currentColor' class='lexicon-icon lexicon-icon-check' role='presentation' viewBox='0 0 512 512'%3E%3Cpath d='M192.9,429.5c-8.3,0-16.4-3.3-22.3-9.2L44.5,294.1C15,263.2,62.7,222,89.1,249.5L191.5,352l230-258.9 c27.2-30.5,74.3,11.5,47.1,41.9L216.4,418.9c-5.8,6.5-14,10.3-22.6,10.6C193.5,429.5,193.2,429.5,192.9,429.5z'%3E%3C/path%3E%3C/svg%3E\");\n\t\tposition: absolute;\n\t\tright: 1rem;\n\t}\n  \n\t.selected-tab-btn {\n\t  width: 100%;\n    text-align: center;\n\t\tborder-radius: 99px;\n    background: var(--Action-Primary-Active-Lighten, #E6EDFB);\n    padding: 8px;\n\t\topacity: 1;\n\t}\n\t\n\t.term-text {\n\t\tcolor: var(--Neutral-10, #282934);\n    font-size: 14px;\n    font-style: normal;\n    font-weight: 600;\n\t}\n\t\n\t.facet-term-unselected .term-text {\n\t\topacity: 0.8;\n\t}\n\t\n\t.term-count {\n\t   border-radius: 12px;\n     background: var(--Status-Info-Info, #2E5AAC);\n\t\t color: var(--Neutral-00, #FFF);\n\t\t padding: 2px 5px;\n\t\t font-size: 13px;\n\t}\n}",
 											"fragmentStyle": {
 												"textColor": "colorNeutral10"
 											},
@@ -162,7 +154,6 @@
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "fb898e16-d12e-a0bf-263e-c6190f6482f9",
 										"type": "Widget"
 									}
 								],
@@ -173,12 +164,8 @@
 					},
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-5);\n}",
-							"customCSSViewports": [
-								{
-									"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: var(--spacer-5);\nflex-wrap: wrap;\n}",
-									"id": "tablet"
-								}
+							"cssClasses": [
+								"learn-search-container"
 							],
 							"fragmentStyle": {
 								"paddingBottom": "24px",
@@ -194,11 +181,9 @@
 							},
 							"name": "Results Container"
 						},
-						"id": "e3e752d2-5c5a-f017-af38-09d6c356e62c",
 						"pageElements": [
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n.custom-control-label::before {\n    border-color: var(--gray-600, #6b6c7e);\n}\n  \n.custom-control-label-text {\n    font-size: 13px;\n    font-weight: 400;\n}\n\n.search-facet-display-vocabulary .treeview-vocabulary-display .tree-item-category {\n    padding-left: 0rem;\n }\n\t\n.portlet {\n   margin-bottom: 0rem;\n}\n\t\n.panel-body {\n    padding: 0rem;\n}\n\t\n.treeview .custom-control {\n    margin: 0rem;\n  }\n\t\n.treeview .btn {\n    padding: 0px;\n    margin-right: 0.5rem;\n}  \n\t\n.panel-header {\n\t  padding: 0.75rem 1.25rem 0rem 0rem;\n}\n\n}",
 									"fragmentStyle": {
 										"maxWidth": "300px"
 									},
@@ -218,7 +203,6 @@
 									},
 									"name": "Results Menu Container"
 								},
-								"id": "a21130b0-2f84-87ec-5b44-beb3f8eab633",
 								"pageElements": [
 									{
 										"definition": {
@@ -241,11 +225,9 @@
 											},
 											"name": "Sort Container"
 										},
-										"id": "bada5fe9-3b12-9fb2-8a76-eb904c75cd5a",
 										"pageElements": [
 											{
 												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n\t\t.portlet-sort .form-group-item {\n    height: auto;\n    margin-bottom: 0;\n  }\n\t\n\t.form-group-autofit {\n    flex-direction: column;\n\t\tmargin-bottom: 0;\n  }\n\t\n\t.form-group-autofit:hover {\n\t  background-color:  var(--color-neutral-1) ;\n\t}\n\t\n\t.form-group-item label {\n\t  color: var(--gray-600, #6b6c7e);\n    font-size: 13px;\n    font-weight: 400;\n\t\tdisplay: flex;\n    gap: 12px;\n\t\talign-items: center;\n\t}\n\t\n\t#sort-title {\n    font-size: 0.875rem;\n    font-weight: var(--font-weight-semi-bold, 600);\n    text-transform: uppercase;\n   }\n}",
 													"widgetInstance": {
 														"widgetConfig": {
 															"displayStyle": "ddmTemplate_LEARN_SEARCH_SORT",
@@ -254,7 +236,6 @@
 														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 													}
 												},
-												"id": "df7c0512-6f71-285e-aad6-25d8db74bb95",
 												"type": "Widget"
 											}
 										],
@@ -262,7 +243,6 @@
 									},
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\n\t\n}",
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
@@ -282,7 +262,6 @@
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "664b911b-9dfe-8b30-33d7-864563d7db02",
 										"type": "Widget"
 									},
 									{
@@ -306,7 +285,6 @@
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "742ec5b2-44d3-3adc-5af7-8530c33459e1",
 										"type": "Widget"
 									},
 									{
@@ -330,7 +308,6 @@
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "c5c952a3-47ea-3c6e-0c35-79fbb0be8649",
 										"type": "Widget"
 									}
 								],
@@ -348,11 +325,9 @@
 									},
 									"name": "Results Content Container"
 								},
-								"id": "2befb3f2-edef-2e9a-9504-0972b3fe1478",
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align:left;\n}",
 											"fragmentStyle": {
 												"maxWidth": "50rem",
 												"width": "100%"
@@ -363,7 +338,7 @@
 													"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
 													"federatedSearchKey": "",
 													"fieldsToDisplay": "",
-													"highlightEnabled": "false",
+													"highlightEnabled": "true",
 													"paginationDelta": "20",
 													"paginationDeltaParameterName": "delta",
 													"paginationStartParameterName": "start",
@@ -374,7 +349,6 @@
 												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 											}
 										},
-										"id": "e5c648cb-24da-07b0-9213-50e5250d10ea",
 										"type": "Widget"
 									},
 									{
@@ -391,7 +365,6 @@
 												"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 											}
 										},
-										"id": "9abed075-eecb-2a43-78e8-a7ba17c421e7",
 										"type": "Widget"
 									},
 									{
@@ -407,7 +380,6 @@
 												"widgetName": "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet"
 											}
 										},
-										"id": "3ee652df-f315-eaab-f0e9-117e9a7f80b5",
 										"type": "Widget"
 									}
 								],

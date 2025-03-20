@@ -68,7 +68,7 @@
 						"businessType": "Boolean",
 						"inputAsValue": false,
 						"label": {
-							"en_US": "Answer confirmed by the user"
+							"en_US": "Answer Confirmed by the User"
 						},
 						"name": "answered",
 						"value": "false"

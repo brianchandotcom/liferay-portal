@@ -105,6 +105,8 @@ public class OpenAPIResourceImpl {
 
 			add(SegmentUserResourceImpl.class);
 
+			add(SharedAssetResourceImpl.class);
+
 			add(SiteResourceImpl.class);
 
 			add(SubscriptionResourceImpl.class);

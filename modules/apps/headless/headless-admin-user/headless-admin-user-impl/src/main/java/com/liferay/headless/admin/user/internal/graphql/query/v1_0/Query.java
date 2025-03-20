@@ -16,6 +16,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.RolePermission;
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.dto.v1_0.SegmentUser;
+import com.liferay.headless.admin.user.dto.v1_0.SharedAsset;
 import com.liferay.headless.admin.user.dto.v1_0.Site;
 import com.liferay.headless.admin.user.dto.v1_0.Subscription;
 import com.liferay.headless.admin.user.dto.v1_0.Ticket;
@@ -33,6 +34,7 @@ import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
+import com.liferay.headless.admin.user.resource.v1_0.SharedAssetResource;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.resource.v1_0.TicketResource;
@@ -45,12 +47,15 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -150,6 +155,14 @@ public class Query {
 
 		_segmentUserResourceComponentServiceObjects =
 			segmentUserResourceComponentServiceObjects;
+	}
+
+	public static void setSharedAssetResourceComponentServiceObjects(
+		ComponentServiceObjects<SharedAssetResource>
+			sharedAssetResourceComponentServiceObjects) {
+
+		_sharedAssetResourceComponentServiceObjects =
+			sharedAssetResourceComponentServiceObjects;
 	}
 
 	public static void setSiteResourceComponentServiceObjects(
@@ -1432,6 +1445,65 @@ public class Query {
 			segmentUserResource -> new SegmentUserPage(
 				segmentUserResource.getSegmentUserAccountsPage(
 					segmentId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccountSharedAssetsSharedByMe(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SharedAssetPage myUserAccountSharedAssetsSharedByMe(
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sharedAssetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sharedAssetResource -> new SharedAssetPage(
+				sharedAssetResource.getMyUserAccountSharedAssetsSharedByMePage(
+					search,
+					_aggregationBiFunction.apply(
+						sharedAssetResource, aggregations),
+					_filterBiFunction.apply(sharedAssetResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(sharedAssetResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccountSharedAssetsSharedWithMe(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SharedAssetPage myUserAccountSharedAssetsSharedWithMe(
+			@GraphQLName("search") String search,
+			@GraphQLName("aggregation") List<String> aggregations,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sharedAssetResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sharedAssetResource -> new SharedAssetPage(
+				sharedAssetResource.
+					getMyUserAccountSharedAssetsSharedWithMePage(
+						search,
+						_aggregationBiFunction.apply(
+							sharedAssetResource, aggregations),
+						_filterBiFunction.apply(
+							sharedAssetResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							sharedAssetResource, sortsString))));
 	}
 
 	/**
@@ -3912,6 +3984,8 @@ public class Query {
 		public AccountPage(Page accountPage) {
 			actions = accountPage.getActions();
 
+			facets = accountPage.getFacets();
+
 			items = accountPage.getItems();
 			lastPage = accountPage.getLastPage();
 			page = accountPage.getPage();
@@ -3921,6 +3995,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Account> items;
@@ -3945,6 +4022,8 @@ public class Query {
 		public AccountGroupPage(Page accountGroupPage) {
 			actions = accountGroupPage.getActions();
 
+			facets = accountGroupPage.getFacets();
+
 			items = accountGroupPage.getItems();
 			lastPage = accountGroupPage.getLastPage();
 			page = accountGroupPage.getPage();
@@ -3954,6 +4033,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<AccountGroup> items;
@@ -3978,6 +4060,8 @@ public class Query {
 		public AccountRolePage(Page accountRolePage) {
 			actions = accountRolePage.getActions();
 
+			facets = accountRolePage.getFacets();
+
 			items = accountRolePage.getItems();
 			lastPage = accountRolePage.getLastPage();
 			page = accountRolePage.getPage();
@@ -3987,6 +4071,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<AccountRole> items;
@@ -4011,6 +4098,8 @@ public class Query {
 		public EmailAddressPage(Page emailAddressPage) {
 			actions = emailAddressPage.getActions();
 
+			facets = emailAddressPage.getFacets();
+
 			items = emailAddressPage.getItems();
 			lastPage = emailAddressPage.getLastPage();
 			page = emailAddressPage.getPage();
@@ -4020,6 +4109,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<EmailAddress> items;
@@ -4044,6 +4136,8 @@ public class Query {
 		public OrganizationPage(Page organizationPage) {
 			actions = organizationPage.getActions();
 
+			facets = organizationPage.getFacets();
+
 			items = organizationPage.getItems();
 			lastPage = organizationPage.getLastPage();
 			page = organizationPage.getPage();
@@ -4053,6 +4147,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Organization> items;
@@ -4077,6 +4174,8 @@ public class Query {
 		public PhonePage(Page phonePage) {
 			actions = phonePage.getActions();
 
+			facets = phonePage.getFacets();
+
 			items = phonePage.getItems();
 			lastPage = phonePage.getLastPage();
 			page = phonePage.getPage();
@@ -4086,6 +4185,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Phone> items;
@@ -4110,6 +4212,8 @@ public class Query {
 		public PostalAddressPage(Page postalAddressPage) {
 			actions = postalAddressPage.getActions();
 
+			facets = postalAddressPage.getFacets();
+
 			items = postalAddressPage.getItems();
 			lastPage = postalAddressPage.getLastPage();
 			page = postalAddressPage.getPage();
@@ -4119,6 +4223,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PostalAddress> items;
@@ -4143,6 +4250,8 @@ public class Query {
 		public RolePage(Page rolePage) {
 			actions = rolePage.getActions();
 
+			facets = rolePage.getFacets();
+
 			items = rolePage.getItems();
 			lastPage = rolePage.getLastPage();
 			page = rolePage.getPage();
@@ -4152,6 +4261,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Role> items;
@@ -4176,6 +4288,8 @@ public class Query {
 		public SegmentPage(Page segmentPage) {
 			actions = segmentPage.getActions();
 
+			facets = segmentPage.getFacets();
+
 			items = segmentPage.getItems();
 			lastPage = segmentPage.getLastPage();
 			page = segmentPage.getPage();
@@ -4185,6 +4299,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Segment> items;
@@ -4209,6 +4326,8 @@ public class Query {
 		public SegmentUserPage(Page segmentUserPage) {
 			actions = segmentUserPage.getActions();
 
+			facets = segmentUserPage.getFacets();
+
 			items = segmentUserPage.getItems();
 			lastPage = segmentUserPage.getLastPage();
 			page = segmentUserPage.getPage();
@@ -4220,7 +4339,48 @@ public class Query {
 		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
 		protected java.util.Collection<SegmentUser> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("SharedAssetPage")
+	public class SharedAssetPage {
+
+		public SharedAssetPage(Page sharedAssetPage) {
+			actions = sharedAssetPage.getActions();
+
+			facets = sharedAssetPage.getFacets();
+
+			items = sharedAssetPage.getItems();
+			lastPage = sharedAssetPage.getLastPage();
+			page = sharedAssetPage.getPage();
+			pageSize = sharedAssetPage.getPageSize();
+			totalCount = sharedAssetPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<SharedAsset> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -4242,6 +4402,8 @@ public class Query {
 		public SitePage(Page sitePage) {
 			actions = sitePage.getActions();
 
+			facets = sitePage.getFacets();
+
 			items = sitePage.getItems();
 			lastPage = sitePage.getLastPage();
 			page = sitePage.getPage();
@@ -4251,6 +4413,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Site> items;
@@ -4275,6 +4440,8 @@ public class Query {
 		public SubscriptionPage(Page subscriptionPage) {
 			actions = subscriptionPage.getActions();
 
+			facets = subscriptionPage.getFacets();
+
 			items = subscriptionPage.getItems();
 			lastPage = subscriptionPage.getLastPage();
 			page = subscriptionPage.getPage();
@@ -4284,6 +4451,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Subscription> items;
@@ -4308,6 +4478,8 @@ public class Query {
 		public TicketPage(Page ticketPage) {
 			actions = ticketPage.getActions();
 
+			facets = ticketPage.getFacets();
+
 			items = ticketPage.getItems();
 			lastPage = ticketPage.getLastPage();
 			page = ticketPage.getPage();
@@ -4317,6 +4489,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Ticket> items;
@@ -4341,6 +4516,8 @@ public class Query {
 		public UserAccountPage(Page userAccountPage) {
 			actions = userAccountPage.getActions();
 
+			facets = userAccountPage.getFacets();
+
 			items = userAccountPage.getItems();
 			lastPage = userAccountPage.getLastPage();
 			page = userAccountPage.getPage();
@@ -4350,6 +4527,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<UserAccount> items;
@@ -4376,6 +4556,8 @@ public class Query {
 
 			actions = userAccountFullNameDefinitionPage.getActions();
 
+			facets = userAccountFullNameDefinitionPage.getFacets();
+
 			items = userAccountFullNameDefinitionPage.getItems();
 			lastPage = userAccountFullNameDefinitionPage.getLastPage();
 			page = userAccountFullNameDefinitionPage.getPage();
@@ -4385,6 +4567,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<UserAccountFullNameDefinition> items;
@@ -4409,6 +4594,8 @@ public class Query {
 		public UserGroupPage(Page userGroupPage) {
 			actions = userGroupPage.getActions();
 
+			facets = userGroupPage.getFacets();
+
 			items = userGroupPage.getItems();
 			lastPage = userGroupPage.getLastPage();
 			page = userGroupPage.getPage();
@@ -4418,6 +4605,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<UserGroup> items;
@@ -4442,6 +4632,8 @@ public class Query {
 		public WebUrlPage(Page webUrlPage) {
 			actions = webUrlPage.getActions();
 
+			facets = webUrlPage.getFacets();
+
 			items = webUrlPage.getItems();
 			lastPage = webUrlPage.getLastPage();
 			page = webUrlPage.getPage();
@@ -4451,6 +4643,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<WebUrl> items;
@@ -4675,6 +4870,20 @@ public class Query {
 		segmentUserResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			SharedAssetResource sharedAssetResource)
+		throws Exception {
+
+		sharedAssetResource.setContextAcceptLanguage(_acceptLanguage);
+		sharedAssetResource.setContextCompany(_company);
+		sharedAssetResource.setContextHttpServletRequest(_httpServletRequest);
+		sharedAssetResource.setContextHttpServletResponse(_httpServletResponse);
+		sharedAssetResource.setContextUriInfo(_uriInfo);
+		sharedAssetResource.setContextUser(_user);
+		sharedAssetResource.setGroupLocalService(_groupLocalService);
+		sharedAssetResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(SiteResource siteResource)
 		throws Exception {
 
@@ -4796,6 +5005,8 @@ public class Query {
 		_segmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SegmentUserResource>
 		_segmentUserResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SharedAssetResource>
+		_sharedAssetResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SiteResource>
 		_siteResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SubscriptionResource>
@@ -4813,6 +5024,8 @@ public class Query {
 		_webUrlResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
+	private BiFunction<Object, List<String>, Aggregation>
+		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction
 		<Object, String, com.liferay.portal.kernel.search.filter.Filter>

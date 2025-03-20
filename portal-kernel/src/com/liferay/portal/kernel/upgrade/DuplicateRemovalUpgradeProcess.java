@@ -26,9 +26,9 @@ import java.util.Map;
 /**
  * @author Jorge Avalos
  */
-public class BaseDuplicateRemovalUpgradeProcess extends UpgradeProcess {
+public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
-	public BaseDuplicateRemovalUpgradeProcess(
+	public DuplicateRemovalUpgradeProcess(
 		String tableName, String columns, String orderByColumns,
 		String sortOrder) {
 
@@ -293,7 +293,7 @@ public class BaseDuplicateRemovalUpgradeProcess extends UpgradeProcess {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseDuplicateRemovalUpgradeProcess.class);
+		DuplicateRemovalUpgradeProcess.class);
 
 	private final String _columns;
 	private final String _orderByClause;

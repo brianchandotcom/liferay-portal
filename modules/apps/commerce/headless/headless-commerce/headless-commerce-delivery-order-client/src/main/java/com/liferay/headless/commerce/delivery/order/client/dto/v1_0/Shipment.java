@@ -150,6 +150,27 @@ public class Shipment implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Integer getItemsCount() {
+		return itemsCount;
+	}
+
+	public void setItemsCount(Integer itemsCount) {
+		this.itemsCount = itemsCount;
+	}
+
+	public void setItemsCount(
+		UnsafeSupplier<Integer, Exception> itemsCountUnsafeSupplier) {
+
+		try {
+			itemsCount = itemsCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer itemsCount;
+
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
@@ -170,6 +191,27 @@ public class Shipment implements Cloneable, Serializable {
 	}
 
 	protected Date modifiedDate;
+
+	public String getOneLineAddress() {
+		return oneLineAddress;
+	}
+
+	public void setOneLineAddress(String oneLineAddress) {
+		this.oneLineAddress = oneLineAddress;
+	}
+
+	public void setOneLineAddress(
+		UnsafeSupplier<String, Exception> oneLineAddressUnsafeSupplier) {
+
+		try {
+			oneLineAddress = oneLineAddressUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String oneLineAddress;
 
 	public String getOrderExternalReferenceCode() {
 		return orderExternalReferenceCode;

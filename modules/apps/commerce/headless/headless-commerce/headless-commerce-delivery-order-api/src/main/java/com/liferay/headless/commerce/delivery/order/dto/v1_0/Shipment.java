@@ -300,6 +300,47 @@ public class Shipment implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Integer getItemsCount() {
+		if (_itemsCountSupplier != null) {
+			itemsCount = _itemsCountSupplier.get();
+
+			_itemsCountSupplier = null;
+		}
+
+		return itemsCount;
+	}
+
+	public void setItemsCount(Integer itemsCount) {
+		this.itemsCount = itemsCount;
+
+		_itemsCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setItemsCount(
+		UnsafeSupplier<Integer, Exception> itemsCountUnsafeSupplier) {
+
+		_itemsCountSupplier = () -> {
+			try {
+				return itemsCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer itemsCount;
+
+	@JsonIgnore
+	private Supplier<Integer> _itemsCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Date getModifiedDate() {
 		if (_modifiedDateSupplier != null) {
 			modifiedDate = _modifiedDateSupplier.get();
@@ -339,6 +380,47 @@ public class Shipment implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Date> _modifiedDateSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getOneLineAddress() {
+		if (_oneLineAddressSupplier != null) {
+			oneLineAddress = _oneLineAddressSupplier.get();
+
+			_oneLineAddressSupplier = null;
+		}
+
+		return oneLineAddress;
+	}
+
+	public void setOneLineAddress(String oneLineAddress) {
+		this.oneLineAddress = oneLineAddress;
+
+		_oneLineAddressSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOneLineAddress(
+		UnsafeSupplier<String, Exception> oneLineAddressUnsafeSupplier) {
+
+		_oneLineAddressSupplier = () -> {
+			try {
+				return oneLineAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String oneLineAddress;
+
+	@JsonIgnore
+	private Supplier<String> _oneLineAddressSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getOrderExternalReferenceCode() {
@@ -919,6 +1001,18 @@ public class Shipment implements Serializable {
 			sb.append(id);
 		}
 
+		Integer itemsCount = getItemsCount();
+
+		if (itemsCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"itemsCount\": ");
+
+			sb.append(itemsCount);
+		}
+
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
@@ -931,6 +1025,22 @@ public class Shipment implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(modifiedDate));
+
+			sb.append("\"");
+		}
+
+		String oneLineAddress = getOneLineAddress();
+
+		if (oneLineAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"oneLineAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(oneLineAddress));
 
 			sb.append("\"");
 		}

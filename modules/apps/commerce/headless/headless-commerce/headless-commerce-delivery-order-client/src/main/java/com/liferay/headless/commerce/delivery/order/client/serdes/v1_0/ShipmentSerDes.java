@@ -127,6 +127,16 @@ public class ShipmentSerDes {
 			sb.append(shipment.getId());
 		}
 
+		if (shipment.getItemsCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"itemsCount\": ");
+
+			sb.append(shipment.getItemsCount());
+		}
+
 		if (shipment.getModifiedDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -138,6 +148,20 @@ public class ShipmentSerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(shipment.getModifiedDate()));
+
+			sb.append("\"");
+		}
+
+		if (shipment.getOneLineAddress() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"oneLineAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shipment.getOneLineAddress()));
 
 			sb.append("\"");
 		}
@@ -346,6 +370,13 @@ public class ShipmentSerDes {
 			map.put("id", String.valueOf(shipment.getId()));
 		}
 
+		if (shipment.getItemsCount() == null) {
+			map.put("itemsCount", null);
+		}
+		else {
+			map.put("itemsCount", String.valueOf(shipment.getItemsCount()));
+		}
+
 		if (shipment.getModifiedDate() == null) {
 			map.put("modifiedDate", null);
 		}
@@ -353,6 +384,14 @@ public class ShipmentSerDes {
 			map.put(
 				"modifiedDate",
 				liferayToJSONDateFormat.format(shipment.getModifiedDate()));
+		}
+
+		if (shipment.getOneLineAddress() == null) {
+			map.put("oneLineAddress", null);
+		}
+		else {
+			map.put(
+				"oneLineAddress", String.valueOf(shipment.getOneLineAddress()));
 		}
 
 		if (shipment.getOrderExternalReferenceCode() == null) {
@@ -482,7 +521,13 @@ public class ShipmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "itemsCount")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "oneLineAddress")) {
 				return false;
 			}
 			else if (Objects.equals(
@@ -567,10 +612,21 @@ public class ShipmentSerDes {
 					shipment.setId(Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "itemsCount")) {
+				if (jsonParserFieldValue != null) {
+					shipment.setItemsCount(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "modifiedDate")) {
 				if (jsonParserFieldValue != null) {
 					shipment.setModifiedDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "oneLineAddress")) {
+				if (jsonParserFieldValue != null) {
+					shipment.setOneLineAddress((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

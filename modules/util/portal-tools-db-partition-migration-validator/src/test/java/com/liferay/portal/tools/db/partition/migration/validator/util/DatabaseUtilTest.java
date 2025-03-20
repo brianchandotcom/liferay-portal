@@ -96,8 +96,8 @@ public class DatabaseUtilTest extends BaseTestCase {
 		catch (Exception exception) {
 			Assert.assertTrue(exception instanceof IllegalArgumentException);
 			Assert.assertEquals(
-				"CompanyId " + randomCompanyId +
-					" does not exist in the database",
+				"Company with company ID " + randomCompanyId +
+					" does not exist",
 				exception.getMessage());
 		}
 	}

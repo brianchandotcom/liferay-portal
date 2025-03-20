@@ -360,8 +360,8 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 			if (!companyExists) {
 				Assert.assertTrue(
 					errorFileContent.contains(
-						"CompanyId " + companyId +
-							" does not exist in the database"));
+						"Company with company ID " + companyId +
+							" does not exist"));
 				Assert.assertEquals("1", runtimeException.getMessage());
 
 				File[] files = outputDirectory.listFiles();

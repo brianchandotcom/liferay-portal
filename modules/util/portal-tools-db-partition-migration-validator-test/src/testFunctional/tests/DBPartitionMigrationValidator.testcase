@@ -82,7 +82,7 @@ definition {
 	}
 
 	@priority = 5
-	test ValidateFailedExportWhenCompanyIdDoesNotExist {
+	test ValidateFailedExportWhenCompanyDoesNotExist {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property database.partition.enabled = "false";
 		property portal.acceptance = "true";
@@ -105,8 +105,8 @@ definition {
 				ignoreErrors = "true");
 		}
 
-		task ("Then the tool stops immediately with a console message as: CompanyId <companyId> does not exist in the database") {
-			DBPartitionMigrationValidator.validateOutput(outputMessage = "CompanyId ${randomCompanyId} does not exist in the database");
+		task ("Then the tool stops immediately with a console message as: CompanyId with company ID <companyId> does not exist") {
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "Company with company ID ${randomCompanyId} does not exist");
 		}
 	}
 

@@ -116,7 +116,7 @@ public class DatabaseUtil {
 		}
 
 		throw new IllegalArgumentException(
-			"CompanyId " + companyId + " does not exist in the database");
+			"Company with company ID " + companyId + " does not exist");
 	}
 
 	private static List<String> _getPartitionedTableNames(Connection connection)

@@ -11,13 +11,16 @@ import com.liferay.jenkins.results.parser.aws.AWSFleetCloud;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
@@ -773,6 +776,11 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	@Override
+	public boolean isOffline() {
+		return _offline;
+	}
+
+	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
 			"{availableSlavesCount=", String.valueOf(getAvailableSlavesCount()),
@@ -873,6 +881,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				}
 
 				_idle = computerJSONObject.optBoolean("idle", true);
+				_offline = computerJSONObject.optBoolean("offline", true);
 
 				continue;
 			}
@@ -1186,6 +1195,80 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return retryable.executeWithRetries();
 	}
 
+	private int _getBusyNodeCount(String labelExpression) {
+		int busyNodeCount = 0;
+
+		List<JenkinsNode> jenkinsNodes = new ArrayList<>();
+
+		jenkinsNodes.addAll(getJenkinsSlaves());
+
+		jenkinsNodes.add(this);
+
+		for (JenkinsNode jenkinsNode : jenkinsNodes) {
+			if (JenkinsResultsParserUtil.matchesLabels(
+					labelExpression, jenkinsNode.getAssignedLabels()) &&
+				!jenkinsNode.isIdle() && !jenkinsNode.isOffline()) {
+
+				busyNodeCount++;
+			}
+		}
+
+		return busyNodeCount;
+	}
+
+	private int _getIdleNodeCount(String labelExpression) {
+		int idleNodeCount = 0;
+
+		List<JenkinsNode> jenkinsNodes = new ArrayList<>();
+
+		jenkinsNodes.addAll(getJenkinsSlaves());
+
+		jenkinsNodes.add(this);
+
+		for (JenkinsNode jenkinsNode : jenkinsNodes) {
+			if (jenkinsNode instanceof JenkinsSlave) {
+				JenkinsSlave jenkinsSlave = (JenkinsSlave)jenkinsNode;
+
+				if (jenkinsSlave.isEC2FleetNodeComputer()) {
+					continue;
+				}
+			}
+
+			if (JenkinsResultsParserUtil.matchesLabels(
+					labelExpression, jenkinsNode.getAssignedLabels()) &&
+				jenkinsNode.isIdle() && !jenkinsNode.isOffline()) {
+
+				idleNodeCount++;
+			}
+		}
+
+		List<AWSFleetCloud> awsFleetClouds = getAWSFleetClouds();
+
+		if (awsFleetClouds.isEmpty()) {
+			return idleNodeCount;
+		}
+
+		for (AWSFleetCloud awsFleetCloud : awsFleetClouds) {
+			if (!JenkinsResultsParserUtil.matchesLabels(
+					labelExpression, awsFleetCloud.getLabels())) {
+
+				continue;
+			}
+
+			int idleAWSFleetCloudSlaveCount = awsFleetCloud.getMaxSize();
+
+			for (JenkinsSlave jenkinsSlave : awsFleetCloud.getJenkinsSlaves()) {
+				if (!jenkinsSlave.isIdle() || jenkinsSlave.isOffline()) {
+					idleAWSFleetCloudSlaveCount--;
+				}
+			}
+
+			idleNodeCount += idleAWSFleetCloudSlaveCount;
+		}
+
+		return idleNodeCount;
+	}
+
 	private List<String> _getLabels(String labelExpression) {
 		Set<String> labels = new HashSet<>();
 
@@ -1216,7 +1299,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return matchingLabels;
 	}
 
-	private Map<String, String> _getParameters(JSONObject jsonObject) {
+	private static Map<String, String> _getParameters(JSONObject jsonObject) {
 		Map<String, String> parameters = new HashMap<>();
 
 		if (jsonObject == null) {
@@ -1336,6 +1419,36 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return recentBatchSizesTotal;
 	}
 
+	private int _getUsableNodeCount(String labelExpression) {
+		int usableNodeCount = 0;
+
+		if (JenkinsResultsParserUtil.matchesLabels(
+				labelExpression, getAssignedLabels())) {
+
+			usableNodeCount++;
+		}
+
+		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
+			if (!jenkinsSlave.isEC2FleetNodeComputer() &&
+				!jenkinsSlave.isOffline() &&
+				JenkinsResultsParserUtil.matchesLabels(
+					labelExpression, jenkinsSlave.getAssignedLabels())) {
+
+				usableNodeCount++;
+			}
+		}
+
+		for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
+			if (JenkinsResultsParserUtil.matchesLabels(
+					labelExpression, awsFleetCloud.getLabels())) {
+
+				usableNodeCount += awsFleetCloud.getMaxSize();
+			}
+		}
+
+		return usableNodeCount;
+	}
+
 	private static final long _AVAILABLE_TIMEOUT = 1000 * 60 * 5;
 
 	private static final long _AWS_FLEET_CLOUD_UPDATE_DURATION =
@@ -1396,6 +1509,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final String _masterName;
 	private final String _masterRemoteURL;
 	private final String _masterURL;
+	private boolean _offline;
 	private final Map<String, JSONObject> _queuedBuildURLs =
 		Collections.synchronizedMap(new HashMap<String, JSONObject>());
 	private final List<JSONObject> _queueItemJSONObjects = new ArrayList<>();

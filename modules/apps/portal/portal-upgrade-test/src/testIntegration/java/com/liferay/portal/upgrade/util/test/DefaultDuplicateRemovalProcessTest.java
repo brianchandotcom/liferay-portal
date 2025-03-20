@@ -18,7 +18,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalProcess;
+import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalUpgradeProcess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -105,8 +105,8 @@ public class DefaultDuplicateRemovalProcessTest {
 
 		_assertDuplicates(false);
 
-		DefaultDuplicateRemovalProcess upgradeProcess =
-			new DefaultDuplicateRemovalProcess(
+		DefaultDuplicateRemovalUpgradeProcess upgradeProcess =
+			new DefaultDuplicateRemovalUpgradeProcess(
 				"TestTable", "column1, column2, column3, column4");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -136,8 +136,8 @@ public class DefaultDuplicateRemovalProcessTest {
 
 		_assertDuplicates(false);
 
-		DefaultDuplicateRemovalProcess upgradeProcess =
-			new DefaultDuplicateRemovalProcess(
+		DefaultDuplicateRemovalUpgradeProcess upgradeProcess =
+			new DefaultDuplicateRemovalUpgradeProcess(
 				"TestTable", "column1, column2, column3, column4",
 				"primaryKeyColumn", "asc");
 

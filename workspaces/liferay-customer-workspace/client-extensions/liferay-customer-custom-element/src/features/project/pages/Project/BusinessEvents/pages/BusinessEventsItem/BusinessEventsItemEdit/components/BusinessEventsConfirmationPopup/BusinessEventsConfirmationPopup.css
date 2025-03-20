@@ -1,12 +1,12 @@
 .edit-modal-asterisk {
-    color: var(--color-state-error);
+	color: var(--color-state-error);
 }
 
 .edit-modal-close {
-    margin-top: -0.625rem;
+	margin-top: -0.625rem;
 }
 
 .header-title {
-    color: var(--color-action-primary-default);
-    font-size: 0.875rem;
+	color: var(--color-action-primary-default);
+	font-size: 0.875rem;
 }

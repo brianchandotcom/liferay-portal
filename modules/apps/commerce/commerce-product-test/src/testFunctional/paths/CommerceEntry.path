@@ -731,6 +731,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDERS_ENTRY_BODY_VIEW</td>
+	<td>//div[@class='table-list-title']/../../../*[contains(.,'${key_value}')]//*[name()='svg'][contains(@class,'icon-view')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_VERTICAL_ELLIPSIS_ACCOUNT</td>
 	<td>//div[contains(@class, 'data-set-wrapper') or @class='searchcontainer-content']//*[text()='${key_name}']/../../..//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>

@@ -2855,8 +2855,10 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
+		var warehouseName0 = selenium.getText("//div[contains(text(), 'Warehouse Availability')]//following-sibling::div//tr[contains(@data-id, 'string,$.0')]//td");
+
 		Type(
-			key_warehouseName = "Italy",
+			key_warehouseName = ${warehouseName0},
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
 			value1 = 1);
 
@@ -2869,7 +2871,7 @@ definition {
 		CommerceShipments.assertShipmentItemWarehouseAndQuantityInShipment(
 			quantityInShipment = 1,
 			shipmentItemSku = "MIN55861",
-			warehouseName = "Italy");
+			warehouseName = ${warehouseName0});
 
 		CommerceNavigator.gotoEntry(entryName = "MIN55861");
 
@@ -2886,7 +2888,7 @@ definition {
 		Button.clickSave();
 
 		AssertTextEquals(
-			key_warehouseName = "Italy",
+			key_warehouseName = ${warehouseName0},
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
 			value1 = 0);
 
@@ -2894,8 +2896,10 @@ definition {
 
 		Button.clickSave();
 
+		var warehouseName1 = selenium.getText("//div[contains(text(), 'Warehouse Availability')]//following-sibling::div//tr[contains(@data-id, 'string,$.1')]//td");
+
 		AssertTextEquals(
-			key_warehouseName = "United States - Southwest",
+			key_warehouseName = ${warehouseName1},
 			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
 			value1 = 1);
 
@@ -2906,7 +2910,7 @@ definition {
 		CommerceShipments.assertShipmentItemWarehouseAndQuantityInShipment(
 			quantityInShipment = 1,
 			shipmentItemSku = "MIN55861",
-			warehouseName = "United States - Southwest");
+			warehouseName = ${warehouseName1});
 	}
 
 	@description = "This is a test for COMMERCE-6243. Update address"

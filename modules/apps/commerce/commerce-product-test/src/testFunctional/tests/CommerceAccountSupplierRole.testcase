@@ -157,7 +157,7 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 5.00");
+			CommerceNavigator.gotoOrderEntryViaAdminView(status = "$ 5.00");
 
 			CommerceOrders.editOrderItemDetails(
 				orderItemQuantity = 3,
@@ -220,7 +220,7 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 5.00");
+			CommerceNavigator.gotoOrderEntryViaAdminView(status = "$ 5.00");
 
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "5.00",
@@ -233,7 +233,7 @@ definition {
 		task ("When the supplier user creates 1 quantity of the shipment in a supplier order with 'Simple Product'") {
 			CommerceOrders.openOrdersAdmin();
 
-			CommerceNavigator.gotoOrderEntryViaAdmin(status = "$ 5.00");
+			CommerceNavigator.gotoOrderEntryViaAdminView(status = "$ 5.00");
 
 			CommerceOrders.checkoutFullWorkflow(
 				orderId = ${supplierOrderId},
@@ -2254,7 +2254,7 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Processing");
+			CommerceNavigator.gotoOrderEntryViaAdminView(status = "Processing");
 
 			CommerceOrders.checkoutFullWorkflow(
 				sku = "TESTSKU",
@@ -2266,7 +2266,7 @@ definition {
 
 			AssertElementPresent(
 				key_orderStatus = "Completed",
-				locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+				locator1 = "CommerceOrders#ORDER_VIEW_BY_STATUS");
 		}
 
 		task ("And the buyer can check that the product split to the supplier user has been shipped in the customer order") {

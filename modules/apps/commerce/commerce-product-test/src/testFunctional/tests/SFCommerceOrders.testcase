@@ -1289,11 +1289,11 @@ definition {
 			key_orderAuthor = "Commerce Account",
 			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
 
-		ClickNoError(
-			key_entryName = "U-Joint",
-			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
+		Click(
+			key_value = "U-Joint",
+			locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
-		CommerceEntry.clickNoError(menuItem = "Shipments");
+		MenuItem.click(menuItem = "Shipments");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -542,7 +542,7 @@ definition {
 			for (var productName : list "Wheel Seal - Front,Brake Fluid,Bundled Product") {
 				Click(
 					key_value = ${productName},
-					locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+					locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VERTICAL_ELLIPSIS");
 
 				AssertElementNotPresent(
 					key_menuItem = "Edit",

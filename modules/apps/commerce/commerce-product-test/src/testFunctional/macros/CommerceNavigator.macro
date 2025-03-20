@@ -149,6 +149,15 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro gotoOrderEntryViaAdminView(status = null) {
+		ClickNoError(
+			key_value = ${status},
+			locator1 = "CommerceEntry#ORDERS_ENTRY_BODY_VIEW");
+
+		WaitForPageLoad();
+	}
+
+	@summary = "Default summary"
 	macro goToPlacedOrderDetailPageViaURL(orderId = null) {
 		Variables.assertDefined(parameterList = ${orderId});
 

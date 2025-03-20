@@ -156,6 +156,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_VIEW_BY_STATUS</td>
+	<td>//strong[contains(text(), '${key_orderStatus}')]//../../../../td//*[name()='svg'][contains(@class,'icon-view')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE</td>
 	<td>//td[contains(text(),'${key_warehouseName}')]//following-sibling::td//following-sibling::td//input[contains(@class, 'form-control')]</td>
 	 <td></td>

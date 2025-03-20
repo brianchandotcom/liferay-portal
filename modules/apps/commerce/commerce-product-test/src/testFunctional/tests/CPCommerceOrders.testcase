@@ -2831,7 +2831,7 @@ definition {
 
 			CommerceOrders.openOrdersAdmin();
 
-			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+			CommerceNavigator.gotoOrderEntryViaAdminView(status = "Pending");
 
 			for (var titleName : list "Purchase Order Number,Payment Terms,Delivery Terms,Requested Delivery Date,Printed Note") {
 				AssertElementNotPresent(

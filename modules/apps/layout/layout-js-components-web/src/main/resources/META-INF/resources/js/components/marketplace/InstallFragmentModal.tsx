@@ -31,13 +31,15 @@ export function InstallFragmentModalBody() {
 	);
 }
 
+interface InstallFragmentModalProps {
+	name: string;
+	onCloseModal?: () => void;
+}
+
 export default function InstallFragmentModal({
 	name,
 	onCloseModal = () => {},
-}: {
-	name: string;
-	onCloseModal?: () => void;
-}) {
+}: InstallFragmentModalProps) {
 	const [visible, setVisible] = useState(true);
 
 	const {observer} = useModal({
@@ -47,17 +49,15 @@ export default function InstallFragmentModal({
 		},
 	});
 
-	return (
-		visible && (
-			<ClayModal className="modal-dialog-centered" observer={observer}>
-				<ClayModal.Header>
-					{sub(Liferay.Language.get('installing-x'), name)}
-				</ClayModal.Header>
+	return visible ? (
+		<ClayModal className="modal-dialog-centered" observer={observer}>
+			<ClayModal.Header>
+				{sub(Liferay.Language.get('installing-x'), name)}
+			</ClayModal.Header>
 
-				<ClayModal.Body>
-					<InstallFragmentModalBody />
-				</ClayModal.Body>
-			</ClayModal>
-		)
-	);
+			<ClayModal.Body>
+				<InstallFragmentModalBody />
+			</ClayModal.Body>
+		</ClayModal>
+	) : null;
 }

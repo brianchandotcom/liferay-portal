@@ -194,6 +194,20 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		return hashCodeString.hashCode();
 	}
 
+	public boolean isEC2FleetNodeComputer() {
+		if (_jenkinsNodeClassName == null) {
+			update();
+		}
+
+		if (_jenkinsNodeClassName.equals(
+				"com.amazon.jenkins.ec2fleet.EC2FleetNodeComputer")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isIdle() {
 		return _idle;
 	}
@@ -256,6 +270,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		}
 
 		_idle = jenkinsSlaveJSONObject.getBoolean("idle");
+		_jenkinsNodeClassName = jenkinsSlaveJSONObject.getString("_class");
 		_offline = jenkinsSlaveJSONObject.getBoolean("offline");
 		_offlineCauseReason = jenkinsSlaveJSONObject.optString(
 			"offlineCauseReason");
@@ -293,6 +308,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 	private final List<String> _assignedLabels = new ArrayList<>();
 	private boolean _idle;
 	private final JenkinsMaster _jenkinsMaster;
+	private String _jenkinsNodeClassName;
 	private final String _name;
 	private boolean _offline;
 	private String _offlineCauseReason;

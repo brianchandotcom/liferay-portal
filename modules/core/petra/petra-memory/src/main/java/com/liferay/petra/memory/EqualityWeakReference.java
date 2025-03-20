@@ -42,11 +42,7 @@ public class EqualityWeakReference<T> extends WeakReference<T> {
 		EqualityWeakReference<?> equalityWeakReference =
 			(EqualityWeakReference<?>)object;
 
-		if (Objects.equals(get(), equalityWeakReference.get())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(get(), equalityWeakReference.get());
 	}
 
 	@Override

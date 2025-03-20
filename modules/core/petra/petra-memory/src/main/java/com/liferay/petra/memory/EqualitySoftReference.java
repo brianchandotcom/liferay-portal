@@ -42,11 +42,7 @@ public class EqualitySoftReference<T> extends SoftReference<T> {
 		EqualitySoftReference<?> equalitySoftReference =
 			(EqualitySoftReference<?>)object;
 
-		if (Objects.equals(get(), equalitySoftReference.get())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(get(), equalitySoftReference.get());
 	}
 
 	@Override

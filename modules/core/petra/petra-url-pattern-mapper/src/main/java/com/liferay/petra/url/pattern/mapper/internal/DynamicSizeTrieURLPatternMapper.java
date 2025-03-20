@@ -247,11 +247,7 @@ public class DynamicSizeTrieURLPatternMapper<T>
 		}
 
 		public boolean isEnd() {
-			if (Objects.nonNull(_value)) {
-				return true;
-			}
-
-			return false;
+			return Objects.nonNull(_value);
 		}
 
 		public TrieNode setNextTrieNode(char character, TrieNode nextTrieNode) {

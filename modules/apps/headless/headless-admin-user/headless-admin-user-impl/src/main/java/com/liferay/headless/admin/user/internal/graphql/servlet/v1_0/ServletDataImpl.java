@@ -17,6 +17,7 @@ import com.liferay.headless.admin.user.internal.resource.v1_0.PostalAddressResou
 import com.liferay.headless.admin.user.internal.resource.v1_0.RoleResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.SegmentResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.SegmentUserResourceImpl;
+import com.liferay.headless.admin.user.internal.resource.v1_0.SharedAssetResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.SiteResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.SubscriptionResourceImpl;
 import com.liferay.headless.admin.user.internal.resource.v1_0.TicketResourceImpl;
@@ -34,6 +35,7 @@ import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
+import com.liferay.headless.admin.user.resource.v1_0.SharedAssetResource;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.resource.v1_0.TicketResource;
@@ -113,6 +115,8 @@ public class ServletDataImpl implements ServletData {
 			_segmentResourceComponentServiceObjects);
 		Query.setSegmentUserResourceComponentServiceObjects(
 			_segmentUserResourceComponentServiceObjects);
+		Query.setSharedAssetResourceComponentServiceObjects(
+			_sharedAssetResourceComponentServiceObjects);
 		Query.setSiteResourceComponentServiceObjects(
 			_siteResourceComponentServiceObjects);
 		Query.setSubscriptionResourceComponentServiceObjects(
@@ -1323,6 +1327,16 @@ public class ServletDataImpl implements ServletData {
 							SegmentUserResourceImpl.class,
 							"getSegmentUserAccountsPage"));
 					put(
+						"query#myUserAccountSharedAssetsSharedByMe",
+						new ObjectValuePair<>(
+							SharedAssetResourceImpl.class,
+							"getMyUserAccountSharedAssetsSharedByMePage"));
+					put(
+						"query#myUserAccountSharedAssetsSharedWithMe",
+						new ObjectValuePair<>(
+							SharedAssetResourceImpl.class,
+							"getMyUserAccountSharedAssetsSharedWithMePage"));
+					put(
 						"query#myUserAccountSites",
 						new ObjectValuePair<>(
 							SiteResourceImpl.class,
@@ -1870,6 +1884,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SegmentUserResource>
 		_segmentUserResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SharedAssetResource>
+		_sharedAssetResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SiteResource>

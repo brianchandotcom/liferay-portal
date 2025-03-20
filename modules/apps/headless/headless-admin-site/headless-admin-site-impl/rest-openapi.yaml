@@ -200,25 +200,6 @@ components:
                 -   id
                 -   customCSS
             type: object
-        CustomField:
-            # @review
-            description:
-                The value of each custom field. Fields can contain different information types (e.g., geolocation,
-                strings, etc.).
-            properties:
-                customValue:
-                    $ref: "#/components/schemas/CustomValue"
-                    description:
-                        The field's value.
-                dataType:
-                    description:
-                        The field type (e.g., image, text, etc.).
-                    readOnly: true
-                    type: string
-                name:
-                    description:
-                        The field's internal name. This is valid for comparisons and unique in the structured content.
-                    type: string
         CustomMetaTag:
             # @review
             description:
@@ -236,23 +217,6 @@ components:
                     description:
                         The localized custom meta tag's values.
                     type: object
-            type: object
-        CustomValue:
-            # @review
-            description:
-                A custom value.
-            properties:
-                data_i18n:
-                    additionalProperties:
-                        type: string
-                    # @review
-                    description:
-                        The localized field's content values for simple types.
-                    type: object
-                geo:
-                    $ref: "#/components/schemas/Geo"
-                    description:
-                        A point determined by latitude and longitude.
             type: object
         DefaultFragmentReference:
             # @review
@@ -1091,21 +1055,6 @@ components:
                     description:
                         The old localized relative URLs to the page's rendered content.
                     type: object
-            type: object
-        Geo:
-            description:
-                A point determined by latitude and longitude.
-            properties:
-                latitude:
-                    description:
-                        The latitude of a point in space.
-                    format: double
-                    type: number
-                longitude:
-                    description:
-                        The longitude of a point in space.
-                    format: double
-                    type: number
             type: object
         ItemExternalReference:
             # @review
@@ -2682,7 +2631,7 @@ components:
                     description:
                         Custom fields associated with the page.
                     items:
-                        $ref: "#/components/schemas/CustomField"
+                        type: customField
                     type: array
                 dateCreated:
                     # @review

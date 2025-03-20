@@ -707,7 +707,6 @@
 									);
 
 									const onClickOutside = (event) => {
-										console.log('fire');
 										if (
 											!titleNode.parentNode.contains(
 												event.target

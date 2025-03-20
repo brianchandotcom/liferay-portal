@@ -409,11 +409,11 @@ AUI.add(
 					};
 
 					Liferay.Util.openModal({
+						containerProps: {},
+						iframeBodyCssClass: '',
 						onClose: function destroy() {
 							instance.load();
 						},
-						iframeBodyCssClass: '',
-						containerProps: {},
 						title: Liferay.Language.get('new-calendar-booking'),
 						url: CalendarUtil.fillURLParameters(
 							editCalendarBookingURL,

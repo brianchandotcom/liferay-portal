@@ -244,15 +244,14 @@ public class RowChecker {
 		String checkBoxRowIds, String checkBoxAllRowIds,
 		String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("onClick=\"Liferay.Util.checkAll(AUI");
 		sb.append("AUI().one(this).ancestor('.table'),");
 		sb.append(checkBoxRowIds);
 		sb.append(",");
 		sb.append(checkBoxAllRowIds);
-		sb.append(");");
-		sb.append("AUI().one(this).ancestor('tr:not(.d-none)')?.");
+		sb.append(");AUI().one(this).ancestor('tr:not(.d-none)')?.");
 		sb.append("toggleClass('info');");
 
 		if (Validator.isNotNull(checkBoxPostOnClick)) {

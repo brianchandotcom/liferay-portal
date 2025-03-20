@@ -39,10 +39,7 @@
 												calendarResourceId
 											];
 
-										calendarList.set(
-											'calendars',
-											calendars
-										);
+										calendarList.set('calendars', calendars);
 
 										<portlet:namespace />syncCalendarsMap();
 
@@ -107,8 +104,8 @@
 					/>
 
 					Liferay.Util.openModal({
-													iframeBodyCssClass: 'dialog-with-footer',
-							containerProps: {},
+						iframeBodyCssClass: 'dialog-with-footer',
+						containerProps: {},
 
 						title: '<liferay-ui:message key="permissions" />',
 						url: decodeURIComponent('<%= permissionsURL %>'),
@@ -162,9 +159,9 @@
 					Liferay.Util.openModal({
 						iframeBodyCssClass: '',
 						containerProps: {},
-						onClose:function (event) {
-									<portlet:namespace />scheduler.load();
-								},
+						onClose: function (event) {
+							<portlet:namespace />scheduler.load();
+						},
 						title: '<liferay-ui:message key="new-calendar-booking" />',
 						url: Liferay.CalendarUtil.fillURLParameters(
 							decodeURIComponent('<%= addCalendarBookingURL %>'),
@@ -204,36 +201,33 @@
 						iframeBodyCssClass: '',
 						containerProps: {},
 						onClose: function (event) {
-									remoteServices.getCalendar(
-										activeCalendar.get('calendarId'),
-										(calendar) => {
-											var activeCalendarId =
-												activeCalendar.get('calendarId');
+							remoteServices.getCalendar(
+								activeCalendar.get('calendarId'),
+								(calendar) => {
+									var activeCalendarId =
+										activeCalendar.get('calendarId');
 
-											var calendars = calendarList
-												.get('calendars')
-												.map((item) => {
-													if (
-														activeCalendarId ===
-														item.get('calendarId')
-													) {
-														item = calendar;
-													}
+									var calendars = calendarList
+										.get('calendars')
+										.map((item) => {
+											if (
+												activeCalendarId ===
+												item.get('calendarId')
+											) {
+												item = calendar;
+											}
 
-													return item;
-												});
+											return item;
+										});
 
-											calendarList.set(
-												'calendars',
-												calendars
-											);
+									calendarList.set('calendars', calendars);
 
-											<portlet:namespace />syncCalendarsMap();
+									<portlet:namespace />syncCalendarsMap();
 
-											<portlet:namespace />scheduler.load();
-										}
-									);
-								},
+									<portlet:namespace />scheduler.load();
+								}
+							);
+						},
 						title: '<liferay-ui:message key="calendar-settings" />',
 
 						<portlet:renderURL var="editCalendarURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

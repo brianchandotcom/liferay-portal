@@ -256,11 +256,11 @@ AUI.add(
 					}
 
 					Liferay.Util.openModal({
+						containerProps: {},
+						iframeBodyCssClass: 'dialog-with-footer',
 						onClose: function destroy() {
 							scheduler.load();
 						},
-						iframeBodyCssClass: 'dialog-with-footer',
-						containerProps: {},
 						title: Liferay.Language.get('edit-calendar-booking'),
 						url: CalendarUtil.fillURLParameters(
 							editCalendarBookingURL,
@@ -346,14 +346,14 @@ AUI.add(
 						schedulerEvent.get('calendarBookingId');
 
 					Liferay.Util.openModal({
+						containerProps: {},
+						iframeBodyCssClass: '',
 						onClose: function destroy() {
 							schedulerEvent.syncWithServer();
 						},
 						title: Liferay.Language.get(
 							'view-calendar-booking-details'
 						),
-						iframeBodyCssClass: '',
-						containerProps: {},
 						url: CalendarUtil.fillURLParameters(
 							viewCalendarBookingURL,
 							data

@@ -7,27 +7,25 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="fds-with-custom-management-bar-bg">
-	<div class="container-fluid container-fluid-max-xxl">
-		<react:component
-			module="{CustomDataSets} from frontend-data-set-admin-web"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()
-				).put(
-					"hasAddDataSetObjectEntryPermission", fdsAdminDisplayContext.hasAddDataSetObjectEntryPermission()
-				).put(
-					"namespace", liferayPortletResponse.getNamespace()
-				).put(
-					"permissionsURL", fdsAdminDisplayContext.getDataSetPermissionsURL()
-				).put(
-					"resolvedRESTSchemas", fdsAdminDisplayContext.getRESTApplicationResolvedSchemasJSONArray()
-				).put(
-					"restApplications", fdsAdminDisplayContext.getRESTApplicationsJSONArray()
-				).put(
-					"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
-				).build()
-			%>'
-		/>
-	</div>
+<div class="container-fluid container-fluid-max-xxl">
+	<react:component
+		module="{CustomDataSets} from frontend-data-set-admin-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"editDataSetURL", fdsAdminDisplayContext.getEditDataSetURL()
+			).put(
+				"hasAddDataSetObjectEntryPermission", fdsAdminDisplayContext.hasAddDataSetObjectEntryPermission()
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"permissionsURL", fdsAdminDisplayContext.getDataSetPermissionsURL()
+			).put(
+				"resolvedRESTSchemas", fdsAdminDisplayContext.getRESTApplicationResolvedSchemasJSONArray()
+			).put(
+				"restApplications", fdsAdminDisplayContext.getRESTApplicationsJSONArray()
+			).put(
+				"systemDataSets", fdsAdminDisplayContext.getSystemFDSEntryJSONArray()
+			).build()
+		%>'
+	/>
 </div>

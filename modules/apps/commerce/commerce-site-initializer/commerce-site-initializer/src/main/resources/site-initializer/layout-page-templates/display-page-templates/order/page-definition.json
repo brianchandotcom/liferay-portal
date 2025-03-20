@@ -490,7 +490,7 @@
 								"key": "BASIC_COMPONENT-tabs"
 							},
 							"fragmentConfig": {
-								"numberOfTabs": 2,
+								"numberOfTabs": 3,
 								"persistSelectedTab": true
 							},
 							"fragmentFields": [
@@ -514,6 +514,18 @@
 										"text": {
 											"value_i18n": {
 												"en_US": "Returns"
+											}
+										}
+									}
+								},
+								{
+									"id": "title3",
+									"value": {
+										"fragmentLink": {
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Shipments"
 											}
 										}
 									}
@@ -1362,6 +1374,28 @@
 										"definition": {
 											"fragment": {
 												"key": "com.liferay.commerce.order.content.web.internal.fragment.renderer.OrderReturnsDataSetFragmentRenderer"
+											},
+											"fragmentConfig": {
+												"displayStyle": "fluid"
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							},
+							{
+								"definition": {
+									"fragmentDropZoneId": "3"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.commerce.order.content.web.internal.fragment.renderer.PlacedOrderShipmentsDataSetFragmentRenderer"
 											},
 											"fragmentConfig": {
 												"displayStyle": "fluid"

@@ -461,7 +461,7 @@ public class TestrayCaseResult {
 		"Failed for unknown reason", "timed out after 2 hours"
 	};
 
-	private static final double _MAX_JARO_WINKLER_DISTANCE = 0.8;
+	private static final double _MAX_JARO_WINKLER_DISTANCE = 0.93;
 
 	private ErrorType _errorType;
 	private final JSONObject _jsonObject;

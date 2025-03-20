@@ -10,10 +10,12 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -160,6 +162,8 @@ public class LoadBalancerUtil {
 
 				String blacklistString = properties.getProperty("blacklist");
 				String jobName = properties.getProperty("job.name");
+				String labelExpression = properties.getProperty(
+					"label.expression");
 
 				Integer minimumRAM = JenkinsMaster.getSlaveRAMMinimumDefault();
 
@@ -202,7 +206,9 @@ public class LoadBalancerUtil {
 							_updateInterval);
 				}
 
-				Collections.sort(jenkinsMasters);
+				Collections.sort(
+					jenkinsMasters,
+					new JenkinsMasterLabelComparator(labelExpression));
 
 				JenkinsMaster mostAvailableJenkinsMaster = jenkinsMasters.get(
 					0);
@@ -212,10 +218,23 @@ public class LoadBalancerUtil {
 
 					for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
 						sb.append(jenkinsMaster.getName());
+
+						if (!JenkinsResultsParserUtil.isNullOrEmpty(
+								labelExpression)) {
+
+							sb.append(" [label_expression: ");
+							sb.append(labelExpression);
+							sb.append("]");
+						}
+
 						sb.append(" : ");
-						sb.append(jenkinsMaster.getAvailableSlavesCount());
+						sb.append(
+							jenkinsMaster.getAvailableSlavesCount(
+								labelExpression));
 						sb.append(" : ");
-						sb.append(jenkinsMaster.getAverageQueueLength());
+						sb.append(
+							jenkinsMaster.getAverageQueueLength(
+								labelExpression));
 						sb.append("\n");
 					}
 
@@ -225,9 +244,19 @@ public class LoadBalancerUtil {
 
 					sb.append("\nMost available master ");
 					sb.append(mostAvailableJenkinsMaster.getName());
+
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(
+							labelExpression)) {
+
+						sb.append(" [label_expression: ");
+						sb.append(labelExpression);
+						sb.append("]");
+					}
+
 					sb.append(" has ");
 					sb.append(
-						mostAvailableJenkinsMaster.getAvailableSlavesCount());
+						mostAvailableJenkinsMaster.getAvailableSlavesCount(
+							labelExpression));
 					sb.append(" available slaves.");
 
 					System.out.println(sb.toString());
@@ -243,7 +272,8 @@ public class LoadBalancerUtil {
 					invokedBatchSize = 1;
 				}
 
-				mostAvailableJenkinsMaster.addRecentBatch(invokedBatchSize);
+				mostAvailableJenkinsMaster.addRecentBatch(
+					invokedBatchSize, labelExpression);
 
 				return "http://" + mostAvailableJenkinsMaster.getName();
 			}
@@ -336,6 +366,56 @@ public class LoadBalancerUtil {
 
 	public static void setUpdateInterval(long interval) {
 		_updateInterval = interval;
+	}
+
+	public static class JenkinsMasterLabelComparator
+		implements Comparator<JenkinsMaster> {
+
+		public JenkinsMasterLabelComparator(String labelExpression) {
+			_labelExpression = labelExpression;
+		}
+
+		@Override
+		public int compare(
+			JenkinsMaster jenkinsMaster1, JenkinsMaster jenkinsMaster2) {
+
+			Integer value = null;
+
+			Integer availableSlavesCount1 =
+				jenkinsMaster1.getAvailableSlavesCount(_labelExpression);
+			Integer availableSlavesCount2 =
+				jenkinsMaster2.getAvailableSlavesCount(_labelExpression);
+
+			if ((availableSlavesCount1 > 0) || (availableSlavesCount2 > 0)) {
+				value = availableSlavesCount1.compareTo(availableSlavesCount2);
+			}
+
+			if ((value == null) || (value == 0)) {
+				Float averageQueueLength1 =
+					jenkinsMaster1.getAverageQueueLength(_labelExpression);
+				Float averageQueueLength2 =
+					jenkinsMaster2.getAverageQueueLength(_labelExpression);
+
+				value = -1 * averageQueueLength1.compareTo(averageQueueLength2);
+			}
+
+			if (value != 0) {
+				return -value;
+			}
+
+			Random random = new Random();
+
+			while (true) {
+				int result = random.nextInt(3) - 1;
+
+				if (result != 0) {
+					return result;
+				}
+			}
+		}
+
+		private final String _labelExpression;
+
 	}
 
 	protected static String getMasterPrefix(String baseInvocationURL) {

@@ -791,21 +791,18 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		try {
 			computerAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						_masterURL, "/computer/api/json?tree=computer",
-						"[assignedLabels[name],displayName,",
-						"executors[currentExecutable[url]],idle,offline,",
-						"offlineCauseReason]")),
+				JenkinsResultsParserUtil.combine(
+					getURL(), "/computer/api/json?tree=computer",
+					"[assignedLabels[name],displayName,",
+					"executors[currentExecutable[url]],idle,offline,",
+					"offlineCauseReason]"),
 				false, 5000);
-
-			String queueAPIQuery =
-				"tree=items[actions[parameters[name,value]]," +
-					"inQueueSince,task[name,url],url,why]";
 
 			queueAPIJSONObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
-					getRemoteURL(), "/queue/api/json?" + queueAPIQuery),
+					getURL(), "/queue/api/json?tree=items[actions[",
+					"parameters[name,value]],inQueueSince,task[name,url],url,",
+					"why]"),
 				false, 5000);
 		}
 		catch (Exception exception) {

@@ -11,8 +11,8 @@ const GenerateNewKeySkeleton = () => {
 			footerProps={{
 				footerClass: 'mx-5 mb-2',
 
-				leftButton: <Skeleton.Rounded height={48} width={110} />,
-				middleButton: <Skeleton.Rounded height={48} width={110} />,
+				leftButton: <Skeleton height={48} width={110} />,
+				middleButton: <Skeleton height={48} width={110} />,
 			}}
 			headerSkeleton={
 				<div className="mb-3 ml-5 mt-4 p-4">

@@ -16,7 +16,7 @@ const ActivationKeysSkeleton = () => {
 				<div className="mr-3">
 					<Skeleton className="mb-1" height={24} width={90} />
 
-					<Skeleton.Rounded height={48} width={247} />
+					<Skeleton height={48} width={247} />
 				</div>
 
 				<div>

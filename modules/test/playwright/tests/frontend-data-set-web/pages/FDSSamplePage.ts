@@ -127,6 +127,6 @@ export class FDSSamplePage {
 
 		await this.page.goto(url);
 
-		return {url};
+		return {layout, url};
 	}
 }

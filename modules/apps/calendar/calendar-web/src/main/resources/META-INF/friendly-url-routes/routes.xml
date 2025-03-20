@@ -7,6 +7,12 @@
 		<implicit-parameter name="mvcRenderCommandName">/calendar</implicit-parameter>
 	</route>
 	<route>
+		<pattern>/{calendarBookingId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/view_calendar_booking.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_id">com_liferay_calendar_web_portlet_CalendarPortlet</implicit-parameter>
+		<implicit-parameter name="shared">true</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/{instanceId}/event/{calendarBookingId}</pattern>
 		<implicit-parameter name="mvcPath">/view_calendar_booking.jsp</implicit-parameter>
 	</route>

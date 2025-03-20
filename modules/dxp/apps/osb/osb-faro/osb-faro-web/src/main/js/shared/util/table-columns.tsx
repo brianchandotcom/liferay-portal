@@ -711,6 +711,12 @@ export const metricsListColumns = {
 		label,
 		sortable: false
 	}),
+	impressionMadeMetric: {
+		accessor: 'impressionMadeMetric',
+		className: 'table-column-text-end',
+		dataFormatter: data => data.toLocaleString(),
+		label: Liferay.Language.get('impressions')
+	},
 	modifiedDate: {
 		accessor: 'modifiedDate',
 		cellRenderer: ({data: {modifiedByUserName, modifiedDate}}) => {
@@ -729,12 +735,6 @@ export const metricsListColumns = {
 			);
 		},
 		label: Liferay.Language.get('last-modified')
-	},
-	previewsMetric: {
-		accessor: 'previewsMetric',
-		className: 'table-column-text-end',
-		dataFormatter: data => data.toLocaleString(),
-		label: Liferay.Language.get('previews')
 	},
 	ratingsMetric: {
 		accessor: 'ratingsMetric',

@@ -11,8 +11,8 @@ import {
 import {
 	CommentsMetric,
 	DownloadsMetric,
+	ImpressionMadeMetric,
 	Metric,
-	PreviewsMetric,
 	RatingsMetric
 } from 'shared/components/metric-card/metrics';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
@@ -25,7 +25,7 @@ const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = props
 
 	const metrics: Metric[] = [
 		DownloadsMetric,
-		PreviewsMetric,
+		ImpressionMadeMetric,
 		CommentsMetric,
 		RatingsMetric
 	];

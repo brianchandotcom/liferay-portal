@@ -532,6 +532,8 @@ definition {
 
 			PortalInstances.deleteCP(virtualHost = "www.able.com");
 
+			SignOut.signOut();
+
 			Clustering.shutdownSpecificServer(nodePort = 8080);
 
 			Clustering.shutdownSpecificServer(nodePort = 9080);

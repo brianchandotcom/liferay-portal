@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,11 +37,6 @@ public class AntiSamySanitizerImplTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_companyId = TestPropsValues.getCompanyId();
-	}
-
 	@Test
 	public void test() throws Exception {
 		String content =
@@ -55,8 +49,9 @@ public class AntiSamySanitizerImplTest {
 				LoggerTestUtil.WARN)) {
 
 			_antiSamySanitizer.sanitize(
-				_companyId, 0, 0, StringPool.BLANK, 0, ContentTypes.TEXT_HTML,
-				new String[0], content, new HashMap<>());
+				TestPropsValues.getCompanyId(), 0, 0, StringPool.BLANK, 0,
+				ContentTypes.TEXT_HTML, new String[0], content,
+				new HashMap<>());
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -68,7 +63,5 @@ public class AntiSamySanitizerImplTest {
 		filter = "(&(objectClass=com.liferay.portal.kernel.sanitizer.Sanitizer)(!(component.name=*)))"
 	)
 	private Sanitizer _antiSamySanitizer;
-
-	private long _companyId;
 
 }

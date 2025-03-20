@@ -5,7 +5,7 @@
 		"@types/node": "^12",
 		"typescript": "^4.0 || ^5.0"
 	},
-	"main": "src/node/api.ts",
+	"main": "src/api.ts",
 	"name": "@liferay/${clientName}",
 	"private": true,
 	"type": "commonjs",

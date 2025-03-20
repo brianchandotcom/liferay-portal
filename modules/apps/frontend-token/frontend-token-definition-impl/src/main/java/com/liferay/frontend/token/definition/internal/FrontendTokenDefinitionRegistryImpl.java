@@ -127,7 +127,7 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 		catch (PortalException portalException) {
 			_log.error(
-				"Unable to get the theme for layout with layoutId: " +
+				"Unable to get the theme for layout with layout ID " +
 					layout.getLayoutId(),
 				portalException);
 		}

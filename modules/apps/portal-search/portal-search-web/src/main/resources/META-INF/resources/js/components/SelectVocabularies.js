@@ -12,7 +12,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 const CONFIGURATION = {
 	headers: new Headers({
@@ -34,8 +34,8 @@ const SELECT_OPTIONS = {
  * @param {string} idsString The list of IDs as a string
  * @return {Array} Array of IDs as strings
  */
-const convertToIDArray = (idsString) =>
-	idsString.split(',').filter((id) => id !== '');
+const transformCommaStringToArray = (commaString) =>
+	commaString.split(',').filter((item) => item !== '');
 
 function SiteRow({name, onSelect, vocabularies}) {
 	const _handleSelect =
@@ -202,13 +202,13 @@ function SelectVocabularies({
 	namespace = '',
 	vocabularyERCsInputName = '',
 }) {
-	const initialSelectedERCsRef = useRef(
-		new Set(
+	const initialSelectedVocabularyERCsSet = useMemo(() => {
+		return new Set(
 			initialSelectedVocabularyERCs === SELECT_OPTIONS.ALL
 				? []
-				: convertToIDArray(initialSelectedVocabularyERCs)
-		)
-	);
+				: transformCommaStringToArray(initialSelectedVocabularyERCs)
+		);
+	}, [initialSelectedVocabularyERCs]);
 
 	const [selection, setSelection] = useState(
 		initialSelectedVocabularyERCs === SELECT_OPTIONS.ALL
@@ -216,15 +216,10 @@ function SelectVocabularies({
 			: SELECT_OPTIONS.SELECT
 	);
 	const [selectedKeys, setSelectedKeys] = useState(
-		new Set(
-			initialSelectedVocabularyERCs === SELECT_OPTIONS.ALL
-				? []
-				: convertToIDArray(initialSelectedVocabularyERCs)
-		)
+		initialSelectedVocabularyERCsSet
 	);
+	const [unavailableVocabularies, setUnavailableVocabularies] = useState([]);
 	const [vocabularyTree, setVocabularyTree] = useState(null);
-	const [hiddenSelectedVocabularies, setHiddenSelectedVocabularies] =
-		useState([]);
 	const [vocabularyTreeLoading, setVocabularyTreeLoading] = useState(false);
 
 	useEffect(() => {
@@ -266,7 +261,7 @@ function SelectVocabularies({
 					)
 				)
 					.then((responses) => {
-						const ercs = [];
+						const fetchedERCs = [];
 
 						setVocabularyTree(
 							responses.map((response, index) => ({
@@ -296,7 +291,7 @@ function SelectVocabularies({
 										({externalReferenceCode, id, name}) => {
 											const erc = `${itemsFilteredForSites[index].externalReferenceCode}&&${externalReferenceCode}`;
 
-											ercs.push(erc); // Collect ERCs to allow removal of hidden selected vocabularies
+											fetchedERCs.push(erc); // Collect ERCs to allow deselection of unavailable vocabularies
 
 											return {
 												erc,
@@ -308,9 +303,10 @@ function SelectVocabularies({
 							}))
 						);
 
-						setHiddenSelectedVocabularies(
-							Array.from(initialSelectedERCsRef.current).filter(
-								(erc) => !ercs.includes(erc)
+						setUnavailableVocabularies(
+							Array.from(initialSelectedVocabularyERCsSet).filter(
+								(initialSelectedERC) =>
+									!fetchedERCs.includes(initialSelectedERC)
 							)
 						);
 					})
@@ -320,10 +316,10 @@ function SelectVocabularies({
 			.finally(() => setVocabularyTreeLoading(false));
 	};
 
-	const _handleRemoveHiddenVocabularies = () => {
+	const _handleDeselectUnavailableVocabularies = () => {
 		const newList = new Set(selectedKeys);
 
-		hiddenSelectedVocabularies.forEach((erc) => {
+		unavailableVocabularies.forEach((erc) => {
 			newList.delete(erc);
 		});
 
@@ -338,10 +334,8 @@ function SelectVocabularies({
 		}
 	};
 
-	const _isHiddenVocabulariesRemoved = () =>
-		Array.from(selectedKeys).some((erc) =>
-			hiddenSelectedVocabularies.includes(erc)
-		);
+	const _isUnavailableVocabulariesSelected = () =>
+		unavailableVocabularies.some((erc) => selectedKeys.has(erc));
 
 	return (
 		<div className="select-vocabularies">
@@ -386,35 +380,49 @@ function SelectVocabularies({
 			</ClayRadioGroup>
 
 			{selection === SELECT_OPTIONS.SELECT &&
-				!!hiddenSelectedVocabularies.length && (
-					<ClayAlert
-						displayType="info"
-						style={{opacity: 1}}
-						title={`${Liferay.Language.get('info')}:`}
-					>
-						{Liferay.Language.get(
-							'select-vocabularies-configuration-alert'
-						)}
+				!!unavailableVocabularies.length && (
+					<>
+						{_isUnavailableVocabulariesSelected() ? (
+							<ClayAlert
+								displayType="info"
+								style={{opacity: 1}}
+								title={`${Liferay.Language.get('info')}:`}
+							>
+								{Liferay.Language.get(
+									'select-vocabularies-configuration-alert'
+								)}
 
-						<LearnMessage
-							className="c-ml-1"
-							resource="portal-search-web"
-							resourceKey="tag-and-category-facet"
-						/>
+								<LearnMessage
+									className="c-ml-1"
+									resource="portal-search-web"
+									resourceKey="tag-and-category-facet"
+								/>
 
-						{_isHiddenVocabulariesRemoved() && (
-							<ClayAlert.Footer>
-								<ClayButton
-									alert
-									onClick={_handleRemoveHiddenVocabularies}
-								>
-									{Liferay.Language.get(
-										'remove-hidden-vocabularies'
-									)}
-								</ClayButton>
-							</ClayAlert.Footer>
+								<ClayAlert.Footer>
+									<ClayButton
+										alert
+										onClick={
+											_handleDeselectUnavailableVocabularies
+										}
+									>
+										{Liferay.Language.get(
+											'remove-unavailable-vocabularies'
+										)}
+									</ClayButton>
+								</ClayAlert.Footer>
+							</ClayAlert>
+						) : (
+							<ClayAlert
+								displayType="success"
+								style={{opacity: 1}}
+								title={`${Liferay.Language.get('success')}:`}
+							>
+								{Liferay.Language.get(
+									'unavailable-vocabularies-removed-from-selection'
+								)}
+							</ClayAlert>
 						)}
-					</ClayAlert>
+					</>
 				)}
 
 			{selection === SELECT_OPTIONS.SELECT && (

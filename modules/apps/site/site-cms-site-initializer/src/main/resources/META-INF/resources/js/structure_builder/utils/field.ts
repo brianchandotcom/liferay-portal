@@ -170,6 +170,7 @@ export type Field =
 				['datetime', 'long-text', 'numeric', 'text', 'upload']
 			>;
 	  });
+
 export type FieldType = (typeof FIELD_TYPES)[number];
 
 export type FieldBusinessType =

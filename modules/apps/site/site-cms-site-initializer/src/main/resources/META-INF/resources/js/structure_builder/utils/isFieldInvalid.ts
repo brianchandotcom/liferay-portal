@@ -13,10 +13,4 @@ export default function isFieldInvalid(field: Field) {
 	if (Object.values(field.label).some((translation) => !translation)) {
 		return true;
 	}
-
-	if (field.type === 'text' || field.type === 'long-text') {
-		if ('showCounter' in field.settings && !field.settings.maxLength) {
-			return true;
-		}
-	}
 }

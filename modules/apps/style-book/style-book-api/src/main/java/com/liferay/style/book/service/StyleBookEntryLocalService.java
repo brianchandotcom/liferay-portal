@@ -128,6 +128,8 @@ public interface StyleBookEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteStyleBookEntries(long groupId) throws PortalException;
+
 	/**
 	 * Deletes the style book entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

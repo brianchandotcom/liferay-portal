@@ -122,6 +122,12 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteStyleBookEntries(long groupId)
+		throws PortalException {
+
+		getService().deleteStyleBookEntries(groupId);
+	}
+
 	/**
 	 * Deletes the style book entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

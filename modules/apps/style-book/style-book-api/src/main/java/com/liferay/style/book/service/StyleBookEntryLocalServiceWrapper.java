@@ -126,6 +126,13 @@ public class StyleBookEntryLocalServiceWrapper
 		return _styleBookEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public void deleteStyleBookEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_styleBookEntryLocalService.deleteStyleBookEntries(groupId);
+	}
+
 	/**
 	 * Deletes the style book entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

@@ -7,6 +7,7 @@ package com.liferay.style.book.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -81,6 +82,27 @@ public class StyleBookEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteGroupStyleBookEntries() throws Exception {
+		StyleBookEntry styleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
+				null, RandomTestUtil.randomString(), _serviceContext);
+
+		StyleBookEntry draftStyleBookEntry =
+			_styleBookEntryLocalService.getDraft(styleBookEntry);
+
+		_groupLocalService.deleteGroup(_group);
+
+		Assert.assertNull(
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				styleBookEntry.getStyleBookEntryId()));
+		Assert.assertNull(
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				draftStyleBookEntry.getStyleBookEntryId()));
+	}
+
+	@Test
 	public void testDeleteStyleBookEntryByExternalReferenceCode()
 		throws Exception {
 
@@ -101,6 +123,9 @@ public class StyleBookEntryLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private ServiceContext _serviceContext;
 

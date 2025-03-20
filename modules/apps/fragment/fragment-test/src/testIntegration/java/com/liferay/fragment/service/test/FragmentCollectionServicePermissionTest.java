@@ -80,7 +80,8 @@ public class FragmentCollectionServicePermissionTest {
 
 		_fragmentCollectionService.addFragmentCollection(
 			null, _group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, false,
+			serviceContext);
 	}
 
 	@Test
@@ -96,7 +97,8 @@ public class FragmentCollectionServicePermissionTest {
 
 		_fragmentCollectionService.addFragmentCollection(
 			null, _group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, false,
+			serviceContext);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)

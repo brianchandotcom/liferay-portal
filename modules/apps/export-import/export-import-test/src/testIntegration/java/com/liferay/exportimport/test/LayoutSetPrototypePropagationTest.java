@@ -286,7 +286,7 @@ public class LayoutSetPrototypePropagationTest
 				StringPool.BLANK, "<h1>Heading Example</h1>", StringPool.BLANK,
 				false, StringPool.BLANK, null, 0, false,
 				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_APPROVED, false,
 				ServiceContextTestUtil.getServiceContext(
 					_layoutSetPrototypeGroup.getGroupId()));
 

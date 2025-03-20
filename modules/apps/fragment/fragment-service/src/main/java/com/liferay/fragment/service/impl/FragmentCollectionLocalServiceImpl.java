@@ -56,7 +56,7 @@ public class FragmentCollectionLocalServiceImpl
 
 		return addFragmentCollection(
 			externalReferenceCode, userId, groupId, StringPool.BLANK, name,
-			description, serviceContext);
+			description, false, serviceContext);
 	}
 
 	@Override

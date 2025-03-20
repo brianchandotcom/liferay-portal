@@ -180,7 +180,7 @@ public class ResetPrototypeMVCActionCommandTest {
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Fragment Entry HTML", StringPool.BLANK, false, null, null, 0,
 			false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, _serviceContext);
 	}
 
 	private LayoutStructure _getLayoutStructure(

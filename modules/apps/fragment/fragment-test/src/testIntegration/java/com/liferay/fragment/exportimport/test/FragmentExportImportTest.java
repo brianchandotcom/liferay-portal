@@ -277,7 +277,7 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Original HTML Fragment" + _HTML, StringPool.BLANK, false,
 			_configuration, null, 0, false, FragmentConstants.TYPE_COMPONENT,
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			null, WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private void _assertContains(String text, String... strings) {

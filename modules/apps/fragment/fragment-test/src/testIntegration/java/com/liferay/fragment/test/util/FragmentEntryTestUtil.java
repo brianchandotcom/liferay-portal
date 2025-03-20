@@ -50,7 +50,7 @@ public class FragmentEntryTestUtil {
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div>TEST</div>", StringPool.BLANK, false, StringPool.BLANK, null,
 			0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntry(
@@ -73,7 +73,7 @@ public class FragmentEntryTestUtil {
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
 			false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntryByStatus(
@@ -100,7 +100,7 @@ public class FragmentEntryTestUtil {
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
-			false, FragmentConstants.TYPE_COMPONENT, null, status,
+			false, FragmentConstants.TYPE_COMPONENT, null, status, false,
 			serviceContext);
 	}
 
@@ -123,7 +123,7 @@ public class FragmentEntryTestUtil {
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
 			"<div></div>", StringPool.BLANK, false, StringPool.BLANK, null, 0,
-			false, FragmentConstants.TYPE_COMPONENT, null, status,
+			false, FragmentConstants.TYPE_COMPONENT, null, status, false,
 			serviceContext);
 	}
 
@@ -153,7 +153,7 @@ public class FragmentEntryTestUtil {
 			StringUtil.randomString(), name, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			"{fieldSets: []}", null, 0, false, type, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntryByType(
@@ -174,7 +174,7 @@ public class FragmentEntryTestUtil {
 			StringUtil.randomString(), name, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			"{fieldSets: []}", null, 0, false, type, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 }

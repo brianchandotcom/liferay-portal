@@ -404,7 +404,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
 			false, configuration, null, 0, false,
 			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_APPROVED, false,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}

@@ -66,7 +66,7 @@ public class FragmentEntryStagedModelRepository
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
 			fragmentEntry.getPreviewFileEntryId(), fragmentEntry.isReadOnly(),
 			fragmentEntry.getType(), fragmentEntry.getTypeOptions(),
-			fragmentEntry.getStatus(), serviceContext);
+			fragmentEntry.getStatus(), false, serviceContext);
 	}
 
 	@Override

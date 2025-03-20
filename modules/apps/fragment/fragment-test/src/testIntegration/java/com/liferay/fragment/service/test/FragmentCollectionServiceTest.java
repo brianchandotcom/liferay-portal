@@ -256,7 +256,7 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
 				null, _group.getGroupId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
+				RandomTestUtil.randomString(), StringPool.BLANK, false,
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
 
@@ -553,7 +553,7 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
 				null, _group.getGroupId(), RandomTestUtil.randomString(), name,
-				StringPool.BLANK,
+				StringPool.BLANK, false,
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
 

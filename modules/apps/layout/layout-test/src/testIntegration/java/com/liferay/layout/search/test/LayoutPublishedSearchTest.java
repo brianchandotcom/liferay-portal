@@ -197,7 +197,7 @@ public class LayoutPublishedSearchTest {
 					"<lfr-drop-zone></lfr-drop-zone></div>",
 				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
 				0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_APPROVED, false,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -434,7 +434,7 @@ public class LayoutPublishedSearchTest {
 				"<div>" + value + "</div>", StringPool.BLANK, false,
 				StringPool.BLANK, null, 0, false,
 				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_APPROVED, false,
 				ServiceContextTestUtil.getServiceContext());
 
 		long defaultSegmentsExperienceId =

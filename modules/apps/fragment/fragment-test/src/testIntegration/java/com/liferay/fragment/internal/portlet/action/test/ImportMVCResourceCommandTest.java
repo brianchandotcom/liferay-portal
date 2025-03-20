@@ -121,7 +121,7 @@ public class ImportMVCResourceCommandTest {
 
 		_fragmentCollectionLocalService.addFragmentCollection(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			"collection", "Resources Collection", StringPool.BLANK,
+			"collection", "Resources Collection", StringPool.BLANK, false,
 			_serviceContext);
 
 		_assertImportResultsJSONObject(
@@ -167,7 +167,7 @@ public class ImportMVCResourceCommandTest {
 
 		_fragmentCollectionLocalService.addFragmentCollection(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			"collection", "Resources Collection", StringPool.BLANK,
+			"collection", "Resources Collection", StringPool.BLANK, false,
 			_serviceContext);
 
 		_assertImportResultsJSONObject(
@@ -243,7 +243,7 @@ public class ImportMVCResourceCommandTest {
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, _serviceContext);
 	}
 
 	private void _assertImportResultsJSONObject(

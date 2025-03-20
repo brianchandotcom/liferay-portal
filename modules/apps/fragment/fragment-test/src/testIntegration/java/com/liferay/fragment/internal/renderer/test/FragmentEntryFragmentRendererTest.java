@@ -724,7 +724,7 @@ public class FragmentEntryFragmentRendererTest {
 			RandomTestUtil.randomString(), ".component{color:blue;}",
 			"Fragment Entry HTML", "console.log('test');", cacheable, null,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, _serviceContext);
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {

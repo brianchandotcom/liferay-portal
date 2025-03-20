@@ -149,7 +149,7 @@ public class CopyFragmentEntryMVCActionCommandTest {
 				StringUtil.randomString(), StringPool.BLANK, false,
 				StringPool.BLANK, StringPool.BLANK, 0, false,
 				FragmentConstants.TYPE_COMPONENT, StringPool.BLANK,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+				WorkflowConstants.STATUS_APPROVED, false, _serviceContext);
 
 		String name = StringBundler.concat(
 			fragmentEntry.getName(), " (",

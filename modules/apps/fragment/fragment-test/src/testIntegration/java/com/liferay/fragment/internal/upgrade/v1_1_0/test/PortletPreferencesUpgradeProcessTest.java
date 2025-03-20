@@ -312,7 +312,7 @@ public class PortletPreferencesUpgradeProcessTest {
 						"<lfr-widget-nav></lfr-widget-nav></div>",
 				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
 				false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 
 		long segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(

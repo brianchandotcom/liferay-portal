@@ -82,7 +82,7 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 					fragmentCollectionId, null, name, StringPool.BLANK,
 					StringPool.BLANK, StringPool.BLANK, false, StringPool.BLANK,
 					null, 0, false, type, typeOptions,
-					WorkflowConstants.STATUS_DRAFT, serviceContext);
+					WorkflowConstants.STATUS_DRAFT, false, serviceContext);
 
 			fragmentEntry.setCss(
 				StringBundler.concat(

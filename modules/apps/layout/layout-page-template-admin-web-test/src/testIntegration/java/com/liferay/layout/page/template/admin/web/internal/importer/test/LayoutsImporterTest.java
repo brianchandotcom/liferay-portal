@@ -1165,7 +1165,7 @@ public class LayoutsImporterTest {
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
 			fragmentEntry.getConfiguration(), null, 0, false,
 			fragmentEntry.getType(), fragmentEntry.getTypeOptions(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private FragmentEntry _addFragmentEntry(
@@ -1187,7 +1187,7 @@ public class LayoutsImporterTest {
 				RandomTestUtil.randomString() + "</a></div>",
 			StringPool.BLANK, false, configuration, null, 0, false,
 			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private FragmentEntry _addFragmentEntry(
@@ -1205,7 +1205,7 @@ public class LayoutsImporterTest {
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private void _addFragmentEntryLinks(

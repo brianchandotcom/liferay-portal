@@ -560,7 +560,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			_language.get(
 				_portal.getSiteDefaultLocale(groupId),
 				_FRAGMENT_COLLECTION_KEY_DEFAULT),
-			StringPool.BLANK, ServiceContextThreadLocal.getServiceContext());
+			StringPool.BLANK, false,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private String _getFileName(String path) {

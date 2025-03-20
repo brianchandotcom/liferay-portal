@@ -2106,7 +2106,7 @@ public class RenderLayoutStructureTagTest {
 				"data-lfr-editable-type=\"text\">Heading Example</h1>",
 			StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
 			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, _serviceContext);
 	}
 
 	private FragmentEntryLink[] _addFragmentEntryLinks(

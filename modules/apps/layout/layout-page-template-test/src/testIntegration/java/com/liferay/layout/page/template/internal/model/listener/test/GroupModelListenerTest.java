@@ -161,7 +161,7 @@ public class GroupModelListenerTest {
 				RandomTestUtil.randomString(), StringPool.BLANK, false,
 				StringPool.BLANK, null, 0, false,
 				FragmentConstants.TYPE_SECTION, null,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			null, TestPropsValues.getUserId(), groupId, 0,

@@ -73,7 +73,7 @@ public class FragmentTestUtil {
 
 		return FragmentCollectionLocalServiceUtil.addFragmentCollection(
 			null, TestPropsValues.getUserId(), groupId, fragmentCollectionKey,
-			name, StringPool.BLANK, serviceContext);
+			name, StringPool.BLANK, false, serviceContext);
 	}
 
 	public static FragmentEntryLink addFragmentEntryLink(

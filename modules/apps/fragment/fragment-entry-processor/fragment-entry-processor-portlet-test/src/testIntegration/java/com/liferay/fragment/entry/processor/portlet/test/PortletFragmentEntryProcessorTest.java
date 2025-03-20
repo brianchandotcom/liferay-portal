@@ -192,7 +192,7 @@ public class PortletFragmentEntryProcessorTest {
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 			"Fragment Entry", null, html, null, false, null, null, 0, false,
 			FragmentConstants.TYPE_SECTION, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private String _getHTML(String portletAlias, String... instanceIds) {

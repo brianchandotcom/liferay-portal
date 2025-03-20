@@ -81,7 +81,7 @@ public class PublishFragmentEntryMVCActionCommandTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), false, _readFileToString(), null,
 				0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_DRAFT,
+				WorkflowConstants.STATUS_DRAFT, false,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
 

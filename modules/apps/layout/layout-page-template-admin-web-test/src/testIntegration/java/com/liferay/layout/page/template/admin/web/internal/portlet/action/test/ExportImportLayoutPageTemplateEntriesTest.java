@@ -1391,7 +1391,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private void _addImageFragmentEntry() throws Exception {

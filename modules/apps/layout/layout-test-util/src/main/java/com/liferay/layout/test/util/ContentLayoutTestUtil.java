@@ -182,7 +182,7 @@ public class ContentLayoutTestUtil {
 					JSONUtil.put(
 						"fieldTypes", JSONUtil.put(infoFieldType.getName())
 					).toString(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+					WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 
 			addFragmentEntryLinkToLayout(
 				JSONUtil.put(
@@ -208,7 +208,7 @@ public class ContentLayoutTestUtil {
 					JSONUtil.put(
 						"fieldTypes", JSONUtil.put("captcha")
 					).toString(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+					WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 
 			addFragmentEntryLinkToLayout(
 				StringPool.BLANK, fragmentEntry.getCss(),
@@ -331,7 +331,7 @@ public class ContentLayoutTestUtil {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), false, "{fieldSets: []}", null,
 				0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED,
+				WorkflowConstants.STATUS_APPROVED, false,
 				ServiceContextTestUtil.getServiceContext(
 					layout.getGroupId(), TestPropsValues.getUserId()));
 

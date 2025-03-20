@@ -186,7 +186,7 @@ public class CopyFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			fragmentEntry.getConfiguration(), fragmentEntry.getIcon(),
 			previewFileEntryId, fragmentEntry.isReadOnly(),
 			fragmentEntry.getType(), fragmentEntry.getTypeOptions(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private long _getPreviewFileEntryId(

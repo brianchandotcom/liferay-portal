@@ -143,7 +143,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 						"fragment_entry_with_invalid_freemarker_variable.html"),
 					null, false, null, null, 0, false,
 					FragmentConstants.TYPE_COMPONENT, null,
-					WorkflowConstants.STATUS_DRAFT, serviceContext);
+					WorkflowConstants.STATUS_DRAFT, false, serviceContext);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -167,7 +167,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 			"Fragment Entry", null, "${fragmentElementId}", null, false,
 			StringPool.BLANK, null, 0, false, FragmentConstants.TYPE_COMPONENT,
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			null, WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -205,7 +205,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 			"Fragment Entry", null, "${layoutMode}", null, false,
 			StringPool.BLANK, null, 0, false, FragmentConstants.TYPE_COMPONENT,
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			null, WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -652,7 +652,7 @@ public class FreeMarkerFragmentEntryProcessorTest {
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 			"Fragment Entry", null, _readFileToString(htmlFile), null, false,
 			configuration, null, 0, false, FragmentConstants.TYPE_COMPONENT,
-			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			null, WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

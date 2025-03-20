@@ -78,7 +78,7 @@ public class FragmentEntryStagingTest {
 				JSONUtil.put(
 					"fieldTypes", JSONUtil.put("string")
 				).toString(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 
 		_stagingGroup = FragmentStagingTestUtil.enableLocalStaging(_liveGroup);
 

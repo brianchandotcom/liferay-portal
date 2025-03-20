@@ -211,7 +211,7 @@ public class EditableValuesExportImportContentProcessorTest {
 					))
 			).toString(),
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private FragmentEntryLink _addLinkMappedToLayoutFragmentEntryLink(

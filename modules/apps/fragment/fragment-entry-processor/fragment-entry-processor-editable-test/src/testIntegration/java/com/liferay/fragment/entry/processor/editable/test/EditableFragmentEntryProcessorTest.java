@@ -1447,7 +1447,7 @@ public class EditableFragmentEntryProcessorTest {
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 			"Fragment Entry", null, _readFileToString(htmlFile), null, false,
 			null, null, 0, false, FragmentConstants.TYPE_SECTION, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(

@@ -651,7 +651,7 @@ public class PageTemplatesImporterTest {
 						"<lfr-drop-zone></lfr-drop-zone></div>"),
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
 					null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_APPROVED, false,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -739,7 +739,7 @@ public class PageTemplatesImporterTest {
 						"\"></lfr-drop-zone></div>"),
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
 					null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_APPROVED, false,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -825,7 +825,7 @@ public class PageTemplatesImporterTest {
 						"\"></lfr-drop-zone></div>"),
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
 					null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_APPROVED, false,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -922,7 +922,7 @@ public class PageTemplatesImporterTest {
 						"<lfr-drop-zone></lfr-drop-zone></div>"),
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
 					null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_APPROVED, false,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -1318,7 +1318,7 @@ public class PageTemplatesImporterTest {
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private File _generateZipFile(String type, Map<String, String> valuesMap)

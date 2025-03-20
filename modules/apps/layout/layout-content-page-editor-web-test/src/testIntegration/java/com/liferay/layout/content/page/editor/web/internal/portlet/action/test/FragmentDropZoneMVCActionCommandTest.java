@@ -379,7 +379,7 @@ public class FragmentDropZoneMVCActionCommandTest {
 			RandomTestUtil.randomString(), false,
 			_readFileToString("drop_zone_fragment_entry_configuration.json"),
 			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

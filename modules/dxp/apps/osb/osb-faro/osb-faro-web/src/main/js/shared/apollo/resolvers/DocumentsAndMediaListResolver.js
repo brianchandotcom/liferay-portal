@@ -14,7 +14,7 @@ export default () => ({
 				__typename: 'Metric',
 				value: 4
 			},
-			previewsMetric: {
+			impressionMadeMetric: {
 				__typename: 'Metric',
 				value: 13
 			},
@@ -36,7 +36,7 @@ export default () => ({
 				__typename: 'Metric',
 				value: 3
 			},
-			previewsMetric: {
+			impressionMadeMetric: {
 				__typename: 'Metric',
 				value: 13
 			},
@@ -58,7 +58,7 @@ export default () => ({
 				__typename: 'Metric',
 				value: 3
 			},
-			previewsMetric: {
+			impressionMadeMetric: {
 				__typename: 'Metric',
 				value: 5
 			},
@@ -80,7 +80,7 @@ export default () => ({
 				__typename: 'Metric',
 				value: 2
 			},
-			previewsMetric: {
+			impressionMadeMetric: {
 				__typename: 'Metric',
 				value: 24
 			},
@@ -102,7 +102,7 @@ export default () => ({
 				__typename: 'Metric',
 				value: 2
 			},
-			previewsMetric: {
+			impressionMadeMetric: {
 				__typename: 'Metric',
 				value: 3
 			},

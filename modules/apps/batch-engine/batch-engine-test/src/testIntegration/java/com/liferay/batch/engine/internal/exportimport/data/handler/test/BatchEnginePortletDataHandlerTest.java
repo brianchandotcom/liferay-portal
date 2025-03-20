@@ -194,9 +194,10 @@ public class BatchEnginePortletDataHandlerTest {
 
 		Assert.assertEquals(objectEntries.toString(), 3, objectEntries.size());
 
-		duplicateObjectEntry = _objectEntryLocalService.getObjectEntry(
-			duplicateObjectEntry.getExternalReferenceCode(),
-			_objectDefinition1.getObjectDefinitionId());
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry2.getExternalReferenceCode(),
+				_objectDefinition1.getObjectDefinitionId()));
 
 		Assert.assertNotEquals(
 			_objectEntry2.getExternalReferenceCode(),

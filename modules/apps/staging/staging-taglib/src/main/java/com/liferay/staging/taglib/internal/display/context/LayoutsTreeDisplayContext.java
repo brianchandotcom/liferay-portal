@@ -471,13 +471,8 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private boolean _isIncomplete() {
-		if (LayoutStagingUtil.isBranchingLayoutSet(
-				getSelectPagesGroup(), isSelectPagesPrivateLayout())) {
-
-			return true;
-		}
-
-		return false;
+		return LayoutStagingUtil.isBranchingLayoutSet(
+			getSelectPagesGroup(), isSelectPagesPrivateLayout());
 	}
 
 	private String _action;

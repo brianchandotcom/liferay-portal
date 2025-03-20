@@ -256,19 +256,11 @@ public class ProcessListDisplayContext {
 	}
 
 	private boolean _isNavigationCompleted() {
-		if (Objects.equals(_getNavigation(), "completed")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getNavigation(), "completed");
 	}
 
 	private boolean _isNavigationHome() {
-		if (Objects.equals(_getNavigation(), "all")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getNavigation(), "all");
 	}
 
 	private boolean _isOrderByAsc() {

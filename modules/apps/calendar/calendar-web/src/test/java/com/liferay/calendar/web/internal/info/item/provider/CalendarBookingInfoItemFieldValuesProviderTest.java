@@ -16,8 +16,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -64,6 +67,42 @@ public class CalendarBookingInfoItemFieldValuesProviderTest {
 			_getCalendarBookingURL(_GUEST_LAYOUT_ACTUAL_URL),
 			_calendarBookingInfoItemFieldValuesProvider.getCalendarBookingURL(
 				_calendarBooking));
+
+		ServiceContext serviceContext = Mockito.mock(ServiceContext.class);
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getPathFriendlyURLPublic()
+		).thenReturn(
+			_PATH_FRIENDLY_URL_PUBLIC
+		);
+
+		Mockito.when(
+			themeDisplay.getPortalURL()
+		).thenReturn(
+			_PORTAL_URL
+		);
+
+		Mockito.when(
+			serviceContext.getThemeDisplay()
+		).thenReturn(
+			themeDisplay
+		);
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					_PORTAL_URL, _PATH_FRIENDLY_URL_PUBLIC,
+					"/calendar/shared/-/calendar/", _CALENDAR_BOOKING_ID),
+				_calendarBookingInfoItemFieldValuesProvider.
+					getCalendarBookingURL(_calendarBooking));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private String _getCalendarBookingURL(String layoutActualURL) {
@@ -227,6 +266,9 @@ public class CalendarBookingInfoItemFieldValuesProviderTest {
 		RandomTestUtil.randomString();
 
 	private static final String _LAYOUT_ACTUAL_URL =
+		RandomTestUtil.randomString();
+
+	private static final String _PATH_FRIENDLY_URL_PUBLIC =
 		RandomTestUtil.randomString();
 
 	private static final String _PORTAL_URL = RandomTestUtil.randomString();

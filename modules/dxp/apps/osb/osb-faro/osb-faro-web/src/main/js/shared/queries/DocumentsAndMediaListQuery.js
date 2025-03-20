@@ -31,7 +31,7 @@ export default gql`
 					downloadsMetric {
 						value
 					}
-					previewsMetric {
+					impressionMadeMetric {
 						value
 					}
 					ratingsMetric {

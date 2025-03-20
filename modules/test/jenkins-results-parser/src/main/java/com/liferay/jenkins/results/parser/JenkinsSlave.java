@@ -213,6 +213,7 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 		return _idle;
 	}
 
+	@Override
 	public boolean isOffline() {
 		return _offline;
 	}

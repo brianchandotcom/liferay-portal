@@ -22,4 +22,6 @@ public interface JenkinsNode<T> extends Comparable<T> {
 
 	public boolean isIdle();
 
+	public boolean isOffline();
+
 }

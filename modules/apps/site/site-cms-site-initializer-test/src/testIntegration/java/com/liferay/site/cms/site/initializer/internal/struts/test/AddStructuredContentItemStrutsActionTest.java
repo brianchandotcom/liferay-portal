@@ -7,9 +7,13 @@ package com.liferay.site.cms.site.initializer.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -21,6 +25,8 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -124,6 +130,8 @@ public class AddStructuredContentItemStrutsActionTest {
 		mockHttpServletRequest.setParameter(
 			"objectDefinitionId",
 			String.valueOf(_objectDefinition.getObjectDefinitionId()));
+		mockHttpServletRequest.setParameter(
+			"plid", String.valueOf(_layout.getPlid()));
 		mockHttpServletRequest.setRequestURI(_layout.getFriendlyURL());
 
 		return mockHttpServletRequest;
@@ -156,6 +164,53 @@ public class AddStructuredContentItemStrutsActionTest {
 		}
 		else {
 			Assert.assertNotNull(layoutPageTemplateEntry);
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						layoutPageTemplateEntry.getGroupId(),
+						layoutPageTemplateEntry.getPlid());
+
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+
+			List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+				layoutStructure.getFormStyledLayoutStructureItems();
+
+			Assert.assertEquals(
+				formStyledLayoutStructureItems.toString(), 1,
+				formStyledLayoutStructureItems.size());
+
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				formStyledLayoutStructureItems.get(0);
+
+			Assert.assertEquals(
+				_objectDefinition.getClassName(),
+				formStyledLayoutStructureItem.getClassName());
+
+			JSONObject itemConfigJSONObject =
+				formStyledLayoutStructureItem.getItemConfigJSONObject();
+
+			Assert.assertEquals(
+				JSONUtil.put(
+					"layout",
+					JSONUtil.put(
+						"groupId", _layout.getGroupId()
+					).put(
+						"layoutId", _layout.getLayoutId()
+					).put(
+						"layoutUuid", _layout.getUuid()
+					).put(
+						"private", _layout.isPrivateLayout()
+					).put(
+						"title", _layout.getTitle()
+					)
+				).put(
+					"showNotification", true
+				).put(
+					"type", "page"
+				).toString(),
+				String.valueOf(itemConfigJSONObject.get("successMessage")));
 		}
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -201,6 +256,10 @@ public class AddStructuredContentItemStrutsActionTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

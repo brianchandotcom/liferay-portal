@@ -44,6 +44,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
 			externalReferenceCode: 'structureERC',
@@ -66,7 +67,7 @@ describe('buildObjectDefinition', () => {
 				},
 			],
 			pluralLabel: {en_US: 'Structure'},
-			scope: 'site',
+			scope: 'depot',
 		});
 	});
 
@@ -80,6 +81,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
 			externalReferenceCode: 'structureERC',
@@ -102,7 +104,7 @@ describe('buildObjectDefinition', () => {
 				},
 			],
 			pluralLabel: {en_US: 'Structure'},
-			scope: 'site',
+			scope: 'depot',
 		});
 	});
 });

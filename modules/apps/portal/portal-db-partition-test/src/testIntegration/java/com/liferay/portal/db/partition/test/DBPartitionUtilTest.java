@@ -63,10 +63,15 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		for (long companyId : COMPANY_IDS) {
-			db.runSQL(
-				dbPartitionDB.getCreatePartitionSQL(
-					connection, getPartitionName(companyId)));
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					portal.getDefaultCompanyId())) {
+
+			for (long companyId : COMPANY_IDS) {
+				db.runSQL(
+					dbPartitionDB.getCreatePartitionSQL(
+						connection, getPartitionName(companyId)));
+			}
 		}
 
 		_scheduleJob(PortalInstancePool.getDefaultCompanyId(), _JOB_NAME_1);
@@ -316,10 +321,15 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				_getJobsCount(defaultPartitionName));
 		}
 		finally {
-			for (long companyId : COMPANY_IDS) {
-				db.runSQL(
-					dbPartitionDB.getDropPartitionSQL(
-						getExtractedPartitionName(companyId)));
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						portal.getDefaultCompanyId())) {
+
+				for (long companyId : COMPANY_IDS) {
+					db.runSQL(
+						dbPartitionDB.getDropPartitionSQL(
+							getExtractedPartitionName(companyId)));
+				}
 			}
 
 			deletePartitionRequiredData();
@@ -332,7 +342,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testExtractCompany() throws Exception {
 		long companyId = PortalInstancePool.getDefaultCompanyId();
 
-		try {
+		try (SafeCloseable safeCloseable1 =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
 			String sourcePartitionName = getPartitionName(companyId);
 
 			List<String> tableNames = _getObjectNames(
@@ -389,9 +402,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				_JOBS_COUNT, _getJobsCount(extractedPartitionName));
 		}
 		finally {
-			db.runSQL(
-				dbPartitionDB.getDropPartitionSQL(
-					getExtractedPartitionName(companyId)));
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						portal.getDefaultCompanyId())) {
+
+				db.runSQL(
+					dbPartitionDB.getDropPartitionSQL(
+						getExtractedPartitionName(companyId)));
+			}
 		}
 	}
 
@@ -477,10 +495,15 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 		finally {
-			for (long companyId : COMPANY_IDS) {
-				db.runSQL(
-					dbPartitionDB.getDropPartitionSQL(
-						getExtractedPartitionName(companyId)));
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						portal.getDefaultCompanyId())) {
+
+				for (long companyId : COMPANY_IDS) {
+					db.runSQL(
+						dbPartitionDB.getDropPartitionSQL(
+							getExtractedPartitionName(companyId)));
+				}
 			}
 
 			deletePartitionRequiredData();

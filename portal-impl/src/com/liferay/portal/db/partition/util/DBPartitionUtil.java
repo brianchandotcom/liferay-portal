@@ -1596,8 +1596,6 @@ public class DBPartitionUtil {
 
 				if ((CompanyThreadLocal.getNonsystemCompanyId() !=
 						PortalInstancePool.getDefaultCompanyId()) &&
-					!StringUtil.startsWith(lowerCaseSQL, "create schema") &&
-					!StringUtil.startsWith(lowerCaseSQL, "drop schema") &&
 					!_upgrading.get()) {
 
 					int count = StringUtil.count(

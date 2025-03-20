@@ -317,10 +317,15 @@ public class CompanyLocalServiceDBPartitionTest
 			}
 		}
 		finally {
-			db.runSQL(
-				dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
-						company.getCompanyId())));
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						_defaultCompanyId)) {
+
+				db.runSQL(
+					dbPartitionDB.getDropPartitionSQL(
+						CompanyLocalServiceTestUtil.getExtractedPartitionName(
+							company.getCompanyId())));
+			}
 
 			if (ArrayUtil.contains(
 					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
@@ -369,10 +374,15 @@ public class CompanyLocalServiceDBPartitionTest
 			}
 		}
 		finally {
-			db.runSQL(
-				dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
-						company.getCompanyId())));
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						_defaultCompanyId)) {
+
+				db.runSQL(
+					dbPartitionDB.getDropPartitionSQL(
+						CompanyLocalServiceTestUtil.getExtractedPartitionName(
+							company.getCompanyId())));
+			}
 
 			if (ArrayUtil.contains(
 					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
@@ -434,10 +444,15 @@ public class CompanyLocalServiceDBPartitionTest
 			}
 		}
 		finally {
-			db.runSQL(
-				dbPartitionDB.getDropPartitionSQL(
-					CompanyLocalServiceTestUtil.getExtractedPartitionName(
-						company.getCompanyId())));
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						_defaultCompanyId)) {
+
+				db.runSQL(
+					dbPartitionDB.getDropPartitionSQL(
+						CompanyLocalServiceTestUtil.getExtractedPartitionName(
+							company.getCompanyId())));
+			}
 
 			if (ArrayUtil.contains(
 					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),

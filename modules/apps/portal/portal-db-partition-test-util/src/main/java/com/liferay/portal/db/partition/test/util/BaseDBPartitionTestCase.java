@@ -180,9 +180,15 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void dropSchemas() throws Exception {
-		for (long companyId : COMPANY_IDS) {
-			db.runSQL(
-				dbPartitionDB.getDropPartitionSQL(getPartitionName(companyId)));
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			for (long companyId : COMPANY_IDS) {
+				db.runSQL(
+					dbPartitionDB.getDropPartitionSQL(
+						getPartitionName(companyId)));
+			}
 		}
 	}
 

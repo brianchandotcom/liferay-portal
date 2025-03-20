@@ -5,12 +5,15 @@
 
 package com.liferay.portal.db.schema.definition.internal.test.util;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
@@ -37,11 +40,17 @@ public class DatabaseTestUtil {
 	public static void createSchema(String schemaName) throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			db.runSQL("create schema " + schemaName + " character set utf8");
-		}
-		else {
-			db.runSQL("create schema " + schemaName);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			if (DBManagerUtil.getDBType() == DBType.MYSQL) {
+				db.runSQL(
+					"create schema " + schemaName + " character set utf8");
+			}
+			else {
+				db.runSQL("create schema " + schemaName);
+			}
 		}
 	}
 
@@ -54,11 +63,16 @@ public class DatabaseTestUtil {
 	public static void dropSchema(String schemaName) throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			db.runSQL("drop schema " + schemaName);
-		}
-		else {
-			db.runSQL("drop schema " + schemaName + " cascade");
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			if (DBManagerUtil.getDBType() == DBType.MYSQL) {
+				db.runSQL("drop schema " + schemaName);
+			}
+			else {
+				db.runSQL("drop schema " + schemaName + " cascade");
+			}
 		}
 	}
 

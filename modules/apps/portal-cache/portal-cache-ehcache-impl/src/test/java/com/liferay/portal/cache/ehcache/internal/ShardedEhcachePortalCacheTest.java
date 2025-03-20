@@ -7,7 +7,6 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
-import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -137,20 +136,12 @@ public class ShardedEhcachePortalCacheTest {
 		ReflectionTestUtil.setFieldValue(
 			_baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
 
-		EhcachePortalCacheManagerConfiguration
-			ehcachePortalCacheManagerConfiguration =
-				new EhcachePortalCacheManagerConfiguration(
-					CacheConfigurationBuilder.newCacheConfigurationBuilder(
-						Object.class, Object.class,
-						ResourcePoolsBuilder.heap(
-							_MAX_ENTRIES_LOCAL_HEAP_DEFAULT)
-					).build(),
-					null, Collections.emptySet());
-
 		ReflectionTestUtil.setFieldValue(
-			_baseEhcachePortalCacheManager,
-			"_ehcachePortalCacheManagerConfiguration",
-			ehcachePortalCacheManagerConfiguration);
+			_baseEhcachePortalCacheManager, "_defaultCacheConfiguration",
+			CacheConfigurationBuilder.newCacheConfigurationBuilder(
+				Object.class, Object.class,
+				ResourcePoolsBuilder.heap(_MAX_ENTRIES_LOCAL_HEAP_DEFAULT)
+			).build());
 
 		_companyThreadLocalMockedStatic.when(
 			CompanyThreadLocal::getNonsystemCompanyId

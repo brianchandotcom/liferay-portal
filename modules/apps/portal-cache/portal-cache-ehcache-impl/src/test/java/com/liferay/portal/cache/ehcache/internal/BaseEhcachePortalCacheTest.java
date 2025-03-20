@@ -8,7 +8,6 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
@@ -25,7 +24,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -117,16 +115,9 @@ public class BaseEhcachePortalCacheTest {
 		ReflectionTestUtil.setFieldValue(
 			baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
 
-		EhcachePortalCacheManagerConfiguration
-			ehcachePortalCacheManagerConfiguration =
-				new EhcachePortalCacheManagerConfiguration(
-					_cacheConfigurationBuilder.build(), null,
-					Collections.emptySet());
-
 		ReflectionTestUtil.setFieldValue(
-			baseEhcachePortalCacheManager,
-			"_ehcachePortalCacheManagerConfiguration",
-			ehcachePortalCacheManagerConfiguration);
+			baseEhcachePortalCacheManager, "_defaultCacheConfiguration",
+			_cacheConfigurationBuilder.build());
 
 		_ehcachePortalCache = new EhcachePortalCache<>(
 			baseEhcachePortalCacheManager,
@@ -716,16 +707,9 @@ public class BaseEhcachePortalCacheTest {
 					Serializable.class, Object.class,
 					ResourcePoolsBuilder.heap(100));
 
-		EhcachePortalCacheManagerConfiguration
-			ehcachePortalCacheManagerConfiguration =
-				new EhcachePortalCacheManagerConfiguration(
-					cacheConfigurationBuilder.build(), null,
-					Collections.emptySet());
-
 		ReflectionTestUtil.setFieldValue(
-			baseEhcachePortalCacheManager,
-			"_ehcachePortalCacheManagerConfiguration",
-			ehcachePortalCacheManagerConfiguration);
+			baseEhcachePortalCacheManager, "_defaultCacheConfiguration",
+			cacheConfigurationBuilder.build());
 
 		EhcachePortalCache<String, Object> ehcachePortalCache =
 			new EhcachePortalCache<>(

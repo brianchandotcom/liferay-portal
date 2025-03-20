@@ -308,8 +308,7 @@ public class PortalCacheExtenderTest {
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
 			ReflectionTestUtil.getFieldValue(
-				_multiVMPortalCacheManager,
-				"_ehcachePortalCacheManagerConfiguration");
+				_multiVMPortalCacheManager, "_portalCacheManagerConfiguration");
 
 		Assert.assertEquals(
 			requireSerialization,

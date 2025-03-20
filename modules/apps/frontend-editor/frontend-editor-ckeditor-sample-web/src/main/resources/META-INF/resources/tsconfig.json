@@ -1,5 +1,5 @@
 {
-	"@generated": "9c92b3f6b3a43317b9e41244c10e9216d9c6fe68",
+	"@generated": "d669f082a6fbdb2da637799143656bb0e747b856",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"frontend-editor-ckeditor-web": [

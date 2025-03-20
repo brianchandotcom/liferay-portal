@@ -1,5 +1,5 @@
 {
-	"@generated": "666ffe6e8e7a856bdb859b19f6cc29d3b3ca0030",
+	"@generated": "f054c58fa976c62ac5326370c4f74f2c25bf257d",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"social-bookmarks-taglib": [

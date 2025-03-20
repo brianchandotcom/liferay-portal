@@ -1,5 +1,5 @@
 {
-	"@generated": "5ad794b793a37442163e9089dd0b3d2391d011d8",
+	"@generated": "69975caf4b850cb3cc3c8ac1845b8ff22c75c9ff",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 		},

@@ -1,5 +1,5 @@
 {
-	"@generated": "b513021b3b2277a0390525a79fa13c94946ff9ba",
+	"@generated": "bc01324a102bf097451b0e52582b2d205f65a7d1",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/document-library-preview-css": [

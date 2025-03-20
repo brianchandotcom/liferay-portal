@@ -1,5 +1,5 @@
 {
-	"@generated": "b2f31fb414b10a6bbc9bd410de897f9e649a5023",
+	"@generated": "6b1bb9a8622d6e3c3c4de0bab81f1975ebda7e0c",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/portal-workflow-instance-tracker-web": [

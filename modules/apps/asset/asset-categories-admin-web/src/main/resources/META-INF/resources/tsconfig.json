@@ -1,5 +1,5 @@
 {
-	"@generated": "5b323c9342011d9f1e0f1cbfb91dcfc3395dcacf",
+	"@generated": "86f15ed8a0b66191cdecb6a0c6562da1a3403b09",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"asset-taglib": [

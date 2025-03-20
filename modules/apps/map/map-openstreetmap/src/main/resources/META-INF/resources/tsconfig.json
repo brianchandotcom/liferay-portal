@@ -1,5 +1,5 @@
 {
-	"@generated": "4959bae081534a5f11fd4f5221cbad3e92431547",
+	"@generated": "6d33a38594a9d318b4ee2d4842c3f51e00dedd02",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/map-common": [

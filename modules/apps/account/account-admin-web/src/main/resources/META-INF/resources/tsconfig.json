@@ -1,5 +1,5 @@
 {
-	"@generated": "0a7a0deefd5af96e677800e63904c31b2507ab16",
+	"@generated": "039f0de8c3c9734458c913484604912668312764",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/address-web": [

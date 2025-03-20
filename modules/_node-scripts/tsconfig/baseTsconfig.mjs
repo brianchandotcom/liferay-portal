@@ -11,7 +11,7 @@ export default {
 		composite: true,
 		emitDeclarationOnly: true,
 		jsx: 'react',
-		module: 'es6',
+		module: 'es2022',
 		moduleResolution: 'node',
 		skipLibCheck: true,
 		sourceMap: false,

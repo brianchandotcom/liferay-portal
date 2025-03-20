@@ -1,5 +1,5 @@
 {
-	"@generated": "ce2d965f2a02e3eba6c44f0c5b0d423d2cb66a4d",
+	"@generated": "752b1a428db1793765cef000563419903fe32ef0",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/layout-js-components-web": [

@@ -1,5 +1,5 @@
 {
-	"@generated": "87c86ad55471e15f386d0cb90bc6fa685afb391a",
+	"@generated": "5d7df0318cab23e1933a3d8e92aa9ca4ea699d3a",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/content-dashboard-web": [

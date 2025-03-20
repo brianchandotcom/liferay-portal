@@ -1,5 +1,5 @@
 {
-	"@generated": "46f9cff7a776446820a5acfc418888e52797bb2f",
+	"@generated": "1fdcb28bca9655bb2d81260a33ddb932b19fb998",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/frontend-icons-web": [

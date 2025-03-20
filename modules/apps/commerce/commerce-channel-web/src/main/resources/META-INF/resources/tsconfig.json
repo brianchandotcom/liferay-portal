@@ -1,5 +1,5 @@
 {
-	"@generated": "57845d10ab3b7de20a4dd6600448e04290026917",
+	"@generated": "28445e6040ead07a41e4182cad9841ba7196b483",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/marketplace-js-components-web": [

@@ -1,5 +1,5 @@
 {
-	"@generated": "d454446f9f3c9139676c9e52b7015aac356328fc",
+	"@generated": "39eb62ded078a137bb09e41c0c4a205ae3ddd014",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -8,7 +8,7 @@
 		"declarationDir": "../../../../../../../../.tsc/types",
 		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "es6",
+		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
 			"@liferay/frontend-js-codemirror-web": [

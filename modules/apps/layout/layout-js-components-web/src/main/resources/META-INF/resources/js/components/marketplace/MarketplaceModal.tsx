@@ -8,46 +8,101 @@ import {
 	Marketplace,
 	MarketplaceContextProvider,
 	MarketplaceRest,
+	MarketplaceView,
+	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
-import React, {ReactElement} from 'react';
+import {sub} from 'frontend-js-web';
+import React, {
+	ReactElement,
+	cloneElement,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react';
 
 import MarketplaceViews from './MarketplaceViews';
 
-interface Props {
+interface MarketplaceModalProps {
 	trigger?: ReactElement;
 }
 
-function MarketplaceModal({trigger}: Props) {
+export default function MarketplaceModal({trigger}: MarketplaceModalProps) {
+	const [title, setTitle] = useState<string | undefined>();
+
+	const props = {
+		trigger: (
+			<MarketplaceModalTrigger setTitle={setTitle} trigger={trigger} />
+		),
+		...(title && {title}),
+	};
+
 	return (
 		<MarketplaceContextProvider
 			baseResourceURL={MarketplaceRest.getBaseResourceURL()}
 			settings={{productFilter: 'fragments'}}
 		>
-			<Marketplace.Modal
-				trigger={
-					trigger ? (
-						trigger
-					) : (
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get(
-								'open-marketplace-explorer'
-							)}
-							borderless
-							displayType="secondary"
-							monospaced
-							size="sm"
-							symbol="marketplace"
-							title={Liferay.Language.get(
-								'open-marketplace-explorer'
-							)}
-						/>
-					)
-				}
-			>
+			<Marketplace.Modal {...props}>
 				<MarketplaceViews />
 			</Marketplace.Modal>
 		</MarketplaceContextProvider>
 	);
 }
 
-export default MarketplaceModal;
+interface MarketplaceModalTriggerProps {
+	setTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
+	trigger?: ReactElement;
+}
+
+function MarketplaceModalTrigger({
+	setTitle,
+	trigger,
+}: MarketplaceModalTriggerProps) {
+	const {
+		modal: {onOpenChange},
+		product,
+		setView,
+		view,
+	} = useMarketplaceContext();
+
+	const handleClick = useCallback(() => {
+		if (view === MarketplaceView.PURCHASE) {
+			setView(MarketplaceView.PRODUCTS);
+		}
+
+		onOpenChange(true);
+	}, [view, setView, onOpenChange]);
+
+	useEffect(() => {
+		setTitle(
+			view === MarketplaceView.PURCHASE && product
+				? sub(Liferay.Language.get('installing-x'), product.name)
+				: ''
+		);
+	}, [view, product, setTitle]);
+
+	if (trigger) {
+		return cloneElement(trigger, {
+			onClick: (event: React.MouseEvent) => {
+				if (trigger.props.onClick) {
+					trigger.props.onClick(event);
+				}
+				else {
+					handleClick();
+				}
+			},
+		});
+	}
+
+	return (
+		<ClayButtonWithIcon
+			aria-label={Liferay.Language.get('open-marketplace-explorer')}
+			borderless
+			displayType="secondary"
+			monospaced
+			onClick={handleClick}
+			size="sm"
+			symbol="marketplace"
+			title={Liferay.Language.get('open-marketplace-explorer')}
+		/>
+	);
+}

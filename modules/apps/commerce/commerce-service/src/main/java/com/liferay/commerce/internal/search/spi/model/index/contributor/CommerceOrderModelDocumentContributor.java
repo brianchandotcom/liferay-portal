@@ -56,10 +56,15 @@ public class CommerceOrderModelDocumentContributor
 			document.addKeywordSortable(Field.NAME, commerceOrder.getName());
 			document.addKeyword(Field.STATUS, commerceOrder.getStatus());
 
-			User user = _userLocalService.getUser(commerceOrder.getUserId());
+			User user = _userLocalService.fetchUser(commerceOrder.getUserId());
 
-			document.addKeyword(Field.USER_NAME, user.getFullName());
-			document.addKeywordSortable(Field.USER_NAME, user.getFullName());
+			if (user != null) {
+				document.addKeyword(Field.USER_NAME, user.getFullName());
+				document.addKeywordSortable(
+					Field.USER_NAME, user.getFullName());
+				document.addKeyword(
+					"orderCreatorEmailAddress", user.getEmailAddress());
+			}
 
 			AccountEntry accountEntry =
 				_accountEntryLocalService.fetchAccountEntry(
@@ -104,8 +109,6 @@ public class CommerceOrderModelDocumentContributor
 				commerceOrder.getExternalReferenceCode());
 			document.addNumber(
 				"itemsQuantity", _getItemsQuantity(commerceOrder));
-			document.addKeyword(
-				"orderCreatorEmailAddress", user.getEmailAddress());
 			document.addDate("orderDate", commerceOrder.getOrderDate());
 			document.addDateSortable("orderDate", commerceOrder.getOrderDate());
 			document.addKeyword(

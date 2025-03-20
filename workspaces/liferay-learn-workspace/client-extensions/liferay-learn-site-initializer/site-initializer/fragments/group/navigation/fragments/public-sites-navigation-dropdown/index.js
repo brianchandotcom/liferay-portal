@@ -17,40 +17,40 @@ const withinMasterLayout = fragmentElement.parentElement.classList.contains(
 let alignMenuInterval;
 
 function alignMenu() {
-	const toggleRect = toggle.getBoundingClientRect();
-	const parent =
+	const toggleBoundingClientRect = toggle.getBoundingClientRect();
+	const parentElement =
 		document.querySelector('.page-editor__layout-viewport__resizer') ||
 		document.body;
 
-	const parentRect = parent.getBoundingClientRect();
+	const parentBoundingClientRect = parentElement.getBoundingClientRect();
 	const wrapperRect = document
 		.querySelector('#wrapper')
 		?.getBoundingClientRect();
 	const isRTL =
 		Liferay.Language.direction?.[themeDisplay?.getLanguageId()] === 'rtl';
 
-	menu.style.top = `${toggleRect.bottom}px`;
+	menu.style.top = `${toggleBoundingClientRect.bottom}px`;
 
 	if (configuration.panelType === 'mega-menu') {
-		menu.style.left = `${parentRect.left}px`;
-		menu.style.width = `${parentRect.width}px`;
+		menu.style.left = `${parentBoundingClientRect.left}px`;
+		menu.style.width = `${parentBoundingClientRect.width}px`;
 	}
 	else if (configuration.panelType === 'regular') {
 		menu.style.width = `${regularMenuWidth}px`;
 
 		if (
-			toggleRect.left + regularMenuWidth >= window.innerWidth ||
+			toggleBoundingClientRect.left + regularMenuWidth >= window.innerWidth ||
 			(wrapperRect &&
-				toggleRect.left + regularMenuWidth >= wrapperRect.width)
+				toggleBoundingClientRect.left + regularMenuWidth >= wrapperRect.width)
 		) {
-			menu.style.right = `${window.innerWidth - toggleRect.right}px`;
+			menu.style.right = `${window.innerWidth - toggleBoundingClientRect.right}px`;
 		}
 		else {
 			menu.style.right = null;
 		}
 
-		if (isRTL && toggleRect.right - regularMenuWidth < 0) {
-			menu.style.left = `${toggleRect.left}px`;
+		if (isRTL && toggleBoundingClientRect.right - regularMenuWidth < 0) {
+			menu.style.left = `${toggleBoundingClientRect.left}px`;
 		}
 	}
 	else if (configuration.panelType === 'full-width') {

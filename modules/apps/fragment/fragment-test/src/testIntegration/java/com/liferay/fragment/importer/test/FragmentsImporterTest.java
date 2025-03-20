@@ -155,7 +155,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -194,7 +194,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), CompanyConstants.SYSTEM, 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -227,7 +227,8 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0,
-				fileWithFolderResources, FragmentsImportStrategy.OVERWRITE);
+				fileWithFolderResources, FragmentsImportStrategy.OVERWRITE,
+				false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -269,7 +270,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -305,7 +306,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.OVERWRITE);
+				FragmentsImportStrategy.OVERWRITE, false);
 
 			FragmentEntry fragmentEntry =
 				_fragmentEntryLocalService.fetchFragmentEntry(
@@ -325,7 +326,7 @@ public class FragmentsImporterTest {
 
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.OVERWRITE);
+				FragmentsImportStrategy.OVERWRITE, false);
 
 			fragmentEntryLink =
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
@@ -359,7 +360,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -397,7 +398,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -433,7 +434,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -478,7 +479,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -516,7 +517,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.OVERWRITE);
+				FragmentsImportStrategy.OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -562,7 +563,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -615,7 +616,7 @@ public class FragmentsImporterTest {
 				filteredFragmentsImporterResultEntries = ListUtil.filter(
 					_fragmentsImporter.importFragmentEntries(
 						_user.getUserId(), _group.getGroupId(), 0, _file,
-						FragmentsImportStrategy.DO_NOT_OVERWRITE),
+						FragmentsImportStrategy.DO_NOT_OVERWRITE, false),
 					fragmentsImporterResultEntry -> Objects.equals(
 						fragmentsImporterResultEntry.getName(),
 						"Fragment./Composition"));
@@ -651,7 +652,7 @@ public class FragmentsImporterTest {
 				filteredFragmentsImporterResultEntries = ListUtil.filter(
 					_fragmentsImporter.importFragmentEntries(
 						_user.getUserId(), _group.getGroupId(), 0, _file,
-						FragmentsImportStrategy.DO_NOT_OVERWRITE),
+						FragmentsImportStrategy.DO_NOT_OVERWRITE, false),
 					fragmentsImporterResultEntry -> Objects.equals(
 						fragmentsImporterResultEntry.getName(),
 						"React Fragment With Invalid Configuration"));
@@ -692,19 +693,19 @@ public class FragmentsImporterTest {
 				_generateZipFile(
 					_PATH_DEPENDENCIES +
 						"fragments-collection/collection-name"),
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0,
 				_generateZipFile(
 					_PATH_DEPENDENCIES + "fragments-collection/freemarker"),
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0,
 				_generateZipFile(
 					_PATH_DEPENDENCIES + "fragments-collection/widgets"),
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -807,7 +808,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _file,
-				FragmentsImportStrategy.DO_NOT_OVERWRITE);
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -900,7 +901,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _resourcesFile,
-				FragmentsImportStrategy.OVERWRITE);
+				FragmentsImportStrategy.OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -922,7 +923,7 @@ public class FragmentsImporterTest {
 		try {
 			_fragmentsImporter.importFragmentEntries(
 				_user.getUserId(), _group.getGroupId(), 0, _resourcesFile,
-				FragmentsImportStrategy.OVERWRITE);
+				FragmentsImportStrategy.OVERWRITE, false);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

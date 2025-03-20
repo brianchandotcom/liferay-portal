@@ -33,7 +33,11 @@ public class MockPortletParameters implements PortletParameters {
 	public String getValue(String name) {
 		String[] values = parameters.get(name);
 
-		return ArrayUtil.isNotEmpty(values) ? values[0] : null;
+		if (ArrayUtil.isEmpty(values)) {
+			return null;
+		}
+
+		return values[0];
 	}
 
 	@Override

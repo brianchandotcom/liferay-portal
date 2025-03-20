@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
@@ -41,8 +42,9 @@ public class MockStateAwareResponse
 	}
 
 	public Iterator<QName> getEventNames() {
-		return _events.keySet(
-		).iterator();
+		Set<QName> keys = _events.keySet();
+
+		return keys.iterator();
 	}
 
 	@Override
@@ -130,6 +132,7 @@ public class MockStateAwareResponse
 	@Override
 	public void setRenderParameters(Map<String, String[]> parameters) {
 		_renderParameters.clear();
+
 		_renderParameters.putAll(parameters);
 	}
 

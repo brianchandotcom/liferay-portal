@@ -268,7 +268,11 @@ public class MockPortletContext implements PortletContext {
 				return null;
 			}
 
-			String prefix = path.endsWith("/") ? path : path + "/";
+			String prefix = path;
+
+			if (prefix.endsWith(StringPool.SLASH)) {
+				prefix = prefix + StringPool.SLASH;
+			}
 
 			Set<String> resourcePaths = new HashSet<>();
 

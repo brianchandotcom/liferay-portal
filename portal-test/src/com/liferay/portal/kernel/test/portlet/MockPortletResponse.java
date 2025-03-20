@@ -63,10 +63,10 @@ public class MockPortletResponse implements PortletResponse {
 
 	@Override
 	public void addProperty(String key, String value) {
-		String[] oldValues = _properties.get(key);
+		String[] values = _properties.get(key);
 
-		if (oldValues != null) {
-			_properties.put(key, ArrayUtil.append(oldValues, value));
+		if (values != null) {
+			_properties.put(key, ArrayUtil.append(values, value));
 		}
 		else {
 			_properties.put(key, new String[] {value});
@@ -128,13 +128,13 @@ public class MockPortletResponse implements PortletResponse {
 	}
 
 	public String getProperty(String key) {
-		String[] array = _properties.get(key);
+		String[] values = _properties.get(key);
 
-		if (ArrayUtil.isNotEmpty(array)) {
-			return array[0];
+		if (ArrayUtil.isEmpty(values)) {
+			return null;
 		}
 
-		return null;
+		return values[0];
 	}
 
 	public Set<String> getPropertyNames() {
@@ -153,11 +153,11 @@ public class MockPortletResponse implements PortletResponse {
 	public Element getXmlProperty(String key) {
 		Element[] elements = _xmlProperties.get(key);
 
-		if (ArrayUtil.isNotEmpty(elements)) {
-			return elements[0];
+		if (ArrayUtil.isEmpty(elements)) {
+			return null;
 		}
 
-		return null;
+		return elements[0];
 	}
 
 	public Set<String> getXmlPropertyNames() {

@@ -10,7 +10,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import java.util.Collection;
@@ -74,25 +73,26 @@ public class MockClientDataRequest
 	}
 
 	public InputStream getPortletInputStream() throws IOException {
-		if (_content != null) {
-			return new ByteArrayInputStream(_content);
+		if (_content == null) {
+			return null;
 		}
 
-		return null;
+		return new ByteArrayInputStream(_content);
 	}
 
 	public BufferedReader getReader() throws UnsupportedEncodingException {
-		if (_content != null) {
-			InputStream inputStream = new ByteArrayInputStream(_content);
-
-			Reader reader = (_characterEncoding != null) ?
-				new InputStreamReader(inputStream, _characterEncoding) :
-					new InputStreamReader(inputStream);
-
-			return new BufferedReader(reader);
+		if (_content == null) {
+			return null;
 		}
 
-		return null;
+		InputStream inputStream = new ByteArrayInputStream(_content);
+
+		if (_characterEncoding == null) {
+			return new BufferedReader(new InputStreamReader(inputStream));
+		}
+
+		return new BufferedReader(
+			new InputStreamReader(inputStream, _characterEncoding));
 	}
 
 	public void setCharacterEncoding(String characterEncoding) {

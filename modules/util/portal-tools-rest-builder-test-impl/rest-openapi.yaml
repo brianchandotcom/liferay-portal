@@ -78,10 +78,6 @@ components:
                     type: string
                 externalReferenceCode:
                     type: string
-                id:
-                    format: int64
-                    readOnly: true
-                    type: integer
                 permissions:
                     items:
                         type: permission
@@ -768,7 +764,7 @@ paths:
             tags: ["ErcSiteTestEntity"]
     /sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}:
         get:
-            operationId: getSiteErcSiteTestEntityByExternalReferenceCode
+            operationId: getSiteErcSiteTestEntity
             parameters:
                 - in: path
                   name: ercSiteTestEntityExternalReferenceCode
@@ -793,7 +789,7 @@ paths:
                         "OK"
             tags: ["ErcSiteTestEntity"]
         put:
-            operationId: putSiteErcSiteTestEntityByExternalReferenceCode
+            operationId: putSiteErcSiteTestEntity
             parameters:
                 - in: path
                   name: ercSiteTestEntityExternalReferenceCode

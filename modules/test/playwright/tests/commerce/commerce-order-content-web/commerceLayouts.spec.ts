@@ -23,7 +23,8 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {commerceReturnSetUp} from '../utils/commerce';
+import {ORDER_WORKFLOW_STATUS_CODE} from '../../workspaces/liferay-workspace-marketplace/utils/constants';
+import {classicCommerceSetUp, commerceReturnSetUp} from '../utils/commerce';
 import {checkLocalizedDate} from '../utils/date';
 
 export const test = mergeTests(
@@ -41,2653 +42,2867 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('LPD-25926 Display page template edit mode works with Speedwell theme', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Blogs Entry',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Heading');
-
-	await expect(page.getByText('Heading Example')).toBeVisible();
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.configureDisplayPageTemplateTheme(
-		'Select Speedwell By Liferay, Inc.'
-	);
-
-	await expect(
-		page.getByText('Success:The page was updated successfully.')
-	).toBeVisible();
-
-	await commerceLayoutsPage.backLink.click();
-
-	await commerceLayoutsPage
-		.displayPageTemplateLink(displayPageTemplateName)
-		.click();
-
-	await expect(page.getByText('Heading Example')).toBeVisible();
-});
-
-test('LPD-33439 Default order display page template is accessible via friendly URL', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await commerceLayoutsPage.addFragment('Heading');
-
-	await expect(page.getByText('Heading Example')).toBeVisible();
-
-	await commerceLayoutsPage.publishButton.click();
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Heading Example')).toBeVisible();
-});
-
-test('LPD-32227 Order info box fragment configuration', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'purchaseOrderNumber',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'PON',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('PON')).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('PON').click();
-	await commerceLayoutsPage.inputTextbox('PON').fill('testPON');
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(page.getByText('testPON')).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('PON').click();
-	await commerceLayoutsPage.inputTextbox('PON').fill('testPONEdited');
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(page.getByText('testPONEdited')).toBeVisible();
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.editMenuItem.click();
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'accountInfo',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Account Info',
-	});
-
-	await expect(
-		page.getByText('The info box component is not correctly configured.')
-	).toBeVisible();
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: true,
-	});
-
-	await expect(
-		page.getByText('The info box component is not correctly configured.')
-	).toBeHidden();
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Account Info')).toBeVisible();
-	await expect(page.getByText(account.name)).toBeVisible();
-	await expect(page.getByText(String(account.id))).toBeVisible();
-	await expect(commerceLayoutsPage.infoBoxButton('PON')).toBeHidden();
-});
-
-test('LPD-32236 Order Step Tracker fragment configuration', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Step Tracker');
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(commerceLayoutsPage.stepTrackerItem('Pending')).toHaveClass(
-		/active/
-	);
-	await expect(
-		commerceLayoutsPage.stepTrackerItem('Processing')
-	).not.toHaveClass(/active/);
-	await expect(
-		commerceLayoutsPage.stepTrackerItem('Shipped')
-	).not.toHaveClass(/active/);
-	await expect(
-		commerceLayoutsPage.stepTrackerItem('Completed')
-	).not.toHaveClass(/active/);
-});
-
-test('LPD-32232 Edit Requested Delivery Date in Open Order Details', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'requestedDeliveryDate',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Requested Delivery Date',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Requested Delivery Date')).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Requested Delivery Date').click();
-	await commerceLayoutsPage
-		.inputTextbox('Requested Delivery Date')
-		.fill('2024-09-11');
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(page.getByText('9/11/24', {exact: true})).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Requested Delivery Date').click();
-	await commerceLayoutsPage
-		.inputTextbox('Requested Delivery Date')
-		.fill('2024-09-13');
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(page.getByText('9/13/24', {exact: true})).toBeVisible();
-
-	await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
-
-	await page.reload();
-
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Requested Delivery Date')
-	).toBeHidden();
-});
-
-test('LPD-33808 Edit Shipping Method in Open Order Details', async ({
-	apiHelpers,
-	commerceAdminChannelsPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	test.setTimeout(180000);
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'shippingMethod',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Shipping Method',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-			shippingAddressId: address.id,
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Shipping Method')
-	).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
-
-	await expect(commerceLayoutsPage.infoBoxShippingMethodAlert).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxCancelButton.click();
-
-	const shippingOptions = [getRandomString(), getRandomString()];
-
-	await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
-		channel.name,
-		'Flat Rate',
-		shippingOptions
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Shipping Method')
-	).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue(shippingOptions[0])
-	).toHaveCount(0);
-
-	await commerceLayoutsPage.infoBoxShippingMethodSelect.selectOption(
-		'Flat Rate'
-	);
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue(shippingOptions[0])
-	).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxValue(shippingOptions[0]).click();
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue('Flat Rate - ' + shippingOptions[0])
-	).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
-	await commerceLayoutsPage.infoBoxValue(shippingOptions[1]).click();
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue('Flat Rate - ' + shippingOptions[1])
-	).toBeVisible();
-
-	await page.reload();
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue('Flat Rate - ' + shippingOptions[1])
-	).toBeVisible();
-
-	await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
-
-	await page.reload();
-
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Shipping Method')
-	).toBeHidden();
-});
-
-test('LPD-33809 Edit Payment Method in Open Order Details', async ({
-	apiHelpers,
-	commerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	test.setTimeout(180000);
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'paymentMethod',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Payment Method',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-			shippingAddressId: address.id,
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Payment Method')
-	).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Payment Method').click();
-
-	await expect(commerceLayoutsPage.infoBoxShippingMethodAlert).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxCancelButton.click();
-
-	const paymentMethod1 = 'Money Order';
-	const paymentMethod2 = 'PayPal';
-
-	await commerceAdminChannelsPage.goto();
-	await (
-		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
-	).click();
-	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
-		paymentMethod1,
-		'Payment Methods'
-	);
-	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
-		paymentMethod2,
-		'Payment Methods'
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Payment Method')
-	).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Payment Method').click();
-	await commerceLayoutsPage.infoBoxValue(paymentMethod1).check();
-
-	await expect(page.getByLabel(paymentMethod1, {exact: true})).toBeChecked();
-
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue(paymentMethod1)
-	).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Payment Method').click();
-	await commerceLayoutsPage.infoBoxValue(paymentMethod2).check();
-
-	await expect(page.getByLabel(paymentMethod2, {exact: true})).toBeChecked();
-
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue(paymentMethod2)
-	).toBeVisible();
-
-	await page.reload();
-
-	await expect(
-		commerceLayoutsPage.infoBoxValue(paymentMethod2)
-	).toBeVisible();
-
-	await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
-
-	await page.reload();
-
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Payment Method')
-	).toBeHidden();
-});
-
-test('LPD-35558 Order Details - Order Summary', async ({
-	apiHelpers,
-	commerceAdminDiscountsPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'orderSummary',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Order Summary',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: true,
-	});
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		skus: [
-			{
-				cost: 0,
-				price: 20,
-				published: true,
-				purchasable: true,
-				sku: 'Sku' + getRandomInt(),
-			},
-		],
-	});
-
-	const sku = product.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	const discount = await apiHelpers.headlessCommerceAdminPricing.postDiscount(
-		{
-			couponCode: getRandomString(),
-			percentageLevel1: 10,
-			target: 'subtotal',
-			useCouponCode: true,
-			usePercentage: true,
-		}
-	);
-
-	await apiHelpers.headlessCommerceAdminPricing.postDiscount({
-		percentageLevel1: 10,
-		target: 'total',
-		usePercentage: true,
-	});
-
-	await commerceLayoutsPage.addWidget('Coupon Code Entry', 'Commerce');
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Order Summary')).toBeVisible();
-
-	await commerceAdminDiscountsPage.enterPromoCodeToWidget(
-		discount.couponCode
-	);
-
-	await commerceLayoutsPage.checkValueOrderSummary('Subtotal', '$ 20.00');
-	await commerceLayoutsPage.checkValueOrderSummary(
-		'Subtotal Discount',
-		'$ 2.00'
-	);
-	await commerceLayoutsPage.checkValueOrderSummary(
-		'Total Discount',
-		discount.couponCode
-	);
-
-	await expect(page.getByText('Total', {exact: true})).toBeVisible();
-	await expect(page.getByText('$ 16.20')).toBeVisible();
-});
-
-test('LPD-32237 Order actions fragment', async ({
-	apiHelpers,
-	checkoutPage,
-	commerceAdminChannelsPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	test.setTimeout(180000);
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'business',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
+test(
+	'Display page template edit mode works with Speedwell theme',
+	{tag: '@LPD-25926'},
+	async ({
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Blogs Entry',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Heading');
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.configureDisplayPageTemplateTheme(
+			'Select Speedwell By Liferay, Inc.'
 		);
 
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+		await expect(
+			page.getByText('Success:The page was updated successfully.')
+		).toBeVisible();
 
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
+		await commerceLayoutsPage.backLink.click();
 
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
+		await commerceLayoutsPage
+			.displayPageTemplateLink(displayPageTemplateName)
+			.click();
 
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
-	);
+		await expect(page.getByText('Heading Example')).toBeVisible();
+	}
+);
 
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+test(
+	'Default order display page template is accessible via friendly URL',
+	{tag: '@LPD-33439'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
 
-	const displayPageTemplateName = getRandomString();
+		apiHelpers.data.push({id: account.id, type: 'account'});
 
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await commerceLayoutsPage.addFragment('Heading');
+		const displayPageTemplateName = getRandomString();
 
-	await page.getByText('Heading Example', {exact: true}).dblclick();
-	await page.getByLabel('Field').selectOption('CommerceOrder_orderId');
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-	await pageEditorPage.addFragment('Order', 'Order Actions');
+		await commerceLayoutsPage.addFragment('Heading');
 
-	await expect(
-		page.getByText('The order actions component will be shown here.')
-	).toBeVisible();
+		await expect(page.getByText('Heading Example')).toBeVisible();
 
-	await pageEditorPage.waitForChangesSaved();
+		await commerceLayoutsPage.publishButton.click();
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
 
-	await displayPageTemplatesPage.publishTemplate();
+		await waitForAlert(page);
 
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
 
-	await waitForAlert(page);
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
 
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
 
-	await commerceAdminChannelsPage.fixCommerceChannelIssue(
-		['Checkout'],
-		channel.name
-	);
-	await commerceAdminChannelsPage.changeCommerceChannelSiteType(
-		channel.name,
-		'B2B',
-		true
-	);
+		const sku = product.skus[0];
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
 
-	const sku = product.skus[0];
+		await expect(page.getByText('Heading Example')).toBeVisible();
+	}
+);
 
-	await performLogout(page);
+test(
+	'Order info box fragment configuration',
+	{tag: '@LPD-32227'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
 
-	await performLogin(page, 'demo.unprivileged');
+		apiHelpers.data.push({id: account.id, type: 'account'});
 
-	const cart1 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart1.id}`
-	);
+		const displayPageTemplateName = getRandomString();
 
-	await expect(
-		page.getByRole('heading', {name: String(cart1.id)}).first()
-	).toBeVisible();
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-	await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
-	await commerceLayoutsPage.orderActionsButton('Checkout').click();
+		await pageEditorPage.addFragment('Order', 'Info Box');
 
-	await checkoutPage.performCheckout({
-		shippingAddress: {
-			city: 'testCity',
-			countryLabel: 'United States',
-			name: user.name,
-			regionLabel: 'Florida',
-			street: 'testStreet',
-			zip: '12345',
-		},
-	});
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
 
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart1.id}`
-	);
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'purchaseOrderNumber',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'PON',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
 
-	await expect(
-		page.getByRole('heading', {name: String(cart1.id)}).first()
-	).toBeVisible();
+		await pageEditorPage.waitForChangesSaved();
 
-	await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+		await displayPageTemplatesPage.publishTemplate();
 
-	await performLogout(page);
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
 
-	await performLogin(page, 'test');
+		await waitForAlert(page);
 
-	await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
-		'Single Approver (Version 1)',
-		channel.name
-	);
-	await commerceAdminChannelsPage.changeCommerceChannelSellerOrderAcceptanceWorkflow(
-		'Single Approver (Version 1)',
-		channel.name,
-		true
-	);
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
 
-	await performLogout(page);
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
 
-	await performLogin(page, 'demo.unprivileged');
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	const cart2 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
 
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart2.id}`
-	);
+		const sku = product.skus[0];
 
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
 
-	await commerceLayoutsPage.expectOrderActionButtons({submitCount: 1});
-	await commerceLayoutsPage.orderActionsButton('Submit').click();
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
 
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
+		await expect(page.getByText('PON')).toBeVisible();
 
-	await commerceLayoutsPage.expectOrderActionButtons({});
+		await commerceLayoutsPage.infoBoxButton('PON').click();
+		await commerceLayoutsPage.inputTextbox('PON').fill('testPON');
+		await commerceLayoutsPage.saveButton.click();
 
-	await performLogout(page);
+		await expect(page.getByText('testPON')).toBeVisible();
 
-	await performLogin(page, 'test');
+		await commerceLayoutsPage.infoBoxButton('PON').click();
+		await commerceLayoutsPage.inputTextbox('PON').fill('testPONEdited');
+		await commerceLayoutsPage.saveButton.click();
 
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart2.id}`
-	);
+		await expect(page.getByText('testPONEdited')).toBeVisible();
 
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await commerceLayoutsPage.expectOrderActionButtons({
-		approveCount: 1,
-		rejectCount: 1,
-	});
-	await commerceLayoutsPage.orderActionsButton('Approve').click();
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.editMenuItem.click();
 
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'accountInfo',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Account Info',
+		});
 
-	await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeVisible();
 
-	await performLogout(page);
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: true,
+		});
 
-	await performLogin(page, 'demo.unprivileged');
+		await expect(
+			page.getByText(
+				'The info box component is not correctly configured.'
+			)
+		).toBeHidden();
 
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart2.id}`
-	);
+		await pageEditorPage.waitForChangesSaved();
 
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
+		await displayPageTemplatesPage.publishTemplate();
 
-	await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
-	await commerceLayoutsPage.orderActionsButton('Checkout').click();
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
 
-	await checkoutPage.performCheckout(
-		{
+		await expect(page.getByText('Account Info')).toBeVisible();
+		await expect(page.getByText(account.name)).toBeVisible();
+		await expect(page.getByText(String(account.id))).toBeVisible();
+		await expect(commerceLayoutsPage.infoBoxButton('PON')).toBeHidden();
+	}
+);
+
+test(
+	'Order Step Tracker fragment configuration',
+	{tag: '@LPD-32236'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Step Tracker');
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Pending')
+		).toHaveClass(/active/);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Processing')
+		).not.toHaveClass(/active/);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Shipped')
+		).not.toHaveClass(/active/);
+		await expect(
+			commerceLayoutsPage.stepTrackerItem('Completed')
+		).not.toHaveClass(/active/);
+	}
+);
+
+test(
+	'Edit Requested Delivery Date in Open Order Details',
+	{tag: '@LPD-32232'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Info Box');
+
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'requestedDeliveryDate',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Requested Delivery Date',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Requested Delivery Date')).toBeVisible();
+
+		await commerceLayoutsPage
+			.infoBoxButton('Requested Delivery Date')
+			.click();
+		await commerceLayoutsPage
+			.inputTextbox('Requested Delivery Date')
+			.fill('2024-09-11');
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(page.getByText('9/11/24', {exact: true})).toBeVisible();
+
+		await commerceLayoutsPage
+			.infoBoxButton('Requested Delivery Date')
+			.click();
+		await commerceLayoutsPage
+			.inputTextbox('Requested Delivery Date')
+			.fill('2024-09-13');
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(page.getByText('9/13/24', {exact: true})).toBeVisible();
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Requested Delivery Date')
+		).toBeHidden();
+	}
+);
+
+test(
+	'Edit Shipping Method in Open Order Details',
+	{tag: '@LPD-33808'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		test.setTimeout(180000);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Info Box');
+
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'shippingMethod',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Shipping Method',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				shippingAddressId: address.id,
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Shipping Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxShippingMethodAlert
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxCancelButton.click();
+
+		const shippingOptions = [getRandomString(), getRandomString()];
+
+		await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
+			channel.name,
+			'Flat Rate',
+			shippingOptions
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Shipping Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(shippingOptions[0])
+		).toHaveCount(0);
+
+		await commerceLayoutsPage.infoBoxShippingMethodSelect.selectOption(
+			'Flat Rate'
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(shippingOptions[0])
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxValue(shippingOptions[0]).click();
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(
+				'Flat Rate - ' + shippingOptions[0]
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Shipping Method').click();
+		await commerceLayoutsPage.infoBoxValue(shippingOptions[1]).click();
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(
+				'Flat Rate - ' + shippingOptions[1]
+			)
+		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(
+				'Flat Rate - ' + shippingOptions[1]
+			)
+		).toBeVisible();
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Shipping Method')
+		).toBeHidden();
+	}
+);
+
+test(
+	'Edit Payment Method in Open Order Details',
+	{tag: '@LPD-33809'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		test.setTimeout(180000);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Info Box');
+
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'paymentMethod',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Payment Method',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				shippingAddressId: address.id,
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Payment Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Method').click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxShippingMethodAlert
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxCancelButton.click();
+
+		const paymentMethod1 = 'Money Order';
+		const paymentMethod2 = 'PayPal';
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			paymentMethod1,
+			'Payment Methods'
+		);
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			paymentMethod2,
+			'Payment Methods'
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Payment Method')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Method').click();
+		await commerceLayoutsPage.infoBoxValue(paymentMethod1).check();
+
+		await expect(
+			page.getByLabel(paymentMethod1, {exact: true})
+		).toBeChecked();
+
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(paymentMethod1)
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Payment Method').click();
+		await commerceLayoutsPage.infoBoxValue(paymentMethod2).check();
+
+		await expect(
+			page.getByLabel(paymentMethod2, {exact: true})
+		).toBeChecked();
+
+		await commerceLayoutsPage.saveButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(paymentMethod2)
+		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxValue(paymentMethod2)
+		).toBeVisible();
+
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Payment Method')
+		).toBeHidden();
+	}
+);
+
+test(
+	'Order Details - Order Summary',
+	{tag: '@LPD-35558'},
+	async ({
+		apiHelpers,
+		commerceAdminDiscountsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Info Box');
+
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'orderSummary',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Order Summary',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: true,
+		});
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				skus: [
+					{
+						cost: 0,
+						price: 20,
+						published: true,
+						purchasable: true,
+						sku: 'Sku' + getRandomInt(),
+					},
+				],
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		const discount =
+			await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+				couponCode: getRandomString(),
+				percentageLevel1: 10,
+				target: 'subtotal',
+				useCouponCode: true,
+				usePercentage: true,
+			});
+
+		await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+			percentageLevel1: 10,
+			target: 'total',
+			usePercentage: true,
+		});
+
+		await commerceLayoutsPage.addWidget('Coupon Code Entry', 'Commerce');
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Order Summary')).toBeVisible();
+
+		await commerceAdminDiscountsPage.enterPromoCodeToWidget(
+			discount.couponCode
+		);
+
+		await commerceLayoutsPage.checkValueOrderSummary('Subtotal', '$ 20.00');
+		await commerceLayoutsPage.checkValueOrderSummary(
+			'Subtotal Discount',
+			'$ 2.00'
+		);
+		await commerceLayoutsPage.checkValueOrderSummary(
+			'Total Discount',
+			discount.couponCode
+		);
+
+		await expect(page.getByText('Total', {exact: true})).toBeVisible();
+		await expect(page.getByText('$ 16.20')).toBeVisible();
+	}
+);
+
+test(
+	'Order actions fragment',
+	{tag: '@LPD-32237'},
+	async ({
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		test.setTimeout(180000);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['demo.unprivileged@liferay.com']
+		);
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+
+		const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
+		});
+
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			accountRoleBuyer[0].id,
+			user.emailAddress
+		);
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await commerceLayoutsPage.addFragment('Heading');
+
+		await page.getByText('Heading Example', {exact: true}).dblclick();
+		await page.getByLabel('Field').selectOption('CommerceOrder_orderId');
+
+		await pageEditorPage.addFragment('Order', 'Order Actions');
+
+		await expect(
+			page.getByText('The order actions component will be shown here.')
+		).toBeVisible();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.fixCommerceChannelIssue(
+			['Checkout'],
+			channel.name
+		);
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B',
+			true
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		const cart1 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart1.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart1.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Checkout').click();
+
+		await checkoutPage.performCheckout({
 			shippingAddress: {
 				city: 'testCity',
 				countryLabel: 'United States',
 				name: user.name,
-				regionLabel: 'California',
+				regionLabel: 'Florida',
 				street: 'testStreet',
 				zip: '12345',
 			},
-		},
-		async (activeStep: string) => {
-			if (activeStep.includes('Order Confirmation')) {
-				await page.waitForTimeout(1000);
-			}
-		}
-	);
+		});
 
-	await performLogout(page);
-
-	await performLogin(page, 'test');
-
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart2.id}`
-	);
-
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
-
-	await commerceLayoutsPage.expectOrderActionButtons({
-		approveCount: 1,
-		rejectCount: 1,
-		reorderCount: 1,
-	});
-	await commerceLayoutsPage.orderActionsButton('Approve').click();
-
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
-
-	await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
-
-	await performLogout(page);
-
-	await performLogin(page, 'demo.unprivileged');
-
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${cart2.id}`
-	);
-
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)}).first()
-	).toBeVisible();
-
-	await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
-	await commerceLayoutsPage.orderActionsButton('Reorder').click();
-
-	await expect(
-		page.getByRole('heading', {name: String(cart2.id)})
-	).toHaveCount(0);
-
-	await commerceLayoutsPage.expectOrderActionButtons({submitCount: 1});
-});
-
-test('LPD-32230 Billing and shipping address order info box fragment configuration', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'billingAddress',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Billing Address',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
-
-	await expect(
-		page.getByText('The info box component will be shown here.')
-	).toBeVisible();
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Billing Address')).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Billing Address').click();
-
-	await commerceLayoutsPage.cancelButton.click();
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.editMenuItem.click();
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'shippingAddress',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Shipping Address',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: true,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Shipping Address')).toBeVisible();
-	await expect(
-		commerceLayoutsPage.infoBoxButton('Shipping Address')
-	).toBeHidden();
-});
-
-test('LPD-33503 Order Details - Questions & Answers', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-	site,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart1.id}`
 		);
 
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+		await expect(
+			page.getByRole('heading', {name: String(cart1.id)}).first()
+		).toBeVisible();
 
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
+		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
 
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
+		await performLogout(page);
 
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
-	);
+		await performLogin(page, 'test');
 
-	const className = await apiHelpers.jsonWebServicesClassName.fetchClassName(
-		'com.liferay.commerce.model.CommerceOrder'
-	);
+		await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
+			'Single Approver (Version 1)',
+			channel.name
+		);
+		await commerceAdminChannelsPage.changeCommerceChannelSellerOrderAcceptanceWorkflow(
+			'Single Approver (Version 1)',
+			channel.name,
+			true
+		);
 
-	const displayPageTemplateName = getRandomString();
+		await performLogout(page);
 
-	const displayPage =
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+		await performLogin(page, 'demo.unprivileged');
+
+		const cart2 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
-				classNameId: className.classNameId,
-				groupId: site.id,
-				name: displayPageTemplateName,
-			}
-		);
-
-	await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
-		{
-			layoutPageTemplateEntryId: displayPage.layoutPageTemplateEntryId,
-		}
-	);
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'notes',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Order notes',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
-
-	await expect(
-		page.getByText('The info box component will be shown here.')
-	).toBeVisible();
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Order notes')).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Order notes').click();
-
-	const randomComment = getRandomString();
-
-	await commerceLayoutsPage.inputTextArea.fill(randomComment);
-
-	await commerceLayoutsPage.submitButton.click();
-
-	let comment = await apiHelpers.headlessCommerceDeliveryCart.getComments(
-		cart.id
-	);
-
-	let commentModifiedDate = await page.getByRole('paragraph').innerText();
-
-	expect(
-		checkLocalizedDate(comment.items[0].modifiedDate, commentModifiedDate)
-	).toBe(true);
-
-	await commerceLayoutsPage.infoBoxButton('Order notes').click();
-
-	await expect(page.getByText(comment.items[0].author)).toBeVisible();
-	await expect(page.getByText(randomComment)).toBeVisible();
-
-	const randomComment2 = getRandomString();
-
-	await commerceLayoutsPage.inputTextArea.fill(randomComment2);
-
-	await page.getByLabel('Private').check();
-
-	await commerceLayoutsPage.submitButton.click();
-
-	await commerceLayoutsPage.infoBoxButton('Order notes').click();
-
-	await expect(page.getByText(randomComment2)).toBeVisible();
-	await expect(commerceLayoutsPage.iconLock).toBeVisible();
-
-	await commerceLayoutsPage.moreActionsButton.first().click();
-
-	page.once('dialog', async (dialog) => {
-		expect(dialog.message()).toContain(
-			'Are you sure you want to delete this? It will be deleted immediately.'
-		);
-		await dialog.accept();
-	});
-
-	await commerceLayoutsPage.deleteMenuItemModal.click();
-
-	const randomComment3 = getRandomString();
-
-	await commerceLayoutsPage.infoBoxButton('Order notes').click();
-
-	await commerceLayoutsPage.inputTextArea.fill(randomComment3);
-
-	await commerceLayoutsPage.submitButton.click();
-
-	await performLogout(page);
-
-	await performLogin(page, 'demo.unprivileged');
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	comment = await apiHelpers.headlessCommerceDeliveryCart.getComments(
-		cart.id
-	);
-
-	commentModifiedDate = await page.getByRole('paragraph').innerText();
-
-	expect(
-		checkLocalizedDate(comment.items[0].modifiedDate, commentModifiedDate)
-	).toBe(true);
-
-	await commerceLayoutsPage.infoBoxButton('Order notes').click();
-
-	await expect(page.getByText(comment.items[0].author)).toBeVisible();
-	await expect(page.getByText(randomComment3)).toBeVisible();
-	await expect(commerceLayoutsPage.iconLock).toBeHidden();
-
-	await performLogout(page);
-});
-
-test('LPD-35558 Order Data Sets and header fragments', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Orders Data Set');
-	await pageEditorPage.addFragment('Order', 'Order Items Data Set');
-	await pageEditorPage.addFragment('Order', 'Order Status Label');
-	await pageEditorPage.addFragment('Order', 'Inline Editable Order Field');
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		skus: [
-			{
-				cost: 0,
-				price: 20,
-				published: true,
-				purchasable: true,
-				sku: 'Sku' + getRandomInt(),
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
 			},
-		],
-	});
+			channel.id
+		);
 
-	const sku = product.skus[0];
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
 
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({submitCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Submit').click();
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({});
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({
+			approveCount: 1,
+			rejectCount: 1,
+		});
+		await commerceLayoutsPage.orderActionsButton('Approve').click();
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
+
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
+
+		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Checkout').click();
+
+		await checkoutPage.performCheckout(
+			{
+				shippingAddress: {
+					city: 'testCity',
+					countryLabel: 'United States',
+					name: user.name,
+					regionLabel: 'California',
+					street: 'testStreet',
+					zip: '12345',
 				},
-			],
-		},
-		channel.id
-	);
+			},
+			async (activeStep: string) => {
+				if (activeStep.includes('Order Confirmation')) {
+					await page.waitForTimeout(1000);
+				}
+			}
+		);
 
-	await pageEditorPage.waitForChangesSaved();
+		await performLogout(page);
 
-	await displayPageTemplatesPage.publishTemplate();
+		await performLogin(page, 'test');
 
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
 
-	await waitForAlert(page);
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
 
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
+		await commerceLayoutsPage.expectOrderActionButtons({
+			approveCount: 1,
+			rejectCount: 1,
+			reorderCount: 1,
+		});
+		await commerceLayoutsPage.orderActionsButton('Approve').click();
 
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
 
-	await expect(
-		page.getByRole('link', {name: cart.id.toString()})
-	).toBeVisible();
-	await expect(page.getByText(sku.sku.toString())).toBeVisible();
-});
+		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
 
-test('LPD-37698 Payment and Delivery Terms order info box fragment configuration', async ({
-	apiHelpers,
-	commerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	test.setTimeout(180000);
+		await performLogout(page);
 
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
+		await performLogin(page, 'demo.unprivileged');
 
-	apiHelpers.data.push({id: account.id, type: 'account'});
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart2.id}`
+		);
 
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)}).first()
+		).toBeVisible();
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+		await commerceLayoutsPage.orderActionsButton('Reorder').click();
 
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await expect(
+			page.getByRole('heading', {name: String(cart2.id)})
+		).toHaveCount(0);
 
-	const displayPageTemplateName = getRandomString();
+		await commerceLayoutsPage.expectOrderActionButtons({submitCount: 1});
+	}
+);
 
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+test(
+	'Billing and shipping address order info box fragment configuration',
+	{tag: '@LPD-32230'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
 
-	await pageEditorPage.addFragment('Order', 'Info Box');
+		apiHelpers.data.push({id: account.id, type: 'account'});
 
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'paymentTermId',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Payment Term',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
+		const displayPageTemplateName = getRandomString();
 
-	await pageEditorPage.waitForChangesSaved();
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-	await displayPageTemplatesPage.publishTemplate();
+		await pageEditorPage.addFragment('Order', 'Info Box');
 
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
 
-	await waitForAlert(page);
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'billingAddress',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Billing Address',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
 
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
+		await expect(
+			page.getByText('The info box component will be shown here.')
+		).toBeVisible();
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
+		await pageEditorPage.waitForChangesSaved();
 
-	const paymentTerm1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
-		label: {
-			en_US: 'MoneyA',
-		},
-		name: 'moneya',
-		priority: 0,
-		type: 'payment-terms',
-	});
-	const paymentTerm2 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
-		label: {
-			en_US: 'MoneyB',
-		},
-		name: 'moneyb',
-		priority: 1,
-		type: 'payment-terms',
-	});
+		await displayPageTemplatesPage.publishTemplate();
 
-	await commerceAdminChannelsPage.goto();
-	await (
-		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
-	).click();
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
 
-	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
-		'Money Order',
-		'Payment Methods'
-	);
-	await (
-		await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
-			'Money Order'
-		)
-	).click();
-	await commerceAdminChannelDetailsPage.setEntryEligibility(
-		'Specific Payment Terms',
-		paymentTerm1.name,
-		'Payment Methods'
-	);
-	await (
-		await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
-			'Money Order'
-		)
-	).click();
-	await commerceAdminChannelDetailsPage.setEntryEligibility(
-		'Specific Payment Terms',
-		paymentTerm2.name,
-		'Payment Methods'
-	);
+		await waitForAlert(page);
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
 
-	const sku = product.skus[0];
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
 
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Billing Address')).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Billing Address').click();
+
+		await commerceLayoutsPage.cancelButton.click();
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.editMenuItem.click();
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'shippingAddress',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Shipping Address',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: true,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Shipping Address')).toBeVisible();
+		await expect(
+			commerceLayoutsPage.infoBoxButton('Shipping Address')
+		).toBeHidden();
+	}
+);
+
+test(
+	'Order Details - Questions & Answers',
+	{tag: '@LPD-33503'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['demo.unprivileged@liferay.com']
+		);
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+
+		const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
+		});
+
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			accountRoleBuyer[0].id,
+			user.emailAddress
+		);
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
+
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				'com.liferay.commerce.model.CommerceOrder'
+			);
+
+		const displayPageTemplateName = getRandomString();
+
+		const displayPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 				{
-					quantity: 1,
-					skuId: sku.id,
+					classNameId: className.classNameId,
+					groupId: site.id,
+					name: displayPageTemplateName,
+				}
+			);
+
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+			{
+				layoutPageTemplateEntryId:
+					displayPage.layoutPageTemplateEntryId,
+			}
+		);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Info Box');
+
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'notes',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Order notes',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
+
+		await expect(
+			page.getByText('The info box component will be shown here.')
+		).toBeVisible();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText('Order notes')).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		const randomComment = getRandomString();
+
+		await commerceLayoutsPage.inputTextArea.fill(randomComment);
+
+		await commerceLayoutsPage.submitButton.click();
+
+		let comment = await apiHelpers.headlessCommerceDeliveryCart.getComments(
+			cart.id
+		);
+
+		let commentModifiedDate = await page.getByRole('paragraph').innerText();
+
+		expect(
+			checkLocalizedDate(
+				comment.items[0].modifiedDate,
+				commentModifiedDate
+			)
+		).toBe(true);
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await expect(page.getByText(comment.items[0].author)).toBeVisible();
+		await expect(page.getByText(randomComment)).toBeVisible();
+
+		const randomComment2 = getRandomString();
+
+		await commerceLayoutsPage.inputTextArea.fill(randomComment2);
+
+		await page.getByLabel('Private').check();
+
+		await commerceLayoutsPage.submitButton.click();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await expect(page.getByText(randomComment2)).toBeVisible();
+		await expect(commerceLayoutsPage.iconLock).toBeVisible();
+
+		await commerceLayoutsPage.moreActionsButton.first().click();
+
+		page.once('dialog', async (dialog) => {
+			expect(dialog.message()).toContain(
+				'Are you sure you want to delete this? It will be deleted immediately.'
+			);
+			await dialog.accept();
+		});
+
+		await commerceLayoutsPage.deleteMenuItemModal.click();
+
+		const randomComment3 = getRandomString();
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await commerceLayoutsPage.inputTextArea.fill(randomComment3);
+
+		await commerceLayoutsPage.submitButton.click();
+
+		await performLogout(page);
+
+		await performLogin(page, 'demo.unprivileged');
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		comment = await apiHelpers.headlessCommerceDeliveryCart.getComments(
+			cart.id
+		);
+
+		commentModifiedDate = await page.getByRole('paragraph').innerText();
+
+		expect(
+			checkLocalizedDate(
+				comment.items[0].modifiedDate,
+				commentModifiedDate
+			)
+		).toBe(true);
+
+		await commerceLayoutsPage.infoBoxButton('Order notes').click();
+
+		await expect(page.getByText(comment.items[0].author)).toBeVisible();
+		await expect(page.getByText(randomComment3)).toBeVisible();
+		await expect(commerceLayoutsPage.iconLock).toBeHidden();
+
+		await performLogout(page);
+	}
+);
+
+test(
+	'Order Data Sets and header fragments',
+	{tag: '@LPD-35558'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Orders Data Set');
+		await pageEditorPage.addFragment('Order', 'Order Items Data Set');
+		await pageEditorPage.addFragment('Order', 'Order Status Label');
+		await pageEditorPage.addFragment(
+			'Order',
+			'Inline Editable Order Field'
+		);
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				skus: [
+					{
+						cost: 0,
+						price: 20,
+						published: true,
+						purchasable: true,
+						sku: 'Sku' + getRandomInt(),
+					},
+				],
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			page.getByRole('link', {name: cart.id.toString()})
+		).toBeVisible();
+		await expect(page.getByText(sku.sku.toString())).toBeVisible();
+	}
+);
+
+test(
+	'Payment and Delivery Terms order info box fragment configuration',
+	{tag: '@LPD-37698'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		test.setTimeout(180000);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Order', 'Info Box');
+
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'paymentTermId',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Payment Term',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const paymentTerm1 =
+			await apiHelpers.headlessCommerceAdminOrder.postTerm({
+				label: {
+					en_US: 'MoneyA',
 				},
-			],
-			paymentMethod: 'money-order',
-			shippingAddressId: address.id,
-		},
-		channel.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText('Payment Term')).toBeVisible();
-
-	await commerceLayoutsPage.infoBoxButton('Payment Term').click();
-
-	await commerceLayoutsPage.paymentTermsSelect.selectOption(
-		String(paymentTerm1.id)
-	);
-
-	await expect(page.getByText(paymentTerm1.description.en_US)).toBeVisible();
-
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(page.getByTestId('infoBoxValue')).toHaveText(
-		String(paymentTerm1.label.en_US)
-	);
-
-	await commerceLayoutsPage.infoBoxButton('Payment Term').click();
-
-	await commerceLayoutsPage.paymentTermsSelect.selectOption(
-		String(paymentTerm2.id)
-	);
-
-	await expect(page.getByText(paymentTerm2.description.en_US)).toBeVisible();
-
-	await commerceLayoutsPage.saveButton.click();
-
-	await expect(page.getByTestId('infoBoxValue')).toHaveText(
-		String(paymentTerm2.label.en_US)
-	);
-
-	await page.reload();
-
-	await expect(page.getByTestId('infoBoxValue')).toHaveText(
-		String(paymentTerm2.label.en_US)
-	);
-
-	await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
-
-	await page.reload();
-
-	await commerceLayoutsPage.infoBoxButton('Payment Term').click();
-
-	await expect(commerceLayoutsPage.saveButton).not.toBeVisible();
-});
-
-test('LPD-33490 Purchase Document in Open Order Details', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	test.setTimeout(180000);
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await pageEditorPage.addFragment('Order', 'Info Box');
-
-	const infoBoxFragmentId = await pageEditorPage.getFragmentId('Info Box');
-
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Field',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'purchaseOrderDocument',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Label',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: 'Purchase Order Document',
-	});
-	await pageEditorPage.changeFragmentConfiguration({
-		fieldLabel: 'Read Only',
-		fragmentId: infoBoxFragmentId,
-		tab: 'General',
-		value: false,
-	});
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku = product.skus[0];
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
+				name: 'moneya',
+				priority: 0,
+				type: 'payment-terms',
+			});
+		const paymentTerm2 =
+			await apiHelpers.headlessCommerceAdminOrder.postTerm({
+				label: {
+					en_US: 'MoneyB',
 				},
-			],
-		},
-		channel.id
-	);
+				name: 'moneyb',
+				priority: 1,
+				type: 'payment-terms',
+			});
 
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
 
-	await expect(
-		commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
-	).toBeVisible();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			paymentTerm1.name,
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+		await commerceAdminChannelDetailsPage.setEntryEligibility(
+			'Specific Payment Terms',
+			paymentTerm2.name,
+			'Payment Methods'
+		);
 
-	let fileChooserPromise = page.waitForEvent('filechooser');
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	await commerceLayoutsPage.infoBoxButton('purchaseOrderDocument').click();
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
 
-	let fileChooser = await fileChooserPromise;
-	await fileChooser.setFiles(
-		path.join(__dirname, '/dependencies/image1.jpg')
-	);
+		const sku = product.skus[0];
 
-	await expect(
-		commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
-	).toHaveCount(0);
-	await expect(commerceLayoutsPage.infoBoxValue('image1.jpg')).toBeVisible();
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
 
-	fileChooserPromise = page.waitForEvent('filechooser');
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+				paymentMethod: 'money-order',
+				shippingAddressId: address.id,
+			},
+			channel.id
+		);
 
-	await commerceLayoutsPage.infoBoxEditPurchaseOrderDocumentButton.click();
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
 
-	fileChooser = await fileChooserPromise;
-	await fileChooser.setFiles(
-		path.join(__dirname, '/dependencies/image2.jpg')
-	);
+		await expect(page.getByText('Payment Term')).toBeVisible();
 
-	await expect(
-		commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
-	).toHaveCount(0);
-	await expect(commerceLayoutsPage.infoBoxValue('image2.jpg')).toBeVisible();
+		await commerceLayoutsPage.infoBoxButton('Payment Term').click();
 
-	await page.reload();
+		await commerceLayoutsPage.paymentTermsSelect.selectOption(
+			String(paymentTerm1.id)
+		);
 
-	await expect(
-		commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
-	).toHaveCount(0);
-	await expect(commerceLayoutsPage.infoBoxValue('image2.jpg')).toBeVisible();
+		await expect(
+			page.getByText(paymentTerm1.description.en_US)
+		).toBeVisible();
 
-	await commerceLayoutsPage.infoBoxDeletePurchaseOrderDocumentButton.click();
+		await commerceLayoutsPage.saveButton.click();
 
-	await expect(
-		commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
-	).toBeVisible();
-	await expect(commerceLayoutsPage.infoBoxValue('image2.jpg')).toHaveCount(0);
+		await expect(page.getByTestId('infoBoxValue')).toHaveText(
+			String(paymentTerm1.label.en_US)
+		);
 
-	await page.reload();
+		await commerceLayoutsPage.infoBoxButton('Payment Term').click();
 
-	await expect(
-		commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
-	).toBeVisible();
-	await expect(commerceLayoutsPage.infoBoxValue('image2.jpg')).toHaveCount(0);
-});
+		await commerceLayoutsPage.paymentTermsSelect.selectOption(
+			String(paymentTerm2.id)
+		);
 
-test('LPD-34399 Quick checkout from order actions fragment', async ({
-	apiHelpers,
-	commerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
+		await expect(
+			page.getByText(paymentTerm2.description.en_US)
+		).toBeVisible();
 
-	apiHelpers.data.push({id: account.id, type: 'account'});
+		await commerceLayoutsPage.saveButton.click();
 
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
+		await expect(page.getByTestId('infoBoxValue')).toHaveText(
+			String(paymentTerm2.label.en_US)
+		);
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+		await page.reload();
 
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await expect(page.getByTestId('infoBoxValue')).toHaveText(
+			String(paymentTerm2.label.en_US)
+		);
 
-	const displayPageTemplateName = getRandomString();
+		await apiHelpers.headlessCommerceDeliveryCart.checkoutCart(cart.id);
 
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+		await page.reload();
 
-	await commerceLayoutsPage.addFragment('Heading');
+		await commerceLayoutsPage.infoBoxButton('Payment Term').click();
 
-	await page.getByText('Heading Example', {exact: true}).dblclick();
-	await page.getByLabel('Field').selectOption('CommerceOrder_orderId');
+		await expect(commerceLayoutsPage.saveButton).not.toBeVisible();
+	}
+);
 
-	await commerceLayoutsPage.addFragment('Order Actions', 'Order');
+test(
+	'Purchase Document in Open Order Details',
+	{tag: '@LPD-33490'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		test.setTimeout(180000);
 
-	await expect(
-		page.getByText('The order actions component will be shown here.')
-	).toBeVisible();
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await pageEditorPage.waitForChangesSaved();
+		const displayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.publishTemplate();
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
+		await pageEditorPage.addFragment('Order', 'Info Box');
 
-	await waitForAlert(page);
+		const infoBoxFragmentId =
+			await pageEditorPage.getFragmentId('Info Box');
 
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'purchaseOrderDocument',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: 'Purchase Order Document',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Read Only',
+			fragmentId: infoBoxFragmentId,
+			tab: 'General',
+			value: false,
+		});
 
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
+		await pageEditorPage.waitForChangesSaved();
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		await displayPageTemplatesPage.publishTemplate();
 
-	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
 
-	const sku = product.skus[0];
+		await waitForAlert(page);
 
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
-				{
-					quantity: 1,
-					skuId: sku.id,
-				},
-			],
-		},
-		channel.id
-	);
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
 
-	await commerceAdminChannelsPage.goto();
-	await (
-		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
-	).click();
-	await commerceAdminChannelsPage.ordersTabToggle('Quick Checkout').click();
-	await commerceAdminChannelsPage.headerActionsSaveButton.click();
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
 
-	await waitForAlert(page);
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
 
-	await expect(
-		commerceLayoutsPage.orderActionsButton('Quick Checkout')
-	).toBeDisabled();
+		const sku = product.skus[0];
 
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber: '1234567890', regionISOCode: 'AL'}
-	);
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
 
-	await commerceAdminChannelsPage.goto();
-	await (
-		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
-	).click();
+		apiHelpers.data.push({id: account.id, type: 'account'});
 
-	await commerceAdminChannelDetailsPage.activateChannelConfiguration(
-		'Money Order',
-		'Payment Methods'
-	);
-	await (
-		await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
-			'Money Order'
-		)
-	).click();
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
 
-	const shippingOption = getRandomString();
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
 
-	await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
-		channel.name,
-		'Flat Rate',
-		[shippingOption]
-	);
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toBeVisible();
 
-	await apiHelpers.headlessCommerceDeliveryCart.patchCart(
-		{
+		let fileChooserPromise = page.waitForEvent('filechooser');
+
+		await commerceLayoutsPage
+			.infoBoxButton('purchaseOrderDocument')
+			.click();
+
+		let fileChooser = await fileChooserPromise;
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/image1.jpg')
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image1.jpg')
+		).toBeVisible();
+
+		fileChooserPromise = page.waitForEvent('filechooser');
+
+		await commerceLayoutsPage.infoBoxEditPurchaseOrderDocumentButton.click();
+
+		fileChooser = await fileChooserPromise;
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/image2.jpg')
+		);
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toHaveCount(0);
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toBeVisible();
+
+		await commerceLayoutsPage.infoBoxDeletePurchaseOrderDocumentButton.click();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toBeVisible();
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toHaveCount(0);
+
+		await page.reload();
+
+		await expect(
+			commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+		).toBeVisible();
+		await expect(
+			commerceLayoutsPage.infoBoxValue('image2.jpg')
+		).toHaveCount(0);
+	}
+);
+
+test(
+	'Quick checkout from order actions fragment',
+	{tag: '@LPD-34399'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await commerceLayoutsPage.addFragment('Heading');
+
+		await page.getByText('Heading Example', {exact: true}).dblclick();
+		await page.getByLabel('Field').selectOption('CommerceOrder_orderId');
+
+		await commerceLayoutsPage.addFragment('Order Actions', 'Order');
+
+		await expect(
+			page.getByText('The order actions component will be shown here.')
+		).toBeVisible();
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku = product.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelsPage
+			.ordersTabToggle('Quick Checkout')
+			.click();
+		await commerceAdminChannelsPage.headerActionsSaveButton.click();
+
+		await waitForAlert(page);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.orderActionsButton('Quick Checkout')
+		).toBeDisabled();
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'Money Order',
+			'Payment Methods'
+		);
+		await (
+			await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+				'Money Order'
+			)
+		).click();
+
+		const shippingOption = getRandomString();
+
+		await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
+			channel.name,
+			'Flat Rate',
+			[shippingOption]
+		);
+
+		await apiHelpers.headlessCommerceDeliveryCart.patchCart(
+			{
+				accountId: account.id,
+				billingAddressId: address.id,
+				paymentMethod: 'money-order',
+				shippingAddressId: address.id,
+				shippingMethod: 'fixed',
+				shippingOption,
+			},
+			cart.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(
+			commerceLayoutsPage.orderActionsButton('Quick Checkout')
+		).toBeEnabled();
+	}
+);
+
+test(
+	'Order Returns Data Set fragment',
+	{tag: '@LPD-32243'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+	}) => {
+		const {commerceReturn, order, site} =
+			await commerceReturnSetUp(apiHelpers);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await commerceLayoutsPage.addFragment(
+			'Order Returns Data Set',
+			'Order'
+		);
+
+		await expect(
+			page.getByText(
+				'The order returns data set component will be shown here.'
+			)
+		).toBeVisible();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${order.id}`
+		);
+
+		await expect(
+			page
+				.getByRole('columnheader', {name: 'Return ID'})
+				.getByRole('button')
+		).toBeVisible();
+		await expect(page.getByText(commerceReturn.id)).toBeVisible();
+	}
+);
+
+test(
+	'All commerce widgets work in a content page',
+	{tag: '@LPD-38261'},
+	async ({apiHelpers, page, site}) => {
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_discount_content_web_internal_portlet_CommerceDiscountContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentMiniPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardForecastsChartPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_order_content_web_internal_portlet_CommerceReturnContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_shipment_content_web_internal_portlet_CommerceShipmentContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_wish_list_web_internal_portlet_CommerceWishListContentPortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_wish_list_web_internal_portlet_MyCommerceWishListsPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(
+			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText('is temporarily unavailable.')).toHaveCount(
+			0
+		);
+	}
+);
+
+test(
+	'Order Multishipping fragment',
+	{tag: '@LPD-36953'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await commerceLayoutsPage.addFragment('Multishipping', 'Order');
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await commerceLayoutsPage.moreActionsButton.click();
+
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const sku1 = product1.skus[0];
+		const sku2 = product2.skus[0];
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						quantity: 1,
+						skuId: sku1.id,
+					},
+					{
+						quantity: 1,
+						skuId: sku2.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText(sku1.sku)).toHaveCount(0);
+		await expect(page.getByText(sku2.sku)).toHaveCount(0);
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.allowMultishippingToggle.setChecked(
+			true
+		);
+
+		await expect(
+			commerceAdminChannelDetailsPage.allowMultishippingToggle
+		).toBeChecked();
+
+		await commerceAdminChannelDetailsPage.saveButton.click();
+
+		await expect(
+			commerceAdminChannelDetailsPage.allowMultishippingToggle
+		).toBeChecked();
+
+		await waitForAlert(page);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${cart.id}`
+		);
+
+		await expect(page.getByText(sku1.sku)).toBeVisible();
+
+		await expect(page.getByText(sku2.sku)).toBeVisible();
+	}
+);
+
+test(
+	'Account selector redirects to order details DPT if open order content portlet is not present',
+	{tag: '@LPD-43496'},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'COMMERCE_ACCOUNT_FRAGMENTS-account-selector',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			siteGroupId: site.id,
+		});
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		await commerceLayoutsPage.createDisplayPageTemplate(
+			getRandomString(),
+			'Order',
+			site.name
+		);
+		await commerceLayoutsPage.addFragment('Heading');
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
+
+		await commerceLayoutsPage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'The display page template was published successfully.'
+		);
+
+		await commerceLayoutsPage.moreActionsButton.click();
+		await commerceLayoutsPage.markAsDefaultMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.accountSelectorButton(account.name).click();
+		await commerceLayoutsPage.createNewOrderButton.click();
+
+		await expect(page.getByText('Heading Example')).toBeVisible();
+	}
+);
+
+test(
+	'Placed Order Shipments Data Set fragment',
+	{tag: '@LPD-32242'},
+	async ({apiHelpers, displayPageTemplatesPage, page, pageEditorPage}) => {
+		test.setTimeout(180000);
+
+		const {channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			`B2B_${getRandomString()}`
+		);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const sku =
+			await apiHelpers.headlessCommerceAdminCatalog.getSkuByName(
+				'CLSC55861'
+			);
+
+		const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
 			accountId: account.id,
 			billingAddressId: address.id,
-			paymentMethod: 'money-order',
-			shippingAddressId: address.id,
-			shippingMethod: 'fixed',
-			shippingOption,
-		},
-		cart.id
-	);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(
-		commerceLayoutsPage.orderActionsButton('Quick Checkout')
-	).toBeEnabled();
-});
-
-test('LPD-32243 Order Returns Data Set fragment', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-}) => {
-	const {commerceReturn, order, site} = await commerceReturnSetUp(apiHelpers);
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await commerceLayoutsPage.addFragment('Order Returns Data Set', 'Order');
-
-	await expect(
-		page.getByText(
-			'The order returns data set component will be shown here.'
-		)
-	).toBeVisible();
-
-	await commerceLayoutsPage.publishButton.click();
-
-	await waitForAlert(
-		page,
-		'The display page template was published successfully.'
-	);
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	await page.goto(
-		liferayConfig.environment.baseUrl +
-			`/web/${site.name}/order/${order.id}`
-	);
-
-	await expect(
-		page.getByRole('columnheader', {name: 'Return ID'}).getByRole('button')
-	).toBeVisible();
-	await expect(page.getByText(commerceReturn.id)).toBeVisible();
-});
-
-test('LPD-38261 All commerce widgets work in a content page', async ({
-	apiHelpers,
-	page,
-}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_discount_content_web_internal_portlet_CommerceDiscountContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentMiniPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardForecastsChartPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_order_content_web_internal_portlet_CommerceReturnContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_shipment_content_web_internal_portlet_CommerceShipmentContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_wish_list_web_internal_portlet_CommerceWishListContentPortlet',
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetName:
-					'com_liferay_commerce_wish_list_web_internal_portlet_MyCommerceWishListsPortlet',
-			}),
-		]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
-
-	await page.goto(
-		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-	);
-
-	await expect(page.getByText('is temporarily unavailable.')).toHaveCount(0);
-});
-
-test('LPD-36953 Order Multishipping fragment', async ({
-	apiHelpers,
-	commerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	const displayPageTemplateName = getRandomString();
-
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-	await commerceLayoutsPage.addFragment('Multishipping', 'Order');
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-
-	const sku1 = product1.skus[0];
-	const sku2 = product2.skus[0];
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			cartItems: [
+			channelId: channel.id,
+			orderItems: [
 				{
 					quantity: 1,
-					skuId: sku1.id,
-				},
-				{
-					quantity: 1,
-					skuId: sku2.id,
+					skuId: sku.id,
 				},
 			],
-		},
-		channel.id
-	);
+			shippingAddressId: address.id,
+		});
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(order.id, {
+			orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+		});
 
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
+		const shipment =
+			await apiHelpers.headlessCommerceAdminShipment.postShipment({
+				orderId: order.id,
+				shipmentItems: [
+					{
+						orderItemId: order.orderItems[0].id,
+						quantity: 1,
+					},
+				],
+				shippingAddressId: address.id,
+			});
 
-	await expect(page.getByText(sku1.sku)).toHaveCount(0);
-	await expect(page.getByText(sku2.sku)).toHaveCount(0);
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	await commerceAdminChannelsPage.goto();
+		const displayPageTemplateName = getRandomString();
 
-	await (
-		await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
-	).click();
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Order',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-	await commerceAdminChannelDetailsPage.allowMultishippingToggle.setChecked(
-		true
-	);
+		await pageEditorPage.addFragment(
+			'Order',
+			'Placed Order Shipments Data Set'
+		);
+		await pageEditorPage.waitForChangesSaved();
 
-	await expect(
-		commerceAdminChannelDetailsPage.allowMultishippingToggle
-	).toBeChecked();
+		await displayPageTemplatesPage.publishTemplate();
+		await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
 
-	await commerceAdminChannelDetailsPage.saveButton.click();
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${order.id}`
+		);
 
-	await expect(
-		commerceAdminChannelDetailsPage.allowMultishippingToggle
-	).toBeChecked();
-
-	await waitForAlert(page);
-
-	await page.goto(
-		liferayConfig.environment.baseUrl + `/web/${site.name}/order/${cart.id}`
-	);
-
-	await expect(page.getByText(sku1.sku)).toBeVisible();
-
-	await expect(page.getByText(sku2.sku)).toBeVisible();
-});
-
-test('LPD-43496 Account selector redirects to order details DPT if open order content portlet is not present', async ({
-	apiHelpers,
-	applicationsMenuPage,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-}) => {
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'person',
-	});
-
-	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'COMMERCE_ACCOUNT_FRAGMENTS-account-selector',
-			}),
-		]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
-
-	await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		siteGroupId: site.id,
-	});
-
-	await applicationsMenuPage.goToSite(site.name);
-
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-	await commerceLayoutsPage.createDisplayPageTemplate(
-		getRandomString(),
-		'Order',
-		site.name
-	);
-	await commerceLayoutsPage.addFragment('Heading');
-
-	await expect(page.getByText('Heading Example')).toBeVisible();
-
-	await commerceLayoutsPage.publishButton.click();
-
-	await waitForAlert(
-		page,
-		'The display page template was published successfully.'
-	);
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
-
-	await applicationsMenuPage.goToSite(site.name);
-
-	await commerceLayoutsPage.accountSelectorButton(account.name).click();
-	await commerceLayoutsPage.createNewOrderButton.click();
-
-	await expect(page.getByText('Heading Example')).toBeVisible();
-});
+		await expect(
+			page
+				.getByRole('columnheader', {name: 'Shipment ID'})
+				.getByRole('button')
+		).toBeVisible();
+		await expect(page.getByText(String(shipment.id))).toBeVisible();
+	}
+);

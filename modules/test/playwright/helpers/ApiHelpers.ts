@@ -552,6 +552,11 @@ export class DataApiHelpers extends ApiHelpers {
 					userId
 				);
 			}
+			else if (item.type === 'shipment') {
+				await this.headlessCommerceAdminShipment.deleteShipment(
+					item.id
+				);
+			}
 			else if (item.type === 'site') {
 				await this.headlessSite.deleteSite(item.id);
 			}

@@ -55,7 +55,8 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 
 		ObjectEntryFolder contentParentObjectEntryFolder =
 			_addObjectEntryFolder(
-				"L_CONTENT",
+				ObjectEntryFolderConstants.
+					CONTENTS_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
@@ -74,7 +75,8 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 		// Files root folder
 
 		ObjectEntryFolder filesParentObjectEntryFolder = _addObjectEntryFolder(
-			"L_FILES",
+			ObjectEntryFolderConstants.
+				FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
 		ObjectEntryFolder objectEntryFolder2 = _addObjectEntryFolder(

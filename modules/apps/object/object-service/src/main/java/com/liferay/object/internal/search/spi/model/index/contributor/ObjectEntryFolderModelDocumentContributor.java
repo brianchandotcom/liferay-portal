@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
@@ -62,11 +63,17 @@ public class ObjectEntryFolderModelDocumentContributor
 		String externalReferenceCode =
 			objectEntryFolder.getExternalReferenceCode();
 
-		if (externalReferenceCode.equals("L_CONTENT")) {
+		if (externalReferenceCode.equals(
+				ObjectEntryFolderConstants.
+					CONTENTS_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE)) {
+
 			return "content";
 		}
 
-		if (externalReferenceCode.equals("L_FILES")) {
+		if (externalReferenceCode.equals(
+				ObjectEntryFolderConstants.
+					FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE)) {
+
 			return "files";
 		}
 

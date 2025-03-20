@@ -56,14 +56,18 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 
 		_objectEntryFolderLocalService.addObjectEntryFolder(
-			"L_CONTENTS", group.getCreatorUserId(), group.getGroupId(),
+			ObjectEntryFolderConstants.
+				CONTENTS_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+			group.getCreatorUserId(), group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, "Contents"
 			).build(),
 			"Contents", ServiceContextThreadLocal.getServiceContext());
 		_objectEntryFolderLocalService.addObjectEntryFolder(
-			"L_FILES", group.getCreatorUserId(), group.getGroupId(),
+			ObjectEntryFolderConstants.
+				FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+			group.getCreatorUserId(), group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.put(
 				LocaleUtil.ENGLISH, "Files"
@@ -85,9 +89,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 						true)) {
 
 			_objectEntryFolderLocalService.deleteObjectEntryFolder(
-				"L_CONTENTS", group.getGroupId(), group.getCompanyId());
+				ObjectEntryFolderConstants.
+					CONTENTS_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+				group.getGroupId(), group.getCompanyId());
 			_objectEntryFolderLocalService.deleteObjectEntryFolder(
-				"L_FILES", group.getGroupId(), group.getCompanyId());
+				ObjectEntryFolderConstants.
+					FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+				group.getGroupId(), group.getCompanyId());
 		}
 	}
 

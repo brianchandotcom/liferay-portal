@@ -157,8 +157,7 @@ public class DefaultStyleBookEntryUtilTest {
 	}
 
 	private Layout _getMasterLayoutLayout() throws Exception {
-		Layout masterLayoutLayout = LayoutTestUtil.addTypeContentLayout(
-			_group);
+		Layout masterLayoutLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(

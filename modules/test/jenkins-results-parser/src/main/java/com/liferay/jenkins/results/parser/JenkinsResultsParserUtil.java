@@ -1748,8 +1748,6 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static long getCurrentTimeMillis() {
-		sleep(1);
-
 		if (!isCINode() || isJenkinsMaster()) {
 			return System.currentTimeMillis();
 		}

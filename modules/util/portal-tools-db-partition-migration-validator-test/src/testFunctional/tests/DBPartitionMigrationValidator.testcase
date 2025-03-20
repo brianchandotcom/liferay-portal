@@ -81,6 +81,35 @@ definition {
 		}
 	}
 
+	@priority = 5
+	test ValidateFailedExportWhenCompanyIdDoesNotExist {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "false";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("The database is set and we add a new virtual instance without database partitioning enabled") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Extraction of non existent company ID will produce error") {
+			var randomCompanyId = MathUtil.randomNumber(1000000);
+
+			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${randomCompanyId},
+				databaseSchemaName = "lportal",
+				ignoreErrors = "true");
+		}
+
+		task ("Then the tool stops immediately with a console message as: CompanyId <companyId> does not exist in the database") {
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "CompanyId ${randomCompanyId} does not exist in the database");
+		}
+	}
+
 	@priority = 4
 	test ValidateSuccessfulExportAndValidation {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
@@ -133,7 +162,7 @@ definition {
 	}
 
 	@priority = 5
-	test ValidateSuccessfulExportWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
+	test ValidateSuccessfulExportWhenSourceNonPartitionedDBHasMultipleInstances {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property database.partition.enabled = "false";
 		property portal.acceptance = "true";
@@ -163,35 +192,6 @@ definition {
 				databaseCompanyId = ${defaultCompanyId},
 				databaseSchemaName = "lportal",
 				ignoreErrors = "true");
-		}
-	}
-
-	@priority = 5
-	test ValidateWrongExportWhenCompanyIdNotExists {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property database.partition.enabled = "false";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("The database is set and we add a new virtual instance without database partitioning enabled") {
-			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.able.com",
-				portalInstanceId = "www.able.com",
-				virtualHost = "www.able.com");
-		}
-
-		task ("Extraction of non existent company ID will produce error") {
-			var randomCompanyId = MathUtil.randomNumber(1000000);
-
-			DBPartitionMigrationValidator.executeExtraction(
-				databaseCompanyId = ${randomCompanyId},
-				databaseSchemaName = "lportal",
-				ignoreErrors = "true");
-		}
-
-		task ("Then the tool stops immediately with a console message as: CompanyId <companyId> does not exist in the database") {
-			DBPartitionMigrationValidator.validateOutput(outputMessage = "CompanyId ${randomCompanyId} does not exist in the database");
 		}
 	}
 

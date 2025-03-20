@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.test.portlet;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockMutableRenderParameters;
 
 import java.io.Serializable;
 

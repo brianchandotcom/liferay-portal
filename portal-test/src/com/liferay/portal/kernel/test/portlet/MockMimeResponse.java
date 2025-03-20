@@ -7,10 +7,6 @@ package com.liferay.portal.kernel.test.portlet;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionURL;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletURL;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderURL;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockResourceURL;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -56,6 +52,7 @@ public class MockMimeResponse
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public <T extends PortletURL & ActionURL> T createActionURL() {
 		return (T)new MockPortletURL(
 			getPortalContext(), MockPortletURL.URL_TYPE_ACTION);
@@ -67,6 +64,7 @@ public class MockMimeResponse
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public <T extends PortletURL & RenderURL> T createRenderURL() {
 		return (T)new MockPortletURL(
 			getPortalContext(), MockPortletURL.URL_TYPE_RENDER);
@@ -79,7 +77,7 @@ public class MockMimeResponse
 
 	@Override
 	public ResourceURL createResourceURL() {
-		return new MockResourceURL();
+		return new MockResourceURL(getPortalContext(), "resource");
 	}
 
 	@Override

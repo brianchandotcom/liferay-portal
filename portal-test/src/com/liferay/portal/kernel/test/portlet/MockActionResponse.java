@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.test.portlet;
 
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderURL;
-
 import java.io.IOException;
 
 import java.util.Map;

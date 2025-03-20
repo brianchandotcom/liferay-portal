@@ -40,7 +40,7 @@ export default gql`
 				...geolocationFragment
 				...metricFragment
 			}
-			previewsMetric {
+			impressionMadeMetric {
 				...metricFragment
 			}
 			ratingsMetric {

@@ -120,10 +120,10 @@ export const DownloadsMetric: Metric = {
 	type: MetricType.Number
 };
 
-export const PreviewsMetric: Metric = {
-	name: MetricName.Previews,
-	sortField: MetricName.Previews,
-	title: Liferay.Language.get('previews'),
+export const ImpressionMadeMetric: Metric = {
+	name: MetricName.Impressions,
+	sortField: MetricName.Impressions,
+	title: Liferay.Language.get('impressions'),
 	type: MetricType.Number
 };
 

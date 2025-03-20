@@ -26,7 +26,7 @@ export enum Accessor {
 	ViewsMetric = 'viewsMetric',
 	DownloadsMetric = 'downloadsMetric',
 	SubmissionsMetric = 'submissionsMetric',
-	PreviewsMetric = 'previewsMetric'
+	ImpressionMadeMetric = 'impressionMadeMetric'
 }
 
 export enum EmptyStateLink {

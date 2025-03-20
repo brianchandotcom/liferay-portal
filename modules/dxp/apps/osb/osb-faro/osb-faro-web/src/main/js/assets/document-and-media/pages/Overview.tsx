@@ -62,7 +62,7 @@ const Overview = () => (
 				<AssetAppearsOnCard
 					accessors={[
 						Accessor.DownloadsMetric,
-						Accessor.PreviewsMetric
+						Accessor.ImpressionMadeMetric
 					]}
 					assetType={AssetTypes.Document}
 					emptyStateLink={EmptyStateLink.Document}

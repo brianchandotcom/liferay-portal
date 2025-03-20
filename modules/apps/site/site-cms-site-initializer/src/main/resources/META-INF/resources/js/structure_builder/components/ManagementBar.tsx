@@ -121,7 +121,14 @@ function SaveButton() {
 		catch (error) {
 			const {message} = error as Error;
 
-			dispatch({error: message, type: 'set-error'});
+			dispatch({
+				error:
+					message ||
+					Liferay.Language.get(
+						'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					),
+				type: 'set-error',
+			});
 		}
 	};
 
@@ -202,7 +209,14 @@ function PublishButton() {
 		catch (error) {
 			const {message} = error as Error;
 
-			dispatch({error: message, type: 'set-error'});
+			dispatch({
+				error:
+					message ||
+					Liferay.Language.get(
+						'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					),
+				type: 'set-error',
+			});
 		}
 	};
 

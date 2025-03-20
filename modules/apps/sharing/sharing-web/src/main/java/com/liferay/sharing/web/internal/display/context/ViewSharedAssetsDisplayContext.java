@@ -301,11 +301,7 @@ public class ViewSharedAssetsDisplayContext {
 			_sharingConfigurationFactory.getGroupSharingConfiguration(
 				_groupLocalService.getGroup(sharingEntry.getGroupId()));
 
-		if (!groupSharingConfiguration.isEnabled()) {
-			return false;
-		}
-
-		return true;
+		return groupSharingConfiguration.isEnabled();
 	}
 
 	private PortletURL _getURLEdit(

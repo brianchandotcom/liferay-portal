@@ -95,11 +95,7 @@ public class ViewSharingEntryAssetEntryDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (group.equals(themeDisplay.getControlPanelGroup())) {
-			return true;
-		}
-
-		return false;
+		return group.equals(themeDisplay.getControlPanelGroup());
 	}
 
 	private AssetEntry _getAssetEntry() throws PortalException {

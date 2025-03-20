@@ -5,7 +5,7 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.kernel.upgrade.util.BaseDuplicateRemovalProcess;
+import com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess;
 
 /**
  * @author Jorge Avalos

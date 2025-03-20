@@ -1748,6 +1748,8 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static long getCurrentTimeMillis() {
+		sleep(1);
+
 		if (!isCINode() || isJenkinsMaster()) {
 			return System.currentTimeMillis();
 		}
@@ -4144,6 +4146,44 @@ public class JenkinsResultsParserUtil {
 
 			cancelQueuedItem(itemJSONObject.getLong("id"), jenkinsMaster);
 		}
+	}
+
+	public static boolean matchesLabels(
+		String labelExpression, List<String> labels) {
+
+		if (isNullOrEmpty(labelExpression)) {
+			return true;
+		}
+
+		if ((labels == null) || (labels.isEmpty())) {
+			return false;
+		}
+
+		for (String label : labels) {
+			if (Objects.equals(label, labelExpression)) {
+				return true;
+			}
+		}
+
+		if (!labelExpression.startsWith("!")) {
+			return false;
+		}
+
+		String negativeLabelExpression = labelExpression.substring(1);
+
+		boolean matchesNegativeLabelExpression = false;
+
+		for (String label : labels) {
+			if (Objects.equals(label, negativeLabelExpression)) {
+				matchesNegativeLabelExpression = true;
+			}
+		}
+
+		if (matchesNegativeLabelExpression) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public static void move(File sourceFile, File targetFile)

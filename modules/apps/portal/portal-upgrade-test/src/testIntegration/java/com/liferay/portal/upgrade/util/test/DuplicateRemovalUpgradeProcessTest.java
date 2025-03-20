@@ -13,12 +13,12 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.upgrade.DuplicateRemovalUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalUpgradeProcess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Jorge Avalos
  */
 @RunWith(Arquillian.class)
-public class DefaultDuplicateRemovalProcessTest {
+public class DuplicateRemovalUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -100,13 +100,13 @@ public class DefaultDuplicateRemovalProcessTest {
 	}
 
 	@Test
-	public void testDefaultDuplicateRemovalProcess()
+	public void testDuplicateRemovalProcess()
 		throws SQLException, UpgradeException {
 
 		_assertDuplicates(false);
 
-		DefaultDuplicateRemovalUpgradeProcess upgradeProcess =
-			new DefaultDuplicateRemovalUpgradeProcess(
+		DuplicateRemovalUpgradeProcess upgradeProcess =
+			new DuplicateRemovalUpgradeProcess(
 				"TestTable", "column1, column2, column3, column4");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -131,13 +131,13 @@ public class DefaultDuplicateRemovalProcessTest {
 	}
 
 	@Test
-	public void testDefaultDuplicateRemovalProcessWithOrderBy()
+	public void testDuplicateRemovalProcessWithOrderBy()
 		throws SQLException, UpgradeException {
 
 		_assertDuplicates(false);
 
-		DefaultDuplicateRemovalUpgradeProcess upgradeProcess =
-			new DefaultDuplicateRemovalUpgradeProcess(
+		DuplicateRemovalUpgradeProcess upgradeProcess =
+			new DuplicateRemovalUpgradeProcess(
 				"TestTable", "column1, column2, column3, column4",
 				"primaryKeyColumn", "asc");
 

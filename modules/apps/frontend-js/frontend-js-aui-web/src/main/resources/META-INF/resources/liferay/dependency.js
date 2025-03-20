@@ -142,7 +142,5 @@
 		},
 	};
 
-	Liferay.Dependency = Dependency;
-
 	Liferay.provide = Dependency.provide;
 })();

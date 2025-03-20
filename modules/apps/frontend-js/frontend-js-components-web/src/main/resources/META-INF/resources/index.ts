@@ -45,6 +45,7 @@ export {default as openTagSelectionModal} from './modal/commands/openTagSelectio
 export {ModalStatus} from './modal/components/Modal';
 
 export {default as openToast} from './toast/openToast';
+export type {OpenToastProps} from './toast/openToast';
 
 export {Locale} from './translation_manager/TranslationAdminContent';
 export {default as TranslationAdminItem} from './translation_manager/TranslationAdminItem';

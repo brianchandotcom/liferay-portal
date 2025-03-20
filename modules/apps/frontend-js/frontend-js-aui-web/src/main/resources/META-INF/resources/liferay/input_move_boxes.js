@@ -156,7 +156,56 @@ AUI.add(
 				_orderItem(box, direction) {
 					const instance = this;
 
-					Util.reorder(box, direction);
+					box = Liferay.Util.getElement(box);
+
+					if (box) {
+						if (box.getAttribute('selectedIndex') === -1) {
+							box.setAttribute('selectedIndex', 0);
+						}
+						else {
+							const selectedItems = Array.from(
+								box.querySelectorAll('option:checked')
+							);
+
+							const items = Array.from(
+								box.querySelectorAll('option')
+							);
+
+							if (direction) {
+								selectedItems.reverse().forEach((item) => {
+									const itemIndex = items.indexOf(item);
+
+									const lastIndex = items.length - 1;
+
+									if (itemIndex === lastIndex) {
+										box.insertBefore(item, box.firstChild);
+									}
+									else {
+										const nextItem =
+											item.nextElementSibling
+												.nextElementSibling;
+
+										box.insertBefore(item, nextItem);
+									}
+								});
+							}
+							else {
+								selectedItems.forEach((item) => {
+									const itemIndex = items.indexOf(item);
+
+									if (itemIndex === 0) {
+										box.appendChild(item);
+									}
+									else {
+										box.insertBefore(
+											item,
+											item.previousElementSibling
+										);
+									}
+								});
+							}
+						}
+					}
 
 					instance._toggleBtnSort(box);
 

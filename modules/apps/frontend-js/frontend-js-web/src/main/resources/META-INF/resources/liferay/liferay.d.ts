@@ -258,6 +258,8 @@ declare module Liferay {
 		export function isControlPanel(): boolean;
 		export function isImpersonated(): boolean;
 		export function isSignedIn(): boolean;
+		export function getRealUserId(): string;
+		export function getPathMain(): string;
 	}
 
 	namespace Util {
@@ -459,6 +461,8 @@ declare module Liferay {
 			except: string,
 			name?: string
 		): Array<number> | '';
+
+		export function getDOM(arg: any): HTMLElement | null;
 
 		export function getUncheckedCheckboxes(
 			form: HTMLFormElement,

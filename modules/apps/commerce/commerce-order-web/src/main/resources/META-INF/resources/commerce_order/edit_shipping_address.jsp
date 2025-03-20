@@ -49,7 +49,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 		<aui:select label="region" name="regionId" wrapperCssClass="form-group-item" />
 	</aui:form>
 
-	<aui:script use="liferay-dynamic-select">
+	<aui:script>
 		new Liferay.DynamicSelect([
 			{
 				select: '<portlet:namespace />countryId',

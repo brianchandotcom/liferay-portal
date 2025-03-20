@@ -408,18 +408,14 @@ AUI.add(
 						titleCurrentValue: '',
 					};
 
-					Liferay.Util.openWindow({
-						dialog: {
-							after: {
-								destroy() {
-									instance.load();
-								},
-							},
-							destroyOnHide: true,
-							modal: true,
+					Liferay.Util.openModal({
+						onClose: function destroy() {
+							instance.load();
 						},
+						iframeBodyCssClass: '',
+						containerProps: {},
 						title: Liferay.Language.get('new-calendar-booking'),
-						uri: CalendarUtil.fillURLParameters(
+						url: CalendarUtil.fillURLParameters(
 							editCalendarBookingURL,
 							data
 						),

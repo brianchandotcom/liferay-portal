@@ -131,17 +131,6 @@ if (layout != null) {
 	<aui:script use="event-move,liferay-navigation">
 		var navBlock = A.one(Liferay.Data.NAV_SELECTOR);
 
-		Liferay.once(
-			'initNavigation',
-			function () {
-				new Liferay.Navigation(
-					{
-						navBlock: navBlock
-					}
-				);
-			}
-		);
-
 		if (navBlock) {
 			if (A.UA.touchMobile) {
 				var panel = document.querySelector(Liferay.Data.NAV_SELECTOR_MOBILE);

@@ -787,7 +787,7 @@ AUI.add(
 					const instance = this;
 
 					if (instance.get('multipleFiles')) {
-						Liferay.Util.checkAllBox(
+						Liferay.Util.checkAll(
 							instance._fileListSelector,
 							instance._selectUploadedFileCheckboxId,
 							instance._allRowIdsCheckboxSelector

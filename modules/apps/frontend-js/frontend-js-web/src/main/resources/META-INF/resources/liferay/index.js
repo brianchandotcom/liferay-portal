@@ -51,6 +51,7 @@ import throttle from './throttle.es';
 import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
+import {checkAll} from './util/checkAll';
 import Cookie, {
 	CONSENT_TYPES,
 	checkConsent,
@@ -98,7 +99,7 @@ import navigate from './util/navigate.es';
 import normalizeFriendlyURL from './util/normalize_friendly_url';
 import ns from './util/ns.es';
 import objectToURLSearchParams from './util/object_to_url_search_params.es';
-import openWindow from './util/open_window';
+import openWindow, {openInDialog} from './util/open_window';
 import {
 	getPortletConfigurationIconAction,
 	setPortletConfigurationIconAction,
@@ -314,6 +315,7 @@ Liferay.Util.toCharCode = toCharCode;
 Liferay.Util.toggleDisabled = toggleDisabled;
 
 Liferay.Util.openWindow = openWindow;
+Liferay.Util.openInDialog = openInDialog;
 Liferay.Util.removeEntitySelection = removeEntitySelection;
 Liferay.Util.selectFolder = selectFolder;
 Liferay.Util.setPortletConfigurationIconAction =
@@ -353,6 +355,7 @@ Liferay.Util.unescape = (string) => {
 
 Liferay.Util.unescapeHTML = unescapeHTML;
 
+Liferay.Util.checkAll = checkAll;
 Liferay.Util.Cookie = Cookie;
 
 Liferay.Util.LocalStorage = localStorage;

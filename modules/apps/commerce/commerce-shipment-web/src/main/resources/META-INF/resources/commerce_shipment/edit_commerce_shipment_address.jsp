@@ -71,7 +71,7 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 	</aui:form>
 </commerce-ui:modal-content>
 
-<aui:script use="aui-base,liferay-dynamic-select">
+<aui:script use="aui-base">
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />countryId',

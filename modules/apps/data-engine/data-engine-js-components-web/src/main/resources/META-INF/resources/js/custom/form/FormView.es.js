@@ -82,7 +82,7 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 							}
 
 							if (submittable) {
-								Liferay.Util.submitForm(event.target);
+								event.target.submit();
 							}
 
 							Liferay.fire('ddmFormValid', {

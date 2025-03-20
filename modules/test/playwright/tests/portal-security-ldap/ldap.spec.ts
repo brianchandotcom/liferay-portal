@@ -421,7 +421,7 @@ test('LPD-47223 AC2 TC2: Verify LDAP bulk import updates user information and me
 		await ldapServerPage.editLdapServer(ldapServer);
 	});
 
-	await invokeLdapImport(ldapServerPage.page);
+	await invokeLdapImport(ldapServerPage.page, ldapServer);
 
 	await test.step('Assert user data and membership was updated correctly', async () => {
 		await usersAndOrganizationsPage.goToUsers(false);
@@ -595,6 +595,8 @@ test('LPD-47223 AC3 TC3 and AC3 TC4: Verify LDAP import via authentication with 
 		await ldapServerPage.editLdapServer(ldapServerB);
 	});
 
+	await updateLdapServerCustomMapping(ldapServerA, ldapServerPage.page);
+
 	await test.step(`Authenticate with ${LDAP_USER_4.alternateName}, triggering an import from LDAP server A only`, async () => {
 		const page = await browser.newPage();
 
@@ -654,6 +656,8 @@ test('LPD-47223 AC3 TC3 and AC3 TC4: Verify LDAP import via authentication with 
 			);
 		});
 
+		await updateLdapServerCustomMapping(ldapServerB, ldapServerPage.page);
+
 		await test.step(`Authenticate with ${LDAP_USER_4.alternateName}, triggering an import from LDAP server B only`, async () => {
 			const page = await browser.newPage();
 
@@ -710,6 +714,8 @@ test('LPD-47223 AC3 TC3 and AC3 TC4: Verify LDAP import via authentication with 
 				[LDAP_USER_4.alternateName, LDAP_USER_4_AB.alternateName]
 			);
 		});
+
+		await updateLdapServerCustomMapping(ldapServerB, ldapServerPage.page);
 
 		await test.step(`Authenticate with ${LDAP_USER_4_A.alternateName}, triggering an import from LDAP server B only`, async () => {
 			const page = await browser.newPage();
@@ -954,7 +960,11 @@ test('smoke: Add LDAP server, verify connection, users, and groups are mapped pr
 	});
 });
 
-async function invokeLdapImport(page: Page) {
+async function invokeLdapImport(page: Page, ldapServer?: TLdapServer) {
+	if (ldapServer) {
+		await updateLdapServerCustomMapping(ldapServer, page);
+	}
+
 	await test.step('Manually trigger bulk import', async () => {
 		const applicationsMenuPage = new ApplicationsMenuPage(page);
 
@@ -1062,4 +1072,17 @@ async function resetLdapImportSystemSettings(
 
 		await waitForAlert(systemSettingsPage.page);
 	}
+}
+
+async function updateLdapServerCustomMapping(
+	ldapServer: TLdapServer,
+	page: Page
+) {
+	await test.step(`Update LDAP server '${ldapServer.serverName}' custom mapping to allow full reimport of user(s).`, async () => {
+		ldapServer.customUserMapping = getRandomString();
+
+		const ldapServerPage = new LdapServerPage(page);
+
+		await ldapServerPage.editLdapServer(ldapServer);
+	});
 }

@@ -36,6 +36,8 @@ public class CommerceShipmentKeywordQueryContributor
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "carrier", false);
+		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "commerceAccountName", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "commerceChannelName", false);

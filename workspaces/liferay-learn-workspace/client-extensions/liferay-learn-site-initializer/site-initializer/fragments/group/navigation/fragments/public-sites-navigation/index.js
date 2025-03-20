@@ -58,17 +58,15 @@ function changeFocus() {
 }
 
 function checkScreenSize() {
+	menuElements.menuTextOpen.style.display = 'inline';
+	menuElements.menuTextClose.style.display = 'none';
+	menuElements.menuButton.classList.remove('open');
+
 	if (window.innerWidth <= 1000) {
 		documentationEducationDropdown.classList.add('hide');
-		menuElements.menuTextOpen.style.display = 'inline';
-		menuElements.menuTextClose.style.display = 'none';
-		menuElements.menuButton.classList.remove('open');
 	}
 	else {
 		documentationEducationDropdown.classList.remove('hide');
-		menuElements.menuTextOpen.style.display = 'inline';
-		menuElements.menuTextClose.style.display = 'none';
-		menuElements.menuButton.classList.remove('open');
 		resetMenuIcon();
 	}
 }

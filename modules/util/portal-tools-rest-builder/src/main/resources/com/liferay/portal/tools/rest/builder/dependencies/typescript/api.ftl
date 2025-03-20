@@ -52,7 +52,9 @@ export class ${className} {
 		public async ${operationData.operationId}<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size > 1)>WithContentType</#if>(
 			<#if operationData.parameters??>
 				<#list operationData.parameters as parameter>
-					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
+					<#if parameter.required>
+						${parameter.name}: ${parameter.dataType},
+					</#if>
 				</#list>
 			</#if>
 			<#if operationData.bodyParameters?has_content>
@@ -79,7 +81,14 @@ export class ${className} {
 						</#list>
 				</#if>
 			</#if>
-			headers?: {[name: string]: string}
+			<#if operationData.parameters??>
+				<#list operationData.parameters as parameter>
+					<#if !parameter.required>
+						${parameter.name}?: ${parameter.dataType},
+					</#if>
+				</#list>
+			</#if>
+			headers?: {[name: string]: string},
 		): Promise<{
 			<#if operationData.returnDataType??>
 				body: ${operationData.returnDataType};
@@ -234,12 +243,21 @@ export class ${className} {
 					public async ${operationData.operationId}(
 						<#if operationData.parameters??>
 							<#list operationData.parameters as parameter>
-								${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
+								<#if parameter.required>
+									${parameter.name}: ${parameter.dataType},
+								</#if>
 							</#list>
 						</#if>
 						<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
 							${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType},
 						</#list>
+						<#if operationData.parameters??>
+							<#list operationData.parameters as parameter>
+								<#if !parameter.required>
+									${parameter.name}?: ${parameter.dataType},
+								</#if>
+							</#list>
+						</#if>
 						headers?: {[name: string]: string}
 					): Promise<{
 						<#if operationData.returnDataType??>
@@ -252,7 +270,9 @@ export class ${className} {
 						return this.${operationData.operationId}WithContentType(
 							<#if operationData.parameters??>
 								<#list operationData.parameters as parameter>
-									${parameter.name},
+									<#if parameter.required>
+										${parameter.name},
+									</#if>
 								</#list>
 							</#if>
 							{
@@ -263,6 +283,13 @@ export class ${className} {
 									</#list>
 								}
 							},
+							<#if operationData.parameters??>
+								<#list operationData.parameters as parameter>
+									<#if !parameter.required>
+										${parameter.name},
+									</#if>
+								</#list>
+							</#if>
 							headers
 						);
 					}

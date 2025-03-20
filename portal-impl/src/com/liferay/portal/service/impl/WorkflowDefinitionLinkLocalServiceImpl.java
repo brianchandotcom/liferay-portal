@@ -421,15 +421,13 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			return null;
 		}
 
-		if (workflowDefinitionLinks.size() > 1) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"More than one workflow definition link uses group ID ",
-						groupId, ", company ID ", companyId, ", class name ID ",
-						classNameId, ", class PK ", classPK, ", and type PK ",
-						typePK));
-			}
+		if ((workflowDefinitionLinks.size() > 1) && _log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"More than one workflow definition link uses group ID ",
+					groupId, ", company ID ", companyId, ", class name ID ",
+					classNameId, ", class PK ", classPK, ", and type PK ",
+					typePK));
 		}
 
 		return workflowDefinitionLinks.get(workflowDefinitionLinks.size() - 1);

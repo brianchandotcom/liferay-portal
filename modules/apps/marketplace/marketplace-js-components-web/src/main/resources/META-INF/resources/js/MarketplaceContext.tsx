@@ -62,6 +62,7 @@ export type MarketplaceContextProviderProps = {
 	children: ReactNode;
 	className?: string;
 	defaultView?: MarketplaceView;
+	onCloseModal?: () => void;
 	settings: {
 		productFilter?: 'all' | 'fragments' | 'payments';
 		productFilterCustom?: string;
@@ -93,6 +94,7 @@ export function MarketplaceContextProvider({
 	defaultView = MarketplaceView.PRODUCTS,
 	className,
 	settings,
+	onCloseModal,
 }: MarketplaceContextProviderProps) {
 	const [loading, setLoading] = useState(false);
 	const [product, setProduct] = useState<Product>();
@@ -103,7 +105,12 @@ export function MarketplaceContextProvider({
 		useState<APIResponse<Product>>();
 	const [view, setView] = useState(defaultView);
 
-	const modal = useModal({onClose: () => setView(defaultView)});
+	const modal = useModal({
+		onClose: () => {
+			setView(defaultView);
+			onCloseModal?.();
+		},
+	});
 
 	const marketplaceConfiguration =
 		useMarketplaceConfiguration(baseResourceURL);

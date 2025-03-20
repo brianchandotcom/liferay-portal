@@ -10,7 +10,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -25,12 +24,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.test.util.exportimport.BaseExportImportPortletPreferencesProcessorTestCase;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
-import com.liferay.portal.test.rule.ExpectedLog;
-import com.liferay.portal.test.rule.ExpectedLogs;
-import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -94,15 +89,6 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 				layout, CategoryFacetPortletKeys.CATEGORY_FACET);
 	}
 
-	@ExpectedLogs(
-		expectedLogs = {
-			@ExpectedLog(
-				expectedLog = "Unable to get a staged model data handler for a null value because a model was not exported properly",
-				expectedType = ExpectedType.EXACT
-			)
-		},
-		level = "ERROR", loggerClass = StagedModelDataHandlerUtil.class
-	)
 	@Test
 	public void testProcessAssetVocabularyIdWithMissingReference()
 		throws Exception {
@@ -117,25 +103,22 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 				processExportPortletPreferences(
 					_portletDataContextExport, _portletPreferences);
 
-		String exportedAssetVocabularyId = exportedPortletPreferences.getValue(
-			"vocabularyIds", "");
+		String exportedGroupVocabularyExternalReferenceCodes =
+			exportedPortletPreferences.getValue(
+				"groupVocabularyExternalReferenceCodes", "");
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				assetVocabulary.getExternalReferenceCode(), StringPool.POUND,
 				_group.getGroupId(), StringPool.POUND,
 				_group.getExternalReferenceCode()),
-			exportedAssetVocabularyId);
+			exportedGroupVocabularyExternalReferenceCodes);
 
 		AssetVocabularyLocalServiceUtil.deleteVocabulary(
 			assetVocabulary.getVocabularyId());
 
-		_portletDataContextImport.setImportDataRootElement(
-			_portletDataContextExport.getExportDataRootElement());
-
-		_exportImportPortletPreferencesProcessor.
-			processImportPortletPreferences(
-				_portletDataContextImport, exportedPortletPreferences);
+		_assertImportedPortletPreference(
+			assetVocabulary, exportedPortletPreferences);
 	}
 
 	@Test
@@ -150,30 +133,19 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 				processExportPortletPreferences(
 					_portletDataContextExport, _portletPreferences);
 
-		String exportedAssetVocabularyId = exportedPortletPreferences.getValue(
-			"vocabularyIds", "");
+		String exportedGroupVocabularyExternalReferenceCodes =
+			exportedPortletPreferences.getValue(
+				"groupVocabularyExternalReferenceCodes", "");
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				assetVocabulary.getExternalReferenceCode(), StringPool.POUND,
 				_group.getGroupId(), StringPool.POUND,
 				_group.getExternalReferenceCode()),
-			exportedAssetVocabularyId);
+			exportedGroupVocabularyExternalReferenceCodes);
 
-		_portletDataContextImport.setImportDataRootElement(
-			_portletDataContextExport.getExportDataRootElement());
-
-		PortletPreferences importedPortletPreferences =
-			_exportImportPortletPreferencesProcessor.
-				processImportPortletPreferences(
-					_portletDataContextImport, exportedPortletPreferences);
-
-		String importedVocabularyId = importedPortletPreferences.getValue(
-			"vocabularyIds", "");
-
-		Assert.assertEquals(
-			assetVocabulary.getVocabularyId(),
-			GetterUtil.getLong(importedVocabularyId));
+		_assertImportedPortletPreference(
+			assetVocabulary, exportedPortletPreferences);
 	}
 
 	@Test
@@ -190,15 +162,16 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 				processExportPortletPreferences(
 					_portletDataContextExport, _portletPreferences);
 
-		String exportedAssetVocabularyId = exportedPortletPreferences.getValue(
-			"vocabularyIds", "");
+		String exportedGroupVocabularyExternalReferenceCodes =
+			exportedPortletPreferences.getValue(
+				"groupVocabularyExternalReferenceCodes", "");
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				assetVocabulary.getExternalReferenceCode(), StringPool.POUND,
 				_group.getGroupId(), StringPool.POUND,
 				_group.getExternalReferenceCode()),
-			exportedAssetVocabularyId);
+			exportedGroupVocabularyExternalReferenceCodes);
 
 		AssetVocabularyLocalServiceUtil.deleteVocabulary(
 			assetVocabulary.getVocabularyId());
@@ -207,27 +180,62 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 			_group.getGroupId());
 
 		importedAssetVocabulary.setExternalReferenceCode(
-			exportedAssetVocabularyId.substring(
-				0, exportedAssetVocabularyId.indexOf(CharPool.POUND)));
+			exportedGroupVocabularyExternalReferenceCodes.substring(
+				0,
+				exportedGroupVocabularyExternalReferenceCodes.indexOf(
+					CharPool.POUND)));
 
 		importedAssetVocabulary =
 			AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
 				importedAssetVocabulary);
 
-		_portletDataContextImport.setImportDataRootElement(
-			_portletDataContextExport.getExportDataRootElement());
+		_assertImportedPortletPreference(
+			importedAssetVocabulary, exportedPortletPreferences);
+	}
 
-		PortletPreferences importedPortletPreferences =
+	@Test
+	public void testProcessLegacyAssetVocabularyIdWithReplacedReference()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		_setCategoryFacetPortletPreferences(assetVocabulary);
+
+		PortletPreferences exportedPortletPreferences =
 			_exportImportPortletPreferencesProcessor.
-				processImportPortletPreferences(
-					_portletDataContextImport, exportedPortletPreferences);
+				processExportPortletPreferences(
+					_portletDataContextExport, _portletPreferences);
 
-		String importedVocabularyId = importedPortletPreferences.getValue(
-			"vocabularyIds", "");
+		String exportedGroupVocabularyExternalReferenceCodes =
+			exportedPortletPreferences.getValue(
+				"groupVocabularyExternalReferenceCodes", "");
 
-		Assert.assertEquals(
-			importedAssetVocabulary.getVocabularyId(),
-			GetterUtil.getLong(importedVocabularyId));
+		_portletPreferences.setValue(
+			"vocabularyIds",
+			_portletPreferences.getValue(
+				"groupVocabularyExternalReferenceCodes", ""));
+
+		_portletPreferences.reset("groupVocabularyExternalReferenceCodes");
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(
+			assetVocabulary.getVocabularyId());
+
+		AssetVocabulary importedAssetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		importedAssetVocabulary.setExternalReferenceCode(
+			exportedGroupVocabularyExternalReferenceCodes.substring(
+				0,
+				exportedGroupVocabularyExternalReferenceCodes.indexOf(
+					CharPool.POUND)));
+
+		importedAssetVocabulary =
+			AssetVocabularyLocalServiceUtil.updateAssetVocabulary(
+				importedAssetVocabulary);
+
+		_assertImportedPortletPreference(
+			importedAssetVocabulary, exportedPortletPreferences);
 	}
 
 	@Override
@@ -237,12 +245,37 @@ public class CategoryFacetExportImportPortletPreferencesProcessorTest
 		return _exportImportPortletPreferencesProcessor;
 	}
 
+	private void _assertImportedPortletPreference(
+			AssetVocabulary assetVocabulary,
+			PortletPreferences exportedPortletPreferences)
+		throws Exception {
+
+		_portletDataContextImport.setImportDataRootElement(
+			_portletDataContextExport.getExportDataRootElement());
+
+		PortletPreferences importedPortletPreferences =
+			_exportImportPortletPreferencesProcessor.
+				processImportPortletPreferences(
+					_portletDataContextImport, exportedPortletPreferences);
+
+		String importedGroupVocabularyExternalReferenceCodes =
+			importedPortletPreferences.getValue(
+				"groupVocabularyExternalReferenceCodes", "");
+
+		Assert.assertEquals(
+			_group.getExternalReferenceCode() + "&&" +
+				assetVocabulary.getExternalReferenceCode(),
+			importedGroupVocabularyExternalReferenceCodes);
+	}
+
 	private void _setCategoryFacetPortletPreferences(
 			AssetVocabulary assetVocabulary)
 		throws Exception {
 
 		_portletPreferences.setValue(
-			"vocabularyIds", String.valueOf(assetVocabulary.getVocabularyId()));
+			"groupVocabularyExternalReferenceCodes",
+			_group.getExternalReferenceCode() + "&&" +
+				assetVocabulary.getExternalReferenceCode());
 
 		_portletPreferences.store();
 	}

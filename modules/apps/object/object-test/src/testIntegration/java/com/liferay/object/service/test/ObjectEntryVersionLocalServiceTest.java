@@ -430,27 +430,17 @@ public class ObjectEntryVersionLocalServiceTest {
 
 				if (expectedValue instanceof JSONObject) {
 					Assert.assertTrue(
-						StringBundler.concat(
-							"Expected: ", key, " = ", expectedValue,
-							" but was: ", key, " = ", actualValue),
 						JSONUtil.equals(
 							(JSONObject)expectedValue,
 							(JSONObject)actualValue));
 				}
 				else if (expectedValue instanceof JSONArray) {
 					Assert.assertTrue(
-						StringBundler.concat(
-							"Expected: ", key, " = ", expectedValue,
-							" but was: ", key, " = ", actualValue),
 						JSONUtil.equals(
 							(JSONArray)expectedValue, (JSONArray)actualValue));
 				}
 				else {
-					Assert.assertEquals(
-						StringBundler.concat(
-							"Expected: ", key, " = ", expectedValue,
-							" but was: ", key, " = ", actualValue),
-						expectedValue, actualValue);
+					Assert.assertEquals(expectedValue, actualValue);
 				}
 			}
 

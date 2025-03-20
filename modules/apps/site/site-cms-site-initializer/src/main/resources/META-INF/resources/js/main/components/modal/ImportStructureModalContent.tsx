@@ -14,8 +14,10 @@ const JSON_EXTENSION = '.json';
 
 export default function ImportStructureModalContent({
 	closeModal,
+	importURL,
 }: {
 	closeModal: () => void;
+	importURL: string;
 }) {
 	const [warning, setWarning] = useState(true);
 	const [jsonFile, setJsonFile] = useState<File | null>(null);

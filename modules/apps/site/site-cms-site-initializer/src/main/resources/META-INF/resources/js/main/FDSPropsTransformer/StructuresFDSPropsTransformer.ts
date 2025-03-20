@@ -49,7 +49,7 @@ export default function StructuresFDSPropsTransformer({
 			itemData,
 			loadData,
 		}: {
-			action: {data: {id: string}; href?: string};
+			action: {data: {id: string; importURL: string}; href?: string};
 			event: Event;
 			itemData: {
 				actions: {
@@ -61,7 +61,7 @@ export default function StructuresFDSPropsTransformer({
 			loadData: () => {};
 		}) {
 			if (action.data.id === 'import') {
-				importStructureAction();
+				importStructureAction(action.data.importURL);
 			}
 			else if (action.data.id === 'delete') {
 				event.preventDefault();

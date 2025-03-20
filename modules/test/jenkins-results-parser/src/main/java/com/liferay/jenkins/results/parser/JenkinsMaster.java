@@ -775,6 +775,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_buildURLs.clear();
 			_jenkinsSlavesMap.clear();
 			_labelBatchSizes.clear();
+			_labelExpressionLabels.clear();
 			_queuedBuildURLs.clear();
 			_queueItems.clear();
 
@@ -808,6 +809,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_buildURLs.clear();
 			_jenkinsSlavesMap.clear();
 			_labelBatchSizes.clear();
+			_labelExpressionLabels.clear();
 			_queuedBuildURLs.clear();
 			_queueItems.clear();
 
@@ -1293,6 +1295,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	private List<String> _getLabels(String labelExpression) {
+		if (_labelExpressionLabels.containsKey(labelExpression)) {
+			return _labelExpressionLabels.get(labelExpression);
+		}
+
 		Set<String> labels = new HashSet<>();
 
 		labels.addAll(getAssignedLabels());
@@ -1319,7 +1325,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			}
 		}
 
-		return matchingLabels;
+		_labelExpressionLabels.put(labelExpression, matchingLabels);
+
+		return _labelExpressionLabels.get(labelExpression);
 	}
 
 	private int _getQueueCount(String labelExpression) {
@@ -1474,6 +1482,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());
 	private final Map<String, Map<Long, Integer>> _labelBatchSizes =
+		new HashMap<>();
+	private final Map<String, List<String>> _labelExpressionLabels =
 		new HashMap<>();
 	private final String _masterName;
 	private final String _masterRemoteURL;

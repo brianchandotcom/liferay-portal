@@ -322,9 +322,8 @@ public class ObjectEntryLocalServiceImpl
 
 		_contributeValues(groupId, objectDefinition, userId, values);
 
-		long objectEntryId = counterLocalService.increment();
-
 		Set<Long> dlFileEntryIds = new HashSet<>();
+		long objectEntryId = counterLocalService.increment();
 
 		_validateValues(
 			dlFileEntryIds, null, user.isGuestUser(), groupId, objectDefinition,
@@ -473,9 +472,8 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-
 		Set<Long> dlFileEntryIds = new HashSet<>();
+		User user = _userLocalService.getUser(userId);
 
 		_validateValues(
 			dlFileEntryIds, null, user.isGuestUser(), 0, objectDefinition,

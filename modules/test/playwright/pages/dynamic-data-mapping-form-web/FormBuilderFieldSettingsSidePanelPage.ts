@@ -38,7 +38,7 @@ export class FormBuilderFieldSettingsSidePanelPage {
 
 			await this.page.waitForTimeout(2000);
 
-			if (index < numberOfOptions) {
+			if (index < numberOfOptions - 1) {
 				await this.addOptionButton.click();
 			}
 		}

@@ -77,11 +77,11 @@ public class MockMutablePortletParameters
 			parameters.put(name, new String[] {value});
 		}
 
-		if (ArrayUtil.isNotEmpty(oldValues)) {
-			return oldValues[0];
+		if (ArrayUtil.isEmpty(oldValues)) {
+			return null;
 		}
 
-		return null;
+		return oldValues[0];
 	}
 
 	@Override

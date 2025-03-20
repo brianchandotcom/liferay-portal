@@ -74,11 +74,11 @@ public class MockPortletURL implements PortletURL {
 	public String getParameter(String name) {
 		String[] values = parameters.get(name);
 
-		if (ArrayUtil.isNotEmpty(values)) {
-			return values[0];
+		if (ArrayUtil.isEmpty(values)) {
+			return null;
 		}
 
-		return null;
+		return values[0];
 	}
 
 	@Override

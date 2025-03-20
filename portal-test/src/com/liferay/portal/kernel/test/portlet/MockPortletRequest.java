@@ -69,10 +69,10 @@ public class MockPortletRequest implements PortletRequest {
 	}
 
 	public void addParameter(String name, String[] values) {
-		String[] oldArray = _parameters.get(name);
+		String[] parameters = _parameters.get(name);
 
-		if (oldArray != null) {
-			_parameters.put(name, ArrayUtil.append(oldArray, values));
+		if (parameters != null) {
+			_parameters.put(name, ArrayUtil.append(parameters, values));
 		}
 		else {
 			_parameters.put(name, values);
@@ -90,17 +90,13 @@ public class MockPortletRequest implements PortletRequest {
 	public void addProperty(String key, String value) {
 		Assert.notNull(key, "Property key must not be null");
 
-		List<String> oldList = _properties.get(key);
+		List<String> values = _properties.get(key);
 
-		if (oldList != null) {
-			oldList.add(value);
+		if (values != null) {
+			values.add(value);
 		}
 		else {
-			List<String> list = new LinkedList<>();
-
-			list.add(value);
-
-			_properties.put(key, list);
+			_properties.put(key, new LinkedList<>(List.of(value)));
 		}
 	}
 
@@ -157,13 +153,13 @@ public class MockPortletRequest implements PortletRequest {
 
 	@Override
 	public String getParameter(String name) {
-		String[] array = _parameters.get(name);
+		String[] parameters = _parameters.get(name);
 
-		if (ArrayUtil.isNotEmpty(array)) {
-			return array[0];
+		if (ArrayUtil.isEmpty(parameters)) {
+			return null;
 		}
 
-		return null;
+		return parameters[0];
 	}
 
 	@Override
@@ -253,13 +249,13 @@ public class MockPortletRequest implements PortletRequest {
 	public String getProperty(String key) {
 		Assert.notNull(key, "Property key must not be null");
 
-		List<String> list = _properties.get(key);
+		List<String> values = _properties.get(key);
 
-		if (ListUtil.isNotEmpty(list)) {
-			return list.get(0);
+		if (ListUtil.isEmpty(values)) {
+			return null;
 		}
 
-		return null;
+		return values.get(0);
 	}
 
 	@Override
@@ -303,11 +299,11 @@ public class MockPortletRequest implements PortletRequest {
 	public String getRequestedSessionId() {
 		PortletSession portletSession = getPortletSession();
 
-		if (portletSession != null) {
-			return portletSession.getId();
+		if (portletSession == null) {
+			return null;
 		}
 
-		return null;
+		return portletSession.getId();
 	}
 
 	@Override

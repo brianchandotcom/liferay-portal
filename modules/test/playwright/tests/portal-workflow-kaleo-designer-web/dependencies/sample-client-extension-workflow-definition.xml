@@ -83,7 +83,7 @@
 		</metadata>
 		<actions>
 			<action>
-				<name>timestamp</name>
+				<name>action1</name>
 				<description></description>
 				<script>
 					<![CDATA[]]>
@@ -98,7 +98,7 @@
 		</assignments>
 		<labels>
 			<label language-id="en_US">
-				Task
+				Review
 			</label>
 		</labels>
 		<transitions>

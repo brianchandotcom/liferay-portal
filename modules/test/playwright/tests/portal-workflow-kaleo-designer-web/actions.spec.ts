@@ -8,9 +8,16 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {workflowPagesTest} from '../../fixtures/workflowPagesTest';
+import {clientExtensionsPageTest} from '../client-extension-web/fixtures/clientExtensionsPageTest';
+import {getWorkflowDefinition} from './utils/getWorkflowDefinition';
 import postSingleApproverCopy from './utils/postSingleApproverCopy';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	loginTest(),
+	workflowPagesTest,
+	clientExtensionsPageTest
+);
 
 let workflowDefinitionId: number;
 let workflowDefinitionName: string;
@@ -147,4 +154,43 @@ test('cannot save a workflow definition that has a java action when the script m
 	await diagramViewPage.saveWorkflowDefinition();
 
 	await expect(page.getByText('Error Updating Definition')).toBeVisible();
+});
+
+test('can save a workflow definition that has a customer extension action after changing from an UpdateStatus to a customer extension action', async ({
+	apiHelpers,
+	diagramViewPage,
+	page,
+	processBuilderPage,
+}) => {
+	const workflowDefinition =
+		await apiHelpers.headlessAdminWorkflow.postWorkflowDefinitionSave(
+			workflowDefinitionName,
+			getWorkflowDefinition('sample-client-extension')
+		);
+
+	workflowDefinitionName = workflowDefinition.name;
+
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickNode('Review');
+
+	await page.getByRole('link', {name: 'action1'}).click();
+
+	await page
+		.locator('#type')
+		.selectOption(
+			'function#liferay-sample-etc-spring-boot-workflow-action-1'
+		);
+
+	await diagramViewPage.saveWorkflowDefinition();
+
+	await diagramViewPage.publishWorkflowDefinition();
+
+	await expect(
+		page.getByText('Workflow published successfully.')
+	).toBeVisible();
 });

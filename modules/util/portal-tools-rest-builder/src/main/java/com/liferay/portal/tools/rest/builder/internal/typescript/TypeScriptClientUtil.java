@@ -79,17 +79,17 @@ public class TypeScriptClientUtil {
 				entry.getValue(), configYAML, copyrightFile, files,
 				"typescript/api",
 				StringBundler.concat(
-					baseClientDir.getPath(), "/src/node/api/",
+					baseClientDir.getPath(), "/src/api/",
 					StringUtil.lowerCaseFirstLetter(entry.getKey()), "Api.ts"));
 		}
 
 		_createFile(
 			null, configYAML, copyrightFile, files, "typescript/api_global",
-			baseClientDir.getPath() + "/src/node/api.ts");
+			baseClientDir.getPath() + "/src/api.ts");
 		_createFile(
 			Collections.singletonMap("apiContexts", apiContexts.values()),
 			configYAML, copyrightFile, files, "typescript/apis",
-			baseClientDir.getPath() + "/src/node/api/apis.ts");
+			baseClientDir.getPath() + "/src/api/apis.ts");
 
 		Components components = openAPIYAML.getComponents();
 
@@ -103,7 +103,7 @@ public class TypeScriptClientUtil {
 					_buildModelContext(entry.getKey(), entry.getValue()),
 					configYAML, copyrightFile, files, "typescript/model",
 					StringBundler.concat(
-						baseClientDir.getPath(), "/src/node/model/",
+						baseClientDir.getPath(), "/src/model/",
 						StringUtil.lowerCaseFirstLetter(entry.getKey()),
 						".ts"));
 				_createRelatedSchemaModels(
@@ -115,7 +115,7 @@ public class TypeScriptClientUtil {
 		_createFile(
 			Collections.singletonMap("schemaMap", schemas), configYAML,
 			copyrightFile, files, "typescript/models",
-			baseClientDir.getPath() + "/src/node/model/models.ts");
+			baseClientDir.getPath() + "/src/model/models.ts");
 
 		FileUtil.deleteFiles(baseClientDir.getPath(), files);
 	}
@@ -699,7 +699,7 @@ public class TypeScriptClientUtil {
 					_buildModelContext(referencedSchemaName, referencedSchema),
 					configYAML, copyrightFile, files, "typescript/model",
 					StringBundler.concat(
-						baseClientDir.getPath(), "/src/node/model/",
+						baseClientDir.getPath(), "/src/model/",
 						StringUtil.lowerCaseFirstLetter(referencedSchemaName),
 						".ts"));
 				_createRelatedSchemaModels(

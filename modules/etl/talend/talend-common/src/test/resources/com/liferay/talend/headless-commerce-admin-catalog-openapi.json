@@ -346,7 +346,7 @@
 						"type": "string"
 					},
 					"x-class-name": {
-						"default": "com.liferay.headless.commerce.admin.catalog.dto.v1_0.CustomField",
+						"default": "com.liferay.portal.vulcan.custom.field.CustomField",
 						"readOnly": true,
 						"type": "string"
 					}
@@ -372,7 +372,7 @@
 						"$ref": "#/components/schemas/Geo"
 					},
 					"x-class-name": {
-						"default": "com.liferay.headless.commerce.admin.catalog.dto.v1_0.CustomValue",
+						"default": "com.liferay.portal.vulcan.custom.field.CustomValue",
 						"readOnly": true,
 						"type": "string"
 					}
@@ -477,7 +477,7 @@
 						"type": "number"
 					},
 					"x-class-name": {
-						"default": "com.liferay.headless.commerce.admin.catalog.dto.v1_0.Geo",
+						"default": "com.liferay.portal.vulcan.custom.field.Geo",
 						"readOnly": true,
 						"type": "string"
 					}

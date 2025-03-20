@@ -633,8 +633,15 @@ components:
                     minimum: 0
                     readOnly: true
                     type: integer
+                itemsCount:
+                    format: int32
+                    readOnly: true
+                    type: integer
                 modifiedDate:
                     format: date
+                    readOnly: true
+                    type: string
+                oneLineAddress:
                     readOnly: true
                     type: string
                 orderExternalReferenceCode:

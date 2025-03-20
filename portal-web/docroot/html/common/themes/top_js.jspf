@@ -389,6 +389,13 @@
 		Liferay.Util.openSelectionModal = buildESMStub('frontend-js-components-web', 'openSelectionModal');
 		Liferay.Util.openSimpleInputModal = buildESMStub('frontend-js-components-web', 'openSimpleInputModal');
 		Liferay.Util.openToast = buildESMStub('frontend-js-components-web', 'openToast');
+		Liferay.Util.Window = {
+			_map: {} ,
+
+			getById(id) {
+				return this._map[id];
+			},
+		};
 
 		var themeDisplay = Liferay.ThemeDisplay;
 

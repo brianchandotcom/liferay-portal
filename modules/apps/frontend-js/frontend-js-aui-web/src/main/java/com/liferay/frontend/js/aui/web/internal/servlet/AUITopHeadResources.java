@@ -80,7 +80,7 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/event-custom-base/event-custom-base-min.js",
 		"/aui/event-custom-complex/event-custom-complex-min.js",
 		"/aui/oop/oop-min.js", "/aui/aui-base-lang/aui-base-lang-min.js",
-		"/liferay/dependency.js", "/liferay/util.js"
+		"/liferay/dependency.js"
 	};
 
 	private static final String[] _FILE_NAMES_AUI_PRELOAD = {
@@ -144,7 +144,7 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/aui-node-html5/aui-node-html5-min.js",
 		"/aui/aui-selector/aui-selector-min.js",
 		"/aui/aui-timer/aui-timer-min.js", "/liferay/form.js",
-		"/liferay/icon.js", "/liferay/menu.js"
+		"/liferay/menu.js"
 	};
 
 	private static final String[] _FILE_NAMES_AUI_PRELOAD_AUTHENTICATED = {
@@ -168,8 +168,7 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/aui-overlay-manager-deprecated" +
 			"/aui-overlay-manager-deprecated-min.js",
 		"/aui/aui-overlay-mask-deprecated/aui-overlay-mask-deprecated-min.js",
-		"/aui/aui-parse-content/aui-parse-content-min.js",
-		"/liferay/session.js", "/liferay/deprecated.js"
+		"/aui/aui-parse-content/aui-parse-content-min.js"
 	};
 
 	private volatile List<String> _authenticatedJsResourcePaths =

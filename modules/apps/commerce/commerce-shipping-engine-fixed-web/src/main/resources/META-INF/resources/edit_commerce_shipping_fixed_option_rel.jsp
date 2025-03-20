@@ -146,7 +146,7 @@ if (commerceShippingFixedOptionRel != null) {
 	</aui:form>
 </liferay-frontend:side-panel-content>
 
-<aui:script use="aui-base,liferay-dynamic-select">
+<aui:script use="aui-base">
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />countryId',

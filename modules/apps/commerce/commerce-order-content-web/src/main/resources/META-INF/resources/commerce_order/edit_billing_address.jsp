@@ -51,7 +51,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 	</aui:form>
 </commerce-ui:modal-content>
 
-<aui:script use="liferay-dynamic-select">
+<aui:script>
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />countryId',

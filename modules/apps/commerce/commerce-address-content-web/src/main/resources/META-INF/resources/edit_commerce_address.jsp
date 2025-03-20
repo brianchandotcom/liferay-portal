@@ -106,7 +106,7 @@ AccountEntry accountEntry = commerceAddressDisplayContext.getAccountEntry();
 	</div>
 </aui:form>
 
-<aui:script use="aui-base,liferay-dynamic-select">
+<aui:script use="aui-base">
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />countryId',

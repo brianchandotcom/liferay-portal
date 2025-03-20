@@ -166,7 +166,107 @@ AUI.add(
 								modalUtil.Window._name = id;
 
 								iframeElement.onload = function () {
-									Util.afterIframeLoaded(event);
+									const nodeInstances = A.Node._instances;
+
+									const docEl = event.doc;
+
+									const docUID = docEl._yuid;
+
+									if (docUID in nodeInstances) {
+										delete nodeInstances[docUID];
+									}
+
+									const iframeDocument = A.one(docEl);
+
+									const iframeBody =
+										iframeDocument.one('body');
+
+									const dialog = event.dialog;
+
+									const lfrFormContent =
+										iframeBody.one('.lfr-form-content');
+
+									iframeBody.addClass('dialog-iframe-popup');
+
+									if (
+										lfrFormContent &&
+										iframeBody.one(
+											'.button-holder.dialog-footer'
+										)
+									) {
+										iframeBody.addClass(
+											'dialog-with-footer'
+										);
+
+										const stagingAlert = iframeBody.one(
+											'.portlet-body > .lfr-portlet-message-staging-alert'
+										);
+
+										if (stagingAlert) {
+											stagingAlert.remove();
+
+											lfrFormContent.prepend(
+												stagingAlert
+											);
+										}
+									}
+
+									iframeBody.addClass(
+										dialog.iframeConfig.bodyCssClass
+									);
+
+									event.win.focus();
+
+									const iframeWindow = event.win;
+
+									if (iframeWindow.Liferay.SPA) {
+										const beforeScreenFlipHandler =
+											iframeWindow.Liferay.on(
+												'beforeScreenFlip',
+												() => {
+													iframeWindow.document.body.classList.add(
+														'dialog-iframe-popup'
+													);
+												}
+											);
+
+										iframeWindow.onunload = () => {
+											if (beforeScreenFlipHandler) {
+												iframeWindow.Liferay.detach(
+													beforeScreenFlipHandler
+												);
+											}
+										};
+									}
+
+									const cancelEventHandler =
+										iframeBody.delegate(
+											'click',
+											(event) => {
+												dialog.set(
+													'visible',
+													false,
+													event.currentTarget.hasClass(
+														'lfr-hide-dialog'
+													)
+														? {
+																src: 'hideLink',
+															}
+														: null
+												);
+
+												cancelEventHandler.detach();
+
+												iframeDocument.purge(true);
+											},
+											'.btn-cancel,.lfr-hide-dialog'
+										);
+
+									Liferay.fire('modalIframeLoaded', {
+										src: event.dialog.iframe.node.getAttribute(
+											'src'
+										),
+									});
 								};
 							}
 

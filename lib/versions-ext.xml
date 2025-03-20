@@ -663,18 +663,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/portletmvc4spring-test.jar</file-name>
-				<version>5.2.1</version>
-				<project-name>PortletMVC4Spring</project-name>
-				<project-url>https://github.com/liferay/portletmvc4spring</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/osgi-annotation-versioning.jar</file-name>
 				<version>1.1.0</version>
 				<project-name>org.osgi.annotation.versioning</project-name>

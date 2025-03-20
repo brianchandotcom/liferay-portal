@@ -28,6 +28,13 @@ import java.util.Map;
  */
 public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
+	public DuplicateRemovalUpgradeProcess(String tableName, String columns) {
+		_tableName = tableName;
+		_columns = columns;
+
+		_orderByClause = null;
+	}
+
 	public DuplicateRemovalUpgradeProcess(
 		String tableName, String columns, String orderByColumns,
 		String sortOrder) {

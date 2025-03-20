@@ -28,10 +28,10 @@ public class AWSFactory {
 		List<AWSFleetCloud> awsFleetClouds = new ArrayList<>();
 
 		JSONArray fleetCloudsJSONArray =
-			_getFleetCloudsJSONArrayFromBuildProperties(jenkinsMaster);
+			_getBuildPropertiesFleetCloudsJSONArray(jenkinsMaster);
 
 		if (fleetCloudsJSONArray == null) {
-			fleetCloudsJSONArray = _getFleetCloudsJSONArrayFromJenkins(
+			fleetCloudsJSONArray = _getJenkinsFleetCloudsJSONArray(
 				jenkinsMaster);
 		}
 
@@ -54,7 +54,7 @@ public class AWSFactory {
 		return new AWSFleetCloud(jenkinsMaster, jsonObject);
 	}
 
-	private static JSONArray _getFleetCloudsJSONArrayFromBuildProperties(
+	private static JSONArray _getBuildPropertiesFleetCloudsJSONArray(
 		JenkinsMaster jenkinsMaster) {
 
 		if (jenkinsMaster == null) {
@@ -125,7 +125,7 @@ public class AWSFactory {
 		}
 	}
 
-	private static JSONArray _getFleetCloudsJSONArrayFromJenkins(
+	private static JSONArray _getJenkinsFleetCloudsJSONArray(
 		JenkinsMaster jenkinsMaster) {
 
 		if (jenkinsMaster == null) {

@@ -10,6 +10,7 @@ export class FormBuilderFieldSettingsSidePanelPage {
 	readonly advancedTabButton: Locator;
 	readonly allowMultipleSelectionsSettingToggle: Locator;
 	readonly createListSettingSelect: Locator;
+	readonly inlineToggle: Locator;
 	readonly optionDisplayNameInputField: Locator;
 	readonly page: Page;
 
@@ -22,6 +23,7 @@ export class FormBuilderFieldSettingsSidePanelPage {
 			'Allow Multiple Selections'
 		);
 		this.createListSettingSelect = page.getByLabel('Create List');
+		this.inlineToggle = page.getByText('Inline');
 		this.optionDisplayNameInputField = page.getByPlaceholder('Option');
 		this.page = page;
 	}

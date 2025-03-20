@@ -26,6 +26,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
@@ -98,7 +99,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		if (layoutPageTemplateEntry == null) {
 			layoutPageTemplateEntry = _addDefaultLayoutPageTemplateEntry(
 				classNameId, groupId, objectDefinition.getName(),
-				serviceContext);
+				ParamUtil.getLong(httpServletRequest, "plid"), serviceContext);
 		}
 
 		Group group = _groupLocalService.getGroup(groupId);
@@ -134,7 +135,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 	}
 
 	private LayoutPageTemplateEntry _addDefaultLayoutPageTemplateEntry(
-			long classNameId, long groupId, String name,
+			long classNameId, long groupId, String name, long plid,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -181,6 +182,31 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			formStyledLayoutStructureItem, true, draftLayout, layoutStructure,
 			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
 			serviceContext, null);
+
+		Layout backLayout = _layoutLocalService.fetchLayout(plid);
+
+		if (backLayout != null) {
+			layoutStructure.updateItemConfig(
+				JSONUtil.put(
+					"successMessage",
+					JSONUtil.put(
+						"layout",
+						JSONUtil.put(
+							"groupId", backLayout.getGroupId()
+						).put(
+							"layoutId", backLayout.getLayoutId()
+						).put(
+							"layoutUuid", backLayout.getUuid()
+						).put(
+							"private", backLayout.isPrivateLayout()
+						).put(
+							"title", backLayout.getTitle()
+						)
+					).put(
+						"type", "page"
+					)),
+				formStyledLayoutStructureItem.getItemId());
+		}
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

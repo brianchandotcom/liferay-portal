@@ -2378,6 +2378,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="subrepository.name" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
+		<attribute default="" name="test.copy.company" />
 		<attribute default="" name="test.extract.and.insert.company" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.license.xml.url" />
@@ -2418,6 +2419,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							<antcall target="prepare-portal-test-digital-signature-properties" />
 
 							<antcall target="prepare-portal-test-portal-impl-properties">
+								<param name="test.copy.company" value="@{test.copy.company}" />
 								<param name="test.extract.and.insert.company" value="@{test.extract.and.insert.company}" />
 							</antcall>
 
@@ -7287,6 +7289,40 @@ information. Make sure to commit in all format-javadoc results.
 				</ant>
 			</finally>
 		</trycatch>
+	</target>
+
+	<target name="modules-integration-db-partition-copy-mysql">
+		<run-modules-integration-test
+			database.partition.enabled="true"
+			database.type="mysql"
+			test.copy.company="true"
+		/>
+	</target>
+
+	<target name="modules-integration-db-partition-copy-mysql57">
+		<run-modules-integration-test
+			database.partition.enabled="true"
+			database.type="mysql"
+			database.version="5.7"
+			test.copy.company="true"
+		/>
+	</target>
+
+	<target name="modules-integration-db-partition-copy-postgresql">
+		<run-modules-integration-test
+			database.partition.enabled="true"
+			database.type="postgresql"
+			test.copy.company="true"
+		/>
+	</target>
+
+	<target name="modules-integration-db-partition-copy-postgresql163">
+		<run-modules-integration-test
+			database.partition.enabled="true"
+			database.type="postgresql"
+			database.version="16.3"
+			test.copy.company="true"
+		/>
 	</target>
 
 	<target name="modules-integration-db-partition-extract-and-insert-mysql">

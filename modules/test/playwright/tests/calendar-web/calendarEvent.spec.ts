@@ -7,22 +7,28 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {calendarPagesTest} from '../../fixtures/calendarPagesTest';
+import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {toLocalDateTimeFormatted} from './utils/toLocalDateTimeFormatted';
-
 export const test = mergeTests(
 	apiHelpersTest,
 	calendarPagesTest,
+	collectionsPagesTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	journalPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest
@@ -88,6 +94,131 @@ test('assert that past events have respective within the click more dropdown', a
 			)
 			.nth(2)
 	).toHaveClass(/scheduler-event-past/);
+});
+
+test('assert that unprivileged users are denied access to calendar URLs', async ({
+	apiHelpers,
+	calendarWidgetPage,
+	collectionsPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Add calendar event
+
+	const title = getRandomString();
+
+	await calendarWidgetPage.addEvent({
+		allDay: true,
+		publishEvent: true,
+		title,
+	});
+
+	// Add calendar event dynamic collection
+
+	await collectionsPage.goto(site.friendlyUrlPath);
+
+	const calendarEventDynamicCollection = getRandomString();
+
+	await collectionsPage.addNewDynamicCollection(
+		calendarEventDynamicCollection
+	);
+
+	await page.getByLabel('Item Type').selectOption({label: 'Calendar Event'});
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	// Add collection display
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		options: {type: 'content'},
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.addFragment('Content Display', 'Collection Display');
+
+	await pageEditorPage.selectFragment(
+		await pageEditorPage.getFragmentId('Collection Display')
+	);
+
+	await pageEditorPage.chooseCollectionDisplayOption(
+		'Collections',
+		calendarEventDynamicCollection
+	);
+
+	await pageEditorPage.waitForChangesSaved();
+
+	// Add heading fragment
+
+	await pageEditorPage.addFragment(
+		'Basic Components',
+		'Heading',
+		page.locator('.page-editor__collection-item.empty').first()
+	);
+
+	// Map heading fragment to event URL field
+
+	await pageEditorPage.goToSidebarTab('Browser');
+
+	await page.getByLabel('Select element-text').click();
+
+	await page.getByLabel('Field').selectOption('Event URL');
+
+	await pageEditorPage.waitForChangesSaved();
+
+	// Access calendar event URL
+
+	const eventURL = await page
+		.getByText('/calendar/shared/-/calendar/')
+		.textContent();
+
+	await page.goto(eventURL);
+
+	await expect(page.getByText(site.key)).toBeVisible();
+	await expect(page.getByText(title)).toBeVisible();
+
+	// Add new user
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	apiHelpers.data.push({
+		id: user.id,
+		type: 'userAccount',
+	});
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: user.familyName,
+	};
+
+	await performLogout(page);
+	await performLogin(page, user.alternateName);
+
+	// Access event URL as new user
+
+	await page.goto(eventURL);
+
+	await expect(page.getByText(site.key)).not.toBeVisible();
+	await expect(page.getByText(title)).not.toBeVisible();
+
+	// Access calendar portlet as new user
+
+	await page.goto(
+		`/group/guest/~/control_panel/manage?p_p_id=com_liferay_calendar_web_portlet_CalendarPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_auth=obAWFnzM`
+	);
+
+	await expect(
+		page
+			.getByText(
+				'You do not have the roles required to access this portlet.'
+			)
+			.first()
+	).toBeVisible();
 });
 
 test('can create all-day calendar event with different time zone', async ({

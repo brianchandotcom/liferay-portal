@@ -151,6 +151,9 @@ function FirstSectionComponent({field}: {field: Field}) {
 			/>
 
 			<Input
+				helpMessage={Liferay.Language.get(
+					'set-the-maximum-file-size-in-megabytes'
+				)}
 				label={Liferay.Language.get('maximum-file-size')}
 				onValueChange={(value) => {
 					dispatch({

@@ -42,6 +42,7 @@ export default function ImportStructureModalContent({
 
 			<ClayModal.Body>
 				<FieldFile
+					fieldId="jsonFileId"
 					label={Liferay.Language.get('json-file')}
 					validExtensions={JSON_EXTENSION}
 				/>

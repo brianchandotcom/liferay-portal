@@ -8,10 +8,14 @@ import {ClayInput} from '@clayui/form';
 import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
+import FieldWrapper from './FieldWrapper';
+
 const FieldFile = ({
+	fieldId,
 	label,
 	validExtensions,
 }: {
+	fieldId: string;
 	label: string;
 	validExtensions: string;
 }) => {
@@ -47,70 +51,69 @@ const FieldFile = ({
 	};
 
 	return (
-		<ClayInput.Group>
-			<ClayInput.GroupItem>
-				<label htmlFor="inputId">{label}</label>
+		<FieldWrapper fieldId={fieldId} label={label}>
+			<ClayInput.Group>
+				<ClayInput.GroupItem>
+					<ClayInput id={fieldId} value={file?.name || ''} />
 
-				<ClayInput id="inputId" value={file?.name || ''} />
+					<input
+						accept={validExtensions}
+						className="d-none"
+						onChange={handleFileInputChange}
+						ref={fileInputRef}
+						type="file"
+					/>
+				</ClayInput.GroupItem>
 
-				<input
-					accept={validExtensions}
-					className="d-none"
-					id="fileInputId"
-					onChange={handleFileInputChange}
-					ref={fileInputRef}
-					type="file"
-				/>
-			</ClayInput.GroupItem>
+				<ClayInput.GroupItem shrink>
+					{file ? (
+						<>
+							<ClayButtonWithIcon
+								aria-label={sub(
+									Liferay.Language.get('change-x'),
+									Liferay.Language.get('file')
+								)}
+								className="lfr-portal-tooltip"
+								displayType="secondary"
+								onClick={onChangeClick}
+								symbol="change"
+								title={sub(
+									Liferay.Language.get('change-x'),
+									Liferay.Language.get('file')
+								)}
+								type="button"
+							/>
 
-			<ClayInput.GroupItem className="mt-4" shrink>
-				{file ? (
-					<>
+							<ClayButtonWithIcon
+								aria-label={sub(
+									Liferay.Language.get('remove-x'),
+									Liferay.Language.get('file')
+								)}
+								className="lfr-portal-tooltip"
+								displayType="unstyled"
+								onClick={resetFileInput}
+								symbol="trash"
+								title={sub(
+									Liferay.Language.get('remove-x'),
+									Liferay.Language.get('file')
+								)}
+								type="button"
+							/>
+						</>
+					) : (
 						<ClayButtonWithIcon
-							aria-label={sub(
-								Liferay.Language.get('change-x'),
-								Liferay.Language.get('file')
-							)}
+							aria-label={Liferay.Language.get('add')}
 							className="lfr-portal-tooltip"
 							displayType="secondary"
-							onClick={onChangeClick}
-							symbol="change"
-							title={sub(
-								Liferay.Language.get('change-x'),
-								Liferay.Language.get('file')
-							)}
+							onClick={() => fileInputRef.current?.click()}
+							symbol="plus"
+							title={Liferay.Language.get('add')}
 							type="button"
 						/>
-
-						<ClayButtonWithIcon
-							aria-label={sub(
-								Liferay.Language.get('remove-x'),
-								Liferay.Language.get('file')
-							)}
-							className="lfr-portal-tooltip"
-							displayType="unstyled"
-							onClick={resetFileInput}
-							symbol="trash"
-							title={sub(
-								Liferay.Language.get('remove-x'),
-								Liferay.Language.get('file')
-							)}
-							type="button"
-						/>
-					</>
-				) : (
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('add')}
-						className="lfr-portal-tooltip"
-						displayType="secondary"
-						onClick={() => fileInputRef.current?.click()}
-						symbol="plus"
-						title={Liferay.Language.get('add')}
-						type="button"
-					/>
-				)}
-			</ClayInput.GroupItem>
-		</ClayInput.Group>
+					)}
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+		</FieldWrapper>
 	);
 };
 

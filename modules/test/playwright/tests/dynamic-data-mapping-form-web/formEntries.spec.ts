@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -12,7 +12,15 @@ import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
 
+let formPreviewPage: Page;
+
 test.afterEach(async ({formsPage}) => {
+	if (formPreviewPage) {
+		await formPreviewPage.close();
+
+		formPreviewPage = null;
+	}
+
 	await formsPage.goTo();
 
 	await deleteItems(formsPage);
@@ -65,4 +73,80 @@ test('can interact with a large list of fields on the form entries page', async 
 	await page.locator('a').filter({hasText: 'Text 29'}).click();
 
 	await expect(page.getByText(formEntry)).toBeVisible();
+});
+
+test('can interact with Single Selection options using only keys', async ({
+	formBuilderFieldSettingsSidePanelPage,
+	formBuilderPage,
+	formBuilderSidePanelPage,
+	formsPage,
+	page,
+}) => {
+	await formsPage.goTo();
+
+	await formsPage.clickManagementToolbarNewButton();
+
+	for (let index = 0; index < 2; index++) {
+		await formBuilderSidePanelPage.addSingleSelectionButton.dblclick();
+
+		await formBuilderFieldSettingsSidePanelPage.addOptions(3);
+
+		await formBuilderFieldSettingsSidePanelPage.advancedTabButton.click();
+
+		await formBuilderFieldSettingsSidePanelPage.inlineToggle.click();
+
+		await formBuilderSidePanelPage.backButton.click();
+	}
+
+	const formPreviewPagePromise = page.waitForEvent('popup');
+
+	await formBuilderPage.previewButton.click();
+
+	formPreviewPage = await formPreviewPagePromise;
+
+	// We need to ensure option elements are enabled before tabbing through them.
+
+	await expect(formPreviewPage.getByLabel('Option0').first()).toBeEnabled();
+
+	for (let index = 0; index < 2; index++) {
+
+		// On the second loop iteration, pressing Tab should focus the second group.
+
+		await formPreviewPage.keyboard.press('Tab');
+
+		await expect(
+			formPreviewPage.getByLabel('Option0').nth(index)
+		).toBeChecked();
+
+		await formPreviewPage.keyboard.press('ArrowDown');
+
+		await expect(
+			formPreviewPage.getByLabel('Option1').nth(index)
+		).toBeChecked();
+
+		await formPreviewPage.keyboard.press('ArrowDown');
+
+		await expect(
+			formPreviewPage.getByLabel('Option2').nth(index)
+		).toBeChecked();
+
+		await formPreviewPage.keyboard.press('ArrowDown');
+
+		// After pressing Arrow Down while being in the last option,
+		// we should have the first option selected again.
+
+		await expect(
+			formPreviewPage.getByLabel('Option0').nth(index)
+		).toBeChecked();
+
+		// Then, pressing Arrow Up twice should select the middle option.
+
+		await formPreviewPage.keyboard.press('ArrowUp');
+
+		await formPreviewPage.keyboard.press('ArrowUp');
+
+		await expect(
+			formPreviewPage.getByLabel('Option1').nth(index)
+		).toBeChecked();
+	}
 });

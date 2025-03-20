@@ -51,7 +51,31 @@ public class ShipmentDTOConverter
 				setExternalReferenceCode(
 					commerceShipment::getExternalReferenceCode);
 				setId(commerceShipment::getCommerceShipmentId);
+				setItemsCount(
+					() -> {
+						Integer itemsCount =
+							(Integer)dtoConverterContext.getAttribute(
+								"itemsCount");
+
+						if (itemsCount == null) {
+							return null;
+						}
+
+						return itemsCount;
+					});
 				setModifiedDate(commerceShipment::getModifiedDate);
+				setOneLineAddress(
+					() -> {
+						String oneLineAddress =
+							(String)dtoConverterContext.getAttribute(
+								"oneLineAddress");
+
+						if (oneLineAddress == null) {
+							return null;
+						}
+
+						return oneLineAddress;
+					});
 				setShippingAddressId(commerceShipment::getCommerceAddressId);
 				setShippingDate(commerceShipment::getShippingDate);
 				setShippingMethodId(

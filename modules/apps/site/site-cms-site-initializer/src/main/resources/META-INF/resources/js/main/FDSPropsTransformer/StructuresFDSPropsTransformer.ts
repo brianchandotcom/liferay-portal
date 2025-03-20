@@ -42,9 +42,13 @@ export default function StructuresFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		onActionDropdownItemClick({action}: {action: {data: {id: string}}}) {
+		onActionDropdownItemClick({
+			action,
+		}: {
+			action: {data: {id: string; importURL: string}};
+		}) {
 			if (action.data.id === 'import') {
-				importStructureAction();
+				importStructureAction(action.data.importURL);
 			}
 		},
 	};

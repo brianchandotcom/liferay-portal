@@ -62,8 +62,6 @@ public class CommerceOrderModelDocumentContributor
 				document.addKeyword(Field.USER_NAME, user.getFullName());
 				document.addKeywordSortable(
 					Field.USER_NAME, user.getFullName());
-				document.addKeyword(
-					"orderCreatorEmailAddress", user.getEmailAddress());
 			}
 
 			AccountEntry accountEntry =
@@ -90,9 +88,6 @@ public class CommerceOrderModelDocumentContributor
 					commerceOrder.getCommerceOrderTypeId());
 
 			if (commerceOrderType != null) {
-				document.addLocalizedKeyword(
-					"commerceOrderTypeName", commerceOrderType.getNameMap(),
-					false, true);
 				document.addKeyword(
 					"commerceOrderTypeExternalReferenceCode",
 					commerceOrderType.getExternalReferenceCode());
@@ -100,6 +95,12 @@ public class CommerceOrderModelDocumentContributor
 
 			document.addKeyword(
 				"commerceOrderTypeId", commerceOrder.getCommerceOrderTypeId());
+
+			if (commerceOrderType != null) {
+				document.addLocalizedKeyword(
+					"commerceOrderTypeName", commerceOrderType.getNameMap(),
+					false, true);
+			}
 
 			document.addKeyword(
 				"externalReferenceCode",
@@ -109,6 +110,12 @@ public class CommerceOrderModelDocumentContributor
 				commerceOrder.getExternalReferenceCode());
 			document.addNumber(
 				"itemsQuantity", _getItemsQuantity(commerceOrder));
+
+			if (user != null) {
+				document.addKeyword(
+					"orderCreatorEmailAddress", user.getEmailAddress());
+			}
+
 			document.addDate("orderDate", commerceOrder.getOrderDate());
 			document.addDateSortable("orderDate", commerceOrder.getOrderDate());
 			document.addKeyword(

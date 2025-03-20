@@ -16,6 +16,7 @@ import {Uuid, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
+import selectStructureUuid from '../selectors/selectStructureUuid';
 import {FIELD_TYPE_LABEL, Field} from '../utils/field';
 import focusInvalidInput from '../utils/focusInvalidInput';
 import getFieldComponents from '../utils/getFieldComponents';
@@ -27,6 +28,7 @@ export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 	const dispatch = useStateDispatch();
 	const field = useSelector(selectStructureField(uuid));
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
+	const structureUuid = useSelector(selectStructureUuid);
 
 	useEffect(() => {
 		focusInvalidInput();
@@ -41,7 +43,7 @@ export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 						label: structureLabel,
 						onClick: () => {
 							dispatch({
-								selection: [],
+								selection: [structureUuid],
 								type: 'set-selection',
 							});
 						},

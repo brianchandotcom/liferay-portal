@@ -5,19 +5,19 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalProcess;
+import com.liferay.portal.kernel.upgrade.BaseDuplicateRemovalUpgradeProcess;
 
 /**
  * @author Jorge Avalos
  */
-public class DefaultDuplicateRemovalProcess
-	extends BaseDuplicateRemovalProcess {
+public class DefaultDuplicateRemovalUpgradeProcess
+	extends BaseDuplicateRemovalUpgradeProcess {
 
-	public DefaultDuplicateRemovalProcess(String tableName, String columns) {
+	public DefaultDuplicateRemovalUpgradeProcess(String tableName, String columns) {
 		super(tableName, columns, null, null);
 	}
 
-	public DefaultDuplicateRemovalProcess(
+	public DefaultDuplicateRemovalUpgradeProcess(
 		String tableName, String columns, String orderByColumns,
 		String orderByClause) {
 

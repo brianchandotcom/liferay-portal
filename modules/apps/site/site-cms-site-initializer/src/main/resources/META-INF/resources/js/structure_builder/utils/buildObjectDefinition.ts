@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
 import {config} from '../config';
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
@@ -71,9 +73,9 @@ function buildFields(fields: Field[]) {
 		}
 
 		if ('settings' in field) {
-			objectField.objectFieldSettings = Object.entries(
-				field.settings
-			).map(([name, value]) => ({name, value}));
+			objectField.objectFieldSettings = Object.entries(field.settings)
+				.filter(([_, value]) => !isNullOrUndefined(value))
+				.map(([name, value]) => ({name, value}));
 		}
 
 		return objectField;

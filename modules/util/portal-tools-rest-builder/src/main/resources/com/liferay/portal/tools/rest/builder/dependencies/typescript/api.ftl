@@ -97,37 +97,6 @@ export class ${className} {
 			</#if>
 			response: Response;
 		}> {
-			const localVarPath = this._basePath + '${operationData.path}'
-				<#list operationData.parameters as parameter>
-					<#if stringUtil.equals(parameter.type, "path")>
-						.replace('{${parameter.name}}',encodeURIComponent(${parameter.name}))
-					</#if>
-				</#list>;
-
-			<#if operationData.parameters??>
-				<#list operationData.parameters as parameter>
-					<#if parameter.required>
-						if (${parameter.name} === null || ${parameter.name} === undefined) {
-							throw new Error('Required parameter ${parameter.name} was null or undefined when calling ${operationData.operationId}.');
-						}
-
-					</#if>
-				</#list>
-			</#if>
-			const localVarQueryParameters: any = {};
-
-			<#list operationData.parameters as parameter>
-				<#if stringUtil.equals(parameter.type, "query")>
-					if (${parameter.name} !== undefined) {
-						localVarQueryParameters['${parameter.name}'] = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
-					}
-				</#if>
-			</#list>
-
-			const queryString = Object.keys(localVarQueryParameters).length
-				? '?' + new URLSearchParams(localVarQueryParameters).toString()
-				: '';
-
 			<#if operationData.bodyParameters?has_content>
 				let body;
 				<#if (operationData.bodyParameters?keys?size > 1)>
@@ -169,7 +138,36 @@ export class ${className} {
 				</#if>
 			</#if>
 
-			const response = await fetch(localVarPath + queryString, {
+			const path = this._basePath + '${operationData.path}'
+				<#list operationData.parameters as parameter>
+					<#if stringUtil.equals(parameter.type, "path")>
+						.replace('{${parameter.name}}',encodeURIComponent(${parameter.name}))
+					</#if>
+				</#list>;
+
+			const queryParameters: any = {};
+			<#if operationData.parameters??>
+				<#list operationData.parameters as parameter>
+					<#if parameter.required>
+
+						if (${parameter.name} === null || ${parameter.name} === undefined) {
+							throw new Error('Required parameter ${parameter.name} was null or undefined when calling ${operationData.operationId}.');
+						}
+					</#if>
+					<#if stringUtil.equals(parameter.type, "query")>
+
+						if (${parameter.name} !== undefined) {
+							queryParameters['${parameter.name}'] = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
+						}
+					</#if>
+				</#list>
+			</#if>
+
+			const queryString = Object.keys(queryParameters).length
+				? '?' + new URLSearchParams(queryParameters).toString()
+				: '';
+
+			const response = await fetch(path + queryString, {
 				method: '${operationData.httpMethod}',
 				headers:
 					Object.assign({}, this._defaultHeaders

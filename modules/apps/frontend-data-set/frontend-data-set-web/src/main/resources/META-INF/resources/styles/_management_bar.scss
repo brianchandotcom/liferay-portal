@@ -1,5 +1,6 @@
 .management-bar-wrapper {
 	border-bottom: 1px solid $border-color;
+	margin-bottom: 1rem;
 
 	& > .management-bar + .management-bar {
 		border-top: 1px solid #eee;

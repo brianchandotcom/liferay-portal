@@ -100,11 +100,29 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public synchronized void addRecentBatch(int batchSize) {
-		_batchSizes.put(
+		addRecentBatch(batchSize, null);
+	}
+
+	public synchronized void addRecentBatch(
+		int batchSize, String labelExpression) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+			labelExpression = null;
+		}
+
+		Map<Long, Integer> batchSizes = _labelBatchSizes.get(labelExpression);
+
+		if (batchSizes == null) {
+			batchSizes = new TreeMap<>();
+
+			_labelBatchSizes.put(labelExpression, batchSizes);
+		}
+
+		batchSizes.put(
 			JenkinsResultsParserUtil.getCurrentTimeMillis() + maxRecentBatchAge,
 			batchSize);
 
-		getAvailableSlavesCount();
+		_labelBatchSizes.put(labelExpression, batchSizes);
 	}
 
 	@Override
@@ -818,9 +836,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	public synchronized void update(boolean minimal) {
 		if (!isAvailable()) {
 			_assignedLabels.clear();
-			_batchSizes.clear();
 			_buildURLs.clear();
 			_jenkinsSlavesMap.clear();
+			_labelBatchSizes.clear();
 			_queueCount = 0;
 			_queuedBuildURLs.clear();
 			_reportedAvailableSlavesCount = 0;
@@ -857,9 +875,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 		catch (Exception exception) {
 			_assignedLabels.clear();
-			_batchSizes.clear();
 			_buildURLs.clear();
 			_jenkinsSlavesMap.clear();
+			_labelBatchSizes.clear();
 			_queueCount = 0;
 			_queuedBuildURLs.clear();
 			_reportedAvailableSlavesCount = 0;
@@ -1105,25 +1123,54 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	private synchronized int _getRecentBatchSizesTotal() {
+		return _getRecentBatchSizesTotal(null);
+	}
+
+	private synchronized int _getRecentBatchSizesTotal(String labelExpression) {
 		int recentBatchSizesTotal = 0;
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+			labelExpression = null;
+		}
+
 		long currentTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
-		List<Long> expiredTimestamps = new ArrayList<>(_batchSizes.size());
 
-		for (Map.Entry<Long, Integer> entry : _batchSizes.entrySet()) {
-			Long expirationTimestamp = entry.getKey();
+		for (Map.Entry<String, Map<Long, Integer>> labelBatchSizesEntry :
+				_labelBatchSizes.entrySet()) {
 
-			if (expirationTimestamp < currentTimestamp) {
-				expiredTimestamps.add(expirationTimestamp);
+			String currentLabel = labelBatchSizesEntry.getKey();
+
+			if ((labelExpression != null) &&
+				!labelExpression.equals(currentLabel)) {
 
 				continue;
 			}
 
-			recentBatchSizesTotal += entry.getValue();
-		}
+			Map<Long, Integer> batchSizes = labelBatchSizesEntry.getValue();
 
-		for (Long expiredTimestamp : expiredTimestamps) {
-			_batchSizes.remove(expiredTimestamp);
+			if (batchSizes == null) {
+				batchSizes = new HashMap<>();
+			}
+
+			List<Long> expiredTimestamps = new ArrayList<>(batchSizes.size());
+
+			for (Map.Entry<Long, Integer> entry : batchSizes.entrySet()) {
+				Long expirationTimestamp = entry.getKey();
+
+				if (expirationTimestamp < currentTimestamp) {
+					expiredTimestamps.add(expirationTimestamp);
+
+					continue;
+				}
+
+				recentBatchSizesTotal += entry.getValue();
+			}
+
+			for (Long expiredTimestamp : expiredTimestamps) {
+				batchSizes.remove(expiredTimestamp);
+			}
+
+			_labelBatchSizes.put(currentLabel, batchSizes);
 		}
 
 		return recentBatchSizesTotal;
@@ -1173,7 +1220,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private long _availableTimestamp = -1;
 	private long _awsFleetCloudLastUpdateTimestamp;
 	private List<AWSFleetCloud> _awsFleetClouds;
-	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
 	private boolean _blacklisted;
 	private final Map<String, List<JSONObject>> _buildJSONObjectsMap =
 		new HashMap<>();
@@ -1184,6 +1230,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private JenkinsCohort _jenkinsCohort;
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());
+	private final Map<String, Map<Long, Integer>> _labelBatchSizes =
+		new HashMap<>();
 	private final String _masterName;
 	private final String _masterRemoteURL;
 	private final String _masterURL;

@@ -5,13 +5,11 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -86,8 +84,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 		String sql = sb.toString();
 
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -149,8 +146,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 		String sql = sb.toString();
 
-		try (Connection connection = DataAccess.getConnection();
-			 PreparedStatement preparedStatement =
+		try (PreparedStatement preparedStatement =
 				 connection.prepareStatement(sql);
 
 			 ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -273,9 +269,8 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 				String sql = sb.toString();
 
-				try (Connection connection = DataAccess.getConnection()) {
-					PreparedStatement preparedStatement1 =
-						connection.prepareStatement(sql);
+				try (PreparedStatement preparedStatement1 =
+						connection.prepareStatement(sql)) {
 
 					preparedStatement1.execute();
 				}

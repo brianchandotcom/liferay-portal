@@ -164,21 +164,21 @@ public class ImportSystemDataSetMVCResourceCommand
 		if (ListUtil.isNotEmpty(fdsViews)) {
 			for (FDSView fdsView : fdsViews) {
 				if (fdsView instanceof BaseTableFDSView) {
-					_addDataSetTableSectionObjectEntries(
+					_addBaseTableFDSViewObjectEntries(
 						(BaseTableFDSView)fdsView,
 						_portal.getHttpServletRequest(resourceRequest),
 						objectEntry);
 				}
 
 				if (fdsView instanceof BaseCardsFDSView) {
-					_addDataSetCardsSectionsObjectEntries(
+					_addBaseCardsFDSViewObjectEntries(
 						(BaseCardsFDSView)fdsView,
 						_portal.getHttpServletRequest(resourceRequest),
 						objectEntry);
 				}
 
 				if (fdsView instanceof BaseListFDSView) {
-					_addDataSetListSectionsObjectEntries(
+					_addBaseListFDSViewObjectEntries(
 						(BaseListFDSView)fdsView,
 						_portal.getHttpServletRequest(resourceRequest),
 						objectEntry);
@@ -206,7 +206,7 @@ public class ImportSystemDataSetMVCResourceCommand
 			resourceRequest, resourceResponse, objectEntry);
 	}
 
-	private void _addDataSetCardsSectionsObjectEntries(
+	private void _addBaseCardsFDSViewObjectEntries(
 			BaseCardsFDSView baseCardsFDSView,
 			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
 		throws Exception {
@@ -258,7 +258,7 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 	}
 
-	private void _addDataSetListSectionsObjectEntries(
+	private void _addBaseListFDSViewObjectEntries(
 			BaseListFDSView baseListFDSView,
 			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
 		throws Exception {
@@ -310,7 +310,7 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 	}
 
-	private void _addDataSetTableSectionObjectEntries(
+	private void _addBaseTableFDSViewObjectEntries(
 			BaseTableFDSView baseTableFDSView,
 			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
 		throws Exception {

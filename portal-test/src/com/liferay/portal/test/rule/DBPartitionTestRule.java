@@ -13,10 +13,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalInstances;
-
-import java.util.Date;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -44,9 +41,10 @@ public class DBPartitionTestRule implements TestRule {
 				String companyWebId;
 
 				if (GetterUtil.getBoolean(
-						TestPropsUtil.get("test.extract.and.insert.company")) ||
+						TestPropsUtil.get(
+							_PROPERTY_TEST_EXTRACT_AND_INSERT_COMPANY)) ||
 					GetterUtil.getBoolean(
-						TestPropsUtil.get("test.copy.company"))) {
+						TestPropsUtil.get(_PROPERTY_TEST_COPY_COMPANY))) {
 
 					companyWebId = RandomTestUtil.randomString() + ".com";
 				}
@@ -61,7 +59,8 @@ public class DBPartitionTestRule implements TestRule {
 						true, null, null, null, null, null, null));
 
 				if (GetterUtil.getBoolean(
-						TestPropsUtil.get("test.extract.and.insert.company"))) {
+						TestPropsUtil.get(
+							_PROPERTY_TEST_EXTRACT_AND_INSERT_COMPANY))) {
 
 					company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
 						companyWebId);
@@ -78,7 +77,7 @@ public class DBPartitionTestRule implements TestRule {
 						TestPropsValues.COMPANY_WEB_ID);
 				}
 				else if (GetterUtil.getBoolean(
-							TestPropsUtil.get("test.copy.company"))) {
+							TestPropsUtil.get(_PROPERTY_TEST_COPY_COMPANY))) {
 
 					company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
 						companyWebId);
@@ -102,5 +101,11 @@ public class DBPartitionTestRule implements TestRule {
 
 		return statement;
 	}
+
+	private static final String _PROPERTY_TEST_COPY_COMPANY =
+		"test.copy.company";
+
+	private static final String _PROPERTY_TEST_EXTRACT_AND_INSERT_COMPANY =
+		"test.extract.and.insert.company";
 
 }

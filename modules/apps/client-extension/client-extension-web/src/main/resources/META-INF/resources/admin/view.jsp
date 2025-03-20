@@ -33,7 +33,6 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 		id="<%= ClientExtensionAdminFDSNames.CLIENT_EXTENSION_TYPES %>"
 		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="externalReferenceCode"
-		style="fluid"
 		uniformActionsDisplay="<%= true %>"
 	/>
 </div>

@@ -56,7 +56,6 @@ const FDS_DEFAULT_PROPS = {
 		deltas: [{label: 4}, {label: 8}, {label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 8,
 	},
-	style: 'fluid' as const,
 };
 
 const DEFAULT_VISUALIZATION_MODES: Array<IBaseVisualizationMode<any>> = [

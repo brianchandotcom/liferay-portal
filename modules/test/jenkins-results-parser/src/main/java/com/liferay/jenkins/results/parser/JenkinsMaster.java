@@ -924,6 +924,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 					_assignedLabels.add(assignedLabelName);
 				}
 
+				_idle = computerJSONObject.optBoolean("idle", true);
+
 				continue;
 			}
 
@@ -1227,6 +1229,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
 	private final List<DefaultBuild> _defaultBuilds = new ArrayList<>();
 	private Map<String, String> _globalEnvironmentVariables;
+	private boolean _idle;
 	private JenkinsCohort _jenkinsCohort;
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());

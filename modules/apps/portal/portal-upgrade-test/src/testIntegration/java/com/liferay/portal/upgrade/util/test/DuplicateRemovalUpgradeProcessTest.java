@@ -47,6 +47,8 @@ public class DuplicateRemovalUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
+
 		_db = DBManagerUtil.getDB();
 
 		_maxPrimaryKey = RandomTestUtil.randomLong(9000, 10000);
@@ -119,8 +121,7 @@ public class DuplicateRemovalUpgradeProcessTest {
 
 		_assertDuplicates(true);
 
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select primaryKeyColumn from TestTable");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -151,8 +152,7 @@ public class DuplicateRemovalUpgradeProcessTest {
 
 		_assertDuplicates(true);
 
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select primaryKeyColumn from TestTable");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -170,9 +170,8 @@ public class DuplicateRemovalUpgradeProcessTest {
 		if (removed) {
 			_companyLocalService.forEachCompany(
 				company -> {
-					try (Connection connection = DataAccess.getConnection();
-						PreparedStatement preparedStatement =
-							connection.prepareStatement(countSQL);
+					try (PreparedStatement preparedStatement =
+							_connection.prepareStatement(countSQL);
 						ResultSet resultSet =
 							preparedStatement.executeQuery()) {
 
@@ -183,9 +182,8 @@ public class DuplicateRemovalUpgradeProcessTest {
 		else {
 			_companyLocalService.forEachCompany(
 				company -> {
-					try (Connection connection = DataAccess.getConnection();
-						PreparedStatement preparedStatement =
-							connection.prepareStatement(countSQL);
+					try (PreparedStatement preparedStatement =
+							_connection.prepareStatement(countSQL);
 						ResultSet resultSet =
 							preparedStatement.executeQuery()) {
 
@@ -200,6 +198,7 @@ public class DuplicateRemovalUpgradeProcessTest {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
+	private static Connection _connection;
 	private static DB _db;
 	private static long _maxPrimaryKey;
 	private static long _minPrimaryKey;

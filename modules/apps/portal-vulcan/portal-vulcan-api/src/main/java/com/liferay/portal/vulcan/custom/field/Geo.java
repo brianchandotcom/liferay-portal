@@ -14,6 +14,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.function.Supplier;
@@ -23,7 +25,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * @author Carlos Correa
  */
-@GraphQLName("Geo")
+@GraphQLName(
+	description = "A point determined by latitude and longitude.", value = "Geo"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Geo")
 public class Geo implements Serializable {
@@ -36,6 +40,7 @@ public class Geo implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Geo.class, json);
 	}
 
+	@Schema(description = "The latitude of a point in space.")
 	public Double getLatitude() {
 		if (_latitudeSupplier != null) {
 			latitude = _latitudeSupplier.get();
@@ -46,6 +51,7 @@ public class Geo implements Serializable {
 		return latitude;
 	}
 
+	@Schema(description = "The longitude of a point in space.")
 	public Double getLongitude() {
 		if (_longitudeSupplier != null) {
 			longitude = _longitudeSupplier.get();
@@ -101,6 +107,13 @@ public class Geo implements Serializable {
 			}
 		};
 	}
+
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.portal.vulcan.custom.field.Geo",
+		name = "x-class-name"
+	)
+	public String xClassName;
 
 	@GraphQLField(description = "The latitude of a point in space.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)

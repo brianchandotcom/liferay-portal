@@ -14,6 +14,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.Map;
@@ -26,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * @author Carlos Correa
  */
-@GraphQLName("CustomValue")
+@GraphQLName(description = "Represents a custom value.", value = "CustomValue")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CustomValue")
 public class CustomValue implements Serializable {
@@ -39,6 +41,7 @@ public class CustomValue implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CustomValue.class, json);
 	}
 
+	@Schema(description = "The field's content value for simple types.")
 	@Valid
 	public Object getData() {
 		if (_dataSupplier != null) {
@@ -50,6 +53,9 @@ public class CustomValue implements Serializable {
 		return data;
 	}
 
+	@Schema(
+		description = "The localized field's content values for simple types."
+	)
 	@Valid
 	public Map<String, String> getData_i18n() {
 		if (_data_i18nSupplier != null) {
@@ -61,6 +67,7 @@ public class CustomValue implements Serializable {
 		return data_i18n;
 	}
 
+	@Schema(description = "A point determined by latitude and longitude.")
 	@Valid
 	public Geo getGeo() {
 		if (_geoSupplier != null) {
@@ -138,15 +145,24 @@ public class CustomValue implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.portal.vulcan.custom.field.CustomValue",
+		name = "x-class-name"
+	)
+	public String xClassName;
+
+	@GraphQLField(description = "The field's content value for simple types.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object data;
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The localized field's content values for simple types."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> data_i18n;
 
-	@GraphQLField
+	@GraphQLField(description = "A point determined by latitude and longitude.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Geo geo;
 

@@ -14,6 +14,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.io.Serializable;
 
 import java.util.function.Supplier;
@@ -25,7 +27,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * @author Carlos Correa
  */
-@GraphQLName("CustomField")
+@GraphQLName(
+	description = "Represents the value of each custom field. Fields can contain different information types (e.g., geolocation, strings, etc.).",
+	value = "CustomField"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CustomField")
 public class CustomField implements Serializable {
@@ -38,6 +43,7 @@ public class CustomField implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(CustomField.class, json);
 	}
 
+	@Schema(description = "The field's value.")
 	@Valid
 	public CustomValue getCustomValue() {
 		if (_customValueSupplier != null) {
@@ -49,6 +55,7 @@ public class CustomField implements Serializable {
 		return customValue;
 	}
 
+	@Schema(description = "The field type (e.g., image, text, etc.).")
 	public String getDataType() {
 		if (_dataTypeSupplier != null) {
 			dataType = _dataTypeSupplier.get();
@@ -59,6 +66,9 @@ public class CustomField implements Serializable {
 		return dataType;
 	}
 
+	@Schema(
+		description = "The field's internal name. This is valid for comparisons and unique in the structured content."
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -136,15 +146,24 @@ public class CustomField implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@Schema(
+		accessMode = Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.portal.vulcan.custom.field.CustomField",
+		name = "x-class-name"
+	)
+	public String xClassName;
+
+	@GraphQLField(description = "The field's value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CustomValue customValue;
 
-	@GraphQLField
+	@GraphQLField(description = "The field type (e.g., image, text, etc.).")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String dataType;
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The field's internal name. This is valid for comparisons and unique in the structured content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 

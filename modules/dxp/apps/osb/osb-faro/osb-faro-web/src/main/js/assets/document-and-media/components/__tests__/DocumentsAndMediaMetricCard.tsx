@@ -6,7 +6,7 @@ import {cleanup, render} from '@testing-library/react';
 import {
 	CommentsMetric,
 	DownloadsMetric,
-	PreviewsMetric,
+	ImpressionMadeMetric,
 	RatingsMetric
 } from 'shared/components/metric-card/metrics';
 import {
@@ -71,7 +71,7 @@ const WrappedComponent = ({empty = false}) => (
 					mockAssetTabsReq({
 						metrics: [
 							DownloadsMetric,
-							PreviewsMetric,
+							ImpressionMadeMetric,
 							CommentsMetric,
 							RatingsMetric
 						],

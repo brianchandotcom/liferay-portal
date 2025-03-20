@@ -100,10 +100,13 @@ describe('AssetAppearsOnCard', () => {
 		expect(getByText('Views')).toBeInTheDocument();
 	});
 
-	it('should have [Downloads, Previews] columns for Document', async () => {
+	it('should have [Downloads, Impressions] columns for Document', async () => {
 		const {container, getByText} = render(
 			<WrappedComponent
-				accessors={[Accessor.DownloadsMetric, Accessor.PreviewsMetric]}
+				accessors={[
+					Accessor.DownloadsMetric,
+					Accessor.ImpressionMadeMetric
+				]}
 				assetType={AssetTypes.Document}
 				emptyStateLink={EmptyStateLink.Document}
 				emptyStateText={EmptyStateText.Document}
@@ -113,7 +116,7 @@ describe('AssetAppearsOnCard', () => {
 		await waitForLoadingToBeRemoved(container);
 
 		expect(getByText('Downloads')).toBeInTheDocument();
-		expect(getByText('Previews')).toBeInTheDocument();
+		expect(getByText('Impressions')).toBeInTheDocument();
 	});
 
 	it('should have a [Submissions, Views] column for Forms', async () => {
@@ -150,7 +153,7 @@ describe('AssetAppearsOnCard', () => {
 	it('should render empty state for Blog', async () => {
 		const {container, getByText} = render(
 			<WrappedComponent
-				accessors={[Accessor.PreviewsMetric]}
+				accessors={[Accessor.ImpressionMadeMetric]}
 				assetType={AssetTypes.Blog}
 				empty
 				emptyStateLink={EmptyStateLink.Blog}
@@ -177,7 +180,7 @@ describe('AssetAppearsOnCard', () => {
 	it('should render empty state for Documents and Media', async () => {
 		const {container, getByText} = render(
 			<WrappedComponent
-				accessors={[Accessor.PreviewsMetric]}
+				accessors={[Accessor.ImpressionMadeMetric]}
 				assetType={AssetTypes.Document}
 				empty
 				emptyStateLink={EmptyStateLink.Document}
@@ -204,7 +207,7 @@ describe('AssetAppearsOnCard', () => {
 	it('should render empty state for Forms', async () => {
 		const {container, getByText} = render(
 			<WrappedComponent
-				accessors={[Accessor.PreviewsMetric]}
+				accessors={[Accessor.ImpressionMadeMetric]}
 				assetType={AssetTypes.Form}
 				empty
 				emptyStateLink={EmptyStateLink.Form}
@@ -231,7 +234,7 @@ describe('AssetAppearsOnCard', () => {
 	it('should render empty state for Web content', async () => {
 		const {container, getByText} = render(
 			<WrappedComponent
-				accessors={[Accessor.PreviewsMetric]}
+				accessors={[Accessor.ImpressionMadeMetric]}
 				assetType={AssetTypes.Journal}
 				empty
 				emptyStateLink={EmptyStateLink.Journal}

@@ -6,17 +6,19 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {sub} from 'frontend-js-web';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import FieldWrapper from './FieldWrapper';
 
 const FieldFile = ({
 	fieldId,
 	label,
+	onFileChange,
 	validExtensions,
 }: {
 	fieldId: string;
 	label: string;
+	onFileChange?: (file: File | null) => void;
 	validExtensions: string;
 }) => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -49,6 +51,12 @@ const FieldFile = ({
 
 		setFile(target.files[0]);
 	};
+
+	useEffect(() => {
+		if (onFileChange) {
+			onFileChange(file);
+		}
+	}, [file, onFileChange]);
 
 	return (
 		<FieldWrapper fieldId={fieldId} label={label}>

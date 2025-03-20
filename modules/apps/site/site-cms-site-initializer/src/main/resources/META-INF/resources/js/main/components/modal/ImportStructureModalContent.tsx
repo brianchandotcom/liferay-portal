@@ -18,6 +18,11 @@ export default function ImportStructureModalContent({
 	closeModal: () => void;
 }) {
 	const [warning, setWarning] = useState(true);
+	const [jsonFile, setJsonFile] = useState<File | null>(null);
+
+	const onFileChange = (file: File | null) => {
+		setJsonFile(file);
+	};
 
 	return (
 		<>
@@ -44,6 +49,7 @@ export default function ImportStructureModalContent({
 				<FieldFile
 					fieldId="jsonFileId"
 					label={Liferay.Language.get('json-file')}
+					onFileChange={onFileChange}
 					validExtensions={JSON_EXTENSION}
 				/>
 			</ClayModal.Body>
@@ -59,7 +65,7 @@ export default function ImportStructureModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary">
+						<ClayButton disabled={!jsonFile} displayType="primary">
 							{Liferay.Language.get('import-and-override')}
 						</ClayButton>
 					</ClayButton.Group>

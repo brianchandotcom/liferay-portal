@@ -132,18 +132,18 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	public int compareTo(JenkinsMaster jenkinsMaster) {
 		Integer value = null;
 
-		Integer availableSlavesCount = getAvailableSlavesCount();
+		Integer availableSlavesCount = getAvailableSlavesCount(null);
 		Integer otherAvailableSlavesCount =
-			jenkinsMaster.getAvailableSlavesCount();
+			jenkinsMaster.getAvailableSlavesCount(null);
 
 		if ((availableSlavesCount > 0) || (otherAvailableSlavesCount > 0)) {
 			value = availableSlavesCount.compareTo(otherAvailableSlavesCount);
 		}
 
 		if ((value == null) || (value == 0)) {
-			Float averageQueueLength = getAverageQueueLength();
-			Float otherAverageQueueLength =
-				jenkinsMaster.getAverageQueueLength();
+			Float averageQueueLength = getAverageQueueLength(null);
+			Float otherAverageQueueLength = jenkinsMaster.getAverageQueueLength(
+				null);
 
 			value = -1 * averageQueueLength.compareTo(otherAverageQueueLength);
 		}
@@ -168,20 +168,12 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return _assignedLabels;
 	}
 
-	public int getAvailableSlavesCount() {
-		return getAvailableSlavesCount(null);
-	}
-
 	public int getAvailableSlavesCount(String labelExpression) {
 		int idleNodeCount = _getIdleNodeCount(labelExpression);
 		int queueCount = _getQueueCount(labelExpression);
 		int recentBatchSizesTotal = _getRecentBatchSizesTotal(labelExpression);
 
 		return idleNodeCount - queueCount - recentBatchSizesTotal;
-	}
-
-	public float getAverageQueueLength() {
-		return getAverageQueueLength(null);
 	}
 
 	public float getAverageQueueLength(String labelExpression) {
@@ -765,9 +757,12 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
-			"{availableSlavesCount=", String.valueOf(getAvailableSlavesCount()),
-			", masterURL=", _masterURL, ", recentBatchSizesTotal=",
-			String.valueOf(_getRecentBatchSizesTotal()), "}");
+			"{availableSlavesCount=",
+			String.valueOf(getAvailableSlavesCount(null)),
+			", averageQueueLength=",
+			String.valueOf(getAverageQueueLength(null)), ", masterURL=",
+			_masterURL, ", recentBatchSizesTotal=",
+			String.valueOf(_getRecentBatchSizesTotal(null)), "}");
 	}
 
 	public synchronized void update() {
@@ -1081,6 +1076,56 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	protected static long maxRecentBatchAge = 120 * 1000;
 
+	private static Map<String, String> _getParameters(JSONObject jsonObject) {
+		Map<String, String> parameters = new HashMap<>();
+
+		if (jsonObject == null) {
+			return parameters;
+		}
+
+		JSONArray actionsJSONArray = jsonObject.optJSONArray("actions");
+
+		if (actionsJSONArray == null) {
+			return parameters;
+		}
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionJSONObject = actionsJSONArray.optJSONObject(i);
+
+			if ((actionJSONObject == JSONObject.NULL) ||
+				!Objects.equals(
+					actionJSONObject.optString("_class"),
+					"hudson.model.ParametersAction")) {
+
+				continue;
+			}
+
+			JSONArray parametersJSONArray = actionJSONObject.optJSONArray(
+				"parameters");
+
+			if (parametersJSONArray == JSONObject.NULL) {
+				continue;
+			}
+
+			for (int k = 0; k < parametersJSONArray.length(); k++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.optJSONObject(k);
+
+				if (parameterJSONObject == JSONObject.NULL) {
+					continue;
+				}
+
+				parameters.put(
+					parameterJSONObject.getString("name"),
+					parameterJSONObject.getString("value"));
+			}
+
+			break;
+		}
+
+		return parameters;
+	}
+
 	private JenkinsMaster(String masterName) {
 		if (masterName.contains(".")) {
 			_masterName = masterName.substring(0, masterName.indexOf("."));
@@ -1277,56 +1322,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return matchingLabels;
 	}
 
-	private static Map<String, String> _getParameters(JSONObject jsonObject) {
-		Map<String, String> parameters = new HashMap<>();
-
-		if (jsonObject == null) {
-			return parameters;
-		}
-
-		JSONArray actionsJSONArray = jsonObject.optJSONArray("actions");
-
-		if (actionsJSONArray == null) {
-			return parameters;
-		}
-
-		for (int i = 0; i < actionsJSONArray.length(); i++) {
-			JSONObject actionJSONObject = actionsJSONArray.optJSONObject(i);
-
-			if ((actionJSONObject == JSONObject.NULL) ||
-				!Objects.equals(
-					actionJSONObject.optString("_class"),
-					"hudson.model.ParametersAction")) {
-
-				continue;
-			}
-
-			JSONArray parametersJSONArray = actionJSONObject.optJSONArray(
-				"parameters");
-
-			if (parametersJSONArray == JSONObject.NULL) {
-				continue;
-			}
-
-			for (int k = 0; k < parametersJSONArray.length(); k++) {
-				JSONObject parameterJSONObject =
-					parametersJSONArray.optJSONObject(k);
-
-				if (parameterJSONObject == JSONObject.NULL) {
-					continue;
-				}
-
-				parameters.put(
-					parameterJSONObject.getString("name"),
-					parameterJSONObject.getString("value"));
-			}
-
-			break;
-		}
-
-		return parameters;
-	}
-
 	private int _getQueueCount(String labelExpression) {
 		int queueCount = 0;
 
@@ -1341,10 +1336,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		return queueCount;
-	}
-
-	private synchronized int _getRecentBatchSizesTotal() {
-		return _getRecentBatchSizesTotal(null);
 	}
 
 	private synchronized int _getRecentBatchSizesTotal(String labelExpression) {

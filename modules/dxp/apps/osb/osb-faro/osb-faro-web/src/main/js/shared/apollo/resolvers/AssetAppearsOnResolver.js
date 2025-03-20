@@ -8,9 +8,9 @@ const metrics = {
 		__typename: 'AssetMetric',
 		name: 'downloadsMetric'
 	},
-	previewsMetric: {
+	impressionMadeMetric: {
 		__typename: 'AssetMetric',
-		name: 'previewsMetric'
+		name: 'impressionMadeMetric'
 	},
 	submissionsMetric: {
 		__typename: 'AssetMetric',

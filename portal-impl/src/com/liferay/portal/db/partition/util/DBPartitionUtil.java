@@ -1610,6 +1610,20 @@ public class DBPartitionUtil {
 							_DATABASE_PARTITION_SCHEMA_NAME_PREFIX +
 								" cannot be used in a statement executeUpdate");
 					}
+
+					count = StringUtil.count(
+						lowerCaseSQL,
+						_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX);
+
+					if (count > 0) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(sql);
+						}
+
+						throw new IllegalArgumentException(
+							_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX +
+								" cannot be used in a statement executeUpdate");
+					}
 				}
 
 				Connection connection = statement.getConnection();

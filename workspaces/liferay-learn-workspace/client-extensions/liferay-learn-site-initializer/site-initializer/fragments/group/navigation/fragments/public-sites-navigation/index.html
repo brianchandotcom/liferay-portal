@@ -116,15 +116,15 @@
 						<div class="nav-items-menu-button-icon-line" id="nav-items-menu-button-icon-line-3"></div>
 					</div>
 
-					<span class="menu-button-text menu-button-text-open">Menu</span>
-					<span class="menu-button-text menu-button-text-close">Close</span>
+					<span class="menu-button-text menu-button-text-open">${languageUtil.get(locale, 'menu', 'Menu')}</span>
+					<span class="menu-button-text menu-button-text-close">${languageUtil.get(locale, 'close', 'Close')}</span>
 				</div>
 			</div>
 
 			<div class="d-flex">
 				[#if configuration.showCta]
 					<a class="align-items-center align-self-center btn btn-primary cta-btn-nav" data-lfr-editable-id="call-to-action-btn" data-lfr-editable-type="link">
-						Call to Action
+						${languageUtil.get(locale, 'call-to-action', 'Call to Action')}
 					</a>
 				[/#if]
 				<div class="menu-button-group ml-3">

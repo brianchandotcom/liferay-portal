@@ -151,8 +151,8 @@ public class LoadBalancerUtil {
 
 		while (true) {
 			try {
-				String baseInvocationURL = properties.getProperty(
-					"base.invocation.url");
+				String baseInvocationURL = JenkinsResultsParserUtil.getProperty(
+					properties, "base.invocation.url");
 
 				String masterPrefix = getMasterPrefix(baseInvocationURL);
 
@@ -160,14 +160,17 @@ public class LoadBalancerUtil {
 					return baseInvocationURL;
 				}
 
-				String blacklistString = properties.getProperty("blacklist");
-				String jobName = properties.getProperty("job.name");
-				String labelExpression = properties.getProperty(
-					"label.expression");
+				String blacklistString = JenkinsResultsParserUtil.getProperty(
+					properties, "blacklist");
+				String jobName = JenkinsResultsParserUtil.getProperty(
+					properties, "job.name");
+				String labelExpression = JenkinsResultsParserUtil.getProperty(
+					properties, "label.expression");
 
 				Integer minimumRAM = JenkinsMaster.getSlaveRAMMinimumDefault();
 
-				String minimumRAMString = properties.getProperty("minimum.ram");
+				String minimumRAMString = JenkinsResultsParserUtil.getProperty(
+					properties, "minimum.ram");
 
 				if ((minimumRAMString != null) &&
 					minimumRAMString.matches("\\d+")) {
@@ -178,8 +181,9 @@ public class LoadBalancerUtil {
 				Integer maximumSlavesPerHost =
 					JenkinsMaster.getSlavesPerHostDefault();
 
-				String maximumSlavesPerHostString = properties.getProperty(
-					"maximum.slaves.per.host");
+				String maximumSlavesPerHostString =
+					JenkinsResultsParserUtil.getProperty(
+						properties, "maximum.slaves.per.host");
 
 				if ((maximumSlavesPerHostString != null) &&
 					maximumSlavesPerHostString.matches("\\d+")) {

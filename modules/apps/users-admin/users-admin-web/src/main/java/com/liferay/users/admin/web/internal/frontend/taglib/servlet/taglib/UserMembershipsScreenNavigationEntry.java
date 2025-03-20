@@ -69,16 +69,11 @@ public class UserMembershipsScreenNavigationEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		if (Objects.equals(
-				portletDisplay.getPortletName(),
-				PortletProviderUtil.getPortletId(
-					PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-					PortletProvider.Action.VIEW))) {
-
-			return false;
-		}
-
-		return true;
+		return !Objects.equals(
+			portletDisplay.getPortletName(),
+			PortletProviderUtil.getPortletId(
+				PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+				PortletProvider.Action.VIEW));
 	}
 
 	@Override

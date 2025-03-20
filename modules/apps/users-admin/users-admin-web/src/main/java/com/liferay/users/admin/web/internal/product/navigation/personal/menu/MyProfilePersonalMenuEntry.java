@@ -78,11 +78,7 @@ public class MyProfilePersonalMenuEntry implements PersonalMenuEntry {
 
 		User user = themeDisplay.getUser();
 
-		if (displayURL.startsWith(user.getDisplayURL(themeDisplay, false))) {
-			return true;
-		}
-
-		return false;
+		return displayURL.startsWith(user.getDisplayURL(themeDisplay, false));
 	}
 
 	@Override

@@ -71,11 +71,7 @@ public class UserOrganizationsScreenNavigationEntry
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		if (myAccountPortletId.equals(portletDisplay.getPortletName())) {
-			return false;
-		}
-
-		return true;
+		return !myAccountPortletId.equals(portletDisplay.getPortletName());
 	}
 
 	@Override

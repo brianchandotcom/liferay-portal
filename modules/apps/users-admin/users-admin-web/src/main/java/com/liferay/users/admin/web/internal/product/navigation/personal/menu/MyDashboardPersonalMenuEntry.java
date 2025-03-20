@@ -78,11 +78,7 @@ public class MyDashboardPersonalMenuEntry implements PersonalMenuEntry {
 
 		User user = themeDisplay.getUser();
 
-		if (displayURL.startsWith(user.getDisplayURL(themeDisplay, true))) {
-			return true;
-		}
-
-		return false;
+		return displayURL.startsWith(user.getDisplayURL(themeDisplay, true));
 	}
 
 	@Override

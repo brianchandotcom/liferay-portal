@@ -62,6 +62,9 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		boolean marketplace = ParamUtil.getBoolean(
+			actionRequest, "marketplace");
+
 		long fragmentCollectionId = ParamUtil.getLong(
 			actionRequest, "fragmentCollectionId");
 
@@ -83,7 +86,8 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
 				_fragmentsImporter.importFragmentEntries(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					fragmentCollectionId, file, fragmentsImportStrategy);
+					fragmentCollectionId, file, fragmentsImportStrategy,
+					marketplace);
 
 			if (ListUtil.isNotEmpty(fragmentsImporterResultEntries)) {
 				SessionMessages.add(

@@ -76,7 +76,7 @@ public class ImportFragmentEntriesStrutsAction implements StrutsAction {
 			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
 				_fragmentsImporter.importFragmentEntries(
 					themeDisplay.getUserId(), groupId, 0L, file,
-					FragmentsImportStrategy.OVERWRITE);
+					FragmentsImportStrategy.OVERWRITE, false);
 
 			for (FragmentsImporterResultEntry fragmentsImporterResultEntry :
 					fragmentsImporterResultEntries) {

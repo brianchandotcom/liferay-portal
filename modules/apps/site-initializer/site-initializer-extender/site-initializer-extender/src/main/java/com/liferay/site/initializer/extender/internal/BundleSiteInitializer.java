@@ -913,7 +913,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_fragmentsImporter.importFragmentEntries(
 			serviceContext.getUserId(), groupId, 0, zipWriter.getFile(),
-			FragmentsImportStrategy.OVERWRITE);
+			FragmentsImportStrategy.OVERWRITE, false);
 	}
 
 	private void _addFragmentEntries(

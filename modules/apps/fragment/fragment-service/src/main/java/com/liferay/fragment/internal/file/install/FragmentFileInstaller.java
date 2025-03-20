@@ -250,7 +250,7 @@ public class FragmentFileInstaller implements FileInstaller {
 
 			_fragmentsImporter.importFragmentEntries(
 				user.getUserId(), groupId, 0, file,
-				FragmentsImportStrategy.OVERWRITE);
+				FragmentsImportStrategy.OVERWRITE, false);
 
 			if ((group != null) &&
 				(company.getGroupId() != group.getGroupId())) {

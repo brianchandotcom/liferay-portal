@@ -82,7 +82,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 	@Override
 	public List<FragmentsImporterResultEntry> importFragmentEntries(
 			long userId, long groupId, long fragmentCollectionId, File file,
-			FragmentsImportStrategy fragmentsImportStrategy)
+			FragmentsImportStrategy fragmentsImportStrategy,
+			boolean marketplace)
 		throws Exception {
 
 		_fragmentsImporterResultEntries = new ArrayList<>();
@@ -123,7 +124,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 				FragmentCollection fragmentCollection = _addFragmentCollection(
 					groupId, entry.getKey(), name, description,
-					fragmentsImportStrategy);
+					fragmentsImportStrategy, marketplace);
 
 				_importResources(
 					userId, groupId, fragmentCollection, entry.getKey(),
@@ -139,7 +140,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					userId, groupId, zipFile,
 					fragmentCollection.getFragmentCollectionId(),
 					fragmentCollectionFolder.getFragmentEntries(),
-					resourceReferences, fragmentsImportStrategy);
+					resourceReferences, fragmentsImportStrategy, marketplace);
 			}
 
 			if (MapUtil.isNotEmpty(orphanFragmentCompositions) ||
@@ -162,7 +163,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					userId, groupId, zipFile,
 					fragmentCollection.getFragmentCollectionId(),
 					orphanFragmentEntries, resourceReferences,
-					fragmentsImportStrategy);
+					fragmentsImportStrategy, marketplace);
 			}
 		}
 
@@ -234,7 +235,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 
 	private FragmentCollection _addFragmentCollection(
 			long groupId, String fragmentCollectionKey, String name,
-			String description, FragmentsImportStrategy fragmentsImportStrategy)
+			String description, FragmentsImportStrategy fragmentsImportStrategy,
+			boolean marketplace)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -245,7 +247,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			fragmentCollection =
 				_fragmentCollectionService.addFragmentCollection(
 					null, groupId, fragmentCollectionKey, name, description,
-					ServiceContextThreadLocal.getServiceContext());
+					marketplace, ServiceContextThreadLocal.getServiceContext());
 		}
 		else if (Objects.equals(
 					FragmentsImportStrategy.DO_NOT_IMPORT,
@@ -265,7 +267,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 							groupId, fragmentCollectionKey),
 					_fragmentCollectionLocalService.
 						getUniqueFragmentCollectionName(groupId, name),
-					description, ServiceContextThreadLocal.getServiceContext());
+					description, marketplace,
+					ServiceContextThreadLocal.getServiceContext());
 		}
 		else if (Objects.equals(
 					FragmentsImportStrategy.OVERWRITE,
@@ -291,7 +294,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String configuration, String icon, boolean readOnly,
 			String thumbnailPath, String typeLabel, String typeOptions,
 			FragmentsImportStrategy fragmentsImportStrategy, long userId,
-			ZipFile zipFile)
+			ZipFile zipFile, boolean marketplace)
 		throws Exception {
 
 		if (fragmentEntry != null) {
@@ -346,7 +349,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					null, groupId, fragmentCollectionId, fragmentEntryKey, name,
 					css, html, js, cacheable, configuration, icon, 0, readOnly,
-					type, typeOptions, status,
+					type, typeOptions, status, marketplace,
 					ServiceContextThreadLocal.getServiceContext());
 
 				_fragmentEntryLocalService.updateFragmentEntry(
@@ -367,7 +370,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					_fragmentEntryLocalService.getUniqueFragmentEntryName(
 						groupId, fragmentCollectionId, name),
 					css, html, js, cacheable, configuration, icon, 0, readOnly,
-					type, typeOptions, status,
+					type, typeOptions, status, marketplace,
 					ServiceContextThreadLocal.getServiceContext());
 
 				_fragmentEntryLocalService.updateFragmentEntry(
@@ -1000,7 +1003,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			long userId, long groupId, ZipFile zipFile,
 			long fragmentCollectionId, Map<String, String> fragmentEntries,
 			Map<String, String> resourceReferences,
-			FragmentsImportStrategy fragmentsImportStrategy)
+			FragmentsImportStrategy fragmentsImportStrategy,
+			boolean marketplace)
 		throws Exception {
 
 		for (Map.Entry<String, String> entry : fragmentEntries.entrySet()) {
@@ -1062,7 +1066,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				groupId, entry.getValue(), fragmentEntry, fragmentCollectionId,
 				entry.getKey(), name, css, html, js, cacheable, configuration,
 				icon, readOnly, thumbnailPath, typeLabel, typeOptions,
-				fragmentsImportStrategy, userId, zipFile);
+				fragmentsImportStrategy, userId, zipFile, marketplace);
 		}
 	}
 

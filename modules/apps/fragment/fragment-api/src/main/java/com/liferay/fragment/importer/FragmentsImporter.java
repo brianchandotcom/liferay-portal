@@ -19,7 +19,8 @@ public interface FragmentsImporter {
 
 	public List<FragmentsImporterResultEntry> importFragmentEntries(
 			long userId, long groupId, long fragmentCollectionId, File file,
-			FragmentsImportStrategy fragmentsImportStrategy)
+			FragmentsImportStrategy fragmentsImportStrategy,
+			boolean marketplace)
 		throws Exception;
 
 	public boolean validateFragmentEntries(

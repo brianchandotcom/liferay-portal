@@ -88,10 +88,13 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 					FragmentsImportStrategy.DO_NOT_OVERWRITE;
 			}
 
+			boolean marketplace = ParamUtil.getBoolean(
+				resourceRequest, "marketplace");
+
 			jsonObject = _importFragmentEntries(
 				file, fragmentCollectionId, themeDisplay.getScopeGroupId(),
 				fragmentsImportStrategy, themeDisplay.getLocale(),
-				themeDisplay.getUserId());
+				themeDisplay.getUserId(), marketplace);
 		}
 		else {
 			jsonObject.put("valid", false);
@@ -120,7 +123,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 	private JSONObject _importFragmentEntries(
 		File file, long fragmentCollectionId, long groupId,
 		FragmentsImportStrategy fragmentsImportStrategy, Locale locale,
-		long userId) {
+		long userId, boolean marketplace) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -128,7 +131,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
 				_fragmentsImporter.importFragmentEntries(
 					userId, groupId, fragmentCollectionId, file,
-					fragmentsImportStrategy);
+					fragmentsImportStrategy, marketplace);
 
 			JSONObject importResultsJSONObject =
 				_jsonFactory.createJSONObject();

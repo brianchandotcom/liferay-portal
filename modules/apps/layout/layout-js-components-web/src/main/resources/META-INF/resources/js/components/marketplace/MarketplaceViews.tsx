@@ -63,6 +63,7 @@ export default function MarketplaceViews() {
 
 	async function onClickInstall(product: Product) {
 		setView(MarketplaceView.PURCHASE);
+		setProduct(product);
 
 		try {
 			const cart = await marketplaceRest.createCart(product as Product, {

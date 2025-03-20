@@ -95,7 +95,8 @@ function SearchResultsPanel({searchValue}: {searchValue: string}) {
 			'attachments.accountId': '-1',
 			'filter': marketplaceRest.settings?.references?.fragmentsFilter,
 			'images.accountId': '-1',
-			'nestedFields': 'productSpecifications,skus,categories,images',
+			'nestedFields':
+				'attachments,productSpecifications,skus,categories,images',
 			'page': `${page}`,
 			'pageSize': '20',
 			'search': searchValueRef.current,

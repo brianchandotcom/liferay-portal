@@ -134,7 +134,8 @@ export function MarketplaceContextProvider({
 				settings
 			),
 			'images.accountId': '-1',
-			'nestedFields': 'productSpecifications,skus,categories,images',
+			'nestedFields':
+				'attachments,productSpecifications,skus,categories,images',
 			'page': String(productSearchParams.page),
 			'pageSize': String(productSearchParams.pageSize),
 			'search': productSearchParams.search,

@@ -170,6 +170,21 @@ public class SharingEntryServiceImpl extends SharingEntryServiceBaseImpl {
 	}
 
 	@Override
+	public SharingEntry getSharingEntry(long sharingEntryId)
+		throws PortalException {
+
+		SharingEntry sharingEntry = sharingEntryLocalService.getSharingEntry(
+			sharingEntryId);
+
+		sharingPermission.check(
+			getPermissionChecker(), sharingEntry.getClassNameId(),
+			sharingEntry.getClassPK(), sharingEntry.getGroupId(),
+			Collections.singletonList(SharingEntryAction.VIEW));
+
+		return sharingEntry;
+	}
+
+	@Override
 	public SharingEntry getSharingEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {

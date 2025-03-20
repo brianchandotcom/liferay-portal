@@ -138,6 +138,15 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteStyleBookEntries(long groupId) throws PortalException {
+		for (StyleBookEntry styleBookEntry :
+				styleBookEntryPersistence.findByGroupId_Head(groupId, true)) {
+
+			deleteStyleBookEntry(styleBookEntry);
+		}
+	}
+
+	@Override
 	public StyleBookEntry deleteStyleBookEntry(long styleBookEntryId)
 		throws PortalException {
 

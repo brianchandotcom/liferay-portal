@@ -218,7 +218,9 @@ function SelectVocabularies({
 	const [selectedKeys, setSelectedKeys] = useState(
 		initialSelectedVocabularyERCsSet
 	);
-	const [unavailableVocabularies, setUnavailableVocabularies] = useState([]);
+	const [unavailableVocabularyERCs, setUnavailableVocabularyERCs] = useState(
+		[]
+	);
 	const [vocabularyTree, setVocabularyTree] = useState(null);
 	const [vocabularyTreeLoading, setVocabularyTreeLoading] = useState(false);
 
@@ -303,7 +305,7 @@ function SelectVocabularies({
 							}))
 						);
 
-						setUnavailableVocabularies(
+						setUnavailableVocabularyERCs(
 							Array.from(initialSelectedVocabularyERCsSet).filter(
 								(initialSelectedERC) =>
 									!fetchedERCs.includes(initialSelectedERC)
@@ -316,10 +318,10 @@ function SelectVocabularies({
 			.finally(() => setVocabularyTreeLoading(false));
 	};
 
-	const _handleDeselectUnavailableVocabularies = () => {
+	const _handleDeselectUnavailableVocabularyERCs = () => {
 		const newList = new Set(selectedKeys);
 
-		unavailableVocabularies.forEach((erc) => {
+		unavailableVocabularyERCs.forEach((erc) => {
 			newList.delete(erc);
 		});
 
@@ -334,8 +336,8 @@ function SelectVocabularies({
 		}
 	};
 
-	const _isUnavailableVocabulariesSelected = () =>
-		unavailableVocabularies.some((erc) => selectedKeys.has(erc));
+	const _isUnavailableVocabularyERCsSelected = () =>
+		unavailableVocabularyERCs.some((erc) => selectedKeys.has(erc));
 
 	return (
 		<div className="select-vocabularies">
@@ -380,9 +382,9 @@ function SelectVocabularies({
 			</ClayRadioGroup>
 
 			{selection === SELECT_OPTIONS.SELECT &&
-				!!unavailableVocabularies.length && (
+				!!unavailableVocabularyERCs.length && (
 					<>
-						{_isUnavailableVocabulariesSelected() ? (
+						{_isUnavailableVocabularyERCsSelected() ? (
 							<ClayAlert
 								displayType="info"
 								style={{opacity: 1}}
@@ -402,7 +404,7 @@ function SelectVocabularies({
 									<ClayButton
 										alert
 										onClick={
-											_handleDeselectUnavailableVocabularies
+											_handleDeselectUnavailableVocabularyERCs
 										}
 									>
 										{Liferay.Language.get(

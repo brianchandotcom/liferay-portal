@@ -10,7 +10,7 @@ definition {
 			var sqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
 		}
 		else if (${databaseType} == "postgresql") {
-			var sqlStatement = "select schema_name from information_schema.schemata WHERE schema_name LIKE '${databaseFilter}';";
+			var sqlStatement = "SELECT schema_name from information_schema.schemata WHERE schema_name LIKE '${databaseFilter}';";
 		}
 
 		var sqlResults = SQL.executeSQLStatement(sqlStatement = ${sqlStatement});

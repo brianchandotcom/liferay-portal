@@ -90,7 +90,7 @@ public class CommercePriceListAccountRelServiceImpl
 
 		return commercePriceListAccountRelLocalService.
 			fetchCommercePriceListAccountRel(
-				commercePriceListId, commerceAccountId);
+				commerceAccountId, commercePriceListId);
 	}
 
 	@Override

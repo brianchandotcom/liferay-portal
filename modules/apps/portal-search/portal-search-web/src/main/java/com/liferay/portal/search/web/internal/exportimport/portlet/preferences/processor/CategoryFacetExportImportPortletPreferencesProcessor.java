@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences;
 
@@ -96,43 +93,101 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 	}
 
 	@Override
-	protected String getExportPortletPreferencesValue(
-			PortletDataContext portletDataContext, Portlet portlet,
-			String className, long primaryKeyLong)
-		throws Exception {
+	protected String getExportPortletPreferencesExternalReferenceCode(
+		PortletDataContext portletDataContext, Portlet portlet,
+		String className, String externalReferenceCode) {
 
 		if (!className.equals(AssetVocabulary.class.getName())) {
 			return null;
 		}
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.fetchAssetVocabulary(primaryKeyLong);
+		String[] groupVocabularyExternalReferenceCodes = StringUtil.split(
+			externalReferenceCode, "&&");
 
-		if (assetVocabulary == null) {
-			return null;
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			groupVocabularyExternalReferenceCodes[0],
+			portletDataContext.getCompanyId());
+
+		if (group == null) {
+			return externalReferenceCode;
 		}
 
-		long groupId = assetVocabulary.getGroupId();
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				fetchAssetVocabularyByExternalReferenceCode(
+					groupVocabularyExternalReferenceCodes[1],
+					group.getGroupId());
+
+		if (assetVocabulary == null) {
+			return StringUtil.merge(
+				new Object[] {
+					groupVocabularyExternalReferenceCodes[1],
+					group.getGroupId(), groupVocabularyExternalReferenceCodes[0]
+				},
+				StringPool.POUND);
+		}
 
 		portletDataContext.addReferenceElement(
 			portlet, portletDataContext.getExportDataRootElement(),
 			assetVocabulary, PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
 			true);
 
-		String groupExternalReferenceCode = StringPool.BLANK;
-
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group != null) {
-			groupExternalReferenceCode = group.getExternalReferenceCode();
-		}
+		String groupExternalReferenceCode =
+			getGroupExportPortletPreferencesExternalReferenceCode(
+				portletDataContext, groupVocabularyExternalReferenceCodes[0]);
 
 		return StringUtil.merge(
 			new Object[] {
-				assetVocabulary.getExternalReferenceCode(), groupId,
+				assetVocabulary.getExternalReferenceCode(), group.getGroupId(),
 				groupExternalReferenceCode
 			},
 			StringPool.POUND);
+	}
+
+	@Override
+	protected String getExportPortletPreferencesValue(
+			PortletDataContext portletDataContext, Portlet portlet,
+			String className, long primaryKeyLong)
+		throws Exception {
+
+		throw new Exception();
+	}
+
+	protected String getImportPortletPreferencesNewExternalReferenceCode(
+			PortletDataContext portletDataContext, Class<?> clazz,
+			long companyGroupId, Map<String, String[]> primaryKeys,
+			String portletPreferencesOldExternalReferenceCode)
+		throws Exception {
+
+		String className = clazz.getName();
+
+		if (!className.equals(AssetVocabulary.class.getName())) {
+			return null;
+		}
+
+		String[] oldValues = StringUtil.split(
+			portletPreferencesOldExternalReferenceCode, StringPool.POUND);
+
+		Group group = null;
+
+		if (oldValues.length > 1) {
+			Map<Long, Long> groupIdPrimaryKeyMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					Group.class);
+
+			long groupId = MapUtil.getLong(
+				groupIdPrimaryKeyMap, GetterUtil.getLong(oldValues[1]));
+
+			if (groupId != 0) {
+				group = _groupLocalService.fetchGroup(groupId);
+			}
+		}
+
+		if (group != null) {
+			return group.getExternalReferenceCode() + "&&" + oldValues[0];
+		}
+
+		return oldValues[2] + "&&" + oldValues[0];
 	}
 
 	@Override
@@ -142,53 +197,7 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 			String portletPreferencesOldValue)
 		throws Exception {
 
-		_importReferenceStagedModel(portletDataContext);
-
-		if (Validator.isNumber(portletPreferencesOldValue)) {
-			long oldPrimaryKey = GetterUtil.getLong(portletPreferencesOldValue);
-
-			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
-		}
-
-		String className = clazz.getName();
-
-		String[] oldValues = StringUtil.split(
-			portletPreferencesOldValue, StringPool.POUND);
-
-		long groupId = portletDataContext.getScopeGroupId();
-
-		if (oldValues.length > 1) {
-			Map<Long, Long> groupIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					Group.class);
-
-			groupId = MapUtil.getLong(
-				groupIds, GetterUtil.getLong(oldValues[1]));
-
-			if ((groupId == 0) && (oldValues.length > 2)) {
-				Group group =
-					_groupLocalService.fetchGroupByExternalReferenceCode(
-						oldValues[2], portletDataContext.getCompanyId());
-
-				groupId = group.getGroupId();
-			}
-		}
-
-		if (!className.equals(AssetVocabulary.class.getName())) {
-			return null;
-		}
-
-		String erc = oldValues[0];
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.
-				fetchAssetVocabularyByExternalReferenceCode(erc, groupId);
-
-		if (assetVocabulary == null) {
-			return null;
-		}
-
-		return assetVocabulary.getVocabularyId();
+		throw new Exception();
 	}
 
 	@Reference(target = "(name=PortletDisplayTemplateExporter)")
@@ -196,36 +205,6 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 
 	@Reference(target = "(name=PortletDisplayTemplateImporter)")
 	protected Capability importCapability;
-
-	private void _importReferenceStagedModel(
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		Element importDataRootElement =
-			portletDataContext.getImportDataRootElement();
-
-		Element referencesElement = importDataRootElement.element("references");
-
-		if (referencesElement == null) {
-			return;
-		}
-
-		for (Element referenceElement : referencesElement.elements()) {
-			String className = referenceElement.attributeValue("class-name");
-
-			if ((className == null) ||
-				!className.equals(AssetVocabulary.class.getName())) {
-
-				continue;
-			}
-
-			long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, className, Long.valueOf(classPK));
-		}
-	}
 
 	private PortletPreferences _updateExportPortletPreferences(
 			PortletDataContext portletDataContext,
@@ -242,9 +221,9 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 
 			if (name.equals(
 					CategoryFacetPortletPreferences.
-						PREFERENCE_VOCABULARY_IDS)) {
+						PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES)) {
 
-				updateExportPortletPreferencesClassPKs(
+				updateExportPortletPreferencesExternalReferenceCodes(
 					portletDataContext, portlet, portletPreferences, name,
 					AssetVocabulary.class.getName());
 			}
@@ -270,11 +249,30 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 
 			if (name.equals(
 					CategoryFacetPortletPreferences.
-						PREFERENCE_VOCABULARY_IDS)) {
+						PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES)) {
 
-				updateImportPortletPreferencesClassPKs(
+				updateImportPortletPreferencesExternalReferenceCodes(
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
+			}
+			else if (name.equals(
+						CategoryFacetPortletPreferences.
+							PREFERENCE_VOCABULARY_IDS)) {
+
+				updateImportPortletPreferencesExternalReferenceCodes(
+					portletDataContext, portletPreferences, name,
+					AssetVocabulary.class, companyGroup.getGroupId());
+
+				portletPreferences.setValues(
+					CategoryFacetPortletPreferences.
+						PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES,
+					portletPreferences.getValues(
+						CategoryFacetPortletPreferences.
+							PREFERENCE_VOCABULARY_IDS,
+						null));
+
+				portletPreferences.reset(
+					CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS);
 			}
 		}
 

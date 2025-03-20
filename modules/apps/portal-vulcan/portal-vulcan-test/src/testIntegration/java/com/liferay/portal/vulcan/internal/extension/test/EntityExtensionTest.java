@@ -251,11 +251,7 @@ public class EntityExtensionTest {
 
 		@Override
 		public boolean isApplicableExtension(long companyId, String className) {
-			if (className.equals(TestClass.class.getName())) {
-				return true;
-			}
-
-			return false;
+			return className.equals(TestClass.class.getName());
 		}
 
 		@Override

@@ -2515,16 +2515,10 @@ public class GraphQLServletExtender {
 				return false;
 			}
 
-			if (StringUtil.endsWith(
-					ClassUtil.getClassName(
-						_getThrowable(
-							(ExceptionWhileDataFetching)graphQLError)),
-					"StatusException")) {
-
-				return true;
-			}
-
-			return false;
+			return StringUtil.endsWith(
+				ClassUtil.getClassName(
+					_getThrowable((ExceptionWhileDataFetching)graphQLError)),
+				"StatusException");
 		}
 
 		private final Set<String> _graphQLNamespaces;

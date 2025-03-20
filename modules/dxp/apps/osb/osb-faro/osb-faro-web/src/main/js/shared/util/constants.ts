@@ -9,7 +9,7 @@ export enum AcquisitionTypes {
 export enum ActivityActions {
 	Comments = 3,
 	Downloads = 0,
-	Previews = 4,
+	Impressions = 4,
 	Submissions = 1,
 	Visits = 2
 }

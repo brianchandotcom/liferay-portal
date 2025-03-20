@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalProcess;
+import com.liferay.portal.upgrade.util.DefaultDuplicateRemovalUpgradeProcess;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
 import com.liferay.portal.upgrade.v7_4_x.util.AssetTagGroupRelTable;
@@ -607,14 +607,14 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 18, 1),
-			new DefaultDuplicateRemovalProcess(
+			new DefaultDuplicateRemovalUpgradeProcess(
 				"PortalPreferences", "ownerType, ownerId"),
-			new DefaultDuplicateRemovalProcess(
+			new DefaultDuplicateRemovalUpgradeProcess(
 				"PortletItem", "groupId, classNameId, portletId, name"),
-			new DefaultDuplicateRemovalProcess(
+			new DefaultDuplicateRemovalUpgradeProcess(
 				"SocialActivitySetting",
 				"groupId, classNameId, activityType, name, ctCollectionId"),
-			new DefaultDuplicateRemovalProcess(
+			new DefaultDuplicateRemovalUpgradeProcess(
 				"Ticket", "key_", "ticketId", "asc"));
 	}
 

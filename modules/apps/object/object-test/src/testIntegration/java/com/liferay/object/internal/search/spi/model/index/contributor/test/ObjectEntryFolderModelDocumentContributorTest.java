@@ -69,7 +69,7 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 			document1.get(Field.FOLDER_ID));
 		Assert.assertEquals(
 			objectEntryFolder1.getName(), document1.get(Field.NAME));
-		Assert.assertEquals("content", document1.get("cms_section"));
+		Assert.assertEquals("contents", document1.get("cms_section"));
 
 		// Files root folder
 

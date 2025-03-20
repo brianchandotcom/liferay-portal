@@ -40,7 +40,6 @@ public class ObjectEntryFolderModelDocumentContributor
 			objectEntryFolder.getTreePath(), CharPool.SLASH);
 
 		document.addKeyword(Field.TREE_PATH, parts);
-
 		document.addKeyword("cms_section", _getCMSSection(parts));
 
 		document.addLocalizedKeyword(
@@ -66,7 +65,7 @@ public class ObjectEntryFolderModelDocumentContributor
 		if (externalReferenceCode.equals(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)) {
 
-			return "content";
+			return "contents";
 		}
 
 		if (externalReferenceCode.equals(

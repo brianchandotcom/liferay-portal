@@ -392,7 +392,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return _CMS_PRIVATE_SEARCH_RESULT_ENTITY_FIELD_NAMES;
+		return _IGNORED_ENTITY_FIELD_NAMES;
 	}
 
 	@Override
@@ -1400,10 +1400,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			jsonObject.getLong("totalCount"));
 	}
 
-	private static final String[]
-		_CMS_PRIVATE_SEARCH_RESULT_ENTITY_FIELD_NAMES = {
-			"cmsSection", "folderId", "objectDefinitionFolder"
-		};
+	private static final String[] _IGNORED_ENTITY_FIELD_NAMES = {
+		"cmsSection", "folderId", "objectDefinitionFolder"
+	};
 
 	@Inject
 	private static DTOConverterRegistry _dtoConverterRegistry;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -93,7 +94,8 @@ public class ImportMVCResourceCommandTest {
 
 		_assertImportResultsJSONObject(
 			2, 3, 2,
-			_importFragmentEntries(FragmentsImportStrategy.DO_NOT_IMPORT));
+			_importFragmentEntries(
+				FragmentsImportStrategy.DO_NOT_IMPORT, false));
 
 		FragmentEntry actualFragmentEntry =
 			_fragmentEntryLocalService.getFragmentEntry(
@@ -109,7 +111,8 @@ public class ImportMVCResourceCommandTest {
 
 		_assertImportResultsJSONObject(
 			2, 4, 2,
-			_importFragmentEntries(FragmentsImportStrategy.DO_NOT_OVERWRITE));
+			_importFragmentEntries(
+				FragmentsImportStrategy.DO_NOT_OVERWRITE, false));
 	}
 
 	@Test
@@ -122,7 +125,8 @@ public class ImportMVCResourceCommandTest {
 			_serviceContext);
 
 		_assertImportResultsJSONObject(
-			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH));
+			2, 4, 2,
+			_importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH, false));
 
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionLocalService.getFragmentCollections(
@@ -141,7 +145,8 @@ public class ImportMVCResourceCommandTest {
 			"fragment", "Fragment", "<h1>Test html</h1>");
 
 		_assertImportResultsJSONObject(
-			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH));
+			2, 4, 2,
+			_importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH, false));
 
 		FragmentEntry actualFragmentEntry =
 			_fragmentEntryLocalService.getFragmentEntry(
@@ -156,11 +161,53 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-50980")
+	public void testImportFragmentEntriesWithMarketplaceAndWithExistingFragmentCollection()
+		throws Exception {
+
+		_fragmentCollectionLocalService.addFragmentCollection(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			"collection", "Resources Collection", StringPool.BLANK,
+			_serviceContext);
+
+		_assertImportResultsJSONObject(
+			2, 4, 2,
+			_importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH, true));
+
+		FragmentCollection importedFragmentCollection =
+			_fragmentCollectionLocalService.fetchFragmentCollection(
+				_group.getGroupId(), "collection-0");
+
+		Assert.assertNotNull(importedFragmentCollection);
+		Assert.assertTrue(importedFragmentCollection.isMarketplace());
+	}
+
+	@Test
+	@TestInfo("LPD-50980")
+	public void testImportFragmentEntriesWithMarketplaceAndWithExistingFragmentEntry()
+		throws Exception {
+
+		_addFragmentEntry("fragment", "Fragment", "<h1>Test html</h1>");
+
+		_assertImportResultsJSONObject(
+			2, 4, 2,
+			_importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH, true));
+
+		FragmentEntry importedFragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				_group.getGroupId(), "fragment-0");
+
+		Assert.assertNotNull(importedFragmentEntry);
+		Assert.assertTrue(importedFragmentEntry.isMarketplace());
+	}
+
+	@Test
 	public void testImportFragmentEntriesWithOverwriteStrategy()
 		throws Exception {
 
 		_assertImportResultsJSONObject(
-			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.OVERWRITE));
+			2, 4, 2,
+			_importFragmentEntries(FragmentsImportStrategy.OVERWRITE, false));
 	}
 
 	@Test
@@ -171,7 +218,8 @@ public class ImportMVCResourceCommandTest {
 			"fragment", "Fragment", "<h1>Test html</h1>");
 
 		_assertImportResultsJSONObject(
-			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.OVERWRITE));
+			2, 4, 2,
+			_importFragmentEntries(FragmentsImportStrategy.OVERWRITE, false));
 
 		FragmentEntry actualFragmentEntry =
 			_fragmentEntryLocalService.getFragmentEntry(
@@ -251,17 +299,19 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	private JSONObject _importFragmentEntries(
-			FragmentsImportStrategy fragmentsImportStrategy)
+			FragmentsImportStrategy fragmentsImportStrategy,
+			boolean marketplace)
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_importFragmentEntries",
 			new Class<?>[] {
 				File.class, long.class, long.class,
-				FragmentsImportStrategy.class, Locale.class, long.class
+				FragmentsImportStrategy.class, Locale.class, long.class,
+				boolean.class
 			},
 			_getFile(), 0, _group.getGroupId(), fragmentsImportStrategy,
-			LocaleUtil.US, TestPropsValues.getUserId());
+			LocaleUtil.US, TestPropsValues.getUserId(), marketplace);
 	}
 
 	private static final String _RESOURCES_PATH =

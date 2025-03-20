@@ -279,18 +279,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return new ArrayList<>(_buildURLs);
 	}
 
-	public int getBusyJenkinsSlavesCount() {
-		int busySlavesCount = 0;
-
-		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
-			if (!jenkinsSlave.isIdle()) {
-				busySlavesCount++;
-			}
-		}
-
-		return busySlavesCount;
-	}
-
 	public List<DefaultBuild> getDefaultBuilds() {
 		List<String> buildURLs = getBuildURLs();
 
@@ -779,9 +767,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return JenkinsResultsParserUtil.combine(
 			"{availableSlavesCount=", String.valueOf(getAvailableSlavesCount()),
 			", masterURL=", _masterURL, ", recentBatchSizesTotal=",
-			String.valueOf(_getRecentBatchSizesTotal()),
-			", reportedAvailableSlavesCount=",
-			String.valueOf(_reportedAvailableSlavesCount), "}");
+			String.valueOf(_getRecentBatchSizesTotal()), "}");
 	}
 
 	public synchronized void update() {
@@ -796,7 +782,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_labelBatchSizes.clear();
 			_queuedBuildURLs.clear();
 			_queueItems.clear();
-			_reportedAvailableSlavesCount = 0;
 
 			return;
 		}
@@ -830,7 +815,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_labelBatchSizes.clear();
 			_queuedBuildURLs.clear();
 			_queueItems.clear();
-			_reportedAvailableSlavesCount = 0;
 
 			System.out.println("Unable to read " + _masterURL);
 
@@ -1509,7 +1493,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private final List<JSONObject> _queueItemJSONObjects = new ArrayList<>();
 	private final List<QueueItem> _queueItems = new ArrayList<>();
 	private Long _queueUpdateTime;
-	private int _reportedAvailableSlavesCount;
 	private final Integer _slaveRAM;
 	private final Integer _slavesPerHost;
 

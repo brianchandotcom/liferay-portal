@@ -79,8 +79,129 @@ if (!linkCssClass.contains("keep-aria-attributes") && (useDialog || (urlIsNotNul
 </c:choose>
 
 <c:if test="<%= Validator.isNotNull(srcHover) || forcePost || useDialog %>">
-	<aui:script use="liferay-icon">
-		Liferay.Icon.register(
+	<aui:script>
+		const ICON_REGISTRY = {};
+		let docClickHandler;
+		let mouseOverEvent;
+		let mouseOutEvent;
+
+		function forcePost(event) {
+			if (!Liferay.SPA || !Liferay.SPA.app) {
+				const currentElement = Liferay.Util.getElement(
+					event.currentTarget
+				);
+
+				if (currentElement) {
+					const url = currentElement.getAttribute('href');
+
+					// LPS-127302
+
+					if (url === 'javascript:void(0);') {
+						return;
+					}
+
+					const newWindow =
+						currentElement.getAttribute('target') === '_blank';
+
+					const hrefFm = document.hrefFm;
+
+					if (newWindow) {
+						hrefFm.setAttribute('target', '_blank');
+					}
+
+					submitForm(hrefFm, url, !newWindow);
+
+					Liferay.Util._submitLocked = null;
+				}
+
+				event.preventDefault();
+			}
+		}
+
+		function getConfig(event) {
+			return ICON_REGISTRY[event.currentTarget.attr('id')];
+		}
+
+		function handleDocClick(event) {
+			const config = getConfig(event);
+
+			if (config) {
+				event.preventDefault();
+
+				if (config.useDialog) {
+					_useDialog(event);
+				}
+				else {
+					_forcePost(event);
+				}
+			}
+		}
+
+		function handleDocMouseOut(event) {
+			const config = getConfig(event);
+
+			if (config && config.srcHover) {
+				_onMouseHover(event, config.src);
+			}
+		}
+
+		function handleDocMouseOver(event) {
+			const config = getConfig(event);
+
+			if (config && config.srcHover) {
+				_onMouseHover(event, config.srcHover);
+			}
+		}
+
+		function onMouseHover(event, src) {
+			const image = event.currentTarget.one('img');
+
+			if (image) {
+				image.attr('src', src);
+			}
+		}
+
+		function useDialog(event) {
+			Liferay.Util.openInDialog(event, {
+				dialog: {
+					destroyOnHide: true,
+				},
+				dialogIframe: {
+					bodyCssClass: 'cadmin dialog-with-footer',
+				},
+			});
+		}
+
+		function register(config) {
+			_ICON_REGISTRY[config.id] = config;
+
+			if (!_docClickHandler) {
+				_docClickHandler = document.getElementById('<portlet:namespace /><%= id %>').addEventListener(
+					'click',
+					_handleDocClick,
+				);
+			}
+
+			if (!_mouseOverEvent) {
+				_mouseOverEvent = document.getElementById('<portlet:namespace /><%= id %>').addEventListener(
+					'mouseover',
+					_handleDocMouseOver,
+				);
+			}
+
+			if (!_mouseOutEvent) {
+				_mouseOutEvent = document.getElementById('<portlet:namespace /><%= id %>').addEventListener(
+					'mouseout',
+					_handleDocMouseOut,
+				);
+			}
+
+			Liferay.once('screenLoad', () => {
+				delete ICON_REGISTRY[config.id];
+			});
+		}
+
+		register(
 			{
 				forcePost: <%= forcePost %>,
 				id: '<portlet:namespace /><%= id %>',

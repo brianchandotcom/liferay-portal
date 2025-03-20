@@ -59,7 +59,7 @@ const DocumentsAndMediaListCard: React.FC = () => {
 						route: Routes.ASSETS_DOCUMENTS_AND_MEDIA_OVERVIEW
 					}),
 					metricsListColumns.downloadsMetric,
-					metricsListColumns.previewsMetric,
+					metricsListColumns.impressionMadeMetric,
 					metricsListColumns.commentsMetric,
 					metricsListColumns.ratingsMetric
 				]}

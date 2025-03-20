@@ -18,6 +18,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -92,6 +93,16 @@ public class CalendarBookingInfoItemFieldValuesProvider
 	 * User, long)}
 	 */
 	protected String getCalendarBookingURL(CalendarBooking calendarBooking) {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		if (themeDisplay != null) {
+			return StringBundler.concat(
+				themeDisplay.getPortalURL(),
+				themeDisplay.getPathFriendlyURLPublic(),
+				"/calendar/shared/-/calendar/",
+				calendarBooking.getCalendarBookingId());
+		}
+
 		try {
 			Company company = _companyLocalService.getCompany(
 				calendarBooking.getCompanyId());

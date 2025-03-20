@@ -5,7 +5,6 @@
 
 import {
 	AvailableLocale,
-	EditingLocale,
 	LocalizedValue,
 	MultipleSelection,
 	ReactFieldBase as FieldBase,
@@ -23,7 +22,6 @@ type Values = string[] | LocalizedValue<string[]>;
 interface MultiselectPicklistProps {
 	availableLocales: AvailableLocale[];
 	defaultLanguageId: Liferay.Language.Locale;
-	defaultLocale: EditingLocale;
 	errorMessage: string;
 	fieldName: string;
 	id: string;

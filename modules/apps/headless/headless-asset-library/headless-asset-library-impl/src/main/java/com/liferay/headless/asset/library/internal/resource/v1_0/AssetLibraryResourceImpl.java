@@ -282,19 +282,20 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, companyId);
 
-		if (group != null) {
-			DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
-				group.getGroupId());
+		if (group == null) {
+			return depotAppCustomizationMap;
+		}
 
-			for (DepotAppCustomization depotAppCustomization :
-					_depotAppCustomizationLocalService.
-						getDepotAppCustomizations(
-							depotEntry.getDepotEntryId())) {
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+			group.getGroupId());
 
-				depotAppCustomizationMap.put(
-					depotAppCustomization.getPortletId(),
-					depotAppCustomization.isEnabled());
-			}
+		for (DepotAppCustomization depotAppCustomization :
+				_depotAppCustomizationLocalService.getDepotAppCustomizations(
+					depotEntry.getDepotEntryId())) {
+
+			depotAppCustomizationMap.put(
+				depotAppCustomization.getPortletId(),
+				depotAppCustomization.isEnabled());
 		}
 
 		return depotAppCustomizationMap;

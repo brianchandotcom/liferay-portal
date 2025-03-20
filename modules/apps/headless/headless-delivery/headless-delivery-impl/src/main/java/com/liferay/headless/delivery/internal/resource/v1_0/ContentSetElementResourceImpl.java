@@ -31,8 +31,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
-import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -160,12 +160,9 @@ public class ContentSetElementResourceImpl
 			AssetListEntry assetListEntry, Pagination pagination)
 		throws Exception {
 
-		long[] segmentsEntryIds =
-			_segmentsEntryProviderRegistry.getSegmentsEntryIds(
-				assetListEntry.getGroupId(), contextUser.getModelClassName(),
-				contextUser.getPrimaryKey(),
-				_requestContextMapper.map(contextHttpServletRequest),
-				new long[0]);
+		long[] segmentsEntryIds = _segmentsEntryRetriever.getSegmentsEntryIds(
+			assetListEntry.getGroupId(), contextUser.getUserId(),
+			_requestContextMapper.map(contextHttpServletRequest), new long[0]);
 
 		InfoPage<AssetEntry> infoPage =
 			_assetListAssetEntryProvider.getAssetEntriesInfoPage(
@@ -278,6 +275,6 @@ public class ContentSetElementResourceImpl
 	private RequestContextMapper _requestContextMapper;
 
 	@Reference
-	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
+	private SegmentsEntryRetriever _segmentsEntryRetriever;
 
 }

@@ -550,13 +550,13 @@ definition {
 
 			Clustering.updatePortalPropertiesOnSpecificServer(
 				nodePort = 8080,
-				propertiesOriginal = "database.partiton.enabled=false",
-				propertiesUpdate = "database.partiton.enabled=true");
+				propertiesOriginal = "database.partition.enabled=false",
+				propertiesUpdate = "database.partition.enabled=true");
 
 			Clustering.updatePortalPropertiesOnSpecificServer(
 				nodePort = 9080,
-				propertiesOriginal = "database.partiton.enabled=false",
-				propertiesUpdate = "database.partiton.enabled=true");
+				propertiesOriginal = "database.partition.enabled=false",
+				propertiesUpdate = "database.partition.enabled=true");
 
 			Clustering.startSpecificServer(
 				deleteLiferayHome = "false",

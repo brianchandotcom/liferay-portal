@@ -33,7 +33,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -583,19 +582,19 @@ public class CustomFDSSerializer
 							return jsonObject;
 						}
 
+						String externalReferenceCode = String.valueOf(
+							properties.get("renderer"));
+
 						FDSCellRendererCET fdsCellRendererCET =
 							(FDSCellRendererCET)cetManager.getCET(
 								PortalUtil.getCompanyId(httpServletRequest),
-								String.valueOf(properties.get("renderer")));
+								externalReferenceCode);
 
 						if (fdsCellRendererCET == null) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
-									StringBundler.concat(
-										"Unable to find frontend data set ",
-										"cell renderer client extension with ",
-										"external reference code ",
-										properties.get("renderer")));
+									"No FDS cell renderer CET found for " +
+										externalReferenceCode);
 							}
 
 							return jsonObject.put(

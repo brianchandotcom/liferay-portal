@@ -52,15 +52,15 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler();
 
-		sb.append("SELECT * FROM ");
+		sb.append("select * from ");
 		sb.append(_tableName);
-		sb.append(" WHERE ");
+		sb.append(" where ");
 
 		for (int i = 0; i < indexDuplicateColumns.length; i++) {
 			sb.append(columns[i]);
 
 			if (indexDuplicateColumns[i] == null) {
-				sb.append(" IS NULL ");
+				sb.append(" is null ");
 			}
 			else {
 				sb.append(" = '");
@@ -69,7 +69,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			}
 
 			if (i < (columns.length - 1)) {
-				sb.append("AND ");
+				sb.append("and ");
 			}
 		}
 
@@ -131,20 +131,19 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("SELECT ");
+		sb.append("select ");
 		sb.append(_columns);
-		sb.append(" FROM ");
+		sb.append(" from ");
 		sb.append(_tableName);
-		sb.append(" GROUP BY ");
+		sb.append(" group by ");
 		sb.append(_columns);
-		sb.append(" HAVING COUNT(*) > 1");
+		sb.append(" having count(*) > 1");
 
 		String sql = sb.toString();
 
-		try (PreparedStatement preparedStatement =
-				 connection.prepareStatement(sql);
-
-			 ResultSet resultSet = preparedStatement.executeQuery()) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			ResultSetMetaData metaData = resultSet.getMetaData();
 
@@ -197,9 +196,9 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 				StringBundler sb = new StringBundler();
 
-				sb.append("DELETE FROM ");
+				sb.append("delete from ");
 				sb.append(_tableName);
-				sb.append(" WHERE ");
+				sb.append(" where ");
 
 				int counter = 0;
 
@@ -209,7 +208,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 					sb.append(querySet.getKey());
 
 					if (querySet.getValue() == null) {
-						sb.append(" IS NULL ");
+						sb.append(" is null ");
 					}
 					else {
 						sb.append(" = '");
@@ -218,7 +217,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 					}
 
 					if (counter < (duplicate.size() - 1)) {
-						sb.append("AND ");
+						sb.append("and ");
 					}
 
 					counter++;

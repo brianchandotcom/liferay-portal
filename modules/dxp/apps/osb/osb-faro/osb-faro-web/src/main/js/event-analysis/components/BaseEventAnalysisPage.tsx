@@ -140,7 +140,7 @@ const BaseEventAnalysisPage: React.FC<IBaseEventAnalysisPageProps> = ({
 				eventAnalysisId,
 				eventDefinitionId: event.id,
 				name,
-				userId: currentUser.userId,
+				userId: String(currentUser.userId),
 				userName: currentUser.name,
 				...getSafeRangeSelectors(rangeSelectors)
 			}

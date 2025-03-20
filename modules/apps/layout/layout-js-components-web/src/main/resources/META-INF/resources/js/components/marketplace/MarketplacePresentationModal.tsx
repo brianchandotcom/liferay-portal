@@ -12,13 +12,21 @@ import MarketplaceModal from './MarketplaceModal';
 
 import '../../../css/MarketplaceModal.scss';
 
-interface Props {
+interface MarketplacePresentationModalProps {
 	body: string;
+	fragmentPortletNamespace: string;
+	fragmentsImportURL: string;
 	heading: string;
 	onCloseModal: () => void;
 }
 
-function MarketplacePresentationModal({body, heading, onCloseModal}: Props) {
+export default function MarketplacePresentationModal({
+	body,
+	fragmentPortletNamespace,
+	fragmentsImportURL,
+	heading,
+	onCloseModal,
+}: MarketplacePresentationModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			onCloseModal();
@@ -48,6 +56,8 @@ function MarketplacePresentationModal({body, heading, onCloseModal}: Props) {
 						</ClayButton>
 
 						<MarketplaceModal
+							fragmentPortletNamespace={fragmentPortletNamespace}
+							fragmentsImportURL={fragmentsImportURL}
 							trigger={
 								<ClayButton
 									aria-label={Liferay.Language.get(
@@ -75,5 +85,3 @@ function MarketplacePresentationModal({body, heading, onCloseModal}: Props) {
 		</ClayModal>
 	);
 }
-
-export default MarketplacePresentationModal;

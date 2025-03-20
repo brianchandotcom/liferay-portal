@@ -295,6 +295,10 @@ export default function FragmentsSidebar() {
 							body={Liferay.Language.get(
 								'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
 							)}
+							fragmentPortletNamespace={
+								config.fragmentPortletNamespace
+							}
+							fragmentsImportURL={config.fragmentsImportURL}
 							heading={Liferay.Language.get(
 								'marketplace-is-now-in-page-builder'
 							)}

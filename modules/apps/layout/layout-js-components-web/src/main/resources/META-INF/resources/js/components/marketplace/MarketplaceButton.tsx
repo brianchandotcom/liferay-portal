@@ -14,8 +14,10 @@ import '../../../css/MarketplaceButton.scss';
 
 import classNames from 'classnames';
 
-interface Props {
+interface MarketplaceButtonProps {
 	body: string;
+	fragmentPortletNamespace: string;
+	fragmentsImportURL: string;
 	heading: string;
 	isMarketplaceButtonVisited: boolean;
 	portletNamespace: string;
@@ -23,16 +25,23 @@ interface Props {
 
 function MarketplaceButton({
 	body,
+	fragmentPortletNamespace,
+	fragmentsImportURL,
 	heading,
 	isMarketplaceButtonVisited,
 	portletNamespace,
-}: Props) {
+}: MarketplaceButtonProps) {
 	const [visited, setVisited] = useState(isMarketplaceButtonVisited);
 
 	const handleClick = useCallback(() => {
 		openModalComponent({
 			ModalComponent: MarketplacePresentationModal,
-			modalComponentProps: {body, heading},
+			modalComponentProps: {
+				body,
+				fragmentPortletNamespace,
+				fragmentsImportURL,
+				heading,
+			},
 		});
 
 		setVisited(true);
@@ -40,10 +49,21 @@ function MarketplaceButton({
 			`${portletNamespace}isMarketplaceButtonVisited`,
 			true
 		);
-	}, [body, heading, portletNamespace]);
+	}, [
+		body,
+		fragmentPortletNamespace,
+		fragmentsImportURL,
+		heading,
+		portletNamespace,
+	]);
 
 	if (visited) {
-		return <MarketplaceModal />;
+		return (
+			<MarketplaceModal
+				fragmentPortletNamespace={fragmentPortletNamespace}
+				fragmentsImportURL={fragmentsImportURL}
+			/>
+		);
 	}
 
 	return (

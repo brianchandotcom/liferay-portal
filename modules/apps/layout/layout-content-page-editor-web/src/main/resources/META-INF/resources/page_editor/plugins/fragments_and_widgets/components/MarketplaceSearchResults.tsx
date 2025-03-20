@@ -18,6 +18,7 @@ import {
 } from '@liferay/marketplace-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {config} from '../../../app/config';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {useKeyboardNavigation} from '../../../app/js-index';
 import MarketplaceTabItem from './MarketplaceTabItem';
@@ -236,6 +237,8 @@ function MarketplaceSearchResultsList({item}: {item: Product}) {
 			tabIndex={isTarget ? 0 : -1}
 		>
 			<MarketplaceModal
+				fragmentPortletNamespace={config.fragmentPortletNamespace}
+				fragmentsImportURL={config.fragmentsImportURL}
 				trigger={
 					<MarketplaceTabItem item={item} onClickRef={onClickRef} />
 				}

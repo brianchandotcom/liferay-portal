@@ -23,10 +23,16 @@ import React, {
 import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplaceModalProps {
+	fragmentPortletNamespace: string;
+	fragmentsImportURL: string;
 	trigger?: ReactElement;
 }
 
-export default function MarketplaceModal({trigger}: MarketplaceModalProps) {
+export default function MarketplaceModal({
+	fragmentPortletNamespace,
+	fragmentsImportURL,
+	trigger,
+}: MarketplaceModalProps) {
 	const [title, setTitle] = useState<string | undefined>();
 
 	const props = {
@@ -42,7 +48,10 @@ export default function MarketplaceModal({trigger}: MarketplaceModalProps) {
 			settings={{productFilter: 'fragments'}}
 		>
 			<Marketplace.Modal {...props}>
-				<MarketplaceViews />
+				<MarketplaceViews
+					fragmentPortletNamespace={fragmentPortletNamespace}
+					fragmentsImportURL={fragmentsImportURL}
+				/>
 			</Marketplace.Modal>
 		</MarketplaceContextProvider>
 	);

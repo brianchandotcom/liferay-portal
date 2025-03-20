@@ -13,9 +13,11 @@ import {
 	Product,
 	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
-import {fetch} from 'frontend-js-web';
-import React from 'react';
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
+import React, {useCallback} from 'react';
 
+import importZipFile from '../import/importZipFile';
 import {InstallFragmentModalBody} from './InstallFragmentModal';
 
 async function fetchFragmentBlob(marketplaceRest: MarketplaceRest, url: URL) {
@@ -32,73 +34,119 @@ async function fetchFragmentBlob(marketplaceRest: MarketplaceRest, url: URL) {
 function getProductAttachmentBlob(
 	marketplaceRest: MarketplaceRest,
 	product: Product
-) {
+): Promise<Blob> {
+	if (!product.attachments || !product.attachments.length) {
+		throw new Error('Product has no attachments.');
+	}
+
 	return fetchFragmentBlob(
 		marketplaceRest,
 		new URL(product.attachments[0].src)
 	);
 }
 
-async function uploadFragment(blob: Blob, name: string) {
-	const formData = new FormData();
-
-	formData.append(
-		'file',
-		blob,
-		`${name.replace(' ', '-').toLowerCase()}.zip`
-	);
-
-	// Within the blob upload the .zip to the fragments endpoint
-	// This is an example of import.
-
-	await fetch('/o/headless-delivery/upload', {
-		body: formData,
-		method: 'POST',
-	});
+interface MarketplaceViewsProps {
+	fragmentPortletNamespace: string;
+	fragmentsImportURL: string;
 }
 
-export default function MarketplaceViews() {
-	const {marketplaceRest, product, setProduct, setView, view} =
-		useMarketplaceContext();
+export default function MarketplaceViews({
+	fragmentPortletNamespace,
+	fragmentsImportURL,
+}: MarketplaceViewsProps) {
+	const {
+		marketplaceRest,
+		modal: {onOpenChange},
+		product,
+		setProduct,
+		setView,
+		view,
+	} = useMarketplaceContext();
 
-	async function onClickInstall(product: Product) {
-		setView(MarketplaceView.PURCHASE);
-		setProduct(product);
-
-		try {
-			const cart = await marketplaceRest.createCart(product as Product, {
-				orderTypeExternalReferenceCode: 'FRAGMENT',
-			});
-
-			await marketplaceRest.checkoutCart(cart);
-
-			const blob = await getProductAttachmentBlob(
-				marketplaceRest,
-				product
-			);
-
-			if (blob) {
-				await uploadFragment(blob, product.name);
+	const handleImportFile = useCallback(
+		async (file: File) => {
+			try {
+				await importZipFile({
+					file,
+					handleResponse: ({importResults}, file) => {
+						if (!Object.keys(importResults).length) {
+							openToast({
+								message: sub(
+									Liferay.Language.get(
+										'no-new-items-were-imported'
+									),
+									file.name
+								),
+								type: 'info',
+							});
+						}
+						else {
+							window.location.reload();
+						}
+					},
+					importURL: fragmentsImportURL,
+					marketplace: true,
+					overwriteStrategy: 'keep_both',
+					portletNamespace: fragmentPortletNamespace,
+				});
 			}
+			catch (error) {
+				console.error('Import failed:', error);
+			}
+		},
+		[fragmentsImportURL, fragmentPortletNamespace]
+	);
 
-			Liferay.Util.openToast({
-				message: Liferay.Language.get(
-					'your-request-completed-successfully'
-				),
-				title: Liferay.Language.get('success'),
-				type: 'success',
-			});
-		}
-		catch (error) {
-			console.error(error);
+	const handleInstallProduct = useCallback(
+		async (product: Product) => {
+			setView(MarketplaceView.PURCHASE);
+			setProduct(product);
 
-			Liferay.Util.openToast({
-				message: Liferay.Language.get('an-unexpected-error-occurred'),
-				title: Liferay.Language.get('danger'),
-				type: 'danger',
-			});
-		}
-	}
+			try {
+				const cart = await marketplaceRest.createCart(product, {
+					orderTypeExternalReferenceCode: 'FRAGMENT',
+				});
+
+				await marketplaceRest.checkoutCart(cart);
+
+				const blob = await getProductAttachmentBlob(
+					marketplaceRest,
+					product
+				);
+
+				if (blob) {
+					const file = new File(
+						[blob],
+						`${product.name.replace(' ', '-').toLowerCase()}.zip`,
+						{
+							type: 'application/zip',
+						}
+					);
+					await handleImportFile(file);
+
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						title: Liferay.Language.get('success'),
+						type: 'success',
+					});
+				}
+			}
+			catch (error: any) {
+				console.error('Installation failed:', error);
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					title: Liferay.Language.get('danger'),
+					type: 'danger',
+				});
+				onOpenChange(false);
+			}
+		},
+		[marketplaceRest, setProduct, setView, handleImportFile, onOpenChange]
+	);
 
 	return (
 		<>
@@ -106,16 +154,13 @@ export default function MarketplaceViews() {
 				<Marketplace.Products
 					onClickProduct={(product) => {
 						setProduct(product);
-
 						setView(MarketplaceView.STOREFRONT);
 					}}
 				>
 					{(product) => (
 						<ClayButton
 							className="w-100"
-							onClick={() => {
-								onClickInstall(product);
-							}}
+							onClick={() => handleInstallProduct(product)}
 						>
 							{Liferay.Language.get('install')}
 						</ClayButton>
@@ -128,7 +173,7 @@ export default function MarketplaceViews() {
 					primaryButton={
 						<ClayButton
 							className="ml-auto mt-3 rounded"
-							onClick={() => onClickInstall(product)}
+							onClick={() => handleInstallProduct(product)}
 						>
 							{Liferay.Language.get('install')}
 						</ClayButton>

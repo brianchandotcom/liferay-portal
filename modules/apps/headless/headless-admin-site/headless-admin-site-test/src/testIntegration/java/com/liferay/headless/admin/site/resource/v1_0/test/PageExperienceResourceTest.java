@@ -192,18 +192,23 @@ public class PageExperienceResourceTest
 		pageExperience.setName_i18n(
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 
-		pageExperience.setPageElements(new PageElement[] {
-			new PageElement() {{
-				setPageElements(new PageElement[0]);
-				setPosition(0);
-				setType(PageElement.Type.CONTAINER);
-			}},
-			new PageElement() {{
-				setPageElements(new PageElement[0]);
-				setPosition(1);
-				setType(PageElement.Type.CONTAINER);
-			}}
-		});
+		pageExperience.setPageElements(
+			new PageElement[] {
+				new PageElement() {
+					{
+						setPageElements(new PageElement[0]);
+						setPosition(0);
+						setType(PageElement.Type.CONTAINER);
+					}
+				},
+				new PageElement() {
+					{
+						setPageElements(new PageElement[0]);
+						setPosition(1);
+						setType(PageElement.Type.CONTAINER);
+					}
+				}
+			});
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			testGroup.getGroupId());

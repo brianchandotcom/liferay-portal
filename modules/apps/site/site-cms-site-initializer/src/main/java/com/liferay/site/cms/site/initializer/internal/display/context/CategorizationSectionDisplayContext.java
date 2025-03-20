@@ -24,7 +24,7 @@ public class CategorizationSectionDisplayContext
 	}
 
 	@Override
-	protected String getCMSSectionFilter() {
+	protected String getCMSSectionFilterString() {
 		return StringPool.BLANK;
 	}
 

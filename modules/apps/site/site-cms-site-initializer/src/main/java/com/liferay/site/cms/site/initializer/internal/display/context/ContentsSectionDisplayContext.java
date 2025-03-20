@@ -137,7 +137,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	protected String getCMSSectionFilter() {
+	protected String getCMSSectionFilterString() {
 		return "cmsSection in ('content', 'files')";
 	}
 

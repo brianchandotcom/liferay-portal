@@ -6,9 +6,10 @@
 package com.liferay.batch.engine.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
@@ -21,7 +22,6 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -34,11 +34,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -53,6 +52,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -185,33 +185,14 @@ public class BatchEnginePortletDataHandlerTest {
 		ObjectEntry duplicateObjectEntry = _addObjectEntry(
 			_objectDefinition1, objectFieldValue);
 
-		try {
-			try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
-					"com.liferay.exportimport.internal.lifecycle." +
-						"LoggerExportImportLifecycleListener",
-					LoggerTestUtil.OFF);
-				LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
-					"com.liferay.batch.engine.internal." +
-						"BatchEngineImportTaskExecutorImpl",
-					LoggerTestUtil.OFF)) {
-
-				_importLayouts();
-			}
-
-			Assert.fail();
-		}
-		catch (PortletDataException portletDataException) {
-			String message = portletDataException.getMessage();
-
-			Assert.assertTrue(message.contains(objectFieldValue));
-		}
+		_importLayouts();
 
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
 				0, _objectDefinition1.getObjectDefinitionId(),
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
+		Assert.assertEquals(objectEntries.toString(), 3, objectEntries.size());
 
 		duplicateObjectEntry = _objectEntryLocalService.getObjectEntry(
 			duplicateObjectEntry.getExternalReferenceCode(),
@@ -220,6 +201,14 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertNotEquals(
 			_objectEntry2.getExternalReferenceCode(),
 			duplicateObjectEntry.getExternalReferenceCode());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				_batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+					BatchEngineTaskExecuteStatus.COMPLETED.toString()),
+				batchEngineImportTask -> Objects.equals(
+					batchEngineImportTask.getTaskItemDelegateName(),
+					_objectDefinition1.getName())));
 	}
 
 	@Test
@@ -323,7 +312,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0L,
-			_objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.put(
@@ -423,6 +412,10 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
+
+	@Inject
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
 
 	private long _companyGroupId;
 

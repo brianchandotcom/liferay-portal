@@ -110,19 +110,22 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 				var selectedData = [];
 
 				allSelectedElements.each(function () {
-					var dataset;
-					var row = this.ancestor('tr');
+					var data;
 
-					if (row) {
-						dataset = row.getDOM().dataset;
+					if (Object.keys(this.getDOM().dataset).length) {
+						data = this.getDOM().dataset;
 					}
 					else {
-						dataset = this.getDOM().dataset;
+						const row = this.ancestor('tr');
+
+						if (row && Object.keys(row.getDOM().dataset).length) {
+							data = row.getDOM().dataset;
+						}
 					}
 
 					selectedData.push({
-						id: dataset.id,
-						name: dataset.name,
+						id: data.id,
+						name: data.name,
 					});
 				});
 

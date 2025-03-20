@@ -39,7 +39,7 @@ export interface OpenSelectionModalSelectedItem {
 	checked?: boolean;
 	dataset?: DOMStringMap;
 	value?: string;
-	[prop: string]: boolean | string | undefined;
+	[prop: string]: boolean | DOMStringMap | string | undefined;
 }
 
 export default function openSelectionModal<
@@ -89,7 +89,6 @@ export default function openSelectionModal<
 						// @ts-ignore
 
 						allSelectedNodes.map((node) => {
-							let dataset: DOMStringMap | undefined;
 							let item: OpenSelectionModalSelectedItem = {};
 
 							if (node.value) {
@@ -100,18 +99,16 @@ export default function openSelectionModal<
 								item.checked = node.checked;
 							}
 
-							const row: HTMLElement | null =
-								node.closest('dd, tr, li');
-
-							if (row) {
-								dataset = row.dataset;
+							if (node.dataset?.id && node.dataset.name) {
+								item = {...item, ...node.dataset};
 							}
 							else {
-								dataset = node.dataset;
-							}
+								const row: HTMLElement | null =
+									node.closest('dd, tr, li');
 
-							if (dataset && Object.keys(dataset).length) {
-								item = {...item, ...dataset};
+								if (row && Object.keys(row.dataset).length) {
+									item = {...item, ...row.dataset};
+								}
 							}
 
 							return item;

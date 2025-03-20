@@ -61,11 +61,11 @@ public abstract class BaseSectionDisplayContext {
 				objectDefinitionFolderExternalReferenceCodes, "','"));
 		sb.append("')");
 
-		String cmsSectionFilter = getCMSSectionFilter();
+		String cmsSectionFilterString = getCMSSectionFilterString();
 
-		if (Validator.isNotNull(cmsSectionFilter)) {
+		if (Validator.isNotNull(cmsSectionFilterString)) {
 			sb.append(" or ");
-			sb.append(cmsSectionFilter);
+			sb.append(cmsSectionFilterString);
 		}
 
 		if (objectEntryFolder != null) {
@@ -113,7 +113,7 @@ public abstract class BaseSectionDisplayContext {
 		return sb.toString();
 	}
 
-	protected abstract String getCMSSectionFilter();
+	protected abstract String getCMSSectionFilterString();
 
 	protected final CMSSiteInitializerConfiguration
 		cmsSiteInitializerConfiguration;

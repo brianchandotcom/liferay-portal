@@ -50,7 +50,7 @@ export const LOCATION = 'location';
 export const MODIFIED_DATE = 'modifiedDate';
 export const NAME = 'name';
 export const OPERATION = 'operation';
-export const PREVIEWS_METRIC = 'previewsMetric';
+export const IMPRESSIONS_METRIC = 'impressionMadeMetric';
 export const PROVIDER_TYPE = 'providerType';
 export const RATINGS_METRIC = 'ratingsMetric';
 export const READING_TIME_METRIC = 'readingTimeMetric';
@@ -85,10 +85,10 @@ const INVERTED_SORT_FIELDS = [
 	DOWNLOADS_METRIC,
 	ENTRANCES_METRIC,
 	EXIT_RATE_METRIC,
+	IMPRESSIONS_METRIC,
 	INDIVIDUAL_COUNT,
 	LAST_ACTIVITY_DATE,
 	MODIFIED_DATE,
-	PREVIEWS_METRIC,
 	RATINGS_METRIC,
 	READING_TIME_METRIC,
 	SCORE,

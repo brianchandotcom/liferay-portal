@@ -276,8 +276,8 @@
 			"key": "portalPatchTicketURL",
 			"label": "Portal Patch Ticket URL",
 			"type": "url",
-			"valueDefault": "https://help.liferay.com/hc/en-us/requests/PATCHERTEST",
-			"valueDescription": "e.g. https://help.liferay.com/hc/en-us/requests/PATCHERTEST",
+			"valueDefault": "https://mirrors.lax.liferay.com/hc/en-us/requests/PATCHERTEST",
+			"valueDescription": "e.g. https://mirrors.lax.liferay.com/hc/en-us/requests/PATCHERTEST",
 			"valueRegex": "https?://.+"
 		},
 		{

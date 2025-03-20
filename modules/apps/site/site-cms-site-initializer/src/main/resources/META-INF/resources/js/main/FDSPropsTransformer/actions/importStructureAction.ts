@@ -7,11 +7,12 @@ import {openModal} from 'frontend-js-components-web';
 
 import ImportStructureModalContent from '../../components/modal/ImportStructureModalContent';
 
-export default function importStructureAction() {
+export default function importStructureAction(importURL: string) {
 	openModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			ImportStructureModalContent({
 				closeModal,
+				importURL,
 			}),
 		size: 'md',
 	});

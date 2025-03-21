@@ -77,6 +77,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -922,16 +923,20 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			}
 
 			if (samlSpMessage != null) {
-				_samlSpMessageLocalService.deleteSamlSpMessage(samlSpMessage);
+				samlSpMessage.setCreateDate(new Date());
+				samlSpMessage.setExpirationDate(notOnOrAfterDateTime.toDate());
+
+				_samlSpMessageLocalService.updateSamlSpMessage(samlSpMessage);
 			}
+			else {
+				ServiceContext serviceContext = new ServiceContext();
 
-			ServiceContext serviceContext = new ServiceContext();
+				serviceContext.setCompanyId(CompanyThreadLocal.getCompanyId());
 
-			serviceContext.setCompanyId(CompanyThreadLocal.getCompanyId());
-
-			_samlSpMessageLocalService.addSamlSpMessage(
-				idpEntityId, messageKey, notOnOrAfterDateTime.toDate(),
-				serviceContext);
+				_samlSpMessageLocalService.addSamlSpMessage(
+					idpEntityId, messageKey, notOnOrAfterDateTime.toDate(),
+					serviceContext);
+			}
 		}
 		catch (SystemException systemException) {
 			throw new SamlException(systemException);

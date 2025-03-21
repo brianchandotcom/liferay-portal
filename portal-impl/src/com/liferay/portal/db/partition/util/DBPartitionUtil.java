@@ -1601,28 +1601,19 @@ public class DBPartitionUtil {
 					int count = StringUtil.count(
 						lowerCaseSQL, _DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
 
-					if (count > 0) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(sql);
-						}
-
-						throw new IllegalArgumentException(
-							_DATABASE_PARTITION_SCHEMA_NAME_PREFIX +
-								" cannot be used in a statement executeUpdate");
+					if (count == 0) {
+						count = StringUtil.count(
+							lowerCaseSQL,
+							_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX);
 					}
 
-					count = StringUtil.count(
-						lowerCaseSQL,
-						_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX);
-
 					if (count > 0) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(sql);
 						}
 
-						throw new IllegalArgumentException(
-							_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX +
-								" cannot be used in a statement executeUpdate");
+						throw new UnsupportedOperationException(
+							"Unsupported SQL query");
 					}
 				}
 

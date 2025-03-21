@@ -17,7 +17,7 @@ import {useCustomerPortal} from '~/features/project/context';
 import {Liferay} from '~/services/liferay';
 import {
 	getBusinessEventById,
-	getBusinessEventsVersions,
+	getBusinessEventVersions,
 } from '~/services/liferay/api';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
@@ -117,7 +117,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 		try {
 			const businessEventsVersionsResponse =
-				await getBusinessEventsVersions(filterQuery);
+				await getBusinessEventVersions(filterQuery);
 
 			setBusinessEventVersion(businessEventsVersionsResponse.items);
 		}
@@ -312,14 +312,15 @@ const BusinessEventsItemActivityHistory = () => {
 				<NavigationBar
 					triggerLabel={i18n.translate('activity-history')}
 				>
-					<Nav.Item>
+					<Nav.Item
+						onClick={() =>
+							navigate(`/${accountKey}/business-events/${id}`)
+						}
+					>
 						<Nav.Link
 							active={false}
 							aria-label={`Switch to ${i18n.translate('event-details')}`}
 							className="be-nav-link text-neutral-10"
-							onClick={() =>
-								navigate(`/${accountKey}/business-events/${id}`)
-							}
 						>
 							{i18n.translate('event-details')}
 						</Nav.Link>

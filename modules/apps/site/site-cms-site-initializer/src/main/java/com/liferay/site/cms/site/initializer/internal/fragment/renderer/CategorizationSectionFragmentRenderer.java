@@ -10,7 +10,6 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
-import com.liferay.site.cms.site.initializer.internal.display.context.CategorizationSectionDisplayContext;
 
 import java.io.IOException;
 
@@ -58,11 +57,6 @@ public class CategorizationSectionFragmentRenderer
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
 					"/categorization_section.jsp");
-
-			httpServletRequest.setAttribute(
-				CategorizationSectionDisplayContext.class.getName(),
-				new CategorizationSectionDisplayContext(
-					_cmsSiteInitializerConfiguration, httpServletRequest));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

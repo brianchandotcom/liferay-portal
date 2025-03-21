@@ -10,8 +10,8 @@
 				<then>
 					<loadproperties srcfile="${project.dir}/.gradle/gradle.properties" />
 
-					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.password: ${systemProp.repository.private.password}</echo>
-					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.username: ${systemProp.repository.private.username}</echo>
+					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.password=${systemProp.repository.private.password}</echo>
+					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.username=${systemProp.repository.private.username}</echo>
 				</then>
 			</if>
 

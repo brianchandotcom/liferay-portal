@@ -60,8 +60,7 @@ public class StructuresSectionFragmentRenderer
 
 			httpServletRequest.setAttribute(
 				StructuresSectionDisplayContext.class.getName(),
-				new StructuresSectionDisplayContext(
-					_cmsSiteInitializerConfiguration, httpServletRequest));
+				new StructuresSectionDisplayContext(httpServletRequest));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

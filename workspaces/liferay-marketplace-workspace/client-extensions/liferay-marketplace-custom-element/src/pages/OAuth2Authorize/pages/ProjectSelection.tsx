@@ -34,8 +34,9 @@ const ProjectSelection: React.FC<ProjectSelectionProps> = ({
 				<h2>{i18n.translate('no-cloud-projects-available')}</h2>
 
 				<p className="mt-4 secondary-text">
-					{`${i18n.translate('you-do-not-have-access-to-cloud-project')} 
-					${i18n.translate('this-may-restrict-the-functionality-available-to-you')}`}
+					{i18n.translate(
+						'please-note-that-since-there-is-no-cloud-project-associated-with-your-instance-you-will-not-be-able-to-install-cloud-apps'
+					)}
 				</p>
 			</div>
 		);

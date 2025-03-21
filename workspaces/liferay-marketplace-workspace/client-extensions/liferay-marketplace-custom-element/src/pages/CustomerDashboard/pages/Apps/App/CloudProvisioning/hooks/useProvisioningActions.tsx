@@ -7,7 +7,6 @@ import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import {useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {KeyedMutator} from 'swr';
 
 import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import useModalContext from '../../../../../../../hooks/useModalContext';
@@ -20,10 +19,7 @@ import {InstallStatus} from '../types';
 import useProvisioningData, {ProvisioningRow} from './useProvisioningData';
 
 type UseProvisioningActionsProps = {
-	mutateOrder: KeyedMutator<{
-		placedOrder: PlacedOrder;
-		product: DeliveryProduct;
-	}>;
+	mutateOrder: ReturnType<typeof useProvisioningData>['mutateOrder'];
 	order: PlacedOrder;
 	resourceRequirements: ReturnType<
 		typeof useProvisioningData

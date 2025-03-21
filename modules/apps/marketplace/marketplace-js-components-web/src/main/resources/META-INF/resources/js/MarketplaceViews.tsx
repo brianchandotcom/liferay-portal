@@ -175,7 +175,7 @@ export default function MarketplaceViews() {
 
 			{view === MarketplaceView.PURCHASE && (
 				<Marketplace.Purchase
-					rightTitle={
+					productPurchaseChildren={
 						<small className="align-items-end d-flex flex-column">
 							<span className="font-weight-bold">
 								{cloudProject}

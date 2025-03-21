@@ -327,6 +327,8 @@ export default {
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
 	'please-fill-in-a-valid-email': 'Please fill in a valid email',
+	'please-note-that-since-there-is-no-cloud-project-associated-with-your-instance-you-will-not-be-able-to-install-cloud-apps':
+		'Please note that since there is no cloud project associated with your instance, you will not be able to install Cloud Apps',
 	'please-review-before-submitting-once-sent-you-will-not-be-able-to-edit-any-information-until-this-submission-is-completely-reviewed-by-liferay':
 		'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
 	'please-select-the-account-you-wish-to-link-to-your-liferay-dxp-below':
@@ -540,8 +542,8 @@ export default {
 	'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it':
 		'{0} will be deleted and this action can’t be undone. Are you sure you want to delete it?',
 	'yes': 'Yes',
-	'you-are-one-step-away-from-finalizing-your-connection-with-the-marketplace-this-window-will-close-automatically':
-		'You are one step away from finalizing your connection with the Marketplace, this window will close automatically.',
+	'you-are-one-step-away-from-finalizing-your-connection-with-the-marketplace':
+		'You are one step away from finalizing your connection with the Marketplace. Please, do not close the window until the connection is fully completed, as it will close automatically once it is done.',
 	'you-can-paste-links-directly-from-youtube':
 		'You can paste links directly from YouTube.',
 	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':

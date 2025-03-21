@@ -97,7 +97,7 @@ const Congratulations = () => {
 
 			<p className="align-items-center d-flex mt-4 px-3 secondary-text">
 				{i18n.translate(
-					'you-are-one-step-away-from-finalizing-your-connection-with-the-marketplace-this-window-will-close-automatically'
+					'you-are-one-step-away-from-finalizing-your-connection-with-the-marketplace'
 				)}
 			</p>
 		</div>

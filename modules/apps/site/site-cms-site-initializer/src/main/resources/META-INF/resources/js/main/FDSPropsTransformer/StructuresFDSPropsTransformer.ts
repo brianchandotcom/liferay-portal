@@ -44,19 +44,26 @@ export default function StructuresFDSPropsTransformer({
 		},
 		onActionDropdownItemClick({
 			action,
+			event,
+			itemData,
 		}: {
 			action: {
 				data: {
 					id: string;
-					importURL: string;
-					objectFolderExternalReferenceCode: string;
 				};
+			};
+			event: Event;
+			itemData: {
+				objectFolderExternalReferenceCode: string;
 			};
 		}) {
 			if (action.data.id === 'import') {
+				event.preventDefault();
+				const target = event.target as HTMLAnchorElement;
+
 				importStructureAction(
-					action.data.importURL,
-					action.data.objectFolderExternalReferenceCode
+					target.href,
+					itemData.objectFolderExternalReferenceCode
 				);
 			}
 		},

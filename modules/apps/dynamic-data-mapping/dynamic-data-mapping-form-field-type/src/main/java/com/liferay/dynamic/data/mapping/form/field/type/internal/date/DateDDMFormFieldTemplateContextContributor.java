@@ -98,8 +98,9 @@ public class DateDDMFormFieldTemplateContextContributor
 		).put(
 			"years", _getYears()
 		).putAll(
-			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
-				ddmForm.getDefaultLocale())
+			DDMFormFieldTemplateContextContributorUtil.
+				getLocalizationParameters(
+					ddmFormField, ddmForm.getDefaultLocale())
 		).build();
 	}
 

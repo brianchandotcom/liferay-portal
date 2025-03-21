@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -102,6 +103,9 @@ public class TextDDMFormFieldTemplateContextContributor
 				"tooltip",
 				DDMFormFieldTypeUtil.getPropertyValue(
 					ddmFormField, locale, "tooltip")
+			).putAll(
+				DDMFormFieldTemplateContextContributorUtil.
+					getLocalizationParameters(ddmFormField, locale)
 			).build();
 		}
 

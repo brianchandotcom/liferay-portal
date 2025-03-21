@@ -94,8 +94,9 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 						ddmFormFieldRenderingContext.getValue()));
 			}
 		).putAll(
-			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
-				ddmForm.getDefaultLocale())
+			DDMFormFieldTemplateContextContributorUtil.
+				getLocalizationParameters(
+					ddmFormField, ddmForm.getDefaultLocale())
 		).build();
 	}
 

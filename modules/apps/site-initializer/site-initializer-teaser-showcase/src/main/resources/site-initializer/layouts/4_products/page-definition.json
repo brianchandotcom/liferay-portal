@@ -149,7 +149,7 @@
 												"definition": {
 													"fragment": {
 														"key": "dialect-dialect-button",
-														"siteKey": "test2"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"buttonSize": "",
@@ -180,7 +180,7 @@
 																						},
 																						{
 																							"fieldName": "siteKey",
-																							"fieldValue": "test2"
+																							"fieldValue": "[$GROUP_KEY$]"
 																						}
 																					]
 																				}
@@ -363,7 +363,7 @@
 										"definition": {
 											"fragment": {
 												"key": "dialect-dialect-button",
-												"siteKey": "test2"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"buttonSize": "",
@@ -381,7 +381,7 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/web/test2/g/contacts"
+																		"en_US": "/web/[$GROUP_KEY$]/g/contacts"
 																	}
 																}
 															}
@@ -517,7 +517,7 @@
 										"definition": {
 											"fragment": {
 												"key": "dialect-dialect-button",
-												"siteKey": "test2"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"buttonSize": "",
@@ -535,7 +535,7 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/web/test2/g/lenses"
+																		"en_US": "/web/[$GROUP_KEY$]/g/lenses"
 																	}
 																}
 															}
@@ -687,7 +687,7 @@
 										"definition": {
 											"fragment": {
 												"key": "dialect-dialect-button",
-												"siteKey": "test2"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"buttonSize": "",
@@ -705,7 +705,7 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/web/test2/g/contacts"
+																		"en_US": "/web/[$GROUP_KEY$]/g/contacts"
 																	}
 																}
 															}
@@ -834,7 +834,7 @@
 										"definition": {
 											"fragment": {
 												"key": "dialect-dialect-button",
-												"siteKey": "test2"
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
 												"buttonSize": "",
@@ -852,7 +852,7 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/web/test2/g/lenses"
+																		"en_US": "/web/[$GROUP_KEY$]/g/lenses"
 																	}
 																}
 															}

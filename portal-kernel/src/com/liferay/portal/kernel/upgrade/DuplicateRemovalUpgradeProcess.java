@@ -144,17 +144,11 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 				sql);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			ResultSetMetaData metaData = resultSet.getMetaData();
-
-			int columnCount = metaData.getColumnCount();
-
 			while (resultSet.next()) {
-				String[] columnResults = new String[columnCount];
+				String[] columnResults = new String[_columnNames.length];
 
-				for (int i = 1; i <= columnCount; i++) {
-					String value = resultSet.getString(i);
-
-					columnResults[i - 1] = value;
+				for (int i = 1; i <= columnResults.length; i++) {
+					columnResults[i - 1] = resultSet.getString(i);
 				}
 
 				indexesDuplicatesList.add(columnResults);

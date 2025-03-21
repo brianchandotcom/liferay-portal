@@ -233,10 +233,10 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 			.check();
 
 		await dataSetFragmentPage.addFilterButton.click();
+	});
 
-		// Close filter
-
-		await dataSetFragmentPage.page.keyboard.press('Escape');
+	await test.step('Assert that the filter is hidden', async () => {
+		await expect(dataSetFragmentPage.filterConfirmButton).not.toBeVisible();
 	});
 
 	await test.step('Check that the filter works', async () => {
@@ -540,10 +540,10 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 		await dataSetFragmentPage.filterItem
 			.getByRole('button', {name: 'Add filter'})
 			.click();
+	});
 
-		// Close filter
-
-		await dataSetFragmentPage.page.keyboard.press('Escape');
+	await test.step('Assert that the filter is hidden', async () => {
+		await expect(dataSetFragmentPage.filterConfirmButton).not.toBeVisible();
 	});
 
 	await test.step('Check that the filter works', async () => {
@@ -588,10 +588,10 @@ test('Selection filter of type "API REST Application" is displayed in fragment @
 			.getByRole('checkbox', {name: 'boolean'})
 			.check();
 		await dataSetFragmentPage.addFilterButton.click();
+	});
 
-		// Close filter
-
-		await dataSetFragmentPage.page.keyboard.press('Escape');
+	await test.step('Assert that the filter is hidden', async () => {
+		await expect(dataSetFragmentPage.filterConfirmButton).not.toBeVisible();
 	});
 
 	await test.step('Check that the filter works', async () => {
@@ -709,10 +709,12 @@ test(
 			await dataSetFragmentPage.filterItem
 				.getByRole('button', {name: 'Add filter'})
 				.click();
+		});
 
-			// Close filter
-
-			await dataSetFragmentPage.page.keyboard.press('Escape');
+		await test.step('Assert that the filter is hidden', async () => {
+			await expect(
+				dataSetFragmentPage.filterConfirmButton
+			).not.toBeVisible();
 		});
 
 		await test.step('Check that the filter works', async () => {

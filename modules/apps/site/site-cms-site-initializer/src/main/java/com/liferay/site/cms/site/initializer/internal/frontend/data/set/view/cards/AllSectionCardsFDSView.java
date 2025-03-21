@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.ca
 
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
+import com.liferay.petra.string.StringPool;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,17 +23,12 @@ public class AllSectionCardsFDSView extends BaseCardsFDSView {
 
 	@Override
 	public String getDescription() {
-		return "description";
-	}
-
-	@Override
-	public String getImage() {
-		return "embedded.contentUrl";
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getTitle() {
-		return "title";
+		return "embedded.title";
 	}
 
 }

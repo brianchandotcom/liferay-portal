@@ -123,6 +123,7 @@ public interface SharingEntryLocalService
 	 the expiration date is a past value
 	 * @review
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SharingEntry addSharingEntry(
 			String externalReferenceCode, long userId, long toUserGroupId,
 			long toUserId, long classNameId, long classPK, long groupId,
@@ -689,6 +690,7 @@ public interface SharingEntryLocalService
 	 value), or if the expiration date is a past value
 	 * @review
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public SharingEntry updateSharingEntry(
 			long userId, long sharingEntryId,
 			Collection<SharingEntryAction> sharingEntryActions,

@@ -41,7 +41,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 	}
 
 	@Override
-	protected void doUpgrade() {
+	protected void doUpgrade() throws Exception {
 		_removeDuplicates();
 	}
 
@@ -127,7 +127,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			_DB_ESCAPE_STRINGS[1]);
 	}
 
-	private List<String[]> _getColumnValuesList() {
+	private List<String[]> _getColumnValuesList() throws Exception {
 		List<String[]> columnValuesList = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(7);
@@ -156,11 +156,6 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 				columnValuesList.add(columnValues);
 			}
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
 
 		return columnValuesList;
 	}
@@ -176,7 +171,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _removeDuplicates() {
+	private void _removeDuplicates() throws Exception {
 		List<String[]> columnValuesList = _getColumnValuesList();
 
 		for (String[] columnValues : columnValuesList) {

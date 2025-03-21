@@ -109,7 +109,7 @@ public class DuplicateRemovalUpgradeProcessTest {
 
 		DuplicateRemovalUpgradeProcess upgradeProcess =
 			new DuplicateRemovalUpgradeProcess(
-				"TestTable", "column1, column2, column3, column4");
+				"TestTable", new String[]{"column1", "column2", "column3", "column4"});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
@@ -139,7 +139,7 @@ public class DuplicateRemovalUpgradeProcessTest {
 
 		DuplicateRemovalUpgradeProcess upgradeProcess =
 			new DuplicateRemovalUpgradeProcess(
-				"TestTable", "column1, column2, column3, column4",
+				"TestTable", new String[]{"column1", "column2", "column3", "column4"},
 				"primaryKeyColumn asc");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

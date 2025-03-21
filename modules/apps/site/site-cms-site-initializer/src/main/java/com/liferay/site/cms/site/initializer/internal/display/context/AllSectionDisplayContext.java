@@ -5,24 +5,16 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
-import java.util.List;
 import java.util.Map;
-
-import javax.portlet.ActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,40 +25,19 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public AllSectionDisplayContext(
 		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService) {
 
-		super(cmsSiteInitializerConfiguration, httpServletRequest);
-
-		_objectDefinitionService = objectDefinitionService;
+		super(
+			cmsSiteInitializerConfiguration, httpServletRequest, language,
+			objectDefinitionService);
 	}
 
 	@Override
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
-				for (ObjectDefinition objectDefinition :
-						_objectDefinitionService.getCMSObjectDefinitions(
-							themeDisplay.getCompanyId(),
-							getObjectDefinitionFolderExternalReferenceCodes())) {
-
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.putData("action", "createAsset");
-							dropdownItem.putData(
-								"redirect",
-								getAddStructuredContentItemURL(
-									objectDefinition.getObjectDefinitionId()));
-							dropdownItem.putData(
-								"title",
-								objectDefinition.getLabel(
-									themeDisplay.getLocale()));
-							dropdownItem.setIcon("forms");
-							dropdownItem.setLabel(
-								objectDefinition.getLabel(
-									themeDisplay.getLocale()));
-						});
-				}
+				addStructureContentDropdownItems(this);
 			}
 		};
 	}
@@ -85,24 +56,6 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
-		throws Exception {
-
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				_getPermissionsURL(), "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), "get",
-				"permissions", "modal-permissions"),
-			new FDSActionDropdownItem(
-				LanguageUtil.get(
-					httpServletRequest,
-					"are-you-sure-you-want-to-delete-this-entry"),
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete", "headless"));
-	}
-
-	@Override
 	public String[] getObjectDefinitionFolderExternalReferenceCodes() {
 		return ArrayUtil.append(
 			cmsSiteInitializerConfiguration.
@@ -115,30 +68,5 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	protected String getCMSSectionFilterString() {
 		return StringPool.BLANK;
 	}
-
-	private String _getPermissionsURL() throws Exception {
-
-		// TODO "modelResourceDescription"
-
-		return PortletURLBuilder.create(
-			PortalUtil.getControlPanelPortletURL(
-				httpServletRequest,
-				"com_liferay_portlet_configuration_web_portlet_" +
-					"PortletConfigurationPortlet",
-				ActionRequest.RENDER_PHASE)
-		).setMVCPath(
-			"/edit_permissions.jsp"
-		).setRedirect(
-			""
-		).setParameter(
-			"modelResource", "{entryClassName}"
-		).setParameter(
-			"resourcePrimKey", "{embedded.id}"
-		).setWindowState(
-			LiferayWindowState.POP_UP
-		).buildString();
-	}
-
-	private final ObjectDefinitionService _objectDefinitionService;
 
 }

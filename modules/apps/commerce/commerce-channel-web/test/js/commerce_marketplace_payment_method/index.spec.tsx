@@ -168,7 +168,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		expect(queryByText('no-results-were-found')).toBeTruthy();
 	});
 
-	it('renders aunthorized with apps and click install without cloud projects', async () => {
+	it('renders authorized with apps and click install without cloud projects', async () => {
 		const {fetch} = require('frontend-js-web');
 
 		fetch

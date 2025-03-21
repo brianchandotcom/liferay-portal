@@ -12,48 +12,27 @@ import {MarketplaceProduct} from '../../../src/main/resources/META-INF/resources
 import {MarketplacePurchase} from '../../../src/main/resources/META-INF/resources/js/views/Purchase';
 import product from '../__mock__/product';
 
-const marketplaceProduct = new MarketplaceProduct(product);
-
-const {LATEST_VERSION} = marketplaceProduct.specificationValues;
-
 describe('MarketplacePurchase', () => {
 	it('rendering components with its props', async () => {
+		const marketplaceProduct = new MarketplaceProduct(product);
+
 		const {queryByText} = render(
-			<MarketplaceContext.Provider value={marketplaceProduct as any}>
-				<MarketplacePurchase rightTitle="Right Title">
+			<MarketplaceContext.Provider value={{product} as any}>
+				<MarketplacePurchase productPurchaseChildren="Product Purchase Children">
 					children
 				</MarketplacePurchase>
 			</MarketplaceContext.Provider>
 		);
+
+		const {LATEST_VERSION} = marketplaceProduct.specificationValues;
 
 		expect(queryByText('0CPUs, 0GB RAM')).toBeInTheDocument();
 		expect(queryByText('children')).toBeInTheDocument();
 		expect(queryByText('Free')).toBeInTheDocument();
-		expect(queryByText('project-name')).toBeInTheDocument();
-		expect(queryByText('Right Title')).toBeInTheDocument();
+		expect(queryByText('Product Purchase Children')).toBeInTheDocument();
 		expect(
 			queryByText(`${LATEST_VERSION} by ${product.catalogName}`)
 		).toBeInTheDocument();
 		expect(queryByText(product.name)).toBeInTheDocument();
-	});
-
-	it('rendering component without product specifications', () => {
-		product.productSpecifications = [];
-
-		const productWihtoutSpecifications = new MarketplaceProduct(product);
-
-		const {queryByText} = render(
-			<MarketplaceContext.Provider
-				value={productWihtoutSpecifications as any}
-			>
-				<MarketplacePurchase rightTitle="Right Title">
-					children
-				</MarketplacePurchase>
-			</MarketplaceContext.Provider>
-		);
-
-		expect(
-			queryByText(`${LATEST_VERSION} by ${product.catalogName}`)
-		).toBeFalsy();
 	});
 });

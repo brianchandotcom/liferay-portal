@@ -11,14 +11,14 @@ import {
 	MarketplaceContext,
 	MarketplaceView,
 } from '../../../../src/main/resources/META-INF/resources/js/MarketplaceContext';
-import MarketplaceModalView from '../../../../src/main/resources/META-INF/resources/js/views/Modal/MarketplaceModal';
+import BaseModal from '../../../../src/main/resources/META-INF/resources/js/views/Modal/BaseModal';
 
 const observer = {
 	dispatch: () => null,
 	mutation: [true, true] as [boolean, boolean],
 };
 
-describe('MarketplaceModalView', () => {
+describe('BaseModal', () => {
 	afterAll(() => {
 		jest.useRealTimers();
 	});
@@ -38,9 +38,9 @@ describe('MarketplaceModalView', () => {
 			<MarketplaceContext.Provider
 				value={{view: MarketplaceView.PURCHASE} as any}
 			>
-				<MarketplaceModalView observer={observer} open={true}>
+				<BaseModal observer={observer} open={true}>
 					children
-				</MarketplaceModalView>
+				</BaseModal>
 			</MarketplaceContext.Provider>
 		);
 
@@ -50,15 +50,17 @@ describe('MarketplaceModalView', () => {
 
 		const modalParentElement = queryByRole('dialog')?.parentElement;
 
-		expect(modalParentElement).toHaveClass('modal-lg');
+		expect(modalParentElement).toHaveClass(
+			'modal-dialog modal-full-screen modal-dialog-centered'
+		);
 		expect(queryByText('add-from-marketplace')).toBeInTheDocument();
 		expect(queryByText('children')).toBeTruthy();
 
 		rerender(
 			<MarketplaceContext.Provider value={{view: 0} as any}>
-				<MarketplaceModalView observer={observer} open={true}>
+				<BaseModal observer={observer} open={true}>
 					children
-				</MarketplaceModalView>
+				</BaseModal>
 			</MarketplaceContext.Provider>
 		);
 
@@ -69,9 +71,9 @@ describe('MarketplaceModalView', () => {
 		expect(modalParentElement).toHaveClass('modal-full-screen');
 
 		rerender(
-			<MarketplaceModalView observer={observer} open={false}>
+			<BaseModal observer={observer} open={false}>
 				children
-			</MarketplaceModalView>
+			</BaseModal>
 		);
 
 		expect(queryByText('add-from-marketplace')).toBeFalsy();

@@ -140,11 +140,7 @@ public class ReturnPoshiElement extends PoshiElement {
 				return false;
 			}
 
-			if (isVarAssignedToMacroInvocation(poshiScript)) {
-				return true;
-			}
-
-			return false;
+			return isVarAssignedToMacroInvocation(poshiScript);
 		}
 
 		return isValidPoshiScriptStatement(_returnPattern, poshiScript);

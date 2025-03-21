@@ -41,11 +41,7 @@ public class InlinePoshiComment extends PoshiComment {
 	public boolean isPoshiScriptComment(String poshiScript) {
 		poshiScript = poshiScript.trim();
 
-		if (poshiScript.startsWith("//")) {
-			return true;
-		}
-
-		return false;
+		return poshiScript.startsWith("//");
 	}
 
 	@Override

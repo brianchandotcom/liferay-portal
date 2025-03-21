@@ -22,11 +22,7 @@ public class PQLVariable extends PQLValue {
 
 		List<String> poshiPropertyNames = PoshiContext.getPoshiPropertyNames();
 
-		if (poshiPropertyNames.contains(variable)) {
-			return true;
-		}
-
-		return false;
+		return poshiPropertyNames.contains(variable);
 	}
 
 	public PQLVariable(String variable) throws Exception {

@@ -226,6 +226,49 @@ public class PostalAddress implements Serializable {
 	private Supplier<String> _addressRegionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The address's subtype."
+	)
+	public String getAddressSubtype() {
+		if (_addressSubtypeSupplier != null) {
+			addressSubtype = _addressSubtypeSupplier.get();
+
+			_addressSubtypeSupplier = null;
+		}
+
+		return addressSubtype;
+	}
+
+	public void setAddressSubtype(String addressSubtype) {
+		this.addressSubtype = addressSubtype;
+
+		_addressSubtypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAddressSubtype(
+		UnsafeSupplier<String, Exception> addressSubtypeUnsafeSupplier) {
+
+		_addressSubtypeSupplier = () -> {
+			try {
+				return addressSubtypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The address's subtype.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String addressSubtype;
+
+	@JsonIgnore
+	private Supplier<String> _addressSubtypeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The address's type."
 	)
 	public String getAddressType() {
@@ -738,6 +781,22 @@ public class PostalAddress implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(addressRegion));
+
+			sb.append("\"");
+		}
+
+		String addressSubtype = getAddressSubtype();
+
+		if (addressSubtype != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressSubtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(addressSubtype));
 
 			sb.append("\"");
 		}

@@ -194,6 +194,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		postalAddress.setAddressCountry(regex);
 		postalAddress.setAddressLocality(regex);
 		postalAddress.setAddressRegion(regex);
+		postalAddress.setAddressSubtype(regex);
 		postalAddress.setAddressType(regex);
 		postalAddress.setExternalReferenceCode(regex);
 		postalAddress.setName(regex);
@@ -212,6 +213,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		Assert.assertEquals(regex, postalAddress.getAddressCountry());
 		Assert.assertEquals(regex, postalAddress.getAddressLocality());
 		Assert.assertEquals(regex, postalAddress.getAddressRegion());
+		Assert.assertEquals(regex, postalAddress.getAddressSubtype());
 		Assert.assertEquals(regex, postalAddress.getAddressType());
 		Assert.assertEquals(regex, postalAddress.getExternalReferenceCode());
 		Assert.assertEquals(regex, postalAddress.getName());
@@ -1661,6 +1663,14 @@ public abstract class BasePostalAddressResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("addressSubtype", additionalAssertFieldName)) {
+				if (postalAddress.getAddressSubtype() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("addressType", additionalAssertFieldName)) {
 				if (postalAddress.getAddressType() == null) {
 					valid = false;
@@ -1899,6 +1909,17 @@ public abstract class BasePostalAddressResourceTestCase {
 				if (!Objects.deepEquals(
 						postalAddress1.getAddressRegion(),
 						postalAddress2.getAddressRegion())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("addressSubtype", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						postalAddress1.getAddressSubtype(),
+						postalAddress2.getAddressSubtype())) {
 
 					return false;
 				}
@@ -2228,6 +2249,52 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		if (entityFieldName.equals("addressRegion")) {
 			Object object = postalAddress.getAddressRegion();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("addressSubtype")) {
+			Object object = postalAddress.getAddressSubtype();
 
 			String value = String.valueOf(object);
 
@@ -2700,6 +2767,8 @@ public abstract class BasePostalAddressResourceTestCase {
 				addressLocality = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				addressRegion = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				addressSubtype = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				addressType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

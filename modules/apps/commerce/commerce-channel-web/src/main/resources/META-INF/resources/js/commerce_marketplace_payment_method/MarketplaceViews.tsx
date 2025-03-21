@@ -91,7 +91,7 @@ export default function MarketplaceViews() {
 			.catch(console.error);
 	}, [cloudProject, marketplaceRest, product]);
 
-	const definedState = useMemo(() => {
+	const getState = useCallback(() => {
 		if (!cloudProject) {
 			return States.NO_PROJECT;
 		}
@@ -182,7 +182,7 @@ export default function MarketplaceViews() {
 			{view === MarketplaceView.PURCHASE && (
 				<Marketplace.Purchase
 					productPurchaseChildren={
-						definedState !== States.NO_PROJECT ? (
+						getState() !== States.NO_PROJECT ? (
 							<>
 								<hr />
 
@@ -210,7 +210,7 @@ export default function MarketplaceViews() {
 					<MarketplacePurchase
 						onClickInstall={onClickInstall}
 						projectId={cloudProject}
-						state={definedState}
+						state={getState()}
 					/>
 				</Marketplace.Purchase>
 			)}

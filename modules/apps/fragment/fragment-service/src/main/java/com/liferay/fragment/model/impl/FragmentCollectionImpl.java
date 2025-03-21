@@ -44,7 +44,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 	@Override
 	public FileEntry getResource(String path) {
 		try {
-			Repository repository = _getRepository();
+			Repository repository = _getRepository(true);
 
 			return PortletFileRepositoryUtil.fetchPortletFileEntry(
 				getGroupId(),
@@ -84,7 +84,11 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			return _resourcesFolderId;
 		}
 
-		Repository repository = _getRepository();
+		Repository repository = _getRepository(createIfAbsent);
+
+		if (repository == null) {
+			return 0;
+		}
 
 		Folder folder = null;
 
@@ -128,7 +132,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 	@Override
 	public boolean hasResources() throws PortalException {
-		Repository repository = _getRepository();
+		Repository repository = _getRepository(true);
 
 		int fileEntriesCount =
 			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -217,7 +221,9 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 		return path.substring(index + 1);
 	}
 
-	private Repository _getRepository() throws PortalException {
+	private Repository _getRepository(boolean createIfAbsent)
+		throws PortalException {
+
 		if (_repository != null) {
 			return _repository;
 		}
@@ -234,7 +240,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				groupId, FragmentPortletKeys.FRAGMENT);
 
-		if (repository == null) {
+		if ((repository == null) && createIfAbsent) {
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setAddGroupPermissions(true);
@@ -291,7 +297,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 
 		Map<String, FileEntry> resourcesMap = new HashMap<>();
 
-		Repository repository = _getRepository();
+		Repository repository = _getRepository(true);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
 			DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(

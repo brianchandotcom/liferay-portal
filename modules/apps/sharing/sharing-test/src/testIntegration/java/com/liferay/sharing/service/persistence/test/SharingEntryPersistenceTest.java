@@ -294,12 +294,12 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTUG_TU_C_C() throws Exception {
-		_persistence.countByTUG_TU_C_C(
+	public void testCountByTU_C_C() throws Exception {
+		_persistence.countByTU_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong());
 
-		_persistence.countByTUG_TU_C_C(0L, 0L, 0L, 0L);
+		_persistence.countByTU_C_C(0L, 0L, 0L);
 	}
 
 	@Test
@@ -619,11 +619,6 @@ public class SharingEntryPersistenceTest {
 				sharingEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
 
-		Assert.assertEquals(
-			Long.valueOf(sharingEntry.getToUserGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				sharingEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "toUserGroupId"));
 		Assert.assertEquals(
 			Long.valueOf(sharingEntry.getToUserId()),
 			ReflectionTestUtil.<Long>invoke(

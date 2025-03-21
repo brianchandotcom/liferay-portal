@@ -9,7 +9,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
-import {ORDER_TYPES} from '../../enums/Order';
+import {ORDER_TYPES, PAYMENT_STATUS} from '../../enums/Order';
 import withProviders from '../../hoc/withProviders';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
@@ -19,7 +19,6 @@ import {
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../utils/util';
-import {PaymentStatus} from '../GetApp/enums/PaymentStatus';
 import getProductPriceModel from '../GetApp/utils/getProductPriceModel';
 import useNextSteps from './useNextSteps';
 
@@ -30,18 +29,12 @@ export function NextSteps() {
 	const urlParams = new URLSearchParams(queryString);
 	const orderId = urlParams.get('orderId');
 
-	const {
-		accountCommerce,
-		cart,
-		cartItems,
-		firstCartItem,
-		isLoading,
-		product,
-	} = useNextSteps(orderId as string);
+	const {accountCommerce, firstPlacedOrder, isLoading, placedOrder, product} =
+		useNextSteps(orderId as string);
 
-	const {name: appName = ''} = firstCartItem ?? {};
+	const {name: appName = ''} = firstPlacedOrder ?? {};
 
-	const isTrial = cartItems?.items?.some(
+	const isTrial = placedOrder?.placedOrderItems?.some(
 		(item: any) =>
 			item.sku.endsWith('ts') || item.sku.toLowerCase().includes('trial')
 	);
@@ -53,15 +46,16 @@ export function NextSteps() {
 		baseURL
 	);
 
-	const paymentStatus = cart?.paymentStatusLabel;
-	const orderTypeExternalReferenceCode = cart?.orderTypeExternalReferenceCode;
+	const paymentStatus = placedOrder?.paymentStatus;
+	const orderTypeExternalReferenceCode =
+		placedOrder?.orderTypeExternalReferenceCode;
 
 	const isCloudApp = orderTypeExternalReferenceCode === ORDER_TYPES.CLOUDAPP;
 
 	const {isPaidApp} = getProductPriceModel(product);
 
 	const nextStepBody = {
-		[PaymentStatus.PAID]: (
+		[PAYMENT_STATUS.PAID]: (
 			<Header
 				description={
 					isCloudApp ? (
@@ -118,7 +112,7 @@ export function NextSteps() {
 				title="Next steps"
 			/>
 		),
-		[PaymentStatus.PAYMENT_PENDING]: (
+		[PAYMENT_STATUS.PAYMENT_PENDING]: (
 			<Header
 				description={
 					isTrial ? (
@@ -230,7 +224,7 @@ export function NextSteps() {
 					showContinueButton={true}
 				/>
 
-				{(paymentStatus === PaymentStatus.PAID || isTrial) && (
+				{(paymentStatus === PAYMENT_STATUS.PAID || isTrial) && (
 					<div className="d-flex justify-content-end">
 						<a href="#">
 							<ins>Learn more about App Configuration</ins>

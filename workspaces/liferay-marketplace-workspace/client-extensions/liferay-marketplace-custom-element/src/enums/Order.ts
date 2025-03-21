@@ -44,3 +44,8 @@ export enum ORDER_WORKFLOW_STATUS_CODE {
 	PENDING = 1,
 	PROCESSING = 10,
 }
+
+export enum PAYMENT_STATUS {
+	PAID = 0,
+	PAYMENT_PENDING = 2,
+}

@@ -7,32 +7,29 @@ import useSWR from 'swr';
 
 import {Liferay} from '../../liferay/liferay';
 import HeadlessCommerceDeliveryCatalogImpl from '../../services/rest/HeadlessCommerceDeliveryCatalog';
-import {
-	getAccountInfoFromCommerce,
-	getCart,
-	getCartItems,
-} from '../../utils/api';
+import HeadlessCommerceDeliveryOrderImpl from '../../services/rest/HeadlessCommerceDeliveryOrder';
+import {getAccountInfoFromCommerce} from '../../utils/api';
 
 const useNextSteps = (orderId: string) => {
-	const {data = [], isLoading: cartLoading} = useSWR(
-		`/next-steps/cart/${orderId}`,
-		() => Promise.all([getCart(orderId), getCartItems(orderId)])
-	);
+	const {data: placedOrder = {} as PlacedOrder, isLoading: cartLoading} =
+		useSWR(`/next-steps/cart/${orderId}`, () =>
+			HeadlessCommerceDeliveryOrderImpl.getPlacedOrder(orderId)
+		);
 
-	const [cart, cartItems] = data ?? [];
-	const {accountId} = cart ?? {};
-	const firstCartItem = cartItems?.items[0];
+	const {accountId, placedOrderItems = []} = placedOrder as PlacedOrder;
 
-	const {productId} = firstCartItem ?? {};
+	const firstPlacedOrder = placedOrderItems[0];
+
+	const {productId} = firstPlacedOrder ?? {};
 
 	const {data: product, isLoading: productLoading} = useSWR(
 		productId
-			? `/next-steps/product/${productId}/${firstCartItem.id}`
+			? `/next-steps/product/${productId}/${firstPlacedOrder?.id}`
 			: null,
 		() =>
 			HeadlessCommerceDeliveryCatalogImpl.getProduct(
 				Liferay.CommerceContext.commerceChannelId,
-				productId,
+				productId as number,
 				new URLSearchParams({
 					'accountId': '-1',
 					'attachments.accountId': '-1',
@@ -50,10 +47,9 @@ const useNextSteps = (orderId: string) => {
 
 	return {
 		accountCommerce,
-		cart,
-		cartItems,
-		firstCartItem,
+		firstPlacedOrder,
 		isLoading: cartLoading || productLoading || accountCommerceLoading,
+		placedOrder,
 		product,
 	};
 };

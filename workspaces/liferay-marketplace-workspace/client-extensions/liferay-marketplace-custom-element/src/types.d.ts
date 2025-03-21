@@ -495,6 +495,7 @@ type PlacedOrder = {
 		label_i18n: string;
 	};
 	orderTypeExternalReferenceCode: string;
+	paymentStatus: number;
 	placedOrderBillingAddress: any;
 	placedOrderBillingAddressId: number;
 	placedOrderItems: PlacedOrderItems[];

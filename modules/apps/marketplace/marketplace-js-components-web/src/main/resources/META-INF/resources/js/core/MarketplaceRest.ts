@@ -121,7 +121,7 @@ export class MarketplaceRest {
 
 	public async checkoutCart(cart: Cart) {
 		return this.fetchMarketplace<Cart>(
-			`/o/headless-commerce-delivery-cart/v1.0/carts/${cart.id}/checkout?nestedFields=cartItems`,
+			`/o/headless-commerce-delivery-cart/v1.0/carts/${cart.id}/checkout`,
 			{
 				method: 'POST',
 			}

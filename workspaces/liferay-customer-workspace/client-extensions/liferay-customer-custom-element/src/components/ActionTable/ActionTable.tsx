@@ -48,7 +48,7 @@ interface IPaginationConfig {
 	activePage?: number;
 	itemsPerPage?: number;
 	labels?: any;
-	listItemsPerPage?: number[];
+	listItemsPerPage?: {label: number}[];
 	setActivePage: (page: number) => void;
 	setItemsPerPage: (itemsPerPage: number) => void;
 	showDeltasDropDown?: boolean;

@@ -13,7 +13,7 @@ interface IProps {
 	ellipsisBuffer?: number;
 	itemsPerPage: number;
 	labels?: any;
-	listItemsPerPage?: number[];
+	listItemsPerPage?: {label: number}[];
 	setActivePage: (page: number) => void;
 	setItemsPerPage: (itemsPerPage: number) => void;
 	showDeltasDropDown: boolean;
@@ -47,7 +47,7 @@ const Pagination: React.FC<IProps> = ({
 						'cp-hide-pagination-activation-keys':
 							itemsPerPage >= totalItems,
 					})}
-					deltas={listItemsPerPage.map((item) => ({label: item}))}
+					deltas={listItemsPerPage}
 					ellipsisBuffer={ellipsisBuffer}
 					labels={labels || defaultLabels}
 					onDeltaChange={setItemsPerPage}

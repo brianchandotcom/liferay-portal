@@ -81,6 +81,7 @@ public class PostalAddressUtil {
 
 						return region.getName();
 					});
+				setAddressSubtype(address::getSubtype);
 				setAddressType(listType::getName);
 				setExternalReferenceCode(address::getExternalReferenceCode);
 				setId(address::getAddressId);

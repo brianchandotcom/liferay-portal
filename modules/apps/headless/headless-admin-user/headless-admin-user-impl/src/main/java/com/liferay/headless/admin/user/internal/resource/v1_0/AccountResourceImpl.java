@@ -625,7 +625,7 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				address.getCity(), address.getDescription(),
 				address.isMailing(), address.getName(), address.isPrimary(),
 				address.getStreet1(), address.getStreet2(),
-				address.getStreet3(), null, address.getZip(),
+				address.getStreet3(), address.getSubtype(), address.getZip(),
 				postalAddress.getPhoneNumber(), _createServiceContext(account));
 		}
 	}

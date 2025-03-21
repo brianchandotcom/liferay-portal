@@ -49,11 +49,7 @@ public class JenkinsEventsDescriptor
 			return false;
 		}
 
-		if (_eventTypes.contains(eventType)) {
-			return true;
-		}
-
-		return false;
+		return _eventTypes.contains(eventType);
 	}
 
 	public boolean containsEventType(String eventTypeString) {

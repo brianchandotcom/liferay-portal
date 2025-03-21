@@ -62,7 +62,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.function.Predicate;
 
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -181,21 +180,16 @@ public class ObjectEntryPerformanceTest {
 				return company;
 			});
 
-		boolean connected = true;
-
 		try {
 			_invokeHttp(null, HttpInvoker.HttpMethod.GET, _getPath(""));
 		}
 		catch (ConnectException connectException) {
-			connected = false;
-		}
-		finally {
-			Assert.assertTrue(
+			throw new Exception(
 				StringBundler.concat(
 					"Failed to visit ", _getPath(""),
 					"! Please add the host name: ", _VIRTUAL_HOST_NAME,
-					" to the host file!"),
-				connected);
+					" to the host file and rerun the test!"),
+				connectException);
 		}
 
 		ObjectFolderResource.Builder objectFolderResourceBuilder =

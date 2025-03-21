@@ -66,7 +66,7 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 				company.getCompanyId());
 
 			_sharingEntryLocalService.addSharingEntry(
-				null, sharerUser.getUserId(), 0, user.getUserId(),
+				null, sharerUser.getUserId(), user.getUserId(),
 				_portal.getClassNameId(DLFileEntry.class),
 				fileEntry.getFileEntryId(), group.getGroupId(), (i % 3) == 0,
 				Arrays.asList(SharingEntryAction.VIEW),
@@ -79,7 +79,7 @@ public class SharingDemo extends BasePortalInstanceLifecycleListener {
 
 		if (testUser != null) {
 			_sharingEntryLocalService.addSharingEntry(
-				null, sharerUser.getUserId(), 0, testUser.getUserId(),
+				null, sharerUser.getUserId(), testUser.getUserId(),
 				_portal.getClassNameId(DLFileEntry.class),
 				fileEntry.getFileEntryId(), group.getGroupId(), true,
 				Arrays.asList(

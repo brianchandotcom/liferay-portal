@@ -49,11 +49,7 @@ public abstract class BaseTestClass implements TestClass {
 			return false;
 		}
 
-		if (Objects.equals(hashCode(), object.hashCode())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(hashCode(), object.hashCode());
 	}
 
 	@Override

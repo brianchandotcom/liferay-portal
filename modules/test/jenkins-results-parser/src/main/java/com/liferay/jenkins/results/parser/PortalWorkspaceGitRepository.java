@@ -74,11 +74,7 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 				JenkinsResultsParserUtil.getCanonicalPath(deletedFile));
 		}
 
-		if (!multiPattern.matchesAll(filePaths.toArray(new String[0]))) {
-			return false;
-		}
-
-		return true;
+		return multiPattern.matchesAll(filePaths.toArray(new String[0]));
 	}
 
 	public String getLiferayFacesAlloyURL() {

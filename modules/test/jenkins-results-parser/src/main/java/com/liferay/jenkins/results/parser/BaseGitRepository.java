@@ -29,11 +29,7 @@ public abstract class BaseGitRepository implements GitRepository {
 	public boolean isSubrepository() {
 		String name = getName();
 
-		if (name.startsWith("com-liferay-")) {
-			return true;
-		}
-
-		return false;
+		return name.startsWith("com-liferay-");
 	}
 
 	protected BaseGitRepository(JSONObject jsonObject) {

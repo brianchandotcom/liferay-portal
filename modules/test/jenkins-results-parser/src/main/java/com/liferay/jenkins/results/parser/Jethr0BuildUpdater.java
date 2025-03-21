@@ -92,38 +92,22 @@ public class Jethr0BuildUpdater extends BaseBuildUpdater {
 
 	@Override
 	protected boolean isBuildCompleted() {
-		if (Objects.equals(_jethr0Status, "completed")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_jethr0Status, "completed");
 	}
 
 	@Override
 	protected boolean isBuildFailing() {
-		if (!Objects.equals(_jethr0Result, "passed")) {
-			return true;
-		}
-
-		return false;
+		return !Objects.equals(_jethr0Result, "passed");
 	}
 
 	@Override
 	protected boolean isBuildQueued() {
-		if (Objects.equals(_jethr0Status, "queued")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_jethr0Status, "queued");
 	}
 
 	@Override
 	protected boolean isBuildRunning() {
-		if (Objects.equals(_jethr0Status, "running")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_jethr0Status, "running");
 	}
 
 	@Override

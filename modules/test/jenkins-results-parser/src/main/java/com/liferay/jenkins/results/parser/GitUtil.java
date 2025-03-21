@@ -354,11 +354,7 @@ public class GitUtil {
 	public static boolean isValidGitHubRefURL(String gitHubURL) {
 		Matcher matcher = _gitHubRefURLPattern.matcher(gitHubURL);
 
-		if (!matcher.find()) {
-			return false;
-		}
-
-		return true;
+		return matcher.find();
 	}
 
 	public static boolean isValidRemoteURL(String remoteURL) {

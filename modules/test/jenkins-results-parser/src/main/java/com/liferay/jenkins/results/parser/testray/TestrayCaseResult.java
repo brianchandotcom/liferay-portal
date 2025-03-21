@@ -448,11 +448,7 @@ public class TestrayCaseResult {
 			return false;
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
-			if (Objects.equals(thisErrors, previousErrors)) {
-				return true;
-			}
-
-			return false;
+			return Objects.equals(thisErrors, previousErrors);
 		}
 	}
 

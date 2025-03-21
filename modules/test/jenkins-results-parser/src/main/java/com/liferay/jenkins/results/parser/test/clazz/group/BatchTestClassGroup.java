@@ -833,11 +833,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			Collections.addAll(testBatchNames, jobPropertyValue.split(","));
 		}
 
-		if (testBatchNames.contains(batchName)) {
-			return true;
-		}
-
-		return false;
+		return testBatchNames.contains(batchName);
 	}
 
 	protected void recordJobProperties(List<JobProperty> jobProperties) {

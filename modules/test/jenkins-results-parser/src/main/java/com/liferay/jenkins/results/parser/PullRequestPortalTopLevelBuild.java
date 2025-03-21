@@ -277,11 +277,7 @@ public class PullRequestPortalTopLevelBuild
 			}
 		}
 
-		if (failedDownstreamBuilds.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return failedDownstreamBuilds.isEmpty();
 	}
 
 	protected Element getFailedStableJobSummaryElement() {

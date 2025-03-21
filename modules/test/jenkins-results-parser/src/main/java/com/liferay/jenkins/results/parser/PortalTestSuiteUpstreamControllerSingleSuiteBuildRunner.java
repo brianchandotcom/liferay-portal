@@ -222,11 +222,7 @@ public class PortalTestSuiteUpstreamControllerSingleSuiteBuildRunner
 		allowConcurrentBuildsString = allowConcurrentBuildsString.toLowerCase();
 		allowConcurrentBuildsString = allowConcurrentBuildsString.trim();
 
-		if (!allowConcurrentBuildsString.equals("true")) {
-			return false;
-		}
-
-		return true;
+		return allowConcurrentBuildsString.equals("true");
 	}
 
 	private boolean _expirePreviousBuild() {

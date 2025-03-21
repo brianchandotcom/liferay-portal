@@ -139,11 +139,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	public boolean isUpgradeFile(File file) {
 		Matcher matcher = _upgradeFileNamePattern.matcher(file.toString());
 
-		if (matcher.find()) {
-			return true;
-		}
-
-		return false;
+		return matcher.find();
 	}
 
 	protected FunctionalBatchTestClassGroup(

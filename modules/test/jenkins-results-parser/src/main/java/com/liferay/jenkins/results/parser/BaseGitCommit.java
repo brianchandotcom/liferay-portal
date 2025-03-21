@@ -25,11 +25,7 @@ public abstract class BaseGitCommit implements GitCommit {
 			return false;
 		}
 
-		if (Objects.equals(hashCode(), object.hashCode())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(hashCode(), object.hashCode());
 	}
 
 	@Override

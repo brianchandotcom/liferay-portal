@@ -62,7 +62,7 @@ public class ExecuteInfoItemActionStrutsAction implements StrutsAction {
 			InfoItemActionExecutor<Object> infoItemActionExecutor =
 				_infoItemServiceRegistry.getFirstInfoItemService(
 					InfoItemActionExecutor.class,
-					_portal.getClassName(
+					_portal.fetchClassName(
 						ParamUtil.getLong(httpServletRequest, "classNameId")));
 
 			if (infoItemActionExecutor == null) {

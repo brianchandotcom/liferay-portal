@@ -605,17 +605,17 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.addColumns(
 				"Address", "subtype VARCHAR(75) null"));
 
+
 		upgradeVersionTreeMap.put(
 			new Version(31, 18, 1),
+			new DuplicateRemovalUpgradeProcess("PortalPreferences",new String[]{"ownerType","ownerId"}),
 			new DuplicateRemovalUpgradeProcess(
-				"PortalPreferences", "ownerType, ownerId"),
-			new DuplicateRemovalUpgradeProcess(
-				"PortletItem", "groupId, classNameId, portletId, name"),
+				"PortletItem",new String[]{"groupId","classNameId","portletId","name"}),
 			new DuplicateRemovalUpgradeProcess(
 				"SocialActivitySetting",
-				"groupId, classNameId, activityType, name, ctCollectionId"),
+				new String[]{"groupId", "classNameId", "activityType", "name", "ctCollectionId"}),
 			new DuplicateRemovalUpgradeProcess(
-				"Ticket", "key_", "ticketId asc"));
+				"Ticket", new String[]{"key_"}, "ticketId asc"));
 	}
 
 }

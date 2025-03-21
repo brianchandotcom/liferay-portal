@@ -5,22 +5,18 @@
 
 package com.liferay.sharing.internal.security.permission.contributor;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.sharing.configuration.SharingConfiguration;
@@ -43,13 +39,11 @@ public class SharingPermissionSQLContributor
 	public SharingPermissionSQLContributor(
 		ClassNameLocalService classNameLocalService,
 		GroupLocalService groupLocalService,
-		SharingConfigurationFactory sharingConfigurationFactory,
-		UserGroupLocalService userGroupLocalService) {
+		SharingConfigurationFactory sharingConfigurationFactory) {
 
 		_classNameLocalService = classNameLocalService;
 		_groupLocalService = groupLocalService;
 		_sharingConfigurationFactory = sharingConfigurationFactory;
-		_userGroupLocalService = userGroupLocalService;
 	}
 
 	@Override
@@ -92,12 +86,14 @@ public class SharingPermissionSQLContributor
 				SharingEntryTable.INSTANCE
 			).where(
 				() -> {
-					Predicate predicate = _getUserAndUserGroupPredicate(
-						permissionChecker
-					).and(
-						SharingEntryTable.INSTANCE.classNameId.eq(
-							_classNameLocalService.getClassNameId(className))
-					);
+					Predicate predicate =
+						SharingEntryTable.INSTANCE.toUserId.eq(
+							permissionChecker.getUserId()
+						).and(
+							SharingEntryTable.INSTANCE.classNameId.eq(
+								_classNameLocalService.getClassNameId(
+									className))
+						);
 
 					if (disableGroupIds.isEmpty()) {
 						return predicate;
@@ -132,23 +128,9 @@ public class SharingPermissionSQLContributor
 
 		_addDisabledGroupsSQL(sb, groupIds);
 
-		sb.append("((SharingEntry.toUserId = ");
+		sb.append("(SharingEntry.toUserId = ");
 		sb.append(permissionChecker.getUserId());
-
-		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
-			permissionChecker.getUserId());
-
-		if (!userGroups.isEmpty()) {
-			sb.append(") OR (SharingEntry.toUserGroupId IN ( ");
-			sb.append(
-				StringUtil.merge(
-					TransformUtil.transformToLongArray(
-						userGroups, UserGroup::getUserGroupId),
-					","));
-			sb.append(")");
-		}
-
-		sb.append(")) AND (SharingEntry.classNameId = ");
+		sb.append(") AND (SharingEntry.classNameId = ");
 		sb.append(_classNameLocalService.getClassNameId(className));
 		sb.append("))");
 
@@ -199,31 +181,8 @@ public class SharingPermissionSQLContributor
 		}
 	}
 
-	private Predicate _getUserAndUserGroupPredicate(
-		PermissionChecker permissionChecker) {
-
-		return SharingEntryTable.INSTANCE.toUserId.eq(
-			permissionChecker.getUserId()
-		).or(
-			() -> {
-				List<UserGroup> userGroups =
-					_userGroupLocalService.getUserUserGroups(
-						permissionChecker.getUserId());
-
-				if (userGroups.isEmpty()) {
-					return null;
-				}
-
-				return SharingEntryTable.INSTANCE.toUserGroupId.in(
-					TransformUtil.transformToArray(
-						userGroups, UserGroup::getUserGroupId, Long.class));
-			}
-		);
-	}
-
 	private final ClassNameLocalService _classNameLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final SharingConfigurationFactory _sharingConfigurationFactory;
-	private final UserGroupLocalService _userGroupLocalService;
 
 }

@@ -56,11 +56,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -76,11 +78,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -99,7 +103,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Elevate Your Eyewear Business with Premium Quality"
@@ -120,12 +125,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Elevate your brand with a curated selection of glasses, sunglasses, contacts, and lenses."
@@ -145,12 +152,12 @@
 														"siteKey": "test2"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
 														"iconName": "share",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
@@ -191,7 +198,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -215,11 +223,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -281,7 +291,8 @@
 												"width": "100%"
 											},
 											"indexed": true,
-											"layout": {}
+											"layout": {
+											}
 										},
 										"type": "Section"
 									},
@@ -297,7 +308,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Eyeglasses"
@@ -321,12 +333,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Elevate your style with precision-crafted eyeglasses that seamlessly merge high quality with sustainability."
@@ -352,12 +366,12 @@
 												"siteKey": "test2"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
 												"iconName": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "solid",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
@@ -382,7 +396,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -430,7 +445,8 @@
 												"width": "100%"
 											},
 											"indexed": true,
-											"layout": {}
+											"layout": {
+											}
 										},
 										"type": "Section"
 									},
@@ -446,7 +462,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Sunglasses"
@@ -470,12 +487,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Make a bold statement with our stylish and sustainable sunglasses, combining cutting-edge design with uncompromising quality."
@@ -501,12 +520,12 @@
 												"siteKey": "test2"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
 												"iconName": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "solid",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
@@ -531,7 +550,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -595,7 +615,8 @@
 												"width": "100%"
 											},
 											"indexed": true,
-											"layout": {}
+											"layout": {
+											}
 										},
 										"type": "Section"
 									},
@@ -611,7 +632,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Contacts"
@@ -635,12 +657,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose."
@@ -666,12 +690,12 @@
 												"siteKey": "test2"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
 												"iconName": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "solid",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
@@ -696,7 +720,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -742,7 +767,8 @@
 												"width": "100%"
 											},
 											"indexed": true,
-											"layout": {}
+											"layout": {
+											}
 										},
 										"type": "Section"
 									},
@@ -758,7 +784,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Lenses"
@@ -782,12 +809,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -808,12 +837,12 @@
 												"siteKey": "test2"
 											},
 											"fragmentConfig": {
-												"uppercase": false,
+												"buttonSize": "",
 												"iconName": "",
+												"inverted": false,
 												"style": "primary",
 												"type": "solid",
-												"inverted": false,
-												"buttonSize": ""
+												"uppercase": false
 											},
 											"fragmentFields": [
 												{
@@ -838,7 +867,8 @@
 												{
 													"id": "text",
 													"value": {
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],

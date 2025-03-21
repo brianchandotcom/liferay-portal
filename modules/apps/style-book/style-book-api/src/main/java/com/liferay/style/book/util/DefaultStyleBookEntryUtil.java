@@ -69,7 +69,8 @@ public class DefaultStyleBookEntryUtil {
 			return styleBookEntry.getName();
 		}
 
-		StyleBookEntry defaultStyleBookEntry = getDefaultStyleBookEntry(layout);
+		StyleBookEntry defaultStyleBookEntry = getDefaultMasterStyleBookEntry(
+			layout);
 
 		if (defaultStyleBookEntry == null) {
 			if (FeatureFlagManagerUtil.isEnabled(

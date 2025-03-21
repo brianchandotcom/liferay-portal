@@ -26,6 +26,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
+import com.liferay.style.book.util.StyleBookUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -134,6 +135,25 @@ public class DefaultStyleBookEntryUtilTest {
 		Assert.assertEquals(
 			styleBookEntry2.getStyleBookEntryId(),
 			defaultStyleBookEntry.getStyleBookEntryId());
+	}
+
+	@Test
+	public void testGetStyleBookEntryNameForDefaultStyleBookEntryWhenLayoutHasStyleBookEntry()
+		throws Exception {
+
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(false);
+
+		_layout.setStyleBookEntryId(styleBookEntry.getStyleBookEntryId());
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		StyleBookEntry styleFromThemeStyleBookEntry =
+			StyleBookUtil.getStyleFromThemeStyleBookEntry(_layout, null);
+
+		Assert.assertEquals(
+			"styles-from-theme",
+			DefaultStyleBookEntryUtil.getStyleBookEntryName(
+				_layout, null, styleFromThemeStyleBookEntry));
 	}
 
 	@Test

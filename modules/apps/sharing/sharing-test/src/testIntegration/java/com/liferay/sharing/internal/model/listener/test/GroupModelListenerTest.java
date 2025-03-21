@@ -64,6 +64,7 @@ public class GroupModelListenerTest {
 	@Test
 	public void testDeletingGroupDeletesSharingEntries() throws Exception {
 		long classPK = _group.getGroupId();
+
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		try {
@@ -100,7 +101,9 @@ public class GroupModelListenerTest {
 				groupSharingEntries.toString(), 0, groupSharingEntries.size());
 		}
 		finally {
-			_userGroupLocalService.deleteUserGroup(userGroup);
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
 		}
 	}
 

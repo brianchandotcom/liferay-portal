@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {default as AllFDSPropsTransformer} from './main/FDSPropsTransformer/AllFDSPropsTransform';
+export {default as AllFDSPropsTransformer} from './main/FDSPropsTransformer/AllFDSPropsTransformer';
 export {default as ContentsFDSPropsTransformer} from './main/FDSPropsTransformer/ContentsFDSPropsTransformer';
 export {default as FilesFDSPropsTransformer} from './main/FDSPropsTransformer/FilesFDSPropsTransformer';
 export {default as StructuresFDSPropsTransformer} from './main/FDSPropsTransformer/StructuresFDSPropsTransformer';

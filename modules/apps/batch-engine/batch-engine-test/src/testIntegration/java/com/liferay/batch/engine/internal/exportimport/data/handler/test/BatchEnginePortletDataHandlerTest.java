@@ -23,9 +23,11 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -262,6 +264,17 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry2.getExternalReferenceCode(),
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
+			_classExternalReferenceCodesJSONArray(
+				file, _objectDefinition1.getName()
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				_objectEntry1.getExternalReferenceCode(),
+				_objectEntry2.getExternalReferenceCode(),
+				_objectEntry3.getExternalReferenceCode()
+			).toString(),
 			_getClassExternalReferenceCodesJSONArray(
 				_companyGroupId, file
 			).toString(),
@@ -328,6 +341,39 @@ public class BatchEnginePortletDataHandlerTest {
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private JSONArray _classExternalReferenceCodesJSONArray(
+			File larFile, String className)
+		throws Exception {
+
+		try (ZipFile zipFile = new ZipFile(larFile)) {
+			String filePath = className + "_deletions.json";
+
+			ZipEntry zipEntry = zipFile.getEntry(filePath);
+
+			if (zipEntry == null) {
+				throw new FileNotFoundException();
+			}
+
+			JSONArray jsonArray1 = JSONFactoryUtil.createJSONArray(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
+
+			JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray();
+
+			for (Object event : jsonArray1) {
+				if (event instanceof JSONObject) {
+					JSONObject jsonObject = (JSONObject)event;
+
+					String classExternalReferenceCode = jsonObject.getString(
+						"externalReferenceCode");
+
+					jsonArray2.put(classExternalReferenceCode);
+				}
+			}
+
+			return jsonArray2;
+		}
 	}
 
 	private JSONArray _getClassExternalReferenceCodesJSONArray(

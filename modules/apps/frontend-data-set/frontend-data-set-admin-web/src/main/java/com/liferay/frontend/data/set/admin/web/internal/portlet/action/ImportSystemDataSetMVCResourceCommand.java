@@ -346,8 +346,8 @@ public class ImportSystemDataSetMVCResourceCommand
 						String label = fdsTableSchemaField.getLabel();
 
 						if (!fdsTableSchemaField.isLocalizeLabel()) {
-							Locale locale =
-								_portal.getLocale(httpServletRequest);
+							Locale locale = _portal.getLocale(
+								httpServletRequest);
 
 							return HashMapBuilder.put(
 								dataSetTableSectionObjectDefinition.
@@ -360,12 +360,12 @@ public class ImportSystemDataSetMVCResourceCommand
 
 						HashMap<String, String> labels = new HashMap<>();
 
-						for (Locale locale : LanguageUtil.getAvailableLocales()) {
+						for (Locale locale :
+								LanguageUtil.getAvailableLocales()) {
 
 							ResourceBundle resourceBundle =
 								ResourceBundleUtil.getBundle(
-									"content.Language", locale,
-									getClass());
+									"content.Language", locale, getClass());
 
 							String translatedLabel = LanguageUtil.get(
 								resourceBundle, label);
@@ -374,7 +374,9 @@ public class ImportSystemDataSetMVCResourceCommand
 								translatedLabel = StringPool.BLANK;
 							}
 
-							labels.put(LocaleUtil.toLanguageId(locale), translatedLabel);
+							labels.put(
+								LocaleUtil.toLanguageId(locale),
+								translatedLabel);
 						}
 
 						return labels;
@@ -386,7 +388,7 @@ public class ImportSystemDataSetMVCResourceCommand
 					"renderer",
 					() -> {
 						if (fdsTableSchemaField.
-							isContentRendererClientExtension()) {
+								isContentRendererClientExtension()) {
 
 							/* it is not possible to get client extension ERC from module URL
 							 univocally, so this CX will have to be configured from DSM */
@@ -416,16 +418,16 @@ public class ImportSystemDataSetMVCResourceCommand
 						}
 
 						return null;
-							}
-						).put(
-							"sortable", fdsTableSchemaField.isSortable()
-						).put(
+					}
+				).put(
+					"sortable", fdsTableSchemaField.isSortable()
+				).put(
 
 							// we don't have the type (mandatory).
 							// Not easy to guess, we'll need to inform it.
 
-							"type", "string"
-						);
+					"type", "string"
+				);
 
 			_objectEntryService.addObjectEntry(
 				0, dataSetTableSectionObjectDefinition.getObjectDefinitionId(),
@@ -746,11 +748,19 @@ public class ImportSystemDataSetMVCResourceCommand
 				Map<String, Object> data =
 					(Map<String, Object>)fdsActionDropdownItem.get("data");
 
-				_objectEntryService.addObjectEntry(
+				Object id = data.get("id");
+
+				if (id == null) {
+					continue;
+				}
+
+				_objectEntryService.addOrUpdateObjectEntry(
+					FDSActionUtil.createFDSItemActionERC(
+						objectEntry.getExternalReferenceCode(),
+						String.valueOf(id)),
 					0, objectDefinitionId,
 					ObjectEntryFolderConstants.
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null,
 					HashMapBuilder.<String, Serializable>put(
 						"confirmationMessage_i18n",
 						() -> _getLocalizeableValue(
@@ -771,6 +781,7 @@ public class ImportSystemDataSetMVCResourceCommand
 							fdsActionDropdownItem.get("icon"))
 					).put(
 						"label_i18n",
+						// TODO: add all locales
 						() -> _getLocalizeableValue(
 							defaultLanguageId,
 							_getOptionalValue(

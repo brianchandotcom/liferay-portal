@@ -40,6 +40,7 @@ export class DataSetFragmentPage {
 		headRow: Locator;
 		itemActionsCells: Locator;
 	};
+	readonly filterConfirmButton: Locator;
 
 	constructor(page: Page) {
 		this.activeViewSelector = page.getByLabel('Show View Options');
@@ -58,6 +59,9 @@ export class DataSetFragmentPage {
 		this.filterButton = page.getByRole('button', {
 			exact: true,
 			name: 'Filter',
+		});
+		this.filterConfirmButton = page.getByRole('button', {
+			name: /add filter|edit filter|delete filter/i,
 		});
 		this.filterResumeButton = page.locator('.filter-resume');
 		this.fragmentWidgetSearchInput = page.getByLabel(

@@ -231,13 +231,7 @@ public class ObjectEntryPerformanceTest {
 			_customObjectDefinition = objectDefinitions.get(
 				_OBJECT_DEFINITION_LIST_INDEX);
 
-			long currentObjectEntryCount = 0;
-
-			while (currentObjectEntryCount < _objectEntryCount) {
-				currentObjectEntryCount =
-					_objectEntryLocalService.getObjectEntriesCount(
-						_customObjectDefinition.getObjectDefinitionId());
-			}
+			_waitForObjectEntriesCountChangedTo(_objectEntryCount);
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
@@ -258,13 +252,7 @@ public class ObjectEntryPerformanceTest {
 				jsonArray.toString(), HttpInvoker.HttpMethod.DELETE,
 				_getPath(_PATH_SUFFIX));
 
-			long currentObjectEntryCount = _objectEntryCount;
-
-			while (currentObjectEntryCount != 0) {
-				currentObjectEntryCount =
-					_objectEntryLocalService.getObjectEntriesCount(
-						_customObjectDefinition.getObjectDefinitionId());
-			}
+			_waitForObjectEntriesCountChangedTo(0);
 		}
 	}
 
@@ -301,6 +289,19 @@ public class ObjectEntryPerformanceTest {
 				PropsValues.DEFAULT_ADMIN_PASSWORD));
 
 		return httpInvoker.invoke();
+	}
+
+	private void _waitForObjectEntriesCountChangedTo(
+		long expectedObjectEntriesCount) {
+
+		long currentObjectEntryCount;
+
+		do {
+			currentObjectEntryCount =
+				_objectEntryLocalService.getObjectEntriesCount(
+					_customObjectDefinition.getObjectDefinitionId());
+		}
+		while (currentObjectEntryCount != expectedObjectEntriesCount);
 	}
 
 	private static final int _CUSTOM_OBJECT_DEFINITION_STATUS = 0;

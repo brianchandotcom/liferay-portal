@@ -273,10 +273,6 @@ const BusinessEvents = () => {
 						if (isSaasOnly) {
 							return (
 								<div className="align-items-center d-flex">
-									<ClayIcon
-										className="mr-2 text-success"
-										symbol="order-arrow-up"
-									/>
 									<div className="text-neutral-10">
 										{businessEvent?.newLiferayVersion?.name}
 									</div>

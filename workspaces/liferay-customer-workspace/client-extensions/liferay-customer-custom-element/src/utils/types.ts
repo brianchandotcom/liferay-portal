@@ -36,7 +36,7 @@ export interface IBusinessEvent {
 		key: string;
 		name: string;
 	};
-	dateModified: string;
+	dateModified?: string;
 	description?: string;
 	details?: string;
 	eventStatus?: {
@@ -61,6 +61,20 @@ export interface IBusinessEvent {
 		key: string;
 		name: string;
 	};
+}
+
+export interface IBusinessEventVersion {
+	change?: {
+		key: string;
+		name: string;
+	};
+	comment?: string;
+	creator?: {
+		name: string;
+	};
+	dateModified?: string;
+	r_accountEntryToBusinessEventVersions_accountEntryId?: number;
+	r_businessEventtoBusinesssEventVersions_c_businessEventId?: number;
 }
 
 export interface IKoroneikiAccount {
@@ -125,6 +139,7 @@ export interface IUserAccount {
 	accountKey?: string;
 	code?: string;
 	email?: string;
+	emailAddress?: string;
 	familyName?: string;
 	firstName?: string;
 	givenName?: string;

@@ -1,6 +1,9 @@
-.be-nav-link {
-	pointer-events: none;
+.be-edit-page {
+	.be-nav-link {
+		cursor: default;
+	}
 }
+
 
 .event-edit-container .event-edit-field {
 	width: 35rem;

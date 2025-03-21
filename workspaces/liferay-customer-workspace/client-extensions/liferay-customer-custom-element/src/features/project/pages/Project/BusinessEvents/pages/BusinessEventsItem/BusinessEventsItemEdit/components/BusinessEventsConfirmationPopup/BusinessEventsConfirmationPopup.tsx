@@ -12,13 +12,14 @@ import i18n from '~/utils/I18n';
 import './BusinessEventsConfirmationPopup.css';
 
 import {ClayInput} from '@clayui/form';
-import {useState} from 'react';
 
 interface IBusinessEventsConfirmationPopupProps {
 	handleSubmit: () => void;
 	message: string;
 	observer: Observer;
 	onClose: () => void;
+	reason: string;
+	setReason: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const BusinessEventsConfirmationPopup = ({
@@ -26,9 +27,9 @@ const BusinessEventsConfirmationPopup = ({
 	message,
 	observer,
 	onClose,
+	reason,
+	setReason,
 }: IBusinessEventsConfirmationPopupProps) => {
-	const [reason, setReason] = useState('');
-
 	const handleInputChange = (event: {target: {value: string}}) => {
 		setReason(event.target.value);
 	};

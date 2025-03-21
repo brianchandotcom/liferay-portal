@@ -1,0 +1,109 @@
+{
+	"object-actions": [
+		{
+			"active": true,
+			"label": {
+				"en_US": "Business Event Add"
+			},
+			"name": "businessEventAdd",
+			"objectActionExecutorKey": "add-object-entry",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION",
+				"predefinedValues": [
+					{
+						"businessType": "Picklist",
+						"inputAsValue": true,
+						"label": {
+							"en_US": "Change"
+						},
+						"name": "change",
+						"value": "Created"
+					},
+					{
+						"businessType": "Text",
+						"inputAsValue": true,
+						"label": {
+							"en_US": "Comment"
+						},
+						"name": "comment",
+						"value": "New Business Event has been created."
+					}
+				],
+				"relatedObjectEntries": true,
+				"system": "false"
+			}
+		},
+		{
+			"active": true,
+			"conditionExpression": "oldValue(targetGoLiveDateTime) != targetGoLiveDateTime",
+			"label": {
+				"en_US": "Business Event Edited"
+			},
+			"name": "businessEventEdited",
+			"objectActionExecutorKey": "add-object-entry",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION",
+				"predefinedValues": [
+					{
+						"businessType": "Picklist",
+						"inputAsValue": true,
+						"label": {
+							"en_US": "Change"
+						},
+						"name": "change",
+						"value": "Edited"
+					},
+					{
+						"businessType": "Text",
+						"inputAsValue": false,
+						"label": {
+							"en_US": "Comment"
+						},
+						"name": "comment",
+						"value": "lastComment"
+					}
+				],
+				"relatedObjectEntries": true,
+				"system": "false"
+			}
+		},
+		{
+			"active": true,
+			"conditionExpression": "oldValue(actualGoLiveDateTime) != actualGoLiveDateTime",
+			"label": {
+				"en_US": "Business Event Go Live"
+			},
+			"name": "businessEventGoLive",
+			"objectActionExecutorKey": "add-object-entry",
+			"objectActionTriggerKey": "onAfterUpdate",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION",
+				"predefinedValues": [
+					{
+						"businessType": "Picklist",
+						"inputAsValue": true,
+						"label": {
+							"en_US": "Change"
+						},
+						"name": "change",
+						"value": "Go-Live"
+					},
+					{
+						"businessType": "Text",
+						"inputAsValue": false,
+						"label": {
+							"en_US": "Comment"
+						},
+						"name": "comment",
+						"value": "lastComment"
+					}
+				],
+				"relatedObjectEntries": true,
+				"system": "false"
+			}
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:BusinessEvent$]"
+}

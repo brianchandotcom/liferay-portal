@@ -54,6 +54,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
+	const [reason, setReason] = useState('');
 
 	const {businessEventTypesList} = useGetBusinessEventTypesList();
 
@@ -128,13 +129,12 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 				updatedBusinessEvent.currentLiferayVersion?.key,
 			description: updatedBusinessEvent.description,
 			eventType: updatedBusinessEvent.eventType?.key,
+			lastComment: reason,
 			newLiferayVersion: updatedBusinessEvent.newLiferayVersion?.key,
-
 			targetGoLiveDateTime: getFormattedGoLiveDateTime(
 				updatedBusinessEvent.targetGoLiveDate,
 				updatedBusinessEvent.targetGoLiveTime
 			),
-
 			timeZone: updatedBusinessEvent.timeZone?.key,
 		};
 
@@ -279,7 +279,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	]);
 
 	return hasAllEventsPermissions ? (
-		<div>
+		<div className="be-edit-page">
 			<div className="be-breadcrumbs font-weight-semi-bold mb-4">
 				<span className="mx-2">
 					<Link to={`/${project?.accountKey}/business-events/`}>
@@ -351,6 +351,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 					)}
 					observer={observer}
 					onClose={onClose}
+					reason={reason}
+					setReason={setReason}
 				/>
 			)}
 

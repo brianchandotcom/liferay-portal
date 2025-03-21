@@ -687,6 +687,7 @@ export const getUserAccount = gql`
 					name
 				}
 			}
+			emailAddress
 			externalReferenceCode
 			id
 			image

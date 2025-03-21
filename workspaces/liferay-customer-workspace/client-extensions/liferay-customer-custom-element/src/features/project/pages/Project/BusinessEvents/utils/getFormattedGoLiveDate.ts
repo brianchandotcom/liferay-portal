@@ -13,7 +13,9 @@ function getFormattedGoLiveDateTime(
 		return undefined;
 	}
 
-	const [year, month, day] = targetGoLiveDate.split('-');
+	const [month, day, year] = targetGoLiveDate.split('-');
+
+	const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
 	let hours: string;
 	let minutes: string;
@@ -30,9 +32,9 @@ function getFormattedGoLiveDateTime(
 			: targetGoLiveTime.minutes;
 	}
 
-	const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00.000`;
+	const formattedDateTime = `${formattedDate}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00.000`;
 
-	return formattedDate;
+	return formattedDateTime;
 }
 
 export {getFormattedGoLiveDateTime};

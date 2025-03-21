@@ -132,23 +132,21 @@ public class SharingPermissionSQLContributor
 
 		_addDisabledGroupsSQL(sb, groupIds);
 
+		sb.append("((SharingEntry.toUserId = ");
+		sb.append(permissionChecker.getUserId());
+
 		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
 			permissionChecker.getUserId());
 
-		sb.append("(");
-
 		if (!userGroups.isEmpty()) {
-			sb.append("(SharingEntry.toUserGroupId IN ( ");
+			sb.append(") OR (SharingEntry.toUserGroupId IN ( ");
 			sb.append(
 				StringUtil.merge(
 					TransformUtil.transformToLongArray(
 						userGroups, UserGroup::getUserGroupId),
 					StringPool.COMMA));
-			sb.append(")) OR ");
+			sb.append(")");
 		}
-
-		sb.append("(SharingEntry.toUserId = ");
-		sb.append(permissionChecker.getUserId());
 
 		sb.append(")) AND (SharingEntry.classNameId = ");
 		sb.append(_classNameLocalService.getClassNameId(className));

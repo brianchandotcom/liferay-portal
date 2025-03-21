@@ -294,16 +294,16 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 			Assert.assertEquals(
 				StringBundler.concat(
 					"1234 IN (SELECT SharingEntry.classPK FROM SharingEntry ",
-					"WHERE ((SharingEntry.toUserGroupId IN ( ",
+					"WHERE ((SharingEntry.toUserId = ",
+					TestPropsValues.getUserId(),
+					") OR (SharingEntry.toUserGroupId IN ( ",
 					StringUtil.merge(
 						new long[] {
 							userGroup1.getUserGroupId(),
 							userGroup2.getUserGroupId()
 						},
 						","),
-					")) OR (SharingEntry.toUserId = ",
-					TestPropsValues.getUserId(),
-					")) AND (SharingEntry.classNameId = ",
+					"))) AND (SharingEntry.classNameId = ",
 					_classNameLocalService.getClassNameId(
 						model.getModelClassName()),
 					"))"),

@@ -31,6 +31,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -79,23 +82,33 @@ public class AMImageContentTransformerTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		String rawHTML = String.format(
-			"<img data-fileentryid=\"%s\" src=\"%s\" />",
-			fileEntry.getFileEntryId(),
-			_dlURLHelper.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false));
+		String transformedHTML = _contentTransformerHandler.transform(
+			_getRawHTML(fileEntry, 1));
 
-		String regex = StringBundler.concat(
-			"<picture data-fileentryid=\".+\">",
-			"<source media=\"\\(max-width:.+px\\)\" srcset=\".+\" \\/>",
-			"<source media=\"\\(max-width:.+px\\) and \\(min-width:.+px\\)\" ",
-			"srcset=\".+\" \\/><img data-fileentryid=\".+\" src=\".+\" \\/>",
-			"<\\/picture>");
-
-		String transformedHTML = _contentTransformerHandler.transform(rawHTML);
+		String regex = _getRegex();
 
 		Assert.assertTrue(transformedHTML, transformedHTML.matches(regex));
+
+		_assertMatcher(1, regex, transformedHTML);
+	}
+
+	@Test
+	public void testTransformASingleImageMultipleTimes() throws Exception {
+		int fileEntryCount = 5;
+
+		FileEntry fileEntry = _addImageFileEntry(
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+
+		String transformedHTML = _contentTransformerHandler.transform(
+			_contentTransformerHandler.transform(
+				_getRawHTML(fileEntry, fileEntryCount)));
+
+		String regex = _getRegex();
+
+		Assert.assertTrue(transformedHTML, transformedHTML.matches(regex));
+
+		_assertMatcher(fileEntryCount, regex, transformedHTML);
 	}
 
 	private FileEntry _addImageFileEntry(ServiceContext serviceContext)
@@ -108,6 +121,49 @@ public class AMImageContentTransformerTest {
 			FileUtil.getBytes(
 				AMImageContentTransformerTest.class, "dependencies/image.jpg"),
 			null, null, null, serviceContext);
+	}
+
+	private void _assertMatcher(
+		int fileEntryCount, String regex, String transformedHTML) {
+
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(transformedHTML);
+
+		int count = 0;
+
+		while (matcher.find()) {
+			count++;
+		}
+
+		Assert.assertEquals(fileEntryCount, count);
+	}
+
+	private String _getRawHTML(FileEntry fileEntry, int imageCount)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder(imageCount);
+
+		for (int i = 0; i < imageCount; i++) {
+			sb.append(
+				String.format(
+					"<img data-fileentryid=\"%s\" src=\"%s\" />",
+					fileEntry.getFileEntryId(),
+					_dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null,
+						StringPool.BLANK, false, false)));
+		}
+
+		return sb.toString();
+	}
+
+	private String _getRegex() {
+		return StringBundler.concat(
+			"<picture data-fileentryid=\".+?\">",
+			"<source media=\"\\(max-width:.+?px\\)\" srcset=\".+?\" \\/>",
+			"<source media=\"\\(max-width:.+?px\\) and ",
+			"\\(min-width:.+?px\\)\" srcset=\".+?\" \\/>",
+			"<img data-fileentryid=\".+?\" src=\".+?\" \\/><\\/picture>");
 	}
 
 	private AMImageConfigurationEntry _amImageConfigurationEntry;

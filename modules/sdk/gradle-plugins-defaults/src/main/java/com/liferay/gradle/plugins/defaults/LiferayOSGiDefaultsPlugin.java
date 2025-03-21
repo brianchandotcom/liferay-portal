@@ -719,11 +719,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-			"com.liferay.portletmvc4spring",
-			"com.liferay.portletmvc4spring.test", "5.2.1");
-
-		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
 			"org.springframework", "spring-test", "5.2.2.RELEASE");
 	}
 

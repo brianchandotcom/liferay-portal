@@ -4,7 +4,7 @@
  */
 
 import {Option, Picker} from '@clayui/core';
-import ClayForm, {ClayToggle} from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -87,16 +87,21 @@ function FirstSectionComponent({field}: {field: Field}) {
 
 			{uploadField.settings.fileSource === 'userComputer' ? (
 				<ClayForm.Group className="mb-3">
-					<ClayToggle
+					<ClayCheckbox
+						checked={
+							uploadField.settings.showFilesInDocumentsAndMedia ||
+							false
+						}
 						disabled={isPublished}
 						label={Liferay.Language.get(
 							'show-files-in-documents-and-media'
 						)}
-						onToggle={(value) => {
+						onChange={(event) => {
 							dispatch({
 								settings: {
 									...uploadField.settings,
-									showFilesInDocumentsAndMedia: value,
+									showFilesInDocumentsAndMedia:
+										event.target.checked,
 									storageDLFolderPath:
 										'/' + Liferay.Language.get('new'),
 								},
@@ -104,9 +109,6 @@ function FirstSectionComponent({field}: {field: Field}) {
 								uuid: field.uuid,
 							});
 						}}
-						toggled={
-							uploadField.settings.showFilesInDocumentsAndMedia
-						}
 					/>
 				</ClayForm.Group>
 			) : null}

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayToggle} from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -23,9 +23,12 @@ export default function MaxLengthInput({field}: {field: Field}) {
 	return (
 		<>
 			<ClayForm.Group className="mb-3">
-				<ClayToggle
+				<ClayCheckbox
+					checked={enableLimitCharacters}
 					label={Liferay.Language.get('limit-characters')}
-					onToggle={(value) => {
+					onChange={(event) => {
+						const value = event.target.checked;
+
 						setEnableLimitCharacters(value);
 
 						if (!value) {
@@ -40,7 +43,6 @@ export default function MaxLengthInput({field}: {field: Field}) {
 							});
 						}
 					}}
-					toggled={enableLimitCharacters}
 				/>
 			</ClayForm.Group>
 			{enableLimitCharacters ? (

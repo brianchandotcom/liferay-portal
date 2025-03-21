@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayToggle} from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
@@ -29,20 +29,20 @@ function SecondSectionComponent({field}: {field: Field}) {
 
 	return (
 		<ClayForm.Group className="mb-3">
-			<ClayToggle
+			<ClayCheckbox
+				checked={numericField.settings.uniqueValues || false}
 				disabled={isPublished}
 				label={Liferay.Language.get('accept-unique-values-only')}
-				onToggle={(value) => {
+				onChange={(event) => {
 					dispatch({
 						settings: {
 							...numericField.settings,
-							uniqueValues: value,
+							uniqueValues: event.target.checked,
 						},
 						type: 'update-field',
 						uuid: field.uuid,
 					});
 				}}
-				toggled={numericField.settings.uniqueValues}
 			/>
 		</ClayForm.Group>
 	);

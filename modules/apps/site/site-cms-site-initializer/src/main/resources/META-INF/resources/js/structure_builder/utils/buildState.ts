@@ -5,7 +5,7 @@
 
 import {State, Uuid} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
-import {DB_TYPE_FIELD_TYPE, Field} from './field';
+import {Field, FieldType} from './field';
 import getUuid from './getUuid';
 
 export default function buildState(
@@ -45,17 +45,10 @@ export default function buildState(
 			localized: objectField.localized,
 			name: objectField.name,
 			required: objectField.required,
-			settings: getSettings(objectField),
-			type: DB_TYPE_FIELD_TYPE[objectField.DBType],
+			settings: getFieldSettings(objectField),
+			type: getFieldType(objectField),
 			uuid,
 		};
-
-		if (objectField.businessType === 'Picklist') {
-			field.type = DB_TYPE_FIELD_TYPE.SingleSelect;
-		}
-		else if (objectField.businessType === 'MultiselectPicklist') {
-			field.type = DB_TYPE_FIELD_TYPE.Multiselect;
-		}
 
 		fields.set(uuid, field);
 	});
@@ -77,7 +70,7 @@ export default function buildState(
 	};
 }
 
-function getSettings(objectField: ObjectField): Field['settings'] {
+function getFieldSettings(objectField: ObjectField): Field['settings'] {
 	const settings: Record<string, any> = {};
 
 	const objectFieldSettings: Record<string, any> = {};
@@ -121,4 +114,28 @@ function getSettings(objectField: ObjectField): Field['settings'] {
 	}
 
 	return settings as Field['settings'];
+}
+
+function getFieldType(objectField: ObjectField): FieldType {
+	if (objectField.businessType === 'Picklist') {
+		return 'single-select';
+	}
+	else if (objectField.businessType === 'MultiselectPicklist') {
+		return 'multiselect';
+	}
+
+	const DB_TYPE_TO_FIELD_TYPE: Record<string, FieldType> = {
+		BigDecimal: 'decimal',
+		Boolean: 'boolean',
+		Clob: 'long-text',
+		Date: 'date',
+		DateTime: 'datetime',
+		Integer: 'integer',
+		Long: 'upload',
+		RichText: 'rich-text',
+		String: 'text',
+		Upload: 'upload',
+	} as const;
+
+	return DB_TYPE_TO_FIELD_TYPE[objectField.DBType];
 }

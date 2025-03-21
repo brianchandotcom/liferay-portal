@@ -52,7 +52,7 @@ export const FIELD_TYPE_ICON: Record<FieldType, string> = {
 	'upload': 'upload',
 } as const;
 
-export const FIELD_TYPE_BUSINESS_TYPE: Record<FieldType, string> = {
+export const FIELD_TYPE_TO_BUSINESS_TYPE: Record<FieldType, string> = {
 	'boolean': 'Boolean',
 	'date': 'Date',
 	'datetime': 'DateTime',
@@ -66,7 +66,7 @@ export const FIELD_TYPE_BUSINESS_TYPE: Record<FieldType, string> = {
 	'upload': 'Attachment',
 } as const;
 
-export const FIELD_TYPE_DB_TYPE: Record<FieldType, string> = {
+export const FIELD_TYPE_TO_DB_TYPE: Record<FieldType, string> = {
 	'boolean': 'Boolean',
 	'date': 'Date',
 	'datetime': 'DateTime',
@@ -78,21 +78,6 @@ export const FIELD_TYPE_DB_TYPE: Record<FieldType, string> = {
 	'single-select': 'String',
 	'text': 'String',
 	'upload': 'Long',
-} as const;
-
-export const DB_TYPE_FIELD_TYPE: Record<string, FieldType> = {
-	BigDecimal: 'decimal',
-	Boolean: 'boolean',
-	Clob: 'long-text',
-	Date: 'date',
-	DateTime: 'datetime',
-	Integer: 'integer',
-	Long: 'upload',
-	Multiselect: 'multiselect',
-	RichText: 'rich-text',
-	SingleSelect: 'single-select',
-	String: 'text',
-	Upload: 'upload',
 } as const;
 
 // Types
@@ -197,7 +182,7 @@ export type Field =
 export type FieldType = (typeof FIELD_TYPES)[number];
 
 export type FieldBusinessType =
-	(typeof FIELD_TYPE_BUSINESS_TYPE)[keyof typeof FIELD_TYPE_BUSINESS_TYPE];
+	(typeof FIELD_TYPE_TO_BUSINESS_TYPE)[keyof typeof FIELD_TYPE_TO_BUSINESS_TYPE];
 
 // Functions
 

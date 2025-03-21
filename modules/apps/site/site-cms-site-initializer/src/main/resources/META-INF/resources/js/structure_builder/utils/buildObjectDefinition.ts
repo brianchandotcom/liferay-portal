@@ -8,7 +8,11 @@ import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {config} from '../config';
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
-import {FIELD_TYPE_BUSINESS_TYPE, FIELD_TYPE_DB_TYPE, Field} from './field';
+import {
+	FIELD_TYPE_TO_BUSINESS_TYPE,
+	FIELD_TYPE_TO_DB_TYPE,
+	Field,
+} from './field';
 import {isFieldTextSearchable} from './isFieldTextSearchable';
 
 export default function buildObjectDefinition({
@@ -53,8 +57,8 @@ export default function buildObjectDefinition({
 function buildFields(fields: Field[]) {
 	return fields.map((field) => {
 		const objectField: ObjectField = {
-			DBType: FIELD_TYPE_DB_TYPE[field.type],
-			businessType: FIELD_TYPE_BUSINESS_TYPE[field.type],
+			DBType: FIELD_TYPE_TO_DB_TYPE[field.type],
+			businessType: FIELD_TYPE_TO_BUSINESS_TYPE[field.type],
 			externalReferenceCode: field.erc,
 			indexed: field.indexableConfig.indexed,
 			label: field.label,

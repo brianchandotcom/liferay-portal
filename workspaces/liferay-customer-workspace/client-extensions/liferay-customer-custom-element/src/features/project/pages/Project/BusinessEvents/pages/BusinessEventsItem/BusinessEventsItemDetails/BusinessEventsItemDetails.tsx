@@ -160,16 +160,17 @@ const BusinessEventsItemDetails = () => {
 							{i18n.translate('event-details')}
 						</Nav.Link>
 					</Nav.Item>
-					<Nav.Item>
+					<Nav.Item
+						onClick={() =>
+							navigate(
+								`/${accountKey}/business-events/${id}/activity-history`
+							)
+						}
+					>
 						<Nav.Link
 							active={false}
 							aria-label={`Switch to ${i18n.translate('activity-history')}`}
 							className="be-nav-link text-neutral-10"
-							onClick={() =>
-								navigate(
-									`/${accountKey}/business-events/${id}/activity-history`
-								)
-							}
 						>
 							{i18n.translate('activity-history')}
 						</Nav.Link>

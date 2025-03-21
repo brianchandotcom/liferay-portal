@@ -1,9 +1,9 @@
 .versions-table {
-    .table td {
-        border: 0 !important;
-    }
+	.table td {
+		border: 0 !important;
+	}
 
-    .table thead {
-        border-bottom: 0.063rem solid var(--color-neutral-2);
-    }
+	.table thead {
+		border-bottom: 0.063rem solid var(--color-neutral-2);
+	}
 }

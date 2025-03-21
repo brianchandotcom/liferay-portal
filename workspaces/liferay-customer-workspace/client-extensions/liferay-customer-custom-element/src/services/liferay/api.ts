@@ -55,7 +55,7 @@ const getBusinessEvents = async (filters: string) => {
 	});
 };
 
-const getBusinessEventsVersions = async (filters: string) => {
+const getBusinessEventVersions = async (filters: string) => {
 	return fetcher(
 		`${HEADLESS_BASE_URL}${`c/businesseventversions?${filters}`}`,
 		{
@@ -118,7 +118,7 @@ const updateBusinessEventItem = async (
 export {
 	getBusinessEventById,
 	getBusinessEvents,
-	getBusinessEventsVersions,
+	getBusinessEventVersions,
 	getHighPriorityContacts,
 	getTicketAttachments,
 	fetchHeadless,

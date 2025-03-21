@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
-import com.liferay.site.teams.item.selector.criterion.SiteTeamsItemSelectorCriterion;
+import com.liferay.site.teams.item.selector.SiteTeamsItemSelectorCriterion;
 
 import java.util.List;
 import java.util.Locale;

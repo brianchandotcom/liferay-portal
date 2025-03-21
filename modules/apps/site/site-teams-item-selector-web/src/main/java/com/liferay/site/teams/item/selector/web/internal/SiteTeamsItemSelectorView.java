@@ -11,7 +11,7 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.teams.item.selector.criterion.SiteTeamsItemSelectorCriterion;
+import com.liferay.site.teams.item.selector.SiteTeamsItemSelectorCriterion;
 
 import java.io.IOException;
 

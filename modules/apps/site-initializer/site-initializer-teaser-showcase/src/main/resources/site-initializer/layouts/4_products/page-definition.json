@@ -21,6 +21,7 @@
 										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/products_banner.jpg$]"
 									}
 								},
+								"borderRadius": "25px",
 								"height": "460px",
 								"paddingLeft": "7",
 								"paddingRight": "7"
@@ -55,13 +56,11 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -77,13 +76,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -102,8 +99,7 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Elevate Your Eyewear Business with Premium Quality"
@@ -124,14 +120,12 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {
-													},
+													"fragmentConfig": {},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {
-																},
+																"fragmentLink": {},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Elevate your brand with a curated selection of glasses, sunglasses, contacts, and lenses."
@@ -148,15 +142,15 @@
 												"definition": {
 													"fragment": {
 														"key": "dialect-dialect-button",
-														"siteKey": "Teaser"
+														"siteKey": "test2"
 													},
 													"fragmentConfig": {
-														"buttonSize": "",
+														"uppercase": false,
 														"iconName": "share",
-														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"uppercase": false
+														"inverted": false,
+														"buttonSize": ""
 													},
 													"fragmentFields": [
 														{
@@ -179,7 +173,7 @@
 																						},
 																						{
 																							"fieldName": "siteKey",
-																							"fieldValue": "[$GROUP_KEY$]"
+																							"fieldValue": "test2"
 																						}
 																					]
 																				}
@@ -197,8 +191,7 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {
-																}
+																"fragmentLink": {}
 															}
 														}
 													],
@@ -222,13 +215,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -245,412 +236,315 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"paddingBottom": "5",
-								"paddingTop": "5"
+								"marginBottom": "4",
+								"marginTop": "4"
 							},
 							"indexed": true,
 							"layout": {
-								"paddingBottom": 4,
-								"paddingTop": 4
+								"contentDisplay": "FlexRow",
+								"marginBottom": 2,
+								"marginTop": 2
 							},
-							"name": "Bento Row 1"
+							"name": "Bento Row 2"
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"gutters": true,
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n flex:2.5\n}",
+									"fragmentStyle": {
+										"backgroundColor": "#FDFBF7",
+										"borderRadius": "25px",
+										"marginRight": "3"
+									},
 									"indexed": true,
-									"modulesPerRow": 2,
-									"numberOfColumns": 2,
-									"reverseOrder": false,
-									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-												"modulesPerRow": 1
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
-											}
-										}
-									],
-									"verticalAlignment": "top"
+									"layout": {
+										"contentDisplay": "FlexColumn",
+										"flexWrap": "Wrap",
+										"marginRight": 1
+									},
+									"name": "Contacts"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n  border-top-left-radius: 25px;\nborder-top-right-radius: 25px;\n}",
+											"fragmentStyle": {
+												"backgroundFragmentImage": {
+													"title": {
+														"value": "eyeglasses.jpg"
 													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 8
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#FDFBF7"
-													},
-													"indexed": true,
-													"layout": {
-													},
-													"name": "Eyeglasses"
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"url": {
-																				"value_i18n": {
-																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/eyeglasses.jpg$]"
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-heading"
-															},
-															"fragmentConfig": {
-																"headingLevel": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Eyeglasses"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5",
-																"marginTop": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-paragraph"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Elevate your style with precision-crafted eyeglasses that seamlessly merge high quality with sustainability."
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "dialect-dialect-button",
-																"siteKey": "[$GROUP_KEY$]"
-															},
-															"fragmentConfig": {
-																"buttonSize": "",
-																"iconName": "",
-																"inverted": false,
-																"style": "primary",
-																"type": "solid",
-																"uppercase": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "link",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"value_i18n": {
-																						"en_US": "/web/[$GROUP_KEY$]/g/eyeglasses"
-																					}
-																				}
-																			}
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Explore"
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginLeft": "5",
-																"paddingBottom": "6"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
+													"url": {
+														"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/eyeglasses.jpg$]"
 													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
+												},
+												"height": "400px",
+												"width": "100%"
+											},
+											"indexed": true,
+											"layout": {}
+										},
+										"type": "Section"
 									},
 									{
 										"definition": {
-											"columnViewports": [
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h2"
+											},
+											"fragmentFields": [
 												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Eyeglasses"
+															}
+														}
+													}
 												}
 											],
-											"size": 4
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"marginTop": "5"
+											},
+											"indexed": true
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#FDFBF7"
-													},
-													"indexed": true,
-													"layout": {
-													},
-													"name": "Sunglasses"
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"description": {
-																				"value_i18n": {
-																					"en_US": ""
-																				}
-																			},
-																			"url": {
-																				"value_i18n": {
-																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/sunglasses.jpg$]"
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-heading"
-															},
-															"fragmentConfig": {
-																"headingLevel": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Sunglasses"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5",
-																"marginTop": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-paragraph"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Make a bold statement with our stylish and sustainable sunglasses, combining cutting-edge design with uncompromising quality."
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "dialect-dialect-button",
-																"siteKey": "[$GROUP_KEY$]"
-															},
-															"fragmentConfig": {
-																"buttonSize": "",
-																"iconName": "",
-																"inverted": false,
-																"style": "primary",
-																"type": "solid",
-																"uppercase": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "link",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"value_i18n": {
-																						"en_US": "/web/[$GROUP_KEY$]/g/sunglasses"
-																					}
-																				}
-																			}
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Explore"
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginLeft": "5",
-																"paddingBottom": "6"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Elevate your style with precision-crafted eyeglasses that seamlessly merge high quality with sustainability."
+															}
+														}
 													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"maxWidth": "500px"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button",
+												"siteKey": "test2"
+											},
+											"fragmentConfig": {
+												"uppercase": false,
+												"iconName": "",
+												"style": "primary",
+												"type": "solid",
+												"inverted": false,
+												"buttonSize": ""
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/web/test2/g/contacts"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Explore"
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginLeft": "3",
+												"paddingBottom": "6"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
 									}
 								],
-								"type": "Row"
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n flex:1;\n}",
+									"fragmentStyle": {
+										"backgroundColor": "#FDFBF7",
+										"borderRadius": "25px",
+										"marginLeft": "3"
+									},
+									"indexed": true,
+									"layout": {
+										"align": "Start",
+										"contentDisplay": "FlexColumn",
+										"marginLeft": 1
+									},
+									"name": "Lenses"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n  border-top-left-radius: 25px;\nborder-top-right-radius: 25px;\n}",
+											"fragmentStyle": {
+												"backgroundFragmentImage": {
+													"title": {
+														"value": "sunglasses.jpg"
+													},
+													"url": {
+														"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/sunglasses.jpg$]"
+													}
+												},
+												"height": "400px",
+												"width": "100%"
+											},
+											"indexed": true,
+											"layout": {}
+										},
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h2"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Sunglasses"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"marginTop": "5"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Make a bold statement with our stylish and sustainable sunglasses, combining cutting-edge design with uncompromising quality."
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"maxWidth": "500px"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button",
+												"siteKey": "test2"
+											},
+											"fragmentConfig": {
+												"uppercase": false,
+												"iconName": "",
+												"style": "primary",
+												"type": "solid",
+												"inverted": false,
+												"buttonSize": ""
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/web/test2/g/lenses"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Explore"
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginLeft": "5",
+												"paddingBottom": "6"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
 							}
 						],
 						"type": "Section"
@@ -658,413 +552,306 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"marginBottom": "5",
-								"paddingBottom": "5",
-								"paddingTop": "5"
+								"marginBottom": "5"
 							},
 							"indexed": true,
 							"layout": {
-								"marginBottom": 4,
-								"paddingBottom": 4,
-								"paddingTop": 4
+								"contentDisplay": "FlexRow",
+								"marginBottom": 4
 							},
 							"name": "Bento Row 2"
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"gutters": true,
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n flex:1\n}",
+									"fragmentStyle": {
+										"backgroundColor": "#FDFBF7",
+										"borderRadius": "25px",
+										"marginRight": "3"
+									},
 									"indexed": true,
-									"modulesPerRow": 2,
-									"numberOfColumns": 2,
-									"reverseOrder": false,
-									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-												"modulesPerRow": 1
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
-											}
-										}
-									],
-									"verticalAlignment": "top"
+									"layout": {
+										"contentDisplay": "FlexColumn",
+										"flexWrap": "Wrap",
+										"marginRight": 1
+									},
+									"name": "Contacts"
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n  border-top-left-radius: 25px;\nborder-top-right-radius: 25px;\n}",
+											"fragmentStyle": {
+												"backgroundFragmentImage": {
+													"title": {
+														"value": "contacts.jpg"
 													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#FDFBF7"
-													},
-													"indexed": true,
-													"layout": {
-													},
-													"name": "Contacts"
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"description": {
-																				"value_i18n": {
-																					"en_US": ""
-																				}
-																			},
-																			"url": {
-																				"value_i18n": {
-																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/contacts.jpg$]"
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-heading"
-															},
-															"fragmentConfig": {
-																"headingLevel": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Contacts"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5",
-																"marginTop": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-paragraph"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "dialect-dialect-button",
-																"siteKey": "[$GROUP_KEY$]"
-															},
-															"fragmentConfig": {
-																"buttonSize": "",
-																"iconName": "",
-																"inverted": false,
-																"style": "primary",
-																"type": "solid",
-																"uppercase": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "link",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"value_i18n": {
-																						"en_US": "/web/[$GROUP_KEY$]/g/contacts"
-																					}
-																				}
-																			}
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Explore"
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginLeft": "3",
-																"paddingBottom": "6"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
+													"url": {
+														"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/contacts.jpg$]"
 													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
+												},
+												"height": "400px",
+												"width": "100%"
+											},
+											"indexed": true,
+											"layout": {}
+										},
+										"type": "Section"
 									},
 									{
 										"definition": {
-											"columnViewports": [
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h2"
+											},
+											"fragmentFields": [
 												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "tablet"
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Contacts"
+															}
+														}
+													}
 												}
 											],
-											"size": 8
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"marginTop": "5"
+											},
+											"indexed": true
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentStyle": {
-														"backgroundColor": "#FDFBF7"
-													},
-													"indexed": true,
-													"layout": {
-													},
-													"name": "Lenses"
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-image"
-															},
-															"fragmentConfig": {
-																"imageSize": "w-100"
-															},
-															"fragmentFields": [
-																{
-																	"id": "image-square",
-																	"value": {
-																		"fragmentImage": {
-																			"description": {
-																				"value_i18n": {
-																					"en_US": ""
-																				}
-																			},
-																			"url": {
-																				"value_i18n": {
-																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/lenses.jpg$]"
-																				}
-																			}
-																		},
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"height": "50%",
-																"maxHeight": "50%"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-heading"
-															},
-															"fragmentConfig": {
-																"headingLevel": "h2"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Lenses"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5",
-																"marginTop": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-paragraph"
-															},
-															"fragmentConfig": {
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginLeft": "5",
-																"marginRight": "5"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "dialect-dialect-button",
-																"siteKey": "[$GROUP_KEY$]"
-															},
-															"fragmentConfig": {
-																"buttonSize": "",
-																"iconName": "",
-																"inverted": false,
-																"style": "primary",
-																"type": "solid",
-																"uppercase": false
-															},
-															"fragmentFields": [
-																{
-																	"id": "link",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"value_i18n": {
-																						"en_US": "/web/[$GROUP_KEY$]/g/lenses"
-																					}
-																				}
-																			}
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Explore"
-																			}
-																		}
-																	}
-																},
-																{
-																	"id": "text",
-																	"value": {
-																		"fragmentLink": {
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginLeft": "5",
-																"paddingBottom": "6"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose."
+															}
+														}
 													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"maxWidth": "500px"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button",
+												"siteKey": "test2"
+											},
+											"fragmentConfig": {
+												"uppercase": false,
+												"iconName": "",
+												"style": "primary",
+												"type": "solid",
+												"inverted": false,
+												"buttonSize": ""
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/web/test2/g/contacts"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Explore"
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginLeft": "3",
+												"paddingBottom": "6"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
 									}
 								],
-								"type": "Row"
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n flex:2;\n}",
+									"fragmentStyle": {
+										"backgroundColor": "#FDFBF7",
+										"borderRadius": "25px",
+										"marginLeft": "3"
+									},
+									"indexed": true,
+									"layout": {
+										"marginLeft": 1
+									},
+									"name": "Lenses"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n  border-top-left-radius: 25px;\nborder-top-right-radius: 25px;\n}",
+											"fragmentStyle": {
+												"backgroundFragmentImage": {
+													"title": {
+														"value": "lenses.jpg"
+													},
+													"url": {
+														"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/lenses.jpg$]"
+													}
+												},
+												"height": "400px",
+												"width": "100%"
+											},
+											"indexed": true,
+											"layout": {}
+										},
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h2"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Lenses"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"marginTop": "5"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginBottom": "5",
+												"marginLeft": "5",
+												"marginRight": "5",
+												"maxWidth": "500px"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "dialect-dialect-button",
+												"siteKey": "test2"
+											},
+											"fragmentConfig": {
+												"uppercase": false,
+												"iconName": "",
+												"style": "primary",
+												"type": "solid",
+												"inverted": false,
+												"buttonSize": ""
+											},
+											"fragmentFields": [
+												{
+													"id": "link",
+													"value": {
+														"fragmentLink": {
+															"value": {
+																"href": {
+																	"value_i18n": {
+																		"en_US": "/web/test2/g/lenses"
+																	}
+																}
+															}
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Explore"
+															}
+														}
+													}
+												},
+												{
+													"id": "text",
+													"value": {
+														"fragmentLink": {}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"marginLeft": "5",
+												"paddingBottom": "6"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
 							}
 						],
 						"type": "Section"

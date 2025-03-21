@@ -303,9 +303,11 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 		try {
 			if (sharingEntry.getToUserId() > 0) {
+				User user = _userLocalService.getUser(
+					sharingEntry.getToUserId());
+
 				_sendNotificationEvent(
-					sharingEntry, notificationType, serviceContext,
-					_userLocalService.getUser(sharingEntry.getToUserId()));
+					sharingEntry, notificationType, serviceContext, user);
 
 				return;
 			}

@@ -27,3 +27,7 @@
 .cp-activation-key-cell-small {
 	max-width: 20%;
 }
+
+.cp-copy-clipboard-icon {
+	cursor: pointer;
+}

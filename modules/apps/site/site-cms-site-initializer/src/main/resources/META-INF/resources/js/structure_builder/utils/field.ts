@@ -97,6 +97,7 @@ type BaseField = {
 	localized: boolean;
 	name: string;
 	required: boolean;
+	settings: {};
 	uuid: Uuid;
 };
 
@@ -124,7 +125,6 @@ export type LongTextField = BaseField & {
 
 export type MultiselectField = BaseField & {
 	listTypeDefinitionId: string;
-	settings: {};
 	type: 'multiselect';
 };
 
@@ -134,7 +134,6 @@ export type NumericField = BaseField & {
 
 export type SingleSelectField = BaseField & {
 	listTypeDefinitionId: string;
-	settings: {};
 	type: 'single-select';
 };
 

@@ -60,7 +60,6 @@ import java.net.ConnectException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.function.Predicate;
 
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -232,10 +231,13 @@ public class ObjectEntryPerformanceTest {
 			_customObjectDefinition = objectDefinitions.get(
 				_OBJECT_DEFINITION_LIST_INDEX);
 
-			_assertObjectEntryCount(
-				0,
-				currentObjectEntryCount ->
-					currentObjectEntryCount < _objectEntryCount);
+			long currentObjectEntryCount = 0;
+
+			while (currentObjectEntryCount < _objectEntryCount) {
+				currentObjectEntryCount =
+					_objectEntryLocalService.getObjectEntriesCount(
+						_customObjectDefinition.getObjectDefinitionId());
+			}
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
@@ -256,19 +258,13 @@ public class ObjectEntryPerformanceTest {
 				jsonArray.toString(), HttpInvoker.HttpMethod.DELETE,
 				_getPath(_PATH_SUFFIX));
 
-			_assertObjectEntryCount(
-				_objectEntryCount,
-				currentObjectEntryCount -> currentObjectEntryCount != 0);
-		}
-	}
+			long currentObjectEntryCount = _objectEntryCount;
 
-	private void _assertObjectEntryCount(
-		long currentObjectEntryCount, Predicate<Long> condition) {
-
-		while (condition.test(currentObjectEntryCount)) {
-			currentObjectEntryCount =
-				_objectEntryLocalService.getObjectEntriesCount(
-					_customObjectDefinition.getObjectDefinitionId());
+			while (currentObjectEntryCount != 0) {
+				currentObjectEntryCount =
+					_objectEntryLocalService.getObjectEntriesCount(
+						_customObjectDefinition.getObjectDefinitionId());
+			}
 		}
 	}
 

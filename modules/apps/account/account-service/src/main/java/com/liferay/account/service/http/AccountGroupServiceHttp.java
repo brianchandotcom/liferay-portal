@@ -283,6 +283,49 @@ public class AccountGroupServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountGroup
+			getAccountGroupByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountGroupServiceUtil.class,
+				"getAccountGroupByExternalReferenceCode",
+				_getAccountGroupByExternalReferenceCodeParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.account.model.AccountGroup>
 			getAccountGroupsByAccountEntryId(
 				HttpPrincipal httpPrincipal, long accountEntryId, int start,
@@ -293,7 +336,7 @@ public class AccountGroupServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class,
 				"getAccountGroupsByAccountEntryId",
-				_getAccountGroupsByAccountEntryIdParameterTypes6);
+				_getAccountGroupsByAccountEntryIdParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, start, end);
@@ -335,7 +378,7 @@ public class AccountGroupServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class,
 				"getAccountGroupsCountByAccountEntryId",
-				_getAccountGroupsCountByAccountEntryIdParameterTypes7);
+				_getAccountGroupsCountByAccountEntryIdParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId);
@@ -379,7 +422,7 @@ public class AccountGroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class, "searchAccountGroups",
-				_searchAccountGroupsParameterTypes8);
+				_searchAccountGroupsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, keywords, start, end, orderByComparator);
@@ -422,7 +465,7 @@ public class AccountGroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class, "updateAccountGroup",
-				_updateAccountGroupParameterTypes9);
+				_updateAccountGroupParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, accountGroupId, description,
@@ -465,7 +508,7 @@ public class AccountGroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class, "updateExternalReferenceCode",
-				_updateExternalReferenceCodeParameterTypes10);
+				_updateExternalReferenceCodeParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountGroupId, externalReferenceCode);
@@ -519,25 +562,29 @@ public class AccountGroupServiceHttp {
 	private static final Class<?>[] _getAccountGroupParameterTypes5 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_getAccountGroupsByAccountEntryIdParameterTypes6 = new Class[] {
+		_getAccountGroupByExternalReferenceCodeParameterTypes6 = new Class[] {
+			String.class, long.class
+		};
+	private static final Class<?>[]
+		_getAccountGroupsByAccountEntryIdParameterTypes7 = new Class[] {
 			long.class, int.class, int.class
 		};
 	private static final Class<?>[]
-		_getAccountGroupsCountByAccountEntryIdParameterTypes7 = new Class[] {
+		_getAccountGroupsCountByAccountEntryIdParameterTypes8 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _searchAccountGroupsParameterTypes8 =
+	private static final Class<?>[] _searchAccountGroupsParameterTypes9 =
 		new Class[] {
 			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateAccountGroupParameterTypes9 =
+	private static final Class<?>[] _updateAccountGroupParameterTypes10 =
 		new Class[] {
 			String.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateExternalReferenceCodeParameterTypes10 = new Class[] {
+		_updateExternalReferenceCodeParameterTypes11 = new Class[] {
 			long.class, String.class
 		};
 

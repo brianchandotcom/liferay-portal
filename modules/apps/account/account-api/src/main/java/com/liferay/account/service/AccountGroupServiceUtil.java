@@ -73,6 +73,14 @@ public class AccountGroupServiceUtil {
 		return getService().getAccountGroup(accountGroupId);
 	}
 
+	public static AccountGroup getAccountGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getAccountGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static List<AccountGroup> getAccountGroupsByAccountEntryId(
 			long accountEntryId, int start, int end)
 		throws PortalException {

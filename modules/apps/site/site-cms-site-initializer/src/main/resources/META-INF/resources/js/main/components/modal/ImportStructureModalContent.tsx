@@ -6,12 +6,16 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
+import {openToast} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldFile} from '../forms';
 
 const JSON_EXTENSION = '.json';
+const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
+	'an-unexpected-error-occurred'
+);
 
 export default function ImportStructureModalContent({
 	closeModal,
@@ -24,8 +28,13 @@ export default function ImportStructureModalContent({
 }) {
 	const [warning, setWarning] = useState(true);
 	const [jsonFile, setJsonFile] = useState<File | null>(null);
+	const [errorMessage, setErrorMessage] = useState('');
 
 	const onFileChange = (file: File | null) => {
+		if (!file) {
+			setErrorMessage('');
+		}
+
 		setJsonFile(file);
 	};
 
@@ -47,6 +56,13 @@ export default function ImportStructureModalContent({
 		})
 			.then((response) => {
 				if (response.ok) {
+					openToast({
+						message: Liferay.Language.get(
+							'the-structure-has-been-successfully-imported-and-overritten'
+						),
+						type: 'success',
+					});
+
 					closeModal();
 				}
 				else {
@@ -54,12 +70,13 @@ export default function ImportStructureModalContent({
 				}
 			})
 			.then((response) => {
-				console.log(response);
+				setErrorMessage(response?.title);
 			})
 			.catch((error) => {
 				if (process.env.NODE_ENV === 'development') {
 					console.error(error);
 				}
+				setErrorMessage(UNEXPECTED_ERROR_MESSAGE);
 			});
 	};
 
@@ -86,6 +103,7 @@ export default function ImportStructureModalContent({
 
 			<ClayModal.Body>
 				<FieldFile
+					errorMessage={errorMessage}
 					fieldId="jsonFileId"
 					label={Liferay.Language.get('json-file')}
 					onFileChange={onFileChange}
@@ -105,7 +123,7 @@ export default function ImportStructureModalContent({
 						</ClayButton>
 
 						<ClayButton
-							disabled={!jsonFile}
+							disabled={!jsonFile || !!errorMessage}
 							displayType="primary"
 							onClick={onImportButtonClick}
 						>

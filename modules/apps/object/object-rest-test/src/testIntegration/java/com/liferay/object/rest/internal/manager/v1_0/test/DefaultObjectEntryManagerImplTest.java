@@ -4240,7 +4240,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@FeatureFlags("LPD-17564")
 	@Test
-	public void testGetObjectEntryVersions() throws Exception {
+	public void testGetVersionedObjectEntries() throws Exception {
 		ObjectEntry objectEntry1 = new ObjectEntry() {
 			{
 				externalReferenceCode = RandomTestUtil.randomString();

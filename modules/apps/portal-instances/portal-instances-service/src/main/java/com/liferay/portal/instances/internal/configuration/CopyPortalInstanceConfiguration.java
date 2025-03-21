@@ -13,7 +13,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author István András Dézsi
  */
 @ExtendedObjectClassDefinition(
-	category = "upgrades", featureFlagKey = "LPD-10959"
+	category = "upgrades"
 )
 @Meta.OCD(
 	id = "com.liferay.portal.instances.internal.configuration.CopyPortalInstanceConfiguration",

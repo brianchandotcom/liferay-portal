@@ -5,7 +5,7 @@
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import {Option, Picker} from '@clayui/core';
-import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
@@ -149,32 +149,32 @@ function GeneralTab({field}: {field: Field}) {
 
 			<div className="mt-4 pb-2">
 				<ClayForm.Group className="mb-3">
-					<ClayToggle
+					<ClayCheckbox
+						checked={field.required}
 						disabled={isPublished}
 						label={Liferay.Language.get('mandatory')}
-						onToggle={(value) => {
+						onChange={(event) => {
 							dispatch({
-								required: value,
+								required: event.target.checked,
 								type: 'update-field',
 								uuid: field.uuid,
 							});
 						}}
-						toggled={field.required}
 					/>
 				</ClayForm.Group>
 
 				<ClayForm.Group className="mb-3">
-					<ClayToggle
+					<ClayCheckbox
+						checked={field.localized}
 						disabled={isPublished}
 						label={Liferay.Language.get('localizable')}
-						onToggle={(value) => {
+						onChange={(event) => {
 							dispatch({
-								localized: value,
+								localized: event.target.checked,
 								type: 'update-field',
 								uuid: field.uuid,
 							});
 						}}
-						toggled={field.localized}
 					/>
 				</ClayForm.Group>
 
@@ -212,12 +212,13 @@ function SearchTab({field}: {field: Field}) {
 	return (
 		<>
 			<ClayForm.Group>
-				<ClayToggle
+				<ClayCheckbox
+					checked={field.indexableConfig.indexed}
 					label={Liferay.Language.get('searchable')}
-					onToggle={(value) => {
+					onChange={(event) => {
 						dispatch({
 							indexableConfig: {
-								indexed: value,
+								indexed: event.target.checked,
 								indexedAsKeyword: false,
 								indexedLanguageId:
 									Liferay.ThemeDisplay.getDefaultLanguageId(),
@@ -226,7 +227,6 @@ function SearchTab({field}: {field: Field}) {
 							uuid: field.uuid,
 						});
 					}}
-					toggled={field.indexableConfig.indexed}
 				/>
 			</ClayForm.Group>
 

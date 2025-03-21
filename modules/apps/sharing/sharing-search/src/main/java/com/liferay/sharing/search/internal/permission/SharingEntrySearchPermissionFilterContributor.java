@@ -36,24 +36,24 @@ public class SharingEntrySearchPermissionFilterContributor
 			return;
 		}
 
-		TermsFilter sharedToUserIdTermsFilter = new TermsFilter(
+		TermsFilter termsFilterSharedToUserId = new TermsFilter(
 			"sharedToUserId");
 
-		sharedToUserIdTermsFilter.addValue(String.valueOf(userId));
+		termsFilterSharedToUserId.addValue(String.valueOf(userId));
 
-		booleanFilter.add(sharedToUserIdTermsFilter, BooleanClauseOccur.SHOULD);
+		booleanFilter.add(termsFilterSharedToUserId, BooleanClauseOccur.SHOULD);
 
-		TermsFilter sharedToUserGroupIdTermsFilter = new TermsFilter(
+		TermsFilter termsFilterSharedToUserGroupId = new TermsFilter(
 			"sharedToUserGroupId");
 
-		sharedToUserGroupIdTermsFilter.addValues(
+		termsFilterSharedToUserGroupId.addValues(
 			TransformUtil.transformToArray(
 				_userGroupLocalService.getUserUserGroups(userId),
 				userGroup -> String.valueOf(userGroup.getUserGroupId()),
 				String.class));
 
 		booleanFilter.add(
-			sharedToUserGroupIdTermsFilter, BooleanClauseOccur.SHOULD);
+			termsFilterSharedToUserGroupId, BooleanClauseOccur.SHOULD);
 	}
 
 	@Reference

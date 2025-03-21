@@ -45,10 +45,19 @@ export default function StructuresFDSPropsTransformer({
 		onActionDropdownItemClick({
 			action,
 		}: {
-			action: {data: {id: string; importURL: string}};
+			action: {
+				data: {
+					id: string;
+					importURL: string;
+					objectFolderExternalReferenceCode: string;
+				};
+			};
 		}) {
 			if (action.data.id === 'import') {
-				importStructureAction(action.data.importURL);
+				importStructureAction(
+					action.data.importURL,
+					action.data.objectFolderExternalReferenceCode
+				);
 			}
 		},
 	};

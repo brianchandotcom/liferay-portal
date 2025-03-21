@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
+import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldFile} from '../forms';
@@ -15,15 +16,51 @@ const JSON_EXTENSION = '.json';
 export default function ImportStructureModalContent({
 	closeModal,
 	importURL,
+	objectFolderExternalReferenceCode,
 }: {
 	closeModal: () => void;
 	importURL: string;
+	objectFolderExternalReferenceCode: string;
 }) {
 	const [warning, setWarning] = useState(true);
 	const [jsonFile, setJsonFile] = useState<File | null>(null);
 
 	const onFileChange = (file: File | null) => {
 		setJsonFile(file);
+	};
+
+	const onImportButtonClick = () => {
+		const formData = new FormData();
+
+		formData.append(
+			'objectFolderExternalReferenceCode',
+			objectFolderExternalReferenceCode
+		);
+
+		if (jsonFile) {
+			formData.append('objectDefinitionJSON', new Blob([jsonFile]));
+		}
+
+		fetch(importURL, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((response) => {
+				if (response.ok) {
+					closeModal();
+				}
+				else {
+					return response.json();
+				}
+			})
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+			});
 	};
 
 	return (
@@ -67,7 +104,11 @@ export default function ImportStructureModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton disabled={!jsonFile} displayType="primary">
+						<ClayButton
+							disabled={!jsonFile}
+							displayType="primary"
+							onClick={onImportButtonClick}
+						>
 							{Liferay.Language.get('import-and-override')}
 						</ClayButton>
 					</ClayButton.Group>

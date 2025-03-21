@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -120,12 +121,12 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		long groupId = _getGroupId(httpServletRequest, serviceContext);
-
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			groupId, objectDefinitionId,
 			_getObjectEntryFolderId(
-				themeDisplay.getCompanyId(), groupId, objectDefinition),
+				themeDisplay.getCompanyId(),
+				_getGroupId(httpServletRequest, serviceContext),
+				objectDefinition),
 			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()),
 			Collections.emptyMap(), serviceContext);
 
@@ -264,13 +265,15 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 	private long _getObjectEntryFolderId(
 		long companyId, long groupId, ObjectDefinition objectDefinition) {
 
-		String externalReferenceCode = "L_CONTENTS";
+		String externalReferenceCode =
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
 
 		if (Objects.equals(
 				objectDefinition.getObjectFolderExternalReferenceCode(),
 				"L_CMS_FILE_TYPES")) {
 
-			externalReferenceCode = "L_FILES";
+			externalReferenceCode =
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
 		}
 
 		ObjectEntryFolder objectEntryFolder =

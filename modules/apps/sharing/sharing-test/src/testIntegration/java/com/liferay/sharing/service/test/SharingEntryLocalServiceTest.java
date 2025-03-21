@@ -249,19 +249,17 @@ public class SharingEntryLocalServiceTest {
 			sharingEntry.getActionIds());
 	}
 
-	@Test
-	public void testAddSharingEntryToUserOrUserGroup() throws Exception {
-		try {
-			_sharingEntryLocalService.addSharingEntry(
-				RandomTestUtil.randomString(), _fromUser.getUserId(),
-				RandomTestUtil.randomLong(), 0, _classNameId,
-				_group.getGroupId(), _group.getGroupId(), true,
-				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
-		}
-		catch (Exception exception) {
-			Assert.assertTrue(exception instanceof NoSuchUserGroupException);
-		}
+	@Test(expected = NoSuchUserGroupException.class)
+	public void testAddSharingEntryToNonexistingUserGroup() throws Exception {
+		_sharingEntryLocalService.addSharingEntry(
+			RandomTestUtil.randomString(), _fromUser.getUserId(),
+			RandomTestUtil.randomLong(), 0, _classNameId, _group.getGroupId(),
+			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
+			null, _serviceContext);
+	}
 
+	@Test
+	public void testAddSharingEntryToUser() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_sharingEntryLocalService.addSharingEntry(
@@ -277,7 +275,10 @@ public class SharingEntryLocalServiceTest {
 		Assert.assertNotNull(sharingEntry);
 		Assert.assertEquals(0, sharingEntry.getToUserGroupId());
 		Assert.assertEquals(_toUser.getUserId(), sharingEntry.getToUserId());
+	}
 
+	@Test(expected = InvalidSharingEntryUserAndUserGroupException.class)
+	public void testAddSharingEntryToUserAndUserGroup() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		try {
@@ -287,22 +288,27 @@ public class SharingEntryLocalServiceTest {
 				_group.getGroupId(), _group.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 		}
-		catch (Exception exception) {
-			Assert.assertTrue(
-				exception instanceof
-					InvalidSharingEntryUserAndUserGroupException);
+		finally {
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
 		}
+	}
+
+	@Test
+	public void testAddSharingEntryToUserGroup() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		try {
-			externalReferenceCode = RandomTestUtil.randomString();
-
 			_sharingEntryLocalService.addSharingEntry(
 				externalReferenceCode, _fromUser.getUserId(),
 				userGroup.getUserGroupId(), 0, _classNameId,
 				_group.getGroupId(), _group.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, _serviceContext);
 
-			sharingEntry =
+			SharingEntry sharingEntry =
 				_sharingEntryLocalService.
 					fetchSharingEntryByExternalReferenceCode(
 						externalReferenceCode, _group.getGroupId());
@@ -313,7 +319,9 @@ public class SharingEntryLocalServiceTest {
 			Assert.assertEquals(0, sharingEntry.getToUserId());
 		}
 		finally {
-			_userGroupLocalService.deleteUserGroup(userGroup);
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
 		}
 	}
 

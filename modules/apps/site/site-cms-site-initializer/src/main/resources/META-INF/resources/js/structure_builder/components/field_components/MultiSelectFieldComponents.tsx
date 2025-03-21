@@ -5,10 +5,10 @@
 
 import React from 'react';
 
-import {Field} from '../utils/field';
-import PicklistPicker from './PicklistPicker';
+import {Field} from '../../utils/field';
+import PicklistPicker from '../PicklistPicker';
 
-export default function getSingleSelectFieldComponents(): {
+export default function getMultiSelectFieldComponents(): {
 	FirstSectionComponent?: React.FC<{field: Field}>;
 	SecondSectionComponent?: React.FC<{field: Field}>;
 } {

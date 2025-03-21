@@ -9,9 +9,9 @@ import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectPublishedFields from '../selectors/selectPublishedFields';
-import {DateTimeField, Field} from '../utils/field';
+import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectPublishedFields from '../../selectors/selectPublishedFields';
+import {DateTimeField, Field} from '../../utils/field';
 
 const TIME_STORAGE_OPTIONS = [
 	{

@@ -6,10 +6,10 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectPublishedFields from '../selectors/selectPublishedFields';
-import {Field, TextField} from '../utils/field';
-import MaxLengthInput from './MaxLengthInput';
+import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectPublishedFields from '../../selectors/selectPublishedFields';
+import {Field, TextField} from '../../utils/field';
+import MaxLengthInput from '../MaxLengthInput';
 
 export default function getTextFieldComponents(): {
 	FirstSectionComponent?: React.FC<{field: Field}>;

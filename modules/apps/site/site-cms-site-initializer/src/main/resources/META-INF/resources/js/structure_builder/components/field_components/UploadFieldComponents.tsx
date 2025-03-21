@@ -10,10 +10,10 @@ import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectPublishedFields from '../selectors/selectPublishedFields';
-import {Field, UploadField} from '../utils/field';
-import Input from './Input';
+import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectPublishedFields from '../../selectors/selectPublishedFields';
+import {Field, UploadField} from '../../utils/field';
+import Input from '../Input';
 
 const FILE_SOURCE_OPTIONS = [
 	{

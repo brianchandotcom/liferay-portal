@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import getDateTimeFieldComponents from '../components/DateTimeFieldComponents';
-import getLongTextFieldComponents from '../components/LongTextFieldComponents';
-import getMultiSelectFieldComponents from '../components/MultiSelectFieldComponents';
-import getNumericFieldComponents from '../components/NumericFieldComponents';
-import getSingleSelectFieldComponents from '../components/SingleSelectFieldComponents';
-import getTextFieldComponents from '../components/TextFieldComponents';
-import getUploadFieldComponents from '../components/UploadFieldComponents';
+import getDateTimeFieldComponents from '../components/field_components/DateTimeFieldComponents';
+import getLongTextFieldComponents from '../components/field_components/LongTextFieldComponents';
+import getMultiSelectFieldComponents from '../components/field_components/MultiSelectFieldComponents';
+import getNumericFieldComponents from '../components/field_components/NumericFieldComponents';
+import getSingleSelectFieldComponents from '../components/field_components/SingleSelectFieldComponents';
+import getTextFieldComponents from '../components/field_components/TextFieldComponents';
+import getUploadFieldComponents from '../components/field_components/UploadFieldComponents';
 import {Field, FieldType} from './field';
 
 type FieldComponents = {

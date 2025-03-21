@@ -5,18 +5,18 @@
 
 import React from 'react';
 
-import {Field} from '../utils/field';
-import PicklistPicker from './PicklistPicker';
+import {Field} from '../../utils/field';
+import MaxLengthInput from '../MaxLengthInput';
 
-export default function getMultiSelectFieldComponents(): {
+export default function getLongTextFieldComponents(): {
 	FirstSectionComponent?: React.FC<{field: Field}>;
 	SecondSectionComponent?: React.FC<{field: Field}>;
 } {
 	return {
-		FirstSectionComponent,
+		SecondSectionComponent,
 	};
 }
 
-function FirstSectionComponent({field}: {field: Field}) {
-	return <PicklistPicker field={field} />;
+function SecondSectionComponent({field}: {field: Field}) {
+	return <MaxLengthInput field={field} />;
 }

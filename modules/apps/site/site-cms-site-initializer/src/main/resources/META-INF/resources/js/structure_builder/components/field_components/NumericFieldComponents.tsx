@@ -6,9 +6,9 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import React from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectPublishedFields from '../selectors/selectPublishedFields';
-import {Field, NumericField} from '../utils/field';
+import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectPublishedFields from '../../selectors/selectPublishedFields';
+import {Field, NumericField} from '../../utils/field';
 
 export default function getNumericFieldComponents(): {
 	FirstSectionComponent?: React.FC<{field: Field}>;

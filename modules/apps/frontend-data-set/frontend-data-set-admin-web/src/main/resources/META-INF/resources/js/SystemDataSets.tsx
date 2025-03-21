@@ -179,31 +179,35 @@ const SelectSystemDataSetModalContent = ({
 	};
 
 	return (
-		<div className="select-system-data-set-modal-content">
+		<>
 			<ClayModal.Header>
 				{Liferay.Language.get('create-system-data-set-customization')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<FrontendDataSet
-					{...FDS_DEFAULT_PROPS}
-					apiURL={getSystemDataSetsURL}
-					id="SystemDataSets"
-					onSelect={({
-						selectedItems,
-					}: {
-						selectedItems: Array<ISystemDataSet>;
-					}) => {
-						setSelectedSystemDataSet(selectedItems[0]);
-					}}
-					selectedItemsKey="name"
-					selectionType="single"
-					views={[
-						{
-							component: SystemDataSetsView,
-						},
-					]}
-				/>
+				<div className="modal-height-full select-system-data-set-modal-content">
+					<FrontendDataSet
+						{...FDS_DEFAULT_PROPS}
+						apiURL={getSystemDataSetsURL}
+						id="SystemDataSets"
+						onSelect={({
+							selectedItems,
+						}: {
+							selectedItems: Array<ISystemDataSet>;
+						}) => {
+							setSelectedSystemDataSet(selectedItems[0]);
+						}}
+						selectedItemsKey="name"
+						selectionType="single"
+						views={[
+							{
+								component: SystemDataSetsView,
+								contentRenderer: 'custom',
+								name: 'custom',
+							},
+						]}
+					/>
+				</div>
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -228,7 +232,7 @@ const SelectSystemDataSetModalContent = ({
 					</ClayButton.Group>
 				}
 			/>
-		</div>
+		</>
 	);
 };
 

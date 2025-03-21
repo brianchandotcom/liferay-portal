@@ -1185,7 +1185,11 @@ public class GetEntryRenderDataMVCResourceCommand
 
 		long safeCloseableCTCollectionId = ctEntry.getCtCollectionId();
 
-		if (ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) {
+		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING) &&
+			(ctCollection.getStatus() != WorkflowConstants.STATUS_SCHEDULED)) {
+
 			Map<String, Object> modelAttributes = model.getModelAttributes();
 
 			safeCloseableCTCollectionId = (long)modelAttributes.get(

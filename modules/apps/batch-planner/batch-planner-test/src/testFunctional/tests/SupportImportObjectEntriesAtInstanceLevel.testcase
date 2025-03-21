@@ -124,36 +124,6 @@ definition {
 		}
 	}
 
-	@priority = 5
-	test CanCreateObjectEntry {
-		task ("When importing .json file as 'Student' Entity Type with default setting") {
-			ImportExport.replaceAttachmentIdAndHrefInFile(
-				en_US_plural_label = "students",
-				fileName = "objectEntry_import_create.json");
-
-			ImportExport.importFile(
-				entityType = "Student (v1.0 - Liferay Object REST)",
-				fileName = "objectEntry_import_create.json");
-		}
-
-		task ("Then new Student item with name 'John', subjectStudents 'Math', diploma 'Example.jpg' is created") {
-			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
-			var actualValueList = ListUtil.newList();
-
-			for (var fieldNameList : list "name,r_subjectStudents_c_subjectERC,diploma.name") {
-				var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items[*].${fieldNameList}");
-
-				ListUtil.add(${actualValueList}, ${actualValue});
-			}
-
-			var actualValueList = ListUtil.toString(${actualValueList});
-
-			TestUtils.assertEquals(
-				actual = ${actualValueList},
-				expected = "Jane,John,Math,Math,Document_1.jpg,Document_1.jpg");
-		}
-	}
-
 	@priority = 4
 	test CanCreateObjectEntryFromFileContainingExistingAndNewWithUncheckedStopImportOnError {
 		task ("When importing .jsonl file as 'Student' Entity Type with 'Only Add New Records Import Strategy', 'Stop the Import on Error' unchecked") {

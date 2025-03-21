@@ -1150,6 +1150,12 @@ public class ContentManager {
 			return;
 		}
 
+		String className = _portal.fetchClassName(classNameId);
+
+		if (Validator.isNull(className)) {
+			return;
+		}
+
 		long classPK = jsonObject.getLong("classPK");
 		String externalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
@@ -1165,8 +1171,7 @@ public class ContentManager {
 			return;
 		}
 
-		String className = _infoSearchClassMapperRegistry.getClassName(
-			_portal.getClassName(classNameId));
+		className = _infoSearchClassMapperRegistry.getClassName(className);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.

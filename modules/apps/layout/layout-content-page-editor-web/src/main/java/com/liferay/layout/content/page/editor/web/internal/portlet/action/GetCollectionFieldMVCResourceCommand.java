@@ -579,12 +579,14 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private Object _getInfoItem(HttpServletRequest httpServletRequest) {
-		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+		String className = _portal.fetchClassName(
+			ParamUtil.getLong(httpServletRequest, "classNameId"));
+
 		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 		String externalReferenceCode = ParamUtil.getString(
 			httpServletRequest, "externalReferenceCode");
 
-		if ((classNameId <= 0) ||
+		if (Validator.isNull(className) ||
 			((classPK <= 0) && Validator.isNull(externalReferenceCode))) {
 
 			return null;
@@ -601,8 +603,8 @@ public class GetCollectionFieldMVCResourceCommand
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			(InfoItemObjectProvider<Object>)
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					_portal.getClassName(classNameId), infoItemServiceFilter);
+					InfoItemObjectProvider.class, className,
+					infoItemServiceFilter);
 
 		if (infoItemObjectProvider == null) {
 			return null;

@@ -80,7 +80,7 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return MappingContentUtil.getMappingFieldsJSONArray(
 			classTypeId, groupId, _infoItemServiceRegistry,
-			_portal.getClassName(classNameId), locale);
+			_portal.fetchClassName(classNameId), locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

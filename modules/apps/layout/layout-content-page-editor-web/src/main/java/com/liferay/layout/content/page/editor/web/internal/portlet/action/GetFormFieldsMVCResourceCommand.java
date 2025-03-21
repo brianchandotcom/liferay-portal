@@ -55,7 +55,8 @@ public class GetFormFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 				resourceRequest, resourceResponse,
 				MappingContentUtil.getEditableMappingFieldsJSONArray(
 					classTypeId, themeDisplay.getScopeGroupId(),
-					_infoItemServiceRegistry, _portal.getClassName(classNameId),
+					_infoItemServiceRegistry,
+					_portal.fetchClassName(classNameId),
 					themeDisplay.getLocale()));
 		}
 		catch (Exception exception) {

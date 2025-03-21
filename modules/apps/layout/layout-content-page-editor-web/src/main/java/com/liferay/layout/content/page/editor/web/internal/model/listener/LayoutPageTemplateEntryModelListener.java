@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -144,14 +144,11 @@ public class LayoutPageTemplateEntryModelListener
 		formStyledLayoutStructureItem.setClassNameId(0);
 		formStyledLayoutStructureItem.setClassTypeId(0);
 
-		if (layoutPageTemplateEntry.getClassNameId() == 0) {
-			return Collections.emptyList();
-		}
-
 		String className = _infoSearchClassMapperRegistry.getClassName(
-			_portal.getClassName(layoutPageTemplateEntry.getClassNameId()));
+			layoutPageTemplateEntry.getClassName());
 
-		if (!ListUtil.exists(
+		if (Validator.isNull(className) ||
+			!ListUtil.exists(
 				_infoItemServiceRegistry.getInfoItemCapabilities(className),
 				infoItemCapability -> Objects.equals(
 					infoItemCapability.getKey(),
@@ -460,9 +457,6 @@ public class LayoutPageTemplateEntryModelListener
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

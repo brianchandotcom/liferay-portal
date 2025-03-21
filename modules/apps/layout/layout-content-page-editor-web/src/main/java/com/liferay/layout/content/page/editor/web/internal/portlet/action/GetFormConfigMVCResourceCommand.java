@@ -43,7 +43,7 @@ public class GetFormConfigMVCResourceCommand extends BaseMVCResourceCommand {
 		InfoItemStatusProvider<Object> infoItemStatusProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemStatusProvider.class,
-				_portal.getClassName(classNameId));
+				_portal.fetchClassName(classNameId));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

@@ -52,7 +52,7 @@ public class GetInfoItemActionErrorMessageMVCResourceCommand
 				infoItemActionDetailsProvider =
 					_infoItemServiceRegistry.getFirstInfoItemService(
 						InfoItemActionDetailsProvider.class,
-						_portal.getClassName(
+						_portal.fetchClassName(
 							ParamUtil.getLong(resourceRequest, "classNameId")));
 
 			if (infoItemActionDetailsProvider == null) {

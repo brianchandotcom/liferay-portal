@@ -402,9 +402,9 @@ public class FragmentEntryStagedModelDataHandlerTest
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
-			false, configuration, null, 0, false,
+			false, configuration, null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false,
+			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}

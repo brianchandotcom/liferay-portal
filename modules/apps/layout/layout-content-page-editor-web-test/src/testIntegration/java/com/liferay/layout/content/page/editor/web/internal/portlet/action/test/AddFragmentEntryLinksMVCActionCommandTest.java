@@ -198,9 +198,9 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 				fragmentCollection.getFragmentCollectionId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				StringPool.BLANK, html, StringPool.BLANK, false,
-				StringPool.BLANK, null, 0, false, fragmentEntryType,
+				StringPool.BLANK, null, 0, false, false, fragmentEntryType,
 				JSONUtil.toString(JSONUtil.put("fieldTypes", fieldTypes)),
-				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

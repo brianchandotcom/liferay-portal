@@ -839,9 +839,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				"<lfr-editable id=\"fragmentEditableId\" type=\"text\">" +
 					"Default Fragment Text</lfr-editable>",
-				StringPool.BLANK, false, null, null, 0, false,
+				StringPool.BLANK, false, null, null, 0, false, false,
 				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		PageElement originalFragmentPageElement = new PageElement() {
 			{

@@ -74,11 +74,11 @@ public class FragmentEntryStagingTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
-				false, FragmentConstants.TYPE_INPUT,
+				false, false, FragmentConstants.TYPE_INPUT,
 				JSONUtil.put(
 					"fieldTypes", JSONUtil.put("string")
 				).toString(),
-				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_stagingGroup = FragmentStagingTestUtil.enableLocalStaging(_liveGroup);
 

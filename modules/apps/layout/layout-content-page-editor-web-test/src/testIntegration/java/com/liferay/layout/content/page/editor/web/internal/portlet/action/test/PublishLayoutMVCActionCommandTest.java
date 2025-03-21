@@ -650,8 +650,8 @@ public class PublishLayoutMVCActionCommandTest {
 				fragmentCollectionId, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), StringPool.BLANK, html,
 				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
-				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+				false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
@@ -695,8 +695,8 @@ public class PublishLayoutMVCActionCommandTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(), null,
 				RandomTestUtil.randomString(), null, html, null, false, null,
-				null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+				null, 0, false, false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		return ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			"{}", fragmentEntry.getCss(), fragmentEntry.getConfiguration(),

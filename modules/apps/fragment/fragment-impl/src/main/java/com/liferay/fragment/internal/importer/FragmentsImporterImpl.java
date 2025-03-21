@@ -349,7 +349,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					null, groupId, fragmentCollectionId, fragmentEntryKey, name,
 					css, html, js, cacheable, configuration, icon, 0, readOnly,
-					type, typeOptions, status, marketplace,
+					marketplace, type, typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 
 				_fragmentEntryLocalService.updateFragmentEntry(
@@ -370,7 +370,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					_fragmentEntryLocalService.getUniqueFragmentEntryName(
 						groupId, fragmentCollectionId, name),
 					css, html, js, cacheable, configuration, icon, 0, readOnly,
-					type, typeOptions, status, marketplace,
+					marketplace, type, typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 
 				_fragmentEntryLocalService.updateFragmentEntry(

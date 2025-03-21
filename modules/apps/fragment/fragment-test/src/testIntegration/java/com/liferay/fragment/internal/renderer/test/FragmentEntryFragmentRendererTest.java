@@ -723,8 +723,8 @@ public class FragmentEntryFragmentRendererTest {
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), ".component{color:blue;}",
 			"Fragment Entry HTML", "console.log('test');", cacheable, null,
-			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false, _serviceContext);
+			null, 0, false, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {

@@ -146,7 +146,7 @@ public class FragmentCollectionServiceTest {
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionService.addFragmentCollection(
 				null, _group.getGroupId(), RandomTestUtil.randomString(), name,
-				StringPool.BLANK, serviceContext);
+				StringPool.BLANK, false, serviceContext);
 
 		fragmentCollection = _fragmentCollectionService.fetchFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());

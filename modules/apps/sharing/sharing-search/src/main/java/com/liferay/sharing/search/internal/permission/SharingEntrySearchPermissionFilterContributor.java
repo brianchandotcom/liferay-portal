@@ -5,16 +5,13 @@
 
 package com.liferay.sharing.search.internal.permission;
 
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Adds a new permission filter so the search returns shared documents based on
@@ -36,27 +33,11 @@ public class SharingEntrySearchPermissionFilterContributor
 			return;
 		}
 
-		TermsFilter termsFilterSharedToUserId = new TermsFilter(
-			"sharedToUserId");
+		TermsFilter termsFilter = new TermsFilter("sharedToUserId");
 
-		termsFilterSharedToUserId.addValue(String.valueOf(userId));
+		termsFilter.addValue(String.valueOf(userId));
 
-		booleanFilter.add(termsFilterSharedToUserId, BooleanClauseOccur.SHOULD);
-
-		TermsFilter termsFilterSharedToUserGroupId = new TermsFilter(
-			"sharedToUserGroupId");
-
-		termsFilterSharedToUserGroupId.addValues(
-			TransformUtil.transformToArray(
-				_userGroupLocalService.getUserUserGroups(userId),
-				userGroup -> String.valueOf(userGroup.getUserGroupId()),
-				String.class));
-
-		booleanFilter.add(
-			termsFilterSharedToUserGroupId, BooleanClauseOccur.SHOULD);
+		booleanFilter.add(termsFilter, BooleanClauseOccur.SHOULD);
 	}
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
 
 }

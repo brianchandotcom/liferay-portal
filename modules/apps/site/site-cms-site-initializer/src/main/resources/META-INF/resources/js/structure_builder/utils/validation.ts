@@ -9,10 +9,15 @@ import {useCallback} from 'react';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import selectStructureFields from '../selectors/selectStructureFields';
-import {Field} from './field';
+import {Field, MultiselectField, SingleSelectField} from './field';
 import focusInvalidElement from './focusInvalidElement';
 
-export type ValidationError = 'no-erc' | 'no-label' | 'no-name' | 'no-space';
+export type ValidationError =
+	| 'no-erc'
+	| 'no-label'
+	| 'no-name'
+	| 'no-picklist'
+	| 'no-space';
 
 export function validateField({
 	currentErrors,
@@ -28,7 +33,7 @@ export function validateField({
 			| MultiselectField['picklistId'];
 	};
 }): Set<ValidationError> {
-	const {erc, label, name} = data;
+	const {erc, label, name, picklistId} = data;
 
 	const errors = new Set(currentErrors);
 
@@ -44,6 +49,10 @@ export function validateField({
 		Object.values(label ?? {}).every(Boolean)
 			? errors.delete('no-label')
 			: errors.add('no-label');
+	}
+
+	if (!isNullOrUndefined(picklistId)) {
+		picklistId ? errors.delete('no-picklist') : errors.add('no-picklist');
 	}
 
 	return errors;

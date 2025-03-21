@@ -18,6 +18,10 @@ definition {
 		}
 	}
 
+	tearDown {
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+	}
+
 	@description = "This is a test for LPS-121979 and LPS-120005. Change the configuration of page won't break the connection with its style book."
 	@priority = 5
 	test ChangeConfigurationOfPageBasedOnStyleBook {

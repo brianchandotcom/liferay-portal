@@ -12,7 +12,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Mariano Álvaro Sáiz
  */
-@ExtendedObjectClassDefinition(generateUI = false)
+@ExtendedObjectClassDefinition(featureFlagKey = "LPD-11342")
 @Meta.OCD(
 	id = "com.liferay.portal.instances.internal.configuration.InsertPortalInstanceConfiguration",
 	localization = "content/Language",

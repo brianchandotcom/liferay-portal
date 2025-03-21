@@ -140,6 +140,7 @@ import javax.sql.DataSource;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -189,6 +190,16 @@ public class CompanyLocalServiceTest {
 
 		_dbPartitionDB = ReflectionTestUtil.getFieldValue(
 			DBPartitionUtil.class, "_dbPartitionDB");
+
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			PortalInstancePool.getDefaultCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		if (_safeCloseable != null) {
+			_safeCloseable.close();
+		}
 	}
 
 	public void resetBackgroundTaskThreadLocal() throws Exception {
@@ -1592,6 +1603,7 @@ public class CompanyLocalServiceTest {
 	private static Connection _connection;
 	private static DB _db;
 	private static DBPartitionDB _dbPartitionDB;
+	private static SafeCloseable _safeCloseable;
 	private static final TransactionConfig _transactionConfig;
 
 	static {

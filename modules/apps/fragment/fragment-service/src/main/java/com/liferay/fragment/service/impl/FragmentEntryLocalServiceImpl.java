@@ -83,8 +83,8 @@ public class FragmentEntryLocalServiceImpl
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, boolean cacheable,
 			String configuration, String icon, long previewFileEntryId,
-			boolean readOnly, int type, String typeOptions, int status,
-			boolean marketplace, ServiceContext serviceContext)
+			boolean marketplace, boolean readOnly, int type, String typeOptions,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -200,11 +200,11 @@ public class FragmentEntryLocalServiceImpl
 				publishedFragmentEntry.getJs(),
 				publishedFragmentEntry.isCacheable(),
 				publishedFragmentEntry.getConfiguration(),
-				publishedFragmentEntry.getIcon(), 0,
+				publishedFragmentEntry.getIcon(), 0, false,
 				publishedFragmentEntry.isReadOnly(),
 				publishedFragmentEntry.getType(),
 				publishedFragmentEntry.getTypeOptions(),
-				WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			_copyFragmentEntryPreviewFileEntry(
 				userId, groupId, publishedFragmentEntry,
@@ -225,10 +225,10 @@ public class FragmentEntryLocalServiceImpl
 				draftFragmentEntry.getCss(), draftFragmentEntry.getHtml(),
 				draftFragmentEntry.getJs(), draftFragmentEntry.isCacheable(),
 				draftFragmentEntry.getConfiguration(),
-				draftFragmentEntry.getIcon(), 0,
+				draftFragmentEntry.getIcon(), 0, false,
 				draftFragmentEntry.isReadOnly(), draftFragmentEntry.getType(),
 				draftFragmentEntry.getTypeOptions(),
-				WorkflowConstants.STATUS_DRAFT, false, serviceContext);
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			_copyFragmentEntryPreviewFileEntry(
 				userId, groupId, draftFragmentEntry, targetDraftFragmentEntry);

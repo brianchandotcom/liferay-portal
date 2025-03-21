@@ -72,7 +72,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryLocalService.addFragmentEntry(
 			null, getUserId(), groupId, fragmentCollectionId, fragmentEntryKey,
 			name, css, html, js, false, configuration, null, previewFileEntryId,
-			false, type, null, status, marketplace, serviceContext);
+			false, false, type, null, status, serviceContext);
 	}
 
 	@Override
@@ -81,8 +81,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, boolean cacheable,
 			String configuration, String icon, long previewFileEntryId,
-			boolean readOnly, int type, String typeOptions, int status,
-			boolean marketplace, ServiceContext serviceContext)
+			boolean marketplace, boolean readOnly, int type, String typeOptions,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -92,8 +92,8 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 		return fragmentEntryLocalService.addFragmentEntry(
 			externalReferenceCode, getUserId(), groupId, fragmentCollectionId,
 			fragmentEntryKey, name, css, html, js, cacheable, configuration,
-			icon, previewFileEntryId, readOnly, type, typeOptions, status,
-			marketplace, serviceContext);
+			icon, previewFileEntryId, marketplace, readOnly, type, typeOptions,
+			status, serviceContext);
 	}
 
 	@Override

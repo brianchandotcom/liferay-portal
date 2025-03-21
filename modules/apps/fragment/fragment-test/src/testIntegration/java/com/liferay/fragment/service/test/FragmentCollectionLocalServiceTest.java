@@ -6,6 +6,7 @@
 package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionExternalReferenceCodeException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.model.FragmentCollection;
@@ -18,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -154,6 +156,10 @@ public class FragmentCollectionLocalServiceTest {
 		Assert.assertNull(
 			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
+
+		Assert.assertNull(
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				_group.getGroupId(), FragmentPortletKeys.FRAGMENT));
 	}
 
 	@Test

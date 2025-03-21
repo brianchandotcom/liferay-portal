@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -17,10 +18,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -30,40 +33,43 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sam Ziemer
  */
-public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
+public class StructuresSectionDisplayContext {
 
 	public StructuresSectionDisplayContext(
-		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
 		HttpServletRequest httpServletRequest) {
 
-		super(cmsSiteInitializerConfiguration, httpServletRequest);
+		_httpServletRequest = httpServletRequest;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
-	@Override
 	public String getAPIURL() {
 		return "/o/object-admin/v1.0/object-definitions?filter=" +
 			"objectFolderExternalReferenceCode eq 'L_CMS_CONTENT_STRUCTURES' " +
 				"or objectFolderExternalReferenceCode eq 'L_CMS_FILE_TYPES'";
 	}
 
-	@Override
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return Collections.emptyList();
+	}
+
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(_getHref("L_CMS_CONTENT_STRUCTURES"));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "content"));
+					LanguageUtil.get(_httpServletRequest, "content"));
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(_getHref("L_CMS_FILE_TYPES"));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "file"));
+					LanguageUtil.get(_httpServletRequest, "file"));
 			}
 		).build();
 	}
 
-	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
@@ -72,20 +78,20 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 				HttpComponentsUtil.addParameters(
 					PortalUtil.getLayoutFullURL(
 						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-							themeDisplay.getScopeGroupId(), false,
+							_themeDisplay.getScopeGroupId(), false,
 							"/structure-builder"),
-						themeDisplay),
+						_themeDisplay),
 					"objectDefinitionId", "{id}"),
-				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
+				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				"get", null, null),
 			new FDSActionDropdownItem(
 				"", "copy", "copy",
-				LanguageUtil.get(httpServletRequest, "make-a-copy"), null, null,
-				null),
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"), null,
+				null, null),
 			new FDSActionDropdownItem(
 				ResourceURLBuilder.createResourceURL(
 					PortletURLFactoryUtil.create(
-						httpServletRequest,
+						_httpServletRequest,
 						ObjectPortletKeys.OBJECT_DEFINITIONS,
 						PortletRequest.RESOURCE_PHASE)
 				).setParameter(
@@ -94,25 +100,20 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 					"/object_definitions/export_object_definition"
 				).buildString(),
 				"export", "export",
-				LanguageUtil.get(httpServletRequest, "export-as-json"), "get",
+				LanguageUtil.get(_httpServletRequest, "export-as-json"), "get",
 				"exportObjectDefinition", null),
 			new FDSActionDropdownItem(
 				"", "import", "import",
-				LanguageUtil.get(httpServletRequest, "import-and-override"),
+				LanguageUtil.get(_httpServletRequest, "import-and-override"),
 				null, null, null),
 			new FDSActionDropdownItem(
 				"", "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), "get",
+				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
 				"", "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", "headless"));
-	}
-
-	@Override
-	protected String getCMSSectionFilterString() {
-		return StringPool.BLANK;
 	}
 
 	private String _getHref(String objectFolderExternalReferenceCode) {
@@ -120,9 +121,9 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 			return HttpComponentsUtil.addParameters(
 				PortalUtil.getLayoutFullURL(
 					LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-						themeDisplay.getScopeGroupId(), false,
+						_themeDisplay.getScopeGroupId(), false,
 						"/structure-builder"),
-					themeDisplay),
+					_themeDisplay),
 				"objectFolderExternalReferenceCode",
 				objectFolderExternalReferenceCode);
 		}
@@ -135,5 +136,8 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructuresSectionDisplayContext.class);
+
+	private final HttpServletRequest _httpServletRequest;
+	private final ThemeDisplay _themeDisplay;
 
 }

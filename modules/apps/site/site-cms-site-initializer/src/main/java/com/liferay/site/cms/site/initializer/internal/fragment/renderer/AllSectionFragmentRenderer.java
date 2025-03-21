@@ -62,7 +62,7 @@ public class AllSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 				AllSectionDisplayContext.class.getName(),
 				new AllSectionDisplayContext(
 					_cmsSiteInitializerConfiguration, httpServletRequest,
-					_objectDefinitionService));
+					_language, _objectDefinitionService));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

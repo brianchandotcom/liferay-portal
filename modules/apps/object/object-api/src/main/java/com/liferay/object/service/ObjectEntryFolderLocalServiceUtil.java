@@ -233,13 +233,6 @@ public class ObjectEntryFolderLocalServiceUtil {
 		return getService().fetchObjectEntryFolder(objectEntryFolderId);
 	}
 
-	public static ObjectEntryFolder fetchObjectEntryFolder(
-		String externalReferenceCode, long groupId, long companyId) {
-
-		return getService().fetchObjectEntryFolder(
-			externalReferenceCode, groupId, companyId);
-	}
-
 	/**
 	 * Returns the object entry folder matching the UUID and group.
 	 *

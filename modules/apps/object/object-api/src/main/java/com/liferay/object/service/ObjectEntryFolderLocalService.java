@@ -212,10 +212,6 @@ public interface ObjectEntryFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntryFolder fetchObjectEntryFolder(long objectEntryFolderId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ObjectEntryFolder fetchObjectEntryFolder(
-		String externalReferenceCode, long groupId, long companyId);
-
 	/**
 	 * Returns the object entry folder matching the UUID and group.
 	 *

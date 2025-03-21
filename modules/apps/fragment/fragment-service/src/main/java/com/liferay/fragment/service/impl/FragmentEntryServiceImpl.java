@@ -59,7 +59,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js,
 			String configuration, long previewFileEntryId, int type, int status,
-			boolean marketplace, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// LPS-190674 Maintain method for backwards compatibility with the

@@ -638,13 +638,19 @@ public class SharingEntryLocalServiceImpl
 		long toUserId, long classNameId, long classPK,
 		SharingEntryAction sharingEntryAction) {
 
-		SharingEntry sharingEntry = sharingEntryPersistence.fetchByTUG_TU_C_C(
-			0, toUserId, classNameId, classPK);
+		List<SharingEntry> sharingEntries = sharingEntryPersistence.findByTU_C(
+			toUserId, classNameId);
 
-		if ((sharingEntry != null) &&
-			sharingEntry.hasSharingPermission(sharingEntryAction)) {
+		if (!sharingEntries.isEmpty()) {
+			for (SharingEntry sharingEntry : sharingEntries) {
+				if (classPK == sharingEntry.getClassPK()) {
+					if (sharingEntry.hasSharingPermission(sharingEntryAction)) {
+						return true;
+					}
 
-			return true;
+					break;
+				}
+			}
 		}
 
 		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
@@ -654,13 +660,13 @@ public class SharingEntryLocalServiceImpl
 			return false;
 		}
 
-		for (SharingEntry curSharingEntry :
+		for (SharingEntry sharingEntry :
 				sharingEntryPersistence.findByTUG_C_C(
 					TransformUtil.transformToLongArray(
 						userGroups, UserGroup::getUserGroupId),
 					classNameId, classPK)) {
 
-			if (curSharingEntry.hasSharingPermission(sharingEntryAction)) {
+			if (sharingEntry.hasSharingPermission(sharingEntryAction)) {
 				return true;
 			}
 		}

@@ -50,7 +50,7 @@ public class DisplayPageTemplateSettingsUtil {
 		InfoItemServiceRegistry infoItemServiceRegistry,
 		LayoutPageTemplateEntry layoutPageTemplateEntry, Portal portal) {
 
-		String className = portal.getClassName(
+		String className = portal.fetchClassName(
 			layoutPageTemplateEntry.getClassNameId());
 
 		return new ContentAssociation() {

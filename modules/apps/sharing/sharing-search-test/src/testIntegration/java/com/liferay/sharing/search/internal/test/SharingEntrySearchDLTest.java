@@ -192,7 +192,6 @@ public class SharingEntrySearchDLTest {
 			if (userGroup != null) {
 				_userGroupLocalService.deleteUserUserGroup(
 					_groupUser.getUserId(), userGroup);
-
 				_userGroupLocalService.deleteUserGroup(userGroup);
 			}
 		}

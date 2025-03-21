@@ -29,10 +29,9 @@ import {
 	STATUS_TAG_TYPE_NAMES,
 } from '~/features/project/utils/constants';
 import AnalyticsCloudModal from '../../AnalyticsCloudModal';
-import PopoverIcon from '../DXPCloud/components/PopoverIcon';
 import ActivationStatusLayout from '../Layout';
 import AnalyticsCloudStatusModal from './AnalyticsCloudStatusModal';
-import ActivationCardLink from '../index';
+import ActivationCardLink from '../ActivationCardLink';
 
 const ActivationStatusAnalyticsCloud = () => {
 	const [{project, subscriptionGroups, userAccount}, dispatch] =

@@ -5,7 +5,7 @@
 
 export const LIST_TYPES = {
 	businessEventTypes: 'Business Event Types',
-	developerKeyportalVersion: 'Developer Key Portal Version',
+	developerKeyPortalVersion: 'Developer Key Portal Version',
 	dxpMajorVersion: 'DXP Major Version',
 	dxpMinorVersion: 'DXP Minor Version',
 	gmtTimeZones: 'GMT Time Zones',

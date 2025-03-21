@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
@@ -82,7 +81,7 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				PermissionSQLContributor.class,
 				new SharingPermissionSQLContributor(
 					_classNameLocalService, _groupLocalService,
-					_sharingConfigurationFactory, _userGroupLocalService),
+					_sharingConfigurationFactory),
 				new HashMapDictionary<>());
 	}
 
@@ -124,9 +123,6 @@ public class SharingModelResourcePermissionConfiguratorImpl
 	private ServiceRegistration<PermissionSQLContributor>
 		_sharingPermissionSQLContributorServiceRegistration;
 	private SharingSystemConfiguration _sharingSystemConfiguration;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
 
 	private class SharingModelResourcePermissionLogic<T extends GroupedModel>
 		implements ModelResourcePermissionLogic<T> {

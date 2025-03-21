@@ -32,6 +32,24 @@ const productTypeIcons = {
 	dxp: 'site-template',
 };
 
+const appTypes = {
+	'client-extension': 'Client Extension',
+	'cloud': 'Cloud App',
+	'composite-app': 'Composite App',
+	'dxp': 'DXP App',
+	'low-code-configuration': 'Low Code',
+} as const;
+
+const normalizeProductImage = (imageUrl: string) => {
+
+	// eslint-disable-next-line @liferay/portal/no-localhost-reference
+	if (imageUrl.includes('localhost')) {
+		return imageUrl.replace('https', 'http');
+	}
+
+	return imageUrl;
+};
+
 export class MarketplaceProduct {
 	constructor(private product: Product) {}
 
@@ -74,7 +92,7 @@ export class MarketplaceProduct {
 	public getProductImages() {
 		return this.product.images
 			.filter((image) => image.priority !== 0)
-			.map((image) => image.src);
+			.map((image) => normalizeProductImage(image.src));
 	}
 
 	public getPrice() {
@@ -156,8 +174,11 @@ export class MarketplaceProduct {
 		const type = this.getSpecificationValue(Specifications.TYPE);
 
 		return {
-			icon: (productTypeIcons as any)[type] || 'cog',
-			label: `${type} App`,
+			icon:
+				productTypeIcons[type as keyof typeof productTypeIcons] ||
+				'cog',
+			label:
+				appTypes[type.toLowerCase() as keyof typeof appTypes] || type,
 			type,
 		};
 	}
@@ -181,7 +202,7 @@ export class MarketplaceProduct {
 	}
 
 	public get productImage() {
-		return this.product.urlImage;
+		return normalizeProductImage(this.product.urlImage);
 	}
 
 	public getProductResourceLabel() {

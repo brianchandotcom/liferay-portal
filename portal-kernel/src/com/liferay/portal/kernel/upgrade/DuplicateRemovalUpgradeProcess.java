@@ -78,31 +78,23 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			sb.append(_orderByClause);
 		}
 
-		String sql = sb.toString();
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sql);
+				sb.toString());
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			ResultSetMetaData metaData = resultSet.getMetaData();
 
-			int columnCount = metaData.getColumnCount();
+			String[] columnNames = new String[metaData.getColumnCount()];
 
-			String[] columnNames = new String[columnCount];
-
-			for (int i = 0; i < columnCount; i++) {
-				String columnName = metaData.getColumnName(i+1);
-
-				columnNames[i] = columnName;
+			for (int i = 0; i < columnNames.length; i++) {
+				columnNames[i] = metaData.getColumnName(i + 1);
 			}
 
 			while (resultSet.next()) {
 				Map<String, String> queryMap = new LinkedHashMap<>();
 
-				for (int i = 0; i < columnCount; i++) {
-					String value = resultSet.getString(columnNames[i]);
-
-					queryMap.put(columnNames[i], value);
+				for (String columnName : columnNames) {
+					queryMap.put(columnName, resultSet.getString(columnName));
 				}
 
 				queryResult.add(queryMap);
@@ -140,10 +132,8 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		sb.append(String.join(", ", _columnNames));
 		sb.append(" having count(*) > 1");
 
-		String sql = sb.toString();
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sql);
+				sb.toString());
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -172,7 +162,8 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _removeDuplicates() throws Exception {
-		List<String[]> duplicatedColumnValuesList = _getDuplicatedColumnValuesList();
+		List<String[]> duplicatedColumnValuesList =
+			_getDuplicatedColumnValuesList();
 
 		for (String[] duplicatedColumnValues : duplicatedColumnValuesList) {
 			List<Map<String, String>> duplicatesList = getDuplicatesSQL(
@@ -214,10 +205,8 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 					counter++;
 				}
 
-				String sql = sb.toString();
-
 				try (PreparedStatement preparedStatement1 =
-						connection.prepareStatement(sql)) {
+						connection.prepareStatement(sb.toString())) {
 
 					preparedStatement1.execute();
 				}

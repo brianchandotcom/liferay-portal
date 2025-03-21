@@ -46,6 +46,20 @@ jarSources {
 }
 
 processDefaultSanitizerConfiguration {
+	doLast {
+		String replace = """\
+			|<attribute name="rel">
+			|				<regexp-list>
+			|					<regexp value="(\\\\\\\\s*(nofollow|noopener|noreferrer)(\\\\\\\\s(nofollow|noopener|noreferrer))*\\\\\\\\s*)?"/>
+			|				</regexp-list>
+			|			</attribute>""".stripMargin()
+
+		ant.replaceregexp(file: sanitizerConfigurationFile,
+			match: '<attribute name="rel">\\s*<literal-list>\\s*<literal value="nofollow"/>\\s*</literal-list>\\s*</attribute>',
+			replace: replace,
+			flags: 'g')
+	}
+
 	ext {
 		autoClean = false
 	}

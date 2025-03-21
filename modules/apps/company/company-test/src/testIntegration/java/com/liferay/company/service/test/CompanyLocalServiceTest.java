@@ -981,15 +981,10 @@ public class CompanyLocalServiceTest {
 				_configurationAdmin, _persistenceManager, pid, true);
 		}
 		finally {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						PortalInstancePool.getDefaultCompanyId())) {
-
-				_db.runSQL(
-					_dbPartitionDB.getDropPartitionSQL(
-						CompanyLocalServiceTestUtil.getExtractedPartitionName(
-							company.getCompanyId())));
-			}
+			_db.runSQL(
+				_dbPartitionDB.getDropPartitionSQL(
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
 
 			_companyLocalService.deleteCompany(company);
 		}
@@ -1053,15 +1048,10 @@ public class CompanyLocalServiceTest {
 						company.getCompanyId())));
 		}
 		finally {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						PortalInstancePool.getDefaultCompanyId())) {
-
-				_db.runSQL(
-					_dbPartitionDB.getDropPartitionSQL(
-						CompanyLocalServiceTestUtil.getExtractedPartitionName(
-							company.getCompanyId())));
-			}
+			_db.runSQL(
+				_dbPartitionDB.getDropPartitionSQL(
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
 
 			_companyLocalService.deleteCompany(company);
 		}

@@ -50,7 +50,7 @@ public class CacheMBeanImpl extends StandardMBean implements CacheMBean {
 			ResourceType.Core.HEAP);
 
 		if (sizedResourcePool == null) {
-			return "No heap store for this cache";
+			return "";
 		}
 
 		return StringBundler.concat(

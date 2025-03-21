@@ -58,11 +58,11 @@ public class PortalCacheManagerEventListener implements CacheManagerListener {
 			return false;
 		}
 
-		PortalCacheManagerEventListener ehcacheCacheManagerListener =
+		PortalCacheManagerEventListener portalCacheManagerEventListener =
 			(PortalCacheManagerEventListener)object;
 
 		return _portalCacheManagerListener.equals(
-			ehcacheCacheManagerListener._portalCacheManagerListener);
+			portalCacheManagerEventListener._portalCacheManagerListener);
 	}
 
 	@Override

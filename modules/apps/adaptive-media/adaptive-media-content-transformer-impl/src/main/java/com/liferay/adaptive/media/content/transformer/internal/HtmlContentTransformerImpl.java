@@ -98,7 +98,8 @@ public class HtmlContentTransformerImpl implements ContentTransformer {
 
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
-			if (!_amImageMimeTypeProvider.isMimeTypeSupported(
+			if (_processedFileEntry(fileEntry, html.substring(i, imgEnd)) ||
+				!_amImageMimeTypeProvider.isMimeTypeSupported(
 					fileEntry.getMimeType())) {
 
 				sb.append(html.substring(i, imgEnd));
@@ -118,6 +119,18 @@ public class HtmlContentTransformerImpl implements ContentTransformer {
 		}
 
 		return sb.toString();
+	}
+
+	private boolean _processedFileEntry(FileEntry fileEntry, String html) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<picture ");
+		sb.append(AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID);
+		sb.append("=\"");
+		sb.append(fileEntry.getFileEntryId());
+		sb.append("\">");
+
+		return html.contains(sb.toString());
 	}
 
 	private static final String _OPEN_TAG_TOKEN_IMG = "<img ";

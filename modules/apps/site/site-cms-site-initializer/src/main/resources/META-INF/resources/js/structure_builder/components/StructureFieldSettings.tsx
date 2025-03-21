@@ -147,7 +147,7 @@ function GeneralTab({field}: {field: Field}) {
 				<FirstSectionComponent field={field} />
 			</div>
 
-			<div className="mt-4 pb-2">
+			<div className="pb-2">
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={field.required}
@@ -181,7 +181,7 @@ function GeneralTab({field}: {field: Field}) {
 				<SecondSectionComponent field={field} />
 			</div>
 
-			<div className="mt-4">
+			<div>
 				<ERCInput
 					disabled={isPublished}
 					onValueChange={(value) => {

@@ -121,12 +121,12 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
+		long groupId = _getGroupId(httpServletRequest, serviceContext);
+
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			groupId, objectDefinitionId,
 			_getObjectEntryFolderId(
-				themeDisplay.getCompanyId(),
-				_getGroupId(httpServletRequest, serviceContext),
-				objectDefinition),
+				themeDisplay.getCompanyId(), groupId, objectDefinition),
 			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()),
 			Collections.emptyMap(), serviceContext);
 

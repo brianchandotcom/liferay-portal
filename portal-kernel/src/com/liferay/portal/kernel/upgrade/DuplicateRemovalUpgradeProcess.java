@@ -34,7 +34,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		String tableName, String[] columnNames, String orderByClause) {
 
 		_tableName = tableName;
-		_columnNames = String.join(", ", columnNames);
+		_columnNames = columnNames;
 		_orderByClause = orderByClause;
 	}
 
@@ -48,16 +48,14 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 		List<Map<String, String>> queryResult = new ArrayList<>();
 
-		String[] columns = _columnNames.split(", ");
-
 		StringBundler sb = new StringBundler();
 
 		sb.append("select * from ");
 		sb.append(_tableName);
 		sb.append(" where ");
 
-		for (int i = 0; i < indexDuplicateColumns.length; i++) {
-			sb.append(columns[i]);
+		for (int i = 0; i < _columnNames.length; i++) {
+			sb.append(_columnNames[i]);
 
 			if (indexDuplicateColumns[i] == null) {
 				sb.append(" is null ");
@@ -68,7 +66,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 				sb.append("' ");
 			}
 
-			if (i < (columns.length - 1)) {
+			if (i < (_columnNames.length - 1)) {
 				sb.append("and ");
 			}
 		}
@@ -133,11 +131,11 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("select ");
-		sb.append(_columnNames);
+		sb.append(String.join(", ", _columnNames));
 		sb.append(" from ");
 		sb.append(_tableName);
 		sb.append(" group by ");
-		sb.append(_columnNames);
+		sb.append(String.join(", ", _columnNames));
 		sb.append(" having count(*) > 1");
 
 		String sql = sb.toString();
@@ -176,7 +174,8 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			_log.warn(
 				StringBundler.concat(
 					"Deleted duplicate entry from ", _tableName,
-					" table for index columns (", _columnNames, "): ",
+					" table for index columns (",
+					String.join(", ", _columnNames), "): ",
 					duplicate.toString()));
 		}
 	}
@@ -236,7 +235,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 						StringBundler.concat(
 							"Failed to remove duplicate entry: ",
 							duplicate.toString(), " in ", _tableName, " for ",
-							_columnNames),
+							String.join(", ", _columnNames)),
 						sqlException);
 				}
 				finally {
@@ -254,7 +253,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DuplicateRemovalUpgradeProcess.class);
 
-	private final String _columnNames;
+	private final String[] _columnNames;
 	private final String _orderByClause;
 	private final String _tableName;
 

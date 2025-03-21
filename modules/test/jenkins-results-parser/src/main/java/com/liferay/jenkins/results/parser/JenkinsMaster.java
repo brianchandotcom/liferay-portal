@@ -1163,7 +1163,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		jenkinsNodes.add(this);
 
 		for (JenkinsNode jenkinsNode : jenkinsNodes) {
-			if (JenkinsResultsParserUtil.matchesLabels(
+			if (_matchesLabels(
 					labelExpression, jenkinsNode.getAssignedLabels()) &&
 				!jenkinsNode.isIdle() && !jenkinsNode.isOffline()) {
 
@@ -1192,7 +1192,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				}
 			}
 
-			if (JenkinsResultsParserUtil.matchesLabels(
+			if (_matchesLabels(
 					labelExpression, jenkinsNode.getAssignedLabels()) &&
 				jenkinsNode.isIdle() && !jenkinsNode.isOffline()) {
 
@@ -1207,9 +1207,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		for (AWSFleetCloud awsFleetCloud : awsFleetClouds) {
-			if (!JenkinsResultsParserUtil.matchesLabels(
-					labelExpression, awsFleetCloud.getLabels())) {
-
+			if (!_matchesLabels(labelExpression, awsFleetCloud.getLabels())) {
 				continue;
 			}
 
@@ -1251,9 +1249,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		List<String> matchingLabels = new ArrayList<>();
 
 		for (String label : labels) {
-			if (JenkinsResultsParserUtil.matchesLabels(
-					labelExpression, Arrays.asList(label))) {
-
+			if (_matchesLabels(labelExpression, Arrays.asList(label))) {
 				matchingLabels.add(label);
 			}
 		}
@@ -1273,9 +1269,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				continue;
 			}
 
-			if (JenkinsResultsParserUtil.matchesLabels(
-					queueItem.getLabelExpression(), labels)) {
-
+			if (_matchesLabels(queueItem.getLabelExpression(), labels)) {
 				queueCount++;
 			}
 		}
@@ -1334,16 +1328,14 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private int _getUsableNodeCount(String labelExpression) {
 		int usableNodeCount = 0;
 
-		if (JenkinsResultsParserUtil.matchesLabels(
-				labelExpression, getAssignedLabels())) {
-
+		if (_matchesLabels(labelExpression, getAssignedLabels())) {
 			usableNodeCount++;
 		}
 
 		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
 			if (!jenkinsSlave.isEC2FleetNodeComputer() &&
 				!jenkinsSlave.isOffline() &&
-				JenkinsResultsParserUtil.matchesLabels(
+				_matchesLabels(
 					labelExpression, jenkinsSlave.getAssignedLabels())) {
 
 				usableNodeCount++;
@@ -1351,9 +1343,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 
 		for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
-			if (JenkinsResultsParserUtil.matchesLabels(
-					labelExpression, awsFleetCloud.getLabels())) {
-
+			if (_matchesLabels(labelExpression, awsFleetCloud.getLabels())) {
 				usableNodeCount += awsFleetCloud.getMaxSize();
 			}
 		}
@@ -1368,6 +1358,44 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 			_updateTimestamp = System.currentTimeMillis();
 
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _matchesLabels(
+		String labelExpression, List<String> labels) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+			return true;
+		}
+
+		if ((labels == null) || labels.isEmpty()) {
+			return false;
+		}
+
+		for (String label : labels) {
+			if (Objects.equals(label, labelExpression)) {
+				return true;
+			}
+		}
+
+		if (!labelExpression.startsWith("!")) {
+			return false;
+		}
+
+		String negativeLabelExpression = labelExpression.substring(1);
+
+		boolean matchesNegativeLabelExpression = false;
+
+		for (String label : labels) {
+			if (Objects.equals(label, negativeLabelExpression)) {
+				matchesNegativeLabelExpression = true;
+			}
+		}
+
+		if (matchesNegativeLabelExpression) {
 			return false;
 		}
 

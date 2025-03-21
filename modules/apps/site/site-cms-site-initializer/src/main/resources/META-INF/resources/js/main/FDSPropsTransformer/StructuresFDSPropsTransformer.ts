@@ -49,21 +49,25 @@ export default function StructuresFDSPropsTransformer({
 			itemData,
 			loadData,
 		}: {
-			action: {data: {id: string; importURL: string; objectFolderExternalReferenceCode: string;}; href?: string};
+			action: {data: {id: string}; href?: string};
 			event: Event;
 			itemData: {
 				actions: {
 					delete: {href: string; method: string};
 				};
 				label: Partial<Liferay.Language.FullyLocalizedValue<string>>;
+				objectFolderExternalReferenceCode: string;
 				status: {code: number};
 			};
 			loadData: () => {};
 		}) {
 			if (action.data.id === 'import') {
+				event.preventDefault();
+				const target = event.target as HTMLAnchorElement;
+
 				importStructureAction(
-					action.data.importURL,
-					action.data.objectFolderExternalReferenceCode
+					target.href,
+					itemData.objectFolderExternalReferenceCode
 				);
 			}
 			else if (action.data.id === 'delete') {

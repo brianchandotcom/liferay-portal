@@ -354,6 +354,12 @@ public class PortletRegistryImplTest {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(
+			portal.fetchClassName(Mockito.anyLong())
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
 			portal.getClassName(Mockito.anyLong())
 		).thenReturn(
 			RandomTestUtil.randomString()

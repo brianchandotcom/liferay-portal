@@ -18,7 +18,7 @@ page import="com.liferay.site.cms.site.initializer.internal.display.context.Cont
 page import="com.liferay.site.cms.site.initializer.internal.display.context.FilesSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.StructuresSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.TagsViewDisplayContext" %><%@
-page import="com.liferay.site.cms.site.initializer.internal.display.context.VocabularyViewDisplayContext" %>
+page import="com.liferay.site.cms.site.initializer.internal.display.context.VocabulariesViewDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

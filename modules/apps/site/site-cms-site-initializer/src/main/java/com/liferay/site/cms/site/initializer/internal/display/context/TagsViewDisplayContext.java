@@ -39,7 +39,7 @@ public class TagsViewDisplayContext {
 					"/categorization/view_tags"),
 				_themeDisplay)
 		).put(
-			"vocabularyURL",
+			"vocabulariesURL",
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false,

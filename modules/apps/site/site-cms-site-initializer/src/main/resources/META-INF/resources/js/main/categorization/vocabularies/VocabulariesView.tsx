@@ -10,10 +10,10 @@ import CategorizationToolbar from '../CategorizationToolbar';
 
 export default function VocabulariesView({
 	tagsURL,
-	vocabularyURL,
+	vocabulariesURL,
 }: {
 	tagsURL: string;
-	vocabularyURL: string;
+	vocabulariesURL: string;
 }) {
 	const creationMenu = {
 		primaryItems: [
@@ -46,7 +46,7 @@ export default function VocabulariesView({
 			<CategorizationToolbar
 				activeTab="vocabularies"
 				tagsURL={tagsURL}
-				vocabularyURL={vocabularyURL}
+				vocabulariesURL={vocabulariesURL}
 			/>
 
 			<FrontendDataSet

@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
-import com.liferay.site.cms.site.initializer.internal.display.context.VocabularyViewDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.VocabulariesViewDisplayContext;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration",
 	service = FragmentRenderer.class
 )
-public class VocabularyViewFragmentRenderer
+public class VocabulariesViewFragmentRenderer
 	extends BaseSectionFragmentRenderer {
 
 	@Override
@@ -58,15 +58,15 @@ public class VocabularyViewFragmentRenderer
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/vocabulary_view.jsp");
+				_servletContext.getRequestDispatcher("/vocabularies_view.jsp");
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
-				VocabularyViewDisplayContext.class.getName(),
-				new VocabularyViewDisplayContext(
+				VocabulariesViewDisplayContext.class.getName(),
+				new VocabulariesViewDisplayContext(
 					_cmsSiteInitializerConfiguration, httpServletRequest,
 					themeDisplay));
 

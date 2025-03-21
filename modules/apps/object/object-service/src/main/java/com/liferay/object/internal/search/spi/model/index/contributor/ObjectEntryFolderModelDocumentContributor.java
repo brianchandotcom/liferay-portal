@@ -47,7 +47,7 @@ public class ObjectEntryFolderModelDocumentContributor
 	}
 
 	private String _getCMSSection(String[] parts) {
-		if (parts.length <= 1) {
+		if (parts.length <= 2) {
 			return "none";
 		}
 

@@ -100,11 +100,7 @@ public class VarPoshiElement extends PoshiElement {
 			return true;
 		}
 
-		if (value.matches(_VAR_VALUE_VARIABLE_REGEX)) {
-			return false;
-		}
-
-		return true;
+		return !value.matches(_VAR_VALUE_VARIABLE_REGEX);
 	}
 
 	@Override

@@ -783,11 +783,7 @@ public abstract class PoshiElement
 	}
 
 	protected boolean isElementType(String name, Element element) {
-		if (name.equals(element.getName())) {
-			return true;
-		}
-
-		return false;
+		return name.equals(element.getName());
 	}
 
 	protected boolean isNestedCondition(String poshiScript) {
@@ -910,11 +906,7 @@ public abstract class PoshiElement
 		Matcher poshiScriptStatementMatcher =
 			poshiScriptStatementPattern.matcher(poshiScript);
 
-		if (poshiScriptStatementMatcher.find()) {
-			return true;
-		}
-
-		return false;
+		return poshiScriptStatementMatcher.find();
 	}
 
 	protected boolean isVarAssignedToMacroInvocation(String poshiScript) {

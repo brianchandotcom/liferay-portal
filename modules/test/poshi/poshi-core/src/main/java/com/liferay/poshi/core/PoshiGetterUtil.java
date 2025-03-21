@@ -401,11 +401,7 @@ public class PoshiGetterUtil {
 	}
 
 	public static boolean isValidUtilityClass(String className) {
-		if (_utilityClassMap.containsValue(className)) {
-			return true;
-		}
-
-		return false;
+		return _utilityClassMap.containsValue(className);
 	}
 
 	private static Element _preparePoshiXMLElement(

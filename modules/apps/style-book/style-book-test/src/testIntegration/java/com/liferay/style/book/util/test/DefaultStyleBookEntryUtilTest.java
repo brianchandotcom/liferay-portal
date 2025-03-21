@@ -59,16 +59,16 @@ public class DefaultStyleBookEntryUtilTest {
 
 	@Test
 	public void testGetDefaultMasterStyleBookEntry() throws Exception {
-		Layout layoutWithMasterLayout = _getMasterLayoutLayout();
+		Layout masterLayoutBasedLayout = _getMasterLayoutBasedLayout();
 
-		Layout masterPageTemplateLayout = _layoutLocalService.getLayout(
-			layoutWithMasterLayout.getMasterLayoutPlid());
+		Layout masterLayout = _layoutLocalService.getLayout(
+			masterLayoutBasedLayout.getMasterLayoutPlid());
 
 		StyleBookEntry styleBookEntry1 = _newStyleBookEntry(true);
 
 		StyleBookEntry defaultMasterStyleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
-				layoutWithMasterLayout);
+				masterLayoutBasedLayout);
 
 		Assert.assertNotNull(defaultMasterStyleBookEntry);
 
@@ -78,14 +78,13 @@ public class DefaultStyleBookEntryUtilTest {
 
 		StyleBookEntry styleBookEntry2 = _newStyleBookEntry(false);
 
-		masterPageTemplateLayout.setStyleBookEntryId(
-			styleBookEntry2.getStyleBookEntryId());
+		masterLayout.setStyleBookEntryId(styleBookEntry2.getStyleBookEntryId());
 
-		_layoutLocalService.updateLayout(masterPageTemplateLayout);
+		_layoutLocalService.updateLayout(masterLayout);
 
 		defaultMasterStyleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
-				layoutWithMasterLayout);
+				masterLayoutBasedLayout);
 
 		Assert.assertNotNull(defaultMasterStyleBookEntry);
 
@@ -96,21 +95,20 @@ public class DefaultStyleBookEntryUtilTest {
 
 	@Test
 	public void testGetDefaultStyleBookEntry() throws Exception {
-		Layout layoutWithMasterLayout = _getMasterLayoutLayout();
+		Layout masterLayoutBasedLayout = _getMasterLayoutBasedLayout();
 
-		Layout masterPageTemplateLayout = _layoutLocalService.getLayout(
-			layoutWithMasterLayout.getMasterLayoutPlid());
+		Layout masterLayout = _layoutLocalService.getLayout(
+			masterLayoutBasedLayout.getMasterLayoutPlid());
 
 		StyleBookEntry styleBookEntry1 = _newStyleBookEntry(false);
 
-		masterPageTemplateLayout.setStyleBookEntryId(
-			styleBookEntry1.getStyleBookEntryId());
+		masterLayout.setStyleBookEntryId(styleBookEntry1.getStyleBookEntryId());
 
-		_layoutLocalService.updateLayout(masterPageTemplateLayout);
+		_layoutLocalService.updateLayout(masterLayout);
 
 		StyleBookEntry defaultStyleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
-				layoutWithMasterLayout);
+				masterLayoutBasedLayout);
 
 		Assert.assertNotNull(defaultStyleBookEntry);
 
@@ -120,15 +118,15 @@ public class DefaultStyleBookEntryUtilTest {
 
 		StyleBookEntry styleBookEntry2 = _newStyleBookEntry(false);
 
-		layoutWithMasterLayout.setStyleBookEntryId(
+		masterLayoutBasedLayout.setStyleBookEntryId(
 			styleBookEntry2.getStyleBookEntryId());
 
-		layoutWithMasterLayout = _layoutLocalService.updateLayout(
-			layoutWithMasterLayout);
+		masterLayoutBasedLayout = _layoutLocalService.updateLayout(
+			masterLayoutBasedLayout);
 
 		defaultStyleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
-				layoutWithMasterLayout);
+				masterLayoutBasedLayout);
 
 		Assert.assertNotNull(defaultStyleBookEntry);
 
@@ -294,14 +292,14 @@ public class DefaultStyleBookEntryUtilTest {
 				String expectedStyleBookEntryName)
 		throws Exception {
 
-		Layout layoutWithMasterLayout = _getMasterLayoutLayout();
+		Layout masterLayoutBasedLayout = _getMasterLayoutBasedLayout();
 
 		_newStyleBookEntry(false);
 
 		Assert.assertEquals(
 			expectedStyleBookEntryName,
 			DefaultStyleBookEntryUtil.getStyleBookEntryName(
-				layoutWithMasterLayout, null, null));
+				masterLayoutBasedLayout, null, null));
 	}
 
 	private static final String _THEME_ID = RandomTestUtil.randomString();

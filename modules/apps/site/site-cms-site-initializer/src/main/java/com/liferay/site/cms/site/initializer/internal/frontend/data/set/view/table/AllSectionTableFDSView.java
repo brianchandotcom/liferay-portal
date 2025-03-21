@@ -32,23 +32,35 @@ public class AllSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"title", "title"
+			"embedded.title", "title",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"title"
+			).setSortable(
+				true
+			)
 		).add(
-			"description", "description"
+			"embedded.objectDefinitionName", "type",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"typeTableCellRenderer")
 		).add(
-			"dateCreated", "create-date",
+			"embedded.scopeKey", "space",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"spaceTableCellRenderer")
+		).add(
+			"embedded.creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"authorTableCellRenderer")
+		).add(
+			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dateTime"
 			).setSortable(
 				true
 			)
 		).add(
-			"dateModified", "modified-date",
+			"embedded.status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+				"status")
 		).build();
 	}
 

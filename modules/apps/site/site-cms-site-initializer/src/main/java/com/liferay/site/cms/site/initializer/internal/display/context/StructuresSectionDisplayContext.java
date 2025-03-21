@@ -119,7 +119,20 @@ public class StructuresSectionDisplayContext {
 				"export", "export",
 				LanguageUtil.get(_httpServletRequest, "export-as-json"), "get",
 				"exportObjectDefinition", null),
-			_getImportActionDropdownItem(),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortletURLFactoryUtil.create(
+						_httpServletRequest,
+						ObjectPortletKeys.OBJECT_DEFINITIONS,
+						PortletRequest.ACTION_PHASE)
+				).setActionName(
+					"/object_definitions/import_object_definition"
+				).setParameter(
+					"externalReferenceCode", "{externalReferenceCode}"
+				).buildString(),
+				"import", "import",
+				LanguageUtil.get(_httpServletRequest, "import-and-override"),
+				"get", "update", null),
 			new FDSActionDropdownItem(
 				"", "password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
@@ -156,31 +169,6 @@ public class StructuresSectionDisplayContext {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private FDSActionDropdownItem _getImportActionDropdownItem() {
-		FDSActionDropdownItem importActionItem = new FDSActionDropdownItem(
-			"", "import", "import",
-			LanguageUtil.get(httpServletRequest, "import-and-override"), null,
-			null, null);
-
-		try {
-			importActionItem.putData(
-				"importURL",
-				PortletURLBuilder.create(
-					PortletURLFactoryUtil.create(
-						httpServletRequest,
-						ObjectPortletKeys.OBJECT_DEFINITIONS,
-						PortletRequest.ACTION_PHASE)
-				).setActionName(
-					"/object_definitions/import_object_definition"
-				).buildString());
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return importActionItem;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

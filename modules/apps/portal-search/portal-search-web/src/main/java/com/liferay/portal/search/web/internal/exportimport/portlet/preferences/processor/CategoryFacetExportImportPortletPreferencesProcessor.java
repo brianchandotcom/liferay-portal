@@ -191,10 +191,10 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 		return assetVocabulary.getVocabularyId();
 	}
 
-	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	protected Capability exportCapability;
 
-	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	protected Capability importCapability;
 
 	private void _importReferenceStagedModel(

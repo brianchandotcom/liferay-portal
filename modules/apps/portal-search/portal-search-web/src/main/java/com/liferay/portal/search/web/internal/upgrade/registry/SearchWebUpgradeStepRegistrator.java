@@ -7,10 +7,14 @@ package com.liferay.portal.search.web.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
+import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.search.web.internal.upgrade.v2_0_0.SearchPortletUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
+
+import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,6 +54,26 @@ public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"2.0.1", "2.0.2",
 			new com.liferay.portal.search.web.internal.upgrade.v2_0_2.
 				SearchPortletUpgradeProcess());
+
+		registry.register(
+			"2.0.2", "2.0.3",
+			new BaseUpgradePortletPreferences() {
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {
+						CategoryFacetPortletKeys.CATEGORY_FACET + "_INSTANCE_%"
+					};
+				}
+
+				@Override
+				protected void upgradePreferences(
+						long companyId, long ownerId, int ownerType, long plid,
+						String portletId, PortletPreferences portletPreferences)
+					throws Exception {
+				}
+
+			});
 	}
 
 	@Reference

@@ -26,7 +26,9 @@ import java.util.Map;
  */
 public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
-	public DuplicateRemovalUpgradeProcess(String tableName, String[] columnNames) {
+	public DuplicateRemovalUpgradeProcess(
+		String tableName, String[] columnNames) {
+
 		this(tableName, columnNames, null);
 	}
 
@@ -44,7 +46,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected List<Map<String, String>> getDuplicatesSQL(
-		String[] indexDuplicateColumns) {
+		String[] columnValues) {
 
 		List<Map<String, String>> queryResult = new ArrayList<>();
 
@@ -57,12 +59,12 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		for (int i = 0; i < _columnNames.length; i++) {
 			sb.append(_columnNames[i]);
 
-			if (indexDuplicateColumns[i] == null) {
+			if (columnValues[i] == null) {
 				sb.append(" is null ");
 			}
 			else {
 				sb.append(" = '");
-				sb.append(_escape(indexDuplicateColumns[i]));
+				sb.append(_escape(columnValues[i]));
 				sb.append("' ");
 			}
 
@@ -125,8 +127,8 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			_DB_ESCAPE_STRINGS[1]);
 	}
 
-	private List<String[]> _getIndexDuplicatesList() {
-		List<String[]> indexesDuplicatesList = new ArrayList<>();
+	private List<String[]> _getColumnValuesList() {
+		List<String[]> columnValuesList = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(7);
 
@@ -145,13 +147,13 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				String[] columnResults = new String[_columnNames.length];
+				String[] columnValues = new String[_columnNames.length];
 
-				for (int i = 0; i < columnResults.length; i++) {
-					columnResults[i] = resultSet.getString(i + 1);
+				for (int i = 0; i < columnValues.length; i++) {
+					columnValues[i] = resultSet.getString(i + 1);
 				}
 
-				indexesDuplicatesList.add(columnResults);
+				columnValuesList.add(columnValues);
 			}
 		}
 		catch (Exception exception) {
@@ -160,7 +162,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		return indexesDuplicatesList;
+		return columnValuesList;
 	}
 
 	private void _logDeletedDuplicates(Map<String, String> duplicate) {
@@ -175,11 +177,11 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _removeDuplicates() {
-		List<String[]> indexDuplicatesList = _getIndexDuplicatesList();
+		List<String[]> columnValuesList = _getColumnValuesList();
 
-		for (String[] indexDuplicateColumns : indexDuplicatesList) {
+		for (String[] columnValues : columnValuesList) {
 			List<Map<String, String>> duplicatesList = getDuplicatesSQL(
-				indexDuplicateColumns);
+				columnValues);
 
 			int duplicateCount = duplicatesList.size();
 

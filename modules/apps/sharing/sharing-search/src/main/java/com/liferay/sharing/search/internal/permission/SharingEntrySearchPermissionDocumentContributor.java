@@ -55,17 +55,6 @@ public class SharingEntrySearchPermissionDocumentContributor
 		}
 
 		document.addKeyword(
-			"sharedToUserGroupId",
-			TransformUtil.transformToLongArray(
-				sharingEntries,
-				sharingEntry -> {
-					if (sharingEntry.getToUserGroupId() == 0) {
-						return null;
-					}
-
-					return sharingEntry.getToUserGroupId();
-				}));
-		document.addKeyword(
 			"sharedToUserId",
 			TransformUtil.transformToLongArray(
 				sharingEntries,
@@ -75,6 +64,18 @@ public class SharingEntrySearchPermissionDocumentContributor
 					}
 
 					return sharingEntry.getToUserId();
+				}));
+
+		document.addKeyword(
+			"sharedToUserGroupId",
+			TransformUtil.transformToLongArray(
+				sharingEntries,
+				sharingEntry -> {
+					if (sharingEntry.getToUserGroupId() == 0) {
+						return null;
+					}
+
+					return sharingEntry.getToUserGroupId();
 				}));
 	}
 

@@ -82,7 +82,7 @@ public class JspCPlugin implements Plugin<Project> {
 			"javax.servlet.jsp.jstl-api", "1.2.1");
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "org.apache.tomcat", "tomcat-jasper",
-			"9.0.98");
+			"9.0.102");
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "org.glassfish.web",
 			"javax.servlet.jsp.jstl", "1.2.3", false);

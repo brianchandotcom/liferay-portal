@@ -283,9 +283,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		if (GetterUtil.getBoolean(masterPage.getMarkedAsDefault())) {
 			defaultTemplate = true;
-			status = WorkflowConstants.STATUS_APPROVED;
 		}
-		else if (_isPublishedLayout(masterPage.getPageSpecifications())) {
+
+		if (_isPublishedLayout(masterPage.getPageSpecifications())) {
 			status = WorkflowConstants.STATUS_APPROVED;
 		}
 

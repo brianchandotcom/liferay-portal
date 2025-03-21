@@ -46,5 +46,5 @@ String oauthRedirectURL = facebookConnectConfiguration.oauthRedirectURL();
 
 	<aui:input cssClass="lfr-input-text-container" label="oauth-token-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthTokenURL" %>' type="text" value="<%= oauthTokenURL %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="oauth-redirect-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthRedirectURL" %>' type="text" value="<%= oauthRedirectURL %>" />
+	<aui:input cssClass="lfr-input-text-container" label="redirect-url" name='<%= PortalSettingsFacebookConnectConstants.FORM_PARAMETER_NAMESPACE + "oauthRedirectURL" %>' type="text" value="<%= oauthRedirectURL %>" />
 </aui:fieldset>

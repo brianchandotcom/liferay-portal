@@ -63,7 +63,7 @@ public class ItemSelectorEditableValuesConfigurationExportImportContentProcessor
 		_exportDDMTemplateReference(
 			portletDataContext, stagedModel, configurationValueJSONObject);
 
-		String className = _portal.getClassName(classNameId);
+		String className = _portal.fetchClassName(classNameId);
 
 		configurationValueJSONObject.put("className", className);
 

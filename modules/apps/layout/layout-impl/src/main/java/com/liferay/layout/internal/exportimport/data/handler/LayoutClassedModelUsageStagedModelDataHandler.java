@@ -80,7 +80,7 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 
 		element.addAttribute(
 			"layout-classed-model-container-class-name",
-			_portal.getClassName(layoutClassedModelUsage.getContainerType()));
+			_portal.fetchClassName(layoutClassedModelUsage.getContainerType()));
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(

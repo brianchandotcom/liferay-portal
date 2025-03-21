@@ -57,7 +57,7 @@ public class
 
 		configurationValueJSONObject.put(
 			"className",
-			_portal.getClassName(
+			_portal.fetchClassName(
 				configurationValueJSONObject.getLong("classNameId")));
 
 		AssetListEntry assetListEntry =

@@ -549,7 +549,7 @@ public abstract class BaseLayoutStructureItemImporter {
 			infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class,
 				infoSearchClassMapperRegistry.getClassName(
-					PortalUtil.getClassName(
+					PortalUtil.fetchClassName(
 						layoutPageTemplateEntry.getClassNameId())));
 
 		if (infoItemFormProvider == null) {

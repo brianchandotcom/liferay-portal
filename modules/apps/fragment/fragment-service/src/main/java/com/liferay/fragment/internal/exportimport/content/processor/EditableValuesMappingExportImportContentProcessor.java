@@ -225,7 +225,7 @@ public class EditableValuesMappingExportImportContentProcessor
 			return;
 		}
 
-		String className = _portal.getClassName(classNameId);
+		String className = _portal.fetchClassName(classNameId);
 
 		editableJSONObject.put("className", className);
 

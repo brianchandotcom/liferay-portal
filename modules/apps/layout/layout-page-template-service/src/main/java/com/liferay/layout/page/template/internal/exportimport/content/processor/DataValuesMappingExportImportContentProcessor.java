@@ -376,7 +376,7 @@ public class DataValuesMappingExportImportContentProcessor
 		_exportDDMTemplateReference(
 			jsonObject, portletDataContext, stagedModel);
 
-		String className = _portal.getClassName(classNameId);
+		String className = _portal.fetchClassName(classNameId);
 
 		jsonObject.put("className", className);
 
@@ -425,7 +425,7 @@ public class DataValuesMappingExportImportContentProcessor
 						stagedModel.getPrimaryKeyObj(),
 						" references asset entry with class primary key ",
 						classPK, " and class name ",
-						_portal.getClassName(classNameId),
+						_portal.fetchClassName(classNameId),
 						" that could not be exported due to ", exception);
 
 					if (Validator.isNotNull(exception.getMessage())) {

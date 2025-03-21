@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
@@ -318,19 +319,18 @@ public class LayoutWarningMessageHelperImpl
 	}
 
 	private Object _getInfoItem(JSONObject layoutObjectReferenceJSONObject) {
-		long classNameId = layoutObjectReferenceJSONObject.getLong(
-			"classNameId");
+		String className = _portal.fetchClassName(
+			layoutObjectReferenceJSONObject.getLong("classNameId"));
 		long classPK = layoutObjectReferenceJSONObject.getLong("classPK");
 
-		if ((classNameId <= 0) && (classPK <= 0)) {
+		if (Validator.isNull(className) && (classPK <= 0)) {
 			return null;
 		}
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			(InfoItemObjectProvider<Object>)
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					_portal.getClassName(classNameId),
+					InfoItemObjectProvider.class, className,
 					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 		if (infoItemObjectProvider == null) {

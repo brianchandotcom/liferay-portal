@@ -23,6 +23,7 @@ export class JSONWebServicesFragmentEntryApiHelper {
 		groupId,
 		html = '',
 		js = '',
+		marketplace = false,
 		name,
 		type = 'component',
 		typeOptions = {fieldTypes: []},
@@ -33,6 +34,7 @@ export class JSONWebServicesFragmentEntryApiHelper {
 		groupId: string;
 		html?: string;
 		js?: string;
+		marketplace?: boolean;
 		name: string;
 		type?: FragmentEntryType;
 		typeOptions?: FragmentTypeOptions;
@@ -55,6 +57,7 @@ export class JSONWebServicesFragmentEntryApiHelper {
 		urlSearchParams.append('type', FRAGMENT_ENTRY_TYPES[type]);
 		urlSearchParams.append('typeOptions', JSON.stringify(typeOptions));
 		urlSearchParams.append('status', '0');
+		urlSearchParams.append('marketplace', String(marketplace));
 		urlSearchParams.append('serviceContext', JSON.stringify({}));
 
 		return await this.apiHelpers.post(

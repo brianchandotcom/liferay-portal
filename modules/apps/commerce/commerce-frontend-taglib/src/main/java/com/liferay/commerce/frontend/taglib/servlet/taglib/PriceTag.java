@@ -60,6 +60,12 @@ public class PriceTag extends IncludeTag {
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		try {
+			if ((commerceContext == null) ||
+				(commerceContext.getCommerceChannelId() == 0)) {
+
+				return SKIP_BODY;
+			}
+
 			long cpInstanceId = 0;
 
 			if (_showDefaultSkuPrice) {

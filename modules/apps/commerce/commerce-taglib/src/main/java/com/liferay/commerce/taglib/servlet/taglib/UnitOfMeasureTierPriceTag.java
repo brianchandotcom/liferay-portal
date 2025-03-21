@@ -31,6 +31,12 @@ public class UnitOfMeasureTierPriceTag extends IncludeTag {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
+			if ((commerceContext == null) ||
+				(commerceContext.getCommerceChannelId() == 0)) {
+
+				return SKIP_BODY;
+			}
+
 			_commerceAccountId = CommerceUtil.getCommerceAccountId(
 				commerceContext);
 

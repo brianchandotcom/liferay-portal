@@ -47,6 +47,12 @@ public class TierPriceTag extends IncludeTag {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
+			if ((commerceContext == null) ||
+				(commerceContext.getCommerceChannelId() == 0)) {
+
+				return SKIP_BODY;
+			}
+
 			CommercePriceList commercePriceList = _getPriceList(
 				_cpInstanceId, commerceContext);
 

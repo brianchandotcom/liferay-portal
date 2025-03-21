@@ -10,6 +10,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.sql.PreparedStatement;
@@ -110,7 +111,7 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 			if (resultSet.next()) {
 				languageIdToNameMap.put(
 					resultSet.getString("languageId"),
-					resultSet.getString("description"));
+					GetterUtil.getString(resultSet.getString("description")));
 			}
 
 			return LocalizationUtil.getXml(
@@ -132,7 +133,7 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 			if (resultSet.next()) {
 				languageIdToNameMap.put(
 					resultSet.getString("languageId"),
-					resultSet.getString("name"));
+					GetterUtil.getString(resultSet.getString("name")));
 			}
 
 			return LocalizationUtil.getXml(

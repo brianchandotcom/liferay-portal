@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {ReactNode, useMemo, useState} from 'react';
 
-import {MarketplaceView, useMarketplaceContext} from '../MarketplaceContext';
+import {useMarketplaceContext} from '../MarketplaceContext';
 import Card from '../components/Card';
 import Carousel from '../components/Carousel';
 import PublisherSupportModal from '../components/Storefront/PublisherSupportModal';
@@ -32,8 +32,7 @@ export function MarketplaceStorefront({
 	onClickBack,
 	primaryButton,
 }: MarketplaceStorefrontProps) {
-	const {marketplaceConfiguration, product, setView} =
-		useMarketplaceContext();
+	const {marketplaceConfiguration, product} = useMarketplaceContext();
 
 	const [publisherSupportModalVisible, setPublisherSupportModalVisible] =
 		useState(false);
@@ -164,23 +163,19 @@ export function MarketplaceStorefront({
 	return (
 		<div className="p-4">
 			<div>
-				<ClayButton
-					className="back-button mb-3"
-					displayType="unstyled"
-					onClick={() => {
-						if (onClickBack) {
-							return onClickBack();
-						}
+				{onClickBack && (
+					<ClayButton
+						className="back-button mb-3"
+						displayType="unstyled"
+						onClick={onClickBack}
+					>
+						<ClayIcon symbol="angle-left" />
 
-						setView(MarketplaceView.PRODUCTS);
-					}}
-				>
-					<ClayIcon symbol="angle-left" />
-
-					<span className="ml-1">
-						{Liferay.Language.get('back-to-list')}
-					</span>
-				</ClayButton>
+						<span className="ml-1">
+							{Liferay.Language.get('back-to-list')}
+						</span>
+					</ClayButton>
+				)}
 
 				<div className="align-items-center d-flex justify-content-between mt-2">
 					<div className="d-flex">
@@ -247,11 +242,13 @@ export function MarketplaceStorefront({
 				</div>
 
 				<div className="ml-4 storefront-cards">
-					{storefrontItems.map((storefrontItem, index) => (
-						<Card key={index} title={storefrontItem.title}>
-							{storefrontItem.value}
-						</Card>
-					))}
+					{storefrontItems
+						.filter((storefrontItem) => storefrontItem.value)
+						.map((storefrontItem, index) => (
+							<Card key={index} title={storefrontItem.title}>
+								{storefrontItem.value}
+							</Card>
+						))}
 				</div>
 			</div>
 

@@ -31,15 +31,15 @@ dependencies {
 	}
 	else {
 		compileOnly group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.2"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-api", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-el-api", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-jasper", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-jasper-el", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-jsp-api", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-juli", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-servlet-api", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-util", version: "9.0.98"
-		compileOnly group: "org.apache.tomcat", name: "tomcat-util-scan", version: "9.0.98"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-api", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-el-api", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-jasper", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-jasper-el", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-jsp-api", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-juli", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-servlet-api", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-util", version: "9.0.102"
+		compileOnly group: "org.apache.tomcat", name: "tomcat-util-scan", version: "9.0.102"
 		compileOnly group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 	}
 }

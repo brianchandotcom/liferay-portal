@@ -5,6 +5,8 @@
 
 package com.liferay.headless.commerce.admin.pricing.resource.v2_0.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -12,16 +14,30 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceList;
+import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListAccount;
+import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.PriceListResource;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Arrays;
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,19 +47,36 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class PriceListResourceTest extends BasePriceListResourceTestCase {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
-		User user = UserTestUtil.addUser();
+		_user = UserTestUtil.addUser(testCompany);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			testCompany.getCompanyId(), testGroup.getGroupId(),
+			_user.getUserId());
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			testGroup.getCompanyId());
 
+		_accountEntry = _accountEntryLocalService.addAccountEntry(
+			_user.getUserId(), 0, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			"business", 1, _serviceContext);
+
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
-			user.getUserId(), _commerceCurrency.getCode());
+			_user.getUserId(), _commerceCurrency.getCode());
 	}
 
 	@Ignore
@@ -120,6 +153,14 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 	@Test
 	public void testGraphQLGetPriceListsPage() throws Exception {
 		super.testGraphQLGetPriceListsPage();
+	}
+
+	@Override
+	@Test
+	public void testPostPriceList() throws Exception {
+		super.testPostPriceList();
+
+		_testPostPriceListWithSamePriceListAccount();
 	}
 
 	@Override
@@ -216,7 +257,93 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 		return priceListResource.postPriceList(randomPriceList());
 	}
 
+	private PriceListAccount _createPriceListAccount(PriceList priceList)
+		throws Exception {
+
+		return new PriceListAccount() {
+			{
+				accountExternalReferenceCode =
+					_accountEntry.getExternalReferenceCode();
+				accountId = _accountEntry.getAccountEntryId();
+				priceListExternalReferenceCode =
+					priceList.getExternalReferenceCode();
+				priceListId = priceList.getId();
+			}
+		};
+	}
+
+	private void _testPostPriceListWithSamePriceListAccount() throws Exception {
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniadminUser.getUserId(), password, password, false, true);
+
+		PriceListResource priceListResource = PriceListResource.builder(
+		).authentication(
+			omniadminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "priceListAccounts"
+		).build();
+
+		PriceList priceList = randomPriceList();
+
+		priceList.setPriceListAccounts(
+			new PriceListAccount[] {_createPriceListAccount(priceList)});
+
+		PriceList expectedPriceList = priceListResource.getPriceList(
+			testPostPriceList_addPriceList(
+				priceList
+			).getId());
+
+		PriceList actualPriceList = priceListResource.getPriceList(
+			testPostPriceList_addPriceList(
+				priceList
+			).getId());
+
+		assertEquals(expectedPriceList, actualPriceList);
+
+		PriceListAccount[] expectedPriceListAccounts =
+			expectedPriceList.getPriceListAccounts();
+
+		PriceListAccount[] actualPriceListAccounts =
+			actualPriceList.getPriceListAccounts();
+
+		Assert.assertEquals(
+			Arrays.toString(expectedPriceListAccounts), 1,
+			expectedPriceListAccounts.length);
+		Assert.assertEquals(
+			Arrays.toString(actualPriceListAccounts), 1,
+			actualPriceListAccounts.length);
+
+		PriceListAccount expectedPriceListAccount =
+			expectedPriceListAccounts[0];
+		PriceListAccount actualPriceListAccount = expectedPriceListAccounts[0];
+
+		Assert.assertEquals(
+			actualPriceListAccount.toString(),
+			expectedPriceListAccount.getAccountId(),
+			actualPriceListAccount.getAccountId());
+		Assert.assertEquals(
+			actualPriceListAccount.toString(),
+			expectedPriceListAccount.getPriceListId(),
+			actualPriceListAccount.getPriceListId());
+	}
+
+	private AccountEntry _accountEntry;
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	private CommerceCatalog _commerceCatalog;
 	private CommerceCurrency _commerceCurrency;
+	private ServiceContext _serviceContext;
+	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

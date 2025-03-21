@@ -294,22 +294,6 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByTUG_C_C() throws Exception {
-		_persistence.countByTUG_C_C(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByTUG_C_C(0L, 0L, 0L);
-	}
-
-	@Test
-	public void testCountByTUG_C_CArrayable() throws Exception {
-		_persistence.countByTUG_C_C(
-			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
-	}
-
-	@Test
 	public void testCountByTUG_TU_C_C() throws Exception {
 		_persistence.countByTUG_TU_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

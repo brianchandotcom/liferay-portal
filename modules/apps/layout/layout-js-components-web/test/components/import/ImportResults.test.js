@@ -52,7 +52,6 @@ describe('ImportResults', () => {
 		);
 
 		expect(getByText('fragment 1')).toBeInTheDocument();
-
 		expect(getByText('x-item-was-imported')).toBeInTheDocument();
 		expect(getByRole('button').classList.contains('collapsed')).toBe(false);
 
@@ -68,7 +67,6 @@ describe('ImportResults', () => {
 		);
 
 		expect(getByText('fragment 1')).toBeInTheDocument();
-
 		expect(getByText('x-item-was-imported')).toBeInTheDocument();
 		expect(getByRole('button').classList.contains('collapsed')).toBe(true);
 	});
@@ -89,7 +87,6 @@ describe('ImportResults', () => {
 			getByText('x-items-were-imported-with-warnings')
 		).toBeInTheDocument();
 		expect(getByText('x-item-could-not-be-imported')).toBeInTheDocument();
-
 		expect(getByText('This is a warning message')).toBeInTheDocument();
 		expect(
 			getByText('This is another warning message')

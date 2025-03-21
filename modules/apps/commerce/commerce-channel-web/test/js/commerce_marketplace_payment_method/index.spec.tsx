@@ -101,7 +101,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		expect(queryByText('go-to-instance-settings')).toBeTruthy();
 		expect(
 			queryByText(
-				'you-are-trying-to-add-a-new-payment-method-through-the-marketplace,-but-the-connection-has-not-been-established-yet'
+				'you-are-trying-to-add-a-new-payment-method-through-the-marketplace,-but-the-connection-has-not-been-established-yetplease-go-to-instance-settings-to-enable-the-connection'
 			)
 		).toBeTruthy();
 	});

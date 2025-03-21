@@ -8,8 +8,8 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
-import SearchResultsPanel from '../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/SearchResultsPanel';
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import SearchResultsPanel from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/SearchResultsPanel';
 
 global.Liferay = {
 	FeatureFlags: {'LPD-34938': true},
@@ -17,7 +17,7 @@ global.Liferay = {
 };
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/TabCollection',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/TabCollection',
 	() => ({
 		__esModule: true,
 		default: ({collection}) => (
@@ -29,7 +29,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceSearchResults',
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceSearchResults',
 	() => ({
 		__esModule: true,
 		default: () => <div data-testid="marketplace-search-results" />,
@@ -55,7 +55,7 @@ function renderSearchResultsPanel({
 	filteredTabs = mockFilteredTabs,
 	searchValue = 'test',
 	viewMarketplace = true,
-}) {
+} = {}) {
 	return render(
 		<StoreAPIContextProvider
 			dispatch={() => {}}
@@ -90,7 +90,7 @@ describe('SearchResultsPanel', () => {
 	});
 
 	it('renders filtered tabs when available', () => {
-		renderSearchResultsPanel({});
+		renderSearchResultsPanel();
 		mockFilteredTabs.forEach((tab) => {
 			expect(screen.getByText(tab.label)).toBeInTheDocument();
 			tab.collections.forEach((collection) => {
@@ -109,7 +109,7 @@ describe('SearchResultsPanel', () => {
 	it('renders marketplace results if Liferay FeatureFlag is true', () => {
 		global.Liferay.FeatureFlags['LPD-34938'] = true;
 
-		renderSearchResultsPanel({});
+		renderSearchResultsPanel();
 
 		expect(
 			screen.getByTestId('marketplace-search-results')
@@ -121,7 +121,7 @@ describe('SearchResultsPanel', () => {
 	it('does not render marketplace results if Liferay FeatureFlag is false', () => {
 		global.Liferay.FeatureFlags['LPD-34938'] = false;
 
-		renderSearchResultsPanel({});
+		renderSearchResultsPanel();
 
 		expect(
 			screen.queryByTestId('marketplace-search-results')
@@ -131,7 +131,7 @@ describe('SearchResultsPanel', () => {
 	});
 
 	it('renders marketplace results if has permission to view marketplace', () => {
-		renderSearchResultsPanel({});
+		renderSearchResultsPanel();
 
 		expect(
 			screen.getByTestId('marketplace-search-results')

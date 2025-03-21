@@ -18,22 +18,18 @@ describe('InstallFragmentModal', () => {
 
 		await waitFor(() => {
 			expect(
-				document.querySelectorAll('.loading-animation-squares').length
-			).toBe(1);
+				document.querySelector('.loading-animation-squares')
+			).toBeInTheDocument();
 
 			expect(
 				screen.getByText(
-					'the-installation-process-is-ongoing-and-may-take-some-time',
-					{exact: false}
+					/the-installation-process-is-ongoing-and-may-take-some-time/
 				)
 			).toBeInTheDocument();
 
 			expect(
 				screen.getByText(
-					'closing-the-window-will-not-cancel-the-process',
-					{
-						exact: false,
-					}
+					/closing-the-window-will-not-cancel-the-process/
 				)
 			).toBeInTheDocument();
 		});

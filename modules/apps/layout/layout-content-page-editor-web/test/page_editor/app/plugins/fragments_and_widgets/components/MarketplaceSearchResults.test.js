@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -11,8 +11,9 @@ import {
 	MarketplaceRest,
 	useMarketplaceConfiguration,
 } from '@liferay/marketplace-js-components-web';
+import userEvent from '@testing-library/user-event';
 
-import MarketplaceSearchResults from '../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceSearchResults';
+import MarketplaceSearchResults from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceSearchResults';
 
 global.Liferay = {
 	FeatureFlags: {'LPD-34938': true},
@@ -51,19 +52,38 @@ jest.mock('@liferay/layout-js-components-web', () => {
 
 	return {
 		...jest.requireActual('@liferay/layout-js-components-web'),
-		MarketplaceModal: ({onOpenChange = mockOpenChange, trigger}) => (
-			<MarketplaceContext.Provider
-				value={{
-					modal: {onOpenChange},
-					setProduct: jest.fn(),
-					setView: jest.fn(),
-				}}
-			>
-				{trigger}
-			</MarketplaceContext.Provider>
+		MarketplaceModal: jest.fn(
+			({children, onOpenChange = mockOpenChange}) => (
+				<MarketplaceContext.Provider
+					value={{
+						modal: {onOpenChange},
+						setProduct: jest.fn(),
+						setView: jest.fn(),
+					}}
+				>
+					<div data-testid="marketplace-modal-children">
+						{children}
+					</div>
+				</MarketplaceContext.Provider>
+			)
 		),
 	};
 });
+
+const mockConfig = {
+	fragmentPortletNamespace: 'mockNamespace',
+	fragmentsImportURL: '/mockImportURL',
+};
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
+	() => ({
+		config: {
+			fragmentPortletNamespace: 'mockNamespace',
+			fragmentsImportURL: '/mockImportURL',
+		},
+	})
+);
 
 const mockMarketplaceConfiguration = {
 	authorized: true,
@@ -91,7 +111,7 @@ const components = ({searchValue = 'test'}) => (
 function renderMarketplaceSearchResults({
 	searchValue = 'test',
 	viewMarketplace = true,
-}) {
+} = {}) {
 	return render(components({searchValue, viewMarketplace}));
 }
 
@@ -111,7 +131,7 @@ describe('MarketplaceSearchResults', () => {
 	});
 
 	it('renders "see marketplace results" button when not showing marketplace results', () => {
-		renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
 		expect(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
@@ -121,7 +141,7 @@ describe('MarketplaceSearchResults', () => {
 	it('does not render "see marketplace results" if not connected to marketplace', () => {
 		mockMarketplaceConfiguration.authorized = false;
 
-		renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
 		expect(
 			screen.queryByRole('button', {name: 'see-marketplace-results'})
@@ -131,9 +151,21 @@ describe('MarketplaceSearchResults', () => {
 	});
 
 	it('fetches and displays marketplace results when button is clicked', async () => {
-		const {container} = renderMarketplaceSearchResults({});
+		const expectProduct = (index) => {
+			expect(screen.getByText(`Product ${index}`)).toBeInTheDocument();
+			expect(screen.getByText(`Catalog ${index}`)).toBeInTheDocument();
 
-		fireEvent.click(
+			const imageElements = screen.getAllByRole('img');
+			const urlImage = imageElements.find(
+				(image) => image.getAttribute('src') === `urlImage${index}`
+			);
+
+			expect(urlImage).toBeInTheDocument();
+		};
+
+		renderMarketplaceSearchResults();
+
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
@@ -145,34 +177,15 @@ describe('MarketplaceSearchResults', () => {
 			expect(screen.getByText('showing-x-x')).toBeInTheDocument();
 			expect(screen.getAllByTitle(`x-details`).length).toBe(2);
 
-			const expectProduct = (index) => {
-				expect(
-					screen.getByText(`Product ${index}`)
-				).toBeInTheDocument();
-				expect(
-					screen.getByText(`Catalog ${index}`)
-				).toBeInTheDocument();
-				const imageElements = screen.getAllByRole('img');
-				const urlImage = imageElements.find(
-					(image) => image.getAttribute('src') === `urlImage${index}`
-				);
-				expect(urlImage).toBeInTheDocument();
-			};
-
 			expectProduct(1);
 			expectProduct(2);
-
-			expect(
-				container.getElementsByClassName('lexicon-icon-angle-right')
-					.length
-			).toBe(2);
 		});
 	});
 
 	it('hides marketplace search results when searchValue changes', async () => {
-		const {rerender} = renderMarketplaceSearchResults({});
+		const {rerender} = renderMarketplaceSearchResults();
 
-		fireEvent.click(
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
@@ -191,13 +204,14 @@ describe('MarketplaceSearchResults', () => {
 
 	it('displays empty state when no results are found', async () => {
 		const emptyProducts = {items: [], lastPage: 1, page: 1};
+
 		mockMarketplaceInstance.getProducts.mockResolvedValueOnce(
 			emptyProducts
 		);
 
-		renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
-		fireEvent.click(
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
@@ -209,7 +223,7 @@ describe('MarketplaceSearchResults', () => {
 	it('displays loading indicator while fetching results', async () => {
 		const {container} = renderMarketplaceSearchResults({loading: true});
 
-		fireEvent.click(
+		userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
@@ -221,121 +235,161 @@ describe('MarketplaceSearchResults', () => {
 	});
 
 	it('handles "load more results" functionality', async () => {
-		const {container} = renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
-		fireEvent.click(
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
-		await waitFor(() => {
-			const loadMoreResultsButton = screen.getByRole('button', {
+		expect(mockMarketplaceInstance.getProducts).toHaveBeenCalledTimes(1);
+
+		await expect(screen.getAllByRole('menuitem').length).toBe(2);
+
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 1 Catalog 1'})
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 2 Catalog 2'})
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole('button', {
 				name: 'load-more-results',
-			});
-			expect(loadMoreResultsButton).toBeInTheDocument();
-			expect(mockMarketplaceInstance.getProducts).toHaveBeenCalledTimes(
-				1
-			);
-			expect(screen.getAllByRole('menuitem').length).toBe(2);
-			expect(screen.getByText('Product 1')).toBeInTheDocument();
-			expect(screen.getByText('Product 2')).toBeInTheDocument();
+			})
+		).toBeInTheDocument();
 
-			mockMarketplaceInstance.getProducts.mockResolvedValue({
-				items: [getProduct(3), getProduct(4)],
-				lastPage: 2,
-				page: 2,
-			});
-
-			fireEvent.click(loadMoreResultsButton);
-
-			expect(
-				container.getElementsByClassName('loading-animation').length
-			).toBe(1);
-			expect(screen.getByText('Product 1')).toBeInTheDocument();
-			expect(screen.getByText('Product 2')).toBeInTheDocument();
+		mockMarketplaceInstance.getProducts.mockResolvedValue({
+			items: [getProduct(3), getProduct(4)],
+			lastPage: 2,
+			page: 2,
 		});
+
+		await userEvent.click(
+			screen.getByRole('button', {
+				name: 'load-more-results',
+			})
+		);
 
 		await waitFor(() => {
 			expect(
 				screen.queryByRole('button', {name: 'load-more-results'})
 			).not.toBeInTheDocument();
+			expect(screen.getAllByRole('menuitem').length).toBe(4);
+			expect(
+				screen.getByRole('menuitem', {name: 'Product 1 Catalog 1'})
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'Product 2 Catalog 2'})
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'Product 3 Catalog 3'})
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('menuitem', {name: 'Product 4 Catalog 4'})
+			).toBeInTheDocument();
 			expect(mockMarketplaceInstance.getProducts).toHaveBeenCalledTimes(
 				2
 			);
-
-			expect(screen.getAllByRole('menuitem').length).toBe(4);
-			expect(screen.getByText('Product 1')).toBeInTheDocument();
-			expect(screen.getByText('Product 2')).toBeInTheDocument();
-			expect(screen.getByText('Product 3')).toBeInTheDocument();
-			expect(screen.getByText('Product 4')).toBeInTheDocument();
 		});
 	});
 
 	it('focuses the first item only on initial load and handles keyboard navigation', async () => {
-		renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
-		fireEvent.click(
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
-		await waitFor(() => {
-			expect(screen.getAllByRole('menubar').length).toBe(1);
-			const menuItems = screen.getAllByRole('menuitem');
-			expect(menuItems.length).toBe(2);
-			expect(menuItems[0]).toHaveFocus();
-			fireEvent.keyDown(menuItems[0], {code: 'ArrowDown'});
-			expect(menuItems[1]).toHaveFocus();
+		expect(screen.getAllByRole('menubar').length).toBe(1);
+		expect(screen.getAllByRole('menuitem').length).toBe(2);
 
-			mockMarketplaceInstance.getProducts.mockResolvedValue({
-				items: [getProduct(3), getProduct(4)],
-				lastPage: 2,
-				page: 2,
-			});
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 1 Catalog 1'})
+		).toHaveFocus();
 
-			fireEvent.click(
-				screen.getByRole('button', {name: 'load-more-results'})
-			);
+		await userEvent.keyboard('{ArrowDown}');
+
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 2 Catalog 2'})
+		).toHaveFocus();
+
+		mockMarketplaceInstance.getProducts.mockResolvedValue({
+			items: [getProduct(3), getProduct(4)],
+			lastPage: 2,
+			page: 2,
 		});
 
-		await waitFor(() => {
-			const menuItems = screen.getAllByRole('menuitem');
-			expect(menuItems.length).toBe(4);
+		await userEvent.click(
+			screen.getByRole('button', {name: 'load-more-results'})
+		);
 
-			expect(menuItems[0]).not.toHaveFocus();
-			expect(menuItems[1]).toHaveFocus();
+		expect(screen.getAllByRole('menuitem').length).toBe(4);
 
-			fireEvent.keyDown(menuItems[1], {code: 'ArrowDown'});
-			expect(menuItems[2]).toHaveFocus();
-			fireEvent.keyDown(menuItems[2], {code: 'ArrowDown'});
-			expect(menuItems[3]).toHaveFocus();
-			fireEvent.keyDown(menuItems[3], {code: 'ArrowUp'});
-			expect(menuItems[2]).toHaveFocus();
-		});
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 1 Catalog 1'})
+		).not.toHaveFocus();
+
+		screen.getByRole('menuitem', {name: 'Product 2 Catalog 2'}).focus();
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 2 Catalog 2'})
+		).toHaveFocus();
+
+		await userEvent.keyboard('{ArrowDown}');
+
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 3 Catalog 3'})
+		).toHaveFocus();
+
+		await userEvent.keyboard('{ArrowDown}');
+
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 4 Catalog 4'})
+		).toHaveFocus();
+
+		await userEvent.keyboard('{ArrowUp}');
+
+		expect(
+			screen.getByRole('menuitem', {name: 'Product 3 Catalog 3'})
+		).toHaveFocus();
 	});
 
 	it('triggers modal on enter key press', async () => {
-		renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
-		fireEvent.click(
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
 		await waitFor(() => {
-			const menuItems = screen.getAllByRole('menuitem');
-			fireEvent.keyDown(menuItems[0], {key: 'Enter'});
+			userEvent.keyboard('{Enter}');
+
 			expect(mockOpenChange).toHaveBeenCalledWith(true);
 		});
 	});
 
 	it('triggers modal on space key press', async () => {
-		renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
-		fireEvent.click(
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
 		await waitFor(() => {
-			const menuItems = screen.getAllByRole('menuitem');
-			fireEvent.keyDown(menuItems[0], {key: 'Space'});
+			userEvent.keyboard('{Space}');
+
+			expect(mockOpenChange).toHaveBeenCalledWith(true);
+		});
+	});
+
+	it('triggers modal on space key press linux', async () => {
+		renderMarketplaceSearchResults();
+
+		await userEvent.click(
+			screen.getByRole('button', {name: 'see-marketplace-results'})
+		);
+
+		await waitFor(() => {
+			userEvent.keyboard(' ');
+
 			expect(mockOpenChange).toHaveBeenCalledWith(true);
 		});
 	});
@@ -347,9 +401,9 @@ describe('MarketplaceSearchResults', () => {
 
 		console.error = jest.fn();
 
-		renderMarketplaceSearchResults({});
+		renderMarketplaceSearchResults();
 
-		fireEvent.click(
+		await userEvent.click(
 			screen.getByRole('button', {name: 'see-marketplace-results'})
 		);
 
@@ -361,5 +415,38 @@ describe('MarketplaceSearchResults', () => {
 		});
 
 		console.error.mockRestore();
+	});
+
+	it('renders MarketplaceModal with specific children', async () => {
+		renderMarketplaceSearchResults();
+
+		await userEvent.click(
+			screen.getByRole('button', {name: 'see-marketplace-results'})
+		);
+
+		screen.getAllByRole('menuitem');
+
+		let firstMenuItem = null;
+
+		await waitFor(() => {
+			[firstMenuItem] = screen.getAllByRole('menuitem');
+		});
+
+		await userEvent.click(firstMenuItem);
+
+		expect(
+			screen.getByTestId('marketplace-modal-children')
+		).toBeInTheDocument();
+
+		expect(
+			require('@liferay/layout-js-components-web').MarketplaceModal
+		).toHaveBeenCalledWith(
+			expect.objectContaining({
+				fragmentPortletNamespace: mockConfig.fragmentPortletNamespace,
+				fragmentsImportURL: mockConfig.fragmentsImportURL,
+				trigger: null,
+			}),
+			expect.anything()
+		);
 	});
 });

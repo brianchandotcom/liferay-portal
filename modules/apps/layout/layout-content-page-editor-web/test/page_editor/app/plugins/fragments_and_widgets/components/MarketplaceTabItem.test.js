@@ -12,7 +12,7 @@ import {
 	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
 
-import MarketplaceTabItem from '../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceTabItem';
+import MarketplaceTabItem from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceTabItem';
 
 global.Liferay = {
 	Language: {get: (key) => key},
@@ -35,10 +35,8 @@ const mockContext = {
 	setView: jest.fn(),
 };
 
-function renderMarketPlaceTabItem({onClickRef}) {
-	return render(
-		<MarketplaceTabItem item={mockItem} onClickRef={onClickRef} />
-	);
+function renderMarketPlaceTabItem({onClickRef, item = mockItem} = {}) {
+	return render(<MarketplaceTabItem item={item} onClickRef={onClickRef} />);
 }
 
 describe('MarketplaceTabItem', () => {
@@ -51,7 +49,7 @@ describe('MarketplaceTabItem', () => {
 	});
 
 	it('renders item details with correct name, catalog, and image', () => {
-		renderMarketPlaceTabItem({});
+		renderMarketPlaceTabItem();
 
 		expect(screen.getByTitle('x-details')).toBeInTheDocument();
 
@@ -65,7 +63,7 @@ describe('MarketplaceTabItem', () => {
 	});
 
 	it('renders the card with correct classNames', () => {
-		const {container} = renderMarketPlaceTabItem({});
+		const {container} = renderMarketPlaceTabItem();
 		expect(
 			container.querySelector('.card-interactive')
 		).toBeInTheDocument();

@@ -14,6 +14,7 @@ import {
 import {sub} from 'frontend-js-web';
 import React, {
 	ReactElement,
+	ReactNode,
 	cloneElement,
 	useCallback,
 	useEffect,
@@ -23,12 +24,14 @@ import React, {
 import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplaceModalProps {
+	children?: ReactNode;
 	fragmentPortletNamespace: string;
 	fragmentsImportURL: string;
-	trigger?: ReactElement;
+	trigger?: ReactElement | null;
 }
 
 export default function MarketplaceModal({
+	children,
 	fragmentPortletNamespace,
 	fragmentsImportURL,
 	trigger,
@@ -50,6 +53,8 @@ export default function MarketplaceModal({
 			baseResourceURL={MarketplaceRest.getBaseResourceURL()}
 			settings={{productFilter: 'fragments'}}
 		>
+			{children}
+
 			<Marketplace.Modal {...props}>
 				<MarketplaceViews
 					fragmentPortletNamespace={fragmentPortletNamespace}
@@ -62,7 +67,7 @@ export default function MarketplaceModal({
 
 interface MarketplaceModalTriggerProps {
 	setTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
-	trigger?: ReactElement;
+	trigger?: ReactElement | null;
 }
 
 function MarketplaceModalTrigger({
@@ -91,6 +96,10 @@ function MarketplaceModalTrigger({
 				: ''
 		);
 	}, [view, product, setTitle]);
+
+	if (trigger === null) {
+		return null;
+	}
 
 	if (trigger) {
 		return cloneElement(trigger, {

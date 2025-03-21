@@ -179,19 +179,27 @@ function SearchResults({
 	return (
 		<>
 			{results?.items.length ? (
-				<ul
-					aria-label={Liferay.Language.get('marketplace-fragments')}
-					className="list-unstyled px-3"
-					ref={listRef}
-					role="menubar"
+				<MarketplaceModal
+					fragmentPortletNamespace={config.fragmentPortletNamespace}
+					fragmentsImportURL={config.fragmentsImportURL}
+					trigger={null}
 				>
-					{results.items.map((item: Product) => (
-						<MarketplaceSearchResultsList
-							item={item}
-							key={item.id}
-						/>
-					))}
-				</ul>
+					<ul
+						aria-label={Liferay.Language.get(
+							'marketplace-fragments'
+						)}
+						className="list-unstyled px-3"
+						ref={listRef}
+						role="menubar"
+					>
+						{results.items.map((item: Product) => (
+							<MarketplaceSearchResultsList
+								item={item}
+								key={item.id}
+							/>
+						))}
+					</ul>
+				</MarketplaceModal>
 			) : null}
 
 			{!loading && !results?.items.length ? (
@@ -236,13 +244,7 @@ function MarketplaceSearchResultsList({item}: {item: Product}) {
 			role="menuitem"
 			tabIndex={isTarget ? 0 : -1}
 		>
-			<MarketplaceModal
-				fragmentPortletNamespace={config.fragmentPortletNamespace}
-				fragmentsImportURL={config.fragmentsImportURL}
-				trigger={
-					<MarketplaceTabItem item={item} onClickRef={onClickRef} />
-				}
-			/>
+			<MarketplaceTabItem item={item} onClickRef={onClickRef} />
 		</li>
 	);
 }

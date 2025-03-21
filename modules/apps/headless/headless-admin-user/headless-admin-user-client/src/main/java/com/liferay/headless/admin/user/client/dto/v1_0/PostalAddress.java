@@ -113,6 +113,27 @@ public class PostalAddress implements Cloneable, Serializable {
 
 	protected String addressRegion;
 
+	public String getAddressSubtype() {
+		return addressSubtype;
+	}
+
+	public void setAddressSubtype(String addressSubtype) {
+		this.addressSubtype = addressSubtype;
+	}
+
+	public void setAddressSubtype(
+		UnsafeSupplier<String, Exception> addressSubtypeUnsafeSupplier) {
+
+		try {
+			addressSubtype = addressSubtypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String addressSubtype;
+
 	public String getAddressType() {
 		return addressType;
 	}

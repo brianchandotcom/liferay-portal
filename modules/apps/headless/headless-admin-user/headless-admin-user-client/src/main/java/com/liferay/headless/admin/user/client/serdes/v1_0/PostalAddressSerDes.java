@@ -98,6 +98,20 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (postalAddress.getAddressSubtype() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressSubtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(postalAddress.getAddressSubtype()));
+
+			sb.append("\"");
+		}
+
 		if (postalAddress.getAddressType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -285,6 +299,15 @@ public class PostalAddressSerDes {
 				String.valueOf(postalAddress.getAddressRegion()));
 		}
 
+		if (postalAddress.getAddressSubtype() == null) {
+			map.put("addressSubtype", null);
+		}
+		else {
+			map.put(
+				"addressSubtype",
+				String.valueOf(postalAddress.getAddressSubtype()));
+		}
+
 		if (postalAddress.getAddressType() == null) {
 			map.put("addressType", null);
 		}
@@ -398,6 +421,9 @@ public class PostalAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "addressRegion")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "addressSubtype")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "addressType")) {
 				return false;
 			}
@@ -468,6 +494,12 @@ public class PostalAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "addressRegion")) {
 				if (jsonParserFieldValue != null) {
 					postalAddress.setAddressRegion(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "addressSubtype")) {
+				if (jsonParserFieldValue != null) {
+					postalAddress.setAddressSubtype(
 						(String)jsonParserFieldValue);
 				}
 			}

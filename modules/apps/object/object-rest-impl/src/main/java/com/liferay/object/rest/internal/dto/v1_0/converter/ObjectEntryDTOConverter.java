@@ -1180,15 +1180,15 @@ public class ObjectEntryDTOConverter
 		return (Map<String, Object>)(Map)unsafeSuppliers;
 	}
 
-	private Status _toStatus(Locale locale, int statusInt) {
+	private Status _toStatus(Locale locale, int status) {
 		return new Status() {
 			{
-				setCode(() -> statusInt);
-				setLabel(() -> WorkflowConstants.getStatusLabel(statusInt));
+				setCode(() -> status);
+				setLabel(() -> WorkflowConstants.getStatusLabel(status));
 				setLabel_i18n(
 					() -> _language.get(
 						LanguageResources.getResourceBundle(locale),
-						WorkflowConstants.getStatusLabel(statusInt)));
+						WorkflowConstants.getStatusLabel(status)));
 			}
 		};
 	}

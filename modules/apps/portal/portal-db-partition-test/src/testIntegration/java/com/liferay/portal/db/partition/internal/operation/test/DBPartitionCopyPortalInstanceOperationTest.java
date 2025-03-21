@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.AfterClass;
@@ -46,6 +47,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 		return "CopyPortalInstanceOperation";
 	}
 
+	@FeatureFlags("LPD-11342")
 	@Test
 	public void testDeployConfiguration() throws Exception {
 		long[] companyIds = PortalInstancePool.getCompanyIds();
@@ -74,6 +76,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 		}
 	}
 
+	@FeatureFlags("LPD-11342")
 	@Test
 	public void testDeployConfigurationExistingDestinationCompanyId()
 		throws Exception {

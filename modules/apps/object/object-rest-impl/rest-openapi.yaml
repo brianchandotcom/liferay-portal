@@ -25,14 +25,6 @@ components:
                     type: object
                 oldValue:
                     type: object
-        EntryValidation:
-            properties:
-                entry:
-                    $ref: "#/components/schemas/ObjectEntry"
-                validationKeys:
-                    items:
-                        type: string
-                    type: array
         FileEntry:
             properties:
                 externalReferenceCode:
@@ -236,8 +228,16 @@ components:
                     type: string
                 objectFieldName:
                     type: string
-                validationKey:
+                objectValidationRuleERC:
                     type: string
+        ValidationRequest:
+            properties:
+                objectValidationRuleERCs:
+                    items:
+                        type: string
+                    type: array
+                values:
+                    $ref: "#/components/schemas/ObjectEntry"
 info:
     license:
         name: "Apache 2.0"
@@ -661,10 +661,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/EntryValidation"
+                            $ref: "#/components/schemas/ValidationRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/EntryValidation"
+                            $ref: "#/components/schemas/ValidationRequest"
             responses:
                 200:
                     content:
@@ -686,10 +686,10 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/EntryValidation"
+                            $ref: "#/components/schemas/ValidationRequest"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/EntryValidation"
+                            $ref: "#/components/schemas/ValidationRequest"
             responses:
                 200:
                     content:

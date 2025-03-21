@@ -11,11 +11,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import FieldWrapper from './FieldWrapper';
 
 const FieldFile = ({
+	errorMessage,
 	fieldId,
 	label,
 	onFileChange,
 	validExtensions,
 }: {
+	errorMessage?: string;
 	fieldId: string;
 	label: string;
 	onFileChange?: (file: File | null) => void;
@@ -59,7 +61,11 @@ const FieldFile = ({
 	}, [file, onFileChange]);
 
 	return (
-		<FieldWrapper fieldId={fieldId} label={label}>
+		<FieldWrapper
+			errorMessage={errorMessage}
+			fieldId={fieldId}
+			label={label}
+		>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayInput id={fieldId} value={file?.name || ''} />

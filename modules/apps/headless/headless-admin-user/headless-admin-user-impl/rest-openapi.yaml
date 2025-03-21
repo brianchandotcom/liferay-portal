@@ -809,6 +809,10 @@ components:
                     description:
                         The address's region (e.g., state).
                     type: string
+                addressSubtype:
+                    description:
+                        The address's subtype.
+                    type: string
                 addressType:
                     description:
                         The address's type.

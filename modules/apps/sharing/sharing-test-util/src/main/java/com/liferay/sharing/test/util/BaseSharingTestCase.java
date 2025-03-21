@@ -6,7 +6,6 @@
 package com.liferay.sharing.test.util;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -26,14 +24,12 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.permission.contributor.PermissionSQLContributor;
 import com.liferay.portal.test.rule.Inject;
@@ -233,52 +229,9 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 	}
 
 	@Test
-	public void testInlinePermissionsToUserGroup() throws Exception {
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_groupUser);
-
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_groupUser, permissionChecker)) {
-
-			Assert.assertEquals(0, getModelCount(_group));
-
-			T model = getModel(TestPropsValues.getUser(), _group);
-
-			long classPK = (long)model.getPrimaryKeyObj();
-
-			_userGroupLocalService.addUserUserGroup(
-				_groupUser.getUserId(), userGroup);
-
-			_sharingEntryLocalService.addSharingEntry(
-				null, TestPropsValues.getUserId(), userGroup.getUserGroupId(),
-				0,
-				_classNameLocalService.getClassNameId(
-					model.getModelClassName()),
-				classPK, _group.getGroupId(), true,
-				Collections.singletonList(SharingEntryAction.VIEW), null,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-			Assert.assertEquals(1, getModelCount(_group));
-		}
-		finally {
-			if (userGroup != null) {
-				_userGroupLocalService.deleteUserUserGroup(
-					_groupUser.getUserId(), userGroup);
-				_userGroupLocalService.deleteUserGroup(userGroup);
-			}
-		}
-	}
-
-	@Test
 	public void testModelClassNameReturnsPermissionSQL() throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
-
-		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
-
-		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				TestPropsValues.getUser(), permissionChecker)) {
@@ -288,42 +241,17 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 			PermissionSQLContributor permissionSQLContributor =
 				getPermissionSQLContributor();
 
-			_userGroupLocalService.addUserUserGroup(
-				TestPropsValues.getUserId(), userGroup1);
-			_userGroupLocalService.addUserUserGroup(
-				TestPropsValues.getUserId(), userGroup2);
-
 			Assert.assertEquals(
 				StringBundler.concat(
 					"1234 IN (SELECT SharingEntry.classPK FROM SharingEntry ",
-					"WHERE ((SharingEntry.toUserId = ",
+					"WHERE (SharingEntry.toUserId = ",
 					TestPropsValues.getUserId(),
-					") OR (SharingEntry.toUserGroupId IN ( ",
-					StringUtil.merge(
-						new long[] {
-							userGroup1.getUserGroupId(),
-							userGroup2.getUserGroupId()
-						},
-						","),
-					"))) AND (SharingEntry.classNameId = ",
+					") AND (SharingEntry.classNameId = ",
 					_classNameLocalService.getClassNameId(
 						model.getModelClassName()),
 					"))"),
 				permissionSQLContributor.getPermissionSQL(
 					model.getModelClassName(), "1234", null, null, null));
-		}
-		finally {
-			if (userGroup1 != null) {
-				_userGroupLocalService.deleteUserUserGroup(
-					TestPropsValues.getUserId(), userGroup1);
-				_userGroupLocalService.deleteUserGroup(userGroup1);
-			}
-
-			if (userGroup2 != null) {
-				_userGroupLocalService.deleteUserUserGroup(
-					TestPropsValues.getUserId(), userGroup2);
-				_userGroupLocalService.deleteUserGroup(userGroup2);
-			}
 		}
 	}
 
@@ -915,9 +843,6 @@ public abstract class BaseSharingTestCase<T extends ClassedModel> {
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
-
-	@Inject
-	private UserGroupLocalService _userGroupLocalService;
 
 	private class AddModelResourcePermission implements AutoCloseable {
 

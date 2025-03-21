@@ -64,7 +64,7 @@ public class DefaultStyleBookEntryUtilTest {
 		Layout masterLayout = _layoutLocalService.getLayout(
 			masterLayoutBasedLayout.getMasterLayoutPlid());
 
-		StyleBookEntry styleBookEntry1 = _addStyleBookEntry(true);
+		StyleBookEntry defaultStyleBookEntry = _addStyleBookEntry(true);
 
 		StyleBookEntry defaultMasterStyleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultMasterStyleBookEntry(
@@ -73,12 +73,12 @@ public class DefaultStyleBookEntryUtilTest {
 		Assert.assertNotNull(defaultMasterStyleBookEntry);
 
 		Assert.assertEquals(
-			styleBookEntry1.getStyleBookEntryId(),
+			defaultStyleBookEntry.getStyleBookEntryId(),
 			defaultMasterStyleBookEntry.getStyleBookEntryId());
 
-		StyleBookEntry styleBookEntry2 = _addStyleBookEntry(false);
+		StyleBookEntry styleBookEntry = _addStyleBookEntry(false);
 
-		masterLayout.setStyleBookEntryId(styleBookEntry2.getStyleBookEntryId());
+		masterLayout.setStyleBookEntryId(styleBookEntry.getStyleBookEntryId());
 
 		_layoutLocalService.updateLayout(masterLayout);
 
@@ -89,7 +89,7 @@ public class DefaultStyleBookEntryUtilTest {
 		Assert.assertNotNull(defaultMasterStyleBookEntry);
 
 		Assert.assertEquals(
-			styleBookEntry2.getStyleBookEntryId(),
+			styleBookEntry.getStyleBookEntryId(),
 			defaultMasterStyleBookEntry.getStyleBookEntryId());
 	}
 

@@ -179,7 +179,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 			Object infoItem = null;
 
-			String className = _portal.getClassName(
+			String className = _portal.fetchClassName(
 				ParamUtil.getLong(httpServletRequest, "classNameId"));
 
 			InfoItemIdentifier infoItemIdentifier = _getInfoItemIdentifier(

@@ -93,7 +93,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 import com.liferay.site.manager.RecentGroupManager;
 
 import java.text.Format;

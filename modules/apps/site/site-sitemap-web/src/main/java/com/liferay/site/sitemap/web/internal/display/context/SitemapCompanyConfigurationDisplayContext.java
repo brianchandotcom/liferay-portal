@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 
 import java.util.List;
 

@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 
 import java.util.ArrayList;

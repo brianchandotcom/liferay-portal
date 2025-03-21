@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 import com.liferay.site.item.selector.web.internal.renderer.RecentGroupItemSelectorViewRenderer;
 import com.liferay.site.manager.RecentGroupManager;
 import com.liferay.site.provider.GroupURLProvider;

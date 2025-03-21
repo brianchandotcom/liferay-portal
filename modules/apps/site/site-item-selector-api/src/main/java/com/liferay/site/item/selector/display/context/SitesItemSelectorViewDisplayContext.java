@@ -8,7 +8,7 @@ package com.liferay.site.item.selector.display.context;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 import com.liferay.site.search.GroupSearch;
 
 import javax.portlet.PortletException;

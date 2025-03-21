@@ -34,7 +34,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.product.navigation.site.administration.internal.constants.SiteAdministrationWebKeys" %><%@
 page import="com.liferay.product.navigation.site.administration.internal.display.context.SiteAdministrationPanelCategoryDisplayContext" %><%@
-page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %><%@
+page import="com.liferay.site.item.selector.SiteItemSelectorCriterion" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.Map" %>

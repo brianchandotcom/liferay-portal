@@ -23,7 +23,7 @@ import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 import com.liferay.site.manager.RecentGroupManager;
 import com.liferay.taglib.aui.AUIUtil;
 

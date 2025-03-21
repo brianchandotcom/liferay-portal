@@ -110,7 +110,7 @@ page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDispla
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.frontend.taglib.clay.servlet.taglib.SelectSiteInitializerVerticalCard" %><%@
 page import="com.liferay.site.admin.web.internal.frontend.taglib.clay.servlet.taglib.SiteVerticalCard" %><%@
-page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %><%@
+page import="com.liferay.site.item.selector.SiteItemSelectorCriterion" %><%@
 page import="com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %>
 

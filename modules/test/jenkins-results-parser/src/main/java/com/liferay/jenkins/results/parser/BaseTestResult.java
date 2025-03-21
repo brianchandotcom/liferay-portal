@@ -102,11 +102,7 @@ public abstract class BaseTestResult implements TestResult {
 	public boolean isSkipped() {
 		String status = getStatus();
 
-		if (status.equals("SKIPPED")) {
-			return true;
-		}
-
-		return false;
+		return status.equals("SKIPPED");
 	}
 
 	@Override

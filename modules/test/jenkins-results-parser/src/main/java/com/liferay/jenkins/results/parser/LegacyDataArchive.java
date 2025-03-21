@@ -54,13 +54,8 @@ public class LegacyDataArchive {
 
 		String gitCommitMessage = localGitCommit.getMessage();
 
-		if (gitCommitMessage.contains(
-				latestTestLocalGitCommit.getAbbreviatedSHA())) {
-
-			return true;
-		}
-
-		return false;
+		return gitCommitMessage.contains(
+			latestTestLocalGitCommit.getAbbreviatedSHA());
 	}
 
 	public void stageLegacyDataArchive() throws IOException {

@@ -460,11 +460,7 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		String portalBatchName = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
 
-		if (portalBatchName.startsWith("functional")) {
-			return true;
-		}
-
-		return false;
+		return portalBatchName.startsWith("functional");
 	}
 
 	private boolean _isJUnitBatch() {

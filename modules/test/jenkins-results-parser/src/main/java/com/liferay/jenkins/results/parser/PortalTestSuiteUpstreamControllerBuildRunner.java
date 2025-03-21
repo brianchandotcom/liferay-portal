@@ -541,11 +541,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		String previousPortalBranchSHA = matcher.group("branchSHA");
 
-		if (portalBranchSHA.equals(previousPortalBranchSHA)) {
-			return true;
-		}
-
-		return false;
+		return portalBranchSHA.equals(previousPortalBranchSHA);
 	}
 
 	private static final Pattern _portalBranchSHAPattern = Pattern.compile(

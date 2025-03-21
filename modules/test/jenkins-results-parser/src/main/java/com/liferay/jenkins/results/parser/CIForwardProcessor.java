@@ -732,11 +732,7 @@ public class CIForwardProcessor {
 		List<String> failedRequiredPassingTestSuiteNames =
 			_getFailedRequiredPassingTestSuiteNames();
 
-		if (!failedRequiredPassingTestSuiteNames.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return failedRequiredPassingTestSuiteNames.isEmpty();
 	}
 
 	private static final long _RETRY_PERIOD = 1000L * 60L;

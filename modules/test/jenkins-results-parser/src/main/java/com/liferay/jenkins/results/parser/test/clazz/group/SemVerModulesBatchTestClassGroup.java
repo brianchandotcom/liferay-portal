@@ -63,11 +63,7 @@ public class SemVerModulesBatchTestClassGroup
 			_quarterlyReleaseNamePattern.matcher(
 				portalGitWorkingDirectory.getUpstreamBranchName());
 
-		if (quarterlyReleaseNameMatcher.find()) {
-			return true;
-		}
-
-		return false;
+		return quarterlyReleaseNameMatcher.find();
 	}
 
 	@Override

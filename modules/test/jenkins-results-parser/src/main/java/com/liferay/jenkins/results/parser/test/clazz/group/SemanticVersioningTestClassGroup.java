@@ -66,11 +66,7 @@ public class SemanticVersioningTestClassGroup extends BatchTestClassGroup {
 			_quarterlyReleaseNamePattern.matcher(
 				portalGitWorkingDirectory.getUpstreamBranchName());
 
-		if (quarterlyReleaseNameMatcher.find()) {
-			return true;
-		}
-
-		return false;
+		return quarterlyReleaseNameMatcher.find();
 	}
 
 	private static final Pattern _quarterlyReleaseNamePattern = Pattern.compile(

@@ -303,11 +303,7 @@ public class GitHubWebhookPayloadProcessor {
 	}
 
 	public boolean isValidAutopull(String repo) {
-		if (repo.startsWith("com-liferay-")) {
-			return true;
-		}
-
-		return false;
+		return repo.startsWith("com-liferay-");
 	}
 
 	public boolean isValidCIMergeFile(PullRequest pullRequest) {
@@ -707,21 +703,12 @@ public class GitHubWebhookPayloadProcessor {
 
 		string = string.trim();
 
-		if (string.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return string.isEmpty();
 	}
 
 	protected boolean isBotPush(PushEventPayload pushEventPayload) {
-		if (JenkinsResultsParserUtil.isNullOrEmpty(
-				getSubrepoPath(pushEventPayload))) {
-
-			return false;
-		}
-
-		return true;
+		return !JenkinsResultsParserUtil.isNullOrEmpty(
+			getSubrepoPath(pushEventPayload));
 	}
 
 	protected boolean isLiferayUser(String gitHubUsername) {
@@ -762,11 +749,7 @@ public class GitHubWebhookPayloadProcessor {
 	protected boolean isSynchronizeablePullRequest(PullRequest pullRequest) {
 		String receiverUsername = pullRequest.getReceiverUsername();
 
-		if (receiverUsername.equals("brianchandotcom")) {
-			return false;
-		}
-
-		return true;
+		return !receiverUsername.equals("brianchandotcom");
 	}
 
 	protected boolean isTestablePullRequest(PullRequest pullRequest) {
@@ -1058,11 +1041,7 @@ public class GitHubWebhookPayloadProcessor {
 
 		JSONObject commitJSONObject = new JSONObject(processURL(sb.toString()));
 
-		if (!commitJSONObject.has("sha")) {
-			return false;
-		}
-
-		return true;
+		return commitJSONObject.has("sha");
 	}
 
 	protected String join(String[] array) {

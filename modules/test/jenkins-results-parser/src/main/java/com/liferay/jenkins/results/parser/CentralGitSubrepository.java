@@ -154,13 +154,8 @@ public class CentralGitSubrepository {
 		String gitSubrepositoryMergedCommit = _gitrepoProperties.getProperty(
 			"commit", "");
 
-		if (gitSubrepositoryMergedCommit.equals(
-				getGitSubrepositoryUpstreamCommit())) {
-
-			return true;
-		}
-
-		return false;
+		return gitSubrepositoryMergedCommit.equals(
+			getGitSubrepositoryUpstreamCommit());
 	}
 
 	private String _getGitSubrepositoryName() {

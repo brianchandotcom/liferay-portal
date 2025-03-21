@@ -794,10 +794,11 @@ public class SharingEntryLocalServiceTest {
 					SharingEntryAction.UPDATE));
 		}
 		finally {
-			_userGroupLocalService.deleteUserUserGroup(
-				_toUser.getUserId(), userGroup);
-
-			_userGroupLocalService.deleteUserGroup(userGroup);
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserUserGroup(
+					_toUser.getUserId(), userGroup);
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
 		}
 	}
 
@@ -887,10 +888,11 @@ public class SharingEntryLocalServiceTest {
 					SharingEntryAction.VIEW));
 		}
 		finally {
-			_userGroupLocalService.deleteUserUserGroup(
-				_toUser.getUserId(), userGroup);
-
-			_userGroupLocalService.deleteUserGroup(userGroup);
+			if (userGroup != null) {
+				_userGroupLocalService.deleteUserUserGroup(
+					_toUser.getUserId(), userGroup);
+				_userGroupLocalService.deleteUserGroup(userGroup);
+			}
 		}
 	}
 

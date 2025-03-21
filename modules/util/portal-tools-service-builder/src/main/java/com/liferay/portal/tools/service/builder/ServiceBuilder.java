@@ -6819,9 +6819,9 @@ public class ServiceBuilder {
 
 				throw new IllegalArgumentException(
 					StringBundler.concat(
-						"Finder ", entityName, StringPool.PERIOD, finderName,
-						" must set \"unique\" to true as it returns a single ",
-						"object, not a Collection."));
+						"Finder \"", finderName, "\" defined by entity \"",
+						entityName, "\" must set unique=\"true\" as its ",
+						"return type is the name of the entity."));
 			}
 
 			String finderWhere = finderElement.attributeValue("where");

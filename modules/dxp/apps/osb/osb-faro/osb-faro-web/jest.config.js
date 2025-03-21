@@ -25,7 +25,7 @@ module.exports = {
 			activityActions: {
 				comments: 3,
 				downloads: 0,
-				previews: 4,
+				impressions: 4,
 				submissions: 1,
 				visits: 2
 			},

@@ -1414,8 +1414,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static boolean _isValidParameter(String name, String schemaName) {
-		String schemaVarName = TextFormatter.format(
-			schemaName, TextFormatter.I);
+		String schemaVarName = OpenAPIParserUtil.getSchemaVarName(schemaName);
 
 		if (StringUtil.equals(name, "aggregation") ||
 			StringUtil.equals(name, "aggregationTerms") ||

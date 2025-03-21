@@ -63,12 +63,13 @@ public class RequestQuoteTag extends IncludeTag {
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
-			_commerceChannelId = commerceContext.getCommerceChannelId();
+			if ((commerceContext == null) ||
+				(commerceContext.getCommerceChannelId() == 0)) {
 
-			if (_commerceChannelId == 0) {
 				return SKIP_BODY;
 			}
 
+			_commerceChannelId = commerceContext.getCommerceChannelId();
 			_commerceAccountId = CommerceUtil.getCommerceAccountId(
 				commerceContext);
 

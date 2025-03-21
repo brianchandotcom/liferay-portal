@@ -788,86 +788,87 @@ test.describe('UI', () => {
 		}
 	);
 
-	test('Content type modal is displayed when mapped object definition does not exist anymore', async ({
-		apiHelpers,
-		displayPageTemplatesPage,
-		page,
-		site,
-	}) => {
+	test(
+		'Content type modal is displayed when mapped object definition does not exist anymore',
+		{
+			tag: '@LPD-51605',
+		},
+		async ({apiHelpers, displayPageTemplatesPage, page, site}) => {
 
-		// Create Object definition
+			// Create Object definition
 
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				externalReferenceCode: 'stockERC',
-				label: {
-					en_US: 'stock',
-				},
-				name: 'Stock',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: 'nameERC',
-						indexed: true,
-						indexedAsKeyword: true,
-						label: {
-							en_US: 'name',
-						},
-						name: 'name',
-						required: true,
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: 'stockERC',
+					label: {
+						en_US: 'stock',
 					},
-				],
-				pluralLabel: {
-					en_US: 'stocks',
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
-			});
+					name: 'Stock',
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'nameERC',
+							indexed: true,
+							indexedAsKeyword: true,
+							label: {
+								en_US: 'name',
+							},
+							name: 'name',
+							required: true,
+						},
+					],
+					pluralLabel: {
+						en_US: 'stocks',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
 
-		// Create display page template for object
+			// Create display page template for object
 
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				objectDefinition.className
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinition.className
+				);
+
+			const displayPageTemplateName = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+				{
+					classNameId: className.classNameId,
+					groupId: site.id,
+					name: displayPageTemplateName,
+				}
 			);
 
-		const displayPageTemplateName = getRandomString();
+			// Delete object definition
 
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
-			{
-				classNameId: className.classNameId,
-				groupId: site.id,
-				name: displayPageTemplateName,
-			}
-		);
+			await objectDefinitionAPIClient.deleteObjectDefinition(
+				objectDefinition.id
+			);
 
-		// Delete object definition
+			// Check that content type modal is displayed when trying to edit display page template
 
-		await objectDefinitionAPIClient.deleteObjectDefinition(
-			objectDefinition.id
-		);
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-		// Check that content type modal is displayed when trying to edit display page template
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName,
+				'Edit'
+			);
 
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		await displayPageTemplatesPage.clickMoreActions(
-			displayPageTemplateName,
-			'Edit'
-		);
-
-		await expect(
-			page.getByLabel('Select Content Type', {exact: true})
-		).toBeVisible();
-	});
+			await expect(
+				page.getByLabel('Select Content Type', {exact: true})
+			).toBeVisible();
+		}
+	);
 });
 
 test.describe('Usages', () => {

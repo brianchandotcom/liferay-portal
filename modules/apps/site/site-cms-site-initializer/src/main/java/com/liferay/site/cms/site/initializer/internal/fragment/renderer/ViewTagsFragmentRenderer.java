@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
-import com.liferay.site.cms.site.initializer.internal.display.context.TagsViewDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewTagsDisplayContext;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration",
 	service = FragmentRenderer.class
 )
-public class TagsViewFragmentRenderer extends BaseSectionFragmentRenderer {
+public class ViewTagsFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -57,15 +57,15 @@ public class TagsViewFragmentRenderer extends BaseSectionFragmentRenderer {
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/tags_view.jsp");
+				_servletContext.getRequestDispatcher("/view_tags.jsp");
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
-				TagsViewDisplayContext.class.getName(),
-				new TagsViewDisplayContext(
+				ViewTagsDisplayContext.class.getName(),
+				new ViewTagsDisplayContext(
 					_cmsSiteInitializerConfiguration, httpServletRequest,
 					themeDisplay));
 

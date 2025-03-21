@@ -15,11 +15,11 @@ import React from 'react';
 export default function CategorizationToolbar({
 	activeTab,
 	tagsURL,
-	vocabularyURL,
+	vocabulariesURL,
 }: {
 	activeTab: string;
 	tagsURL: string;
-	vocabularyURL: string;
+	vocabulariesURL: string;
 }) {
 	return (
 		<div>
@@ -71,7 +71,7 @@ export default function CategorizationToolbar({
 					active={activeTab === 'vocabularies'}
 					key={Liferay.Language.get('vocabularies')}
 				>
-					<ClayButton onClick={() => navigate(vocabularyURL)}>
+					<ClayButton onClick={() => navigate(vocabulariesURL)}>
 						{Liferay.Language.get('vocabularies')}
 					</ClayButton>
 				</ClayNavigationBar.Item>

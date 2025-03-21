@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Noor Najjar
  */
-public class TagsViewDisplayContext {
+public class ViewVocabulariesDisplayContext {
 
-	public TagsViewDisplayContext(
+	public ViewVocabulariesDisplayContext(
 		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
@@ -39,7 +39,7 @@ public class TagsViewDisplayContext {
 					"/categorization/view_tags"),
 				_themeDisplay)
 		).put(
-			"vocabularyURL",
+			"vocabulariesURL",
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false,

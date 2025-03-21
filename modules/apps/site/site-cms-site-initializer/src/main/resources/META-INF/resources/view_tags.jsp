@@ -8,14 +8,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-VocabularyViewDisplayContext vocabularyViewDisplayContext = (VocabularyViewDisplayContext)request.getAttribute(VocabularyViewDisplayContext.class.getName());
+ViewTagsDisplayContext viewTagsDisplayContext = (ViewTagsDisplayContext)request.getAttribute(
+	ViewTagsDisplayContext.class.getName());
 %>
 
 <div class="cms-section">
 	<div id="<%= CMSSiteInitializerFDSNames.CATEGORIZATION_SECTION %>">
 		<react:component
-			module="{VocabulariesView} from site-cms-site-initializer"
-			props="<%= vocabularyViewDisplayContext.getReactData() %>"
+			module="{ViewTags} from site-cms-site-initializer"
+			props="<%= viewTagsDisplayContext.getReactData() %>"
 		/>
 	</div>
 </div>

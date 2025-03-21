@@ -8,12 +8,12 @@ import React from 'react';
 
 import CategorizationToolbar from '../CategorizationToolbar';
 
-export default function TagsView({
+export default function ViewTags({
 	tagsURL,
-	vocabularyURL,
+	vocabulariesURL,
 }: {
 	tagsURL: string;
-	vocabularyURL: string;
+	vocabulariesURL: string;
 }) {
 	const creationMenu = {
 		primaryItems: [
@@ -44,13 +44,13 @@ export default function TagsView({
 			<CategorizationToolbar
 				activeTab="tags"
 				tagsURL={tagsURL}
-				vocabularyURL={vocabularyURL}
+				vocabulariesURL={vocabulariesURL}
 			/>
 
 			<FrontendDataSet
 				creationMenu={creationMenu}
 				emptyState={emptyState}
-				id="TagsView"
+				id="ViewTags"
 				showManagementBar={false}
 				showSearch={false}
 				views={views}

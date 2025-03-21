@@ -23,7 +23,7 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
-import {commerceReturnSetUp} from '../utils/commerce';
+import {classicCommerceSetUp, commerceReturnSetUp} from '../utils/commerce';
 import {checkLocalizedDate} from '../utils/date';
 
 export const test = mergeTests(
@@ -2691,3 +2691,34 @@ test('LPD-43496 Account selector redirects to order details DPT if open order co
 
 	await expect(page.getByText('Heading Example')).toBeVisible();
 });
+
+test(
+	'When there is no site associated with the channel, inform the user',
+	{tag: '@LPD-51595'},
+	async ({apiHelpers, commerceLayoutsPage, page}) => {
+		const {channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			getRandomString()
+		);
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			commerceLayoutsPage.accountSelectorButton('Select Account & Order')
+		).toBeVisible();
+
+		await apiHelpers.headlessCommerceAdminChannel.putChannel(channel.id, {
+			accountId: channel.accountId,
+			currencyCode: channel.currencyCode,
+			name: channel.name,
+			siteGroupId: 0,
+			type: channel.type,
+		});
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			commerceLayoutsPage.accountSelectorButton('Select Account & Order')
+		).not.toBeVisible();
+	}
+);

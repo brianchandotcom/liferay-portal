@@ -7,10 +7,21 @@ package com.liferay.portal.search.web.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
+import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
+import com.liferay.portal.search.web.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
+import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
+import com.liferay.portal.search.web.internal.custom.filter.constants.CustomFilterPortletKeys;
+import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
+import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
+import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
+import com.liferay.portal.search.web.internal.sort.constants.SortPortletKeys;
+import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
+import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.search.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.portal.search.web.internal.upgrade.v2_0_0.SearchPortletUpgradeProcess;
+import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
 
@@ -62,7 +73,18 @@ public class SearchWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				@Override
 				protected String[] getPortletIds() {
 					return new String[] {
-						CategoryFacetPortletKeys.CATEGORY_FACET + "_INSTANCE_%"
+						CategoryFacetPortletKeys.CATEGORY_FACET + "_INSTANCE_%",
+						CustomFacetPortletKeys.CUSTOM_FACET + "_INSTANCE_%",
+						CustomFilterPortletKeys.CUSTOM_FILTER + "_INSTANCE_%",
+						FolderFacetPortletKeys.FOLDER_FACET + "_INSTANCE_%",
+						ModifiedFacetPortletKeys.MODIFIED_FACET + "_INSTANCE_%",
+						SearchBarPortletKeys.SEARCH_BAR + "_INSTANCE_%",
+						SearchResultsPortletKeys.SEARCH_RESULTS + "_INSTANCE_%",
+						SiteFacetPortletKeys.SITE_FACET + "_INSTANCE_%",
+						SortPortletKeys.SORT + "_INSTANCE_%",
+						TagFacetPortletKeys.TAG_FACET + "_INSTANCE_%",
+						TypeFacetPortletKeys.TYPE_FACET + "_INSTANCE_%",
+						UserFacetPortletKeys.USER_FACET + "_INSTANCE_%"
 					};
 				}
 

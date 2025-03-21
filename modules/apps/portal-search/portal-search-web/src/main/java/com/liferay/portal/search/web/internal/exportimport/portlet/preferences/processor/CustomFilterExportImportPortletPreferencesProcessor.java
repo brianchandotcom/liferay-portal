@@ -18,5 +18,5 @@ import org.osgi.service.component.annotations.Component;
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class CustomFilterExportImportPortletPreferencesProcessor
-	extends BaseExportImportPortletPreferencesProcessor {
+	extends BaseSearchExportImportPortletPreferencesProcessor {
 }

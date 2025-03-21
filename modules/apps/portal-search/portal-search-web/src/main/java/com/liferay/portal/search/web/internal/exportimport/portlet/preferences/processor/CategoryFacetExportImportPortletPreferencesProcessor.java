@@ -10,9 +10,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -21,7 +19,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,7 +27,6 @@ import com.liferay.portal.search.web.internal.category.facet.constants.CategoryF
 import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences;
 
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -46,17 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ExportImportPortletPreferencesProcessor.class
 )
 public class CategoryFacetExportImportPortletPreferencesProcessor
-	extends BaseExportImportPortletPreferencesProcessor {
-
-	@Override
-	public List<Capability> getExportCapabilities() {
-		return ListUtil.fromArray(exportCapability);
-	}
-
-	@Override
-	public List<Capability> getImportCapabilities() {
-		return ListUtil.fromArray(importCapability);
-	}
+	extends BaseSearchExportImportPortletPreferencesProcessor {
 
 	@Override
 	public PortletPreferences processExportPortletPreferences(
@@ -190,12 +176,6 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 
 		return assetVocabulary.getVocabularyId();
 	}
-
-	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
-	protected Capability exportCapability;
-
-	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
-	protected Capability importCapability;
 
 	private void _importReferenceStagedModel(
 			PortletDataContext portletDataContext)

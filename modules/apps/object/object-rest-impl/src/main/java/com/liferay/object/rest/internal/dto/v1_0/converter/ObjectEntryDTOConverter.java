@@ -277,7 +277,8 @@ public class ObjectEntryDTOConverter
 						ObjectEntryFolder objectEntryFolder =
 							_objectEntryFolderLocalService.
 								fetchObjectEntryFolder(
-									objectEntry.getObjectEntryFolderId());
+									serviceBuilderObjectEntry.
+										getObjectEntryFolderId());
 
 						if (objectEntryFolder != null) {
 							return objectEntryFolder.getExternalReferenceCode();
@@ -285,7 +286,8 @@ public class ObjectEntryDTOConverter
 
 						return StringPool.BLANK;
 					});
-				setObjectEntryFolderId(objectEntry::getObjectEntryFolderId);
+				setObjectEntryFolderId(
+					serviceBuilderObjectEntry::getObjectEntryFolderId);
 				setPermissions(
 					() -> _toPermissions(
 						objectDefinition, serviceBuilderObjectEntry));

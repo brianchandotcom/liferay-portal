@@ -103,6 +103,7 @@ import com.liferay.object.tree.Tree;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
@@ -130,6 +131,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -177,6 +179,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -2752,6 +2755,112 @@ public class ObjectEntryLocalServiceTest {
 
 		// TODO Test object entries scoped to company vs. scoped to group
 
+	}
+
+	@Test
+	public void testAddOrUpdateObjectEntryWithAttachmentObjectFieldAndObjectValidationRule()
+		throws Exception {
+
+		ObjectValidationRule objectValidationRule = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Field must be an email address"),
+			"isEmailAddress(emailAddressRequired)");
+
+		FileEntry tempFileEntry1 = _addTempFileEntry(StringUtil.randomString());
+
+		try {
+			_addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", RandomTestUtil.randomString()
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"upload", tempFileEntry1.getFileEntryId()
+				).build());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRule);
+		}
+
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(tempFileEntry1.getFileEntryId()));
+
+		_clearValidatedObjectEntryIds();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "james@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"upload", tempFileEntry1.getFileEntryId()
+			).build());
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				tempFileEntry1.getFileEntryId(), "}"),
+			() -> _dlAppLocalService.getFileEntry(
+				tempFileEntry1.getFileEntryId()));
+
+		long persistedDLFileEntryId = MapUtil.getLong(
+			objectEntry.getValues(), "upload");
+
+		Assert.assertNotNull(
+			_dlFileEntryLocalService.getDLFileEntry(persistedDLFileEntryId));
+
+		_clearValidatedObjectEntryIds();
+
+		FileEntry tempFileEntry2 = _addTempFileEntry(StringUtil.randomString());
+
+		try {
+			objectEntry = _addOrUpdateObjectEntry(
+				objectEntry.getExternalReferenceCode(), 0,
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", RandomTestUtil.randomString()
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).put(
+					"upload", tempFileEntry2.getFileEntryId()
+				).build());
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			_assertFailureObjectValidationRule(
+				modelListenerException, objectValidationRule);
+		}
+
+		Assert.assertEquals(
+			persistedDLFileEntryId,
+			MapUtil.getLong(objectEntry.getValues(), "upload"));
+		Assert.assertNotNull(
+			_dlFileEntryLocalService.getDLFileEntry(persistedDLFileEntryId));
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+			tempFileEntry2.getFileEntryId());
+
+		dlFileEntry.setCreateDate(
+			new Date(System.currentTimeMillis() - Time.DAY));
+
+		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+
+		UnsafeRunnable<Exception> unsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
+
+		unsafeRunnable.run();
+
+		AssertUtils.assertFailure(
+			NoSuchFileEntryException.class,
+			StringBundler.concat(
+				"No FileEntry exists with the key {fileEntryId=",
+				tempFileEntry2.getFileEntryId(), "}"),
+			() -> _dlAppLocalService.getFileEntry(
+				tempFileEntry2.getFileEntryId()));
 	}
 
 	@FeatureFlags("LPD-21926")
@@ -6097,6 +6206,11 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.document.library.web.internal.scheduler.TempFileEntriesSchedulerJobConfiguration"
+	)
+	private SchedulerJobConfiguration _schedulerJobConfiguration;
 
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;

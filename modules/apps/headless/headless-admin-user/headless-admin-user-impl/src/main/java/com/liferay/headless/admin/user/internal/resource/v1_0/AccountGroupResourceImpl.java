@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -218,12 +217,8 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		throws Exception {
 
 		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
-			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+			_accountGroupService.getAccountGroupByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (serviceBuilderAccountGroup == null) {
-			throw new NoSuchGroupException();
-		}
 
 		return _updateAccountGroup(accountGroup, serviceBuilderAccountGroup);
 	}

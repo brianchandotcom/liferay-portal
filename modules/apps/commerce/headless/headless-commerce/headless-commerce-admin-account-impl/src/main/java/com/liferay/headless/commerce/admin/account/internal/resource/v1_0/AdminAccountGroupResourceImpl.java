@@ -6,7 +6,6 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.account.exception.NoSuchEntryException;
-import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryService;
@@ -65,14 +64,8 @@ public class AdminAccountGroupResourceImpl
 		throws Exception {
 
 		AccountGroup accountGroup =
-			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+			_accountGroupService.getAccountGroupByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountGroup == null) {
-			throw new NoSuchGroupException(
-				"Unable to find account group with external reference code " +
-					externalReferenceCode);
-		}
 
 		_accountGroupService.deleteAccountGroup(
 			accountGroup.getAccountGroupId());
@@ -116,14 +109,8 @@ public class AdminAccountGroupResourceImpl
 		throws Exception {
 
 		AccountGroup accountGroup =
-			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+			_accountGroupService.getAccountGroupByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountGroup == null) {
-			throw new NoSuchGroupException(
-				"Unable to find account group with external reference code " +
-					externalReferenceCode);
-		}
 
 		return _adminAccountGroupDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
@@ -186,14 +173,8 @@ public class AdminAccountGroupResourceImpl
 		throws Exception {
 
 		AccountGroup accountGroup =
-			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+			_accountGroupService.getAccountGroupByExternalReferenceCode(
 				externalReferenceCode, contextCompany.getCompanyId());
-
-		if (accountGroup == null) {
-			throw new NoSuchGroupException(
-				"Unable to find account group with external reference code " +
-					externalReferenceCode);
-		}
 
 		_accountGroupService.updateAccountGroup(
 			externalReferenceCode, accountGroup.getAccountGroupId(),

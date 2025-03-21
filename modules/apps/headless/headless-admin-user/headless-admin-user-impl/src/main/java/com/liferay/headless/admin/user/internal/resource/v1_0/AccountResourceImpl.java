@@ -8,7 +8,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountListTypeConstants;
-import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -227,15 +226,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		throws Exception {
 
 		AccountGroup accountGroup =
-			_accountGroupService.fetchAccountGroupByExternalReferenceCode(
+			_accountGroupService.getAccountGroupByExternalReferenceCode(
 				accountGroupExternalReferenceCode,
 				contextCompany.getCompanyId());
-
-		if (accountGroup == null) {
-			throw new NoSuchGroupException(
-				"Unable to find account group with external reference code " +
-					accountGroupExternalReferenceCode);
-		}
 
 		return getAccountGroupAccountsPage(
 			accountGroup.getAccountGroupId(), search, filter, pagination,

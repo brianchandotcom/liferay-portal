@@ -6,8 +6,11 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration;
 
@@ -29,13 +32,12 @@ public class AssetCategoriesSearchFacetDisplayContext
 			HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		_httpServletRequest = httpServletRequest;
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		_categoryFacetPortletInstanceConfiguration =
 			ConfigurationProviderUtil.getPortletInstanceConfiguration(
-				CategoryFacetPortletInstanceConfiguration.class,
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY));
+				CategoryFacetPortletInstanceConfiguration.class, _themeDisplay);
 	}
 
 	@Override
@@ -68,15 +70,23 @@ public class AssetCategoriesSearchFacetDisplayContext
 			return _displayStyleGroupId;
 		}
 
-		_displayStyleGroupId =
-			_categoryFacetPortletInstanceConfiguration.displayStyleGroupId();
+		String displayStyleGroupExternalReferenceCode =
+			_categoryFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
 
-		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		Group group = _themeDisplay.getScopeGroup();
 
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupId = group.getGroupId();
+		}
+		else {
+			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
 		}
 
 		return _displayStyleGroupId;
@@ -172,13 +182,13 @@ public class AssetCategoriesSearchFacetDisplayContext
 		_categoryFacetPortletInstanceConfiguration;
 	private boolean _cloud;
 	private long _displayStyleGroupId;
-	private final HttpServletRequest _httpServletRequest;
 	private boolean _nothingSelected;
 	private String _paginationStartParameterName;
 	private String _parameterName;
 	private String _parameterValue;
 	private List<String> _parameterValues;
 	private boolean _renderNothing;
+	private final ThemeDisplay _themeDisplay;
 	private List<String> _vocabularyNames;
 
 }

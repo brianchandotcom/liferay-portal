@@ -996,21 +996,22 @@ public abstract class Base${schemaName}ResourceImpl
 				useDeleteByERC = deleteByERCJavaMethodSignature?? && properties?keys?seq_contains("externalReferenceCode")
 				useDeleteById = deleteByIdJavaMethodSignature?? && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
 			/>
+
 			<#if useDeleteByERC || useDeleteById>
 				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
 					<#if useDeleteById>
 						<#assign getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id") />
 
-						if(${schemaVarName}.${getterMethodName}() != null) {
-							<#if useDeleteByERC>
+						<#if useDeleteByERC>
+							if(${schemaVarName}.${getterMethodName}() != null) {
 								try {
-							</#if>
+						</#if>
 
-							${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.${getterMethodName}());
+						${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.${getterMethodName}());
 
-							return ${schemaVarName};
+						return ${schemaVarName};
 
-							<#if useDeleteByERC>
+						<#if useDeleteByERC>
 								} catch (Exception exception) {
 									if(${schemaVarName}.getExternalReferenceCode() != null) {
 										${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
@@ -1018,8 +1019,8 @@ public abstract class Base${schemaName}ResourceImpl
 										return ${schemaVarName};
 									}
 								}
-							</#if>
-						}
+							}
+						</#if>
 					</#if>
 
 					<#if useDeleteByERC>
@@ -1030,9 +1031,11 @@ public abstract class Base${schemaName}ResourceImpl
 
 							return ${schemaVarName};
 						}
-					</#if>
 
-					throw new UnsupportedOperationException("Unable to delete ${schemaVarName}. No valid identifier provided.");
+						<#if useDeleteById>
+							throw new UnsupportedOperationException("Unable to delete ${schemaVarName}. No valid identifier provided.");
+						</#if>
+					</#if>
 				};
 
 				if (contextBatchUnsafeBiConsumer != null) {

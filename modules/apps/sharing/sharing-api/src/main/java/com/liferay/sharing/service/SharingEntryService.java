@@ -66,8 +66,8 @@ public interface SharingEntryService extends BaseService {
 	 the expiration date is a past value
 	 */
 	public SharingEntry addOrUpdateSharingEntry(
-			String externalReferenceCode, long toUserGroupId, long toUserId,
-			long classNameId, long classPK, long groupId, boolean shareable,
+			String externalReferenceCode, long toUserId, long classNameId,
+			long classPK, long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;
@@ -93,8 +93,8 @@ public interface SharingEntryService extends BaseService {
 	 expiration date is a past value
 	 */
 	public SharingEntry addSharingEntry(
-			String externalReferenceCode, long toUserGroupId, long toUserId,
-			long classNameId, long classPK, long groupId, boolean shareable,
+			String externalReferenceCode, long toUserId, long classNameId,
+			long classPK, long groupId, boolean shareable,
 			Collection<SharingEntryAction> sharingEntryActions,
 			Date expirationDate, ServiceContext serviceContext)
 		throws PortalException;

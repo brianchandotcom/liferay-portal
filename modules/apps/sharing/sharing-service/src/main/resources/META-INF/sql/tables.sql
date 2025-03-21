@@ -8,7 +8,6 @@ create table SharingEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	toUserGroupId LONG,
 	toUserId LONG,
 	classNameId LONG,
 	classPK LONG,

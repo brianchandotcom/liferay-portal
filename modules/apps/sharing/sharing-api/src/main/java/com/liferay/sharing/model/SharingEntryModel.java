@@ -215,20 +215,6 @@ public interface SharingEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the to user group ID of this sharing entry.
-	 *
-	 * @return the to user group ID of this sharing entry
-	 */
-	public long getToUserGroupId();
-
-	/**
-	 * Sets the to user group ID of this sharing entry.
-	 *
-	 * @param toUserGroupId the to user group ID of this sharing entry
-	 */
-	public void setToUserGroupId(long toUserGroupId);
-
-	/**
 	 * Returns the to user ID of this sharing entry.
 	 *
 	 * @return the to user ID of this sharing entry

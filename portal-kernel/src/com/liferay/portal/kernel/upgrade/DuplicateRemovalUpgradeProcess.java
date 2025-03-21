@@ -205,10 +205,10 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 					counter++;
 				}
 
-				try (PreparedStatement preparedStatement1 =
+				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(sb.toString())) {
 
-					preparedStatement1.execute();
+					preparedStatement.execute();
 				}
 				catch (SQLException sqlException) {
 					_log.error(

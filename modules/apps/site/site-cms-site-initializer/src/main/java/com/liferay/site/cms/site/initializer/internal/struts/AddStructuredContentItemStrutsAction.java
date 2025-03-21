@@ -263,7 +263,8 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 	}
 
 	private long _getObjectEntryFolderId(
-		long companyId, long groupId, ObjectDefinition objectDefinition) {
+			long companyId, long groupId, ObjectDefinition objectDefinition)
+		throws Exception {
 
 		String externalReferenceCode =
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
@@ -277,8 +278,9 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		}
 
 		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.fetchObjectEntryFolder(
-				externalReferenceCode, groupId, companyId);
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					externalReferenceCode, groupId, companyId);
 
 		return objectEntryFolder.getObjectEntryFolderId();
 	}

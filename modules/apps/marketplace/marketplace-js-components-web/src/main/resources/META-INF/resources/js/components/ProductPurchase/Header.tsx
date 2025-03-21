@@ -9,8 +9,6 @@ type ProductPurchaseHeaderProps = {
 	children?: ReactNode;
 	image?: string;
 	rightNode?: ReactNode;
-	subsectionTitleLeft: string;
-	subsectionTitleRight: ReactNode;
 	subtitle?: string | ReactNode;
 	title: string;
 };
@@ -19,8 +17,6 @@ const ProductPurchaseHeader = ({
 	children,
 	image,
 	rightNode,
-	subsectionTitleLeft,
-	subsectionTitleRight,
 	subtitle,
 	title,
 }: ProductPurchaseHeaderProps) => {
@@ -52,20 +48,6 @@ const ProductPurchaseHeader = ({
 			</div>
 
 			{children}
-
-			<hr />
-
-			<div className="d-flex flex-row justify-content-between">
-				<strong className="align-self-center">
-					{subsectionTitleLeft}
-				</strong>
-
-				<div className="align-items-center d-flex">
-					<div className="align-items-end d-flex flex-column m-2">
-						{subsectionTitleRight}
-					</div>
-				</div>
-			</div>
 		</div>
 	);
 };

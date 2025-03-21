@@ -11,12 +11,12 @@ import {MarketplaceProduct} from '../core/MarketplaceProduct';
 
 type MarketplacePurchaseProps = {
 	children: ReactNode;
-	rightTitle: ReactNode;
+	productPurchaseChildren: ReactNode;
 };
 
 export function MarketplacePurchase({
 	children,
-	rightTitle,
+	productPurchaseChildren,
 }: MarketplacePurchaseProps) {
 	const {product} = useMarketplaceContext();
 
@@ -28,7 +28,7 @@ export function MarketplacePurchase({
 		<div className="marketplace-purchase">
 			<div className="bg-light border d-flex flex-column m-4 rounded-lg">
 				<ProductPurchaseHeader
-					image={product?.urlImage}
+					image={marketplaceProduct.productImage}
 					rightNode={
 						<div className="align-items-end d-flex flex-column price-text">
 							<strong className="mr-1">
@@ -40,15 +40,15 @@ export function MarketplacePurchase({
 							</small>
 						</div>
 					}
-					subsectionTitleLeft={Liferay.Language.get('project-name')}
-					subsectionTitleRight={rightTitle}
 					subtitle={
 						LATEST_VERSION
 							? `${LATEST_VERSION} ${Liferay.Language.get('by')} ${marketplaceProduct.catalogName} `
 							: marketplaceProduct.catalogName
 					}
 					title={product.name}
-				/>
+				>
+					{productPurchaseChildren}
+				</ProductPurchaseHeader>
 			</div>
 
 			{children}

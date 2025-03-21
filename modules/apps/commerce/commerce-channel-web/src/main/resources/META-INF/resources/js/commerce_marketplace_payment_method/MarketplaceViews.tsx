@@ -90,7 +90,8 @@ export default function MarketplaceViews() {
 			.then(setCloudUserProject)
 			.catch(console.error);
 	}, [cloudProject, marketplaceRest, product]);
-	const getState = useCallback(() => {
+
+	const definedState = useMemo(() => {
 		if (!cloudProject) {
 			return States.NO_PROJECT;
 		}
@@ -159,6 +160,7 @@ export default function MarketplaceViews() {
 
 			{view === MarketplaceView.STOREFRONT && (
 				<Marketplace.Storefront
+					onClickBack={() => setView(MarketplaceView.PRODUCTS)}
 					primaryButton={
 						<ClayButton
 							{...(isProductInstalled(product) && {
@@ -179,24 +181,36 @@ export default function MarketplaceViews() {
 
 			{view === MarketplaceView.PURCHASE && (
 				<Marketplace.Purchase
-					rightTitle={
-						<small className="align-items-end d-flex flex-column">
-							<span className="font-weight-bold">
-								{cloudProject}
-							</span>
+					productPurchaseChildren={
+						definedState !== States.NO_PROJECT ? (
+							<>
+								<hr />
 
-							<span>
-								{marketplaceProduct?.getCloudResourceLabel(
-									cloudUserProject as CloudUserProject
-								)}
-							</span>
-						</small>
+								<div className="d-flex flex-row justify-content-between">
+									<strong className="align-self-center">
+										{Liferay.Language.get('project-name')}
+									</strong>
+
+									<small className="align-items-end d-flex flex-column">
+										<span className="font-weight-bold">
+											{cloudProject}
+										</span>
+
+										<span>
+											{marketplaceProduct?.getCloudResourceLabel(
+												cloudUserProject as CloudUserProject
+											)}
+										</span>
+									</small>
+								</div>
+							</>
+						) : null
 					}
 				>
 					<MarketplacePurchase
 						onClickInstall={onClickInstall}
 						projectId={cloudProject}
-						state={getState()}
+						state={definedState}
 					/>
 				</Marketplace.Purchase>
 			)}

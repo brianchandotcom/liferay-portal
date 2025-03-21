@@ -70,7 +70,7 @@ export function MarketplacePurchase({
 				secondaryButtonProps={secondaryButtonProps}
 				title={Liferay.Language.get('no-cloud-project-available')}
 			>
-				<p className="text-red">
+				<p>
 					{Liferay.Language.get(
 						'you-do-not-have-access-to-a-cloud-project'
 					)}

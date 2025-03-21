@@ -33,6 +33,16 @@ const TEXT_FIELD: Field = {
 	uuid: getUuid(),
 };
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/structure_builder/config',
+	() => ({
+		config: {
+			acceptedGroupExternalReferenceCodes:
+				'acceptedGroupExternalReferenceCodesConfig',
+		},
+	})
+);
+
 describe('buildObjectDefinition', () => {
 	it('Builds objectDefinition with a field without settings', () => {
 		const result = buildObjectDefinition({
@@ -51,6 +61,12 @@ describe('buildObjectDefinition', () => {
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
+			objectDefinitionSettings: [
+				{
+					name: 'acceptedGroupExternalReferenceCodes',
+					value: 'acceptedGroupExternalReferenceCodesConfig',
+				},
+			],
 			objectFields: [
 				{
 					DBType: 'String',
@@ -88,6 +104,12 @@ describe('buildObjectDefinition', () => {
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
+			objectDefinitionSettings: [
+				{
+					name: 'acceptedGroupExternalReferenceCodes',
+					value: 'acceptedGroupExternalReferenceCodesConfig',
+				},
+			],
 			objectFields: [
 				{
 					DBType: 'DateTime',

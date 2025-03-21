@@ -88,10 +88,10 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 			String[] columnNames = new String[columnCount];
 
-			for (int i = 1; i <= columnCount; i++) {
-				String columnName = metaData.getColumnName(i);
+			for (int i = 0; i < columnCount; i++) {
+				String columnName = metaData.getColumnName(i+1);
 
-				columnNames[i - 1] = columnName;
+				columnNames[i] = columnName;
 			}
 
 			while (resultSet.next()) {
@@ -147,8 +147,8 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				String[] columnResults = new String[_columnNames.length];
 
-				for (int i = 1; i <= columnResults.length; i++) {
-					columnResults[i - 1] = resultSet.getString(i);
+				for (int i = 0; i < columnResults.length; i++) {
+					columnResults[i] = resultSet.getString(i + 1);
 				}
 
 				indexesDuplicatesList.add(columnResults);

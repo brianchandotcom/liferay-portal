@@ -7,15 +7,10 @@
 
 <aui:script senna="temporary" type="text/javascript">
 	// <![CDATA[
-		function buildESMStub(contextPath, symbol) {
+		function buildESMStub(url, symbol) {
 			return (
 				(...args) => {
-					import(
-						Liferay.ThemeDisplay.getPathContext() +
-							'/o/' +
-							contextPath +
-							'/__liferay__/index.js'
-					).then(
+					import(url).then(
 						(exports) => exports[symbol](...args)
 					);
 				}
@@ -183,8 +178,16 @@
 			Liferay.Portlet = {};
 		}
 
-		Liferay.Portlet.openModal = buildESMStub('frontend-js-components-web', 'openPortletModal');
-		Liferay.Portlet.openWindow = buildESMStub('frontend-js-components-web', 'openPortletWindow');
+		<%
+		String frontendJSComponentsWebURL = ESMURLUtil.buildURL(themeDisplay, "frontend-js-components-web");
+		%>
+
+		Liferay.Portlet.openModal = buildESMStub(
+			'<%= frontendJSComponentsWebURL %>',
+			'openPortletModal'
+		);
+
+		Liferay.Portlet.openWindow = buildESMStub('<%= frontendJSComponentsWebURL %>',, 'openPortletWindow');
 
 		Liferay.PortletKeys = {
 			DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
@@ -383,12 +386,12 @@
 			Liferay.Util = {};
 		}
 
-		Liferay.Util.openAlertModal = buildESMStub('frontend-js-components-web', 'openAlertModal');
-		Liferay.Util.openConfirmModal = buildESMStub('frontend-js-components-web', 'openConfirmModal');
-		Liferay.Util.openModal = buildESMStub('frontend-js-components-web', 'openModal');
-		Liferay.Util.openSelectionModal = buildESMStub('frontend-js-components-web', 'openSelectionModal');
-		Liferay.Util.openSimpleInputModal = buildESMStub('frontend-js-components-web', 'openSimpleInputModal');
-		Liferay.Util.openToast = buildESMStub('frontend-js-components-web', 'openToast');
+		Liferay.Util.openAlertModal = buildESMStub('<%= frontendJSComponentsWebURL %>', 'openAlertModal');
+		Liferay.Util.openConfirmModal = buildESMStub('<%= frontendJSComponentsWebURL %>', 'openConfirmModal');
+		Liferay.Util.openModal = buildESMStub('<%= frontendJSComponentsWebURL %>', 'openModal');
+		Liferay.Util.openSelectionModal = buildESMStub('<%= frontendJSComponentsWebURL %>', 'openSelectionModal');
+		Liferay.Util.openSimpleInputModal = buildESMStub('<%= frontendJSComponentsWebURL %>', 'openSimpleInputModal');
+		Liferay.Util.openToast = buildESMStub('<%= frontendJSComponentsWebURL %>', 'openToast');
 		Liferay.Util.Window = {
 			_map: {} ,
 

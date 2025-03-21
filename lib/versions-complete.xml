@@ -685,8 +685,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-services-drive.jar</file-name>
-				<version>v3-rev20190311-1.28.0</version>
-				<project-name>Drive API v3-rev20190311-1.28.0</project-name>
+				<version>v3-rev20250216-2.0.0</version>
+				<project-name>Google Drive API v3-rev20250216-2.0.0</project-name>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -696,8 +696,8 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.opener.google.drive.web.jar!google-api-services-oauth2.jar</file-name>
-				<version>v2-rev137-1.23.0</version>
-				<project-name>Google OAuth2 API v2-rev137-1.23.0</project-name>
+				<version>v2-rev157-1.25.0</version>
+				<project-name>Google OAuth2 API v2-rev157-1.25.0</project-name>
 				<licenses>
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
@@ -3220,6 +3220,18 @@
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
 				<version>1.12.719</version>
 				<project-name>AWS Java SDK for Amazon S3</project-name>
+				<project-url>https://aws.amazon.com/sdkforjava</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://aws.amazon.com/apache2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-sts.jar</file-name>
+				<version>1.12.719</version>
+				<project-name>AWS Java SDK for AWS STS</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
 					<license>
@@ -6942,18 +6954,6 @@
 				<version>3.0.1</version>
 				<project-name>JSR 362 Portlet Specification 3.0</project-name>
 				<project-url>https://jcp.org/en/jsr/detail?id=362</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/portletmvc4spring-test.jar</file-name>
-				<version>5.2.1</version>
-				<project-name>PortletMVC4Spring</project-name>
-				<project-url>https://github.com/liferay/portletmvc4spring</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>

@@ -26,15 +26,15 @@ import java.util.Map;
  */
 public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
-	public DuplicateRemovalUpgradeProcess(String tableName, String[] columns) {
-		this(tableName, columns, null);
+	public DuplicateRemovalUpgradeProcess(String tableName, String[] columnNames) {
+		this(tableName, columnNames, null);
 	}
 
 	public DuplicateRemovalUpgradeProcess(
-		String tableName, String[] columns,String orderByClause) {
+		String tableName, String[] columnNames, String orderByClause) {
 
 		_tableName = tableName;
-		_columns = String.join(", ", columns);
+		_columnNames = String.join(", ", columnNames);
 		_orderByClause = orderByClause;
 	}
 
@@ -48,7 +48,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 		List<Map<String, String>> queryResult = new ArrayList<>();
 
-		String[] columns = _columns.split(", ");
+		String[] columns = _columnNames.split(", ");
 
 		StringBundler sb = new StringBundler();
 
@@ -133,11 +133,11 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("select ");
-		sb.append(_columns);
+		sb.append(_columnNames);
 		sb.append(" from ");
 		sb.append(_tableName);
 		sb.append(" group by ");
-		sb.append(_columns);
+		sb.append(_columnNames);
 		sb.append(" having count(*) > 1");
 
 		String sql = sb.toString();
@@ -176,7 +176,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			_log.warn(
 				StringBundler.concat(
 					"Deleted duplicate entry from ", _tableName,
-					" table for index columns (", _columns, "): ",
+					" table for index columns (", _columnNames, "): ",
 					duplicate.toString()));
 		}
 	}
@@ -236,7 +236,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 						StringBundler.concat(
 							"Failed to remove duplicate entry: ",
 							duplicate.toString(), " in ", _tableName, " for ",
-							_columns),
+							_columnNames),
 						sqlException);
 				}
 				finally {
@@ -254,7 +254,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DuplicateRemovalUpgradeProcess.class);
 
-	private final String _columns;
+	private final String _columnNames;
 	private final String _orderByClause;
 	private final String _tableName;
 

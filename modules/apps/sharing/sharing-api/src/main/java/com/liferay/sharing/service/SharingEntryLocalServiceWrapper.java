@@ -51,9 +51,8 @@ public class SharingEntryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
-			String externalReferenceCode, long userId, long toUserGroupId,
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long userId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -62,8 +61,8 @@ public class SharingEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			externalReferenceCode, userId, toUserGroupId, toUserId, classNameId,
-			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			externalReferenceCode, userId, toUserId, classNameId, classPK,
+			groupId, shareable, sharingEntryActions, expirationDate,
 			serviceContext);
 	}
 
@@ -107,9 +106,8 @@ public class SharingEntryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.sharing.model.SharingEntry addSharingEntry(
-			String externalReferenceCode, long userId, long toUserGroupId,
-			long toUserId, long classNameId, long classPK, long groupId,
-			boolean shareable,
+			String externalReferenceCode, long userId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -118,8 +116,8 @@ public class SharingEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sharingEntryLocalService.addSharingEntry(
-			externalReferenceCode, userId, toUserGroupId, toUserId, classNameId,
-			classPK, groupId, shareable, sharingEntryActions, expirationDate,
+			externalReferenceCode, userId, toUserId, classNameId, classPK,
+			groupId, shareable, sharingEntryActions, expirationDate,
 			serviceContext);
 	}
 

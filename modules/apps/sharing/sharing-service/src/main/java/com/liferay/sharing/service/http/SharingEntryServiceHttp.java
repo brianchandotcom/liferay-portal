@@ -44,8 +44,8 @@ public class SharingEntryServiceHttp {
 	public static com.liferay.sharing.model.SharingEntry
 			addOrUpdateSharingEntry(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long toUserGroupId, long toUserId, long classNameId,
-				long classPK, long groupId, boolean shareable,
+				long toUserId, long classNameId, long classPK, long groupId,
+				boolean shareable,
 				java.util.Collection
 					<com.liferay.sharing.security.permission.SharingEntryAction>
 						sharingEntryActions,
@@ -59,8 +59,8 @@ public class SharingEntryServiceHttp {
 				_addOrUpdateSharingEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, toUserGroupId, toUserId,
-				classNameId, classPK, groupId, shareable, sharingEntryActions,
+				methodKey, externalReferenceCode, toUserId, classNameId,
+				classPK, groupId, shareable, sharingEntryActions,
 				expirationDate, serviceContext);
 
 			Object returnObj = null;
@@ -93,8 +93,8 @@ public class SharingEntryServiceHttp {
 
 	public static com.liferay.sharing.model.SharingEntry addSharingEntry(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long toUserGroupId, long toUserId, long classNameId, long classPK,
-			long groupId, boolean shareable,
+			long toUserId, long classNameId, long classPK, long groupId,
+			boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -108,8 +108,8 @@ public class SharingEntryServiceHttp {
 				_addSharingEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, toUserGroupId, toUserId,
-				classNameId, classPK, groupId, shareable, sharingEntryActions,
+				methodKey, externalReferenceCode, toUserId, classNameId,
+				classPK, groupId, shareable, sharingEntryActions,
 				expirationDate, serviceContext);
 
 			Object returnObj = null;
@@ -362,15 +362,13 @@ public class SharingEntryServiceHttp {
 	private static final Class<?>[] _addOrUpdateSharingEntryParameterTypes0 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
-			long.class, boolean.class, java.util.Collection.class,
-			java.util.Date.class,
+			boolean.class, java.util.Collection.class, java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addSharingEntryParameterTypes1 =
 		new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
-			long.class, boolean.class, java.util.Collection.class,
-			java.util.Date.class,
+			boolean.class, java.util.Collection.class, java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteSharingEntryParameterTypes2 =

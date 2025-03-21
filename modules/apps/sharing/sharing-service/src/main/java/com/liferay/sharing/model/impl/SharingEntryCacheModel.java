@@ -53,7 +53,7 @@ public class SharingEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -73,8 +73,6 @@ public class SharingEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", toUserGroupId=");
-		sb.append(toUserGroupId);
 		sb.append(", toUserId=");
 		sb.append(toUserId);
 		sb.append(", classNameId=");
@@ -136,7 +134,6 @@ public class SharingEntryCacheModel
 			sharingEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		sharingEntryImpl.setToUserGroupId(toUserGroupId);
 		sharingEntryImpl.setToUserId(toUserId);
 		sharingEntryImpl.setClassNameId(classNameId);
 		sharingEntryImpl.setClassPK(classPK);
@@ -170,8 +167,6 @@ public class SharingEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		toUserGroupId = objectInput.readLong();
 
 		toUserId = objectInput.readLong();
 
@@ -219,8 +214,6 @@ public class SharingEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(toUserGroupId);
-
 		objectOutput.writeLong(toUserId);
 
 		objectOutput.writeLong(classNameId);
@@ -242,7 +235,6 @@ public class SharingEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long toUserGroupId;
 	public long toUserId;
 	public long classNameId;
 	public long classPK;

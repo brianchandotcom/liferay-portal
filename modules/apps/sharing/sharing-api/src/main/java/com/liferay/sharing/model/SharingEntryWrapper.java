@@ -43,7 +43,6 @@ public class SharingEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("toUserGroupId", getToUserGroupId());
 		attributes.put("toUserId", getToUserId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -109,12 +108,6 @@ public class SharingEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long toUserGroupId = (Long)attributes.get("toUserGroupId");
-
-		if (toUserGroupId != null) {
-			setToUserGroupId(toUserGroupId);
 		}
 
 		Long toUserId = (Long)attributes.get("toUserId");
@@ -287,16 +280,6 @@ public class SharingEntryWrapper
 	@Override
 	public long getSharingEntryId() {
 		return model.getSharingEntryId();
-	}
-
-	/**
-	 * Returns the to user group ID of this sharing entry.
-	 *
-	 * @return the to user group ID of this sharing entry
-	 */
-	@Override
-	public long getToUserGroupId() {
-		return model.getToUserGroupId();
 	}
 
 	/**
@@ -513,16 +496,6 @@ public class SharingEntryWrapper
 	@Override
 	public void setSharingEntryId(long sharingEntryId) {
 		model.setSharingEntryId(sharingEntryId);
-	}
-
-	/**
-	 * Sets the to user group ID of this sharing entry.
-	 *
-	 * @param toUserGroupId the to user group ID of this sharing entry
-	 */
-	@Override
-	public void setToUserGroupId(long toUserGroupId) {
-		model.setToUserGroupId(toUserGroupId);
 	}
 
 	/**

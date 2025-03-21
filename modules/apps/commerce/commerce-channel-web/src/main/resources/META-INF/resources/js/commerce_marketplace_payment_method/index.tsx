@@ -25,9 +25,11 @@ const CommerceChannelAddPaymentMethod = () => (
 		<MarketplaceContext.Consumer>
 			{({view}) => (
 				<Marketplace.Modal
-					noConnectionMessage={Liferay.Language.get(
+					noConnectionMessage={`${Liferay.Language.get(
 						'you-are-trying-to-add-a-new-payment-method-through-the-marketplace,-but-the-connection-has-not-been-established-yet'
-					)}
+					)}${Liferay.Language.get(
+						'please-go-to-instance-settings-to-enable-the-connection'
+					)}`}
 					size={
 						view === MarketplaceView.PURCHASE ? 'lg' : 'full-screen'
 					}

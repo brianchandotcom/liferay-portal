@@ -36,6 +36,9 @@ export default function MarketplaceModal({
 	const [title, setTitle] = useState<string | undefined>();
 
 	const props = {
+		noConnectionMessage: Liferay.Language.get(
+			'please-go-to-instance-settings-to-enable-the-connection'
+		),
 		trigger: (
 			<MarketplaceModalTrigger setTitle={setTitle} trigger={trigger} />
 		),

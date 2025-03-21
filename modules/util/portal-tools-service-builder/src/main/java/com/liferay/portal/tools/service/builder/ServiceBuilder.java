@@ -6814,8 +6814,8 @@ public class ServiceBuilder {
 				ArrayUtil.contains(
 					StringUtil.split(
 						_compatProperties.getProperty(
-							"unique.single.finders.entities")),
-					entityName)) {
+							"force.unique.finder.package.path")),
+					_packagePath)) {
 
 				throw new IllegalArgumentException(
 					StringBundler.concat(

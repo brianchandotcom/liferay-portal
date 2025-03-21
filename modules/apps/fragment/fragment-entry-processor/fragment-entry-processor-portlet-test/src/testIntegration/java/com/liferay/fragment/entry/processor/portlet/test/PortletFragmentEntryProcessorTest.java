@@ -191,8 +191,8 @@ public class PortletFragmentEntryProcessorTest {
 			null, _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
 			"Fragment Entry", null, html, null, false, null, null, 0, false,
-			FragmentConstants.TYPE_SECTION, null,
-			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+			false, FragmentConstants.TYPE_SECTION, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private String _getHTML(String portletAlias, String... instanceIds) {

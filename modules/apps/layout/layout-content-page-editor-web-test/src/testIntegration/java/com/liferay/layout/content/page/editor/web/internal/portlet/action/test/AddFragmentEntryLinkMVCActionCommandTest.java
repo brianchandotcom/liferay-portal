@@ -268,9 +268,9 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			fragmentCollection.getFragmentCollectionId(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
-			false, "{fieldSets: []}", null, 0, false,
+			false, "{fieldSets: []}", null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private void
@@ -370,8 +370,8 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, "{fieldSets: []}", null, 0,
-			false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+			false, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

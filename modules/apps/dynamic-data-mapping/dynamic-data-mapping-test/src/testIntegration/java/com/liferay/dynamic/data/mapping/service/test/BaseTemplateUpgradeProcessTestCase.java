@@ -78,8 +78,8 @@ public abstract class BaseTemplateUpgradeProcessTestCase {
 			null, _group.getGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			"FragmentEntry Name", null, read(filePath), null, false, null, null,
-			0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false, _serviceContext);
+			0, false, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
 	protected DDMTemplate getDDMTemplate() throws Exception {

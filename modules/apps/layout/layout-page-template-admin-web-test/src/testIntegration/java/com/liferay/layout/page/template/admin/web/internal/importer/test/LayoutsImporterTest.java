@@ -1163,9 +1163,9 @@ public class LayoutsImporterTest {
 			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getName(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.isCacheable(),
-			fragmentEntry.getConfiguration(), null, 0, false,
+			fragmentEntry.getConfiguration(), null, 0, false, false,
 			fragmentEntry.getType(), fragmentEntry.getTypeOptions(),
-			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private FragmentEntry _addFragmentEntry(
@@ -1185,9 +1185,9 @@ public class LayoutsImporterTest {
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"<div class=\"fragment_1\"><a href=${configuration.myURL}>" +
 				RandomTestUtil.randomString() + "</a></div>",
-			StringPool.BLANK, false, configuration, null, 0, false,
+			StringPool.BLANK, false, configuration, null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private FragmentEntry _addFragmentEntry(
@@ -1204,8 +1204,8 @@ public class LayoutsImporterTest {
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(), key, name,
 			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
-			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+			null, 0, false, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private void _addFragmentEntryLinks(

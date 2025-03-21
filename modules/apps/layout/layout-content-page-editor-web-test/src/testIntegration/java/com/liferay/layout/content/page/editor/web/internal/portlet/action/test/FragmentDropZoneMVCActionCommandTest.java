@@ -378,8 +378,8 @@ public class FragmentDropZoneMVCActionCommandTest {
 			_readFileToString("drop_zone_fragment_entry.html"),
 			RandomTestUtil.randomString(), false,
 			_readFileToString("drop_zone_fragment_entry_configuration.json"),
-			null, 0, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED, false, serviceContext);
+			null, 0, false, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

@@ -48,7 +48,45 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 	}
 
 	@Test
-	public void testNoEmptyClauses() throws Exception {
+	public void testClausesWithMoreThanOneInactiveGroup() throws Exception {
+		Group group = Mockito.mock(Group.class);
+
+		long groupId = 11111;
+
+		Mockito.doReturn(
+			group
+		).when(
+			_groupLocalService
+		).getGroup(
+			groupId
+		);
+
+		Mockito.doReturn(
+			false
+		).when(
+			_groupLocalService
+		).isLiveGroupActive(
+			group
+		);
+
+		assertSearch(
+			indexingTestHelper -> indexingTestHelper.define(
+				searchContext -> {
+					searchContext.setGroupIds(new long[] {groupId, 22222});
+
+					BooleanFilter booleanFilter = (BooleanFilter)_createFilter(
+						searchContext);
+
+					_assertEmptyClauses(booleanFilter.getMustBooleanClauses());
+					_assertEmptyClauses(
+						booleanFilter.getMustNotBooleanClauses());
+					_assertEmptyClauses(
+						booleanFilter.getShouldBooleanClauses());
+				}));
+	}
+
+	@Test
+	public void testClausesWithOneInactiveGroup() throws Exception {
 		Group group = Mockito.mock(Group.class);
 
 		long groupId = 11111;
@@ -77,11 +115,8 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 					BooleanFilter booleanFilter = (BooleanFilter)_createFilter(
 						searchContext);
 
-					_assertEmptyClauses(booleanFilter.getMustBooleanClauses());
-					_assertEmptyClauses(
-						booleanFilter.getMustNotBooleanClauses());
-					_assertEmptyClauses(
-						booleanFilter.getShouldBooleanClauses());
+					_assertNoEmptyClauses(
+						booleanFilter.getMustBooleanClauses());
 				}));
 	}
 
@@ -135,6 +170,10 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 
 	private void _assertEmptyClauses(List<BooleanClause<Filter>> clauses) {
 		Assert.assertEquals(clauses.toString(), 0, clauses.size());
+	}
+
+	private void _assertNoEmptyClauses(List<BooleanClause<Filter>> clauses) {
+		Assert.assertNotEquals(clauses.toString(), 0, clauses.size());
 	}
 
 	private void _assertSearch(long scopeGroupId, String expected) {

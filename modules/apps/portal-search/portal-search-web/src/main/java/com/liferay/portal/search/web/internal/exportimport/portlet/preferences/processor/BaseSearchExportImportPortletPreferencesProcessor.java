@@ -8,10 +8,12 @@ package com.liferay.portal.search.web.internal.exportimport.portlet.preferences.
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
-import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -20,8 +22,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Felipe Lorenz
  */
-public abstract class BaseExportImportPortletPreferencesProcessor
-	implements ExportImportPortletPreferencesProcessor {
+public abstract class BaseSearchExportImportPortletPreferencesProcessor
+	extends BaseExportImportPortletPreferencesProcessor {
 
 	@Override
 	public List<Capability> getExportCapabilities() {
@@ -51,10 +53,29 @@ public abstract class BaseExportImportPortletPreferencesProcessor
 		return null;
 	}
 
-	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	@Override
+	protected String getExportPortletPreferencesValue(
+			PortletDataContext portletDataContext, Portlet portlet,
+			String className, long primaryKeyLong)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
+	protected Long getImportPortletPreferencesNewValue(
+			PortletDataContext portletDataContext, Class<?> clazz,
+			long companyGroupId, Map<Long, Long> primaryKeys,
+			String portletPreferencesOldValue)
+		throws Exception {
+
+		return null;
+	}
+
+	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	protected Capability exportCapability;
 
-	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	protected Capability importCapability;
 
 }

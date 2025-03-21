@@ -26,9 +26,14 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -47,6 +52,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,6 +63,18 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"),
+			new LiferayIntegrationTestRule() {
+				{
+					skipTestRule(CompanyProviderClassTestRule.INSTANCE);
+				}
+			},
+			PermissionCheckerMethodTestRule.INSTANCE);
+
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseDBPartitionTestCase.setUpClass();
@@ -63,15 +82,10 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					portal.getDefaultCompanyId())) {
-
-			for (long companyId : COMPANY_IDS) {
-				db.runSQL(
-					dbPartitionDB.getCreatePartitionSQL(
-						connection, getPartitionName(companyId)));
-			}
+		for (long companyId : COMPANY_IDS) {
+			db.runSQL(
+				dbPartitionDB.getCreatePartitionSQL(
+					connection, getPartitionName(companyId)));
 		}
 
 		_scheduleJob(PortalInstancePool.getDefaultCompanyId(), _JOB_NAME_1);

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,18 +64,24 @@ public class ObjectEntryFolderDTOConverter
 						objectEntryFolder.getLabelMap()));
 				setName(objectEntryFolder::getName);
 				setNumberOfObjectEntries(
-					() ->
-						_objectEntryLocalService.
-							getObjectEntryFolderObjectEntriesCount(
-								objectEntryFolder.getGroupId(),
-								objectEntryFolder.getObjectEntryFolderId()));
+					() -> NestedFieldsSupplier.supply(
+						"numberOfObjectEntries",
+						nestedField ->
+							_objectEntryLocalService.
+								getObjectEntryFolderObjectEntriesCount(
+									objectEntryFolder.getGroupId(),
+									objectEntryFolder.
+										getObjectEntryFolderId())));
 				setNumberOfObjectEntryFolders(
-					() ->
-						_objectEntryFolderLocalService.
-							getObjectEntryFoldersCount(
-								objectEntryFolder.getGroupId(),
-								objectEntryFolder.getCompanyId(),
-								objectEntryFolder.getObjectEntryFolderId()));
+					() -> NestedFieldsSupplier.supply(
+						"numberOfObjectEntryFolders",
+						nestedField ->
+							_objectEntryFolderLocalService.
+								getObjectEntryFoldersCount(
+									objectEntryFolder.getGroupId(),
+									objectEntryFolder.getCompanyId(),
+									objectEntryFolder.
+										getObjectEntryFolderId())));
 				setParentObjectEntryFolderId(
 					() -> {
 						if (objectEntryFolder.getParentObjectEntryFolderId() >

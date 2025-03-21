@@ -126,9 +126,7 @@ public class CreatingThreadsForDBAccessCheck extends BaseCheck {
 				continue;
 			}
 
-			log(
-				methodCallDetailAST,
-				_MSG_USE_COMPANY_INHERITABLE_THREAD_LOCAL_CALLABLE);
+			log(detailAST, _MSG_USE_COMPANY_INHERITABLE_THREAD_LOCAL_CALLABLE);
 		}
 	}
 

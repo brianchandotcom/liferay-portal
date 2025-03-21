@@ -209,14 +209,6 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Override
-	public ObjectEntryFolder fetchObjectEntryFolderByExternalReferenceCode(
-		String externalReferenceCode, long groupId, long companyId) {
-
-		return objectEntryFolderPersistence.fetchByERC_G_C(
-			externalReferenceCode, groupId, companyId);
-	}
-
-	@Override
 	public ObjectEntryFolder getObjectEntryFolderByExternalReferenceCode(
 			String externalReferenceCode, long groupId, long companyId)
 		throws PortalException {

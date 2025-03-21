@@ -32,18 +32,24 @@ public class ContentsSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"title", "title",
+			"embedded.title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"title"
 			).setSortable(
 				true
 			)
 		).add(
-			"embedded.creator.name", "author"
+			"embedded.objectDefinitionName", "type",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"typeTableCellRenderer")
 		).add(
-			"embedded.type", "type"
+			"embedded.scopeKey", "space",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"spaceTableCellRenderer")
 		).add(
-			"embedded.siteId", "space"
+			"embedded.creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"authorTableCellRenderer")
 		).add(
 			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
@@ -52,9 +58,9 @@ public class ContentsSectionTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"embedded.status", "status"
-		).add(
-			"embedded.actions", "actions"
+			"embedded.status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 

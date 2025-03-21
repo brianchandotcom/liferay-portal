@@ -7,7 +7,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {sub} from 'frontend-js-web';
-import React, {ReactNode} from 'react';
+import React, {Fragment, ReactNode} from 'react';
 
 import {useMarketplaceContext} from '../MarketplaceContext';
 import {ManagementToolbar} from '../components/ManagementToolbar';
@@ -87,7 +87,9 @@ const ProductListView: React.FC<MarketplaceProductsProps> = ({children}) => {
 	return (
 		<>
 			<div className="d-flex flex-wrap h-100 marketplace-search-results p-4">
-				{products.map((product) => children(product))}
+				{products.map((product, index) => (
+					<Fragment key={index}>{children(product)}</Fragment>
+				))}
 			</div>
 
 			<div className="d-flex justify-content-end px-4 py-4 w-100">

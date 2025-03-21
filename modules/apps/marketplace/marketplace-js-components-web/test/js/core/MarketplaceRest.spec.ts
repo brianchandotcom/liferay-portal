@@ -271,7 +271,7 @@ describe('MarketplaceRest', () => {
 		expect(fetchCall.body).toBeUndefined();
 		expect(fetchCall.method).toBe('POST');
 		expect(fetchURL).toBe(
-			`${marketplaceConfiguration.url}/o/headless-commerce-delivery-cart/v1.0/carts/${mockCart.id}/checkout?nestedFields=cartItems`
+			`${marketplaceConfiguration.url}/o/headless-commerce-delivery-cart/v1.0/carts/${mockCart.id}/checkout`
 		);
 		expect(response).toMatchObject(mockCart);
 	});

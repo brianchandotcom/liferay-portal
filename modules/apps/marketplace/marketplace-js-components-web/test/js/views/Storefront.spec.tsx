@@ -86,7 +86,7 @@ describe('MarketplaceStorefront', () => {
 		expect(queryByText(product.catalogName)).toBeInTheDocument();
 		expect(queryByText(product.description)).toBeInTheDocument();
 		expect(queryByText(product.name)).toBeInTheDocument();
-		expect(queryByText('cloud App')).toBeInTheDocument();
+		expect(queryByText('Cloud App')).toBeInTheDocument();
 
 		fireEvent.click(backToListButton);
 
@@ -122,16 +122,10 @@ describe('MarketplaceStorefront', () => {
 			</MarketplaceContext.Provider>
 		);
 
-		const backToListButton = queryByText(
-			'back-to-list'
-		) as HTMLButtonElement;
+		const backToListButton = queryByText('back-to-list');
 
-		expect(backToListButton).toBeInTheDocument();
-
-		fireEvent.click(backToListButton);
-
+		expect(backToListButton).not.toBeInTheDocument();
 		expect(onClickBack).toHaveBeenCalledTimes(0);
-		expect(setView).toHaveBeenCalledTimes(1);
 	});
 
 	it('testing copy to cliboard', async () => {

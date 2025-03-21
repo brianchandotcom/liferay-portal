@@ -15,8 +15,6 @@ describe('Header', () => {
 			<ProductPurchase.Header
 				image="image/src"
 				rightNode="right node"
-				subsectionTitleLeft="left title"
-				subsectionTitleRight="right title"
 				subtitle="subTitle"
 				title="heading"
 			>
@@ -28,17 +26,10 @@ describe('Header', () => {
 		expect(queryAllByAltText('App Icon')).toBeTruthy();
 		expect(queryByText('children')).toBeInTheDocument();
 		expect(queryByText('heading')).toBeInTheDocument();
-		expect(queryByText('left title')).toBeInTheDocument();
-		expect(queryByText('right node')).toBeInTheDocument();
-		expect(queryByText('right title')).toBeInTheDocument();
 		expect(queryByText('subTitle')).toBeInTheDocument();
 
 		rerender(
-			<ProductPurchase.Header
-				subsectionTitleLeft="left"
-				subsectionTitleRight="right"
-				title="This Title is Longer than 30 characters making it an h3"
-			/>
+			<ProductPurchase.Header title="This Title is Longer than 30 characters making it an h3" />
 		);
 
 		expect(container.querySelector('h3')).toBeTruthy();

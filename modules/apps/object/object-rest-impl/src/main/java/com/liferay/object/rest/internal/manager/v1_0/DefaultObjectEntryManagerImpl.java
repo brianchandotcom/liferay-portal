@@ -735,7 +735,7 @@ public class DefaultObjectEntryManagerImpl
 			Pagination pagination)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry objectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			objectEntryLocalService.getObjectEntry(objectEntryId);
 
 		return Page.of(
@@ -748,7 +748,7 @@ public class DefaultObjectEntryManagerImpl
 						"objectEntryVersion", objectEntryVersion);
 
 					return _objectEntryDTOConverter.toDTO(
-						dtoConverterContext, objectEntry);
+						dtoConverterContext, serviceBuilderObjectEntry);
 				}),
 			pagination,
 			_objectEntryVersionService.getObjectEntryVersionsCount(
@@ -762,13 +762,14 @@ public class DefaultObjectEntryManagerImpl
 			Pagination pagination)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry objectEntry =
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			objectEntryLocalService.getObjectEntry(
 				externalReferenceCode,
 				objectDefinition.getObjectDefinitionId());
 
 		return getVersionedObjectEntries(
-			dtoConverterContext, objectEntry.getObjectEntryId(), pagination);
+			dtoConverterContext, serviceBuilderObjectEntry.getObjectEntryId(),
+			pagination);
 	}
 
 	@Override

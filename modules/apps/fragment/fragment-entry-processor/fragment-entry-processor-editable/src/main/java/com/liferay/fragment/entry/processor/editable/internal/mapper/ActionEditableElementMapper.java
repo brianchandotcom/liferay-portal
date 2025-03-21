@@ -157,10 +157,11 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				return;
 			}
 
+			String className = _portal.fetchClassName(classNameId);
+
 			InfoItemObjectProvider<?> infoItemObjectProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					_portal.getClassName(classNameId),
+					InfoItemObjectProvider.class, className,
 					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 			if (infoItemObjectProvider == null) {
@@ -169,8 +170,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFieldValuesProvider.class,
-					_portal.getClassName(classNameId));
+					InfoItemFieldValuesProvider.class, className);
 
 			if (infoItemFieldValuesProvider == null) {
 				return;

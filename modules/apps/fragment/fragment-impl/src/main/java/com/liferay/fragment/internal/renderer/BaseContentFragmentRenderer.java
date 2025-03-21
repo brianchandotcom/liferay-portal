@@ -102,7 +102,7 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 
 					if (assetEntry != null) {
 						return new Tuple(
-							portal.getClassName(assetEntry.getClassNameId()),
+							portal.fetchClassName(assetEntry.getClassNameId()),
 							assetEntry.getClassPK());
 					}
 				}

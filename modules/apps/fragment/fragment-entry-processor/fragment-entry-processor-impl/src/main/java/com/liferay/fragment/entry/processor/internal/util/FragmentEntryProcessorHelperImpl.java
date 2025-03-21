@@ -185,12 +185,14 @@ public class FragmentEntryProcessorHelperImpl
 			return 0;
 		}
 
+		String className = _portal.fetchClassName(classNameId);
+
 		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
 			classPK);
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, _portal.getClassName(classNameId),
+				InfoItemObjectProvider.class, className,
 				infoItemIdentifier.getInfoItemServiceFilter());
 
 		if (infoItemObjectProvider == null) {
@@ -203,8 +205,7 @@ public class FragmentEntryProcessorHelperImpl
 			return 0;
 		}
 
-		return _getFileEntryId(
-			_portal.getClassName(classNameId), object, fieldName, locale);
+		return _getFileEntryId(className, object, fieldName, locale);
 	}
 
 	@Override
@@ -260,7 +261,7 @@ public class FragmentEntryProcessorHelperImpl
 
 		if (isMapped(editableValueJSONObject)) {
 			String className = _infoSearchClassMapperRegistry.getClassName(
-				_portal.getClassName(
+				_portal.fetchClassName(
 					editableValueJSONObject.getLong("classNameId")));
 			String externalReferenceCode = editableValueJSONObject.getString(
 				"externalReferenceCode");

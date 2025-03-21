@@ -656,24 +656,46 @@ public class ProjectController extends BaseFaroController {
 			@QueryParam("startDateString") String startDateString)
 		throws Exception {
 
-		List<FaroProject> faroProjects = new ArrayList<>();
-
-		if (Validator.isNotNull(groupId)) {
-			faroProjects.add(
-				_faroProjectLocalService.fetchFaroProjectByGroupId(groupId));
-		}
-		else {
-			faroProjects = _faroProjectLocalService.getFaroProjects(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		if ((_thread != null) && _thread.isAlive()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Usage reset is running already");
+			}
 		}
 
-		for (FaroProject faroProject : faroProjects) {
-			_faroProjectLocalService.updateSubscription(
-				faroProject.getFaroProjectId(),
-				JSONUtil.writeValueAsString(
-					_resetProjectUsageDisplays(
-						faroProject.getGroupId(), startDateString)));
-		}
+		_thread = new Thread(
+			() -> {
+				try {
+					List<FaroProject> faroProjects = new ArrayList<>();
+
+					if (Validator.isNotNull(groupId)) {
+						faroProjects.add(
+							_faroProjectLocalService.fetchFaroProjectByGroupId(
+								groupId));
+					}
+					else {
+						faroProjects = _faroProjectLocalService.getFaroProjects(
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					}
+
+					for (FaroProject faroProject : faroProjects) {
+						_faroProjectLocalService.updateSubscription(
+							faroProject.getFaroProjectId(),
+							JSONUtil.writeValueAsString(
+								_resetProjectUsageDisplays(
+									faroProject.getGroupId(),
+									startDateString)));
+					}
+
+					if (_log.isInfoEnabled()) {
+						_log.info("Usage reset finished successfully");
+					}
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			});
+
+		_thread.start();
 	}
 
 	@Path("/{groupId}/send-created-workspace-email")
@@ -1456,5 +1478,7 @@ public class ProjectController extends BaseFaroController {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	private Thread _thread;
 
 }

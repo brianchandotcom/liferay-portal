@@ -92,7 +92,8 @@ public class CompileJSPUtil {
 
 						@Override
 						protected void processURLs(
-							JarScanType scanType, JarScannerCallback callback,
+							JarScanType jarScanType,
+							JarScannerCallback jarScannerCallback,
 							Set<URL> processedURLs, boolean webApp,
 							Deque<URL> classPathUrlsToProcess) {
 
@@ -103,8 +104,8 @@ public class CompileJSPUtil {
 							}
 
 							super.processURLs(
-								scanType, callback, processedURLs, webApp,
-								classPathUrlsToProcess);
+								jarScanType, jarScannerCallback, processedURLs,
+								webApp, classPathUrlsToProcess);
 						}
 
 					});
@@ -125,17 +126,15 @@ public class CompileJSPUtil {
 						@Override
 						public InputStream openStream() throws IOException {
 							URL url = getUrl();
-
 							String entryName = getEntryName();
 
-							String path = url.getPath();
+							String key =
+								url.getPath() + "#" + String.valueOf(entryName);
 
-							String key = path + "#" + String.valueOf(entryName);
+							byte[] bytes = _bytesMap.get(key);
 
-							byte[] data = _dataMap.get(key);
-
-							if (data != null) {
-								return new ByteArrayInputStream(data);
+							if (bytes != null) {
+								return new ByteArrayInputStream(bytes);
 							}
 
 							if (entryName == null) {
@@ -147,7 +146,7 @@ public class CompileJSPUtil {
 								}
 							}
 
-							try (ZipFile zipFile = new ZipFile(path)) {
+							try (ZipFile zipFile = new ZipFile(url.getPath())) {
 								ZipEntry zipEntry = zipFile.getEntry(entryName);
 
 								try (InputStream inputStream =
@@ -174,14 +173,14 @@ public class CompileJSPUtil {
 
 		inputStream.transferTo(byteArrayOutputStream);
 
-		byte[] data = byteArrayOutputStream.toByteArray();
+		byte[] bytes = byteArrayOutputStream.toByteArray();
 
-		_dataMap.put(key, data);
+		_bytesMap.put(key, bytes);
 
-		return new ByteArrayInputStream(data);
+		return new ByteArrayInputStream(bytes);
 	}
 
-	private static final Map<String, byte[]> _dataMap =
+	private static final Map<String, byte[]> _bytesMap =
 		new ConcurrentHashMap<>();
 
 }

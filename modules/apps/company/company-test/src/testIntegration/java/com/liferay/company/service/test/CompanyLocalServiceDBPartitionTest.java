@@ -88,6 +88,7 @@ import javax.portlet.Portlet;
 import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -129,6 +130,16 @@ public class CompanyLocalServiceDBPartitionTest
 		_bundleContext = bundle.getBundleContext();
 
 		_defaultCompanyId = PortalInstancePool.getDefaultCompanyId();
+
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			_defaultCompanyId);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		if (_safeCloseable != null) {
+			_safeCloseable.close();
+		}
 	}
 
 	@After
@@ -162,26 +173,21 @@ public class CompanyLocalServiceDBPartitionTest
 
 	@Test
 	public void testAddCompanyUsesVirtualHostCounter() throws Exception {
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					_defaultCompanyId)) {
+		long counter = _counterLocalService.increment();
 
-			long counter = _counterLocalService.increment();
+		_company1 = CompanyTestUtil.addCompany();
 
-			_company1 = CompanyTestUtil.addCompany();
+		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
+			_company1.getVirtualHostname());
 
-			VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
-				_company1.getVirtualHostname());
+		Assert.assertEquals(counter + 1, virtualHost.getVirtualHostId());
 
-			Assert.assertEquals(counter + 1, virtualHost.getVirtualHostId());
+		_company2 = CompanyTestUtil.addCompany();
 
-			_company2 = CompanyTestUtil.addCompany();
+		virtualHost = _virtualHostLocalService.getVirtualHost(
+			_company2.getVirtualHostname());
 
-			virtualHost = _virtualHostLocalService.getVirtualHost(
-				_company2.getVirtualHostname());
-
-			Assert.assertEquals(counter + 2, virtualHost.getVirtualHostId());
-		}
+		Assert.assertEquals(counter + 2, virtualHost.getVirtualHostId());
 	}
 
 	@Test
@@ -317,15 +323,10 @@ public class CompanyLocalServiceDBPartitionTest
 			}
 		}
 		finally {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						_defaultCompanyId)) {
-
-				db.runSQL(
-					dbPartitionDB.getDropPartitionSQL(
-						CompanyLocalServiceTestUtil.getExtractedPartitionName(
-							company.getCompanyId())));
-			}
+			db.runSQL(
+				dbPartitionDB.getDropPartitionSQL(
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
 					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
@@ -374,15 +375,10 @@ public class CompanyLocalServiceDBPartitionTest
 			}
 		}
 		finally {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						_defaultCompanyId)) {
-
-				db.runSQL(
-					dbPartitionDB.getDropPartitionSQL(
-						CompanyLocalServiceTestUtil.getExtractedPartitionName(
-							company.getCompanyId())));
-			}
+			db.runSQL(
+				dbPartitionDB.getDropPartitionSQL(
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
 					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
@@ -444,15 +440,10 @@ public class CompanyLocalServiceDBPartitionTest
 			}
 		}
 		finally {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						_defaultCompanyId)) {
-
-				db.runSQL(
-					dbPartitionDB.getDropPartitionSQL(
-						CompanyLocalServiceTestUtil.getExtractedPartitionName(
-							company.getCompanyId())));
-			}
+			db.runSQL(
+				dbPartitionDB.getDropPartitionSQL(
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
 
 			if (ArrayUtil.contains(
 					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
@@ -475,15 +466,19 @@ public class CompanyLocalServiceDBPartitionTest
 				_configurationAdmin, TestPropsValues.getCompanyId());
 
 		String name = RandomTestUtil.randomString();
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition();
 		String virtualHostname = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
 		String webId = RandomTestUtil.randomString();
 
 		Company copiedCompany = null;
 
-		try {
+		try (SafeCloseable safeCloseable1 =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					TestPropsValues.getCompanyId())) {
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition();
+
 			copiedCompany = companyLocalService.copyDBPartitionCompany(
 				TestPropsValues.getCompanyId(), null, name, virtualHostname,
 				webId);
@@ -528,11 +523,11 @@ public class CompanyLocalServiceDBPartitionTest
 					CompanyLocalServiceTestUtil.getPartitionName(
 						copiedCompany.getCompanyId())));
 
-			SafeCloseable safeCloseable =
+			SafeCloseable safeCloseable2 =
 				PortalInstances.setCopyInProcessCompanyIdWithSafeCloseable(
 					copiedCompanyId);
 
-			safeCloseable.close();
+			safeCloseable2.close();
 		}
 		finally {
 			if (_className1 != null) {
@@ -1100,6 +1095,7 @@ public class CompanyLocalServiceDBPartitionTest
 	private static CounterLocalService _counterLocalService;
 
 	private static long _defaultCompanyId;
+	private static SafeCloseable _safeCloseable;
 
 	@Inject
 	private static VirtualHostLocalService _virtualHostLocalService;

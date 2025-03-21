@@ -145,9 +145,9 @@ public abstract class Base${schemaName}ResourceImpl
 			parentSchemaName = javaMethodSignature.parentSchemaName!
 		/>
 
-		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
 			<#assign deleteByIdJavaMethodSignature = javaMethodSignature />
-		<#elseif (stringUtil.equals(javaMethodSignature.methodName, "deleteByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "deleteByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "ByExternalReferenceCode")>
 			<#assign deleteByERCJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
 			<#assign getByIdJavaMethodSignature = javaMethodSignature />
@@ -992,13 +992,17 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public void delete(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
-			<#if deleteByIdJavaMethodSignature?? || deleteByERCJavaMethodSignature??>
+			<#assign
+				useDeleteByERC = deleteByERCJavaMethodSignature?? && properties?keys?seq_contains("externalReferenceCode")
+				useDeleteById = deleteByIdJavaMethodSignature?? && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
+			/>
+			<#if useDeleteByERC || useDeleteById>
 				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-					<#if deleteByIdJavaMethodSignature??>
+					<#if useDeleteById>
 						<#assign getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id") />
 
 						if(${schemaVarName}.${getterMethodName}() != null) {
-							<#if deleteByERCJavaMethodSignature??>
+							<#if useDeleteByERC>
 								try {
 							</#if>
 
@@ -1006,7 +1010,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 							return ${schemaVarName};
 
-							<#if deleteByERCJavaMethodSignature??>
+							<#if useDeleteByERC>
 								} catch (Exception exception) {
 									if(${schemaVarName}.getExternalReferenceCode() != null) {
 										${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
@@ -1018,8 +1022,8 @@ public abstract class Base${schemaName}ResourceImpl
 						}
 					</#if>
 
-					<#if deleteByERCJavaMethodSignature??>
-						<#if deleteByIdJavaMethodSignature??>else </#if>
+					<#if useDeleteByERC>
+						<#if useDeleteById>else </#if>
 
 						if(${schemaVarName}.getExternalReferenceCode() != null) {
 							${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());

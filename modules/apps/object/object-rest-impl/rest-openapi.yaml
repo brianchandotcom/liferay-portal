@@ -238,6 +238,12 @@ components:
                     type: array
                 values:
                     $ref: "#/components/schemas/ObjectEntry"
+        ValidationResponse:
+            properties:
+                validationErrors:
+                    items:
+                        $ref: "#/components/schemas/ValidationError"
+                    type: array
 info:
     license:
         name: "Apache 2.0"
@@ -670,13 +676,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/ValidationError"
-                                type: array
+                                $ref: "#/components/schemas/ValidationResponse"
                         application/xml:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/ValidationError"
+                                $ref: "#/components/schemas/ValidationResponse"
                                 type: array
             tags: ["ObjectEntry"]
     "/validate":
@@ -695,13 +698,10 @@ paths:
                     content:
                         application/json:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/ValidationError"
-                                type: array
+                                $ref: "#/components/schemas/ValidationResponse"
                         application/xml:
                             schema:
-                                items:
-                                    $ref: "#/components/schemas/ValidationError"
+                                $ref: "#/components/schemas/ValidationResponse"
                                 type: array
             tags: ["ObjectEntry"]
     "/{objectEntryId}":

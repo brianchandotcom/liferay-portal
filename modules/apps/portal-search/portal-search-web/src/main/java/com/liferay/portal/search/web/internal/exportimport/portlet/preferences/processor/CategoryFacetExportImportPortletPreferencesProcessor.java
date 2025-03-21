@@ -202,10 +202,10 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 				"getImportPortletPreferencesNewExternalReferenceCode");
 	}
 
-	@Reference(target = "(name=PortletDisplayTemplateExporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateExportCapability)")
 	protected Capability exportCapability;
 
-	@Reference(target = "(name=PortletDisplayTemplateImporter)")
+	@Reference(target = "(name=CommonPortletDisplayTemplateImportCapability)")
 	protected Capability importCapability;
 
 	private PortletPreferences _updateExportPortletPreferences(

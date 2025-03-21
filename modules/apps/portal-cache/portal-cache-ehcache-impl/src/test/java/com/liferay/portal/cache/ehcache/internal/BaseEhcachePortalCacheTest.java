@@ -114,7 +114,6 @@ public class BaseEhcachePortalCacheTest {
 
 		ReflectionTestUtil.setFieldValue(
 			baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
-
 		ReflectionTestUtil.setFieldValue(
 			baseEhcachePortalCacheManager, "_defaultCacheConfiguration",
 			_cacheConfigurationBuilder.build());
@@ -569,7 +568,7 @@ public class BaseEhcachePortalCacheTest {
 
 		_defaultPortalCacheReplicator.reset();
 
-		// Remove Logging
+		// Remove logging
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 		_ehcachePortalCache.put(_KEY_2, _VALUE_2);

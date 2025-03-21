@@ -135,7 +135,6 @@ public class ShardedEhcachePortalCacheTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_baseEhcachePortalCacheManager, "_cacheManager", _cacheManager);
-
 		ReflectionTestUtil.setFieldValue(
 			_baseEhcachePortalCacheManager, "_defaultCacheConfiguration",
 			CacheConfigurationBuilder.newCacheConfigurationBuilder(
@@ -750,10 +749,10 @@ public class ShardedEhcachePortalCacheTest {
 	private List<String> _getCacheNames() {
 		Configuration configuration = _cacheManager.getRuntimeConfiguration();
 
-		Map<String, CacheConfiguration<?, ?>> cacheConfigurationsMap =
+		Map<String, CacheConfiguration<?, ?>> cacheConfigurations =
 			configuration.getCacheConfigurations();
 
-		return new ArrayList<>(cacheConfigurationsMap.keySet());
+		return new ArrayList<>(cacheConfigurations.keySet());
 	}
 
 	private String _getShardedCacheName(String cacheName, long companyId) {

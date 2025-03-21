@@ -22,19 +22,25 @@ const hasPermission = (action: IItemsActions, itemData: any): boolean => {
 	);
 };
 
-const matchesFilters = (action: IItemsActions, itemData: any): boolean => {
-	if (!action?.data?.filters) {
+const matchesVisibilityFilters = (
+	action: IItemsActions,
+	itemData: any
+): boolean => {
+	if (!action?.data?.visibilityFilters) {
 		return true;
 	}
 
-	return action?.data?.filters.every(
+	return action?.data?.visibilityFilters.every(
 		(filter: IItemActionsDataFilter) =>
 			getLocalizedValue(itemData, filter?.key)?.value === filter?.value
 	);
 };
 
 const isVisible = (action: IItemsActions, itemData: any): boolean => {
-	if (!hasPermission(action, itemData) || !matchesFilters(action, itemData)) {
+	if (
+		!hasPermission(action, itemData) ||
+		!matchesVisibilityFilters(action, itemData)
+	) {
 		return false;
 	}
 

@@ -15,44 +15,6 @@ import java.util.List;
 public class FDSActionDropdownItem extends DropdownItem {
 
 	public FDSActionDropdownItem(
-		List<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters,
-		String href, String icon, String id, String label, String method,
-		String permissionKey, String target) {
-
-		setFilters(fdsActionDropdownItemFilters);
-		setHref(href);
-		setIcon(icon);
-		setId(id);
-		setLabel(label);
-		setMethod(method);
-		setPermissionKey(permissionKey);
-		setTarget(target);
-	}
-
-	public FDSActionDropdownItem(
-		String confirmationMessage, String confirmationMessageType,
-		String errorMessage,
-		List<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters,
-		String href, String icon, String id, String label, String method,
-		String modalSize, String permissionKey, String requestBody,
-		String successMessage, String target, String title, String type) {
-
-		this(
-			fdsActionDropdownItemFilters, href, icon, id, label, method,
-			permissionKey, target);
-
-		setConfirmationMessage(confirmationMessage);
-		setConfirmationMessageType(confirmationMessageType);
-		setErrorMessage(errorMessage);
-		setModalSize(modalSize);
-		setRequestBody(requestBody);
-		setRequestBody(requestBody);
-		setSuccessMessage(successMessage);
-		setTitle(title);
-		setType(type);
-	}
-
-	public FDSActionDropdownItem(
 		String href, String icon, String id, String label, String method,
 		String permissionKey, String target) {
 
@@ -63,6 +25,21 @@ public class FDSActionDropdownItem extends DropdownItem {
 		setMethod(method);
 		setPermissionKey(permissionKey);
 		setTarget(target);
+	}
+
+	public FDSActionDropdownItem(
+		String href, String icon, String id, String label, String method,
+		String permissionKey, String target,
+		List<FDSActionDropdownItemFilter> visibilityFilters) {
+
+		setHref(href);
+		setIcon(icon);
+		setId(id);
+		setLabel(label);
+		setMethod(method);
+		setPermissionKey(permissionKey);
+		setTarget(target);
+		setVisibilityFilters(visibilityFilters);
 	}
 
 	public FDSActionDropdownItem(
@@ -94,6 +71,28 @@ public class FDSActionDropdownItem extends DropdownItem {
 		setType(type);
 	}
 
+	public FDSActionDropdownItem(
+		String confirmationMessage, String confirmationMessageType,
+		String errorMessage, String href, String icon, String id, String label,
+		String method, String modalSize, String permissionKey,
+		String requestBody, String successMessage, String target, String title,
+		String type, List<FDSActionDropdownItemFilter> visibilityFilters) {
+
+		this(
+			href, icon, id, label, method, permissionKey, target,
+			visibilityFilters);
+
+		setConfirmationMessage(confirmationMessage);
+		setConfirmationMessageType(confirmationMessageType);
+		setErrorMessage(errorMessage);
+		setModalSize(modalSize);
+		setRequestBody(requestBody);
+		setRequestBody(requestBody);
+		setSuccessMessage(successMessage);
+		setTitle(title);
+		setType(type);
+	}
+
 	public void setConfirmationMessage(String confirmationMessage) {
 		putData("confirmationMessage", confirmationMessage);
 	}
@@ -104,12 +103,6 @@ public class FDSActionDropdownItem extends DropdownItem {
 
 	public void setErrorMessage(String errorMessage) {
 		putData("errorMessage", errorMessage);
-	}
-
-	public void setFilters(
-		List<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters) {
-
-		putData("filters", fdsActionDropdownItemFilters);
 	}
 
 	public void setId(String id) {
@@ -142,6 +135,12 @@ public class FDSActionDropdownItem extends DropdownItem {
 
 	public void setType(String type) {
 		putData("type", type);
+	}
+
+	public void setVisibilityFilters(
+		List<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters) {
+
+		putData("visibilityFilters", fdsActionDropdownItemFilters);
 	}
 
 }

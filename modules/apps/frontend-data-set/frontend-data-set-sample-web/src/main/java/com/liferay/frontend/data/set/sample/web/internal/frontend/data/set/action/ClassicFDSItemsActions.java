@@ -43,26 +43,24 @@ public class ClassicFDSItemsActions implements FDSItemsActions {
 				_language.get(httpServletRequest, "job-archive"), null, null,
 				null, null, null, "link", null, "item"),
 			new FDSActionDropdownItem(
-				null, null, null,
-				Arrays.asList(new FDSActionDropdownItemFilter("active", true)),
-				"#", "cog", "deactivate",
+				null, null, null, "#", "cog", "deactivate",
 				_language.get(httpServletRequest, "deactivate"), null, null,
-				null, null, null, "link", null, "item"),
+				null, null, null, "link", null, "item",
+				Arrays.asList(new FDSActionDropdownItemFilter("active", true))),
 			new FDSActionDropdownItem(
-				null, null, null,
-				Arrays.asList(new FDSActionDropdownItemFilter("active", false)),
-				"#", "cog", "activate",
+				null, null, null, "#", "cog", "activate",
 				_language.get(httpServletRequest, "activate"), null, null, null,
-				null, null, "link", null, "item"),
+				null, null, "link", null, "item",
+				Arrays.asList(
+					new FDSActionDropdownItemFilter("active", false))),
 			new FDSActionDropdownItem(
-				null, null, null,
+				null, null, null, "#", "cog", "activity",
+				_language.get(httpServletRequest, "activity"), null, null, null,
+				null, null, "link", null, "item",
 				Arrays.asList(
 					new FDSActionDropdownItemFilter("active", true),
 					new FDSActionDropdownItemFilter(
-						"emailAddress", "manager.user@liferay.com")),
-				"#", "cog", "activity",
-				_language.get(httpServletRequest, "activity"), null, null, null,
-				null, null, "link", null, "item"));
+						"emailAddress", "manager.user@liferay.com"))));
 	}
 
 	@Override

@@ -141,16 +141,16 @@ describe('filterItemActions', () => {
 		});
 	});
 
-	describe('when permissionKey and action filters are defined for an action item', () => {
-		it('returns only the action that matches the permissionKey and the action filter criteria', () => {
+	describe('when permissionKey and action visibility filters are defined for an action item', () => {
+		it('returns only the action that matches the permissionKey and the action  visibility filter criteria', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					filters: [{key: 'color', value: 'green'}],
 					permissionKey: 'UPDATE',
+					visibilityFilters: [{key: 'color', value: 'green'}],
 				},
 				{
-					filters: [{key: 'color', value: 'blue'}],
 					permissionKey: 'UPDATE',
+					visibilityFilters: [{key: 'color', value: 'blue'}],
 				},
 			]);
 
@@ -164,14 +164,14 @@ describe('filterItemActions', () => {
 		});
 	});
 
-	describe('when only action filters are defined for an action item', () => {
-		it('returns only the action that matches the action filter criteria', () => {
+	describe('when only action visibility filters are defined for an action item', () => {
+		it('returns only the action that matches the action visibility filter criteria', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					filters: [{key: 'color', value: 'green'}],
+					visibilityFilters: [{key: 'color', value: 'green'}],
 				},
 				{
-					filters: [{key: 'color', value: 'blue'}],
+					visibilityFilters: [{key: 'color', value: 'blue'}],
 				},
 			]);
 
@@ -185,13 +185,13 @@ describe('filterItemActions', () => {
 			expect(filteredActions[0]).toMatchObject(customItemActions[1]);
 		});
 
-		it('returns only the actions that matches all action filters criteria', () => {
+		it('returns only the actions that matches all action visibility filters criteria', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					filters: [{key: 'color', value: 'green'}],
+					visibilityFilters: [{key: 'color', value: 'green'}],
 				},
 				{
-					filters: [
+					visibilityFilters: [
 						{key: 'color', value: 'blue'},
 						{key: 'type', value: 'boolean'},
 					],
@@ -209,10 +209,10 @@ describe('filterItemActions', () => {
 		it('returns actions if the filter criteria key includes a composed field name', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					filters: [{key: 'color', value: 'green'}],
+					visibilityFilters: [{key: 'color', value: 'green'}],
 				},
 				{
-					filters: [
+					visibilityFilters: [
 						{key: 'color', value: 'blue'},
 						{key: 'creator.name', value: 'Test Test'},
 					],
@@ -231,10 +231,10 @@ describe('filterItemActions', () => {
 		it('returns actions if the filter criteria is based on a boolean value', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					filters: [{key: 'color', value: 'green'}],
+					visibilityFilters: [{key: 'color', value: 'green'}],
 				},
 				{
-					filters: [
+					visibilityFilters: [
 						{key: 'color', value: 'blue'},
 						{key: 'sortable', value: true},
 					],

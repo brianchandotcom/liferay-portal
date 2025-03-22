@@ -332,7 +332,8 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	private ObjectEntryFolder _toObjectEntryFolder(
-			com.liferay.object.model.ObjectEntryFolder objectEntryFolder)
+			com.liferay.object.model.ObjectEntryFolder
+				persistedObjectEntryFolder)
 		throws Exception {
 
 		return _objectEntryFolderDTOConverter.toDTO(
@@ -341,21 +342,21 @@ public class ObjectEntryFolderResourceImpl
 				HashMapBuilder.put(
 					"delete",
 					addAction(
-						ActionKeys.DELETE, objectEntryFolder,
+						ActionKeys.DELETE, persistedObjectEntryFolder,
 						"deleteObjectEntryFolder")
 				).put(
 					"get",
 					addAction(
-						ActionKeys.VIEW, objectEntryFolder,
+						ActionKeys.VIEW, persistedObjectEntryFolder,
 						"getObjectEntryFolder")
 				).put(
 					"update",
 					addAction(
-						ActionKeys.UPDATE, objectEntryFolder,
+						ActionKeys.UPDATE, persistedObjectEntryFolder,
 						"patchObjectEntryFolder")
 				).build(),
 				_dtoConverterRegistry,
-				objectEntryFolder.getObjectEntryFolderId(),
+				persistedObjectEntryFolder.getObjectEntryFolderId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

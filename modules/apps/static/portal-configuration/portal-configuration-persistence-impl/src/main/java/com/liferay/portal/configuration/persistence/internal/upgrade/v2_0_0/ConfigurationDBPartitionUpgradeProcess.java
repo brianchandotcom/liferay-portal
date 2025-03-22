@@ -37,8 +37,8 @@ public class ConfigurationDBPartitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (PortalInstancePool.getDefaultCompanyId() ==
-				CompanyThreadLocal.getCompanyId()) {
+		if (CompanyThreadLocal.getCompanyId() ==
+				PortalInstancePool.getDefaultCompanyId()) {
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(

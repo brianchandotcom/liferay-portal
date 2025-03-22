@@ -289,6 +289,27 @@ export class ChangeTrackingPage {
 			.waitFor();
 	}
 
+	async goToReviewChangesScheduled(title: string) {
+		await this.goto();
+
+		await this.selectTab('Scheduled');
+
+		await this.page
+			.locator('#fnsd___table-id div')
+			.filter({hasText: title})
+			.first()
+			.waitFor();
+
+		await this.page.getByRole('link', {exact: true, name: title}).click();
+
+		await this.page
+			.locator(
+				'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_controlMenu'
+			)
+			.filter({hasText: 'Review Changes'})
+			.waitFor();
+	}
+
 	async switchLanguage(language: string) {
 		await this.page.getByLabel('show-available-locales').click();
 

@@ -55,4 +55,22 @@ export class HeadlessChangeTrackingApiHelper {
 			ctCollectionId
 		);
 	}
+
+	async scheduleCTCollection(ctCollectionId: number) {
+		const today = new Date();
+
+		const scheduledDate = new Date(
+			today.getFullYear() + 1,
+			today.getMonth(),
+			today.getDate()
+		);
+
+		const ctCollectionApiClient =
+			await this.apiHelpers.buildRestClient(CTCollectionApi);
+
+		return await ctCollectionApiClient.postCTCollectionSchedulePublish(
+			ctCollectionId,
+			scheduledDate
+		);
+	}
 }

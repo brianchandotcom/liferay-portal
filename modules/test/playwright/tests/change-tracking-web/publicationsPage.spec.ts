@@ -692,6 +692,28 @@ test(
 				'//td[contains(@class,"publications-render-view-content")]'
 			)
 		).toBeVisible();
+
+		await apiHelpers.headlessChangeTracking.scheduleCTCollection(
+			ctCollection.body.id
+		);
+
+		await changeTrackingPage.goToReviewChangesScheduled(
+			ctCollection.body.name
+		);
+
+		await changeTrackingPage.viewChanges({
+			changed: 'Added',
+			site: site.name,
+			title: layoutTitle,
+			type: 'Page',
+		});
+
+		await page.getByRole('link', {exact: true, name: layoutTitle}).click();
+		await expect(
+			page.locator(
+				'//td[contains(@class,"publications-render-view-content")]'
+			)
+		).toBeVisible();
 	}
 );
 

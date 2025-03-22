@@ -5,11 +5,13 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-import CreationModalContent from '../../components/modal/CreationModalContent';
+import CreationModalContent, {
+	AssetLibray,
+} from '../../components/modal/CreationModalContent';
 
 type FolderData = {
 	action: 'createFolder';
-	assetLibraryId?: string;
+	assetLibraries: AssetLibray[];
 };
 
 export default function createFolderAction(data: FolderData) {

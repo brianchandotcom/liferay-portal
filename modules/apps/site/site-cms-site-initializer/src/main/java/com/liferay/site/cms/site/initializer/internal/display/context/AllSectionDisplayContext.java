@@ -5,12 +5,15 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -23,10 +26,17 @@ import javax.servlet.http.HttpServletRequest;
 public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public AllSectionDisplayContext(
+		DepotEntryLocalService depotEntryLocalService,
+		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
-		ObjectDefinitionService objectDefinitionService) {
+		ObjectDefinitionService objectDefinitionService,
+		ObjectDefinitionSettingLocalService
+			objectDefinitionSettingLocalService) {
 
-		super(httpServletRequest, language, objectDefinitionService);
+		super(
+			depotEntryLocalService, groupLocalService, httpServletRequest,
+			language, objectDefinitionService,
+			objectDefinitionSettingLocalService);
 	}
 
 	@Override

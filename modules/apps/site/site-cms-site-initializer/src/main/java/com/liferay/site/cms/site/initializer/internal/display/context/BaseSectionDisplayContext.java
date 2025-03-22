@@ -148,7 +148,8 @@ public abstract class BaseSectionDisplayContext {
 							themeDisplay.getPathMain(),
 							"/cms/add_structured_content_item?",
 							"objectDefinitionId=",
-							objectDefinition.getObjectDefinitionId()));
+							objectDefinition.getObjectDefinitionId(), "&plid=",
+							themeDisplay.getPlid()));
 					dropdownItem.putData(
 						"title",
 						objectDefinition.getLabel(themeDisplay.getLocale()));

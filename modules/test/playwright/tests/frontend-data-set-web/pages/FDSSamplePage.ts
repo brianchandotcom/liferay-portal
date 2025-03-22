@@ -13,6 +13,10 @@ import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getW
 
 export class FDSSamplePage {
 	private readonly apiHelpers: ApiHelpers;
+	readonly bulkActions: {
+		actionsDropdownButton: Locator;
+		container: Locator;
+	};
 	readonly customViewsActionsButton: Locator;
 	readonly customViewsDeleteAlert: Locator;
 	readonly customViewsSaveModal: Locator;
@@ -33,6 +37,12 @@ export class FDSSamplePage {
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
+		this.bulkActions = {
+			actionsDropdownButton: page
+				.locator('.bulk-actions')
+				.getByLabel('Actions'),
+			container: page.locator('.bulk-actions'),
+		};
 		this.customViewsActionsButton = page.getByLabel('Show View Actions', {
 			exact: true,
 		});
@@ -62,6 +72,7 @@ export class FDSSamplePage {
 				'Manage Columns Visibility'
 			),
 		};
+
 		const itemActionsCell = this.table.itemActionsCells.first();
 
 		this.itemActionButton = itemActionsCell.getByRole('button', {
@@ -88,6 +99,20 @@ export class FDSSamplePage {
 				name: itemAction,
 			})
 			.click();
+	}
+
+	async getVisibleLocator(locator: Locator): Promise<Locator> {
+		const locators = await locator.all();
+
+		let visibleLocator: Locator;
+
+		for (const locator of locators) {
+			if (await locator.isVisible()) {
+				visibleLocator = locator;
+			}
+		}
+
+		return visibleLocator;
 	}
 
 	selectItemActionsByRow(text: string) {

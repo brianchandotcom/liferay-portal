@@ -750,12 +750,49 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 			.first()
 			.getByRole('checkbox');
 
-		await test.step('Select one of the items in the table', async () => {
+		await test.step('Select the first item in the table', async () => {
 			await firstItemCheckbox.check();
 		});
 
+		await test.step('Check the highlighted bulk action "Label" is visible', async () => {
+			await expect(
+				fdsSamplePage.bulkActions.container.getByRole('button', {
+					name: 'Label',
+				})
+			).toHaveText('Label');
+		});
+
+		await test.step('Check in medium-width windows the text is hidden', async () => {
+			await page.setViewportSize({height: 1024, width: 800});
+
+			const visibleLabelButton = await fdsSamplePage.getVisibleLocator(
+				fdsSamplePage.bulkActions.container.getByRole('button', {
+					name: 'Label',
+				})
+			);
+
+			await expect(visibleLabelButton).not.toHaveText('Label');
+			await expect(
+				visibleLabelButton.locator('.lexicon-icon')
+			).toBeVisible();
+		});
+
+		await test.step('Check in small-width windows the text and icon are hidden', async () => {
+			await page.setViewportSize({height: 720, width: 360});
+
+			await expect(
+				fdsSamplePage.bulkActions.container.getByRole('button', {
+					name: 'Label',
+				})
+			).toBeHidden();
+		});
+
+		await test.step('Reset the window size', async () => {
+			await page.setViewportSize({height: 720, width: 1280});
+		});
+
 		await test.step('Open ellipsis actions menu', async () => {
-			await page.locator('.bulk-actions').getByLabel('Actions').click();
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
 		});
 
 		await test.step('Check the bulk actions are listed', async () => {
@@ -765,7 +802,7 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 		});
 
 		await test.step('Close ellipsis actions menu', async () => {
-			await page.locator('.bulk-actions').getByLabel('Actions').click();
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
 
 			await expect(page.locator('.dropdown-menu.show')).toBeHidden();
 		});

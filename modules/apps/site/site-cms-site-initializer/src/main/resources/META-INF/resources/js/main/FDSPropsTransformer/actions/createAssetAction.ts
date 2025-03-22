@@ -5,10 +5,13 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-import CreationModalContent from '../../components/modal/CreationModalContent';
+import CreationModalContent, {
+	AssetLibray,
+} from '../../components/modal/CreationModalContent';
 
 type AssetData = {
 	action: 'createAsset';
+	assetLibraries: AssetLibray[];
 	redirect: string;
 	title: string;
 };

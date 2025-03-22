@@ -5,10 +5,13 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.site.cms.site.initializer.internal.display.context.ContentsSectionDisplayContext;
 
 import java.io.IOException;
@@ -54,7 +57,9 @@ public class ContentsSectionFragmentRenderer
 			httpServletRequest.setAttribute(
 				ContentsSectionDisplayContext.class.getName(),
 				new ContentsSectionDisplayContext(
-					httpServletRequest, _language, _objectDefinitionService));
+					_depotEntryLocalService, _groupLocalService,
+					httpServletRequest, _language, _objectDefinitionService,
+					_objectDefinitionSettingLocalService));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -64,10 +69,20 @@ public class ContentsSectionFragmentRenderer
 	}
 
 	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Language _language;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Reference
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

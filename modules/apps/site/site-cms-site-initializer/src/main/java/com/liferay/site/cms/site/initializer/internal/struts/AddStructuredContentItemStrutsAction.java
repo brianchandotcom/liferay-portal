@@ -31,7 +31,6 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -57,7 +55,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -125,7 +122,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		long groupId = _getGroupId(httpServletRequest, serviceContext);
+		long groupId = _getGroupId(httpServletRequest);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -284,34 +281,14 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		return layoutPageTemplateEntry;
 	}
 
-	private long _getGroupId(
-			HttpServletRequest httpServletRequest,
-			ServiceContext serviceContext)
+	private long _getGroupId(HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		long assetLibraryId = ParamUtil.getLong(
 			httpServletRequest, "assetLibraryId");
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
 			assetLibraryId);
-
-		if (depotEntry != null) {
-			return depotEntry.getGroupId();
-		}
-
-		List<DepotEntry> depotEntries = _depotEntryLocalService.getDepotEntries(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (!depotEntries.isEmpty()) {
-			depotEntry = depotEntries.get(0);
-		}
-		else {
-			depotEntry = _depotEntryLocalService.addDepotEntry(
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), "Default"
-				).build(),
-				new HashMap<>(), serviceContext);
-		}
 
 		return depotEntry.getGroupId();
 	}

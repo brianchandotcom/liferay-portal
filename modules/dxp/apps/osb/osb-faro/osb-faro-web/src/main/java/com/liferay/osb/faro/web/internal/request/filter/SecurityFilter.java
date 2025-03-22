@@ -209,11 +209,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 	}
 
 	private boolean _isSiteOwner(String roleName) {
-		if (StringUtil.equals(roleName, RoleConstants.SITE_OWNER)) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(roleName, RoleConstants.SITE_OWNER);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SecurityFilter.class);

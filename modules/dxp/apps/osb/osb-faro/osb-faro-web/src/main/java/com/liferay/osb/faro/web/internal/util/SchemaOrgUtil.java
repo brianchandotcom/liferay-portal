@@ -54,11 +54,7 @@ public class SchemaOrgUtil {
 	}
 
 	public static boolean isSubtype(String type, String rawType) {
-		if (rawType.equals(getRawType(type, type))) {
-			return true;
-		}
-
-		return false;
+		return rawType.equals(getRawType(type, type));
 	}
 
 	private static final String _SCHEMA_ORG_URL = "http://schema.org/";

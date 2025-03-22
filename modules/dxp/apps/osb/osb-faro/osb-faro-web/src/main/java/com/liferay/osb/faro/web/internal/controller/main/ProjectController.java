@@ -1186,11 +1186,7 @@ public class ProjectController extends BaseFaroController {
 		oldSubscriptionName = StringUtil.replace(
 			oldSubscriptionName, "LXC ", "Liferay SaaS ");
 
-		if (!Objects.equals(oldSubscriptionName, subscriptionName)) {
-			return true;
-		}
-
-		return false;
+		return !Objects.equals(oldSubscriptionName, subscriptionName);
 	}
 
 	private boolean _isWorkspaceHealthy(FaroProject faroProject) {

@@ -46,9 +46,7 @@ public class ObjectEntryFolderNameExceptionMapper
 		if (objectEntryFolderNameException instanceof
 				ObjectEntryFolderNameException.MustNotBeNull) {
 
-			return new Problem(
-				Response.Status.BAD_REQUEST,
-				objectEntryFolderNameException.getMessage());
+			return new Problem(objectEntryFolderNameException);
 		}
 
 		return new Problem(objectEntryFolderNameException);

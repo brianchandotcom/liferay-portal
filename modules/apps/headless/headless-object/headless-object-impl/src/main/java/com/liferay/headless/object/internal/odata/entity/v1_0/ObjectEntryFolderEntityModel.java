@@ -34,8 +34,6 @@ public class ObjectEntryFolderEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME)),
-			new StringEntityField(
 				"label",
 				locale -> Field.getSortableFieldName(
 					"localized_label_".concat(LocaleUtil.toLanguageId(locale))),
@@ -45,7 +43,9 @@ public class ObjectEntryFolderEntityModel implements EntityModel {
 							LocaleUtil.toLanguageId(locale)));
 
 					return sortableFieldName.concat(".keyword_lowercase");
-				}));
+				}),
+			new StringEntityField(
+				"name", locale -> Field.getSortableFieldName(Field.NAME)));
 	}
 
 	@Override

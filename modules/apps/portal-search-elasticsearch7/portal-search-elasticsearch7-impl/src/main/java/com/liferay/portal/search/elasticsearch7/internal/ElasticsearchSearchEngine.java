@@ -506,11 +506,7 @@ public class ElasticsearchSearchEngine
 		List<SnapshotRepositoryDetails> snapshotRepositoryDetailsList =
 			getSnapshotRepositoriesResponse.getSnapshotRepositoryDetails();
 
-		if (snapshotRepositoryDetailsList.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !snapshotRepositoryDetailsList.isEmpty();
 	}
 
 	private void _putTimestampPipeline() {

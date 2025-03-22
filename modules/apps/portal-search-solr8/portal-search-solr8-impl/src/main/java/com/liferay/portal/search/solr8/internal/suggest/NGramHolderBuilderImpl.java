@@ -96,11 +96,7 @@ public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 
 			@Override
 			protected boolean isTokenChar(int c) {
-				if (Character.isWhitespace(c)) {
-					return false;
-				}
-
-				return true;
+				return !Character.isWhitespace(c);
 			}
 
 		};

@@ -88,11 +88,7 @@ public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 
 		booleanClauses = booleanFilter.getMustNotBooleanClauses();
 
-		if (!booleanClauses.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !booleanClauses.isEmpty();
 	}
 
 }

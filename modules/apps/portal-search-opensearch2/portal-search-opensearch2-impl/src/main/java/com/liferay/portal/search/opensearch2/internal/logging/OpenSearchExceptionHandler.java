@@ -48,11 +48,7 @@ public class OpenSearchExceptionHandler {
 	private boolean _isIndexNotFound(Throwable throwable) {
 		String message = throwable.getMessage();
 
-		if (message.contains(INDEX_NOT_FOUND_EXCEPTION_MESSAGE)) {
-			return true;
-		}
-
-		return false;
+		return message.contains(INDEX_NOT_FOUND_EXCEPTION_MESSAGE);
 	}
 
 	private final Log _log;

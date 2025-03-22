@@ -258,11 +258,7 @@ public class Sidecar {
 	private boolean _fileNameContains(Path path, String s) {
 		String name = String.valueOf(path.getFileName());
 
-		if (name.contains(s)) {
-			return true;
-		}
-
-		return false;
+		return name.contains(s);
 	}
 
 	private String _getBootstrapClassPath() {

@@ -33,10 +33,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -95,25 +97,25 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Group group = _groupLocalService.getGroup(
+			themeDisplay.getCompanyId(), GroupConstants.CMS);
+
 		long classNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchDefaultLayoutPageTemplateEntry(
-					themeDisplay.getScopeGroupId(), classNameId, 0);
+					group.getGroupId(), classNameId, 0);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
 		if (layoutPageTemplateEntry == null) {
 			layoutPageTemplateEntry = _addDefaultLayoutPageTemplateEntry(
-				classNameId, themeDisplay.getScopeGroupId(),
-				objectDefinition.getName(),
+				classNameId, group.getGroupId(), objectDefinition.getName(),
 				ParamUtil.getLong(httpServletRequest, "plid"), serviceContext);
 		}
-
-		Group group = themeDisplay.getScopeGroup();
 
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);
@@ -338,6 +340,9 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

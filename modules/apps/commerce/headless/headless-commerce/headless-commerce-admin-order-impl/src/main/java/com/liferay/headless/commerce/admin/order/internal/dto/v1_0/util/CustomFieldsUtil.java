@@ -88,28 +88,28 @@ public class CustomFieldsUtil {
 			companyId, className);
 
 		for (CustomField customField : customFields) {
-			String fieldName = customField.getName();
+			String name = customField.getName();
 
-			int attributeType = expandoBridge.getAttributeType(fieldName);
+			int attributeType = expandoBridge.getAttributeType(name);
 
 			CustomValue customValue = customField.getCustomValue();
 
 			Object data = customValue.getData();
 
 			if (ExpandoColumnConstants.DATE == attributeType) {
-				map.put(fieldName, _parseDate(String.valueOf(data)));
+				map.put(name, _parseDate(String.valueOf(data)));
 			}
 			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-				map.put(fieldName, _toArray(data, ArrayUtil::toDoubleArray));
+				map.put(name, _toArray(data, ArrayUtil::toDoubleArray));
 			}
 			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-				map.put(fieldName, _toArray(data, ArrayUtil::toFloatArray));
+				map.put(name, _toArray(data, ArrayUtil::toFloatArray));
 			}
 			else if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
 				Geo geo = customValue.getGeo();
 
 				map.put(
-					fieldName,
+					name,
 					JSONUtil.put(
 						"latitude", geo.getLatitude()
 					).put(
@@ -117,27 +117,27 @@ public class CustomFieldsUtil {
 					).toString());
 			}
 			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-				map.put(fieldName, _toArray(data, ArrayUtil::toIntArray));
+				map.put(name, _toArray(data, ArrayUtil::toIntArray));
 			}
 			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
 				map.put(
-					fieldName,
+					name,
 					_toArray(
 						data,
 						(Function<Collection<Number>, Serializable>)
 							ArrayUtil::toLongArray));
 			}
 			else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
-				map.put(fieldName, _toArray(data, ArrayUtil::toStringArray));
+				map.put(name, _toArray(data, ArrayUtil::toStringArray));
 			}
 			else if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
 				map.put(
-					fieldName,
+					name,
 					(Serializable)LocalizedMapUtil.getLocalizedMap(
 						locale, (String)data, customValue.getData_i18n()));
 			}
 			else {
-				map.put(fieldName, (Serializable)data);
+				map.put(name, (Serializable)data);
 			}
 		}
 

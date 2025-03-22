@@ -145,6 +145,7 @@ public class ObjectEntryFolderResourceTest
 			randomObjectEntryFolder());
 	}
 
+	@Override
 	protected ObjectEntryFolder
 			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
 		throws Exception {
@@ -154,6 +155,7 @@ public class ObjectEntryFolderResourceTest
 			randomObjectEntryFolder());
 	}
 
+	@Override
 	protected ObjectEntryFolder
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				ObjectEntryFolder objectEntryFolder)

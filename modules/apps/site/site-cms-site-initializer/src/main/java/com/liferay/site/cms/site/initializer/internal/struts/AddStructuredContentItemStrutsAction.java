@@ -17,6 +17,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -180,10 +181,34 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
+		ContainerStyledLayoutStructureItem
+			parentContainerStyledLayoutStructureItem =
+				(ContainerStyledLayoutStructureItem)
+					layoutStructure.addContainerStyledLayoutStructureItem(
+						layoutStructure.getMainItemId(), 0);
+
+		parentContainerStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"paddingBottom", "6"
+				).put(
+					"paddingTop", "6"
+				)));
+
+		ContainerStyledLayoutStructureItem
+			childContainerStyledLayoutStructureItem =
+				(ContainerStyledLayoutStructureItem)
+					layoutStructure.addContainerStyledLayoutStructureItem(
+						parentContainerStyledLayoutStructureItem.getItemId(),
+						0);
+
+		childContainerStyledLayoutStructureItem.setWidthType("fixed");
+
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
 				layoutStructure.addFormStyledLayoutStructureItem(
-					layoutStructure.getMainItemId(), 0);
+					childContainerStyledLayoutStructureItem.getItemId(), 0);
 
 		formStyledLayoutStructureItem.setClassNameId(
 			layoutPageTemplateEntry.getClassNameId());

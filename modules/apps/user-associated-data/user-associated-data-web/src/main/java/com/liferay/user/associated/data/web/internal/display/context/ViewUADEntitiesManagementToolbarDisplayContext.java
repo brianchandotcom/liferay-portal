@@ -99,11 +99,7 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	public Boolean isShowInfoButton() {
 		String applicationKey = _viewUADEntitiesDisplay.getApplicationKey();
 
-		if (applicationKey.equals(UADConstants.ALL_APPLICATIONS)) {
-			return false;
-		}
-
-		return true;
+		return !applicationKey.equals(UADConstants.ALL_APPLICATIONS);
 	}
 
 	@Override

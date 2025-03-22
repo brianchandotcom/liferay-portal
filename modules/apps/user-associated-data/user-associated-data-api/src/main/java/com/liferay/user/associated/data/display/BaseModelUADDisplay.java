@@ -111,11 +111,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 
 	@Override
 	public boolean isSiteScoped() {
-		if (GroupedModel.class.isAssignableFrom(getTypeClass())) {
-			return true;
-		}
-
-		return false;
+		return GroupedModel.class.isAssignableFrom(getTypeClass());
 	}
 
 	@Override

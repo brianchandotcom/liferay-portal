@@ -54,11 +54,7 @@ public class ErasePersonalDataUserActionContributor
 
 	@Override
 	public boolean isShowConfirmationMessage(User selUser) {
-		if (selUser.isActive()) {
-			return true;
-		}
-
-		return false;
+		return selUser.isActive();
 	}
 
 	@Override

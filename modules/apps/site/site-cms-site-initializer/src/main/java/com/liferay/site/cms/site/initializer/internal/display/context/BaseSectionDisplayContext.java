@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.List;
 import java.util.Map;
@@ -38,11 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseSectionDisplayContext {
 
 	public BaseSectionDisplayContext(
-		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService) {
 
-		this.cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
 		this.httpServletRequest = httpServletRequest;
 		this.language = language;
 
@@ -167,8 +164,6 @@ public abstract class BaseSectionDisplayContext {
 	protected abstract String[]
 		getObjectDefinitionFolderExternalReferenceCodes();
 
-	protected final CMSSiteInitializerConfiguration
-		cmsSiteInitializerConfiguration;
 	protected final HttpServletRequest httpServletRequest;
 	protected final Language language;
 	protected final ThemeDisplay themeDisplay;

@@ -36,8 +36,7 @@ public class ObjectEntryFolderScopeExceptionMapper
 
 		return new Problem(
 			Response.Status.CONFLICT,
-			"Group ID does not match with parent folder group ID " +
-				objectEntryFolderScopeException.getMessage());
+			objectEntryFolderScopeException.getMessage());
 	}
 
 }

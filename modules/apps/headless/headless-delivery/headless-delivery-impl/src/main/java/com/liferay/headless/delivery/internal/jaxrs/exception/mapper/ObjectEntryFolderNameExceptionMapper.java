@@ -40,8 +40,7 @@ public class ObjectEntryFolderNameExceptionMapper
 
 			return new Problem(
 				Response.Status.CONFLICT,
-				"A object entry folder already exists with the name " +
-					objectEntryFolderNameException.getMessage());
+				objectEntryFolderNameException.getMessage());
 		}
 
 		if (objectEntryFolderNameException instanceof
@@ -49,8 +48,7 @@ public class ObjectEntryFolderNameExceptionMapper
 
 			return new Problem(
 				Response.Status.BAD_REQUEST,
-				"A object entry folder name must not be null" +
-					objectEntryFolderNameException.getMessage());
+				objectEntryFolderNameException.getMessage());
 		}
 
 		return new Problem(objectEntryFolderNameException);

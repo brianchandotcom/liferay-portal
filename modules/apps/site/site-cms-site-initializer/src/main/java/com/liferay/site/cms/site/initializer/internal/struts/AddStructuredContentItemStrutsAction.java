@@ -213,6 +213,30 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		formStyledLayoutStructureItem.setClassNameId(
 			layoutPageTemplateEntry.getClassNameId());
 
+		Layout backLayout = _layoutLocalService.fetchLayout(plid);
+
+		if (backLayout != null) {
+			formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+				JSONUtil.put(
+					"layout",
+					JSONUtil.put(
+						"groupId", backLayout.getGroupId()
+					).put(
+						"layoutId", backLayout.getLayoutId()
+					).put(
+						"layoutUuid", backLayout.getUuid()
+					).put(
+						"private", backLayout.isPrivateLayout()
+					).put(
+						"title", backLayout.getTitle()
+					)
+				).put(
+					"showNotification", true
+				).put(
+					"type", "page"
+				));
+		}
+
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
 		_formManager.addFragmentEntryLinksLayoutStructureItems(
@@ -220,33 +244,6 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			formStyledLayoutStructureItem, true, draftLayout, layoutStructure,
 			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
 			serviceContext, null);
-
-		Layout backLayout = _layoutLocalService.fetchLayout(plid);
-
-		if (backLayout != null) {
-			layoutStructure.updateItemConfig(
-				JSONUtil.put(
-					"successMessage",
-					JSONUtil.put(
-						"layout",
-						JSONUtil.put(
-							"groupId", backLayout.getGroupId()
-						).put(
-							"layoutId", backLayout.getLayoutId()
-						).put(
-							"layoutUuid", backLayout.getUuid()
-						).put(
-							"private", backLayout.isPrivateLayout()
-						).put(
-							"title", backLayout.getTitle()
-						)
-					).put(
-						"showNotification", true
-					).put(
-						"type", "page"
-					)),
-				formStyledLayoutStructureItem.getItemId());
-		}
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

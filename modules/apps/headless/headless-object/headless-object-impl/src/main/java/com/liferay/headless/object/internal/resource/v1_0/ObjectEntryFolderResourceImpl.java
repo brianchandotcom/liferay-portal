@@ -247,13 +247,12 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long parentObjectEntryFolderId = GetterUtil.getLong(
-			objectEntryFolder.getParentObjectEntryFolderId());
-
 		com.liferay.object.model.ObjectEntryFolder persistedObjectEntryFolder =
 			null;
 
 		long groupId = GetterUtil.getLong(scopeKey);
+		long parentObjectEntryFolderId = GetterUtil.getLong(
+			objectEntryFolder.getParentObjectEntryFolderId());
 
 		try {
 			persistedObjectEntryFolder =

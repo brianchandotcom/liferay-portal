@@ -184,10 +184,13 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 	private void _upgradeDBPartition(long defaultCompanyId) throws Exception {
 		if (CompanyThreadLocal.getCompanyId() == defaultCompanyId) {
 			runSQL("update ListType set companyId = " + defaultCompanyId);
+
+			for (long companyId : PortalInstancePool.getCompanyIds()) {
+				DBPartitionUtil.replaceByTable(
+					connection, companyId, true, "ListType");
+			}
 		}
 		else {
-			DBPartitionUtil.replaceByTable(connection, true, "ListType");
-
 			runSQL(
 				"update ListType set companyId = " +
 					CompanyThreadLocal.getCompanyId());

@@ -77,12 +77,15 @@ public class ConfigurationDBPartitionUpgradeProcess extends UpgradeProcess {
 
 			long[] companyIds = PortalInstancePool.getCompanyIds();
 
+			for (long companyId : companyIds) {
+				DBPartitionUtil.replaceByTable(
+					connection, companyId, false, "Configuration_");
+			}
+
 			_atomicInteger.set(companyIds.length - 1);
 
 			return;
 		}
-
-		DBPartitionUtil.replaceByTable(connection, false, "Configuration_");
 
 		for (ScopeConfiguration scopeConfiguration : _scopeConfigurations) {
 			if (_isApplicable(

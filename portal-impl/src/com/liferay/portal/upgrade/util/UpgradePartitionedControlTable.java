@@ -7,6 +7,8 @@ package com.liferay.portal.upgrade.util;
 
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -20,7 +22,16 @@ public class UpgradePartitionedControlTable extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DBPartitionUtil.replaceByTable(connection, true, _tableName);
+		if (CompanyThreadLocal.getCompanyId() !=
+				PortalInstancePool.getDefaultCompanyId()) {
+
+			return;
+		}
+
+		for (long companyId : PortalInstancePool.getCompanyIds()) {
+			DBPartitionUtil.replaceByTable(
+				connection, companyId, true, _tableName);
+		}
 	}
 
 	@Override

@@ -511,38 +511,52 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
-	public void testDatabasePartitionSchemaNamePrefixUsage() throws Exception {
-		String partitionName = DBPartitionUtil.getPartitionName(COMPANY_IDS[0]);
+	public void testDatabasePartitionSchemaNamePrefixes() throws Exception {
+		String[] databasePartitionSchemaNamePrefixes = {
+			ReflectionTestUtil.getFieldValue(
+				DBPartitionUtil.class,
+				"_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX"),
+			ReflectionTestUtil.getFieldValue(
+				DBPartitionUtil.class,
+				"_DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX")
+		};
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					CompanyConstants.SYSTEM)) {
+		for (String databasePartitionSchemaNamePrefix :
+				databasePartitionSchemaNamePrefixes) {
 
-			db.runSQL(
-				StringBundler.concat(
-					"drop view if exists ", partitionName, ".TestView"));
-		}
+			String databasePartitionSchemaNamePrefixSQL = StringBundler.concat(
+				"drop view if exists ", databasePartitionSchemaNamePrefix,
+				COMPANY_IDS[0], ".TestView");
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					COMPANY_IDS[0])) {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						CompanyConstants.SYSTEM)) {
 
-			db.runSQL(
-				StringBundler.concat(
-					"drop view if exists ", partitionName, ".TestView"));
+				db.runSQL(databasePartitionSchemaNamePrefixSQL);
+			}
 
-			Assert.fail();
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			String databasePartitionSchemaNamePrefix =
-				ReflectionTestUtil.getFieldValue(
-					DBPartitionUtil.class,
-					"_DATABASE_PARTITION_SCHEMA_NAME_PREFIX");
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						PortalInstancePool.getDefaultCompanyId())) {
 
-			Assert.assertEquals(
-				databasePartitionSchemaNamePrefix +
-					" cannot be used in a statement executeUpdate",
-				illegalArgumentException.getMessage());
+				db.runSQL(databasePartitionSchemaNamePrefixSQL);
+			}
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						COMPANY_IDS[0])) {
+
+				db.runSQL(databasePartitionSchemaNamePrefixSQL);
+
+				Assert.fail();
+			}
+			catch (UnsupportedOperationException
+						unsupportedOperationException) {
+
+				Assert.assertEquals(
+					"Unsupported SQL query",
+					unsupportedOperationException.getMessage());
+			}
 		}
 	}
 

@@ -93,8 +93,8 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 			jsonObject = _importFragmentEntries(
 				file, fragmentCollectionId, themeDisplay.getScopeGroupId(),
-				fragmentsImportStrategy, themeDisplay.getLocale(),
-				marketplace, themeDisplay.getUserId());
+				fragmentsImportStrategy, themeDisplay.getLocale(), marketplace,
+				themeDisplay.getUserId());
 		}
 		else {
 			jsonObject.put("valid", false);

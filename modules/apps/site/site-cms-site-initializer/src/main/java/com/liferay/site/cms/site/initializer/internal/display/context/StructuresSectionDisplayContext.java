@@ -102,6 +102,17 @@ public class StructuresSectionDisplayContext {
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				"get", "update", null),
 			new FDSActionDropdownItem(
+				HttpComponentsUtil.addParameters(
+					PortalUtil.getLayoutFullURL(
+						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+							_themeDisplay.getScopeGroupId(), false,
+							"/structure-usages"),
+						_themeDisplay),
+					"objectDefinitionId", "{id}"),
+				null, "viewUsages",
+				LanguageUtil.get(_httpServletRequest, "view-usages"), "get",
+				null, null),
+			new FDSActionDropdownItem(
 				"", "copy", "copy",
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"), null,
 				null, null),

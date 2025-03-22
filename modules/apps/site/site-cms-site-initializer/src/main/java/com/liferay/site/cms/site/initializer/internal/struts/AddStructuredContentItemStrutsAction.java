@@ -300,7 +300,8 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		if (Objects.equals(
 				objectDefinition.getObjectFolderExternalReferenceCode(),
-				"L_CMS_FILE_TYPES")) {
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
 
 			externalReferenceCode =
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;

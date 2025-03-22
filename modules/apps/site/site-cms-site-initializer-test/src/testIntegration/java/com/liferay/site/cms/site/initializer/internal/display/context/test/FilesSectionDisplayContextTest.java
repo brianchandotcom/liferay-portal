@@ -76,7 +76,8 @@ public class FilesSectionDisplayContextTest
 
 		ObjectFolder objectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", TestPropsValues.getCompanyId());
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+				TestPropsValues.getCompanyId());
 
 		ObjectDefinition objectDefinition = addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), true, true,

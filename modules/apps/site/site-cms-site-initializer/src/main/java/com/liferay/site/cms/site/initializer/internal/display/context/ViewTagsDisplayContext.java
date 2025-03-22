@@ -10,23 +10,15 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Noor Najjar
  */
 public class ViewTagsDisplayContext {
 
-	public ViewTagsDisplayContext(
-		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
-		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
-
-		_cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
-		_httpServletRequest = httpServletRequest;
+	public ViewTagsDisplayContext(ThemeDisplay themeDisplay) {
 		_themeDisplay = themeDisplay;
 	}
 
@@ -48,9 +40,6 @@ public class ViewTagsDisplayContext {
 		).build();
 	}
 
-	private final CMSSiteInitializerConfiguration
-		_cmsSiteInitializerConfiguration;
-	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

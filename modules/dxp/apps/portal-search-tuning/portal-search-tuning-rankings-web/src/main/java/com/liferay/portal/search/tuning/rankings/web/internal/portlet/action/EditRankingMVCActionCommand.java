@@ -424,14 +424,9 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 	private boolean _isInactive(
 		EditRankingMVCActionRequest editRankingMVCActionRequest) {
 
-		if (Objects.equals(
-				editRankingMVCActionRequest.getStatus(),
-				ResultRankingsConstants.STATUS_ACTIVE)) {
-
-			return false;
-		}
-
-		return true;
+		return !Objects.equals(
+			editRankingMVCActionRequest.getStatus(),
+			ResultRankingsConstants.STATUS_ACTIVE);
 	}
 
 	private boolean _isUpdateSpecial(String string) {

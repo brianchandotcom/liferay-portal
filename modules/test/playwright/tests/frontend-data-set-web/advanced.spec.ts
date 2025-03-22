@@ -822,6 +822,11 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 
 			await page.getByRole('option', {name: '60 Items'}).click();
 
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
+
 			await expect(
 				page.getByText('Showing 1 to 60 of 75 entries.')
 			).toBeVisible();
@@ -838,6 +843,11 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 		await test.step('Select all items', async () => {
 			await page.getByLabel('Go to page, 2').click();
 
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
+
 			for (let i = 1; i <= 15; i++) {
 				await page
 					.locator(
@@ -853,6 +863,11 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 
 		await test.step('Check that selection are preserved through page navigation', async () => {
 			await page.getByLabel('Go to page, 1').click();
+
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
 
 			await expect(
 				page.getByText('All Selected (75 of 75 Items)')

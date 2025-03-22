@@ -6,6 +6,7 @@
 export {default as AllFDSPropsTransformer} from './main/FDSPropsTransformer/AllFDSPropsTransformer';
 export {default as ContentsFDSPropsTransformer} from './main/FDSPropsTransformer/ContentsFDSPropsTransformer';
 export {default as FilesFDSPropsTransformer} from './main/FDSPropsTransformer/FilesFDSPropsTransformer';
+export {default as StructureUsagesFDSPropsTransformer} from './main/FDSPropsTransformer/StructureUsagesFDSPropsTransformer';
 export {default as StructuresFDSPropsTransformer} from './main/FDSPropsTransformer/StructuresFDSPropsTransformer';
 export {default as ViewTags} from './main/categorization/tags/ViewTags';
 export {default as EditVocabulary} from './main/categorization/vocabularies/EditVocabulary';

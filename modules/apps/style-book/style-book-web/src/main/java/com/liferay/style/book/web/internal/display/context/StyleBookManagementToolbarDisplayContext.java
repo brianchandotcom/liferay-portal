@@ -202,15 +202,10 @@ public class StyleBookManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		if (StyleBookPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(),
-				StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES)) {
-
-			return true;
-		}
-
-		return false;
+		return StyleBookPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(),
+			StyleBookActionKeys.MANAGE_STYLE_BOOK_ENTRIES);
 	}
 
 	@Override

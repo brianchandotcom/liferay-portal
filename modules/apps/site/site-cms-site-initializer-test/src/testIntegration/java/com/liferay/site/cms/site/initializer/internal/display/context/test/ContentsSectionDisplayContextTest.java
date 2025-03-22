@@ -97,7 +97,9 @@ public class ContentsSectionDisplayContextTest
 
 		ObjectFolder objectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", TestPropsValues.getCompanyId());
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+				TestPropsValues.getCompanyId());
 
 		ObjectDefinition objectDefinition = addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), true, true,

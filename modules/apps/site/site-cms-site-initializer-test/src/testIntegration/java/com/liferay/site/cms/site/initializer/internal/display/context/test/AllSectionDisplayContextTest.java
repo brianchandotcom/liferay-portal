@@ -79,7 +79,9 @@ public class AllSectionDisplayContextTest
 
 		ObjectFolder cmsContentStructuresObjectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", TestPropsValues.getCompanyId());
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+				TestPropsValues.getCompanyId());
 
 		ObjectDefinition cmsContentStructuresObjectDefinition =
 			addCustomObjectDefinition(
@@ -89,7 +91,8 @@ public class AllSectionDisplayContextTest
 
 		ObjectFolder cmsFileTypesObjectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", TestPropsValues.getCompanyId());
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+				TestPropsValues.getCompanyId());
 
 		ObjectDefinition cmsFileTypesObjectDefinition =
 			addCustomObjectDefinition(

@@ -6,10 +6,10 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.Map;
 
@@ -21,13 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public ContentsSectionDisplayContext(
-		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService) {
 
-		super(
-			cmsSiteInitializerConfiguration, httpServletRequest, language,
-			objectDefinitionService);
+		super(httpServletRequest, language, objectDefinitionService);
 	}
 
 	@Override
@@ -63,8 +60,10 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public String[] getObjectDefinitionFolderExternalReferenceCodes() {
-		return cmsSiteInitializerConfiguration.
-			contentsObjectDefinitionFolderExternalReferenceCodes();
+		return new String[] {
+			ObjectEntryFolderConstants.
+				EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
+		};
 	}
 
 	@Override

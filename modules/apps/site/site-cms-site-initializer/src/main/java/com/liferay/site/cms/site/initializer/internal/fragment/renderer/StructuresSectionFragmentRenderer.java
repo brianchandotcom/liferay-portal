@@ -7,33 +7,25 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 import com.liferay.site.cms.site.initializer.internal.display.context.StructuresSectionDisplayContext;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sam Ziemer
  */
-@Component(
-	configurationPid = "com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration",
-	service = FragmentRenderer.class
-)
+@Component(service = FragmentRenderer.class)
 public class StructuresSectionFragmentRenderer
 	extends BaseSectionFragmentRenderer {
 
@@ -68,16 +60,6 @@ public class StructuresSectionFragmentRenderer
 			throw new RuntimeException(exception);
 		}
 	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_cmsSiteInitializerConfiguration = ConfigurableUtil.createConfigurable(
-			CMSSiteInitializerConfiguration.class, properties);
-	}
-
-	private volatile CMSSiteInitializerConfiguration
-		_cmsSiteInitializerConfiguration;
 
 	@Reference
 	private Language _language;

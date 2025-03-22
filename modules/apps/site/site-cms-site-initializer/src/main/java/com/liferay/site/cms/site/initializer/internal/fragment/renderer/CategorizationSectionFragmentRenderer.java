@@ -26,10 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sam Ziemer
  */
-@Component(
-	configurationPid = "com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration",
-	service = FragmentRenderer.class
-)
+@Component(service = FragmentRenderer.class)
 public class CategorizationSectionFragmentRenderer
 	extends BaseSectionFragmentRenderer {
 

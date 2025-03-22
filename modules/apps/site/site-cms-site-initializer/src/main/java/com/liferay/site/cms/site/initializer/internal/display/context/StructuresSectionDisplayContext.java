@@ -9,7 +9,9 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,9 +47,19 @@ public class StructuresSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/object-admin/v1.0/object-definitions?filter=" +
-			"objectFolderExternalReferenceCode eq 'L_CMS_CONTENT_STRUCTURES' " +
-				"or objectFolderExternalReferenceCode eq 'L_CMS_FILE_TYPES'";
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("/o/object-admin/v1.0/object-definitions?filter=");
+		sb.append("objectFolderExternalReferenceCode eq '");
+		sb.append(
+			ObjectEntryFolderConstants.
+				EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
+		sb.append("' or objectFolderExternalReferenceCode eq '");
+		sb.append(
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+		sb.append("'");
+
+		return sb.toString();
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
@@ -57,13 +69,19 @@ public class StructuresSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(_getHref("L_CMS_CONTENT_STRUCTURES"));
+				dropdownItem.setHref(
+					_getHref(
+						ObjectEntryFolderConstants.
+							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "content"));
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(_getHref("L_CMS_FILE_TYPES"));
+				dropdownItem.setHref(
+					_getHref(
+						ObjectEntryFolderConstants.
+							EXTERNAL_REFERENCE_CODE_FILE_TYPES));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "file"));
 			}

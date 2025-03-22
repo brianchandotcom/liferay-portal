@@ -332,8 +332,8 @@ public class DBPartitionUtil {
 	}
 
 	public static void replaceByTable(
-			Connection connection, long companyId, boolean copyData,
-			String viewName)
+			Connection connection, long companyId, String viewName,
+			boolean copyData)
 		throws Exception {
 
 		if (companyId == _defaultCompanyId) {

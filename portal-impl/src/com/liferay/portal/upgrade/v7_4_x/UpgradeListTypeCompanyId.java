@@ -187,7 +187,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 			for (long companyId : PortalInstancePool.getCompanyIds()) {
 				DBPartitionUtil.replaceByTable(
-					connection, companyId, true, "ListType");
+					connection, companyId, "ListType", true);
 			}
 		}
 		else {

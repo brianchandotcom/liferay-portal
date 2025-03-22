@@ -30,7 +30,7 @@ public class UpgradePartitionedControlTable extends UpgradeProcess {
 
 		for (long companyId : PortalInstancePool.getCompanyIds()) {
 			DBPartitionUtil.replaceByTable(
-				connection, companyId, true, _tableName);
+				connection, companyId, _tableName, true);
 		}
 	}
 

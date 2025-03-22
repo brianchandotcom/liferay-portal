@@ -79,7 +79,7 @@ public class ConfigurationDBPartitionUpgradeProcess extends UpgradeProcess {
 
 			for (long companyId : companyIds) {
 				DBPartitionUtil.replaceByTable(
-					connection, companyId, false, "Configuration_");
+					connection, companyId, "Configuration_", false);
 			}
 
 			_atomicInteger.set(companyIds.length - 1);

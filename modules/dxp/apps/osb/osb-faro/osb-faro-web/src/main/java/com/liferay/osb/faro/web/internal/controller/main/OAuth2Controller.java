@@ -170,13 +170,8 @@ public class OAuth2Controller extends BaseFaroController {
 
 		ExpandoBridge expandoBridge = oAuth2Authorization.getExpandoBridge();
 
-		if (Objects.equals(
-				groupId, expandoBridge.getAttribute("groupId", false))) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			groupId, expandoBridge.getAttribute("groupId", false));
 	}
 
 	private String _generateApplicationName() {

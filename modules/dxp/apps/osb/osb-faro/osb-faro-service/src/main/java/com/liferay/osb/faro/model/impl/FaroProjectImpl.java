@@ -57,14 +57,8 @@ public class FaroProjectImpl extends FaroProjectBaseImpl {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				getSubscription());
 
-			if (StringUtil.equals(
-					jsonObject.getString("name"),
-					"Liferay Analytics Cloud Basic")) {
-
-				return true;
-			}
-
-			return false;
+			return StringUtil.equals(
+				jsonObject.getString("name"), "Liferay Analytics Cloud Basic");
 		}
 		catch (Exception exception) {
 			_log.error(exception);

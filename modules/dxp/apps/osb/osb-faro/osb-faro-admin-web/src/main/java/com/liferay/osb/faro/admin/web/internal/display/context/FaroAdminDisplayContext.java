@@ -247,59 +247,31 @@ public class FaroAdminDisplayContext {
 	}
 
 	private boolean _isBasic() {
-		if (StringUtil.equals(_getNavigation(), "basic")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_getNavigation(), "basic");
 	}
 
 	private boolean _isBusiness() {
-		if (StringUtil.equals(_getNavigation(), "business")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_getNavigation(), "business");
 	}
 
 	private boolean _isEnterprise() {
-		if (StringUtil.equals(_getNavigation(), "enterprise")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_getNavigation(), "enterprise");
 	}
 
 	private boolean _isInactive() {
-		if (StringUtil.equals(_getNavigation(), "inactive")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_getNavigation(), "inactive");
 	}
 
 	private boolean _isNavigationUsageLimitApproaching() {
-		if (StringUtil.equals(_getNavigation(), "usage-limit-approaching")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_getNavigation(), "usage-limit-approaching");
 	}
 
 	private boolean _isNavigationUsageLimitExceeded() {
-		if (StringUtil.equals(_getNavigation(), "usage-limit-exceeded")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_getNavigation(), "usage-limit-exceeded");
 	}
 
 	private boolean _isOffline() {
-		if (StringUtil.equals(_getNavigation(), "offline")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_getNavigation(), "offline");
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -31,11 +31,7 @@ public class AsahProject {
 
 		AsahProject project = (AsahProject)object;
 
-		if (Objects.equals(_id, project._id)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_id, project._id);
 	}
 
 	public String getId() {

@@ -8,8 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewTagsDisplayContext viewTagsDisplayContext = (ViewTagsDisplayContext)request.getAttribute(
-	ViewTagsDisplayContext.class.getName());
+ViewTagsDisplayContext viewTagsDisplayContext = (ViewTagsDisplayContext)request.getAttribute(ViewTagsDisplayContext.class.getName());
 %>
 
 <div class="cms-section">

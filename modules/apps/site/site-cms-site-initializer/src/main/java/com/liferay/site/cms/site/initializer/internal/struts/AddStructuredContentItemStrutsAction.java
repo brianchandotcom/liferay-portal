@@ -121,9 +121,9 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
 		long groupId = _getGroupId(httpServletRequest, serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			groupId, objectDefinitionId,

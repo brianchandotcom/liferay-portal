@@ -456,11 +456,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	private SearchContext _getSearchContext(
@@ -503,11 +499,7 @@ public class KaleoFormsViewRecordsDisplayContext {
 	}
 
 	private boolean _isDDMFormFieldTransient(DDMFormField ddmFormField) {
-		if (Validator.isNull(ddmFormField.getDataType())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(ddmFormField.getDataType());
 	}
 
 	private static final int _TOTAL_COLUMNS = 5;

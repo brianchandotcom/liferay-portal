@@ -496,11 +496,7 @@ public class KaleoFormsAdminDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	private PortletURL _getIteratorURL() {

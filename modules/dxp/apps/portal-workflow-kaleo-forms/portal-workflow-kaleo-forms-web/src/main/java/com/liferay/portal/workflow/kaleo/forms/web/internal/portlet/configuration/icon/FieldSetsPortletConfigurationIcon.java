@@ -96,11 +96,7 @@ public class FieldSetsPortletConfigurationIcon
 
 		User user = themeDisplay.getUser();
 
-		if (user.isGuestUser()) {
-			return false;
-		}
-
-		return true;
+		return !user.isGuestUser();
 	}
 
 	@Reference

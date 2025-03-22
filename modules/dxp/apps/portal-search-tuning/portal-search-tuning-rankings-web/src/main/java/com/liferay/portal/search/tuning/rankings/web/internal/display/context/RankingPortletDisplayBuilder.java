@@ -531,11 +531,7 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	private boolean _isSearch(String keywords) {
-		if (!Validator.isBlank(keywords)) {
-			return true;
-		}
-
-		return false;
+		return !Validator.isBlank(keywords);
 	}
 
 	private SearchContainer<RankingEntryDisplayContext> _search() {

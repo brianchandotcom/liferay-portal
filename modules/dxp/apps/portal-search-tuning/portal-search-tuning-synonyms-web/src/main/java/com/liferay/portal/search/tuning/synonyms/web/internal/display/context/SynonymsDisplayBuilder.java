@@ -122,11 +122,7 @@ public class SynonymsDisplayBuilder {
 	protected boolean isDisabledManagementBar(
 		List<SynonymSetDisplayContext> synonymSetDisplayContexts) {
 
-		if (synonymSetDisplayContexts.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return synonymSetDisplayContexts.isEmpty();
 	}
 
 	private RenderURL _buildEditRenderURL(SynonymSet synonymSet) {

@@ -61,7 +61,7 @@ const METRICS_STATIC_VALUES = {
 	analyticsReportsHistoricalViews: {
 		color: CHART_COLORS.analyticsReportsHistoricalViews,
 		iconType: 'circle',
-		langKey: Liferay.Language.get('views-metric'),
+		langKey: Liferay.Language.get('views'),
 	},
 };
 

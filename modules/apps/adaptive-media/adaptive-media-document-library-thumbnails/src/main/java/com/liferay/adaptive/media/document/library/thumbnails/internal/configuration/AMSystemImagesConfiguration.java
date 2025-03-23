@@ -30,7 +30,7 @@ public interface AMSystemImagesConfiguration {
 	@Meta.AD(
 		deflt = StringPool.BLANK,
 		description = "preview-am-configuration-description",
-		name = "preview-am-configuration", required = false
+		name = "preview-configuration", required = false
 	)
 	public String previewAMConfiguration();
 

@@ -36,8 +36,8 @@ public class ControlledFDSDisplayContext {
 				themeDisplay.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 				0, 20, null),
 			user -> new UserEntry(
-				user.getEmailAddress(), user.getFirstName(), user.getUserId(),
-				user.isActive(), user.getLastName()));
+				user.isActive(), user.getEmailAddress(), user.getFirstName(),
+				user.getUserId(), user.getLastName()));
 	}
 
 	public Object getViews() {

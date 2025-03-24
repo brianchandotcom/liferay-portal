@@ -67,7 +67,7 @@ public class ContentsSectionDisplayContextTest
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("filter=objectDefinitionFolder in ('");
+		sb.append("filter=objectFolderExternalReferenceCode in ('");
 		sb.append(
 			StringUtil.merge(
 				_getObjectFolderExternalReferenceCodes(), "','"));

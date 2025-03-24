@@ -299,7 +299,8 @@ public class ObjectEntryModelDocumentContributor
 			objectDefinition.getObjectFolderId());
 
 		document.addKeyword(
-			"objectDefinitionFolder", objectFolder.getExternalReferenceCode());
+			"objectFolderExternalReferenceCode",
+			objectFolder.getExternalReferenceCode());
 
 		Map<String, Serializable> values = objectEntry.getValues();
 

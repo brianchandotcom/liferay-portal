@@ -454,7 +454,7 @@
 					"objectFieldName": {
 						"type": "string"
 					},
-					"validationKey": {
+					"objectValidationRuleExternalReferenceCode": {
 						"type": "string"
 					},
 					"x-class-name": {
@@ -472,14 +472,14 @@
 			},
 			"ValidationRequest": {
 				"properties": {
-					"entry": {
-						"$ref": "#/components/schemas/Object9"
-					},
-					"validationKeys": {
+					"objectValidationRuleExternalReferenceCodes": {
 						"items": {
 							"type": "string"
 						},
 						"type": "array"
+					},
+					"values": {
+						"$ref": "#/components/schemas/Object9"
 					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.ValidationRequest",
@@ -496,9 +496,6 @@
 			},
 			"ValidationResponse": {
 				"properties": {
-					"success": {
-						"type": "boolean"
-					},
 					"validationErrors": {
 						"items": {
 							"$ref": "#/components/schemas/ValidationError"

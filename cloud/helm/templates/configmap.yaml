@@ -1,6 +1,10 @@
 apiVersion: v1
 data:
     {{- if not .Values.configmap.overrideDefaults }}
+    000_jdk_java_options.sh: |
+        #!/usr/bin/env bash
+
+        export JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} --add-opens=jdk.naming.dns/com.sun.jndi.dns=java.naming"
     com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config: |
         apiServerHost="$[env:KUBERNETES_SERVICE_HOST]"
         apiServerPort="$[env:KUBERNETES_SERVICE_PORT]"
@@ -53,9 +57,6 @@ data:
         {{ end }}
         {{- tpl (.Files.Get "resources/portal-cloud.properties") $ | nindent 8 }}
     {{ if or (gt (int .Values.replicaCount) 1) .Values.autoscaling.enabled }}
-    000_jdk_java_options.sh: |
-        #!/usr/bin/env bash
-        export JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} --add-opens=jdk.naming.dns/com.sun.jndi.dns=java.naming"
     unicast.xml: |
         {{- tpl (.Files.Get "resources/unicast.xml") . | nindent 8 }}
     {{- end }}

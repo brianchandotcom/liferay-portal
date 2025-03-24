@@ -31,11 +31,11 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 			new BooleanEntityField("answered", locale -> "answered"),
 			new BooleanEntityField("showAsQuestion", locale -> "question"),
 			new CollectionEntityField(
-				new StringEntityField(
-					"keywords", locale -> "assetTagNames.lowercase")),
-			new CollectionEntityField(
 				new IntegerEntityField(
 					"taxonomyCategoryIds", locale -> "assetCategoryIds")),
+			new CollectionEntityField(
+				new StringEntityField(
+					"keywords", locale -> "assetTagNames.lowercase")),
 			new ComplexEntityField(
 				"creator",
 				Collections.singletonList(

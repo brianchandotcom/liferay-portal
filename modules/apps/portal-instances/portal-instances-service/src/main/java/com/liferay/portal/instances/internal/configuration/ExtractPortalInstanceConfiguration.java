@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ExtractPortalInstanceConfiguration {
 
-	@Meta.AD(type = Meta.Type.Long)
+	@Meta.AD(name = "extract-company-id", type = Meta.Type.Long)
 	public long extractCompanyId();
 
 }

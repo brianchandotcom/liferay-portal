@@ -16,6 +16,7 @@ import com.liferay.headless.object.internal.odata.entity.v1_0.ObjectEntryFolderE
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.service.ObjectEntryFolderService;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -39,10 +41,12 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -82,7 +86,7 @@ public class ObjectEntryFolderResourceImpl
 
 		_objectEntryFolderService.
 			deleteObjectEntryFolderByExternalReferenceCode(
-				externalReferenceCode, GetterUtil.getLong(scopeKey),
+				externalReferenceCode, _getGroupId(scopeKey),
 				contextCompany.getCompanyId());
 	}
 
@@ -122,7 +126,7 @@ public class ObjectEntryFolderResourceImpl
 		return _toObjectEntryFolder(
 			_objectEntryFolderService.
 				getObjectEntryFolderByExternalReferenceCode(
-					externalReferenceCode, GetterUtil.getLong(scopeKey),
+					externalReferenceCode, _getGroupId(scopeKey),
 					contextCompany.getCompanyId()));
 	}
 
@@ -137,7 +141,7 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GetterUtil.getLong(scopeKey);
+		long groupId = _getGroupId(scopeKey);
 
 		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
 			groupId);
@@ -218,7 +222,7 @@ public class ObjectEntryFolderResourceImpl
 			objectEntryFolder,
 			_objectEntryFolderService.
 				getObjectEntryFolderByExternalReferenceCode(
-					externalReferenceCode, GetterUtil.getLong(scopeKey),
+					externalReferenceCode, _getGroupId(scopeKey),
 					contextCompany.getCompanyId()));
 	}
 
@@ -232,7 +236,7 @@ public class ObjectEntryFolderResourceImpl
 		}
 
 		return _addObjectEntryFolder(
-			GetterUtil.getLong(scopeKey),
+			_getGroupId(scopeKey),
 			GetterUtil.getLong(
 				objectEntryFolder.getParentObjectEntryFolderId()),
 			objectEntryFolder);
@@ -252,7 +256,7 @@ public class ObjectEntryFolderResourceImpl
 		com.liferay.object.model.ObjectEntryFolder persistedObjectEntryFolder =
 			null;
 
-		long groupId = GetterUtil.getLong(scopeKey);
+		long groupId = _getGroupId(scopeKey);
 		long parentObjectEntryFolderId = GetterUtil.getLong(
 			objectEntryFolder.getParentObjectEntryFolderId());
 
@@ -301,6 +305,21 @@ public class ObjectEntryFolderResourceImpl
 					groupId, contextHttpServletRequest,
 					objectEntryFolder.getViewableByAsString()
 				).build()));
+	}
+
+	private long _getGroupId(String scopeKey) throws Exception {
+		Long groupId = GroupUtil.getGroupId(
+			contextCompany.getCompanyId(), scopeKey, _groupLocalService);
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		if (Objects.equals(scopeKey, "0")) {
+			return 0;
+		}
+
+		throw new NoSuchGroupException();
 	}
 
 	private ObjectEntryFolder _patchObjectEntryFolder(
@@ -380,6 +399,9 @@ public class ObjectEntryFolderResourceImpl
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.object.internal.dto.v1_0.converter.ObjectEntryFolderDTOConverter)"

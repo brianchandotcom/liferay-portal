@@ -29,11 +29,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-<#if freeMarkerTool.isVersionCompatible(configYAML, 8)>
-	import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-	import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
-</#if>
-
 <#if freeMarkerTool.isVersionCompatible(configYAML, 2)>
 	import com.liferay.petra.function.transform.TransformUtil;
 
@@ -43,6 +38,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 <#assign
 	generatePermissionsJavaMethodSignatures = []
+	generateWaitForFinishMethod = false
 	javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 
@@ -55,11 +51,20 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 	<#if freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)>
 		<#assign generatePermissionsJavaMethodSignatures = generatePermissionsJavaMethodSignatures + [javaMethodSignature] />
 	</#if>
+
+	<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
+		<#assign generateWaitForFinishMethod = true />
+	</#if>
 </#list>
 
 <#if generateDepotEntry>
 	import com.liferay.depot.model.DepotEntry;
 	import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+</#if>
+
+<#if generateWaitForFinishMethod>
+	import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+	import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 </#if>
 
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -217,6 +222,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 				"nestedFields", "permissions"
 			).build();
 		</#if>
+
+		<#if generateWaitForFinishMethod>
+			importTaskResource = ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+		</#if>
 	}
 
 	@After
@@ -298,7 +314,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#assign
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, schema)
 		generateGetMultipartFilesMethod = false
-		generateWaitForFinishMethod = false
 		generateSearchTestRule = false
 		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
 	/>
@@ -309,83 +324,78 @@ public abstract class Base${schemaName}ResourceTestCase {
 			parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)
 		/>
 
-		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)>
 			<#assign
+				getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
+				getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id")
+				idParameterName = properties?keys?seq_contains("id")?then("id", schemaVarName + "Id")
+
 				useDeleteByERC = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
 				useDeleteById = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
 			/>
-			<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName) && (useDeleteByERC || useDeleteById)>
-				<#assign
-					generateWaitForFinishMethod = true
-					getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
-					getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id")
-					idParameterName = properties?keys?seq_contains("id")?then("id", schemaVarName + "Id")
-				/>
 
-				@Test
-				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-					<#if useDeleteById>
-						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
-
-						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
-
-						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
-					</#if>
-
-					<#if useDeleteByERC>
-						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
-
-						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
-
-						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
-					</#if>
-
-					<#if useDeleteByERC && useDeleteById>
-						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
-						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
-
-						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
-
-						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
-
-						assertHttpResponseStatusCode(200, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
-
-						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
-
-						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
-					</#if>
-				}
-
-				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
-					<#if properties?keys?seq_contains("id") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
-						return testDelete${schemaName}_add${schemaName}();
-					<#else>
-						throw new UnsupportedOperationException("This method needs to be implemented");
-					</#if>
-				}
-
-				protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(String expectedExecuteStatus, String externalReferenceCode, ${properties[idParameterName]} id) throws Exception {
-					HttpInvoker.HttpResponse httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
-						null, JSONFactoryUtil.createJSONArray(
-						Collections.singletonList(
-							HashMapBuilder.<String, Object>put(
-								"externalReferenceCode", () -> externalReferenceCode
-							).put(
-								"${idParameterName}", () -> id
-							).build())));
-
-					Assert.assertEquals(202, httpResponse.getStatusCode());
-
-					_waitForFinish(expectedExecuteStatus, JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-				}
-
-				<#continue>
-			<#else>
+			<#if !useDeleteByERC && !useDeleteById>
 				<#continue>
 			</#if>
-		</#if>
 
-		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
+			@Test
+			public void testDelete${schemaName}Batch() throws Exception {
+				<#if useDeleteById>
+					${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
+
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
+				</#if>
+
+				<#if useDeleteByERC>
+					${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
+
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
+				</#if>
+
+				<#if useDeleteByERC && useDeleteById>
+					${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+					${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
+
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
+
+					assertHttpResponseStatusCode(200, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
+
+					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
+
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
+				</#if>
+			}
+
+			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+				<#if properties?keys?seq_contains("id") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
+					return testDelete${schemaName}_add${schemaName}();
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
+			}
+
+			protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(String expectedExecuteStatus, String externalReferenceCode, ${properties[idParameterName]} id) throws Exception {
+				HttpInvoker.HttpResponse httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+					null, JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"${idParameterName}", () -> id
+						)));
+
+				Assert.assertEquals(202, httpResponse.getStatusCode());
+
+				_waitForFinish(expectedExecuteStatus, JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+			}
+		<#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
+			<#continue>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
 			<#assign
 				addGetterMethod = false
 				defaultImplementationGetterMethod = false
@@ -3741,6 +3751,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 		protected ${schemaName}Resource permissions${schemaName}Resource;
+	</#if>
+
+	<#if generateWaitForFinishMethod>
+		protected ImportTaskResource importTaskResource;
 	</#if>
 
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;

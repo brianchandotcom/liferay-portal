@@ -176,7 +176,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/images/home_banner--option-1.png$]"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/images/home_banner.png$]"
 																				}
 																			}
 																		},
@@ -368,7 +368,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/images/home_banner--option-1.png$]"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/images/home_banner.png$]"
 																				}
 																			}
 																		},
@@ -1000,7 +1000,7 @@
 																						"fragmentImage": {
 																							"url": {
 																								"value_i18n": {
-																									"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_learning-paths_icon.svg$]"
+																									"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/home_learning_paths_icon.svg$]"
 																								}
 																							}
 																						},

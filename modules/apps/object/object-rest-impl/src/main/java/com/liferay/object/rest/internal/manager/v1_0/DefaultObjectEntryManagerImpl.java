@@ -15,6 +15,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
+import com.liferay.object.entry.validation.ValidationError;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
@@ -928,7 +929,7 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
-	public void validateObjectEntry(
+	public List<ValidationError> validateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			List<String> objectValidationRuleExternalReferenceCodes,
@@ -937,6 +938,9 @@ public class DefaultObjectEntryManagerImpl
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			objectEntryLocalService.createObjectEntry(0L);
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry);
 
 		serviceBuilderObjectEntry.setObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
@@ -947,9 +951,9 @@ public class DefaultObjectEntryManagerImpl
 				_createServiceContext(
 					dtoConverterContext, objectDefinition, objectEntry)));
 
-		_objectEntryService.validate(
+		return _objectEntryService.validate(
 			getGroupId(objectDefinition, scopeKey), serviceBuilderObjectEntry,
-			objectValidationRuleExternalReferenceCodes);
+			objectValidationRuleExternalReferenceCodes, serviceContext);
 	}
 
 	private Map<String, String> _addAction(

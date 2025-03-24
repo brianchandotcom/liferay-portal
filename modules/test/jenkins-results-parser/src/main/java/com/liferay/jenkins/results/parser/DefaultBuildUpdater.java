@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -31,7 +33,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			JenkinsCohort jenkinsCohort = build.getJenkinsCohort();
 
 			jenkinsMaster = jenkinsCohort.getMostAvailableJenkinsMaster(
-				build.getInvokedBatchSize(), build.getMinimumSlaveRAM(),
+				build.getInvokedBatchSize(), build.getJobName(),
+				_getLabelExpression(), build.getMinimumSlaveRAM(),
 				build.getMaximumSlavesPerHost());
 
 			build.setJenkinsMaster(jenkinsMaster);
@@ -48,8 +51,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 		JenkinsMaster jenkinsMaster =
 			jenkinsCohort.getMostAvailableJenkinsMaster(
-				build.getInvokedBatchSize(), 24,
-				build.getMaximumSlavesPerHost());
+				build.getInvokedBatchSize(), build.getJobName(),
+				_getLabelExpression(), 24, build.getMaximumSlavesPerHost());
 
 		build.setJenkinsMaster(jenkinsMaster);
 
@@ -281,6 +284,21 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		}
 
 		return buildParameters;
+	}
+
+	private String _getLabelExpression() {
+		Build build = getBuild();
+
+		if (build instanceof DownstreamBuild) {
+			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+			AxisTestClassGroup axisTestClassGroup =
+				downstreamBuild.getAxisTestClassGroup();
+
+			return axisTestClassGroup.getSlaveLabel();
+		}
+
+		return null;
 	}
 
 	private JSONObject _getQueueItemJSONObject() {

@@ -10,11 +10,5 @@
 		"prettier": "3.2.5",
 		"typescript": "4.4.2"
 	},
-	"private": true,
-	"workspaces": {
-		"packages": [
-			"client-extensions/liferay-learn-global-js",
-			"client-extensions/liferay-learn-theme-spritemap"
-		]
-	}
+	"private": true
 }

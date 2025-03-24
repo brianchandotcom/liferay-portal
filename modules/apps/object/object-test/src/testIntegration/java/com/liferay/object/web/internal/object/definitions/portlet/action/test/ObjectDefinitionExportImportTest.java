@@ -183,8 +183,8 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			);
 
 		String objectFieldName = "r_testAccountRelationship_accountEntryId";
-
-		String objectRelationshipERC = "OBJECTRELATIONSHIPERC";
+		String objectRelationshipExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		accountRestrictedObjectDefinitionJSONObject.put(
 			"objectFields",
@@ -200,7 +200,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 						"objectDefinitionExternalReferenceCode1", "L_ACCOUNT"
 					).put(
 						"objectRelationshipExternalReferenceCode",
-						objectRelationshipERC
+						objectRelationshipExternalReferenceCode
 					))));
 
 		testExportImportJSON(
@@ -215,7 +215,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				getObjectRelationshipByExternalReferenceCode(
-					objectRelationshipERC, user.getCompanyId(),
+					objectRelationshipExternalReferenceCode, user.getCompanyId(),
 					accountObjectDefinition.getId());
 
 		Assert.assertEquals(

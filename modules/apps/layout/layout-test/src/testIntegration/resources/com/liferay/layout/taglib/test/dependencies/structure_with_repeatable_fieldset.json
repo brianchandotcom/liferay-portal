@@ -73,6 +73,7 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
+			"rows": "[{\"columns\": [{\"fields\": [\"Text1\"], \"size\": 12}]}, {\"columns\": [{\"fields\": [\"Text2\"], \"size\": 12}]}]",
 			"showLabel": true,
 			"type": "fieldset",
 			"upgradedStructure": false

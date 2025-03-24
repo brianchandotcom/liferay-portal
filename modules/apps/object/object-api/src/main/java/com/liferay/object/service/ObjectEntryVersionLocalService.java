@@ -233,6 +233,11 @@ public interface ObjectEntryVersionLocalService
 	public ObjectEntryVersion getObjectEntryVersion(long objectEntryVersionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntryVersion getObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException;
+
 	/**
 	 * Returns the object entry version with the matching UUID and company.
 	 *

@@ -260,7 +260,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			fireEvent.click(queryByText('cancel') as HTMLButtonElement)
 		);
 
-		expect(fetch.mock.calls.length).toBe(5);
+		expect(fetch.mock.calls.length).toBe(4);
 		expect(queryByText(productResponseMock.items[0].name)).toBeTruthy();
 	});
 
@@ -342,7 +342,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			fireEvent.click(queryByText('install') as HTMLButtonElement)
 		);
 
-		expect(fetch.mock.calls.length).toBe(5);
+		expect(fetch.mock.calls.length).toBe(4);
 		expect(queryByText('insufficient-resources')).toBeTruthy();
 	});
 
@@ -424,8 +424,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(marketplaceSettingsMock))
 			.mockResponseOnce(JSON.stringify(productResponseMock))
 			.mockResponseOnce(JSON.stringify(placedOrderResponse))
-			.mockResponseOnce(JSON.stringify(projectsMockResponse))
-			.mockResponseOnce(JSON.stringify(cartResponseMock));
+			.mockResponseOnce(JSON.stringify(projectsMockResponse));
 
 		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
 
@@ -439,7 +438,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		await act(async () => jest.runAllTimers());
 
-		expect(fetch.mock.calls.length).toBe(5);
+		expect(fetch.mock.calls.length).toBe(4);
 		expect(queryByText('install')).toBeDisabled();
 	});
 });

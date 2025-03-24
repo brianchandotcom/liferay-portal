@@ -213,82 +213,86 @@ public class DeletionSystemEventExporter {
 		Element deletionSystemEventsElement,
 		Set<String> batchDeleteSupportedClassNames) {
 
-		Element deletionSystemEventElement =
-			deletionSystemEventsElement.addElement("deletion-system-event");
-
-		deletionSystemEventElement.addAttribute(
-			"class-external-reference-code",
-			systemEvent.getClassExternalReferenceCode());
-
 		String className = PortalUtil.getClassName(
 			systemEvent.getClassNameId());
-
-		deletionSystemEventElement.addAttribute("class-name", className);
-
-		deletionSystemEventElement.addAttribute(
-			"classExternalReferenceCode",
-			systemEvent.getClassExternalReferenceCode());
 
 		if (batchDeleteSupportedClassNames.contains(className)) {
 			BatchEngineDeletionHelperUtil.addDeletionEvent(
 				portletDataContext, systemEvent);
 		}
+		else {
+			Element deletionSystemEventElement =
+				deletionSystemEventsElement.addElement("deletion-system-event");
 
-		if (className.equals(FragmentEntry.class.getName())) {
-			try {
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						systemEvent.getExtraData());
+			deletionSystemEventElement.addAttribute(
+				"class-external-reference-code",
+				systemEvent.getClassExternalReferenceCode());
 
-				Long[] layoutIds = ArrayUtil.toArray(
-					portletDataContext.getLayoutIds());
+			deletionSystemEventElement.addAttribute("class-name", className);
 
-				if (layoutIds.length > 0) {
-					String[] layoutUUIDs = new String[layoutIds.length];
+			deletionSystemEventElement.addAttribute(
+				"classExternalReferenceCode",
+				systemEvent.getClassExternalReferenceCode());
 
-					for (int i = 0; i < layoutIds.length; i++) {
-						Layout layout = LayoutLocalServiceUtil.getLayout(
-							portletDataContext.getGroupId(),
-							portletDataContext.isPrivateLayout(), layoutIds[i]);
+			if (className.equals(FragmentEntry.class.getName())) {
+				try {
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject(
+							systemEvent.getExtraData());
 
-						layoutUUIDs[i] = layout.getUuid();
+					Long[] layoutIds = ArrayUtil.toArray(
+						portletDataContext.getLayoutIds());
+
+					if (layoutIds.length > 0) {
+						String[] layoutUUIDs = new String[layoutIds.length];
+
+						for (int i = 0; i < layoutIds.length; i++) {
+							Layout layout = LayoutLocalServiceUtil.getLayout(
+								portletDataContext.getGroupId(),
+								portletDataContext.isPrivateLayout(),
+								layoutIds[i]);
+
+							layoutUUIDs[i] = layout.getUuid();
+						}
+
+						extraDataJSONObject.put(
+							"layoutUUIDs", layoutUUIDs
+						).put(
+							"privateLayout",
+							portletDataContext.isPrivateLayout()
+						);
 					}
 
-					extraDataJSONObject.put(
-						"layoutUUIDs", layoutUUIDs
-					).put(
-						"privateLayout", portletDataContext.isPrivateLayout()
-					);
+					deletionSystemEventElement.addAttribute(
+						"extra-data", extraDataJSONObject.toString());
 				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
 
-				deletionSystemEventElement.addAttribute(
-					"extra-data", extraDataJSONObject.toString());
+					deletionSystemEventElement.addAttribute(
+						"extra-data", systemEvent.getExtraData());
+				}
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
+			else {
 				deletionSystemEventElement.addAttribute(
 					"extra-data", systemEvent.getExtraData());
 			}
-		}
-		else {
+
 			deletionSystemEventElement.addAttribute(
-				"extra-data", systemEvent.getExtraData());
-		}
+				"group-id", String.valueOf(systemEvent.getGroupId()));
 
-		deletionSystemEventElement.addAttribute(
-			"group-id", String.valueOf(systemEvent.getGroupId()));
+			if (systemEvent.getReferrerClassNameId() > 0) {
+				deletionSystemEventElement.addAttribute(
+					"referrer-class-name",
+					PortalUtil.getClassName(
+						systemEvent.getReferrerClassNameId()));
+			}
 
-		if (systemEvent.getReferrerClassNameId() > 0) {
 			deletionSystemEventElement.addAttribute(
-				"referrer-class-name",
-				PortalUtil.getClassName(systemEvent.getReferrerClassNameId()));
+				"uuid", systemEvent.getClassUuid());
 		}
-
-		deletionSystemEventElement.addAttribute(
-			"uuid", systemEvent.getClassUuid());
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();

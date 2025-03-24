@@ -130,6 +130,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (portletDataContext.getZipReader() == null) {
+			return portletPreferences;
+		}
+
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
 			_deletionsFileName);
 

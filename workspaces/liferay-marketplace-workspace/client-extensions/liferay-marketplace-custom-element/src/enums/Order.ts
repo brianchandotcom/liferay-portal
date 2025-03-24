@@ -9,6 +9,7 @@ export enum ORDER_CUSTOM_FIELDS {
 	END_DATE = 'trial-end-date',
 	PROJECT_NAME = 'project-name',
 	START_DATE = 'trial-start-date',
+	TRIAL_ERROR = 'trial-error',
 	TRIAL_SETTINGS = 'trial-settings',
 	VIRTUAL_HOST = 'trial-virtualhost',
 }

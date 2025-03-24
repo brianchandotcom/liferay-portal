@@ -44,8 +44,9 @@ public class ObjectEntryFolderDTOConverter
 			_objectEntryFolderLocalService.getObjectEntryFolder(
 				(Long)dtoConverterContext.getId());
 
-		com.liferay.object.model.ObjectEntryFolder parentObjectEntryFolder =
-			_getParentObjectEntryFolder(objectEntryFolder);
+		com.liferay.object.model.ObjectEntryFolder
+			persistedParentObjectEntryFolder = _getParentObjectEntryFolder(
+				objectEntryFolder);
 
 		return new ObjectEntryFolder() {
 			{
@@ -89,47 +90,13 @@ public class ObjectEntryFolderDTOConverter
 				setParentObjectEntryFolder(
 					() -> NestedFieldsSupplier.supply(
 						"parentObjectEntryFolder",
-						nestedField -> {
-							com.liferay.object.model.ObjectEntryFolder
-								parentObjectEntryFolder =
-								_objectEntryFolderLocalService.
-									fetchObjectEntryFolder(
-										objectEntryFolder.
-											getParentObjectEntryFolderId());
-
-							if (parentObjectEntryFolder != null) {
-								return new ObjectEntryFolderBrief() {
-									{
-										setExternalReferenceCode(
-											parentObjectEntryFolder::
-												getExternalReferenceCode);
-										setId(
-											parentObjectEntryFolder::
-												getObjectEntryFolderId);
-										setLabel(
-											() ->
-												parentObjectEntryFolder.
-													getLabel(
-														dtoConverterContext.
-															getLocale()));
-										setLabel_i18n(
-											() ->
-												LocalizedMapUtil.
-													getLanguageIdMap(
-														parentObjectEntryFolder.
-															getLabelMap()));
-										setName(
-											parentObjectEntryFolder::getName);
-									}
-								};
-							}
-
-							return null;
-						}));
+						nestedField -> _getParentObjectEntryFolderBrief(
+							dtoConverterContext,
+							persistedParentObjectEntryFolder)));
 				setParentObjectEntryFolderExternalReferenceCode(
 					() -> {
-						if (parentObjectEntryFolder != null) {
-							return parentObjectEntryFolder.
+						if (persistedParentObjectEntryFolder != null) {
+							return persistedParentObjectEntryFolder.
 								getExternalReferenceCode();
 						}
 
@@ -137,13 +104,13 @@ public class ObjectEntryFolderDTOConverter
 					});
 				setParentObjectEntryFolderId(
 					() -> {
-						if (parentObjectEntryFolder != null) {
-							return parentObjectEntryFolder.
+						if (persistedParentObjectEntryFolder != null) {
+							return persistedParentObjectEntryFolder.
 								getObjectEntryFolderId();
 						}
 
-							return null;
-						}));
+						return null;
+					});
 
 				setScopeKey(
 					() -> String.valueOf(objectEntryFolder.getGroupId()));
@@ -162,6 +129,30 @@ public class ObjectEntryFolderDTOConverter
 		}
 
 		return null;
+	}
+
+	private ObjectEntryFolderBrief _getParentObjectEntryFolderBrief(
+		DTOConverterContext dtoConverterContext,
+		com.liferay.object.model.ObjectEntryFolder parentObjectEntryFolder) {
+
+		if (parentObjectEntryFolder == null) {
+			return null;
+		}
+
+		return new ObjectEntryFolderBrief() {
+			{
+				setExternalReferenceCode(
+					parentObjectEntryFolder::getExternalReferenceCode);
+				setId(parentObjectEntryFolder::getObjectEntryFolderId);
+				setLabel(
+					() -> parentObjectEntryFolder.getLabel(
+						dtoConverterContext.getLocale()));
+				setLabel_i18n(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						parentObjectEntryFolder.getLabelMap()));
+				setName(parentObjectEntryFolder::getName);
+			}
+		};
 	}
 
 	@Reference

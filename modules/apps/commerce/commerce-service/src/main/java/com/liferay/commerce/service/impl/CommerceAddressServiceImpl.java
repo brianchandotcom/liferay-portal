@@ -37,56 +37,21 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), defaultBilling/Shipping exist on Account Entity. Pass type.
-	 */
-	@Deprecated
-	@Override
-	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			boolean defaultBilling, boolean defaultShipping,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_checkPermission(className, classPK);
-
-		return commerceAddressLocalService.addCommerceAddress(
-			className, classPK, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, defaultBilling,
-			defaultShipping, serviceContext);
-	}
-
-	@Override
-	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return commerceAddressService.addCommerceAddress(
-			null, className, classPK, name, description, street1, street2,
-			street3, city, zip, regionId, countryId, phoneNumber, type,
-			serviceContext);
-	}
-
 	@Override
 	public CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
-			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, String phoneNumber, int type,
+			long countryId, long regionId, String city, String description,
+			String name, String phoneNumber, String street1, String street2,
+			String street3, String subtype, int type, String zip,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkPermission(className, classPK);
 
 		return commerceAddressLocalService.addCommerceAddress(
-			externalReferenceCode, className, classPK, name, description,
-			street1, street2, street3, city, zip, regionId, countryId,
-			phoneNumber, type, serviceContext);
+			externalReferenceCode, className, classPK, countryId, regionId,
+			city, description, name, phoneNumber, street1, street2, street3,
+			subtype, type, zip, serviceContext);
 	}
 
 	@Override
@@ -392,16 +357,12 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 			companyId, className, classPK, keywords, start, end, sort);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), defaultBilling/Shipping exist on Account Entity. Pass type.
-	 */
-	@Deprecated
 	@Override
 	public CommerceAddress updateCommerceAddress(
-			long commerceAddressId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			boolean defaultBilling, boolean defaultShipping,
+			String externalReferenceCode, long commerceAddressId,
+			long countryId, long regionId, String city, String description,
+			String name, String phoneNumber, String street1, String street2,
+			String street3, String subtype, int type, String zip,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -411,28 +372,9 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 		_checkPermission(commerceAddress);
 
 		return commerceAddressLocalService.updateCommerceAddress(
-			commerceAddress.getCommerceAddressId(), name, description, street1,
-			street2, street3, city, zip, regionId, countryId, phoneNumber,
-			defaultBilling, defaultShipping, serviceContext);
-	}
-
-	@Override
-	public CommerceAddress updateCommerceAddress(
-			long commerceAddressId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceAddress commerceAddress =
-			commerceAddressLocalService.getCommerceAddress(commerceAddressId);
-
-		_checkPermission(commerceAddress);
-
-		return commerceAddressLocalService.updateCommerceAddress(
-			commerceAddress.getCommerceAddressId(), name, description, street1,
-			street2, street3, city, zip, regionId, countryId, phoneNumber, type,
-			serviceContext);
+			externalReferenceCode, commerceAddress.getCommerceAddressId(),
+			countryId, regionId, city, description, name, phoneNumber, street1,
+			street2, street3, subtype, type, zip, serviceContext);
 	}
 
 	private void _checkPermission(CommerceAddress commerceAddress)

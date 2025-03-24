@@ -25,6 +25,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,59 +72,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceAddressLocalServiceImpl
 	extends CommerceAddressLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), defaultBilling/Shipping exist on Account Entity. Pass type.
-	 */
-	@Deprecated
-	@Override
-	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			boolean defaultBilling, boolean defaultShipping,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		int type = CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
-
-		if (defaultBilling && !defaultShipping) {
-			type = CommerceAddressConstants.ADDRESS_TYPE_BILLING;
-		}
-		else if (!defaultBilling && defaultShipping) {
-			type = CommerceAddressConstants.ADDRESS_TYPE_SHIPPING;
-		}
-
-		return commerceAddressLocalService.addCommerceAddress(
-			className, classPK, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			int type, ServiceContext serviceContext)
-		throws PortalException {
-
-		return commerceAddressLocalService.addCommerceAddress(
-			null, className, classPK, name, description, street1, street2,
-			street3, city, zip, regionId, countryId, phoneNumber, type,
-			serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
-			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, String phoneNumber, int type,
+			long countryId, long regionId, String city, String description,
+			String name, String phoneNumber, String street1, String street2,
+			String street3, String subtype, int type, String zip,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(name, street1, city, zip, countryId, type);
+		_validate(city, countryId, name, street1, type, zip);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
@@ -132,7 +91,7 @@ public class CommerceAddressLocalServiceImpl
 				externalReferenceCode, user.getUserId(), className, classPK,
 				countryId, CommerceAddressImpl.toAddressTypeId(type), regionId,
 				city, description, false, name, false, street1, street2,
-				street3, null, zip, phoneNumber, serviceContext));
+				street3, subtype, zip, phoneNumber, serviceContext));
 	}
 
 	@Override
@@ -146,15 +105,18 @@ public class CommerceAddressLocalServiceImpl
 
 		CommerceAddress targetCommerceAddress =
 			commerceAddressLocalService.addCommerceAddress(
-				className, classPK, sourceCommerceAddress.getName(),
+				StringPool.BLANK, className, classPK,
+				sourceCommerceAddress.getCountryId(),
+				sourceCommerceAddress.getRegionId(),
+				sourceCommerceAddress.getCity(),
 				sourceCommerceAddress.getDescription(),
+				sourceCommerceAddress.getName(),
+				sourceCommerceAddress.getPhoneNumber(),
 				sourceCommerceAddress.getStreet1(),
 				sourceCommerceAddress.getStreet2(),
 				sourceCommerceAddress.getStreet3(),
-				sourceCommerceAddress.getCity(), sourceCommerceAddress.getZip(),
-				sourceCommerceAddress.getRegionId(),
-				sourceCommerceAddress.getCountryId(),
-				sourceCommerceAddress.getPhoneNumber(), false, false,
+				sourceCommerceAddress.getSubtype(),
+				sourceCommerceAddress.getType(), sourceCommerceAddress.getZip(),
 				serviceContext);
 
 		return CommerceAddressImpl.fromAddress(
@@ -632,53 +594,27 @@ public class CommerceAddressLocalServiceImpl
 			addressBaseModelSearchResult.getLength());
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), defaultBilling/Shipping exist on Account Entity. Pass type.
-	 */
-	@Deprecated
-	@Override
-	public CommerceAddress updateCommerceAddress(
-			long commerceAddressId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			boolean defaultBilling, boolean defaultShipping,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		int type = CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
-
-		if (defaultBilling && !defaultShipping) {
-			type = CommerceAddressConstants.ADDRESS_TYPE_BILLING;
-		}
-		else if (!defaultBilling && defaultShipping) {
-			type = CommerceAddressConstants.ADDRESS_TYPE_SHIPPING;
-		}
-
-		return updateCommerceAddress(
-			commerceAddressId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, type, serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceAddress updateCommerceAddress(
-			long commerceAddressId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			int type, ServiceContext serviceContext)
+			String externalReferenceCode, long commerceAddressId,
+			long countryId, long regionId, String city, String description,
+			String name, String phoneNumber, String street1, String street2,
+			String street3, String subtype, int type, String zip,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce address
 
 		Address address = _addressLocalService.getAddress(commerceAddressId);
 
-		_validate(name, street1, city, zip, countryId, type);
+		_validate(city, countryId, name, street1, type, zip);
 
 		address = _addressLocalService.updateAddress(
-			null, commerceAddressId, countryId,
+			externalReferenceCode, commerceAddressId, countryId,
 			CommerceAddressImpl.toAddressTypeId(type), regionId, city,
 			description, address.isMailing(), name, address.isPrimary(),
-			street1, street2, street3, null, zip, phoneNumber);
+			street1, street2, street3, subtype, zip, phoneNumber);
 
 		return CommerceAddressImpl.fromAddress(address);
 	}
@@ -827,9 +763,17 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	private void _validate(
-			String name, String street1, String city, String zip,
-			long countryId, int type)
+			String city, long countryId, String name, String street1, int type,
+			String zip)
 		throws PortalException {
+
+		if (Validator.isNull(city)) {
+			throw new CommerceAddressCityException();
+		}
+
+		if (countryId <= 0) {
+			throw new CommerceAddressCountryException();
+		}
 
 		if (Validator.isNull(name)) {
 			throw new CommerceAddressNameException();
@@ -839,20 +783,12 @@ public class CommerceAddressLocalServiceImpl
 			throw new CommerceAddressStreetException();
 		}
 
-		if (Validator.isNull(city)) {
-			throw new CommerceAddressCityException();
+		if (!ArrayUtil.contains(CommerceAddressConstants.ADDRESS_TYPES, type)) {
+			throw new CommerceAddressTypeException();
 		}
 
 		if (Validator.isNull(zip)) {
 			throw new CommerceAddressZipException();
-		}
-
-		if (countryId <= 0) {
-			throw new CommerceAddressCountryException();
-		}
-
-		if (!ArrayUtil.contains(CommerceAddressConstants.ADDRESS_TYPES, type)) {
-			throw new CommerceAddressTypeException();
 		}
 	}
 

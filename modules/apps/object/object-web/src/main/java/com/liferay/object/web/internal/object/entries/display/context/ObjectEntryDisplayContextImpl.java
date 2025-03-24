@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -1049,7 +1050,10 @@ public class ObjectEntryDisplayContextImpl
 		if (objectEntry != null) {
 			ddmFormField.setProperty(
 				"defaultLocale",
-				LocaleUtil.fromLanguageId(objectEntry.getDefaultLanguageId()));
+				JSONFactoryUtil.createJSONObject(
+					DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
+						LocaleUtil.fromLanguageId(
+							objectEntry.getDefaultLanguageId()))));
 		}
 
 		ddmFormField.setProperty(

@@ -307,11 +307,11 @@ public class ImportMVCResourceCommandTest {
 			_mvcResourceCommand, "_importFragmentEntries",
 			new Class<?>[] {
 				File.class, long.class, long.class,
-				FragmentsImportStrategy.class, Locale.class, long.class,
-				boolean.class
+				FragmentsImportStrategy.class, Locale.class, boolean.class,
+				long.class
 			},
 			_getFile(), 0, _group.getGroupId(), fragmentsImportStrategy,
-			LocaleUtil.US, TestPropsValues.getUserId(), marketplace);
+			LocaleUtil.US, marketplace, TestPropsValues.getUserId());
 	}
 
 	private static final String _RESOURCES_PATH =

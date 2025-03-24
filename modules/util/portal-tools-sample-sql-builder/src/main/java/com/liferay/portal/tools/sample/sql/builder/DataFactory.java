@@ -5918,11 +5918,11 @@ public class DataFactory {
 	}
 
 	public List<FragmentEntryLinkModel> newObjectFieldsFragmentEntryLinkModels(
-			LayoutModel layoutModel, List<ObjectFieldModel> objectFieldModels,
-			long segmentsExperienceId)
+			List<LayoutModel> layoutModels,
+			List<ObjectFieldModel> objectFieldModels, long segmentsExperienceId)
 		throws Exception {
 
-		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
+		List<FragmentEntryLinkModel> originalFragmentEntryLinkModels =
 			new ArrayList<>();
 
 		String editValueJSON = _readFile(
@@ -5958,12 +5958,32 @@ public class DataFactory {
 					"ObjectField_" + objectFieldModel.getName());
 			}
 
-			fragmentEntryLinkModels.add(
+			originalFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, 0, segmentsExperienceId, headingCss,
+					layoutModels.get(1), 0, segmentsExperienceId, headingCss,
 					headingHtml, StringPool.BLANK, editValue,
 					paragraphRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_HEADING));
+		}
+
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
+			originalFragmentEntryLinkModels);
+
+		for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
+				originalFragmentEntryLinkModels) {
+
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModels.get(0),
+					originalFragmentEntryLinkModel.getFragmentEntryLinkId(),
+					originalFragmentEntryLinkModel.getSegmentsExperienceId(),
+					originalFragmentEntryLinkModel.getCss(),
+					originalFragmentEntryLinkModel.getHtml(),
+					originalFragmentEntryLinkModel.getConfiguration(),
+					originalFragmentEntryLinkModel.getEditableValues(),
+					originalFragmentEntryLinkModel.getNamespace(),
+					originalFragmentEntryLinkModel.getPosition(),
+					originalFragmentEntryLinkModel.getRendererKey()));
 		}
 
 		return fragmentEntryLinkModels;

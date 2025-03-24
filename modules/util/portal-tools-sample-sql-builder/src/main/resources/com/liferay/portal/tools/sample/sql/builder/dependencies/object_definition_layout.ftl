@@ -7,24 +7,22 @@
 		contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, name)
 
 		segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(contentLayoutModels)
+
+		fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(contentLayoutModels, objectFieldModels, segmentsExperienceModel.getSegmentsExperienceId())
 	/>
+
+	<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
+		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+	</#list>
 
 	${dataFactory.toInsertSQL(segmentsExperienceModel)}
 
 	<#list contentLayoutModels as contentLayoutModel>
-		<#assign
-			fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(contentLayoutModel, objectFieldModels, segmentsExperienceModel.getSegmentsExperienceId())
-
-			layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel)
-		/>
+		<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
 
 		${dataFactory.toInsertSQL(contentLayoutModel)}
 
 		${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
-
-		<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
-			${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
-		</#list>
 
 		${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 

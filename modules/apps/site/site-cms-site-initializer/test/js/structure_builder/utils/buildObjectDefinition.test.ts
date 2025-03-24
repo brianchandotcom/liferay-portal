@@ -51,6 +51,7 @@ describe('buildObjectDefinition', () => {
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
+			spaces: [],
 		});
 
 		expect(result).toEqual({
@@ -61,12 +62,6 @@ describe('buildObjectDefinition', () => {
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
-			objectDefinitionSettings: [
-				{
-					name: 'acceptedGroupExternalReferenceCodes',
-					value: 'acceptedGroupExternalReferenceCodesConfig',
-				},
-			],
 			objectFields: [
 				{
 					DBType: 'String',
@@ -94,6 +89,7 @@ describe('buildObjectDefinition', () => {
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
+			spaces: [],
 		});
 
 		expect(result).toEqual({
@@ -104,12 +100,6 @@ describe('buildObjectDefinition', () => {
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
-			objectDefinitionSettings: [
-				{
-					name: 'acceptedGroupExternalReferenceCodes',
-					value: 'acceptedGroupExternalReferenceCodesConfig',
-				},
-			],
 			objectFields: [
 				{
 					DBType: 'DateTime',

@@ -16,7 +16,7 @@ import {
 	State,
 	Uuid,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
-import ListTypeService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/ListTypeService';
+import PicklistService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/PicklistService';
 import {
 	Field,
 	getDefaultField,
@@ -25,12 +25,10 @@ import getUuid from '../../../../src/main/resources/META-INF/resources/js/struct
 import {MockStateProvider} from '../mocks/MockStateProvider';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/structure_builder/services/ListTypeService',
+	'../../../../src/main/resources/META-INF/resources/js/structure_builder/services/PicklistService',
 	() => ({
-		getListTypeDefinitions: jest.fn(() =>
-			Promise.resolve({
-				items: [{id: 'papayaId', name: 'papaya'}],
-			})
+		getPicklists: jest.fn(() =>
+			Promise.resolve([{id: 'papayaId', name: 'papaya'}])
 		),
 	})
 );
@@ -448,14 +446,14 @@ describe('StructureFieldSettings', () => {
 		});
 
 		await waitFor(() =>
-			expect(ListTypeService.getListTypeDefinitions).toHaveBeenCalled()
+			expect(PicklistService.getPicklists).toHaveBeenCalled()
 		);
 
 		await userEvent.click(screen.getByLabelText('picklist'));
 		await userEvent.click(screen.getByText('papaya'));
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			listTypeDefinitionId: 'papayaId',
+			picklistId: 'papayaId',
 			type: 'update-field',
 			uuid,
 		});
@@ -477,14 +475,14 @@ describe('StructureFieldSettings', () => {
 		});
 
 		await waitFor(() =>
-			expect(ListTypeService.getListTypeDefinitions).toHaveBeenCalled()
+			expect(PicklistService.getPicklists).toHaveBeenCalled()
 		);
 
 		await userEvent.click(screen.getByLabelText('picklist'));
 		await userEvent.click(screen.getByText('papaya'));
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			listTypeDefinitionId: 'papayaId',
+			picklistId: 'papayaId',
 			type: 'update-field',
 			uuid,
 		});

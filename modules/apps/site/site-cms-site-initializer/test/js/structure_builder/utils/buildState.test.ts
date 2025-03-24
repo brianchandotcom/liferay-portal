@@ -52,6 +52,7 @@ describe('buildState', () => {
 			name: 'myStructure',
 			publishedFields: new Set(),
 			selection: [],
+			spaces: [],
 			status: 'draft',
 		};
 
@@ -61,6 +62,7 @@ describe('buildState', () => {
 			id: initialState.id,
 			label: initialState.label,
 			name: initialState.name,
+			spaces: initialState.spaces,
 		});
 
 		const result = buildState(objectDefinition);
@@ -79,6 +81,7 @@ describe('buildState', () => {
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			selection: [],
+			spaces: [],
 			status: 'published',
 		};
 
@@ -88,6 +91,7 @@ describe('buildState', () => {
 			id: initialState.id,
 			label: initialState.label,
 			name: initialState.name,
+			spaces: initialState.spaces,
 		});
 
 		const result = buildState({

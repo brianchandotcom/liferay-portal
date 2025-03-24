@@ -5,25 +5,57 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Noor Najjar
  */
 public class ViewTagsDisplayContext {
 
-	public ViewTagsDisplayContext(ThemeDisplay themeDisplay) {
+	public ViewTagsDisplayContext(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
+			"assetLibraryId",
+			() -> {
+				List<DepotEntry> depotEntryList =
+					DepotEntryLocalServiceUtil.getDepotEntries(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				if (!depotEntryList.isEmpty()) {
+					return depotEntryList.get(
+						0
+					).getDepotEntryId();
+				}
+
+				return DepotEntryLocalServiceUtil.addDepotEntry(
+					HashMapBuilder.put(
+						LocaleUtil.getDefault(), "Depot"
+					).build(),
+					new HashMap<>(),
+					ServiceContextFactory.getInstance(_httpServletRequest));
+			}
+		).put(
 			"tagsURL",
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
@@ -40,6 +72,7 @@ public class ViewTagsDisplayContext {
 		).build();
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

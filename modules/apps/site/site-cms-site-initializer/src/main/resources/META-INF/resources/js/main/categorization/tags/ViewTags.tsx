@@ -4,14 +4,18 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
 import CategorizationToolbar from '../CategorizationToolbar';
+import CreateTagsModal from './CreateTagsModal';
 
 export default function ViewTags({
+	assetLibraryId,
 	tagsURL,
 	vocabulariesURL,
 }: {
+	assetLibraryId: string;
 	tagsURL: string;
 	vocabulariesURL: string;
 }) {
@@ -19,9 +23,28 @@ export default function ViewTags({
 		primaryItems: [
 			{
 				label: Liferay.Language.get('new'),
+				onClick: () => {
+					openModal({
+						contentComponent: () =>
+							CreateTagsModal({
+								assetLibraryId,
+								tagsURL,
+							}),
+						size: 'md',
+					});
+				},
 			},
 		],
 	};
+
+	const filters = [
+		{
+			items: [{label: assetLibraryId, value: assetLibraryId}],
+			label: 'Space',
+			multiple: true,
+			type: 'selection',
+		},
+	];
 
 	const views = [
 		{
@@ -29,6 +52,25 @@ export default function ViewTags({
 			default: true,
 			label: Liferay.Language.get('table'),
 			name: 'table',
+			schema: {
+				fields: [
+					{
+						fieldName: 'name',
+						label: Liferay.Language.get('title'),
+						sortable: true,
+					},
+					{
+						fieldName: 'assetLibraryKey',
+						label: Liferay.Language.get('space'),
+						sortable: false,
+					},
+					{
+						fieldName: 'dateModified',
+						label: Liferay.Language.get('modified'),
+						sortable: false,
+					},
+				],
+			},
 			thumbnail: 'table',
 		},
 	];
@@ -48,11 +90,23 @@ export default function ViewTags({
 			/>
 
 			<FrontendDataSet
+				apiURL={`/o/headless-admin-taxonomy/v1.0/asset-libraries/${assetLibraryId}/keywords`}
 				creationMenu={creationMenu}
 				emptyState={emptyState}
+				filters={filters}
 				id="ViewTags"
-				showManagementBar={false}
-				showSearch={false}
+				itemsActions={[
+					{
+						icon: 'pencil',
+						label: Liferay.Language.get('edit'),
+					},
+					{
+						icon: 'trash',
+						label: Liferay.Language.get('delete'),
+					},
+				]}
+				showManagementBar={true}
+				showSearch={true}
 				views={views}
 			/>
 		</div>

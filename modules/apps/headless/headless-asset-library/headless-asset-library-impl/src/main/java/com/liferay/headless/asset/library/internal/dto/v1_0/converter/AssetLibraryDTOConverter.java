@@ -72,6 +72,7 @@ public class AssetLibraryDTOConverter
 
 		return new AssetLibrary() {
 			{
+				setActions(dtoConverterContext::getActions);
 				setDateCreated(depotEntry::getCreateDate);
 				setDateModified(depotEntry::getModifiedDate);
 				setDescription(

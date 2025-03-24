@@ -72,14 +72,15 @@ public class CommerceAddressModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"street1", Types.VARCHAR},
+		{"classPK", Types.BIGINT}, {"countryId", Types.BIGINT},
+		{"regionId", Types.BIGINT}, {"city", Types.VARCHAR},
+		{"defaultBilling", Types.BOOLEAN}, {"defaultShipping", Types.BOOLEAN},
+		{"description", Types.VARCHAR}, {"latitude", Types.DOUBLE},
+		{"longitude", Types.DOUBLE}, {"name", Types.VARCHAR},
+		{"phoneNumber", Types.VARCHAR}, {"street1", Types.VARCHAR},
 		{"street2", Types.VARCHAR}, {"street3", Types.VARCHAR},
-		{"city", Types.VARCHAR}, {"zip", Types.VARCHAR},
-		{"regionId", Types.BIGINT}, {"countryId", Types.BIGINT},
-		{"latitude", Types.DOUBLE}, {"longitude", Types.DOUBLE},
-		{"phoneNumber", Types.VARCHAR}, {"defaultBilling", Types.BOOLEAN},
-		{"defaultShipping", Types.BOOLEAN}, {"type_", Types.INTEGER}
+		{"subtype", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"zip", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,25 +98,26 @@ public class CommerceAddressModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("city", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("defaultBilling", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("defaultShipping", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("latitude", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("longitude", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("phoneNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street1", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street2", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street3", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("city", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("latitude", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("longitude", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("phoneNumber", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("defaultBilling", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("defaultShipping", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("subtype", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAddress (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(255) null,description STRING null,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,latitude DOUBLE,longitude DOUBLE,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN,type_ INTEGER)";
+		"create table CommerceAddress (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG,regionId LONG,city VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN,description STRING null,latitude DOUBLE,longitude DOUBLE,name VARCHAR(255) null,phoneNumber VARCHAR(75) null,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,subtype VARCHAR(75) null,type_ INTEGER,zip VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceAddress";
 
@@ -330,32 +332,34 @@ public class CommerceAddressModelImpl
 				"classNameId", CommerceAddress::getClassNameId);
 			attributeGetterFunctions.put(
 				"classPK", CommerceAddress::getClassPK);
-			attributeGetterFunctions.put("name", CommerceAddress::getName);
+			attributeGetterFunctions.put(
+				"countryId", CommerceAddress::getCountryId);
+			attributeGetterFunctions.put(
+				"regionId", CommerceAddress::getRegionId);
+			attributeGetterFunctions.put("city", CommerceAddress::getCity);
+			attributeGetterFunctions.put(
+				"defaultBilling", CommerceAddress::getDefaultBilling);
+			attributeGetterFunctions.put(
+				"defaultShipping", CommerceAddress::getDefaultShipping);
 			attributeGetterFunctions.put(
 				"description", CommerceAddress::getDescription);
+			attributeGetterFunctions.put(
+				"latitude", CommerceAddress::getLatitude);
+			attributeGetterFunctions.put(
+				"longitude", CommerceAddress::getLongitude);
+			attributeGetterFunctions.put("name", CommerceAddress::getName);
+			attributeGetterFunctions.put(
+				"phoneNumber", CommerceAddress::getPhoneNumber);
 			attributeGetterFunctions.put(
 				"street1", CommerceAddress::getStreet1);
 			attributeGetterFunctions.put(
 				"street2", CommerceAddress::getStreet2);
 			attributeGetterFunctions.put(
 				"street3", CommerceAddress::getStreet3);
-			attributeGetterFunctions.put("city", CommerceAddress::getCity);
-			attributeGetterFunctions.put("zip", CommerceAddress::getZip);
 			attributeGetterFunctions.put(
-				"regionId", CommerceAddress::getRegionId);
-			attributeGetterFunctions.put(
-				"countryId", CommerceAddress::getCountryId);
-			attributeGetterFunctions.put(
-				"latitude", CommerceAddress::getLatitude);
-			attributeGetterFunctions.put(
-				"longitude", CommerceAddress::getLongitude);
-			attributeGetterFunctions.put(
-				"phoneNumber", CommerceAddress::getPhoneNumber);
-			attributeGetterFunctions.put(
-				"defaultBilling", CommerceAddress::getDefaultBilling);
-			attributeGetterFunctions.put(
-				"defaultShipping", CommerceAddress::getDefaultShipping);
+				"subtype", CommerceAddress::getSubtype);
 			attributeGetterFunctions.put("type", CommerceAddress::getType);
+			attributeGetterFunctions.put("zip", CommerceAddress::getZip);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -415,12 +419,43 @@ public class CommerceAddressModelImpl
 				"classPK",
 				(BiConsumer<CommerceAddress, Long>)CommerceAddress::setClassPK);
 			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<CommerceAddress, String>)CommerceAddress::setName);
+				"countryId",
+				(BiConsumer<CommerceAddress, Long>)
+					CommerceAddress::setCountryId);
+			attributeSetterBiConsumers.put(
+				"regionId",
+				(BiConsumer<CommerceAddress, Long>)
+					CommerceAddress::setRegionId);
+			attributeSetterBiConsumers.put(
+				"city",
+				(BiConsumer<CommerceAddress, String>)CommerceAddress::setCity);
+			attributeSetterBiConsumers.put(
+				"defaultBilling",
+				(BiConsumer<CommerceAddress, Boolean>)
+					CommerceAddress::setDefaultBilling);
+			attributeSetterBiConsumers.put(
+				"defaultShipping",
+				(BiConsumer<CommerceAddress, Boolean>)
+					CommerceAddress::setDefaultShipping);
 			attributeSetterBiConsumers.put(
 				"description",
 				(BiConsumer<CommerceAddress, String>)
 					CommerceAddress::setDescription);
+			attributeSetterBiConsumers.put(
+				"latitude",
+				(BiConsumer<CommerceAddress, Double>)
+					CommerceAddress::setLatitude);
+			attributeSetterBiConsumers.put(
+				"longitude",
+				(BiConsumer<CommerceAddress, Double>)
+					CommerceAddress::setLongitude);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<CommerceAddress, String>)CommerceAddress::setName);
+			attributeSetterBiConsumers.put(
+				"phoneNumber",
+				(BiConsumer<CommerceAddress, String>)
+					CommerceAddress::setPhoneNumber);
 			attributeSetterBiConsumers.put(
 				"street1",
 				(BiConsumer<CommerceAddress, String>)
@@ -434,42 +469,15 @@ public class CommerceAddressModelImpl
 				(BiConsumer<CommerceAddress, String>)
 					CommerceAddress::setStreet3);
 			attributeSetterBiConsumers.put(
-				"city",
-				(BiConsumer<CommerceAddress, String>)CommerceAddress::setCity);
-			attributeSetterBiConsumers.put(
-				"zip",
-				(BiConsumer<CommerceAddress, String>)CommerceAddress::setZip);
-			attributeSetterBiConsumers.put(
-				"regionId",
-				(BiConsumer<CommerceAddress, Long>)
-					CommerceAddress::setRegionId);
-			attributeSetterBiConsumers.put(
-				"countryId",
-				(BiConsumer<CommerceAddress, Long>)
-					CommerceAddress::setCountryId);
-			attributeSetterBiConsumers.put(
-				"latitude",
-				(BiConsumer<CommerceAddress, Double>)
-					CommerceAddress::setLatitude);
-			attributeSetterBiConsumers.put(
-				"longitude",
-				(BiConsumer<CommerceAddress, Double>)
-					CommerceAddress::setLongitude);
-			attributeSetterBiConsumers.put(
-				"phoneNumber",
+				"subtype",
 				(BiConsumer<CommerceAddress, String>)
-					CommerceAddress::setPhoneNumber);
-			attributeSetterBiConsumers.put(
-				"defaultBilling",
-				(BiConsumer<CommerceAddress, Boolean>)
-					CommerceAddress::setDefaultBilling);
-			attributeSetterBiConsumers.put(
-				"defaultShipping",
-				(BiConsumer<CommerceAddress, Boolean>)
-					CommerceAddress::setDefaultShipping);
+					CommerceAddress::setSubtype);
 			attributeSetterBiConsumers.put(
 				"type",
 				(BiConsumer<CommerceAddress, Integer>)CommerceAddress::setType);
+			attributeSetterBiConsumers.put(
+				"zip",
+				(BiConsumer<CommerceAddress, String>)CommerceAddress::setZip);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -743,142 +751,27 @@ public class CommerceAddressModelImpl
 
 	@JSON
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
+	public long getCountryId() {
+		return _countryId;
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setCountryId(long countryId) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_name = name;
+		_countryId = countryId;
 	}
 
-	@JSON
-	@Override
-	public String getDescription() {
-		if (_description == null) {
-			return "";
-		}
-		else {
-			return _description;
-		}
-	}
-
-	@Override
-	public void setDescription(String description) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_description = description;
-	}
-
-	@JSON
-	@Override
-	public String getStreet1() {
-		if (_street1 == null) {
-			return "";
-		}
-		else {
-			return _street1;
-		}
-	}
-
-	@Override
-	public void setStreet1(String street1) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_street1 = street1;
-	}
-
-	@JSON
-	@Override
-	public String getStreet2() {
-		if (_street2 == null) {
-			return "";
-		}
-		else {
-			return _street2;
-		}
-	}
-
-	@Override
-	public void setStreet2(String street2) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_street2 = street2;
-	}
-
-	@JSON
-	@Override
-	public String getStreet3() {
-		if (_street3 == null) {
-			return "";
-		}
-		else {
-			return _street3;
-		}
-	}
-
-	@Override
-	public void setStreet3(String street3) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_street3 = street3;
-	}
-
-	@JSON
-	@Override
-	public String getCity() {
-		if (_city == null) {
-			return "";
-		}
-		else {
-			return _city;
-		}
-	}
-
-	@Override
-	public void setCity(String city) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_city = city;
-	}
-
-	@JSON
-	@Override
-	public String getZip() {
-		if (_zip == null) {
-			return "";
-		}
-		else {
-			return _zip;
-		}
-	}
-
-	@Override
-	public void setZip(String zip) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_zip = zip;
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCountryId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("countryId"));
 	}
 
 	@JSON
@@ -908,77 +801,22 @@ public class CommerceAddressModelImpl
 
 	@JSON
 	@Override
-	public long getCountryId() {
-		return _countryId;
-	}
-
-	@Override
-	public void setCountryId(long countryId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_countryId = countryId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalCountryId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("countryId"));
-	}
-
-	@JSON
-	@Override
-	public double getLatitude() {
-		return _latitude;
-	}
-
-	@Override
-	public void setLatitude(double latitude) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_latitude = latitude;
-	}
-
-	@JSON
-	@Override
-	public double getLongitude() {
-		return _longitude;
-	}
-
-	@Override
-	public void setLongitude(double longitude) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_longitude = longitude;
-	}
-
-	@JSON
-	@Override
-	public String getPhoneNumber() {
-		if (_phoneNumber == null) {
+	public String getCity() {
+		if (_city == null) {
 			return "";
 		}
 		else {
-			return _phoneNumber;
+			return _city;
 		}
 	}
 
 	@Override
-	public void setPhoneNumber(String phoneNumber) {
+	public void setCity(String city) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_phoneNumber = phoneNumber;
+		_city = city;
 	}
 
 	@JSON
@@ -1045,6 +883,176 @@ public class CommerceAddressModelImpl
 
 	@JSON
 	@Override
+	public String getDescription() {
+		if (_description == null) {
+			return "";
+		}
+		else {
+			return _description;
+		}
+	}
+
+	@Override
+	public void setDescription(String description) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_description = description;
+	}
+
+	@JSON
+	@Override
+	public double getLatitude() {
+		return _latitude;
+	}
+
+	@Override
+	public void setLatitude(double latitude) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_latitude = latitude;
+	}
+
+	@JSON
+	@Override
+	public double getLongitude() {
+		return _longitude;
+	}
+
+	@Override
+	public void setLongitude(double longitude) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_longitude = longitude;
+	}
+
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
+	}
+
+	@JSON
+	@Override
+	public String getPhoneNumber() {
+		if (_phoneNumber == null) {
+			return "";
+		}
+		else {
+			return _phoneNumber;
+		}
+	}
+
+	@Override
+	public void setPhoneNumber(String phoneNumber) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_phoneNumber = phoneNumber;
+	}
+
+	@JSON
+	@Override
+	public String getStreet1() {
+		if (_street1 == null) {
+			return "";
+		}
+		else {
+			return _street1;
+		}
+	}
+
+	@Override
+	public void setStreet1(String street1) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_street1 = street1;
+	}
+
+	@JSON
+	@Override
+	public String getStreet2() {
+		if (_street2 == null) {
+			return "";
+		}
+		else {
+			return _street2;
+		}
+	}
+
+	@Override
+	public void setStreet2(String street2) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_street2 = street2;
+	}
+
+	@JSON
+	@Override
+	public String getStreet3() {
+		if (_street3 == null) {
+			return "";
+		}
+		else {
+			return _street3;
+		}
+	}
+
+	@Override
+	public void setStreet3(String street3) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_street3 = street3;
+	}
+
+	@JSON
+	@Override
+	public String getSubtype() {
+		if (_subtype == null) {
+			return "";
+		}
+		else {
+			return _subtype;
+		}
+	}
+
+	@Override
+	public void setSubtype(String subtype) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_subtype = subtype;
+	}
+
+	@JSON
+	@Override
 	public int getType() {
 		return _type;
 	}
@@ -1066,6 +1074,26 @@ public class CommerceAddressModelImpl
 	public int getOriginalType() {
 		return GetterUtil.getInteger(
 			this.<Integer>getColumnOriginalValue("type_"));
+	}
+
+	@JSON
+	@Override
+	public String getZip() {
+		if (_zip == null) {
+			return "";
+		}
+		else {
+			return _zip;
+		}
+	}
+
+	@Override
+	public void setZip(String zip) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_zip = zip;
 	}
 
 	public long getColumnBitmask() {
@@ -1136,21 +1164,22 @@ public class CommerceAddressModelImpl
 		commerceAddressImpl.setModifiedDate(getModifiedDate());
 		commerceAddressImpl.setClassNameId(getClassNameId());
 		commerceAddressImpl.setClassPK(getClassPK());
-		commerceAddressImpl.setName(getName());
+		commerceAddressImpl.setCountryId(getCountryId());
+		commerceAddressImpl.setRegionId(getRegionId());
+		commerceAddressImpl.setCity(getCity());
+		commerceAddressImpl.setDefaultBilling(isDefaultBilling());
+		commerceAddressImpl.setDefaultShipping(isDefaultShipping());
 		commerceAddressImpl.setDescription(getDescription());
+		commerceAddressImpl.setLatitude(getLatitude());
+		commerceAddressImpl.setLongitude(getLongitude());
+		commerceAddressImpl.setName(getName());
+		commerceAddressImpl.setPhoneNumber(getPhoneNumber());
 		commerceAddressImpl.setStreet1(getStreet1());
 		commerceAddressImpl.setStreet2(getStreet2());
 		commerceAddressImpl.setStreet3(getStreet3());
-		commerceAddressImpl.setCity(getCity());
-		commerceAddressImpl.setZip(getZip());
-		commerceAddressImpl.setRegionId(getRegionId());
-		commerceAddressImpl.setCountryId(getCountryId());
-		commerceAddressImpl.setLatitude(getLatitude());
-		commerceAddressImpl.setLongitude(getLongitude());
-		commerceAddressImpl.setPhoneNumber(getPhoneNumber());
-		commerceAddressImpl.setDefaultBilling(isDefaultBilling());
-		commerceAddressImpl.setDefaultShipping(isDefaultShipping());
+		commerceAddressImpl.setSubtype(getSubtype());
 		commerceAddressImpl.setType(getType());
+		commerceAddressImpl.setZip(getZip());
 
 		commerceAddressImpl.resetOriginalValues();
 
@@ -1183,35 +1212,37 @@ public class CommerceAddressModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		commerceAddressImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
-		commerceAddressImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
+		commerceAddressImpl.setCountryId(
+			this.<Long>getColumnOriginalValue("countryId"));
+		commerceAddressImpl.setRegionId(
+			this.<Long>getColumnOriginalValue("regionId"));
+		commerceAddressImpl.setCity(
+			this.<String>getColumnOriginalValue("city"));
+		commerceAddressImpl.setDefaultBilling(
+			this.<Boolean>getColumnOriginalValue("defaultBilling"));
+		commerceAddressImpl.setDefaultShipping(
+			this.<Boolean>getColumnOriginalValue("defaultShipping"));
 		commerceAddressImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
+		commerceAddressImpl.setLatitude(
+			this.<Double>getColumnOriginalValue("latitude"));
+		commerceAddressImpl.setLongitude(
+			this.<Double>getColumnOriginalValue("longitude"));
+		commerceAddressImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
+		commerceAddressImpl.setPhoneNumber(
+			this.<String>getColumnOriginalValue("phoneNumber"));
 		commerceAddressImpl.setStreet1(
 			this.<String>getColumnOriginalValue("street1"));
 		commerceAddressImpl.setStreet2(
 			this.<String>getColumnOriginalValue("street2"));
 		commerceAddressImpl.setStreet3(
 			this.<String>getColumnOriginalValue("street3"));
-		commerceAddressImpl.setCity(
-			this.<String>getColumnOriginalValue("city"));
-		commerceAddressImpl.setZip(this.<String>getColumnOriginalValue("zip"));
-		commerceAddressImpl.setRegionId(
-			this.<Long>getColumnOriginalValue("regionId"));
-		commerceAddressImpl.setCountryId(
-			this.<Long>getColumnOriginalValue("countryId"));
-		commerceAddressImpl.setLatitude(
-			this.<Double>getColumnOriginalValue("latitude"));
-		commerceAddressImpl.setLongitude(
-			this.<Double>getColumnOriginalValue("longitude"));
-		commerceAddressImpl.setPhoneNumber(
-			this.<String>getColumnOriginalValue("phoneNumber"));
-		commerceAddressImpl.setDefaultBilling(
-			this.<Boolean>getColumnOriginalValue("defaultBilling"));
-		commerceAddressImpl.setDefaultShipping(
-			this.<Boolean>getColumnOriginalValue("defaultShipping"));
+		commerceAddressImpl.setSubtype(
+			this.<String>getColumnOriginalValue("subtype"));
 		commerceAddressImpl.setType(
 			this.<Integer>getColumnOriginalValue("type_"));
+		commerceAddressImpl.setZip(this.<String>getColumnOriginalValue("zip"));
 
 		return commerceAddressImpl;
 	}
@@ -1343,6 +1374,34 @@ public class CommerceAddressModelImpl
 
 		commerceAddressCacheModel.classPK = getClassPK();
 
+		commerceAddressCacheModel.countryId = getCountryId();
+
+		commerceAddressCacheModel.regionId = getRegionId();
+
+		commerceAddressCacheModel.city = getCity();
+
+		String city = commerceAddressCacheModel.city;
+
+		if ((city != null) && (city.length() == 0)) {
+			commerceAddressCacheModel.city = null;
+		}
+
+		commerceAddressCacheModel.defaultBilling = isDefaultBilling();
+
+		commerceAddressCacheModel.defaultShipping = isDefaultShipping();
+
+		commerceAddressCacheModel.description = getDescription();
+
+		String description = commerceAddressCacheModel.description;
+
+		if ((description != null) && (description.length() == 0)) {
+			commerceAddressCacheModel.description = null;
+		}
+
+		commerceAddressCacheModel.latitude = getLatitude();
+
+		commerceAddressCacheModel.longitude = getLongitude();
+
 		commerceAddressCacheModel.name = getName();
 
 		String name = commerceAddressCacheModel.name;
@@ -1351,12 +1410,12 @@ public class CommerceAddressModelImpl
 			commerceAddressCacheModel.name = null;
 		}
 
-		commerceAddressCacheModel.description = getDescription();
+		commerceAddressCacheModel.phoneNumber = getPhoneNumber();
 
-		String description = commerceAddressCacheModel.description;
+		String phoneNumber = commerceAddressCacheModel.phoneNumber;
 
-		if ((description != null) && (description.length() == 0)) {
-			commerceAddressCacheModel.description = null;
+		if ((phoneNumber != null) && (phoneNumber.length() == 0)) {
+			commerceAddressCacheModel.phoneNumber = null;
 		}
 
 		commerceAddressCacheModel.street1 = getStreet1();
@@ -1383,13 +1442,15 @@ public class CommerceAddressModelImpl
 			commerceAddressCacheModel.street3 = null;
 		}
 
-		commerceAddressCacheModel.city = getCity();
+		commerceAddressCacheModel.subtype = getSubtype();
 
-		String city = commerceAddressCacheModel.city;
+		String subtype = commerceAddressCacheModel.subtype;
 
-		if ((city != null) && (city.length() == 0)) {
-			commerceAddressCacheModel.city = null;
+		if ((subtype != null) && (subtype.length() == 0)) {
+			commerceAddressCacheModel.subtype = null;
 		}
+
+		commerceAddressCacheModel.type = getType();
 
 		commerceAddressCacheModel.zip = getZip();
 
@@ -1398,28 +1459,6 @@ public class CommerceAddressModelImpl
 		if ((zip != null) && (zip.length() == 0)) {
 			commerceAddressCacheModel.zip = null;
 		}
-
-		commerceAddressCacheModel.regionId = getRegionId();
-
-		commerceAddressCacheModel.countryId = getCountryId();
-
-		commerceAddressCacheModel.latitude = getLatitude();
-
-		commerceAddressCacheModel.longitude = getLongitude();
-
-		commerceAddressCacheModel.phoneNumber = getPhoneNumber();
-
-		String phoneNumber = commerceAddressCacheModel.phoneNumber;
-
-		if ((phoneNumber != null) && (phoneNumber.length() == 0)) {
-			commerceAddressCacheModel.phoneNumber = null;
-		}
-
-		commerceAddressCacheModel.defaultBilling = isDefaultBilling();
-
-		commerceAddressCacheModel.defaultShipping = isDefaultShipping();
-
-		commerceAddressCacheModel.type = getType();
 
 		return commerceAddressCacheModel;
 	}
@@ -1494,21 +1533,22 @@ public class CommerceAddressModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private String _name;
+	private long _countryId;
+	private long _regionId;
+	private String _city;
+	private boolean _defaultBilling;
+	private boolean _defaultShipping;
 	private String _description;
+	private double _latitude;
+	private double _longitude;
+	private String _name;
+	private String _phoneNumber;
 	private String _street1;
 	private String _street2;
 	private String _street3;
-	private String _city;
-	private String _zip;
-	private long _regionId;
-	private long _countryId;
-	private double _latitude;
-	private double _longitude;
-	private String _phoneNumber;
-	private boolean _defaultBilling;
-	private boolean _defaultShipping;
+	private String _subtype;
 	private int _type;
+	private String _zip;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1552,21 +1592,22 @@ public class CommerceAddressModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
-		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("countryId", _countryId);
+		_columnOriginalValues.put("regionId", _regionId);
+		_columnOriginalValues.put("city", _city);
+		_columnOriginalValues.put("defaultBilling", _defaultBilling);
+		_columnOriginalValues.put("defaultShipping", _defaultShipping);
 		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("latitude", _latitude);
+		_columnOriginalValues.put("longitude", _longitude);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("phoneNumber", _phoneNumber);
 		_columnOriginalValues.put("street1", _street1);
 		_columnOriginalValues.put("street2", _street2);
 		_columnOriginalValues.put("street3", _street3);
-		_columnOriginalValues.put("city", _city);
-		_columnOriginalValues.put("zip", _zip);
-		_columnOriginalValues.put("regionId", _regionId);
-		_columnOriginalValues.put("countryId", _countryId);
-		_columnOriginalValues.put("latitude", _latitude);
-		_columnOriginalValues.put("longitude", _longitude);
-		_columnOriginalValues.put("phoneNumber", _phoneNumber);
-		_columnOriginalValues.put("defaultBilling", _defaultBilling);
-		_columnOriginalValues.put("defaultShipping", _defaultShipping);
+		_columnOriginalValues.put("subtype", _subtype);
 		_columnOriginalValues.put("type_", _type);
+		_columnOriginalValues.put("zip", _zip);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1612,35 +1653,37 @@ public class CommerceAddressModelImpl
 
 		columnBitmasks.put("classPK", 1024L);
 
-		columnBitmasks.put("name", 2048L);
+		columnBitmasks.put("countryId", 2048L);
 
-		columnBitmasks.put("description", 4096L);
+		columnBitmasks.put("regionId", 4096L);
 
-		columnBitmasks.put("street1", 8192L);
+		columnBitmasks.put("city", 8192L);
 
-		columnBitmasks.put("street2", 16384L);
+		columnBitmasks.put("defaultBilling", 16384L);
 
-		columnBitmasks.put("street3", 32768L);
+		columnBitmasks.put("defaultShipping", 32768L);
 
-		columnBitmasks.put("city", 65536L);
+		columnBitmasks.put("description", 65536L);
 
-		columnBitmasks.put("zip", 131072L);
+		columnBitmasks.put("latitude", 131072L);
 
-		columnBitmasks.put("regionId", 262144L);
+		columnBitmasks.put("longitude", 262144L);
 
-		columnBitmasks.put("countryId", 524288L);
+		columnBitmasks.put("name", 524288L);
 
-		columnBitmasks.put("latitude", 1048576L);
+		columnBitmasks.put("phoneNumber", 1048576L);
 
-		columnBitmasks.put("longitude", 2097152L);
+		columnBitmasks.put("street1", 2097152L);
 
-		columnBitmasks.put("phoneNumber", 4194304L);
+		columnBitmasks.put("street2", 4194304L);
 
-		columnBitmasks.put("defaultBilling", 8388608L);
+		columnBitmasks.put("street3", 8388608L);
 
-		columnBitmasks.put("defaultShipping", 16777216L);
+		columnBitmasks.put("subtype", 16777216L);
 
 		columnBitmasks.put("type_", 33554432L);
+
+		columnBitmasks.put("zip", 67108864L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

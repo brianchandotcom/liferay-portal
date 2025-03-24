@@ -71,7 +71,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 					{i18n.translate('close')}
 				</ClayButton>,
 			],
-			header: 'Trial Details',
+			header: i18n.translate('trial-details'),
 			size: 'md',
 		});
 	};

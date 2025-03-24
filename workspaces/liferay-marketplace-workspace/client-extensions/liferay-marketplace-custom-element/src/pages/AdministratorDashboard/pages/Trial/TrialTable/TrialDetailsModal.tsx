@@ -44,6 +44,8 @@ const TrialDetails: React.FC<TrialDetailsProps> = ({order}) => {
 		sendNotificationEmail: true,
 	});
 
+	const trialError = customFields[ORDER_CUSTOM_FIELDS.TRIAL_ERROR];
+
 	return (
 		<QATable
 			items={[
@@ -102,6 +104,26 @@ const TrialDetails: React.FC<TrialDetailsProps> = ({order}) => {
 					title: 'Send Notification Email',
 					value: i18n.translate(
 						trialSettings.sendNotificationEmail ? 'yes' : 'no'
+					),
+				},
+				{
+					visible: !!trialError,
+					title: 'Error',
+					value: (
+						<span
+							className="text-secondary cursor-pointer"
+							onClick={() =>
+								alert(
+									JSON.stringify(
+										safeJSONParse(trialError),
+										null,
+										2
+									)
+								)
+							}
+						>
+							{i18n.translate('details')}
+						</span>
 					),
 				},
 			]}

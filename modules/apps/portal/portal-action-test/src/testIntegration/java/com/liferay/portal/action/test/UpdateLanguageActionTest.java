@@ -239,6 +239,22 @@ public class UpdateLanguageActionTest {
 			mockHttpServletRequest, themeDisplay, _targetLocale);
 	}
 
+	private String _getFriendlyURLSeparatorPart(Locale locale)
+		throws Exception {
+
+		return _getFriendlyURLSeparatorPart(
+			locale, Portal.FRIENDLY_URL_SEPARATOR);
+	}
+
+	private String _getFriendlyURLSeparatorPart(Locale locale, String separator)
+		throws Exception {
+
+		Map<Locale, String> friendlyURLMap =
+			_journalArticle.getFriendlyURLMap();
+
+		return separator + friendlyURLMap.get(locale);
+	}
+
 	private void _testGetRedirect(
 			String contextPath, Locale sourceLocale, String sourceURL,
 			Locale targetLocale, String targetURL, boolean virtualHost)
@@ -283,45 +299,6 @@ public class UpdateLanguageActionTest {
 		}
 	}
 
-	private void _testGetRedirectWithLayoutFriendlyURL(boolean virtualHost)
-		throws Exception {
-
-		for (Locale locale : _availableLocales) {
-			_testGetRedirectWithLayoutFriendlyURL(
-				StringPool.BLANK, null, locale, virtualHost);
-
-			if (!Objects.equals(_defaultLocale, locale)) {
-				_testGetRedirectWithLayoutFriendlyURL(
-					StringPool.BLANK, _defaultLocale, locale, virtualHost);
-			}
-		}
-	}
-
-	private void _testGetRedirectWithLayoutFriendlyURL(
-			String path, Locale sourceLocale, Locale targetLocale,
-			boolean virtualHost)
-		throws Exception {
-
-		String layoutFriendlyURL = _layout.getFriendlyURL();
-
-		if (sourceLocale != null) {
-			layoutFriendlyURL = _layout.getFriendlyURL(sourceLocale);
-		}
-
-		String sourceURL = StringBundler.concat(
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-			_group.getFriendlyURL(), layoutFriendlyURL, path, "?queryString");
-
-		String targetURL = StringBundler.concat(
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-			_group.getFriendlyURL(), _layout.getFriendlyURL(targetLocale), path,
-			"?queryString");
-
-		_testGetRedirect(
-			StringPool.BLANK, sourceLocale, sourceURL, targetLocale, targetURL,
-			virtualHost);
-	}
-
 	private void _testGetRedirect(
 			String contextPath, String expectedRedirect, Locale targetLocale,
 			ThemeDisplay themeDisplay, String url)
@@ -344,22 +321,6 @@ public class UpdateLanguageActionTest {
 			expectedRedirect,
 			updateLanguageAction.getRedirect(
 				mockHttpServletRequest, themeDisplay, targetLocale));
-	}
-
-	private String _getFriendlyURLSeparatorPart(Locale locale)
-		throws Exception {
-
-		return _getFriendlyURLSeparatorPart(
-			locale, Portal.FRIENDLY_URL_SEPARATOR);
-	}
-
-	private String _getFriendlyURLSeparatorPart(Locale locale, String separator)
-		throws Exception {
-
-		Map<Locale, String> friendlyURLMap =
-			_journalArticle.getFriendlyURLMap();
-
-		return separator + friendlyURLMap.get(locale);
 	}
 
 	private void _testGetRedirectWithControlPanelURL(boolean i18n)
@@ -459,6 +420,45 @@ public class UpdateLanguageActionTest {
 		_testGetRedirect(
 			StringPool.BLANK, targetURL, _targetLocale, themeDisplay,
 			"/" + _sourceLocale.getLanguage() + sourceURL);
+	}
+
+	private void _testGetRedirectWithLayoutFriendlyURL(boolean virtualHost)
+		throws Exception {
+
+		for (Locale locale : _availableLocales) {
+			_testGetRedirectWithLayoutFriendlyURL(
+				StringPool.BLANK, null, locale, virtualHost);
+
+			if (!Objects.equals(_defaultLocale, locale)) {
+				_testGetRedirectWithLayoutFriendlyURL(
+					StringPool.BLANK, _defaultLocale, locale, virtualHost);
+			}
+		}
+	}
+
+	private void _testGetRedirectWithLayoutFriendlyURL(
+			String path, Locale sourceLocale, Locale targetLocale,
+			boolean virtualHost)
+		throws Exception {
+
+		String layoutFriendlyURL = _layout.getFriendlyURL();
+
+		if (sourceLocale != null) {
+			layoutFriendlyURL = _layout.getFriendlyURL(sourceLocale);
+		}
+
+		String sourceURL = StringBundler.concat(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			_group.getFriendlyURL(), layoutFriendlyURL, path, "?queryString");
+
+		String targetURL = StringBundler.concat(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			_group.getFriendlyURL(), _layout.getFriendlyURL(targetLocale), path,
+			"?queryString");
+
+		_testGetRedirect(
+			StringPool.BLANK, sourceLocale, sourceURL, targetLocale, targetURL,
+			virtualHost);
 	}
 
 	private void _testGetRedirectWithPortletFriendlyURL(Locale sourceLocale)

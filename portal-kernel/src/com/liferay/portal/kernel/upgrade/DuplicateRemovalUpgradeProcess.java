@@ -129,11 +129,6 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 				}
 			}
 		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
 
 		if (_orderByClause == null) {
 			Collections.reverse(queryResult);

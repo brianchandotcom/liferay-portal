@@ -12,6 +12,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 
@@ -24,6 +25,8 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +41,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/dxp")
 @RestController
 public class DXPRestController extends BaseRestController {
+
+	@GetMapping("project-usage")
+	public String getProjectsUsage(
+			@AuthenticationPrincipal Jwt jwt, @RequestParam String projectId)
+		throws Exception {
+
+		String emailAddress = String.valueOf(
+			jwt.getClaims(
+			).get(
+				"username"
+			));
+
+		return _consoleService.getProjectUsage(emailAddress, projectId);
+	}
 
 	@PostMapping("provisioning/{orderId}")
 	public void postProvisioning(
@@ -105,6 +122,9 @@ public class DXPRestController extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(DXPRestController.class);
+
+	@Autowired
+	private ConsoleService _consoleService;
 
 	@Autowired
 	private MarketplaceService _marketplaceService;

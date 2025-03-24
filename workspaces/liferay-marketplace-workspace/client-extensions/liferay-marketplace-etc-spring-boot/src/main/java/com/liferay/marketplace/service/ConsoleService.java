@@ -15,6 +15,7 @@ import java.util.Objects;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -102,6 +103,37 @@ public class ConsoleService extends BaseService {
 				"userEmail", userEmail
 			).build(
 			).toString());
+	}
+
+	public String getProjectUsage(String emailAddress, String projectId)
+		throws Exception {
+
+		JSONObject jsonObject = new JSONObject(getProjectsUsage(emailAddress));
+
+		JSONArray userProjectsJSONArray = jsonObject.getJSONArray(
+			"userProjects");
+
+		for (int i = 0; i < userProjectsJSONArray.length(); i++) {
+			JSONObject userProjectJSONObject =
+				userProjectsJSONArray.getJSONObject(i);
+
+			JSONArray environmentsJSONArray =
+				userProjectJSONObject.getJSONArray("environments");
+
+			for (int j = 0; j < environmentsJSONArray.length(); j++) {
+				JSONObject environmentJSONObject =
+					environmentsJSONArray.getJSONObject(j);
+
+				if (Objects.equals(
+						environmentJSONObject.getString("projectId"),
+						projectId)) {
+
+					return userProjectJSONObject.toString();
+				}
+			}
+		}
+
+		throw new Exception("Project not found");
 	}
 
 	public void setUpProject(

@@ -100,8 +100,8 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	@Override
 	public Page<SearchResult> getSearchPage(
 			String blueprintExternalReferenceCode, Boolean emptySearch,
-			String entryClassNames, String scope, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			String entryClassNames, String scope, String search,
+			String statuses, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-11232")) {
@@ -116,6 +116,17 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			).put(
 				"search.experiences.blueprint.external.reference.code",
 				blueprintExternalReferenceCode
+			).put(
+				"status",
+				() -> {
+					int[] statusesArray = StringUtil.split(statuses, 0);
+
+					if (statusesArray.length > 0) {
+						return statusesArray;
+					}
+
+					return null;
+				}
 			).build());
 
 		return _postSearchPage(
@@ -258,7 +269,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 	private boolean _isAllowedSearchContextAttribute(String key) {
 		if (key.startsWith("search.experiences.") ||
-			key.equals("search.empty.search")) {
+			(key.equals("search.empty.search") | key.equals("status"))) {
 
 			return true;
 		}

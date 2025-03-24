@@ -6,9 +6,11 @@
 import ApiHelper from './ApiHelper';
 
 async function getPicklists() {
-	return await ApiHelper.get(
+	const {items} = await ApiHelper.get(
 		'/o/headless-admin-list-type/v1.0/list-type-definitions'
 	);
+
+	return items;
 }
 
 export default {

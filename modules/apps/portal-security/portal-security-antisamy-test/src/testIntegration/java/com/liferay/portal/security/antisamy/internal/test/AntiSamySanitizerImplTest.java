@@ -11,14 +11,13 @@ import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -39,10 +38,6 @@ public class AntiSamySanitizerImplTest {
 
 	@Test
 	public void testSanitize() throws Exception {
-		String content =
-			"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
-				"target=\"_blank\"></a></p>";
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.security.antisamy.internal." +
 					"AntiSamySanitizerImpl",
@@ -50,12 +45,12 @@ public class AntiSamySanitizerImplTest {
 
 			_antiSamySanitizer.sanitize(
 				TestPropsValues.getCompanyId(), 0, 0, StringPool.BLANK, 0,
-				ContentTypes.TEXT_HTML, new String[0], content,
+				ContentTypes.TEXT_HTML, new String[0],
+				"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
+					"target=\"_blank\"></a></p>",
 				new HashMap<>());
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertTrue(logEntries.isEmpty());
+			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
 		}
 	}
 

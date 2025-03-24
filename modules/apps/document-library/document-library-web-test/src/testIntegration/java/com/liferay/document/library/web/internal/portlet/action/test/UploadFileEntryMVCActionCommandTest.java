@@ -201,15 +201,16 @@ public class UploadFileEntryMVCActionCommandTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(_company);
+
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		themeDisplay.setCompany(_company);
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
 		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(_user);
@@ -219,7 +220,6 @@ public class UploadFileEntryMVCActionCommandTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:8080");
-
 		mockHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
 

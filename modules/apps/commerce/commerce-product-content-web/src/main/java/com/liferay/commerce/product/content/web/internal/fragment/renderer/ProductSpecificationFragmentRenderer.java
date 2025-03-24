@@ -148,16 +148,6 @@ public class ProductSpecificationFragmentRenderer implements FragmentRenderer {
 
 				label = cpSpecificationOption.getTitle(
 					themeDisplay.getLanguageId());
-
-				httpServletRequest.setAttribute(
-					"liferay-commerce:product-specification:visible",
-					cpDefinitionSpecificationOptionValue.isVisible() &&
-					cpSpecificationOption.isVisible());
-			}
-			else {
-				httpServletRequest.setAttribute(
-					"liferay-commerce:product-specification:visible",
-					Boolean.FALSE);
 			}
 
 			httpServletRequest.setAttribute(
@@ -207,6 +197,22 @@ public class ProductSpecificationFragmentRenderer implements FragmentRenderer {
 					_getConfigurationValue(
 						fragmentRendererContext.getFragmentEntryLink(),
 						"valueElementType")));
+
+			if (cpDefinitionSpecificationOptionValue != null) {
+				CPSpecificationOption cpSpecificationOption =
+					cpDefinitionSpecificationOptionValue.
+						getCPSpecificationOption();
+
+				httpServletRequest.setAttribute(
+					"liferay-commerce:product-specification:visible",
+					cpDefinitionSpecificationOptionValue.isVisible() &&
+					cpSpecificationOption.isVisible());
+			}
+			else {
+				httpServletRequest.setAttribute(
+					"liferay-commerce:product-specification:visible",
+					Boolean.FALSE);
+			}
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

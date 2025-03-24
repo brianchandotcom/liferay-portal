@@ -112,7 +112,7 @@ it('Assert roles in User Notification', () => {
 	const itemsNamesList = {
 		recipients: [
 			{
-				roleName: 'Label1',
+				roleName: 'Name1',
 			},
 		],
 	};
@@ -126,12 +126,12 @@ it('Assert roles in User Notification', () => {
 		{
 			checked: true,
 			label: 'Name1',
-			value: 'Label1',
+			value: 'Name1',
 		},
 		{
 			checked: false,
 			label: 'Name2',
-			value: 'Label2',
+			value: 'Name2',
 		},
 		{
 			checked: false,

@@ -62,6 +62,17 @@ public class ObjectEntryFolderServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntryFolder
+			fetchObjectEntryFolderByExternalReferenceCode(
+				String externalReferenceCode, long groupId, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.
+			fetchObjectEntryFolderByExternalReferenceCode(
+				externalReferenceCode, groupId, companyId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntryFolder getObjectEntryFolder(
 			long objectEntryFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {

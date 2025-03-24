@@ -64,6 +64,9 @@ public class CalendarNotificationTemplateServiceImpl
 		_calendarModelResourcePermission.check(
 			getPermissionChecker(),
 			calendarNotificationTemplate.getCalendarId(), ActionKeys.UPDATE);
+		_calendarNotificationTemplateModelResourcePermission.check(
+			getPermissionChecker(), calendarNotificationTemplate,
+			ActionKeys.UPDATE);
 
 		return calendarNotificationTemplateLocalService.
 			updateCalendarNotificationTemplate(
@@ -75,5 +78,11 @@ public class CalendarNotificationTemplateServiceImpl
 		target = "(model.class.name=com.liferay.calendar.model.Calendar)"
 	)
 	private ModelResourcePermission<Calendar> _calendarModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate)"
+	)
+	private ModelResourcePermission<CalendarNotificationTemplate>
+		_calendarNotificationTemplateModelResourcePermission;
 
 }

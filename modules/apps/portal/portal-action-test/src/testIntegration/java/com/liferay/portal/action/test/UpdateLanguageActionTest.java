@@ -161,30 +161,12 @@ public class UpdateLanguageActionTest {
 			).build());
 
 		_testGetRedirect(
-			StringPool.BLANK, _sourceUKLocale,
+			_sourceUKLocale,
 			StringBundler.concat(
 				StringPool.SLASH, _sourceUKLocale.toLanguageTag(),
 				_getFriendlyURLSeparatorPart(_sourceUKLocale), "?queryString"),
 			_targetLocale,
 			_getFriendlyURLSeparatorPart(_targetLocale) + "?queryString", true);
-
-		String contextPath = "/" + RandomTestUtil.randomString();
-
-		try (AutoCloseable autoCloseable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					_portal, "_pathContext", contextPath)) {
-
-			_testGetRedirect(
-				contextPath, _sourceUKLocale,
-				StringBundler.concat(
-					contextPath, StringPool.SLASH,
-					_sourceUKLocale.toLanguageTag(),
-					_getFriendlyURLSeparatorPart(_sourceUKLocale),
-					"?queryString"),
-				_targetLocale,
-				_getFriendlyURLSeparatorPart(_targetLocale) + "?queryString",
-				true);
-		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -253,6 +235,27 @@ public class UpdateLanguageActionTest {
 			_journalArticle.getFriendlyURLMap();
 
 		return separator + friendlyURLMap.get(locale);
+	}
+
+	private void _testGetRedirect(
+			Locale sourceLocale, String sourceURL, Locale targetLocale,
+			String targetURL, boolean virtualHost)
+		throws Exception {
+
+		_testGetRedirect(
+			StringPool.BLANK, sourceLocale, sourceURL, targetLocale, targetURL,
+			virtualHost);
+
+		String contextPath = "/" + RandomTestUtil.randomString();
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					_portal, "_pathContext", contextPath)) {
+
+			_testGetRedirect(
+				contextPath, sourceLocale, contextPath + sourceURL,
+				targetLocale, targetURL, virtualHost);
+		}
 	}
 
 	private void _testGetRedirect(
@@ -457,8 +460,7 @@ public class UpdateLanguageActionTest {
 			"?queryString");
 
 		_testGetRedirect(
-			StringPool.BLANK, sourceLocale, sourceURL, targetLocale, targetURL,
-			virtualHost);
+			sourceLocale, sourceURL, targetLocale, targetURL, virtualHost);
 	}
 
 	private void _testGetRedirectWithPortletFriendlyURL(Locale sourceLocale)

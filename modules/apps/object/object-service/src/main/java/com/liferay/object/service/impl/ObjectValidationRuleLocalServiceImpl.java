@@ -618,15 +618,15 @@ public class ObjectValidationRuleLocalServiceImpl
 			List<ObjectValidationRule> objectValidationRules)
 		throws PortalException {
 
+		List<ObjectValidationRuleResult> objectValidationRuleResults =
+			new ArrayList<>();
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
 
 		Map<String, Object> variables = ObjectEntryVariablesUtil.getVariables(
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
 			_systemObjectDefinitionManagerRegistry);
-
-		List<ObjectValidationRuleResult> objectValidationRuleResults =
-			new ArrayList<>();
 
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {

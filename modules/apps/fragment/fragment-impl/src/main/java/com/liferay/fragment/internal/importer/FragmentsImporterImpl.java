@@ -291,10 +291,10 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			long groupId, String fileName, FragmentEntry fragmentEntry,
 			long fragmentCollectionId, String fragmentEntryKey, String name,
 			String css, String html, String js, boolean cacheable,
-			String configuration, String icon, boolean readOnly,
-			String thumbnailPath, String typeLabel, String typeOptions,
-			FragmentsImportStrategy fragmentsImportStrategy, long userId,
-			ZipFile zipFile, boolean marketplace)
+			String configuration, String icon, boolean marketplace,
+			boolean readOnly, String thumbnailPath, String typeLabel,
+			String typeOptions, FragmentsImportStrategy fragmentsImportStrategy,
+			long userId, ZipFile zipFile)
 		throws Exception {
 
 		if (fragmentEntry != null) {
@@ -348,8 +348,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			if (fragmentEntry == null) {
 				fragmentEntry = _fragmentEntryService.addFragmentEntry(
 					null, groupId, fragmentCollectionId, fragmentEntryKey, name,
-					css, html, js, cacheable, configuration, icon, 0, readOnly,
-					marketplace, type, typeOptions, status,
+					css, html, js, cacheable, configuration, icon, 0,
+					marketplace, readOnly, type, typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 
 				_fragmentEntryLocalService.updateFragmentEntry(
@@ -369,8 +369,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 						groupId, fragmentEntryKey),
 					_fragmentEntryLocalService.getUniqueFragmentEntryName(
 						groupId, fragmentCollectionId, name),
-					css, html, js, cacheable, configuration, icon, 0, readOnly,
-					marketplace, type, typeOptions, status,
+					css, html, js, cacheable, configuration, icon, 0,
+					marketplace, readOnly, type, typeOptions, status,
 					ServiceContextThreadLocal.getServiceContext());
 
 				_fragmentEntryLocalService.updateFragmentEntry(
@@ -1066,8 +1066,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			_addFragmentEntry(
 				groupId, entry.getValue(), fragmentEntry, fragmentCollectionId,
 				entry.getKey(), name, css, html, js, cacheable, configuration,
-				icon, readOnly, thumbnailPath, typeLabel, typeOptions,
-				fragmentsImportStrategy, userId, zipFile, marketplace);
+				icon, marketplace, readOnly, thumbnailPath, typeLabel,
+				typeOptions, fragmentsImportStrategy, userId, zipFile);
 		}
 	}
 

@@ -66,6 +66,11 @@ components:
                         The number of this object entry folder's child object entry folders.
                     readOnly: true
                     type: integer
+                parentObjectEntryFolderExternalReferenceCode:
+                    # @review
+                    description:
+                        The parent entry folder's external reference code, if it exists.
+                    type: string
                 parentObjectEntryFolderId:
                     # @review
                     description:

@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
@@ -12,7 +13,15 @@ import getRandomString from '../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {FIELD_TYPES} from './pages/StructureBuilderPage';
 
-const test = mergeTests(cmsPagesTest, loginTest());
+const test = mergeTests(
+	cmsPagesTest,
+	featureFlagsTest({
+		'LPD-11232': {enabled: true},
+		'LPD-17564': {enabled: true},
+		'LPD-31149': {enabled: true},
+	}),
+	loginTest()
+);
 
 test(
 	'Structures can be saved and published',

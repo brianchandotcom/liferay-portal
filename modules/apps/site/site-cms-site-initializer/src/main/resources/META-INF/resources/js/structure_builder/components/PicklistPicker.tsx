@@ -14,7 +14,7 @@ import React, {useEffect, useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
-import ListTypeService from '../services/ListTypeService';
+import PicklistService from '../services/PicklistService';
 import {Field, MultiselectField, SingleSelectField} from '../utils/field';
 
 type Picklist = {
@@ -27,7 +27,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 
 	const [picklists, setPicklists] = useState<Picklist[]>([]);
 	const [selectedKey, setSelectedKey] = useState<React.Key>(
-		selectField.listTypeDefinitionId
+		selectField.picklistId
 	);
 
 	const dispatch = useStateDispatch();
@@ -39,10 +39,9 @@ export default function PicklistPicker({field}: {field: Field}) {
 
 	useEffect(() => {
 		const getPicklists = async () => {
-			const listTypeDefinitions =
-				await ListTypeService.getListTypeDefinitions();
+			const picklists = await PicklistService.getPicklists();
 
-			setPicklists(listTypeDefinitions.items);
+			setPicklists(picklists.items);
 		};
 
 		getPicklists();
@@ -71,7 +70,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 						items={picklists}
 						onSelectionChange={(selectedKey: React.Key) => {
 							dispatch({
-								listTypeDefinitionId: selectedKey as string,
+								picklistId: selectedKey as string,
 								type: 'update-field',
 								uuid: field.uuid,
 							});

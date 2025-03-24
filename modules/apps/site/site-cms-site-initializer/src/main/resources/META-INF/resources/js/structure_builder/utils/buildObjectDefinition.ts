@@ -90,8 +90,8 @@ function buildFields(fields: Field[]) {
 				.map(([name, value]) => ({name, value}));
 		}
 
-		if ('listTypeDefinitionId' in field) {
-			objectField.listTypeDefinitionId = field.listTypeDefinitionId;
+		if ('picklistId' in field) {
+			objectField.listTypeDefinitionId = field.picklistId;
 		}
 
 		return objectField;

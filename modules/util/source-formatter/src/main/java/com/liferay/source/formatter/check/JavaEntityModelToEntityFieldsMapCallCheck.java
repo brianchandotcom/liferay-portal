@@ -24,6 +24,8 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = _sortParameters(content, "EntityFieldsMapFactory.create");
+
 		return _sortParameters(content, "EntityModel.toEntityFieldsMap");
 	}
 

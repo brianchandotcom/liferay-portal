@@ -2906,3 +2906,34 @@ test(
 		await expect(page.getByText(String(shipment.id))).toBeVisible();
 	}
 );
+
+test(
+	'When there is no site associated with the channel, inform the user',
+	{tag: '@LPD-51595'},
+	async ({apiHelpers, commerceLayoutsPage, page}) => {
+		const {channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			getRandomString()
+		);
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			commerceLayoutsPage.accountSelectorButton('Select Account & Order')
+		).toBeVisible();
+
+		await apiHelpers.headlessCommerceAdminChannel.putChannel(channel.id, {
+			accountId: channel.accountId,
+			currencyCode: channel.currencyCode,
+			name: channel.name,
+			siteGroupId: 0,
+			type: channel.type,
+		});
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			commerceLayoutsPage.accountSelectorButton('Select Account & Order')
+		).not.toBeVisible();
+	}
+);

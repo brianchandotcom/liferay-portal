@@ -118,6 +118,8 @@ public interface ObjectEntryVersionLocalService
 	public ObjectEntryVersion deleteObjectEntryVersion(
 		ObjectEntryVersion objectEntryVersion);
 
+	public void deleteObjectEntryVersions(long objectEntryId);
+
 	/**
 	 * @throws PortalException
 	 */

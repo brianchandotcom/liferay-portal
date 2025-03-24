@@ -120,6 +120,12 @@ public class ObjectEntryVersionLocalServiceWrapper
 			objectEntryVersion);
 	}
 
+	@Override
+	public void deleteObjectEntryVersions(long objectEntryId) {
+		_objectEntryVersionLocalService.deleteObjectEntryVersions(
+			objectEntryId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

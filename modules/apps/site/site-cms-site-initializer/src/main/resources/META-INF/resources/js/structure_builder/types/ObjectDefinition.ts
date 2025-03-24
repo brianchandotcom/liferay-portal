@@ -29,7 +29,10 @@ export type ObjectDefinition = {
 	id?: number;
 	label: Liferay.Language.LocalizedValue<string>;
 	name?: string;
-	objectDefinitionSettings?: {name: string; value: string}[];
+	objectDefinitionSettings?: {
+		name: 'acceptedGroupExternalReferenceCodes' | 'acceptAllGroups';
+		value: string;
+	}[];
 	objectFields?: ObjectField[];
 	objectFolderExternalReferenceCode?: string;
 	pluralLabel: Liferay.Language.LocalizedValue<string>;

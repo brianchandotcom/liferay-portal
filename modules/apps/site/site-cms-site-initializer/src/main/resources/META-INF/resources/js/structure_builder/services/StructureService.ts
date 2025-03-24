@@ -14,17 +14,20 @@ async function createStructure({
 	fields,
 	label,
 	name,
+	spaces,
 }: {
 	erc?: State['erc'];
 	fields: Field[];
 	label: State['label'];
 	name?: State['name'];
+	spaces: State['spaces'];
 }) {
 	const objectDefinition = buildObjectDefinition({
 		erc,
 		fields,
 		label,
 		name,
+		spaces,
 	});
 
 	return await ApiHelper.post(
@@ -49,12 +52,14 @@ async function updateStructure({
 	id,
 	label,
 	name,
+	spaces,
 }: {
 	erc: State['erc'];
 	fields: Field[];
 	id: State['id'];
 	label: State['label'];
 	name: State['name'];
+	spaces: State['spaces'];
 }) {
 	const objectDefinition = buildObjectDefinition({
 		erc,
@@ -62,6 +67,7 @@ async function updateStructure({
 		id,
 		label,
 		name,
+		spaces,
 	});
 
 	return await ApiHelper.put(

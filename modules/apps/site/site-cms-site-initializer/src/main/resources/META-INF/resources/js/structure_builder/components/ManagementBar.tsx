@@ -17,6 +17,7 @@ import selectStructureId from '../selectors/selectStructureId';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureName from '../selectors/selectStructureName';
+import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import StructureService from '../services/StructureService';
 import focusInvalidInput from '../utils/focusInvalidInput';
@@ -79,6 +80,7 @@ function SaveButton() {
 	const label = useSelector(selectStructureLabel);
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const name = useSelector(selectStructureName);
+	const spaces = useSelector(selectStructureSpaces);
 	const status = useSelector(selectStructureStatus);
 	const structureId = useSelector(selectStructureId);
 
@@ -96,6 +98,7 @@ function SaveButton() {
 					fields,
 					label,
 					name,
+					spaces,
 				});
 
 				dispatch({id, type: 'create-structure'});
@@ -107,6 +110,7 @@ function SaveButton() {
 					id: structureId,
 					label,
 					name,
+					spaces,
 				});
 			}
 
@@ -150,6 +154,7 @@ function PublishButton() {
 	const label = useSelector(selectStructureLabel);
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const name = useSelector(selectStructureName);
+	const spaces = useSelector(selectStructureSpaces);
 	const status = useSelector(selectStructureStatus);
 	const structureId = useSelector(selectStructureId);
 
@@ -167,6 +172,7 @@ function PublishButton() {
 					fields,
 					label,
 					name,
+					spaces,
 				});
 
 				await StructureService.publishStructure({id});
@@ -180,6 +186,7 @@ function PublishButton() {
 					id: structureId,
 					label,
 					name,
+					spaces,
 				});
 
 				await StructureService.publishStructure({id: structureId});
@@ -193,6 +200,7 @@ function PublishButton() {
 					id: structureId,
 					label,
 					name,
+					spaces,
 				});
 
 				dispatch({type: 'publish-structure'});

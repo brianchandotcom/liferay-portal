@@ -21,12 +21,14 @@ export default function buildObjectDefinition({
 	id,
 	label,
 	name,
+	spaces,
 }: {
 	erc: State['erc'];
 	fields?: Field[];
 	id?: State['id'];
 	label: State['label'];
 	name?: State['name'];
+	spaces: State['spaces'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
 		enableIndexSearch: true,
@@ -34,12 +36,6 @@ export default function buildObjectDefinition({
 		enableObjectEntryDraft: true,
 		externalReferenceCode: erc,
 		label,
-		objectDefinitionSettings: [
-			{
-				name: 'acceptedGroupExternalReferenceCodes',
-				value: config.acceptedGroupExternalReferenceCodes,
-			},
-		],
 		objectFields: buildFields(fields),
 		pluralLabel: label,
 		scope: 'depot',
@@ -56,6 +52,20 @@ export default function buildObjectDefinition({
 	if (config.objectFolderExternalReferenceCode) {
 		objectDefinition.objectFolderExternalReferenceCode =
 			config.objectFolderExternalReferenceCode;
+	}
+
+	if (spaces === 'all') {
+		objectDefinition.objectDefinitionSettings = [
+			{name: 'acceptAllGroups', value: 'true'},
+		];
+	}
+	else if (spaces.length) {
+		objectDefinition.objectDefinitionSettings = [
+			{
+				name: 'acceptedGroupExternalReferenceCodes',
+				value: spaces.join(','),
+			},
+		];
 	}
 
 	return objectDefinition;

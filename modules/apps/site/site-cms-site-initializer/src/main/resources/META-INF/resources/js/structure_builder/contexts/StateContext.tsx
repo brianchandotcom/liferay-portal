@@ -25,6 +25,8 @@ const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
 type Status = 'new' | 'draft' | 'published';
 
+type Spaces = 'all' | string[];
+
 export type Uuid = string & {__brand: 'Uuid'};
 
 export type State = {
@@ -37,6 +39,7 @@ export type State = {
 	name: string;
 	publishedFields: Set<Uuid>;
 	selection: Uuid[];
+	spaces: Spaces;
 	status: Status;
 	uuid: Uuid;
 };
@@ -53,6 +56,7 @@ const INITIAL_STATE: State = {
 	name: objectDefinitionUtils.normalizeName(DEFAULT_STRUCTURE_LABEL),
 	publishedFields: new Set(),
 	selection: [],
+	spaces: [],
 	status: 'new',
 	uuid: getUuid(),
 };
@@ -95,6 +99,7 @@ type UpdateStructureAction = {
 	erc?: string;
 	label?: Liferay.Language.LocalizedValue<string>;
 	name?: string;
+	spaces?: Spaces;
 	type: 'update-structure';
 };
 
@@ -276,6 +281,7 @@ function reducer(state: State, action: Action): State {
 				erc: nextErc,
 				label: nextLabel,
 				name: nextName,
+				spaces: action.spaces ?? state.spaces,
 			};
 
 			const invalids = new Set(state.invalids);

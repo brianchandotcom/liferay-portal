@@ -65,6 +65,7 @@ export default function buildState(
 		name: objectDefinition.name ?? '',
 		publishedFields: isPublished ? new Set(fields.keys()) : new Set(),
 		selection: [],
+		spaces: getSpaces(objectDefinition),
 		status: isPublished ? 'published' : 'draft',
 		uuid: getUuid(),
 	};
@@ -138,4 +139,23 @@ function getFieldType(objectField: ObjectField): FieldType {
 	} as const;
 
 	return DB_TYPE_TO_FIELD_TYPE[objectField.DBType];
+}
+
+function getSpaces(objectDefinition: ObjectDefinition) {
+	const settings = objectDefinition.objectDefinitionSettings || [];
+
+	const acceptedGroupExternalReferenceCodes = settings.find(
+		({name}) => name === 'acceptedGroupExternalReferenceCodes'
+	)?.value;
+
+	const acceptAllGroups = settings.find(
+		({name}) => name === 'acceptAllGroups'
+	)?.value;
+
+	const spaces =
+		acceptAllGroups === 'true'
+			? 'all'
+			: acceptedGroupExternalReferenceCodes?.split(',') || [];
+
+	return spaces;
 }

@@ -24,11 +24,13 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -45,16 +47,17 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -126,12 +129,50 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
-			groupId, objectDefinitionId,
-			_getObjectEntryFolderId(
-				themeDisplay.getCompanyId(), groupId, objectDefinition),
-			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()),
-			Collections.emptyMap(), serviceContext);
+		ObjectEntryManager objectEntryManager =
+			_objectEntryManagerRegistry.getObjectEntryManager(
+				objectDefinition.getStorageType());
+
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setObjectEntryFolderExternalReferenceCode(
+			() -> {
+				if (Objects.equals(
+						objectDefinition.getObjectFolderExternalReferenceCode(),
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
+					return ObjectEntryFolderConstants.
+						EXTERNAL_REFERENCE_CODE_FILES;
+				}
+
+				return ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENTS;
+			});
+		objectEntry.setProperties(
+			() -> HashMapBuilder.<String, Object>put(
+				() -> {
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectDefinition.getTitleObjectFieldId());
+
+					return objectField.getName();
+				},
+				ParamUtil.getString(httpServletRequest, "name")
+			).build());
+		objectEntry.setStatus(
+			() -> new Status() {
+				{
+					setCode(() -> WorkflowConstants.STATUS_DRAFT);
+				}
+			});
+
+		objectEntry = objectEntryManager.addObjectEntry(
+			new DefaultDTOConverterContext(
+				false, null, null, null, null,
+				themeDisplay.getSiteDefaultLocale(), null,
+				themeDisplay.getUser()),
+			objectDefinition, objectEntry, String.valueOf(groupId));
 
 		httpServletResponse.sendRedirect(
 			_portal.escapeRedirect(
@@ -141,7 +182,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 						groupFriendlyURL, _getURLSeparator(),
 						layout.getFriendlyURL(themeDisplay.getLocale()),
 						StringPool.SLASH, classNameId, StringPool.SLASH,
-						objectEntry.getObjectEntryId()))));
+						objectEntry.getId()))));
 
 		return null;
 	}
@@ -293,29 +334,6 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		return depotEntry.getGroupId();
 	}
 
-	private long _getObjectEntryFolderId(
-			long companyId, long groupId, ObjectDefinition objectDefinition)
-		throws Exception {
-
-		String externalReferenceCode =
-			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
-
-		if (Objects.equals(
-				objectDefinition.getObjectFolderExternalReferenceCode(),
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
-
-			externalReferenceCode =
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
-		}
-
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.
-				getObjectEntryFolderByExternalReferenceCode(
-					externalReferenceCode, groupId, companyId);
-
-		return objectEntryFolder.getObjectEntryFolderId();
-	}
-
 	private String _getURLSeparator() {
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.
@@ -362,10 +380,10 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 	@Reference
-	private ObjectEntryService _objectEntryService;
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private Portal _portal;

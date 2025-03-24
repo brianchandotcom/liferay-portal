@@ -606,7 +606,7 @@ public class PortalUpgradeProcessRegistryImpl
 				"Address", "subtype VARCHAR(75) null"));
 
 		upgradeVersionTreeMap.put(
-			new Version(31, 18, 1),
+			new Version(32, 0, 0),
 			new DuplicateIndexEntriesUpgradeProcess(
 				"PortalPreferences", new String[] {"ownerType", "ownerId"}),
 			new DuplicateIndexEntriesUpgradeProcess(

@@ -192,7 +192,7 @@ public class EditInfoItemStrutsActionTest {
 	@FeatureFlags("LPD-21926")
 	@Test
 	@TestInfo("LPD-50374")
-	public void testAddInfoItemFriendlyURL() throws Exception {
+	public void testAddAndUpdateInfoItemFriendlyURL() throws Exception {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
@@ -203,7 +203,7 @@ public class EditInfoItemStrutsActionTest {
 
 		_layout = _addLayout();
 
-		_testAddInfoItem(
+		ObjectEntry objectEntry = _testAddInfoItem(
 			RandomTestUtil.randomString(), null, null, null, null, null, null,
 			StringUtil.toLowerCase(
 				StringUtil.removeSubstring(
@@ -212,6 +212,38 @@ public class EditInfoItemStrutsActionTest {
 					StringPool.SLASH)),
 			null, null, null, null, WorkflowConstants.STATUS_APPROVED, null,
 			null);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			mockHttpServletResponse, unsyncStringWriter);
+
+		String friendlyURL = StringUtil.toLowerCase(
+			StringUtil.removeSubstring(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE),
+				StringPool.SLASH));
+
+		UploadPortletRequest uploadPortletRequest = _getUploadPortletRequest(
+			RandomTestUtil.randomString(), null, null, null,
+			objectEntry.getObjectEntryId(), null, null, null, null, friendlyURL,
+			null, null, null, null, null, WorkflowConstants.STATUS_APPROVED,
+			null, null);
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest, pipingServletResponse);
+
+		objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			friendlyURL,
+			objectEntry.getURLTitle(_objectDefinition.getDefaultLocale()));
 	}
 
 	@Test
@@ -1257,7 +1289,7 @@ public class EditInfoItemStrutsActionTest {
 			integerValue, longValue, longValue, status, stringValue, redirect);
 	}
 
-	private void _testAddInfoItem(
+	private ObjectEntry _testAddInfoItem(
 			String attachmentValue, String backURL, String bigDecimalValueInput,
 			String bigDecimalValueExpected, String displayPage,
 			String doubleValueInput, String doubleValueExpected,
@@ -1367,6 +1399,8 @@ public class EditInfoItemStrutsActionTest {
 			Assert.assertEquals(
 				redirect, pipingServletResponse.getHeader("Location"));
 		}
+
+		return objectEntry;
 	}
 
 	private void _testAddInfoItemWithInvalidData(

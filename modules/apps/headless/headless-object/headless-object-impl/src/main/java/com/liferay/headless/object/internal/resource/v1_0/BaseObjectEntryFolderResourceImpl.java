@@ -199,7 +199,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderBrief": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
@@ -331,7 +331,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderBrief": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -420,7 +420,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderBrief": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -550,7 +550,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderBrief": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

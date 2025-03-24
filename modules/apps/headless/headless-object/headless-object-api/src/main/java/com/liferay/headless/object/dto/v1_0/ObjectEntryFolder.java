@@ -553,6 +553,57 @@ public class ObjectEntryFolder implements Serializable {
 	private Supplier<Integer> _numberOfObjectEntryFoldersSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The object entry folder's parent, if it exists."
+	)
+	@Valid
+	public ParentObjectEntryFolderBrief getParentObjectEntryFolderBrief() {
+		if (_parentObjectEntryFolderBriefSupplier != null) {
+			parentObjectEntryFolderBrief =
+				_parentObjectEntryFolderBriefSupplier.get();
+
+			_parentObjectEntryFolderBriefSupplier = null;
+		}
+
+		return parentObjectEntryFolderBrief;
+	}
+
+	public void setParentObjectEntryFolderBrief(
+		ParentObjectEntryFolderBrief parentObjectEntryFolderBrief) {
+
+		this.parentObjectEntryFolderBrief = parentObjectEntryFolderBrief;
+
+		_parentObjectEntryFolderBriefSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentObjectEntryFolderBrief(
+		UnsafeSupplier<ParentObjectEntryFolderBrief, Exception>
+			parentObjectEntryFolderBriefUnsafeSupplier) {
+
+		_parentObjectEntryFolderBriefSupplier = () -> {
+			try {
+				return parentObjectEntryFolderBriefUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The object entry folder's parent, if it exists."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ParentObjectEntryFolderBrief parentObjectEntryFolderBrief;
+
+	@JsonIgnore
+	private Supplier<ParentObjectEntryFolderBrief>
+		_parentObjectEntryFolderBriefSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The parent entry folder's external reference code, if it exists."
 	)
 	public String getParentObjectEntryFolderExternalReferenceCode() {
@@ -932,6 +983,19 @@ public class ObjectEntryFolder implements Serializable {
 			sb.append("\"numberOfObjectEntryFolders\": ");
 
 			sb.append(numberOfObjectEntryFolders);
+		}
+
+		ParentObjectEntryFolderBrief parentObjectEntryFolderBrief =
+			getParentObjectEntryFolderBrief();
+
+		if (parentObjectEntryFolderBrief != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentObjectEntryFolderBrief\": ");
+
+			sb.append(String.valueOf(parentObjectEntryFolderBrief));
 		}
 
 		String parentObjectEntryFolderExternalReferenceCode =

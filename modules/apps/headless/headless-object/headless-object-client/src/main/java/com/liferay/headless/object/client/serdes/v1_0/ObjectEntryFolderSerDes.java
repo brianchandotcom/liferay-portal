@@ -186,6 +186,18 @@ public class ObjectEntryFolderSerDes {
 			sb.append(objectEntryFolder.getNumberOfObjectEntryFolders());
 		}
 
+		if (objectEntryFolder.getParentObjectEntryFolderBrief() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentObjectEntryFolderBrief\": ");
+
+			sb.append(
+				String.valueOf(
+					objectEntryFolder.getParentObjectEntryFolderBrief()));
+		}
+
 		if (objectEntryFolder.
 				getParentObjectEntryFolderExternalReferenceCode() != null) {
 
@@ -359,6 +371,16 @@ public class ObjectEntryFolderSerDes {
 					objectEntryFolder.getNumberOfObjectEntryFolders()));
 		}
 
+		if (objectEntryFolder.getParentObjectEntryFolderBrief() == null) {
+			map.put("parentObjectEntryFolderBrief", null);
+		}
+		else {
+			map.put(
+				"parentObjectEntryFolderBrief",
+				String.valueOf(
+					objectEntryFolder.getParentObjectEntryFolderBrief()));
+		}
+
 		if (objectEntryFolder.
 				getParentObjectEntryFolderExternalReferenceCode() == null) {
 
@@ -457,6 +479,11 @@ public class ObjectEntryFolderSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "parentObjectEntryFolderBrief")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName,
 						"parentObjectEntryFolderExternalReferenceCode")) {
 
@@ -550,6 +577,15 @@ public class ObjectEntryFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setNumberOfObjectEntryFolders(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "parentObjectEntryFolderBrief")) {
+
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setParentObjectEntryFolderBrief(
+						ParentObjectEntryFolderBriefSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

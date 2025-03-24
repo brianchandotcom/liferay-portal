@@ -1700,6 +1700,19 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"parentObjectEntryFolderBrief",
+					additionalAssertFieldName)) {
+
+				if (objectEntryFolder.getParentObjectEntryFolderBrief() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"parentObjectEntryFolderExternalReferenceCode",
 					additionalAssertFieldName)) {
 
@@ -1980,6 +1993,20 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						objectEntryFolder1.getNumberOfObjectEntryFolders(),
 						objectEntryFolder2.getNumberOfObjectEntryFolders())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parentObjectEntryFolderBrief",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectEntryFolder1.getParentObjectEntryFolderBrief(),
+						objectEntryFolder2.getParentObjectEntryFolderBrief())) {
 
 					return false;
 				}
@@ -2375,6 +2402,11 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 					objectEntryFolder.getNumberOfObjectEntryFolders()));
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("parentObjectEntryFolderBrief")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals(

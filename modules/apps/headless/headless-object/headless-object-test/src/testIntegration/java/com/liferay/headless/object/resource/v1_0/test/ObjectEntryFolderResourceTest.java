@@ -9,6 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
+import com.liferay.headless.object.client.pagination.Page;
+import com.liferay.headless.object.client.pagination.Pagination;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -16,12 +20,16 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -46,6 +54,50 @@ public class ObjectEntryFolderResourceTest
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+	}
+
+	@Override
+	@Test
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String scopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
+
+		ObjectEntryFolder objectEntryFolder1 = randomObjectEntryFolder();
+
+		objectEntryFolder1 =
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, objectEntryFolder1);
+
+		EntityField nameEntityField = new StringEntityField(
+			"name", locale -> Field.getSortableFieldName(Field.NAME));
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectEntryFolder> page =
+				objectEntryFolderResource.
+					getScopeScopeKeyObjectEntryFoldersPage(
+						scopeKey, null, null, null,
+						StringBundler.concat(
+							getFilterString(
+								entityField, "between", objectEntryFolder1),
+							" and ",
+							getFilterString(
+								nameEntityField, "contains",
+								objectEntryFolder1)),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(objectEntryFolder1),
+				(List<ObjectEntryFolder>)page.getItems());
+		}
 	}
 
 	@Override

@@ -479,6 +479,30 @@ describe('StructureFieldSettings', () => {
 		});
 	});
 
+	it('disables the picklist picker when there are no picklists to select', async () => {
+		const mockDispatch = jest.fn();
+		const uuid = getUuid();
+
+		jest.spyOn(PicklistService, 'getPicklists').mockImplementation(() =>
+			Promise.resolve([])
+		);
+
+		renderComponent({
+			dispatch: mockDispatch,
+			state: {
+				...DEFAULT_STATE,
+				fields: new Map([
+					[uuid, {...getDefaultField('single-select'), uuid}],
+				]),
+			},
+			uuid,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByLabelText('picklist')).toBeDisabled();
+		});
+	});
+
 	it('disables fields when structure is published', () => {
 		const mockDispatch = jest.fn();
 

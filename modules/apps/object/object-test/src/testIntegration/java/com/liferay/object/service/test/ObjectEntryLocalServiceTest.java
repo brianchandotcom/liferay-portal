@@ -2807,11 +2807,10 @@ public class ObjectEntryLocalServiceTest {
 			() -> _dlAppLocalService.getFileEntry(
 				tempFileEntry1.getFileEntryId()));
 
-		long persistedDLFileEntryId = MapUtil.getLong(
-			objectEntry.getValues(), "upload");
+		long dlFileEntryId = MapUtil.getLong(objectEntry.getValues(), "upload");
 
 		Assert.assertNotNull(
-			_dlFileEntryLocalService.getDLFileEntry(persistedDLFileEntryId));
+			_dlFileEntryLocalService.getDLFileEntry(dlFileEntryId));
 
 		_clearValidatedObjectEntryIds();
 
@@ -2836,10 +2835,9 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		Assert.assertEquals(
-			persistedDLFileEntryId,
-			MapUtil.getLong(objectEntry.getValues(), "upload"));
+			dlFileEntryId, MapUtil.getLong(objectEntry.getValues(), "upload"));
 		Assert.assertNotNull(
-			_dlFileEntryLocalService.getDLFileEntry(persistedDLFileEntryId));
+			_dlFileEntryLocalService.getDLFileEntry(dlFileEntryId));
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
 			tempFileEntry2.getFileEntryId());

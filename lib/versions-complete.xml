@@ -1650,13 +1650,14 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.cache.ehcache.impl.jar!net.sf.ehcache.jar</file-name>
-				<version>2.10.6.LIFERAY-PATCHED-2</version>
-				<project-name>ehcache</project-name>
-				<project-url>http://www.terracotta.org</project-url>
+				<file-name>com.liferay.portal.cache.ehcache.impl.jar!ehcache.jar</file-name>
+				<version>3.10.8</version>
+				<project-name>Ehcache 3</project-name>
+				<project-url>http://ehcache.org</project-url>
 				<licenses>
 					<license>
-						<license-name>src/assemble/EHCACHE-CORE-LICENSE.txt</license-name>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3242,7 +3243,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!ibm-cos-java-sdk-core.jar</file-name>
-				<version>2.9.0</version>
+				<version>2.14.0</version>
 				<project-name>IBM COS SDK for Java - Core</project-name>
 				<project-url>https://github.com/ibm/ibm-cos-sdk-java</project-url>
 				<licenses>
@@ -3254,7 +3255,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!ibm-cos-java-sdk-kms.jar</file-name>
-				<version>2.9.0</version>
+				<version>2.14.0</version>
 				<project-name>IBM COS Java SDK for COS KMS</project-name>
 				<project-url>https://github.com/ibm/ibm-cos-sdk-java</project-url>
 				<licenses>
@@ -3266,7 +3267,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!ibm-cos-java-sdk-s3.jar</file-name>
-				<version>2.9.0</version>
+				<version>2.14.0</version>
 				<project-name>IBM COS Java SDK for Amazon S3</project-name>
 				<project-url>https://github.com/ibm/ibm-cos-sdk-java</project-url>
 				<licenses>

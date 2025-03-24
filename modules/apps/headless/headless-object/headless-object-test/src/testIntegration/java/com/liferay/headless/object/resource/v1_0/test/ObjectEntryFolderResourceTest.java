@@ -12,6 +12,7 @@ import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -54,6 +55,9 @@ public class ObjectEntryFolderResourceTest
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+
+		_testDepotEntryGroup = _groupLocalService.getGroup(
+			_testDepotEntry.getGroupId());
 	}
 
 	@Override
@@ -98,6 +102,16 @@ public class ObjectEntryFolderResourceTest
 				Collections.singletonList(objectEntryFolder1),
 				(List<ObjectEntryFolder>)page.getItems());
 		}
+	}
+
+	@Override
+	@Test
+	public void testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		super.testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode();
+
+		_testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithGroupKey();
 	}
 
 	@Override
@@ -240,6 +254,38 @@ public class ObjectEntryFolderResourceTest
 		return objectEntryFolder;
 	}
 
+	private void _testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithGroupKey()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomPatchObjectEntryFolder =
+			randomPatchObjectEntryFolder();
+
+		ObjectEntryFolder patchObjectEntryFolder =
+			objectEntryFolderResource.
+				patchScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					_testDepotEntryGroup.getGroupKey(),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomPatchObjectEntryFolder);
+
+		ObjectEntryFolder expectedPatchObjectEntryFolder =
+			postObjectEntryFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					_testDepotEntryGroup.getGroupKey(),
+					patchObjectEntryFolder.getExternalReferenceCode());
+
+		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
@@ -248,5 +294,7 @@ public class ObjectEntryFolderResourceTest
 
 	@DeleteAfterTestRun
 	private DepotEntry _testDepotEntry;
+
+	private Group _testDepotEntryGroup;
 
 }

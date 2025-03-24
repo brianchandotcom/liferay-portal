@@ -235,10 +235,10 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = _getGroupId(scopeKey);
+
 		return _addObjectEntryFolder(
-			_getGroupId(scopeKey),
-			GetterUtil.getLong(
-				objectEntryFolder.getParentObjectEntryFolderId()),
+			groupId, _getParentObjectEntryFolderId(groupId, objectEntryFolder),
 			objectEntryFolder);
 	}
 
@@ -257,8 +257,9 @@ public class ObjectEntryFolderResourceImpl
 			null;
 
 		long groupId = _getGroupId(scopeKey);
-		long parentObjectEntryFolderId = GetterUtil.getLong(
-			objectEntryFolder.getParentObjectEntryFolderId());
+
+		long parentObjectEntryFolderId = _getParentObjectEntryFolderId(
+			groupId, objectEntryFolder);
 
 		try {
 			persistedObjectEntryFolder =
@@ -322,6 +323,25 @@ public class ObjectEntryFolderResourceImpl
 		throw new NoSuchGroupException();
 	}
 
+	private long _getParentObjectEntryFolderId(
+			long groupId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntryFolder parentObjectEntryFolder =
+			_objectEntryFolderService.
+				fetchObjectEntryFolderByExternalReferenceCode(
+					objectEntryFolder.
+						getParentObjectEntryFolderExternalReferenceCode(),
+					groupId, contextCompany.getCompanyId());
+
+		if (parentObjectEntryFolder != null) {
+			return parentObjectEntryFolder.getParentObjectEntryFolderId();
+		}
+
+		return GetterUtil.getLong(
+			objectEntryFolder.getParentObjectEntryFolderId());
+	}
+
 	private ObjectEntryFolder _patchObjectEntryFolder(
 			ObjectEntryFolder objectEntryFolder,
 			com.liferay.object.model.ObjectEntryFolder
@@ -339,7 +359,9 @@ public class ObjectEntryFolderResourceImpl
 			_objectEntryFolderService.updateObjectEntryFolder(
 				persistedObjectEntryFolder.getObjectEntryFolderId(),
 				GetterUtil.getLong(
-					objectEntryFolder.getParentObjectEntryFolderId(),
+					_getParentObjectEntryFolderId(
+						persistedObjectEntryFolder.getGroupId(),
+						objectEntryFolder),
 					persistedObjectEntryFolder.getParentObjectEntryFolderId()),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),

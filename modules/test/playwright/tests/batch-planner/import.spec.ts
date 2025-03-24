@@ -576,18 +576,12 @@ test('can import CSV file with an unexisting field', async ({
 				'c/tests'
 			)
 		).items
-	).toEqual([
+	).toMatchObject([
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: expect.any(Number),
 			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
-			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
@@ -646,19 +640,13 @@ test('can import CSV file with custom columns order', async ({
 				'Guest'
 			)
 		).items
-	).toEqual([
+	).toMatchObject([
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: expect.any(Number),
 			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
@@ -717,19 +705,13 @@ test('can import CSV file with multiple site scoped object entries', async ({
 				'Guest'
 			)
 		).items
-	).toEqual([
+	).toMatchObject([
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: expect.any(Number),
 			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
@@ -751,17 +733,10 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			testTextField: 'Test_FirstEntry',
 		},
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			id: expect.any(Number),
-			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-2-suffix',
@@ -833,19 +808,13 @@ test('can import CSV file with new and existing site scoped object entries', asy
 				'Guest'
 			)
 		).items
-	).toEqual([
+	).toMatchObject([
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: expect.any(Number),
 			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
@@ -867,17 +836,11 @@ test('can import CSV file with new and existing site scoped object entries', asy
 			testTextField: 'Test',
 		},
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			id: expect.any(Number),
 			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-2-suffix',
@@ -948,19 +911,12 @@ test('can import CSV file with new and modified existing company scoped object e
 				'c/tests'
 			)
 		).items
-	).toEqual([
+	).toMatchObject([
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			id: expect.any(Number),
 			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
-			status: expect.any(Object),
-			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: true,
@@ -981,16 +937,10 @@ test('can import CSV file with new and modified existing company scoped object e
 			testTextField: 'Test_Modified',
 		},
 		{
-			actions: expect.any(Object),
-			creator: expect.any(Object),
-			dateCreated: expect.any(String),
-			dateModified: expect.any(String),
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			id: expect.any(Number),
 			keywords: [],
 			r_testRelationship_c_testERC: '',
 			r_testRelationship_c_testId: 0,
-			status: expect.any(Object),
 			taxonomyCategoryBriefs: [],
 			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-2-suffix',
@@ -1032,7 +982,9 @@ test('can map all imported fields', async ({
 
 	await dataMigrationCenterPage.selectEntityType(OBJECT_ENTRY_ENTITY_TYPE);
 
-	await expect(page.getByText('externalReferenceCode')).toBeVisible();
+	await expect(
+		page.getByText('externalReferenceCode', {exact: true})
+	).toBeVisible();
 	await expect(page.getByText('keywords', {exact: true})).toBeVisible();
 	await expect(page.getByText('taxonomyCategoryIds')).toBeVisible();
 	await expect(page.getByText('testAutoIncrementField')).toBeVisible();

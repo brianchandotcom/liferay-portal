@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LanguageIds;
@@ -146,6 +149,7 @@ public class UpdateLanguageActionTest {
 	}
 
 	@Test
+	@TestInfo("LPD-51902")
 	public void testGetRedirectWithFriendlyURLWithVirtualHost()
 		throws Exception {
 
@@ -157,12 +161,30 @@ public class UpdateLanguageActionTest {
 			).build());
 
 		_assertGetRedirect(
-			_sourceUKLocale,
+			StringPool.BLANK, _sourceUKLocale,
 			StringBundler.concat(
 				StringPool.SLASH, _sourceUKLocale.toLanguageTag(),
 				_getFriendlyURLSeparatorPart(_sourceUKLocale), "?queryString"),
 			_targetLocale,
 			_getFriendlyURLSeparatorPart(_targetLocale) + "?queryString", true);
+
+		String contextPath = "/" + RandomTestUtil.randomString();
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					_portal, "_pathContext", contextPath)) {
+
+			_assertGetRedirect(
+				contextPath, _sourceUKLocale,
+				StringBundler.concat(
+					contextPath, StringPool.SLASH,
+					_sourceUKLocale.toLanguageTag(),
+					_getFriendlyURLSeparatorPart(_sourceUKLocale),
+					"?queryString"),
+				_targetLocale,
+				_getFriendlyURLSeparatorPart(_targetLocale) + "?queryString",
+				true);
+		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -218,9 +240,13 @@ public class UpdateLanguageActionTest {
 	}
 
 	private void _assertGetRedirect(
-			Locale sourceLocale, String sourceURL, Locale targetLocale,
-			String targetURL, boolean virtualHost)
+			String contextPath, Locale sourceLocale, String sourceURL,
+			Locale targetLocale, String targetURL, boolean virtualHost)
 		throws Exception {
+
+		if (Validator.isNotNull(contextPath)) {
+			targetURL = contextPath + targetURL;
+		}
 
 		if (virtualHost) {
 			targetURL = Http.HTTP_WITH_SLASH + _VIRTUAL_HOSTNAME + targetURL;
@@ -238,6 +264,7 @@ public class UpdateLanguageActionTest {
 			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		themeDisplay.setPathContext(contextPath);
 
 		if (virtualHost) {
 			themeDisplay.setPortalDomain(_VIRTUAL_HOSTNAME);
@@ -246,11 +273,12 @@ public class UpdateLanguageActionTest {
 
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
-		_assertRedirect(targetURL, targetLocale, themeDisplay, sourceURL);
+		_assertRedirect(
+			contextPath, targetURL, targetLocale, themeDisplay, sourceURL);
 
 		if (sourceLocale != null) {
 			_assertRedirect(
-				targetURL, targetLocale, themeDisplay,
+				contextPath, targetURL, targetLocale, themeDisplay,
 				"/" + sourceLocale.getLanguage() + sourceURL);
 		}
 	}
@@ -290,11 +318,12 @@ public class UpdateLanguageActionTest {
 			"?queryString");
 
 		_assertGetRedirect(
-			sourceLocale, sourceURL, targetLocale, targetURL, virtualHost);
+			StringPool.BLANK, sourceLocale, sourceURL, targetLocale, targetURL,
+			virtualHost);
 	}
 
 	private void _assertRedirect(
-			String expectedRedirect, Locale targetLocale,
+			String contextPath, String expectedRedirect, Locale targetLocale,
 			ThemeDisplay themeDisplay, String url)
 		throws Exception {
 
@@ -302,6 +331,8 @@ public class UpdateLanguageActionTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setContextPath(contextPath);
 
 		HttpSession httpSession = mockHttpServletRequest.getSession();
 
@@ -357,15 +388,17 @@ public class UpdateLanguageActionTest {
 		controlPanelURL += "?queryString";
 
 		_assertRedirect(
-			controlPanelURL, _targetLocale, themeDisplay, controlPanelURL);
+			StringPool.BLANK, controlPanelURL, _targetLocale, themeDisplay,
+			controlPanelURL);
 
 		if (i18n) {
 			_assertRedirect(
-				controlPanelURL, _targetLocale, themeDisplay,
+				StringPool.BLANK, controlPanelURL, _targetLocale, themeDisplay,
 				"/" + _sourceLocale.getLanguage() + controlPanelURL);
 		}
 		else {
 			_assertRedirect(
+				StringPool.BLANK,
 				"/" + _sourceLocale.getLanguage() + controlPanelURL,
 				_targetLocale, themeDisplay,
 				"/" + _sourceLocale.getLanguage() + controlPanelURL);
@@ -420,9 +453,11 @@ public class UpdateLanguageActionTest {
 
 		sourceURL += sourceFriendlyURLSeparatorPart + "?queryString";
 
-		_assertRedirect(targetURL, _targetLocale, themeDisplay, sourceURL);
 		_assertRedirect(
-			targetURL, _targetLocale, themeDisplay,
+			StringPool.BLANK, targetURL, _targetLocale, themeDisplay,
+			sourceURL);
+		_assertRedirect(
+			StringPool.BLANK, targetURL, _targetLocale, themeDisplay,
 			"/" + _sourceLocale.getLanguage() + sourceURL);
 	}
 
@@ -477,6 +512,9 @@ public class UpdateLanguageActionTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	private final Locale _sourceLocale = LocaleUtil.FRANCE;
 	private final Locale _sourceUKLocale = LocaleUtil.UK;

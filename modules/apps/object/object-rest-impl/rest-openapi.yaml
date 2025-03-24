@@ -215,13 +215,6 @@ components:
                     readOnly: true
                     type: object
             type: object
-        Version:
-            properties:
-                number:
-                    format: int32
-                    readOnly: true
-                    type: integer
-            type: object
         ValidationError:
             properties:
                 errorMessage:
@@ -244,6 +237,13 @@ components:
                     items:
                         $ref: "#/components/schemas/ValidationError"
                     type: array
+        Version:
+            properties:
+                number:
+                    format: int32
+                    readOnly: true
+                    type: integer
+            type: object
 info:
     license:
         name: "Apache 2.0"

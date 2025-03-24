@@ -70,7 +70,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 			_updateZendesk(
 				_fetchZendeskOrganizationId(externalReferenceCode),
 				_getBusinessEvents(jsonArray),
-				_getImpactedZendeskTicketIds(jsonArray));
+				_getAssociatedTicketIds(jsonArray));
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -106,6 +106,24 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		return 0;
 	}
 
+	private Long[] _getAssociatedTicketIds(JSONArray jsonArray) {
+		Set<Long> associatedTicketIds = new HashSet<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray associatedTicketIdsJSONArray = jsonObject.getJSONArray(
+				"associatedTicketIds");
+
+			for (int j = 0; j < associatedTicketIdsJSONArray.length(); j++) {
+				associatedTicketIds.add(
+					associatedTicketIdsJSONArray.getLong(j));
+			}
+		}
+
+		return associatedTicketIds.toArray(new Long[0]);
+	}
+
 	private String _getBusinessEvents(JSONArray jsonArray) {
 		List<String> businessEvents = new ArrayList<>();
 
@@ -119,7 +137,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 			while (iterator.hasNext()) {
 				String key = iterator.next();
 
-				if (key.equals("impactedZendeskTicketIds")) {
+				if (key.equals("associatedTicketIds")) {
 					continue;
 				}
 
@@ -138,29 +156,9 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		return StringUtil.merge(businessEvents, "\n\n");
 	}
 
-	private Long[] _getImpactedZendeskTicketIds(JSONArray jsonArray) {
-		Set<Long> zendeskTicketIds = new HashSet<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONArray impactedZendeskTicketIdsJSONArray =
-				jsonObject.getJSONArray("impactedZendeskTicketIds");
-
-			for (int j = 0; j < impactedZendeskTicketIdsJSONArray.length();
-				 j++) {
-
-				zendeskTicketIds.add(
-					impactedZendeskTicketIdsJSONArray.getLong(j));
-			}
-		}
-
-		return zendeskTicketIds.toArray(new Long[0]);
-	}
-
 	private void _updateZendesk(
 			long zendeskOrganizationId, String businessEvents,
-			Long[] impactedZendeskTicketIds)
+			Long[] associatedTicketIds)
 		throws Exception {
 
 		_zendeskService.updateZendeskOrganization(
@@ -190,7 +188,7 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 				Set<String> tags = zendeskTicket.getTags();
 
 				if (ArrayUtil.contains(
-						impactedZendeskTicketIds,
+						associatedTicketIds,
 						zendeskTicket.getZendeskTicketId())) {
 
 					tags.add("impacting_business_event");

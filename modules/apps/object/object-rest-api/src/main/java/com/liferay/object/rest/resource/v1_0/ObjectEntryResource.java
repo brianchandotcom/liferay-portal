@@ -90,6 +90,10 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public ObjectEntry putByExternalReferenceCodeByVersionRestore(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
@@ -150,6 +154,10 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public ObjectEntry getObjectEntryByVersion(
+			Long objectEntryId, Integer version)
+		throws Exception;
+
+	public ObjectEntry putObjectEntryByVersionRestore(
 			Long objectEntryId, Integer version)
 		throws Exception;
 

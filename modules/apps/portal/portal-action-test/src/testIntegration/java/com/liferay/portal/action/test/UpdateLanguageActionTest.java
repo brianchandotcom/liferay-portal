@@ -136,7 +136,7 @@ public class UpdateLanguageActionTest {
 		_updateLayoutFriendlyURL(
 			StringPool.SLASH.concat(_defaultLocale.getLanguage()));
 
-		_assertGetRedirectWithLayoutFriendlyURL(false);
+		_testGetRedirectWithLayoutFriendlyURL(false);
 
 		LayoutSet layoutSet = _layout.getLayoutSet();
 
@@ -145,7 +145,7 @@ public class UpdateLanguageActionTest {
 				_VIRTUAL_HOSTNAME, StringPool.BLANK
 			).build());
 
-		_assertGetRedirectWithLayoutFriendlyURL(true);
+		_testGetRedirectWithLayoutFriendlyURL(true);
 	}
 
 	@Test
@@ -160,7 +160,7 @@ public class UpdateLanguageActionTest {
 				_VIRTUAL_HOSTNAME, StringPool.BLANK
 			).build());
 
-		_assertGetRedirect(
+		_testGetRedirect(
 			StringPool.BLANK, _sourceUKLocale,
 			StringBundler.concat(
 				StringPool.SLASH, _sourceUKLocale.toLanguageTag(),
@@ -174,7 +174,7 @@ public class UpdateLanguageActionTest {
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					_portal, "_pathContext", contextPath)) {
 
-			_assertGetRedirect(
+			_testGetRedirect(
 				contextPath, _sourceUKLocale,
 				StringBundler.concat(
 					contextPath, StringPool.SLASH,
@@ -239,7 +239,7 @@ public class UpdateLanguageActionTest {
 			mockHttpServletRequest, themeDisplay, _targetLocale);
 	}
 
-	private void _assertGetRedirect(
+	private void _testGetRedirect(
 			String contextPath, Locale sourceLocale, String sourceURL,
 			Locale targetLocale, String targetURL, boolean virtualHost)
 		throws Exception {
@@ -273,31 +273,31 @@ public class UpdateLanguageActionTest {
 
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
-		_assertRedirect(
+		_testGetRedirect(
 			contextPath, targetURL, targetLocale, themeDisplay, sourceURL);
 
 		if (sourceLocale != null) {
-			_assertRedirect(
+			_testGetRedirect(
 				contextPath, targetURL, targetLocale, themeDisplay,
 				"/" + sourceLocale.getLanguage() + sourceURL);
 		}
 	}
 
-	private void _assertGetRedirectWithLayoutFriendlyURL(boolean virtualHost)
+	private void _testGetRedirectWithLayoutFriendlyURL(boolean virtualHost)
 		throws Exception {
 
 		for (Locale locale : _availableLocales) {
-			_assertGetRedirectWithLayoutFriendlyURL(
+			_testGetRedirectWithLayoutFriendlyURL(
 				StringPool.BLANK, null, locale, virtualHost);
 
 			if (!Objects.equals(_defaultLocale, locale)) {
-				_assertGetRedirectWithLayoutFriendlyURL(
+				_testGetRedirectWithLayoutFriendlyURL(
 					StringPool.BLANK, _defaultLocale, locale, virtualHost);
 			}
 		}
 	}
 
-	private void _assertGetRedirectWithLayoutFriendlyURL(
+	private void _testGetRedirectWithLayoutFriendlyURL(
 			String path, Locale sourceLocale, Locale targetLocale,
 			boolean virtualHost)
 		throws Exception {
@@ -317,12 +317,12 @@ public class UpdateLanguageActionTest {
 			_group.getFriendlyURL(), _layout.getFriendlyURL(targetLocale), path,
 			"?queryString");
 
-		_assertGetRedirect(
+		_testGetRedirect(
 			StringPool.BLANK, sourceLocale, sourceURL, targetLocale, targetURL,
 			virtualHost);
 	}
 
-	private void _assertRedirect(
+	private void _testGetRedirect(
 			String contextPath, String expectedRedirect, Locale targetLocale,
 			ThemeDisplay themeDisplay, String url)
 		throws Exception {
@@ -387,17 +387,17 @@ public class UpdateLanguageActionTest {
 
 		controlPanelURL += "?queryString";
 
-		_assertRedirect(
+		_testGetRedirect(
 			StringPool.BLANK, controlPanelURL, _targetLocale, themeDisplay,
 			controlPanelURL);
 
 		if (i18n) {
-			_assertRedirect(
+			_testGetRedirect(
 				StringPool.BLANK, controlPanelURL, _targetLocale, themeDisplay,
 				"/" + _sourceLocale.getLanguage() + controlPanelURL);
 		}
 		else {
-			_assertRedirect(
+			_testGetRedirect(
 				StringPool.BLANK,
 				"/" + _sourceLocale.getLanguage() + controlPanelURL,
 				_targetLocale, themeDisplay,
@@ -453,10 +453,10 @@ public class UpdateLanguageActionTest {
 
 		sourceURL += sourceFriendlyURLSeparatorPart + "?queryString";
 
-		_assertRedirect(
+		_testGetRedirect(
 			StringPool.BLANK, targetURL, _targetLocale, themeDisplay,
 			sourceURL);
-		_assertRedirect(
+		_testGetRedirect(
 			StringPool.BLANK, targetURL, _targetLocale, themeDisplay,
 			"/" + _sourceLocale.getLanguage() + sourceURL);
 	}
@@ -474,14 +474,14 @@ public class UpdateLanguageActionTest {
 			_PORTLET_FRIENDLY_URL_PART_ASSET_PUBLISHER +
 				friendlyURLMap.get(defaultLocale);
 
-		_assertGetRedirectWithLayoutFriendlyURL(
+		_testGetRedirectWithLayoutFriendlyURL(
 			path, sourceLocale, _targetLocale, false);
 	}
 
 	private void _testGetRedirectWithPortletURLMapping(Locale sourceLocale)
 		throws Exception {
 
-		_assertGetRedirectWithLayoutFriendlyURL(
+		_testGetRedirectWithLayoutFriendlyURL(
 			"/tags/tagname", sourceLocale, _targetLocale, false);
 	}
 

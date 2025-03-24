@@ -66,6 +66,11 @@ components:
                         The number of this object entry folder's child object entry folders.
                     readOnly: true
                     type: integer
+                parentObjectEntryFolder:
+                    $ref: "#/components/schemas/ObjectEntryFolderBrief"
+                    # @review
+                    description:
+                        The object entry folder's parent, if it exists.
                 parentObjectEntryFolderExternalReferenceCode:
                     # @review
                     description:
@@ -91,6 +96,35 @@ components:
                     writeOnly: true
             required:
                 - name
+            type: object
+        ObjectEntryFolderBrief:
+            description:
+                Represents a object entry folder brief.
+            properties:
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The object entry folder's external reference code.
+                    type: string
+                id:
+                    description:
+                        The object entry folder's ID.
+                    format: int64
+                    type: integer
+                label:
+                    description:
+                        The object entry folder's label.
+                    type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized object entry folder's label.
+                    type: object
+                name:
+                    description:
+                        The object entry folder's main title/name.
+                    type: string
             type: object
 info:
     license:

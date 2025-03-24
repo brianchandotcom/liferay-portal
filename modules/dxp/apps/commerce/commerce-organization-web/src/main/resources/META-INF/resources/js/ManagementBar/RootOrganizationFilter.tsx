@@ -5,7 +5,6 @@
 
 import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import {IItem} from '@clayui/drop-down/lib/drilldown/Menu';
 import ClayIcon from '@clayui/icon';
 import React, {
 	MouseEvent,
@@ -19,11 +18,13 @@ import React, {
 
 import ChartContext from '../ChartContext';
 
+type Items = React.ComponentProps<typeof ClayDropDownWithItems>['items'];
+
 const _toDropDownItems = (
 	items: TOrganization[],
 	onChange: (id: number) => void,
 	isRootOrgFromConfig = false
-): IItem[] =>
+): Items =>
 	items.map(
 		({id: value, name: label}) =>
 			({
@@ -33,7 +34,9 @@ const _toDropDownItems = (
 				onChange: () => onChange(Number(value)),
 				type: 'checkbox',
 				value: Number(value),
-			}) as unknown as IItem
+			}) as unknown as React.ComponentProps<
+				typeof ClayDropDownWithItems
+			>['items'][number]
 	);
 
 const MAX_ROOT_ORGANIZATIONS = 10;
@@ -50,7 +53,7 @@ const RootOrganizationFilter = () => {
 	} = useContext(ChartContext);
 
 	const [changeApplied, setChangeApplied] = useState(true);
-	const [itemList, setItemList] = useState([] as IItem[]);
+	const [itemList, setItemList] = useState([] as Items);
 	const [rootOrganizations, setRootOrganizations] = useState(
 		[] as TOrganization[]
 	);
@@ -84,13 +87,13 @@ const RootOrganizationFilter = () => {
 
 	useEffect(() => {
 		if (!configRootOrganizationId) {
-			setItemList((current: IItem[]) =>
-				current.map((item: IItem) => ({
+			setItemList((current: Items) =>
+				current.map((item: Items[number]) => ({
 					...item,
-					checked: selectedItems.has(item.value),
+					checked: selectedItems.has(Number(item.value)),
 					disabled:
 						selectedItems.size === MAX_ROOT_ORGANIZATIONS &&
-						!selectedItems.has(item.value),
+						!selectedItems.has(Number(item.value)),
 				}))
 			);
 		}

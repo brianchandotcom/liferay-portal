@@ -16,7 +16,6 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
-import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -51,7 +50,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolder(objectEntryFolderId: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, name, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolder(objectEntryFolderId: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, name, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolder, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the object entry folder.")
 	public ObjectEntryFolder objectEntryFolder(
@@ -69,7 +68,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCode(externalReferenceCode: ___, scopeKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, name, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCode(externalReferenceCode: ___, scopeKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, name, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolder, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectEntryFolder
@@ -156,33 +155,6 @@ public class Query {
 
 		@GraphQLField
 		protected long totalCount;
-
-	}
-
-	@GraphQLTypeExtension(ObjectEntryFolder.class)
-	public class ParentObjectEntryFolderObjectEntryFolderIdTypeExtension {
-
-		public ParentObjectEntryFolderObjectEntryFolderIdTypeExtension(
-			ObjectEntryFolder objectEntryFolder) {
-
-			_objectEntryFolder = objectEntryFolder;
-		}
-
-		@GraphQLField(description = "Retrieves the object entry folder.")
-		public ObjectEntryFolder parentObjectEntryFolder() throws Exception {
-			if (_objectEntryFolder.getParentObjectEntryFolderId() == null) {
-				return null;
-			}
-
-			return _applyComponentServiceObjects(
-				_objectEntryFolderResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				objectEntryFolderResource ->
-					objectEntryFolderResource.getObjectEntryFolder(
-						_objectEntryFolder.getParentObjectEntryFolderId()));
-		}
-
-		private ObjectEntryFolder _objectEntryFolder;
 
 	}
 

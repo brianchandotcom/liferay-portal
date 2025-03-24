@@ -126,12 +126,6 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,
 							"getScopeScopeKeyObjectEntryFoldersPage"));
-
-					put(
-						"query#ObjectEntryFolder.parentObjectEntryFolder",
-						new ObjectValuePair<>(
-							ObjectEntryFolderResourceImpl.class,
-							"getObjectEntryFolder"));
 				}
 			};
 

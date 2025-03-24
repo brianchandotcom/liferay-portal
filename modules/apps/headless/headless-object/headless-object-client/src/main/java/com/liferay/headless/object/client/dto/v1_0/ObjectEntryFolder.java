@@ -261,6 +261,31 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 
 	protected Integer numberOfObjectEntryFolders;
 
+	public ObjectEntryFolderBrief getParentObjectEntryFolder() {
+		return parentObjectEntryFolder;
+	}
+
+	public void setParentObjectEntryFolder(
+		ObjectEntryFolderBrief parentObjectEntryFolder) {
+
+		this.parentObjectEntryFolder = parentObjectEntryFolder;
+	}
+
+	public void setParentObjectEntryFolder(
+		UnsafeSupplier<ObjectEntryFolderBrief, Exception>
+			parentObjectEntryFolderUnsafeSupplier) {
+
+		try {
+			parentObjectEntryFolder =
+				parentObjectEntryFolderUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ObjectEntryFolderBrief parentObjectEntryFolder;
+
 	public String getParentObjectEntryFolderExternalReferenceCode() {
 		return parentObjectEntryFolderExternalReferenceCode;
 	}

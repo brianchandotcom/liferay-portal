@@ -5,11 +5,12 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -64,15 +65,13 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 				sb.append(" is null ");
 			}
 			else {
-				sb.append(" = '");
-				sb.append(_escape(duplicatedColumnValues[i]));
-				sb.append("' ");
+				sb.append(" = ? ");
 			}
 
-			if (i < (_columnNames.length - 1)) {
-				sb.append("and ");
-			}
+			sb.append("and ");
 		}
+
+		sb.setIndex(sb.index() - 1);
 
 		if (_orderByClause != null) {
 			sb.append("order by ");
@@ -80,25 +79,54 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString());
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				sb.toString())) {
 
-			ResultSetMetaData metaData = resultSet.getMetaData();
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			String[] columnNames = new String[metaData.getColumnCount()];
+			DBInspector dbInspector = new DBInspector(connection);
 
-			for (int i = 0; i < columnNames.length; i++) {
-				columnNames[i] = metaData.getColumnName(i + 1);
-			}
+			int parameterIndex = 1;
 
-			while (resultSet.next()) {
-				Map<String, String> queryMap = new LinkedHashMap<>();
-
-				for (String columnName : columnNames) {
-					queryMap.put(columnName, resultSet.getString(columnName));
+			for (int i = 0; i < _columnNames.length; i++) {
+				if (duplicatedColumnValues[i] == null) {
+					continue;
 				}
 
-				queryResult.add(queryMap);
+				try (ResultSet resultSet = databaseMetaData.getColumns(
+						dbInspector.getCatalog(), dbInspector.getSchema(),
+						dbInspector.normalizeName(_tableName, databaseMetaData),
+						dbInspector.normalizeName(
+							_columnNames[i], databaseMetaData))) {
+
+					resultSet.next();
+
+					preparedStatement.setObject(
+						parameterIndex, duplicatedColumnValues[i],
+						resultSet.getInt("DATA_TYPE"));
+
+					parameterIndex++;
+				}
+			}
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				ResultSetMetaData metaData = resultSet.getMetaData();
+
+				String[] columnNames = new String[metaData.getColumnCount()];
+
+				for (int i = 0; i < columnNames.length; i++) {
+					columnNames[i] = metaData.getColumnName(i + 1);
+				}
+
+				while (resultSet.next()) {
+					Map<String, String> queryMap = new LinkedHashMap<>();
+
+					for (String columnName : columnNames) {
+						queryMap.put(
+							columnName, resultSet.getString(columnName));
+					}
+
+					queryResult.add(queryMap);
+				}
 			}
 		}
 		catch (Exception exception) {
@@ -112,12 +140,6 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		}
 
 		return queryResult;
-	}
-
-	private String _escape(Object object) {
-		return StringUtil.replace(
-			String.valueOf(object), _DB_ESCAPE_STRINGS[0],
-			_DB_ESCAPE_STRINGS[1]);
 	}
 
 	private List<String[]> _getDuplicatedColumnEntries() throws Exception {
@@ -214,10 +236,6 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			}
 		}
 	}
-
-	private static final String[][] _DB_ESCAPE_STRINGS = {
-		{"\\", "'"}, {"\\\\", "''"}
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DuplicateRemovalUpgradeProcess.class);

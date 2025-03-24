@@ -112,4 +112,46 @@ describe('buildState', () => {
 			uuid,
 		});
 	});
+
+	it('Takes into account saces', () => {
+		const initialState = {
+			erc: 'structureERC',
+			error: null,
+			id: 1,
+			invalids: new Set(),
+			label: {en_US: 'Structure'},
+			name: 'myStructure',
+			selection: [],
+			spaces: ['space-1-erc', 'space-2-erc'],
+			status: 'published',
+		};
+
+		const objectDefinition = buildObjectDefinition({
+			erc: initialState.erc,
+			fields: Array.from([TEXT_FIELD, DATE_TIME_FIELD]),
+			id: initialState.id,
+			label: initialState.label,
+			name: initialState.name,
+			spaces: initialState.spaces,
+		});
+
+		const result = buildState({
+			...objectDefinition,
+
+			status: {
+				label: 'approved',
+			},
+		});
+
+		const {fields, uuid} = result!;
+
+		const publishedFields = new Set(fields.keys());
+
+		expect(result).toEqual({
+			...initialState,
+			fields,
+			publishedFields,
+			uuid,
+		});
+	});
 });

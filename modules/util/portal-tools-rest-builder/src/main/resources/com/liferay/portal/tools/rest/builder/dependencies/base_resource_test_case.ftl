@@ -298,6 +298,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#assign
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, schema)
 		generateGetMultipartFilesMethod = false
+		generateWaitForFinishMethod = false
 		generateSearchTestRule = false
 		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
 	/>
@@ -315,6 +316,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			/>
 			<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName) && (useDeleteByERC || useDeleteById)>
 				<#assign
+					generateWaitForFinishMethod = true
 					getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 					getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id")
 					idParameterName = properties?keys?seq_contains("id")?then("id", schemaVarName + "Id")
@@ -325,11 +327,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if useDeleteById>
 						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-						<#if useDeleteByERC>
-							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
-						<#else>
-							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}1.${getterMethodName}());
-						</#if>
+						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
 
 						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
 					</#if>
@@ -337,11 +335,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#if useDeleteByERC>
 						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-						<#if useDeleteById>
-							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
-						<#else>
-							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode());
-						</#if>
+						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
 
 						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
 					</#if>
@@ -370,32 +364,19 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				}
 
-				protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(
-					String expectedExecuteStatus<#if useDeleteByERC>, ${properties["externalReferenceCode"]} ${schemaVarName}ERC</#if><#if useDeleteById>, ${properties[idParameterName]} ${schemaVarName}Id</#if>)
-					throws Exception {
-						Map<String, Object> map = HashMapBuilder<#if useDeleteById>.<String, Object>put("id", ${schemaVarName}Id)</#if><#if useDeleteByERC>.<String, Object>put("externalReferenceCode", ${schemaVarName}ERC)</#if>.build();
-						HttpInvoker.HttpResponse response = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(null, JSONFactoryUtil.createJSONArray(Collections.singletonList(map)));
+				protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(String expectedExecuteStatus, String externalReferenceCode, ${properties[idParameterName]} id) throws Exception {
+					HttpInvoker.HttpResponse httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+						null, JSONFactoryUtil.createJSONArray(
+						Collections.singletonList(
+							HashMapBuilder.<String, Object>put(
+								"externalReferenceCode", () -> externalReferenceCode
+							).put(
+								"${idParameterName}", () -> id
+							).build())));
 
-						Assert.assertEquals(202, response.getStatusCode());
+					Assert.assertEquals(202, httpResponse.getStatusCode());
 
-						ImportTaskResource importTaskResource = ImportTaskResource.builder(
-							).authentication(
-								_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-							).endpoint(
-								testCompany.getVirtualHostname(), 8080, "http"
-							).locale(
-								LocaleUtil.getDefault()
-							).build();
-
-						while (true) {
-							ImportTask importTask = importTaskResource.getImportTask(JSONFactoryUtil.createJSONObject(response.getContent()).getLong("id"));
-							String executeStatus = importTask.getExecuteStatus().toString();
-
-							if (StringUtil.equals(executeStatus, "COMPLETED") || StringUtil.equals(executeStatus, "FAILED")) {
-								Assert.assertEquals(expectedExecuteStatus, executeStatus);
-								break;
-							}
-						}
+					_waitForFinish(expectedExecuteStatus, JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 				}
 
 				<#continue>
@@ -3128,6 +3109,25 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#if generateGetMultipartFilesMethod>
 		protected void assertValid(${schemaClientJavaType} ${schemaVarName}, Map<String, File> multipartFiles) throws Exception {
 			throw new UnsupportedOperationException("This method needs to be implemented");
+		}
+	</#if>
+
+	<#if generateWaitForFinishMethod>
+		private JSONObject _waitForFinish(String expectedExecuteStatus, JSONObject jsonObject) throws Exception {
+			while (true) {
+				ImportTask importTask = importTaskResource.getImportTask(
+					jsonObject.getLong("id"));
+
+				ImportTask.ExecuteStatus executeStatus = importTask.getExecuteStatus();
+
+				if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+					StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+					Assert.assertEquals(expectedExecuteStatus, executeStatus.getValue());
+
+					return jsonObject;
+				}
+			}
 		}
 	</#if>
 

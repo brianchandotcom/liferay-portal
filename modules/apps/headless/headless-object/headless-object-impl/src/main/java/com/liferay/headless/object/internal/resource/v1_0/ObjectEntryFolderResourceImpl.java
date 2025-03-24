@@ -20,8 +20,6 @@ import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -257,23 +255,14 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		com.liferay.object.model.ObjectEntryFolder persistedObjectEntryFolder =
-			null;
-
 		long groupId = _getGroupId(scopeKey);
 
-		try {
-			persistedObjectEntryFolder =
-				_objectEntryFolderService.
-					getObjectEntryFolderByExternalReferenceCode(
-						externalReferenceCode, groupId,
-						contextUser.getCompanyId());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
+		com.liferay.object.model.ObjectEntryFolder persistedObjectEntryFolder =
+			_objectEntryFolderService.
+				fetchObjectEntryFolderByExternalReferenceCode(
+					externalReferenceCode, groupId, contextUser.getCompanyId());
 
+		if (persistedObjectEntryFolder == null) {
 			return _addObjectEntryFolder(
 				groupId,
 				_getParentObjectEntryFolderId(
@@ -334,59 +323,51 @@ public class ObjectEntryFolderResourceImpl
 			boolean createIfNotExist,
 			ParentObjectEntryFolderBrief parentObjectEntryFolderBrief,
 			long groupId)
-		throws PortalException {
+		throws Exception {
 
 		long parentObjectEntryFolderId = 0;
 
-		if (parentObjectEntryFolderBrief != null) {
-			parentObjectEntryFolderId = GetterUtil.getLong(
-				parentObjectEntryFolderBrief.getId());
+		if (parentObjectEntryFolderBrief == null) {
+			return parentObjectEntryFolderId;
+		}
 
-			if (parentObjectEntryFolderId > 0) {
-				return parentObjectEntryFolderId;
-			}
+		parentObjectEntryFolderId = GetterUtil.getLong(
+			parentObjectEntryFolderBrief.getId());
 
-			if (Validator.isNotNull(
-					parentObjectEntryFolderBrief.getExternalReferenceCode())) {
+		if (parentObjectEntryFolderId > 0) {
+			return parentObjectEntryFolderId;
+		}
 
-				com.liferay.object.model.ObjectEntryFolder
-					objectEntryFolderPersistence = null;
+		if (Validator.isNotNull(
+				parentObjectEntryFolderBrief.getExternalReferenceCode())) {
 
-				try {
-					objectEntryFolderPersistence =
-						_objectEntryFolderService.
-							getObjectEntryFolderByExternalReferenceCode(
-								parentObjectEntryFolderBrief.
-									getExternalReferenceCode(),
-								groupId, contextUser.getCompanyId());
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-
-					if (!createIfNotExist) {
-						throw portalException;
-					}
-
-					objectEntryFolderPersistence =
-						_objectEntryFolderService.addObjectEntryFolder(
+			com.liferay.object.model.ObjectEntryFolder
+				objectEntryFolderPersistence =
+					_objectEntryFolderService.
+						fetchObjectEntryFolderByExternalReferenceCode(
 							parentObjectEntryFolderBrief.
 								getExternalReferenceCode(),
-							groupId, 0,
-							LocalizedMapUtil.getLocalizedMap(
-								contextAcceptLanguage.getPreferredLocale(),
-								parentObjectEntryFolderBrief.getLabel(),
-								parentObjectEntryFolderBrief.getLabel_i18n()),
-							parentObjectEntryFolderBrief.getName(),
-							ServiceContextBuilder.create(
-								groupId, contextHttpServletRequest, null
-							).build());
-				}
+							groupId, contextUser.getCompanyId());
 
-				parentObjectEntryFolderId =
-					objectEntryFolderPersistence.getObjectEntryFolderId();
+			if ((objectEntryFolderPersistence == null) && !createIfNotExist) {
+				throw new PortalException();
 			}
+
+			objectEntryFolderPersistence =
+				_objectEntryFolderService.addObjectEntryFolder(
+					parentObjectEntryFolderBrief.getExternalReferenceCode(),
+					groupId, 0,
+					LocalizedMapUtil.getLocalizedMap(
+						contextAcceptLanguage.getPreferredLocale(),
+						parentObjectEntryFolderBrief.getLabel(),
+						parentObjectEntryFolderBrief.getLabel_i18n()),
+					parentObjectEntryFolderBrief.getName(),
+					ServiceContextBuilder.create(
+						groupId, contextHttpServletRequest, null
+					).build());
+
+			parentObjectEntryFolderId =
+				objectEntryFolderPersistence.getObjectEntryFolderId();
 		}
 
 		return parentObjectEntryFolderId;
@@ -458,9 +439,6 @@ public class ObjectEntryFolderResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectEntryFolderResourceImpl.class);
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

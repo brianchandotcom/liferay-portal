@@ -553,6 +553,58 @@ public class ObjectEntryFolder implements Serializable {
 	private Supplier<Integer> _numberOfObjectEntryFoldersSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The parent entry folder's external reference code, if it exists."
+	)
+	public String getParentObjectEntryFolderExternalReferenceCode() {
+		if (_parentObjectEntryFolderExternalReferenceCodeSupplier != null) {
+			parentObjectEntryFolderExternalReferenceCode =
+				_parentObjectEntryFolderExternalReferenceCodeSupplier.get();
+
+			_parentObjectEntryFolderExternalReferenceCodeSupplier = null;
+		}
+
+		return parentObjectEntryFolderExternalReferenceCode;
+	}
+
+	public void setParentObjectEntryFolderExternalReferenceCode(
+		String parentObjectEntryFolderExternalReferenceCode) {
+
+		this.parentObjectEntryFolderExternalReferenceCode =
+			parentObjectEntryFolderExternalReferenceCode;
+
+		_parentObjectEntryFolderExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setParentObjectEntryFolderExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			parentObjectEntryFolderExternalReferenceCodeUnsafeSupplier) {
+
+		_parentObjectEntryFolderExternalReferenceCodeSupplier = () -> {
+			try {
+				return parentObjectEntryFolderExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The parent entry folder's external reference code, if it exists."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String parentObjectEntryFolderExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String>
+		_parentObjectEntryFolderExternalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the object entry folder's parent, if it exists."
 	)
 	public Long getParentObjectEntryFolderId() {
@@ -880,6 +932,23 @@ public class ObjectEntryFolder implements Serializable {
 			sb.append("\"numberOfObjectEntryFolders\": ");
 
 			sb.append(numberOfObjectEntryFolders);
+		}
+
+		String parentObjectEntryFolderExternalReferenceCode =
+			getParentObjectEntryFolderExternalReferenceCode();
+
+		if (parentObjectEntryFolderExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentObjectEntryFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(parentObjectEntryFolderExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		Long parentObjectEntryFolderId = getParentObjectEntryFolderId();

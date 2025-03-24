@@ -186,6 +186,25 @@ public class ObjectEntryFolderSerDes {
 			sb.append(objectEntryFolder.getNumberOfObjectEntryFolders());
 		}
 
+		if (objectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode() != null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentObjectEntryFolderExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					objectEntryFolder.
+						getParentObjectEntryFolderExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectEntryFolder.getParentObjectEntryFolderId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -340,6 +359,19 @@ public class ObjectEntryFolderSerDes {
 					objectEntryFolder.getNumberOfObjectEntryFolders()));
 		}
 
+		if (objectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode() == null) {
+
+			map.put("parentObjectEntryFolderExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"parentObjectEntryFolderExternalReferenceCode",
+				String.valueOf(
+					objectEntryFolder.
+						getParentObjectEntryFolderExternalReferenceCode()));
+		}
+
 		if (objectEntryFolder.getParentObjectEntryFolderId() == null) {
 			map.put("parentObjectEntryFolderId", null);
 		}
@@ -421,6 +453,12 @@ public class ObjectEntryFolderSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "numberOfObjectEntryFolders")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentObjectEntryFolderExternalReferenceCode")) {
 
 				return false;
 			}
@@ -512,6 +550,16 @@ public class ObjectEntryFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setNumberOfObjectEntryFolders(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"parentObjectEntryFolderExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.
+						setParentObjectEntryFolderExternalReferenceCode(
+							(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

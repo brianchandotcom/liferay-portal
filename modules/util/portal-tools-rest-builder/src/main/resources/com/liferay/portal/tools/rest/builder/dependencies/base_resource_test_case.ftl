@@ -310,10 +310,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
 			<#assign
-				hasDeleteByERCJavaMethodSignature = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
-				hasDeleteByIdJavaMethodSignature = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
+				useDeleteByERC = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
+				useDeleteById = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
 			/>
-			<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName) && (hasDeleteByIdJavaMethodSignature || hasDeleteByERCJavaMethodSignature)>
+			<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName) && (useDeleteByERC || useDeleteById)>
 				<#assign
 					getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 					getterJavaMethodParametersMap = {}
@@ -322,13 +322,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if !properties?keys?seq_contains("id")>
 					<#assign idParameterName = "${schemaVarName}Id" />
 				</#if>
+
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-
-					<#if hasDeleteByIdJavaMethodSignature>
+					<#if useDeleteById>
 						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-						<#if hasDeleteByERCJavaMethodSignature>
+						<#if useDeleteByERC>
 							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.get${idParameterName?cap_first}());
 						<#else>
 							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}1.get${idParameterName?cap_first}());
@@ -337,10 +337,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
 					</#if>
 
-					<#if hasDeleteByERCJavaMethodSignature>
+					<#if useDeleteByERC>
 						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-						<#if hasDeleteByIdJavaMethodSignature>
+						<#if useDeleteById>
 							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
 						<#else>
 							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode());
@@ -349,7 +349,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
 					</#if>
 
-					<#if hasDeleteByIdJavaMethodSignature && hasDeleteByERCJavaMethodSignature>
+					<#if useDeleteById && useDeleteByERC>
 						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
@@ -374,9 +374,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 
 				protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(
-					String expectedExecuteStatus<#if hasDeleteByERCJavaMethodSignature>, ${properties["externalReferenceCode"]} ${schemaVarName}ERC</#if><#if hasDeleteByIdJavaMethodSignature>, ${properties[idParameterName]} ${schemaVarName}Id</#if>)
+					String expectedExecuteStatus<#if useDeleteByERC>, ${properties["externalReferenceCode"]} ${schemaVarName}ERC</#if><#if useDeleteById>, ${properties[idParameterName]} ${schemaVarName}Id</#if>)
 					throws Exception {
-						Map<String, Object> map = HashMapBuilder<#if hasDeleteByIdJavaMethodSignature>.<String, Object>put("id", ${schemaVarName}Id)</#if><#if hasDeleteByERCJavaMethodSignature>.<String, Object>put("externalReferenceCode", ${schemaVarName}ERC)</#if>.build();
+						Map<String, Object> map = HashMapBuilder<#if useDeleteById>.<String, Object>put("id", ${schemaVarName}Id)</#if><#if useDeleteByERC>.<String, Object>put("externalReferenceCode", ${schemaVarName}ERC)</#if>.build();
 						HttpInvoker.HttpResponse response = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(null, JSONFactoryUtil.createJSONArray(Collections.singletonList(map)));
 
 						Assert.assertEquals(202, response.getStatusCode());

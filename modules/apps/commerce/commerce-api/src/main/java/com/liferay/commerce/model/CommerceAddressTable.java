@@ -49,32 +49,12 @@ public class CommerceAddressTable extends BaseTable<CommerceAddressTable> {
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceAddressTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> description =
-		createColumn(
-			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> street1 = createColumn(
-		"street1", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> street2 = createColumn(
-		"street2", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> street3 = createColumn(
-		"street3", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> city = createColumn(
-		"city", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> zip = createColumn(
-		"zip", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, Long> regionId = createColumn(
-		"regionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceAddressTable, Long> countryId = createColumn(
 		"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, Double> latitude = createColumn(
-		"latitude", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, Double> longitude = createColumn(
-		"longitude", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
-	public final Column<CommerceAddressTable, String> phoneNumber =
-		createColumn(
-			"phoneNumber", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, Long> regionId = createColumn(
+		"regionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> city = createColumn(
+		"city", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceAddressTable, Boolean> defaultBilling =
 		createColumn(
 			"defaultBilling", Boolean.class, Types.BOOLEAN,
@@ -83,8 +63,30 @@ public class CommerceAddressTable extends BaseTable<CommerceAddressTable> {
 		createColumn(
 			"defaultShipping", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> description =
+		createColumn(
+			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, Double> latitude = createColumn(
+		"latitude", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, Double> longitude = createColumn(
+		"longitude", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> phoneNumber =
+		createColumn(
+			"phoneNumber", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> street1 = createColumn(
+		"street1", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> street2 = createColumn(
+		"street2", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> street3 = createColumn(
+		"street3", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> subtype = createColumn(
+		"subtype", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceAddressTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<CommerceAddressTable, String> zip = createColumn(
+		"zip", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CommerceAddressTable() {
 		super("CommerceAddress", CommerceAddressTable::new);

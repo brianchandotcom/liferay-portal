@@ -47,33 +47,12 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceAddressLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce address local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceAddressLocalServiceUtil} if injection and service tracking are not available.
 	 */
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), defaultBilling/Shipping exist on Account Entity. Pass type.
-	 */
-	@Deprecated
-	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			boolean defaultBilling, boolean defaultShipping,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceAddress addCommerceAddress(
-			String className, long classPK, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			int type, ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress addCommerceAddress(
 			String externalReferenceCode, String className, long classPK,
-			String name, String description, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, String phoneNumber, int type,
+			long countryId, long regionId, String city, String description,
+			String name, String phoneNumber, String street1, String street2,
+			String street3, String subtype, int type, String zip,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -234,24 +213,13 @@ public interface CommerceAddressLocalService extends BaseLocalService {
 			int start, int end, Sort sort)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), defaultBilling/Shipping exist on Account Entity. Pass type.
-	 */
-	@Deprecated
-	public CommerceAddress updateCommerceAddress(
-			long commerceAddressId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			boolean defaultBilling, boolean defaultShipping,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress updateCommerceAddress(
-			long commerceAddressId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			int type, ServiceContext serviceContext)
+			String externalReferenceCode, long commerceAddressId,
+			long countryId, long regionId, String city, String description,
+			String name, String phoneNumber, String street1, String street2,
+			String street3, String subtype, int type, String zip,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

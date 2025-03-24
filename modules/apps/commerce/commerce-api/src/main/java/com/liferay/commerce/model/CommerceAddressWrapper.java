@@ -47,21 +47,22 @@ public class CommerceAddressWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("name", getName());
+		attributes.put("countryId", getCountryId());
+		attributes.put("regionId", getRegionId());
+		attributes.put("city", getCity());
+		attributes.put("defaultBilling", isDefaultBilling());
+		attributes.put("defaultShipping", isDefaultShipping());
 		attributes.put("description", getDescription());
+		attributes.put("latitude", getLatitude());
+		attributes.put("longitude", getLongitude());
+		attributes.put("name", getName());
+		attributes.put("phoneNumber", getPhoneNumber());
 		attributes.put("street1", getStreet1());
 		attributes.put("street2", getStreet2());
 		attributes.put("street3", getStreet3());
-		attributes.put("city", getCity());
-		attributes.put("zip", getZip());
-		attributes.put("regionId", getRegionId());
-		attributes.put("countryId", getCountryId());
-		attributes.put("latitude", getLatitude());
-		attributes.put("longitude", getLongitude());
-		attributes.put("phoneNumber", getPhoneNumber());
-		attributes.put("defaultBilling", isDefaultBilling());
-		attributes.put("defaultShipping", isDefaultShipping());
+		attributes.put("subtype", getSubtype());
 		attributes.put("type", getType());
+		attributes.put("zip", getZip());
 
 		return attributes;
 	}
@@ -135,16 +136,64 @@ public class CommerceAddressWrapper
 			setClassPK(classPK);
 		}
 
-		String name = (String)attributes.get("name");
+		Long countryId = (Long)attributes.get("countryId");
 
-		if (name != null) {
-			setName(name);
+		if (countryId != null) {
+			setCountryId(countryId);
+		}
+
+		Long regionId = (Long)attributes.get("regionId");
+
+		if (regionId != null) {
+			setRegionId(regionId);
+		}
+
+		String city = (String)attributes.get("city");
+
+		if (city != null) {
+			setCity(city);
+		}
+
+		Boolean defaultBilling = (Boolean)attributes.get("defaultBilling");
+
+		if (defaultBilling != null) {
+			setDefaultBilling(defaultBilling);
+		}
+
+		Boolean defaultShipping = (Boolean)attributes.get("defaultShipping");
+
+		if (defaultShipping != null) {
+			setDefaultShipping(defaultShipping);
 		}
 
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Double latitude = (Double)attributes.get("latitude");
+
+		if (latitude != null) {
+			setLatitude(latitude);
+		}
+
+		Double longitude = (Double)attributes.get("longitude");
+
+		if (longitude != null) {
+			setLongitude(longitude);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String phoneNumber = (String)attributes.get("phoneNumber");
+
+		if (phoneNumber != null) {
+			setPhoneNumber(phoneNumber);
 		}
 
 		String street1 = (String)attributes.get("street1");
@@ -165,64 +214,22 @@ public class CommerceAddressWrapper
 			setStreet3(street3);
 		}
 
-		String city = (String)attributes.get("city");
+		String subtype = (String)attributes.get("subtype");
 
-		if (city != null) {
-			setCity(city);
-		}
-
-		String zip = (String)attributes.get("zip");
-
-		if (zip != null) {
-			setZip(zip);
-		}
-
-		Long regionId = (Long)attributes.get("regionId");
-
-		if (regionId != null) {
-			setRegionId(regionId);
-		}
-
-		Long countryId = (Long)attributes.get("countryId");
-
-		if (countryId != null) {
-			setCountryId(countryId);
-		}
-
-		Double latitude = (Double)attributes.get("latitude");
-
-		if (latitude != null) {
-			setLatitude(latitude);
-		}
-
-		Double longitude = (Double)attributes.get("longitude");
-
-		if (longitude != null) {
-			setLongitude(longitude);
-		}
-
-		String phoneNumber = (String)attributes.get("phoneNumber");
-
-		if (phoneNumber != null) {
-			setPhoneNumber(phoneNumber);
-		}
-
-		Boolean defaultBilling = (Boolean)attributes.get("defaultBilling");
-
-		if (defaultBilling != null) {
-			setDefaultBilling(defaultBilling);
-		}
-
-		Boolean defaultShipping = (Boolean)attributes.get("defaultShipping");
-
-		if (defaultShipping != null) {
-			setDefaultShipping(defaultShipping);
+		if (subtype != null) {
+			setSubtype(subtype);
 		}
 
 		Integer type = (Integer)attributes.get("type");
 
 		if (type != null) {
 			setType(type);
+		}
+
+		String zip = (String)attributes.get("zip");
+
+		if (zip != null) {
+			setZip(zip);
 		}
 	}
 
@@ -493,6 +500,16 @@ public class CommerceAddressWrapper
 	@Override
 	public String getStreet3() {
 		return model.getStreet3();
+	}
+
+	/**
+	 * Returns the subtype of this commerce address.
+	 *
+	 * @return the subtype of this commerce address
+	 */
+	@Override
+	public String getSubtype() {
+		return model.getSubtype();
 	}
 
 	/**
@@ -808,6 +825,16 @@ public class CommerceAddressWrapper
 	@Override
 	public void setStreet3(String street3) {
 		model.setStreet3(street3);
+	}
+
+	/**
+	 * Sets the subtype of this commerce address.
+	 *
+	 * @param subtype the subtype of this commerce address
+	 */
+	@Override
+	public void setSubtype(String subtype) {
+		model.setSubtype(subtype);
 	}
 
 	/**

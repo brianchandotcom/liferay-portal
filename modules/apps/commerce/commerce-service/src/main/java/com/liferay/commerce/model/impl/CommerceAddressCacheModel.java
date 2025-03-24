@@ -71,7 +71,7 @@ public class CommerceAddressCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,36 +95,38 @@ public class CommerceAddressCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", name=");
-		sb.append(name);
+		sb.append(", countryId=");
+		sb.append(countryId);
+		sb.append(", regionId=");
+		sb.append(regionId);
+		sb.append(", city=");
+		sb.append(city);
+		sb.append(", defaultBilling=");
+		sb.append(defaultBilling);
+		sb.append(", defaultShipping=");
+		sb.append(defaultShipping);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", latitude=");
+		sb.append(latitude);
+		sb.append(", longitude=");
+		sb.append(longitude);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", phoneNumber=");
+		sb.append(phoneNumber);
 		sb.append(", street1=");
 		sb.append(street1);
 		sb.append(", street2=");
 		sb.append(street2);
 		sb.append(", street3=");
 		sb.append(street3);
-		sb.append(", city=");
-		sb.append(city);
-		sb.append(", zip=");
-		sb.append(zip);
-		sb.append(", regionId=");
-		sb.append(regionId);
-		sb.append(", countryId=");
-		sb.append(countryId);
-		sb.append(", latitude=");
-		sb.append(latitude);
-		sb.append(", longitude=");
-		sb.append(longitude);
-		sb.append(", phoneNumber=");
-		sb.append(phoneNumber);
-		sb.append(", defaultBilling=");
-		sb.append(defaultBilling);
-		sb.append(", defaultShipping=");
-		sb.append(defaultShipping);
+		sb.append(", subtype=");
+		sb.append(subtype);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", zip=");
+		sb.append(zip);
 		sb.append("}");
 
 		return sb.toString();
@@ -171,6 +173,28 @@ public class CommerceAddressCacheModel
 
 		commerceAddressImpl.setClassNameId(classNameId);
 		commerceAddressImpl.setClassPK(classPK);
+		commerceAddressImpl.setCountryId(countryId);
+		commerceAddressImpl.setRegionId(regionId);
+
+		if (city == null) {
+			commerceAddressImpl.setCity("");
+		}
+		else {
+			commerceAddressImpl.setCity(city);
+		}
+
+		commerceAddressImpl.setDefaultBilling(defaultBilling);
+		commerceAddressImpl.setDefaultShipping(defaultShipping);
+
+		if (description == null) {
+			commerceAddressImpl.setDescription("");
+		}
+		else {
+			commerceAddressImpl.setDescription(description);
+		}
+
+		commerceAddressImpl.setLatitude(latitude);
+		commerceAddressImpl.setLongitude(longitude);
 
 		if (name == null) {
 			commerceAddressImpl.setName("");
@@ -179,11 +203,11 @@ public class CommerceAddressCacheModel
 			commerceAddressImpl.setName(name);
 		}
 
-		if (description == null) {
-			commerceAddressImpl.setDescription("");
+		if (phoneNumber == null) {
+			commerceAddressImpl.setPhoneNumber("");
 		}
 		else {
-			commerceAddressImpl.setDescription(description);
+			commerceAddressImpl.setPhoneNumber(phoneNumber);
 		}
 
 		if (street1 == null) {
@@ -207,12 +231,14 @@ public class CommerceAddressCacheModel
 			commerceAddressImpl.setStreet3(street3);
 		}
 
-		if (city == null) {
-			commerceAddressImpl.setCity("");
+		if (subtype == null) {
+			commerceAddressImpl.setSubtype("");
 		}
 		else {
-			commerceAddressImpl.setCity(city);
+			commerceAddressImpl.setSubtype(subtype);
 		}
+
+		commerceAddressImpl.setType(type);
 
 		if (zip == null) {
 			commerceAddressImpl.setZip("");
@@ -220,22 +246,6 @@ public class CommerceAddressCacheModel
 		else {
 			commerceAddressImpl.setZip(zip);
 		}
-
-		commerceAddressImpl.setRegionId(regionId);
-		commerceAddressImpl.setCountryId(countryId);
-		commerceAddressImpl.setLatitude(latitude);
-		commerceAddressImpl.setLongitude(longitude);
-
-		if (phoneNumber == null) {
-			commerceAddressImpl.setPhoneNumber("");
-		}
-		else {
-			commerceAddressImpl.setPhoneNumber(phoneNumber);
-		}
-
-		commerceAddressImpl.setDefaultBilling(defaultBilling);
-		commerceAddressImpl.setDefaultShipping(defaultShipping);
-		commerceAddressImpl.setType(type);
 
 		commerceAddressImpl.resetOriginalValues();
 
@@ -261,28 +271,29 @@ public class CommerceAddressCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		name = objectInput.readUTF();
-		description = objectInput.readUTF();
-		street1 = objectInput.readUTF();
-		street2 = objectInput.readUTF();
-		street3 = objectInput.readUTF();
-		city = objectInput.readUTF();
-		zip = objectInput.readUTF();
-
-		regionId = objectInput.readLong();
 
 		countryId = objectInput.readLong();
 
-		latitude = objectInput.readDouble();
-
-		longitude = objectInput.readDouble();
-		phoneNumber = objectInput.readUTF();
+		regionId = objectInput.readLong();
+		city = objectInput.readUTF();
 
 		defaultBilling = objectInput.readBoolean();
 
 		defaultShipping = objectInput.readBoolean();
+		description = objectInput.readUTF();
+
+		latitude = objectInput.readDouble();
+
+		longitude = objectInput.readDouble();
+		name = objectInput.readUTF();
+		phoneNumber = objectInput.readUTF();
+		street1 = objectInput.readUTF();
+		street2 = objectInput.readUTF();
+		street3 = objectInput.readUTF();
+		subtype = objectInput.readUTF();
 
 		type = objectInput.readInt();
+		zip = objectInput.readUTF();
 	}
 
 	@Override
@@ -318,6 +329,32 @@ public class CommerceAddressCacheModel
 
 		objectOutput.writeLong(classPK);
 
+		objectOutput.writeLong(countryId);
+
+		objectOutput.writeLong(regionId);
+
+		if (city == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(city);
+		}
+
+		objectOutput.writeBoolean(defaultBilling);
+
+		objectOutput.writeBoolean(defaultShipping);
+
+		if (description == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
+		objectOutput.writeDouble(latitude);
+
+		objectOutput.writeDouble(longitude);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -325,11 +362,11 @@ public class CommerceAddressCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		if (description == null) {
+		if (phoneNumber == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(description);
+			objectOutput.writeUTF(phoneNumber);
 		}
 
 		if (street1 == null) {
@@ -353,12 +390,14 @@ public class CommerceAddressCacheModel
 			objectOutput.writeUTF(street3);
 		}
 
-		if (city == null) {
+		if (subtype == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(city);
+			objectOutput.writeUTF(subtype);
 		}
+
+		objectOutput.writeInt(type);
 
 		if (zip == null) {
 			objectOutput.writeUTF("");
@@ -366,27 +405,6 @@ public class CommerceAddressCacheModel
 		else {
 			objectOutput.writeUTF(zip);
 		}
-
-		objectOutput.writeLong(regionId);
-
-		objectOutput.writeLong(countryId);
-
-		objectOutput.writeDouble(latitude);
-
-		objectOutput.writeDouble(longitude);
-
-		if (phoneNumber == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(phoneNumber);
-		}
-
-		objectOutput.writeBoolean(defaultBilling);
-
-		objectOutput.writeBoolean(defaultShipping);
-
-		objectOutput.writeInt(type);
 	}
 
 	public long mvccVersion;
@@ -400,20 +418,21 @@ public class CommerceAddressCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public String name;
+	public long countryId;
+	public long regionId;
+	public String city;
+	public boolean defaultBilling;
+	public boolean defaultShipping;
 	public String description;
+	public double latitude;
+	public double longitude;
+	public String name;
+	public String phoneNumber;
 	public String street1;
 	public String street2;
 	public String street3;
-	public String city;
-	public String zip;
-	public long regionId;
-	public long countryId;
-	public double latitude;
-	public double longitude;
-	public String phoneNumber;
-	public boolean defaultBilling;
-	public boolean defaultShipping;
+	public String subtype;
 	public int type;
+	public String zip;
 
 }

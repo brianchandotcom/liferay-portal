@@ -438,10 +438,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		else {
 			objectValidationRules = TransformUtil.transform(
 				externalReferenceCodes,
-				externalReferenceCode ->
-					fetchObjectValidationRule(
-						externalReferenceCode,
-						objectEntry.getObjectDefinitionId()));
+				externalReferenceCode -> fetchObjectValidationRule(
+					externalReferenceCode,
+					objectEntry.getObjectDefinitionId()));
 		}
 
 		_validate(
@@ -728,8 +727,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 					objectValidationRuleResults.add(
 						new ObjectValidationRuleResult(
-							errorMessage, objectField.getName(),
-							objectValidationRule.getExternalReferenceCode()));
+							errorMessage,
+							objectValidationRule.getExternalReferenceCode(),
+							objectField.getName()));
 				}
 			}
 			else {

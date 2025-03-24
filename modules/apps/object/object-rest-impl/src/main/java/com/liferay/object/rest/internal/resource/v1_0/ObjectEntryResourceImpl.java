@@ -756,7 +756,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 							setObjectFieldName(
 								objectValidationRuleResult::getObjectFieldName);
 							setObjectValidationRuleExternalReferenceCode(
-								objectValidationRuleResult::getValidationKey);
+								objectValidationRuleResult::
+									getExternalReferenceCode);
 						}
 					},
 					ValidationError.class));

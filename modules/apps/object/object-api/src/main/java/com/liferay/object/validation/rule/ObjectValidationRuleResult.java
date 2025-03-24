@@ -11,33 +11,34 @@ package com.liferay.object.validation.rule;
 public class ObjectValidationRuleResult {
 
 	public ObjectValidationRuleResult(
-		String errorMessage, String validationKey) {
+		String errorMessage, String externalReferenceCode) {
 
-		this(errorMessage, null, validationKey);
+		this(errorMessage, externalReferenceCode, null);
 	}
 
 	public ObjectValidationRuleResult(
-		String errorMessage, String objectFieldName, String validationKey) {
+		String errorMessage, String externalReferenceCode,
+		String objectFieldName) {
 
 		_errorMessage = errorMessage;
+		_externalReferenceCode = externalReferenceCode;
 		_objectFieldName = objectFieldName;
-		_validationKey = validationKey;
 	}
 
 	public String getErrorMessage() {
 		return _errorMessage;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public String getObjectFieldName() {
 		return _objectFieldName;
 	}
 
-	public String getValidationKey() {
-		return _validationKey;
-	}
-
 	private String _errorMessage;
+	private String _externalReferenceCode;
 	private String _objectFieldName;
-	private String _validationKey;
 
 }

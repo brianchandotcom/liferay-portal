@@ -81,10 +81,10 @@ type UpdateFieldAction = {
 	erc?: string;
 	indexableConfig?: Field['indexableConfig'];
 	label?: Liferay.Language.LocalizedValue<string>;
-	listTypeDefinitionId?: string;
 	localized?: boolean;
 	name?: string;
 	newName?: string;
+	picklistId?: string;
 	required?: boolean;
 	settings?: Field['settings'];
 	type: 'update-field';
@@ -205,9 +205,9 @@ function reducer(state: State, action: Action): State {
 				erc,
 				indexableConfig,
 				label,
-				listTypeDefinitionId,
 				localized,
 				name,
+				picklistId,
 				required,
 				settings,
 				uuid,
@@ -232,8 +232,8 @@ function reducer(state: State, action: Action): State {
 				settings: settings ?? field.settings,
 			};
 
-			if (listTypeDefinitionId && 'listTypeDefinitionId' in nextField) {
-				nextField.listTypeDefinitionId = listTypeDefinitionId;
+			if (picklistId && 'picklistId' in nextField) {
+				nextField.picklistId = picklistId;
 			}
 
 			nextFields.set(nextField.uuid, nextField);

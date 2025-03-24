@@ -124,7 +124,7 @@ export type LongTextField = BaseField & {
 } & MaxLengthSettingsField;
 
 export type MultiselectField = BaseField & {
-	listTypeDefinitionId: string;
+	picklistId: string;
 	type: 'multiselect';
 };
 
@@ -133,7 +133,7 @@ export type NumericField = BaseField & {
 } & UniqueValuesSettingsField;
 
 export type SingleSelectField = BaseField & {
-	listTypeDefinitionId: string;
+	picklistId: string;
 	type: 'single-select';
 };
 
@@ -227,14 +227,14 @@ export function getDefaultField(type: FieldType): Field {
 	else if (type === 'single-select') {
 		return {
 			...base,
-			listTypeDefinitionId: '',
+			picklistId: '',
 			type: 'single-select',
 		};
 	}
 	else if (type === 'multiselect') {
 		return {
 			...base,
-			listTypeDefinitionId: '',
+			picklistId: '',
 			type: 'multiselect',
 		};
 	}

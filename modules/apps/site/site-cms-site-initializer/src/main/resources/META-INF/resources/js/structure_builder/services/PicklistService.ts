@@ -5,12 +5,12 @@
 
 import ApiHelper from './ApiHelper';
 
-async function getListTypeDefinitions() {
+async function getPicklists() {
 	return await ApiHelper.get(
 		'/o/headless-admin-list-type/v1.0/list-type-definitions'
 	);
 }
 
 export default {
-	getListTypeDefinitions,
+	getPicklists,
 };

@@ -94,7 +94,7 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest {
 	}
 
 	@Test
-	public void testCompanyGroupBreadcrumb() throws Exception {
+	public void testCompanyGroupBreadcrumbEntry() throws Exception {
 		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
 			_company.getCompanyId(), "Control Panel");
 
@@ -105,12 +105,12 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest {
 
 			List<BreadcrumbEntry> breadcrumbEntries = _getBreadcrumbEntries(0);
 
-			Group companyGloablGroup = _company.getGroup();
+			Group companyGroup = _company.getGroup();
 
 			BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(1);
 
 			Assert.assertEquals(
-				companyGloablGroup.getName(_themeDisplay.getLanguageId()),
+				companyGroup.getName(_themeDisplay.getLanguageId()),
 				breadcrumbEntry.getTitle());
 		}
 		finally {

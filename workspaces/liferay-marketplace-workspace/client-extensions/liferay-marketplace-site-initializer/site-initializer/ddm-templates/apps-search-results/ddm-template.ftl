@@ -106,13 +106,8 @@
 </#if>
 
 <#assign
-	channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'")
-	productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}"
+	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
 />
-
-<#if channel?has_content>
-	<#assign channelId = channel.items[0].id />
-</#if>
 
 <div class="adt-apps-search-results">
 	<div class="cards-container pb-6">
@@ -120,13 +115,16 @@
 			<#list entries as entry>
 				<#if entry?has_content>
 					<#assign
+						accountEntryId = commerceContext.getAccountEntry().getAccountEntryId()
+						channelId = commerceContext.getCommerceChannelId()
+						friendlyURL = cpContentHelper.getFriendlyURL(entry, themeDisplay)
 						portalURL = portalUtil.getLayoutURL(themeDisplay)
-						productId = entry.getClassPK() + 1
+						productId = entry.getCProductId()
 						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
-						productImage = (product.images![])?filter(item -> item.tags?seq_contains("app icon"))![]
+						productImage = cpContentHelper.getDefaultImageFileURL(accountEntryId, entry.getCPDefinitionId())
+						productName = entry.getName()
 						remainingCategoriesText = []
 					/>
-
 					<#if product.categories?has_content && product.productSpecifications?has_content>
 						<#assign
 							productCategories = product.categories?filter(productCategory -> productCategory.vocabulary?replace(" ", "-") == "marketplace-app-category")![]
@@ -135,43 +133,16 @@
 						/>
 					</#if>
 
-					<#if product.name?has_content>
-						<#assign productName = product.name />
-						<#else>
-							<#assign productName = "" />
-					</#if>
-
 					<#if product.description?has_content>
 						<#assign productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 150, "...") />
 						<#else>
 							<#assign productDescription = "" />
 					</#if>
 
-					<#if product.urls?has_content>
-						<#assign productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US />
-						<#else>
-							<#assign productURL = "" />
-					</#if>
-
-					<#if productImage?has_content>
-						<#assign productThumbnail = productImage[0].src?split("/o") />
-						<#if productThumbnail?has_content && productThumbnail?size gte 2>
-							<#assign productThumbnail1 = "/o/${productThumbnail[1]}" !"" />
-						</#if>
-
-					<#else>
-						<#if product.urlImage?has_content>
-							<#assign productThumbnail = product.urlImage?split("/o") />
-							<#if productThumbnail?has_content && productThumbnail?size gte 2>
-								<#assign productThumbnail1 = "/o/${productThumbnail[1]}" !"" />
-							</#if>
-						</#if>
-					</#if>
-
-					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none" href=${productURL}>
+					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none" href=${friendlyURL}>
 						<div class="align-items-center card-image-title-container d-flex">
 							<div class="image-container mr-2 rounded">
-								<img alt="${productName}" class="app-search-image" src="${productThumbnail1}" />
+								<img alt="${productName}" class="app-search-image" src="${productImage}" />
 							</div>
 
 							<div>

@@ -629,52 +629,26 @@
 												"pageElements": [
 													{
 														"definition": {
-															"fragmentStyle": {
-																"hidden": true
-															},
 															"widgetInstance": {
 																"widgetConfig": {
 																	"cpContentListRendererKey": "list-default",
-																	"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
-																	"displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"grouped--cpTypeListEntryRendererKey": "list-entry-default",
-																	"lfrAppShowShareWithFriendsLink": "false",
-																	"lfrFacebookApiKey": "",
-																	"lfrFacebookCanvasPageUrl": "",
-																	"lfrFacebookShowAddAppLink": "false",
-																	"lfrIgoogleShowAddAppLink": "false",
-																	"lfrNetvibesShowAddAppLink": "false",
-																	"lfrWidgetShowAddAppLink": "false",
-																	"paginate": "false",
-																	"paginationDelta": "15",
-																	"selectionStyle": "adt",
-																	"simple--cpTypeListEntryRendererKey": "list-entry-default",
-																	"virtual--cpTypeListEntryRendererKey": "list-entry-default"
-																},
-																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
-															}
-														},
-														"type": "Widget"
-													},
-													{
-														"definition": {
-															"widgetInstance": {
-																"widgetConfig": {
 																	"displayInDocumentForm": "false",
 																	"displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
 																	"displayStyleGroupId": "[$GROUP_ID$]",
 																	"federatedSearchKey": "",
 																	"fieldsToDisplay": "",
+																	"grouped--cpTypeListEntryRendererKey": "list-entry-default",
 																	"highlightEnabled": "true",
 																	"paginationDelta": "15",
 																	"paginationDeltaParameterName": "delta",
 																	"paginationStartParameterName": "start",
+																	"selectionStyle": "adt",
 																	"showEmptyResultMessage": "true",
 																	"showPagination": "true",
-																	"viewInContext": "true"
+																	"viewInContext": "true",
+																	"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 																},
-																"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
 															}
 														},
 														"type": "Widget"

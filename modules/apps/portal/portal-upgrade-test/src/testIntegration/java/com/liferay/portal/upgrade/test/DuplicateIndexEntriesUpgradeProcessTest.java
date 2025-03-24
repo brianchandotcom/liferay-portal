@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.upgrade.DuplicateRemovalUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DuplicateIndexEntriesUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Jorge Avalos
  */
 @RunWith(Arquillian.class)
-public class DuplicateRemovalUpgradeProcessTest {
+public class DuplicateIndexEntriesUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -107,14 +107,14 @@ public class DuplicateRemovalUpgradeProcessTest {
 
 		_assertDuplicates(false);
 
-		DuplicateRemovalUpgradeProcess upgradeProcess =
-			new DuplicateRemovalUpgradeProcess(
+		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
+			new DuplicateIndexEntriesUpgradeProcess(
 				"TestTable",
 				new String[] {"column1", "column2", "column3", "column4"});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
-					"DuplicateRemovalUpgradeProcess",
+					"DuplicateIndexEntriesUpgradeProcess",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();
@@ -138,15 +138,15 @@ public class DuplicateRemovalUpgradeProcessTest {
 
 		_assertDuplicates(false);
 
-		DuplicateRemovalUpgradeProcess upgradeProcess =
-			new DuplicateRemovalUpgradeProcess(
+		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
+			new DuplicateIndexEntriesUpgradeProcess(
 				"TestTable",
 				new String[] {"column1", "column2", "column3", "column4"},
 				"primaryKeyColumn asc");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
-					"DuplicateRemovalUpgradeProcess",
+					"DuplicateIndexEntriesUpgradeProcess",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();

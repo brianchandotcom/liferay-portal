@@ -103,6 +103,8 @@ public class ObjectEntryInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "friendly-url")
+		).localizable(
+			true
 		).build();
 	}
 

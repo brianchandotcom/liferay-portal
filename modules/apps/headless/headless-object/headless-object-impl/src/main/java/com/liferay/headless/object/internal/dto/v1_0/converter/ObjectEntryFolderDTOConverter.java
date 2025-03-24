@@ -7,6 +7,7 @@ package com.liferay.headless.object.internal.dto.v1_0.converter;
 
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
+import com.liferay.headless.object.dto.v1_0.ParentObjectEntryFolderBrief;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -85,6 +86,46 @@ public class ObjectEntryFolderDTOConverter
 									objectEntryFolder.getCompanyId(),
 									objectEntryFolder.
 										getObjectEntryFolderId())));
+				setParentObjectEntryFolderBrief(
+					() -> NestedFieldsSupplier.supply(
+						"parentObjectEntryFolderBrief",
+						nestedField -> {
+							com.liferay.object.model.ObjectEntryFolder
+								parentObjectEntryFolder =
+									_objectEntryFolderLocalService.
+										fetchObjectEntryFolder(
+											objectEntryFolder.
+												getParentObjectEntryFolderId());
+
+							if (parentObjectEntryFolder != null) {
+								return new ParentObjectEntryFolderBrief() {
+									{
+										setExternalReferenceCode(
+											parentObjectEntryFolder::
+												getExternalReferenceCode);
+										setId(
+											parentObjectEntryFolder::
+												getObjectEntryFolderId);
+										setLabel(
+											() ->
+												parentObjectEntryFolder.
+													getLabel(
+														dtoConverterContext.
+															getLocale()));
+										setLabel_i18n(
+											() ->
+												LocalizedMapUtil.
+													getLanguageIdMap(
+														parentObjectEntryFolder.
+															getLabelMap()));
+										setName(
+											parentObjectEntryFolder::getName);
+									}
+								};
+							}
+
+							return null;
+						}));
 				setParentObjectEntryFolderExternalReferenceCode(
 					() -> {
 						if (parentObjectEntryFolder != null) {
@@ -103,6 +144,7 @@ public class ObjectEntryFolderDTOConverter
 
 						return null;
 					});
+
 				setScopeKey(
 					() -> String.valueOf(objectEntryFolder.getGroupId()));
 			}

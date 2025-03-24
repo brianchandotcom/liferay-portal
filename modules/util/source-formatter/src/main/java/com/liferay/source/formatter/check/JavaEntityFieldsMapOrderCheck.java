@@ -60,13 +60,15 @@ public class JavaEntityFieldsMapOrderCheck extends BaseFileCheck {
 				int compare = newEntityFieldComparator.compare(
 					previousParameter, parameter);
 
-				if (compare > 0) {
-					content = StringUtil.replaceFirst(
-						content, parameter, previousParameter, x);
-
-					return StringUtil.replaceFirst(
-						content, previousParameter, parameter, x);
+				if (compare <= 0) {
+					continue;
 				}
+
+				content = StringUtil.replaceFirst(
+					content, parameter, previousParameter, x);
+
+				return StringUtil.replaceFirst(
+					content, previousParameter, parameter, x);
 			}
 		}
 	}

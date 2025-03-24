@@ -500,7 +500,7 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Test
-	public void testRelatedCTEntriesMapWithConflictedEntries()
+	public void testRelatedCTEntriesMapWithConflictedCTEntries()
 		throws Exception {
 
 		JournalArticle journalArticle1 = null;

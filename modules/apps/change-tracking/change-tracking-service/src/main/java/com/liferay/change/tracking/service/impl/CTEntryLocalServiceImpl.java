@@ -148,10 +148,10 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 		Set<Serializable> primaryKeys = new HashSet<>(
 			TransformUtil.transformToList(ctEntryIds, GetterUtil::getLong));
 
-		Map<Serializable, CTEntry> map = ctEntryPersistence.fetchByPrimaryKeys(
-			primaryKeys);
+		Map<Serializable, CTEntry> ctEntriesMap =
+			ctEntryPersistence.fetchByPrimaryKeys(primaryKeys);
 
-		return new ArrayList<>(map.values());
+		return new ArrayList<>(ctEntriesMap.values());
 	}
 
 	@Override

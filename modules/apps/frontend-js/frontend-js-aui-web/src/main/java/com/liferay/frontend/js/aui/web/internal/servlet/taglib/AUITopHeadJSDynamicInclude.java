@@ -3,19 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.js.aui.web.internal.servlet;
+package com.liferay.frontend.js.aui.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration;
-import com.liferay.frontend.js.top.head.extender.TopHeadResources;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
+import com.liferay.portal.url.builder.ComboRequestAbsolutePortalURLBuilder;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -27,23 +41,49 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration",
-	property = "service.ranking:Integer=-1", service = TopHeadResources.class
+	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	service = DynamicInclude.class
 )
-public class AUITopHeadResources implements TopHeadResources {
+public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 
 	@Override
-	public Collection<String> getAuthenticatedJsResourcePaths() {
-		return _authenticatedJsResourcePaths;
+	public void include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String key)
+		throws IOException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay.isThemeJsFastLoad()) {
+			if (themeDisplay.isThemeJsBarebone()) {
+				_renderBundleComboURLs(
+					httpServletRequest, httpServletResponse, _jsResourcePaths);
+			}
+			else {
+				_renderBundleComboURLs(
+					httpServletRequest, httpServletResponse,
+					_allJsResourcePaths);
+			}
+		}
+		else {
+			if (themeDisplay.isThemeJsBarebone()) {
+				_renderBundleURLs(
+					httpServletRequest, httpServletResponse, _jsResourcePaths);
+			}
+			else {
+				_renderBundleURLs(
+					httpServletRequest, httpServletResponse,
+					_allJsResourcePaths);
+			}
+		}
 	}
 
 	@Override
-	public Collection<String> getJsResourcePaths() {
-		return _jsResourcePaths;
-	}
-
-	@Override
-	public String getServletContextPath() {
-		return _servletContext.getContextPath();
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/top_js.jspf#resources");
 	}
 
 	@Activate
@@ -52,22 +92,99 @@ public class AUITopHeadResources implements TopHeadResources {
 		AUIConfiguration auiConfiguration = ConfigurableUtil.createConfigurable(
 			AUIConfiguration.class, properties);
 
-		List<String> authenticatedJsResourcePaths = new ArrayList<>();
+		List<String> allJsResourcePaths = new ArrayList<>();
 
 		List<String> jsResourcePaths = new ArrayList<>();
 
-		Collections.addAll(jsResourcePaths, _FILE_NAMES_AUI_CORE);
+		String bundleContextPath = _servletContext.getContextPath();
 
-		if (auiConfiguration.enableAUIPreload()) {
-			Collections.addAll(jsResourcePaths, _FILE_NAMES_AUI_PRELOAD);
-
-			Collections.addAll(
-				authenticatedJsResourcePaths,
-				_FILE_NAMES_AUI_PRELOAD_AUTHENTICATED);
+		for (String resourcePath : _FILE_NAMES_AUI_CORE) {
+			jsResourcePaths.add(bundleContextPath + resourcePath);
+			allJsResourcePaths.add(bundleContextPath + resourcePath);
 		}
 
-		_authenticatedJsResourcePaths = authenticatedJsResourcePaths;
+		if (auiConfiguration.enableAUIPreload()) {
+			for (String resourcePath : _FILE_NAMES_AUI_PRELOAD) {
+				jsResourcePaths.add(bundleContextPath + resourcePath);
+				allJsResourcePaths.add(bundleContextPath + resourcePath);
+			}
+
+			for (String resourcePath : _FILE_NAMES_AUI_PRELOAD_AUTHENTICATED) {
+				allJsResourcePaths.add(bundleContextPath + resourcePath);
+			}
+		}
+
+		_allJsResourcePaths = allJsResourcePaths;
 		_jsResourcePaths = jsResourcePaths;
+	}
+
+	private void _renderBundleComboURLs(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, List<String> urls)
+		throws IOException {
+
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
+
+		ComboRequestAbsolutePortalURLBuilder
+			comboRequestAbsolutePortalURLBuilder =
+				absolutePortalURLBuilder.forComboRequest();
+
+		comboRequestAbsolutePortalURLBuilder.setTimestamp(
+			PortalWebResourcesUtil.getLastModified(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS));
+
+		String comboURL = comboRequestAbsolutePortalURLBuilder.build();
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		StringBundler sb = new StringBundler();
+
+		for (String url : urls) {
+			if ((sb.length() + url.length() + 1) >= 2000) {
+				_renderScriptURL(
+					httpServletRequest, printWriter, sb.toString());
+
+				sb = new StringBundler();
+			}
+
+			if (sb.length() == 0) {
+				sb.append(comboURL);
+			}
+
+			sb.append(StringPool.AMPERSAND);
+			sb.append(url);
+		}
+
+		if (sb.length() > 0) {
+			_renderScriptURL(httpServletRequest, printWriter, sb.toString());
+		}
+	}
+
+	private void _renderBundleURLs(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, List<String> urls)
+		throws IOException {
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		for (String url : urls) {
+			_renderScriptURL(httpServletRequest, printWriter, url);
+		}
+	}
+
+	private void _renderScriptURL(
+		HttpServletRequest httpServletRequest, PrintWriter printWriter,
+		String url) {
+
+		printWriter.print("<script");
+		printWriter.write(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				httpServletRequest));
+		printWriter.print(" data-senna-track=\"permanent\" src=\"");
+		printWriter.print(url);
+		printWriter.println("\" type=\"text/javascript\"></script>");
 	}
 
 	private static final String[] _FILE_NAMES_AUI_CORE = {
@@ -172,8 +289,10 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/liferay/session.js", "/liferay/deprecated.js"
 	};
 
-	private volatile List<String> _authenticatedJsResourcePaths =
-		new ArrayList<>();
+	@Reference
+	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	private volatile List<String> _allJsResourcePaths = new ArrayList<>();
 	private volatile List<String> _jsResourcePaths = new ArrayList<>();
 
 	@Reference(

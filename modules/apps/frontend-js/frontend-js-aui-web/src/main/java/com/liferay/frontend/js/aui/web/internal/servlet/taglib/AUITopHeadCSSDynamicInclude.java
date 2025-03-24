@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  */
 @Component(service = DynamicInclude.class)
-public class AUITopHeadDynamicInclude extends BaseDynamicInclude {
+public class AUITopHeadCSSDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void include(

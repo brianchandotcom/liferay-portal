@@ -46,8 +46,10 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.capability.InfoItemCapability;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -61,6 +63,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
@@ -74,6 +77,7 @@ import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutFriendlyURLRandomizerBumper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -88,6 +92,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -325,6 +330,14 @@ public class RenderLayoutStructureTagTest {
 
 		String content = _getRenderLayoutHTML(layout);
 
+		List<String> expectedList = new ArrayList<>();
+		String friendlyURLValue = StringUtil.toLowerCase(
+			StringUtil.removeSubstring(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE),
+				StringPool.SLASH));
+		String textValue = RandomTestUtil.randomString();
+
 		for (Map.Entry<Long, LayoutStructureItem> entry :
 				fragmentLayoutStructureItems.entrySet()) {
 
@@ -361,6 +374,13 @@ public class RenderLayoutStructureTagTest {
 					"id=\"", fragmentEntryLink.getNamespace(),
 					"-friendly-url-input\" name=\"objectEntryFriendlyURL\" ",
 					"type=\"text\" value=\"");
+
+				expectedList.add(
+					expectedContent + friendlyURLValue + StringPool.QUOTE);
+			}
+			else {
+				expectedList.add(
+					expectedContent + textValue + StringPool.QUOTE);
 			}
 
 			Assert.assertTrue(
@@ -368,6 +388,70 @@ public class RenderLayoutStructureTagTest {
 				StringUtil.contains(
 					content, expectedContent + StringPool.QUOTE,
 					StringPool.BLANK));
+		}
+
+		_serviceContext.setAttribute(
+			"friendlyUrlMap",
+			HashMapBuilder.put(
+				objectDefinition.getDefaultLanguageId(), friendlyURLValue
+			).build());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"text", textValue
+			).build(),
+			_serviceContext);
+
+		Assert.assertEquals(
+			friendlyURLValue,
+			objectEntry.getURLTitle(objectDefinition.getDefaultLocale()));
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getClassName());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				layout,
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(
+						objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId())),
+				Collections.emptyMap(), null);
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM, objectEntry);
+
+		InfoItemDetailsProvider infoItemDetailsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, objectDefinition.getClassName());
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+			infoItemDetailsProvider.getInfoItemDetails(objectEntry));
+
+		_serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		try {
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, mockHttpServletRequest);
+
+			content = mockHttpServletResponse.getContentAsString();
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		for (String value : expectedList) {
+			Assert.assertTrue(
+				content, StringUtil.contains(content, value, StringPool.BLANK));
 		}
 	}
 
@@ -3048,6 +3132,10 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

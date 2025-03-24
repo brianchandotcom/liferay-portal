@@ -641,6 +641,9 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
 			objectEntry.getPrimaryKey());
 
+		_objectEntryVersionLocalService.deleteObjectEntryVersion(
+			objectEntry.getObjectEntryId());
+
 		if (!objectDefinition.isActive() ||
 			!objectDefinition.isEnableIndexSearch()) {
 

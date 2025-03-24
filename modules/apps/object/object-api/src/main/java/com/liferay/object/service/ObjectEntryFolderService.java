@@ -59,6 +59,11 @@ public interface ObjectEntryFolderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntryFolder fetchObjectEntryFolderByExternalReferenceCode(
+			String externalReferenceCode, long groupId, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntryFolder getObjectEntryFolder(long objectEntryFolderId)
 		throws PortalException;
 

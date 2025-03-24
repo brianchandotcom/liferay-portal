@@ -59,6 +59,15 @@ public class ObjectEntryFolderServiceUtil {
 			externalReferenceCode, groupId, companyId);
 	}
 
+	public static ObjectEntryFolder
+			fetchObjectEntryFolderByExternalReferenceCode(
+				String externalReferenceCode, long groupId, long companyId)
+		throws PortalException {
+
+		return getService().fetchObjectEntryFolderByExternalReferenceCode(
+			externalReferenceCode, groupId, companyId);
+	}
+
 	public static ObjectEntryFolder getObjectEntryFolder(
 			long objectEntryFolderId)
 		throws PortalException {

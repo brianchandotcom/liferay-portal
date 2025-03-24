@@ -365,6 +365,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.CreatingThreadsForDBAccessCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases where `CompanyInheritableThreadLocalCallable` should be used when creating threads for DB access." />
+			<property name="enabled" value="false" />
 			<message key="company.inheritable.thread.local.callable.use" value="Use &quot;CompanyInheritableThreadLocalCallable&quot; to create threads for DB access" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.CreationMenuBuilderCheck">

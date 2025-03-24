@@ -181,7 +181,8 @@ public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 
 					for (String columnName : columnNames) {
 						duplicateEntry.put(
-							columnName, resultSet.getString(columnName));
+							dbInspector.normalizeName(columnName),
+							resultSet.getString(columnName));
 					}
 
 					duplicateEntries.add(duplicateEntry);

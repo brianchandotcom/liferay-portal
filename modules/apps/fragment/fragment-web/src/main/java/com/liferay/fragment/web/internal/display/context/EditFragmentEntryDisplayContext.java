@@ -22,6 +22,7 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
+import com.liferay.info.field.type.FriendlyURLInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.LongTextInfoFieldType;
@@ -663,7 +664,8 @@ public class EditFragmentEntryDisplayContext {
 		BooleanInfoFieldType.INSTANCE, CaptchaInfoFieldType.INSTANCE,
 		DateInfoFieldType.INSTANCE, DateTimeInfoFieldType.INSTANCE,
 		FileInfoFieldType.INSTANCE, FormButtonInfoFieldType.INSTANCE,
-		HTMLInfoFieldType.INSTANCE, LocalizationSelectInfoFieldType.INSTANCE,
+		FriendlyURLInfoFieldType.INSTANCE, HTMLInfoFieldType.INSTANCE,
+		LocalizationSelectInfoFieldType.INSTANCE,
 		LongTextInfoFieldType.INSTANCE, MultiselectInfoFieldType.INSTANCE,
 		NumberInfoFieldType.INSTANCE, RelationshipInfoFieldType.INSTANCE,
 		SelectInfoFieldType.INSTANCE, StepperInfoFieldType.INSTANCE,

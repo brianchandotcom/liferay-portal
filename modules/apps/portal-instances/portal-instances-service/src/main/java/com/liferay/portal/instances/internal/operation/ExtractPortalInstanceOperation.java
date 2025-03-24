@@ -12,6 +12,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -54,6 +55,10 @@ public class ExtractPortalInstanceOperation
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11342")) {
+			return;
+		}
+
 		onPortalInstance(
 			() -> {
 				ExtractPortalInstanceConfiguration

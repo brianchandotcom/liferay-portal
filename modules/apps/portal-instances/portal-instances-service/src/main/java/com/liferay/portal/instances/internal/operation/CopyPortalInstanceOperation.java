@@ -8,6 +8,7 @@ package com.liferay.portal.instances.internal.operation;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instances.internal.configuration.CopyPortalInstanceConfiguration;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +40,10 @@ public class CopyPortalInstanceOperation extends BasePortalInstanceOperation {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-11342")) {
+			return;
+		}
+
 		onPortalInstance(
 			() -> {
 				CopyPortalInstanceConfiguration

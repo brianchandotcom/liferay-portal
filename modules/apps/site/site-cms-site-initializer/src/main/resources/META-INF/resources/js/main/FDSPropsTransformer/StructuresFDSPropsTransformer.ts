@@ -47,6 +47,7 @@ export default function StructuresFDSPropsTransformer({
 			action,
 			event,
 			itemData,
+			loadData,
 		}: {
 			action: {data: {id: string}; href?: string};
 			event: Event;
@@ -57,6 +58,7 @@ export default function StructuresFDSPropsTransformer({
 				label: Partial<Liferay.Language.FullyLocalizedValue<string>>;
 				status: {code: number};
 			};
+			loadData: () => {};
 		}) {
 			if (action.data.id === 'import') {
 				importStructureAction();
@@ -68,6 +70,7 @@ export default function StructuresFDSPropsTransformer({
 				await deleteStructureAction({
 					deleteAction: itemData.actions.delete,
 					getObjectDefinitionDeleteInfoURL: target.href,
+					loadData,
 					name:
 						itemData.label[Liferay.ThemeDisplay.getLanguageId()] ||
 						itemData.label[

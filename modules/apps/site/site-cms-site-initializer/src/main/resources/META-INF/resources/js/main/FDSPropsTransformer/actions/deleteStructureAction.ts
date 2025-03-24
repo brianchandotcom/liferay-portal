@@ -7,21 +7,50 @@ import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import {fetchJSON} from '../../../api/api';
+import {executeAsyncItemAction} from '../utils/executeAsyncItemAction';
+
+async function deleteStructureToast({
+	method = 'DELETE',
+	name,
+	refreshData,
+	url,
+}: {
+	method?: string;
+	name: string;
+	refreshData: () => {};
+	url: string;
+}) {
+	await executeAsyncItemAction({
+		method,
+		refreshData,
+		successMessage: sub(
+			Liferay.Language.get('x-was-deleted-successfully'),
+			`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
+		),
+		url,
+	});
+}
 
 export default async function deleteStructureAction({
 	deleteAction,
 	getObjectDefinitionDeleteInfoURL,
+	loadData,
 	name,
 	status,
 }: {
 	deleteAction: {href: string; method: string};
 	getObjectDefinitionDeleteInfoURL: string;
+	loadData: () => {};
 	name: string;
 	status: number;
 }) {
 	if (status !== 0) {
-
-		// TODO: Delete without checking
+		await deleteStructureToast({
+			method: deleteAction.method,
+			name,
+			refreshData: loadData,
+			url: deleteAction.href,
+		});
 
 		return;
 	}

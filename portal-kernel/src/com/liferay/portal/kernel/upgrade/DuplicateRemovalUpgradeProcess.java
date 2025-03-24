@@ -43,7 +43,64 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_removeDuplicates();
+		List<String[]> duplicatedColumnEntries = _getDuplicatedColumnEntries();
+
+		for (String[] duplicatedColumnEntry : duplicatedColumnEntries) {
+			List<Map<String, String>> duplicates = getDuplicatesSQL(
+				duplicatedColumnEntry);
+
+			int duplicatesCount = duplicates.size();
+
+			for (Map<String, String> duplicate : duplicates) {
+				if (duplicatesCount == 1) {
+					break;
+				}
+
+				StringBundler sb = new StringBundler();
+
+				sb.append("delete from ");
+				sb.append(_tableName);
+				sb.append(" where ");
+
+				String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
+					connection, _tableName);
+
+				for (String primaryKeyColumnName : primaryKeyColumnNames) {
+					sb.append(primaryKeyColumnName);
+					sb.append(" = ");
+					sb.append(duplicate.get(primaryKeyColumnName));
+					sb.append("and ");
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(sb.toString())) {
+
+					preparedStatement.execute();
+				}
+				catch (SQLException sqlException) {
+					_log.error(
+						StringBundler.concat(
+							"Failed to remove duplicate entry: ",
+							duplicate.toString(), " in ", _tableName, " for ",
+							String.join(", ", _columnNames)),
+						sqlException);
+				}
+				finally {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Deleted duplicate entry from ", _tableName,
+								" table for index columns (",
+								String.join(", ", _columnNames), "): ",
+								duplicate.toString()));
+					}
+
+					duplicatesCount--;
+				}
+			}
+		}
 	}
 
 	protected List<Map<String, String>> getDuplicatesSQL(
@@ -166,70 +223,6 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		}
 
 		return duplicatedColumnEntries;
-	}
-
-	private void _logDeletedDuplicates(Map<String, String> duplicate) {
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Deleted duplicate entry from ", _tableName,
-					" table for index columns (",
-					String.join(", ", _columnNames), "): ",
-					duplicate.toString()));
-		}
-	}
-
-	private void _removeDuplicates() throws Exception {
-		List<String[]> duplicatedColumnEntries = _getDuplicatedColumnEntries();
-
-		for (String[] duplicatedColumnEntry : duplicatedColumnEntries) {
-			List<Map<String, String>> duplicates = getDuplicatesSQL(
-				duplicatedColumnEntry);
-
-			int duplicatesCount = duplicates.size();
-
-			for (Map<String, String> duplicate : duplicates) {
-				if (duplicatesCount == 1) {
-					break;
-				}
-
-				StringBundler sb = new StringBundler();
-
-				sb.append("delete from ");
-				sb.append(_tableName);
-				sb.append(" where ");
-
-				String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
-					connection, _tableName);
-
-				for (String primaryKeyColumnName : primaryKeyColumnNames) {
-					sb.append(primaryKeyColumnName);
-					sb.append(" = ");
-					sb.append(duplicate.get(primaryKeyColumnName));
-					sb.append("and ");
-				}
-
-				sb.setIndex(sb.index() - 1);
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(sb.toString())) {
-
-					preparedStatement.execute();
-				}
-				catch (SQLException sqlException) {
-					_log.error(
-						StringBundler.concat(
-							"Failed to remove duplicate entry: ",
-							duplicate.toString(), " in ", _tableName, " for ",
-							String.join(", ", _columnNames)),
-						sqlException);
-				}
-				finally {
-					_logDeletedDuplicates(duplicate);
-					duplicatesCount--;
-				}
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -409,6 +409,39 @@ public class ObjectEntryVersionLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 	}
 
+	@Test
+	public void testDeleteObjectEntryVersions() throws Exception {
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+
+		Assert.assertEquals(
+			1,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			2,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		Assert.assertEquals(
+			0,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+	}
+
 	private void _assertEquals(
 			List<ObjectEntryVersion> expectedObjectEntryVersions,
 			List<ObjectEntryVersion> actualObjectEntryVersions)

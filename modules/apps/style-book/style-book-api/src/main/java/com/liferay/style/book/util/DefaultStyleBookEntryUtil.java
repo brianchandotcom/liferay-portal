@@ -17,6 +17,7 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Víctor Galán
@@ -53,11 +54,29 @@ public class DefaultStyleBookEntryUtil {
 				layout.getStyleBookEntryId());
 		}
 
-		if (styleBookEntry != null) {
-			return styleBookEntry;
+		if (styleBookEntry == null) {
+			return getDefaultMasterStyleBookEntry(layout);
 		}
 
-		return getDefaultMasterStyleBookEntry(layout);
+		if (FeatureFlagManagerUtil.isEnabled(
+				layout.getCompanyId(), "LPD-30204")) {
+
+			FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+				_frontendTokenDefinitionRegistrySnapshot.get();
+
+			FrontendTokenDefinition frontendTokenDefinition =
+				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					layout);
+
+			if (!Objects.equals(
+					frontendTokenDefinition.getThemeId(),
+					styleBookEntry.getThemeId())) {
+
+				return getDefaultMasterStyleBookEntry(layout);
+			}
+		}
+
+		return styleBookEntry;
 	}
 
 	public static String getStyleBookEntryName(

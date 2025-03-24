@@ -22,6 +22,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -252,7 +253,13 @@ public class LayoutLookAndFeelDisplayContext {
 
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
-		if (selLayout.getStyleBookEntryId() > 0) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				selLayout.getCompanyId(), "LPD-30204")) {
+
+			styleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				selLayout);
+		}
+		else if (selLayout.getStyleBookEntryId() > 0) {
 			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
 				selLayout.getStyleBookEntryId());
 		}

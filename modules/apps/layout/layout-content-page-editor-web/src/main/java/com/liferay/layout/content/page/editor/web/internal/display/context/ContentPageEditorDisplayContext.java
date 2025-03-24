@@ -683,7 +683,23 @@ public class ContentPageEditorDisplayContext {
 				() -> {
 					Layout layout = themeDisplay.getLayout();
 
-					return layout.getStyleBookEntryId();
+					if (!FeatureFlagManagerUtil.isEnabled(
+							layout.getCompanyId(), "LPD-30204")) {
+
+						return layout.getStyleBookEntryId();
+					}
+
+					if (layout.getStyleBookEntryId() > 0) {
+						StyleBookEntry defaultStyleBookEntry =
+							DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+								layout);
+
+						if (defaultStyleBookEntry != null) {
+							return defaultStyleBookEntry.getStyleBookEntryId();
+						}
+					}
+
+					return "0";
 				}
 			).put(
 				"styleBooks", _getStyleBooks()

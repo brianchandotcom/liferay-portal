@@ -24,10 +24,14 @@ public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		return _sortParameters(content, "EntityModel.toEntityFieldsMap");
+	}
+
+	private String _sortParameters(String content, String methodName) {
 		int x = -1;
 
 		while (true) {
-			x = content.indexOf("EntityModel.toEntityFieldsMap(", x + 1);
+			x = content.indexOf(methodName + "(", x + 1);
 
 			if (x == -1) {
 				return content;

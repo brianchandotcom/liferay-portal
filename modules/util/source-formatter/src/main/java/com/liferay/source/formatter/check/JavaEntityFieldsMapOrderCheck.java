@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class JavaEntityModelToEntityFieldsMapCallCheck extends BaseFileCheck {
+public class JavaEntityFieldsMapOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

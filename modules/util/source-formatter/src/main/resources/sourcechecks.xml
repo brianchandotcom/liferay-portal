@@ -507,9 +507,9 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />
 		</check>
-		<check name="JavaEntityModelToEntityFieldsMapCallCheck">
+		<check name="JavaEntityFieldsMapOrderCheck">
 			<category name="Styling" />
-			<description name="Sorts parameters in EntityModel.toEntityFieldsMap call." />
+			<description name="Sorts entity fields when calling `EntityFieldsMapFactory.create` and `EntityModel.toEntityFieldsMap`." />
 		</check>
 		<check name="JavaExceptionCheck">
 			<category name="Naming Conventions" />

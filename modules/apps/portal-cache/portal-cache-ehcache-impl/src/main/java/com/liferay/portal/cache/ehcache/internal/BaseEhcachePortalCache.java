@@ -8,6 +8,7 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.BasePortalCache;
+import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheConfiguration;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCacheListener;

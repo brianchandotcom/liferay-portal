@@ -7,6 +7,7 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
+import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.model.CompanyConstants;

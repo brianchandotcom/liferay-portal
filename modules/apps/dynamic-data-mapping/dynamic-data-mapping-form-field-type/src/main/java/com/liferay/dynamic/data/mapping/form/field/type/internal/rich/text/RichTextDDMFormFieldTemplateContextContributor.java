@@ -17,6 +17,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContribu
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -97,7 +98,9 @@ public class RichTextDDMFormFieldTemplateContextContributor
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				themeDisplay.getPpid(), ddmFormFieldType, "ckeditor_classic",
+				themeDisplay.getPpid(), ddmFormFieldType,
+				FeatureFlagManagerUtil.isEnabled("LPD-11235") ?
+					"ckeditor5_classic" : "ckeditor_classic",
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
 				).put(

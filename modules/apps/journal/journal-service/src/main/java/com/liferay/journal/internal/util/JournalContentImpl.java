@@ -501,19 +501,20 @@ public class JournalContentImpl implements JournalContent {
 		long groupId, String articleId, String ddmTemplateKey,
 		String[] languageIds) {
 
-		Set<JournalContentKey> keys = _journalArticlePortalCacheIndexer.getKeys(
-			JournalContentArticleKeyIndexEncoder.encode(
-				groupId, articleId, ddmTemplateKey));
+		Set<JournalContentKey> journalContentKeys =
+			_journalArticlePortalCacheIndexer.getKeys(
+				JournalContentArticleKeyIndexEncoder.encode(
+					groupId, articleId, ddmTemplateKey));
 
-		if ((keys == null) || keys.isEmpty()) {
+		if ((journalContentKeys == null) || journalContentKeys.isEmpty()) {
 			return;
 		}
 
 		Set<String> languageIdsSet = new HashSet<>(Arrays.asList(languageIds));
 
-		for (JournalContentKey key : keys) {
-			if (languageIdsSet.contains(key._languageId)) {
-				_portalCache.remove(key);
+		for (JournalContentKey journalContentKey : journalContentKeys) {
+			if (languageIdsSet.contains(journalContentKey._languageId)) {
+				_portalCache.remove(journalContentKey);
 			}
 		}
 	}

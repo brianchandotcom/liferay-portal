@@ -127,9 +127,19 @@ public class StructuresSectionDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
 				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
-				"", "trash", "delete",
+				ResourceURLBuilder.createResourceURL(
+					PortletURLFactoryUtil.create(
+						_httpServletRequest,
+						ObjectPortletKeys.OBJECT_DEFINITIONS,
+						PortletRequest.RESOURCE_PHASE)
+				).setParameter(
+					"objectDefinitionId", "{id}"
+				).setResourceID(
+					"/object_definitions/get_object_definition_delete_info"
+				).buildString(),
+				"trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
-				"delete", "headless"));
+				"delete", null));
 	}
 
 	private String _getHref(String objectFolderExternalReferenceCode) {

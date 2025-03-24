@@ -5,6 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import deleteStructureAction from './actions/deleteStructureAction';
 import importStructureAction from './actions/importStructureAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
@@ -42,9 +43,39 @@ export default function StructuresFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		onActionDropdownItemClick({action}: {action: {data: {id: string}}}) {
+		async onActionDropdownItemClick({
+			action,
+			event,
+			itemData,
+		}: {
+			action: {data: {id: string}; href?: string};
+			event: Event;
+			itemData: {
+				actions: {
+					delete: {href: string; method: string};
+				};
+				label: Partial<Liferay.Language.FullyLocalizedValue<string>>;
+				status: {code: number};
+			};
+		}) {
 			if (action.data.id === 'import') {
 				importStructureAction();
+			}
+			else if (action.data.id === 'delete') {
+				event.preventDefault();
+				const target = event.target as HTMLAnchorElement;
+
+				await deleteStructureAction({
+					deleteAction: itemData.actions.delete,
+					getObjectDefinitionDeleteInfoURL: target.href,
+					name:
+						itemData.label[Liferay.ThemeDisplay.getLanguageId()] ||
+						itemData.label[
+							Liferay.ThemeDisplay.getDefaultLanguageId()
+						] ||
+						'',
+					status: itemData.status.code,
+				});
 			}
 		},
 	};

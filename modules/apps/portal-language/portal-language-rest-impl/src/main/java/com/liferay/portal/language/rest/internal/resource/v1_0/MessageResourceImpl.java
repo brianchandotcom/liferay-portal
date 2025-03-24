@@ -78,19 +78,6 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 	}
 
 	@Override
-	public Page<Message> postMessagesExportPage(
-		String languageId, String[] keys) {
-
-		List<Message> messages = new ArrayList<>();
-
-		for (String key : keys) {
-			messages.add(getMessage(key, languageId));
-		}
-
-		return Page.of(messages);
-	}
-
-	@Override
 	public Message postMessage(Message message) throws PortalException {
 		return _addOrUpdatePLOEntry(message);
 	}
@@ -124,6 +111,19 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 			_ploEntryService.importPLOEntries(languageId, properties);
 		}
+	}
+
+	@Override
+	public Page<Message> postMessagesExportPage(
+		String languageId, String[] keys) {
+
+		List<Message> messages = new ArrayList<>();
+
+		for (String key : keys) {
+			messages.add(getMessage(key, languageId));
+		}
+
+		return Page.of(messages);
 	}
 
 	@Override

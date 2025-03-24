@@ -41,6 +41,47 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 public class ObjectEntryVersionServiceHttp {
 
+	public static com.liferay.object.model.ObjectEntryVersion
+			getObjectEntryVersion(
+				HttpPrincipal httpPrincipal, long objectEntryId, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryVersionServiceUtil.class, "getObjectEntryVersion",
+				_getObjectEntryVersionParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectEntryId, version);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectEntryVersion)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List<com.liferay.object.model.ObjectEntryVersion>
 			getObjectEntryVersions(
 				HttpPrincipal httpPrincipal, long objectEntryId, int start,
@@ -50,7 +91,7 @@ public class ObjectEntryVersionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryVersionServiceUtil.class, "getObjectEntryVersions",
-				_getObjectEntryVersionsParameterTypes0);
+				_getObjectEntryVersionsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId, start, end);
@@ -92,7 +133,7 @@ public class ObjectEntryVersionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectEntryVersionServiceUtil.class,
 				"getObjectEntryVersionsCount",
-				_getObjectEntryVersionsCountParameterTypes1);
+				_getObjectEntryVersionsCountParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryId);
@@ -128,9 +169,11 @@ public class ObjectEntryVersionServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectEntryVersionServiceHttp.class);
 
-	private static final Class<?>[] _getObjectEntryVersionsParameterTypes0 =
+	private static final Class<?>[] _getObjectEntryVersionParameterTypes0 =
+		new Class[] {long.class, int.class};
+	private static final Class<?>[] _getObjectEntryVersionsParameterTypes1 =
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[]
-		_getObjectEntryVersionsCountParameterTypes1 = new Class[] {long.class};
+		_getObjectEntryVersionsCountParameterTypes2 = new Class[] {long.class};
 
 }

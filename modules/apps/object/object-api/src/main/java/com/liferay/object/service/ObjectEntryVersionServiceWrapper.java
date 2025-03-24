@@ -29,6 +29,15 @@ public class ObjectEntryVersionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntryVersion getObjectEntryVersion(
+			long objectEntryId, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryVersionService.getObjectEntryVersion(
+			objectEntryId, version);
+	}
+
+	@Override
 	public java.util.List<com.liferay.object.model.ObjectEntryVersion>
 			getObjectEntryVersions(long objectEntryId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

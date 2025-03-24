@@ -265,6 +265,13 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().getObjectEntryVersion(objectEntryVersionId);
 	}
 
+	public static ObjectEntryVersion getObjectEntryVersion(
+			long objectEntryId, int version)
+		throws PortalException {
+
+		return getService().getObjectEntryVersion(objectEntryId, version);
+	}
+
 	/**
 	 * Returns the object entry version with the matching UUID and company.
 	 *

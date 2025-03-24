@@ -299,6 +299,15 @@ public class ObjectEntryVersionLocalServiceWrapper
 			objectEntryVersionId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryVersion getObjectEntryVersion(
+			long objectEntryId, int version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryVersionLocalService.getObjectEntryVersion(
+			objectEntryId, version);
+	}
+
 	/**
 	 * Returns the object entry version with the matching UUID and company.
 	 *

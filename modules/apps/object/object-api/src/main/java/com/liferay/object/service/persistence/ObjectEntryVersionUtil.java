@@ -640,6 +640,74 @@ public class ObjectEntryVersionUtil {
 	}
 
 	/**
+	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or throws a <code>NoSuchObjectEntryVersionException</code> if it could not be found.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the matching object entry version
+	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
+	 */
+	public static ObjectEntryVersion findByOEI_V(
+			long objectEntryId, int version)
+		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
+
+		return getPersistence().findByOEI_V(objectEntryId, version);
+	}
+
+	/**
+	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	public static ObjectEntryVersion fetchByOEI_V(
+		long objectEntryId, int version) {
+
+		return getPersistence().fetchByOEI_V(objectEntryId, version);
+	}
+
+	/**
+	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	public static ObjectEntryVersion fetchByOEI_V(
+		long objectEntryId, int version, boolean useFinderCache) {
+
+		return getPersistence().fetchByOEI_V(
+			objectEntryId, version, useFinderCache);
+	}
+
+	/**
+	 * Removes the object entry version where objectEntryId = &#63; and version = &#63; from the database.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the object entry version that was removed
+	 */
+	public static ObjectEntryVersion removeByOEI_V(
+			long objectEntryId, int version)
+		throws com.liferay.object.exception.NoSuchObjectEntryVersionException {
+
+		return getPersistence().removeByOEI_V(objectEntryId, version);
+	}
+
+	/**
+	 * Returns the number of object entry versions where objectEntryId = &#63; and version = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the number of matching object entry versions
+	 */
+	public static int countByOEI_V(long objectEntryId, int version) {
+		return getPersistence().countByOEI_V(objectEntryId, version);
+	}
+
+	/**
 	 * Caches the object entry version in the entity cache if it is enabled.
 	 *
 	 * @param objectEntryVersion the object entry version

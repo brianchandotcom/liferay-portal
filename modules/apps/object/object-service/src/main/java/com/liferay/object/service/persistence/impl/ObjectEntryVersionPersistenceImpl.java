@@ -1720,6 +1720,191 @@ public class ObjectEntryVersionPersistenceImpl
 	private static final String _FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2 =
 		"objectEntryVersion.objectEntryId = ?";
 
+	private FinderPath _finderPathFetchByOEI_V;
+
+	/**
+	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or throws a <code>NoSuchObjectEntryVersionException</code> if it could not be found.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the matching object entry version
+	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
+	 */
+	@Override
+	public ObjectEntryVersion findByOEI_V(long objectEntryId, int version)
+		throws NoSuchObjectEntryVersionException {
+
+		ObjectEntryVersion objectEntryVersion = fetchByOEI_V(
+			objectEntryId, version);
+
+		if (objectEntryVersion == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("objectEntryId=");
+			sb.append(objectEntryId);
+
+			sb.append(", version=");
+			sb.append(version);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchObjectEntryVersionException(sb.toString());
+		}
+
+		return objectEntryVersion;
+	}
+
+	/**
+	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	@Override
+	public ObjectEntryVersion fetchByOEI_V(long objectEntryId, int version) {
+		return fetchByOEI_V(objectEntryId, version, true);
+	}
+
+	/**
+	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	@Override
+	public ObjectEntryVersion fetchByOEI_V(
+		long objectEntryId, int version, boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {objectEntryId, version};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByOEI_V, finderArgs, this);
+		}
+
+		if (result instanceof ObjectEntryVersion) {
+			ObjectEntryVersion objectEntryVersion = (ObjectEntryVersion)result;
+
+			if ((objectEntryId != objectEntryVersion.getObjectEntryId()) ||
+				(version != objectEntryVersion.getVersion())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_OEI_V_OBJECTENTRYID_2);
+
+			sb.append(_FINDER_COLUMN_OEI_V_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectEntryId);
+
+				queryPos.add(version);
+
+				List<ObjectEntryVersion> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByOEI_V, finderArgs, list);
+					}
+				}
+				else {
+					ObjectEntryVersion objectEntryVersion = list.get(0);
+
+					result = objectEntryVersion;
+
+					cacheResult(objectEntryVersion);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ObjectEntryVersion)result;
+		}
+	}
+
+	/**
+	 * Removes the object entry version where objectEntryId = &#63; and version = &#63; from the database.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the object entry version that was removed
+	 */
+	@Override
+	public ObjectEntryVersion removeByOEI_V(long objectEntryId, int version)
+		throws NoSuchObjectEntryVersionException {
+
+		ObjectEntryVersion objectEntryVersion = findByOEI_V(
+			objectEntryId, version);
+
+		return remove(objectEntryVersion);
+	}
+
+	/**
+	 * Returns the number of object entry versions where objectEntryId = &#63; and version = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the number of matching object entry versions
+	 */
+	@Override
+	public int countByOEI_V(long objectEntryId, int version) {
+		ObjectEntryVersion objectEntryVersion = fetchByOEI_V(
+			objectEntryId, version);
+
+		if (objectEntryVersion == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_OEI_V_OBJECTENTRYID_2 =
+		"objectEntryVersion.objectEntryId = ? AND ";
+
+	private static final String _FINDER_COLUMN_OEI_V_VERSION_2 =
+		"objectEntryVersion.version = ?";
+
 	public ObjectEntryVersionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1744,6 +1929,14 @@ public class ObjectEntryVersionPersistenceImpl
 	public void cacheResult(ObjectEntryVersion objectEntryVersion) {
 		entityCache.putResult(
 			ObjectEntryVersionImpl.class, objectEntryVersion.getPrimaryKey(),
+			objectEntryVersion);
+
+		finderCache.putResult(
+			_finderPathFetchByOEI_V,
+			new Object[] {
+				objectEntryVersion.getObjectEntryId(),
+				objectEntryVersion.getVersion()
+			},
 			objectEntryVersion);
 	}
 
@@ -1816,6 +2009,18 @@ public class ObjectEntryVersionPersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(ObjectEntryVersionImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		ObjectEntryVersionModelImpl objectEntryVersionModelImpl) {
+
+		Object[] args = new Object[] {
+			objectEntryVersionModelImpl.getObjectEntryId(),
+			objectEntryVersionModelImpl.getVersion()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByOEI_V, args, objectEntryVersionModelImpl);
 	}
 
 	/**
@@ -2009,6 +2214,8 @@ public class ObjectEntryVersionPersistenceImpl
 		entityCache.putResult(
 			ObjectEntryVersionImpl.class, objectEntryVersionModelImpl, false,
 			true);
+
+		cacheUniqueFindersCache(objectEntryVersionModelImpl);
 
 		if (isNew) {
 			objectEntryVersion.setNew(false);
@@ -2350,6 +2557,11 @@ public class ObjectEntryVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectEntryId",
 			new String[] {Long.class.getName()}, new String[] {"objectEntryId"},
 			false);
+
+		_finderPathFetchByOEI_V = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByOEI_V",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"objectEntryId", "version"}, true);
 
 		ObjectEntryVersionUtil.setPersistence(this);
 	}

@@ -29,6 +29,8 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -60,6 +62,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -67,12 +70,14 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -83,6 +88,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -221,6 +227,148 @@ public class RenderLayoutStructureTagTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@FeatureFlags("LPD-21926")
+	@Test
+	@TestInfo("LPD-50584")
+	public void testDisplayPageWithFormWithFriendlyURLInfoField()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, true, true, true,
+				false, false, RandomTestUtil.randomLocaleStringMap(),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				ListUtil.fromArray(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "text")));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		objectDefinition.setEnableFriendlyURLCustomization(true);
+
+		long classNameId = _portal.getClassNameId(
+			objectDefinition.getClassName());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(), classNameId, 0, true,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
+			false, String.valueOf(classNameId), "0", draftLayout,
+			_layoutStructureProvider, segmentsExperienceId);
+
+		LayoutStructure layoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				draftLayout.getPlid(), segmentsExperienceId);
+
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
+		_formManager.addFragmentEntryLinksLayoutStructureItems(
+			addedFragmentEntryLinks, _jsonFactory.createJSONObject(),
+			(FormStyledLayoutStructureItem)
+				layoutStructure.getLayoutStructureItem(
+					jsonObject.getString("addedItemId")),
+			true, draftLayout, layoutStructure,
+			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
+			_serviceContext, null);
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				draftLayout.getGroupId(), draftLayout.getPlid(),
+				segmentsExperienceId, layoutStructure.toString());
+
+		for (FragmentEntryLink addedFragmentEntryLink :
+				addedFragmentEntryLinks) {
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					_fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					addedFragmentEntryLink);
+			}
+		}
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		layoutStructure = _layoutStructureProvider.getLayoutStructure(
+			layout.getPlid(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		Assert.assertEquals(
+			MapUtil.toString(fragmentLayoutStructureItems), 3,
+			fragmentLayoutStructureItems.size());
+
+		String content = _getRenderLayoutHTML(layout);
+
+		for (Map.Entry<Long, LayoutStructureItem> entry :
+				fragmentLayoutStructureItems.entrySet()) {
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					entry.getKey());
+
+			if (Objects.equals(
+					fragmentEntryLink.getRendererKey(),
+					"INPUTS-submit-button")) {
+
+				continue;
+			}
+
+			JSONObject editableValueJSONObject = _jsonFactory.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+
+			JSONObject fremarkerFragmentEntryProcessorJSONObject =
+				editableValueJSONObject.getJSONObject(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+			String expectedContent = StringBundler.concat(
+				"id=\"", fragmentEntryLink.getNamespace(),
+				"-text-input\" name=\"text\" placeholder=\"\" type=\"text\" ",
+				"value=\"");
+
+			if (Objects.equals(
+					fremarkerFragmentEntryProcessorJSONObject.getString(
+						"inputFieldId"),
+					"ObjectEntry_objectEntryFriendlyURL")) {
+
+				expectedContent = StringBundler.concat(
+					"id=\"", fragmentEntryLink.getNamespace(),
+					"-friendly-url-input\" name=\"objectEntryFriendlyURL\" ",
+					"type=\"text\" value=\"");
+			}
+
+			Assert.assertTrue(
+				content,
+				StringUtil.contains(
+					content, expectedContent + StringPool.QUOTE,
+					StringPool.BLANK));
+		}
 	}
 
 	@Test
@@ -2861,11 +3009,18 @@ public class RenderLayoutStructureTagTest {
 	private EntityCache _entityCache;
 
 	@Inject
+	private FormManager _formManager;
+
+	@Inject
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
@@ -2909,6 +3064,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

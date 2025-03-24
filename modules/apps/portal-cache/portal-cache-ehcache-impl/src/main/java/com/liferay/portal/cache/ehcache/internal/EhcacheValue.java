@@ -27,11 +27,9 @@ public class EhcacheValue implements Serializable {
 			return true;
 		}
 
-		if (!(other instanceof EhcacheValue)) {
+		if (!(other instanceof EhcacheValue ehcacheValue)) {
 			return false;
 		}
-
-		EhcacheValue ehcacheValue = (EhcacheValue)other;
 
 		return Objects.equals(_value, ehcacheValue._value);
 	}

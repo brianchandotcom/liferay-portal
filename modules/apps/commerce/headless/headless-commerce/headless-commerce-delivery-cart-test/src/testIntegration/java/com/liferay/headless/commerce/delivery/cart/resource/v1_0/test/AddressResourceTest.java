@@ -19,6 +19,7 @@ import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Address;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
@@ -270,14 +271,14 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 
 		_commerceAddress = _commerceAddressLocalService.addCommerceAddress(
 			RandomTestUtil.randomString(), AccountEntry.class.getName(),
-			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
+			_accountEntry.getAccountEntryId(), _country.getCountryId(),
+			_region.getRegionId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), String.valueOf(30133),
-			_region.getRegionId(), _country.getCountryId(),
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK,
 			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
-			_serviceContext);
+			String.valueOf(30133), _serviceContext);
 
 		return _commerceAddress;
 	}

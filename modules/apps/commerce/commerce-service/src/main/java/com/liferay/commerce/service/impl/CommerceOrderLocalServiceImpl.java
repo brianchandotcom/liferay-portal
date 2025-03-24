@@ -8,6 +8,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
 import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
@@ -2725,18 +2726,25 @@ public class CommerceOrderLocalServiceImpl
 		long commerceAddressId = commerceAddressIdGetter.apply(commerceOrder);
 
 		if (commerceAddressId > 0) {
+			commerceAddress = _commerceAddressLocalService.getCommerceAddress(
+				commerceAddressId);
+
 			commerceAddress =
 				_commerceAddressLocalService.updateCommerceAddress(
-					commerceAddressId, name, description, street1, street2,
-					street3, city, zip, regionId, countryId, phoneNumber, false,
-					false, serviceContext);
+					commerceAddress.getExternalReferenceCode(),
+					commerceAddressId, countryId, regionId, city, description,
+					name, phoneNumber, street1, street2, street3,
+					StringPool.BLANK, commerceAddress.getType(), zip,
+					serviceContext);
 		}
 		else {
 			commerceAddress = _commerceAddressLocalService.addCommerceAddress(
-				commerceOrder.getModelClassName(),
-				commerceOrder.getCommerceOrderId(), name, description, street1,
-				street2, street3, city, zip, regionId, countryId, phoneNumber,
-				false, false, serviceContext);
+				StringPool.BLANK, commerceOrder.getModelClassName(),
+				commerceOrder.getCommerceOrderId(), countryId, regionId, city,
+				description, name, phoneNumber, street1, street2, street3,
+				StringPool.BLANK,
+				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING, zip,
+				serviceContext);
 		}
 
 		commerceAddressIdSetter.accept(

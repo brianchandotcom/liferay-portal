@@ -15,6 +15,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.exception.NoSuchCountryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -153,17 +154,17 @@ public class CommerceAccountsImporter {
 			}
 		}
 
-		String street1 = jsonObject.getString("street1");
-		String city = jsonObject.getString("city");
-		String zip = jsonObject.getString("zip");
-
 		// Add Commerce Address
 
 		_commerceAddressLocalService.addCommerceAddress(
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId(),
-			accountEntry.getName(), StringPool.BLANK, street1, StringPool.BLANK,
-			StringPool.BLANK, city, zip, regionId, country.getCountryId(),
-			StringPool.BLANK, true, true, serviceContext);
+			StringPool.BLANK, AccountEntry.class.getName(),
+			accountEntry.getAccountEntryId(), country.getCountryId(), regionId,
+			jsonObject.getString("city"), StringPool.BLANK,
+			accountEntry.getName(), StringPool.BLANK,
+			jsonObject.getString("street1"), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK,
+			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
+			jsonObject.getString("zip"), serviceContext);
 
 		// Add Company Logo
 

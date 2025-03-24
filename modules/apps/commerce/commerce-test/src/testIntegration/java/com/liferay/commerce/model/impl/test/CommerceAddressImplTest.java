@@ -11,6 +11,7 @@ import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Region;
@@ -157,12 +158,13 @@ public class CommerceAddressImplTest {
 
 		CommerceAddress commerceAddress =
 			_commerceAddressLocalService.addCommerceAddress(
-				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				StringPool.BLANK, AccountEntry.class.getName(),
+				_accountEntry.getAccountEntryId(), country.getCountryId(),
+				region.getRegionId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), region.getRegionId(),
-				country.getCountryId(), RandomTestUtil.randomString(), type,
+				StringPool.BLANK, type, RandomTestUtil.randomString(),
 				_serviceContext);
 
 		commerceAddress.setLatitude(RandomTestUtil.nextDouble());

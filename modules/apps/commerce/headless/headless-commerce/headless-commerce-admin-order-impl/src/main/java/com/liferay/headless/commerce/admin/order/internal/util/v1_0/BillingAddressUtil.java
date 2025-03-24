@@ -5,11 +5,13 @@
 
 package com.liferay.headless.commerce.admin.order.internal.util.v1_0;
 
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
@@ -61,13 +63,15 @@ public class BillingAddressUtil {
 			commerceOrder.getCompanyId(), billingAddress.getCountryISOCode());
 
 		return commerceAddressService.addCommerceAddress(
-			commerceOrder.getModelClassName(),
-			commerceOrder.getCommerceOrderId(), billingAddress.getName(),
-			billingAddress.getDescription(), billingAddress.getStreet1(),
-			billingAddress.getStreet2(), billingAddress.getStreet3(),
-			billingAddress.getCity(), billingAddress.getZip(),
-			_getRegionId(billingAddress, null, country), country.getCountryId(),
-			billingAddress.getPhoneNumber(), false, false, serviceContext);
+			StringPool.BLANK, commerceOrder.getModelClassName(),
+			commerceOrder.getCommerceOrderId(), country.getCountryId(),
+			_getRegionId(billingAddress, null, country),
+			billingAddress.getCity(), billingAddress.getDescription(),
+			billingAddress.getName(), billingAddress.getPhoneNumber(),
+			billingAddress.getStreet1(), billingAddress.getStreet2(),
+			billingAddress.getStreet3(), StringPool.BLANK,
+			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
+			billingAddress.getZip(), serviceContext);
 	}
 
 	private static long _getCountryId(

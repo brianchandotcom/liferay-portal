@@ -22,6 +22,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Region;
@@ -168,14 +169,14 @@ public class CommerceCheckoutStepHttpHelperTest {
 		}
 
 		return _commerceAddressLocalService.addCommerceAddress(
-			AccountEntry.class.getName(), commerceAccountId,
+			StringPool.BLANK, AccountEntry.class.getName(), commerceAccountId,
+			_country.getCountryId(), _region.getRegionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			String.valueOf(30133), _region.getRegionId(),
-			_country.getCountryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), StringPool.BLANK,
 			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
-			_serviceContext);
+			String.valueOf(30133), _serviceContext);
 	}
 
 	@Inject

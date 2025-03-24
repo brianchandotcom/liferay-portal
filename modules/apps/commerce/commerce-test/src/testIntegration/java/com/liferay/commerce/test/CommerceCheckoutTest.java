@@ -834,12 +834,13 @@ public class CommerceCheckoutTest {
 		}
 
 		return CommerceAddressLocalServiceUtil.addCommerceAddress(
-			AccountEntry.class.getName(), commerceOrder.getCommerceAccountId(),
+			StringPool.BLANK, AccountEntry.class.getName(),
+			commerceOrder.getCommerceAccountId(), country.getCountryId(), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), 0, country.getCountryId(),
-			RandomTestUtil.randomString(), addressType, _serviceContext);
+			RandomTestUtil.randomString(), StringPool.BLANK, addressType,
+			RandomTestUtil.randomString(), _serviceContext);
 	}
 
 	private static Company _company;

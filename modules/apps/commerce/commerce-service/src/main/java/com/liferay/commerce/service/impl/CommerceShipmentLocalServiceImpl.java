@@ -25,6 +25,7 @@ import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -852,10 +853,10 @@ public class CommerceShipmentLocalServiceImpl
 
 		return _commerceAddressLocalService.addCommerceAddress(
 			externalReferenceCode, commerceShipment.getModelClassName(),
-			commerceShipment.getCommerceShipmentId(), name, description,
-			street1, street2, street3, city, zip, regionId, countryId,
-			phoneNumber,
-			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
+			commerceShipment.getCommerceShipmentId(), countryId, regionId, city,
+			description, name, phoneNumber, street1, street2, street3,
+			StringPool.BLANK,
+			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING, zip,
 			serviceContext);
 	}
 

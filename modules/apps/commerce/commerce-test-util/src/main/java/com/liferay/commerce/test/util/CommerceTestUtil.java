@@ -8,6 +8,7 @@ package com.liferay.commerce.test.util;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -541,12 +542,14 @@ public class CommerceTestUtil {
 		Region region = _setUpRegion(country, serviceContext);
 
 		return CommerceAddressLocalServiceUtil.addCommerceAddress(
-			User.class.getName(), userId, RandomTestUtil.randomString(),
+			StringPool.BLANK, User.class.getName(), userId,
+			country.getCountryId(), region.getRegionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), String.valueOf(30133),
-			region.getRegionId(), country.getCountryId(),
-			RandomTestUtil.randomString(), false, false, serviceContext);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
+			String.valueOf(30133), serviceContext);
 	}
 
 	public static CommerceChannelRel addWarehouseCommerceChannelRel(

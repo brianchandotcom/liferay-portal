@@ -490,13 +490,13 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder.getCompanyId(), address.getCountryISOCode());
 
 		return _commerceAddressService.addCommerceAddress(
-			commerceOrder.getModelClassName(),
-			commerceOrder.getCommerceOrderId(), address.getName(),
-			address.getDescription(), address.getStreet1(),
-			address.getStreet2(), address.getStreet3(), address.getCity(),
-			address.getZip(), _getRegionId(null, country, address),
-			country.getCountryId(), address.getPhoneNumber(), type,
-			serviceContext);
+			StringPool.BLANK, commerceOrder.getModelClassName(),
+			commerceOrder.getCommerceOrderId(), country.getCountryId(),
+			_getRegionId(null, country, address), address.getCity(),
+			address.getDescription(), address.getName(),
+			address.getPhoneNumber(), address.getStreet1(),
+			address.getStreet2(), address.getStreet3(), StringPool.BLANK, type,
+			address.getZip(), serviceContext);
 	}
 
 	private CommerceOrder _addCommerceOrder(
@@ -1172,19 +1172,20 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		Country country = commerceAddress.getCountry();
 
 		_commerceAddressService.updateCommerceAddress(
-			commerceAddress.getCommerceAddressId(), address.getName(),
+			commerceAddress.getExternalReferenceCode(),
+			commerceAddress.getCommerceAddressId(), country.getCountryId(),
+			_getRegionId(commerceAddress, country, address), address.getCity(),
 			GetterUtil.get(
 				address.getDescription(), commerceAddress.getDescription()),
+			address.getName(),
+			GetterUtil.get(
+				address.getPhoneNumber(), commerceAddress.getPhoneNumber()),
 			address.getStreet1(),
 			GetterUtil.get(address.getStreet2(), commerceAddress.getStreet2()),
 			GetterUtil.get(address.getStreet3(), commerceAddress.getStreet3()),
-			address.getCity(),
+			commerceAddress.getSubtype(), type,
 			GetterUtil.get(address.getZip(), commerceAddress.getZip()),
-			_getRegionId(commerceAddress, country, address),
-			country.getCountryId(),
-			GetterUtil.get(
-				address.getPhoneNumber(), commerceAddress.getPhoneNumber()),
-			type, serviceContext);
+			serviceContext);
 	}
 
 	private void _updateOrder(CommerceOrder commerceOrder, Cart cart)

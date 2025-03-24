@@ -6,6 +6,7 @@
 package com.liferay.commerce.address.content.web.internal.portlet.action;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceAddressCityException;
 import com.liferay.commerce.exception.CommerceAddressCountryException;
@@ -13,10 +14,10 @@ import com.liferay.commerce.exception.CommerceAddressStreetException;
 import com.liferay.commerce.exception.NoSuchAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -97,45 +98,70 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private int _toType(ActionRequest actionRequest) {
+		int type = CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING;
+
+		boolean defaultBilling = ParamUtil.getBoolean(
+			actionRequest, "defaultBilling");
+		boolean defaultShipping = ParamUtil.getBoolean(
+			actionRequest, "defaultShipping");
+
+		if (defaultBilling && !defaultShipping) {
+			type = CommerceAddressConstants.ADDRESS_TYPE_BILLING;
+		}
+		else if (!defaultBilling && defaultShipping) {
+			type = CommerceAddressConstants.ADDRESS_TYPE_SHIPPING;
+		}
+
+		return type;
+	}
+
 	private void _updateCommerceAddress(ActionRequest actionRequest)
 		throws Exception {
 
 		long commerceAddressId = ParamUtil.getLong(
 			actionRequest, "commerceAddressId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		String street1 = ParamUtil.getString(actionRequest, "street1");
-		String street2 = ParamUtil.getString(actionRequest, "street2");
-		String street3 = ParamUtil.getString(actionRequest, "street3");
-		String city = ParamUtil.getString(actionRequest, "city");
-		String zip = ParamUtil.getString(actionRequest, "zip");
-		long regionId = ParamUtil.getLong(actionRequest, "regionId");
-		long countryId = ParamUtil.getLong(actionRequest, "countryId");
-		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
-		boolean defaultBilling = ParamUtil.getBoolean(
-			actionRequest, "defaultBilling");
-		boolean defaultShipping = ParamUtil.getBoolean(
-			actionRequest, "defaultShipping");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceAddress.class.getName(), actionRequest);
-
 		if (commerceAddressId <= 0) {
 			long commerceAccountId = ParamUtil.getLong(
 				actionRequest, "commerceAccountId");
 
 			_commerceAddressService.addCommerceAddress(
-				AccountEntry.class.getName(), commerceAccountId, name,
-				description, street1, street2, street3, city, zip, regionId,
-				countryId, phoneNumber, defaultBilling, defaultShipping,
-				serviceContext);
+				StringPool.BLANK, AccountEntry.class.getName(),
+				commerceAccountId,
+				ParamUtil.getLong(actionRequest, "countryId"),
+				ParamUtil.getLong(actionRequest, "regionId"),
+				ParamUtil.getString(actionRequest, "city"),
+				ParamUtil.getString(actionRequest, "description"),
+				ParamUtil.getString(actionRequest, "name"),
+				ParamUtil.getString(actionRequest, "phoneNumber"),
+				ParamUtil.getString(actionRequest, "street1"),
+				ParamUtil.getString(actionRequest, "street2"),
+				ParamUtil.getString(actionRequest, "street3"), StringPool.BLANK,
+				_toType(actionRequest),
+				ParamUtil.getString(actionRequest, "zip"),
+				ServiceContextFactory.getInstance(
+					CommerceAddress.class.getName(), actionRequest));
 		}
 		else {
+			CommerceAddress commerceAddress =
+				_commerceAddressService.getCommerceAddress(commerceAddressId);
+
 			_commerceAddressService.updateCommerceAddress(
-				commerceAddressId, name, description, street1, street2, street3,
-				city, zip, regionId, countryId, phoneNumber, defaultBilling,
-				defaultShipping, serviceContext);
+				commerceAddress.getExternalReferenceCode(), commerceAddressId,
+				ParamUtil.getLong(actionRequest, "countryId"),
+				ParamUtil.getLong(actionRequest, "regionId"),
+				ParamUtil.getString(actionRequest, "city"),
+				ParamUtil.getString(actionRequest, "description"),
+				ParamUtil.getString(actionRequest, "name"),
+				ParamUtil.getString(actionRequest, "phoneNumber"),
+				ParamUtil.getString(actionRequest, "street1"),
+				ParamUtil.getString(actionRequest, "street2"),
+				ParamUtil.getString(actionRequest, "street3"),
+				commerceAddress.getSubtype(), _toType(actionRequest),
+				ParamUtil.getString(actionRequest, "zip"),
+				ServiceContextFactory.getInstance(
+					CommerceAddress.class.getName(), actionRequest));
 		}
 	}
 

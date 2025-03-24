@@ -33,6 +33,7 @@ import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountResource
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -533,20 +534,23 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 							accountAddressId);
 
 					_commerceAddressService.updateCommerceAddress(
+						exisitingCommerceAddress.getExternalReferenceCode(),
 						exisitingCommerceAddress.getCommerceAddressId(),
-						accountAddress.getName(),
+						country.getCountryId(),
+						_getRegionId(country, accountAddress),
+						accountAddress.getCity(),
 						accountAddress.getDescription(),
+						accountAddress.getName(),
+						accountAddress.getPhoneNumber(),
 						accountAddress.getStreet1(),
 						accountAddress.getStreet2(),
-						accountAddress.getStreet3(), accountAddress.getCity(),
-						accountAddress.getZip(),
-						_getRegionId(country, accountAddress),
-						country.getCountryId(), accountAddress.getPhoneNumber(),
+						accountAddress.getStreet3(),
+						exisitingCommerceAddress.getSubtype(),
 						GetterUtil.getInteger(
 							accountAddress.getType(),
 							CommerceAddressConstants.
 								ADDRESS_TYPE_BILLING_AND_SHIPPING),
-						serviceContext);
+						accountAddress.getZip(), serviceContext);
 
 					if (GetterUtil.getBoolean(
 							accountAddress.getDefaultBilling())) {
@@ -575,19 +579,20 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 							accountAddress.getExternalReferenceCode(), null),
 						AccountEntry.class.getName(),
 						accountEntry.getAccountEntryId(),
-						accountAddress.getName(),
+						country.getCountryId(),
+						_getRegionId(country, accountAddress),
+						accountAddress.getCity(),
 						accountAddress.getDescription(),
+						accountAddress.getName(),
+						accountAddress.getPhoneNumber(),
 						accountAddress.getStreet1(),
 						accountAddress.getStreet2(),
-						accountAddress.getStreet3(), accountAddress.getCity(),
-						accountAddress.getZip(),
-						_getRegionId(country, accountAddress),
-						country.getCountryId(), accountAddress.getPhoneNumber(),
+						accountAddress.getStreet3(), StringPool.BLANK,
 						GetterUtil.getInteger(
 							accountAddress.getType(),
 							CommerceAddressConstants.
 								ADDRESS_TYPE_BILLING_AND_SHIPPING),
-						serviceContext);
+						accountAddress.getZip(), serviceContext);
 
 				if (GetterUtil.getBoolean(accountAddress.getDefaultBilling())) {
 					_accountEntryLocalService.updateDefaultBillingAddressId(

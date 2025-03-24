@@ -10,6 +10,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -52,7 +53,7 @@ public class DefaultStyleBookEntryUtilTest {
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
-		layoutSet.setThemeId(_THEME_ID);
+		layoutSet.setThemeId(_CLASSIC_THEME_ID);
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 	}
@@ -90,7 +91,7 @@ public class DefaultStyleBookEntryUtilTest {
 	}
 
 	@Test
-	public void testGetDefaultStyleBookEntry() throws Exception {
+	public void testGetDefaultStyleBookEntry1() throws Exception {
 		Layout masterLayoutBasedLayout = _getMasterLayoutBasedLayout();
 
 		Layout masterLayout = _layoutLocalService.getLayout(
@@ -121,6 +122,36 @@ public class DefaultStyleBookEntryUtilTest {
 		defaultStyleBookEntry =
 			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
 				masterLayoutBasedLayout);
+
+		Assert.assertEquals(
+			styleBookEntry2.getStyleBookEntryId(),
+			defaultStyleBookEntry.getStyleBookEntryId());
+	}
+
+	@FeatureFlags("LPD-30204")
+	@Test
+	public void testGetDefaultStyleBookEntry2() throws Exception {
+		StyleBookEntry styleBookEntry1 = _addStyleBookEntry(false);
+
+		_layout.setStyleBookEntryId(styleBookEntry1.getStyleBookEntryId());
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		_layout = _layoutLocalService.updateLookAndFeel(
+			_group.getGroupId(), _layout.isPrivateLayout(),
+			_layout.getLayoutId(), _DIALECT_THEME_ID, "01", StringPool.BLANK);
+
+		Assert.assertNull(
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(_layout));
+
+		StyleBookEntry styleBookEntry2 =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), true, null, RandomTestUtil.randomString(),
+				null, _DIALECT_THEME_ID, null);
+
+		StyleBookEntry defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(_layout);
 
 		Assert.assertEquals(
 			styleBookEntry2.getStyleBookEntryId(),
@@ -244,7 +275,8 @@ public class DefaultStyleBookEntryUtilTest {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), false, null, name, null, _THEME_ID, null);
+				_group.getGroupId(), false, null, name, null, _CLASSIC_THEME_ID,
+				null);
 
 		Assert.assertEquals(
 			name,
@@ -258,7 +290,7 @@ public class DefaultStyleBookEntryUtilTest {
 		return _styleBookEntryLocalService.addStyleBookEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_group.getGroupId(), defaultStyleBookEntry, null,
-			RandomTestUtil.randomString(), null, _THEME_ID, null);
+			RandomTestUtil.randomString(), null, _CLASSIC_THEME_ID, null);
 	}
 
 	private Layout _getMasterLayoutBasedLayout() throws Exception {
@@ -294,7 +326,9 @@ public class DefaultStyleBookEntryUtilTest {
 				masterLayoutBasedLayout, null, null));
 	}
 
-	private static final String _THEME_ID = RandomTestUtil.randomString();
+	private static final String _CLASSIC_THEME_ID = "classic_WAR_classictheme";
+
+	private static final String _DIALECT_THEME_ID = "dialect_WAR_dialecttheme";
 
 	private Group _group;
 	private Layout _layout;

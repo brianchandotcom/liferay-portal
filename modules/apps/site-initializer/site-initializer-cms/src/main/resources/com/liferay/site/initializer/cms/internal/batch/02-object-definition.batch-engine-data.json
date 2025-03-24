@@ -28,6 +28,12 @@
 			"name": "BasicDocument",
 			"objectActions": [
 			],
+			"objectDefinitionSettings":[
+				{
+					"name":"acceptAllGroups",
+					"value":"true"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Long",
@@ -120,6 +126,12 @@
 			},
 			"modifiable": true,
 			"name": "BasicWebContent",
+			"objectDefinitionSettings":[
+				{
+					"name":"acceptAllGroups",
+					"value":"true"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Clob",
@@ -192,6 +204,12 @@
 			},
 			"modifiable": true,
 			"name": "Blog",
+			"objectDefinitionSettings":[
+				{
+					"name":"acceptAllGroups",
+					"value":"true"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Clob",
@@ -324,6 +342,12 @@
 			},
 			"modifiable": true,
 			"name": "ExternalVideo",
+			"objectDefinitionSettings":[
+				{
+					"name":"acceptAllGroups",
+					"value":"true"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -375,6 +399,12 @@
 			},
 			"modifiable": true,
 			"name": "KnowledgeBase",
+			"objectDefinitionSettings":[
+				{
+					"name":"acceptAllGroups",
+					"value":"true"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Clob",

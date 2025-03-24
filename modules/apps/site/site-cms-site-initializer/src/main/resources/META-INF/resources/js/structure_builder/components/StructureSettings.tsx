@@ -25,6 +25,7 @@ import focusInvalidInput from '../utils/focusInvalidInput';
 import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
 import Input from './Input';
+import Spaces from './Spaces';
 import StructureFieldSettings from './StructureFieldSettings';
 
 export default function () {
@@ -148,6 +149,8 @@ function GeneralTab() {
 				}
 				value={erc}
 			/>
+
+			<Spaces />
 		</div>
 	);
 }

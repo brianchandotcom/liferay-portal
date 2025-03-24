@@ -9,21 +9,18 @@ export const EXECUTION_MODES = {
 			'reindex-mode-concurrent-description'
 		),
 		label: Liferay.Language.get('concurrent'),
-		showBetaBadge: true,
 		symbol: 'change-list',
 		value: 'concurrent',
 	},
 	FULL: {
 		description: Liferay.Language.get('reindex-mode-full-description'),
 		label: Liferay.Language.get('full'),
-		showBetaBadge: false,
 		symbol: 'globe-lines',
 		value: 'full',
 	},
 	SYNC: {
 		description: Liferay.Language.get('reindex-mode-sync-description'),
 		label: Liferay.Language.get('sync'),
-		showBetaBadge: true,
 		symbol: 'reload',
 		value: 'sync',
 	},

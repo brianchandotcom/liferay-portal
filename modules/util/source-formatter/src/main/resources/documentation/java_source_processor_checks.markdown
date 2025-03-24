@@ -91,7 +91,7 @@ JavaDuplicateVariableCheck | [Miscellaneous](miscellaneous_checks.markdown#misce
 [JavaElseStatementCheck](check/java_else_statement_check.markdown#javaelsestatementcheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Finds unnecessary `else` statements (when the `if` statement ends with a `return` statement). |
 JavaEmptyLineAfterSuperCallCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Finds missing empty line after a `super` call. |
 JavaEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines. |
-JavaEntityModelToEntityFieldsMapCallCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts parameters in EntityModel.toEntityFieldsMap call. |
+JavaEntityFieldsMapOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts entity fields when calling `EntityFieldsMapFactory.create` and `EntityModel.toEntityFieldsMap`. |
 JavaExceptionCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks that variable names of exceptions in `catch` statements follow naming conventions. |
 JavaFeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used. |
 JavaFeatureFlagsAndTestInfoAnnotationCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts the values in `@FeatureFlags` and `@TestInfo` annotation. |

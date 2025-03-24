@@ -11,16 +11,16 @@
 <liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
 
 <aui:style type="text/css">
-	.portlet-body {
-		overflow: hidden;
-	}
-
 	.management-bar-wrapper {
 		background: #fff;
 		margin-left: -100%;
 		margin-right: -100%;
 		padding-left: 100%;
 		padding-right: 100%;
+	}
+
+	.portlet-body {
+		overflow: hidden;
 	}
 </aui:style>
 

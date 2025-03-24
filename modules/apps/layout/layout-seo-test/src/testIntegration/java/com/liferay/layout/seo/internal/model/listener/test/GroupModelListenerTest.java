@@ -37,7 +37,7 @@ public class GroupModelListenerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testDeleteGroup() throws Exception {
+	public void testOnAfterRemove() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		_layoutSEOSiteLocalService.updateLayoutSEOSite(

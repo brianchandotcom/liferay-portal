@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayActionRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -41,6 +42,9 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.ActionRequestFactory;
@@ -48,6 +52,8 @@ import com.liferay.portlet.ActionRequestFactory;
 import java.net.URLDecoder;
 
 import java.nio.charset.StandardCharsets;
+
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -75,6 +81,77 @@ public class LoginMVCActionCommandTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testLoginWhenQueryStringContainsPwd() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
+
+		try (CompanyConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_company.getCompanyId(),
+						"com.liferay.multi.factor.authentication.email.otp." +
+							"configuration.MFAEmailOTPConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build());
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.multi.factor.authentication.web.internal." +
+					"portlet.action.LoginMVCActionCommand",
+				LoggerTestUtil.WARN)) {
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				new MockLiferayPortletActionRequest() {
+
+					@Override
+					public Portlet getPortlet() {
+						return _portletLocalService.getPortletById(
+							LoginPortletKeys.LOGIN);
+					}
+
+					@Override
+					public String getPortletName() {
+						return LoginPortletKeys.LOGIN;
+					}
+
+					{
+						Portlet portlet = getPortlet();
+
+						PortletApp portletApp = portlet.getPortletApp();
+
+						portletApp.setSpecMajorVersion(2);
+					}
+				};
+
+			mockLiferayPortletActionRequest.setAttribute(
+				WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				(MockHttpServletRequest)
+					mockLiferayPortletActionRequest.getHttpServletRequest();
+
+			mockHttpServletRequest.setQueryString("_testPortlet_password=test");
+
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			String logEntryMessage = logEntry.getMessage();
+
+			Assert.assertTrue(
+				logEntryMessage.contains(
+					"Ignoring login attempt because the password parameter " +
+						"was found for the request with the referer header:"));
+		}
+	}
 
 	@Test
 	public void testResetPasswordValueDoesNotChangeWhenItIsTrue()
@@ -281,6 +358,7 @@ public class LoginMVCActionCommandTest {
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
+		themeDisplay.setLayoutSet(layoutSet);
 		themeDisplay.setLookAndFeel(layoutSet.getTheme(), null);
 
 		themeDisplay.setPermissionChecker(

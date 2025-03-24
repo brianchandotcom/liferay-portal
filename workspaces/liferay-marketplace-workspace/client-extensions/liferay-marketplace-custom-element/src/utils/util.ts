@@ -332,7 +332,7 @@ export async function submitBase64EncodedFile({
 
 export function safeJSONParse<T = any>(
 	value: string | null,
-	defaultValue: T = '' as T
+	defaultValue: T
 ): T {
 	if (defaultValue && typeof value !== 'string') {
 		return defaultValue as T;

@@ -283,7 +283,9 @@ test('can import custom object entries at instance level with or without permiss
 			permissions: [
 				{
 					actionIds: ['VIEW'],
+					roleExternalReferenceCode: expect.any(String),
 					roleName: 'Guest',
+					roleType: 'regular',
 				},
 			],
 		})
@@ -311,7 +313,9 @@ test('can import custom object entries at instance level with or without permiss
 			permissions: [
 				{
 					actionIds: ['VIEW'],
+					roleExternalReferenceCode: expect.any(String),
 					roleName: 'Guest',
+					roleType: 'regular',
 				},
 			],
 		})

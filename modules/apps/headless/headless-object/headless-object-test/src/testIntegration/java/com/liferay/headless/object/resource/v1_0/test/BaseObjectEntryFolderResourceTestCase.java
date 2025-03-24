@@ -200,6 +200,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		objectEntryFolder.setExternalReferenceCode(regex);
 		objectEntryFolder.setLabel(regex);
 		objectEntryFolder.setName(regex);
+		objectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
+			regex);
 		objectEntryFolder.setScopeKey(regex);
 
 		String json = ObjectEntryFolderSerDes.toJSON(objectEntryFolder);
@@ -212,6 +214,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			regex, objectEntryFolder.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectEntryFolder.getLabel());
 		Assert.assertEquals(regex, objectEntryFolder.getName());
+		Assert.assertEquals(
+			regex,
+			objectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode());
 		Assert.assertEquals(regex, objectEntryFolder.getScopeKey());
 	}
 
@@ -1694,6 +1700,20 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"parentObjectEntryFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (objectEntryFolder.
+						getParentObjectEntryFolderExternalReferenceCode() ==
+							null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"parentObjectEntryFolderId", additionalAssertFieldName)) {
 
 				if (objectEntryFolder.getParentObjectEntryFolderId() == null) {
@@ -1960,6 +1980,22 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						objectEntryFolder1.getNumberOfObjectEntryFolders(),
 						objectEntryFolder2.getNumberOfObjectEntryFolders())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parentObjectEntryFolderExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectEntryFolder1.
+							getParentObjectEntryFolderExternalReferenceCode(),
+						objectEntryFolder2.
+							getParentObjectEntryFolderExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2341,6 +2377,56 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals(
+				"parentObjectEntryFolderExternalReferenceCode")) {
+
+			Object object =
+				objectEntryFolder.
+					getParentObjectEntryFolderExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("parentObjectEntryFolderId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2451,6 +2537,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				numberOfObjectEntries = RandomTestUtil.randomInt();
 				numberOfObjectEntryFolders = RandomTestUtil.randomInt();
+				parentObjectEntryFolderExternalReferenceCode =
+					StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentObjectEntryFolderId = RandomTestUtil.randomLong();
 				scopeKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.BasePortalCache;
 import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheConfiguration;
 import com.liferay.portal.cache.ehcache.internal.events.PortalCacheCacheEventListener;
+import com.liferay.portal.cache.ehcache.internal.expiry.EhcacheExpiryValue;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
@@ -196,9 +197,9 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 			return null;
 		}
 
-		EhcacheValue ehcacheValue = (EhcacheValue)value;
+		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)value;
 
-		value = ehcacheValue.getValue();
+		value = ehcacheExpiryValue.getValue();
 
 		if (_serializable) {
 			return SerializableObjectWrapper.unwrap(value);
@@ -223,11 +224,11 @@ public abstract class BaseEhcachePortalCache<K extends Serializable, V>
 		}
 
 		if (_serializable && (value instanceof Serializable)) {
-			return new EhcacheValue(
+			return new EhcacheExpiryValue(
 				new SerializableObjectWrapper((Serializable)value), duration);
 		}
 
-		return new EhcacheValue(value, duration);
+		return new EhcacheExpiryValue(value, duration);
 	}
 
 	private final Log _log;

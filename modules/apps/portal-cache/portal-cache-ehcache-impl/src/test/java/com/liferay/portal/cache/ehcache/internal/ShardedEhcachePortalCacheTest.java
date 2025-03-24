@@ -8,6 +8,7 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheConfiguration;
+import com.liferay.portal.cache.ehcache.internal.expiry.EhcacheExpiryValue;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -732,13 +733,14 @@ public class ShardedEhcachePortalCacheTest {
 			_getShardedCacheName(_TEST_CACHE_NAME, companyId), Object.class,
 			Object.class);
 
-		EhcacheValue ehcacheValue = (EhcacheValue)cache.get(key);
+		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)cache.get(
+			key);
 
-		Assert.assertEquals(value, ehcacheValue.getValue());
+		Assert.assertEquals(value, ehcacheExpiryValue.getValue());
 
 		long actualTimeToLive = 0;
 
-		Duration duration = ehcacheValue.getTimeToLive();
+		Duration duration = ehcacheExpiryValue.getTimeToLive();
 
 		if (!duration.equals(ExpiryPolicy.INFINITE)) {
 			actualTimeToLive = duration.toSeconds();

@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.cache.ehcache.internal.BaseEhcachePortalCache;
-import com.liferay.portal.cache.ehcache.internal.EhcacheValue;
+import com.liferay.portal.cache.ehcache.internal.expiry.EhcacheExpiryValue;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
@@ -139,9 +139,9 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	}
 
 	private int _getTimeToLive(Object value) {
-		EhcacheValue ehcacheValue = (EhcacheValue)value;
+		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)value;
 
-		Duration duration = ehcacheValue.getTimeToLive();
+		Duration duration = ehcacheExpiryValue.getTimeToLive();
 
 		if (duration.equals(ExpiryPolicy.INFINITE)) {
 			return 0;
@@ -151,9 +151,9 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	}
 
 	private V _getValue(Object value) {
-		EhcacheValue ehcacheValue = (EhcacheValue)value;
+		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)value;
 
-		value = ehcacheValue.getValue();
+		value = ehcacheExpiryValue.getValue();
 
 		if (_requireSerialization) {
 			return SerializableObjectWrapper.unwrap(value);

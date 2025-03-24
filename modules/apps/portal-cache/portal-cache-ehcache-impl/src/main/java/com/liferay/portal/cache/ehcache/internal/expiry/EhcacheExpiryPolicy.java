@@ -5,8 +5,6 @@
 
 package com.liferay.portal.cache.ehcache.internal.expiry;
 
-import com.liferay.portal.cache.ehcache.internal.EhcacheValue;
-
 import java.time.Duration;
 
 import java.util.function.Supplier;
@@ -29,18 +27,18 @@ public class EhcacheExpiryPolicy implements ExpiryPolicy<Object, Object> {
 
 	@Override
 	public Duration getExpiryForCreation(Object key, Object value) {
-		EhcacheValue ehcacheValue = (EhcacheValue)value;
+		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)value;
 
-		return ehcacheValue.getTimeToLive();
+		return ehcacheExpiryValue.getTimeToLive();
 	}
 
 	@Override
 	public Duration getExpiryForUpdate(
 		Object key, Supplier<?> oldValue, Object newValue) {
 
-		EhcacheValue ehcacheValue = (EhcacheValue)newValue;
+		EhcacheExpiryValue ehcacheExpiryValue = (EhcacheExpiryValue)newValue;
 
-		return ehcacheValue.getTimeToLive();
+		return ehcacheExpiryValue.getTimeToLive();
 	}
 
 	private final ExpiryPolicy<Object, Object> _expiryPolicy;

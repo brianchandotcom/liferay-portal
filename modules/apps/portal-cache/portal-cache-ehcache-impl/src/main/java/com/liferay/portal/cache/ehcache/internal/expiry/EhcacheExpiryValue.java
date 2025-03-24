@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.cache.ehcache.internal;
+package com.liferay.portal.cache.ehcache.internal.expiry;
 
 import java.io.Serializable;
 
@@ -14,9 +14,9 @@ import java.util.Objects;
 /**
  * @author Dante Wang
  */
-public class EhcacheValue implements Serializable {
+public class EhcacheExpiryValue implements Serializable {
 
-	public EhcacheValue(Object value, Duration timeToLive) {
+	public EhcacheExpiryValue(Object value, Duration timeToLive) {
 		_value = value;
 		_timeToLive = timeToLive;
 	}
@@ -27,11 +27,11 @@ public class EhcacheValue implements Serializable {
 			return true;
 		}
 
-		if (!(other instanceof EhcacheValue ehcacheValue)) {
+		if (!(other instanceof EhcacheExpiryValue ehcacheExpiryValue)) {
 			return false;
 		}
 
-		return Objects.equals(_value, ehcacheValue._value);
+		return Objects.equals(_value, ehcacheExpiryValue._value);
 	}
 
 	public Duration getTimeToLive() {

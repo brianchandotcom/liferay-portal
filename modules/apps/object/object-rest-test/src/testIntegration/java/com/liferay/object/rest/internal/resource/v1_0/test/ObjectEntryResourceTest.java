@@ -13303,19 +13303,6 @@ public class ObjectEntryResourceTest {
 		return URLCodec.encodeURL(string);
 	}
 
-	private ValidationResponse _validate(
-			String scopeKey, ObjectEntryResource objectEntryResource,
-			ValidationRequest validationRequest)
-		throws Exception {
-
-		if (scopeKey != null) {
-			return objectEntryResource.postScopeScopeKeyValidate(
-				scopeKey, validationRequest);
-		}
-
-		return objectEntryResource.postValidate(validationRequest);
-	}
-
 	private DLFolder _getDLFolder(
 			ObjectDefinition objectDefinition, boolean showInDocsAndMedia)
 		throws Exception {
@@ -16399,6 +16386,19 @@ public class ObjectEntryResourceTest {
 		fileEntry.setName(fileName);
 
 		return JSONFactoryUtil.createJSONObject(fileEntry.toString());
+	}
+
+	private ValidationResponse _validate(
+			String scopeKey, ObjectEntryResource objectEntryResource,
+			ValidationRequest validationRequest)
+		throws Exception {
+
+		if (scopeKey != null) {
+			return objectEntryResource.postScopeScopeKeyValidate(
+				scopeKey, validationRequest);
+		}
+
+		return objectEntryResource.postValidate(validationRequest);
 	}
 
 	private static final String _ERC_VALUE_1 =

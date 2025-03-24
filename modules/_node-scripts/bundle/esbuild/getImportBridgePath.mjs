@@ -26,7 +26,9 @@ export default function getImportBridgePath(moduleName, type) {
 		throw new Error(`Invalid type: ${type}`);
 	}
 
-	return `/$/bridge/for/${type}/${moduleName}`;
+	return path.sep === '/'
+		? `/$/bridge/for/${type}/${moduleName}`
+		: `C:\\$\\bridge\\for\\${type}\\${moduleName}`;
 }
 
 /**

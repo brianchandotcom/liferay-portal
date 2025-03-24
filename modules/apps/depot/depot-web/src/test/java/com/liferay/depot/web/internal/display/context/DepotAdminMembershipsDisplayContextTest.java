@@ -223,10 +223,23 @@ public class DepotAdminMembershipsDisplayContextTest {
 
 	@Test
 	public void testGetInheritedDepotsGroupCount() throws Exception {
+		List<Group> groups = Arrays.asList(
+			_getDepotGroup(), _getNondepotGroup());
+
+		MockedStatic<GroupLocalServiceUtil> groupLocalServiceUtilMockedStatic =
+			Mockito.mockStatic(GroupLocalServiceUtil.class);
+
 		Organization organization = Mockito.mock(Organization.class);
 
 		List<Organization> organizations = Collections.singletonList(
 			organization);
+
+		groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.getOrganizationsRelatedGroups(
+				organizations)
+		).thenReturn(
+			groups
+		);
 
 		Mockito.when(
 			_user.getOrganizations()
@@ -242,19 +255,6 @@ public class DepotAdminMembershipsDisplayContextTest {
 			_user.getUserGroups()
 		).thenReturn(
 			userGroups
-		);
-
-		List<Group> groups = Arrays.asList(
-			_getDepotGroup(), _getNondepotGroup());
-
-		MockedStatic<GroupLocalServiceUtil> groupLocalServiceUtilMockedStatic =
-			Mockito.mockStatic(GroupLocalServiceUtil.class);
-
-		groupLocalServiceUtilMockedStatic.when(
-			() -> GroupLocalServiceUtil.getOrganizationsRelatedGroups(
-				organizations)
-		).thenReturn(
-			groups
 		);
 
 		DepotAdminMembershipsDisplayContext

@@ -316,7 +316,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName) && (useDeleteByERC || useDeleteById)>
 				<#assign
 					getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
-					getterJavaMethodParametersMap = {}
 					idParameterName = "id"
 				/>
 				<#if !properties?keys?seq_contains("id")>
@@ -401,22 +400,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 						}
 				}
 
-				<#list getterJavaMethodParametersMap?values as javaMethodParameter>
-					<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-						protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaName} ${schemaVarName}) throws Exception {
-
-						return ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}();
-					<#else>
-						protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
-
-						<#if properties?keys?seq_contains("id") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
-							return testDelete${schemaName}_get${javaMethodParameter.parameterName?cap_first}();
-						<#else>
-							throw new UnsupportedOperationException("This method needs to be implemented");
-						</#if>
-					</#if>
-						}
-				</#list>
 				<#continue>
 			<#else>
 				<#continue>

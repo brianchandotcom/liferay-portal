@@ -51,9 +51,11 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		_db = DBManagerUtil.getDB();
 
-		_maxPrimaryKey = RandomTestUtil.randomLong(9000, 10000);
+		_oldPrimaryKey = RandomTestUtil.randomLong(10, 10);
 
-		_minPrimaryKey = RandomTestUtil.randomLong(10, 10);
+		_newPrimaryKey = RandomTestUtil.randomLong(9000, 10000);
+
+		_staticPrimaryKey = RandomTestUtil.randomLong(11, 8999);
 	}
 
 	@Before
@@ -62,36 +64,29 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 			company -> {
 				_db.runSQL(
 					StringBundler.concat(
-						"create table TestTable (mvccVersion LONG default 0 ",
-						"not null, uuid_ VARCHAR(75) null, primaryKeyColumn ",
-						"LONG not null primary key, column1 LONG, column2 LONG",
-						", column3 LONG, column4 LONG, companyId LONG)"));
+						"create table TestTable (primaryKeyColumn LONG not ",
+						"null primary key, column1 LONG, column2 LONG, ",
+						"column3 LONG)"));
 
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into TestTable values (0, '",
-						RandomTestUtil.randomString(10), "', ", _minPrimaryKey,
-						", 1, 2, 3, 4, 1)"));
+						"insert into TestTable values (", _oldPrimaryKey,
+						", 1, 2, 3)"));
 
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into TestTable values (0, '",
-						RandomTestUtil.randomString(10), "', ",
-						RandomTestUtil.randomLong(10, 8999),
-						", 1, 2, 3, 4, 1)"));
+						"insert into TestTable values (",
+						RandomTestUtil.randomLong(10, 8999), ", 1, 2, 3)"));
 
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into TestTable values (0, '",
-						RandomTestUtil.randomString(10), "', ",
-						RandomTestUtil.randomLong(10, 8999),
-						", 1, 2, 3, 4, 1)"));
+						"insert into TestTable values (", _staticPrimaryKey,
+						", 5, 6, 7)"));
 
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into TestTable values (0, '",
-						RandomTestUtil.randomString(10), "', ", _maxPrimaryKey,
-						", 1, 2, 3, 4, 1)"));
+						"insert into TestTable values (", _newPrimaryKey,
+						", 1, 2, 3)"));
 			});
 	}
 
@@ -109,8 +104,7 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
 			new DuplicateIndexEntriesUpgradeProcess(
-				"TestTable",
-				new String[] {"column1", "column2", "column3", "column4"});
+				"TestTable", new String[] {"column1", "column2", "column3"});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
@@ -123,12 +117,13 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 		_assertDuplicates(true);
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select primaryKeyColumn from TestTable");
+				"select primaryKeyColumn from TestTable where column1 = 1 " +
+					"and column2 = 2 and column3 = 3");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
 
-			Assert.assertEquals(_minPrimaryKey, resultSet.getLong(1));
+			Assert.assertEquals(_oldPrimaryKey, resultSet.getLong(1));
 		}
 	}
 
@@ -140,8 +135,7 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
 			new DuplicateIndexEntriesUpgradeProcess(
-				"TestTable",
-				new String[] {"column1", "column2", "column3", "column4"},
+				"TestTable", new String[] {"column1", "column2", "column3"},
 				"primaryKeyColumn asc");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -155,19 +149,20 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 		_assertDuplicates(true);
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select primaryKeyColumn from TestTable");
+				"select primaryKeyColumn from TestTable where column1 = 1 " +
+					"and column2 = 2 and column3 = 3");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
 
-			Assert.assertEquals(_maxPrimaryKey, resultSet.getLong(1));
+			Assert.assertEquals(_newPrimaryKey, resultSet.getLong(1));
 		}
 	}
 
 	private void _assertDuplicates(boolean removed) throws SQLException {
 		String countSQL =
 			"select count(*) from TestTable group by column1, column2, " +
-				"column3, column4 having count(*) > 1";
+				"column3 having count(*) > 1";
 
 		if (removed) {
 			_companyLocalService.forEachCompany(
@@ -178,6 +173,20 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 							preparedStatement.executeQuery()) {
 
 						Assert.assertFalse(resultSet.next());
+					}
+				});
+
+			_companyLocalService.forEachCompany(
+				company -> {
+					try (PreparedStatement preparedStatement =
+							_connection.prepareStatement(
+								"select primaryKeyColumn from TestTable " +
+									"where primaryKeyColumn = " +
+										_staticPrimaryKey);
+						ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						Assert.assertTrue(resultSet.next());
 					}
 				});
 		}
@@ -191,7 +200,7 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 						Assert.assertTrue(resultSet.next());
 
-						Assert.assertEquals(4, resultSet.getLong(1));
+						Assert.assertEquals(3, resultSet.getLong(1));
 					}
 				});
 		}
@@ -202,7 +211,8 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 	private static Connection _connection;
 	private static DB _db;
-	private static long _maxPrimaryKey;
-	private static long _minPrimaryKey;
+	private static long _newPrimaryKey;
+	private static long _oldPrimaryKey;
+	private static long _staticPrimaryKey;
 
 }

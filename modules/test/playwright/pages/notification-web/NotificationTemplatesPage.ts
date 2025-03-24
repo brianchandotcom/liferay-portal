@@ -8,14 +8,14 @@ import {Locator, Page} from '@playwright/test';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class NotificationTemplatesPage {
-	readonly page: Page;
+	readonly emailNotificationDropdownItem: Locator;
 	readonly frontEndDatasetItemAction: Locator;
 	readonly frontEndDatasetItemActionDelete: Locator;
 	readonly newNotificationTemplateButton: Locator;
-	readonly emailNotificationDropdownItem: Locator;
+	readonly page: Page;
+	readonly userNotificationDropdownItem: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
 		this.emailNotificationDropdownItem = page
 			.getByRole('menuitem')
 			.filter({hasText: 'Email'});
@@ -25,7 +25,13 @@ export class NotificationTemplatesPage {
 		this.frontEndDatasetItemActionDelete = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
-		this.newNotificationTemplateButton = page.getByTitle('New').first();
+		this.newNotificationTemplateButton = page
+			.getByTitle('New', {exact: true})
+			.first();
+		this.page = page;
+		this.userNotificationDropdownItem = page
+			.getByRole('menuitem')
+			.filter({hasText: 'User Notification'});
 	}
 
 	getFrontEndDatasetItemLocator(notificationTemplateName: string) {

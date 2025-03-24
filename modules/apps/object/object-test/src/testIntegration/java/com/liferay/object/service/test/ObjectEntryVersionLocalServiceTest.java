@@ -387,6 +387,9 @@ public class ObjectEntryVersionLocalServiceTest {
 			).build(),
 			serviceContext);
 
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
+
 		Assert.assertTrue(objectEntry.isPending());
 		Assert.assertEquals(2, objectEntry.getVersion());
 
@@ -404,9 +407,6 @@ public class ObjectEntryVersionLocalServiceTest {
 					WorkflowConstants.STATUS_PENDING, 2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
-
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			workflowDefinitionLink);
 	}
 
 	private void _assertEquals(

@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DBColumnSizeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DuplicateRemovalUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DuplicateIndexEntriesUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
@@ -607,18 +607,18 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(31, 18, 1),
-			new DuplicateRemovalUpgradeProcess(
+			new DuplicateIndexEntriesUpgradeProcess(
 				"PortalPreferences", new String[] {"ownerType", "ownerId"}),
-			new DuplicateRemovalUpgradeProcess(
+			new DuplicateIndexEntriesUpgradeProcess(
 				"PortletItem",
 				new String[] {"groupId", "classNameId", "portletId", "name"}),
-			new DuplicateRemovalUpgradeProcess(
+			new DuplicateIndexEntriesUpgradeProcess(
 				"SocialActivitySetting",
 				new String[] {
 					"groupId", "classNameId", "activityType", "name",
 					"ctCollectionId"
 				}),
-			new DuplicateRemovalUpgradeProcess(
+			new DuplicateIndexEntriesUpgradeProcess(
 				"Ticket", new String[] {"key_"}, "ticketId asc"));
 	}
 

@@ -156,7 +156,6 @@ public class FragmentCollectionLocalServiceTest {
 		Assert.assertNull(
 			_fragmentCollectionLocalService.fetchFragmentCollection(
 				fragmentCollection.getFragmentCollectionId()));
-
 		Assert.assertNull(
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				_group.getGroupId(), FragmentPortletKeys.FRAGMENT));

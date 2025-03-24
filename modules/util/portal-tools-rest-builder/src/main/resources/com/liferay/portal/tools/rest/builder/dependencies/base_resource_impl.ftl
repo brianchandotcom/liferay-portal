@@ -1032,9 +1032,7 @@ public abstract class Base${schemaName}ResourceImpl
 							return ${schemaVarName};
 						}
 
-						<#if useDeleteById>
-							throw new UnsupportedOperationException("Unable to delete ${schemaVarName}. No valid identifier provided.");
-						</#if>
+						throw new UnsupportedOperationException("Unable to delete ${schemaVarName}. No valid identifier provided.");
 					</#if>
 				};
 

@@ -15,11 +15,13 @@ public class ValidationError {
 	}
 
 	public ValidationError(
-		String errorMessage, String objectFieldName, String objectValidationRuleExternalReferenceCode) {
+		String errorMessage, String objectFieldName,
+		String objectValidationRuleExternalReferenceCode) {
 
 		_errorMessage = errorMessage;
 		_objectFieldName = objectFieldName;
-		_objectValidationRuleExternalReferenceCode = objectValidationRuleExternalReferenceCode;
+		_objectValidationRuleExternalReferenceCode =
+			objectValidationRuleExternalReferenceCode;
 	}
 
 	public String getErrorMessage() {

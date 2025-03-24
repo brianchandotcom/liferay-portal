@@ -4,7 +4,6 @@
  */
 
 export type Config = {
-	acceptedGroupExternalReferenceCodes: string;
 	objectFolderExternalReferenceCode: string;
 };
 

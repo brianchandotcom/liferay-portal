@@ -5,31 +5,23 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,40 +47,12 @@ public class StructureBuilderDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"config",
 			JSONUtil.put(
-				"acceptedGroupExternalReferenceCodes",
-				_getAcceptedGroupExternalReferenceCodes()
-			).put(
 				"objectFolderExternalReferenceCode",
-				_getObjectFolderExternalReferenceCode()
-			)
+				_getObjectFolderExternalReferenceCode())
 		).put(
 			"state",
 			JSONUtil.put("objectDefinition", _getObjectDefinitionJSONObject())
 		).build();
-	}
-
-	private String _getAcceptedGroupExternalReferenceCodes() throws Exception {
-		DepotEntry depotEntry = null;
-
-		List<DepotEntry> depotEntries =
-			DepotEntryLocalServiceUtil.getDepotEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (!depotEntries.isEmpty()) {
-			depotEntry = depotEntries.get(0);
-		}
-		else {
-			depotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), "Default"
-				).build(),
-				new HashMap<>(),
-				ServiceContextFactory.getInstance(_httpServletRequest));
-		}
-
-		Group group = depotEntry.getGroup();
-
-		return group.getExternalReferenceCode();
 	}
 
 	private ObjectDefinition _getObjectDefinition() {

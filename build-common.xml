@@ -1859,9 +1859,24 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 						</then>
 					</if>
 
-					<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">
-						<arg value="--build-file=${project.dir}/modules/util.gradle" />
-					</gradle-execute>
+					<if>
+						<and>
+							<available file="${project.dir}/${build.binaries.cache.dir}/.yarn/offline-cache" type="dir" />
+							<isset property="env.JENKINS_HOME" />
+						</and>
+						<then>
+							<sync-dir
+								dir="${project.dir}/${build.binaries.cache.dir}/.yarn/offline-cache"
+								symbolic="${sync.dir.symbolic}"
+								toDir="${project.dir}/modules/node_modules_cache"
+							/>
+						</then>
+						<else>
+							<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">
+								<arg value="--build-file=${project.dir}/modules/util.gradle" />
+							</gradle-execute>
+						</else>
+					</if>
 
 					<retry retrycount="5" retrydelay="30000">
 						<gradle-execute dir="${project.dir}/modules" task=":portalYarnInstall" />

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -506,7 +507,7 @@ public class JournalContentImpl implements JournalContent {
 				JournalContentArticleKeyIndexEncoder.encode(
 					groupId, articleId, ddmTemplateKey));
 
-		if ((journalContentKeys == null) || journalContentKeys.isEmpty()) {
+		if (SetUtil.isEmpty(journalContentKeys)) {
 			return;
 		}
 

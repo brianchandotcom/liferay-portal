@@ -170,7 +170,8 @@ public class ObjectEntryModelResourcePermission
 			objectEntryModelResourcePermissionLogic =
 				_objectEntryModelResourcePermissionLogicSupplier.get();
 
-		if (Objects.equals(
+		if ((!actionId.equals(ActionKeys.VIEW) || objectEntry.isApproved()) &&
+			Objects.equals(
 				objectEntryModelResourcePermissionLogic.contains(
 					permissionChecker, objectDefinition.getClassName(),
 					objectEntry, actionId),

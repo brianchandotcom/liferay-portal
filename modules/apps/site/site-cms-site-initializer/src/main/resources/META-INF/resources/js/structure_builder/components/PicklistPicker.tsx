@@ -38,13 +38,9 @@ export default function PicklistPicker({field}: {field: Field}) {
 	const id = useId();
 
 	useEffect(() => {
-		const getPicklists = async () => {
-			const picklists = await PicklistService.getPicklists();
-
-			setPicklists(picklists.items);
-		};
-
-		getPicklists();
+		PicklistService.getPicklists().then((picklists) =>
+			setPicklists(picklists)
+		);
 	}, []);
 
 	return (

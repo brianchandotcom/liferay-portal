@@ -310,13 +310,13 @@ public class DepotAdminMembershipsDisplayContextTest {
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
-			group.isSite()
+			group.isDepot()
 		).thenReturn(
 			false
 		);
 
 		Mockito.when(
-			group.isDepot()
+			group.isSite()
 		).thenReturn(
 			false
 		);

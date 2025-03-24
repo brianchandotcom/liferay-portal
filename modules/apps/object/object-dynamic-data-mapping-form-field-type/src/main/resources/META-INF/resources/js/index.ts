@@ -5,5 +5,5 @@
 
 export {default as Attachment} from './Attachment/Attachment';
 export {default as AutoIncrement} from './AutoIncrement/AutoIncrement';
-export {default as MultiSelectPicklist} from './MultiSelectPicklist/MultiSelectPicklist';
+export {default as MultiselectPicklist} from './MultiselectPicklist/MultiselectPicklist';
 export {default as ObjectRelationship} from './ObjectRelationship/ObjectRelationship';

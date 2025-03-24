@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "ddm.form.field.type.name=" + ObjectDDMFormFieldTypeConstants.MULTISELECT_PICKLIST,
 	service = DDMFormFieldValueAccessor.class
 )
-public class MultiSelectPicklistDDMFormFieldValueAccessor
+public class MultiselectPicklistDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONArray> {
 
 	@Override

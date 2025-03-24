@@ -22,7 +22,7 @@ import org.junit.Test;
 /**
  * @author Pedro Leite
  */
-public class MultiSelectPicklistDDMFormFieldValueAccessorTest {
+public class MultiselectPicklistDDMFormFieldValueAccessorTest {
 
 	@ClassRule
 	@Rule
@@ -34,7 +34,7 @@ public class MultiSelectPicklistDDMFormFieldValueAccessorTest {
 		JSONArray expectedJSONArray = _jsonFactory.createJSONArray("[value]");
 
 		JSONArray actualJSONArray =
-			_multiSelectPicklistDDMFormFieldValueAccessor.getValue(
+			_multiselectPicklistDDMFormFieldValueAccessor.getValue(
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					RandomTestUtil.randomString(),
 					new UnlocalizedValue(expectedJSONArray.toString())),
@@ -47,15 +47,15 @@ public class MultiSelectPicklistDDMFormFieldValueAccessorTest {
 	@Test
 	public void testIsEmpty() {
 		Assert.assertTrue(
-			_multiSelectPicklistDDMFormFieldValueAccessor.isEmpty(
+			_multiselectPicklistDDMFormFieldValueAccessor.isEmpty(
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					RandomTestUtil.randomString(), new UnlocalizedValue("[]")),
 				LocaleUtil.US));
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private final MultiSelectPicklistDDMFormFieldValueAccessor
-		_multiSelectPicklistDDMFormFieldValueAccessor =
-			new MultiSelectPicklistDDMFormFieldValueAccessor();
+	private final MultiselectPicklistDDMFormFieldValueAccessor
+		_multiselectPicklistDDMFormFieldValueAccessor =
+			new MultiselectPicklistDDMFormFieldValueAccessor();
 
 }

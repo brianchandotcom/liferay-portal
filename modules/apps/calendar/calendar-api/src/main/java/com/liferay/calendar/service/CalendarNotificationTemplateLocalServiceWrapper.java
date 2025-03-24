@@ -104,10 +104,12 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	 *
 	 * @param calendarNotificationTemplate the calendar notification template
 	 * @return the calendar notification template that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public CalendarNotificationTemplate deleteCalendarNotificationTemplate(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
+			CalendarNotificationTemplate calendarNotificationTemplate)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _calendarNotificationTemplateLocalService.
 			deleteCalendarNotificationTemplate(calendarNotificationTemplate);
@@ -134,7 +136,9 @@ public class CalendarNotificationTemplateLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCalendarNotificationTemplates(long calendarId) {
+	public void deleteCalendarNotificationTemplates(long calendarId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_calendarNotificationTemplateLocalService.
 			deleteCalendarNotificationTemplates(calendarId);
 	}

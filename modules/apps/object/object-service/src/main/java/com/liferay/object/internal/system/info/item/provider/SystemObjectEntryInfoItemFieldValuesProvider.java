@@ -7,12 +7,15 @@ package com.liferay.object.internal.system.info.item.provider;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
@@ -31,11 +34,17 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -46,7 +55,6 @@ import com.liferay.portal.vulcan.extension.util.ExtensionUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +69,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
 		DTOConverterRegistry dtoConverterRegistry,
 		ExtensionProviderRegistry extensionProviderRegistry,
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService,
 		InfoItemFieldReaderFieldSetProvider infoItemFieldReaderFieldSetProvider,
 		String itemClassName,
 		ListTypeEntryLocalService listTypeEntryLocalService,
@@ -72,7 +81,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
 		SystemObjectDefinitionManager systemObjectDefinitionManager,
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider) {
 
@@ -82,6 +91,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		_dlURLHelper = dlURLHelper;
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_extensionProviderRegistry = extensionProviderRegistry;
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 		_infoItemFieldReaderFieldSetProvider =
 			infoItemFieldReaderFieldSetProvider;
 		_itemClassName = itemClassName;
@@ -95,6 +105,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_portal = portal;
 		_systemObjectDefinitionManager = systemObjectDefinitionManager;
 		_templateInfoItemFieldSetProvider = templateInfoItemFieldSetProvider;
 	}
@@ -113,7 +124,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 
 			return InfoItemFieldValues.builder(
 			).infoFieldValues(
-				_getInfoFieldValues(themeDisplay, systemObjectEntry.getValues())
+				_getInfoFieldValues(themeDisplay, systemObjectEntry)
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
 					infoItemReference, StringPool.BLANK,
@@ -134,15 +145,53 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		}
 	}
 
-	private List<InfoFieldValue<Object>> _getInfoFieldValues(
-			ThemeDisplay themeDisplay, Map<String, Object> values)
-		throws Exception {
+	private InfoLocalizedValue<?> _getFriendlyURLValue(
+		SystemObjectEntry systemObjectEntry) {
 
-		if (MapUtil.isEmpty(values)) {
-			return Collections.emptyList();
+		try {
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(_objectDefinition.getClassName()),
+					systemObjectEntry.getClassPK());
+
+			if (friendlyURLEntry == null) {
+				return null;
+			}
+
+			return InfoLocalizedValue.function(
+				locale -> friendlyURLEntry.getUrlTitle(
+					LocaleUtil.toLanguageId(locale)));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
 		}
 
+		return null;
+	}
+
+	private List<InfoFieldValue<Object>> _getInfoFieldValues(
+			ThemeDisplay themeDisplay, SystemObjectEntry systemObjectEntry)
+		throws Exception {
+
 		List<InfoFieldValue<Object>> objectEntryFieldValues = new ArrayList<>();
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-21926")) {
+
+			objectEntryFieldValues.add(
+				new InfoFieldValue<>(
+					ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+						_objectDefinition),
+					() -> _getFriendlyURLValue(systemObjectEntry)));
+		}
+
+		Map<String, Object> values = systemObjectEntry.getValues();
+
+		if (MapUtil.isEmpty(values)) {
+			return objectEntryFieldValues;
+		}
 
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
@@ -213,12 +262,16 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 		return objectEntryFieldValues;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SystemObjectEntryInfoItemFieldValuesProvider.class);
+
 	private final DisplayPageInfoItemFieldSetProvider
 		_displayPageInfoItemFieldSetProvider;
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final ExtensionProviderRegistry _extensionProviderRegistry;
+	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 	private final InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
 	private final String _itemClassName;
@@ -233,6 +286,7 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+	private final Portal _portal;
 	private final SystemObjectDefinitionManager _systemObjectDefinitionManager;
 	private final TemplateInfoItemFieldSetProvider
 		_templateInfoItemFieldSetProvider;

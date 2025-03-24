@@ -24,6 +24,7 @@ import com.liferay.object.system.SystemObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
@@ -122,6 +123,18 @@ public class SystemObjectEntryInfoItemFormProvider
 				ObjectEntryInfoItemFields.externalReferenceCodeInfoField
 			).infoFieldSetEntry(
 				ObjectEntryInfoItemFields.modifiedDateInfoField
+			).infoFieldSetEntry(
+				unsafeConsumer -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							_objectDefinition.getCompanyId(), "LPD-21926")) {
+
+						return;
+					}
+
+					unsafeConsumer.accept(
+						ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+							_objectDefinition));
+				}
 			).infoFieldSetEntry(
 				ObjectEntryInfoItemFields.objectEntryIdInfoField
 			).infoFieldSetEntry(

@@ -7,6 +7,7 @@ package com.liferay.object.internal.instance.lifecycle;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -265,14 +266,15 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				new SystemObjectEntryInfoItemFieldValuesProvider(
 					_displayPageInfoItemFieldSetProvider, _dlAppLocalService,
 					_dlURLHelper, _dtoConverterRegistry,
-					_extensionProviderRegistry,
+					_extensionProviderRegistry, _friendlyURLEntryLocalService,
 					_infoItemFieldReaderFieldSetProvider, itemClassName,
 					_listTypeEntryLocalService, _objectActionLocalService,
 					objectDefinition, _objectDefinitionLocalService,
 					_objectEntryLocalService, _objectEntryManagerRegistry,
 					objectFieldInfoFieldConverter, _objectFieldLocalService,
 					_objectRelationshipLocalService,
-					_objectScopeProviderRegistry, systemObjectDefinitionManager,
+					_objectScopeProviderRegistry, _portal,
+					systemObjectDefinitionManager,
 					_templateInfoItemFieldSetProvider),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
@@ -406,6 +408,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

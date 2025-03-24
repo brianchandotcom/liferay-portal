@@ -89,7 +89,7 @@ export default function MarketplaceViews() {
 			.getProjectUsage()
 			.then(setCloudUserProject)
 			.catch(console.error);
-	}, [cloudProject, marketplaceRest, product]);
+	}, [cloudProject, marketplaceRest]);
 
 	const getState = useCallback(() => {
 		if (!cloudProject) {

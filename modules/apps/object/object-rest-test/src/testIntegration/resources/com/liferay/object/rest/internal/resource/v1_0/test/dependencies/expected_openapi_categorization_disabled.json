@@ -227,6 +227,13 @@
 						"type": "integer",
 						"x-parent-map": "properties"
 					},
+					"objectEntryFolderExternalReferenceCode": {
+						"type": "string"
+					},
+					"objectEntryFolderId": {
+						"format": "int64",
+						"type": "integer"
+					},
 					"permissions": {
 						"items": {
 							"$ref": "#/components/schemas/Permission"
@@ -243,6 +250,9 @@
 						"type": "integer",
 						"x-batch-unsupported-formats": "CSV",
 						"x-parent-map": "properties"
+					},
+					"version": {
+						"$ref": "#/components/schemas/Version"
 					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -513,6 +523,26 @@
 				],
 				"xml": {
 					"name": "ValidationResponse"
+				}
+			},
+			"Version": {
+				"properties": {
+					"number": {
+						"format": "int32",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.Version",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "Version"
 				}
 			}
 		}
@@ -935,6 +965,55 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/versions": {
+			"get": {
+				"operationId": "getByExternalReferenceCodeVersionsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageObject9"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageObject9"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
 		"/export-batch": {
 			"post": {
 				"operationId": "postObject9sPageExportBatch",
@@ -1344,6 +1423,55 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/PagePermission"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
+		"/{object9Id}/versions": {
+			"get": {
+				"operationId": "getObject9sVersionsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageObject9"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageObject9"
 								}
 							}
 						},

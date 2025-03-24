@@ -5,15 +5,10 @@
 
 	<macrodef name="build-analytics-cloud-images">
 		<sequential>
-			<if>
-				<equals arg1="${env.CI_TEST_SUITE}" arg2="analytics-cloud-acceptance" />
-				<then>
-					<loadproperties srcfile="${project.dir}/.gradle/gradle.properties" />
+			<loadproperties srcfile="${project.dir}/.gradle/gradle.properties" />
 
-					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.password=${systemProp.repository.private.password}</echo>
-					<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.username=${systemProp.repository.private.username}</echo>
-				</then>
-			</if>
+			<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.password=${systemProp.repository.private.password}</echo>
+			<echo append="true" file="${analytics.cloud.asah.dir}/gradle.properties">&#10;systemProp.repository.private.username=${systemProp.repository.private.username}</echo>
 
 			<create-analytics-cloud-docker-compose start.analytics.cloud="false" />
 

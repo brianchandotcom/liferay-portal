@@ -9,7 +9,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -52,11 +52,9 @@ public class StructuresSectionDisplayContext {
 		sb.append("/o/object-admin/v1.0/object-definitions?filter=");
 		sb.append("objectFolderExternalReferenceCode eq '");
 		sb.append(
-			ObjectEntryFolderConstants.
-				EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES);
 		sb.append("' or objectFolderExternalReferenceCode eq '");
-		sb.append(
-			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
+		sb.append(ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES);
 		sb.append("'");
 
 		return sb.toString();
@@ -71,7 +69,7 @@ public class StructuresSectionDisplayContext {
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getHref(
-						ObjectEntryFolderConstants.
+						ObjectFolderConstants.
 							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "content"));
@@ -80,7 +78,7 @@ public class StructuresSectionDisplayContext {
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getHref(
-						ObjectEntryFolderConstants.
+						ObjectFolderConstants.
 							EXTERNAL_REFERENCE_CODE_FILE_TYPES));
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "file"));

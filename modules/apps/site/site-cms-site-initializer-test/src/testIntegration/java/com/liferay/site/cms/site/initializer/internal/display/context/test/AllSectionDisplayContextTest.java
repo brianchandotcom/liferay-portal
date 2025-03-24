@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -79,7 +80,7 @@ public class AllSectionDisplayContextTest
 
 		ObjectFolder cmsContentStructuresObjectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectEntryFolderConstants.
+				ObjectFolderConstants.
 					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 				TestPropsValues.getCompanyId());
 
@@ -91,7 +92,7 @@ public class AllSectionDisplayContextTest
 
 		ObjectFolder cmsFileTypesObjectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
 				TestPropsValues.getCompanyId());
 
 		ObjectDefinition cmsFileTypesObjectDefinition =

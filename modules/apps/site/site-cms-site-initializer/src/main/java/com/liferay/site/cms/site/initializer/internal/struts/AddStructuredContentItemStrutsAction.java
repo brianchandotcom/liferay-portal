@@ -21,6 +21,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -300,8 +301,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		if (Objects.equals(
 				objectDefinition.getObjectFolderExternalReferenceCode(),
-				ObjectEntryFolderConstants.
-					EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
 
 			externalReferenceCode =
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;

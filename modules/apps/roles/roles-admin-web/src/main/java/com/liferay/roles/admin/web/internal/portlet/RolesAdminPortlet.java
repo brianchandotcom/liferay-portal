@@ -12,7 +12,9 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.DataLimitExceededException;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -285,7 +287,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (ArrayUtil.isNotEmpty(addUserIds) ||
 			ArrayUtil.isNotEmpty(removeUserIds)) {
 
-			try {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
 				_userService.addRoleUsers(roleId, addUserIds);
 				_userService.unsetRoleUsers(roleId, removeUserIds);
 			}
@@ -304,19 +309,29 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (ArrayUtil.isNotEmpty(addGroupIds) ||
 			ArrayUtil.isNotEmpty(removeGroupIds)) {
 
-			_groupService.addRoleGroups(roleId, addGroupIds);
-			_groupService.unsetRoleGroups(roleId, removeGroupIds);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				_groupService.addRoleGroups(roleId, addGroupIds);
+				_groupService.unsetRoleGroups(roleId, removeGroupIds);
+			}
 		}
 
 		long[] addSegmentsEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addSegmentsEntryIds"), 0L);
 
 		if (ArrayUtil.isNotEmpty(addSegmentsEntryIds)) {
-			for (long segmentsEntryId : addSegmentsEntryIds) {
-				_segmentsEntryRoleLocalService.addSegmentsEntryRole(
-					segmentsEntryId, roleId,
-					ServiceContextFactory.getInstance(
-						Role.class.getName(), actionRequest));
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				for (long segmentsEntryId : addSegmentsEntryIds) {
+					_segmentsEntryRoleLocalService.addSegmentsEntryRole(
+						segmentsEntryId, roleId,
+						ServiceContextFactory.getInstance(
+							Role.class.getName(), actionRequest));
+				}
 			}
 		}
 
@@ -324,9 +339,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "removeSegmentsEntryIds"), 0L);
 
 		if (ArrayUtil.isNotEmpty(removeSegmentsEntryIds)) {
-			for (long segmentsEntryId : removeSegmentsEntryIds) {
-				_segmentsEntryRoleLocalService.deleteSegmentsEntryRole(
-					segmentsEntryId, roleId);
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				for (long segmentsEntryId : removeSegmentsEntryIds) {
+					_segmentsEntryRoleLocalService.deleteSegmentsEntryRole(
+						segmentsEntryId, roleId);
+				}
 			}
 		}
 	}

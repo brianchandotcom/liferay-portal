@@ -366,6 +366,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					"get",
 					addAction(ActionKeys.VIEW, depotEntry, "getAssetLibrary")
 				).put(
+					"permissions",
+					addAction(
+						ActionKeys.PERMISSIONS, depotEntry, "patchAssetLibrary")
+				).put(
 					"update",
 					addAction(
 						ActionKeys.UPDATE, depotEntry, "patchAssetLibrary")

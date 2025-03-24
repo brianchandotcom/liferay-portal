@@ -287,6 +287,10 @@ test(
 	{tag: '@LPD-36752'},
 	async ({page, structureBuilderPage}) => {
 
+		// Add a picklist
+
+		const picklist = await structureBuilderPage.createPicklist();
+
 		// Go to the Structure Builder
 
 		await structureBuilderPage.goto();
@@ -302,11 +306,11 @@ test(
 
 		await expect(page.getByText('This field is required')).toBeVisible();
 
-		// Add a Text field and select it
+		// Add a Single Select field and select it
 
-		await structureBuilderPage.addField('Text');
+		await structureBuilderPage.addField('Single Select');
 
-		await structureBuilderPage.selectField({label: 'Text'});
+		await structureBuilderPage.selectField({label: 'Single Select'});
 
 		// Put empty name
 
@@ -326,7 +330,9 @@ test(
 		// Now try to save and check it redirects to field view
 
 		await clickAndExpectToBeVisible({
-			target: page.locator('.breadcrumb-link', {hasText: 'Text'}),
+			target: page.locator('.breadcrumb-link', {
+				hasText: 'Single Select',
+			}),
 			trigger: structureBuilderPage.saveButton,
 		});
 
@@ -334,10 +340,18 @@ test(
 
 		await structureBuilderPage.changeFieldSettings({name: 'text'});
 
+		await structureBuilderPage.changeFieldSettings({
+			picklist: picklist.name,
+		});
+
 		const {id} = await structureBuilderPage.saveStructure();
 
 		// Delete structure
 
 		await structureBuilderPage.deleteStructure(id);
+
+		// Delete picklist
+
+		await structureBuilderPage.deletePicklist(picklist.id);
 	}
 );

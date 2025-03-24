@@ -108,8 +108,8 @@ public class ObjectEntryInfoItemFormProvider
 						}
 
 						unsafeConsumer.accept(
-							ObjectEntryInfoItemFields.
-								objectEntryFriendlyURLInfoField);
+							ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+								_objectDefinition));
 					}
 				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.objectEntryIdInfoField

@@ -282,76 +282,137 @@ test(
 	}
 );
 
-test(
-	'Frontend validations',
-	{tag: '@LPD-36752'},
-	async ({page, structureBuilderPage}) => {
+test.describe('Frontend validations', () => {
+	test(
+		'Validations when saving the structure',
+		{tag: '@LPD-36752'},
+		async ({page, structureBuilderPage}) => {
 
-		// Add a picklist
+			// Add a picklist
 
-		const picklist = await structureBuilderPage.createPicklist();
+			const picklist = await structureBuilderPage.createPicklist();
 
-		// Go to the Structure Builder
+			// Go to the Structure Builder
 
-		await structureBuilderPage.goto();
+			await structureBuilderPage.goto();
 
-		// Set label and empty name
+			// Set label and empty name
 
-		const label = `Structure${getRandomInt()}`;
+			const label = `Structure${getRandomInt()}`;
 
-		await structureBuilderPage.changeStructureSettings({
-			label,
-			name: '',
-		});
+			await structureBuilderPage.changeStructureSettings({
+				label,
+				name: '',
+			});
 
-		await expect(page.getByText('This field is required')).toBeVisible();
+			await expect(
+				page.getByText('This field is required')
+			).toBeVisible();
 
-		// Add a Single Select field and select it
+			// Add a Single Select field and select it
 
-		await structureBuilderPage.addField('Single Select');
+			await structureBuilderPage.addField('Single Select');
 
-		await structureBuilderPage.selectField({label: 'Single Select'});
+			await structureBuilderPage.selectField({label: 'Single Select'});
 
-		// Put empty name
+			// Put empty name
 
-		await structureBuilderPage.changeFieldSettings({name: ''});
+			await structureBuilderPage.changeFieldSettings({name: ''});
 
-		// Try to save and check it redirects to structure view
+			// Try to save and check it redirects to structure view
 
-		await clickAndExpectToBeVisible({
-			target: page.getByText('Structure Name'),
-			trigger: structureBuilderPage.saveButton,
-		});
+			await clickAndExpectToBeVisible({
+				target: page.getByText('Structure Name'),
+				trigger: structureBuilderPage.saveButton,
+			});
 
-		// Fill name
+			// Fill name
 
-		await structureBuilderPage.changeStructureSettings({name: label});
+			await structureBuilderPage.changeStructureSettings({name: label});
 
-		// Now try to save and check it redirects to field view
+			// Now try to save and check it redirects to field view
 
-		await clickAndExpectToBeVisible({
-			target: page.locator('.breadcrumb-link', {
-				hasText: 'Single Select',
-			}),
-			trigger: structureBuilderPage.saveButton,
-		});
+			await clickAndExpectToBeVisible({
+				target: page.locator('.breadcrumb-link', {
+					hasText: 'Single Select',
+				}),
+				trigger: structureBuilderPage.saveButton,
+			});
 
-		// Fill name and save again
+			// Fill name and save again
 
-		await structureBuilderPage.changeFieldSettings({name: 'text'});
+			await structureBuilderPage.changeFieldSettings({name: 'text'});
 
-		await structureBuilderPage.changeFieldSettings({
-			picklist: picklist.name,
-		});
+			await structureBuilderPage.changeFieldSettings({
+				picklist: picklist.name,
+			});
 
-		const {id} = await structureBuilderPage.saveStructure();
+			const {id} = await structureBuilderPage.saveStructure();
 
-		// Delete structure
+			// Delete structure
 
-		await structureBuilderPage.deleteStructure(id);
+			await structureBuilderPage.deleteStructure(id);
 
-		// Delete picklist
+			// Delete picklist
 
-		await structureBuilderPage.deletePicklist(picklist.id);
-	}
-);
+			await structureBuilderPage.deletePicklist(picklist.id);
+		}
+	);
+
+	test(
+		'Validations in the picklist picker',
+		{tag: '@LPD-51647'},
+		async ({page, structureBuilderPage}) => {
+
+			// Add a picklist
+
+			const picklist = await structureBuilderPage.createPicklist();
+
+			// Go to the Structure Builder
+
+			await structureBuilderPage.goto();
+
+			// Add a Single Select field and check for blur error
+
+			await structureBuilderPage.addField('Single Select');
+
+			await structureBuilderPage.selectField({label: 'Single Select'});
+
+			const picklistPicker = page.getByRole('combobox', {
+				name: 'Select Picklist',
+			});
+
+			const errorMessage = page.getByText('This field is required.');
+
+			await expect(errorMessage).not.toBeAttached();
+
+			await picklistPicker.press('Tab');
+
+			await expect(errorMessage).toBeAttached();
+
+			await structureBuilderPage.changeFieldSettings({
+				picklist: picklist.name,
+			});
+
+			await expect(errorMessage).not.toBeAttached();
+
+			// Add a Multiselect field and check for outside click error
+
+			await structureBuilderPage.addField('Multiselect');
+
+			await structureBuilderPage.selectField({label: 'Multiselect'});
+
+			await expect(errorMessage).not.toBeAttached();
+
+			await picklistPicker.click();
+
+			await page.locator('body').click();
+
+			await expect(errorMessage).toBeAttached();
+
+			// Delete picklist
+
+			await structureBuilderPage.deletePicklist(picklist.id);
+		}
+	);
+});

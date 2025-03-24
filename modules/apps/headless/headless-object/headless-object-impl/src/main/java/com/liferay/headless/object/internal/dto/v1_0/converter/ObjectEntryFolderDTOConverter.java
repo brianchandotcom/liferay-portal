@@ -89,43 +89,8 @@ public class ObjectEntryFolderDTOConverter
 				setParentObjectEntryFolderBrief(
 					() -> NestedFieldsSupplier.supply(
 						"parentObjectEntryFolderBrief",
-						nestedField -> {
-							com.liferay.object.model.ObjectEntryFolder
-								parentObjectEntryFolder =
-									_objectEntryFolderLocalService.
-										fetchObjectEntryFolder(
-											objectEntryFolder.
-												getParentObjectEntryFolderId());
-
-							if (parentObjectEntryFolder != null) {
-								return new ParentObjectEntryFolderBrief() {
-									{
-										setExternalReferenceCode(
-											parentObjectEntryFolder::
-												getExternalReferenceCode);
-										setId(
-											parentObjectEntryFolder::
-												getObjectEntryFolderId);
-										setLabel(
-											() ->
-												parentObjectEntryFolder.
-													getLabel(
-														dtoConverterContext.
-															getLocale()));
-										setLabel_i18n(
-											() ->
-												LocalizedMapUtil.
-													getLanguageIdMap(
-														parentObjectEntryFolder.
-															getLabelMap()));
-										setName(
-											parentObjectEntryFolder::getName);
-									}
-								};
-							}
-
-							return null;
-						}));
+						nestedField -> _getParentObjectEntryFolderBrief(
+							dtoConverterContext, parentObjectEntryFolder)));
 				setParentObjectEntryFolderExternalReferenceCode(
 					() -> {
 						if (parentObjectEntryFolder != null) {
@@ -162,6 +127,30 @@ public class ObjectEntryFolderDTOConverter
 		}
 
 		return null;
+	}
+
+	private ParentObjectEntryFolderBrief _getParentObjectEntryFolderBrief(
+		DTOConverterContext dtoConverterContext,
+		com.liferay.object.model.ObjectEntryFolder parentObjectEntryFolder) {
+
+		if (parentObjectEntryFolder == null) {
+			return null;
+		}
+
+		return new ParentObjectEntryFolderBrief() {
+			{
+				setExternalReferenceCode(
+					parentObjectEntryFolder::getExternalReferenceCode);
+				setId(parentObjectEntryFolder::getObjectEntryFolderId);
+				setLabel(
+					() -> parentObjectEntryFolder.getLabel(
+						dtoConverterContext.getLocale()));
+				setLabel_i18n(
+					() -> LocalizedMapUtil.getLanguageIdMap(
+						parentObjectEntryFolder.getLabelMap()));
+				setName(parentObjectEntryFolder::getName);
+			}
+		};
 	}
 
 	@Reference

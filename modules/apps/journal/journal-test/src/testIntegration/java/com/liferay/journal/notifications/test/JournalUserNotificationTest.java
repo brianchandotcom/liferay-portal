@@ -6,6 +6,8 @@
 package com.liferay.journal.notifications.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -15,11 +17,21 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.notifications.test.util.BaseUserNotificationTestCase;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
@@ -50,6 +62,46 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
 
 	@Test
+	public void testNoUserNotificationWhenJournalArticleIsPending()
+		throws Exception {
+
+		_activateSingleApproverWorkflow();
+
+		User subscribedUser = UserTestUtil.addUser();
+
+		Role subscriberRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			subscriberRole, JournalFolder.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(group.getCompanyId()), ActionKeys.SUBSCRIBE);
+
+		_roleLocalService.addUserRole(
+			subscribedUser.getUserId(), subscriberRole);
+
+		JournalFolderLocalServiceUtil.subscribe(
+			subscribedUser.getUserId(), group.getGroupId(),
+			_folder.getFolderId());
+
+		JournalArticle pendingArticle = (JournalArticle)addBaseModel();
+
+		_assertJournalArticleNotifications(
+			pendingArticle, 1,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, 0,
+			subscribedUser);
+
+		_journalArticleLocalService.moveArticleToTrash(
+			user.getUserId(), pendingArticle);
+
+		_assertJournalArticleNotifications(
+			pendingArticle, 1,
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY, 0,
+			subscribedUser);
+
+		_deactivateSingleApproverWorkflow();
+	}
+
+	@Test
 	public void testUserNotificationWhenJournalArticleExpiredAutomatically()
 		throws Exception {
 
@@ -67,7 +119,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_assertJournalArticleNotifications(
 			expiredArticle, 2,
-			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1);
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1,
+			user);
 	}
 
 	@Test
@@ -86,7 +139,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_assertJournalArticleNotifications(
 			expiredArticle, 1,
-			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1);
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1,
+			user);
 	}
 
 	@Test
@@ -108,7 +162,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_assertJournalArticleNotifications(
 			journalArticle, 2,
-			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY, 2);
+			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY, 2, user);
 	}
 
 	@Override
@@ -142,16 +196,25 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			(JournalArticle)baseModel, true);
 	}
 
+	private void _activateSingleApproverWorkflow() throws Exception {
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			user.getUserId(), group.getCompanyId(), group.getGroupId(),
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL, "Single Approver", 1);
+	}
+
 	private void _assertJournalArticleNotifications(
 			JournalArticle article, int emailNotificationCount,
-			int notificationType, int userNotificationCount)
+			int notificationType, int userNotificationCount,
+			User subscribedUser)
 		throws Exception {
 
 		Assert.assertEquals(
 			emailNotificationCount, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
-			getUserNotificationEventsJSONObjects(user.getUserId());
+			getUserNotificationEventsJSONObjects(subscribedUser.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEventsJSONObjects.toString(), userNotificationCount,
@@ -166,9 +229,27 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		}
 	}
 
+	private void _deactivateSingleApproverWorkflow() throws Exception {
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			user.getUserId(), group.getCompanyId(), group.getGroupId(),
+			JournalFolder.class.getName(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.DDM_STRUCTURE_ID_ALL, null);
+	}
+
 	private JournalFolder _folder;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

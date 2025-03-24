@@ -34,7 +34,7 @@ export async function createDataSource(page) {
 
 	await page
 		.getByRole('link', {
-			name: 'FARO-DEV-liferay Liferay Demo Enterprise Plan',
+			name: 'FARO-DEV-liferay',
 		})
 		.click();
 
@@ -44,9 +44,13 @@ export async function createDataSource(page) {
 
 	await page.getByRole('button', {name: 'Liferay DXP'}).click();
 
-	await page.getByLabel('Click to Copy').click();
+	await page.waitForTimeout(1000);
 
-	await page.getByRole('link', {name: 'Done'}).click();
+	const token = await page
+		.locator('.onboarding-modal-root input')
+		.getAttribute('value');
+
+	return {token};
 }
 
 export async function findDataSource({

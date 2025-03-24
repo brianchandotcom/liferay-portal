@@ -22,6 +22,10 @@ type ApiToken = {
 	token: string;
 };
 
+const _authorization = `Basic ${btoa(
+	`${faroConfig.user.login}:${faroConfig.user.password}`
+)}`;
+
 export class JSONWebServicesOSBFaroApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -46,10 +50,7 @@ export class JSONWebServicesOSBFaroApiHelper {
 
 		const header = new Headers();
 
-		header.append(
-			'Authorization',
-			this.apiHelpers.getAuthorizationHeader()
-		);
+		header.append('Authorization', _authorization);
 
 		return fetch(
 			`${faroConfig.environment.baseUrl}${this.basePath}/main/${groupId}/channel`,
@@ -71,10 +72,7 @@ export class JSONWebServicesOSBFaroApiHelper {
 
 		const header = new Headers();
 
-		header.append(
-			'Authorization',
-			this.apiHelpers.getAuthorizationHeader()
-		);
+		header.append('Authorization', _authorization);
 
 		return fetch(
 			`${faroConfig.environment.baseUrl}${this.basePath}/main/project/trial`,
@@ -93,10 +91,7 @@ export class JSONWebServicesOSBFaroApiHelper {
 
 		const header = new Headers();
 
-		header.append(
-			'Authorization',
-			this.apiHelpers.getAuthorizationHeader()
-		);
+		header.append('Authorization', _authorization);
 
 		return fetch(
 			`${faroConfig.environment.baseUrl}${this.basePath}/main/${groupId}/channel`,
@@ -111,10 +106,7 @@ export class JSONWebServicesOSBFaroApiHelper {
 	async deleteProject(groupId: number): Promise<Project> {
 		const header = new Headers();
 
-		header.append(
-			'Authorization',
-			this.apiHelpers.getAuthorizationHeader()
-		);
+		header.append('Authorization', _authorization);
 
 		return fetch(
 			`${faroConfig.environment.baseUrl}${this.basePath}/main/project/${groupId}`,

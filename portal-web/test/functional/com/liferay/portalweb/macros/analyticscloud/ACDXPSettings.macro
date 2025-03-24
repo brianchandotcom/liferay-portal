@@ -60,7 +60,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro connectAnalyticsCloud(staticACToken = null, acToken = null, staticExistingSourceToken = null) {
+	macro connectAnalyticsCloud(acToken = null, staticExistingSourceToken = null) {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
 		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
@@ -76,9 +76,9 @@ definition {
 				value1 = ${staticExistingSourceToken});
 		}
 		else {
-			Type(
+			Type.sendKeys(
 				locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD",
-				value1 = ${staticACToken});
+				value1 = "keys=CONTROL,v");
 		}
 
 		WaitForElementNotPresent(locator1 = "ACDXPSettings#CONNECT_BUTTON_DISABLED");

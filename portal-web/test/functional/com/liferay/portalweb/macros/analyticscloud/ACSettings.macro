@@ -774,11 +774,7 @@ definition {
 
 		Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
 
-		var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
-
-		static var staticACToken = ${token};
-
-		return ${staticACToken};
+		Click(locator1 = "ACSettings#COPY_TOKEN_BUTTON");
 	}
 
 	@summary = "Default summary"

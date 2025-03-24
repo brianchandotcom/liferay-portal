@@ -47,6 +47,8 @@ test(
 			channelName,
 		});
 
+		let token;
+
 		await test.step('Go to Analytics Cloud settings and add a Data Source', async () => {
 			await navigateToACSettingsViaURL({
 				acPage: ACPage.dataSourcePage,
@@ -58,7 +60,11 @@ test(
 
 			await page.getByRole('button', {name: 'Liferay DXP'}).click();
 
-			await page.getByRole('button', {name: 'Click to Copy'}).click();
+			await page.waitForTimeout(1000);
+
+			token = await page
+				.locator('.onboarding-modal-root input')
+				.getAttribute('value');
 
 			await page.getByRole('link', {name: 'Done'}).click();
 		});
@@ -74,7 +80,7 @@ test(
 				await disconnectFromAnalyticsCloud(page);
 			}
 
-			await connectToAnalyticsCloud(page);
+			await connectToAnalyticsCloud(page, {token});
 
 			await expect(
 				page.getByRole('heading', {name: 'Property Assignment'})

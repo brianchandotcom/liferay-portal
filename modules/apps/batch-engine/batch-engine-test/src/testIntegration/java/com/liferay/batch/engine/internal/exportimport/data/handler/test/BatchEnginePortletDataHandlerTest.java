@@ -271,9 +271,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
-				_objectEntry1.getExternalReferenceCode(),
-				_objectEntry2.getExternalReferenceCode(),
-				_objectEntry3.getExternalReferenceCode()
 			).toString(),
 			_getClassExternalReferenceCodesJSONArray(
 				_companyGroupId, file
@@ -297,6 +294,14 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
+			_classExternalReferenceCodesJSONArray(
+				file, _objectDefinition2.getName()
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+			).toString(),
 			_getClassExternalReferenceCodesJSONArray(
 				_companyGroupId, file
 			).toString(),
@@ -319,8 +324,24 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_objectEntry1.getExternalReferenceCode(),
 				_objectEntry2.getExternalReferenceCode(),
-				_objectEntry3.getExternalReferenceCode(),
+				_objectEntry3.getExternalReferenceCode()
+			).toString(),
+			_classExternalReferenceCodesJSONArray(
+				file, _objectDefinition1.getName()
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
+			).toString(),
+			_classExternalReferenceCodesJSONArray(
+				file, _objectDefinition2.getName()
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
 			).toString(),
 			_getClassExternalReferenceCodesJSONArray(
 				_companyGroupId, file

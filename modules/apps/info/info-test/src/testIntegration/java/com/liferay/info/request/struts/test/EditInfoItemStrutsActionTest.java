@@ -160,38 +160,9 @@ public class EditInfoItemStrutsActionTest {
 		_layout = _addLayout();
 	}
 
-	@Test
-	public void testAddInfoItemAttachment() throws Exception {
-		_testAddInfoItem(
-			RandomTestUtil.randomString(), null, null, null, null, null, null,
-			null, null, null, null, null, WorkflowConstants.STATUS_APPROVED,
-			null, null);
-	}
-
-	@Test
-	public void testAddInfoItemAttachmentWithGuestRole() throws Exception {
-		_user = _userLocalService.getGuestUser(_group.getCompanyId());
-
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
-
-		_resourcePermissionLocalService.addResourcePermission(
-			_group.getCompanyId(), _objectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_group.getCompanyId()), role.getRoleId(),
-			ObjectActionKeys.ADD_OBJECT_ENTRY);
-
-		UserTestUtil.setUser(_user);
-
-		_testAddInfoItem(
-			RandomTestUtil.randomString(), null, null, null, null, null, null,
-			null, null, null, null, null, WorkflowConstants.STATUS_APPROVED,
-			null, null);
-	}
-
 	@FeatureFlags("LPD-21926")
 	@Test
-	@TestInfo("LPD-50374")
+	@TestInfo("LPD-50584")
 	public void testAddAndUpdateInfoItemFriendlyURL() throws Exception {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
@@ -244,6 +215,35 @@ public class EditInfoItemStrutsActionTest {
 		Assert.assertEquals(
 			friendlyURL,
 			objectEntry.getURLTitle(_objectDefinition.getDefaultLocale()));
+	}
+
+	@Test
+	public void testAddInfoItemAttachment() throws Exception {
+		_testAddInfoItem(
+			RandomTestUtil.randomString(), null, null, null, null, null, null,
+			null, null, null, null, null, WorkflowConstants.STATUS_APPROVED,
+			null, null);
+	}
+
+	@Test
+	public void testAddInfoItemAttachmentWithGuestRole() throws Exception {
+		_user = _userLocalService.getGuestUser(_group.getCompanyId());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			_group.getCompanyId(), _objectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_group.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		UserTestUtil.setUser(_user);
+
+		_testAddInfoItem(
+			RandomTestUtil.randomString(), null, null, null, null, null, null,
+			null, null, null, null, null, WorkflowConstants.STATUS_APPROVED,
+			null, null);
 	}
 
 	@Test

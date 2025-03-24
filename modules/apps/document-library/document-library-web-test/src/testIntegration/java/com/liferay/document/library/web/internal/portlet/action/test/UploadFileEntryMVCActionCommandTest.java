@@ -119,7 +119,7 @@ public class UploadFileEntryMVCActionCommandTest {
 	}
 
 	@Test
-	public void testReplaceControlPanelGroupId() throws Exception {
+	public void testProcessAction() throws Exception {
 		int currentCount = _dlFileEntryLocalService.getGroupFileEntriesCount(
 			_group.getGroupId());
 

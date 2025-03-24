@@ -25,15 +25,15 @@ import java.util.Map;
 /**
  * @author Jorge Avalos
  */
-public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
+public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 
-	public DuplicateRemovalUpgradeProcess(
+	public DuplicateIndexEntriesUpgradeProcess(
 		String tableName, String[] columnNames) {
 
 		this(tableName, columnNames, null);
 	}
 
-	public DuplicateRemovalUpgradeProcess(
+	public DuplicateIndexEntriesUpgradeProcess(
 		String tableName, String[] columnNames, String orderByClause) {
 
 		_tableName = tableName;
@@ -43,14 +43,73 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_removeDuplicates();
+		List<String[]> duplicateColumnValuesList =
+			_getDuplicateColumnValuesList();
+
+		for (String[] duplicateColumnValues : duplicateColumnValuesList) {
+			List<Map<String, String>> duplicateEntries = getDuplicateEntries(
+				duplicateColumnValues);
+
+			int duplicateEntriesCount = duplicateEntries.size();
+
+			for (Map<String, String> duplicateEntry : duplicateEntries) {
+				if (duplicateEntriesCount == 1) {
+					break;
+				}
+
+				StringBundler sb = new StringBundler();
+
+				sb.append("delete from ");
+				sb.append(_tableName);
+				sb.append(" where ");
+
+				String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
+					connection, _tableName);
+
+				for (String primaryKeyColumnName : primaryKeyColumnNames) {
+					sb.append(primaryKeyColumnName);
+					sb.append(" = ");
+					sb.append(duplicateEntry.get(primaryKeyColumnName));
+					sb.append("and ");
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(sb.toString())) {
+
+					preparedStatement.execute();
+				}
+				catch (SQLException sqlException) {
+					_log.error(
+						StringBundler.concat(
+							"Failed to delete duplicate entry from table ",
+							_tableName, " for index columns (",
+							String.join(", ", _columnNames), "): ",
+							duplicateEntry.toString()),
+						sqlException);
+				}
+				finally {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Deleted duplicate entry from table ",
+								_tableName, " for index columns (",
+								String.join(", ", _columnNames), "): ",
+								duplicateEntry.toString()));
+					}
+
+					duplicateEntriesCount--;
+				}
+			}
+		}
 	}
 
-	protected List<Map<String, String>> getDuplicatesSQL(
-			String[] duplicatedColumnValues)
+	protected List<Map<String, String>> getDuplicateEntries(
+			String[] duplicateColumnValues)
 		throws SQLException {
 
-		List<Map<String, String>> queryResult = new ArrayList<>();
+		List<Map<String, String>> duplicateEntries = new ArrayList<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -61,7 +120,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 		for (int i = 0; i < _columnNames.length; i++) {
 			sb.append(_columnNames[i]);
 
-			if (duplicatedColumnValues[i] == null) {
+			if (duplicateColumnValues[i] == null) {
 				sb.append(" is null ");
 			}
 			else {
@@ -88,7 +147,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 			int parameterIndex = 1;
 
 			for (int i = 0; i < _columnNames.length; i++) {
-				if (duplicatedColumnValues[i] == null) {
+				if (duplicateColumnValues[i] == null) {
 					continue;
 				}
 
@@ -101,7 +160,7 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 					resultSet.next();
 
 					preparedStatement.setObject(
-						parameterIndex, duplicatedColumnValues[i],
+						parameterIndex, duplicateColumnValues[i],
 						resultSet.getInt("DATA_TYPE"));
 
 					parameterIndex++;
@@ -118,27 +177,27 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 				}
 
 				while (resultSet.next()) {
-					Map<String, String> queryMap = new LinkedHashMap<>();
+					Map<String, String> duplicateEntry = new LinkedHashMap<>();
 
 					for (String columnName : columnNames) {
-						queryMap.put(
+						duplicateEntry.put(
 							columnName, resultSet.getString(columnName));
 					}
 
-					queryResult.add(queryMap);
+					duplicateEntries.add(duplicateEntry);
 				}
 			}
 		}
 
 		if (_orderByClause == null) {
-			Collections.reverse(queryResult);
+			Collections.reverse(duplicateEntries);
 		}
 
-		return queryResult;
+		return duplicateEntries;
 	}
 
-	private List<String[]> _getDuplicatedColumnEntries() throws Exception {
-		List<String[]> duplicatedColumnEntries = new ArrayList<>();
+	private List<String[]> _getDuplicateColumnValuesList() throws Exception {
+		List<String[]> duplicateColumnEntries = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(7);
 
@@ -161,79 +220,15 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 					columnValues[i] = resultSet.getString(i + 1);
 				}
 
-				duplicatedColumnEntries.add(columnValues);
+				duplicateColumnEntries.add(columnValues);
 			}
 		}
 
-		return duplicatedColumnEntries;
-	}
-
-	private void _logDeletedDuplicates(Map<String, String> duplicate) {
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Deleted duplicate entry from ", _tableName,
-					" table for index columns (",
-					String.join(", ", _columnNames), "): ",
-					duplicate.toString()));
-		}
-	}
-
-	private void _removeDuplicates() throws Exception {
-		List<String[]> duplicatedColumnEntries = _getDuplicatedColumnEntries();
-
-		for (String[] duplicatedColumnEntry : duplicatedColumnEntries) {
-			List<Map<String, String>> duplicates = getDuplicatesSQL(
-				duplicatedColumnEntry);
-
-			int duplicatesCount = duplicates.size();
-
-			for (Map<String, String> duplicate : duplicates) {
-				if (duplicatesCount == 1) {
-					break;
-				}
-
-				StringBundler sb = new StringBundler();
-
-				sb.append("delete from ");
-				sb.append(_tableName);
-				sb.append(" where ");
-
-				String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
-					connection, _tableName);
-
-				for (String primaryKeyColumnName : primaryKeyColumnNames) {
-					sb.append(primaryKeyColumnName);
-					sb.append(" = ");
-					sb.append(duplicate.get(primaryKeyColumnName));
-					sb.append("and ");
-				}
-
-				sb.setIndex(sb.index() - 1);
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(sb.toString())) {
-
-					preparedStatement.execute();
-				}
-				catch (SQLException sqlException) {
-					_log.error(
-						StringBundler.concat(
-							"Failed to remove duplicate entry: ",
-							duplicate.toString(), " in ", _tableName, " for ",
-							String.join(", ", _columnNames)),
-						sqlException);
-				}
-				finally {
-					_logDeletedDuplicates(duplicate);
-					duplicatesCount--;
-				}
-			}
-		}
+		return duplicateColumnEntries;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DuplicateRemovalUpgradeProcess.class);
+		DuplicateIndexEntriesUpgradeProcess.class);
 
 	private final String[] _columnNames;
 	private final String _orderByClause;

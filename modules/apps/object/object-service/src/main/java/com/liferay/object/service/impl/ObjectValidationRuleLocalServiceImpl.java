@@ -429,7 +429,7 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Override
 	@Transactional(readOnly = true)
 	public void validate(
-			ObjectEntry objectEntry, List<String> externalReferenceCodes,
+			List<String> externalReferenceCodes, ObjectEntry objectEntry,
 			long userId)
 		throws PortalException {
 

@@ -442,7 +442,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntry.getValues());
 
 		_objectValidationRuleLocalService.validate(
-			objectEntry, objectValidationRuleExternalReferenceCodes,
+			objectValidationRuleExternalReferenceCodes, objectEntry,
 			getUserId());
 	}
 

@@ -38,7 +38,7 @@ public class AntiSamySanitizerImplTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void test() throws Exception {
+	public void testSanitize() throws Exception {
 		String content =
 			"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
 				"target=\"_blank\"></a></p>";

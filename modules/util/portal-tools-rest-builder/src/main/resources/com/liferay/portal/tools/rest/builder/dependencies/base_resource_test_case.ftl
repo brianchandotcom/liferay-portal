@@ -391,7 +391,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				Assert.assertEquals(202, httpResponse.getStatusCode());
 
-				_waitForFinish(expectedExecuteStatus, JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+				waitForFinish(expectedExecuteStatus, JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 			}
 		<#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
 			<#continue>
@@ -3123,7 +3123,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#if>
 
 	<#if generateWaitForFinishMethod>
-		private JSONObject _waitForFinish(String expectedExecuteStatus, JSONObject jsonObject) throws Exception {
+		protected final JSONObject waitForFinish(String expectedExecuteStatus, JSONObject jsonObject) throws Exception {
 			while (true) {
 				ImportTask importTask = importTaskResource.getImportTask(
 					jsonObject.getLong("id"));

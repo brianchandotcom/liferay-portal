@@ -2,6 +2,8 @@ Bundle-Name: Liferay Portal Store S3
 Bundle-SymbolicName: com.liferay.portal.store.s3
 Bundle-Version: 6.0.40
 Import-Package:\
+	!com.amazon.ion.*,\
+	\
 	!com.ibm.aspera.faspmanager2,\
 	\
 	!com.sun.javadoc,\

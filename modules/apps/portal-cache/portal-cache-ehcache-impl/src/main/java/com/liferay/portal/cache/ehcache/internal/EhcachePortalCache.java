@@ -7,7 +7,7 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.cache.ehcache.internal.configuration.EhcachePortalCacheConfiguration;
-import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
+import com.liferay.portal.cache.ehcache.internal.events.PortalCacheCacheEventListener;
 
 import java.io.Serializable;
 

@@ -11909,7 +11909,7 @@ ${update.properties}</echo>
 		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.cache.ehcache.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <Configuration strict="true">
 	<Loggers>
-		<Logger level="DEBUG" name="com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache" />
+		<Logger level="DEBUG" name="com.liferay.portal.cache.ehcache.internal.events.PortalCacheCacheEventListener.test.cache" />
 	</Loggers>
 </Configuration>]]></echo>
 

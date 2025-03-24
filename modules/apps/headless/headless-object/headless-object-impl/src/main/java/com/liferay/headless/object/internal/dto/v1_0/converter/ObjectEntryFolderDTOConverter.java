@@ -43,6 +43,9 @@ public class ObjectEntryFolderDTOConverter
 			_objectEntryFolderLocalService.getObjectEntryFolder(
 				(Long)dtoConverterContext.getId());
 
+		com.liferay.object.model.ObjectEntryFolder parentObjectEntryFolder =
+			_getParentObjectEntryFolder(objectEntryFolder);
+
 		return new ObjectEntryFolder() {
 			{
 				setActions(dtoConverterContext::getActions);
@@ -82,13 +85,20 @@ public class ObjectEntryFolderDTOConverter
 									objectEntryFolder.getCompanyId(),
 									objectEntryFolder.
 										getObjectEntryFolderId())));
+				setParentObjectEntryFolderExternalReferenceCode(
+					() -> {
+						if (parentObjectEntryFolder != null) {
+							return parentObjectEntryFolder.
+								getExternalReferenceCode();
+						}
+
+						return null;
+					});
 				setParentObjectEntryFolderId(
 					() -> {
-						if (objectEntryFolder.getParentObjectEntryFolderId() >
-								0L) {
-
-							return objectEntryFolder.
-								getParentObjectEntryFolderId();
+						if (parentObjectEntryFolder != null) {
+							return parentObjectEntryFolder.
+								getObjectEntryFolderId();
 						}
 
 						return null;
@@ -97,6 +107,19 @@ public class ObjectEntryFolderDTOConverter
 					() -> String.valueOf(objectEntryFolder.getGroupId()));
 			}
 		};
+	}
+
+	private com.liferay.object.model.ObjectEntryFolder
+			_getParentObjectEntryFolder(
+				com.liferay.object.model.ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if (objectEntryFolder.getParentObjectEntryFolderId() > 0L) {
+			return _objectEntryFolderLocalService.getObjectEntryFolder(
+				objectEntryFolder.getParentObjectEntryFolderId());
+		}
+
+		return null;
 	}
 
 	@Reference

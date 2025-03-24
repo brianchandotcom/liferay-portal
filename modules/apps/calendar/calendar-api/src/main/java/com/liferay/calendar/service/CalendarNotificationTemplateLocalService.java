@@ -112,11 +112,13 @@ public interface CalendarNotificationTemplateLocalService
 	 *
 	 * @param calendarNotificationTemplate the calendar notification template
 	 * @return the calendar notification template that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CalendarNotificationTemplate deleteCalendarNotificationTemplate(
-		CalendarNotificationTemplate calendarNotificationTemplate);
+			CalendarNotificationTemplate calendarNotificationTemplate)
+		throws PortalException;
 
 	/**
 	 * Deletes the calendar notification template with the primary key from the database. Also notifies the appropriate model listeners.
@@ -134,7 +136,8 @@ public interface CalendarNotificationTemplateLocalService
 			long calendarNotificationTemplateId)
 		throws PortalException;
 
-	public void deleteCalendarNotificationTemplates(long calendarId);
+	public void deleteCalendarNotificationTemplates(long calendarId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

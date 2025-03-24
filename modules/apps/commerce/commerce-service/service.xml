@@ -26,21 +26,22 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="name" type="String" />
+		<column name="countryId" type="long" />
+		<column name="regionId" type="long" />
+		<column name="city" type="String" />
+		<column name="defaultBilling" type="boolean" />
+		<column name="defaultShipping" type="boolean" />
 		<column name="description" type="String" />
+		<column name="latitude" type="double" />
+		<column name="longitude" type="double" />
+		<column name="name" type="String" />
+		<column name="phoneNumber" type="String" />
 		<column name="street1" type="String" />
 		<column name="street2" type="String" />
 		<column name="street3" type="String" />
-		<column name="city" type="String" />
-		<column name="zip" type="String" />
-		<column name="regionId" type="long" />
-		<column name="countryId" type="long" />
-		<column name="latitude" type="double" />
-		<column name="longitude" type="double" />
-		<column name="phoneNumber" type="String" />
-		<column name="defaultBilling" type="boolean" />
-		<column name="defaultShipping" type="boolean" />
+		<column name="subtype" type="String" />
 		<column name="type" type="int" />
+		<column name="zip" type="String" />
 
 		<!-- Order -->
 
@@ -50,11 +51,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="RegionId" return-type="Collection">
-			<finder-column name="regionId" />
-		</finder>
 		<finder name="CountryId" return-type="Collection">
 			<finder-column name="countryId" />
+		</finder>
+		<finder name="RegionId" return-type="Collection">
+			<finder-column name="regionId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />

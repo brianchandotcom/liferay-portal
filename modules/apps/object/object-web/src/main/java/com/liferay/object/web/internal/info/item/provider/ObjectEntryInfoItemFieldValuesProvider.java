@@ -236,7 +236,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 			objectEntryFieldValues.add(
 				new InfoFieldValue<>(
-					ObjectEntryInfoItemFields.objectEntryFriendlyURLInfoField,
+					ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+						_objectDefinition),
 					() -> _getFriendlyURLValue(objectEntry)));
 		}
 

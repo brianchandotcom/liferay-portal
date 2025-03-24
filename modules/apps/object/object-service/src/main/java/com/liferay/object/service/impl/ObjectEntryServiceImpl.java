@@ -14,8 +14,10 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
+import com.liferay.object.entry.validation.ValidationError;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryCountException;
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -432,18 +434,50 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void validate(
+	public List<ValidationError> validate(
 			long groupId, ObjectEntry objectEntry,
-			List<String> objectValidationRuleExternalReferenceCodes)
+			List<String> objectValidationRuleExternalReferenceCodes,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkAddObjectEntryPortletResourcePermission(
 			groupId, objectEntry.getObjectDefinitionId(),
 			objectEntry.getValues());
 
-		_objectValidationRuleLocalService.validate(
-			objectValidationRuleExternalReferenceCodes, objectEntry,
-			getUserId());
+		List<ValidationError> validationErrorList = new ArrayList<>();
+
+		try {
+			_objectValidationRuleLocalService.validate(
+				objectValidationRuleExternalReferenceCodes, objectEntry,
+				getUserId());
+		}
+		catch (ObjectValidationRuleEngineException
+					objectValidationRuleEngineException) {
+
+			validationErrorList = ListUtil.toList(
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults(),
+				objectValidationRuleResult -> new ValidationError(
+					objectValidationRuleResult.getErrorMessage(),
+					objectValidationRuleResult.getObjectFieldName(),
+					objectValidationRuleResult.getExternalReferenceCode()));
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		validationErrorList.addAll(
+			ListUtil.toList(
+				objectEntryLocalService.validateValues(
+					Collections.emptyMap(), Collections.emptySet(), objectEntry,
+					false, groupId, objectDefinition,
+					objectEntry.getObjectEntryId(), serviceContext,
+					serviceContext.getUserId(), true, objectEntry.getValues()),
+				objectEntryValuesException -> new ValidationError(
+					objectEntryValuesException.getMessage())));
+
+		return validationErrorList;
 	}
 
 	@Activate

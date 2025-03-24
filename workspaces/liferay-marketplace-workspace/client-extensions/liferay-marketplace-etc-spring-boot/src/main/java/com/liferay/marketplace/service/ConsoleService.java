@@ -133,7 +133,10 @@ public class ConsoleService extends BaseService {
 			}
 		}
 
-		throw new Exception("Project not found");
+		throw new Exception(
+			StringBundler.concat(
+				"No project found with email address ", emailAddress,
+				" and project ID ", projectId));
 	}
 
 	public void setUpProject(

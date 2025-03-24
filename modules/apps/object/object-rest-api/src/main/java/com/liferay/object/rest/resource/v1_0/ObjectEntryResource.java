@@ -84,6 +84,10 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry getByExternalReferenceCodeByVersion(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;
@@ -134,6 +138,10 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Response putObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectEntry getObjectEntryByVersion(
+			Long objectEntryId, Integer version)
 		throws Exception;
 
 	public void putObjectEntryObjectActionObjectActionName(

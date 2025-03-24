@@ -6812,10 +6812,7 @@ public class ServiceBuilder {
 			if (isVersionGTE_7_4_0() &&
 				!Objects.equals(finderReturn, "Collection") && !finderUnique &&
 				ArrayUtil.contains(
-					StringUtil.split(
-						_compatProperties.getProperty(
-							"force.unique.finder.package.path")),
-					_packagePath)) {
+					_FORCE_UNIQUE_FINDER_PACKAGE_PATHS, _packagePath)) {
 
 				throw new IllegalArgumentException(
 					StringBundler.concat(
@@ -8146,6 +8143,10 @@ public class ServiceBuilder {
 	}
 
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
+
+	private static final String[] _FORCE_UNIQUE_FINDER_PACKAGE_PATHS = {
+		"com.liferay.counter", "com.liferay.portal"
+	};
 
 	private static final String _HIBERNATE_3_HBM_NAMESPACE =
 		"\"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd\"";

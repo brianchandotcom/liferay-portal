@@ -182,28 +182,17 @@ public class DuplicateRemovalUpgradeProcess extends UpgradeProcess {
 				sb.append(_tableName);
 				sb.append(" where ");
 
-				int counter = 0;
+				String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
+					connection, _tableName);
 
-				for (Map.Entry<String, String> querySet :
-						duplicate.entrySet()) {
-
-					sb.append(querySet.getKey());
-
-					if (querySet.getValue() == null) {
-						sb.append(" is null ");
-					}
-					else {
-						sb.append(" = '");
-						sb.append(_escape(querySet.getValue()));
-						sb.append("' ");
-					}
-
-					if (counter < (duplicate.size() - 1)) {
-						sb.append("and ");
-					}
-
-					counter++;
+				for (String primaryKeyColumnName : primaryKeyColumnNames) {
+					sb.append(primaryKeyColumnName);
+					sb.append(" = ");
+					sb.append(duplicate.get(primaryKeyColumnName));
+					sb.append("and ");
 				}
+
+				sb.setIndex(sb.index() - 1);
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(sb.toString())) {

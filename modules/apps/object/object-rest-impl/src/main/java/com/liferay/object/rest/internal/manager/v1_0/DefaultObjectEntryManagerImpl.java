@@ -866,7 +866,8 @@ public class DefaultObjectEntryManagerImpl
 	public void validateObjectEntry(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			List<String> objectValidationRuleExternalReferenceCodes, String scopeKey)
+			List<String> objectValidationRuleExternalReferenceCodes,
+			String scopeKey)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =

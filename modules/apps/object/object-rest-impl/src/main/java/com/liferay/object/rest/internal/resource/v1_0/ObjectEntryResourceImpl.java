@@ -727,6 +727,8 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String scopeKey, ValidationRequest validationRequest)
 		throws Exception {
 
+		ValidationResponse validationResponse = new ValidationResponse();
+
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
@@ -741,32 +743,24 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		catch (ObjectValidationRuleEngineException
 					objectValidationRuleEngineException) {
 
-			return new ValidationResponse() {
-				{
-					setValidationErrors(
-						() -> transformToArray(
-							objectValidationRuleEngineException.
-								getObjectValidationRuleResults(),
-							objectValidationRuleResult ->
-								new ValidationError() {
-									{
-										setErrorMessage(
-											objectValidationRuleResult::
-												getErrorMessage);
-										setObjectFieldName(
-											objectValidationRuleResult::
-												getObjectFieldName);
-										setObjectValidationRuleERC(
-											objectValidationRuleResult::
-												getValidationKey);
-									}
-								},
-							ValidationError.class));
-				}
-			};
+			validationResponse.setValidationErrors(
+				() -> transformToArray(
+					objectValidationRuleEngineException.
+						getObjectValidationRuleResults(),
+					objectValidationRuleResult -> new ValidationError() {
+						{
+							setErrorMessage(
+								objectValidationRuleResult::getErrorMessage);
+							setObjectFieldName(
+								objectValidationRuleResult::getObjectFieldName);
+							setObjectValidationRuleERC(
+								objectValidationRuleResult::getValidationKey);
+						}
+					},
+					ValidationError.class));
 		}
 
-		return new ValidationResponse();
+		return validationResponse;
 	}
 
 	private final DTOConverterRegistry _dtoConverterRegistry;

@@ -11,12 +11,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -53,11 +55,29 @@ public class StatusStrutsActionTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
+	@TestInfo("LPD-52041")
 	public void testExecute() throws Exception {
 		_testExecute(TestPropsValues.getUser(), " signed-in ");
 		_testExecute(
 			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()),
 			" signed-out ");
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(null);
+
+			_testExecute(TestPropsValues.getUser(), " signed-in ");
+
+			PrincipalThreadLocal.setName(null);
+
+			_testExecute(
+				_userLocalService.getGuestUser(TestPropsValues.getCompanyId()),
+				" signed-out ");
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+		}
 	}
 
 	private void _processEvents(

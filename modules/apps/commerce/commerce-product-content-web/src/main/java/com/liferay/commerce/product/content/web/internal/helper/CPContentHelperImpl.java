@@ -638,8 +638,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 			cpDefinitionSpecificationOptionValues =
 				_cpDefinitionSpecificationOptionValueLocalService.
 					getCPDefinitionSpecificationOptionValues(
-						cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null);
+						cpDefinitionId, true, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null);
 
 		return !cpDefinitionSpecificationOptionValues.isEmpty();
 	}

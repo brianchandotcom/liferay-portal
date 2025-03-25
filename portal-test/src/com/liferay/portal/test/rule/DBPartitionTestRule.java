@@ -5,12 +5,13 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalInstances;
 
 import org.junit.rules.TestRule;
@@ -42,7 +43,8 @@ public class DBPartitionTestRule implements TestRule {
 			String companyWebId = TestPropsValues.COMPANY_WEB_ID;
 
 			if (TestPropsValues.DATABASE_PARTITION_COPY) {
-				companyWebId = RandomTestUtil.randomString() + ".com";
+				companyWebId = StringUtil.replaceLast(
+					companyWebId, CharPool.PERIOD, "temp.");
 			}
 
 			PortalInstances.addCompany(

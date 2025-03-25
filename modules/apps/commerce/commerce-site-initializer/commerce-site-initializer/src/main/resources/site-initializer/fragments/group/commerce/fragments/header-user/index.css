@@ -1,6 +1,7 @@
 #commerce-header-user {
 	background-color: var(--white);
 	border-bottom: 1px solid var(--gray-300);
+	padding: 0.42rem 0;
 }
 
 .currency-selector-container .dropdown-menu-content.dropdown-menu,

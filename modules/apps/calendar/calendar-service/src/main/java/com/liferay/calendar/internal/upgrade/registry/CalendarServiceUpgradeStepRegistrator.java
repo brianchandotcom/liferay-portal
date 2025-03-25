@@ -20,11 +20,13 @@ import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarNotificationTem
 import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarResourceTable;
 import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarTable;
 import com.liferay.calendar.internal.upgrade.v4_2_1.CalendarBookingUpgradeProcess;
+import com.liferay.calendar.internal.upgrade.v4_3_0.CalendarNotificationTemplateResourceUpgradeProcess;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.comment.upgrade.DiscussionSubscriptionClassNameUpgradeProcess;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -157,6 +159,11 @@ public class CalendarServiceUpgradeStepRegistrator
 		registry.register(
 			"4.2.0", "4.2.1",
 			new CalendarBookingUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"4.2.1", "4.3.0",
+			new CalendarNotificationTemplateResourceUpgradeProcess(
+				_resourceLocalService));
 	}
 
 	@Reference
@@ -167,6 +174,9 @@ public class CalendarServiceUpgradeStepRegistrator
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

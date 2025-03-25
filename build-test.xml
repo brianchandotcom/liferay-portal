@@ -12762,6 +12762,9 @@ mail.session.mail.smtp.port=25000</echo>
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 captcha.enforce.disabled=true</echo>
 
+		<echo append="true" file="portal-impl/src/portal-ext.properties">
+analytics.cloud.domain.allowed=*</echo>
+
 		<apply-portal-ext-properties />
 	</target>
 

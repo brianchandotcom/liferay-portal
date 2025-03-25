@@ -4008,65 +4008,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#if>
 </#macro>
 
-<#macro getQuotedString
-	unquotedString
->
-	"\"" + ${unquotedString} + "\""
-</#macro>
-
-<#macro getPutParameters
-	hasMultipartFiles
-	javaMethodSignature
-	newSchemaVarNamePrefix
-	schemaName
-	schemaVarName
-	schemaVarNamePrefix
->
-	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-			${schemaVarNamePrefix}${schemaName}.getId()
-		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-			<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-				${schemaVarNamePrefix}${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-			<#else>
-				<#assign
-					addGetterMethod = true
-					defaultImplementationGetterMethod = true
-				/>
-			</#if>
-		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-			${newSchemaVarNamePrefix}${schemaName}
-		<#else>
-			<#assign
-				addGetterMethod = true
-				defaultImplementationGetterMethod = false
-			/>
-		</#if>
-
-		<#if addGetterMethod>
-			<#if defaultImplementationGetterMethod>
-				test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarNamePrefix}${schemaName})
-			<#else>
-				test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-			</#if>
-
-			<#assign
-				addGetterMethod = false
-				defaultImplementationGetterMethod = false
-				getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-			/>
-		</#if>
-
-		<#sep>, </#sep>
-	</#list>
-
-	<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && !hasMultipartFiles>
-		, getMultipartFiles()
-	<#elseif freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && hasMultipartFiles>
-		, multipartFiles
-	</#if>
-</#macro>
-
 <#macro getGetParameters
 	javaMethodSignature
 	testMethodName
@@ -4132,6 +4073,65 @@ public abstract class Base${schemaName}ResourceTestCase {
 			/>
 		</#if>
 	</#list>
+</#macro>
+
+<#macro getPutParameters
+	hasMultipartFiles
+	javaMethodSignature
+	newSchemaVarNamePrefix
+	schemaName
+	schemaVarName
+	schemaVarNamePrefix
+>
+	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+			${schemaVarNamePrefix}${schemaName}.getId()
+		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+			<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+				${schemaVarNamePrefix}${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+			<#else>
+				<#assign
+					addGetterMethod = true
+					defaultImplementationGetterMethod = true
+				/>
+			</#if>
+		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+			${newSchemaVarNamePrefix}${schemaName}
+		<#else>
+			<#assign
+				addGetterMethod = true
+				defaultImplementationGetterMethod = false
+			/>
+		</#if>
+
+		<#if addGetterMethod>
+			<#if defaultImplementationGetterMethod>
+				test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarNamePrefix}${schemaName})
+			<#else>
+				test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+			</#if>
+
+			<#assign
+				addGetterMethod = false
+				defaultImplementationGetterMethod = false
+				getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
+			/>
+		</#if>
+
+		<#sep>, </#sep>
+	</#list>
+
+	<#if freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && !hasMultipartFiles>
+		, getMultipartFiles()
+	<#elseif freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data") && hasMultipartFiles>
+		, multipartFiles
+	</#if>
+</#macro>
+
+<#macro getQuotedString
+	unquotedString
+>
+	"\"" + ${unquotedString} + "\""
 </#macro>
 
 <#macro getTestGetterMethods

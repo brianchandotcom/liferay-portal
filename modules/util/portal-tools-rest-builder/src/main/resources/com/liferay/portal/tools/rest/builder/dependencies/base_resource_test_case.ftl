@@ -345,7 +345,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(<@getGetParameters javaMethodSignature = getJavaMethodSignature testMethodName = javaMethodSignature.methodName?cap_first varName = schemaVarName + "1" />));
+					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+						<@getGetParameters
+							javaMethodSignature = getJavaMethodSignature
+							testJavaMethodSignature = javaMethodSignature
+							varName = schemaVarName + "1"
+						/>));
 				</#if>
 
 				<#if useDeleteByERC>
@@ -353,7 +358,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(<@getGetParameters javaMethodSignature = getJavaMethodSignature testMethodName = javaMethodSignature.methodName?cap_first varName = schemaVarName + "2" />));
+					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+						<@getGetParameters
+							javaMethodSignature = getJavaMethodSignature
+							testJavaMethodSignature = javaMethodSignature
+							varName = schemaVarName + "2"
+						/>));
 				</#if>
 
 				<#if useDeleteByERC && useDeleteById>
@@ -362,13 +372,28 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(<@getGetParameters javaMethodSignature = getJavaMethodSignature testMethodName = javaMethodSignature.methodName?cap_first varName = schemaVarName + "1" />));
+					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+						<@getGetParameters
+							javaMethodSignature = getJavaMethodSignature
+							testJavaMethodSignature = javaMethodSignature
+							varName = schemaVarName + "1"
+						/>));
 
-					assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(<@getGetParameters javaMethodSignature = getJavaMethodSignature testMethodName = javaMethodSignature.methodName?cap_first varName = schemaVarName + "2" />));
+					assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+						<@getGetParameters
+							javaMethodSignature = getJavaMethodSignature
+							testJavaMethodSignature = javaMethodSignature
+							varName = schemaVarName + "2"
+						/>));
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(<@getGetParameters javaMethodSignature = getJavaMethodSignature testMethodName = javaMethodSignature.methodName?cap_first varName = schemaVarName + "2" />));
+					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+						<@getGetParameters
+							javaMethodSignature = getJavaMethodSignature
+							testJavaMethodSignature = javaMethodSignature
+							varName = schemaVarName + "2"
+						/>));
 				</#if>
 			}
 
@@ -457,9 +482,20 @@ public abstract class Base${schemaName}ResourceTestCase {
 							getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))
 						/>
 
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(<@getGetParameters javaMethodSignature = getJavaMethodSignature testMethodName = javaMethodSignature.methodName?cap_first varName = schemaVarName />));
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+							<@getGetParameters
+								javaMethodSignature = getJavaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = schemaVarName
+							/>));
 
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(<@getGetParameters javaMethodSignature = getJavaMethodSignature testMethodName = javaMethodSignature.methodName?cap_first varName = schemaVarName defaultParameter = true />));
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+							<@getGetParameters
+								javaMethodSignature = getJavaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = schemaVarName
+								defaultParameter = true
+							/>));
 					</#if>
 				<#else>
 					Assert.assertTrue(false);
@@ -2015,11 +2051,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#assign getJavaMethodSignatureMethodName = javaMethodSignature.methodName?replace("put", "get", "f") />
 
 					<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)>
-						${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(<@getGetParameters javaMethodSignature=freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName) testMethodName=javaMethodSignature.methodName?cap_first varName="put" + schemaName />);
+						${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
+							<@getGetParameters
+								javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
+								testJavaMethodSignature = javaMethodSignature
+								varName = "put" + schemaName
+							/>);
 					<#else>
 						<#assign addResourceGetterMethod = true />
 
-						test${javaMethodSignature.methodName?cap_first}_get${schemaName}(<@getGetParameters allowQueryParameter=false javaMethodSignature=javaMethodSignature testMethodName=javaMethodSignature.methodName?cap_first varName="put" + schemaName/>);
+						test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
+							<@getGetParameters
+								allowQueryParameter = false
+								javaMethodSignature = javaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = "put" + schemaName
+							/>);
 					</#if>
 
 					assertEquals(random${schemaName}, get${schemaName});
@@ -2085,11 +2132,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#assign getJavaMethodSignatureMethodName = javaMethodSignature.methodName?replace("put", "get", "f") />
 
 					<#if freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)>
-						${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(<@getGetParameters javaMethodSignature=freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName) testMethodName=javaMethodSignature.methodName?cap_first varName="put" + schemaName/>);
+						${schemaVarName}Resource.${getJavaMethodSignatureMethodName}(
+							<@getGetParameters
+								javaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, getJavaMethodSignatureMethodName)
+								testJavaMethodSignature = javaMethodSignature
+								varName = "put" + schemaName
+							/>);
 					<#else>
 						<#assign addResourceGetterMethod = true />
 
-						test${javaMethodSignature.methodName?cap_first}_get${schemaName}(<@getGetParameters allowQueryParameter=false javaMethodSignature=javaMethodSignature testMethodName=javaMethodSignature.methodName?cap_first varName="put" + schemaName />);
+						test${javaMethodSignature.methodName?cap_first}_get${schemaName}(
+							<@getGetParameters
+								allowQueryParameter = false
+								javaMethodSignature = javaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = "put" + schemaName
+							/>);
 					</#if>
 
 					assertEquals(new${schemaName}, get${schemaName});
@@ -4010,7 +4068,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 <#macro getGetParameters
 	javaMethodSignature
-	testMethodName
+	testJavaMethodSignature
 	varName
 	allowQueryParameter = true
 	defaultParameter = false
@@ -4062,9 +4120,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#if addGetterMethod>
 			<#if defaultImplementationGetterMethod>
-				test${testMethodName}_get${javaMethodParameter.parameterName?cap_first}(${varName})
+				test${testJavaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${varName})
 			<#else>
-				test${testMethodName}_get${javaMethodParameter.parameterName?cap_first}()
+				test${testJavaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 			</#if>
 
 			<#assign

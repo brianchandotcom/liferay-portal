@@ -32,8 +32,8 @@ public class CommerceTaxCategoryMappingLocalServiceImpl
 
 	@Override
 	public CommerceTaxCategoryMapping addCommerceTaxCategoryMapping(
-			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, String externalReferenceCode)
+			String externalReferenceCode, long groupId, long userId,
+			long commerceTaxMethodId, long cpTaxCategoryId)
 		throws PortalException {
 
 		_validate(commerceTaxMethodId, cpTaxCategoryId);

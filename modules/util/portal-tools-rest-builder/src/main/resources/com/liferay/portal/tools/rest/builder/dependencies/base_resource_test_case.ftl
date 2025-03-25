@@ -324,10 +324,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 			parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)
 		/>
 
-		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)>
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
 			<#assign
-				getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 				getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id")
+				hasGetJavaMethodSignature = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 				idParameterName = properties?keys?seq_contains("id")?then("id", schemaVarName + "Id")
 
 				useDeleteByERC = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
@@ -340,17 +340,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			@Test
 			public void testDelete${schemaName}Batch() throws Exception {
+				<#if hasGetJavaMethodSignature>
+					<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName) />
+				</#if>
+
 				<#if useDeleteById>
 					${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-						<@getGetParameters
-							javaMethodSignature = getJavaMethodSignature
-							testJavaMethodSignature = javaMethodSignature
-							varName = schemaVarName + "1"
-						/>));
+					<#if hasGetJavaMethodSignature>
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+							<@getGetParameters
+								javaMethodSignature = getJavaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = schemaVarName + "1"
+							/>));
+					</#if>
 				</#if>
 
 				<#if useDeleteByERC>
@@ -358,12 +364,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-						<@getGetParameters
-							javaMethodSignature = getJavaMethodSignature
-							testJavaMethodSignature = javaMethodSignature
-							varName = schemaVarName + "2"
-						/>));
+					<#if hasGetJavaMethodSignature>
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+							<@getGetParameters
+								javaMethodSignature = getJavaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = schemaVarName + "2"
+							/>));
+					</#if>
 				</#if>
 
 				<#if useDeleteByERC && useDeleteById>
@@ -372,28 +380,32 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-						<@getGetParameters
-							javaMethodSignature = getJavaMethodSignature
-							testJavaMethodSignature = javaMethodSignature
-							varName = schemaVarName + "1"
-						/>));
+					<#if hasGetJavaMethodSignature>
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+							<@getGetParameters
+								javaMethodSignature = getJavaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = schemaVarName + "1"
+							/>));
 
-					assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-						<@getGetParameters
-							javaMethodSignature = getJavaMethodSignature
-							testJavaMethodSignature = javaMethodSignature
-							varName = schemaVarName + "2"
-						/>));
+						assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+							<@getGetParameters
+								javaMethodSignature = getJavaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = schemaVarName + "2"
+							/>));
+					</#if>
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-						<@getGetParameters
-							javaMethodSignature = getJavaMethodSignature
-							testJavaMethodSignature = javaMethodSignature
-							varName = schemaVarName + "2"
-						/>));
+					<#if hasGetJavaMethodSignature>
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+							<@getGetParameters
+								javaMethodSignature = getJavaMethodSignature
+								testJavaMethodSignature = javaMethodSignature
+								varName = schemaVarName + "2"
+							/>));
+					</#if>
 				</#if>
 			}
 

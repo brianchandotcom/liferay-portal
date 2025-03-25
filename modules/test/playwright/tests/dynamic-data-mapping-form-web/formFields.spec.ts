@@ -6,12 +6,19 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import performLoginViaApi, {performLogout} from '../../utils/performLogin';
 import {deleteItems} from './utils/deleteItems';
 
-export const test = mergeTests(loginTest(), formsPagesTest);
+export const test = mergeTests(
+	dataApiHelpersTest,
+	loginTest(),
+	formsPagesTest,
+	formsPagesTest
+);
 
 test.afterEach(async ({formsPage}) => {
 	await formsPage.goTo();
@@ -183,6 +190,103 @@ test.describe('Manage fields through Form Preview page', () => {
 		await expect(screenReaderOnlyCaptchaSpan).toContainText('captcha');
 
 		await newTabPage.close();
+	});
+
+	test('make sure upload field does not show file count on preview', async ({
+		apiHelpers,
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		formViewPage,
+		page,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Upload');
+
+		await formBuilderSidePanelPage.allowGuestUsers.click();
+
+		await formBuilderPage.clickPublishFormButton();
+
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
+
+		await performLogout(page);
+
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+		await page.waitForLoadState('domcontentloaded');
+
+		// Verify that the first file is removed after the second file is uploaded
+
+		await formViewPage.uploadFile(page, __dirname, 'sampleFile.txt');
+
+		await expect(formViewPage.uploadInput).toHaveValue('sampleFile.txt');
+
+		const firstFileEntryId = await formViewPage.getFileEntryId(page);
+
+		const getDocumentUnauthenticated = async (documentId: string) => {
+			const {Authorization} =
+				await apiHelpers.getJSONWebServicesHeaders();
+
+			return apiHelpers.get(
+				`${apiHelpers.baseUrl}headless-delivery/v1.0/documents/${documentId}`,
+				false,
+				{Authorization}
+			);
+		};
+
+		expect(await getDocumentUnauthenticated(firstFileEntryId)).toEqual(
+			expect.objectContaining({
+				id: Number(firstFileEntryId),
+			})
+		);
+
+		await formViewPage.uploadFile(page, __dirname, 'loremIpsum.txt');
+
+		await expect(formViewPage.uploadInput).toHaveValue('loremIpsum.txt');
+
+		expect(await getDocumentUnauthenticated(firstFileEntryId)).toEqual({
+			status: 'NOT_FOUND',
+		});
+
+		// Verify that the file is removed when reloading the page
+
+		const secondFileEntryId = await formViewPage.getFileEntryId(page);
+
+		expect(await getDocumentUnauthenticated(secondFileEntryId)).toEqual(
+			expect.objectContaining({
+				id: Number(secondFileEntryId),
+			})
+		);
+
+		await page.reload();
+
+		expect(await getDocumentUnauthenticated(secondFileEntryId)).toEqual({
+			status: 'NOT_FOUND',
+		});
+
+		// Verify that the file is removed when clearing the upload field
+
+		await formViewPage.uploadFile(page, __dirname, 'sampleFile.txt');
+
+		await expect(formViewPage.uploadInput).toHaveValue('sampleFile.txt');
+
+		const thirdFileEntryId = await formViewPage.getFileEntryId(page);
+
+		expect(await getDocumentUnauthenticated(thirdFileEntryId)).toEqual(
+			expect.objectContaining({
+				id: Number(thirdFileEntryId),
+			})
+		);
+
+		await formViewPage.unselectFile.click();
+
+		expect(await getDocumentUnauthenticated(thirdFileEntryId)).toEqual({
+			status: 'NOT_FOUND',
+		});
+
+		await performLoginViaApi(page, 'test');
 	});
 });
 

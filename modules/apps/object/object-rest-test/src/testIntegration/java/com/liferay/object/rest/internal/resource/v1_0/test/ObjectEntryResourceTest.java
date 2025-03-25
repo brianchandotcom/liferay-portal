@@ -54,7 +54,6 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.rest.dto.v1_0.Folder;
@@ -15643,22 +15642,36 @@ public class ObjectEntryResourceTest {
 				validationResponse.getValidationErrors()[1].
 					getObjectFieldName());
 
-			ObjectField objectFieldWithProperties = _createObjectFieldWithProperties(
-				objectDefinition, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				ObjectFieldConstants.DB_TYPE_STRING,
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-					).value(
-						"true"
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_MAX_LENGTH
-					).value(
-						"10"
-					).build()), true);
+			_objectValidationRuleLocalService.deleteObjectValidationRules(
+				objectDefinition.getObjectDefinitionId());
+
+			ObjectField objectFieldWithProperties =
+				ObjectFieldLocalServiceUtil.addCustomObjectField(
+					StringUtil.randomString(), TestPropsValues.getUserId(), 0,
+					objectDefinition.getObjectDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+					LocalizedMapUtil.getLocalizedMap("PropertiesField"), false,
+					"propertiesField", null, null, true, false,
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+						).value(
+							"true"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_LENGTH
+						).value(
+							"9"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_SHOW_COUNTER
+						).value(
+							"true"
+						).build()));
 
 			validationResponse = _validate(
 				scopeKey, objectEntryResource,
@@ -15667,35 +15680,79 @@ public class ObjectEntryResourceTest {
 						objectFieldWithProperties.getName(), ""
 					).build()));
 
-			validationResponse.getValidationErrors();
+			Assert.assertEquals(
+				"No value was provided for required object field " +
+					"\"propertiesField\"",
+				validationResponse.getValidationErrors()[0].getErrorMessage());
+
+			validationResponse = _validate(
+				scopeKey, objectEntryResource,
+				_getValidationRequest(
+					HashMapBuilder.<String, Object>put(
+						objectFieldWithProperties.getName(), "0123456789"
+					).build()));
+
+			Assert.assertEquals(
+				"Object entry value exceeds the maximum length of 9 " +
+					"characters for object field \"propertiesField\"",
+				validationResponse.getValidationErrors()[0].getErrorMessage());
+
+			ObjectEntryTestUtil.addObjectEntry(
+				objectDefinition, objectFieldWithProperties.getName(),
+				"unique");
+
+			validationResponse = _validate(
+				scopeKey, objectEntryResource,
+				_getValidationRequest(
+					HashMapBuilder.<String, Object>put(
+						objectFieldWithProperties.getName(), "unique"
+					).build()));
+
+			Assert.assertTrue(
+				validationResponse.getValidationErrors()[0].getErrorMessage(
+				).contains(
+					"Unique value constraint violation for"
+				));
+
+			_objectFieldLocalService.deleteObjectField(
+				objectFieldWithProperties.getObjectFieldId());
+
+			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+				objectDefinition.getPortletId(),
+				TempFileEntryUtil.getTempFileName("foo.pdf"),
+				FileUtil.createTempFile(
+					RandomTestUtil.randomString(
+						(_MAX_FILE_SIZE_VALUE * 1024 * 1024) + 1
+					).getBytes()),
+				ContentTypes.TEXT_PLAIN);
+
+			validationResponse = _validate(
+				scopeKey, objectEntryResource,
+				_getValidationRequest(
+					HashMapBuilder.<String, Object>put(
+						_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+						fileEntry.getFileEntryId()
+					).build()));
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"The file extension \"pdf\" is invalid for object field \"",
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE, "\""),
+				validationResponse.getValidationErrors()[0].getErrorMessage());
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"File exceeds the maximum permitted size of 1 MB for ",
+					"object field \"",
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE, "\""),
+				validationResponse.getValidationErrors()[1].getErrorMessage());
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 			PrincipalThreadLocal.setName(originalName);
 		}
-	}
-
-	private ObjectField _createObjectFieldWithProperties (
-		ObjectDefinition objectDefinition, String businessType,
-		String dbType, List<ObjectFieldSetting> objectFieldSettings, boolean required)
-		throws Exception {
-
-		ObjectField objectField = ObjectFieldTestUtil.addCustomObjectField(
-			TestPropsValues.getUserId(),
-			businessType, dbType, objectDefinition,
-			"o"+StringUtil.randomString());
-
-		ObjectFieldLocalServiceUtil.addOrUpdateCustomObjectField(
-			objectField.getExternalReferenceCode(), objectField.getObjectFieldId(),
-			TestPropsValues.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			businessType, dbType,
-			false, false, "false", Collections.emptyMap(),
-			false, objectField.getName(), "false", null,
-			required, false,
-			objectFieldSettings);
-
-	return objectField;
 	}
 
 	private void _testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(

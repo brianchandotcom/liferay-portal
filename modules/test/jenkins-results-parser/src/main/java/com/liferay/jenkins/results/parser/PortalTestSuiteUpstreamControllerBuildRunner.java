@@ -88,9 +88,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		if (masterURL == null) {
 			masterURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
-				JenkinsResultsParserUtil.combine(
-					"http://" + getInvocationCohortName() + ".liferay.com"),
-				null, 1, 24, 2);
+				"http://" + getInvocationCohortName() + ".liferay.com", null, 1,
+				invocationJobName, getSlaveLabel(testSuite), 24, 2);
 		}
 
 		return JenkinsResultsParserUtil.combine(

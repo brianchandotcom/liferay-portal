@@ -60,6 +60,25 @@ public abstract class BaseBuildRunner<T extends BuildData>
 		return _job;
 	}
 
+	protected String getLabelExpression(String jobName) {
+		String labelExpression = null;
+
+		try {
+			labelExpression = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.osb.jenkins.web.slave.label", jobName);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+				labelExpression = JenkinsResultsParserUtil.getBuildProperty(
+					"master.auto.scaling.group.name");
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return labelExpression;
+	}
+
 	protected List<JSONObject> getPreviousBuildJSONObjects() {
 		if (_previousBuildJSONObjects != null) {
 			return _previousBuildJSONObjects;

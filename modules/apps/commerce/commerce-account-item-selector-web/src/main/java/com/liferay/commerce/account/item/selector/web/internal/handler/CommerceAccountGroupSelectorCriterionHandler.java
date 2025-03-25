@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.account.item.selector.web.internal.handler;
 
-import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupItemSelectorCriterion;
+import com.liferay.commerce.account.item.selector.CommerceAccountGroupItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

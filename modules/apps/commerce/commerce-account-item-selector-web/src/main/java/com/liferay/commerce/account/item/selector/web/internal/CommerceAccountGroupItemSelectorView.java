@@ -6,7 +6,7 @@
 package com.liferay.commerce.account.item.selector.web.internal;
 
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupItemSelectorCriterion;
+import com.liferay.commerce.account.item.selector.CommerceAccountGroupItemSelectorCriterion;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.CommerceAccountGroupItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;

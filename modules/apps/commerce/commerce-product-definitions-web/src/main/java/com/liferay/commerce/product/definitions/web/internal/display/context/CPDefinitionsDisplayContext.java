@@ -8,7 +8,7 @@ package com.liferay.commerce.product.definitions.web.internal.display.context;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
-import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupItemSelectorCriterion;
+import com.liferay.commerce.account.item.selector.CommerceAccountGroupItemSelectorCriterion;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPActionKeys;

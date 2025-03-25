@@ -152,8 +152,9 @@ public class RoleEmailProvider implements EmailProvider {
 	}
 
 	private String _getEmailAddresses(
-		Map<Integer, long[]> groupIdsMap,
-		NotificationContext notificationContext, Object value) {
+			Map<Integer, long[]> groupIdsMap,
+			NotificationContext notificationContext, Object value)
+		throws PortalException {
 
 		Set<String> emailAddresses = new HashSet<>();
 
@@ -173,7 +174,7 @@ public class RoleEmailProvider implements EmailProvider {
 
 			if (role.getType() == RoleConstants.TYPE_REGULAR) {
 				ListUtil.isNotEmptyForEach(
-					_userLocalService.getRoleUsers(
+					_userLocalService.getInheritedRoleUsers(
 						role.getRoleId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 						null),
 					user -> {

@@ -333,6 +333,86 @@ public class CommercePriceModifierTest {
 	}
 
 	@Test
+	public void testOverridePriceTargetCatalog() throws Exception {
+		frutillaRule.scenario(
+			"An override type price modifier overrides the price of a product"
+		).given(
+			"A catalog with at least one product and one price list"
+		).and(
+			"An override type price modifier targeting the product"
+		).when(
+			"The price modifier is applied to the catalog"
+		).then(
+			"The original price is overridden by the modifier"
+		);
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.addCommerceCatalog(
+				null, RandomTestUtil.randomString(),
+				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
+				_serviceContext);
+
+		CommercePriceList commercePriceList =
+			CommercePriceModifierTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), 0.0);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(
+			commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		BigDecimal price = BigDecimal.valueOf(
+			RandomTestUtil.randomDouble()
+		).setScale(
+			2, RoundingMode.valueOf(_commerceCurrency.getRoundingMode())
+		);
+
+		CommercePriceEntry commercePriceEntry = _addCommercePriceEntry(
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commercePriceList.getCommercePriceListId(), price);
+
+		BigDecimal amount = BigDecimal.valueOf(-10);
+
+		CommercePriceModifier commercePriceModifier =
+			CommercePriceModifierTestUtil.addCommercePriceModifier(
+				commerceCatalog.getGroupId(),
+				CommercePriceModifierConstants.TARGET_CATALOG,
+				commercePriceList.getCommercePriceListId(),
+				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, amount,
+				true);
+
+		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
+			commercePriceModifier.getGroupId(),
+			commercePriceModifier.getCommercePriceModifierId(),
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+		BigDecimal finalPrice =
+			_commercePriceModifierHelper.applyCommercePriceModifier(
+				commercePriceList.getCommercePriceListId(),
+				cpInstance.getCPDefinitionId(),
+				commercePriceEntry.getPriceCommerceMoney(
+					_commerceCurrency.getCommerceCurrencyId()));
+
+		MathContext mathContext = new MathContext(
+			finalPrice.precision(),
+			RoundingMode.valueOf(_commerceCurrency.getRoundingMode()));
+
+		BigDecimal expectedPrice = price.subtract(
+			price.multiply(
+				amount.abs()
+			).divide(
+				BigDecimal.valueOf(100), mathContext
+			)
+		).setScale(
+			2, RoundingMode.valueOf(_commerceCurrency.getRoundingMode())
+		);
+
+		Assert.assertEquals(
+			expectedPrice.stripTrailingZeros(),
+			finalPrice.stripTrailingZeros());
+	}
+
+	@Test
 	public void testOverridePriceTargetProduct() throws Exception {
 		frutillaRule.scenario(
 			"A type override price modifier overrides the price of a product"

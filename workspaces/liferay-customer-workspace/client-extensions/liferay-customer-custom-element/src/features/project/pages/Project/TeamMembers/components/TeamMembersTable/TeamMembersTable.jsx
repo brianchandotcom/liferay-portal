@@ -40,7 +40,7 @@ const UNLIMITED_SUPPORT_SEATS = 9999;
 
 const TeamMembersTable = ({
 	koroneikiAccount,
-	loading: koroneikiAccountLoading,
+	koroneikiAccountLoading,
 }) => {
 	const {
 		articleAccountSupportURL,
@@ -184,7 +184,7 @@ const TeamMembersTable = ({
 	const {data: accountRolesData, loading: accountRolesLoading} =
 		useAccountRolesByAccountExternalReferenceCode(
 			koroneikiAccount,
-			koroneikiAccountLoading,
+			koroneikiAccountLoading || myUserAccountLoading,
 			!loggedUserAccount?.selectedAccountSummary?.hasAdministratorRole
 		);
 

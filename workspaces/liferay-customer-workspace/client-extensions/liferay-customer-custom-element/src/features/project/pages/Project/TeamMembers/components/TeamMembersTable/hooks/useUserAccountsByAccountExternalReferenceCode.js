@@ -4,7 +4,7 @@
  */
 
 import {NetworkStatus} from '@apollo/client';
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo} from 'react';
 import useSearchTerm from '~/hooks/useSearchTerm';
 import {useGetUserAccountsByAccountExternalReferenceCode} from '~/services/liferay/graphql/user-accounts';
 import {addContactRoleNameByEmailByProject} from '~/services/liferay/rest/raysource/LicenseKeys';
@@ -27,10 +27,8 @@ const getFilter = (searchTerm) => {
 
 export default function useUserAccountsByAccountExternalReferenceCode(
 	externalReferenceCode,
-	koroneikiAccountLoading
+	skip
 ) {
-	const [searching, setSearching] = useState(false);
-
 	const {
 		data: userAccountData,
 		networkStatus,
@@ -39,7 +37,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		externalReferenceCode,
 		{
 			notifyOnNetworkStatusChange: true,
-			skip: koroneikiAccountLoading,
+			skip: skip || !externalReferenceCode,
 		}
 	);
 
@@ -89,20 +87,12 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		updateContactRoles,
 	} = useUpdateUserAccount();
 
-	useEffect(() => {
-		if (networkStatus === NetworkStatus.refetch) {
-			setSearching(false);
-		}
-	}, [networkStatus]);
-
 	const supportSeatsCount = useSupportSeatsCount(
 		data?.accountUserAccountsByExternalReferenceCode,
-		searching
+		networkStatus === NetworkStatus.loading
 	);
 
 	const [, onSearch] = useSearchTerm((searchTerm) => {
-		setSearching(true);
-
 		refetch({
 			filter: getFilter(searchTerm),
 		});

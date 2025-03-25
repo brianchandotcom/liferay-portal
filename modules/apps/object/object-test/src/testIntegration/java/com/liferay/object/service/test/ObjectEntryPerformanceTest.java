@@ -158,7 +158,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	@Test
-	public void testImportAndDeleteByRestAPI() throws Throwable {
+	public void testImportAndDeleteObjectEntriesByRestAPI() throws Throwable {
 		TransactionConfig.Builder transactionConfigBuilder =
 			new TransactionConfig.Builder();
 

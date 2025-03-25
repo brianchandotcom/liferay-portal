@@ -194,6 +194,7 @@ const ActivationKeysTable = ({
 						)
 					}
 					small
+					spritemap={Liferay.Icons.spritemap}
 					symbol="download"
 				/>
 			),

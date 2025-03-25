@@ -199,7 +199,7 @@ const AccountSubscriptionCard = ({
 						/>
 					) : (
 						IconSVG && (
-							<div className="align-items-center cp-account-subscription-card-iconSvg d-flex">
+							<div className="align-items-center d-flex">
 								<IconSVG height={45} width={45} />
 							</div>
 						)

@@ -46,6 +46,7 @@ const OptionsColumn = ({
 							aria-label={i18n.translate('manage-user-options')}
 							displayType="null"
 							small
+							spritemap={Liferay.Icons.spritemap}
 							symbol="ellipsis-v"
 						/>
 					}

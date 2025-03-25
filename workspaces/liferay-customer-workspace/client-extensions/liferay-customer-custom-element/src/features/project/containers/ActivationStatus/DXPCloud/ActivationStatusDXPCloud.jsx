@@ -168,6 +168,7 @@ const ActivationStatusDXPCloud = ({
 							aria-label={i18n.translate('set-to-active')}
 							displayType="null"
 							small
+							spritemap={Liferay.Icons.spritemap}
 							symbol="caret-bottom"
 						/>
 					}

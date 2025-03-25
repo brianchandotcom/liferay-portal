@@ -13,14 +13,6 @@
 		width: 1.375rem;
 	}
 
-	.cp-account-subscription-card-iconSvg {
-		background: var(--brand-primary-lighten-lighten-5, #e7efff);
-		border-radius: 0.5rem;
-		height: 2.5rem;
-		padding: 0.625rem;
-		width: 2.5rem;
-	}
-
 	.cp-account-subscription-card-info {
 		display: grid;
 		gap: 2.1rem;

@@ -78,10 +78,9 @@ public class RolesAdminPortletTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_userGroup = UserGroupTestUtil.addUserGroup(_group.getGroupId());
-
 		_role = _roleLocalService.getRole(
 			_group.getCompanyId(), "Publications User");
+		_userGroup = UserGroupTestUtil.addUserGroup(_group.getGroupId());
 	}
 
 	@After
@@ -100,10 +99,10 @@ public class RolesAdminPortletTest {
 		Column<Groups_RolesTable, Long> groupIdColumn =
 			groups_rolesTable.groupId;
 
-		long roleId = _role.getRoleId();
 		long groupId = _userGroup.getGroupId();
+		long roleId = _role.getRoleId();
 
-		_processActionRequestInPublication(
+		_processAction(
 			_ctCollection,
 			HashMapBuilder.put(
 				"addGroupIds", String.valueOf(groupId)
@@ -113,16 +112,14 @@ public class RolesAdminPortletTest {
 
 		_assertNoCTEntry();
 
-		List<Object> productionRowsAfterAdd = _roleLocalService.dslQuery(
-			_getMappingTableDSLQuery(
+		List<Object> results = _roleLocalService.dslQuery(
+			_getDSLQuery(
 				groupIdColumn, groups_rolesTable, "groupId", roleId, groupId,
 				CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
-		Assert.assertEquals(
-			productionRowsAfterAdd.toString(), 1,
-			productionRowsAfterAdd.size());
+		Assert.assertEquals(results.toString(), 1, results.size());
 
-		_processActionRequestInPublication(
+		_processAction(
 			_ctCollection,
 			HashMapBuilder.put(
 				"removeGroupIds", String.valueOf(groupId)
@@ -132,14 +129,12 @@ public class RolesAdminPortletTest {
 
 		_assertNoCTEntry();
 
-		List<Object> productionRowsAfterDelete = _roleLocalService.dslQuery(
-			_getMappingTableDSLQuery(
+		results = _roleLocalService.dslQuery(
+			_getDSLQuery(
 				groupIdColumn, groups_rolesTable, "groupId", roleId, groupId,
 				CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
-		Assert.assertEquals(
-			productionRowsAfterDelete.toString(), 0,
-			productionRowsAfterDelete.size());
+		Assert.assertEquals(results.toString(), 0, results.size());
 	}
 
 	@Test
@@ -151,7 +146,7 @@ public class RolesAdminPortletTest {
 		long roleId = _role.getRoleId();
 		long userId = TestPropsValues.getUserId();
 
-		_processActionRequestInPublication(
+		_processAction(
 			_ctCollection,
 			HashMapBuilder.put(
 				"addUserIds", String.valueOf(userId)
@@ -161,16 +156,14 @@ public class RolesAdminPortletTest {
 
 		_assertNoCTEntry();
 
-		List<Object> productionRowsAfterAdd = _roleLocalService.dslQuery(
-			_getMappingTableDSLQuery(
+		List<Object> results = _roleLocalService.dslQuery(
+			_getDSLQuery(
 				userIdColumn, users_rolesTable, "userId", roleId, userId,
 				CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
-		Assert.assertEquals(
-			productionRowsAfterAdd.toString(), 1,
-			productionRowsAfterAdd.size());
+		Assert.assertEquals(results.toString(), 1, results.size());
 
-		_processActionRequestInPublication(
+		_processAction(
 			_ctCollection,
 			HashMapBuilder.put(
 				"removeUserIds", String.valueOf(userId)
@@ -180,14 +173,12 @@ public class RolesAdminPortletTest {
 
 		_assertNoCTEntry();
 
-		List<Object> productionRowsAfterDelete = _roleLocalService.dslQuery(
-			_getMappingTableDSLQuery(
+		results = _roleLocalService.dslQuery(
+			_getDSLQuery(
 				userIdColumn, users_rolesTable, "userId", roleId, userId,
 				CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
-		Assert.assertEquals(
-			productionRowsAfterDelete.toString(), 0,
-			productionRowsAfterDelete.size());
+		Assert.assertEquals(results.toString(), 0, results.size());
 	}
 
 	private void _assertNoCTEntry() throws Exception {
@@ -197,7 +188,7 @@ public class RolesAdminPortletTest {
 				_ctCollection.getCtCollectionId()));
 	}
 
-	private DSLQuery _getMappingTableDSLQuery(
+	private DSLQuery _getDSLQuery(
 		Expression<?> selectExpression, BaseTable<?> table,
 		String rightPKColumnName, long leftPrimaryKey, long rightPrimaryKey,
 		long ctCollectionId) {
@@ -243,7 +234,7 @@ public class RolesAdminPortletTest {
 		return themeDisplay;
 	}
 
-	private void _processActionRequestInPublication(
+	private void _processAction(
 			CTCollection ctCollection, Map<String, String> params)
 		throws Exception {
 

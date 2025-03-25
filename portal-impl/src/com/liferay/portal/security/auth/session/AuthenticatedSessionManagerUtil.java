@@ -69,14 +69,8 @@ public class AuthenticatedSessionManagerUtil {
 		return user.getUserId();
 	}
 
-	public static void login(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String login,
-			String password, boolean rememberMe, String authType)
-		throws Exception {
-
-		httpServletRequest = PortalUtil.getOriginalServletRequest(
-			httpServletRequest);
+	public static boolean isPasswordParameterInQueryString(
+		HttpServletRequest httpServletRequest) {
 
 		String queryString = HttpComponentsUtil.getQueryString(
 			httpServletRequest);
@@ -111,8 +105,24 @@ public class AuthenticatedSessionManagerUtil {
 							"referer header: ", referer));
 				}
 
-				return;
+				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public static void login(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String login,
+			String password, boolean rememberMe, String authType)
+		throws Exception {
+
+		httpServletRequest = PortalUtil.getOriginalServletRequest(
+			httpServletRequest);
+
+		if (isPasswordParameterInQueryString(httpServletRequest)) {
+			return;
 		}
 
 		CookiesManagerUtil.validateSupportCookie(httpServletRequest);

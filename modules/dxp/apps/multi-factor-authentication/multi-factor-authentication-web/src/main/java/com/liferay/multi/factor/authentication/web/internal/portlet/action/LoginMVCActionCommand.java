@@ -9,8 +9,6 @@ import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFAPortletKeys;
 import com.liferay.multi.factor.authentication.web.internal.constants.MFAWebKeys;
 import com.liferay.multi.factor.authentication.web.internal.policy.MFAPolicy;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.CookieNotSupportedException;
@@ -34,18 +32,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -95,45 +90,10 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(actionRequest));
 
-		String queryString = HttpComponentsUtil.getQueryString(
-			httpServletRequest);
+		if (AuthenticatedSessionManagerUtil.isPasswordParameterInQueryString(
+				httpServletRequest)) {
 
-		if (Validator.isNotNull(queryString) &&
-			queryString.contains("password=")) {
-
-			String passwordParameterName = "password=";
-
-			String portletId = PortalUtil.getPortletId(httpServletRequest);
-
-			if (portletId != null) {
-				passwordParameterName =
-					PortalUtil.getPortletNamespace(portletId) +
-						passwordParameterName;
-			}
-
-			int index = queryString.indexOf(passwordParameterName);
-
-			if ((index == 0) ||
-				((index > 0) &&
-				 (queryString.charAt(index - 1) == CharPool.AMPERSAND))) {
-
-				if (_log.isWarnEnabled()) {
-					String referer = httpServletRequest.getHeader(
-						HttpHeaders.REFERER);
-
-					_log.warn(
-						StringBundler.concat(
-							"Ignoring login attempt because the password ",
-							"parameter was found for the request with the ",
-							"referer header: ", referer));
-				}
-
-				_postProcessAuthFailure(actionRequest, actionResponse);
-
-				hideDefaultErrorMessage(actionRequest);
-
-				return;
-			}
+			return;
 		}
 
 		long companyId = _portal.getCompanyId(actionRequest);

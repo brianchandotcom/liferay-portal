@@ -8,6 +8,8 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 DDMFormInstance formInstance = ddmFormAdminDisplayContext.getDDMFormInstance();

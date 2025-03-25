@@ -92,7 +92,6 @@ JSONObject functionsMetadataJSONObject = ddmFormAdminDisplayContext.getFunctions
 String functionsURL = ddmFormAdminDisplayContext.getFunctionsURL();
 String rolesURL = ddmFormAdminDisplayContext.getRolesURL();
 JSONArray ddmFormRulesJSONArray = ddmFormAdminDisplayContext.getDDMFormRulesJSONArray();
-JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
 %>
 
 <%@ include file="/admin/init-ext.jsp" %>

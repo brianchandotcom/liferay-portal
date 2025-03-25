@@ -24,7 +24,7 @@ import {createDataSource} from '../osb-faro-web/utils/data-source';
 import {acceptsCookiesBanner} from '../osb-faro-web/utils/portal';
 
 async function connectToAnalyticsCloudWithNoSiteSynced(page: Page) {
-	await createDataSource(page);
+	const {token} = await createDataSource(page);
 
 	await goToAnalyticsCloudInstanceSettings(page);
 
@@ -32,7 +32,7 @@ async function connectToAnalyticsCloudWithNoSiteSynced(page: Page) {
 
 	await disconnectFromAnalyticsCloud(page);
 
-	await connectToAnalyticsCloud(page);
+	await connectToAnalyticsCloud(page, {token});
 
 	await goNextStep(page);
 

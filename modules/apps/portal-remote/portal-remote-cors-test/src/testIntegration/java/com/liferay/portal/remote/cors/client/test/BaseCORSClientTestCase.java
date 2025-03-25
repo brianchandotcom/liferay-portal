@@ -124,17 +124,13 @@ public abstract class BaseCORSClientTestCase {
 			String urlString, String method, boolean allowOrigin)
 		throws Exception {
 
-		assertJsonWSUrl(urlString, method, allowOrigin, null);
+		assertJsonWSUrl(urlString, method, allowOrigin, _TEST_CORS_URI);
 	}
 
 	protected void assertJsonWSUrl(
 			String urlString, String method, boolean allowOrigin,
 			String allowedOrigin)
 		throws Exception {
-
-		if (allowedOrigin == null) {
-			allowedOrigin = _TEST_CORS_URI;
-		}
 
 		ProcessConfig.Builder builder = _generateTestBuilder();
 

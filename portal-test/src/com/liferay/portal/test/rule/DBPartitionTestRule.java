@@ -83,9 +83,6 @@ public class DBPartitionTestRule implements TestRule {
 						TestPropsValues.COMPANY_WEB_ID,
 						TestPropsValues.COMPANY_WEB_ID,
 						TestPropsValues.COMPANY_WEB_ID);
-
-					CompanyLocalServiceUtil.deleteCompany(
-						company.getCompanyId());
 				}
 			}
 		}

@@ -98,8 +98,11 @@ public class ChangeMasterLayoutMVCActionCommand
 
 		if (masterLayoutPlid == 0) {
 			return JSONUtil.put(
+				"styleBookEntryId", _getStyleBookEntryId(updatedLayout)
+			).put(
 				"styleBooks",
-				_getStyleBooksJSONArray(updatedLayout, themeDisplay));
+				_getStyleBooksJSONArray(updatedLayout, themeDisplay)
+			);
 		}
 
 		LayoutStructure layoutStructure =
@@ -134,6 +137,8 @@ public class ChangeMasterLayoutMVCActionCommand
 		).put(
 			"masterLayoutData", layoutStructure.toJSONObject()
 		).put(
+			"styleBookEntryId", _getStyleBookEntryId(updatedLayout)
+		).put(
 			"styleBooks", _getStyleBooksJSONArray(updatedLayout, themeDisplay)
 		);
 	}
@@ -141,6 +146,17 @@ public class ChangeMasterLayoutMVCActionCommand
 	@Override
 	protected boolean isLayoutLockRequired() {
 		return false;
+	}
+
+	private String _getStyleBookEntryId(Layout updatedLayout) {
+		StyleBookEntry styleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(updatedLayout);
+
+		if (styleBookEntry != null) {
+			return String.valueOf(styleBookEntry.getStyleBookEntryId());
+		}
+
+		return "0";
 	}
 
 	private JSONArray _getStyleBooksJSONArray(

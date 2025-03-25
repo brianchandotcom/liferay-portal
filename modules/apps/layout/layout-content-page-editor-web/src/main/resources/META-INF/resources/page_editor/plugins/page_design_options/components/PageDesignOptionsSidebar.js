@@ -44,7 +44,7 @@ export default function PageDesignOptionsSidebar() {
 				changeMasterLayout({
 					masterLayoutPlid: masterLayout.masterLayoutPlid,
 				})
-			).then(({styleBooks = []}) => {
+			).then(({styleBookEntryId, styleBooks = []}) => {
 				setStyleBooks(styleBooks);
 
 				if (!styleBooks.length) {
@@ -57,24 +57,15 @@ export default function PageDesignOptionsSidebar() {
 				}
 
 				if (Liferay.FeatureFlags['LPD-30204']) {
+					const selectedStyleBook = styleBooks.find(
+						(styleBook) =>
+							styleBook.styleBookEntryId === styleBookEntryId
+					);
 
-					// Changing the master layout should affect the selected
-					// stylebook if the selected styleBookEntryId is equal to 0
-					// which means that the stylebook is inherited or if the
-					// selected stylebook is not found in the available style
-					// books which means that the style book is based on a
-					// different theme
-
-					if (
-						selectedStyleBook.styleBookEntryId === '0' ||
-						!(
-							styleBooks.findIndex(
-								(styleBook) =>
-									styleBook.styleBookEntryId ===
-									selectedStyleBook.styleBookEntryId
-							) >= 0
-						)
-					) {
+					if (selectedStyleBook) {
+						setSelectedStyleBook({...selectedStyleBook});
+					}
+					else {
 						setSelectedStyleBook({...styleBooks[0]});
 					}
 				}

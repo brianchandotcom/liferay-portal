@@ -48,10 +48,17 @@ public class DBPartitionTestRule implements TestRule {
 						null, companyWebId, companyWebId, companyWebId, 0, true,
 						true, null, null, null, null, null, null));
 
-				if (TestPropsValues.DATABASE_PARTITION_EXTRACT_AND_INSERT) {
-					company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+				company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
 						companyWebId);
 
+				if (TestPropsValues.DATABASE_PARTITION_COPY) {
+					CompanyLocalServiceUtil.copyDBPartitionCompany(
+							company.getCompanyId(), null,
+							TestPropsValues.COMPANY_WEB_ID,
+							TestPropsValues.COMPANY_WEB_ID,
+							TestPropsValues.COMPANY_WEB_ID);
+				}
+				else if (TestPropsValues.DATABASE_PARTITION_EXTRACT_AND_INSERT) {
 					CompanyLocalServiceUtil.extractCompany(
 						company.getCompanyId());
 
@@ -60,16 +67,6 @@ public class DBPartitionTestRule implements TestRule {
 
 					CompanyLocalServiceUtil.addDBPartitionCompany(
 						company.getCompanyId(), TestPropsValues.COMPANY_WEB_ID,
-						TestPropsValues.COMPANY_WEB_ID,
-						TestPropsValues.COMPANY_WEB_ID);
-				}
-				else if (TestPropsValues.DATABASE_PARTITION_COPY) {
-					company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-						companyWebId);
-
-					CompanyLocalServiceUtil.copyDBPartitionCompany(
-						company.getCompanyId(), null,
-						TestPropsValues.COMPANY_WEB_ID,
 						TestPropsValues.COMPANY_WEB_ID,
 						TestPropsValues.COMPANY_WEB_ID);
 				}

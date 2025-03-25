@@ -36,16 +36,16 @@ public class CommerceTaxCategoryMappingServiceImpl
 
 	@Override
 	public CommerceTaxCategoryMapping addCommerceTaxCategoryMapping(
-			long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
-			String externalReferenceCode)
+			String externalReferenceCode, long groupId,
+			long commerceTaxMethodId, long cpTaxCategoryId)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceTaxCategoryMappingLocalService.
 			addCommerceTaxCategoryMapping(
-				getUserId(), groupId, commerceTaxMethodId, cpTaxCategoryId,
-				externalReferenceCode);
+				externalReferenceCode, getUserId(), groupId,
+				commerceTaxMethodId, cpTaxCategoryId);
 	}
 
 	@Override

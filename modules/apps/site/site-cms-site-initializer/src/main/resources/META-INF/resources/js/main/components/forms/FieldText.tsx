@@ -24,6 +24,7 @@ const FieldText = ({
 	name,
 	required,
 	type = 'input',
+	value = '',
 	...restProps
 }: {
 	disabled?: boolean;
@@ -34,6 +35,7 @@ const FieldText = ({
 	name: string;
 	required?: boolean;
 	type?: 'textarea' | 'input';
+	value?: string;
 } & ClayInputProps) => {
 	const fieldId = id ?? name;
 	const feedbackId = `feedback-${fieldId}`;
@@ -51,11 +53,12 @@ const FieldText = ({
 			<ClayInput
 				{...restProps}
 				aria-describedby={(errorMessage || helpMessage) ?? feedbackId}
-				component={type === 'textarea' ? 'textarea' : 'input'}
+				component={type}
 				disabled={disabled}
 				id={fieldId}
 				name={name}
 				type={type}
+				value={value}
 			/>
 		</FieldWrapper>
 	);

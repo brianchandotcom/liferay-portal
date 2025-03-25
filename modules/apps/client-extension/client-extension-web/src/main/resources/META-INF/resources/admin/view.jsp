@@ -25,7 +25,7 @@ ClientExtensionAdminDisplayContext clientExtensionAdminDisplayContext = (ClientE
 	}
 </aui:style>
 
-<div class="container-fluid container-fluid-max-xxl">
+<div class="container-fluid container-fluid-max-xxxl">
 	<frontend-data-set:classic-display
 		actionParameterName="externalReferenceCode"
 		creationMenu="<%= clientExtensionAdminDisplayContext.getCreationMenu() %>"

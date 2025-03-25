@@ -5,6 +5,7 @@
 
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
@@ -28,20 +29,19 @@ const IncidentContactCard = ({
 }) => {
 	const [{project}] = useCustomerPortal();
 	const incidentContactStandard = 2;
-	const {loading} = useCurrentKoroneikiAccount();
 
 	const {
 		data: myUserAccountData,
+		loading: myUserAccountLoading
 	} = useMyUserAccountByAccountExternalReferenceCode(
-		loading,
-		project?.accountKey
+		project?.accountKey,
+		!project?.accountKey
 	);
 	const [
 		,
-		{data: userAccountsData, refetch},
-	] = useUserAccountsByAccountExternalReferenceCode(project?.accountKey);
+		{data: userAccountsData, loading: userAccountsLoading, refetch},
+	] = useUserAccountsByAccountExternalReferenceCode(project?.accountKey, !project?.accountKey);
 
-	const [userAccount, setUserAccount] = useState(userAccountsData);
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 	const hasAdministratorRole =
 		loggedUserAccount?.selectedAccountSummary.hasAdministratorRole;
@@ -73,13 +73,8 @@ const IncidentContactCard = ({
 		'Liferay SaaS'
 	);
 
-	useEffect(() => {
-		setUserAccount(userAccountsData);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [modalMonitoring, userAccountsData, project?.accountKey]);
-
 	const getHighPriorityContactsByFilterRAYSOURCE = async (filter) => {
-		return userAccount?.accountUserAccountsByExternalReferenceCode?.items
+		return userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
 			.filter((account) => {
 				return account?.selectedAccountSummary?.roleBriefs?.some(
 					(role) => role?.name === filter
@@ -133,30 +128,24 @@ const IncidentContactCard = ({
 		};
 
 		fetchHighPriorityContacts();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [modalMonitoring, !project?.accountKey, userAccount]);
+	}, [modalMonitoring, !project?.accountKey, userAccountsData]);
 
-	const generateContactBody = ({contact, email, name}) => (
-		<>
-			{userAccount?.accountUserAccountsByExternalReferenceCode?.items
-				.length > 0 && (
-				<div className="customer-portal-cards" key={email}>
-					<h4>{email}</h4>
+	const generateContactBody = ({contact, email, name, id}) => (
+		<div className="customer-portal-cards" key={id}>
+			<h4>{email}</h4>
 
-					<h5>{name}</h5>
+			<h5>{name}</h5>
 
-					{contact.length ? (
-						<h5>{contact}</h5>
-					) : (
-						<p className="text-warning">
-							<ClayIcon symbol="warning-full" />
-							&nbsp;
-							{i18n.translate('phone-number-is-missing')}
-						</p>
-					)}
-				</div>
+			{contact.length ? (
+				<h5>{contact}</h5>
+			) : (
+				<p className="text-warning">
+					<ClayIcon symbol="warning-full" />
+					&nbsp;
+					{i18n.translate('phone-number-is-missing')}
+				</p>
 			)}
-		</>
+		</div>
 	);
 
 	const criticalIncidentContacts = currentHighPriorityContacts.criticalIncident?.map(
@@ -187,8 +176,11 @@ const IncidentContactCard = ({
 
 	return (
 		<>
-			{hasActiveProduct &&
-				userAccount?.accountUserAccountsByExternalReferenceCode?.items
+			{userAccountsLoading || myUserAccountLoading ? (
+				<ClayLoadingIndicator />
+			) : (
+				hasActiveProduct &&
+				userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
 					.length > 0 && (
 					<div
 						className={classNames('customer-portal-card-footer', {
@@ -384,7 +376,8 @@ const IncidentContactCard = ({
 							</div>
 						</>
 					</div>
-				)}
+				)
+			)}
 		</>
 	);
 };

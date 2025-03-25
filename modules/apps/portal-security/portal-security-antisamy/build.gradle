@@ -54,10 +54,11 @@ processDefaultSanitizerConfiguration {
 			|				</regexp-list>
 			|			</attribute>""".stripMargin()
 
-		ant.replaceregexp(file: sanitizerConfigurationFile,
-			match: '<attribute name="rel">\\s*<literal-list>\\s*<literal value="nofollow"/>\\s*</literal-list>\\s*</attribute>',
-			replace: replace,
-			flags: 'g')
+		ant.replaceregexp(
+			file: sanitizerConfigurationFile,
+			flags: "g",
+			match: "<attribute name=\"rel\">\\s*<literal-list>\\s*<literal value=\"nofollow\"/>\\s*</literal-list>\\s*</attribute>",
+			replace: replace)
 	}
 
 	ext {

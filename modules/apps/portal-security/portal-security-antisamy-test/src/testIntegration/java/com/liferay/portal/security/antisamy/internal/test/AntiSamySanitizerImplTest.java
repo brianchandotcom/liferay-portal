@@ -55,7 +55,7 @@ public class AntiSamySanitizerImplTest {
 	}
 
 	@Inject(
-		filter = "(&(objectClass=com.liferay.portal.kernel.sanitizer.Sanitizer)(!(component.name=*)))"
+		filter = "component.name=com.liferay.portal.security.antisamy.internal.AntiSamySanitizerImpl"
 	)
 	private Sanitizer _antiSamySanitizer;
 

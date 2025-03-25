@@ -242,7 +242,7 @@ public class PoshiReleasePortalTopLevelBuildRunner
 
 		BuildData buildData = getBuildData();
 
-		sb.append(getBaseInvocationURL(buildData.getCohortName()));
+		sb.append(getBaseInvocationURL(buildData.getCohortName(), jobName));
 
 		sb.append("/job/");
 		sb.append(jobName);

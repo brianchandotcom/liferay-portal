@@ -77,6 +77,10 @@ public class QAWebsitesControllerBuildRunner
 	protected String getJobInvocationURL() {
 		BuildData buildData = getBuildData();
 
+		String jobName = buildData.getJobName();
+
+		jobName = jobName.replaceAll("-controller\\(.*\\)", "");
+
 		String invocationMasterHostname = buildData.getBuildParameter(
 			"INVOCATION_MASTER_HOSTNAME");
 
@@ -85,17 +89,17 @@ public class QAWebsitesControllerBuildRunner
 
 			String mostAvailableMasterURL =
 				JenkinsResultsParserUtil.getMostAvailableMasterURL(
-					"http://" + cohortName + ".liferay.com", 1);
+					"http://" + cohortName + ".liferay.com", null, 1,
+					getLabelExpression(jobName), jobName,
+					JenkinsMaster.getSlaveRAMMinimumDefault(),
+					JenkinsMaster.getSlavesPerHostDefault());
 
 			invocationMasterHostname = mostAvailableMasterURL.replaceAll(
 				"https?://([^\\.]+)(.liferay.com.*)?", "\1");
 		}
 
-		String jobName = buildData.getJobName();
-
 		return JenkinsResultsParserUtil.combine(
-			"http://", invocationMasterHostname, "/job/",
-			jobName.replaceAll("-controller\\(.*\\)", ""));
+			"http://", invocationMasterHostname, "/job/", jobName);
 	}
 
 	protected void invokeBuild() {

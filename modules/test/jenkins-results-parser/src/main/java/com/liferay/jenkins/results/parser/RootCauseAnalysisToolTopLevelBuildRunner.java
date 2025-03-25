@@ -44,13 +44,6 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 		super(portalTopLevelBuildData);
 	}
 
-	protected String getBaseInvocationURL(String cohortName) {
-		return JenkinsResultsParserUtil.getMostAvailableMasterURL(
-			JenkinsResultsParserUtil.combine(
-				"http://", cohortName, ".liferay.com"),
-			1, 24, 2);
-	}
-
 	@Override
 	protected Element getJenkinsReportElement() {
 		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
@@ -87,6 +80,11 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			workspace.getPrimaryWorkspaceGitRepository());
 
 		return super.getJenkinsReportElement();
+	}
+
+	@Override
+	protected int getSlaveRAMMinimum() {
+		return 24;
 	}
 
 	@Override

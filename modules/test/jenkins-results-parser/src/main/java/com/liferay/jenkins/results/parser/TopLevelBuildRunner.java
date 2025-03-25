@@ -99,11 +99,24 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		throw new RuntimeException(message, exception);
 	}
 
-	protected String getBaseInvocationURL(String cohortName) {
+	protected String getBaseInvocationURL(String cohortName, String jobName) {
+		try {
+			String baseInvocationURL =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.osb.jenkins.web.master.url", jobName);
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(baseInvocationURL)) {
+				return baseInvocationURL;
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
 		return JenkinsResultsParserUtil.getMostAvailableMasterURL(
-			JenkinsResultsParserUtil.combine(
-				"http://", cohortName, ".liferay.com"),
-			1);
+			"http://" + cohortName + ".liferay.com", null, 1, jobName,
+			getLabelExpression(jobName), getSlaveRAMMinimum(),
+			JenkinsMaster.getSlavesPerHostDefault());
 	}
 
 	protected String getBuildParameter(String key) {
@@ -121,6 +134,10 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 			key, getJob());
 
 		return jobProperty.getValue();
+	}
+
+	protected int getSlaveRAMMinimum() {
+		return JenkinsMaster.getSlaveRAMMinimumDefault();
 	}
 
 	protected TopLevelBuild getTopLevelBuild() {
@@ -307,7 +324,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getBaseInvocationURL(cohortName));
+		sb.append(getBaseInvocationURL(cohortName, jobName));
 		sb.append("/job/");
 		sb.append(jobName);
 		sb.append("/buildWithParameters?token=");

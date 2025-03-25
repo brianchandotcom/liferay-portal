@@ -487,9 +487,6 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		else if (field.equals("notes")) {
 			return StringPool.BLANK;
 		}
-		else if (field.equals("orderSummary")) {
-			return StringPool.BLANK;
-		}
 		else if (field.equals("orderType")) {
 			CommerceOrderType commerceOrderType =
 				_commerceOrderTypeService.fetchCommerceOrderType(
@@ -611,7 +608,7 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 	}
 
 	private static final String[] _READ_ONLY_FIELDS = {
-		"accountInfo", "channelName", "orderDate", "orderSummary", "orderType"
+		"accountInfo", "channelName", "orderDate", "orderType"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

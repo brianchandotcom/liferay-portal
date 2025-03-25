@@ -54,8 +54,9 @@ export class CommerceLayoutsPage {
 	readonly labelField: Locator;
 	readonly markAsDefaultMenuItem: Locator;
 	readonly moreActionsButton: Locator;
-	readonly orderActionsButton: (orderActionName: string) => Locator;
 	readonly openProductMenuButton: Locator;
+	readonly orderActionsButton: (orderActionName: string) => Locator;
+	readonly orderActionDropDownButton: Locator;
 	readonly orderItemCardButton: Locator;
 	readonly page: Page;
 	readonly pageEditorCollectionItem: Locator;
@@ -211,12 +212,17 @@ export class CommerceLayoutsPage {
 		});
 		this.labelField = page.getByLabel('Field', {exact: true});
 		this.moreActionsButton = page.getByLabel('More actions');
-		this.orderActionsButton = (orderActionName: string) =>
-			page.getByRole('button', {exact: true, name: orderActionName});
 		this.openProductMenuButton = page.getByRole('tab', {
 			exact: true,
 			name: 'Open Product Menu',
 		});
+		this.orderActionsButton = (orderActionName: string) =>
+			page.getByRole('button', {exact: true, name: orderActionName});
+		this.orderActionDropDownButton = page
+			.locator(
+				'.lfr-layout-structure-item-com-liferay-commerce-order-content-web-internal-fragment-renderer-orderactionsfragmentrenderer'
+			)
+			.locator('.dropdown-toggle');
 		this.orderItemCardButton = page
 			.frameLocator('iframe[title="Select"]')
 			.getByRole('button', {name: 'Select Order Items'});

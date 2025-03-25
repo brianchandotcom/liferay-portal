@@ -1191,9 +1191,13 @@ test(
 		displayPageTemplatesPage,
 		page,
 		pageEditorPage,
-		site,
 	}) => {
 		test.setTimeout(180000);
+
+		const {catalog, channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			getRandomString()
+		);
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -1232,58 +1236,6 @@ test(
 			user.id
 		);
 
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		const displayPageTemplateName = getRandomString();
-
-		await displayPageTemplatesPage.createTemplate({
-			contentType: 'Order',
-			name: displayPageTemplateName,
-		});
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		await commerceLayoutsPage.addFragment('Heading');
-
-		await page.getByText('Heading Example', {exact: true}).dblclick();
-		await page.getByLabel('Field').selectOption('CommerceOrder_orderId');
-
-		await pageEditorPage.addFragment('Order', 'Order Actions');
-
-		await expect(
-			page.getByText('The order actions component will be shown here.')
-		).toBeVisible();
-
-		await pageEditorPage.waitForChangesSaved();
-
-		await displayPageTemplatesPage.publishTemplate();
-
-		await commerceLayoutsPage.moreActionsButton.click();
-		await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-		await waitForAlert(page);
-
-		await expect(
-			commerceLayoutsPage.defaultDisplayPageTemplateIcon
-		).toBeVisible();
-
-		const channel =
-			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				siteGroupId: site.id,
-			});
-
-		await commerceAdminChannelsPage.fixCommerceChannelIssue(
-			['Checkout'],
-			channel.name
-		);
-		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
-			channel.name,
-			'B2B',
-			true
-		);
-
-		const catalog =
-			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
-
 		const product =
 			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 				catalogId: catalog.id,
@@ -1291,9 +1243,25 @@ test(
 
 		const sku = product.skus[0];
 
-		await performLogout(page);
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await displayPageTemplatesPage.editTemplate('Order');
 
-		await performLogin(page, 'demo.unprivileged');
+		const orderActionsFragmentId =
+			await pageEditorPage.getFragmentId('Order Actions');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Enable Import from CSV',
+			fragmentId: orderActionsFragmentId,
+			tab: 'General',
+			value: false,
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'demo.unprivileged');
 
 		const cart1 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
@@ -1316,6 +1284,22 @@ test(
 		await expect(
 			page.getByRole('heading', {name: String(cart1.id)}).first()
 		).toBeVisible();
+
+		await commerceLayoutsPage.orderActionDropDownButton.click();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Import from CSV'})
+		).toBeHidden();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Import from Orders'})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Import from Wish List'})
+		).toBeVisible();
+
+		await commerceLayoutsPage.orderActionDropDownButton.click();
 
 		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
 		await commerceLayoutsPage.orderActionsButton('Checkout').click();
@@ -1343,8 +1327,7 @@ test(
 		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
 
 		await performLogout(page);
-
-		await performLogin(page, 'test');
+		await performLoginViaApi(page, 'test');
 
 		await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
 			'Single Approver (Version 1)',
@@ -1357,8 +1340,7 @@ test(
 		);
 
 		await performLogout(page);
-
-		await performLogin(page, 'demo.unprivileged');
+		await performLoginViaApi(page, 'demo.unprivileged');
 
 		const cart2 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
@@ -1392,8 +1374,7 @@ test(
 		await commerceLayoutsPage.expectOrderActionButtons({});
 
 		await performLogout(page);
-
-		await performLogin(page, 'test');
+		await performLoginViaApi(page, 'test');
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
@@ -1417,8 +1398,7 @@ test(
 		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
 
 		await performLogout(page);
-
-		await performLogin(page, 'demo.unprivileged');
+		await performLoginViaApi(page, 'demo.unprivileged');
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
@@ -1451,8 +1431,7 @@ test(
 		);
 
 		await performLogout(page);
-
-		await performLogin(page, 'test');
+		await performLoginViaApi(page, 'test');
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +

@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.DuplicateIndexEntriesUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.test.log.LogCapture;
@@ -24,6 +23,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -51,11 +53,11 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		_db = DBManagerUtil.getDB();
 
-		_oldPrimaryKey = RandomTestUtil.randomLong(10, 10);
+		_oldDuplicateEntryPrimaryKeyValue = 1;
 
-		_newPrimaryKey = RandomTestUtil.randomLong(9000, 10000);
+		_uniqueEntryPrimaryKeyValue = 2;
 
-		_staticPrimaryKey = RandomTestUtil.randomLong(11, 8999);
+		_newDuplicateEntryPrimaryKeyValue = 3;
 	}
 
 	@Before
@@ -70,23 +72,20 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into TestTable values (", _oldPrimaryKey,
-						", 1, 2, '3')"));
+						"insert into TestTable values (",
+						_oldDuplicateEntryPrimaryKeyValue, ", 1, 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						RandomTestUtil.randomLong(10, 8999), ", 1, 2, '3')"));
+						_uniqueEntryPrimaryKeyValue, ", 0, 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
-						"insert into TestTable values (", _staticPrimaryKey,
-						", 0, 2, '3')"));
+						"insert into TestTable values (",
+						_newDuplicateEntryPrimaryKeyValue, ", 1, 2, '3')"));
 
-				_db.runSQL(
-					StringBundler.concat(
-						"insert into TestTable values (", _newPrimaryKey,
-						", 1, 2, '3')"));
+				_db.runSQL("insert into TestTable values (4, 1, 2, '3')");
 			});
 	}
 
@@ -100,7 +99,7 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 	public void testDuplicateRemovalProcess()
 		throws SQLException, UpgradeException {
 
-		_assertDuplicates(false);
+		_assert(false, null);
 
 		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
 			new DuplicateIndexEntriesUpgradeProcess(
@@ -114,24 +113,14 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 			upgradeProcess.upgrade();
 		}
 
-		_assertDuplicates(true);
-
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select primaryKeyColumn from TestTable where column1 = 1 " +
-					"and column2 = 2 and column3 = '3'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertTrue(resultSet.next());
-
-			Assert.assertEquals(_oldPrimaryKey, resultSet.getLong(1));
-		}
+		_assert(true, _oldDuplicateEntryPrimaryKeyValue);
 	}
 
 	@Test
 	public void testDuplicateRemovalProcessWithOrderBy()
 		throws SQLException, UpgradeException {
 
-		_assertDuplicates(false);
+		_assert(false, null);
 
 		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
 			new DuplicateIndexEntriesUpgradeProcess(
@@ -146,64 +135,52 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 			upgradeProcess.upgrade();
 		}
 
-		_assertDuplicates(true);
-
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select primaryKeyColumn from TestTable where column1 = 1 " +
-					"and column2 = 2 and column3 = '3'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			Assert.assertTrue(resultSet.next());
-
-			Assert.assertEquals(_newPrimaryKey, resultSet.getLong(1));
-		}
+		_assert(true, _newDuplicateEntryPrimaryKeyValue);
 	}
 
-	private void _assertDuplicates(boolean removed) throws SQLException {
-		String countSQL =
-			"select count(*) from TestTable group by column1, column2, " +
-				"column3 having count(*) > 1";
+	private void _assert(
+			boolean duplicatesRemoved, Long remainedEntryPrimaryKeyValue)
+		throws SQLException {
 
-		if (removed) {
-			_companyLocalService.forEachCompany(
-				company -> {
-					try (PreparedStatement preparedStatement =
-							_connection.prepareStatement(countSQL);
-						ResultSet resultSet =
-							preparedStatement.executeQuery()) {
+		_companyLocalService.forEachCompany(
+			company -> {
+				try (PreparedStatement preparedStatement =
+						_connection.prepareStatement(
+							"select count(*) from TestTable group by " +
+								"column1, column2, column3 having count(*) > " +
+									"1");
+					ResultSet resultSet = preparedStatement.executeQuery()) {
 
-						Assert.assertFalse(resultSet.next());
-					}
-				});
-
-			_companyLocalService.forEachCompany(
-				company -> {
-					try (PreparedStatement preparedStatement =
-							_connection.prepareStatement(
-								"select primaryKeyColumn from TestTable " +
-									"where primaryKeyColumn = " +
-										_staticPrimaryKey);
-						ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						Assert.assertTrue(resultSet.next());
-					}
-				});
-		}
-		else {
-			_companyLocalService.forEachCompany(
-				company -> {
-					try (PreparedStatement preparedStatement =
-							_connection.prepareStatement(countSQL);
-						ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
+					if (!duplicatesRemoved) {
 						Assert.assertTrue(resultSet.next());
 
-						Assert.assertEquals(3, resultSet.getLong(1));
+						Assert.assertEquals(3, resultSet.getInt(1));
+
+						return;
 					}
-				});
-		}
+
+					Assert.assertFalse(resultSet.next());
+				}
+
+				try (PreparedStatement preparedStatement =
+						_connection.prepareStatement(
+							"select primaryKeyColumn from TestTable");
+					ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					List<Long> primaryKeys = new ArrayList<>();
+
+					while (resultSet.next()) {
+						primaryKeys.add(resultSet.getLong(1));
+					}
+
+					Assert.assertEquals(
+						primaryKeys.toString(), 2, primaryKeys.size());
+					Assert.assertTrue(
+						primaryKeys.contains(remainedEntryPrimaryKeyValue));
+					Assert.assertTrue(
+						primaryKeys.contains(_uniqueEntryPrimaryKeyValue));
+				}
+			});
 	}
 
 	@Inject
@@ -211,8 +188,8 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 	private static Connection _connection;
 	private static DB _db;
-	private static long _newPrimaryKey;
-	private static long _oldPrimaryKey;
-	private static long _staticPrimaryKey;
+	private static long _newDuplicateEntryPrimaryKeyValue;
+	private static long _oldDuplicateEntryPrimaryKeyValue;
+	private static long _uniqueEntryPrimaryKeyValue;
 
 }

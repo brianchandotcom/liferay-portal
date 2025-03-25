@@ -218,7 +218,7 @@ public class ObjectEntryPerformanceTest {
 		try (PerformanceTimer performanceTimer1 = new PerformanceTimer(
 				_importObjectEntryMaxTime,
 				StringBundler.concat(
-					" Import ", _objectEntriesCount, " Object Entries"))) {
+					"Import ", _objectEntriesCount, " Object Entries"))) {
 
 			_invokeHttp(
 				_createObjectEntryJSON(), HttpInvoker.HttpMethod.POST,
@@ -237,7 +237,7 @@ public class ObjectEntryPerformanceTest {
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
 				_deleteObjectEntriesMaxTime,
 				StringBundler.concat(
-					" Delete ", _objectEntriesCount, " Object Entries"))) {
+					"Delete ", _objectEntriesCount, " Object Entries"))) {
 
 			HttpInvoker.HttpResponse httpResponse = _invokeHttp(
 				null, HttpInvoker.HttpMethod.GET,

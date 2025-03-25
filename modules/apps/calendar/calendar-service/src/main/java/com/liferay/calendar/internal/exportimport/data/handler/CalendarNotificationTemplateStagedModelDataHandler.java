@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -47,7 +48,8 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
+			CalendarNotificationTemplate calendarNotificationTemplate)
+		throws PortalException {
 
 		_calendarNotificationTemplateLocalService.
 			deleteCalendarNotificationTemplate(calendarNotificationTemplate);
@@ -55,7 +57,8 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 
 	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		CalendarNotificationTemplate calendarNotificationTemplate =
 			fetchStagedModelByUuidAndGroupId(uuid, groupId);

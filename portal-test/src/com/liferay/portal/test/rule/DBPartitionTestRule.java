@@ -35,41 +35,41 @@ public class DBPartitionTestRule implements TestRule {
 			Company company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
 				TestPropsValues.COMPANY_WEB_ID);
 
-			if (company == null) {
-				String companyWebId = TestPropsValues.COMPANY_WEB_ID;
+			if (company != null) {
+				return statement;
+			}
 
-				if (TestPropsValues.DATABASE_PARTITION_COPY) {
-					companyWebId = RandomTestUtil.randomString() + ".com";
-				}
+			String companyWebId = TestPropsValues.COMPANY_WEB_ID;
 
-				PortalInstances.addCompany(
-					"",
-					() -> CompanyLocalServiceUtil.addCompany(
-						null, companyWebId, companyWebId, companyWebId, 0, true,
-						true, null, null, null, null, null, null));
+			if (TestPropsValues.DATABASE_PARTITION_COPY) {
+				companyWebId = RandomTestUtil.randomString() + ".com";
+			}
 
-				company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
-						companyWebId);
+			PortalInstances.addCompany(
+				"",
+				() -> CompanyLocalServiceUtil.addCompany(
+					null, companyWebId, companyWebId, companyWebId, 0, true,
+					true, null, null, null, null, null, null));
 
-				if (TestPropsValues.DATABASE_PARTITION_COPY) {
-					CompanyLocalServiceUtil.copyDBPartitionCompany(
-							company.getCompanyId(), null,
-							TestPropsValues.COMPANY_WEB_ID,
-							TestPropsValues.COMPANY_WEB_ID,
-							TestPropsValues.COMPANY_WEB_ID);
-				}
-				else if (TestPropsValues.DATABASE_PARTITION_EXTRACT_AND_INSERT) {
-					CompanyLocalServiceUtil.extractCompany(
-						company.getCompanyId());
+			company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
+				companyWebId);
 
-					CompanyLocalServiceUtil.deleteCompany(
-						company.getCompanyId());
+			if (TestPropsValues.DATABASE_PARTITION_COPY) {
+				CompanyLocalServiceUtil.copyDBPartitionCompany(
+					company.getCompanyId(), null,
+					TestPropsValues.COMPANY_WEB_ID,
+					TestPropsValues.COMPANY_WEB_ID,
+					TestPropsValues.COMPANY_WEB_ID);
+			}
+			else if (TestPropsValues.DATABASE_PARTITION_EXTRACT_AND_INSERT) {
+				CompanyLocalServiceUtil.extractCompany(company.getCompanyId());
 
-					CompanyLocalServiceUtil.addDBPartitionCompany(
-						company.getCompanyId(), TestPropsValues.COMPANY_WEB_ID,
-						TestPropsValues.COMPANY_WEB_ID,
-						TestPropsValues.COMPANY_WEB_ID);
-				}
+				CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+
+				CompanyLocalServiceUtil.addDBPartitionCompany(
+					company.getCompanyId(), TestPropsValues.COMPANY_WEB_ID,
+					TestPropsValues.COMPANY_WEB_ID,
+					TestPropsValues.COMPANY_WEB_ID);
 			}
 		}
 		catch (PortalException portalException) {

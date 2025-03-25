@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -440,6 +441,16 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 			commerceOrder.setShippingAddressId(
 				commerceAddress.getCommerceAddressId());
+		}
+
+		if (BigDecimalUtil.eq(commerceOrder.getTotal(), BigDecimal.ZERO)) {
+			commerceOrder = _commerceOrderLocalService.updatePaymentStatus(
+				userId, commerceOrder.getCommerceOrderId(),
+				CommerceOrderPaymentConstants.STATUS_NOT_REQUIRED);
+
+			return transitionCommerceOrder(
+				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
+				userId, true);
 		}
 
 		CommercePaymentMethod commercePaymentMethod =

@@ -10,22 +10,16 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
+import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
-import PicklistService from '../services/PicklistService';
 import {Field, MultiselectField, SingleSelectField} from '../utils/field';
-
-type Picklist = {
-	id: React.Key;
-	name: string;
-};
 
 export default function PicklistPicker({field}: {field: Field}) {
 	const selectField = field as SingleSelectField | MultiselectField;
 
-	const [picklists, setPicklists] = useState<Picklist[]>([]);
 	const [selectedKey, setSelectedKey] = useState<React.Key>(
 		selectField.picklistId
 	);
@@ -33,15 +27,11 @@ export default function PicklistPicker({field}: {field: Field}) {
 	const dispatch = useStateDispatch();
 	const publishedFields = useSelector(selectPublishedFields);
 
+	const {data: picklists} = useCache('picklists');
+
 	const isPublished = publishedFields.has(field.uuid);
 
 	const id = useId();
-
-	useEffect(() => {
-		PicklistService.getPicklists().then((picklists) =>
-			setPicklists(picklists)
-		);
-	}, []);
 
 	return (
 		<ClayForm.Group className="mb-2">

@@ -5,11 +5,12 @@
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
+import {useCache} from '../contexts/CacheContext';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
-import SpaceService from '../services/SpaceService';
+import {Space} from '../types/Space';
 
 type Item = {
 	label: string;
@@ -20,23 +21,7 @@ export default function Spaces() {
 	const dispatch = useStateDispatch();
 	const structureSpaces = useSelector(selectStructureSpaces);
 
-	const [loading, setLoading] = useState(0);
-	const [availableSpaces, setAvailableSpaces] = useState<Item[]>([]);
-
-	useEffect(() => {
-		setLoading(1);
-
-		SpaceService.getSpaces().then((response) => {
-			const spaces = response.map((space) => ({
-				label: space.name,
-				value: space.externalReferenceCode,
-			}));
-
-			setAvailableSpaces(spaces);
-
-			setLoading(0);
-		});
-	}, [structureSpaces]);
+	const {data: spaces, status} = useCache('spaces');
 
 	return (
 		<div className="mt-5">
@@ -53,14 +38,12 @@ export default function Spaces() {
 			<ClayForm.Group>
 				<ClayMultiSelect
 					disabled={structureSpaces === 'all'}
-					items={getSelection(structureSpaces, availableSpaces)}
-					loadingState={loading}
+					items={getSelection(structureSpaces, spaces)}
+					loadingState={status === 'saving' ? 1 : 0}
 					onItemsChange={(items: Item[]) => {
 						const ercs = items
 							.filter((item) =>
-								availableSpaces.some(
-									({label}) => label === item.label
-								)
+								spaces.some(({name}) => name === item.label)
 							)
 							.map(({value}) => value);
 
@@ -69,7 +52,7 @@ export default function Spaces() {
 							type: 'update-structure',
 						});
 					}}
-					sourceItems={availableSpaces}
+					sourceItems={spaces.map(toItem)}
 					value={
 						structureSpaces === 'all'
 							? Liferay.Language.get('all-spaces')
@@ -96,13 +79,21 @@ export default function Spaces() {
 	);
 }
 
-function getSelection(
-	structureSpaces: State['spaces'],
-	availableSpaces: Item[]
-) {
+function getSelection(structureSpaces: State['spaces'], spaces: Space[]) {
 	if (structureSpaces === 'all') {
 		return [];
 	}
 
-	return availableSpaces.filter(({value}) => structureSpaces.includes(value));
+	return spaces
+		.filter(({externalReferenceCode}) =>
+			structureSpaces.includes(externalReferenceCode)
+		)
+		.map(toItem);
+}
+
+function toItem(space: Space): Item {
+	return {
+		label: space.name,
+		value: space.externalReferenceCode,
+	};
 }

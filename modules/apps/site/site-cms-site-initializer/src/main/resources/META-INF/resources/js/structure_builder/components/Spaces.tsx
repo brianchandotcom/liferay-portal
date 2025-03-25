@@ -11,7 +11,7 @@ import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import SpaceService from '../services/SpaceService';
 
-type Space = {
+type Item = {
 	label: string;
 	value: string;
 };
@@ -21,7 +21,7 @@ export default function Spaces() {
 	const structureSpaces = useSelector(selectStructureSpaces);
 
 	const [loading, setLoading] = useState(0);
-	const [availableSpaces, setAvailableSpaces] = useState<Space[]>([]);
+	const [availableSpaces, setAvailableSpaces] = useState<Item[]>([]);
 
 	useEffect(() => {
 		setLoading(1);
@@ -55,11 +55,11 @@ export default function Spaces() {
 					disabled={structureSpaces === 'all'}
 					items={getSelection(structureSpaces, availableSpaces)}
 					loadingState={loading}
-					onItemsChange={(spaces: Space[]) => {
-						const ercs = spaces
-							.filter((space) =>
+					onItemsChange={(items: Item[]) => {
+						const ercs = items
+							.filter((item) =>
 								availableSpaces.some(
-									({label}) => label === space.label
+									({label}) => label === item.label
 								)
 							)
 							.map(({value}) => value);
@@ -98,7 +98,7 @@ export default function Spaces() {
 
 function getSelection(
 	structureSpaces: State['spaces'],
-	availableSpaces: Space[]
+	availableSpaces: Item[]
 ) {
 	if (structureSpaces === 'all') {
 		return [];

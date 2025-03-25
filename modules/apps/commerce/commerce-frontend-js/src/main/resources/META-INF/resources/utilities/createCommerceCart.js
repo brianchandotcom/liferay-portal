@@ -54,13 +54,13 @@ export function createCommerceCart({
 				return liferayNavigate(redirectURL);
 			}
 		})
-		.catch(({message}) => {
+		.catch(({message, title}) => {
 			onCancel();
 
 			if (message !== 'cancel') {
 				openToast({
 					message:
-						message ||
+						title ||
 						Liferay.Language.get('an-unexpected-error-occurred'),
 					type: 'danger',
 				});

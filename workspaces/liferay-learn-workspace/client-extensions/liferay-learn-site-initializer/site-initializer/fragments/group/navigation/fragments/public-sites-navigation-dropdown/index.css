@@ -32,6 +32,15 @@
 	z-index: 976;
 }
 
+.container-cta-content-dropdown {
+	border-top: 1px solid #E2E2E4;
+	gap: 24px;
+
+	div {
+		gap: 40px;
+	}
+}
+
 .menu-dropdown-caret.rotated {
     transform: rotate(180deg);
     transition: transform 0.3s ease;

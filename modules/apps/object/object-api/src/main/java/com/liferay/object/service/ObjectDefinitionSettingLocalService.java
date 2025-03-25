@@ -201,6 +201,10 @@ public interface ObjectDefinitionSettingLocalService
 	public ObjectDefinitionSetting fetchObjectDefinitionSetting(
 		long objectDefinitionSettingId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectDefinitionSetting fetchObjectDefinitionSetting(
+		long objectDefinitionId, String name);
+
 	/**
 	 * Returns the object definition setting with the matching UUID and company.
 	 *

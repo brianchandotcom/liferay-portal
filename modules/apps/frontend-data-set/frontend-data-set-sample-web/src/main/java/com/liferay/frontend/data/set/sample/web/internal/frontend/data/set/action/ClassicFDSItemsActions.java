@@ -10,6 +10,7 @@ import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,20 +46,25 @@ public class ClassicFDSItemsActions implements FDSItemsActions {
 				null, null, null, "#", "cog", "deactivate",
 				_language.get(httpServletRequest, "deactivate"), null, null,
 				null, null, null, "link", null, "item",
-				new String[] {"active", Boolean.TRUE.toString()}),
+				HashMapBuilder.<String, Object>put(
+					"active", Boolean.TRUE
+				).build()),
 			new FDSActionDropdownItem(
 				null, null, null, "#", "cog", "activate",
 				_language.get(httpServletRequest, "activate"), null, null, null,
 				null, null, "link", null, "item",
-				new String[] {"active", Boolean.FALSE.toString()}),
+				HashMapBuilder.<String, Object>put(
+					"active", Boolean.FALSE
+				).build()),
 			new FDSActionDropdownItem(
 				null, null, null, "#", "cog", "activity",
 				_language.get(httpServletRequest, "activity"), null, null, null,
 				null, null, "link", null, "item",
-				new String[] {
-					"active", Boolean.TRUE.toString(), "emailAddress",
-					"manager.user@liferay.com"
-				}));
+				HashMapBuilder.<String, Object>put(
+					"active", Boolean.TRUE
+				).put(
+					"emailAddress", "manager.user@liferay.com"
+				).build()));
 	}
 
 	@Override

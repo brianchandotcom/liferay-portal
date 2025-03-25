@@ -27,6 +27,7 @@ interface MarketplaceModalProps {
 	children?: ReactNode;
 	fragmentPortletNamespace: string;
 	fragmentsImportURL: string;
+	openOnRender?: boolean;
 	trigger?: ReactElement | null;
 }
 
@@ -34,6 +35,7 @@ export default function MarketplaceModal({
 	children,
 	fragmentPortletNamespace,
 	fragmentsImportURL,
+	openOnRender,
 	trigger,
 }: MarketplaceModalProps) {
 	const [title, setTitle] = useState<string | undefined>();
@@ -43,7 +45,11 @@ export default function MarketplaceModal({
 			'please-go-to-instance-settings-to-enable-the-connection'
 		),
 		trigger: (
-			<MarketplaceModalTrigger setTitle={setTitle} trigger={trigger} />
+			<MarketplaceModalTrigger
+				openOnRender={openOnRender}
+				setTitle={setTitle}
+				trigger={trigger}
+			/>
 		),
 		...(title && {title}),
 	};
@@ -66,11 +72,13 @@ export default function MarketplaceModal({
 }
 
 interface MarketplaceModalTriggerProps {
+	openOnRender?: boolean;
 	setTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
 	trigger?: ReactElement | null;
 }
 
 function MarketplaceModalTrigger({
+	openOnRender,
 	setTitle,
 	trigger,
 }: MarketplaceModalTriggerProps) {
@@ -96,6 +104,12 @@ function MarketplaceModalTrigger({
 				: ''
 		);
 	}, [view, product, setTitle]);
+
+	useEffect(() => {
+		if (openOnRender) {
+			onOpenChange(true);
+		}
+	}, [onOpenChange, openOnRender]);
 
 	if (trigger === null) {
 		return null;

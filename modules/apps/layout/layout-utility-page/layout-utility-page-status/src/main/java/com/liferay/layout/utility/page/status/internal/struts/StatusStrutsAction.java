@@ -9,6 +9,7 @@ import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.PortalMessages;
@@ -69,11 +70,22 @@ public class StatusStrutsAction implements StrutsAction {
 
 		SessionErrors.clear(httpServletRequest);
 
-		Document document = Jsoup.parse(
-			ThemeUtil.include(
-				httpServletRequest.getServletContext(), httpServletRequest,
-				httpServletResponse, "portal_normal.ftl", layoutSet.getTheme(),
-				false));
+		Document document;
+
+		String originalPrincipalName = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(themeDisplay.getUserId());
+
+			document = Jsoup.parse(
+				ThemeUtil.include(
+					httpServletRequest.getServletContext(), httpServletRequest,
+					httpServletResponse, "portal_normal.ftl",
+					layoutSet.getTheme(), false));
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalPrincipalName);
+		}
 
 		PortalMessages.clear(httpServletRequest);
 		SessionMessages.clear(httpServletRequest);

@@ -13,8 +13,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -90,7 +92,7 @@ public class BuildHistoryReport {
 		buildHistoryReport.addFilesFromResource(
 			"dependencies/metrics/utilization-report", "/index.html");
 
-		Collection<BuildHistory> buildHistories =
+		Collection<BuildHistory> utilizationBuildHistories =
 			BuildHistoryProcessor.newUtilizationBuildHistories(
 				TimeUnit.DAYS.toMillis(durationDays),
 				_getStartTime(startDateString));
@@ -98,7 +100,27 @@ public class BuildHistoryReport {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(
-			_getTableDataJSFileContent(buildHistories, "Category", 7, "All"));
+			_getTableDataJSFileContent(
+				utilizationBuildHistories, "Category", 7, "All",
+				"categoryTableData", null));
+
+		sb.append("\n");
+
+		Collection<BuildHistory> utilizationTestTypeBuildHistories =
+			BuildHistoryProcessor.newUtilizationTestTypeBuildHistories(
+				TimeUnit.DAYS.toMillis(durationDays),
+				_getStartTime(startDateString));
+
+		sb.append(
+			_getTableDataJSFileContent(
+				utilizationTestTypeBuildHistories, "Test Batch Type", 7, "All",
+				"testTypeTableData",
+				Arrays.asList(
+					BuildHistory.TableMetric.INVOKED_BUILDS.toString(),
+					BuildHistory.TableMetric.TOTAL_SERVER_DURATION.
+						toString())));
+
+		sb.append("\n");
 
 		sb.append("\nvar reportName = \"Utilization Report\";");
 
@@ -164,13 +186,23 @@ public class BuildHistoryReport {
 		Collection<BuildHistory> buildHistories, String groupIdentifierName,
 		int intervalDays, String mergedBuildHistoryName) {
 
+		return _getTableDataJSFileContent(
+			buildHistories, groupIdentifierName, intervalDays,
+			mergedBuildHistoryName, "tableData", null);
+	}
+
+	private static String _getTableDataJSFileContent(
+		Collection<BuildHistory> buildHistories, String groupIdentifierName,
+		int intervalDays, String mergedBuildHistoryName, String tableName,
+		List<String> metricNames) {
+
 		JSONArray jsonArray = new JSONArray();
 
 		boolean removeHeader = false;
 
 		for (BuildHistory buildHistory : buildHistories) {
 			JSONArray tableJSONArray = buildHistory.getTableJSONArray(
-				groupIdentifierName, intervalDays);
+				groupIdentifierName, intervalDays, metricNames);
 
 			if (removeHeader) {
 				tableJSONArray.remove(0);
@@ -195,7 +227,7 @@ public class BuildHistoryReport {
 			jsonArray.putAll(tableJSONArray);
 		}
 
-		return "var tableData = " + jsonArray.toString();
+		return "var " + tableName + " = " + jsonArray.toString();
 	}
 
 	private static String _getTimelineDataJSFileContent(

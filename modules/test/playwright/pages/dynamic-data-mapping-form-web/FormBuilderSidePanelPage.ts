@@ -10,6 +10,7 @@ export class FormBuilderSidePanelPage {
 	readonly addSelectOptionButton: Locator;
 	readonly addSingleSelectionButton: Locator;
 	readonly advancedTab: Locator;
+	readonly allowGuestUsers: Locator;
 	readonly backButton: Locator;
 	readonly htmlAutocompleteAttributeField: Locator;
 	readonly label: Locator;
@@ -33,6 +34,7 @@ export class FormBuilderSidePanelPage {
 		this.advancedTab = page.getByRole('tab', {
 			name: 'Advanced',
 		});
+		this.allowGuestUsers = page.getByLabel('Allow Guest Users to Send');
 		this.backButton = page.getByRole('button', {name: 'Back'});
 		this.htmlAutocompleteAttributeField = page.getByLabel(
 			'HTML Autocomplete Attribute'

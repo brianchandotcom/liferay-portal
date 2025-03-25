@@ -9,6 +9,7 @@ import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.controller.main.BlockedKeywordsController;
 import com.liferay.osb.faro.web.internal.controller.main.ChannelController;
 import com.liferay.osb.faro.web.internal.controller.main.DefinitionsController;
+import com.liferay.osb.faro.web.internal.controller.main.GlobalPreferencesController;
 import com.liferay.osb.faro.web.internal.controller.main.IssueController;
 import com.liferay.osb.faro.web.internal.controller.main.MainController;
 import com.liferay.osb.faro.web.internal.controller.main.NotificationController;
@@ -48,6 +49,7 @@ public class MainApplication extends BaseApplication {
 		controllers.add(_blockedKeywordsController);
 		controllers.add(_channelController);
 		controllers.add(_definitionsController);
+		controllers.add(_globalPreferencesController);
 		controllers.add(_issueController);
 		controllers.add(_mainController);
 		controllers.add(_notificationController);
@@ -68,6 +70,9 @@ public class MainApplication extends BaseApplication {
 
 	@Reference
 	private DefinitionsController _definitionsController;
+
+	@Reference
+	private GlobalPreferencesController _globalPreferencesController;
 
 	@Reference
 	private IssueController _issueController;

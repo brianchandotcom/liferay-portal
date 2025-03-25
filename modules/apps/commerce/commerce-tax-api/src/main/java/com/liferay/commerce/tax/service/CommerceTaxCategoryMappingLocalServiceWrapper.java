@@ -54,14 +54,14 @@ public class CommerceTaxCategoryMappingLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.tax.model.CommerceTaxCategoryMapping
 			addCommerceTaxCategoryMapping(
-				long userId, long groupId, long commerceTaxMethodId,
-				long cpTaxCategoryId, String externalReferenceCode)
+				String externalReferenceCode, long groupId, long userId,
+				long commerceTaxMethodId, long cpTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTaxCategoryMappingLocalService.
 			addCommerceTaxCategoryMapping(
-				userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
-				externalReferenceCode);
+				externalReferenceCode, groupId, userId, commerceTaxMethodId,
+				cpTaxCategoryId);
 	}
 
 	/**

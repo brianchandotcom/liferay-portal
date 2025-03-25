@@ -55,13 +55,13 @@ public class CommerceTaxCategoryMappingLocalServiceUtil {
 	}
 
 	public static CommerceTaxCategoryMapping addCommerceTaxCategoryMapping(
-			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, String externalReferenceCode)
+			String externalReferenceCode, long groupId, long userId,
+			long commerceTaxMethodId, long cpTaxCategoryId)
 		throws PortalException {
 
 		return getService().addCommerceTaxCategoryMapping(
-			userId, groupId, commerceTaxMethodId, cpTaxCategoryId,
-			externalReferenceCode);
+			externalReferenceCode, groupId, userId, commerceTaxMethodId,
+			cpTaxCategoryId);
 	}
 
 	/**

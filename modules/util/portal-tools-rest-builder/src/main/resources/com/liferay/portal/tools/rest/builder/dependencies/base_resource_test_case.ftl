@@ -345,7 +345,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse getJavaMethodSignature = getJavaMethodSignature javaMethodSignature = javaMethodSignature varIndex = "1" />);
 				</#if>
 
 				<#if useDeleteByERC>
@@ -353,7 +353,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
 
-					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse getJavaMethodSignature = getJavaMethodSignature javaMethodSignature = javaMethodSignature varIndex = "2" />);
 				</#if>
 
 				<#if useDeleteByERC && useDeleteById>
@@ -362,13 +362,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "1" />);
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse getJavaMethodSignature = getJavaMethodSignature javaMethodSignature = javaMethodSignature varIndex = "1" />);
 
-					assertHttpResponseStatusCode(200, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
+					assertHttpResponseStatusCode(200, <@getSchemaHttpResponse getJavaMethodSignature = getJavaMethodSignature javaMethodSignature = javaMethodSignature varIndex = "2" />);
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
-					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature varIndex = "2" />);
+					assertHttpResponseStatusCode(404, <@getSchemaHttpResponse getJavaMethodSignature = getJavaMethodSignature javaMethodSignature = javaMethodSignature varIndex = "2" />);
 				</#if>
 			}
 
@@ -457,9 +457,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 							getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))
 						/>
 
-						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature />);
+						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse getJavaMethodSignature = getJavaMethodSignature javaMethodSignature = javaMethodSignature />);
 
-						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature defaultParameter = true />);
+						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse defaultParameter = true getJavaMethodSignature = getJavaMethodSignature javaMethodSignature = javaMethodSignature />);
 					</#if>
 				<#else>
 					Assert.assertTrue(false);
@@ -4108,10 +4108,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 </#macro>
 
 <#macro getSchemaHttpResponse
+	defaultParameter = false
 	getJavaMethodSignature
 	javaMethodSignature
-	defaultParameter = false
-	testNamePrefix = "test"
 	varIndex = ""
 >
 ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
@@ -4145,9 +4144,9 @@ ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 
 		<#if addGetterMethod>
 			<#if defaultImplementationGetterMethod>
-				${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName}${varIndex})
+				test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName}${varIndex})
 			<#else>
-				${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
+				test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 			</#if>
 
 			<#assign

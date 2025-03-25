@@ -138,12 +138,11 @@ export interface IItemActionsData {
 	status?: ModalStatus;
 	successMessage?: string;
 	title?: string;
-	visibilityFilters?: IItemActionsDataFilter[];
+	visibilityFilters?: IItemActionsDataFilter;
 }
 
 export interface IItemActionsDataFilter {
-	key: string;
-	value: boolean | number | string;
+	[key: string]: boolean | number | string;
 }
 
 export interface IQuickActions extends IBaseActions {

@@ -30,9 +30,12 @@ const matchesVisibilityFilters = (
 		return true;
 	}
 
-	return action?.data?.visibilityFilters.every(
-		(filter: IItemActionsDataFilter) =>
-			getLocalizedValue(itemData, filter?.key)?.value === filter?.value
+	const visibilityFilters: IItemActionsDataFilter =
+		action?.data?.visibilityFilters;
+
+	return Object.keys(visibilityFilters).every(
+		(key: string) =>
+			getLocalizedValue(itemData, key)?.value === visibilityFilters[key]
 	);
 };
 

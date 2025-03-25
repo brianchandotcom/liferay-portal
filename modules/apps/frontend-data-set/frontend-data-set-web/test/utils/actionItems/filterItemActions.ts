@@ -146,11 +146,11 @@ describe('filterItemActions', () => {
 			const customItemActions = generateCustomItemActions([
 				{
 					permissionKey: 'UPDATE',
-					visibilityFilters: [{key: 'color', value: 'green'}],
+					visibilityFilters: {color: 'green'},
 				},
 				{
 					permissionKey: 'UPDATE',
-					visibilityFilters: [{key: 'color', value: 'blue'}],
+					visibilityFilters: {color: 'blue'},
 				},
 			]);
 
@@ -168,10 +168,10 @@ describe('filterItemActions', () => {
 		it('returns only the action that matches the action visibility filter criteria', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					visibilityFilters: [{key: 'color', value: 'green'}],
+					visibilityFilters: {color: 'green'},
 				},
 				{
-					visibilityFilters: [{key: 'color', value: 'blue'}],
+					visibilityFilters: {color: 'blue'},
 				},
 			]);
 
@@ -188,13 +188,13 @@ describe('filterItemActions', () => {
 		it('returns only the actions that matches all action visibility filters criteria', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					visibilityFilters: [{key: 'color', value: 'green'}],
+					visibilityFilters: {color: 'green'},
 				},
 				{
-					visibilityFilters: [
-						{key: 'color', value: 'blue'},
-						{key: 'type', value: 'boolean'},
-					],
+					visibilityFilters: {
+						color: 'blue',
+						type: 'boolean',
+					},
 				},
 			]);
 
@@ -209,13 +209,13 @@ describe('filterItemActions', () => {
 		it('returns actions if the filter criteria key includes a composed field name', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					visibilityFilters: [{key: 'color', value: 'green'}],
+					visibilityFilters: {color: 'green'},
 				},
 				{
-					visibilityFilters: [
-						{key: 'color', value: 'blue'},
-						{key: 'creator.name', value: 'Test Test'},
-					],
+					visibilityFilters: {
+						'color': 'blue',
+						'creator.name': 'Test Test',
+					},
 				},
 			]);
 
@@ -231,13 +231,13 @@ describe('filterItemActions', () => {
 		it('returns actions if the filter criteria is based on a boolean value', () => {
 			const customItemActions = generateCustomItemActions([
 				{
-					visibilityFilters: [{key: 'color', value: 'green'}],
+					visibilityFilters: {color: 'green'},
 				},
 				{
-					visibilityFilters: [
-						{key: 'color', value: 'blue'},
-						{key: 'sortable', value: true},
-					],
+					visibilityFilters: {
+						color: 'blue',
+						sortable: true,
+					},
 				},
 			]);
 

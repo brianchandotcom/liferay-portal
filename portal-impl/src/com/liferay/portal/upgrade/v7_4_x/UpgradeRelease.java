@@ -46,7 +46,6 @@ public class UpgradeRelease extends UpgradeProcess {
 		"com.liferay.document.library.service",
 		"com.liferay.document.library.video",
 		"com.liferay.dynamic.data.mapping.service",
-		"com.liferay.frontend.js.a11y.web",
 		"com.liferay.message.boards.service",
 		"com.liferay.organizations.service", "com.liferay.portal.lock.service",
 		"com.liferay.portal.search.tuning.rankings.web",

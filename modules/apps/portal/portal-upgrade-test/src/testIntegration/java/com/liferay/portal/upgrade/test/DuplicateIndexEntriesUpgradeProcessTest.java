@@ -65,28 +65,28 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 				_db.runSQL(
 					StringBundler.concat(
 						"create table TestTable (primaryKeyColumn LONG not ",
-						"null primary key, column1 LONG, column2 LONG, ",
-						"column3 LONG)"));
+						"null primary key, column1 BOOLEAN, column2 LONG, ",
+						"column3 VARCHAR(75) null)"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (", _oldPrimaryKey,
-						", 1, 2, 3)"));
+						", 1, 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						RandomTestUtil.randomLong(10, 8999), ", 1, 2, 3)"));
+						RandomTestUtil.randomLong(10, 8999), ", 1, 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (", _staticPrimaryKey,
-						", 5, 6, 7)"));
+						", 0, 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (", _newPrimaryKey,
-						", 1, 2, 3)"));
+						", 1, 2, '3')"));
 			});
 	}
 
@@ -118,7 +118,7 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select primaryKeyColumn from TestTable where column1 = 1 " +
-					"and column2 = 2 and column3 = 3");
+					"and column2 = 2 and column3 = '3'");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
@@ -150,7 +150,7 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select primaryKeyColumn from TestTable where column1 = 1 " +
-					"and column2 = 2 and column3 = 3");
+					"and column2 = 2 and column3 = '3'");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());

@@ -94,51 +94,6 @@ public class LoginMVCActionCommandTest {
 	}
 
 	@Test
-	public void testProcessActionWhenQueryStringContainsPwd() throws Exception {
-		try (CompanyConfigurationTemporarySwapper
-				configurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						_company.getCompanyId(),
-						"com.liferay.multi.factor.authentication.email.otp." +
-							"configuration.MFAEmailOTPConfiguration",
-						HashMapDictionaryBuilder.<String, Object>put(
-							"enabled", true
-						).build());
-			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				AuthenticatedSessionManagerUtil.class.getName(),
-				LoggerTestUtil.WARN)) {
-
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-				_getMockLiferayPortletActionRequest(Collections.emptyMap());
-
-			MockHttpServletRequest mockHttpServletRequest =
-				(MockHttpServletRequest)
-					mockLiferayPortletActionRequest.getHttpServletRequest();
-
-			mockHttpServletRequest.setQueryString(
-				_portal.getPortletNamespace(LoginPortletKeys.LOGIN) +
-					"password=test");
-
-			_mvcActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse());
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			String logEntryMessage = logEntry.getMessage();
-
-			Assert.assertTrue(
-				logEntryMessage.contains(
-					"Ignoring login attempt because the password parameter " +
-						"was found for the request with the referer header:"));
-		}
-	}
-
-	@Test
 	public void testProcessActionKeepsResetPasswordValueWhenItIsTrue()
 		throws Exception {
 
@@ -250,6 +205,51 @@ public class LoginMVCActionCommandTest {
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	public void testProcessActionWhenQueryStringContainsPwd() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_company.getCompanyId(),
+						"com.liferay.multi.factor.authentication.email.otp." +
+							"configuration.MFAEmailOTPConfiguration",
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).build());
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				AuthenticatedSessionManagerUtil.class.getName(),
+				LoggerTestUtil.WARN)) {
+
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest(Collections.emptyMap());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				(MockHttpServletRequest)
+					mockLiferayPortletActionRequest.getHttpServletRequest();
+
+			mockHttpServletRequest.setQueryString(
+				_portal.getPortletNamespace(LoginPortletKeys.LOGIN) +
+					"password=test");
+
+			_mvcActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			String logEntryMessage = logEntry.getMessage();
+
+			Assert.assertTrue(
+				logEntryMessage.contains(
+					"Ignoring login attempt because the password parameter " +
+						"was found for the request with the referer header:"));
 		}
 	}
 

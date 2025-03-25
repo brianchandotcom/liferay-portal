@@ -311,6 +311,41 @@ public class CTCollectionLocalServiceTest {
 	}
 
 	@Test
+	public void testCheckConflictsWithPublishedPublication() throws Exception {
+		JournalFolder journalFolder = JournalTestUtil.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection1.getCtCollectionId())) {
+
+			journalFolder.setDescription(RandomTestUtil.randomString());
+
+			journalFolder = _journalFolderLocalService.updateJournalFolder(
+				journalFolder);
+		}
+
+		_ctCollectionService.publishCTCollection(
+			TestPropsValues.getUserId(), _ctCollection1.getCtCollectionId());
+
+		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTCollectionLocalServiceTest.class.getSimpleName(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection2.getCtCollectionId())) {
+
+			_journalFolderLocalService.deleteFolder(journalFolder);
+		}
+
+		Map<Long, List<ConflictInfo>> conflictInfoMap =
+			_ctCollectionLocalService.checkConflicts(_ctCollection2);
+
+		Assert.assertTrue(conflictInfoMap.isEmpty());
+	}
+
+	@Test
 	public void testDeletePredeletedLayout() throws Exception {
 		Layout layout1 = LayoutTestUtil.addTypePortletLayout(_group);
 

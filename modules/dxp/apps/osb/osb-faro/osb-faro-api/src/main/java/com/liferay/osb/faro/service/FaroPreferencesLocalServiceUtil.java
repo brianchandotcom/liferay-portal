@@ -299,6 +299,12 @@ public class FaroPreferencesLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static FaroPreferences saveGlobalPreferences(String preferences)
+		throws PortalException {
+
+		return getService().saveGlobalPreferences(preferences);
+	}
+
 	public static FaroPreferences savePreferences(
 			long userId, long groupId, long ownerId, String preferences)
 		throws PortalException {

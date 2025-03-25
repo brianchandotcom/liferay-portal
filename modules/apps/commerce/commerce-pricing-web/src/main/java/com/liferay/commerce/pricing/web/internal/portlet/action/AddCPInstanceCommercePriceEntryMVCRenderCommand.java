@@ -50,12 +50,12 @@ public class AddCPInstanceCommercePriceEntryMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/commerce_price_lists/cp_instance" +
-					"/add_cp_instance_commerce_price_entry.jsp");
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/commerce_price_lists/cp_instance" +
+						"/add_cp_instance_commerce_price_entry.jsp");
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =

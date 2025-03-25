@@ -47,11 +47,12 @@ public class EditAccountEntryDefaultCommercePaymentMethodMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/dynamic_include/select_default_commerce_payment_method.jsp");
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/dynamic_include/select_default_commerce_payment_method." +
+						"jsp");
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 

@@ -51,11 +51,11 @@ public class EditCommerceTaxFixedRateMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/edit_commerce_tax_fixed_rate.jsp");
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/edit_commerce_tax_fixed_rate.jsp");
+
 			CommerceTaxFixedRatesDisplayContext
 				commerceTaxFixedRatesDisplayContext =
 					new CommerceTaxFixedRatesDisplayContext(

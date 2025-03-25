@@ -57,12 +57,12 @@ public class EditAccountEntryCommerceShippingOptionMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/account_entry/commerce_shipping_options" +
-					"/edit_commerce_shipping_option.jsp");
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/account_entry/commerce_shipping_options" +
+						"/edit_commerce_shipping_option.jsp");
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 

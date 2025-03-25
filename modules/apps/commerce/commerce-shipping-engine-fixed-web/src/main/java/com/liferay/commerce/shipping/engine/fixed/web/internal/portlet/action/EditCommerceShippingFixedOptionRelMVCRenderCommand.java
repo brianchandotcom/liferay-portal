@@ -52,11 +52,11 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/edit_commerce_shipping_fixed_option_rel.jsp");
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/edit_commerce_shipping_fixed_option_rel.jsp");
+
 			CommerceShippingFixedOptionRelsDisplayContext
 				commerceShippingFixedOptionRelsDisplayContext =
 					new CommerceShippingFixedOptionRelsDisplayContext(

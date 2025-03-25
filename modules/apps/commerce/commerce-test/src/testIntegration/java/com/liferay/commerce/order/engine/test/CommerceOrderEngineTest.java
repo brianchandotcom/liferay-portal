@@ -10,6 +10,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -678,6 +679,25 @@ public class CommerceOrderEngineTest {
 				CommerceOrderShippingMethodException.class,
 				throwable.getClass());
 		}
+	}
+
+	@Test
+	public void testCheckoutOrderWithTotal0() throws Exception {
+		_commerceOrder.setManuallyAdjusted(true);
+		_commerceOrder.setTotal(BigDecimal.ZERO);
+
+		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			_commerceOrder);
+
+		_commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
+			_commerceOrder, _user.getUserId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PENDING,
+			_commerceOrder.getOrderStatus());
+		Assert.assertEquals(
+			CommerceOrderPaymentConstants.STATUS_NOT_REQUIRED,
+			_commerceOrder.getPaymentStatus());
 	}
 
 	@Test

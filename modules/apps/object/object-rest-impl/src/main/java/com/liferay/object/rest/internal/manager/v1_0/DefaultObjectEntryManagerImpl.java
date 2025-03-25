@@ -22,6 +22,7 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -47,6 +48,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParserRegi
 import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryVersionService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -159,15 +161,16 @@ public class DefaultObjectEntryManagerImpl
 
 		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
+		long groupId = getGroupId(objectDefinition, scopeKey);
+
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry);
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
-				getGroupId(objectDefinition, scopeKey),
-				objectDefinition.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				groupId, objectDefinition.getObjectDefinitionId(),
+				_getObjectEntryFolderId(
+					objectDefinition.getCompanyId(), groupId, objectEntry),
 				objectEntry.getDefaultLanguageId(),
 				_toObjectValues(
 					dtoConverterContext.getLocale(), objectDefinition,
@@ -1292,6 +1295,35 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry);
 	}
 
+	private long _getObjectEntryFolderId(
+		long companyId, long groupId, ObjectEntry objectEntry) {
+
+		String objectEntryFolderExternalReferenceCode =
+			objectEntry.getObjectEntryFolderExternalReferenceCode();
+
+		if (Validator.isNull(objectEntryFolderExternalReferenceCode)) {
+			return ObjectEntryFolderConstants.
+				PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
+		}
+
+		try {
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderLocalService.
+					getObjectEntryFolderByExternalReferenceCode(
+						objectEntryFolderExternalReferenceCode, groupId,
+						companyId);
+
+			return objectEntryFolder.getObjectEntryFolderId();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
+	}
+
 	private Map<String, ObjectRelationship> _getObjectRelationships(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
@@ -2019,6 +2051,9 @@ public class DefaultObjectEntryManagerImpl
 	)
 	private DTOConverter<com.liferay.object.model.ObjectEntry, ObjectEntry>
 		_objectEntryDTOConverter;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

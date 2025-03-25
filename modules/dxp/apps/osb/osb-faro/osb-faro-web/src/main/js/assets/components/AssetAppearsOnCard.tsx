@@ -23,10 +23,10 @@ import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 const {cur, delta, deltaValues} = FaroConstants.pagination;
 
 export enum Accessor {
-	ViewsMetric = 'viewsMetric',
 	DownloadsMetric = 'downloadsMetric',
+	ImpressionMadeMetric = 'impressionMadeMetric',
 	SubmissionsMetric = 'submissionsMetric',
-	ImpressionMadeMetric = 'impressionMadeMetric'
+	ViewsMetric = 'viewsMetric'
 }
 
 export enum EmptyStateLink {

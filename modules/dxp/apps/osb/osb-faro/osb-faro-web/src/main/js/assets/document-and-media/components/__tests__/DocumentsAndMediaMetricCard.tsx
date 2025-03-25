@@ -70,9 +70,9 @@ const WrappedComponent = ({empty = false}) => (
 					mockPreferenceReq(THIRTEEN_MONTHS),
 					mockAssetTabsReq({
 						metrics: [
+							CommentsMetric,
 							DownloadsMetric,
 							ImpressionMadeMetric,
-							CommentsMetric,
 							RatingsMetric
 						],
 						name: NAME,
@@ -80,7 +80,7 @@ const WrappedComponent = ({empty = false}) => (
 					}),
 					mockAssetMetricReq({
 						empty,
-						metricName: DownloadsMetric.name,
+						metricName: CommentsMetric.name,
 						queryName: NAME,
 						rangeKey: Number(RangeKeyTimeRanges.Last30Days)
 					})

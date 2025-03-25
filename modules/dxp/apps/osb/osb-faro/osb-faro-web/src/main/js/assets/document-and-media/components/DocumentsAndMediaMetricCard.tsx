@@ -24,9 +24,9 @@ const DocumentsAndMediaMetricCard: React.FC<IGenericMetricBaseCardProps> = props
 	const variables = commonVariables => useAssetVariables(commonVariables);
 
 	const metrics: Metric[] = [
+		CommentsMetric,
 		DownloadsMetric,
 		ImpressionMadeMetric,
-		CommentsMetric,
 		RatingsMetric
 	];
 

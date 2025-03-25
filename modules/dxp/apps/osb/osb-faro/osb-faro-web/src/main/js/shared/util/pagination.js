@@ -38,6 +38,7 @@ export const FAMILY_NAME = 'familyName';
 export const FIRST_NAME = 'firstName';
 export const GIVEN_NAME = 'givenName';
 export const ID = 'id';
+export const IMPRESSIONS_METRIC = 'impressionMadeMetric';
 export const INDIVIDUAL_COUNT = 'individualCount';
 export const INDIVIDUAL_EMAIL = 'individualEmail';
 export const INDIVIDUAL_NAME = 'individualName';
@@ -50,7 +51,6 @@ export const LOCATION = 'location';
 export const MODIFIED_DATE = 'modifiedDate';
 export const NAME = 'name';
 export const OPERATION = 'operation';
-export const IMPRESSIONS_METRIC = 'impressionMadeMetric';
 export const PROVIDER_TYPE = 'providerType';
 export const RATINGS_METRIC = 'ratingsMetric';
 export const READING_TIME_METRIC = 'readingTimeMetric';
@@ -61,9 +61,9 @@ export const STATUS = 'status';
 export const SUBMISSIONS_METRIC = 'submissionsMetric';
 export const TITLE = 'title';
 export const TOTAL_ACTIVITIES = 'totalActivities';
-export const USER_NAME = 'author/name';
-export const URL = 'url';
 export const UNIQUE_VISITS_COUNT = 'uniqueVisitsCount';
+export const URL = 'url';
+export const USER_NAME = 'author/name';
 export const VIEWS_METRIC = 'viewsMetric';
 export const VISITORS_METRIC = 'visitorsMetric';
 
@@ -92,8 +92,8 @@ const INVERTED_SORT_FIELDS = [
 	RATINGS_METRIC,
 	READING_TIME_METRIC,
 	SCORE,
-	SUBMISSIONS_METRIC,
 	START_TIME,
+	SUBMISSIONS_METRIC,
 	TOTAL_ACTIVITIES,
 	UNIQUE_VISITS_COUNT,
 	VIEWS_METRIC,

@@ -8,6 +8,7 @@ import '../../../css/structure_builder/StructureBuilder.scss';
 import React, {useEffect} from 'react';
 
 import {Config, initializeConfig} from '../config';
+import CacheContextProvider from '../contexts/CacheContext';
 import StateContextProvider, {useSelector} from '../contexts/StateContext';
 import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
@@ -27,17 +28,19 @@ export default function StructureBuilder({
 
 	return (
 		<StateContextProvider initialState={buildState(state.objectDefinition)}>
-			<div className="d-flex flex-column structure-builder__wrapper">
-				<HistoryManager />
+			<CacheContextProvider>
+				<div className="d-flex flex-column structure-builder__wrapper">
+					<HistoryManager />
 
-				<ManagementBar />
+					<ManagementBar />
 
-				<div className="d-flex flex-grow-1 p-4">
-					<StructureFields />
+					<div className="d-flex flex-grow-1 p-4">
+						<StructureFields />
 
-					<StructureSettings />
+						<StructureSettings />
+					</div>
 				</div>
-			</div>
+			</CacheContextProvider>
 		</StateContextProvider>
 	);
 }

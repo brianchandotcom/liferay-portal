@@ -7,7 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.site.cms.site.initializer.internal.display.context.StructureUsagesDisplayContext;
 
@@ -53,8 +52,7 @@ public class StructureUsagesFragmentRenderer
 
 			httpServletRequest.setAttribute(
 				StructureUsagesDisplayContext.class.getName(),
-				new StructureUsagesDisplayContext(
-					httpServletRequest, _objectDefinitionResourceFactory));
+				new StructureUsagesDisplayContext(httpServletRequest));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -65,9 +63,6 @@ public class StructureUsagesFragmentRenderer
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

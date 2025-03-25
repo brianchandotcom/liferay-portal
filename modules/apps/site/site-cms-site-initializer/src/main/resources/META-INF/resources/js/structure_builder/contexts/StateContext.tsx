@@ -45,7 +45,7 @@ export type State = {
 };
 
 const INITIAL_STATE: State = {
-	erc: getRandomId(),
+	erc: '',
 	error: null,
 	fields: new Map(),
 	id: null,
@@ -303,6 +303,14 @@ function reducer(state: State, action: Action): State {
 	}
 }
 
+function initState(state: State) {
+	if (state.erc) {
+		return state;
+	}
+
+	return {...state, erc: getRandomId()};
+}
+
 const StateContext = createContext<{dispatch: Dispatch<Action>; state: State}>({
 	dispatch: () => {},
 	state: INITIAL_STATE,
@@ -315,9 +323,10 @@ export default function StateContextProvider({
 	children: ReactNode;
 	initialState: State | null;
 }) {
-	const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
+	const [state, dispatch] = useReducer<React.Reducer<State, Action>, State>(
 		reducer,
-		initialState ?? INITIAL_STATE
+		initialState ?? INITIAL_STATE,
+		initState
 	);
 
 	return (

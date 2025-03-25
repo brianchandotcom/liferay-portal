@@ -191,8 +191,8 @@ public abstract class BaseSearchResultResourceTestCase {
 	public void testGetSearchPage() throws Exception {
 		Page<SearchResult> page = searchResultResource.getSearchPage(
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), null, null, Pagination.of(1, 10),
-			null);
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -203,7 +203,8 @@ public abstract class BaseSearchResultResourceTestCase {
 			randomSearchResult());
 
 		page = searchResultResource.getSearchPage(
-			null, null, null, null, null, null, Pagination.of(1, 10), null);
+			null, null, null, null, null, null, null, Pagination.of(1, 10),
+			null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -236,7 +237,7 @@ public abstract class BaseSearchResultResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<SearchResult> page = searchResultResource.getSearchPage(
-				null, null, null, null, null,
+				null, null, null, null, null, null,
 				getFilterString(entityField, "between", searchResult1),
 				Pagination.of(1, 2), null);
 
@@ -285,7 +286,7 @@ public abstract class BaseSearchResultResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<SearchResult> page = searchResultResource.getSearchPage(
-				null, null, null, null, null,
+				null, null, null, null, null, null,
 				getFilterString(entityField, operator, searchResult1),
 				Pagination.of(1, 2), null);
 
@@ -299,7 +300,7 @@ public abstract class BaseSearchResultResourceTestCase {
 	public void testGetSearchPageWithPagination() throws Exception {
 		Page<SearchResult> searchResultPage =
 			searchResultResource.getSearchPage(
-				null, null, null, null, null, null, null, null);
+				null, null, null, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			searchResultPage.getTotalCount());
@@ -319,7 +320,7 @@ public abstract class BaseSearchResultResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<SearchResult> page1 = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -330,7 +331,7 @@ public abstract class BaseSearchResultResourceTestCase {
 			assertContains(searchResult1, (List<SearchResult>)page1.getItems());
 
 			Page<SearchResult> page2 = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -339,7 +340,7 @@ public abstract class BaseSearchResultResourceTestCase {
 			assertContains(searchResult2, (List<SearchResult>)page2.getItems());
 
 			Page<SearchResult> page3 = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -349,7 +350,7 @@ public abstract class BaseSearchResultResourceTestCase {
 		}
 		else {
 			Page<SearchResult> page1 = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(1, totalCount + 2), null);
 
 			List<SearchResult> searchResults1 =
@@ -360,7 +361,7 @@ public abstract class BaseSearchResultResourceTestCase {
 				searchResults1.size());
 
 			Page<SearchResult> page2 = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -372,7 +373,7 @@ public abstract class BaseSearchResultResourceTestCase {
 				searchResults2.toString(), 1, searchResults2.size());
 
 			Page<SearchResult> page3 = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(searchResult1, (List<SearchResult>)page3.getItems());
@@ -492,11 +493,11 @@ public abstract class BaseSearchResultResourceTestCase {
 		searchResult2 = testGetSearchPage_addSearchResult(searchResult2);
 
 		Page<SearchResult> page = searchResultResource.getSearchPage(
-			null, null, null, null, null, null, null, null);
+			null, null, null, null, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<SearchResult> ascPage = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
@@ -506,7 +507,7 @@ public abstract class BaseSearchResultResourceTestCase {
 				searchResult2, (List<SearchResult>)ascPage.getItems());
 
 			Page<SearchResult> descPage = searchResultResource.getSearchPage(
-				null, null, null, null, null, null,
+				null, null, null, null, null, null, null,
 				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 

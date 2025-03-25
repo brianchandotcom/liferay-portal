@@ -51,6 +51,7 @@ public interface SearchResultResource {
 	public Page<SearchResult> getSearchPage(
 			String blueprintExternalReferenceCode, Boolean emptySearch,
 			String entryClassNames, String scope, String search,
+			String statuses,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)

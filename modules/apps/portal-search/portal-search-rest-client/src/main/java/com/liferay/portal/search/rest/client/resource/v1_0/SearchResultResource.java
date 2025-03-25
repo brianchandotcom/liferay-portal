@@ -38,13 +38,15 @@ public interface SearchResultResource {
 	public Page<SearchResult> getSearchPage(
 			String blueprintExternalReferenceCode, Boolean emptySearch,
 			String entryClassNames, String scope, String search,
-			String filterString, Pagination pagination, String sortString)
+			String statuses, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSearchPageHttpResponse(
 			String blueprintExternalReferenceCode, Boolean emptySearch,
 			String entryClassNames, String scope, String search,
-			String filterString, Pagination pagination, String sortString)
+			String statuses, String filterString, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public Page<SearchResult> postSearchPage(
@@ -171,12 +173,13 @@ public interface SearchResultResource {
 		public Page<SearchResult> getSearchPage(
 				String blueprintExternalReferenceCode, Boolean emptySearch,
 				String entryClassNames, String scope, String search,
-				String filterString, Pagination pagination, String sortString)
+				String statuses, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getSearchPageHttpResponse(
 				blueprintExternalReferenceCode, emptySearch, entryClassNames,
-				scope, search, filterString, pagination, sortString);
+				scope, search, statuses, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -240,7 +243,8 @@ public interface SearchResultResource {
 		public HttpInvoker.HttpResponse getSearchPageHttpResponse(
 				String blueprintExternalReferenceCode, Boolean emptySearch,
 				String entryClassNames, String scope, String search,
-				String filterString, Pagination pagination, String sortString)
+				String statuses, String filterString, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -286,6 +290,10 @@ public interface SearchResultResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (statuses != null) {
+				httpInvoker.parameter("statuses", String.valueOf(statuses));
 			}
 
 			if (filterString != null) {

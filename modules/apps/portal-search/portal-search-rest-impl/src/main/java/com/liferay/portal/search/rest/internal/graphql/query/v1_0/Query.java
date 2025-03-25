@@ -78,7 +78,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {search(blueprintExternalReferenceCode: ___, emptySearch: ___, entryClassNames: ___, filter: ___, page: ___, pageSize: ___, scope: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {search(blueprintExternalReferenceCode: ___, emptySearch: ___, entryClassNames: ___, filter: ___, page: ___, pageSize: ___, scope: ___, search: ___, sorts: ___, statuses: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Search the company index for matching content. This endpoint is development and requires setting the portal property 'feature.flag.LPD-11232' to true or enabling via Instance Settings > Feature Flags: Developer."
@@ -90,6 +90,7 @@ public class Query {
 			@GraphQLName("entryClassNames") String entryClassNames,
 			@GraphQLName("scope") String scope,
 			@GraphQLName("search") String search,
+			@GraphQLName("statuses") String statuses,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
@@ -102,7 +103,7 @@ public class Query {
 			searchResultResource -> new SearchResultPage(
 				searchResultResource.getSearchPage(
 					blueprintExternalReferenceCode, emptySearch,
-					entryClassNames, scope, search,
+					entryClassNames, scope, search, statuses,
 					_filterBiFunction.apply(searchResultResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(

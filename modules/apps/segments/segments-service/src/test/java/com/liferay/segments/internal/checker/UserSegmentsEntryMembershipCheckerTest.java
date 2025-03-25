@@ -35,7 +35,11 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	public void testIsMemberContains() throws Exception {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(contains(customField/_00001_test, 'test1'))",
+				"(contains(customField/_00001_test, 'test1 test1'))",
+				_userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"(contains(customField/_00001_test, 'test1-/ÖÀñ'))",
 				_userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
@@ -43,6 +47,9 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(contains(firstName, 'Testing'))", _userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"(contains(firstName, 'Testing ÖÀñ'))", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(contains(customField/_00001_test, 'tes'))", _userAttributes));
@@ -61,13 +68,20 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	public void testIsMemberEquals() throws Exception {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
-				"(customField/_00001_test eq 'test1')", _userAttributes));
+				"(customField/_00001_test eq 'test1 test1 %#*&')",
+				_userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"(customField/_00001_test eq 'test1-ÖÀñ')", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(emailAddress eq 'user@liferay.com')", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(jobTitle eq 'aaa')", _userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"(jobTitle eq 'aaa bbb - ÖÀñ')", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(roleIds eq '2')", _userAttributes));
@@ -230,6 +244,12 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				String.join(
+					StringPool.BLANK, "(segmentEntryIds eq '30' or ",
+					"segmentEntryIds eq '31') and (segmentEntryIds eq '32')"),
+				_userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
+				String.join(
 					StringPool.BLANK, "(contains(emailAddress, 'liferay') ",
 					"and (not (emailAddress eq 'test@liferay.com')))"),
 				_userAttributes));
@@ -352,6 +372,8 @@ public class UserSegmentsEntryMembershipCheckerTest {
 			"roleIds", new long[] {1}
 		).put(
 			"screenName", "test"
+		).put(
+			"segmentEntryIds", new long[] {1}
 		).put(
 			"teamIds", new long[] {1}
 		).put(

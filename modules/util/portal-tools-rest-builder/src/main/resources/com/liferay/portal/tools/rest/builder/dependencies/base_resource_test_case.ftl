@@ -4136,25 +4136,25 @@ ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 					defaultImplementationGetterMethod = true
 				/>
 			</#if>
+		<#else>
+			<#assign
+				addGetterMethod = true
+				defaultImplementationGetterMethod = false
+			/>
+		</#if>
+
+		<#if addGetterMethod>
+			<#if defaultImplementationGetterMethod>
+				${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName}${varIndex})
 			<#else>
-				<#assign
-					addGetterMethod = true
-					defaultImplementationGetterMethod = false
-				/>
+				${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 			</#if>
 
-			<#if addGetterMethod>
-				<#if defaultImplementationGetterMethod>
-					${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName}${varIndex})
-				<#else>
-					${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-				</#if>
-
-				<#assign
-					addGetterMethod = false
-					getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-				/>
-			</#if>
+			<#assign
+				addGetterMethod = false
+				getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
+			/>
+		</#if>
 
 		<#sep>, </#sep>
 	</#list>

@@ -4,7 +4,6 @@
  */
 
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
-import {objectDefinitionUtils} from '@liferay/object-js-components-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -19,6 +18,7 @@ import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
 import isFieldInvalid from '../utils/isFieldInvalid';
 import isStructureInvalid from '../utils/isStructureInvalid';
+import normalizeName from '../utils/normalizeName';
 import openDeletionModal from '../utils/openDeletionModal';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
@@ -53,7 +53,7 @@ const INITIAL_STATE: State = {
 	label: {
 		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_STRUCTURE_LABEL,
 	},
-	name: objectDefinitionUtils.normalizeName(DEFAULT_STRUCTURE_LABEL),
+	name: normalizeName(DEFAULT_STRUCTURE_LABEL),
 	publishedFields: new Set(),
 	selection: [],
 	spaces: [],

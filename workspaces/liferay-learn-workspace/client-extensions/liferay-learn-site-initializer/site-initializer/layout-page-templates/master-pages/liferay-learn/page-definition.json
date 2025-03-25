@@ -4,7 +4,6 @@
 		"pageElements": [
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\npadding-bottom: 7rem;\n}",
 					"fragment": {
 						"key": "public-sites-navigation",
 						"siteKey": "Liferay Learn"
@@ -46,6 +45,9 @@
 							}
 						}
 					],
+					"fragmentStyle": {
+						"paddingBottom": "7rem"
+					},
 					"indexed": true
 				},
 				"id": "34c3bff4-7af8-5104-323a-861fbf5e37e8",
@@ -57,7 +59,6 @@
 						"pageElements": [
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n    background: var(--white);\n    border-radius: 10px;\n    box-shadow: var(--elevation-fluffy-1);\n    text-align: left;\n    width: 15rem;\n    z-index: 10;\n}",
 									"fragmentStyle": {
 										"paddingBottom": "2",
 										"paddingLeft": "2",
@@ -75,7 +76,6 @@
 											"cssClasses": [
 												"liferay-nav-item"
 											],
-											"customCSS": ".[$FRAGMENT_CLASS$]:hover {\nsvg{\nopacity: 1;\n}\n}",
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
@@ -592,7 +592,6 @@
 						"pageElements": [
 							{
 								"definition": {
-									"customCSS": ".[$FRAGMENT_CLASS$] {\n  .language-nav-item {\n    list-style-type: none;\n  }\n}",
 									"widgetInstance": {
 										"widgetConfig": {
 										},
@@ -620,7 +619,6 @@
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\ntext-align-last: start;\n}",
 											"fragment": {
 												"key": "account-dropdown",
 												"siteKey": "Liferay Learn"
@@ -644,7 +642,7 @@
 												"pageElements": [
 													{
 														"definition": {
-															"customCSS": ".[$FRAGMENT_CLASS$] {\n    text-align-last: start;\n}",
+															"customCSS": ".[$FRAGMENT_CLASS$] {\n   \n}",
 															"fragment": {
 																"key": "dropdown-menu-item",
 																"siteKey": "Liferay Learn"
@@ -930,7 +928,6 @@
 																									"cssClasses": [
 																										"container-cta-content-dropdown"
 																									],
-																									"customCSS": ".[$FRAGMENT_CLASS$] {\n    border-top: 1px solid #E2E2E4;\ngap: 24px;\n}",
 																									"fragmentStyle": {
 																										"paddingTop": "2"
 																									},
@@ -944,7 +941,6 @@
 																								"pageElements": [
 																									{
 																										"definition": {
-																											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 40px;\n}",
 																											"indexed": true,
 																											"layout": {
 																												"contentDisplay": "FlexColumn"
@@ -1122,7 +1118,6 @@
 																									},
 																									{
 																										"definition": {
-																											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 40px;\n}",
 																											"indexed": true,
 																											"layout": {
 																												"contentDisplay": "FlexColumn"
@@ -1412,7 +1407,6 @@
 																									"cssClasses": [
 																										"container-cta-content-dropdown"
 																									],
-																									"customCSS": ".[$FRAGMENT_CLASS$] {\n    border-top: 1px solid #E2E2E4;\ngap: 24px;\n}",
 																									"fragmentStyle": {
 																										"paddingTop": "2"
 																									},
@@ -1426,7 +1420,6 @@
 																								"pageElements": [
 																									{
 																										"definition": {
-																											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 40px;\n}",
 																											"indexed": true,
 																											"layout": {
 																												"contentDisplay": "FlexColumn"
@@ -1549,7 +1542,6 @@
 																									},
 																									{
 																										"definition": {
-																											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 40px;\n}",
 																											"indexed": true,
 																											"layout": {
 																												"contentDisplay": "FlexColumn"
@@ -1931,7 +1923,6 @@
 																									"cssClasses": [
 																										"container-cta-content-dropdown-education"
 																									],
-																									"customCSS": ".[$FRAGMENT_CLASS$] {\n    border-top: 1px solid #E2E2E4;\ngap: 24px;\n}",
 																									"fragmentStyle": {
 																										"paddingTop": "2"
 																									},
@@ -1948,7 +1939,6 @@
 																											"cssClasses": [
 																												"container-cta-content-dropdown"
 																											],
-																											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 40px;\n}",
 																											"indexed": true,
 																											"layout": {
 																												"contentDisplay": "FlexColumn"
@@ -2128,7 +2118,6 @@
 																									"cssClasses": [
 																										"container-cta-content-dropdown-education"
 																									],
-																									"customCSS": ".[$FRAGMENT_CLASS$] {\n    border-top: 1px solid #E2E2E4;\ngap: 24px;\n}\n\n",
 																									"fragmentStyle": {
 																										"paddingTop": "2"
 																									},
@@ -2145,7 +2134,6 @@
 																											"cssClasses": [
 																												"container-cta-content-dropdown"
 																											],
-																											"customCSS": ".[$FRAGMENT_CLASS$] {\ngap: 40px;\n}",
 																											"indexed": true,
 																											"layout": {
 																												"contentDisplay": "FlexRow"
@@ -3578,9 +3566,141 @@
 			{
 				"externalReferenceCode": "LXC:liferay-learn-global-css",
 				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
+			},
+			{
+				"externalReferenceCode": "LXC:liferay-learn-global-css",
+				"name": "Liferay Learn Global CSS"
 			}
 		],
 		"globalJSClientExtensions": [
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
+			{
+				"clientExtensionConfig": {
+					"loadType": "default",
+					"scriptLocation": "bottom"
+				},
+				"externalReferenceCode": "LXC:liferay-learn-global-js",
+				"name": "Liferay Learn Global JS"
+			},
 			{
 				"clientExtensionConfig": {
 					"loadType": "default",

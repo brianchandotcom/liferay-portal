@@ -236,7 +236,7 @@ function MarketplaceSearchResultsList({item}: {item: Product}) {
 			className="card-interactive rounded"
 			onClick={() => onClickRef.current?.()}
 			onKeyDown={(event) => {
-				if (event.key === 'Enter' || event.key === 'Space') {
+				if (['Enter', 'Space', ' '].includes(event.key)) {
 					onClickRef.current?.();
 				}
 			}}

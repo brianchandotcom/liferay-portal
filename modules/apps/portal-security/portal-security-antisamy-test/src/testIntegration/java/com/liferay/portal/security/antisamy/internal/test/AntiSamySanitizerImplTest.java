@@ -43,7 +43,7 @@ public class AntiSamySanitizerImplTest {
 					"AntiSamySanitizerImpl",
 				LoggerTestUtil.WARN)) {
 
-			_antiSamySanitizer.sanitize(
+			_sanitizer.sanitize(
 				TestPropsValues.getCompanyId(), 0, 0, StringPool.BLANK, 0,
 				ContentTypes.TEXT_HTML, new String[0],
 				"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
@@ -57,6 +57,6 @@ public class AntiSamySanitizerImplTest {
 	@Inject(
 		filter = "component.name=com.liferay.portal.security.antisamy.internal.AntiSamySanitizerImpl"
 	)
-	private Sanitizer _antiSamySanitizer;
+	private Sanitizer _sanitizer;
 
 }

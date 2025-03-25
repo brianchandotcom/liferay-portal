@@ -5,6 +5,21 @@
 
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
+type TCart = {
+	accountId: number;
+	author?: string;
+	billingAddressId?: number;
+	cartItems?: TCartItem[];
+	createDate?: string;
+	currencyCode?: string;
+	id?: number;
+	modifiedDate?: string;
+	paymentMethod?: string;
+	shippingAddressId?: number;
+	shippingMethod?: string;
+	shippingOption?: string;
+};
+
 type TCartItem = {
 	deliveryGroupName?: string;
 	id?: number;
@@ -22,21 +37,6 @@ type TCartItemUOM = {
 	key: string;
 };
 
-type TCart = {
-	accountId: number;
-	author?: string;
-	billingAddressId?: number;
-	cartItems?: TCartItem[];
-	createDate?: string;
-	currencyCode?: string;
-	id?: number;
-	modifiedDate?: string;
-	paymentMethod?: string;
-	shippingAddressId?: number;
-	shippingMethod?: string;
-	shippingOption?: string;
-};
-
 export class HeadlessCommerceDeliveryCartApiHelper {
 	readonly apiHelpers: ApiHelpers | DataApiHelpers;
 	readonly basePath: string;
@@ -52,6 +52,12 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 		);
 	}
 
+	async deleteCart(cartId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}`
+		);
+	}
+
 	async getCartItems(cartId: number) {
 		return await this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}/items`
@@ -61,12 +67,6 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 	async getComments(cartId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}/comments`
-		);
-	}
-
-	async deleteCart(cartId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}`
 		);
 	}
 

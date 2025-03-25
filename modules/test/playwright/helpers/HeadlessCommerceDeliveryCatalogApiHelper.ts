@@ -27,6 +27,12 @@ export class HeadlessCommerceDeliveryCatalogApiHelper {
 		this.basePath = 'headless-commerce-delivery-catalog/v1.0/';
 	}
 
+	async deleteWishList(wishListId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/wishlists/${wishListId}`
+		);
+	}
+
 	async getChannelProductAttachmentsPage(
 		channelId: number,
 		productId: number
@@ -80,11 +86,5 @@ export class HeadlessCommerceDeliveryCatalogApiHelper {
 		}
 
 		return postWishList;
-	}
-
-	async deleteWishList(wishListId: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/wishlists/${wishListId}`
-		);
 	}
 }

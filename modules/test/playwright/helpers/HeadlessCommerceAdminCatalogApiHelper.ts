@@ -23,15 +23,6 @@ type TCatalog = {
 	name?: string;
 };
 
-type TChannel = {
-	channelId: number;
-	currencyCode: string;
-	externalReferenceCode?: string;
-	id?: number;
-	name: string;
-	type: string;
-};
-
 type TCategory = {
 	checked?: boolean;
 	externalReferenceCode?: string;
@@ -40,6 +31,15 @@ type TCategory = {
 	name: string;
 	value?: string;
 	vocabulary?: string;
+};
+
+type TChannel = {
+	channelId: number;
+	currencyCode: string;
+	externalReferenceCode?: string;
+	id?: number;
+	name: string;
+	type: string;
 };
 
 type TCurrency = {
@@ -220,12 +220,6 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
-	async deleteProductAccountGroup(id: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/product-account-groups/${id}`
-		);
-	}
-
 	async deleteCatalog(catalogId: number | string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/catalog/${catalogId}`
@@ -256,6 +250,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async deleteProductAccountGroup(id: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-account-groups/${id}`
+		);
+	}
+
+	async deleteProductByVersion(productId: number, version: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/by-version/${version}`
+		);
+	}
+
 	async deleteProductConfiguration(productConfigurationId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/product-configurations/${productConfigurationId}`
@@ -265,12 +271,6 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 	async deleteProductConfigurationList(productConfigurationListId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists/${productConfigurationListId}`
-		);
-	}
-
-	async deleteProductByVersion(productId: number, version: number) {
-		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/by-version/${version}`
 		);
 	}
 
@@ -334,6 +334,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async getProductAccountGroups(productId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/product-account-groups`
+		);
+	}
+
+	async getProductByVersion(productId: number, version: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/by-version/${version}`
+		);
+	}
+
 	async getProductConfigurationListsPage(search: string = '') {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/product-configuration-lists?search=${search}`
@@ -345,18 +357,6 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 			`${this.apiHelpers.baseUrl}${
 				this.basePath
 			}/products?${searchParams.toString()}`
-		);
-	}
-
-	async getProductAccountGroups(productId: number) {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/product-account-groups`
-		);
-	}
-
-	async getProductByVersion(productId: number, version: number) {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/by-version/${version}`
 		);
 	}
 
@@ -413,18 +413,6 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
-	async patchProductTaxConfiguration(
-		productId: number,
-		productTaxConfiguration: TProductTaxConfiguration
-	) {
-		return this.apiHelpers.patch(
-			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/taxConfiguration`,
-			{
-				...(productTaxConfiguration || {}),
-			}
-		);
-	}
-
 	async patchProductByErc(
 		externalReferenceCode: string,
 		product?: DataObject
@@ -436,6 +424,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					en_US: `Product${getRandomInt()}`,
 				},
 				...(product || {}),
+			}
+		);
+	}
+
+	async patchProductTaxConfiguration(
+		productId: number,
+		productTaxConfiguration: TProductTaxConfiguration
+	) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/taxConfiguration`,
+			{
+				...(productTaxConfiguration || {}),
 			}
 		);
 	}

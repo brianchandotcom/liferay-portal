@@ -57,22 +57,6 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		);
 	}
 
-	async putChannel(channelId: number, channel: TChannel) {
-		await this.apiHelpers.put(
-			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}`,
-			{
-				data: {
-					accountId: 0,
-					currencyCode: 'USD',
-					name: 'Channel' + getRandomInt(),
-					siteGroupId: 0,
-					type: 'site',
-					...channel,
-				},
-			}
-		);
-	}
-
 	async postChannel(channel: TChannel): Promise<TChannel> {
 		channel = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels`,
@@ -93,5 +77,21 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		}
 
 		return channel;
+	}
+
+	async putChannel(channelId: number, channel: TChannel) {
+		await this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channelId}`,
+			{
+				data: {
+					accountId: 0,
+					currencyCode: 'USD',
+					name: 'Channel' + getRandomInt(),
+					siteGroupId: 0,
+					type: 'site',
+					...channel,
+				},
+			}
+		);
 	}
 }

@@ -68,6 +68,10 @@ public class DefaultStyleBookEntryUtil {
 				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 					layout);
 
+			if (frontendTokenDefinition == null) {
+				return null;
+			}
+
 			if (!Objects.equals(
 					frontendTokenDefinition.getThemeId(),
 					styleBookEntry.getThemeId())) {

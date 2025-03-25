@@ -13,7 +13,7 @@ import {FieldPicker, FieldText} from '../forms';
 import {required, validate} from '../forms/validations';
 
 export type AssetLibray = {
-	id: string;
+	groupId: string;
 	name: string;
 };
 
@@ -33,18 +33,20 @@ export default function CreationModalContent({
 	const {errors, handleChange, handleSubmit, setFieldValue, touched, values} =
 		useFormik({
 			initialValues: {
-				assetLibraryId:
-					assetLibraries.length === 1 ? assetLibraries[0].id : '',
+				groupId:
+					assetLibraries.length === 1
+						? assetLibraries[0].groupId
+						: '',
 				name: '',
 			},
 			onSubmit: (values) => {
 				if (redirect) {
-					const {assetLibraryId, name} = values;
+					const {groupId, name} = values;
 
 					const url = new URL(redirect);
 
 					url.searchParams.set('name', name);
-					url.searchParams.set('assetLibraryId', assetLibraryId);
+					url.searchParams.set('groupId', groupId);
 
 					navigate(url.pathname + url.search);
 				}
@@ -55,7 +57,7 @@ export default function CreationModalContent({
 			validate: (values) =>
 				validate(
 					{
-						assetLibraryId: [required],
+						groupId: [required],
 						name: [required],
 					},
 					values
@@ -79,26 +81,24 @@ export default function CreationModalContent({
 				{assetLibraries.length > 1 && (
 					<FieldPicker
 						errorMessage={
-							touched.assetLibraryId
-								? errors.assetLibraryId
-								: undefined
+							touched.groupId ? errors.groupId : undefined
 						}
 						helpMessage={sub(
 							Liferay.Language.get('choose-the-space-for-the-x'),
 							title
 						)}
-						items={assetLibraries.map(({id, name}) => ({
+						items={assetLibraries.map(({groupId, name}) => ({
 							label: name,
-							value: id,
+							value: groupId,
 						}))}
 						label={Liferay.Language.get('space')}
-						name="assetLibraryId"
+						name="groupId"
 						onSelectionChange={(value: string) => {
-							setFieldValue('assetLibraryId', value);
+							setFieldValue('groupId', value);
 						}}
 						placeholder={Liferay.Language.get('select-a-space')}
 						required
-						selectedKey={values.assetLibraryId}
+						selectedKey={values.groupId}
 					/>
 				)}
 			</ClayModal.Body>

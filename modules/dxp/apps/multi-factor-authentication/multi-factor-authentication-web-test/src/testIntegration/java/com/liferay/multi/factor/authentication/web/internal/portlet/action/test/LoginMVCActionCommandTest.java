@@ -94,7 +94,7 @@ public class LoginMVCActionCommandTest {
 	}
 
 	@Test
-	public void testLoginWhenQueryStringContainsPwd() throws Exception {
+	public void testProcessActionWhenQueryStringContainsPwd() throws Exception {
 		try (CompanyConfigurationTemporarySwapper
 				configurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
@@ -139,7 +139,7 @@ public class LoginMVCActionCommandTest {
 	}
 
 	@Test
-	public void testResetPasswordValueDoesNotChangeWhenItIsTrue()
+	public void testProcessActionKeepsResetPasswordValueWhenItIsTrue()
 		throws Exception {
 
 		User user1 = UserTestUtil.addUser(_company);

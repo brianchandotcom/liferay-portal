@@ -53,10 +53,9 @@ public class MetadataActionPortalFilter extends BaseSamlPortalFilter {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		String metadata = _samlHttpRequestHelper.getEntityDescriptorString(
-			httpServletRequest);
-
-		printWriter.print(metadata);
+		printWriter.print(
+			_samlHttpRequestHelper.getEntityDescriptorString(
+				httpServletRequest));
 	}
 
 	@Override

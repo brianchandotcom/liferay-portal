@@ -13,7 +13,6 @@ import {openToast, useId} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import ImportOptionsModal, {OverwriteStrategy} from './ImportOptionsModal';
 import ImportResults, {Results, getResultsText} from './ImportResults';
 import importZipFile from './importZipFile';
@@ -54,8 +53,8 @@ export default function Import({
 			try {
 				await importZipFile({
 					file,
-					handleResponse: ({importResults, valid}, file) => {
-						if (!isNullOrUndefined(valid) && !valid) {
+					handleResponse: ({importResults, invalid}, file) => {
+						if (invalid) {
 							setImportOptionsModalVisible(true);
 
 							return;

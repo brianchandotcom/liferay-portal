@@ -11,7 +11,7 @@ import {Results} from './ImportResults';
 
 interface ResponseAPI {
 	importResults: Results;
-	valid: boolean;
+	invalid: boolean;
 }
 
 interface ImportZipFileProps {

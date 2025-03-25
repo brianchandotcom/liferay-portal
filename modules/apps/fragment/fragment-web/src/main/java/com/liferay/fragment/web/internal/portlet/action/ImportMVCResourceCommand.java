@@ -97,7 +97,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 				themeDisplay.getUserId());
 		}
 		else {
-			jsonObject.put("valid", false);
+			jsonObject.put("invalid", true);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

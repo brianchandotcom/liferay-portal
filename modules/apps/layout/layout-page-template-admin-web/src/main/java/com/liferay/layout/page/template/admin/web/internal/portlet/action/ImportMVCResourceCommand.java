@@ -97,7 +97,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 				resourceRequest, resourceResponse, jsonObject);
 		}
 		else {
-			jsonObject.put("valid", false);
+			jsonObject.put("invalid", true);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

@@ -10,9 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalInstances;
 
 import org.junit.rules.TestRule;
@@ -40,9 +38,7 @@ public class DBPartitionTestRule implements TestRule {
 			if (company == null) {
 				String companyWebId = TestPropsValues.COMPANY_WEB_ID;
 
-				if (GetterUtil.getBoolean(
-						TestPropsUtil.get(_PROPERTY_TEST_COPY_COMPANY))) {
-
+				if (TestPropsValues.DATABASE_PARTITION_COPY) {
 					companyWebId = RandomTestUtil.randomString() + ".com";
 				}
 
@@ -52,10 +48,7 @@ public class DBPartitionTestRule implements TestRule {
 						null, companyWebId, companyWebId, companyWebId, 0, true,
 						true, null, null, null, null, null, null));
 
-				if (GetterUtil.getBoolean(
-						TestPropsUtil.get(
-							_PROPERTY_TEST_EXTRACT_AND_INSERT_COMPANY))) {
-
+				if (TestPropsValues.DATABASE_PARTITION_EXTRACT_AND_INSERT) {
 					company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
 						companyWebId);
 
@@ -70,9 +63,7 @@ public class DBPartitionTestRule implements TestRule {
 						TestPropsValues.COMPANY_WEB_ID,
 						TestPropsValues.COMPANY_WEB_ID);
 				}
-				else if (GetterUtil.getBoolean(
-							TestPropsUtil.get(_PROPERTY_TEST_COPY_COMPANY))) {
-
+				else if (TestPropsValues.DATABASE_PARTITION_COPY) {
 					company = CompanyLocalServiceUtil.fetchCompanyByVirtualHost(
 						companyWebId);
 
@@ -90,11 +81,5 @@ public class DBPartitionTestRule implements TestRule {
 
 		return statement;
 	}
-
-	private static final String _PROPERTY_TEST_COPY_COMPANY =
-		"test.copy.company";
-
-	private static final String _PROPERTY_TEST_EXTRACT_AND_INSERT_COMPANY =
-		"test.extract.and.insert.company";
 
 }

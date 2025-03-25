@@ -38,18 +38,12 @@ public class DBPartitionTestRule implements TestRule {
 				TestPropsValues.COMPANY_WEB_ID);
 
 			if (company == null) {
-				String companyWebId;
+				String companyWebId = TestPropsValues.COMPANY_WEB_ID;
 
 				if (GetterUtil.getBoolean(
-						TestPropsUtil.get(
-							_PROPERTY_TEST_EXTRACT_AND_INSERT_COMPANY)) ||
-					GetterUtil.getBoolean(
 						TestPropsUtil.get(_PROPERTY_TEST_COPY_COMPANY))) {
 
 					companyWebId = RandomTestUtil.randomString() + ".com";
-				}
-				else {
-					companyWebId = TestPropsValues.COMPANY_WEB_ID;
 				}
 
 				PortalInstances.addCompany(

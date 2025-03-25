@@ -346,8 +346,7 @@ public class ObjectEntryModelDocumentContributor
 			objectDefinition.getObjectFolderId());
 
 		document.addKeyword(
-			"objectFolderExternalReferenceCode",
-			objectFolder.getExternalReferenceCode());
+			"objectFolderERC", objectFolder.getExternalReferenceCode());
 	}
 
 	private String _getDateString(Object value) {

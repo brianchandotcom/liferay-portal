@@ -63,7 +63,7 @@ public abstract class BaseSectionDisplayContext {
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=objectFolderExternalReferenceCode in ('");
+		sb.append("filter=objectFolderERC in ('");
 		sb.append(StringUtil.merge(objectFolderExternalReferenceCodes, "','"));
 		sb.append("')");
 

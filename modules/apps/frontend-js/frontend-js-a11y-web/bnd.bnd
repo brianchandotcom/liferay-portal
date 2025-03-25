@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend JS A11y Web
-Bundle-SymbolicName: com.liferay.frontend.js.a11y.web
-Bundle-Version: 1.0.3
-Web-ContextPath: /frontend-js-a11y-web

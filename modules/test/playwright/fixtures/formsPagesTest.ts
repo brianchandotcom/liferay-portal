@@ -11,6 +11,7 @@ import {FormBuilderPage} from '../pages/dynamic-data-mapping-form-web/FormBuilde
 import {FormBuilderSidePanelPage} from '../pages/dynamic-data-mapping-form-web/FormBuilderSidePanelPage';
 import {FormFieldsPage} from '../pages/dynamic-data-mapping-form-web/FormFieldsPage';
 import {FormSettingsModalPage} from '../pages/dynamic-data-mapping-form-web/FormSettingsModalPage';
+import {FormViewPage} from '../pages/dynamic-data-mapping-form-web/FormViewPage';
 import {FormWidgetPage} from '../pages/dynamic-data-mapping-form-web/FormWidgetPage';
 import {FormsPage} from '../pages/dynamic-data-mapping-form-web/FormsPage';
 import {RulesBuilderPage} from '../pages/dynamic-data-mapping-form-web/RulesBuilderPage';
@@ -25,6 +26,7 @@ const formsPagesTest = test.extend<{
 	formBuilderSidePanelPage: FormBuilderSidePanelPage;
 	formFieldsPage: FormFieldsPage;
 	formSettingsModalPage: FormSettingsModalPage;
+	formViewPage: FormViewPage;
 	formWidgetPage: FormWidgetPage;
 	formsPage: FormsPage;
 	pageEditorPage: PageEditorPage;
@@ -50,6 +52,9 @@ const formsPagesTest = test.extend<{
 	},
 	formSettingsModalPage: async ({page}, use) => {
 		await use(new FormSettingsModalPage(page));
+	},
+	formViewPage: async ({page}, use) => {
+		await use(new FormViewPage(page));
 	},
 	formWidgetPage: async ({page}, use) => {
 		await use(new FormWidgetPage(page));

@@ -5,12 +5,22 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
+
+import javax.portlet.ActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,9 +30,13 @@ import javax.servlet.http.HttpServletRequest;
 public class StructureUsagesDisplayContext {
 
 	public StructureUsagesDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, Language language) {
 
 		_httpServletRequest = httpServletRequest;
+		_language = language;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL() {
@@ -40,6 +54,42 @@ public class StructureUsagesDisplayContext {
 		return Collections.emptyList();
 	}
 
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						"com_liferay_portlet_configuration_web_portlet_" +
+							"PortletConfigurationPortlet",
+						ActionRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/edit_permissions.jsp"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"modelResource", "{entryClassName}"
+				).setParameter(
+					"modelResourceDescription", "{embedded.name}"
+				).setParameter(
+					"resourcePrimKey", "{embedded.id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"password-policies", "permissions",
+				_language.get(_httpServletRequest, "permissions"), "get", null,
+				"modal-permissions"),
+			new FDSActionDropdownItem(
+				_language.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				null, "trash", "delete",
+				_language.get(_httpServletRequest, "delete"), "delete",
+				"delete", "headless"));
+	}
+
 	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
+	private final ThemeDisplay _themeDisplay;
 
 }

@@ -52,7 +52,8 @@ public class StructureUsagesFragmentRenderer
 
 			httpServletRequest.setAttribute(
 				StructureUsagesDisplayContext.class.getName(),
-				new StructureUsagesDisplayContext(httpServletRequest));
+				new StructureUsagesDisplayContext(
+					httpServletRequest, _language));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

@@ -15,6 +15,7 @@ StructureUsagesDisplayContext structureUsagesDisplayContext = (StructureUsagesDi
 	<frontend-data-set:headless-display
 		apiURL="<%= structureUsagesDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= structureUsagesDisplayContext.getBulkActionDropdownItems() %>"
+		fdsActionDropdownItems="<%= structureUsagesDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.STRUCTURE_USAGES %>"
 		itemsPerPage="<%= 10 %>"

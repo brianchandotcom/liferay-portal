@@ -52,7 +52,7 @@ public class CPConfigurationListLocalServiceWrapper
 
 	@Override
 	public CPConfigurationList addCPConfigurationList(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			long parentCPConfigurationListId, boolean master, String name,
 			double priority, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -62,7 +62,7 @@ public class CPConfigurationListLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationListLocalService.addCPConfigurationList(
-			externalReferenceCode, groupId, userId, parentCPConfigurationListId,
+			externalReferenceCode, userId, groupId, parentCPConfigurationListId,
 			master, name, priority, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -71,8 +71,8 @@ public class CPConfigurationListLocalServiceWrapper
 
 	@Override
 	public CPConfigurationList addOrUpdateCPConfigurationList(
-			String externalReferenceCode, long companyId, long groupId,
-			long userId, long parentCPConfigurationListId, boolean master,
+			String externalReferenceCode, long companyId, long userId,
+			long groupId, long parentCPConfigurationListId, boolean master,
 			String name, double priority, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
@@ -82,7 +82,7 @@ public class CPConfigurationListLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationListLocalService.addOrUpdateCPConfigurationList(
-			externalReferenceCode, companyId, groupId, userId,
+			externalReferenceCode, companyId, userId, groupId,
 			parentCPConfigurationListId, master, name, priority,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -523,7 +523,7 @@ public class CPConfigurationListLocalServiceWrapper
 	@Override
 	public CPConfigurationList updateCPConfigurationList(
 			String externalReferenceCode, long cpConfigurationListId,
-			long groupId, long userId, long parentCPConfigurationListId,
+			long userId, long groupId, long parentCPConfigurationListId,
 			boolean master, String name, double priority, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
@@ -533,7 +533,7 @@ public class CPConfigurationListLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpConfigurationListLocalService.updateCPConfigurationList(
-			externalReferenceCode, cpConfigurationListId, groupId, userId,
+			externalReferenceCode, cpConfigurationListId, userId, groupId,
 			parentCPConfigurationListId, master, name, priority,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,

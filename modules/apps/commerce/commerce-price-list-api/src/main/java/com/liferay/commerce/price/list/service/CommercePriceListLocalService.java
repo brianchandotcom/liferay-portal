@@ -89,7 +89,7 @@ public interface CommercePriceListLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceList addCommercePriceList(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			String commerceCurrencyCode, boolean netPrice, String type,
 			long parentCommercePriceListId, boolean catalogBasePriceList,
 			String name, double priority, int displayDateMonth,
@@ -102,7 +102,7 @@ public interface CommercePriceListLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceList addOrUpdateCommercePriceList(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			long commercePriceListId, String commerceCurrencyCode,
 			boolean netPrice, String type, long parentCommercePriceListId,
 			boolean catalogBasePriceList, String name, double priority,

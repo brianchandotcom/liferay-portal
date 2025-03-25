@@ -31,13 +31,13 @@ public class CommerceTaxCategoryMappingServiceWrapper
 	@Override
 	public com.liferay.commerce.tax.model.CommerceTaxCategoryMapping
 			addCommerceTaxCategoryMapping(
-				long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
-				String externalReferenceCode)
+				String externalReferenceCode, long groupId,
+				long commerceTaxMethodId, long cpTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceTaxCategoryMappingService.addCommerceTaxCategoryMapping(
-			groupId, commerceTaxMethodId, cpTaxCategoryId,
-			externalReferenceCode);
+			externalReferenceCode, groupId, commerceTaxMethodId,
+			cpTaxCategoryId);
 	}
 
 	@Override

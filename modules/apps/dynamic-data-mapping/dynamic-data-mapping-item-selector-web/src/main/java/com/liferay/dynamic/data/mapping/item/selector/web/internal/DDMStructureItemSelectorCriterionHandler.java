@@ -5,7 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.item.selector.web.internal;
 
-import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
+import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

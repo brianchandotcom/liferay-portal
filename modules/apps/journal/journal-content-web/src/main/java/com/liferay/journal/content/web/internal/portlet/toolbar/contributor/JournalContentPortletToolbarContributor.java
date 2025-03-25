@@ -5,8 +5,8 @@
 
 package com.liferay.journal.content.web.internal.portlet.toolbar.contributor;
 
+import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorReturnType;
-import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;

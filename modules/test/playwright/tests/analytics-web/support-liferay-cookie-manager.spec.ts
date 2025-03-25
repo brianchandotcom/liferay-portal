@@ -98,7 +98,7 @@ async function connectACToDXP({
 		channelName,
 	});
 
-	await createDataSource(page);
+	const {token} = await createDataSource(page);
 
 	await goToAnalyticsCloudInstanceSettings(page);
 
@@ -112,7 +112,7 @@ async function connectACToDXP({
 
 	await disconnectFromAnalyticsCloud(page);
 
-	await connectToAnalyticsCloud(page);
+	await connectToAnalyticsCloud(page, {token});
 
 	await syncSite({
 		channelName,

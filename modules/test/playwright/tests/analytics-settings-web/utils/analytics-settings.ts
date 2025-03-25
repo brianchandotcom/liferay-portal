@@ -22,16 +22,17 @@ async function switchToTab({page, tabName}: {page: Page; tabName: string}) {
 	await page.waitForTimeout(3000);
 }
 
-export async function connectToAnalyticsCloud(page: Page) {
-	await page.getByPlaceholder('Paste token here.').click();
-
-	await page.keyboard.press('Control+V');
+export async function connectToAnalyticsCloud(
+	page: Page,
+	{token}: {token: string}
+) {
+	await page.getByPlaceholder('Paste token here.').fill(token);
 
 	await page.getByRole('button', {name: 'Connect'}).click();
 }
 
 export async function connectToAnalyticsCloudWithNoSiteSynced(page: Page) {
-	await createDataSource(page);
+	const {token} = await createDataSource(page);
 
 	await goToAnalyticsCloudInstanceSettings(page);
 
@@ -39,7 +40,7 @@ export async function connectToAnalyticsCloudWithNoSiteSynced(page: Page) {
 
 	await disconnectFromAnalyticsCloud(page);
 
-	await connectToAnalyticsCloud(page);
+	await connectToAnalyticsCloud(page, {token});
 
 	await goNextStep(page);
 
@@ -191,7 +192,7 @@ export async function syncAnalyticsCloud({
 		channelName,
 	});
 
-	await createDataSource(page);
+	const {token} = await createDataSource(page);
 
 	await goToAnalyticsCloudInstanceSettings(page);
 
@@ -199,7 +200,7 @@ export async function syncAnalyticsCloud({
 
 	await disconnectFromAnalyticsCloud(page);
 
-	await connectToAnalyticsCloud(page);
+	await connectToAnalyticsCloud(page, {token});
 
 	await syncSite({
 		channelName,

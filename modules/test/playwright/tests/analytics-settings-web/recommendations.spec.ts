@@ -72,7 +72,7 @@ test.describe('Test All Recommendation Job', () => {
 				channelName,
 			});
 
-			await createDataSource(page);
+			const {token} = await createDataSource(page);
 
 			await goToAnalyticsCloudInstanceSettings(page);
 
@@ -80,7 +80,7 @@ test.describe('Test All Recommendation Job', () => {
 
 			await disconnectFromAnalyticsCloud(page);
 
-			await connectToAnalyticsCloud(page);
+			await connectToAnalyticsCloud(page, {token});
 
 			await syncSite({
 				channelName,

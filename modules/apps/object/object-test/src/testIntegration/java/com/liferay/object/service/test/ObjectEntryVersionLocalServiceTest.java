@@ -509,7 +509,9 @@ public class ObjectEntryVersionLocalServiceTest {
 				"objectEntryFolderExternalReferenceCode", StringPool.BLANK
 			).put(
 				"objectEntryFolderId",
-				ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT
+				Long.valueOf(
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT)
 			).put(
 				"properties", jsonObject
 			).put(

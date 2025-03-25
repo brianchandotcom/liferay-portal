@@ -73,19 +73,22 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_oldDuplicateEntryPrimaryKeyValue, ", 1, 2, '3')"));
+						_oldDuplicateEntryPrimaryKeyValue,
+						", [$TRUE$], 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_uniqueEntryPrimaryKeyValue, ", 0, 2, '3')"));
+						_uniqueEntryPrimaryKeyValue, ", [$FALSE$], 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_newDuplicateEntryPrimaryKeyValue, ", 1, 2, '3')"));
+						_newDuplicateEntryPrimaryKeyValue,
+						", [$TRUE$], 2, '3')"));
 
-				_db.runSQL("insert into TestTable values (4, 1, 2, '3')");
+				_db.runSQL(
+					"insert into TestTable values (4, [$TRUE$], 2, '3')");
 			});
 	}
 

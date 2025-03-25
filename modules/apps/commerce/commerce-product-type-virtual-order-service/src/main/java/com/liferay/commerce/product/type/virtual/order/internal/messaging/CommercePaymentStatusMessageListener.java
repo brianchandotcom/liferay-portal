@@ -31,7 +31,10 @@ public class CommercePaymentStatusMessageListener extends BaseMessageListener {
 
 		int paymentStatus = jsonObject.getInt("paymentStatus");
 
-		if (paymentStatus != CommerceOrderPaymentConstants.STATUS_COMPLETED) {
+		if ((paymentStatus != CommerceOrderPaymentConstants.STATUS_COMPLETED) &&
+			(paymentStatus !=
+				CommerceOrderPaymentConstants.STATUS_NOT_REQUIRED)) {
+
 			return;
 		}
 

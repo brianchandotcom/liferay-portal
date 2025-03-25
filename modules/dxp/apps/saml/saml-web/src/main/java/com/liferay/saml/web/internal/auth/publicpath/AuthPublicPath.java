@@ -15,7 +15,6 @@ import org.osgi.service.component.annotations.Component;
 		"auth.public.path=/portal/saml/acs",
 		"auth.public.path=/portal/saml/auth_redirect",
 		"auth.public.path=/portal/saml/login",
-		"auth.public.path=/portal/saml/metadata",
 		"auth.public.path=/portal/saml/slo",
 		"auth.public.path=/portal/saml/slo_logout",
 		"auth.public.path=/portal/saml/slo_redirect",

@@ -70,7 +70,7 @@ public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 					sb.append(primaryKeyColumnName);
 					sb.append(" = ");
 					sb.append(duplicateEntry.get(primaryKeyColumnName));
-					sb.append("and ");
+					sb.append(" and ");
 				}
 
 				sb.setIndex(sb.index() - 1);

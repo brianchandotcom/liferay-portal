@@ -91,7 +91,7 @@ public class RolesAdminPortletTest {
 	}
 
 	@Test
-	public void testEditUserGroupRoleAssignmentDoesNotAddCTEntry()
+	public void testEditRoleAssignmentsForUserGroups()
 		throws Exception {
 
 		Groups_RolesTable groups_rolesTable = Groups_RolesTable.INSTANCE;
@@ -138,7 +138,7 @@ public class RolesAdminPortletTest {
 	}
 
 	@Test
-	public void testEditUserRoleAssignmentDoesNotAddCTEntry() throws Exception {
+	public void testEditRoleAssignmentsForUsers() throws Exception {
 		Users_RolesTable users_rolesTable = Users_RolesTable.INSTANCE;
 
 		Column<Users_RolesTable, Long> userIdColumn = users_rolesTable.userId;

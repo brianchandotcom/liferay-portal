@@ -101,6 +101,15 @@ public class BuildHistory {
 		return table.getJSONArray(intervalDays);
 	}
 
+	public JSONArray getTableJSONArray(
+		String groupIdentifierName, int intervalDays,
+		List<String> metricNames) {
+
+		Table table = _getTable(groupIdentifierName);
+
+		return table.getJSONArray(intervalDays, metricNames);
+	}
+
 	public JSONObject getTimelineJSONObject() {
 		Timeline timeline = _getTimeline();
 
@@ -145,6 +154,26 @@ public class BuildHistory {
 		_startTime = startTime;
 	}
 
+	public enum TableMetric {
+
+		AVERAGE_TOP_LEVEL_BUILD_DURATION("Average Top Level Build Duration"),
+		INVOKED_BUILDS("Invoked Builds"),
+		INVOKED_TOP_LEVEL_BUILDS("Invoked Top Level Builds"),
+		TOTAL_SERVER_DURATION("Total Server Duration");
+
+		@Override
+		public String toString() {
+			return _string;
+		}
+
+		private TableMetric(String string) {
+			_string = string;
+		}
+
+		private final String _string;
+
+	}
+
 	protected static JSONArray getTimeJSONArray(long duration, long startTime) {
 		int size = _getTimelineSize(duration);
 
@@ -166,6 +195,18 @@ public class BuildHistory {
 	protected class Table {
 
 		public JSONArray getJSONArray(int intervalDays) {
+			return getJSONArray(
+				intervalDays,
+				Arrays.asList(
+					TableMetric.AVERAGE_TOP_LEVEL_BUILD_DURATION.toString(),
+					TableMetric.INVOKED_BUILDS.toString(),
+					TableMetric.INVOKED_TOP_LEVEL_BUILDS.toString(),
+					TableMetric.TOTAL_SERVER_DURATION.toString()));
+		}
+
+		public JSONArray getJSONArray(
+			int intervalDays, List<String> metricNames) {
+
 			JSONArray jsonArray = new JSONArray();
 
 			String[][] dateStringsArray = _split(
@@ -209,41 +250,68 @@ public class BuildHistory {
 					}
 				});
 
-			rows.add(
-				new ArrayList<Object>() {
-					{
-						add(getName());
-						add("Invoked Builds");
-						addAll(Arrays.asList(invokedBuilds));
-					}
-				});
+			if (metricNames == null) {
+				metricNames = Arrays.asList(
+					TableMetric.AVERAGE_TOP_LEVEL_BUILD_DURATION.toString(),
+					TableMetric.INVOKED_BUILDS.toString(),
+					TableMetric.INVOKED_TOP_LEVEL_BUILDS.toString(),
+					TableMetric.TOTAL_SERVER_DURATION.toString());
+			}
 
-			rows.add(
-				new ArrayList<Object>() {
-					{
-						add(getName());
-						add("Invoked Top Level Builds");
-						addAll(Arrays.asList(invokedTopLevelBuilds));
-					}
-				});
+			if (metricNames.contains(
+					TableMetric.AVERAGE_TOP_LEVEL_BUILD_DURATION.toString())) {
 
-			rows.add(
-				new ArrayList<Object>() {
-					{
-						add(getName());
-						add("Average Top Level Build Duration");
-						addAll(Arrays.asList(averageTopLevelBuildDurations));
-					}
-				});
+				rows.add(
+					new ArrayList<Object>() {
+						{
+							add(getName());
+							add(
+								TableMetric.AVERAGE_TOP_LEVEL_BUILD_DURATION.
+									toString());
+							addAll(
+								Arrays.asList(averageTopLevelBuildDurations));
+						}
+					});
+			}
 
-			rows.add(
-				new ArrayList<Object>() {
-					{
-						add(getName());
-						add("Total Server Duration");
-						addAll(Arrays.asList(totalServerDurations));
-					}
-				});
+			if (metricNames.contains(TableMetric.INVOKED_BUILDS.toString())) {
+				rows.add(
+					new ArrayList<Object>() {
+						{
+							add(getName());
+							add(TableMetric.INVOKED_BUILDS.toString());
+							addAll(Arrays.asList(invokedBuilds));
+						}
+					});
+			}
+
+			if (metricNames.contains(
+					TableMetric.INVOKED_TOP_LEVEL_BUILDS.toString())) {
+
+				rows.add(
+					new ArrayList<Object>() {
+						{
+							add(getName());
+							add(
+								TableMetric.INVOKED_TOP_LEVEL_BUILDS.
+									toString());
+							addAll(Arrays.asList(invokedTopLevelBuilds));
+						}
+					});
+			}
+
+			if (metricNames.contains(
+					TableMetric.TOTAL_SERVER_DURATION.toString())) {
+
+				rows.add(
+					new ArrayList<Object>() {
+						{
+							add(getName());
+							add(TableMetric.TOTAL_SERVER_DURATION.toString());
+							addAll(Arrays.asList(totalServerDurations));
+						}
+					});
+			}
 
 			for (List<Object> row : rows) {
 				jsonArray.put(new JSONArray(row));

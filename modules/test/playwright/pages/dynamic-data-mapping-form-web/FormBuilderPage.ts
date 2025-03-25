@@ -82,7 +82,7 @@ export class FormBuilderPage {
 
 		const formSubmissionURL = await this.page.evaluate(() => {
 			const urlInput = document.querySelector(
-				'input.form-control[readonly]'
+				'.share-form-modal-item-link input.form-control[readonly]'
 			) as HTMLInputElement;
 
 			return urlInput.value;

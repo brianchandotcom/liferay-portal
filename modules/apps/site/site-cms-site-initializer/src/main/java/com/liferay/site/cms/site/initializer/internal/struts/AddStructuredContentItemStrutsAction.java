@@ -22,13 +22,11 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -45,7 +43,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -138,17 +135,6 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 				return ObjectEntryFolderConstants.
 					EXTERNAL_REFERENCE_CODE_CONTENTS;
 			});
-		objectEntry.setProperties(
-			() -> HashMapBuilder.<String, Object>put(
-				() -> {
-					ObjectField objectField =
-						_objectFieldLocalService.getObjectField(
-							objectDefinition.getTitleObjectFieldId());
-
-					return objectField.getName();
-				},
-				ParamUtil.getString(httpServletRequest, "name")
-			).build());
 		objectEntry.setStatus(
 			() -> new Status() {
 				{
@@ -359,9 +345,6 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -347,7 +347,7 @@ public class ObjectEntryModelDocumentContributor
 
 		document.addKeyword(
 			"objectFolderExternalReferenceCode",
-			objectFolder.getExternalReferenceCode());
+			objectFolder.getExternalReferenceCode(), true);
 	}
 
 	private String _getDateString(Object value) {

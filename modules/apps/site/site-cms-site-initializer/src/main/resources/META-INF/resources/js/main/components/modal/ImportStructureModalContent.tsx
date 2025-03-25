@@ -7,15 +7,12 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {openToast} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {postFormData} from '../../../api/api';
 import {FieldFile} from '../forms';
 
 const JSON_EXTENSION = '.json';
-const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
-	'an-unexpected-error-occurred'
-);
 
 export default function ImportStructureModalContent({
 	closeModal,
@@ -38,7 +35,7 @@ export default function ImportStructureModalContent({
 		setJsonFile(file);
 	};
 
-	const onImportButtonClick = () => {
+	const onImportButtonClick = async () => {
 		const formData = new FormData();
 
 		formData.append(
@@ -50,34 +47,21 @@ export default function ImportStructureModalContent({
 			formData.append('objectDefinitionJSON', new Blob([jsonFile]));
 		}
 
-		fetch(importURL, {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => {
-				if (response.ok) {
-					openToast({
-						message: Liferay.Language.get(
-							'the-structure-has-been-successfully-imported-and-overwritten'
-						),
-						type: 'success',
-					});
+		const {errorMessage, success} = await postFormData(formData, importURL);
 
-					closeModal();
-				}
-				else {
-					return response.json();
-				}
-			})
-			.then((response) => {
-				setErrorMessage(response?.title);
-			})
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
-				setErrorMessage(UNEXPECTED_ERROR_MESSAGE);
+		if (success) {
+			closeModal();
+
+			openToast({
+				message: Liferay.Language.get(
+					'the-structure-has-been-successfully-imported-and-overwritten'
+				),
+				type: 'success',
 			});
+		}
+		else if (errorMessage) {
+			setErrorMessage(errorMessage);
+		}
 	};
 
 	return (

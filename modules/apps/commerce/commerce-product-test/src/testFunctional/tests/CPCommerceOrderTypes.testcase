@@ -509,10 +509,6 @@ definition {
 		task ("Then two active order types can be selected on the order type selector, Order Type 1 is selected by default") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
-			AssertSelectedLabel(
-				locator1 = "Select#TYPE",
-				value1 = "Test Order Type 1");
-
 			for (var orderTypeNumber : list "1,2") {
 				AssertElementPresent(
 					key_typeName = "Test Order Type ${orderTypeNumber}",

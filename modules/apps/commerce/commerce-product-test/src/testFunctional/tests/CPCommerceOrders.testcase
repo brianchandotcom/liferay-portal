@@ -78,9 +78,9 @@ definition {
 
 		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
 
-		AssertTextEquals.assertText(
-			locator1 = "Message#ERROR",
-			value1 = "Close Error:Unable to create a new order as the open order limit has been reached.");
+		AssertTextPresent(
+			locator1 = "Message#ALERT_DISMISSIBLE",
+			value1 = "Error:Unable to create a new order as the open order limit has been reached.");
 	}
 
 	@description = "Verify users can add a minimum order amount rule that applies to order subtotals. Orders that have a subtotal less than the minimum cannot be checked out"
@@ -3864,7 +3864,7 @@ definition {
 
 		CommerceOrders.openOrdersAdmin();
 
-		Button.click(button = "Order Date");
+		Click(locator1 = "//div[contains(@class,'autofit-col')]//button[@title='Sortable Column']");
 
 		var index = 1;
 

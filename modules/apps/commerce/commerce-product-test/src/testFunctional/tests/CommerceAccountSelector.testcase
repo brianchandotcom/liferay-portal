@@ -707,11 +707,11 @@ definition {
 			productName = "U-Joint",
 			productQuantity = 1);
 
-		Click(locator1 = "Button#ANGLE_DOWN");
+		Click(tor1 = "Button#ANGLE_DOWN");
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
 
-		var getOrderId = selenium.getText("CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
+		var getOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 		Button.click(button = "Create New Order");
 

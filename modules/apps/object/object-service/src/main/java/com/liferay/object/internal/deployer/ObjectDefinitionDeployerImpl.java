@@ -422,6 +422,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectRelationshipLocalService)));
 
 		if (!objectDefinition.isRootDescendantNode()) {
+			ConsumerSupplier<ModelResourcePermissionLogic<ObjectEntry>>
+				consumerSupplier = new ConsumerSupplier<>();
 			PortletResourcePermission portletResourcePermission =
 				PortletResourcePermissionFactory.create(
 					objectDefinition.getResourceName(),
@@ -429,9 +431,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						_accountEntryLocalService, _groupLocalService,
 						_objectDefinitionLocalService,
 						_organizationLocalService));
-
-			ConsumerSupplier<ModelResourcePermissionLogic<ObjectEntry>>
-				consumerSupplier = new ConsumerSupplier<>();
 
 			ModelResourcePermission<ObjectEntry> modelResourcePermission =
 				new ObjectEntryModelResourcePermission(

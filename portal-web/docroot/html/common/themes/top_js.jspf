@@ -187,7 +187,7 @@
 			'openPortletModal'
 		);
 
-		Liferay.Portlet.openWindow = buildESMStub('<%= frontendJSComponentsWebURL %>',, 'openPortletWindow');
+		Liferay.Portlet.openWindow = buildESMStub('<%= frontendJSComponentsWebURL %>', 'openPortletWindow');
 
 		Liferay.PortletKeys = {
 			DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',

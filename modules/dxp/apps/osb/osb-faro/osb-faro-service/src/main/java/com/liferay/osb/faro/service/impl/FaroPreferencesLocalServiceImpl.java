@@ -55,6 +55,31 @@ public class FaroPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public FaroPreferences saveGlobalPreferences(String preferences)
+		throws PortalException {
+
+		FaroPreferences faroPreferences = faroPreferencesPersistence.fetchByG_O(
+			0, 0);
+
+		long now = System.currentTimeMillis();
+
+		if (faroPreferences == null) {
+			faroPreferences = faroPreferencesPersistence.create(
+				counterLocalService.increment());
+
+			faroPreferences.setGroupId(0);
+			faroPreferences.setCreateTime(now);
+			faroPreferences.setOwnerId(0);
+		}
+
+		faroPreferences.setUserId(0);
+		faroPreferences.setModifiedTime(now);
+		faroPreferences.setPreferences(preferences);
+
+		return updateFaroPreferences(faroPreferences);
+	}
+
+	@Override
 	public FaroPreferences savePreferences(
 			long userId, long groupId, long ownerId, String preferences)
 		throws PortalException {

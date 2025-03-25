@@ -64,7 +64,7 @@ public class CommercePriceListLocalServiceUtil {
 	}
 
 	public static CommercePriceList addCommercePriceList(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			String commerceCurrencyCode, boolean netPrice, String type,
 			long parentCommercePriceListId, boolean catalogBasePriceList,
 			String name, double priority, int displayDateMonth,
@@ -77,7 +77,7 @@ public class CommercePriceListLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addCommercePriceList(
-			externalReferenceCode, groupId, userId, commerceCurrencyCode,
+			externalReferenceCode, userId, groupId, commerceCurrencyCode,
 			netPrice, type, parentCommercePriceListId, catalogBasePriceList,
 			name, priority, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -86,7 +86,7 @@ public class CommercePriceListLocalServiceUtil {
 	}
 
 	public static CommercePriceList addOrUpdateCommercePriceList(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			long commercePriceListId, String commerceCurrencyCode,
 			boolean netPrice, String type, long parentCommercePriceListId,
 			boolean catalogBasePriceList, String name, double priority,
@@ -99,7 +99,7 @@ public class CommercePriceListLocalServiceUtil {
 		throws PortalException {
 
 		return getService().addOrUpdateCommercePriceList(
-			externalReferenceCode, groupId, userId, commercePriceListId,
+			externalReferenceCode, userId, groupId, commercePriceListId,
 			commerceCurrencyCode, netPrice, type, parentCommercePriceListId,
 			catalogBasePriceList, name, priority, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,

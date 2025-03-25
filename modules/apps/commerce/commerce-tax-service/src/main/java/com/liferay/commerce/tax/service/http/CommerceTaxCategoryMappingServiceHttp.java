@@ -43,9 +43,8 @@ public class CommerceTaxCategoryMappingServiceHttp {
 
 	public static com.liferay.commerce.tax.model.CommerceTaxCategoryMapping
 			addCommerceTaxCategoryMapping(
-				HttpPrincipal httpPrincipal, long groupId,
-				long commerceTaxMethodId, long cpTaxCategoryId,
-				String externalReferenceCode)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long groupId, long commerceTaxMethodId, long cpTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -55,8 +54,8 @@ public class CommerceTaxCategoryMappingServiceHttp {
 				_addCommerceTaxCategoryMappingParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, commerceTaxMethodId, cpTaxCategoryId,
-				externalReferenceCode);
+				methodKey, externalReferenceCode, groupId, commerceTaxMethodId,
+				cpTaxCategoryId);
 
 			Object returnObj = null;
 
@@ -307,7 +306,7 @@ public class CommerceTaxCategoryMappingServiceHttp {
 
 	private static final Class<?>[]
 		_addCommerceTaxCategoryMappingParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, String.class
+			String.class, long.class, long.class, long.class
 		};
 	private static final Class<?>[]
 		_deleteCommerceTaxCategoryMappingParameterTypes1 = new Class[] {

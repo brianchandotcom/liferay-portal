@@ -32,13 +32,13 @@ public class CommerceTaxCategoryMappingServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.tax.service.impl.CommerceTaxCategoryMappingServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceTaxCategoryMapping addCommerceTaxCategoryMapping(
-			long groupId, long commerceTaxMethodId, long cpTaxCategoryId,
-			String externalReferenceCode)
+			String externalReferenceCode, long groupId,
+			long commerceTaxMethodId, long cpTaxCategoryId)
 		throws PortalException {
 
 		return getService().addCommerceTaxCategoryMapping(
-			groupId, commerceTaxMethodId, cpTaxCategoryId,
-			externalReferenceCode);
+			externalReferenceCode, groupId, commerceTaxMethodId,
+			cpTaxCategoryId);
 	}
 
 	public static void deleteCommerceTaxCategoryMapping(

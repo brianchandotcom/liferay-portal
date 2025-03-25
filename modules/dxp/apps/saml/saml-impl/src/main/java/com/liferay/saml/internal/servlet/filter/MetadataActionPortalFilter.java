@@ -1,17 +1,20 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.saml.web.internal.struts;
+package com.liferay.saml.internal.servlet.filter;
 
-import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.io.PrintWriter;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,25 +22,31 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mika Koivisto
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- * 				com.liferay.saml.internal.servlet.filter.MetadataActionPortalFilter}
+ * @author Christopher Kian
  */
 @Component(
-	property = "path=/portal/saml/metadata", service = StrutsAction.class
+	property = {
+		"after-filter=Virtual Host Filter", "dispatcher=REQUEST",
+		"enabled=true", "servlet-context-name=",
+		"servlet-filter-name=Metadata Action SAML Portal Filter",
+		"url-pattern=/c/portal/saml/metadata"
+	},
+	service = Filter.class
 )
-@Deprecated
-public class MetadataAction extends BaseSamlStrutsAction {
+public class MetadataActionPortalFilter extends BaseSamlPortalFilter {
 
 	@Override
-	public boolean isEnabled() {
+	public boolean isFilterEnabled(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
 		return _samlProviderConfigurationHelper.isEnabled();
 	}
 
 	@Override
-	protected String doExecute(
+	protected void doProcessFilter(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
 		httpServletResponse.setContentType(ContentTypes.TEXT_XML);
@@ -48,9 +57,15 @@ public class MetadataAction extends BaseSamlStrutsAction {
 			httpServletRequest);
 
 		printWriter.print(metadata);
-
-		return null;
 	}
+
+	@Override
+	protected Log getLog() {
+		return _log;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MetadataActionPortalFilter.class);
 
 	@Reference
 	private SamlHttpRequestHelper _samlHttpRequestHelper;

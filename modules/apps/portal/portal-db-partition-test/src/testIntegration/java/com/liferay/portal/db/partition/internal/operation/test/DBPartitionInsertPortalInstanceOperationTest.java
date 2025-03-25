@@ -28,7 +28,18 @@ public class DBPartitionInsertPortalInstanceOperationTest
 
 	@FeatureFlags("LPD-11342")
 	@Test
-	public void testDeployConfiguration() throws Exception {
+	public void testDeployConfigurationWithFF() throws Exception {
+		_testDeployConfiguration(
+			"Portal instance with company ID " +
+				PortalInstancePool.getDefaultCompanyId() + " already exists");
+	}
+
+	@Test
+	public void testDeployConfigurationWithoutFF() throws Exception {
+		_testDeployConfiguration("Feature flag LPD-11342 must be enabled");
+	}
+
+	private void _testDeployConfiguration(String message) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
 					"InsertPortalInstanceOperation",
@@ -39,11 +50,7 @@ public class DBPartitionInsertPortalInstanceOperationTest
 				"newWebId=\"testNewWebId\"\ninsertCompanyId=L\"" +
 					PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
-			assertLog(
-				logCapture,
-				"Portal instance with company ID " +
-					PortalInstancePool.getDefaultCompanyId() +
-						" already exists");
+			assertLog(logCapture, message);
 		}
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);

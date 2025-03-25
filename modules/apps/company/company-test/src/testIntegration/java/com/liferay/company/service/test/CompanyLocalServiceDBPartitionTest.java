@@ -461,6 +461,26 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	@Test
+	public void testAddDBPartitionCompanyWithoutFF() {
+		try {
+			_companyLocalService.addDBPartitionCompany(
+				PortalInstancePool.getDefaultCompanyId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception instanceof UnsupportedOperationException);
+
+			Assert.assertEquals(
+				"Feature flag LPD-11342 must be enabled",
+				exception.getMessage());
+		}
+	}
+
 	@FeatureFlags("LPD-11342")
 	@Test
 	public void testCopyDBPartitionCompany() throws Exception {
@@ -641,6 +661,26 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 		finally {
 			companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
+	public void testCopyDBPartitionCompanyWithoutFF() {
+		try {
+			_companyLocalService.copyDBPartitionCompany(
+				PortalInstancePool.getDefaultCompanyId(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception instanceof UnsupportedOperationException);
+
+			Assert.assertEquals(
+				"Feature flag LPD-11342 must be enabled",
+				exception.getMessage());
 		}
 	}
 

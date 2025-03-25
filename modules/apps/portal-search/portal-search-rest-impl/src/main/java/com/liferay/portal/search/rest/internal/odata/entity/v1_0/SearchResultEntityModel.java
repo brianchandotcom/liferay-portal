@@ -45,6 +45,8 @@ public class SearchResultEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField("folderId", locale -> Field.FOLDER_ID),
+			new IntegerEntityField(
+				"objectDefinitionId", locale -> "objectDefinitionId"),
 			new StringEntityField("cmsSection", locale -> "cms_section"),
 			new StringEntityField(
 				"title",

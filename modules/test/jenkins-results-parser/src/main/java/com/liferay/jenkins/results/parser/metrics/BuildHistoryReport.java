@@ -90,7 +90,8 @@ public class BuildHistoryReport {
 			outputDir);
 
 		buildHistoryReport.addFilesFromResource(
-			"dependencies/metrics/utilization-report", "/index.html");
+			"dependencies/metrics/utilization-report", "/css/main.css",
+			"/index.html", "/js/main.js");
 
 		Collection<BuildHistory> utilizationBuildHistories =
 			BuildHistoryProcessor.newUtilizationBuildHistories(

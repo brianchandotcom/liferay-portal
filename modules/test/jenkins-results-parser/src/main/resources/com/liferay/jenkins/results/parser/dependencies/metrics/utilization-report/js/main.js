@@ -174,18 +174,24 @@ function updateHeaderNames(tableElement) {
 
 addReportName();
 
-if ((typeof tableData !== 'undefined') && tableData) {
-	let tableElement = createTable(tableData, 'utilization-data-table');
+if ((typeof categoryTableData !== 'undefined') && categoryTableData) {
+	let categoryTableDataElement = createTable(categoryTableData, 'utilization-category-data-table');
 
-	addUtilizationRows(tableElement);
+	addUtilizationRows(categoryTableDataElement);
 
-	updateHeaderNames(tableElement);
-
-	Sortable.init();
+	updateHeaderNames(categoryTableDataElement);
 
 	window.onload = function () {
 		triggerEvent(getElementByXpath('//th[contains(.,"Category")]'), 'click');
 
-		createBarChartFromTable('Weekly Node Utilization by Job Category', 'utilization-canvas', 'Utilization Percentage', tableElement);
+		createBarChartFromTable('Weekly Node Utilization by Job Category', 'utilization-canvas', 'Utilization Percentage', categoryTableDataElement);
 	}
 }
+
+if ((typeof testTypeTableData !== 'undefined') && testTypeTableData) {
+	let testTypeTableDataElement = createTable(testTypeTableData, 'utilization-test-type-data-table');
+
+	updateHeaderNames(testTypeTableDataElement);
+}
+
+Sortable.init();

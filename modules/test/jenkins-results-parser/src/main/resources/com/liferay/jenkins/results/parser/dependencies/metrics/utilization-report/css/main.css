@@ -11,6 +11,15 @@
 	position: sticky;
 }
 
+.search {
+	border: 1px solid #d3d3d3;
+	font-size: 14px;
+	margin-bottom: 12px;
+	padding: 12px 12px 12px 40px;
+	position:relative;
+	width: 100%;
+}
+
 .table-wrapper{
     max-height: 1080px;
 }

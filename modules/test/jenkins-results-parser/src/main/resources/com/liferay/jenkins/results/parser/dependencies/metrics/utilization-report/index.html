@@ -17,16 +17,32 @@
 		</div>
 
 		<div>
-			<h4>Weekly Statistics</h4>
+			<h4>Weekly Job Statistics</h4>
 
 			<div>
 				<i class="fa fa-search"></i>
 
-				<input id="search" onkeyup="searchTable(this.id, 'utilization-data-table')" placeholder="Filter by category name or metric name (e.g. Pull Requests, Utilization Percentage)" type="text" />
+				<input class="search" id="search-category" onkeyup="searchTable(this.id, 'utilization-category-data-table')" placeholder="Filter by category name or metric name (e.g. Pull Requests, Utilization Percentage)" type="text" />
 			</div>
 
 			<div class="table-wrapper">
-				<table class="table table-hover" data-sortable id="utilization-data-table" />
+				<table class="table table-hover" data-sortable id="utilization-category-data-table"></table>
+			</div>
+
+			<br />
+		</div>
+
+		<div>
+			<h4>Weekly Test Type Statistics</h4>
+
+			<div>
+				<i class="fa fa-search"></i>
+
+				<input class="search" id="search-test-type" onkeyup="searchTable(this.id, 'utilization-test-type-data-table')" placeholder="Filter by test type name or metric name" type="text" />
+			</div>
+
+			<div class="table-wrapper">
+				<table class="table table-hover" data-sortable id="utilization-test-type-data-table"></table>
 			</div>
 		</div>
 
@@ -43,8 +59,8 @@
 
 		<script src="js/table-data.js"></script>
 
-		<link href="https://cdn.jsdelivr.net/gh/liferay/liferay-portal@1a5c67264e8db6aae2e38967a20c3f3a31416d27/modules/test/jenkins-results-parser/src/main/resources/com/liferay/jenkins/results/parser/dependencies/metrics/utilization-report/css/main.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
 
-		<script src="https://cdn.jsdelivr.net/gh/liferay/liferay-portal@1a5c67264e8db6aae2e38967a20c3f3a31416d27/modules/test/jenkins-results-parser/src/main/resources/com/liferay/jenkins/results/parser/dependencies/metrics/utilization-report/js/main.js"></script>
+		<script src="js/main.js"></script>
 	</body>
 </html>

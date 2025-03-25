@@ -362,6 +362,17 @@ public class PlacedOrderItemResourceTest
 							return null;
 						}
 
+						commerceVirtualOrderItem =
+							_commerceVirtualOrderItemLocalService.
+								updateCommerceVirtualOrderItem(
+									commerceVirtualOrderItem.
+										getCommerceVirtualOrderItemId(),
+									commerceVirtualOrderItem.
+										getActivationStatus(),
+									commerceVirtualOrderItem.getDuration(),
+									commerceVirtualOrderItem.getMaxUsages(),
+									true);
+
 						List<CommerceVirtualOrderItemFileEntry>
 							commerceVirtualOrderItemFileEntries =
 								commerceVirtualOrderItem.

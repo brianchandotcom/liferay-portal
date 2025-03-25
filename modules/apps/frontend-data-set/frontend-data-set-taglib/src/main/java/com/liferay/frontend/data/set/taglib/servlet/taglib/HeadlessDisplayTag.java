@@ -143,6 +143,10 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		return _showSearch;
 	}
 
+	public boolean isShowSelectAll() {
+		return _showSelectAll;
+	}
+
 	public void setActionParameterName(String actionParameterName) {
 		_actionParameterName = actionParameterName;
 	}
@@ -233,6 +237,10 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_showSearch = showSearch;
 	}
 
+	public void setShowSelectAll(boolean showSelectAll) {
+		_showSelectAll = showSelectAll;
+	}
+
 	public void setStyle(String style) {
 		_style = style;
 	}
@@ -263,6 +271,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_showManagementBar = true;
 		_showPagination = true;
 		_showSearch = true;
+		_showSelectAll = false;
 		_style = "default";
 	}
 
@@ -320,6 +329,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				"showPagination", _showPagination
 			).put(
 				"showSearch", _showSearch
+			).put(
+				"showSelectAll", _showSelectAll
 			).put(
 				"sorts", _fdsSortItemList
 			).put(
@@ -379,6 +390,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private boolean _showManagementBar = true;
 	private boolean _showPagination = true;
 	private boolean _showSearch = true;
+	private boolean _showSelectAll;
 	private String _style = "default";
 
 }

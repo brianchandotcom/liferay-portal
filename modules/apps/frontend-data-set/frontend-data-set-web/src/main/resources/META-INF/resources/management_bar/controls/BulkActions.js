@@ -32,15 +32,18 @@ function getRichPayload(payload, key, values = []) {
 
 function BulkActions({
 	bulkActions,
+	deselectItems,
 	fluid,
 	handleCheckboxClick,
+	handleSelectAll,
 	items,
 	onClear,
 	pageSelectedItemsValue,
-	selectItems,
+	selectAll,
 	selectedItems,
 	selectedItemsKey,
 	selectedItemsValue,
+	showSelectAll,
 	total,
 }) {
 	const {
@@ -62,7 +65,6 @@ function BulkActions({
 		sidePanelId
 	) {
 		const {data, href, slug, target} = actionDefinition;
-
 		if (target === 'sidePanel') {
 			const sidePanelActionPayload = {
 				baseURL: href,
@@ -90,8 +92,9 @@ function BulkActions({
 				loadData,
 				namespace,
 				selectedData: {
-					items: selectedItems,
-					keyValues: selectedItemsValue,
+					items: selectAll ? [] : selectedItems,
+					keyValues: selectAll ? [] : selectedItemsValue,
+					selectAll,
 				},
 			});
 		}
@@ -105,7 +108,8 @@ function BulkActions({
 					data: {
 						...data,
 						[`${actionParameterName || selectedItemsKey}`]:
-							selectedItemsValue.join(','),
+							selectAll ? [] : selectedItemsValue.join(','),
+						selectAll,
 					},
 					url: href || form.action,
 				});
@@ -142,6 +146,22 @@ function BulkActions({
 		[selectedItemsValue]
 	);
 
+	useEffect(() => {
+		if (
+			selectAll &&
+			!!pageSelectedItemsValue.length &&
+			pageSelectedItemsValue.length !== items.length
+		) {
+			deselectItems(
+				selectedItemsValue.filter(
+					(item) => !pageSelectedItemsValue.includes(item)
+				)
+			);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pageSelectedItemsValue]);
+
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>
 			{({
@@ -176,12 +196,13 @@ function BulkActions({
 
 							<li className="nav-item">
 								<span className="text-truncate">
-									{selectedItemsValue.length === total
+									{selectedItemsValue.length === total ||
+									selectAll
 										? sub(
 												Liferay.Language.get(
 													'all-selected-x-of-x-items'
 												),
-												selectedItemsValue.length,
+												total,
 												total
 											)
 										: sub(
@@ -204,20 +225,21 @@ function BulkActions({
 									{Liferay.Language.get('clear')}
 								</ClayLink>
 
-								<ClayLink
-									className="ml-3"
-									href="#"
-									onClick={(event) => {
-										event.preventDefault();
-										selectItems(
-											items.map(
-												(item) => item[selectedItemsKey]
-											)
-										);
-									}}
-								>
-									{Liferay.Language.get('select-all')}
-								</ClayLink>
+								{pageSelectedItemsValue.length ===
+									items.length &&
+									showSelectAll &&
+									!selectAll && (
+										<ClayLink
+											className="ml-3"
+											href="#"
+											onClick={(event) => {
+												event.preventDefault();
+												handleSelectAll(true);
+											}}
+										>
+											{Liferay.Language.get('select-all')}
+										</ClayLink>
+									)}
 							</li>
 						</ul>
 
@@ -338,11 +360,17 @@ BulkActions.propTypes = {
 			target: PropTypes.oneOf(['sidePanel', 'modal']),
 		})
 	),
+	deselectItems: PropTypes.func.isRequired,
+	fluid: PropTypes.bool.isRequired,
 	handleCheckboxClick: PropTypes.func.isRequired,
+	handleSelectAll: PropTypes.func.isRequired,
 	items: PropTypes.array.isRequired,
 	onClear: PropTypes.func.isRequired,
+	pageSelectedItemsValue: PropTypes.array.isRequired,
+	selectAll: PropTypes.bool.isRequired,
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,
+	showSelectAll: PropTypes.bool.isRequired,
 	total: PropTypes.number,
 };
 

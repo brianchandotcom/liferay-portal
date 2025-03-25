@@ -18,12 +18,15 @@ function ManagementBar({
 	fluid,
 	items,
 	onBulkActionsClear,
+	onSelectAll,
+	selectAll,
 	selectItems,
 	selectedItems,
 	selectedItemsKey,
 	selectedItemsValue,
 	selectionType,
 	showSearch,
+	showSelectAll,
 	total,
 }) {
 	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
@@ -31,6 +34,10 @@ function ManagementBar({
 	);
 
 	function handleCheckboxClick() {
+		if (selectAll) {
+			return deselectItems(selectedItemsValue);
+		}
+
 		const itemKeys = items.map((item) => item[selectedItemsKey]);
 
 		if (pageSelectedItemsValue.length === items.length) {
@@ -39,6 +46,9 @@ function ManagementBar({
 
 		return selectItems(itemKeys);
 	}
+	function handleSelectAll(value) {
+		onSelectAll(value);
+	}
 
 	return (
 		<>
@@ -46,15 +56,19 @@ function ManagementBar({
 				(Liferay.FeatureFlags['LPD-42570'] ? (
 					<BulkActions
 						bulkActions={bulkActions}
+						deselectItems={deselectItems}
 						fluid={fluid}
 						handleCheckboxClick={handleCheckboxClick}
+						handleSelectAll={(value) => handleSelectAll(value)}
 						items={items}
 						onClear={onBulkActionsClear}
 						pageSelectedItemsValue={pageSelectedItemsValue}
+						selectAll={selectAll}
 						selectItems={selectItems}
 						selectedItems={selectedItems}
 						selectedItemsKey={selectedItemsKey}
 						selectedItemsValue={selectedItemsValue}
+						showSelectAll={showSelectAll}
 						total={total}
 					/>
 				) : (
@@ -105,12 +119,14 @@ ManagementBar.propTypes = {
 	fluid: PropTypes.bool,
 	items: PropTypes.array.isRequired,
 	onBulkActionsClear: PropTypes.func.isRequired,
+	onSelectAll: PropTypes.func.isRequired,
 	selectItems: PropTypes.func.isRequired,
 	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,
 	selectedItemsValue: PropTypes.array,
 	selectionType: PropTypes.oneOf(['single', 'multiple']),
 	showSearch: PropTypes.bool,
+	showSelectAll: PropTypes.bool,
 	total: PropTypes.number,
 };
 

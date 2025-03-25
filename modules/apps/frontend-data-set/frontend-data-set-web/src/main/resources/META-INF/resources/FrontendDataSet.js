@@ -80,6 +80,7 @@ const FrontendDataSet = ({
 	showManagementBar,
 	showPagination,
 	showSearch,
+	showSelectAll,
 	sidePanelId,
 	sorts: sortsProp,
 	style,
@@ -103,6 +104,9 @@ const FrontendDataSet = ({
 			(pagination?.initialPageNumber || DEFAULT_PAGINATION_PAGE_NUMBER)
 	);
 	const [searchParam, setSearchParam] = useState('');
+
+	const [selectAll, setSelectAll] = useState(false);
+
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
 		initialSelectedItemsValues || []
 	);
@@ -479,6 +483,14 @@ const FrontendDataSet = ({
 	);
 
 	useEffect(() => {
+		if (selectAll) {
+			const newItems = items.map((item) => item.id);
+
+			selectItems(newItems);
+		}
+	}, [items, selectAll]);
+
+	useEffect(() => {
 		setSelectedItems((selectedItems) => {
 			const newSelectedItems = [];
 
@@ -611,16 +623,28 @@ const FrontendDataSet = ({
 			<ManagementBar
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
-				deselectItems={(items) => deselectItems(items)}
+				deselectItems={(items) => {
+					deselectItems(items);
+
+					if (selectAll) {
+						setSelectAll(false);
+					}
+				}}
 				fluid={style === 'fluid'}
 				items={items}
-				onBulkActionsClear={() => deselectItems(selectedItemsValue)}
+				onBulkActionsClear={() => {
+					deselectItems(selectedItemsValue);
+					setSelectAll(false);
+				}}
+				onSelectAll={(value) => setSelectAll(value)}
+				selectAll={selectAll}
 				selectItems={(items) => selectItems(items)}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
 				selectionType={selectionType}
 				showSearch={showSearch}
+				showSelectAll={showSelectAll}
 				sidePanelId={dataSetSupportSidePanelId}
 				total={total}
 			/>
@@ -1059,6 +1083,7 @@ FrontendDataSet.defaultProps = {
 	showManagementBar: true,
 	showPagination: true,
 	showSearch: true,
+	showSelectAll: false,
 	sorts: [],
 	style: 'default',
 };

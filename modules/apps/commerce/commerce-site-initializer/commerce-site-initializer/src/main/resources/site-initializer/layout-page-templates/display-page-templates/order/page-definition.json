@@ -453,6 +453,10 @@
 																"key": "com.liferay.commerce.order.content.web.internal.fragment.renderer.OrderActionsFragmentRenderer"
 															},
 															"fragmentConfig": {
+																"csv": true,
+																"orders": true,
+																"printOrder": true,
+																"wishlists": true
 															},
 															"fragmentFields": [
 															],

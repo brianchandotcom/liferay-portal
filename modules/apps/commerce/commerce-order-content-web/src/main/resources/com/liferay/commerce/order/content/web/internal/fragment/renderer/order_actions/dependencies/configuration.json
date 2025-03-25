@@ -1,0 +1,40 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "enable-import-from-csv",
+					"name": "csv",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"label": "enable-import-from-orders",
+					"name": "orders",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"label": "enable-import-from-wish-list",
+					"name": "wishlists",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"label": "enable-print",
+					"name": "printOrder",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

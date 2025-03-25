@@ -1072,6 +1072,24 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testExtractCompanyWithoutFF() {
+		try {
+			_companyLocalService.extractCompany(
+				PortalInstancePool.getDefaultCompanyId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception instanceof UnsupportedOperationException);
+
+			Assert.assertEquals(
+				"Feature flag LPD-11342 must be enabled",
+				exception.getMessage());
+		}
+	}
+
+	@Test
 	public void testGetCompanyByVirtualHost() throws Exception {
 		String virtualHostName = "::1";
 

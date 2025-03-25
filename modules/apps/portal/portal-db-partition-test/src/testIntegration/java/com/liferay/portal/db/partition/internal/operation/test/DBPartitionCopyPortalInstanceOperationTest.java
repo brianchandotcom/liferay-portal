@@ -78,7 +78,24 @@ public class DBPartitionCopyPortalInstanceOperationTest
 
 	@FeatureFlags("LPD-11342")
 	@Test
-	public void testDeployConfigurationExistingDestinationCompanyId()
+	public void testDeployConfigurationExistingDestinationCompanyIdWithFF()
+		throws Exception {
+
+		_testDeployConfigurationExistingDestinationCompanyId(
+			"Portal instance with company ID " +
+				PortalInstancePool.getDefaultCompanyId() + " already exists");
+	}
+
+	@Test
+	public void testDeployConfigurationExistingDestinationCompanyIdWithoutFF()
+		throws Exception {
+
+		_testDeployConfigurationExistingDestinationCompanyId(
+			"Feature flag LPD-11342 must be enabled");
+	}
+
+	private void _testDeployConfigurationExistingDestinationCompanyId(
+			String message)
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -94,11 +111,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 					"name=\"testName\"\nsourceCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-			assertLog(
-				logCapture,
-				"Portal instance with company ID " +
-					PortalInstancePool.getDefaultCompanyId() +
-						" already exists");
+			assertLog(logCapture, message);
 		}
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);

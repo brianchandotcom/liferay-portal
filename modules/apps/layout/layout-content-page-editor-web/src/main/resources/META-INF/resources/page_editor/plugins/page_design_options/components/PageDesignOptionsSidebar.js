@@ -237,12 +237,7 @@ const OptionList = ({options = [], icon, type}) => {
 			{Liferay.FeatureFlags['LPD-30204'] &&
 				type === OPTIONS_TYPES.styleBook &&
 				!!options.length && (
-					<ClayAlert
-						arial-label="style-book-alert"
-						className="mt-3"
-						displayType="info"
-						title="Info"
-					>
+					<ClayAlert className="mt-3" displayType="info" title="Info">
 						{sub(
 							Liferay.Language.get(
 								'only-style-books-based-on-the-frontend-token-definition-provided-by-x-are-visible'

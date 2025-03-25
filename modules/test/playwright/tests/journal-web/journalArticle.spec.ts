@@ -1720,30 +1720,89 @@ assetPublisherDeprecationTest(
 );
 
 ckeditor5Test(
-	'Web Content is published when CKEditor 5 is enabled',
+	'Web Content is published with multiple translations',
 	{
 		tag: '@LPD-11235',
 	},
 	async ({journalEditArticlePage, page, site}) => {
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+		await ckeditor5Test.step('Open new Basic Web Content', async () => {
+			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+		});
 
-		const articleTitle = getRandomString();
-
-		await journalEditArticlePage.fillTitle(articleTitle);
-
-		const articleContent = getRandomString();
+		const articleContentAR = getRandomString();
+		const articleContentEN = getRandomString();
+		const articleTitleAR = getRandomString();
+		const articleTitleEN = getRandomString();
 
 		const editable = journalEditArticlePage.page.locator(
 			'.edit-article-panel .ck-content'
 		);
 
-		await editable.fill(articleContent);
+		await ckeditor5Test.step(
+			'Add sample English title and content',
+			async () => {
+				await journalEditArticlePage.fillTitle(articleTitleEN);
 
-		await journalEditArticlePage.publishArticle();
+				await editable.fill(articleContentEN);
+			}
+		);
 
-		await page.getByTitle(articleTitle).click();
+		await ckeditor5Test.step(
+			'Switch to Arabic locale, check content direction',
+			async () => {
+				await journalEditArticlePage.page
+					.getByLabel('Select a language')
+					.click();
 
-		await expect(editable.getByText(articleContent)).toBeVisible();
+				await journalEditArticlePage.page
+					.locator('button[id="ar_SA"]')
+					.click();
+
+				await expect(
+					journalEditArticlePage.page.getByLabel(
+						'Select a language, current language: Arabic.'
+					)
+				).toBeVisible();
+
+				expect(await editable.getAttribute('dir')).toEqual('rtl');
+			}
+		);
+
+		await ckeditor5Test.step(
+			'Add sample Arabic title and content',
+			async () => {
+				await journalEditArticlePage.fillTitle(articleTitleAR);
+
+				await editable.fill(articleContentAR);
+			}
+		);
+
+		await ckeditor5Test.step('Publish article', async () => {
+			await journalEditArticlePage.publishArticle();
+		});
+
+		await ckeditor5Test.step(
+			'Open saved article and assert content is correct',
+			async () => {
+				await page.getByTitle(articleTitleEN).click();
+
+				await expect(
+					editable.getByText(articleContentEN)
+				).toBeVisible();
+
+				await journalEditArticlePage.page
+					.getByLabel('Select a language')
+					.click();
+
+				await journalEditArticlePage.page
+					.locator('button[id="ar_SA"]')
+					.click();
+
+				await expect(
+					editable.getByText(articleContentAR)
+				).toBeVisible();
+			}
+		);
 	}
 );
 

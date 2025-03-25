@@ -7,12 +7,18 @@ package com.liferay.friendly.url.internal.provider;
 
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -25,10 +31,18 @@ public class FriendlyURLSeparatorProviderImpl
 	@Override
 	public String getFriendlyURLSeparator(long companyId, String key) {
 		try {
+			JSONObject jsonObject = _portalCache.get(companyId);
+
+			if (jsonObject != null) {
+				return jsonObject.getString(key);
+			}
+
 			JSONObject friendlyURLSeparatorsJSONObject =
 				_jsonFactory.createJSONObject(
 					_friendlyURLSeparatorConfigurationManager.
 						getFriendlyURLSeparatorsJSON(companyId));
+
+			_portalCache.put(companyId, friendlyURLSeparatorsJSONObject);
 
 			return friendlyURLSeparatorsJSONObject.getString(key);
 		}
@@ -41,6 +55,19 @@ public class FriendlyURLSeparatorProviderImpl
 		return null;
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_portalCache =
+			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
+				FriendlyURLSeparatorProvider.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(
+			FriendlyURLSeparatorProvider.class.getName());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLSeparatorProviderImpl.class.getName());
 
@@ -50,5 +77,10 @@ public class FriendlyURLSeparatorProviderImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private MultiVMPool _multiVMPool;
+
+	private PortalCache<Long, JSONObject> _portalCache;
 
 }

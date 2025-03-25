@@ -295,14 +295,14 @@ public class ObjectEntryPerformanceTest {
 	private void _waitForObjectEntriesCountChangedTo(
 		long expectedObjectEntriesCount) {
 
-		long currentObjectEntryCount;
+		long currentObjectEntriesCount;
 
 		do {
-			currentObjectEntryCount =
+			currentObjectEntriesCount =
 				_objectEntryLocalService.getObjectEntriesCount(
 					_customObjectDefinition.getObjectDefinitionId());
 		}
-		while (currentObjectEntryCount != expectedObjectEntriesCount);
+		while (currentObjectEntriesCount != expectedObjectEntriesCount);
 	}
 
 	private static final int _CUSTOM_OBJECT_DEFINITION_STATUS = 0;

@@ -117,13 +117,8 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 				ServiceContextFactory.getInstance(httpServletRequest));
 		}
 
-		String groupFriendlyURL = _portal.getGroupFriendlyURL(
-			group.getPublicLayoutSet(), themeDisplay, false, false);
-
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
-
-		long groupId = _getGroupId(httpServletRequest);
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
@@ -168,14 +163,18 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 				false, null, null, null, null,
 				themeDisplay.getSiteDefaultLocale(), null,
 				themeDisplay.getUser()),
-			objectDefinition, objectEntry, String.valueOf(groupId));
+			objectDefinition, objectEntry,
+			String.valueOf(_getGroupId(httpServletRequest)));
 
 		httpServletResponse.sendRedirect(
 			_portal.escapeRedirect(
 				_portal.addPreservedParameters(
 					themeDisplay,
 					StringBundler.concat(
-						groupFriendlyURL, _getURLSeparator(),
+						_portal.getGroupFriendlyURL(
+							group.getPublicLayoutSet(), themeDisplay, false,
+							false),
+						_getURLSeparator(),
 						layout.getFriendlyURL(themeDisplay.getLocale()),
 						StringPool.SLASH, classNameId, StringPool.SLASH,
 						objectEntry.getId()))));

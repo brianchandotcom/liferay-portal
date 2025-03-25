@@ -5,6 +5,7 @@
 
 export {default as InfoBox} from './InfoBox';
 export {default as OrderActions} from './OrderActions';
+export {default as OrderSummary} from './OrderSummary';
 export {default as PendingOrderItemActionDropdownPropsTransformer} from './PendingOrderItemActionDropdownPropsTransformer';
 export {default as StepTracker} from './StepTracker';
 export {default as attachModalToHTMLElement} from './attachModalToHTMLElement';

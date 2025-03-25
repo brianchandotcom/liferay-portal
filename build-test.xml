@@ -12843,18 +12843,18 @@ captcha.enforce.disabled=true</echo>
 
 	<target name="prepare-portal-test-portal-impl-properties">
 		<if>
-			<equals arg1="${test.copy.company}" arg2="true" />
+			<equals arg1="${database.partition.copy}" arg2="true" />
 			<then>
 				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
-					test.copy.company=true</echo>
+					database.partition.copy=true</echo>
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${test.extract.and.insert.company}" arg2="true" />
+			<equals arg1="${database.partition.extract.and.insert}" arg2="true" />
 			<then>
 				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl.properties">
-					test.extract.and.insert.company=true</echo>
+					database.partition.extract.and.insert=true</echo>
 			</then>
 		</if>
 	</target>

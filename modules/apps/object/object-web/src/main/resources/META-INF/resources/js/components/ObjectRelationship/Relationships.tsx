@@ -54,6 +54,13 @@ const tableFields = [
 	},
 	{
 		expand: false,
+		fieldName: 'objectDefinitionName2',
+		label: Liferay.Language.get('related-object'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		expand: false,
 		fieldName: 'type',
 		label: Liferay.Language.get('type'),
 		localizeLabel: true,
@@ -64,13 +71,6 @@ const tableFields = [
 		expand: false,
 		fieldName: 'hierarchy',
 		label: Liferay.Language.get('hierarchy'),
-		localizeLabel: true,
-		sortable: false,
-	},
-	{
-		expand: false,
-		fieldName: 'objectDefinitionName2',
-		label: Liferay.Language.get('related-object'),
 		localizeLabel: true,
 		sortable: false,
 	},

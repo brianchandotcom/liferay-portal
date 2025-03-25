@@ -54,30 +54,10 @@ public class DefaultStyleBookEntryUtil {
 				layout.getStyleBookEntryId());
 		}
 
-		if (styleBookEntry == null) {
+		if ((styleBookEntry == null) ||
+			!_isStyleBookEntryApplicable(layout, styleBookEntry)) {
+
 			return getDefaultMasterStyleBookEntry(layout);
-		}
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				layout.getCompanyId(), "LPD-30204")) {
-
-			FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
-				_frontendTokenDefinitionRegistrySnapshot.get();
-
-			FrontendTokenDefinition frontendTokenDefinition =
-				frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-					layout);
-
-			if (frontendTokenDefinition == null) {
-				return null;
-			}
-
-			if (!Objects.equals(
-					frontendTokenDefinition.getThemeId(),
-					styleBookEntry.getThemeId())) {
-
-				return getDefaultMasterStyleBookEntry(layout);
-			}
 		}
 
 		return styleBookEntry;
@@ -134,6 +114,32 @@ public class DefaultStyleBookEntryUtil {
 		}
 
 		return styleBookEntry;
+	}
+
+	private static boolean _isStyleBookEntryApplicable(
+		Layout layout, StyleBookEntry styleBookEntry) {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				layout.getCompanyId(), "LPD-30204")) {
+
+			return true;
+		}
+
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			_frontendTokenDefinitionRegistrySnapshot.get();
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(layout);
+
+		if ((frontendTokenDefinition != null) &&
+			Objects.equals(
+				frontendTokenDefinition.getThemeId(),
+				styleBookEntry.getThemeId())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Snapshot<FrontendTokenDefinitionRegistry>

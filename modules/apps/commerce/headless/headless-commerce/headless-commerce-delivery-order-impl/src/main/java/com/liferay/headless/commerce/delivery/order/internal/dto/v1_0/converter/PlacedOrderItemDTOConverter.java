@@ -195,7 +195,9 @@ public class PlacedOrderItemDTOConverter
 										commerceOrderItem.
 											getCommerceOrderItemId());
 
-							if (commerceVirtualOrderItem == null) {
+							if ((commerceVirtualOrderItem == null) ||
+								!commerceVirtualOrderItem.isActive()) {
+
 								return null;
 							}
 
@@ -221,7 +223,9 @@ public class PlacedOrderItemDTOConverter
 										commerceOrderItem.
 											getCommerceOrderItemId());
 
-							if (commerceVirtualOrderItem == null) {
+							if ((commerceVirtualOrderItem == null) ||
+								!commerceVirtualOrderItem.isActive()) {
+
 								return null;
 							}
 

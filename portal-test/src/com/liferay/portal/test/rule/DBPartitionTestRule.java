@@ -77,9 +77,7 @@ public class DBPartitionTestRule implements TestRule {
 						companyWebId);
 
 					CompanyLocalServiceUtil.copyDBPartitionCompany(
-						company.getCompanyId(),
-						RandomTestUtil.randomLong(
-							(long)Math.pow(10, 13), (long)Math.pow(10, 14)),
+						company.getCompanyId(), null,
 						TestPropsValues.COMPANY_WEB_ID,
 						TestPropsValues.COMPANY_WEB_ID,
 						TestPropsValues.COMPANY_WEB_ID);

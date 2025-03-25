@@ -167,13 +167,57 @@ public class DepotEntryGroupRelServiceHttp {
 
 	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
 			getDepotEntryGroupRels(
-				HttpPrincipal httpPrincipal, long groupId, int start, int end)
+				HttpPrincipal httpPrincipal,
+				com.liferay.depot.model.DepotEntry depotEntry, int start,
+				int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryGroupRelServiceUtil.class, "getDepotEntryGroupRels",
 				_getDepotEntryGroupRelsParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, depotEntry, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.depot.model.DepotEntryGroupRel>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List<com.liferay.depot.model.DepotEntryGroupRel>
+			getDepotEntryGroupRels(
+				HttpPrincipal httpPrincipal, long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryGroupRelServiceUtil.class, "getDepotEntryGroupRels",
+				_getDepotEntryGroupRelsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, start, end);
@@ -216,7 +260,7 @@ public class DepotEntryGroupRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryGroupRelServiceUtil.class,
 				"getDepotEntryGroupRelsCount",
-				_getDepotEntryGroupRelsCountParameterTypes4);
+				_getDepotEntryGroupRelsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntry);
@@ -257,7 +301,7 @@ public class DepotEntryGroupRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryGroupRelServiceUtil.class,
 				"getDepotEntryGroupRelsCount",
-				_getDepotEntryGroupRelsCountParameterTypes5);
+				_getDepotEntryGroupRelsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -299,7 +343,7 @@ public class DepotEntryGroupRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryGroupRelServiceUtil.class,
 				"updateDDMStructuresAvailable",
-				_updateDDMStructuresAvailableParameterTypes6);
+				_updateDDMStructuresAvailableParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntryGroupRelId, ddmStructuresAvailable);
@@ -340,7 +384,7 @@ public class DepotEntryGroupRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryGroupRelServiceUtil.class, "updateSearchable",
-				_updateSearchableParameterTypes7);
+				_updateSearchableParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntryGroupRelId, searchable);
@@ -384,18 +428,22 @@ public class DepotEntryGroupRelServiceHttp {
 		_getDepotEntryGroupRelByDepotEntryIdToGroupIdParameterTypes2 =
 			new Class[] {long.class, long.class};
 	private static final Class<?>[] _getDepotEntryGroupRelsParameterTypes3 =
+		new Class[] {
+			com.liferay.depot.model.DepotEntry.class, int.class, int.class
+		};
+	private static final Class<?>[] _getDepotEntryGroupRelsParameterTypes4 =
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[]
-		_getDepotEntryGroupRelsCountParameterTypes4 = new Class[] {
+		_getDepotEntryGroupRelsCountParameterTypes5 = new Class[] {
 			com.liferay.depot.model.DepotEntry.class
 		};
 	private static final Class<?>[]
-		_getDepotEntryGroupRelsCountParameterTypes5 = new Class[] {long.class};
+		_getDepotEntryGroupRelsCountParameterTypes6 = new Class[] {long.class};
 	private static final Class<?>[]
-		_updateDDMStructuresAvailableParameterTypes6 = new Class[] {
+		_updateDDMStructuresAvailableParameterTypes7 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateSearchableParameterTypes7 =
+	private static final Class<?>[] _updateSearchableParameterTypes8 =
 		new Class[] {long.class, boolean.class};
 
 }

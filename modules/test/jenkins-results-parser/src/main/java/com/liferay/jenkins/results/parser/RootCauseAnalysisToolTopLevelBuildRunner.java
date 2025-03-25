@@ -83,11 +83,6 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	@Override
-	protected int getSlaveRAMMinimum() {
-		return 24;
-	}
-
-	@Override
 	protected void prepareInvocationBuildDataList() {
 		PortalTopLevelBuildData portalTopLevelBuildData = getBuildData();
 

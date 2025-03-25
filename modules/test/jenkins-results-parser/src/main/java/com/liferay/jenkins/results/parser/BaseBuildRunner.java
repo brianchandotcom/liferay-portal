@@ -69,6 +69,12 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
 				labelExpression = JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.osb.jenkins.web.slave.label.minimum.ram",
+					String.valueOf(getSlaveRAMMinimum()));
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+				labelExpression = JenkinsResultsParserUtil.getBuildProperty(
 					"master.auto.scaling.group.name");
 			}
 		}
@@ -109,6 +115,10 @@ public abstract class BaseBuildRunner<T extends BuildData>
 		}
 
 		return _previousBuildJSONObjects;
+	}
+
+	protected int getSlaveRAMMinimum() {
+		return JenkinsMaster.getSlaveRAMMinimumDefault();
 	}
 
 	protected void keepJenkinsBuild(boolean keepLogs) {

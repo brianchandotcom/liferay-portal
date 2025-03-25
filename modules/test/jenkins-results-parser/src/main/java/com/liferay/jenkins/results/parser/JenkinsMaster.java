@@ -756,6 +756,10 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return _offline;
 	}
 
+	public boolean matchesLabelExpression(String labelExpression) {
+		return _matchesLabels(labelExpression, getAssignedLabels());
+	}
+
 	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(

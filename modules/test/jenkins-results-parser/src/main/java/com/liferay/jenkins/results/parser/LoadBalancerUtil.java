@@ -51,6 +51,16 @@ public class LoadBalancerUtil {
 		String jobName, int minimumRAM, int maximumSlavesPerHost,
 		Properties properties, boolean verbose) {
 
+		return getAvailableJenkinsMasters(
+			masterPrefix, blacklistString, goodClockRequired, jobName, null,
+			minimumRAM, maximumSlavesPerHost, properties, verbose);
+	}
+
+	public static List<JenkinsMaster> getAvailableJenkinsMasters(
+		String masterPrefix, String blacklistString, boolean goodClockRequired,
+		String jobName, String labelExpression, int minimumRAM,
+		int maximumSlavesPerHost, Properties properties, boolean verbose) {
+
 		List<JenkinsMaster> allJenkinsMasters = null;
 
 		if (!_jenkinsMasters.containsKey(masterPrefix)) {
@@ -80,12 +90,20 @@ public class LoadBalancerUtil {
 		}
 
 		List<String> goodClockList = _getGoodClockList(properties, verbose);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+			labelExpression = JenkinsResultsParserUtil.getProperty(
+				properties, "jenkins.osb.jenkins.web.slave.label.minimum.ram",
+				String.valueOf(minimumRAM));
+		}
+
 		List<String> whitelist = _getWhitelist(jobName, properties, verbose);
 
 		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
 			if (blacklist.contains(jenkinsMaster.getName()) ||
 				(goodClockRequired &&
 				 !goodClockList.contains(jenkinsMaster.getName())) ||
+				!jenkinsMaster.matchesLabelExpression(labelExpression) ||
 				(jenkinsMaster.getSlaveRAM() < minimumRAM) ||
 				(jenkinsMaster.getSlavesPerHost() > maximumSlavesPerHost) ||
 				(!whitelist.isEmpty() &&
@@ -164,8 +182,6 @@ public class LoadBalancerUtil {
 					properties, "blacklist");
 				String jobName = JenkinsResultsParserUtil.getProperty(
 					properties, "job.name");
-				String labelExpression = JenkinsResultsParserUtil.getProperty(
-					properties, "label.expression");
 
 				Integer minimumRAM = JenkinsMaster.getSlaveRAMMinimumDefault();
 
@@ -176,6 +192,16 @@ public class LoadBalancerUtil {
 					minimumRAMString.matches("\\d+")) {
 
 					minimumRAM = Integer.valueOf(minimumRAMString);
+				}
+
+				String labelExpression = JenkinsResultsParserUtil.getProperty(
+					properties, "label.expression");
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+					labelExpression = JenkinsResultsParserUtil.getProperty(
+						properties,
+						"jenkins.osb.jenkins.web.slave.label.minimum.ram",
+						String.valueOf(minimumRAM));
 				}
 
 				Integer maximumSlavesPerHost =

@@ -136,8 +136,9 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		return jobProperty.getValue();
 	}
 
+	@Override
 	protected int getSlaveRAMMinimum() {
-		return JenkinsMaster.getSlaveRAMMinimumDefault();
+		return 24;
 	}
 
 	protected TopLevelBuild getTopLevelBuild() {

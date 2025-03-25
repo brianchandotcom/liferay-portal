@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.i
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -32,6 +33,10 @@ public class LayoutStructureUtil {
 			layoutStructureItemImporter.addLayoutStructureItem(
 				layoutStructure, layoutStructureItemImporterContext,
 				pageElement);
+
+		if (ArrayUtil.isEmpty(pageElement.getPageElements())) {
+			return layoutStructureItem;
+		}
 
 		for (PageElement childPageElement : pageElement.getPageElements()) {
 			addLayoutStructureItem(

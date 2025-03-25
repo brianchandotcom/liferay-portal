@@ -58,7 +58,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
             <span
               class="title"
             >
-              Downloads
+              Comments
             </span>
             <div>
               <span>
@@ -99,7 +99,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
             <span
               class="title"
             >
-              Previews
+              Downloads
             </span>
             <div>
               <span>
@@ -140,7 +140,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
             <span
               class="title"
             >
-              Comments
+              Impressions
             </span>
             <div>
               <span>
@@ -470,7 +470,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
                       dy="0em"
                       x="5"
                     >
-                      Downloads
+                      Comments
                     </tspan>
                   </text>
                 </g>
@@ -489,7 +489,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
                       cy="315"
                       fill="#4B9BFF"
                       height="280"
-                      name="Downloads"
+                      name="Comments"
                       r="3"
                       stroke="#4B9BFF"
                       stroke-opacity="1"
@@ -535,7 +535,7 @@ exports[`DocumentsAndMediaMetricCard should render 1`] = `
                       class="recharts-legend-item-text"
                       style="color: rgb(75, 155, 255);"
                     >
-                      Downloads
+                      Comments
                     </span>
                   </li>
                 </ul>

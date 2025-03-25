@@ -32,22 +32,20 @@ public class StructureUsagesTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "name",
+			"embedded.title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"name"
+				"title"
 			).setSortable(
 				true
 			)
 		).add(
-			"system", "system",
+			"embedded.scopeKey", "space",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"boolean")
+				"spaceTableCellRenderer")
 		).add(
-			"objectFolderExternalReferenceCode", "type"
-		).add(
-			"scope", "space"
-		).add(
-			"creator.name", "author"
+			"embedded.creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"authorTableCellRenderer")
 		).add(
 			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
@@ -56,7 +54,9 @@ public class StructureUsagesTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"status", "status"
+			"embedded.status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 

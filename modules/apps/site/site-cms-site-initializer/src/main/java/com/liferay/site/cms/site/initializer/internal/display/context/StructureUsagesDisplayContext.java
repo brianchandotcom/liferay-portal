@@ -6,11 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,51 +20,26 @@ import javax.servlet.http.HttpServletRequest;
 public class StructureUsagesDisplayContext {
 
 	public StructureUsagesDisplayContext(
-		HttpServletRequest httpServletRequest,
-		ObjectDefinitionResource.Factory objectDefinitionResourceFactory) {
+		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
-		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAPIURL() throws Exception {
-		ObjectDefinition objectDefinition = _getObjectDefinition();
+	public String getAPIURL() {
+		StringBundler sb = new StringBundler(4);
 
-		return objectDefinition.getRestContextPath();
+		sb.append("/o/search/v1.0/search?emptySearch=true&");
+		sb.append("filter=objectDefinitionId eq ");
+		sb.append(ParamUtil.getLong(_httpServletRequest, "objectDefinitionId"));
+		sb.append("&nestedFields=embedded");
+
+		return sb.toString();
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return Collections.emptyList();
 	}
 
-	private ObjectDefinition _getObjectDefinition() throws Exception {
-		if (_objectDefinition != null) {
-			return _objectDefinition;
-		}
-
-		long objectDefinitionId = ParamUtil.getLong(
-			_httpServletRequest, "objectDefinitionId");
-
-		ObjectDefinitionResource.Builder builder =
-			_objectDefinitionResourceFactory.create();
-
-		ObjectDefinitionResource objectDefinitionResource = builder.user(
-			_themeDisplay.getUser()
-		).build();
-
-		_objectDefinition = objectDefinitionResource.getObjectDefinition(
-			objectDefinitionId);
-
-		return _objectDefinition;
-	}
-
 	private final HttpServletRequest _httpServletRequest;
-	private ObjectDefinition _objectDefinition;
-	private final ObjectDefinitionResource.Factory
-		_objectDefinitionResourceFactory;
-	private final ThemeDisplay _themeDisplay;
 
 }

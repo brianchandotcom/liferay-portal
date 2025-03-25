@@ -54,6 +54,7 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.rest.dto.v1_0.Folder;
@@ -74,6 +75,7 @@ import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -15640,12 +15642,60 @@ public class ObjectEntryResourceTest {
 				objectField.getName(),
 				validationResponse.getValidationErrors()[1].
 					getObjectFieldName());
+
+			ObjectField objectFieldWithProperties = _createObjectFieldWithProperties(
+				objectDefinition, ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING,
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+					).value(
+						"true"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_MAX_LENGTH
+					).value(
+						"10"
+					).build()), true);
+
+			validationResponse = _validate(
+				scopeKey, objectEntryResource,
+				_getValidationRequest(
+					HashMapBuilder.<String, Object>put(
+						objectFieldWithProperties.getName(), ""
+					).build()));
+
+			validationResponse.getValidationErrors();
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
 			PrincipalThreadLocal.setName(originalName);
 		}
+	}
+
+	private ObjectField _createObjectFieldWithProperties (
+		ObjectDefinition objectDefinition, String businessType,
+		String dbType, List<ObjectFieldSetting> objectFieldSettings, boolean required)
+		throws Exception {
+
+		ObjectField objectField = ObjectFieldTestUtil.addCustomObjectField(
+			TestPropsValues.getUserId(),
+			businessType, dbType, objectDefinition,
+			"o"+StringUtil.randomString());
+
+		ObjectFieldLocalServiceUtil.addOrUpdateCustomObjectField(
+			objectField.getExternalReferenceCode(), objectField.getObjectFieldId(),
+			TestPropsValues.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			businessType, dbType,
+			false, false, "false", Collections.emptyMap(),
+			false, objectField.getName(), "false", null,
+			required, false,
+			objectFieldSettings);
+
+	return objectField;
 	}
 
 	private void _testPutCustomObjectEntryUnlinkNestedCustomObjectEntries(

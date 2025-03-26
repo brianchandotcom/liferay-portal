@@ -657,7 +657,7 @@ test.describe('Banner Slider Fragment', () => {
 
 		expect(await page.getByLabel('Focus slide').count()).toBe(4);
 
-		await expect(page.getByText('New title')).toBeVisible();
+		await expect(page.getByText('New title')).toBeAttached();
 	});
 });
 

@@ -75,6 +75,10 @@ public class DefaultSegmentsEntryProviderTest {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
+		_user1 = UserTestUtil.addOrganizationUser(
+			OrganizationTestUtil.addOrganization(),
+			RoleConstants.ORGANIZATION_USER);
+
 		_user2.setModifiedDate(_getDateBefore(_user1));
 
 		Organization organization = OrganizationTestUtil.addOrganization();
@@ -945,26 +949,28 @@ public class DefaultSegmentsEntryProviderTest {
 	@Test
 	public void testGetSegmentsWithDateModified() throws Exception {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
-		_user2 = UserTestUtil.addUser(_group.getGroupId());
-
-		_user2.setModifiedDate(_getDateBefore(_user1));
 
 		Criteria criteria = new Criteria();
 		String filterString = String.format(
 			"dateModified eq %s",
 			ISO8601Utils.format(_getDateModifiedTruncated(_user1)));
 
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
+		_user2.setModifiedDate(_getDateBefore(_user1));
+
 		_userSegmentsCriteriaContributor.contribute(
 			criteria, filterString, Criteria.Conjunction.AND);
-
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
 		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
 			_group.getGroupId(), User.class.getName(), _user1.getUserId());
 
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+
 		Assert.assertArrayEquals(
 			new long[] {segmentsEntry.getSegmentsEntryId()}, segmentsEntryIds);
+
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
 			segmentsEntryIds.length);
@@ -983,8 +989,8 @@ public class DefaultSegmentsEntryProviderTest {
 
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
+		calendar.set(Calendar.SECOND, 0);
 
 		return calendar.getTime();
 	}
@@ -1000,8 +1006,8 @@ public class DefaultSegmentsEntryProviderTest {
 
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
+		calendar.set(Calendar.SECOND, 0);
 
 		return calendar.getTime();
 	}

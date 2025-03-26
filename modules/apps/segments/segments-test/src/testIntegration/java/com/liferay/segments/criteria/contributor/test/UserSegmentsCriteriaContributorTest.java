@@ -215,9 +215,7 @@ public class UserSegmentsCriteriaContributorTest {
 	}
 
 	@Test
-	public void testGetCriteriaJSONObjectWithDateModifiedTruncated()
-		throws Exception {
-
+	public void testGetCriteriaJSONObjectWithDateModifiedTruncated() {
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();
 

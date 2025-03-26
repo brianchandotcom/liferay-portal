@@ -22,7 +22,7 @@
 				"en_US": "Acceptance failed. Please try again later or contact support."
 			},
 			"label": {
-				"en_US": "User Accepted Answer"
+				"en_US": "User Accepted the Answer"
 			},
 			"name": "standaloneUserAcceptance",
 			"objectActionExecutorKey": "update-object-entry",
@@ -56,7 +56,7 @@
 				"en_US": "Rejection failed. Please try again later or contact support."
 			},
 			"label": {
-				"en_US": "User Rejected Answer"
+				"en_US": "User Rejected the Answer"
 			},
 			"name": "standaloneUserRejection",
 			"objectActionExecutorKey": "update-object-entry",

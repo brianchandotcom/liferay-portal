@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom';
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -16,22 +16,14 @@ import {
 	State,
 	Uuid,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
-import PicklistService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/PicklistService';
+import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Picklist';
 import {
 	Field,
 	getDefaultField,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
+import {MockCacheProvider} from '../mocks/MockCacheProvider';
 import {MockStateProvider} from '../mocks/MockStateProvider';
-
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/structure_builder/services/PicklistService',
-	() => ({
-		getPicklists: jest.fn(() =>
-			Promise.resolve([{id: 'papayaId', name: 'papaya'}])
-		),
-	})
-);
 
 const TEXT_FIELD_UUID = getUuid();
 
@@ -62,22 +54,29 @@ const DEFAULT_STATE: State = {
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
 	selection: [],
+	spaces: [],
 	status: 'new',
 	uuid: getUuid(),
 };
 
+const DEFAULT_PICKLISTS = [{externalReferenceCode: '1', id: 1, name: 'papaya'}];
+
 const renderComponent = ({
 	dispatch = jest.fn(),
+	picklists = DEFAULT_PICKLISTS,
 	state = DEFAULT_STATE,
 	uuid = TEXT_FIELD_UUID,
 }: {
 	dispatch?: React.Dispatch<Action>;
+	picklists?: Picklist[];
 	state?: State;
 	uuid?: Uuid;
 } = {}) => {
 	return render(
 		<MockStateProvider dispatch={dispatch} state={state}>
-			<StructureFieldSettings uuid={uuid} />
+			<MockCacheProvider picklists={picklists}>
+				<StructureFieldSettings uuid={uuid} />
+			</MockCacheProvider>
 		</MockStateProvider>
 	);
 };
@@ -445,15 +444,11 @@ describe('StructureFieldSettings', () => {
 			uuid,
 		});
 
-		await waitFor(() =>
-			expect(PicklistService.getPicklists).toHaveBeenCalled()
-		);
-
 		await userEvent.click(screen.getByLabelText('picklist'));
 		await userEvent.click(screen.getByText('papaya'));
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			picklistId: 'papayaId',
+			picklistId: 1,
 			type: 'update-field',
 			uuid,
 		});
@@ -474,15 +469,11 @@ describe('StructureFieldSettings', () => {
 			uuid,
 		});
 
-		await waitFor(() =>
-			expect(PicklistService.getPicklists).toHaveBeenCalled()
-		);
-
 		await userEvent.click(screen.getByLabelText('picklist'));
 		await userEvent.click(screen.getByText('papaya'));
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			picklistId: 'papayaId',
+			picklistId: 1,
 			type: 'update-field',
 			uuid,
 		});

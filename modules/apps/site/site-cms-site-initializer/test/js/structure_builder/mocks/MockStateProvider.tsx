@@ -22,6 +22,7 @@ const DEFAULT_STATE: State = {
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
 	selection: [],
+	spaces: [],
 	status: 'new',
 	uuid: getUuid(),
 };

@@ -8,6 +8,7 @@ package com.liferay.portal.search.web.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
@@ -326,6 +327,22 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return renderRequest;
 	}
 
+	protected static RenderRequest getRenderRequest(Group group)
+		throws ConfigurationException {
+
+		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
+
+		Mockito.doReturn(
+			getThemeDisplay(group)
+		).when(
+			renderRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+
+		return renderRequest;
+	}
+
 	protected static List<TermCollector> getTermCollectors(
 		String[] terms, int[] frequencies) {
 
@@ -339,6 +356,10 @@ public abstract class BaseFacetDisplayContextTestCase {
 	}
 
 	protected static ThemeDisplay getThemeDisplay() {
+		return getThemeDisplay(null);
+	}
+
+	protected static ThemeDisplay getThemeDisplay(Group group) {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.doReturn(
@@ -352,6 +373,14 @@ public abstract class BaseFacetDisplayContextTestCase {
 		).when(
 			themeDisplay
 		).getPortletDisplay();
+
+		if (group != null) {
+			Mockito.doReturn(
+				group
+			).when(
+				themeDisplay
+			).getScopeGroup();
+		}
 
 		return themeDisplay;
 	}

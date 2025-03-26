@@ -80,6 +80,18 @@ public class RedirectNotFoundEntryLocalServiceImpl
 		return redirectNotFoundEntry;
 	}
 
+	@Override
+	public void deleteRedirectNotFoundEntries(long groupId)
+		throws PortalException {
+
+		for (RedirectNotFoundEntry redirectNotFoundEntry :
+				redirectNotFoundEntryPersistence.findByGroupId(groupId)) {
+
+			redirectNotFoundEntryLocalService.deleteRedirectNotFoundEntry(
+				redirectNotFoundEntry);
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RedirectNotFoundEntry deleteRedirectNotFoundEntry(

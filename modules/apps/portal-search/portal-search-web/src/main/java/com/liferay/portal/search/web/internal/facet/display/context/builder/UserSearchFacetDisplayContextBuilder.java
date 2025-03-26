@@ -7,16 +7,19 @@ package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext;
@@ -149,14 +152,30 @@ public class UserSearchFacetDisplayContextBuilder {
 	}
 
 	protected long getDisplayStyleGroupId() {
-		long displayStyleGroupId =
-			_userFacetPortletInstanceConfiguration.displayStyleGroupId();
-
-		if (displayStyleGroupId <= 0) {
-			displayStyleGroupId = _themeDisplay.getScopeGroupId();
+		if (_displayStyleGroupId != 0) {
+			return _displayStyleGroupId;
 		}
 
-		return displayStyleGroupId;
+		String displayStyleGroupExternalReferenceCode =
+			_userFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			_displayStyleGroupId = group.getGroupId();
+		}
+		else {
+			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
 	}
 
 	protected List<BucketDisplayContext> getEmptyBucketDisplayContexts() {
@@ -248,6 +267,7 @@ public class UserSearchFacetDisplayContextBuilder {
 		return _paramValues.get(0);
 	}
 
+	private long _displayStyleGroupId;
 	private Facet _facet;
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;

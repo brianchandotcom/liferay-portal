@@ -14,9 +14,14 @@ import {openToast} from 'frontend-js-components-web';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import SpaceService from '../../../structure_builder/services/SpaceService';
 import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
+import SpaceService from '../services/SpaceService';
+
+type Space = {
+	label: string;
+	value: any;
+};
 
 export default function CreationTagModalContent({
 	assetLibraryId,

@@ -65,26 +65,26 @@ public class UserSegmentsCriteriaContributor
 
 		String newFilterString = filterString;
 
-		Matcher matcher1 = _pattern1.matcher(filterString);
+		Matcher matcher = _pattern1.matcher(filterString);
 
-		while (matcher1.find()) {
-			long roleId = _getRoleId(matcher1.group());
+		while (matcher.find()) {
+			long roleId = _getRoleId(matcher.group());
 
 			newFilterString = StringUtil.replace(
-				newFilterString, matcher1.group(),
+				newFilterString, matcher.group(),
 				String.join(
 					StringPool.BLANK, StringPool.OPEN_PARENTHESIS,
-					matcher1.group(), _getGroupIdsFilterString(roleId),
+					matcher.group(), _getGroupIdsFilterString(roleId),
 					_getOrganizationIdsFilterString(roleId),
 					_getUserGroupIdsFilterString(roleId),
 					StringPool.CLOSE_PARENTHESIS));
 		}
 
-		Matcher matcher2 = _pattern2.matcher(filterString);
+		matcher = _pattern2.matcher(filterString);
 
-		while (matcher2.find()) {
+		while (matcher.find()) {
 			newFilterString = StringUtil.replace(
-				newFilterString, matcher2.group(), "dateModifiedTruncated");
+				newFilterString, matcher.group(), "dateModifiedTruncated");
 		}
 
 		criteria.addFilter(getType(), newFilterString, conjunction);

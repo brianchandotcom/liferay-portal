@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
@@ -60,7 +59,7 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 	@BeforeClass
 	public static void setUpClass() throws InvalidSyntaxException {
 		Bundle bundle = FrameworkUtil.getBundle(
-			UserSegmentsCriteriaContributorTest.class);
+			UserOrganizationSegmentsCriteriaContributorTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -76,9 +75,11 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 		_segmentsCriteriaContributorServiceTracker = new ServiceTracker<>(
 			bundleContext,
 			bundleContext.createFilter(
-				"(&(objectClass=" +
-					SegmentsCriteriaContributor.class.getName() +
-						")(segments.criteria.contributor.key=organization))"),
+				StringBundler.concat(
+					"(&(objectClass=".SegmentsCriteriaContributor.class.
+						getName(),
+					")(segments.criteria.contributor.key=user-",
+					"organizations))")),
 			null);
 
 		_segmentsCriteriaContributorServiceTracker.open();
@@ -93,8 +94,6 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
 		_organization = OrganizationTestUtil.addOrganization(true);
 		_user = UserTestUtil.addUser();
 
@@ -107,6 +106,7 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 			_organization.getGroupId(), _role1.getRoleId());
 
 		_role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
 		_userGroup = UserGroupTestUtil.addUserGroup();
 
 		_roleLocalService.addGroupRole(
@@ -116,9 +116,7 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 	}
 
 	@Test
-	public void testGetCriteriaJSONObjectWithDateModifiedTruncated()
-		throws Exception {
-
+	public void testGetCriteriaJSONObjectWithDateModifiedTruncated() {
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();
 

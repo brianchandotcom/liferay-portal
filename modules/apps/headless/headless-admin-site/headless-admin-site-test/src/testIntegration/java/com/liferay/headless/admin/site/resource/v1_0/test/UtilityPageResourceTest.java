@@ -174,6 +174,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		super.testGetSiteSiteByExternalReferenceCodeUtilityPagesPage();
 
 		_testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithNestedFields();
+		_testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithSearch();
 	}
 
 	@Ignore
@@ -475,6 +476,14 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		return utilityPage;
 	}
 
+	private UtilityPage _getUtilityPage(String name) throws Exception {
+		UtilityPage utilityPage = randomUtilityPage();
+
+		utilityPage.setName(name);
+
+		return utilityPage;
+	}
+
 	private UtilityPage _getUtilityPage(
 		String externalReferenceCode, List<UtilityPage> utilityPages) {
 
@@ -503,6 +512,26 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		).parameters(
 			"nestedFields", "friendlyUrlHistory,pageSpecifications"
 		).build();
+	}
+
+	private List<UtilityPage>
+			_testGetSiteSiteByExternalReferenceCodeUtilityPagesPage(
+				int count, String search)
+		throws Exception {
+
+		Page<UtilityPage> utilityPagePage =
+			utilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
+					testGroup.getExternalReferenceCode(), search, null, null,
+					null, null);
+
+		List<UtilityPage> utilityPages =
+			(List<UtilityPage>)utilityPagePage.getItems();
+
+		Assert.assertEquals(
+			utilityPages.toString(), count, utilityPages.size());
+
+		return utilityPages;
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithNestedFields()
@@ -565,6 +594,64 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_getUtilityPage(
 				utilityPage.getExternalReferenceCode(),
 				(List<UtilityPage>)page.getItems()));
+	}
+
+	private void _testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithSearch()
+		throws Exception {
+
+		String search = RandomTestUtil.randomString();
+
+		Page<UtilityPage> utilityPagePage =
+			utilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
+					testGroup.getExternalReferenceCode(), search, null, null,
+					null, null);
+
+		int totalCount = GetterUtil.getInteger(utilityPagePage.getTotalCount());
+
+		testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
+			testGroup.getExternalReferenceCode(), randomUtilityPage());
+
+		testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
+			testGroup.getExternalReferenceCode(), randomUtilityPage());
+
+		UtilityPage utilityPage = _getUtilityPage(search);
+
+		testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
+			testGroup.getExternalReferenceCode(), utilityPage);
+
+		testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
+			testGroup.getExternalReferenceCode(), randomUtilityPage());
+
+		List<UtilityPage> utilityPages =
+			_testGetSiteSiteByExternalReferenceCodeUtilityPagesPage(
+				totalCount + 1, search);
+
+		String name = null;
+
+		for (UtilityPage curUtilityPage : utilityPages) {
+			if (!Objects.equals(
+					curUtilityPage.getExternalReferenceCode(),
+					utilityPage.getExternalReferenceCode())) {
+
+				continue;
+			}
+
+			name = curUtilityPage.getName();
+
+			break;
+		}
+
+		Assert.assertEquals(search, name);
+
+		testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
+			testGroup.getExternalReferenceCode(),
+			_getUtilityPage(
+				RandomTestUtil.randomString() + search +
+					RandomTestUtil.randomString()));
+
+		_testGetSiteSiteByExternalReferenceCodeUtilityPagesPage(
+			totalCount + 2, search);
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeUtilityPage(

@@ -306,14 +306,13 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		MasterPage masterPage = randomMasterPage();
 
 		masterPage.setKey(StringPool.BLANK);
-		masterPage.setMarkedAsDefault(Boolean.TRUE);
 
 		MasterPage postMasterPage =
 			masterPageResource.postSiteSiteByExternalReferenceCodeMasterPage(
 				testGroup.getExternalReferenceCode(), masterPage);
 
 		Assert.assertTrue(Validator.isNotNull(postMasterPage.getKey()));
-		Assert.assertTrue(postMasterPage.getMarkedAsDefault());
+		Assert.assertFalse(postMasterPage.getMarkedAsDefault());
 		Assert.assertNull(postMasterPage.getThumbnail());
 
 		masterPage = randomMasterPage();

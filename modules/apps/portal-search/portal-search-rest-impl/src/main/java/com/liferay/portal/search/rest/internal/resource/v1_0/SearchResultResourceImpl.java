@@ -47,6 +47,7 @@ import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.internal.facet.FacetRequestContributor;
 import com.liferay.portal.search.rest.internal.facet.FacetResponseProcessor;
 import com.liferay.portal.search.rest.internal.odata.entity.v1_0.SearchResultEntityModel;
+import com.liferay.portal.search.rest.internal.util.FilterUtil;
 import com.liferay.portal.search.rest.internal.util.ScopeUtil;
 import com.liferay.portal.search.rest.internal.util.ValueUtil;
 import com.liferay.portal.search.rest.pagination.SearchPage;
@@ -116,6 +117,17 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			).put(
 				"search.experiences.blueprint.external.reference.code",
 				blueprintExternalReferenceCode
+			).put(
+				"status",
+				() -> {
+					int[] statuses = FilterUtil.getStatuses(filter);
+
+					if (ArrayUtil.isNotEmpty(statuses)) {
+						return statuses;
+					}
+
+					return null;
+				}
 			).build());
 
 		return _postSearchPage(
@@ -125,14 +137,27 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 	@Override
 	public Page<SearchResult> postSearchPage(
-			String entryClassNames, String scope, String search, Filter filter,
-			Pagination pagination, Sort[] sorts,
-			SearchRequestBody searchRequestBody)
-		throws Exception {
+		String entryClassNames, String scope, String search, Filter filter,
+		Pagination pagination, Sort[] sorts,
+		SearchRequestBody searchRequestBody) {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-179669")) {
 			throw new NotFoundException();
 		}
+
+		Map<String, Object> attributes = GetterUtil.getObject(
+			searchRequestBody.getAttributes(), HashMap::new);
+
+		searchRequestBody.setAttributes(
+			() -> {
+				int[] statuses = FilterUtil.getStatuses(filter);
+
+				if (ArrayUtil.isNotEmpty(statuses)) {
+					attributes.put("status", statuses);
+				}
+
+				return attributes;
+			});
 
 		return _postSearchPage(
 			entryClassNames, scope, search, filter, pagination, sorts,
@@ -258,7 +283,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 	private boolean _isAllowedSearchContextAttribute(String key) {
 		if (key.startsWith("search.experiences.") ||
-			key.equals("search.empty.search")) {
+			key.equals("search.empty.search") || key.equals("status")) {
 
 			return true;
 		}

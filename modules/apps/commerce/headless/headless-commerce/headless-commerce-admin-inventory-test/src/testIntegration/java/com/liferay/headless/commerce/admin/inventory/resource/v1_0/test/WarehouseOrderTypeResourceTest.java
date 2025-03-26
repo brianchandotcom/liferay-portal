@@ -186,6 +186,16 @@ public class WarehouseOrderTypeResourceTest
 
 	@Override
 	protected WarehouseOrderType
+			testDeleteWarehouseOrderTypeBatch_addWarehouseOrderType()
+		throws Exception {
+
+		return warehouseOrderTypeResource.postWarehouseIdWarehouseOrderType(
+			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			randomWarehouseOrderType());
+	}
+
+	@Override
+	protected WarehouseOrderType
 			testGetWarehouseByExternalReferenceCodeWarehouseOrderTypesPage_addWarehouseOrderType(
 				String externalReferenceCode,
 				WarehouseOrderType warehouseOrderType)

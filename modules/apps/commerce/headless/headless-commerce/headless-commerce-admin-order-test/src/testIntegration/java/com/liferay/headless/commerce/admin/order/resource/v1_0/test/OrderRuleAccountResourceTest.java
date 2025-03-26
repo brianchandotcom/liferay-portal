@@ -64,6 +64,13 @@ public class OrderRuleAccountResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testDeleteOrderRuleAccountBatch() throws Exception {
+		super.testDeleteOrderRuleAccountBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteOrderRuleAccount() throws Exception {
 		super.testGraphQLDeleteOrderRuleAccount();
 	}

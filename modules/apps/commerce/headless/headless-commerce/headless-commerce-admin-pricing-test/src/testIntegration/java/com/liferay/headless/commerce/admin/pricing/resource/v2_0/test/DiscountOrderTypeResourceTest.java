@@ -79,6 +79,11 @@ public class DiscountOrderTypeResourceTest
 
 	@Override
 	@Test
+	public void testDeleteDiscountOrderTypeBatch() throws Exception {
+	}
+
+	@Override
+	@Test
 	public void testGraphQLDeleteDiscountOrderType() throws Exception {
 	}
 

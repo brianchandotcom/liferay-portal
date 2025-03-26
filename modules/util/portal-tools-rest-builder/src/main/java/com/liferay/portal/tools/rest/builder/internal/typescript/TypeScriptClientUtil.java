@@ -107,7 +107,7 @@ public class TypeScriptClientUtil {
 			HashMapBuilder.<String, Object>put(
 				"apiContexts", apiContexts.values()
 			).put(
-				"schemaMap", schemas
+				"schemas", schemas
 			).build(),
 			configYAML, copyrightFile, files, "typescript/index",
 			baseClientDir.getPath() + "/src/index.ts");
@@ -254,7 +254,7 @@ public class TypeScriptClientUtil {
 					"importClasses",
 					importsMap.getOrDefault(entry.getKey(), new HashSet<>())
 				).put(
-					"operationsData", entry.getValue()
+					"operationDatas", entry.getValue()
 				).build());
 		}
 
@@ -364,10 +364,12 @@ public class TypeScriptClientUtil {
 					return null;
 				}
 
-				Map<String, List<Map<String, Object>>>
-					contentDatasMap = new HashMap<>();
+				Map<String, List<Map<String, Object>>> contentDatasMap =
+					new HashMap<>();
 
-				for (Map.Entry<String, Content> entry : contentsMap.entrySet()) {
+				for (Map.Entry<String, Content> entry :
+						contentsMap.entrySet()) {
+
 					if (entry.getValue() == null) {
 						continue;
 					}
@@ -383,25 +385,21 @@ public class TypeScriptClientUtil {
 					Map<String, Schema> propertySchemas =
 						schema.getPropertySchemas();
 
-					List<Map<String, Object>> contentDatas =
-						new ArrayList<>();
+					List<Map<String, Object>> contentDatas = new ArrayList<>();
 
 					if (propertySchemas != null) {
 						propertySchemas.forEach(
-							(name, propertySchema) ->
-								contentDatas.add(
-									HashMapBuilder.<String, Object>put(
-										"dataType",
-										_getDataType(
-											importClasses, propertySchema)
-									).put(
-										"name",
-										StringUtil.replace(name, '-', '_')
-									).put(
-										"required", false
-									).put(
-										"type", "form"
-									).build()));
+							(name, propertySchema) -> contentDatas.add(
+								HashMapBuilder.<String, Object>put(
+									"dataType",
+									_getDataType(importClasses, propertySchema)
+								).put(
+									"name", StringUtil.replace(name, '-', '_')
+								).put(
+									"required", false
+								).put(
+									"type", "form"
+								).build()));
 					}
 					else {
 						String dataType = _getDataType(importClasses, schema);
@@ -430,8 +428,7 @@ public class TypeScriptClientUtil {
 							).build());
 					}
 
-					contentDatasMap.put(
-						entry.getKey(), contentDatas);
+					contentDatasMap.put(entry.getKey(), contentDatas);
 				}
 
 				return contentDatasMap;

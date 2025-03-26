@@ -181,10 +181,6 @@
 						path: 'portlet_base.js',
 						requires: ['aui-base'],
 					},
-					'liferay-progress': {
-						path: 'progress.js',
-						requires: ['aui-progressbar'],
-					},
 					'liferay-search-container': {
 						path: 'search_container.js',
 						requires: ['aui-base', 'aui-datatable-core'],

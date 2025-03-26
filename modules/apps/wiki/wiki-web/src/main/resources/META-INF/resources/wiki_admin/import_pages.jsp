@@ -70,23 +70,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 			</div>
 		</div>
 	</aui:form>
-
-	<liferay-document-library:upload-progress
-		id="<%= uploadProgressId %>"
-		message="uploading"
-	/>
-
-	<liferay-document-library:upload-progress
-		id="<%= importProgressId %>"
-		message="importing"
-	/>
 </clay:container-fluid>
 
 <aui:script>
 	function <portlet:namespace />importPages() {
-		<%= uploadProgressId %>.startProgress();
-		<%= importProgressId %>.startProgress();
-
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

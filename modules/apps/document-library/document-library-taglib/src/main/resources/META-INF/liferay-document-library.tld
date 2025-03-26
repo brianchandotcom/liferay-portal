@@ -1,12 +1,9 @@
 <?xml version="1.0"?>
 
-<taglib
-	version="2.1"
+<taglib version="2.1"
 	xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
->
-	<description>Provides the Liferay Document Library component tags, prefixed with <![CDATA[<code>liferay-document-library:</code>]]>.</description>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+	<description>Provides the Liferay Document Library component tags, prefixed with 		<![CDATA[<code>liferay-document-library:</code>]]>.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-document-library</short-name>
 	<uri>http://liferay.com/tld/document-library</uri>
@@ -49,24 +46,6 @@
 		</attribute>
 		<attribute>
 			<name>viewableByGuest</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<description>Creates a progress bar for items being uploaded.</description>
-		<name>upload-progress</name>
-		<tag-class>com.liferay.document.library.taglib.servlet.taglib.UploadProgressTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<description>An ID for the component instance.</description>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>A message to label the component.</description>
-			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

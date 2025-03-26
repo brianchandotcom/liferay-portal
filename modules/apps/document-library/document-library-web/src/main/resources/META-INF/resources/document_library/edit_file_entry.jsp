@@ -630,11 +630,6 @@ renderResponse.setTitle(headerTitle);
 			</div>
 		</div>
 	</aui:form>
-
-	<liferay-document-library:upload-progress
-		id="<%= uploadProgressId %>"
-		message="uploading"
-	/>
 </clay:container-fluid>
 
 <c:if test="<%= (fileEntry != null) && checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">

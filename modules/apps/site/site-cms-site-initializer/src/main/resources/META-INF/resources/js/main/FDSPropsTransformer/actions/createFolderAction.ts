@@ -9,7 +9,7 @@ import CreationModalContent, {
 	AssetLibray,
 } from '../../components/modal/CreationModalContent';
 
-type FolderData = {
+export type FolderData = {
 	action: 'createFolder';
 	assetLibraries: AssetLibray[];
 };

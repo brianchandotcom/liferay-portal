@@ -9,7 +9,7 @@ import CreationModalContent, {
 	AssetLibray,
 } from '../../components/modal/CreationModalContent';
 
-type AssetData = {
+export type AssetData = {
 	action: 'createAsset';
 	assetLibraries: AssetLibray[];
 	redirect: string;

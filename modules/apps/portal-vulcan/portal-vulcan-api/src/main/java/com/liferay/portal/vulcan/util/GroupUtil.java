@@ -90,14 +90,7 @@ public class GroupUtil {
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService) {
 
-		Group group = groupLocalService.fetchGroup(
-			Long.valueOf(assetLibraryKey));
-
-		if (group != null) {
-			return group;
-		}
-
-		group = groupLocalService.fetchGroup(companyId, assetLibraryKey);
+		Group group = groupLocalService.fetchGroup(companyId, assetLibraryKey);
 
 		if (group != null) {
 			return group;
@@ -115,6 +108,13 @@ public class GroupUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
+		}
+
+		group = groupLocalService.fetchGroup(
+			Long.valueOf(assetLibraryKey));
+
+		if (group != null) {
+			return group;
 		}
 
 		return null;

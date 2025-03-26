@@ -4115,16 +4115,16 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _handleError(
-			Supplier<ObjectEntryValuesException> exceptionSupplier,
+			ObjectEntryValuesException objectEntryValuesException,
 			List<ObjectEntryValuesException> objectEntryValuesExceptions,
 			boolean throwError)
 		throws ObjectEntryValuesException {
 
 		if (throwError) {
-			throw exceptionSupplier.get();
+			throw objectEntryValuesException;
 		}
 
-		objectEntryValuesExceptions.add(exceptionSupplier.get());
+		objectEntryValuesExceptions.add(objectEntryValuesException);
 	}
 
 	private void _insertIntoLocalizationTable(
@@ -5395,7 +5395,7 @@ public class ObjectEntryLocalServiceImpl
 				fileExtension, true)) {
 
 			_handleError(
-				() -> new ObjectEntryValuesException.InvalidFileExtension(
+				new ObjectEntryValuesException.InvalidFileExtension(
 					fileExtension, objectFieldName),
 				objectEntryValuesExceptions, throwError);
 		}
@@ -5412,7 +5412,7 @@ public class ObjectEntryLocalServiceImpl
 
 		if ((maximumFileSize > 0) && (fileSize > maximumFileSize)) {
 			_handleError(
-				() -> new ObjectEntryValuesException.ExceedsMaxFileSize(
+				new ObjectEntryValuesException.ExceedsMaxFileSize(
 					maximumFileSize / (1024 * 1024), objectFieldName),
 				objectEntryValuesExceptions, throwError);
 		}
@@ -5472,7 +5472,7 @@ public class ObjectEntryLocalServiceImpl
 			 objectField.isRequired())) {
 
 			_handleError(
-				() -> new ObjectEntryValuesException.ListTypeEntry(
+				new ObjectEntryValuesException.ListTypeEntry(
 					objectField.getName()),
 				objectEntryValuesExceptions, throwError);
 		}
@@ -5562,12 +5562,10 @@ public class ObjectEntryLocalServiceImpl
 			User user = _userLocalService.getUser(userId);
 
 			_handleError(
-				() ->
-					new ObjectEntryValuesException.InvalidObjectStateTransition(
-						originalListTypeEntry.getName(user.getLocale()),
-						sourceObjectState,
-						listTypeEntry.getName(user.getLocale()),
-						targetObjectState),
+				new ObjectEntryValuesException.InvalidObjectStateTransition(
+					originalListTypeEntry.getName(user.getLocale()),
+					sourceObjectState, listTypeEntry.getName(user.getLocale()),
+					targetObjectState),
 				objectEntryValuesExceptions, throwError);
 		}
 	}
@@ -5668,7 +5666,7 @@ public class ObjectEntryLocalServiceImpl
 
 		if (objectEntryValue.length() > maxLength) {
 			_handleError(
-				() -> new ObjectEntryValuesException.ExceedsTextMaxLength(
+				new ObjectEntryValuesException.ExceedsTextMaxLength(
 					maxLength, objectFieldName),
 				objectEntryValuesExceptions, throwError);
 		}
@@ -5755,7 +5753,7 @@ public class ObjectEntryLocalServiceImpl
 		Table<?> finalTable = table;
 
 		_handleError(
-			() -> new ObjectEntryValuesException.UniqueValueConstraintViolation(
+			new ObjectEntryValuesException.UniqueValueConstraintViolation(
 				objectField.getDBColumnName(), (Serializable)value,
 				objectField.getLabel(user.getLocale()),
 				finalTable.getTableName(), null),
@@ -5778,8 +5776,7 @@ public class ObjectEntryLocalServiceImpl
 				WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 			_handleError(
-				() -> new ObjectEntryValuesException.Required(
-					objectField.getName()),
+				new ObjectEntryValuesException.Required(objectField.getName()),
 				objectEntryValuesExceptions, throwError);
 		}
 		else if (StringUtil.equals(
@@ -5822,7 +5819,7 @@ public class ObjectEntryLocalServiceImpl
 
 			if (Validator.isNotNull(value)) {
 				_handleError(
-					() -> new ObjectEntryValuesException.InvalidValue(
+					new ObjectEntryValuesException.InvalidValue(
 						objectField.getName()),
 					objectEntryValuesExceptions, throwError);
 			}
@@ -5831,7 +5828,7 @@ public class ObjectEntryLocalServiceImpl
 						 WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 				_handleError(
-					() -> new ObjectEntryValuesException.Required(
+					new ObjectEntryValuesException.Required(
 						objectField.getName()),
 					objectEntryValuesExceptions, throwError);
 			}
@@ -5841,7 +5838,7 @@ public class ObjectEntryLocalServiceImpl
 
 			if (!GetterUtil.getBoolean(value) && objectField.isRequired()) {
 				_handleError(
-					() -> new ObjectEntryValuesException.Required(
+					new ObjectEntryValuesException.Required(
 						objectField.getName()),
 					objectEntryValuesExceptions, throwError);
 			}
@@ -5877,7 +5874,7 @@ public class ObjectEntryLocalServiceImpl
 					(groupId != relatedObjectEntry.getGroupId())) {
 
 					_handleError(
-						() -> new ObjectEntryValuesException.InvalidValue(
+						new ObjectEntryValuesException.InvalidValue(
 							objectField.getName()),
 						objectEntryValuesExceptions, throwError);
 				}
@@ -5907,7 +5904,7 @@ public class ObjectEntryLocalServiceImpl
 						String.valueOf(entryValueInteger), entryValueString)) {
 
 					_handleError(
-						() -> new ObjectEntryValuesException.ExceedsIntegerSize(
+						new ObjectEntryValuesException.ExceedsIntegerSize(
 							9, objectField.getName()),
 						objectEntryValuesExceptions, throwError);
 				}
@@ -5927,7 +5924,7 @@ public class ObjectEntryLocalServiceImpl
 						String.valueOf(entryValueLong), entryValueString)) {
 
 					_handleError(
-						() -> new ObjectEntryValuesException.ExceedsLongSize(
+						new ObjectEntryValuesException.ExceedsLongSize(
 							16, objectField.getName()),
 						objectEntryValuesExceptions, throwError);
 				}
@@ -5935,7 +5932,7 @@ public class ObjectEntryLocalServiceImpl
 							BUSINESS_TYPE_LONG_VALUE_MAX) {
 
 					_handleError(
-						() -> new ObjectEntryValuesException.ExceedsLongMaxSize(
+						new ObjectEntryValuesException.ExceedsLongMaxSize(
 							ObjectFieldValidationConstants.
 								BUSINESS_TYPE_LONG_VALUE_MAX,
 							objectField.getName()),
@@ -5945,7 +5942,7 @@ public class ObjectEntryLocalServiceImpl
 							BUSINESS_TYPE_LONG_VALUE_MIN) {
 
 					_handleError(
-						() -> new ObjectEntryValuesException.ExceedsLongMinSize(
+						new ObjectEntryValuesException.ExceedsLongMinSize(
 							ObjectFieldValidationConstants.
 								BUSINESS_TYPE_LONG_VALUE_MIN,
 							objectField.getName()),
@@ -5985,7 +5982,7 @@ public class ObjectEntryLocalServiceImpl
 						WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 					_handleError(
-						() -> new ObjectEntryValuesException.Required(
+						new ObjectEntryValuesException.Required(
 							objectField.getName()),
 						objectEntryValuesExceptions, throwError);
 				}

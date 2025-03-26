@@ -1,12 +1,12 @@
-import {ObjectSerializer} from '../model/models';
+import {ObjectSerializer} from '../index';
 
 <#if importClasses??>
 	<#list importClasses?sort as import>
-		import {${import}} from '../model/${import?uncap_first}';
+		import {${import}} from '../models/${import}';
 	</#list>
 </#if>
 
-import {HttpError} from './apis';
+import {HttpError} from '../index';
 
 /**
  * @author ${configYAML.author}

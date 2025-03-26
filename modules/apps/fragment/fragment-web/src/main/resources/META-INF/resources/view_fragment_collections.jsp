@@ -15,7 +15,7 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 	managementToolbarDisplayContext="<%= new FragmentCollectionsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fragmentCollectionsDisplayContext) %>"
 />
 
-<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
+<aui:form cssClass="container-fluid container-fluid-max-xxxl" name="fm">
 	<liferay-ui:search-container
 		id="fragmentCollections"
 		searchContainer="<%= fragmentCollectionsDisplayContext.getSearchContainer() %>"

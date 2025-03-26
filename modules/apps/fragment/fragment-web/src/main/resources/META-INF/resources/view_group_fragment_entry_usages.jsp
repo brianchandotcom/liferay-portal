@@ -21,6 +21,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 <clay:container-fluid
 	cssClass="container-form-lg"
+	size="xxxl"
 >
 	<clay:sheet>
 		<clay:row>

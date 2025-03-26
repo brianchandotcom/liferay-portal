@@ -20,7 +20,9 @@ DefaultFragmentEntriesDisplayContext defaultFragmentEntriesDisplayContext = new 
 			managementToolbarDisplayContext="<%= new FragmentCollectionContributorsItemSelectorViewManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, defaultFragmentEntriesDisplayContext.getFragmentCollectionContributorsSearchContainer()) %>"
 		/>
 
-		<clay:container-fluid>
+		<clay:container-fluid
+			size="xxxl"
+		>
 			<liferay-site-navigation:breadcrumb
 				breadcrumbEntries="<%= defaultFragmentEntriesDisplayContext.getBreadcrumbEntries() %>"
 			/>

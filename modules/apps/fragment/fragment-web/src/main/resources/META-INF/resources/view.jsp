@@ -39,6 +39,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 
 <clay:container-fluid
 	cssClass="container-view"
+	size="xxxl"
 >
 	<clay:row>
 		<clay:col

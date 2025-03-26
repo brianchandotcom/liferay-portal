@@ -25,17 +25,15 @@ definition {
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
-		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:8080",
-			siteURLKey = "guest");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
 
-		WebContentNavigator.gotoAddCP();
-
-		PortletEntry.inputTitle(title = "WC WebContent Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
 
 		Upgrade.restoreOriginalBundleAndUpgrade();
 
@@ -46,11 +44,14 @@ definition {
 			id = "image-square",
 			image = "tree");
 
-		WebContentNavigator.openWebContentAdmin(
-			baseURL = "http://localhost:8080",
-			siteURLKey = "guest");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
 	@priority = 4

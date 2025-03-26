@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.document.Document;
@@ -119,7 +120,8 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			).put(
 				"status",
 				() -> {
-					int[] statusesArray = StringUtil.split(statuses, 0);
+					int[] statusesArray = StringUtil.split(
+						statuses, WorkflowConstants.STATUS_APPROVED);
 
 					if (statusesArray.length > 0) {
 						return statusesArray;

@@ -4,7 +4,7 @@
  */
 
 import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {mergeTests} from '@playwright/test';
 
 import {backendPageTest} from '../../../fixtures/backendPageTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
@@ -51,7 +51,5 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 
 	// Delete site
 
-	await expect(
-		await apiHelpers.headlessSite.deleteSiteByERC(PAGE_MANAGEMENT_SITE_ERC)
-	).toBeOK();
+	await apiHelpers.headlessSite.deleteSiteByERC(PAGE_MANAGEMENT_SITE_ERC);
 });

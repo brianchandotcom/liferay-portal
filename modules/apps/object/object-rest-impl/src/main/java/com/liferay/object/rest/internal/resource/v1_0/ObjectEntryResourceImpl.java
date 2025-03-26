@@ -806,20 +806,21 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		List<com.liferay.object.entry.validation.ValidationError> serviceBuilderValidationError =
-			objectEntryManager.validateObjectEntry(
-				_getDTOConverterContext(null), _objectDefinition,
-				validationRequest.getValues(),
-				Arrays.asList(
-					validationRequest.
-						getObjectValidationRuleExternalReferenceCodes()),
-				scopeKey);
+		List<com.liferay.object.entry.validation.ValidationError>
+			serviceBuilderValidationErrors =
+				objectEntryManager.validateObjectEntry(
+					_getDTOConverterContext(null), _objectDefinition,
+					validationRequest.getValues(),
+					Arrays.asList(
+						validationRequest.
+							getObjectValidationRuleExternalReferenceCodes()),
+					scopeKey);
 
 		return new ValidationResponse() {
 			{
 				setValidationErrors(
 					() -> transformToArray(
-						serviceBuilderValidationError,
+						serviceBuilderValidationErrors,
 						validationError -> new ValidationError() {
 							{
 								setErrorMessage(

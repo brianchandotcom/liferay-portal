@@ -1,4 +1,4 @@
-<#list schemaMap?keys?sort as schema>
+<#list schemas?keys?sort as schema>
 	import {${schema}} from './models/${schema}';
 </#list>
 
@@ -7,7 +7,7 @@
  * @generated
  */
 
-<#list schemaMap?keys?sort as schema>
+<#list schemas?keys?sort as schema>
 	export {${schema}} from './models/${schema}';
 </#list>
 
@@ -39,7 +39,7 @@ const primitives = [
 ];
 
 const typeMap: {[index: string]: any} = {
-<#list schemaMap?keys?sort as schema>
+<#list schemas?keys?sort as schema>
 	${schema},
 </#list>
 };

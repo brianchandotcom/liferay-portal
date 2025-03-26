@@ -40,13 +40,30 @@ public class SearchResultEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
 				locale -> Field.CREATE_DATE),
 			new DateTimeEntityField(
+				"dateDisplay",
+				locale -> Field.getSortableFieldName(Field.DISPLAY_DATE),
+				locale -> Field.DISPLAY_DATE),
+			new DateTimeEntityField(
+				"dateExpiration",
+				locale -> Field.getSortableFieldName(Field.EXPIRATION_DATE),
+				locale -> Field.EXPIRATION_DATE),
+			new DateTimeEntityField(
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new DateTimeEntityField(
+				"datePublish",
+				locale -> Field.getSortableFieldName(Field.PUBLISH_DATE),
+				locale -> Field.PUBLISH_DATE),
+			new DateTimeEntityField(
+				"dateReview",
+				locale -> Field.getSortableFieldName("reviewDate"),
+				locale -> "reviewDate"),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField("folderId", locale -> Field.FOLDER_ID),
 			new IntegerEntityField(
 				"objectDefinitionId", locale -> "objectDefinitionId"),
+			new IntegerEntityField("status", locale -> Field.STATUS),
 			new StringEntityField("cmsSection", locale -> "cms_section"),
 			new StringEntityField(
 				"title",

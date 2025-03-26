@@ -1258,6 +1258,8 @@ public class ProjectController extends BaseFaroController {
 
 		if (DateUtil.compareTo(startDate, lastAnniversaryDate) < 0) {
 			startDate = lastAnniversaryDate;
+
+			calendar1.setTime(lastAnniversaryDate);
 		}
 
 		while (DateUtil.compareTo(date, startDate) > 0) {

@@ -681,7 +681,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (layoutPageTemplateEntry.getStatus() !=
 				WorkflowConstants.STATUS_APPROVED) {
 
-			throw new LayoutPageTemplateEntryDefaultTemplateException();
+			throw new LayoutPageTemplateEntryDefaultTemplateException(
+				"Default Layout Page Template Entry",
+				layoutPageTemplateEntry.getType());
 		}
 
 		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
@@ -867,7 +869,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (layoutPageTemplateEntry.isDefaultTemplate() &&
 			(status != WorkflowConstants.STATUS_APPROVED)) {
 
-			throw new LayoutPageTemplateEntryDefaultTemplateException();
+			throw new LayoutPageTemplateEntryDefaultTemplateException(
+				"Default Layout Page Template Entry",
+				layoutPageTemplateEntry.getType());
 		}
 
 		User user = _userLocalService.getUser(userId);
@@ -1240,7 +1244,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		throws PortalException {
 
 		if (defaultTemplate && (status != WorkflowConstants.STATUS_APPROVED)) {
-			throw new LayoutPageTemplateEntryDefaultTemplateException();
+			throw new LayoutPageTemplateEntryDefaultTemplateException(
+				"Default Layout Page Template Entry", type);
 		}
 
 		_validate(groupId, layoutPageTemplateCollectionId, name, type);

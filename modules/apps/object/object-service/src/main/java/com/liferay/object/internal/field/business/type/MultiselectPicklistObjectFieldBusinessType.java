@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.util.ArrayList;
@@ -192,7 +193,10 @@ public class MultiselectPicklistObjectFieldBusinessType
 		else if (value instanceof String) {
 			String valueString = GetterUtil.getString(value);
 
-			if (valueString.contains(StringPool.COMMA_AND_SPACE)) {
+			if (StringUtil.equals(valueString, "[]")) {
+				return StringPool.BLANK;
+			}
+			else if (valueString.contains(StringPool.COMMA_AND_SPACE)) {
 				List<String> keys = ListUtil.fromString(
 					valueString, StringPool.COMMA_AND_SPACE);
 

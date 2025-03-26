@@ -127,7 +127,7 @@ portletDisplay.setURLBack(backURL);
 
 				let fieldName = field.fieldName;
 
-				if (field.localizable) {
+				if (value && field.localizable) {
 					fieldName += '_i18n';
 
 					if (typeof value == 'string') {

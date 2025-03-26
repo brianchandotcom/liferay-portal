@@ -35,7 +35,7 @@ export class StyleBooksPage {
 	async create(styleBookName: string) {
 		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
 
-		await this.page.getByPlaceholder('Name').fill(styleBookName);
+		await this.page.getByRole('textbox').fill(styleBookName);
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
@@ -43,7 +43,7 @@ export class StyleBooksPage {
 			.getByText('Success:Your request completed successfully.')
 			.waitFor();
 
-		const loadingAnimation = await this.page.locator(
+		const loadingAnimation = this.page.locator(
 			'.style-book-editor__page-preview .loading-animation'
 		);
 
@@ -67,6 +67,16 @@ export class StyleBooksPage {
 		await this.page.getByLabel('More actions').click();
 
 		await this.page.getByRole('menuitem', {name: 'Edit'}).click();
+	}
+
+	async markAsDefault(styleBookName: string) {
+		await this.search(styleBookName);
+
+		await this.page.getByLabel('More actions').click();
+
+		await this.page
+			.getByRole('menuitem', {exact: false, name: 'Mark as Default'})
+			.click();
 	}
 
 	async publish() {

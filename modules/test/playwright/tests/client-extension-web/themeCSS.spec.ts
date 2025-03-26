@@ -129,6 +129,8 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 	});
 
 	await test.step('Apply Theme CSS client extension to all pages', async () => {
+		await pagesAdminPage.gotoPagesConfiguration();
+
 		await pagesAdminPage.selectThemeCSSClientExtension(clientExtensionName);
 	});
 

@@ -233,6 +233,28 @@ export class PagesAdminPage {
 		await this.saveConfiguration();
 	}
 
+	async changeTheme(themeName: string) {
+		await this.page
+			.getByRole('radio', {name: 'Define a custom theme for'})
+			.click();
+
+		await this.page
+			.getByRole('button', {name: 'Change Current Theme'})
+			.click();
+
+		const iframe = this.page.frameLocator(
+			'iframe[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_selectTheme_iframe_"]'
+		);
+
+		await iframe.getByText(themeName).waitFor();
+
+		await iframe.getByText(themeName).click();
+
+		await this.configurationSaveButton.waitFor({state: 'visible'});
+
+		await this.saveConfiguration();
+	}
+
 	async clickOnJavaScriptClientExtensionsTab() {
 		await this.javaScriptClientExtensionsTab.waitFor();
 
@@ -334,6 +356,10 @@ export class PagesAdminPage {
 		}
 	}
 
+	async clickOnTab(name: string) {
+		await this.page.getByRole('link', {name}).click();
+	}
+
 	async deletePage(name: string) {
 		await this.clickOnAction('Delete', name);
 
@@ -356,6 +382,12 @@ export class PagesAdminPage {
 		await this.page
 			.getByText('Select a Page Element', {exact: true})
 			.waitFor();
+	}
+
+	async goToDesignTabConfiguration(pageName: string) {
+		await this.clickOnAction('Configure', pageName);
+
+		await this.clickOnTab('Design');
 	}
 
 	async gotoPagesConfiguration(siteUrl?: Site['friendlyUrlPath']) {
@@ -447,8 +479,6 @@ export class PagesAdminPage {
 	}
 
 	async selectThemeCSSClientExtension(clientExtensionName: string) {
-		await this.gotoPagesConfiguration();
-
 		await this.page
 			.locator(
 				'#_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_themeCSSReplacementExtension'

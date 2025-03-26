@@ -1300,6 +1300,14 @@ export class PageEditorPage {
 		}
 	}
 
+	async selectStyleBook(name: string) {
+		await this.goToSidebarTab('Page Design Options');
+
+		await this.goToConfigurationTab('Style Book');
+
+		await this.page.getByRole('button', {name}).click();
+	}
+
 	async selectVideo({
 		fragmentId,
 		isDesktop = true,

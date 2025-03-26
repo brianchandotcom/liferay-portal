@@ -6,4 +6,7 @@
 export const config = {
 	name: 'style-book-web',
 	testDir: 'tests/style-book-web',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

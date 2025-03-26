@@ -84,6 +84,11 @@ public class PriceListOrderTypeResourceTest
 
 	@Override
 	@Test
+	public void testDeletePriceListOrderTypeBatch() throws Exception {
+	}
+
+	@Override
+	@Test
 	public void testGraphQLDeletePriceListOrderType() throws Exception {
 	}
 

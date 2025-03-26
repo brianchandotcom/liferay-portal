@@ -66,6 +66,13 @@ public class OrderTypeChannelResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testDeleteOrderTypeChannelBatch() throws Exception {
+		super.testDeleteOrderTypeChannelBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteOrderTypeChannel() throws Exception {
 		super.testGraphQLDeleteOrderTypeChannel();
 	}

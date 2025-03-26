@@ -58,6 +58,7 @@ export default {
 	'approve': 'Approve',
 	'approved': 'Approved',
 	'apps': 'Apps',
+	'area': 'Area',
 	'available': 'Available',
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
@@ -162,6 +163,7 @@ export default {
 	'developer-licenses-are-limited-to-5-unique-addresses-and-should-not-be-used-for-full-scale-production-deployments':
 		'Developer licenses are limited to 5 unique addresses and should not be used for full scale production deployments.',
 	'discover-and-customize': 'Discover and customize',
+	'do-not-close-this-window': 'DO NOT CLOSE THIS WINDOW',
 	'done': 'Done',
 	'download': 'Download',
 	'download-app': 'Download App',
@@ -392,6 +394,7 @@ export default {
 	'search': 'Search',
 	'select-a-file': 'Select a file',
 	'select-a-local-file-to-upload': 'Select a local file to upload',
+	'select-areas': 'Select areas',
 	'select-categories': 'Select categories',
 	'select-compatible-versions': 'Select Compatible Versions',
 	'select-licensing-terms': 'Select licensing terms',
@@ -542,8 +545,8 @@ export default {
 	'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it':
 		'{0} will be deleted and this action can’t be undone. Are you sure you want to delete it?',
 	'yes': 'Yes',
-	'you-are-one-step-away-from-finalizing-your-connection-with-the-marketplace':
-		'You are one step away from finalizing your connection with the Marketplace. Please, do not close the window until the connection is fully completed, as it will close automatically once it is done.',
+	'you-are-finalizing-your-connection-with-the-marketplace':
+		'We are finalizing your connection with the Marketplace. Please, do not close the window until the connection is fully completed, as it will close automatically once it is done.',
 	'you-can-paste-links-directly-from-youtube':
 		'You can paste links directly from YouTube.',
 	'you-can-put-anything-you-want-here-but-a-good-guideline-is-no-more-than-4-5-paragraphs-this-field-does-not-allow-any-markup-tags-its-just-text-please-do-not-use-misleading-names-information-or-icons-descriptions-should-be-as-concise-as-possible-ensure-your-icons-images-descriptions-and-tags-are-free-of-profanity-or-other-offensive-material':

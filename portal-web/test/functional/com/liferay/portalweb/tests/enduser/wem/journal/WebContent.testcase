@@ -2371,7 +2371,7 @@ definition {
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-ja");
 
-			WebContent.publishWithPermissions();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		task ("Then there's warning message in pop up") {

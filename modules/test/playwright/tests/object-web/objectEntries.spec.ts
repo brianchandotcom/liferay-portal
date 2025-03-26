@@ -5,11 +5,11 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 	ObjectField,
 	ObjectRelationship,
-	ObjectRelationshipApi,
-	ObjectValidationRuleApi,
+	ObjectRelationshipAPI,
+	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -79,7 +79,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 		_objectField = objectFields[0];
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -288,7 +288,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 		).toBeVisible();
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		await objectDefinitionAPIClient.patchObjectDefinition(
 			_objectDefinition.id,
@@ -350,11 +350,11 @@ test.describe('Manage object entries through Object Definition widget', () => {
 			type: 'objectDefinition',
 		});
 
-		const objectValidationRuleApiClient = await apiHelpers.buildRestClient(
-			ObjectValidationRuleApi
+		const objectValidationRuleAPIClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleAPI
 		);
 
-		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+		await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			objectDefinition.externalReferenceCode,
 			{
 				active: true,
@@ -370,7 +370,7 @@ test.describe('Manage object entries through Object Definition widget', () => {
 				system: false,
 			}
 		);
-		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+		await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			objectDefinition.externalReferenceCode,
 			{
 				active: true,
@@ -467,7 +467,7 @@ test.describe('Manage object entries through Page Templates', () => {
 			'ObjectDefinition' + getRandomInt();
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition1} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -510,11 +510,11 @@ test.describe('Manage object entries through Page Templates', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
-		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition1.externalReferenceCode,
 			{
 				label: {
@@ -642,7 +642,7 @@ test.describe('Manage object entries through Page Templates', () => {
 		});
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -790,7 +790,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -951,7 +951,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -1033,7 +1033,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -1132,11 +1132,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
-		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition1.externalReferenceCode,
 			{
 				label: {
@@ -1222,8 +1222,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + getRandomInt();
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
 		const objectRelationshipData: Partial<ObjectRelationship> = {
@@ -1241,7 +1241,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'manyToMany',
 		};
 
-		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition1.externalReferenceCode,
 			objectRelationshipData
 		);
@@ -1400,11 +1400,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 			type: 'objectDefinition',
 		});
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
-		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition.externalReferenceCode,
 			{
 				deletionType: 'disassociate',

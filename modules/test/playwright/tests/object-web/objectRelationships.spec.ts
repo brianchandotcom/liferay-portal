@@ -4,11 +4,11 @@
  */
 
 import {
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 	ObjectField,
-	ObjectFieldApi,
+	ObjectFieldAPI,
 	ObjectRelationship,
-	ObjectRelationshipApi,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -77,12 +77,12 @@ test.describe('Manage object relationships through Model Builder', () => {
 			type: 'oneToMany',
 		};
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
 		const {body: objectRelationship} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 				objectDefinition1.externalReferenceCode,
 				objectRelationshipData
 			);
@@ -496,12 +496,12 @@ test.describe('Manage object relationships through Model Builder', () => {
 			type: 'oneToMany',
 		};
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
 		const {body: objectRelationship} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 				objectDefinition1.externalReferenceCode,
 				objectRelationshipData
 			);
@@ -616,11 +616,11 @@ test.describe('Manage object relationships through Model Builder', () => {
 				type,
 			};
 
-			const objectRelationshipApiClient =
-				await apiHelpers.buildRestClient(ObjectRelationshipApi);
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
 
 			const {body: objectRelationship} =
-				await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 					objectRelationshipData.objectDefinitionExternalReferenceCode1,
 					objectRelationshipData
 				);
@@ -705,12 +705,12 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
 		const {body: objectRelationship} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 				objectDefinition1.externalReferenceCode,
 				{
 					label: {
@@ -838,12 +838,12 @@ test.describe('Manage object relationships through Model Builder', () => {
 			type: 'oneToMany',
 		};
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
 		const {body: objectRelationship} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 				objectRelationshipData.objectDefinitionExternalReferenceCode1,
 				objectRelationshipData
 			);
@@ -895,11 +895,11 @@ test.describe('Manage object relationships through Model Builder', () => {
 				status: {code: 0},
 			});
 
-		const objectDefinitionApiClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: postalAddress} =
-			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 				'L_POSTAL_ADDRESS'
 			);
 
@@ -983,12 +983,12 @@ test.describe('Manage object relationships through Model Builder', () => {
 		const objectRelationshipName =
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
 		const {body: objectRelationship} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 				objectDefinition1.externalReferenceCode,
 				{
 					label: {
@@ -1012,7 +1012,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 		});
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: publishedObjectDefinition2} =
 			await objectDefinitionAPIClient.postObjectDefinitionPublish(
@@ -1051,9 +1051,9 @@ test.describe('Manage object relationships through Model Builder', () => {
 			)
 		).toBeVisible();
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			publishedObjectDefinition2.externalReferenceCode,
 			{
 				DBType: 'String',
@@ -1103,12 +1103,12 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			type: 'oneToMany',
 		};
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
 		const {body: objectRelationship1} =
-			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 				'L_ACCOUNT',
 				objectRelationshipData
 			);

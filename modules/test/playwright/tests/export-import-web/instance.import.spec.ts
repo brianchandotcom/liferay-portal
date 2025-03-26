@@ -5,7 +5,7 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -52,11 +52,11 @@ test('can export and import custom object entries at instance level', async ({
 	apiHelpers,
 	companyExportImportPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {
@@ -128,8 +128,8 @@ test('can only import custom object entries when their definitions are already i
 	apiHelpers,
 	companyExportImportPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const objectDefinitionRequestBody: ObjectDefinition = {
 		active: true,
@@ -163,7 +163,7 @@ test('can only import custom object entries when their definitions are already i
 	};
 
 	let {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition(
+		await objectActionAPIClient.postObjectDefinition(
 			objectDefinitionRequestBody
 		);
 
@@ -174,7 +174,7 @@ test('can only import custom object entries when their definitions are already i
 
 	const exportFilePath = await companyExportImportPage.export('Tests');
 
-	objectActionApiClient.deleteObjectDefinition(objectDefinition.id);
+	objectActionAPIClient.deleteObjectDefinition(objectDefinition.id);
 
 	await companyExportImportPage.import(
 		exportFilePath,
@@ -183,7 +183,7 @@ test('can only import custom object entries when their definitions are already i
 	);
 
 	({body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition(
+		await objectActionAPIClient.postObjectDefinition(
 			objectDefinitionRequestBody
 		));
 
@@ -207,11 +207,11 @@ test('can import custom object entries at instance level with or without permiss
 	apiHelpers,
 	companyExportImportPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {
@@ -322,11 +322,11 @@ test('can see corresponding elements at instance level', async ({
 	apiHelpers,
 	companyExportImportPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {

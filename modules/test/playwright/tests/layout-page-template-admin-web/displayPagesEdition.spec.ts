@@ -4,8 +4,8 @@
  */
 
 import {
-	ObjectActionApi,
-	ObjectDefinitionApi,
+	ObjectActionAPI,
+	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -826,11 +826,11 @@ test.describe('Object Display page', () => {
 
 			// Go to lemon basket display page
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon Basket')
 				)
 			).body;
@@ -866,7 +866,7 @@ test.describe('Object Display page', () => {
 			// Create ticket object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: ticketObjectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -921,10 +921,10 @@ test.describe('Object Display page', () => {
 
 			// Add object action
 
-			const objectActionApiClient =
-				await apiHelpers.buildRestClient(ObjectActionApi);
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
 
-			await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
 				ticketObjectDefinition.externalReferenceCode,
 				{
 					active: true,
@@ -1060,11 +1060,11 @@ test.describe('Object Display page', () => {
 
 			// Create a default display page for lemon object
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -1158,11 +1158,11 @@ test.describe('Object Display page', () => {
 
 			// Create object definition with attachment field
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
-				await objectDefinitionApiClient.postObjectDefinition({
+				await objectDefinitionAPIClient.postObjectDefinition({
 					active: true,
 					externalReferenceCode: 'attachmentERC',
 					label: {
@@ -1214,7 +1214,7 @@ test.describe('Object Display page', () => {
 			// Create a default display page
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					objectDefinition.externalReferenceCode
 				)
 			).body;
@@ -1343,11 +1343,11 @@ test.describe('Object Display page', () => {
 
 			// Create object definition
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
-				await objectDefinitionApiClient.postObjectDefinition({
+				await objectDefinitionAPIClient.postObjectDefinition({
 					active: true,
 					externalReferenceCode: 'filmERC',
 					label: {
@@ -1415,7 +1415,7 @@ test.describe('Object Display page', () => {
 			// Create a display page
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					objectDefinition.externalReferenceCode
 				)
 			).body;

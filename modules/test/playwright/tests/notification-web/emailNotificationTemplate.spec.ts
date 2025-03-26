@@ -5,7 +5,7 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -31,7 +31,7 @@ test.beforeEach(async ({apiHelpers}) => {
 
 test.afterEach(async ({apiHelpers, notificationTemplatesPage, page}) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	await objectDefinitionAPIClient.deleteObjectDefinition(objectDefinition.id);
 

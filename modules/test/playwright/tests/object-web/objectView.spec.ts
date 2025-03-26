@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectRelationshipApi} from '@liferay/object-admin-rest-client-js';
+import {ObjectRelationshipAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -43,11 +43,11 @@ test('can create an object custom view using object relationship entry', async (
 	const objectRelationshipName =
 		'objectRelationshipName' + Math.floor(Math.random() * 99);
 
-	const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-		ObjectRelationshipApi
+	const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipAPI
 	);
 
-	await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+	await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 		objectDefinition1.externalReferenceCode,
 		{
 			label: {

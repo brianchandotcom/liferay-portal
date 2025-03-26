@@ -5,7 +5,7 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -39,7 +39,7 @@ const createdEntities = {
 
 test.afterEach(async ({apiHelpers}) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {objectDefinitions} = createdEntities;
 
@@ -61,7 +61,7 @@ test.beforeEach(async ({apiHelpers}) => {
 	]);
 
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition({
@@ -97,7 +97,7 @@ test('Can create, read, update, and delete object entries that use the client ex
 	viewObjectEntriesPage,
 }) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition({

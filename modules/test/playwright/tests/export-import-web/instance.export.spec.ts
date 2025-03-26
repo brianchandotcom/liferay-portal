@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
@@ -36,11 +36,11 @@ test('cannot export site scoped custom object entries at instance level', async 
 	applicationsMenuPage,
 	page,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {
@@ -88,11 +88,11 @@ test('can export custom object entries at instance level with date filter', asyn
 	apiHelpers,
 	companyExportImportPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {
@@ -184,11 +184,11 @@ test('can export new default and custom task name', async ({
 	apiHelpers,
 	companyExportImportPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {
@@ -244,11 +244,11 @@ test('can export custom object entries at instance level with permissions', asyn
 	apiHelpers,
 	companyExportImportPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {
@@ -300,10 +300,10 @@ test('can see corresponding elements at instance level', async ({
 	companyExportImportPage,
 	uiElementsPage,
 }) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
+		await objectActionAPIClient.postObjectDefinition({
 			active: true,
 			externalReferenceCode: 'test',
 			label: {

@@ -27,7 +27,7 @@ export class ${className} {
 		this._defaultHeaders = defaultHeaders;
 	}
 
-	<#list operationsData?sort_by("operationId") as operationData>
+	<#list operationDatas?sort_by("operationId") as operationData>
 		/**
 		 * ${operationData.description!}
 		 <#if operationData.parameters??>

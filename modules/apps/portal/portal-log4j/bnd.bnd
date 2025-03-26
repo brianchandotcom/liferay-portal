@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Log4j
-Bundle-SymbolicName: com.liferay.portal.log4j
-Bundle-Version: 2.0.6
-Export-Package: com.liferay.portal.log4j

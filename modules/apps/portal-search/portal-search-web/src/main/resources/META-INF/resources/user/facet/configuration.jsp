@@ -57,7 +57,6 @@ UserFacetPortletPreferences userFacetPortletPreferences = new UserFacetPortletPr
 				<liferay-template:template-selector
 					className="<%= UserFacetPortlet.class.getName() %>"
 					displayStyle="<%= userFacetPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= userSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

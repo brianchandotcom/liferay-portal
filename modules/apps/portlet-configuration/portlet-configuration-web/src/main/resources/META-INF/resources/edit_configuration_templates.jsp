@@ -26,7 +26,9 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 				propsTransformer="{ManagementToolbarPropsTransformer} from portlet-configuration-web"
 			/>
 
-			<clay:container-fluid>
+			<clay:container-fluid
+				size="xxxl"
+			>
 				<liferay-ui:error exception="<%= NoSuchPortletItemException.class %>" message="the-setup-could-not-be-found" />
 
 				<div class="button-holder text-center">

@@ -154,6 +154,15 @@ public class RedirectEntryLocalServiceImpl
 		return redirectEntry;
 	}
 
+	@Override
+	public void deleteRedirectEntries(long groupId) throws PortalException {
+		for (RedirectEntry redirectEntry :
+				redirectEntryPersistence.findByGroupId(groupId)) {
+
+			redirectEntryLocalService.deleteRedirectEntry(redirectEntry);
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RedirectEntry deleteRedirectEntry(long redirectEntryId)

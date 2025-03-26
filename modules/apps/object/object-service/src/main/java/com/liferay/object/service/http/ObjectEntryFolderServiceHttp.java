@@ -387,7 +387,8 @@ public class ObjectEntryFolderServiceHttp {
 			updateObjectEntryFolder(
 				HttpPrincipal httpPrincipal, long objectEntryFolderId,
 				long parentObjectEntryFolderId,
-				java.util.Map<java.util.Locale, String> labelMap, String name)
+				java.util.Map<java.util.Locale, String> labelMap, String name,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -397,7 +398,7 @@ public class ObjectEntryFolderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectEntryFolderId, parentObjectEntryFolderId,
-				labelMap, name);
+				labelMap, name, serviceContext);
 
 			Object returnObj = null;
 
@@ -453,6 +454,9 @@ public class ObjectEntryFolderServiceHttp {
 	private static final Class<?>[] _getObjectEntryFoldersCountParameterTypes7 =
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _updateObjectEntryFolderParameterTypes8 =
-		new Class[] {long.class, long.class, java.util.Map.class, String.class};
+		new Class[] {
+			long.class, long.class, java.util.Map.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
 
 }

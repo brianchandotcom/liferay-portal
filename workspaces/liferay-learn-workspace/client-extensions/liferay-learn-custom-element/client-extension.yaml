@@ -1,52 +1,22 @@
 assemble:
     - from: build/static
       into: static
-liferay-lms-certification-list:
+liferay-learn-custom-element:
     cssURLs:
         - css/main.*.css
-    friendlyURLMapping: liferay-lms-certification-list
-    htmlElementName: liferay-lms-certification-list
-    instanceable: true
-    name: Liferay LMS Certification List
-    portletCategoryName: category.client-extensions
-    type: customElement
-    urls:
-        - js/main.*.js
-    useESM: true
-liferay-lms-courses-list:
-    cssURLs:
-        - css/main.*.css
-    friendlyURLMapping: liferay-lms-courses-list
-    htmlElementName: liferay-lms-courses-list
-    instanceable: true
-    name: Liferay LMS Courses List
-    portletCategoryName: category.client-extensions
-    type: customElement
-    urls:
-        - js/main.*.js
-    useESM: true
-liferay-lms-landingpage-view:
-    cssURLs:
-        - css/main.*.css
-    friendlyURLMapping: liferay-lms-landingpage-view
-    htmlElementName: liferay-lms-landingpage-view
+    friendlyURLMapping: liferay-learn-custom-element
+    htmlElementName: liferay-learn-custom-element
     instanceable: false
-    name: Liferay LMS Landingpage View
+    name: Liferay Learn
     portletCategoryName: category.client-extensions
+    properties:
+        analyticsCloudURL: https://analytics-internal.liferay.com
+        cloudConsoleURL: https://console.liferay.cloud
+        contactSupportURL: https://www.liferay.com/contact-us
+        eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
+        marketoFormId: 3738
+        trialEulaURL: https://marketplace.liferay.com/documents/d/marketplace/evaluation-agreement-cloud-services
     type: customElement
     urls:
-        - js/main.*.js
+        - "main.js"
     useESM: true
-liferay-lms-learn-paths-list:
-    cssURLs:
-        - css/main.*.css
-    friendlyURLMapping: liferay-lms-learn-paths-list
-    htmlElementName: liferay-lms-learn-paths-list
-    instanceable: true
-    name: Liferay LMS Learn Paths List
-    portletCategoryName: category.client-extensions
-    type: customElement
-    urls:
-        - js/main.*.js
-    useESM: true
-

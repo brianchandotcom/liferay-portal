@@ -464,12 +464,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	}
 
 	private UtilityPage _getUtilityPage(
-			Boolean markedAsDefault, String masterPageExternalReferenceCode)
+			Boolean markedAsDefault, String utilityPageExternalReferenceCode)
 		throws Exception {
 
 		UtilityPage utilityPage = randomUtilityPage();
 
-		utilityPage.setExternalReferenceCode(masterPageExternalReferenceCode);
+		utilityPage.setExternalReferenceCode(utilityPageExternalReferenceCode);
 		utilityPage.setMarkedAsDefault(markedAsDefault);
 
 		return utilityPage;

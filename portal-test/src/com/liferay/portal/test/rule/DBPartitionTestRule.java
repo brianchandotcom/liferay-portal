@@ -40,11 +40,14 @@ public class DBPartitionTestRule implements TestRule {
 				return statement;
 			}
 
-			String companyWebId = TestPropsValues.COMPANY_WEB_ID;
+			String companyWebId;
 
 			if (TestPropsValues.DATABASE_PARTITION_COPY) {
 				companyWebId = StringUtil.replaceLast(
-					companyWebId, CharPool.PERIOD, "temp.");
+					TestPropsValues.COMPANY_WEB_ID, CharPool.PERIOD, "temp.");
+			}
+			else {
+				companyWebId = TestPropsValues.COMPANY_WEB_ID;
 			}
 
 			PortalInstances.addCompany(

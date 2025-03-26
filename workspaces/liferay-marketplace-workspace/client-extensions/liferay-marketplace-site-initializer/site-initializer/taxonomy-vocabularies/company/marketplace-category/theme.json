@@ -1,7 +1,7 @@
 {
-	"name": "Fragment",
+	"name": "Theme",
 	"name_i18n": {
-		"en_US": "Fragment"
+		"en_US": "Theme"
 	},
 	"viewableBy": "Anyone"
 }

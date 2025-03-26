@@ -1,0 +1,7 @@
+{
+	"name": "Payment methods",
+	"name_i18n": {
+		"en_US": "Payment methods"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,7 +1,7 @@
 {
-	"name": "Utility",
+	"name": "Checkout",
 	"name_i18n": {
-		"en_US": "Utility"
+		"en_US": "Checkout"
 	},
 	"viewableBy": "Anyone"
 }

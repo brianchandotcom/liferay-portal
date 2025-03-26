@@ -6167,6 +6167,10 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="16.3" />
 	</target>
 
+	<target name="functional-upgrade-tomcat90-postgresql163_stable">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="16.3" />
+	</target>
+
 	<target name="functional-upgrade-tomcat90-sqlserver">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" />
 	</target>
@@ -7552,11 +7556,11 @@ information. Make sure to commit in all format-javadoc results.
 		<run-modules-integration-test database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="modules-integration-postgresql155_stable">
-		<run-modules-integration-test database.type="postgresql" database.version="15.5" />
+	<target name="modules-integration-postgresql163">
+		<run-modules-integration-test database.type="postgresql" database.version="16.3" />
 	</target>
 
-	<target name="modules-integration-postgresql163">
+	<target name="modules-integration-postgresql163_stable">
 		<run-modules-integration-test database.type="postgresql" database.version="16.3" />
 	</target>
 
@@ -8264,7 +8268,7 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="portal-license-smoke-postgresql155">
+	<target name="portal-license-smoke-postgresql163">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="postgresql" stop.app.server="true">

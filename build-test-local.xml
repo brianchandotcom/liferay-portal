@@ -349,7 +349,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 			<replacevalue><![CDATA[\
 		functional-tomcat-postgresql163-jdk21_zulu,\
 		modules-integration-postgresql163,\
-		playwright-js-tomcat90-postgresql155]]></replacevalue>
+		playwright-js-tomcat90-postgresql163]]></replacevalue>
 		</replace>
 
 		<replaceregexp

@@ -84,9 +84,16 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		const hasError = errors && Object.keys(errors).length;
 		const hasActualGoLiveDate = values.businessEvent?.actualGoLiveDate;
 
+		const isValidDate = (date: string) => new Date(date) <= new Date();
+		const isActualGoLiveDateValid = isValidDate(hasActualGoLiveDate);
+
 		const hasAllRequiredFieldsFilled = Boolean(hasActualGoLiveDate);
 
-		setBaseButtonDisabled(!hasAllRequiredFieldsFilled || Boolean(hasError));
+		setBaseButtonDisabled(
+			!hasAllRequiredFieldsFilled ||
+				Boolean(hasError) ||
+				!isActualGoLiveDateValid
+		);
 	}, [errors, touched, values.businessEvent?.actualGoLiveDate]);
 
 	const handleSubmit = async () => {

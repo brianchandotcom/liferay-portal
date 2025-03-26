@@ -10,7 +10,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useField} from 'formik';
 import {
-	required as requiredVaidation,
+	required as requiredValidation,
 	validate,
 } from '~/utils/validations.form';
 
@@ -38,11 +38,11 @@ const DatePicker: React.FC<IProps> = ({
 	badgeClassName,
 	className,
 	id,
-	name,
 	dateFormat = 'MM/dd/yyyy',
 	groupStyle,
 	helper,
 	label,
+	name,
 	onBlur,
 	onChange,
 	placeholder,
@@ -51,8 +51,8 @@ const DatePicker: React.FC<IProps> = ({
 }) => {
 	if (required) {
 		validations = validations
-			? [...validations, (value: string) => requiredVaidation(value)]
-			: [(value: string) => requiredVaidation(value)];
+			? [...validations, (value: string) => requiredValidation(value)]
+			: [(value: string) => requiredValidation(value)];
 	}
 
 	const [field, meta, helpers] = useField({

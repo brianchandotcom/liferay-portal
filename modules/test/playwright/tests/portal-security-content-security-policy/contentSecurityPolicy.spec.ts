@@ -502,7 +502,7 @@ test('CSP frame-ancestors blocks framing from specific domain', async ({
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		expect(errors).toHaveLength(3);
+		expect(errors).toHaveLength(5);
 	}).toPass();
 });
 
@@ -600,7 +600,7 @@ test('CSP frame-ancestors directive in the same instance', async ({
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		expect(errors).toHaveLength(3);
+		expect(errors).toHaveLength(5);
 	});
 });
 

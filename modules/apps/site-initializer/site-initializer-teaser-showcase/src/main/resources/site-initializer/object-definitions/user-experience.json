@@ -19,12 +19,12 @@
 			"conditionExpression": "",
 			"description": "",
 			"errorMessage": {
-				"en_US": "Confirmation failed. Please try again later or contact support."
+				"en_US": "Acceptance failed. Please try again later or contact support."
 			},
 			"label": {
-				"en_US": "Standalone User Confirmation"
+				"en_US": "Standalone User Acceptance"
 			},
-			"name": "standaloneUserConfirmation",
+			"name": "standaloneUserAcceptance",
 			"objectActionExecutorKey": "update-object-entry",
 			"objectActionTriggerKey": "standalone",
 			"parameters": {
@@ -53,12 +53,12 @@
 			"conditionExpression": "",
 			"description": "",
 			"errorMessage": {
-				"en_US": "Disconfirmation failed. Please try again later or contact support."
+				"en_US": "Rejection failed. Please try again later or contact support."
 			},
 			"label": {
-				"en_US": "Standalone User Disconfirmation"
+				"en_US": "User Rejected Answer"
 			},
-			"name": "standaloneUserDisconfirmation",
+			"name": "standaloneUserRejection",
 			"objectActionExecutorKey": "update-object-entry",
 			"objectActionTriggerKey": "standalone",
 			"parameters": {

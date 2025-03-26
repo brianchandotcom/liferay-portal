@@ -37,8 +37,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	}
 
 	public void destroy() {
-		_upgradeInfosDCLSingleton.destroy(
-			upgradeInfos -> _bundleContext.ungetService(_serviceReference));
+		_upgradeInfosDCLSingleton.destroy(null);
 	}
 
 	public List<UpgradeStep> getReleaseCreationUpgradeSteps() {
@@ -131,7 +130,12 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		UpgradeStepRegistrator upgradeStepRegistrator =
 			_bundleContext.getService(_serviceReference);
 
-		upgradeStepRegistrator.register(this);
+		try {
+			upgradeStepRegistrator.register(this);
+		}
+		finally {
+			_bundleContext.ungetService(_serviceReference);
+		}
 
 		if (_initialization && _portalUpgraded) {
 			if (_upgradeInfos.isEmpty()) {

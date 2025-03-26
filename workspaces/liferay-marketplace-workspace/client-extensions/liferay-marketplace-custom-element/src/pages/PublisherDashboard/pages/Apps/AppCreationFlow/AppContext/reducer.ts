@@ -49,10 +49,14 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			return {...state, appBuild};
 		}
 
-		case TYPES.UPDATE_APP_CATEGORIES: {
-			const appCategories = action.payload.value;
+		case TYPES.UPDATE_APP_AREAS: {
+			const appAreas = action.payload.value;
 
-			return {...state, appCategories};
+			return {...state, appAreas};
+		}
+
+		case TYPES.UPDATE_APP_CATEGORIES: {
+			return {...state, appCategory: action.payload.value};
 		}
 
 		case TYPES.UPDATE_APP_DESCRIPTION: {
@@ -200,7 +204,7 @@ export function appReducer(state: InitialStateProps, action: TAction) {
 			};
 		}
 
-		case TYPES.UPDATE_APP_LXC_COMPATIBILITY: {
+		case TYPES.UPDATE_APP_TYPE: {
 			const {id, value} = action.payload;
 
 			return {

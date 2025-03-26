@@ -675,6 +675,20 @@ type Specification = {
 	title?: {[key: string]: string};
 };
 
+type TaxonomyCategory = {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+};
+
+type TaxonomyVocabulary = {
+	externalReferenceCode: string;
+	id: number;
+	label: string;
+	name: string;
+	taxonomyCategories: APIResponse<TaxonomyCategory>;
+};
+
 type TierPrice = {
 	currency: string;
 	price: number;

@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/* eslint-disable react/no-unescaped-entities */
-
 import {filesize} from 'filesize';
 import {useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -14,34 +12,36 @@ import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
-import {createApp, createImage, updateApp} from '../../../../../../utils/api';
+import {createImage} from '../../../../../../utils/api';
 import {submitBase64EncodedFile} from '../../../../../../utils/util';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './DefineAppProfilePage.scss';
 import MultiSelect from '../../../../../../components/MultiSelect/MultiSelect';
+import Select from '../../../../../../components/Select/Select';
 import UploadLogo from '../../../../../../components/UploadLogo/UploadLogo';
-import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../enums/Product';
+import {
+	PRODUCT_SPECIFICATION_KEY,
+	PRODUCT_WORKFLOW_STATUS_CODE,
+} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {getRandomID} from '../../../../../../utils/string';
 
 type DefineAppProfilePageProps = {
-	categories: VocabDropdownItem[];
+	areas: Categories[];
+	categories: TaxonomyCategory[];
 	isLoading: boolean;
 	onClickBack: () => void;
 	onClickContinue: () => void;
 	productType: Categories;
 	setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-	tags: VocabDropdownItem[];
+	tags: Categories[];
 };
 
-type VocabDropdownItem = {
-	checked: boolean;
-} & Categories;
-
 export function DefineAppProfilePage({
+	areas = [],
 	categories,
 	isLoading,
 	onClickBack,
@@ -52,7 +52,8 @@ export function DefineAppProfilePage({
 }: DefineAppProfilePageProps) {
 	const [
 		{
-			appCategories,
+			appAreas,
+			appCategory,
 			appDescription,
 			appERC,
 			appLogo,
@@ -97,40 +98,51 @@ export function DefineAppProfilePage({
 
 	const onContinue = async () => {
 		let product;
-		let response;
 
 		setLoading(true);
 
 		const catalog =
 			await HeadlessCommerceAdminCatalogImpl.getCatalog(catalogId);
 
+		const _category = categories.find(({name}) => name === appCategory);
+
+		const _categories = [
+			...appAreas,
+			...appTags,
+			productType as Categories,
+			_category as unknown as Categories,
+		];
+
 		if (appERC) {
-			response = await updateApp({
-				appDescription: appDescription?.replace(/\n/g, '<br>'),
-				appERC,
-				appName,
-			});
+			product =
+				await HeadlessCommerceAdminCatalogImpl.updateProductByExternalReferenceCode(
+					appERC,
+					{
+						catalogId,
+						categories: _categories,
+						description: {en_US: appDescription},
+						name: {en_US: appName},
+						productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
+					}
+				);
 		}
 		else {
-			response = await createApp({
-				appCategories: [
-					...appCategories,
-					...appTags,
-					productType as Categories,
-				],
-				appDescription: appDescription?.replace(/\n/g, '<br>'),
-				appName,
-				catalogId,
-				productSpecifications: [
-					{
-						specificationKey:
-							PRODUCT_SPECIFICATION_KEY.APP_DEVELOPER_NAME,
-						value: {en_US: catalog?.name},
-					},
-				],
-			});
-
-			product = await response.json();
+			product =
+				await HeadlessCommerceAdminCatalogImpl.createVirtualProduct({
+					catalogId,
+					categories: _categories,
+					description: appDescription,
+					name: appName,
+					productSpecifications: [
+						{
+							specificationKey:
+								PRODUCT_SPECIFICATION_KEY.APP_DEVELOPER_NAME,
+							value: {en_US: catalog?.name},
+						},
+					],
+					productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
+					workflowStatusInfo: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
+				});
 
 			dispatch({
 				payload: {
@@ -162,6 +174,7 @@ export function DefineAppProfilePage({
 	};
 
 	const [multiSelectText, setMultiSelectText] = useState({
+		areas: '',
 		categories: '',
 		tags: '',
 	});
@@ -175,7 +188,7 @@ export function DefineAppProfilePage({
 
 	const getFilteredItems = (
 		selectedItems: {[key: string]: string}[],
-		defaultItems: VocabDropdownItem[]
+		defaultItems: Categories[]
 	) =>
 		defaultItems?.filter(
 			(defaultCategory) =>
@@ -185,7 +198,7 @@ export function DefineAppProfilePage({
 		);
 
 	const defaultSourceItems = {
-		categories: categories ?? [],
+		areas: areas ?? [],
 		tags: tags ?? [],
 	};
 
@@ -208,142 +221,156 @@ export function DefineAppProfilePage({
 						uploadedFile={appLogo}
 					/>
 
-					<div>
-						<Input
-							component="input"
-							label="Name"
-							onChange={({target}) =>
-								dispatch({
-									payload: {
-										value: target.value,
-									},
-									type: TYPES.UPDATE_APP_NAME,
-								})
-							}
-							placeholder="Enter app name"
-							required
-							tooltip={ReactDOMServer.renderToString(
-								<span>
-									Customers of the marketplace will see this
-									as the name of the app. Please use a title
-									of no longer than 50 characters. Titles
-									longer than 18 characters may be truncated.
-									The App title may contain the word "Liferay"
-									to describe its use or intent as long as the
-									name does not imply official certification
-									or validation from Liferay, Inc. An example
-									of permissible names would be "Exchange
-									Connector for Liferay" or "Integration
-									Connector Kit for Liferay" while "Liferay
-									Mail App" or "Liferay Management Console"
-									would not be permitted without explicit
-									approval. Please refer to our{' '}
-									<a href="https://www.liferay.com/trademark">
-										trademark policy
-									</a>
-									.
-								</span>
-							)}
-							value={appName}
-						/>
+					<Input
+						component="input"
+						label="Name"
+						onChange={({target}) =>
+							dispatch({
+								payload: {
+									value: target.value,
+								},
+								type: TYPES.UPDATE_APP_NAME,
+							})
+						}
+						placeholder="Enter app name"
+						required
+						tooltip={ReactDOMServer.renderToString(
+							<span>
+								Customers of the marketplace will see this as
+								the name of the app. Please use a title of no
+								longer than 50 characters. Titles longer than 18
+								characters may be truncated. The App title may
+								contain the word &quot;Liferay&quot; to describe
+								its use or intent as long as the name does not
+								imply official certification or validation from
+								Liferay, Inc. An example of permissible names
+								would be &quot;Exchange Connector for
+								Liferay&quot; or &quot;Integration Connector Kit
+								for Liferay&quot; while &quot;Liferay Mail
+								App&quot; or &quot;Liferay Management
+								Console&quot; would not be permitted without
+								explicit approval. Please refer to our{' '}
+								<a href="https://www.liferay.com/trademark">
+									trademark policy
+								</a>
+								.
+							</span>
+						)}
+						value={appName}
+					/>
 
-						<Input
-							component="textarea"
-							label="Description"
-							localizedTooltipText="Descriptions can be localized for each language your app supports.  Please choose the appropriate language and enter description in the language selected."
-							onChange={({target}) =>
-								dispatch({
-									payload: {
-										value: target.value,
-									},
-									type: TYPES.UPDATE_APP_DESCRIPTION,
-								})
-							}
-							placeholder="Enter app description"
-							required
-							tooltip="You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text. Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material."
-							value={appDescription}
-						/>
+					<Input
+						component="textarea"
+						label="Description"
+						localizedTooltipText="Descriptions can be localized for each language your app supports.  Please choose the appropriate language and enter description in the language selected."
+						onChange={({target}) =>
+							dispatch({
+								payload: {
+									value: target.value,
+								},
+								type: TYPES.UPDATE_APP_DESCRIPTION,
+							})
+						}
+						placeholder="Enter app description"
+						required
+						tooltip="You can put anything you want here, but a good guideline is no more than 4-5 paragraphs. This field does not allow any markup tags - it’s just text. Please do not use misleading names, information, or icons. Descriptions should be as concise as possible. Ensure your icons, images, descriptions, and tags are free of profanity or other offensive material."
+						value={appDescription}
+					/>
 
-						<MultiSelect
-							inputName="categories"
-							label={i18n.translate('categories')}
-							multiselectKey={`cat-${
-								getFilteredItems(
-									appCategories,
-									defaultSourceItems?.categories
-								).length
-							}`}
-							onChange={(value: string) =>
-								onChangeMultiSelect({
-									target: {
-										name: 'categories',
-										value,
-									},
-								})
-							}
-							onItemsChange={(value: {[key: string]: string}[]) =>
-								dispatch({
-									payload: {
-										value,
-									},
-									type: TYPES.UPDATE_APP_CATEGORIES,
-								})
-							}
-							placeholder={i18n.translate('select-categories')}
-							required
-							selectedItems={appCategories}
-							sourceItems={getFilteredItems(
-								appCategories,
-								defaultSourceItems?.categories
-							)}
-							tooltip="Choose the Marketplace category that most accurately describes what your app does. Users looking for specific types of apps will often browse categories by searching on a specific category name in the main Marketplace home page. Having your app listed under the appropriate category will help them find your app."
-							value={multiSelectText?.categories}
-						/>
+					<Select
+						boldLabel
+						label="Category"
+						name="category"
+						onChange={({target: {value}}) =>
+							dispatch({
+								payload: {
+									value,
+								},
+								type: TYPES.UPDATE_APP_CATEGORIES,
+							})
+						}
+						options={categories.map(({name}) => ({
+							key: name,
+							name,
+						}))}
+						required
+						value={appCategory}
+					/>
 
-						<MultiSelect
-							inputName="tags"
-							label={i18n.translate('tags')}
-							multiselectKey={`tag-${
-								getFilteredItems(
-									appTags,
-									defaultSourceItems?.tags
-								).length
-							}`}
-							onChange={(value: string) =>
-								onChangeMultiSelect({
-									target: {
-										name: 'tags',
-										value,
-									},
-								})
-							}
-							onItemsChange={(value: {[key: string]: string}[]) =>
-								dispatch({
-									payload: {
-										value,
-									},
-									type: TYPES.UPDATE_APP_TAGS,
-								})
-							}
-							placeholder={i18n.translate('select-tags')}
-							required
-							selectedItems={appTags}
-							sourceItems={getFilteredItems(
-								appTags,
-								defaultSourceItems?.tags
-							)}
-							tooltip="Tags help to describe your app in the Marketplace. Select the tags most relevant to your app. They can be changed if needed."
-							value={multiSelectText?.tags}
-						/>
-					</div>
+					<MultiSelect
+						inputName="areas"
+						label={i18n.translate('area')}
+						multiselectKey={`area-${
+							getFilteredItems(
+								appAreas,
+								defaultSourceItems?.areas
+							).length
+						}`}
+						onChange={(value: string) =>
+							onChangeMultiSelect({
+								target: {
+									name: 'areas',
+									value,
+								},
+							})
+						}
+						onItemsChange={(value: {[key: string]: string}[]) =>
+							dispatch({
+								payload: {
+									value,
+								},
+								type: TYPES.UPDATE_APP_AREAS,
+							})
+						}
+						placeholder={i18n.translate('select-areas')}
+						required
+						selectedItems={appAreas}
+						sourceItems={getFilteredItems(
+							appAreas,
+							defaultSourceItems?.areas
+						)}
+						value={multiSelectText?.areas}
+					/>
+
+					<MultiSelect
+						inputName="tags"
+						label={i18n.translate('tags')}
+						multiselectKey={`tag-${
+							getFilteredItems(appTags, defaultSourceItems?.tags)
+								.length
+						}`}
+						onChange={(value: string) =>
+							onChangeMultiSelect({
+								target: {
+									name: 'tags',
+									value,
+								},
+							})
+						}
+						onItemsChange={(value: {[key: string]: string}[]) =>
+							dispatch({
+								payload: {
+									value,
+								},
+								type: TYPES.UPDATE_APP_TAGS,
+							})
+						}
+						placeholder={i18n.translate('select-tags')}
+						required
+						selectedItems={appTags}
+						sourceItems={getFilteredItems(
+							appTags,
+							defaultSourceItems?.tags
+						)}
+						value={multiSelectText?.tags}
+					/>
 				</Section>
 			</div>
 
 			<NewAppPageFooterButtons
 				disableContinueButton={
 					isLoading ||
-					!appCategories.length ||
+					!appCategory ||
 					!appDescription ||
 					!appName ||
 					!appTags.length

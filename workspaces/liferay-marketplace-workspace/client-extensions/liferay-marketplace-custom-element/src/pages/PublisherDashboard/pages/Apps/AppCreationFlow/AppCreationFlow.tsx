@@ -3,12 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import useSWR from 'swr';
 
+import AppToolbar from '../../../../../components/AppPublish/Navbar';
+import Loading from '../../../../../components/Loading';
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
+import {MarketplaceTaxonomyVocabularies} from '../../../../../entity/MarketplaceTaxonomyVocabulary';
+import {PRODUCT_TYPE_VOCABULARY} from '../../../../../enums/Product';
+import {ProductVocabulary} from '../../../../../enums/ProductVocabulary';
+import {useAccount} from '../../../../../hooks/data/useAccounts';
+import {Liferay} from '../../../../../liferay/liferay';
+import HeadlessAdminTaxonomyImpl from '../../../../../services/rest/HeadlessAdminTaxonomy';
+import {useAppContext} from './AppContext/AppManageState';
 import {initialFLowListItems} from './AppCreationFlowUtil';
 import {ChoosePricingModelPage} from './ChoosePricingModelPage/ChoosePricingModelPage';
 import {CreateNewAppPage} from './CreateNewAppPage/CreateNewAppPage';
+import {DefineAppProfilePage} from './DefineAppProfilePage/DefineAppProfilePage';
 import {InformLicensingTermsPage} from './InformLicensingTermsPage/InformLicensingTermsPage';
 import {InformLicensingTermsPricePage} from './InformLicensingTermsPage/InformLicensingTermsPricePage';
 import {ProvideAppBuildPage} from './ProvideAppBuildPage/ProvideAppBuildPage';
@@ -19,16 +31,6 @@ import {CustomizeAppStorefrontPage} from './StorefrontPage/CustomizeAppStorefron
 
 import './AppCreationFlow.scss';
 
-import {useNavigate} from 'react-router-dom';
-
-import AppToolbar from '../../../../../components/AppPublish/Navbar';
-import Loading from '../../../../../components/Loading';
-import {useAccount} from '../../../../../hooks/data/useAccounts';
-import {Liferay} from '../../../../../liferay/liferay';
-import {getCategories, getVocabularies} from '../../../../../utils/api';
-import {useAppContext} from './AppContext/AppManageState';
-import {DefineAppProfilePage} from './DefineAppProfilePage/DefineAppProfilePage';
-
 type SetAppFlowListStateProps = {
 	checkedItems?: string[];
 	selectedItem: string;
@@ -38,23 +40,53 @@ type AppCreationFlowProps = {
 	catalogId: string;
 };
 
-type VocabDropdownItem = {
-	checked: boolean;
-} & Categories;
-
 export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 	const [{appERC, appLogo, appName, appProductId, priceModel}] =
 		useAppContext();
 	const [appFlowListItems, setAppFlowListItems] =
 		useState(initialFLowListItems);
 	const [currentFlow, setCurrentFlow] = useState('create');
-	const [isLoading, setLoading] = useState<boolean>(false);
-	const [productType, setProductType] = useState<Categories>();
-	const [categories, setCategories] = useState<VocabDropdownItem[]>([]);
-	const [tags, setTags] = useState<VocabDropdownItem[]>([]);
+	const [isLoading, setLoading] = useState(false);
 
 	const {data: account} = useAccount();
 	const navigate = useNavigate();
+
+	const {data: {areas = [], categories = [], productType, tags = []} = {}} =
+		useSWR('/taxonomy-vocabularies', async () => {
+			const data =
+				await HeadlessAdminTaxonomyImpl.getTaxonomyVocabulariesWithCategories();
+
+			const marketplaceTaxonomyVocabularies =
+				new MarketplaceTaxonomyVocabularies(data.items);
+
+			return {
+				areas: marketplaceTaxonomyVocabularies
+					.getVocabularyCategories(ProductVocabulary.APP_AREA)
+					.map((taxonomyCategory) => ({
+						...taxonomyCategory,
+						label: taxonomyCategory.name,
+						value: taxonomyCategory.name,
+						vocabulary: ProductVocabulary.APP_AREA,
+					})),
+				categories:
+					marketplaceTaxonomyVocabularies.getVocabularyCategories(
+						ProductVocabulary.APP_CATEGORY
+					),
+				productType:
+					marketplaceTaxonomyVocabularies.getVocabularyCategory(
+						ProductVocabulary.PRODUCT_TYPE,
+						PRODUCT_TYPE_VOCABULARY.APP
+					),
+				tags: marketplaceTaxonomyVocabularies
+					.getVocabularyCategories(ProductVocabulary.APP_TAGS)
+					.map((taxonomyCategory) => ({
+						...taxonomyCategory,
+						label: taxonomyCategory.name,
+						value: taxonomyCategory.name,
+						vocabulary: ProductVocabulary.APP_TAGS,
+					})),
+			};
+		});
 
 	const setAppFlowListState = ({
 		checkedItems,
@@ -86,85 +118,6 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 
 		setAppFlowListItems(newAppFlowListItems);
 	};
-
-	useEffect(() => {
-		const getData = async () => {
-			setLoading(true);
-			const vocabulariesResponse = await getVocabularies();
-
-			let categoryVocabId = 0;
-			let productTypeVocabId = 0;
-			let tagVocabId = 0;
-
-			vocabulariesResponse.items.forEach(
-				(vocab: {id: number; name: string}) => {
-					if (vocab.name === 'Marketplace App Category') {
-						categoryVocabId = vocab.id;
-					}
-
-					if (vocab.name === 'Marketplace App Tags') {
-						tagVocabId = vocab.id;
-					}
-
-					if (vocab.name === 'Marketplace Product Type') {
-						productTypeVocabId = vocab.id;
-					}
-				}
-			);
-
-			const categoriesList = await getCategories({
-				vocabId: categoryVocabId,
-			});
-			const tagsList = await getCategories({vocabId: tagVocabId});
-
-			const productTypeList = await getCategories({
-				vocabId: productTypeVocabId,
-			});
-
-			const appProductType = productTypeList.find(
-				(productType) => productType.name === 'App'
-			);
-
-			if (appProductType) {
-				setProductType({
-					externalReferenceCode: appProductType.externalReferenceCode,
-					id: appProductType.id,
-					name: appProductType.name,
-					vocabulary: 'Marketplace Product Type',
-				});
-			}
-
-			const categoriesDropdownItems = categoriesList.map((category) => {
-				return {
-					checked: false,
-					externalReferenceCode: category.externalReferenceCode,
-					id: category.id,
-					label: category.name,
-					name: category.name,
-					value: category.name,
-					vocabulary: 'Marketplace App Category',
-				};
-			});
-
-			const tagsDropdownItems = tagsList.map((tag) => {
-				return {
-					checked: false,
-					externalReferenceCode: tag.externalReferenceCode,
-					id: tag.id,
-					label: tag.name,
-					name: tag.name,
-					value: tag.name,
-					vocabulary: 'Marketplace App Tags',
-				};
-			});
-
-			setCategories(categoriesDropdownItems);
-			setTags(tagsDropdownItems);
-			setLoading(false);
-		};
-
-		getData();
-	}, []);
 
 	return (
 		<div className="app-creation-flow-container">
@@ -201,6 +154,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 
 						{currentFlow === 'profile' && (
 							<DefineAppProfilePage
+								areas={areas as unknown as Categories[]}
 								categories={categories}
 								isLoading={isLoading}
 								onClickBack={() => {
@@ -217,9 +171,11 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 
 									setCurrentFlow('build');
 								}}
-								productType={productType as Categories}
+								productType={
+									productType as unknown as Categories
+								}
 								setLoading={setLoading}
-								tags={tags}
+								tags={tags as unknown as Categories[]}
 							/>
 						)}
 

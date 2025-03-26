@@ -19,7 +19,7 @@ type InputProps = {
 	id?: string;
 	label?: string;
 	name: string;
-	options?: {key: string; name: string}[];
+	options?: {disabled?: boolean; key: string; name: string}[];
 	register?: any;
 	required?: boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
@@ -80,7 +80,11 @@ const Select = React.forwardRef<HTMLInputElement, InputProps>(
 
 					{options?.map((option) => {
 						return (
-							<option key={option.key} value={option.key}>
+							<option
+								key={option.key}
+								disabled={option.disabled}
+								value={option.key}
+							>
 								{option.name}
 							</option>
 						);

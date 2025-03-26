@@ -15,6 +15,10 @@ import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFo
 import {PackageVersionModal} from '../../../../../../components/PackageVersionModal/PackageVersionModal';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
+import {
+	PRODUCT_SPECIFICATION_KEY,
+	PRODUCT_WORKFLOW_STATUS_CODE,
+} from '../../../../../../enums/Product';
 import {ProductEditionOption} from '../../../../../../enums/ProductEditionOption';
 import {ProductSpecification} from '../../../../../../enums/ProductSpecification';
 import {ProductType} from '../../../../../../enums/ProductType';
@@ -22,6 +26,7 @@ import {ProductUploadType} from '../../../../../../enums/ProductUploadType';
 import {ProductVersionOption} from '../../../../../../enums/ProductVersionOption';
 import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
 import i18n from '../../../../../../i18n';
+import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createProductSpecification,
 	createProductVirtualEntry,
@@ -35,17 +40,12 @@ import {
 } from '../../../../../../utils/api';
 import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
-import {getOfferingTypes} from './constants/offeringTypes';
-
-import './ProvideAppBuildPage.scss';
-import {
-	PRODUCT_SPECIFICATION_KEY,
-	PRODUCT_WORKFLOW_STATUS_CODE,
-} from '../../../../../../enums/Product';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import ResourceRequirements from './ResourceRequirements';
 import UploadAppPackagesComponent from './components/UploadAppPackages';
+import {getOfferingTypes} from './constants/offeringTypes';
 import {ProductTypeOptions} from './constants/productTypes';
+
+import './ProvideAppBuildPage.scss';
 
 type BodyProductSpecificationProps = {
 	productId: number;
@@ -385,7 +385,7 @@ export function ProvideAppBuildPage({
 
 		dispatch({
 			payload: {id, value: appType.value},
-			type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
+			type: TYPES.UPDATE_APP_TYPE,
 		});
 	};
 
@@ -395,7 +395,7 @@ export function ProvideAppBuildPage({
 				id: appType.id,
 				value,
 			},
-			type: TYPES.UPDATE_APP_LXC_COMPATIBILITY,
+			type: TYPES.UPDATE_APP_TYPE,
 		});
 
 		handleResetAppPackages();
@@ -690,7 +690,7 @@ export function ProvideAppBuildPage({
 							);
 						}
 					}
-					catch (error) {
+					catch {
 						console.error(
 							'Something went wrong to buildCategores | buildTypeSpecifications | buildPackages | buildClouldResourceRequirements'
 						);

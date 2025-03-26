@@ -9,6 +9,8 @@ import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
+import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../enums/Product';
+import {ProductType} from '../../../../../../enums/ProductType';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createAppSKU,
@@ -24,7 +26,6 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {TYPES} from '../AppContext/actionTypes';
 
 import './InformLicensingTermsPage.scss';
-import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../enums/Product';
 
 type InformLicensingTermsPageProps = {
 	onClickBack: () => void;
@@ -205,7 +206,10 @@ export function InformLicensingTermsPage({
 
 					<RadioCard
 						description="App License must be renewed annually."
-						disabled={priceModel.value === 'Free'}
+						disabled={
+							priceModel.value === 'Free' ||
+							appType.value === ProductType.LOW_CODE_CONFIGURATION
+						}
 						icon="document-pending"
 						onChange={() => {
 							dispatch({
@@ -232,7 +236,10 @@ export function InformLicensingTermsPage({
 				<div className="informing-licensing-terms-page-day-trial-container">
 					<RadioCard
 						description="Offer a 30-day free trial for this app."
-						disabled={priceModel.value === 'Free'}
+						disabled={
+							priceModel.value === 'Free' ||
+							appType.value === ProductType.LOW_CODE_CONFIGURATION
+						}
 						icon="check-circle"
 						onChange={() =>
 							dispatch({

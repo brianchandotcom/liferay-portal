@@ -22,7 +22,8 @@ export type LicensePrice = {key: number; value: number};
 
 export type InitialStateProps = {
 	appBuild: string;
-	appCategories: Categories[];
+	appAreas: Categories[];
+	appCategory: string;
 	appDescription: string;
 	appDocumentationURL: Specification;
 	appERC: string;
@@ -67,7 +68,7 @@ export type PriceEntry = {priceEntryId: number; sku: {name: string}};
 
 const initialState = {
 	appBuild: 'upload',
-	appCategories: [],
+	appCategory: '',
 	appDescription: '',
 	appLicense: {value: 'Perpetual'},
 	appLicensePrice: {

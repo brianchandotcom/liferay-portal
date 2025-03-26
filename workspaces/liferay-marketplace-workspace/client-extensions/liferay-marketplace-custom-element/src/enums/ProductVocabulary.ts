@@ -4,6 +4,7 @@
  */
 
 export enum ProductVocabulary {
+	APP_AREA = 'Marketplace App Area',
 	APP_CATEGORY = 'Marketplace App Category',
 	APP_TAGS = 'Marketplace App Tags',
 	EDITION = 'Marketplace Edition',

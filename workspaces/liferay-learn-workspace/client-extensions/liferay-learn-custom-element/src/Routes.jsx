@@ -21,8 +21,8 @@ export default function Routes({path, properties}) {
 	}
 
 	return (
-		<Suspense>
-			<Route properties={properties} />
+		<Suspense fallback={<div>Loading...</div>}>
+		  <Route properties={properties} />
 		</Suspense>
-	);
+	  );
 }

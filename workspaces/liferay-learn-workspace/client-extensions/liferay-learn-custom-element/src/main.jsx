@@ -15,17 +15,6 @@ class WebComponent extends HTMLElement {
 			this.root.render(
 				<Routes
 					path={this.getAttribute('path')}
-					properties={{
-						analyticsCloudURL:
-							this.getAttribute('analyticsCloudURL') || '',
-						cloudConsoleURL:
-							this.getAttribute('cloudConsoleURL') || '',
-						contactSupportURL:
-							this.getAttribute('contactSupportURL') || '',
-						eulaBaseURL: this.getAttribute('eulaBaseURL') || '',
-						marketoFormId: this.getAttribute('marketoFormId') || '',
-						trialEulaURL: this.getAttribute('trialEulaURL') || '',
-					}}
 				/>
 			);
 		}

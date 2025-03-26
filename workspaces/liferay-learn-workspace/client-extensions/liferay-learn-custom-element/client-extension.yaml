@@ -1,22 +1,15 @@
 assemble:
-    - from: build/static
+    - from: build/vite
       into: static
 liferay-learn-custom-element:
     cssURLs:
-        - css/main.*.css
+        - "**/index*.css"
     friendlyURLMapping: liferay-learn-custom-element
     htmlElementName: liferay-learn-custom-element
-    instanceable: false
-    name: Liferay Learn
+    instanceable: true
+    name: Liferay Learn LMS
     portletCategoryName: category.client-extensions
-    properties:
-        analyticsCloudURL: https://analytics-internal.liferay.com
-        cloudConsoleURL: https://console.liferay.cloud
-        contactSupportURL: https://www.liferay.com/contact-us
-        eulaBaseURL: https://www.liferay.com/legal/marketplace-terms-of-service
-        marketoFormId: 3738
-        trialEulaURL: https://marketplace.liferay.com/documents/d/marketplace/evaluation-agreement-cloud-services
     type: customElement
     urls:
-        - "main.js"
+        - main.js
     useESM: true

@@ -922,7 +922,7 @@
 														"key": "BASIC_COMPONENT-heading"
 													},
 													"fragmentConfig": {
-														"headingLevel": "h5"
+														"headingLevel": "h6"
 													},
 													"fragmentFields": [
 														{
@@ -932,7 +932,7 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Ans?"
+																		"en_US": "Answered"
 																	}
 																}
 															}

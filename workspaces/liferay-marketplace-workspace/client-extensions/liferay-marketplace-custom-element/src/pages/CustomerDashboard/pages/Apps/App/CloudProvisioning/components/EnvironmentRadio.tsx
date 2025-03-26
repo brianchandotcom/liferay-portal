@@ -9,7 +9,7 @@ import {useOutletContext} from 'react-router-dom';
 import {z} from 'zod';
 
 import RadioCard from '../../../../../../../components/RadioCardList/components/RadioCard';
-import {ORDER_CUSTOM_FIELDS} from '../../../../../../../enums/Order';
+import {OrderCustomFields} from '../../../../../../../enums/Order';
 import i18n from '../../../../../../../i18n';
 import zodSchema from '../../../../../../../schema/zod';
 import {ConsoleUserProject} from '../../../../../../../services/oauth/types';
@@ -33,7 +33,7 @@ const EnvironmentRadio: React.FC<EnvironmentRadioProps> = ({
 	const {placedOrder} = useOutletContext<CloudProvisioningOutletContext>();
 
 	const cloudProvisioning = safeJSONParse<Provisioning[]>(
-		placedOrder.customFields[ORDER_CUSTOM_FIELDS.CLOUD_PROVISIONING],
+		placedOrder.customFields[OrderCustomFields.CLOUD_PROVISIONING],
 		[]
 	);
 

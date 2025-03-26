@@ -19,7 +19,7 @@ import PublisherSummaryContent from './PublisherSummaryContent';
 
 export type PublisherForm = z.infer<typeof zodSchema.becomePublisherForm>;
 
-export enum StepType {
+export enum PublisherGateStep {
 	FORM = 'form',
 	SUMMARY = 'summary',
 	REQUESTED = 'requested',
@@ -27,7 +27,7 @@ export enum StepType {
 
 const PublisherGateSteps = () => {
 	const {myUserAccount} = useMarketplaceContext();
-	const [step, setStep] = useState<StepType>(StepType.FORM);
+	const [step, setStep] = useState<PublisherGateStep>(PublisherGateStep.FORM);
 	const userPhone =
 		myUserAccount?.userAccountContactInformation?.telephones || [];
 
@@ -61,7 +61,7 @@ const PublisherGateSteps = () => {
 		try {
 			await fetcher.post('o/c/requestpublisheraccounts/', formData);
 
-			setStep(StepType.REQUESTED);
+			setStep(PublisherGateStep.REQUESTED);
 		}
 		catch (error) {
 			console.error(error);
@@ -69,7 +69,7 @@ const PublisherGateSteps = () => {
 	};
 
 	const StepsAccount = {
-		[StepType.FORM]: {
+		[PublisherGateStep.FORM]: {
 			component: (
 				<PublisherGateForm
 					form={form}
@@ -78,7 +78,7 @@ const PublisherGateSteps = () => {
 				/>
 			),
 		},
-		[StepType.SUMMARY]: {
+		[PublisherGateStep.SUMMARY]: {
 			component: (
 				<PublisherGateSummary
 					setStep={setStep}
@@ -105,7 +105,7 @@ const PublisherGateSteps = () => {
 				</PublisherGateSummary>
 			),
 		},
-		[StepType.REQUESTED]: {
+		[PublisherGateStep.REQUESTED]: {
 			component: <PubliserhRequestedCard />,
 		},
 	};

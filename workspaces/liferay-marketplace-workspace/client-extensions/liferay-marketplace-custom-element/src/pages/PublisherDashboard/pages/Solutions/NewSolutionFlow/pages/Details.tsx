@@ -11,7 +11,7 @@ import {useState} from 'react';
 
 import Form from '../../../../../../components/MarketplaceForm';
 import {
-	BLOCK_DIRECTIONS,
+	BlockDirections,
 	SolutionTypes,
 	useSolutionContext,
 } from '../../../../../../context/SolutionContext';
@@ -54,7 +54,7 @@ const Details = () => {
 				const Component = (blockTypes as any)[block.type];
 
 				const handleMoveOrDeleteBlock = (
-					direction: BLOCK_DIRECTIONS
+					direction: BlockDirections
 				) => {
 					dispatch({
 						payload: {
@@ -71,33 +71,33 @@ const Details = () => {
 						name: i18n.translate('move-to-top'),
 						onClick: () =>
 							handleMoveOrDeleteBlock(
-								BLOCK_DIRECTIONS.MOVE_TO_TOP
+								BlockDirections.MOVE_TO_TOP
 							),
 					},
 					{
 						disabled: index === 0,
 						name: i18n.translate('move-up'),
 						onClick: () =>
-							handleMoveOrDeleteBlock(BLOCK_DIRECTIONS.MOVE_UP),
+							handleMoveOrDeleteBlock(BlockDirections.MOVE_UP),
 					},
 					{
 						disabled: index === blocks.length - 1,
 						name: i18n.translate('move-down'),
 						onClick: () =>
-							handleMoveOrDeleteBlock(BLOCK_DIRECTIONS.MOVE_DOWN),
+							handleMoveOrDeleteBlock(BlockDirections.MOVE_DOWN),
 					},
 					{
 						disabled: index === blocks.length - 1,
 						name: i18n.translate('move-to-bottom'),
 						onClick: () =>
 							handleMoveOrDeleteBlock(
-								BLOCK_DIRECTIONS.MOVE_TO_BOTTOM
+								BlockDirections.MOVE_TO_BOTTOM
 							),
 					},
 					{
 						name: i18n.translate('delete'),
 						onClick: () =>
-							handleMoveOrDeleteBlock(BLOCK_DIRECTIONS.DELETE),
+							handleMoveOrDeleteBlock(BlockDirections.DELETE),
 					},
 				];
 

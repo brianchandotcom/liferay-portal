@@ -7,13 +7,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
 import './OrderStatus.scss';
-
-export enum Statuses {
-	APPROVED = 'approved',
-	COMPLETED = 'completed',
-	PENDING = 'pending',
-	PROCESSING = 'processing',
-}
+import {OrderStatus as Status} from '../../enums/Order';
 
 type OrderStatusProps = {
 	children?: string;
@@ -25,12 +19,12 @@ const OrderStatus = ({children, orderStatus}: OrderStatusProps) => (
 		<ClayIcon
 			className={classNames('mr-2 order-status-icon', {
 				'order-status-icon-completed': [
-					Statuses.COMPLETED,
-					Statuses.APPROVED,
-				].includes(orderStatus as Statuses),
-				'order-status-icon-pending': orderStatus === Statuses.PENDING,
+					Status.COMPLETED,
+					Status.APPROVED,
+				].includes(orderStatus as Status),
+				'order-status-icon-pending': orderStatus === Status.PENDING,
 				'order-status-icon-processing':
-					orderStatus === Statuses.PROCESSING,
+					orderStatus === Status.PROCESSING,
 			})}
 			symbol="circle"
 		/>

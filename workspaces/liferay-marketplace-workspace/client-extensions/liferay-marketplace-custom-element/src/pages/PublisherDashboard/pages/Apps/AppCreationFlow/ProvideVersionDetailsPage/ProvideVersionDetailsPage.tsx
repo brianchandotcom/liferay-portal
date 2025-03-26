@@ -7,7 +7,7 @@ import {Header} from '../../../../../../components/Header/Header';
 import {Input} from '../../../../../../components/Input/Input';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Section} from '../../../../../../components/Section/Section';
-import {PRODUCT_LICENSE} from '../../../../../../enums/Product';
+import {ProductLicense} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import {
 	createAppSKU,
@@ -29,7 +29,7 @@ import {
 	getOptionTrialBody,
 } from '../../../../../../utils/util';
 import {useAppContext} from '../AppContext/AppManageState';
-import {TYPES} from '../AppContext/actionTypes';
+import {ActionTypes} from '../AppContext/actionTypes';
 
 import './ProvideVersionDetailsPage.scss';
 
@@ -89,10 +89,10 @@ export function ProvideVersionDetailsPage({
 
 	const createProductOptions = async () => {
 		const cloudOption = options.find(
-			({key}) => key === PRODUCT_LICENSE.CLOUD
+			({key}) => key === ProductLicense.CLOUD
 		);
 
-		const dxpOption = options.find(({key}) => key === PRODUCT_LICENSE.DXP);
+		const dxpOption = options.find(({key}) => key === ProductLicense.DXP);
 
 		const targetOption = isCloud ? cloudOption : dxpOption;
 
@@ -118,12 +118,12 @@ export function ProvideVersionDetailsPage({
 
 		dispatch({
 			payload: {value: newOptionId},
-			type: TYPES.UPDATE_OPTION_ID,
+			type: ActionTypes.UPDATE_OPTION_ID,
 		});
 
 		dispatch({
 			payload: {value: newProductOptionId},
-			type: TYPES.UPDATE_PRODUCT_OPTION_ID,
+			type: ActionTypes.UPDATE_PRODUCT_OPTION_ID,
 		});
 
 		const [developerOptionId, standardOptionId, trialOptionId] =
@@ -200,7 +200,7 @@ export function ProvideVersionDetailsPage({
 			if (sku.name === 'TRIAL') {
 				dispatch({
 					payload: {value: response.id},
-					type: TYPES.UPDATE_SKU_TRIAL_ID,
+					type: ActionTypes.UPDATE_SKU_TRIAL_ID,
 				});
 			}
 
@@ -234,7 +234,7 @@ export function ProvideVersionDetailsPage({
 					onChange={({target}) =>
 						dispatch({
 							payload: {value: target.value},
-							type: TYPES.UPDATE_APP_VERSION,
+							type: ActionTypes.UPDATE_APP_VERSION,
 						})
 					}
 					placeholder="0.0.0"
@@ -251,7 +251,7 @@ export function ProvideVersionDetailsPage({
 					onChange={({target}) =>
 						dispatch({
 							payload: {value: target.value},
-							type: TYPES.UPDATE_APP_NOTES,
+							type: ActionTypes.UPDATE_APP_NOTES,
 						})
 					}
 					placeholder={i18n.translate('enter-app-description')}

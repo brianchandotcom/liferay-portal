@@ -14,9 +14,9 @@ import Loading from '../../../../components/Loading';
 import QATable from '../../../../components/QATable';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {
-	ORDER_CUSTOM_FIELDS,
-	ORDER_TYPES,
-	ORDER_WORKFLOW_STATUS_CODE,
+	OrderCustomFields,
+	OrderTypes,
+	OrderWorkflowStatusCode,
 } from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import analyticsOAuth2 from '../../../../services/oauth/Analytics';
@@ -28,22 +28,22 @@ const NEXT_TO_EXPIRE_LEFT_DAYS = 2;
 
 const getTrialDetails = (placedOrder: PlacedOrder) => {
 	const orderStatusCode = placedOrder.orderStatusInfo
-		?.code as ORDER_WORKFLOW_STATUS_CODE;
+		?.code as OrderWorkflowStatusCode;
 
 	const customFields = placedOrder.customFields;
 
 	const isTrialCompleted =
-		orderStatusCode === ORDER_WORKFLOW_STATUS_CODE.COMPLETED;
+		orderStatusCode === OrderWorkflowStatusCode.COMPLETED;
 
-	const nextToExpire = customFields[ORDER_CUSTOM_FIELDS.END_DATE]
+	const nextToExpire = customFields[OrderCustomFields.END_DATE]
 		? !isTrialCompleted &&
 			differenceInDays(
-				new Date(customFields[ORDER_CUSTOM_FIELDS.END_DATE]),
+				new Date(customFields[OrderCustomFields.END_DATE]),
 				new Date()
 			) <= NEXT_TO_EXPIRE_LEFT_DAYS
 		: false;
 
-	const virtualHost = customFields[ORDER_CUSTOM_FIELDS.VIRTUAL_HOST] || '';
+	const virtualHost = customFields[OrderCustomFields.VIRTUAL_HOST] || '';
 
 	return [
 		{
@@ -52,15 +52,15 @@ const getTrialDetails = (placedOrder: PlacedOrder) => {
 		},
 		{
 			title: i18n.translate('trial-start-date'),
-			value: customFields[ORDER_CUSTOM_FIELDS.START_DATE]
-				? formatDate(customFields[ORDER_CUSTOM_FIELDS.START_DATE])
+			value: customFields[OrderCustomFields.START_DATE]
+				? formatDate(customFields[OrderCustomFields.START_DATE])
 				: '-',
 		},
 		{
 			title: i18n.translate('trial-end-date'),
-			value: customFields[ORDER_CUSTOM_FIELDS.END_DATE] ? (
+			value: customFields[OrderCustomFields.END_DATE] ? (
 				<span>
-					{formatDate(customFields[ORDER_CUSTOM_FIELDS.END_DATE])}
+					{formatDate(customFields[OrderCustomFields.END_DATE])}
 
 					{nextToExpire && (
 						<ClayLabel
@@ -97,7 +97,7 @@ const getTrialDetails = (placedOrder: PlacedOrder) => {
 				</a>
 			),
 			visible:
-				orderStatusCode === ORDER_WORKFLOW_STATUS_CODE.IN_PROGRESS &&
+				orderStatusCode === OrderWorkflowStatusCode.IN_PROGRESS &&
 				!!virtualHost,
 		},
 	];
@@ -202,23 +202,23 @@ const Solution = () => {
 	}>();
 
 	const orderStatusCode = placedOrder.orderStatusInfo
-		?.code as ORDER_WORKFLOW_STATUS_CODE;
+		?.code as OrderWorkflowStatusCode;
 
 	const isAddOn =
-		placedOrder.orderTypeExternalReferenceCode === ORDER_TYPES.ADDONS;
+		placedOrder.orderTypeExternalReferenceCode === OrderTypes.ADDONS;
 
 	const limitedTrial = [
-		ORDER_TYPES.SOLUTIONS7,
-		ORDER_TYPES.SOLUTIONS30,
-	].includes(placedOrder.orderTypeExternalReferenceCode as ORDER_TYPES);
+		OrderTypes.SOLUTIONS7,
+		OrderTypes.SOLUTIONS30,
+	].includes(placedOrder.orderTypeExternalReferenceCode as OrderTypes);
 
 	const analyticsGroupId =
-		placedOrder.customFields[ORDER_CUSTOM_FIELDS.ANALYTICS_GROUP_ID];
+		placedOrder.customFields[OrderCustomFields.ANALYTICS_GROUP_ID];
 
 	const getOrderDetails = () => {
 		if (
-			[ORDER_TYPES.SOLUTIONS7, ORDER_TYPES.SOLUTIONS30].includes(
-				placedOrder.orderTypeExternalReferenceCode as ORDER_TYPES
+			[OrderTypes.SOLUTIONS7, OrderTypes.SOLUTIONS30].includes(
+				placedOrder.orderTypeExternalReferenceCode as OrderTypes
 			)
 		) {
 			return getTrialDetails(placedOrder);

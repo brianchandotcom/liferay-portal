@@ -14,7 +14,7 @@ import {
 	SolutionTypes,
 	useSolutionContext,
 } from '../../../../../../context/SolutionContext';
-import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
+import {ProductVocabulary} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
 import {getRandomID} from '../../../../../../utils/string';

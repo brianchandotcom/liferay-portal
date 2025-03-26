@@ -9,11 +9,11 @@ import {Header} from '../../../components/Header/Header';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {getSiteURL} from '../../../utils/site';
-import {StepType} from './PublisherGateSteps';
+import {PublisherGateStep} from './PublisherGateSteps';
 
 type PublisherGateSummaryProps = {
 	children: JSX.Element;
-	setStep: React.Dispatch<React.SetStateAction<StepType>>;
+	setStep: React.Dispatch<React.SetStateAction<PublisherGateStep>>;
 	submit: () => void;
 };
 
@@ -88,7 +88,7 @@ const PublisherGateSummary: React.FC<PublisherGateSummaryProps> = ({
 							<ClayButton
 								className="mr-4"
 								displayType="secondary"
-								onClick={() => setStep(StepType.FORM)}
+								onClick={() => setStep(PublisherGateStep.FORM)}
 							>
 								{i18n.translate('back')}
 							</ClayButton>

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ProductType, ProductTypeLabels} from '../../enums/ProductType';
+import {ProductType, ProductTypeLabels} from '../../enums/Product';
 import {Liferay} from '../../liferay/liferay';
 
 export function formatDate(date: string) {

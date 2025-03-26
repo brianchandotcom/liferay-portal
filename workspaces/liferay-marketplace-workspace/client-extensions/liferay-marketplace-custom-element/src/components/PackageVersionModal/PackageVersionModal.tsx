@@ -13,7 +13,7 @@ import './PackageVersionModal.scss';
 import useListTypeDefinition from '../../hooks/useListTypeDefinition';
 import i18n from '../../i18n';
 import {useAppContext} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/AppManageState';
-import {TYPES} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/actionTypes';
+import {ActionTypes} from '../../pages/PublisherDashboard/pages/Apps/AppCreationFlow/AppContext/actionTypes';
 
 interface PackageVersionModal {
 	appProductId: number;
@@ -49,7 +49,7 @@ export function PackageVersionModal({
 			payload: {
 				versionName: selectedVersion,
 			},
-			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
+			type: ActionTypes.UPLOAD_BUILD_PACKAGE_FILES,
 		});
 	};
 

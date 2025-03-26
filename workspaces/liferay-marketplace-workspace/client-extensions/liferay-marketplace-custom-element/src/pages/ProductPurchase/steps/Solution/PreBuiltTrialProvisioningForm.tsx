@@ -11,7 +11,7 @@ import {Header} from '../../../../components/Header/Header';
 import Loading from '../../../../components/Loading';
 import MarketoForm from '../../../../components/MarketoForm';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {ORDER_TYPES} from '../../../../enums/Order';
+import {OrderTypes} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
@@ -65,8 +65,8 @@ const AccountForm = () => {
 		accountId: selectedAccount?.id,
 		channelId: Liferay.CommerceContext.commerceChannelId,
 		orderTypeExternalReferenceCodes: [
-			ORDER_TYPES.SOLUTIONS7,
-			ORDER_TYPES.SOLUTIONS30,
+			OrderTypes.SOLUTIONS7,
+			OrderTypes.SOLUTIONS30,
 		],
 		page: 1,
 		pageSize: 50,

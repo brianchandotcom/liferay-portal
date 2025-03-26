@@ -5,7 +5,7 @@
 
 import useSWR from 'swr';
 
-import {ProductVocabulary} from '../../enums/ProductVocabulary';
+import {ProductVocabulary} from '../../enums/Product';
 import HeadlessAdminTaxonomyImpl from '../../services/rest/HeadlessAdminTaxonomy';
 
 const useGetVocabulariesAndCategories = (vocabulariesName: string[]) => {

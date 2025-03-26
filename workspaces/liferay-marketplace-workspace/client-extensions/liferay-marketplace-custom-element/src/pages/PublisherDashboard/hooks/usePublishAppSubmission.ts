@@ -13,12 +13,12 @@ import {
 	NewAppTypes,
 } from '../../../context/NewAppContext';
 import {
-	PRODUCT_SPECIFICATION_KEY,
-	PRODUCT_TAGS,
-	PRODUCT_WORKFLOW_STATUS_CODE,
+	ProductSpecificationKey,
+	ProductTags,
+	ProductType,
+	ProductVocabulary,
+	ProductWorkflowStatusCode,
 } from '../../../enums/Product';
-import {ProductType} from '../../../enums/ProductType';
-import {ProductVocabulary} from '../../../enums/ProductVocabulary';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -78,7 +78,7 @@ const addOrUpdateImages = async (
 
 const updateSpecification = async (
 	product: Product,
-	specificationKey: PRODUCT_SPECIFICATION_KEY,
+	specificationKey: ProductSpecificationKey,
 	value: string
 ) => {
 	const {productId, productSpecifications = []} = product;
@@ -130,7 +130,7 @@ const usePublishAppSubmission = (
 
 	const updateSpecifications = (
 		product: Product,
-		specifications: {key: PRODUCT_SPECIFICATION_KEY; value: string}[]
+		specifications: {key: ProductSpecificationKey; value: string}[]
 	) =>
 		Promise.allSettled(
 			specifications.map((specification) =>
@@ -175,8 +175,8 @@ const usePublishAppSubmission = (
 		}));
 
 		const productStatus = config.isDraft
-			? PRODUCT_WORKFLOW_STATUS_CODE.DRAFT
-			: PRODUCT_WORKFLOW_STATUS_CODE.PENDING;
+			? ProductWorkflowStatusCode.DRAFT
+			: ProductWorkflowStatusCode.PENDING;
 
 		if (_product) {
 			if (file && (!file?.uploaded || file?.changed)) {
@@ -187,7 +187,7 @@ const usePublishAppSubmission = (
 						galleryEnabled: false,
 						neverExpire: true,
 						priority: 0,
-						tags: [PRODUCT_TAGS.APP_ICON],
+						tags: [ProductTags.APP_ICON],
 						title: {
 							en_US: file.fileName,
 						},
@@ -229,7 +229,7 @@ const usePublishAppSubmission = (
 					galleryEnabled: false,
 					neverExpire: true,
 					priority: 0,
-					tags: [PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON],
+					tags: [ProductTags.SOLUTION_PROFILE_APP_ICON],
 					title: {
 						en_US: file.fileName,
 					},
@@ -250,7 +250,7 @@ const usePublishAppSubmission = (
 		// Process Upload Images, priority starts in 1 to not conflict with
 		// the app icon defined as priority 0
 
-		await addOrUpdateImages(images, PRODUCT_TAGS.APP_ICON, product, 1);
+		await addOrUpdateImages(images, ProductTags.APP_ICON, product, 1);
 	};
 
 	const syncBuild = async (product: Product) => {
@@ -260,7 +260,7 @@ const usePublishAppSubmission = (
 
 		const specifications = [
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_TYPE,
+				key: ProductSpecificationKey.APP_TYPE,
 				value: cloudCompatible ? ProductType.CLOUD : ProductType.DXP,
 			},
 		];
@@ -268,11 +268,11 @@ const usePublishAppSubmission = (
 		if (cloudCompatible) {
 			specifications.push([
 				{
-					key: PRODUCT_SPECIFICATION_KEY.APP_BUILD_NUMBER_OF_CPUS,
+					key: ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
 					value: resourceRequirements.cpu as string,
 				},
 				{
-					key: PRODUCT_SPECIFICATION_KEY.APP_BUILD_RAM_IN_GBS,
+					key: ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
 					value: resourceRequirements.ram as string,
 				},
 			] as any);
@@ -307,11 +307,11 @@ const usePublishAppSubmission = (
 
 		await updateSpecifications(product, [
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_VERSION,
+				key: ProductSpecificationKey.APP_VERSION,
 				value: version,
 			},
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_VERSION_NOTES,
+				key: ProductSpecificationKey.APP_VERSION_NOTES,
 				value: notes,
 			},
 		]);
@@ -324,7 +324,7 @@ const usePublishAppSubmission = (
 
 		await updateSpecification(
 			product,
-			PRODUCT_SPECIFICATION_KEY.APP_PRICING_MODEL,
+			ProductSpecificationKey.APP_PRICING_MODEL,
 			priceModel
 		);
 	};
@@ -336,7 +336,7 @@ const usePublishAppSubmission = (
 
 		await updateSpecification(
 			product,
-			PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE,
+			ProductSpecificationKey.APP_LICENSING_TYPE,
 			licenseType
 		);
 	};
@@ -346,37 +346,37 @@ const usePublishAppSubmission = (
 
 		await updateSpecifications(product, [
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_SUPPORT_USAGE_TERMS_URL,
+				key: ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL,
 				value: support.appUsageTermsURL,
 			},
 
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_SUPPORT_DOCUMENTATION_URL,
+				key: ProductSpecificationKey.APP_SUPPORT_DOCUMENTATION_URL,
 				value: support.documentationURL,
 			},
 
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_SUPPORT_EMAIL,
+				key: ProductSpecificationKey.APP_SUPPORT_EMAIL,
 				value: support.email,
 			},
 
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_SUPPORT_INSTALLATION_GUIDE_URL,
+				key: ProductSpecificationKey.APP_SUPPORT_INSTALLATION_GUIDE_URL,
 				value: support.installationGuideURL,
 			},
 
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_SUPPORT_PHONE,
+				key: ProductSpecificationKey.APP_SUPPORT_PHONE,
 				value: support.phone,
 			},
 
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_SUPPORT_PUBLISHER_WEBSITE_URL,
+				key: ProductSpecificationKey.APP_SUPPORT_PUBLISHER_WEBSITE_URL,
 				value: support.publisherWebsiteURL,
 			},
 
 			{
-				key: PRODUCT_SPECIFICATION_KEY.APP_SUPPORT_URL,
+				key: ProductSpecificationKey.APP_SUPPORT_URL,
 				value: support.url,
 			},
 		]);

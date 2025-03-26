@@ -6,7 +6,7 @@
 import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {useAppContext} from '../AppContext/AppManageState';
-import {TYPES} from '../AppContext/actionTypes';
+import {ActionTypes} from '../AppContext/actionTypes';
 
 import './CreateNewAppPage.scss';
 import LicenseAgreement from '../../../../../AdministratorDashboard/components/LicenseAgreement/LicenseAgreement';
@@ -39,7 +39,7 @@ export function CreateNewAppPage({
 						payload: {
 							value: catalogId,
 						},
-						type: TYPES.UPDATE_CATALOG_ID,
+						type: ActionTypes.UPDATE_CATALOG_ID,
 					});
 
 					onClickContinue();

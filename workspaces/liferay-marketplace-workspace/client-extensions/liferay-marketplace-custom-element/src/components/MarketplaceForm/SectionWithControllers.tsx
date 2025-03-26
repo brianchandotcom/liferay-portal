@@ -10,7 +10,7 @@ import './index.scss';
 import ClayDropDown from '@clayui/drop-down';
 import {HTMLAttributes, useState} from 'react';
 
-import {BLOCK_DIRECTIONS} from '../../context/SolutionContext';
+import {BlockDirections} from '../../context/SolutionContext';
 
 interface SectionWithControllersProps extends HTMLAttributes<HTMLDivElement> {
 	dropdownItems: {
@@ -20,7 +20,7 @@ interface SectionWithControllersProps extends HTMLAttributes<HTMLDivElement> {
 	}[];
 	index: number;
 	name: string;
-	onArrowClick: (direction: BLOCK_DIRECTIONS) => void;
+	onArrowClick: (direction: BlockDirections) => void;
 	position: number;
 }
 
@@ -45,7 +45,7 @@ export function SectionWithControllers({
 							disabled={index === 0}
 							displayType="unstyled"
 							onClick={() =>
-								onArrowClick(BLOCK_DIRECTIONS.MOVE_UP)
+								onArrowClick(BlockDirections.MOVE_UP)
 							}
 							size="sm"
 							symbol="order-arrow-up"
@@ -56,7 +56,7 @@ export function SectionWithControllers({
 							disabled={index === position - 1}
 							displayType="unstyled"
 							onClick={() =>
-								onArrowClick(BLOCK_DIRECTIONS.MOVE_DOWN)
+								onArrowClick(BlockDirections.MOVE_DOWN)
 							}
 							size="sm"
 							symbol="order-arrow-down"

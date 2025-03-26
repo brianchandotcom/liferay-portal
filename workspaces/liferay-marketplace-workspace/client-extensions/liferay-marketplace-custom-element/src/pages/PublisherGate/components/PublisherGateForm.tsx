@@ -18,12 +18,12 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {phones} from '../../../utils/phones';
 import {getSiteURL} from '../../../utils/site';
-import {PublisherForm, StepType} from './PublisherGateSteps';
+import {PublisherForm, PublisherGateStep} from './PublisherGateSteps';
 
 type PublisherGateFormProps = {
 	form: UseFormReturn<PublisherForm, any>;
 	listTypeDefinition?: ListTypeDefinition;
-	setStep: React.Dispatch<React.SetStateAction<StepType>>;
+	setStep: React.Dispatch<React.SetStateAction<PublisherGateStep>>;
 };
 
 const tooltipText = {
@@ -273,7 +273,9 @@ const PublisherGateForm: React.FC<PublisherGateFormProps> = ({
 
 							<ClayButton
 								disabled={!form.formState.isValid}
-								onClick={() => setStep(StepType.SUMMARY)}
+								onClick={() =>
+									setStep(PublisherGateStep.SUMMARY)
+								}
 							>
 								{i18n.translate('continue')}
 							</ClayButton>

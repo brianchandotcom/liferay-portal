@@ -10,8 +10,8 @@ import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
 
 import {
-	PRODUCT_WORKFLOW_STATUS_CODE,
-	PRODUCT_WORKFLOW_STATUS_LABEL,
+	ProductWorkflowStatusCode,
+	ProductWorkflowStatusLabel,
 } from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {getProductVersionFromSpecifications} from '../../../../../utils/util';
@@ -44,7 +44,7 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 				<ClayButton
 					disabled={
 						product.productStatus ===
-						PRODUCT_WORKFLOW_STATUS_CODE.PENDING
+						ProductWorkflowStatusCode.PENDING
 					}
 					displayType="secondary"
 					onClick={() =>
@@ -57,7 +57,7 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 			</div>
 
 			{product.workflowStatusInfo.code ===
-				PRODUCT_WORKFLOW_STATUS_CODE.PENDING && (
+				ProductWorkflowStatusCode.PENDING && (
 				<ClayAlert className="my-4" displayType="info">
 					{i18n.translate(
 						'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-the-solution-will-be-published-automatically-to-the-marketplace-meanwhile-any-information-or-data-from-this-solution-submission-cannot-be-updated'
@@ -107,9 +107,9 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 
 							<span className="solution-details-page-header-subtitle-text">
 								{
-									PRODUCT_WORKFLOW_STATUS_LABEL[
+									ProductWorkflowStatusLabel[
 										product.workflowStatusInfo
-											.code as keyof typeof PRODUCT_WORKFLOW_STATUS_LABEL
+											.code as keyof typeof ProductWorkflowStatusLabel
 									]
 								}
 							</span>

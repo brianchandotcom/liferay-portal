@@ -11,8 +11,7 @@ import AppToolbar from '../../../../../components/AppPublish/Navbar';
 import Loading from '../../../../../components/Loading';
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
 import {MarketplaceTaxonomyVocabularies} from '../../../../../entity/MarketplaceTaxonomyVocabulary';
-import {PRODUCT_TYPE_VOCABULARY} from '../../../../../enums/Product';
-import {ProductVocabulary} from '../../../../../enums/ProductVocabulary';
+import {ProductTypeVocabulary, ProductVocabulary} from '../../../../../enums/Product';
 import {useAccount} from '../../../../../hooks/data/useAccounts';
 import {Liferay} from '../../../../../liferay/liferay';
 import HeadlessAdminTaxonomyImpl from '../../../../../services/rest/HeadlessAdminTaxonomy';
@@ -75,7 +74,7 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 				productType:
 					marketplaceTaxonomyVocabularies.getVocabularyCategory(
 						ProductVocabulary.PRODUCT_TYPE,
-						PRODUCT_TYPE_VOCABULARY.APP
+						ProductTypeVocabulary.APP
 					),
 				tags: marketplaceTaxonomyVocabularies
 					.getVocabularyCategories(ProductVocabulary.APP_TAGS)

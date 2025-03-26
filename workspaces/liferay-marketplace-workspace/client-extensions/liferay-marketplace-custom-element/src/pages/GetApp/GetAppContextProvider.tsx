@@ -6,13 +6,13 @@
 import {ReactNode, createContext, useContext, useMemo, useReducer} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {PRODUCT_SPECIFICATION_KEY} from '../../enums/Product';
+import {ProductSpecificationKey} from '../../enums/Product';
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
 import zodSchema from '../../schema/zod';
 import {getUrlParam} from '../../utils/getUrlParam';
 import {isCloudProduct} from '../../utils/productUtils';
 import {safeJSONParse} from '../../utils/util';
-import {StepType} from './enums/stepType';
+import {GetAppStepTypes} from './enums/GetAppStepTypes';
 import useGetResourceInfo from './hooks/useGetResourceInfo';
 
 type LicenseType = '' | 'TRIAL' | 'PAID';
@@ -50,7 +50,7 @@ type InitialState = {
 		onNext: () => void;
 		onPrevious: () => void;
 	};
-	steps: {id: StepType; path: string; title: string}[];
+	steps: {id: GetAppStepTypes; path: string; title: string}[];
 };
 
 export type ActionMap<M extends {[index: string]: any}> = {
@@ -89,22 +89,22 @@ const initialState: InitialState = {
 	stepState: {} as InitialState['stepState'],
 	steps: [
 		{
-			id: StepType.ACCOUNT,
+			id: GetAppStepTypes.ACCOUNT,
 			path: '/',
 			title: 'Account',
 		},
 		{
-			id: StepType.PROJECT,
+			id: GetAppStepTypes.PROJECT,
 			path: '/project',
 			title: 'Project',
 		},
 		{
-			id: StepType.LICENSES,
+			id: GetAppStepTypes.LICENSES,
 			path: '/license',
 			title: 'Licenses',
 		},
 		{
-			id: StepType.PAYMENT,
+			id: GetAppStepTypes.PAYMENT,
 			path: '/payment',
 			title: 'Payment Method',
 		},
@@ -261,7 +261,7 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 		product?.productSpecifications.some(
 			({specificationKey, value}) =>
 				specificationKey ===
-					PRODUCT_SPECIFICATION_KEY.APP_PRICING_MODEL &&
+					ProductSpecificationKey.APP_PRICING_MODEL &&
 				value === 'Free'
 		) ?? false;
 
@@ -269,7 +269,7 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 		(specification) => {
 			if (
 				specification.specificationKey ===
-				PRODUCT_SPECIFICATION_KEY.APP_SETTINGS
+				ProductSpecificationKey.APP_SETTINGS
 			) {
 				return safeJSONParse(specification.value, {
 					resourceRequirements: false,
@@ -283,7 +283,9 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 	const steps = useMemo(
 		() =>
 			state.steps.filter(({id}) =>
-				isCloudApp && requiresResources ? true : id !== StepType.PROJECT
+				isCloudApp && requiresResources
+					? true
+					: id !== GetAppStepTypes.PROJECT
 			),
 		[isCloudApp, requiresResources, state.steps]
 	);
@@ -292,7 +294,7 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 		const currentStep = steps[state.currentStep];
 		const currentStepId = currentStep.id;
 
-		if (StepType.ACCOUNT === currentStepId) {
+		if (GetAppStepTypes.ACCOUNT === currentStepId) {
 			const isAccountValid = !!state.account;
 
 			if (isFreeApp) {
@@ -302,11 +304,11 @@ const GetAppContextProvider: React.FC<GetAppContextProviderProps> = ({
 			return isAccountValid;
 		}
 
-		if (StepType.PROJECT === currentStepId) {
+		if (GetAppStepTypes.PROJECT === currentStepId) {
 			return state.project || !hasConsoleProjectsAvailable;
 		}
 
-		if (StepType.LICENSES === currentStepId) {
+		if (GetAppStepTypes.LICENSES === currentStepId) {
 			if (state.license.type === 'TRIAL') {
 				return state.license.selectedSKU;
 			}

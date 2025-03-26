@@ -8,14 +8,14 @@ import React from 'react';
 import {useLocation} from 'react-router-dom';
 
 import ProductPurchaseFeedback from '../../../components/ProductPurchase/Feedback';
-import {PRODUCT_TYPE_VOCABULARY, SOLUTION_TYPES} from '../../../enums/Product';
+import {ProductTypeVocabulary, SolutionTypes} from '../../../enums/Product';
 import {Liferay} from '../../../liferay/liferay';
 import {getSiteURL} from '../../../utils/site';
 
 type ProductPurchaseThankYouProps = {
 	product: DeliveryProduct;
-	productTypeCategory: PRODUCT_TYPE_VOCABULARY;
-	solutionTypeSpecificationValue: SOLUTION_TYPES;
+	productTypeCategory: ProductTypeVocabulary;
+	solutionTypeSpecificationValue: SolutionTypes;
 };
 
 enum States {
@@ -49,8 +49,8 @@ const ProductPurchaseThankYou: React.FC<ProductPurchaseThankYouProps> = ({
 		);
 
 	const getLabel = () => {
-		if (productTypeCategory === PRODUCT_TYPE_VOCABULARY.SOLUTION) {
-			if (solutionTypeSpecificationValue === SOLUTION_TYPES.ANALYTICS) {
+		if (productTypeCategory === ProductTypeVocabulary.SOLUTION) {
+			if (solutionTypeSpecificationValue === SolutionTypes.ANALYTICS) {
 				return {
 					body: 'Expect an email in 10 minutes or less to get your Liferay DXP connection token or visit your dashboard.',
 					title: 'workspace is being created now.',

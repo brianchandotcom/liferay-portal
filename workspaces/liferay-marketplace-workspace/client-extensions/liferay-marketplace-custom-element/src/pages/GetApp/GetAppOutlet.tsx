@@ -25,7 +25,6 @@ import {useGetAppContext} from './GetAppContextProvider';
 import ProductHeader from './containers/ProductHeader';
 import ProductStepWizard from './containers/ProductStepWizard';
 import {PaymentMethod} from './enums/paymentMethod';
-import {SkuOptions} from './enums/skuOptions';
 import buildNewCart from './utils/buildNewCart';
 import {getProductOrderTypes} from './utils/getProductOrderTypes';
 import getProductPriceModel from './utils/getProductPriceModel';
@@ -34,6 +33,7 @@ import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
 import {postCartByPaymentMethod} from './utils/postCartByPaymentMethod';
 
 import './styles/index.scss';
+import {SkuOptions} from '../../enums/Product';
 
 const getProductBasePriceAndTrial = (
 	product: DeliveryProduct,

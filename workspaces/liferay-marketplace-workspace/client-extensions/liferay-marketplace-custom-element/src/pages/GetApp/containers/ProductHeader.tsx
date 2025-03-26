@@ -4,12 +4,12 @@
  */
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {LicenseType} from '../../../enums/Product';
 import {getValueFromDeliverySpecifications} from '../../../utils/util';
 import AccountEmailInfo from '../../CustomerDashboard/pages/Apps/App/Licenses/CreateLicense/AccountInfo';
 import {useGetAppContext} from '../GetAppContextProvider';
 import {getProductBasePriceAndTrial} from '../GetAppOutlet';
 import {ProductCardRevamp} from '../components/ProductCard/ProductCard';
-import {LicenseType} from '../enums/licenseType';
 import {getIconUrl} from '../utils/getIcon';
 import ProductHeaderPrice from './ProductHeaderPrice';
 
@@ -20,7 +20,7 @@ const getLicenseTagText = (product: DeliveryProduct) => {
 	).toLowerCase();
 
 	if (licenseTypeSpecification) {
-		return licenseTypeSpecification === LicenseType.Perpetual
+		return licenseTypeSpecification === LicenseType.PERPETUAL
 			? 'One-Time'
 			: 'Annually';
 	}

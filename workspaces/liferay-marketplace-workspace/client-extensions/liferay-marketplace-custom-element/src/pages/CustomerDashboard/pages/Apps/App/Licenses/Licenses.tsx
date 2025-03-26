@@ -16,7 +16,6 @@ import useSWR from 'swr';
 
 import {DashboardEmptyTable} from '../../../../../../components/DashboardTable/DashboardEmptyTable';
 import Modal from '../../../../../../components/Modal';
-import {Statuses as OrderStatuses} from '../../../../../../components/OrderStatus';
 import StatusCell from '../../../../../../components/Table/StatusCell';
 import Table from '../../../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
@@ -32,7 +31,7 @@ import TitleSubtitleHeader from '../../../../components/TitleSubtitleHeader';
 import useLicenseActions from './useLicensesActions';
 
 import './Licenses.scss';
-import {ORDER_TYPES} from '../../../../../../enums/Order';
+import {OrderStatus, OrderTypes} from '../../../../../../enums/Order';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
@@ -61,7 +60,7 @@ const Licenses = () => {
 	const product = outletContext?.product;
 
 	const keyType =
-		placedOrder?.orderTypeExternalReferenceCode === ORDER_TYPES.DXPAPP
+		placedOrder?.orderTypeExternalReferenceCode === OrderTypes.DXPAPP
 			? 'On-Premise'
 			: 'Cloud';
 
@@ -93,7 +92,7 @@ const Licenses = () => {
 	const rows = licenseKeysResponse?.items ?? [];
 
 	const orderStatusIsNotCompleted =
-		placedOrder?.orderStatusInfo?.label !== OrderStatuses.COMPLETED;
+		placedOrder?.orderStatusInfo?.label !== OrderStatus.COMPLETED;
 
 	const {onDeativateLicenseKey, onDownload, onViewLicenseKey} =
 		useLicenseActions({

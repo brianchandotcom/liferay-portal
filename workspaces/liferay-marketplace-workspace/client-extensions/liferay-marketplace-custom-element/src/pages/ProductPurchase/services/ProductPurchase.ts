@@ -4,12 +4,12 @@
  */
 
 import {Analytics} from '../../../core/Analytics';
-import {ORDER_TYPES} from '../../../enums/Order';
+import {OrderTypes} from '../../../enums/Order';
 import CommerceSelectAccountImpl from '../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 
 export default class ProductPurchase {
-	protected orderTypeExternalReferenceCode?: ORDER_TYPES;
+	protected orderTypeExternalReferenceCode?: OrderTypes;
 	protected HeadlessCommerceDeliveryCart = HeadlessCommerceDeliveryCart;
 
 	constructor(

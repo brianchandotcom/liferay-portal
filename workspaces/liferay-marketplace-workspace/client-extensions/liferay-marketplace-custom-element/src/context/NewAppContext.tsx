@@ -14,8 +14,7 @@ import {useParams} from 'react-router-dom';
 
 import {UploadedFile} from '../components/FileList/FileList';
 import Loading from '../components/Loading';
-import {PRODUCT_TAGS} from '../enums/Product';
-import {ProductVocabulary} from '../enums/ProductVocabulary';
+import {ProductTags, ProductVocabulary} from '../enums/Product';
 import {LicenseTier} from '../enums/licenseTier';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 
@@ -253,7 +252,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 			}
 
 			const appIcon = (_product.images ?? []).find(({tags}) =>
-				tags?.includes(PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON)
+				tags?.includes(ProductTags.SOLUTION_PROFILE_APP_ICON)
 			);
 
 			return {

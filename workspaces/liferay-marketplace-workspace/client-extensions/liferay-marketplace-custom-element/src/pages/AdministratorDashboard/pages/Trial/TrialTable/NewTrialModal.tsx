@@ -14,7 +14,7 @@ import {useForm} from 'react-hook-form';
 import BaseWrapper from '../../../../../components/Input/base/BaseWrapper';
 import Select from '../../../../../components/Select/Select';
 import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
-import {ORDER_CUSTOM_FIELDS} from '../../../../../enums/Order';
+import {OrderCustomFields} from '../../../../../enums/Order';
 import useDebounce from '../../../../../hooks/useDebounce';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
@@ -98,7 +98,7 @@ const NewTrialModal: React.FC<NewTrialModalProps> = ({onClose, revalidate}) => {
 		try {
 			await productPurchase.createOrder({
 				customFields: {
-					[ORDER_CUSTOM_FIELDS.TRIAL_SETTINGS]: JSON.stringify({
+					[OrderCustomFields.TRIAL_SETTINGS]: JSON.stringify({
 						consoleInviteEmailAddresses:
 							form.consoleInviteEmailAddresses,
 						sendNotificationEmail: form.sendNotificationEmail,

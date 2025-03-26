@@ -21,8 +21,8 @@ import {App, supportAndHelpMap} from './ReviewAndSubmitAppPageUtil';
 import './ReviewAndSubmitAppPage.scss';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
 import {
-	PRODUCT_CATEGORIES,
-	PRODUCT_SPECIFICATION_KEY,
+	ProductCategoies,
+	ProductSpecificationKey,
 } from '../../../../../../enums/Product';
 import {Liferay} from '../../../../../../liferay/liferay';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -71,19 +71,18 @@ export function ReviewAndSubmitAppPage({
 
 			const productCategories = getProductCategoriesByVocabularyName(
 				categories,
-				PRODUCT_CATEGORIES.MARKETPLACE_APP_CATEGORY
+				ProductCategoies.MARKETPLACE_APP_CATEGORY
 			);
 
 			const productTags = getProductCategoriesByVocabularyName(
 				categories,
-				PRODUCT_CATEGORIES.MARKETPLACE_APP_TAGS
+				ProductCategoies.MARKETPLACE_APP_TAGS
 			);
 
 			const isCloud =
 				productSpecifications.some(
 					({specificationKey, value}) =>
-						specificationKey ===
-							PRODUCT_SPECIFICATION_KEY.APP_TYPE &&
+						specificationKey === ProductSpecificationKey.APP_TYPE &&
 						(value.en_US === 'cloud' ||
 							(value as unknown as string) === 'cloud')
 				) ?? false;

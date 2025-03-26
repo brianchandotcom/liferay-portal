@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {PRODUCT_PRICE_MODEL, PRODUCT_SPECIFICATION_KEY} from '../enums/Product';
-import {ProductVocabulary} from '../enums/ProductVocabulary';
+import {
+	ProductPriceModel,
+	ProductSpecificationKey,
+	ProductVocabulary,
+} from '../enums/Product';
 import i18n from '../i18n';
 import {ConsoleUserProject} from '../services/oauth/types';
 
@@ -33,14 +36,14 @@ export class MarketplaceProduct {
 	}
 
 	get specificationValues() {
-		const _specifications = {} as typeof PRODUCT_SPECIFICATION_KEY;
+		const _specifications = {} as typeof ProductSpecificationKey;
 
-		for (const specificationKey in PRODUCT_SPECIFICATION_KEY) {
+		for (const specificationKey in ProductSpecificationKey) {
 			const _key =
-				specificationKey as keyof typeof PRODUCT_SPECIFICATION_KEY;
+				specificationKey as keyof typeof ProductSpecificationKey;
 
 			(_specifications as any)[_key] = this.getSpecificationValue(
-				PRODUCT_SPECIFICATION_KEY[_key]
+				ProductSpecificationKey[_key]
 			);
 		}
 
@@ -62,10 +65,8 @@ export class MarketplaceProduct {
 	public getPrice() {
 		const priceModel = this.getPriceModel();
 
-		if (
-			priceModel.toLowerCase() === PRODUCT_PRICE_MODEL.FREE.toLowerCase()
-		) {
-			return PRODUCT_PRICE_MODEL.FREE;
+		if (priceModel.toLowerCase() === ProductPriceModel.FREE.toLowerCase()) {
+			return ProductPriceModel.FREE;
 		}
 
 		const [purchasableSKU] = this.getPurchasableSKUs();
@@ -114,14 +115,14 @@ export class MarketplaceProduct {
 
 		const cpuSpecification = Number(
 			this.getSpecificationValue(
-				PRODUCT_SPECIFICATION_KEY.APP_BUILD_NUMBER_OF_CPUS,
+				ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
 				'0'
 			)
 		);
 
 		const ramSpecification = Number(
 			this.getSpecificationValue(
-				PRODUCT_SPECIFICATION_KEY.APP_BUILD_RAM_IN_GBS,
+				ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
 				'0'
 			)
 		);
@@ -144,7 +145,7 @@ export class MarketplaceProduct {
 
 	public getProductType() {
 		const type = this.getSpecificationValue(
-			PRODUCT_SPECIFICATION_KEY.APP_TYPE
+			ProductSpecificationKey.APP_TYPE
 		);
 
 		return {
@@ -159,13 +160,13 @@ export class MarketplaceProduct {
 
 	public getPriceModel() {
 		return this.getSpecificationValue(
-			PRODUCT_SPECIFICATION_KEY.APP_PRICING_MODEL,
+			ProductSpecificationKey.APP_PRICING_MODEL,
 			'Free'
 		);
 	}
 
 	public getSpecification(
-		specificationKey: string | typeof PRODUCT_SPECIFICATION_KEY
+		specificationKey: string | typeof ProductSpecificationKey
 	) {
 		return this.product.productSpecifications.find(
 			(specification) =>
@@ -174,7 +175,7 @@ export class MarketplaceProduct {
 	}
 
 	private getSpecificationValue(
-		specificationKey: string | typeof PRODUCT_SPECIFICATION_KEY,
+		specificationKey: string | typeof ProductSpecificationKey,
 		value = ''
 	) {
 		return this.getSpecification(specificationKey)?.value || value;
@@ -186,12 +187,12 @@ export class MarketplaceProduct {
 
 	public getProductResourceLabel() {
 		const cpuSpecification = this.getSpecificationValue(
-			PRODUCT_SPECIFICATION_KEY.APP_BUILD_NUMBER_OF_CPUS,
+			ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
 			'0'
 		);
 
 		const ramSpecification = this.getSpecificationValue(
-			PRODUCT_SPECIFICATION_KEY.APP_BUILD_RAM_IN_GBS,
+			ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
 			'0'
 		);
 

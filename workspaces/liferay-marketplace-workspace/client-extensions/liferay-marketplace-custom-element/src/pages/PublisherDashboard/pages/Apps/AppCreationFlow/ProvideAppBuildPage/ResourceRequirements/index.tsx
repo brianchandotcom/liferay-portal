@@ -6,7 +6,7 @@
 import FormInput from '../../../../../../../components/Input/formInput';
 import i18n from '../../../../../../../i18n';
 import {useAppContext} from '../../AppContext/AppManageState';
-import {TYPES} from '../../AppContext/actionTypes';
+import {ActionTypes} from '../../AppContext/actionTypes';
 
 import './index.scss';
 
@@ -28,7 +28,7 @@ const ResourceRequirements = () => {
 					if (!isNaN(value as unknown as number)) {
 						dispatch({
 							payload: {key: 'cpu', value},
-							type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
+							type: ActionTypes.UPDATE_RESOURCE_REQUIREMENTS,
 						});
 					}
 				}}
@@ -49,7 +49,7 @@ const ResourceRequirements = () => {
 					if (!isNaN(value as unknown as number)) {
 						dispatch({
 							payload: {key: 'ram', value},
-							type: TYPES.UPDATE_RESOURCE_REQUIREMENTS,
+							type: ActionTypes.UPDATE_RESOURCE_REQUIREMENTS,
 						});
 					}
 				}}

@@ -5,7 +5,7 @@
 
 import {useGetAppContext} from '../GetAppContextProvider';
 import {getProductBasePriceAndTrial} from '../GetAppOutlet';
-import {StepType} from '../enums/stepType';
+import {GetAppStepTypes} from '../enums/GetAppStepTypes';
 
 type ProductHeaderPriceProps = {
 	productBasePriceAndTrial: ReturnType<typeof getProductBasePriceAndTrial>;
@@ -25,8 +25,8 @@ const ProductHeaderPrice: React.FC<ProductHeaderPriceProps> = ({
 	const _currentStep = steps[currentStep];
 
 	if (
-		_currentStep.id === StepType.LICENSES ||
-		_currentStep.id === StepType.PAYMENT
+		_currentStep.id === GetAppStepTypes.LICENSES ||
+		_currentStep.id === GetAppStepTypes.PAYMENT
 	) {
 		return (
 			<span className="price-text-value">

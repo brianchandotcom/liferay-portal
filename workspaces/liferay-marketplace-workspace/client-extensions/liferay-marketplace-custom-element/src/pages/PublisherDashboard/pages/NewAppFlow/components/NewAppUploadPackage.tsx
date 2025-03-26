@@ -11,7 +11,7 @@ import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../context/NewAppContext';
-import {ProductType} from '../../../../../enums/ProductType';
+import {ProductType} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {getRandomID} from '../../../../../utils/string';
 

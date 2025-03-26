@@ -52,12 +52,14 @@ const ClassicEditor = ({
 	config,
 	data,
 	onChange,
+	onReady,
 }: {
 	className?: string;
 	config?: ClassicEditorConfig;
 	data?: string;
 	id?: string;
 	onChange?: (event: EventInfo, editor: Editor) => void;
+	onReady?: (editor: Editor) => void;
 }) => {
 	const defaultConfig: ClassicEditorConfig = {
 		plugins: [
@@ -125,6 +127,17 @@ const ClassicEditor = ({
 
 						item.tooltipPosition = 'n';
 					});
+
+					const hasControlMenu = document.querySelector(
+						'.control-menu-container'
+					);
+					if (!hasControlMenu) {
+						editor.ui.viewportOffset = {
+							top: 0,
+						};
+					}
+
+					onReady && onReady(editor);
 				}}
 			/>
 		</div>

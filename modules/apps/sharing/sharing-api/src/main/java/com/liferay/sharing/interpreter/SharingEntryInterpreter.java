@@ -27,6 +27,8 @@ public interface SharingEntryInterpreter {
 
 	public String getTitle(SharingEntry sharingEntry);
 
+	public String getTitle(SharingEntry sharingEntry, Locale locale);
+
 	public Map<Locale, String> getTitleMap(SharingEntry sharingEntry);
 
 	public boolean isVisible(SharingEntry sharingEntry) throws PortalException;

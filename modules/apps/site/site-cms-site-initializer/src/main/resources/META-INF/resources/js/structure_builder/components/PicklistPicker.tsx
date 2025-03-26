@@ -21,7 +21,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 	const selectField = field as SingleSelectField | MultiselectField;
 
 	const [selectedKey, setSelectedKey] = useState<React.Key>(
-		selectField.picklistId
+		selectField.picklistId || ''
 	);
 
 	const dispatch = useStateDispatch();
@@ -56,7 +56,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 						items={picklists}
 						onSelectionChange={(selectedKey: React.Key) => {
 							dispatch({
-								picklistId: selectedKey as string,
+								picklistId: Number(selectedKey),
 								type: 'update-field',
 								uuid: field.uuid,
 							});

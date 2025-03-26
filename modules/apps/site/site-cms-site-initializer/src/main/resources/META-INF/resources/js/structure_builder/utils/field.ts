@@ -124,7 +124,7 @@ export type LongTextField = BaseField & {
 } & MaxLengthSettingsField;
 
 export type MultiselectField = BaseField & {
-	picklistId: string;
+	picklistId?: number;
 	type: 'multiselect';
 };
 
@@ -133,7 +133,7 @@ export type NumericField = BaseField & {
 } & UniqueValuesSettingsField;
 
 export type SingleSelectField = BaseField & {
-	picklistId: string;
+	picklistId?: number;
 	type: 'single-select';
 };
 
@@ -222,20 +222,6 @@ export function getDefaultField(type: FieldType): Field {
 				maximumFileSize: 100,
 			},
 			type: 'upload',
-		};
-	}
-	else if (type === 'single-select') {
-		return {
-			...base,
-			picklistId: '',
-			type: 'single-select',
-		};
-	}
-	else if (type === 'multiselect') {
-		return {
-			...base,
-			picklistId: '',
-			type: 'multiselect',
 		};
 	}
 

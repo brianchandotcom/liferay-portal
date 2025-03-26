@@ -12,7 +12,7 @@ import React, {
 	useReducer,
 } from 'react';
 
-import {Field} from '../utils/field';
+import {Field, MultiselectField, SingleSelectField} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
@@ -88,7 +88,7 @@ type UpdateFieldAction = {
 	localized?: boolean;
 	name?: string;
 	newName?: string;
-	picklistId?: string;
+	picklistId?: number;
 	required?: boolean;
 	settings?: Field['settings'];
 	type: 'update-field';
@@ -226,7 +226,7 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			const nextField = {
+			const nextField: Field = {
 				...field,
 				erc: erc ?? field.erc,
 				indexableConfig: indexableConfig ?? field.indexableConfig,
@@ -237,8 +237,9 @@ function reducer(state: State, action: Action): State {
 				settings: settings ?? field.settings,
 			};
 
-			if (picklistId && 'picklistId' in nextField) {
-				nextField.picklistId = picklistId;
+			if (picklistId) {
+				(nextField as SingleSelectField | MultiselectField).picklistId =
+					picklistId;
 			}
 
 			nextFields.set(nextField.uuid, nextField);

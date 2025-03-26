@@ -13,7 +13,7 @@ export type ObjectField = {
 	indexedAsKeyword?: boolean;
 	indexedLanguageId?: Liferay.Language.Locale | '';
 	label: Liferay.Language.LocalizedValue<string>;
-	listTypeDefinitionId?: string;
+	listTypeDefinitionId?: number;
 	localized: boolean;
 	name: string;
 	objectFieldSettings?: {name: string; value: boolean | string | number}[];

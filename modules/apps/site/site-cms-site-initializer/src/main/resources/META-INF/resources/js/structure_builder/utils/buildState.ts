@@ -43,7 +43,7 @@ export default function buildState(
 			label: objectField.label,
 			localized: objectField.localized,
 			name: objectField.name,
-			picklistId: objectField.listTypeDefinitionId?.toString(),
+			picklistId: objectField.listTypeDefinitionId,
 			required: objectField.required,
 			settings: getFieldSettings(objectField),
 			type: getFieldType(objectField),

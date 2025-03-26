@@ -1,6 +1,4 @@
-plugins {
-	id 'war'
-}
+apply plugin: "war"
 
 task deployWar(type: Copy)
 
@@ -24,7 +22,7 @@ deploy {
 deployWar {
 	dependsOn war
 
-	def warTask = tasks.named('war').get()
+	def warTask = tasks.named("war").get()
 
 	from warTask.outputs.files.singleFile
 	into "${liferay.liferayHome}/osgi/war"

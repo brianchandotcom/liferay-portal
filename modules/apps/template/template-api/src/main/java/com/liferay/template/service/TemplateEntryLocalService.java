@@ -102,6 +102,8 @@ public interface TemplateEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteTemplateEntries(long groupId);
+
 	/**
 	 * Deletes the template entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

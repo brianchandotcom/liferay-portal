@@ -150,7 +150,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult> page =
 			searchResultResource.getSearchPage(
-				null, true, null, scope, null, null,
+				null, true, null, scope, null, null, null,
 				com.liferay.portal.search.rest.client.pagination.Pagination.of(
 					1, 10),
 				null);
@@ -166,7 +166,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 				randomSearchResult());
 
 		page = searchResultResource.getSearchPage(
-			null, true, null, scope, null, null,
+			null, true, null, scope, null, null, null,
 			com.liferay.portal.search.rest.client.pagination.Pagination.of(
 				1, 10),
 			null);
@@ -203,7 +203,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page = searchResultResource.getSearchPage(
 					null, null, null, String.valueOf(testGroup.getGroupId()),
-					searchResult1.getTitle(),
+					searchResult1.getTitle(), null,
 					getFilterString(entityField, "between", searchResult1),
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(1, 2),
@@ -222,7 +222,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testGetSearchPageWithPagination() throws Exception {
 		Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 			searchResultPage = searchResultResource.getSearchPage(
-				null, true, null, null, null, null, null, null);
+				null, true, null, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			searchResultPage.getTotalCount());
@@ -244,7 +244,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page1 = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
@@ -261,7 +261,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page2 = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
@@ -276,7 +276,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page3 = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
@@ -292,7 +292,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		else {
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page1 = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(1, totalCount + 2),
 					null);
@@ -309,7 +309,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page2 = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(2, totalCount + 2),
 					null);
@@ -327,7 +327,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page3 = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(1, (int)totalCount + 3),
 					null);
@@ -427,7 +427,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				page = searchResultResource.getSearchPage(
-					null, true, null, null, null,
+					null, true, null, null, null, null,
 					getFilterString(entityField, operator, searchResult1),
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(1, 2),
@@ -472,12 +472,12 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult> page =
 			searchResultResource.getSearchPage(
-				null, true, null, null, null, null, null, null);
+				null, true, null, null, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				ascPage = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
@@ -495,7 +495,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 			Page<com.liferay.portal.search.rest.client.dto.v1_0.SearchResult>
 				descPage = searchResultResource.getSearchPage(
-					null, true, null, null, null, null,
+					null, true, null, null, null, null, null,
 					com.liferay.portal.search.rest.client.pagination.Pagination.
 						of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");

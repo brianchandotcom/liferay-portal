@@ -287,7 +287,6 @@ modules/apps/portal/portal-jmx/    @liferay-core-infra
 modules/apps/portal/portal-kernel-instance-test/    @liferay-core-infra
 modules/apps/portal/portal-license-deployer/    @liferay-core-infra
 modules/apps/portal/portal-log4j-test/    @liferay-core-infra
-modules/apps/portal/portal-log4j/    @liferay-core-infra
 modules/apps/portal/portal-messaging-test/    @liferay-core-infra
 modules/apps/portal/portal-messaging/    @liferay-core-infra
 modules/apps/portal/portal-model-adapter/    @liferay-core-infra

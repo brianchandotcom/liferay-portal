@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -50,13 +51,14 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 			_group, TestPropsValues.getUserId());
 	}
 
+	@FeatureFlags("LPD-30204")
 	@Test
 	public void testDoUpgrade() throws Exception {
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
-				null, "", _serviceContext);
+				null, null, _serviceContext);
 
 		Assert.assertTrue(Validator.isNull(styleBookEntry.getThemeId()));
 

@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
-import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.sort.FDSSorts;
@@ -43,7 +42,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -54,7 +52,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -598,79 +595,12 @@ public class ImportSystemDataSetMVCResourceCommand
 				);
 			}
 			else if (fdsFilter instanceof BaseSelectionFDSFilter) {
-				BaseSelectionFDSFilter selectionFdsFilter =
-					(BaseSelectionFDSFilter)fdsFilter;
-
 				filterObjectDefinitionERC = "L_DATA_SET_SELECTION_FILTER";
 
 				filterFDSEntryRelationshipName =
 					"r_dataSetToDataSetSelectionFilters_l_dataSetId";
 
-				values.put(
-					"include", true
-				).put(
-					"multiple", selectionFdsFilter.isMultiple()
-				);
-
-				if (Validator.isNotNull(selectionFdsFilter.getAPIURL())) {
-					values.put(
-						"itemKey", selectionFdsFilter.getItemKey()
-					).put(
-						"itemLabel", selectionFdsFilter.getItemLabel()
-					).put(
-						"source", selectionFdsFilter.getAPIURL()
-					).put(
-						"sourceType", "API_REST_APPLICATION"
-					);
-				}
-
-				if (ListUtil.isNotEmpty(
-						selectionFdsFilter.getSelectionFDSFilterItems(
-							_portal.getLocale(httpServletRequest)))) {
-
-					values.put(
-						"source", StringPool.BLANK
-					).put(
-						"sourceType", FDSEntryItemImportPolicy.ITEM_PROXY
-					);
-				}
-
-				Map<String, Object> preloadedData =
-					selectionFdsFilter.getPreloadedData();
-
-				if (MapUtil.isNotEmpty(preloadedData)) {
-					values.put(
-						"include",
-						() -> {
-							Boolean exclude = (Boolean)preloadedData.get(
-								"exclude");
-
-							if (exclude != null) {
-								return !exclude;
-							}
-
-							return null;
-						}
-					).put(
-						"preselectedValues",
-						() -> {
-							List<SelectionFDSFilterItem>
-								selectionFDSFilterItems =
-									(List<SelectionFDSFilterItem>)
-										preloadedData.get("selectedItems");
-
-							if (ListUtil.isEmpty(selectionFDSFilterItems)) {
-								return null;
-							}
-
-							JSONSerializer jsonSerializer =
-								_jsonFactory.createJSONSerializer();
-
-							return jsonSerializer.serializeDeep(
-								selectionFDSFilterItems);
-						}
-					);
-				}
+				values.put("sourceType", FDSEntryItemImportPolicy.ITEM_PROXY);
 			}
 			else if (fdsFilter instanceof BaseClientExtensionFDSFilter) {
 				BaseClientExtensionFDSFilter clientExtensionFDSFilter =

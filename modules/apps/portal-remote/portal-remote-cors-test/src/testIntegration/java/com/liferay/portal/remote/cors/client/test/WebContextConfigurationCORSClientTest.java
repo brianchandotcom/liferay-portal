@@ -48,8 +48,8 @@ public class WebContextConfigurationCORSClientTest
 					"Access-Control-Allow-Credentials: true|",
 					"Access-Control-Allow-Headers: *|",
 					"Access-Control-Allow-Methods: *|",
-					"Access-Control-Allow-Origin: ",
-					"http://localhost:8080,http://127.0.0.1:8080,::1")
+					"Access-Control-Allow-Origin: http://localhost:8080 ",
+					"http://127.0.0.1:8080 ::1")
 			).put(
 				"servlet.context.helper.select.filter",
 				"(osgi.jaxrs.name=test-cors)"

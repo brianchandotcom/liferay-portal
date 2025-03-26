@@ -152,9 +152,7 @@ public class UserSearchFacetDisplayContextBuilder {
 	}
 
 	protected long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
-		}
+		long displayStyleGroupId;
 
 		String displayStyleGroupExternalReferenceCode =
 			_userFacetPortletInstanceConfiguration.
@@ -169,13 +167,13 @@ public class UserSearchFacetDisplayContextBuilder {
 		}
 
 		if (group != null) {
-			_displayStyleGroupId = group.getGroupId();
+			displayStyleGroupId = group.getGroupId();
 		}
 		else {
-			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
+			displayStyleGroupId = _themeDisplay.getScopeGroupId();
 		}
 
-		return _displayStyleGroupId;
+		return displayStyleGroupId;
 	}
 
 	protected List<BucketDisplayContext> getEmptyBucketDisplayContexts() {
@@ -267,7 +265,6 @@ public class UserSearchFacetDisplayContextBuilder {
 		return _paramValues.get(0);
 	}
 
-	private long _displayStyleGroupId;
 	private Facet _facet;
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;

@@ -4,6 +4,7 @@
  */
 
 import {openModal} from 'frontend-js-components-web';
+import {navigate} from 'frontend-js-web';
 
 import CreationModalContent, {
 	AssetLibray,
@@ -17,6 +18,17 @@ export type AssetData = {
 };
 
 export default function createAssetAction(data: AssetData) {
+	if (data.assetLibraries.length === 1) {
+		const url = new URL(data.redirect);
+
+		url.searchParams.set('name', '');
+		url.searchParams.set('groupId', data.assetLibraries[0].groupId);
+
+		navigate(url.pathname + url.search);
+
+		return;
+	}
+
 	openModal({
 		center: true,
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>

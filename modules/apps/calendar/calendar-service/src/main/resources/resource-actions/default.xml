@@ -73,6 +73,24 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.calendar.model.CalendarNotificationTemplate</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_calendar_web_portlet_CalendarPortlet</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.calendar.model.CalendarResource</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_calendar_web_portlet_CalendarPortlet</portlet-name>

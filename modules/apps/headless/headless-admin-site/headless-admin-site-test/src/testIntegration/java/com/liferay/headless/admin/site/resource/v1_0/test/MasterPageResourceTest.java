@@ -94,7 +94,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					testGroup.getGroupId()));
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() ->
 				masterPageResource.
 					deleteSiteSiteByExternalReferenceCodeMasterPage(
@@ -108,7 +108,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_enableLocalStaging();
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				masterPageResource.
 					deleteSiteSiteByExternalReferenceCodeMasterPage(
@@ -130,7 +130,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			masterPage);
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() ->
 				masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
 					testGroup.getExternalReferenceCode(),
@@ -270,7 +270,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() ->
 				masterPageResource.
 					patchSiteSiteByExternalReferenceCodeMasterPage(
@@ -284,7 +284,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_enableLocalStaging();
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				masterPageResource.
 					patchSiteSiteByExternalReferenceCodeMasterPage(
@@ -441,7 +441,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_enableLocalStaging();
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
 					testGroup.getExternalReferenceCode(),
@@ -564,7 +564,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		throws Exception {
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				masterPageResource.
 					postSiteSiteByExternalReferenceCodeMasterPagePageSpecification(
@@ -578,7 +578,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	private void _assertProblemException(
-			String status, UnsafeRunnable<Exception> unsafeRunnable)
+			String status, String title,
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try {
@@ -590,7 +591,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals(status, problem.getStatus());
-			Assert.assertNull(problem.getTitle());
+			Assert.assertEquals(title, problem.getTitle());
 		}
 	}
 

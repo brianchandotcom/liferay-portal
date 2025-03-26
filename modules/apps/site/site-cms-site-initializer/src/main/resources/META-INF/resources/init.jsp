@@ -19,6 +19,7 @@ page import="com.liferay.site.cms.site.initializer.internal.display.context.Edit
 page import="com.liferay.site.cms.site.initializer.internal.display.context.FilesSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.StructureUsagesDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.StructuresSectionDisplayContext" %><%@
+page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewDashboardDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewTagsDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewVocabulariesDisplayContext" %>
 

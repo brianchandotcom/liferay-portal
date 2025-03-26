@@ -363,50 +363,55 @@ public class TypeScriptClientUtil {
 					return null;
 				}
 
-				Map<String, Content> content = requestBody.getContent();
+				Map<String, Content> contentsMap = requestBody.getContent();
 
-				if ((content == null) || content.isEmpty()) {
+				if ((contentsMap == null) || contentsMap.isEmpty()) {
 					return null;
 				}
 
-				Map<String, List<Map<String, Object>>> contentRequestBodyDatas =
-					new HashMap<>();
+				Map<String, List<Map<String, Object>>>
+					contentDatasMap = new HashMap<>();
 
-				for (Map.Entry<String, Content> entry : content.entrySet()) {
+				for (Map.Entry<String, Content> entry : contentsMap.entrySet()) {
 					if (entry.getValue() == null) {
 						continue;
 					}
 
-					Schema schema = entry.getValue(
-					).getSchema();
+					Content content = entry.getValue();
+
+					Schema schema = content.getSchema();
 
 					if (schema == null) {
 						continue;
 					}
 
-					List<Map<String, Object>> requestBodyDatas =
+					Map<String, Schema> propertySchemas =
+						schema.getPropertySchemas();
+
+					List<Map<String, Object>> contentDatas =
 						new ArrayList<>();
 
-					if (schema.getPropertySchemas() != null) {
-						schema.getPropertySchemas(
-						).forEach(
-							(name, propertySchema) -> requestBodyDatas.add(
-								HashMapBuilder.<String, Object>put(
-									"dataType",
-									_getDataType(importClasses, propertySchema)
-								).put(
-									"name", StringUtil.replace(name, '-', '_')
-								).put(
-									"required", false
-								).put(
-									"type", "form"
-								).build())
-						);
+					if (propertySchemas != null) {
+						propertySchemas.forEach(
+							(name, propertySchema) ->
+								contentDatas.add(
+									HashMapBuilder.<String, Object>put(
+										"dataType",
+										_getDataType(
+											importClasses, propertySchema)
+									).put(
+										"name",
+										StringUtil.replace(name, '-', '_')
+									).put(
+										"required", false
+									).put(
+										"type", "form"
+									).build()));
 					}
 					else {
 						String dataType = _getDataType(importClasses, schema);
 
-						requestBodyDatas.add(
+						contentDatas.add(
 							HashMapBuilder.<String, Object>put(
 								"dataType", dataType
 							).put(
@@ -430,11 +435,11 @@ public class TypeScriptClientUtil {
 							).build());
 					}
 
-					contentRequestBodyDatas.put(
-						entry.getKey(), requestBodyDatas);
+					contentDatasMap.put(
+						entry.getKey(), contentDatas);
 				}
 
-				return contentRequestBodyDatas;
+				return contentDatasMap;
 			}
 		).put(
 			"description", operation.getDescription()

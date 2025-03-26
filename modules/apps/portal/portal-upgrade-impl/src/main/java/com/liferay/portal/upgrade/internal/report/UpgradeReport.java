@@ -548,6 +548,9 @@ public class UpgradeReport {
 		).put(
 			"execution.time", _executionTimeString
 		).put(
+			"data.clean.up",
+			_getMessagesPrinters(upgradeRecorder.getCleanUpMessages(), false)
+		).put(
 			"errors",
 			_getMessagesPrinters(upgradeRecorder.getErrorMessages(), true)
 		).put(

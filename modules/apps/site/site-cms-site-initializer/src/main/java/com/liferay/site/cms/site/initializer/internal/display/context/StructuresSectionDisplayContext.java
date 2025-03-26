@@ -99,7 +99,7 @@ public class StructuresSectionDisplayContext {
 						_themeDisplay),
 					"objectDefinitionId", "{id}"),
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
-				"get", null, null),
+				"get", "update", null),
 			new FDSActionDropdownItem(
 				"", "copy", "copy",
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"), null,
@@ -121,7 +121,7 @@ public class StructuresSectionDisplayContext {
 			new FDSActionDropdownItem(
 				"", "import", "import",
 				LanguageUtil.get(_httpServletRequest, "import-and-override"),
-				null, null, null),
+				null, "update", null),
 			new FDSActionDropdownItem(
 				"", "password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), "get",

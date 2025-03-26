@@ -125,6 +125,16 @@ public class WarehouseAccountResourceTest
 
 	@Override
 	protected WarehouseAccount
+			testDeleteWarehouseAccountBatch_addWarehouseAccount()
+		throws Exception {
+
+		return warehouseAccountResource.postWarehouseIdWarehouseAccount(
+			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			randomWarehouseAccount());
+	}
+
+	@Override
+	protected WarehouseAccount
 			testGetWarehouseByExternalReferenceCodeWarehouseAccountsPage_addWarehouseAccount(
 				String externalReferenceCode, WarehouseAccount warehouseAccount)
 		throws Exception {

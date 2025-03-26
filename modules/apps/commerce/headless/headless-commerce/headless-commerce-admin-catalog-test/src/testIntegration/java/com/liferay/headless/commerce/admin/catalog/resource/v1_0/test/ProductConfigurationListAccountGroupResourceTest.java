@@ -195,6 +195,17 @@ public class ProductConfigurationListAccountGroupResourceTest
 
 	@Override
 	protected ProductConfigurationListAccountGroup
+			testDeleteProductConfigurationListAccountGroupBatch_addProductConfigurationListAccountGroup()
+		throws Exception {
+
+		return productConfigurationListAccountGroupResource.
+			postProductConfigurationListIdProductConfigurationListAccountGroup(
+				_cpConfigurationList.getCPConfigurationListId(),
+				randomProductConfigurationListAccountGroup());
+	}
+
+	@Override
+	protected ProductConfigurationListAccountGroup
 			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage_addProductConfigurationListAccountGroup(
 				String externalReferenceCode,
 				ProductConfigurationListAccountGroup

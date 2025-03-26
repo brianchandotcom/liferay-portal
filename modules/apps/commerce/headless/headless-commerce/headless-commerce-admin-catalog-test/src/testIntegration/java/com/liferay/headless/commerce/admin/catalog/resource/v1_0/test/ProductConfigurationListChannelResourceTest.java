@@ -141,6 +141,17 @@ public class ProductConfigurationListChannelResourceTest
 
 	@Override
 	protected ProductConfigurationListChannel
+			testDeleteProductConfigurationListChannelBatch_addProductConfigurationListChannel()
+		throws Exception {
+
+		return productConfigurationListChannelResource.
+			postProductConfigurationListIdProductConfigurationListChannel(
+				_cpConfigurationList.getCPConfigurationListId(),
+				randomProductConfigurationListChannel());
+	}
+
+	@Override
+	protected ProductConfigurationListChannel
 			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationListChannelsPage_addProductConfigurationListChannel(
 				String externalReferenceCode,
 				ProductConfigurationListChannel productConfigurationListChannel)

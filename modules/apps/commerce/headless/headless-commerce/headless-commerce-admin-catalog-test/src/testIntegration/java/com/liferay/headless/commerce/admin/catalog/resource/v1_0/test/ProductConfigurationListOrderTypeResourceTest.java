@@ -164,6 +164,17 @@ public class ProductConfigurationListOrderTypeResourceTest
 
 	@Override
 	protected ProductConfigurationListOrderType
+			testDeleteProductConfigurationListOrderTypeBatch_addProductConfigurationListOrderType()
+		throws Exception {
+
+		return productConfigurationListOrderTypeResource.
+			postProductConfigurationListIdProductConfigurationListOrderType(
+				_cpConfigurationList.getCPConfigurationListId(),
+				randomProductConfigurationListOrderType());
+	}
+
+	@Override
+	protected ProductConfigurationListOrderType
 			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderTypesPage_addProductConfigurationListOrderType(
 				String externalReferenceCode,
 				ProductConfigurationListOrderType

@@ -29,6 +29,7 @@ type ObjectDefinitionNodeActionsProps = {
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
+	isTreeStructure: boolean;
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	objectDefinitionPermissionsURL: string;
@@ -185,6 +186,7 @@ export function getObjectDefinitionNodeActions({
 	hasObjectDefinitionDeleteResourcePermission,
 	hasObjectDefinitionManagePermissionsResourcePermission,
 	hasObjectDefinitionUpdateResourcePermission,
+	isTreeStructure,
 	objectDefinitionId,
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
@@ -307,27 +309,41 @@ export function getObjectDefinitionNodeActions({
 				Liferay.Language.get('object')
 			),
 			onClick: async () => {
-				const deletedObjectDefinition = await deleteObjectDefinition({
-					baseResourceURL,
-					objectDefinitionId,
-					objectDefinitionName,
-				});
-
-				if (deletedObjectDefinition) {
-					dispatch({
-						payload: {
-							deletedObjectDefinition,
-						},
-						type: TYPES.SET_DELETE_OBJECT_DEFINITION,
-					});
+				if (isTreeStructure) {
 					dispatch({
 						payload: {
 							updatedModelBuilderModals: {
-								deleteObjectDefinition: true,
+								objectDefinitionOnRootModelDeletionNotAllowed:
+									true,
 							},
 						},
 						type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 					});
+				}
+				else {
+					const deletedObjectDefinition =
+						await deleteObjectDefinition({
+							baseResourceURL,
+							objectDefinitionId,
+							objectDefinitionName,
+						});
+
+					if (deletedObjectDefinition) {
+						dispatch({
+							payload: {
+								deletedObjectDefinition,
+							},
+							type: TYPES.SET_DELETE_OBJECT_DEFINITION,
+						});
+						dispatch({
+							payload: {
+								updatedModelBuilderModals: {
+									deleteObjectDefinition: true,
+								},
+							},
+							type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+						});
+					}
 				}
 			},
 			symbolLeft: 'trash',

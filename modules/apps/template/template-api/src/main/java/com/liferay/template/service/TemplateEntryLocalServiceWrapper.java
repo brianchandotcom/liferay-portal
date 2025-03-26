@@ -93,6 +93,11 @@ public class TemplateEntryLocalServiceWrapper
 		return _templateEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public void deleteTemplateEntries(long groupId) {
+		_templateEntryLocalService.deleteTemplateEntries(groupId);
+	}
+
 	/**
 	 * Deletes the template entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

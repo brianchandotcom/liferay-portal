@@ -92,6 +92,10 @@ public class TemplateEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteTemplateEntries(long groupId) {
+		getService().deleteTemplateEntries(groupId);
+	}
+
 	/**
 	 * Deletes the template entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

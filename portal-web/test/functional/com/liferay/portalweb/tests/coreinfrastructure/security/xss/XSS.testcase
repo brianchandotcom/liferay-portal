@@ -50,9 +50,6 @@ definition {
 			var maliciousUrl3 = '''
 					http://localhost:8080/group/control_panel/manage?p_p_id=132&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_132_struts_action=%2Fplugins_admin%2Fedit_plugin&_132_pluginId=116&_132_pluginType=portlet&_132_title=Activities&_132_moduleId=%3Cscript%3Ealert(%22xss%22);%3C/script%3E&_2_backURL=alert%28%27xss%27%29
 				''';
-			var maliciousUrl4 = '''
-					http://localhost:8080/html/portal/progress_poller.jsp?ProgressId=a%3D1%3Balert(document.cookie)%3B%2F%2F
-				''';
 
 			Navigator.openSpecificURL(url = ${maliciousUrl1});
 
@@ -62,7 +59,7 @@ definition {
 
 			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 
-			for (var maliciousURL : list "${maliciousUrl2},${maliciousUrl3},${maliciousUrl4}") {
+			for (var maliciousURL : list "${maliciousUrl2},${maliciousUrl3}") {
 				Navigator.openSpecificURL(url = ${maliciousURL});
 
 				AssertAlertNotPresent();

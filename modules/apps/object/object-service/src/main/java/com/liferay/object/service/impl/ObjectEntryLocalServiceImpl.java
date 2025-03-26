@@ -44,6 +44,7 @@ import com.liferay.object.entry.ObjectEntryContext;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
+import com.liferay.object.entry.validation.ValidationError;
 import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
@@ -52,6 +53,7 @@ import com.liferay.object.exception.ObjectEntryFolderScopeException;
 import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -96,6 +98,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.base.ObjectEntryLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.service.persistence.ObjectEntryFolderPersistence;
@@ -329,10 +332,9 @@ public class ObjectEntryLocalServiceImpl
 
 		Map<DLFileEntry, ObjectField> dlFileEntries = new HashMap<>();
 
-		validateValues(
+		_validateValues(
 			dlFileEntries, tempDLFileEntryIds, null, user.isGuestUser(),
-			groupId, objectDefinition, objectEntryId, serviceContext, true,
-			userId, values);
+			groupId, objectDefinition, serviceContext, true, userId, values);
 
 		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
 				dlFileEntries.entrySet()) {
@@ -491,9 +493,9 @@ public class ObjectEntryLocalServiceImpl
 
 		Map<DLFileEntry, ObjectField> dlFileEntries = new HashMap<>();
 
-		validateValues(
+		_validateValues(
 			dlFileEntries, dlFileEntryIds, null, user.isGuestUser(), 0,
-			objectDefinition, primaryKey, serviceContext, true, userId, values);
+			objectDefinition, serviceContext, true, userId, values);
 
 		insertIntoOrUpdateExtensionTable(
 			userId, objectDefinition.getObjectDefinitionId(), primaryKey,
@@ -1668,10 +1670,10 @@ public class ObjectEntryLocalServiceImpl
 
 		Set<Long> dlFileEntryIds = new HashSet<>();
 
-		validateValues(
+		_validateValues(
 			dlFileEntries, dlFileEntryIds, objectEntry, user.isGuestUser(),
-			objectEntry.getGroupId(), objectDefinition, objectEntryId,
-			serviceContext, true, userId, values);
+			objectEntry.getGroupId(), objectDefinition, serviceContext, true,
+			userId, values);
 
 		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
 				dlFileEntries.entrySet()) {
@@ -1962,51 +1964,45 @@ public class ObjectEntryLocalServiceImpl
 		return _addObjectEntryVersion(objectDefinition, objectEntry);
 	}
 
-	public List<ObjectEntryValuesException> validateValues(
-			Map<DLFileEntry, ObjectField> dlFileEntries,
-			Set<Long> tempDLFileEntryIds, ObjectEntry existingObjectEntry,
-			boolean guestUser, long groupId, ObjectDefinition objectDefinition,
-			long objectEntryId, ServiceContext serviceContext,
-			boolean throwError, long userId, Map<String, Serializable> values)
+	public List<ValidationError> validate(
+			long groupId, ObjectEntry objectEntry,
+			List<String> objectValidationRuleExternalReferenceCodes,
+			ServiceContext serviceContext, long userId)
 		throws PortalException {
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
+		List<ValidationError> validationErrorList = new ArrayList<>();
 
-		List<ObjectEntryValuesException> objectEntryValuesExceptions =
-			new ArrayList<>();
+		try {
+			_objectValidationRuleLocalService.validate(
+				objectValidationRuleExternalReferenceCodes, objectEntry,
+				userId);
+		}
+		catch (ObjectValidationRuleEngineException
+					objectValidationRuleEngineException) {
 
-		for (ObjectField objectField : objectFields) {
-			if (!objectField.isLocalized() &&
-				values.containsKey(objectField.getName())) {
-
-				_validateValues(
-					dlFileEntries, tempDLFileEntryIds, existingObjectEntry,
-					guestUser, groupId, objectDefinition,
-					objectEntryValuesExceptions, objectField, serviceContext,
-					throwError, userId, values.get(objectField.getName()),
-					StringPool.BLANK);
-			}
-
-			Map<String, String> localizedValues =
-				(Map<String, String>)values.get(
-					objectField.getI18nObjectFieldName());
-
-			if (MapUtil.isEmpty(localizedValues)) {
-				continue;
-			}
-
-			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
-				_validateValues(
-					dlFileEntries, tempDLFileEntryIds, existingObjectEntry,
-					guestUser, groupId, objectDefinition,
-					objectEntryValuesExceptions, objectField, serviceContext,
-					throwError, userId, entry.getValue(), entry.getKey());
-			}
+			validationErrorList = ListUtil.toList(
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults(),
+				objectValidationRuleResult -> new ValidationError(
+					objectValidationRuleResult.getErrorMessage(),
+					objectValidationRuleResult.getObjectFieldName(),
+					objectValidationRuleResult.getExternalReferenceCode()));
 		}
 
-		return objectEntryValuesExceptions;
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		validationErrorList.addAll(
+			ListUtil.toList(
+				_validateValues(
+					Collections.emptyMap(), Collections.emptySet(), objectEntry,
+					false, groupId, objectDefinition, serviceContext, false,
+					serviceContext.getUserId(), objectEntry.getValues()),
+				objectEntryValuesException -> new ValidationError(
+					objectEntryValuesException.getMessage())));
+
+		return validationErrorList;
 	}
 
 	@Activate
@@ -6012,6 +6008,53 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private List<ObjectEntryValuesException> _validateValues(
+			Map<DLFileEntry, ObjectField> dlFileEntries,
+			Set<Long> tempDLFileEntryIds, ObjectEntry existingObjectEntry,
+			boolean guestUser, long groupId, ObjectDefinition objectDefinition,
+			ServiceContext serviceContext, boolean throwError, long userId,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		List<ObjectEntryValuesException> objectEntryValuesExceptions =
+			new ArrayList<>();
+
+		for (ObjectField objectField : objectFields) {
+			if (!objectField.isLocalized() &&
+				values.containsKey(objectField.getName())) {
+
+				_validateValues(
+					dlFileEntries, tempDLFileEntryIds, existingObjectEntry,
+					guestUser, groupId, objectDefinition,
+					objectEntryValuesExceptions, objectField, serviceContext,
+					throwError, userId, values.get(objectField.getName()),
+					StringPool.BLANK);
+			}
+
+			Map<String, String> localizedValues =
+				(Map<String, String>)values.get(
+					objectField.getI18nObjectFieldName());
+
+			if (MapUtil.isEmpty(localizedValues)) {
+				continue;
+			}
+
+			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
+				_validateValues(
+					dlFileEntries, tempDLFileEntryIds, existingObjectEntry,
+					guestUser, groupId, objectDefinition,
+					objectEntryValuesExceptions, objectField, serviceContext,
+					throwError, userId, entry.getValue(), entry.getKey());
+			}
+		}
+
+		return objectEntryValuesExceptions;
+	}
+
 	private void _validateWorkflowAction(
 			boolean enableObjectEntryDraft, ObjectDefinition objectDefinition,
 			Integer status, Integer workflowAction)
@@ -6156,6 +6199,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectStateLocalService _objectStateLocalService;
+
+	@Reference
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Reference
 	private PermissionService _permissionService;

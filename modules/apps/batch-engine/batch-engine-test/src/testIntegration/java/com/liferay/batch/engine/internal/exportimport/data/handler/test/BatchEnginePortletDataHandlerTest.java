@@ -11,6 +11,7 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -347,6 +348,85 @@ public class BatchEnginePortletDataHandlerTest {
 				_companyGroupId, file
 			).toString(),
 			JSONCompareMode.STRICT);
+	}
+
+	@Test
+	@TestInfo("LPD-49421")
+	public void testImportIndividualDeletionsCompanyGroup() throws Exception {
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
+
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
+					false)),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntry4 = _addObjectEntry(
+			_objectDefinition2, RandomTestUtil.randomString());
+
+		// export deletions
+
+		Map<String, String[]> parameterMap =
+			_getExportIndividualDeletionsParameterMap(
+				Collections.singletonList(_objectDefinition1));
+
+		File file = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), _companyGroupId, false,
+							new long[0], parameterMap)));
+
+		// import to recreate deleted entries
+
+		_importLayouts();
+
+		// import deletions
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportLayoutSettingsMap(
+							TestPropsValues.getUser(), _companyGroupId, false,
+							null, parameterMap));
+
+		_exportImportLocalService.importLayoutsDataDeletions(
+			exportImportConfiguration, file);
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, file);
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry1.getExternalReferenceCode(),
+				_objectDefinition1.getObjectDefinitionId()));
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry2.getExternalReferenceCode(),
+				_objectDefinition1.getObjectDefinitionId()));
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry3.getExternalReferenceCode(),
+				_objectDefinition1.getObjectDefinitionId()));
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry4.getExternalReferenceCode(),
+				_objectDefinition2.getObjectDefinitionId()));
 	}
 
 	private ObjectEntry _addObjectEntry(

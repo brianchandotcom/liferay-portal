@@ -18,6 +18,13 @@ public class LayoutPageTemplateEntryDefaultTemplateException
 		_type = LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE;
 	}
 
+	public LayoutPageTemplateEntryDefaultTemplateException(int type) {
+		super(
+			"The default Layout Page Template Entry must be published first.");
+
+		_type = type;
+	}
+
 	public LayoutPageTemplateEntryDefaultTemplateException(String msg) {
 		super(msg);
 

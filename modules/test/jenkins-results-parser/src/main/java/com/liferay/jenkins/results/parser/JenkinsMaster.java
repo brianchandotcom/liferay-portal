@@ -821,8 +821,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		for (int i = 0; i < computerJSONArray.length(); i++) {
 			JSONObject computerJSONObject = computerJSONArray.getJSONObject(i);
 
-			String jenkinsSlaveName = computerJSONObject.getString(
-				"displayName");
+			String jenkinsSlaveName = JenkinsSlave.getDisplayName(
+				computerJSONObject);
 
 			if (jenkinsSlaveName.equals("Built-In Node") ||
 				jenkinsSlaveName.equals("master")) {

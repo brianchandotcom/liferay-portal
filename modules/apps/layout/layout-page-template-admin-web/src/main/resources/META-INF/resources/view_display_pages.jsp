@@ -46,6 +46,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 	<clay:container-fluid
 		cssClass="container-view sidenav-content"
+		size="xxxl"
 	>
 		<portlet:actionURL name="/layout_page_template_admin/delete_layout_page_template_entry" var="deleteDisplayPageURL">
 			<portlet:param name="tabs1" value="display-page-templates" />

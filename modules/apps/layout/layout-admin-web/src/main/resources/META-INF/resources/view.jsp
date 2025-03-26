@@ -38,7 +38,7 @@ portletDisplay.setShowStagingIcon(false);
 
 		<liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />
 
-		<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
+		<aui:form cssClass="container-fluid container-fluid-max-xxxl" name="fm">
 			<c:choose>
 				<c:when test="<%= layoutsAdminDisplayContext.hasLayouts() %>">
 					<c:choose>

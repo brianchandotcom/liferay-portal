@@ -638,6 +638,21 @@ public class SourceFormatter {
 						new String[] {"**/package.json"},
 						_sourceFormatterExcludes, false));
 			}
+
+			File portalDir = SourceFormatterUtil.getPortalDir(
+				_sourceFormatterArgs.getBaseDirName(),
+				_sourceFormatterArgs.getMaxLineLength());
+
+			if ((portalDir != null) &&
+				recentChangesFileName.endsWith(
+					portalDir + "/test.properties")) {
+
+				dependentFileNames.addAll(
+					SourceFormatterUtil.filterFileNames(
+						_allFileNames, new String[0],
+						new String[] {"**/test.properties"},
+						_sourceFormatterExcludes, false));
+			}
 		}
 
 		if (_sourceFormatterArgs.isFormatCurrentBranch()) {

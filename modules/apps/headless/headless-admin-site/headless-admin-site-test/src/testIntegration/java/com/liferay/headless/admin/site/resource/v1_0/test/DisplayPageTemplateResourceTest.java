@@ -113,7 +113,7 @@ public class DisplayPageTemplateResourceTest
 					testGroup.getGroupId()));
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() ->
 				displayPageTemplateResource.
 					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -127,7 +127,7 @@ public class DisplayPageTemplateResourceTest
 		_enableLocalStaging();
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateResource.
 					deleteSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -170,7 +170,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplate);
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() ->
 				displayPageTemplateResource.
 					getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -298,7 +298,7 @@ public class DisplayPageTemplateResourceTest
 			Boolean.TRUE);
 
 		_assertProblemException(
-			"NOT_FOUND",
+			"NOT_FOUND", null,
 			() ->
 				displayPageTemplateResource.
 					patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -309,7 +309,7 @@ public class DisplayPageTemplateResourceTest
 		_enableLocalStaging();
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateResource.
 					patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -402,7 +402,7 @@ public class DisplayPageTemplateResourceTest
 		_enableLocalStaging();
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateResource.
 					putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -582,7 +582,7 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		_assertProblemException(
-			"BAD_REQUEST",
+			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateResource.
 					postSiteSiteByExternalReferenceCodeDisplayPageTemplatePageSpecification(
@@ -596,7 +596,8 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	private void _assertProblemException(
-			String status, UnsafeRunnable<Exception> unsafeRunnable)
+			String status, String title,
+			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try {
@@ -608,7 +609,7 @@ public class DisplayPageTemplateResourceTest
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals(status, problem.getStatus());
-			Assert.assertNull(problem.getTitle());
+			Assert.assertEquals(title, problem.getTitle());
 		}
 	}
 

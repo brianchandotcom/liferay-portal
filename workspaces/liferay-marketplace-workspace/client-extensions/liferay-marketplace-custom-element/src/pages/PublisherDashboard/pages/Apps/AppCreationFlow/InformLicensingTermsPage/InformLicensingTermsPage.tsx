@@ -9,8 +9,7 @@ import {Header} from '../../../../../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
-import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../enums/Product';
-import {ProductType} from '../../../../../../enums/ProductType';
+import {ProductType} from '../../../../../../enums/Product';
 import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createAppSKU,
@@ -23,9 +22,10 @@ import {
 } from '../../../../../../utils/api';
 import {createSkuName, getSkuPrice} from '../../../../../../utils/util';
 import {useAppContext} from '../AppContext/AppManageState';
-import {TYPES} from '../AppContext/actionTypes';
+import {ActionTypes} from '../AppContext/actionTypes';
 
 import './InformLicensingTermsPage.scss';
+import {ProductSpecificationKey} from '../../../../../../enums/Product';
 
 type InformLicensingTermsPageProps = {
 	onClickBack: () => void;
@@ -67,7 +67,7 @@ export function InformLicensingTermsPage({
 			return updateProductSpecification({
 				body: {
 					specificationKey:
-						PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE,
+						ProductSpecificationKey.APP_LICENSING_TYPE,
 					value,
 				},
 				id: appLicense.id,
@@ -75,7 +75,7 @@ export function InformLicensingTermsPage({
 		}
 
 		const dataSpecification = await getSpecification(
-			PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE
+			ProductSpecificationKey.APP_LICENSING_TYPE
 		);
 
 		const {id} = await createProductSpecification({
@@ -89,7 +89,7 @@ export function InformLicensingTermsPage({
 
 		dispatch({
 			payload: {id, value: appLicense.value},
-			type: TYPES.UPDATE_APP_LICENSE,
+			type: ActionTypes.UPDATE_APP_LICENSE,
 		});
 	};
 
@@ -169,7 +169,7 @@ export function InformLicensingTermsPage({
 			payload: {
 				value: _skuTrialId,
 			},
-			type: TYPES.UPDATE_SKU_TRIAL_ID,
+			type: ActionTypes.UPDATE_SKU_TRIAL_ID,
 		});
 	};
 
@@ -196,7 +196,7 @@ export function InformLicensingTermsPage({
 									id: appLicense.id,
 									value: 'Perpetual',
 								},
-								type: TYPES.UPDATE_APP_LICENSE,
+								type: ActionTypes.UPDATE_APP_LICENSE,
 							});
 						}}
 						selected={appLicense.value === 'Perpetual'}
@@ -217,7 +217,7 @@ export function InformLicensingTermsPage({
 									id: appLicense.id,
 									value: 'non-perpetual',
 								},
-								type: TYPES.UPDATE_APP_LICENSE,
+								type: ActionTypes.UPDATE_APP_LICENSE,
 							});
 						}}
 						selected={appLicense.value === 'non-perpetual'}
@@ -244,7 +244,7 @@ export function InformLicensingTermsPage({
 						onChange={() =>
 							dispatch({
 								payload: {value: 'yes'},
-								type: TYPES.UPDATE_APP_TRIAL_INFO,
+								type: ActionTypes.UPDATE_APP_TRIAL_INFO,
 							})
 						}
 						selected={dayTrial === 'yes'}
@@ -258,7 +258,7 @@ export function InformLicensingTermsPage({
 						onChange={() => {
 							dispatch({
 								payload: {value: 'no'},
-								type: TYPES.UPDATE_APP_TRIAL_INFO,
+								type: ActionTypes.UPDATE_APP_TRIAL_INFO,
 							});
 						}}
 						selected={dayTrial === 'no'}

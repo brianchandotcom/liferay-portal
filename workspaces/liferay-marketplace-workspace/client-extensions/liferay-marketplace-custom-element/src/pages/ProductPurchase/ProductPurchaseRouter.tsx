@@ -7,10 +7,10 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {
-	PRODUCT_CATEGORIES,
-	PRODUCT_SPECIFICATION_KEY,
-	PRODUCT_TYPE_VOCABULARY,
-	SOLUTION_TYPES,
+	ProductCategoies,
+	ProductSpecificationKey,
+	ProductTypeVocabulary,
+	SolutionTypes,
 } from '../../enums/Product';
 import withProviders from '../../hoc/withProviders';
 import {useDeliveryProduct} from '../../hooks/data/useProduct';
@@ -25,7 +25,7 @@ import SolutionProvisioningForm from './steps/Solution';
 import ThankYou from './steps/ThankYou';
 
 const productTypeRoutes = {
-	[PRODUCT_TYPE_VOCABULARY.SOLUTION]: [
+	[ProductTypeVocabulary.SOLUTION]: [
 		{
 			element: ProductPurchaseAccountSelection,
 			index: true,
@@ -37,7 +37,7 @@ const productTypeRoutes = {
 			title: 'Form',
 		},
 	],
-	[PRODUCT_TYPE_VOCABULARY.APP]: [
+	[ProductTypeVocabulary.APP]: [
 		{element: ProductPurchaseAccountSelection, index: true, title: 'Setup'},
 	],
 };
@@ -64,18 +64,18 @@ const ProductPurchaseRouter = () => {
 
 	const productTypes = getProductCategoriesByVocabularyName(
 		product?.categories || [],
-		PRODUCT_CATEGORIES.MARKETPLACE_PRODUCT_TYPE
+		ProductCategoies.MARKETPLACE_PRODUCT_TYPE
 	);
 
-	const productTypeCategory = productTypes[0] as PRODUCT_TYPE_VOCABULARY;
+	const productTypeCategory = productTypes[0] as ProductTypeVocabulary;
 
 	const solutionTypeSpecification = getSpecificationByKey(
-		PRODUCT_SPECIFICATION_KEY.SOLUTION_TYPE,
+		ProductSpecificationKey.SOLUTION_TYPE,
 		product as DeliveryProduct
 	);
 
 	const solutionTypeSpecificationValue =
-		solutionTypeSpecification?.value as SOLUTION_TYPES;
+		solutionTypeSpecification?.value as SolutionTypes;
 
 	const routes = productTypeRoutes[productTypeCategory] || [];
 

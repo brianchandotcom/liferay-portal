@@ -6,7 +6,7 @@
 import {useEffect} from 'react';
 import {useNavigate, useOutletContext} from 'react-router-dom';
 
-import {SOLUTION_TYPES} from '../../../../enums/Product';
+import {SolutionTypes} from '../../../../enums/Product';
 import {ProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import AnalyticsProvisioning from './AnalyticsProvisioningForm';
 import PreBuiltTrialProvisioning from './PreBuiltTrialProvisioningForm';
@@ -23,11 +23,11 @@ const SolutionProvisioningForm = () => {
 		}
 	}, [selectedAccount, accounts.length, navigate]);
 
-	if (solutionTypeSpecificationValue === SOLUTION_TYPES.ANALYTICS) {
+	if (solutionTypeSpecificationValue === SolutionTypes.ANALYTICS) {
 		return <AnalyticsProvisioning />;
 	}
 
-	if (solutionTypeSpecificationValue === SOLUTION_TYPES.PRE_BUILT_TRIAL) {
+	if (solutionTypeSpecificationValue === SolutionTypes.PRE_BUILT_TRIAL) {
 		return <PreBuiltTrialProvisioning />;
 	}
 

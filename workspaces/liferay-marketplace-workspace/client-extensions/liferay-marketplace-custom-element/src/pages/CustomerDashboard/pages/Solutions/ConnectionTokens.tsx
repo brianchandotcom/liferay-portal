@@ -14,7 +14,7 @@ import useSWR from 'swr';
 import EmptyState from '../../../../components/EmptyState';
 import Loading from '../../../../components/Loading';
 import Table from '../../../../components/Table/Table';
-import {ORDER_CUSTOM_FIELDS} from '../../../../enums/Order';
+import {OrderCustomFields} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import analyticsOAuth2 from '../../../../services/oauth/Analytics';
@@ -111,7 +111,7 @@ const ConnectionTokens = () => {
 	const {placedOrder} = useOutletContext<{placedOrder: PlacedOrder}>();
 
 	const analyticsGroupId =
-		placedOrder.customFields[ORDER_CUSTOM_FIELDS.ANALYTICS_GROUP_ID];
+		placedOrder.customFields[OrderCustomFields.ANALYTICS_GROUP_ID];
 
 	const {data: projectDataSourceToken = '', isValidating: isLoading} = useSWR(
 		`/analytics/project/group-${analyticsGroupId}/data-source/token`,

@@ -6,7 +6,7 @@
 import ReactDOMServer from 'react-dom/server';
 
 import {NewAppInitialState} from '../../../../../context/NewAppContext';
-import {ProductUploadType} from '../../../../../enums/ProductUploadType';
+import {ProductUploadType} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
 

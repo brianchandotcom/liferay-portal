@@ -6,10 +6,10 @@
 import productIconFallback from '../assets/icons/purchased_app_icon.svg';
 import productImageFallback from '../assets/images/app_placeholder.png';
 import {
-	PRODUCT_IMAGE_FALLBACK_CATEGORIES,
-	PRODUCT_SPECIFICATION_KEY,
+	ProductImageFallbackCategories,
+	ProductSpecificationKey,
+	ProductType,
 } from '../enums/Product';
-import {ProductType} from '../enums/ProductType';
 import i18n from '../i18n';
 
 export function getProductFallback(): DeliveryProduct {
@@ -33,12 +33,10 @@ export function getProductFallback(): DeliveryProduct {
 	};
 }
 
-export function getProductImageFallback(
-	type: PRODUCT_IMAGE_FALLBACK_CATEGORIES
-) {
+export function getProductImageFallback(type: ProductImageFallbackCategories) {
 	const productImagesFallback = {
-		[PRODUCT_IMAGE_FALLBACK_CATEGORIES.PRODUCT_IMAGE]: productImageFallback,
-		[PRODUCT_IMAGE_FALLBACK_CATEGORIES.PRODUCT_ICON]: productIconFallback,
+		[ProductImageFallbackCategories.PRODUCT_IMAGE]: productImageFallback,
+		[ProductImageFallbackCategories.PRODUCT_ICON]: productIconFallback,
 	};
 
 	return productImagesFallback[type] || '';
@@ -109,7 +107,7 @@ export function getProductCategoriesByVocabularyName(
 
 export function getProductType(product: DeliveryProduct) {
 	const specification = getSpecificationByKey(
-		PRODUCT_SPECIFICATION_KEY.APP_TYPE,
+		ProductSpecificationKey.APP_TYPE,
 		product
 	);
 

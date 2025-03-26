@@ -29,7 +29,7 @@ import {
 } from '../../../../../../utils/api';
 import {isTrialSKU} from '../../../../../../utils/productUtils';
 import {getSkuPrice} from '../../../../../../utils/util';
-import {TYPES} from '../AppContext/actionTypes';
+import {ActionTypes} from '../AppContext/actionTypes';
 import IconButton from './components/IconButton/IconButton';
 import LicensePriceCard from './components/LicensePriceCard';
 
@@ -51,7 +51,7 @@ export function InformLicensingTermsPricePage({
 	const handleAddPriceTier = (licenseTier: LicenseTier) =>
 		dispatch({
 			payload: {licenseTier},
-			type: TYPES.ADD_APP_LICENSE_PRICE,
+			type: ActionTypes.ADD_APP_LICENSE_PRICE,
 		});
 
 	const handleDeletePriceTier = (licenseTier: LicenseTier, key: number) =>
@@ -60,7 +60,7 @@ export function InformLicensingTermsPricePage({
 				key,
 				licenseTier,
 			},
-			type: TYPES.DELETE_APP_LICENSE_PRICE,
+			type: ActionTypes.DELETE_APP_LICENSE_PRICE,
 		});
 
 	const handleEditPriceTier = (
@@ -74,7 +74,7 @@ export function InformLicensingTermsPricePage({
 				licenseTier,
 				price,
 			},
-			type: TYPES.UPDATE_APP_LICENSE_PRICES,
+			type: ActionTypes.UPDATE_APP_LICENSE_PRICES,
 		});
 
 	const processTier = async (priceEntry: PriceEntry) => {

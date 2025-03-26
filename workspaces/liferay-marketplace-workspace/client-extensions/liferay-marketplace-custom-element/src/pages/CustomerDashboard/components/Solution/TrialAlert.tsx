@@ -5,22 +5,22 @@
 
 import ClayAlert from '@clayui/alert';
 
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../enums/Order';
+import {OrderWorkflowStatusCode} from '../../../../enums/Order';
 
 const statusAlert = {
-	[ORDER_WORKFLOW_STATUS_CODE.CANCELLED]: {
+	[OrderWorkflowStatusCode.CANCELLED]: {
 		displayType: 'danger',
 		text: 'Your order has been cancelled. Please contact support if you have any questions.',
 	},
-	[ORDER_WORKFLOW_STATUS_CODE.ON_HOLD]: {
+	[OrderWorkflowStatusCode.ON_HOLD]: {
 		displayType: 'secondary',
 		text: 'Your order is currently on hold. Please check your email for further instructions.',
 	},
-	[ORDER_WORKFLOW_STATUS_CODE.PROCESSING]: {
+	[OrderWorkflowStatusCode.PROCESSING]: {
 		displayType: 'info',
 		text: 'Your order is being processed. We will notify you once it is ready for the next step.',
 	},
-	[ORDER_WORKFLOW_STATUS_CODE.PENDING]: {
+	[OrderWorkflowStatusCode.PENDING]: {
 		displayType: 'warning',
 		text: 'Your order is pending. Please wait a few minutes or hours for the processing to complete.',
 	},

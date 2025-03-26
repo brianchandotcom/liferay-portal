@@ -5,7 +5,7 @@
 
 import {Checkbox} from '../../../components/Checkbox/Checkbox';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
-import {PRODUCT_SUPPORT_SPECIFICATION_KEY} from '../../../enums/Product';
+import {ProductSupportSpecificationKey} from '../../../enums/Product';
 import {Liferay} from '../../../liferay/liferay';
 import {useGetAppContext} from '../GetAppContextProvider';
 
@@ -22,7 +22,7 @@ const LicenseTermsCheckbox = () => {
 	const appUsageTerms = productSpecifications?.find(
 		(specification) =>
 			specification?.specificationKey ===
-			PRODUCT_SUPPORT_SPECIFICATION_KEY.APP_USAGE_TERMS_URL
+			ProductSupportSpecificationKey.APP_USAGE_TERMS_URL
 	);
 
 	const formattedProtocolUrl = appUsageTerms?.value?.startsWith('https://')

@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 
 import ProductPurchase from '../../components/ProductPurchase';
-import {SOLUTION_TYPES} from '../../enums/Product';
+import {SolutionTypes} from '../../enums/Product';
 import useAccounts from './hooks/useAccounts';
 
 type ProductPurchaseOutletProps = {
@@ -18,13 +18,13 @@ type ProductPurchaseOutletProps = {
 		path?: string;
 		title: string;
 	}[];
-	solutionTypeSpecificationValue: SOLUTION_TYPES;
+	solutionTypeSpecificationValue: SolutionTypes;
 };
 
 export type ProductPurchaseOutletContext = {
 	product: DeliveryProduct;
 	routes: ProductPurchaseOutletProps['routes'];
-	solutionTypeSpecificationValue: SOLUTION_TYPES;
+	solutionTypeSpecificationValue: SolutionTypes;
 } & Omit<ReturnType<typeof useAccounts>, 'myUserAccount'>;
 
 const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({

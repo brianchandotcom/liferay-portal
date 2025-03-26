@@ -10,7 +10,7 @@ import {useState} from 'react';
 import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import Page from '../../../../components/Page';
-import {ORDER_TYPES} from '../../../../enums/Order';
+import {OrderTypes} from '../../../../enums/Order';
 import {Liferay} from '../../../../liferay/liferay';
 import {getSiteURL} from '../../../../utils/site';
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
@@ -29,11 +29,11 @@ const Apps = () => {
 		accountId: selectedAccount?.id as number,
 		channelId: Number(Liferay.CommerceContext.commerceChannelId),
 		orderTypeExternalReferenceCodes: [
-			ORDER_TYPES.CLIENT_EXTENSION,
-			ORDER_TYPES.CLOUDAPP,
-			ORDER_TYPES.COMPOSITE_APP,
-			ORDER_TYPES.DXPAPP,
-			ORDER_TYPES.LOW_CODE_CONFIGURATION,
+			OrderTypes.CLIENT_EXTENSION,
+			OrderTypes.CLOUDAPP,
+			OrderTypes.COMPOSITE_APP,
+			OrderTypes.DXPAPP,
+			OrderTypes.LOW_CODE_CONFIGURATION,
 		],
 		page,
 		pageSize: 10,

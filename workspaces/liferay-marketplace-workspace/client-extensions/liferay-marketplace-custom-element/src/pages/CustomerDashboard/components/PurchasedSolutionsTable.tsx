@@ -11,7 +11,7 @@ import {useNavigate} from 'react-router-dom';
 import {DashboardEmptyTable} from '../../../components/DashboardTable/DashboardEmptyTable';
 import OrderStatus from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
-import {ORDER_CUSTOM_FIELDS, ORDER_TYPES} from '../../../enums/Order';
+import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
 import i18n from '../../../i18n';
 
 type PurchasedSolutionsTableProps = {
@@ -19,9 +19,9 @@ type PurchasedSolutionsTableProps = {
 };
 
 const orderTypeLabel = {
-	[ORDER_TYPES.ADDONS]: {duration: null, label: 'Add-ons'},
-	[ORDER_TYPES.SOLUTIONS30]: {duration: 30, label: '30-day Trial'},
-	[ORDER_TYPES.SOLUTIONS7]: {duration: 7, label: '7-day Trial'},
+	[OrderTypes.ADDONS]: {duration: null, label: 'Add-ons'},
+	[OrderTypes.SOLUTIONS30]: {duration: 30, label: '30-day Trial'},
+	[OrderTypes.SOLUTIONS7]: {duration: 7, label: '7-day Trial'},
 } as const;
 
 const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
@@ -90,7 +90,7 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 				},
 				{
 					key: 'orderTypeExternalReferenceCode',
-					render: (orderTypeExternalReferenceCode: ORDER_TYPES) => (
+					render: (orderTypeExternalReferenceCode: OrderTypes) => (
 						<span className="label label-info">
 							{(orderTypeLabel as any)[
 								orderTypeExternalReferenceCode
@@ -133,7 +133,7 @@ const PurchasedSolutionsTable: React.FC<PurchasedSolutionsTableProps> = ({
 					key: 'status',
 					render: (_, {customFields, id}) => {
 						const virtualHost =
-							customFields[ORDER_CUSTOM_FIELDS.VIRTUAL_HOST];
+							customFields[OrderCustomFields.VIRTUAL_HOST];
 
 						return (
 							<div onClick={(event) => event.stopPropagation()}>

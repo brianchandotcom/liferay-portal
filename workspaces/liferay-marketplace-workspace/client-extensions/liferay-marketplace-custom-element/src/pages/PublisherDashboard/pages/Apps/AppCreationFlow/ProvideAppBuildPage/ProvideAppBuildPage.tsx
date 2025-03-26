@@ -15,18 +15,7 @@ import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFo
 import {PackageVersionModal} from '../../../../../../components/PackageVersionModal/PackageVersionModal';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
-import {
-	PRODUCT_SPECIFICATION_KEY,
-	PRODUCT_WORKFLOW_STATUS_CODE,
-} from '../../../../../../enums/Product';
-import {ProductEditionOption} from '../../../../../../enums/ProductEditionOption';
-import {ProductSpecification} from '../../../../../../enums/ProductSpecification';
-import {ProductType} from '../../../../../../enums/ProductType';
-import {ProductUploadType} from '../../../../../../enums/ProductUploadType';
-import {ProductVersionOption} from '../../../../../../enums/ProductVersionOption';
-import {ProductVocabulary} from '../../../../../../enums/ProductVocabulary';
 import i18n from '../../../../../../i18n';
-import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	createProductSpecification,
 	createProductVirtualEntry,
@@ -39,7 +28,18 @@ import {
 	updateProductSpecification,
 } from '../../../../../../utils/api';
 import {useAppContext} from '../AppContext/AppManageState';
-import {TYPES} from '../AppContext/actionTypes';
+import {ActionTypes} from '../AppContext/actionTypes';
+import './ProvideAppBuildPage.scss';
+import {
+	ProductEditionOption,
+	ProductSpecificationKey,
+	ProductType,
+	ProductUploadType,
+	ProductVersionOption,
+	ProductVocabulary,
+	ProductWorkflowStatusCode,
+} from '../../../../../../enums/Product';
+import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
 import ResourceRequirements from './ResourceRequirements';
 import UploadAppPackagesComponent from './components/UploadAppPackages';
 import {getOfferingTypes} from './constants/offeringTypes';
@@ -106,7 +106,7 @@ export function ProvideAppBuildPage({
 	const handleResetAppPackages = useCallback(
 		() =>
 			dispatch({
-				type: TYPES.RESET_APP_PACKAGES,
+				type: ActionTypes.RESET_APP_PACKAGES,
 			}),
 		[dispatch]
 	);
@@ -117,7 +117,7 @@ export function ProvideAppBuildPage({
 				isRemoved: true,
 				versionName: removedVersion,
 			},
-			type: TYPES.UPLOAD_BUILD_PACKAGE_FILES,
+			type: ActionTypes.UPLOAD_BUILD_PACKAGE_FILES,
 		});
 	};
 
@@ -252,7 +252,7 @@ export function ProvideAppBuildPage({
 		const filteredProductSpecifications = dataProductSpecifications.filter(
 			(specification) =>
 				specification.specificationKey !==
-				PRODUCT_SPECIFICATION_KEY.LIFERAY_VERSION
+				ProductSpecificationKey.LIFERAY_VERSION
 		);
 
 		for (const versionKey in buildAppPackages) {
@@ -266,7 +266,7 @@ export function ProvideAppBuildPage({
 					version: versionKey,
 				});
 				liferayVersionSpecifications.push({
-					specificationKey: PRODUCT_SPECIFICATION_KEY.LIFERAY_VERSION,
+					specificationKey: ProductSpecificationKey.LIFERAY_VERSION,
 					value: {
 						en_US: versionKey,
 					},
@@ -281,7 +281,7 @@ export function ProvideAppBuildPage({
 					...filteredProductSpecifications,
 					...liferayVersionSpecifications,
 				],
-				productStatus: PRODUCT_WORKFLOW_STATUS_CODE.DRAFT,
+				productStatus: ProductWorkflowStatusCode.DRAFT,
 			}
 		);
 
@@ -324,7 +324,7 @@ export function ProvideAppBuildPage({
 						);
 						dispatch({
 							payload: buildAppPackages,
-							type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+							type: ActionTypes.UPDATE_BUILD_PACKAGE_FILES,
 						});
 					},
 					virtualSettingId,
@@ -365,7 +365,8 @@ export function ProvideAppBuildPage({
 		if (appType.id) {
 			return updateProductSpecification({
 				body: {
-					specificationKey: ProductSpecification.TYPE.toLowerCase(),
+					specificationKey:
+						ProductSpecificationKey.APP_TYPE.toLowerCase(),
 					value: {en_US: appType.value},
 				},
 				id: appType.id,
@@ -385,7 +386,7 @@ export function ProvideAppBuildPage({
 
 		dispatch({
 			payload: {id, value: appType.value},
-			type: TYPES.UPDATE_APP_TYPE,
+			type: ActionTypes.UPDATE_APP_TYPE,
 		});
 	};
 
@@ -395,7 +396,7 @@ export function ProvideAppBuildPage({
 				id: appType.id,
 				value,
 			},
-			type: TYPES.UPDATE_APP_TYPE,
+			type: ActionTypes.UPDATE_APP_TYPE,
 		});
 
 		handleResetAppPackages();
@@ -568,7 +569,7 @@ export function ProvideAppBuildPage({
 										payload: {
 											value: ProductUploadType.ZIP_UPLOAD,
 										},
-										type: TYPES.UPDATE_APP_BUILD,
+										type: ActionTypes.UPDATE_APP_BUILD,
 									})
 								}
 								selected={
@@ -603,7 +604,7 @@ export function ProvideAppBuildPage({
 								onChange={() =>
 									dispatch({
 										payload: {value: ProductUploadType.LXC},
-										type: TYPES.UPDATE_APP_BUILD,
+										type: ActionTypes.UPDATE_APP_BUILD,
 									})
 								}
 								selected={appBuild === ProductUploadType.LXC}
@@ -626,7 +627,7 @@ export function ProvideAppBuildPage({
 										payload: {
 											value: ProductUploadType.GITHUB,
 										},
-										type: TYPES.UPDATE_APP_BUILD,
+										type: ActionTypes.UPDATE_APP_BUILD,
 									});
 								}}
 								selected={appBuild === ProductUploadType.GITHUB}

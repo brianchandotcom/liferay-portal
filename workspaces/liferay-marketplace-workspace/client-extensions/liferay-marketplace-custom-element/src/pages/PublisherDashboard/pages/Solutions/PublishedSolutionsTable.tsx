@@ -14,8 +14,8 @@ import OrderStatus from '../../../../components/OrderStatus';
 import Table from '../../../../components/Table/Table';
 import TableKebabButton from '../../../../components/Table/TableButtons/TableKebabButton';
 import {
-	PRODUCT_WORKFLOW_STATUS_CODE,
-	PRODUCT_WORKFLOW_STATUS_LABEL,
+	ProductWorkflowStatusCode,
+	ProductWorkflowStatusLabel,
 } from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
@@ -75,7 +75,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 							{
 								disabled:
 									row.workflowStatusInfo.code ===
-									PRODUCT_WORKFLOW_STATUS_CODE.PENDING,
+									ProductWorkflowStatusCode.PENDING,
 								label: i18n.translate('edit'),
 								onClick: () =>
 									navigate(
@@ -85,7 +85,7 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 							{
 								disabled:
 									row.workflowStatusInfo.code ===
-									PRODUCT_WORKFLOW_STATUS_CODE.PENDING,
+									ProductWorkflowStatusCode.PENDING,
 								label: i18n.translate('delete'),
 								onClick: () => {
 									setSelectedApp(row);
@@ -131,8 +131,8 @@ const PublishedSolutionsTable: React.FC<PublishedSolutionsTableProps> = ({
 						render: (workflowStatusInfo) => (
 							<OrderStatus orderStatus={workflowStatusInfo.label}>
 								{
-									PRODUCT_WORKFLOW_STATUS_LABEL[
-										workflowStatusInfo.code as keyof typeof PRODUCT_WORKFLOW_STATUS_LABEL
+									ProductWorkflowStatusLabel[
+										workflowStatusInfo.code as keyof typeof ProductWorkflowStatusLabel
 									]
 								}
 							</OrderStatus>

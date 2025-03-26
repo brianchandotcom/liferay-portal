@@ -9,7 +9,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
-import {ORDER_TYPES, PAYMENT_STATUS} from '../../enums/Order';
+import {OrderTypes, PaymentStatus} from '../../enums/Order';
 import withProviders from '../../hoc/withProviders';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
@@ -50,12 +50,12 @@ export function NextSteps() {
 	const orderTypeExternalReferenceCode =
 		placedOrder?.orderTypeExternalReferenceCode;
 
-	const isCloudApp = orderTypeExternalReferenceCode === ORDER_TYPES.CLOUDAPP;
+	const isCloudApp = orderTypeExternalReferenceCode === OrderTypes.CLOUDAPP;
 
 	const {isPaidApp} = getProductPriceModel(product);
 
 	const nextStepBody = {
-		[PAYMENT_STATUS.PAID]: (
+		[PaymentStatus.PAID]: (
 			<Header
 				description={
 					isCloudApp ? (
@@ -112,7 +112,7 @@ export function NextSteps() {
 				title="Next steps"
 			/>
 		),
-		[PAYMENT_STATUS.PAYMENT_PENDING]: (
+		[PaymentStatus.PAYMENT_PENDING]: (
 			<Header
 				description={
 					isTrial ? (
@@ -224,7 +224,7 @@ export function NextSteps() {
 					showContinueButton={true}
 				/>
 
-				{(paymentStatus === PAYMENT_STATUS.PAID || isTrial) && (
+				{(paymentStatus === PaymentStatus.PAID || isTrial) && (
 					<div className="d-flex justify-content-end">
 						<a href="#">
 							<ins>Learn more about App Configuration</ins>

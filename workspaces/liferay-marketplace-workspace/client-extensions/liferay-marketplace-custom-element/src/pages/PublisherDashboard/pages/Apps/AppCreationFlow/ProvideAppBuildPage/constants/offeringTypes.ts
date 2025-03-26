@@ -3,22 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {PRODUCT_OFFERING_TYPES} from '../../../../../../../enums/Product';
-import {ProductType} from '../../../../../../../enums/ProductType';
+import {
+	ProductOfferingTypes,
+	ProductType,
+} from '../../../../../../../enums/Product';
 
 const ALL_OFFERINGS = [
-	PRODUCT_OFFERING_TYPES.LIFERAY_PAAS,
-	PRODUCT_OFFERING_TYPES.LIFERAY_SAAS,
-	PRODUCT_OFFERING_TYPES.LIFERAY_SELF_HOSTED,
+	ProductOfferingTypes.LIFERAY_PAAS,
+	ProductOfferingTypes.LIFERAY_SAAS,
+	ProductOfferingTypes.LIFERAY_SELF_HOSTED,
 ];
 
 const offeringTypes = {
 	'client-extension': ALL_OFFERINGS,
-	'cloud': [PRODUCT_OFFERING_TYPES.LIFERAY_SAAS],
-	'composite-app': [PRODUCT_OFFERING_TYPES.LIFERAY_SELF_HOSTED],
+	'cloud': [ProductOfferingTypes.LIFERAY_SAAS],
+	'composite-app': [ProductOfferingTypes.LIFERAY_SELF_HOSTED],
 	'dxp': [
-		PRODUCT_OFFERING_TYPES.LIFERAY_PAAS,
-		PRODUCT_OFFERING_TYPES.LIFERAY_SELF_HOSTED,
+		ProductOfferingTypes.LIFERAY_PAAS,
+		ProductOfferingTypes.LIFERAY_SELF_HOSTED,
 	],
 	'low-code-configuration': ALL_OFFERINGS,
 };

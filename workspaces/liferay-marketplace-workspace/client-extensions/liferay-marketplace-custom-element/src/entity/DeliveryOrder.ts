@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ORDER_TYPES, ORDER_WORKFLOW_STATUS_CODE} from '../enums/Order';
+import {OrderTypes, OrderWorkflowStatusCode} from '../enums/Order';
 import {safeJSONParse} from '../utils/util';
 
 export default class MarketplaceDeliveryOrder {
@@ -15,10 +15,10 @@ export default class MarketplaceDeliveryOrder {
 
 	get isDownloadable() {
 		return [
-			ORDER_TYPES.CLIENT_EXTENSION,
-			ORDER_TYPES.COMPOSITE_APP,
-			ORDER_TYPES.DXPAPP,
-		].includes(this.order.orderTypeExternalReferenceCode as ORDER_TYPES);
+			OrderTypes.CLIENT_EXTENSION,
+			OrderTypes.COMPOSITE_APP,
+			OrderTypes.DXPAPP,
+		].includes(this.order.orderTypeExternalReferenceCode as OrderTypes);
 	}
 
 	get isFreeApp() {
@@ -35,7 +35,7 @@ export default class MarketplaceDeliveryOrder {
 	get isOrderStatusCompleted() {
 		return (
 			this.order.orderStatusInfo?.code ===
-			ORDER_WORKFLOW_STATUS_CODE.COMPLETED
+			OrderWorkflowStatusCode.COMPLETED
 		);
 	}
 }

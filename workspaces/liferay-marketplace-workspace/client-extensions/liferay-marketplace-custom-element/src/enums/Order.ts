@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export enum ORDER_CUSTOM_FIELDS {
+export enum OrderCustomFields {
 	ANALYTICS_GROUP_ID = 'analytics-group-id',
 	CLOUD_PROVISIONING = 'cloud-provisioning',
 	END_DATE = 'trial-end-date',
@@ -14,7 +14,14 @@ export enum ORDER_CUSTOM_FIELDS {
 	VIRTUAL_HOST = 'trial-virtualhost',
 }
 
-export enum ORDER_TYPES {
+export enum OrderStatus {
+	APPROVED = 'approved',
+	COMPLETED = 'completed',
+	PENDING = 'pending',
+	PROCESSING = 'processing',
+}
+
+export enum OrderTypes {
 	ADDONS = 'ADDONS',
 	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
 	CLOUDAPP = 'CLOUDAPP',
@@ -25,18 +32,7 @@ export enum ORDER_TYPES {
 	SOLUTIONS30 = 'SOLUTIONS30',
 }
 
-export const ORDER_TYPES_LABELS = {
-	[ORDER_TYPES.ADDONS]: 'Add-Ons',
-	[ORDER_TYPES.CLIENT_EXTENSION]: 'Client Extension',
-	[ORDER_TYPES.CLOUDAPP]: 'Cloud',
-	[ORDER_TYPES.COMPOSITE_APP]: 'Composite App',
-	[ORDER_TYPES.DXPAPP]: 'DXP',
-	[ORDER_TYPES.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
-	[ORDER_TYPES.SOLUTIONS7]: 'Solutions 7',
-	[ORDER_TYPES.SOLUTIONS30]: 'Solutions 30',
-} as const;
-
-export enum ORDER_WORKFLOW_STATUS_CODE {
+export enum OrderWorkflowStatusCode {
 	CANCELLED = 8,
 	COMPLETED = 0,
 	IN_PROGRESS = 6,
@@ -45,7 +41,17 @@ export enum ORDER_WORKFLOW_STATUS_CODE {
 	PROCESSING = 10,
 }
 
-export enum PAYMENT_STATUS {
+export enum PaymentStatus {
 	PAID = 0,
 	PAYMENT_PENDING = 2,
 }
+export const orderTypeLabel = {
+	[OrderTypes.ADDONS]: 'Add-Ons',
+	[OrderTypes.CLIENT_EXTENSION]: 'Client Extension',
+	[OrderTypes.CLOUDAPP]: 'Cloud',
+	[OrderTypes.COMPOSITE_APP]: 'Composite App',
+	[OrderTypes.DXPAPP]: 'DXP',
+	[OrderTypes.LOW_CODE_CONFIGURATION]: 'Low-Code Configuration',
+	[OrderTypes.SOLUTIONS7]: 'Solutions 7',
+	[OrderTypes.SOLUTIONS30]: 'Solutions 30',
+} as const;

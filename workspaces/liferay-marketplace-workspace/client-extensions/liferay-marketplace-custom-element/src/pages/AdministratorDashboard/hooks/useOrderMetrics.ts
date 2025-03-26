@@ -7,7 +7,7 @@ import {addDays, eachDayOfInterval, format} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
-import {ORDER_TYPES} from '../../../enums/Order';
+import {OrderTypes} from '../../../enums/Order';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
 export const METRIC_PARAMETER = {
@@ -23,8 +23,8 @@ type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
 export const orderSearchBuilder = new SearchBuilder()
 	.in('orderTypeExternalReferenceCode', [
-		ORDER_TYPES.CLOUDAPP,
-		ORDER_TYPES.DXPAPP,
+		OrderTypes.CLOUDAPP,
+		OrderTypes.DXPAPP,
 	])
 	.and();
 

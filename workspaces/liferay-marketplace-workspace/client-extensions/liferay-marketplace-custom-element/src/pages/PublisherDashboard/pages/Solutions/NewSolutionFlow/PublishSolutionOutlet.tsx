@@ -18,7 +18,7 @@ import AppPublish from '../../../../../components/AppPublish';
 import PublishNav from '../../../../../components/AppPublish/Sidebar';
 import Modal from '../../../../../components/Modal';
 import {useSolutionContext} from '../../../../../context/SolutionContext';
-import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../../enums/Product';
+import {ProductWorkflowStatusCode} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import usePublishHeader from '../../../hooks/usePublishHeader';
 import usePublishNavigation from '../../../hooks/usePublishNavigation';
@@ -65,7 +65,7 @@ const PublishSolutionOutlet = () => {
 	const isDisabled = parsedSchema ? !parsedSchema.success : false;
 
 	const isDraft = (status: number) =>
-		status === PRODUCT_WORKFLOW_STATUS_CODE.DRAFT;
+		status === ProductWorkflowStatusCode.DRAFT;
 
 	const isSaveAsDraft =
 		!context._product || isDraft(context._product.productStatus);

@@ -6,13 +6,15 @@
 import {addYears, format} from 'date-fns';
 import {useEffect, useMemo, useState} from 'react';
 
-import {ORDER_CUSTOM_FIELDS} from '../../../../../../../enums/Order';
-import {PRODUCT_SPECIFICATION_KEY} from '../../../../../../../enums/Product';
+import {OrderCustomFields} from '../../../../../../../enums/Order';
+import {
+	LicenseType,
+	ProductSpecificationKey,
+} from '../../../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../../i18n';
 import {getSpecificationByKey} from '../../../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../../../utils/util';
-import {LicenseType} from '../../../../../../GetApp/enums/licenseType';
 import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
 import {InstallStatus} from '../types';
 
@@ -41,7 +43,7 @@ const getStatus = (
 	}
 
 	if (
-		licenseType.toLowerCase() === LicenseType.Subscription &&
+		licenseType.toLowerCase() === LicenseType.SUBSCRIPTION &&
 		new Date(order.createDate) > addYears(new Date(order.createDate), 1)
 	) {
 		return InstallStatus.EXPIRED;
@@ -77,7 +79,7 @@ const useProvisioningData = (orderId: string) => {
 	const productLicenseType = useMemo(
 		() =>
 			getSpecificationByKey(
-				PRODUCT_SPECIFICATION_KEY.APP_LICENSING_TYPE,
+				ProductSpecificationKey.APP_LICENSING_TYPE,
 				product as DeliveryProduct
 			)?.value || '',
 		[product]
@@ -87,7 +89,7 @@ const useProvisioningData = (orderId: string) => {
 		const items = [];
 
 		const [cloudProvisioning] = safeJSONParse<{deployments: any[]}[]>(
-			order.customFields[ORDER_CUSTOM_FIELDS.CLOUD_PROVISIONING],
+			order.customFields[OrderCustomFields.CLOUD_PROVISIONING],
 			[{deployments: []}]
 		);
 

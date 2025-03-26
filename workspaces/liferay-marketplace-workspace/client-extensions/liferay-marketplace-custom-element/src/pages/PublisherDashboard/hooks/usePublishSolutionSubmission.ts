@@ -13,11 +13,11 @@ import {
 	SolutionTypes,
 } from '../../../context/SolutionContext';
 import {
-	PRODUCT_SPECIFICATION_KEY,
-	PRODUCT_TAGS,
-	PRODUCT_WORKFLOW_STATUS_CODE,
+	ProductSpecificationKey,
+	ProductTags,
+	ProductVocabulary,
+	ProductWorkflowStatusCode,
 } from '../../../enums/Product';
-import {ProductVocabulary} from '../../../enums/ProductVocabulary';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import headlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -79,7 +79,7 @@ const addOrUpdateImages = async (
 
 const updateSpecification = async (
 	product: Product,
-	specificationKey: PRODUCT_SPECIFICATION_KEY,
+	specificationKey: ProductSpecificationKey,
 	value: string
 ) => {
 	const {productId, productSpecifications = []} = product;
@@ -152,8 +152,8 @@ const usePublishSolutionSubmission = (
 		}));
 
 		const productStatus = config.isDraft
-			? PRODUCT_WORKFLOW_STATUS_CODE.DRAFT
-			: PRODUCT_WORKFLOW_STATUS_CODE.PENDING;
+			? ProductWorkflowStatusCode.DRAFT
+			: ProductWorkflowStatusCode.PENDING;
 
 		if (_product) {
 			if (file && (!file?.uploaded || file?.changed)) {
@@ -166,7 +166,7 @@ const usePublishSolutionSubmission = (
 						galleryEnabled: false,
 						neverExpire: true,
 						priority: 0,
-						tags: [PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON],
+						tags: [ProductTags.SOLUTION_PROFILE_APP_ICON],
 						title: {
 							en_US: file.fileName,
 						},
@@ -210,7 +210,7 @@ const usePublishSolutionSubmission = (
 					galleryEnabled: false,
 					neverExpire: true,
 					priority: 0,
-					tags: [PRODUCT_TAGS.SOLUTION_PROFILE_APP_ICON],
+					tags: [ProductTags.SOLUTION_PROFILE_APP_ICON],
 					title: {
 						en_US: file.fileName,
 					},
@@ -231,12 +231,12 @@ const usePublishSolutionSubmission = (
 		await Promise.all([
 			updateSpecification(
 				product,
-				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_DESCRIPTION,
+				ProductSpecificationKey.SOLUTION_HEADER_DESCRIPTION,
 				description
 			),
 			updateSpecification(
 				product,
-				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_TITLE,
+				ProductSpecificationKey.SOLUTION_HEADER_TITLE,
 				title
 			),
 		]);
@@ -245,14 +245,14 @@ const usePublishSolutionSubmission = (
 			if (contentType.content?.headerVideoDescription) {
 				await updateSpecification(
 					product,
-					PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_DESCRIPTION,
+					ProductSpecificationKey.SOLUTION_HEADER_VIDEO_DESCRIPTION,
 					contentType.content.headerVideoDescription
 				);
 			}
 
 			await updateSpecification(
 				product,
-				PRODUCT_SPECIFICATION_KEY.SOLUTION_HEADER_VIDEO_URL,
+				ProductSpecificationKey.SOLUTION_HEADER_VIDEO_URL,
 				contentType.content.headerVideoUrl as string
 			);
 
@@ -266,7 +266,7 @@ const usePublishSolutionSubmission = (
 
 		await addOrUpdateImages(
 			headerImages,
-			PRODUCT_TAGS.SOLUTION_HEADER,
+			ProductTags.SOLUTION_HEADER,
 			product,
 			0
 		);
@@ -281,17 +281,17 @@ const usePublishSolutionSubmission = (
 		await Promise.all(
 			[
 				[
-					PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_DESCRIPTION,
+					ProductSpecificationKey.SOLUTION_COMPANY_DESCRIPTION,
 					description,
 				],
-				[PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_EMAIL, email],
-				[PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_PHONE, phone],
-				[PRODUCT_SPECIFICATION_KEY.SOLUTION_COMPANY_WEBSITE, website],
-				[PRODUCT_SPECIFICATION_KEY.SOLUTION_CONTACT_EMAIL, contactUs],
+				[ProductSpecificationKey.SOLUTION_COMPANY_EMAIL, email],
+				[ProductSpecificationKey.SOLUTION_COMPANY_PHONE, phone],
+				[ProductSpecificationKey.SOLUTION_COMPANY_WEBSITE, website],
+				[ProductSpecificationKey.SOLUTION_CONTACT_EMAIL, contactUs],
 			].map(([specificationKey, value]) =>
 				updateSpecification(
 					product,
-					specificationKey as PRODUCT_SPECIFICATION_KEY,
+					specificationKey as ProductSpecificationKey,
 					value
 				)
 			)
@@ -310,7 +310,7 @@ const usePublishSolutionSubmission = (
 
 			await addOrUpdateImages(
 				files,
-				PRODUCT_TAGS.SOLUTION_DETAILS,
+				ProductTags.SOLUTION_DETAILS,
 				product,
 				context.header.contentType.type === 'upload-images'
 					? context.header.contentType.content.headerImages.length
@@ -334,7 +334,7 @@ const usePublishSolutionSubmission = (
 
 		await updateSpecification(
 			product,
-			PRODUCT_SPECIFICATION_KEY.SOLUTION_DETAILS_BLOCKS,
+			ProductSpecificationKey.SOLUTION_DETAILS_BLOCKS,
 			JSON.stringify(newBlocks)
 		);
 	};

@@ -8,7 +8,7 @@ import {useEffect, useMemo, useState} from 'react';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
-import {ORDER_TYPES, ORDER_WORKFLOW_STATUS_CODE} from '../../../enums/Order';
+import {OrderTypes, OrderWorkflowStatusCode} from '../../../enums/Order';
 import trialOAuth2 from '../../../services/oauth/Trial';
 import HeadlessCommerceAdminOrderImpl from '../../../services/rest/HeadlessCommerceAdminOrder';
 
@@ -27,7 +27,7 @@ const ACTIVE_REFRESH_INTERVAL = 60 * 1000;
 const DEFAULT_REFRESH_INTERVAL = 240 * 1000;
 
 const trialSearchBuilder = new SearchBuilder()
-	.eq('orderTypeExternalReferenceCode', ORDER_TYPES.SOLUTIONS7)
+	.eq('orderTypeExternalReferenceCode', OrderTypes.SOLUTIONS7)
 	.and();
 
 const useTrialMetrics = (param: FilterType) => {
@@ -60,7 +60,7 @@ const useTrialMetrics = (param: FilterType) => {
 			fields: 'orderStatus',
 			filter: trialSearchBuilder
 				.clone()
-				.lambda('orderStatus', ORDER_WORKFLOW_STATUS_CODE.COMPLETED, {
+				.lambda('orderStatus', OrderWorkflowStatusCode.COMPLETED, {
 					unquote: true,
 				})
 				.build(),
@@ -70,7 +70,7 @@ const useTrialMetrics = (param: FilterType) => {
 			fields: 'orderStatus',
 			filter: trialSearchBuilder
 				.clone()
-				.lambda('orderStatus', ORDER_WORKFLOW_STATUS_CODE.IN_PROGRESS, {
+				.lambda('orderStatus', OrderWorkflowStatusCode.IN_PROGRESS, {
 					unquote: true,
 				})
 				.build(),
@@ -80,7 +80,7 @@ const useTrialMetrics = (param: FilterType) => {
 			fields: 'orderStatus',
 			filter: trialSearchBuilder
 				.clone()
-				.lambda('orderStatus', ORDER_WORKFLOW_STATUS_CODE.ON_HOLD, {
+				.lambda('orderStatus', OrderWorkflowStatusCode.ON_HOLD, {
 					unquote: true,
 				})
 				.build(),
@@ -121,8 +121,8 @@ const useTrialMetrics = (param: FilterType) => {
 	useEffect(() => {
 		const isProcessing = orderItems.some(({orderStatusInfo}: any) =>
 			[
-				ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
-				ORDER_WORKFLOW_STATUS_CODE.ON_HOLD,
+				OrderWorkflowStatusCode.PROCESSING,
+				OrderWorkflowStatusCode.ON_HOLD,
 			].includes(orderStatusInfo.code)
 		);
 

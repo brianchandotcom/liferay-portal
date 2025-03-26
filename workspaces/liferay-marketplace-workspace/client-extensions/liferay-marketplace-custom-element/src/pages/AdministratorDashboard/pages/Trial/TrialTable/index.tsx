@@ -14,7 +14,7 @@ import {DashboardPage} from '../../../../../components/DashBoardPage/DashboardPa
 import {DashboardEmptyTable} from '../../../../../components/DashboardTable/DashboardEmptyTable';
 import Loading from '../../../../../components/Loading';
 import Table from '../../../../../components/Table/Table';
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
+import {OrderWorkflowStatusCode} from '../../../../../enums/Order';
 import {useConfirmationModal} from '../../../../../hooks/useConfirmationModal';
 import useModalContext from '../../../../../hooks/useModalContext';
 import i18n from '../../../../../i18n';
@@ -180,8 +180,8 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 									</ClayLabel>
 
 									{[
-										ORDER_WORKFLOW_STATUS_CODE.ON_HOLD,
-										ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
+										OrderWorkflowStatusCode.ON_HOLD,
+										OrderWorkflowStatusCode.PROCESSING,
 									].includes(orderStatusInfo.code) && (
 										<Loading
 											displayType="primary"

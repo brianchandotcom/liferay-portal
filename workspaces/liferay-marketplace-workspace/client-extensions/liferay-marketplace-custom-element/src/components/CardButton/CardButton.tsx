@@ -10,7 +10,7 @@ import './CardButton.scss';
 
 import ClayIcon from '@clayui/icon';
 
-import {StepType} from '../../pages/GetApp/enums/stepType';
+import {GetAppStepTypes} from '../../pages/GetApp/enums/GetAppStepTypes';
 
 export function CardButton({
 	description,
@@ -28,7 +28,7 @@ export function CardButton({
 	iconRight?: boolean;
 	onClick: (event: MouseEvent) => void;
 	selected: boolean;
-	step?: StepType;
+	step?: GetAppStepTypes;
 	title: string;
 }) {
 	return (
@@ -39,7 +39,7 @@ export function CardButton({
 			})}
 			onClick={disabled ? () => {} : onClick}
 		>
-			{step === StepType.PAYMENT ? (
+			{step === GetAppStepTypes.PAYMENT ? (
 				<ClayIcon
 					aria-label="trial"
 					className="card-button-icon"
@@ -66,15 +66,15 @@ export function CardButton({
 						})}
 					>
 						{title}
-						{step !== StepType.PAYMENT && iconRight && icon}
+						{step !== GetAppStepTypes.PAYMENT && iconRight && icon}
 					</div>
 
 					<small
 						className={classNames({
 							'card-button-description':
-								step === StepType.PAYMENT,
+								step === GetAppStepTypes.PAYMENT,
 							'card-button-description-paid':
-								step === StepType.LICENSES,
+								step === GetAppStepTypes.LICENSES,
 						})}
 					>
 						{description}

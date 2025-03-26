@@ -21,7 +21,7 @@ import {
 	deleteAttachment,
 } from '../../../../../../utils/api';
 import {useAppContext} from '../AppContext/AppManageState';
-import {TYPES} from '../AppContext/actionTypes';
+import {ActionTypes} from '../AppContext/actionTypes';
 
 import './CustomizeAppStorefrontPage.scss';
 
@@ -81,7 +81,7 @@ export function CustomizeAppStorefrontPage({
 					? [...appStorefrontImages, ...newUploadedFiles]
 					: newUploadedFiles,
 			},
-			type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+			type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 		});
 	};
 
@@ -104,7 +104,7 @@ export function CustomizeAppStorefrontPage({
 			payload: {
 				files,
 			},
-			type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+			type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 		});
 	};
 
@@ -120,7 +120,7 @@ export function CustomizeAppStorefrontPage({
 			payload: {
 				files,
 			},
-			type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+			type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 		});
 	};
 
@@ -165,7 +165,7 @@ export function CustomizeAppStorefrontPage({
 										payload: {
 											files: [],
 										},
-										type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+										type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 									});
 								}
 								catch (error) {
@@ -194,7 +194,7 @@ export function CustomizeAppStorefrontPage({
 								payload: {
 									files: newImagesInputs,
 								},
-								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+								type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 							})
 						}
 						onDelete={handleDelete}
@@ -253,7 +253,7 @@ export function CustomizeAppStorefrontPage({
 								payload: {
 									files: appStorefrontImages,
 								},
-								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+								type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 							});
 						}
 
@@ -270,7 +270,7 @@ export function CustomizeAppStorefrontPage({
 										payload: {
 											files: appStorefrontImages,
 										},
-										type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+										type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 									});
 									appStorefrontImages;
 								},
@@ -289,7 +289,7 @@ export function CustomizeAppStorefrontPage({
 								payload: {
 									files: appStorefrontImages,
 								},
-								type: TYPES.UPLOAD_APP_STOREFRONT_IMAGES,
+								type: ActionTypes.UPLOAD_APP_STOREFRONT_IMAGES,
 							});
 						}
 					}

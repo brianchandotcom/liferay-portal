@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export enum TYPES {
+export enum ActionTypes {
 	ADD_APP_LICENSE_PRICE = 'ADD_APP_LICENSE_PRICE',
 	DELETE_APP_LICENSE_PRICE = 'DELETE_APP_LICENSE_PRICE',
 	RESET_APP_PACKAGES = 'RESET_APP_PACKAGES',

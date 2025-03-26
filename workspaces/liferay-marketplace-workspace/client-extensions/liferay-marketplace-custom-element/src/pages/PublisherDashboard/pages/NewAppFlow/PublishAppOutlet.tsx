@@ -11,7 +11,7 @@ import {Link, Outlet} from 'react-router-dom';
 import AppPublish from '../../../../components/AppPublish';
 import Modal from '../../../../components/Modal';
 import {useNewAppContext} from '../../../../context/NewAppContext';
-import {PRODUCT_WORKFLOW_STATUS_CODE} from '../../../../enums/Product';
+import {ProductWorkflowStatusCode} from '../../../../enums/Product';
 import {useAccount} from '../../../../hooks/data/useAccounts';
 import i18n from '../../../../i18n';
 import usePublishHeader from '../../hooks/usePublishHeader';
@@ -55,7 +55,7 @@ const PublishAppOutlet = () => {
 	const isDisabled = parsedSchema ? !parsedSchema.success : false;
 
 	const isDraft = (status: number) =>
-		status === PRODUCT_WORKFLOW_STATUS_CODE.DRAFT;
+		status === ProductWorkflowStatusCode.DRAFT;
 
 	const isSaveAsDraft =
 		!context._product || isDraft(context._product.productStatus);

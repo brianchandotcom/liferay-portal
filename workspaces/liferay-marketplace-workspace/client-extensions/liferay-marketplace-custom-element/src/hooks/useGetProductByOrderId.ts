@@ -6,7 +6,7 @@
 import useSWR, {SWRConfiguration} from 'swr';
 
 import MarketplaceDeliveryOrder from '../entity/DeliveryOrder';
-import {PRODUCT_IMAGE_FALLBACK_CATEGORIES} from '../enums/Product';
+import {ProductImageFallbackCategories} from '../enums/Product';
 import {Liferay} from '../liferay/liferay';
 import HeadlessCommerceDeliveryCatalogImpl from '../services/rest/HeadlessCommerceDeliveryCatalog';
 import HeadlessCommerceDeliveryOrderImpl from '../services/rest/HeadlessCommerceDeliveryOrder';
@@ -54,7 +54,7 @@ const useGetProductByOrderId = (
 				product = getProductFallback();
 				placedOrder.placedOrderItems[0].thumbnail =
 					getProductImageFallback(
-						PRODUCT_IMAGE_FALLBACK_CATEGORIES.PRODUCT_IMAGE
+						ProductImageFallbackCategories.PRODUCT_IMAGE
 					);
 			}
 

@@ -82,6 +82,16 @@ public class AssetTypeSerDes {
 			sb.append("\"");
 		}
 
+		if (assetType.getTypeClassNameId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeClassNameId\": ");
+
+			sb.append(assetType.getTypeClassNameId());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -121,6 +131,15 @@ public class AssetTypeSerDes {
 			map.put("type", String.valueOf(assetType.getType()));
 		}
 
+		if (assetType.getTypeClassNameId() == null) {
+			map.put("typeClassNameId", null);
+		}
+		else {
+			map.put(
+				"typeClassNameId",
+				String.valueOf(assetType.getTypeClassNameId()));
+		}
+
 		return map;
 	}
 
@@ -147,6 +166,9 @@ public class AssetTypeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "typeClassNameId")) {
+				return false;
+			}
 
 			return false;
 		}
@@ -169,6 +191,12 @@ public class AssetTypeSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					assetType.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeClassNameId")) {
+				if (jsonParserFieldValue != null) {
+					assetType.setTypeClassNameId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

@@ -86,6 +86,27 @@ public class AssetType implements Cloneable, Serializable {
 
 	protected String type;
 
+	public Long getTypeClassNameId() {
+		return typeClassNameId;
+	}
+
+	public void setTypeClassNameId(Long typeClassNameId) {
+		this.typeClassNameId = typeClassNameId;
+	}
+
+	public void setTypeClassNameId(
+		UnsafeSupplier<Long, Exception> typeClassNameIdUnsafeSupplier) {
+
+		try {
+			typeClassNameId = typeClassNameIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long typeClassNameId;
+
 	@Override
 	public AssetType clone() throws CloneNotSupportedException {
 		return (AssetType)super.clone();

@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupTable;
 import com.liferay.portal.kernel.model.Users_UserGroupsTable;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
@@ -132,6 +134,7 @@ public class SharingEntryLocalServiceImpl
 	 *         the expiration date is a past value
 	 * @review
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SharingEntry addSharingEntry(
 			String externalReferenceCode, long userId, long toUserGroupId,
@@ -679,6 +682,7 @@ public class SharingEntryLocalServiceImpl
 	 *         value), or if the expiration date is a past value
 	 * @review
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SharingEntry updateSharingEntry(
 			long userId, long sharingEntryId,

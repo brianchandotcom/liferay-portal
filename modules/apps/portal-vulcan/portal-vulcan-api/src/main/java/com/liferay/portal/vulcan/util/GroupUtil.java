@@ -7,9 +7,6 @@ package com.liferay.portal.vulcan.util;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -96,28 +93,21 @@ public class GroupUtil {
 			return group;
 		}
 
-		try {
-			DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
-				GetterUtil.getLong(assetLibraryKey));
+		long assetLibraryId = GetterUtil.getLong(assetLibraryKey);
 
-			if (depotEntry != null) {
-				return depotEntry.getGroup();
+		DepotEntry depotEntry = depotEntryLocalService.fetchDepotEntry(
+			assetLibraryId);
+
+		if (depotEntry != null) {
+			Group depotEntryGroup = groupLocalService.fetchGroup(
+				depotEntry.getGroupId());
+
+			if (depotEntryGroup != null) {
+				return depotEntryGroup;
 			}
 		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
 
-		group = groupLocalService.fetchGroup(
-			Long.valueOf(assetLibraryKey));
-
-		if (group != null) {
-			return group;
-		}
-
-		return null;
+		return groupLocalService.fetchGroup(assetLibraryId);
 	}
 
 	private static boolean _isDepotOrSite(Group group) {
@@ -127,7 +117,5 @@ public class GroupUtil {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(GroupUtil.class);
 
 }

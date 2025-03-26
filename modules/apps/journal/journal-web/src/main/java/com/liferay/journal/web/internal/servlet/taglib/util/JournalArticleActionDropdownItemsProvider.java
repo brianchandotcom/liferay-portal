@@ -308,6 +308,9 @@ public class JournalArticleActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
+			() -> !JournalArticleLocalServiceUtil.isLatestVersion(
+				_article.getGroupId(), _article.getArticleId(),
+				_article.getVersion()),
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(

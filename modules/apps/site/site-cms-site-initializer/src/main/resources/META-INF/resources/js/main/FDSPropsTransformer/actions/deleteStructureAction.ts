@@ -7,29 +7,8 @@ import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import {fetchJSON} from '../../../api/api';
+import DeleteStructureModalContent from '../../components/modal/DeleteStructureModalContent';
 import {executeAsyncItemAction} from '../utils/executeAsyncItemAction';
-
-async function deleteStructureToast({
-	method = 'DELETE',
-	name,
-	refreshData,
-	url,
-}: {
-	method?: string;
-	name: string;
-	refreshData: () => {};
-	url: string;
-}) {
-	await executeAsyncItemAction({
-		method,
-		refreshData,
-		successMessage: sub(
-			Liferay.Language.get('x-was-deleted-successfully'),
-			`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
-		),
-		url,
-	});
-}
 
 export default async function deleteStructureAction({
 	deleteAction,
@@ -44,13 +23,20 @@ export default async function deleteStructureAction({
 	name: string;
 	status: number;
 }) {
-	if (status !== 0) {
-		await deleteStructureToast({
+	const deleteStructureToast = async () => {
+		await executeAsyncItemAction({
 			method: deleteAction.method,
-			name,
 			refreshData: loadData,
+			successMessage: sub(
+				Liferay.Language.get('x-was-deleted-successfully'),
+				`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
+			),
 			url: deleteAction.href,
 		});
+	};
+
+	if (status !== 0) {
+		await deleteStructureToast();
 
 		return;
 	}
@@ -83,8 +69,16 @@ export default async function deleteStructureAction({
 		});
 	}
 	else {
-
-		// TODO: show the confirmation modal and delete after confirmation
-
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: () => void}) =>
+				DeleteStructureModalContent({
+					closeModal,
+					name,
+					onDelete: deleteStructureToast,
+					usesCount: objectEntriesCount,
+				}),
+			size: 'md',
+			status: 'danger',
+		});
 	}
 }

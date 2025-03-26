@@ -32,7 +32,7 @@ import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermission
 import useUpdateOrg from '../../../hooks/useUpdateOrg';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import useIsSaasOnly from '../../../utils/useIsSaasOnly';
-import BusinessEventsConfirmationPopup from './components/BusinessEventsConfirmationPopup';
+import BusinessEventsConfirmationPage from './components/BusinessEventsConfirmationPage';
 
 interface IProps {
 	businessEvent: IBusinessEvent;
@@ -479,7 +479,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 					</div>
 
 					{isModalOpen && (
-						<BusinessEventsConfirmationPopup
+						<BusinessEventsConfirmationPage
 							handleSubmit={handleSubmit}
 							message={i18n.translate(
 								'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
@@ -515,7 +515,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 								<>
 									<div className="event-edit-field mb-4">
 										<Select
-											className="ml-3 mr-3"
+											className="mx-3"
 											groupStyle="pb-1"
 											label={i18n.translate('event-type')}
 											name="businessEvent.eventType.key"
@@ -527,7 +527,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 									{subscriptionGroups && !isSaasOnly && (
 										<div className="event-edit-field mb-4">
 											<Select
-												className="ml-3 mr-3"
+												className="mx-3"
 												groupStyle="pb-1"
 												label={i18n.translate(
 													'your-current-liferay-version'
@@ -544,8 +544,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 									{isNewLiferayVersionRequired && (
 										<div className="event-edit-field mb-4">
 											<Select
-												badgeClassName="ml-3 mr-3"
-												className="ml-3 mr-3"
+												badgeClassName="mx-3"
+												className="mx-3"
 												groupStyle="pb-1"
 												label={i18n.translate(
 													'new-version'
@@ -562,7 +562,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 									{isDescriptionRequired && (
 										<div className="event-edit-field mb-4">
 											<Input
-												badgeClassName="ml-3 mr-3"
+												badgeClassName="mx-3"
 												component="textarea"
 												groupStyle="pb-1"
 												label={i18n.translate(
@@ -582,8 +582,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 										<ClayInput.Group className="m-0">
 											<ClayInput.GroupItem className="m-0">
 												<DatePicker
-													badgeClassName="ml-3 mr-3"
-													className="ml-3 mr-3"
+													badgeClassName="mx-3"
+													className="mx-3"
 													dateFormat="MM-dd-yyyy"
 													groupStyle="pb-1"
 													label={i18n.translate(
@@ -639,7 +639,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 									{tickets && !!tickets.length ? (
 										<>
-											<div className="event-edit-field ml-3 mr-3 pb-3">
+											<div className="event-edit-field mx-3 pb-3">
 												<label>
 													{i18n.translate(
 														'are-there-any-support-tickets-impacting-this-event'
@@ -678,7 +678,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 											</div>
 
 											{hasImpactingEvents === 'yes' && (
-												<div className="event-edit-field ml-3 mr-3 pb-3">
+												<div className="event-edit-field mx-3 pb-3">
 													<label>
 														{i18n.translate(
 															'please-select-the-tickets-that-are-impacting-this-event'
@@ -703,7 +703,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 											)}
 										</>
 									) : (
-										<div className="ml-3 mr-3 pb-3">
+										<div className="mx-3 pb-3">
 											{i18n.translate(
 												'there-are-currently-no-open-tickets-under-this-project'
 											)}

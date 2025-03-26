@@ -9,8 +9,8 @@ import './BusinessEvents.css';
 
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayModal, {useModal} from '@clayui/modal';
-import {useCallback, useMemo, useState} from 'react';
+import {useModal} from '@clayui/modal';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
@@ -22,11 +22,11 @@ import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
 import {IBusinessEvent} from '~/utils/types';
 
-import CancelEventForm from './components/CancelEventForm';
-import useFilters from './hooks/useFilters';
-import useGetBusinessEvents from './hooks/useGetBusinessEvents';
+import ManageEventModal from './components/ManageEventModal';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
 import useIsSaasOnly from './utils/useIsSaasOnly';
+import useFilters from './hooks/useFilters';
+import useGetBusinessEvents from './hooks/useGetBusinessEvents';
 
 const columns = [
 	{
@@ -64,6 +64,7 @@ const BusinessEvents = () => {
 
 	const {businessEvents, fetchBusinessEvents, loading} =
 		useGetBusinessEvents(filterQuery);
+	const [modalType, setModalType] = useState('');
 
 	const {client} = useAppPropertiesContext();
 
@@ -184,12 +185,17 @@ const BusinessEvents = () => {
 						{
 							customOptionStyle: 'pr-5',
 							label: i18n.translate('record-actual-go-live'),
-							onClick: () => {},
+							onClick: () => {
+								setModalType('goLiveEvent');
+								onOpenChange(true);
+								setSelectedBusinessEvent(businessEvent);
+							},
 						},
 						{
 							customOptionStyle: 'be-cancel-event-option pr-5',
 							label: i18n.translate('cancel-event'),
 							onClick: () => {
+								setModalType('cancelEvent');
 								onOpenChange(true);
 								setSelectedBusinessEvent(businessEvent);
 							},
@@ -314,21 +320,17 @@ const BusinessEvents = () => {
 						/>
 
 						{selectedBusinessEvent && open && (
-							<ClayModal
-								center
-								disableAutoClose
+							<ManageEventModal
+								accountExternalReferenceCode={
+									project?.accountKey || ''
+								}
+								businessEvent={selectedBusinessEvent}
+								client={client}
+								closeFunction={onOpenChange}
+								modalType={modalType}
 								observer={observer}
-							>
-								<CancelEventForm
-									accountExternalReferenceCode={
-										project?.accountKey || ''
-									}
-									businessEvent={selectedBusinessEvent}
-									client={client}
-									closeFunction={onOpenChange}
-									onCancel={handleOnCancel}
-								/>
-							</ClayModal>
+								onCancel={handleOnCancel}
+							/>
 						)}
 					</>
 				) : (

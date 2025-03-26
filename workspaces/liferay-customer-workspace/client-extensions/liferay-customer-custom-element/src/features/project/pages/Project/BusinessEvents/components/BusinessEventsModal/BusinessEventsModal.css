@@ -1,0 +1,7 @@
+.cancel-event-modal .btn.btn-primary {
+    background-color: var(--color-state-error);
+} 
+
+.cancel-event-modal .btn.btn-primary:disabled {
+    background-color: var(--color-state-error-lighten-1);
+} 

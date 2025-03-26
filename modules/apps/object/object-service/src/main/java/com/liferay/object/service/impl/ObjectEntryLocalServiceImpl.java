@@ -489,6 +489,10 @@ public class ObjectEntryLocalServiceImpl
 			tempDLFileEntries, null, user.isGuestUser(), 0, objectDefinition,
 			serviceContext, true, userId, values);
 
+		_addFileEntries(
+			objectDefinition, primaryKey, serviceContext, tempDLFileEntries,
+			userId, values);
+
 		insertIntoOrUpdateExtensionTable(
 			userId, objectDefinition.getObjectDefinitionId(), primaryKey,
 			values);

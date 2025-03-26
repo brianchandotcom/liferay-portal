@@ -51,7 +51,7 @@ public class AdvancedClientExtensionFDSFilter
 
 	@Override
 	public String getLabel() {
-		return "Client Extension";
+		return "client-extension";
 	}
 
 	@Override

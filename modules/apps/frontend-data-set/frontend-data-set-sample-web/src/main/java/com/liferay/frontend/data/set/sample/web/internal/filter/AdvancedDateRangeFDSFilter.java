@@ -36,7 +36,7 @@ public class AdvancedDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "Date Range";
+		return "date-range";
 	}
 
 	@Override

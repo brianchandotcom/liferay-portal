@@ -178,6 +178,49 @@ public class AssetType implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The classNameId of the asset's type."
+	)
+	public Long getTypeId() {
+		if (_typeIdSupplier != null) {
+			typeId = _typeIdSupplier.get();
+
+			_typeIdSupplier = null;
+		}
+
+		return typeId;
+	}
+
+	public void setTypeId(Long typeId) {
+		this.typeId = typeId;
+
+		_typeIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTypeId(
+		UnsafeSupplier<Long, Exception> typeIdUnsafeSupplier) {
+
+		_typeIdSupplier = () -> {
+			try {
+				return typeIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The classNameId of the asset's type.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long typeId;
+
+	@JsonIgnore
+	private Supplier<Long> _typeIdSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -247,6 +290,18 @@ public class AssetType implements Serializable {
 			sb.append(_escape(type));
 
 			sb.append("\"");
+		}
+
+		Long typeId = getTypeId();
+
+		if (typeId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeId\": ");
+
+			sb.append(typeId);
 		}
 
 		sb.append("}");

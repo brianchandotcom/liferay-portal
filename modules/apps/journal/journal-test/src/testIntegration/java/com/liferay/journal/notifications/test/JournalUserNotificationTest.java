@@ -13,7 +13,9 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -173,7 +175,10 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected void addContainerModel() throws Exception {
-		_folder = JournalTestUtil.addFolder(
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		_folder = journalFolderFixture.addFolder(
 			group.getGroupId(), RandomTestUtil.randomString());
 	}
 
@@ -241,6 +246,9 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
 	private Portal _portal;

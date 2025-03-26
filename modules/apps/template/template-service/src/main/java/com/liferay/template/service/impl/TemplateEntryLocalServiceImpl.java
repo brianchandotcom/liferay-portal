@@ -57,6 +57,11 @@ public class TemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteTemplateEntries(long groupId) {
+		templateEntryPersistence.removeByGroupId(groupId);
+	}
+
+	@Override
 	public TemplateEntry deleteTemplateEntry(long templateEntryId) {
 		TemplateEntry templateEntry =
 			templateEntryPersistence.fetchByPrimaryKey(templateEntryId);

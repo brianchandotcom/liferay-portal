@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.portal.events,\
 	com.liferay.portal.format.util,\
 	com.liferay.portal.freemarker,\
+	com.liferay.portal.log4j,\
 	com.liferay.portal.minifier,\
 	com.liferay.portal.plugin,\
 	com.liferay.portal.security.auth,\

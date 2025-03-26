@@ -638,15 +638,7 @@ public class SourceFormatter {
 						new String[] {"**/package.json"},
 						_sourceFormatterExcludes, false));
 			}
-
-			File portalDir = SourceFormatterUtil.getPortalDir(
-				_sourceFormatterArgs.getBaseDirName(),
-				_sourceFormatterArgs.getMaxLineLength());
-
-			if ((portalDir != null) &&
-				recentChangesFileName.endsWith(
-					portalDir + "/test.properties")) {
-
+			else if (_isRootTestPropertiesChanges(recentChangesFileName)) {
 				dependentFileNames.addAll(
 					SourceFormatterUtil.filterFileNames(
 						_allFileNames, new String[0],
@@ -1207,6 +1199,18 @@ public class SourceFormatter {
 		}
 
 		return false;
+	}
+
+	private boolean _isRootTestPropertiesChanges(String recentChangesFileName) {
+		File portalDir = SourceFormatterUtil.getPortalDir(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getMaxLineLength());
+
+		if (portalDir == null) {
+			return false;
+		}
+
+		return recentChangesFileName.endsWith(portalDir + "/test.properties");
 	}
 
 	private boolean _isSubrepository() throws Exception {

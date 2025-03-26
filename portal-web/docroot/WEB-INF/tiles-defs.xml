@@ -55,8 +55,6 @@
 		<put name="portlet_content" value="/portal/portlet_not_setup.jsp" />
 	</definition>
 
-	<definition name="portal.progress_poller" path="/portal/progress_poller.jsp" />
-
 	<definition extends="portal" name="portal.setup_wizard">
 		<put name="pop_up" value="true" />
 		<put name="title" value="basic-configuration" />

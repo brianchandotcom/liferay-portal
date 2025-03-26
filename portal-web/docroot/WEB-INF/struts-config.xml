@@ -41,7 +41,6 @@
 		<action path="/portal/login" type="com.liferay.portal.action.LoginAction" />
 		<action forward="portal.login_disabled" path="/portal/login_disabled" />
 		<action path="/portal/logout" type="com.liferay.portal.action.LogoutAction" />
-		<action forward="portal.progress_poller" path="/portal/progress_poller" />
 		<action forward="/portal/protected.jsp" path="/portal/protected" />
 		<action path="/portal/rate_entry" type="com.liferay.portal.action.RateEntryAction" />
 

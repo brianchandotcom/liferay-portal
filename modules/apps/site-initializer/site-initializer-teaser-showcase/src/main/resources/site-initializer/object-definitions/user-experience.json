@@ -22,7 +22,7 @@
 				"en_US": "Acceptance failed. Please try again later or contact support."
 			},
 			"label": {
-				"en_US": "Standalone User Acceptance"
+				"en_US": "User Accepted Answer"
 			},
 			"name": "standaloneUserAcceptance",
 			"objectActionExecutorKey": "update-object-entry",

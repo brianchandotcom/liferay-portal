@@ -21,7 +21,7 @@ export class CommerceAdminDiscountsPage extends CommerceDNDTablePage {
 		this.page = page;
 	}
 
-	async enterPromoCodeToWidget(promoCode) {
+	async enterPromoCodeToWidget(promoCode: string) {
 		await this.page.getByPlaceholder('Enter Promo Code').fill(promoCode);
 		await this.page.getByPlaceholder('Enter Promo Code').waitFor();
 		await this.page

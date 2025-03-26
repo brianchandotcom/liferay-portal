@@ -31,6 +31,7 @@ export class CommerceAdminChannelsPage {
 	readonly shippingMethodOptionsLink: Locator;
 	readonly shippingMethodSaveButton: Locator;
 	readonly shippingMethodsPanel: FrameLocator;
+	readonly shippingOptionAmountField: Locator;
 	readonly shippingOptionKeyField: Locator;
 	readonly shippingOptionNameField: Locator;
 	readonly shippingOptionSaveButton: Locator;
@@ -106,6 +107,8 @@ export class CommerceAdminChannelsPage {
 		this.shippingOptionsPanel =
 			this.shippingMethodsPanel.frameLocator('iframe');
 
+		this.shippingOptionAmountField =
+			this.shippingOptionsPanel.getByLabel('Amount');
 		this.shippingOptionKeyField =
 			this.shippingOptionsPanel.getByLabel('Key');
 		this.shippingOptionNameField =
@@ -197,7 +200,8 @@ export class CommerceAdminChannelsPage {
 	async setupCommerceChannelShippingMethod(
 		channelName: string,
 		shippingMethodName: string,
-		shippingOptions: string[]
+		shippingOptions: string[],
+		amount?: boolean
 	) {
 		await this.goto();
 
@@ -213,6 +217,9 @@ export class CommerceAdminChannelsPage {
 
 		for (const shippingOption of shippingOptions) {
 			await this.shippingOptionNameField.fill(shippingOption);
+			if (amount) {
+				await this.shippingOptionAmountField.fill(String(10.0));
+			}
 			await this.shippingOptionKeyField.fill(shippingOption);
 			await this.shippingOptionSaveButton.click();
 			await expect(

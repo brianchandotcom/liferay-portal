@@ -16,7 +16,7 @@ import {ORDER_WORKFLOW_STATUS_CODE} from '../../workspaces/liferay-workspace-mar
 
 export async function classicCommerceSetUp(
 	apiHelpers: DataApiHelpers,
-	siteName: string
+	siteName?: string
 ) {
 	return initializerSetUp(
 		apiHelpers,

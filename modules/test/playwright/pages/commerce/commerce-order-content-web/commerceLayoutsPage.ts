@@ -359,15 +359,6 @@ export class CommerceLayoutsPage {
 		await this.addWidgetLabel(widgetName).click();
 	}
 
-	async checkValueOrderSummary(nameValue: string, value: string) {
-		await expect(
-			this.page.getByText(nameValue, {exact: true})
-		).toBeVisible();
-		await expect(
-			this.page.locator('span').filter({hasText: value})
-		).toBeVisible();
-	}
-
 	async createDisplayPageTemplate(
 		displayPageTemplateName: string,
 		contentTypeLabel: string = 'Product',

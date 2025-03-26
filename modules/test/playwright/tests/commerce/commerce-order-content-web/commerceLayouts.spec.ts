@@ -18,7 +18,10 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {liferayConfig} from '../../../liferay.config';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import performLogin, {performLogout} from '../../../utils/performLogin';
+import performLogin, {
+	performLoginViaApi,
+	performLogout,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getFragmentDefinition from '../../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
@@ -932,92 +935,159 @@ test(
 
 test(
 	'Order Details - Order Summary',
-	{tag: '@LPD-35558'},
+	{tag: ['@LPD-35558', '@LPD-35252']},
 	async ({
 		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
 		commerceAdminDiscountsPage,
 		commerceLayoutsPage,
 		displayPageTemplatesPage,
 		page,
 		pageEditorPage,
-		site,
 	}) => {
+		const {channel, site} = await classicCommerceSetUp(apiHelpers);
+
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
-			type: 'person',
+			type: 'business',
 		});
 
 		apiHelpers.data.push({id: account.id, type: 'account'});
 
-		const channel =
-			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				siteGroupId: site.id,
-			});
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['demo.unprivileged@liferay.com']
+		);
+		const user =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'demo.unprivileged@liferay.com'
+			);
 
-		const catalog =
-			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
-		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		const displayPageTemplateName = getRandomString();
-
-		await displayPageTemplatesPage.createTemplate({
-			contentType: 'Order',
-			name: displayPageTemplateName,
+		const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
 		});
-		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
-		await pageEditorPage.addFragment('Order', 'Info Box');
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 
-		const infoBoxFragmentId =
-			await pageEditorPage.getFragmentId('Info Box');
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			accountRoleBuyer[0].id,
+			user.emailAddress
+		);
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
 
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Field',
-			fragmentId: infoBoxFragmentId,
-			tab: 'General',
-			value: 'orderSummary',
-		});
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Label',
-			fragmentId: infoBoxFragmentId,
-			tab: 'General',
-			value: 'Order Summary',
-		});
-		await pageEditorPage.changeFragmentConfiguration({
-			fieldLabel: 'Read Only',
-			fragmentId: infoBoxFragmentId,
-			tab: 'General',
-			value: true,
-		});
+		const shippingOption = getRandomString();
+
+		await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
+			channel.name,
+			'Flat Rate',
+			[shippingOption],
+			true
+		);
+
+		const taxCategory = (
+			await apiHelpers.headlessCommerceAdminChannel.getTaxCategories()
+		).items[0];
+
+		await commerceAdminChannelDetailsPage.addFixedTaxRate(
+			'7.5',
+			taxCategory.name.en_US
+		);
 
 		const product =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-				skus: [
-					{
-						cost: 0,
-						price: 20,
-						published: true,
-						purchasable: true,
-						sku: 'Sku' + getRandomInt(),
-					},
-				],
+			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+				new URLSearchParams({
+					filter: `name eq 'U-Joint'`,
+				})
+			);
+
+		const productId = product.items[0].productId;
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(productId)
+			.then((product) => {
+				return product.skus;
 			});
 
-		const sku = product.skus[0];
+		const sku = productSkus[0];
 
-		const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '323262', regionISOCode: 'AL'}
+			);
+
+		const postCart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
 				accountId: account.id,
+				billingAddressId: address.id,
 				cartItems: [
 					{
+						options: '[]',
 						quantity: 1,
+						replacedSkuId: 0,
 						skuId: sku.id,
 					},
 				],
+				shippingAddressId: address.id,
+				shippingMethod: 'fixed',
+				shippingOption,
 			},
 			channel.id
+		);
+
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await displayPageTemplatesPage.editTemplate('Order');
+
+		const orderSummaryId =
+			await pageEditorPage.getFragmentId('Order Summary');
+
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			'Subtotal'
+		);
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: orderSummaryId,
+			tab: 'General',
+			value: 'Total',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: orderSummaryId,
+			tab: 'General',
+			value: 'TotalTest',
+		});
+
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			'TotalTest'
+		);
+
+		await pageEditorPage.addWidget('Commerce', 'Coupon Code Entry');
+		await pageEditorPage.waitForChangesSaved();
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await expect(
+			commerceLayoutsPage.defaultDisplayPageTemplateIcon
+		).toBeVisible();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${postCart.id}`
+		);
+
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`TotalTest $ 31.50`
 		);
 
 		const discount =
@@ -1028,51 +1098,85 @@ test(
 				useCouponCode: true,
 				usePercentage: true,
 			});
-
+		await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+			percentageLevel1: 10,
+			target: 'shipping',
+			usePercentage: true,
+		});
 		await apiHelpers.headlessCommerceAdminPricing.postDiscount({
 			percentageLevel1: 10,
 			target: 'total',
 			usePercentage: true,
 		});
 
-		await commerceLayoutsPage.addWidget('Coupon Code Entry', 'Commerce');
-
-		await pageEditorPage.waitForChangesSaved();
-
-		await displayPageTemplatesPage.publishTemplate();
-
-		await commerceLayoutsPage.moreActionsButton.click();
-		await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-		await waitForAlert(page);
-
-		await expect(
-			commerceLayoutsPage.defaultDisplayPageTemplateIcon
-		).toBeVisible();
-
-		await page.goto(
-			liferayConfig.environment.baseUrl +
-				`/web/${site.name}/order/${cart.id}`
-		);
-
-		await expect(page.getByText('Order Summary')).toBeVisible();
-
 		await commerceAdminDiscountsPage.enterPromoCodeToWidget(
 			discount.couponCode
 		);
 
-		await commerceLayoutsPage.checkValueOrderSummary('Subtotal', '$ 20.00');
-		await commerceLayoutsPage.checkValueOrderSummary(
-			'Subtotal Discount',
-			'$ 2.00'
-		);
-		await commerceLayoutsPage.checkValueOrderSummary(
-			'Total Discount',
-			discount.couponCode
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await displayPageTemplatesPage.editTemplate('Order');
+
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Field',
+			fragmentId: orderSummaryId,
+			tab: 'General',
+			value: 'Subtotal',
+		});
+		await pageEditorPage.changeFragmentConfiguration({
+			fieldLabel: 'Label',
+			fragmentId: orderSummaryId,
+			tab: 'General',
+			value: 'Subtotal',
+		});
+
+		await displayPageTemplatesPage.publishTemplate();
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${postCart.id}`
 		);
 
-		await expect(page.getByText('Total', {exact: true})).toBeVisible();
-		await expect(page.getByText('$ 16.20')).toBeVisible();
+		await expect(page.getByText('Order Summary')).toBeVisible();
+		await expect(
+			page.getByText(`Promotion Code ${discount.couponCode}`)
+		).toBeVisible();
+
+		await performLogout(page);
+		await performLoginViaApi(page, user.alternateName);
+
+		await page.goto(
+			liferayConfig.environment.baseUrl +
+				`/web/${site.name}/order/${postCart.id}`
+		);
+
+		const cart = await apiHelpers.headlessCommerceDeliveryCart.getCart(
+			postCart.id
+		);
+
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`Subtotal ${cart.summary.subtotalFormatted}`
+		);
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`Subtotal Discount ${cart.summary.subtotalDiscountValueFormatted}`
+		);
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`Total Discount ${cart.summary.totalDiscountValueFormatted}`
+		);
+		await expect(
+			page.getByText(`Promotion Code ${discount.couponCode}`)
+		).toBeVisible();
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`Tax ${cart.summary.taxValueFormatted}`
+		);
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`Delivery ${cart.summary.shippingValueFormatted}`
+		);
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`Delivery Discount ${cart.summary.shippingDiscountValueFormatted}`
+		);
+		await expect(page.getByLabel('Details', {exact: true})).toContainText(
+			`Total ${cart.summary.totalFormatted}`
+		);
 	}
 );
 

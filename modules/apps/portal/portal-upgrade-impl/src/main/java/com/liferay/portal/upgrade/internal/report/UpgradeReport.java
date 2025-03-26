@@ -150,7 +150,7 @@ public class UpgradeReport {
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(
-		Map<String, Map<String, Integer>> map1) {
+		Map<String, Map<String, Integer>> map1, boolean includeOccurrence) {
 
 		List<MessagesPrinter> messagesPrinters = new ArrayList<>();
 
@@ -174,7 +174,7 @@ public class UpgradeReport {
 
 			for (Map.Entry<String, Integer> entry2 : map2.entrySet()) {
 				messagesPrinter.addMessagePrinter(
-					entry2.getKey(), entry2.getValue());
+					entry2.getKey(), entry2.getValue(), includeOccurrence);
 			}
 		}
 
@@ -548,7 +548,8 @@ public class UpgradeReport {
 		).put(
 			"execution.time", _executionTimeString
 		).put(
-			"errors", _getMessagesPrinters(upgradeRecorder.getErrorMessages())
+			"errors",
+			_getMessagesPrinters(upgradeRecorder.getErrorMessages(), true)
 		).put(
 			"failed.sqls", UpgradeSQLRecorder.getFailedSQLs()
 		).put(
@@ -629,7 +630,7 @@ public class UpgradeReport {
 			}
 		).put(
 			"warnings",
-			_getMessagesPrinters(upgradeRecorder.getWarningMessages())
+			_getMessagesPrinters(upgradeRecorder.getWarningMessages(), true)
 		).build();
 	}
 
@@ -1018,8 +1019,11 @@ public class UpgradeReport {
 			_className = className;
 		}
 
-		public void addMessagePrinter(String message, int occurrences) {
-			_messagePrinters.add(new MessagePrinter(message, occurrences));
+		public void addMessagePrinter(
+			String message, int occurrences, boolean includeOccurrence) {
+
+			_messagePrinters.add(
+				new MessagePrinter(message, occurrences, includeOccurrence));
 		}
 
 		@Override
@@ -1049,9 +1053,12 @@ public class UpgradeReport {
 
 		private class MessagePrinter {
 
-			public MessagePrinter(String message, int occurrences) {
+			public MessagePrinter(
+				String message, int occurrences, boolean includeOccurrence) {
+
 				_message = message;
 				_occurrences = occurrences;
+				_includeOccurrence = includeOccurrence;
 			}
 
 			@Override
@@ -1060,11 +1067,16 @@ public class UpgradeReport {
 					return _occurrences + StringPool.COLON + _message;
 				}
 
-				return StringBundler.concat(
-					_occurrences, " occurrences of the following event: ",
-					_message);
+				if (_includeOccurrence) {
+					return StringBundler.concat(
+						_occurrences, " occurrences of the following event: ",
+						_message);
+				}
+
+				return _message;
 			}
 
+			private final boolean _includeOccurrence;
 			private final String _message;
 			private final int _occurrences;
 

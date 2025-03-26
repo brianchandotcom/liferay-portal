@@ -183,12 +183,12 @@ const SelectSystemDataSetModalContent = ({
 
 	return (
 		<>
-			<ClayModal.Header>
+			<ClayModal.Header className="select-system-data-set-modal-header">
 				{Liferay.Language.get('create-system-data-set-customization')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<div className="modal-height-full select-system-data-set-modal-content">
+				<div className="modal-height-full select-system-data-set-modal-body">
 					<FrontendDataSet
 						{...FDS_DEFAULT_PROPS}
 						apiURL={getSystemDataSetsURL}
@@ -214,6 +214,7 @@ const SelectSystemDataSetModalContent = ({
 			</ClayModal.Body>
 
 			<ClayModal.Footer
+				className="select-system-data-set-modal-footer"
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton

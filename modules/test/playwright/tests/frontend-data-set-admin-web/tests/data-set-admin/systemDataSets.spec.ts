@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
@@ -36,6 +36,19 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 		});
 	}
 });
+
+async function findTextIndexInLocators(
+	locators: Locator[],
+	textToFind: string
+): Promise<number> {
+	const texts = await Promise.all(
+		locators.map(async (element) => {
+			return await element.textContent();
+		})
+	);
+
+	return texts.findIndex((text) => text?.trim().includes(textToFind));
+}
 
 test(
 	'Import a system data set to customize',
@@ -82,15 +95,25 @@ test(
 		});
 
 		await test.step('Assert the items are listed in alphabetical order', async () => {
+			const systemDataSets = await creationModal.body
+				.locator('.data-set-content-wrapper .list-group-title')
+				.all();
+
+			const classicSampleIndex = await findTextIndexInLocators(
+				systemDataSets,
+				'Classic Sample'
+			);
+
 			expect(
-				creationModal.container.locator(
-					'.data-set-content-wrapper .list-group-title'
+				await findTextIndexInLocators(systemDataSets, 'Advanced Sample')
+			).toBeLessThan(classicSampleIndex);
+
+			expect(classicSampleIndex).toBeLessThan(
+				await findTextIndexInLocators(
+					systemDataSets,
+					'Custom Internal View Sample'
 				)
-			).toHaveText([
-				'Advanced Sample',
-				'Classic Sample',
-				'Custom Internal View Sample',
-			]);
+			);
 		});
 
 		await test.step('Search system data set items', async () => {
@@ -111,7 +134,7 @@ test(
 			await expect(customInternalViewSampleListItem).not.toBeAttached();
 
 			await expect(
-				creationModal.container.getByText('No Results Found')
+				creationModal.body.getByText('No Results Found')
 			).toBeVisible();
 
 			await creationModal.searchInput.fill('');
@@ -244,7 +267,7 @@ test(
 			await expect(form.iconInput).toHaveValue('home');
 			await expect(form.typeSelect).toHaveValue('link');
 			await expect(form.urlInput).toHaveValue('#');
-			await expect(form.headlessActionKeyInput).toHaveValue('view');
+			await expect(form.headlessActionKeyInput).toHaveValue('get');
 			await expect(form.confirmationMessageInput).toHaveValue(
 				'Are you sure?'
 			);
@@ -293,23 +316,15 @@ test(
 
 			const itemActionRows = actionsPage.itemActionsTable
 				.locator('tr')
-				.filter({hasText: 'ITEM_PROXY'});
+				.filter({hasText: 'System Action'});
 
-			await expect(itemActionRows).toHaveCount(2);
+			await expect(itemActionRows).toHaveCount(5);
 
-			const firstDropdownToggle = itemActionRows
-				.first()
-				.locator('.dropdown-toggle');
-
-			await firstDropdownToggle.click();
-
-			await expect(
-				actionsPage.page
-					.locator('.dropdown-menu.show')
-					.getByRole('menuitem', {name: 'Edit'})
-			).not.toBeAttached();
-
-			await firstDropdownToggle.click();
+			for (const itemActionRow of await itemActionRows.all()) {
+				await expect(
+					itemActionRow.locator('.dropdown-toggle')
+				).not.toBeAttached();
+			}
 		});
 
 		await test.step('Creation actions are imported with "item proxy" import policy', async () => {
@@ -320,7 +335,7 @@ test(
 
 			const creationActionRows = actionsPage.creationActionsTable
 				.locator('tr')
-				.filter({hasText: 'ITEM_PROXY'});
+				.filter({hasText: 'System Action'});
 
 			await expect(creationActionRows).toHaveCount(1);
 
@@ -338,23 +353,15 @@ test(
 
 			const itemActionRows = actionsPage.itemActionsTable
 				.locator('tr')
-				.filter({hasText: 'GROUP_PROXY'});
+				.filter({hasText: 'Group of System Actions'});
 
 			await expect(itemActionRows).toHaveCount(1);
 
-			const firstDropdownToggle = itemActionRows
-				.first()
-				.locator('.dropdown-toggle');
-
-			await firstDropdownToggle.click();
-
-			await expect(
-				actionsPage.page
-					.locator('.dropdown-menu.show')
-					.getByRole('menuitem', {name: 'Edit'})
-			).not.toBeAttached();
-
-			await firstDropdownToggle.click();
+			for (const itemActionRow of await itemActionRows.all()) {
+				await expect(
+					itemActionRow.locator('.dropdown-toggle')
+				).not.toBeAttached();
+			}
 		});
 
 		await test.step('Creation actions are imported with "group proxy" import policy', async () => {
@@ -365,7 +372,7 @@ test(
 
 			const creationActionRows = actionsPage.creationActionsTable
 				.locator('tr')
-				.filter({hasText: 'GROUP_PROXY'});
+				.filter({hasText: 'Group of System Actions'});
 
 			await expect(creationActionRows).toHaveCount(1);
 

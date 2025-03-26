@@ -7,6 +7,7 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
+import SpaceSticker from '../../components/SpaceSticker';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
 
@@ -19,6 +20,8 @@ export default function ViewTags({
 	tagsURL: string;
 	vocabulariesURL: string;
 }) {
+	const VIEWS_SPACE_TABLE_CELL_RENDERER_NAME = 'ViewsSpaceTableCellRenderer';
+
 	const creationMenu = {
 		primaryItems: [
 			{
@@ -39,12 +42,22 @@ export default function ViewTags({
 
 	const filters = [
 		{
-			items: [{label: assetLibraryId, value: assetLibraryId}],
+			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
+			itemKey: 'id',
+			itemLabel: 'name',
 			label: 'Space',
 			multiple: true,
 			type: 'selection',
 		},
 	];
+
+	const ViewsSpaceTableCell = ({itemData}: {itemData: any}) => {
+		return (
+			<span className="align-items-center d-flex space-renderer-sticker">
+				<SpaceSticker name={itemData.assetLibraryKey} size="sm" />
+			</span>
+		);
+	};
 
 	const views = [
 		{
@@ -60,11 +73,13 @@ export default function ViewTags({
 						sortable: true,
 					},
 					{
+						contentRenderer: VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
 						fieldName: 'assetLibraryKey',
 						label: Liferay.Language.get('space'),
 						sortable: false,
 					},
 					{
+						contentRenderer: 'dateTime',
 						fieldName: 'dateModified',
 						label: Liferay.Language.get('modified'),
 						sortable: false,
@@ -92,6 +107,15 @@ export default function ViewTags({
 			<FrontendDataSet
 				apiURL={`/o/headless-admin-taxonomy/v1.0/asset-libraries/${assetLibraryId}/keywords`}
 				creationMenu={creationMenu}
+				customRenderers={{
+					tableCell: [
+						{
+							component: ViewsSpaceTableCell,
+							name: VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
+							type: 'internal',
+						},
+					],
+				}}
 				emptyState={emptyState}
 				filters={filters}
 				id="ViewTags"

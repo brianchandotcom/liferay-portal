@@ -1,0 +1,52 @@
+assemble:
+    - from: build/static
+      into: static
+liferay-lms-certification-list:
+    cssURLs:
+        - css/main.*.css
+    friendlyURLMapping: liferay-lms-certification-list
+    htmlElementName: liferay-lms-certification-list
+    instanceable: true
+    name: Liferay LMS Certification List
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
+liferay-lms-courses-list:
+    cssURLs:
+        - css/main.*.css
+    friendlyURLMapping: liferay-lms-courses-list
+    htmlElementName: liferay-lms-courses-list
+    instanceable: true
+    name: Liferay LMS Courses List
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
+liferay-lms-landingpage-view:
+    cssURLs:
+        - css/main.*.css
+    friendlyURLMapping: liferay-lms-landingpage-view
+    htmlElementName: liferay-lms-landingpage-view
+    instanceable: false
+    name: Liferay LMS Landingpage View
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
+liferay-lms-learn-paths-list:
+    cssURLs:
+        - css/main.*.css
+    friendlyURLMapping: liferay-lms-learn-paths-list
+    htmlElementName: liferay-lms-learn-paths-list
+    instanceable: true
+    name: Liferay LMS Learn Paths List
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
+

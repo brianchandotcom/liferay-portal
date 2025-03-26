@@ -16,7 +16,6 @@ import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Sort;
@@ -93,15 +92,19 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		return Page.of(
 			transform(
 				_layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
-					GroupUtil.getGroupId(
-						true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+					groupId, pagination.getStartPosition(),
+					pagination.getEndPosition(), null),
 				layoutUtilityPageEntry -> _utilityPageDTOConverter.toDTO(
-					layoutUtilityPageEntry)));
+					layoutUtilityPageEntry)),
+			pagination,
+			_layoutUtilityPageEntryService.getLayoutUtilityPageEntriesCount(
+				groupId));
 	}
 
 	@Override

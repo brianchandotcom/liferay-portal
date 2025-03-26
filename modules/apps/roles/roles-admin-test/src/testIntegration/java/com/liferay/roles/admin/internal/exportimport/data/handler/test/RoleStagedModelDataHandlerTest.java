@@ -61,6 +61,57 @@ public class RoleStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testImportAccountRole() throws Exception {
+		initExport();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_ACCOUNT);
+
+		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, role);
+
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		Company company = CompanyTestUtil.addCompany();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
+
+			User user = UserTestUtil.getAdminUser(company.getCompanyId());
+
+			Assert.assertNotNull(user);
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			_roleLocalService.deleteRole(role);
+
+			initImport(stagingGroup, company.getGroup());
+
+			Role exportedRole = (Role)readExportedStagedModel(role);
+
+			Role importedRole = _getImportedRole(
+				exportedRole, company.getGroup(), role, user);
+
+			Assert.assertEquals(
+				exportedRole.getExternalReferenceCode(),
+				importedRole.getExternalReferenceCode());
+			Assert.assertEquals(exportedRole.getName(), importedRole.getName());
+			Assert.assertEquals(
+				exportedRole.getClassName(), importedRole.getClassName());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+
+			_companyLocalService.deleteCompany(company);
+		}
+	}
+
+	@Test
 	public void testImportRoleWithUserGroup() throws Exception {
 		initExport();
 

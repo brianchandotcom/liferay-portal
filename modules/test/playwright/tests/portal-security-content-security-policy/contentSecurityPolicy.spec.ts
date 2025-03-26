@@ -307,7 +307,7 @@ test('CSP connect-src blocks connections', async ({
 		button: 'middle',
 	});
 
-	expect(errors.length).toBeGreaterThanOrEqual(9);
+	expect(errors).toHaveLength(9);
 });
 
 test('CSP frame-ancestors allows framing from specific domain', async ({
@@ -504,7 +504,7 @@ test('CSP frame-ancestors blocks framing from specific domain', async ({
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		expect(errors.length).toBeGreaterThanOrEqual(3);
+		expect(errors).toHaveLength(3);
 	}).toPass();
 
 	await page.goto(liferayConfig.environment.baseUrl);
@@ -604,7 +604,7 @@ test('CSP frame-ancestors directive in the same instance', async ({
 
 		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-		expect(errors.length).toBeGreaterThanOrEqual(3);
+		expect(errors).toHaveLength(3);
 	});
 });
 
@@ -747,7 +747,7 @@ test('CSP frame-src blocks frames', async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors.length).toBeGreaterThanOrEqual(2);
+	expect(errors).toHaveLength(2);
 });
 
 test("CSP img-src allow images from 'self'", async ({
@@ -899,5 +899,5 @@ test('CSP img-src blocks images', async ({
 
 	await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
 
-	expect(errors.length).toBeGreaterThanOrEqual(1);
+	expect(errors).toHaveLength(1);
 });

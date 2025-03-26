@@ -158,6 +158,7 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	@TestInfo("LPS-166515")
 	public void testFailedPropagationBackgroundTaskIsRemovedWhileNewPropagationBackgroundTaskIsProcessed()
 		throws Exception {
 

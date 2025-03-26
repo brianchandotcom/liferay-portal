@@ -52,66 +52,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-166515. TC-1: The changes made on the site template will apply to the site created by the template by default and background tasks are deleted at the end of propagation."
-	@priority = 3
-	test AddSiteTemplateApplySiteTemplateChangesToSite {
-		property portal.acceptance = "true";
-
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-		task ("Given: User adds new site template and a new site based on this site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
-
-			Site.openSitesAdmin();
-
-			Site.addCP(
-				siteName = "Site Template Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates",
-				siteType = "Site Template");
-
-			Navigator.openSiteURL(siteName = "Site Template Site Name");
-
-			Portlet.viewNoPortletsPresentPG();
-		}
-
-		task ("When: User add a widget to the Site template") {
-			SiteTemplatesNavigator.gotoSiteTemplatesPage(
-				pageName = "Home",
-				siteTemplateName = "Site Template Name");
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addWidget(portletName = "Asset Publisher");
-
-			PageEditor.publish();
-		}
-
-		task ("Then: The widget will be visible on the new site too") {
-			Navigator.openSiteURL(siteName = "Site Template Site Name");
-
-			if (IsElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT")) {
-				Refresh();
-			}
-
-			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
-		}
-
-		task ("And: Verify the propagation background task is deleted") {
-			var mysqlStatement = "SELECT * FROM BackgroundTask WHERE taskExecutorClassName = 'com.liferay.exportimport.internal.background.task.LayoutSetPrototypeImportBackgroundTaskExecutor' AND STATUS NOT IN (0, 1, 4);";
-
-			var sqlResults = SQL.executeSQLStatement(sqlStatement = ${mysqlStatement});
-
-			var getHeader = StringUtil.regexReplaceAll(${sqlResults}, "[\r\n]", "");
-
-			var getRecord = StringUtil.replace(${getHeader}, "mvccVersion,backgroundTaskId,groupId,companyId,userId,userName,createDate,modifiedDate,name,servletContextNames,taskExecutorClassName,taskContextMap,completed,completionDate,status,statusMessage", "");
-
-			TestUtils.assertEquals(
-				actual = ${getRecord},
-				expected = "");
-		}
-	}
-
 	@description = "User can withdraw site administrator's right to modificate of pages on a site template."
 	@priority = 4
 	test AddSiteTemplateDisablePageModification {

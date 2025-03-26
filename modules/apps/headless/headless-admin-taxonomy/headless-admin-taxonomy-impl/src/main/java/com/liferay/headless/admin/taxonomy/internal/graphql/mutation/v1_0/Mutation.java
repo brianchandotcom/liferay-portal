@@ -851,6 +851,60 @@ public class Mutation {
 			});
 	}
 
+	@GraphQLField
+	public Response createTaxonomyVocabulariesPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.
+					postTaxonomyVocabulariesPageExportBatch(
+						search,
+						_filterBiFunction.apply(
+							taxonomyVocabularyResource, filterString),
+						_sortsBiFunction.apply(
+							taxonomyVocabularyResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Creates the asset library's taxonomy vocabulary in the given spaces."
+	)
+	public TaxonomyVocabulary createTaxonomyVocabulary(
+			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
+				taxonomyVocabulary)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.postTaxonomyVocabulary(
+					taxonomyVocabulary));
+	}
+
+	@GraphQLField
+	public Response createTaxonomyVocabularyBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_taxonomyVocabularyResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			taxonomyVocabularyResource ->
+				taxonomyVocabularyResource.postTaxonomyVocabularyBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the taxonomy vocabulary and returns a 204 if the operation succeeds."
 	)

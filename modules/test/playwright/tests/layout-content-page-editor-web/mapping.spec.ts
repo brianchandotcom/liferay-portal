@@ -4,8 +4,8 @@
  */
 
 import {
-	ObjectActionApi,
-	ObjectDefinitionApi,
+	ObjectActionAPI,
+	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -571,7 +571,7 @@ test(
 		// Create student object definition
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: potatoProviderObjectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -646,10 +646,10 @@ test(
 
 		// Add object action
 
-		const objectActionApiClient =
-			await apiHelpers.buildRestClient(ObjectActionApi);
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
 
-		await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+		await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
 			potatoProviderObjectDefinition.externalReferenceCode,
 			{
 				active: true,

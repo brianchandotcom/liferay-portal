@@ -4,10 +4,10 @@
  */
 
 import {
-	ObjectActionApi,
-	ObjectDefinitionApi,
-	ObjectFolderApi,
-	ObjectRelationshipApi,
+	ObjectActionAPI,
+	ObjectDefinitionAPI,
+	ObjectFolderAPI,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {Page} from '@playwright/test';
 
@@ -465,23 +465,23 @@ export class DataApiHelpers extends ApiHelpers {
 				await this.notification.deleteNotificationTemplate(item.id);
 			}
 			else if (item.type === 'objectAction') {
-				const objectActionApiClient =
-					await this.buildRestClient(ObjectActionApi);
-				await objectActionApiClient.deleteObjectAction(item.id);
+				const objectActionAPIClient =
+					await this.buildRestClient(ObjectActionAPI);
+				await objectActionAPIClient.deleteObjectAction(item.id);
 			}
 			else if (item.type === 'objectDefinition') {
-				const objectDefinitionApiClient =
-					await this.buildRestClient(ObjectDefinitionApi);
-				await objectDefinitionApiClient.deleteObjectDefinition(item.id);
+				const objectDefinitionAPIClient =
+					await this.buildRestClient(ObjectDefinitionAPI);
+				await objectDefinitionAPIClient.deleteObjectDefinition(item.id);
 			}
 			else if (item.type === 'objectFolder') {
 				const objectFolderRESTClient =
-					await this.buildRestClient(ObjectFolderApi);
+					await this.buildRestClient(ObjectFolderAPI);
 				await objectFolderRESTClient.deleteObjectFolder(item.id);
 			}
 			else if (item.type === 'objectRelationship') {
 				const objectRelationshipRESTClient = await this.buildRestClient(
-					ObjectRelationshipApi
+					ObjectRelationshipAPI
 				);
 				await objectRelationshipRESTClient.deleteObjectRelationship(
 					item.id

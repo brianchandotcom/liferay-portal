@@ -5,10 +5,10 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 	ObjectField,
 	ObjectFolder,
-	ObjectFolderApi,
+	ObjectFolderAPI,
 } from '@liferay/object-admin-rest-client-js';
 
 import {getRandomInt} from '../utils/getRandomInt';
@@ -104,11 +104,11 @@ export class ObjectAdminApiHelper {
 				objectFolderExternalReferenceCode;
 		}
 
-		const objectDefinitionApiClient =
-			await this.apiHelpers.buildRestClient(ObjectDefinitionApi);
+		const objectDefinitionAPIClient =
+			await this.apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		return (
-			await objectDefinitionApiClient.postObjectDefinition(requestBody)
+			await objectDefinitionAPIClient.postObjectDefinition(requestBody)
 		).body;
 	}
 
@@ -116,11 +116,11 @@ export class ObjectAdminApiHelper {
 		const objectFolderExternalReferenceCode =
 			'objectFolder' + getRandomInt();
 
-		const objectFolderApiClient =
-			await this.apiHelpers.buildRestClient(ObjectFolderApi);
+		const objectFolderAPIClient =
+			await this.apiHelpers.buildRestClient(ObjectFolderAPI);
 
 		return (
-			await objectFolderApiClient.postObjectFolder({
+			await objectFolderAPIClient.postObjectFolder({
 				externalReferenceCode: objectFolderExternalReferenceCode,
 				label: {
 					en_US: objectFolderExternalReferenceCode,

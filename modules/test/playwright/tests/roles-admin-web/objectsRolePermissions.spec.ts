@@ -5,8 +5,8 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
-	ObjectRelationshipApi,
+	ObjectDefinitionAPI,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -87,7 +87,7 @@ test.skip('LPD-26733 Show object in role permissions page', async ({
 	test.setTimeout(120000);
 
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition1} =
 		await objectDefinitionAPIClient.postObjectDefinition(
@@ -155,12 +155,12 @@ test.skip('LPD-26733 Show object in role permissions page', async ({
 
 	apiHelpers.data.push({id: objectDefinition6.id, type: 'objectDefinition'});
 
-	const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-		ObjectRelationshipApi
+	const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipAPI
 	);
 
 	const {body: objectRelationship} =
-		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition5.externalReferenceCode,
 			{
 				deletionType: 'cascade',
@@ -182,7 +182,7 @@ test.skip('LPD-26733 Show object in role permissions page', async ({
 			}
 		);
 
-	await objectRelationshipApiClient.putObjectRelationship(
+	await objectRelationshipAPIClient.putObjectRelationship(
 		objectRelationship.id,
 		{
 			...objectRelationship,

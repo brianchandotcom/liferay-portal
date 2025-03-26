@@ -5,10 +5,10 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
-	ObjectFieldApi,
-	ObjectRelationshipApi,
-	ObjectValidationRuleApi,
+	ObjectDefinitionAPI,
+	ObjectFieldAPI,
+	ObjectRelationshipAPI,
+	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -41,7 +41,7 @@ test.beforeEach(async ({apiHelpers}) => {
 
 test.afterEach(async ({apiHelpers}) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	await objectDefinitionAPIClient.deleteObjectDefinition(
 		objectDefinition1.id
@@ -59,10 +59,10 @@ test.describe('Object Unique Composite Key Validation', () => {
 		objectValidationsPage,
 		page,
 	}) => {
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
 				DBType: 'Integer',
@@ -117,10 +117,10 @@ test.describe('Object Unique Composite Key Validation', () => {
 	}) => {
 		const integerFieldName = 'integerField' + getRandomInt();
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
 				DBType: 'Integer',
@@ -143,11 +143,11 @@ test.describe('Object Unique Composite Key Validation', () => {
 		const objectValidationName =
 			'Unique Composite Key Object Validation' + getRandomInt();
 
-		const objectValidationRuleApiClient = await apiHelpers.buildRestClient(
-			ObjectValidationRuleApi
+		const objectValidationRuleAPIClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleAPI
 		);
 
-		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+		await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			objectDefinition1.externalReferenceCode,
 			{
 				active: true,
@@ -242,10 +242,10 @@ test.describe('Object Unique Composite Key Validation', () => {
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 		const picklistFieldName = 'picklistField' + getRandomInt();
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
 				DBType: 'String',
@@ -271,7 +271,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 			}
 		);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
 				DBType: 'Date',
@@ -291,7 +291,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 			}
 		);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
 				DBType: 'Integer',
@@ -311,11 +311,11 @@ test.describe('Object Unique Composite Key Validation', () => {
 			}
 		);
 
-		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
 		);
 
-		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition2.externalReferenceCode,
 			{
 				label: {
@@ -336,7 +336,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 		const listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
 				DBType: 'String',
@@ -400,10 +400,10 @@ test.describe('Object Unique Composite Key Validation', () => {
 		objectValidationsPage,
 		page,
 	}) => {
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
 				DBType: 'Integer',

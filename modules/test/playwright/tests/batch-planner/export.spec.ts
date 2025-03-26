@@ -5,7 +5,7 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -61,7 +61,7 @@ const stockObjectEntry = {
 
 test('can export as JSONT', async ({apiHelpers, dataMigrationCenterPage}) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition(
@@ -123,7 +123,7 @@ test('can export as JSON with excluded fields', async ({
 	dataMigrationCenterPage,
 }) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition(
@@ -182,7 +182,7 @@ test('can export as JSON with all field types mapped', async ({
 	);
 
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition({
@@ -383,7 +383,7 @@ test('can export as JSONL with excluded fields', async ({
 	dataMigrationCenterPage,
 }) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition(
@@ -408,7 +408,7 @@ test('can see correct custom object name in dropdown', async ({
 	dataMigrationCenterPage,
 }) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition(

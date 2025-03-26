@@ -4,10 +4,10 @@
  */
 
 import {
-	ObjectActionApi,
+	ObjectActionAPI,
 	ObjectDefinition,
-	ObjectDefinitionApi,
-	ObjectValidationRuleApi,
+	ObjectDefinitionAPI,
+	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -28,7 +28,7 @@ const createdEntities = {
 
 test.afterEach(async ({apiHelpers, scriptManagementPage}) => {
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	if (createdEntities.objectDefinitionsIds.length) {
 		for (const id of createdEntities.objectDefinitionsIds) {
@@ -60,10 +60,10 @@ test.describe('Script management container', () => {
 
 		const groovyObjectActionName = 'groovyObjectAction' + getRandomInt();
 
-		const objectActionApiClient =
-			await apiHelpers.buildRestClient(ObjectActionApi);
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
 
-		await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+		await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
 			objectDefinition.externalReferenceCode,
 			{
 				active: true,
@@ -113,11 +113,11 @@ test.describe('Script management container', () => {
 		const objectValidationName =
 			'Groovy Object Validation' + getRandomInt();
 
-		const objectValidationRuleApiClient = await apiHelpers.buildRestClient(
-			ObjectValidationRuleApi
+		const objectValidationRuleAPIClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleAPI
 		);
 
-		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+		await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			objectDefinition.externalReferenceCode,
 			{
 				active: true,

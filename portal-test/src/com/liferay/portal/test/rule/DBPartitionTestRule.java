@@ -44,7 +44,7 @@ public class DBPartitionTestRule implements TestRule {
 
 			if (TestPropsValues.DATABASE_PARTITION_COPY) {
 				companyWebId = StringUtil.replaceLast(
-					TestPropsValues.COMPANY_WEB_ID, CharPool.PERIOD, "temp.");
+					TestPropsValues.COMPANY_WEB_ID, CharPool.PERIOD, "-copy.");
 			}
 			else {
 				companyWebId = TestPropsValues.COMPANY_WEB_ID;

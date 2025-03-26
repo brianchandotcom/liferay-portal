@@ -165,3 +165,36 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Latest version of Web Content should not have delete option',
+	{
+		tag: '@LPD-52126',
+	},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: 'Basic Web content'},
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await page.getByRole('button', {name: 'Actions'}).click();
+
+		await page.getByRole('menuitem', {name: 'View History'}).click();
+
+		await page.getByRole('button', {name: 'Actions'}).first().click();
+
+		await expect(
+			page.getByRole('menuitem', {name: 'Delete'})
+		).not.toBeVisible();
+
+		await page.locator('.management-bar input[type="checkbox"]').click();
+
+		await expect(page.getByRole('button', {name: 'Delete'})).toBeDisabled();
+	}
+);

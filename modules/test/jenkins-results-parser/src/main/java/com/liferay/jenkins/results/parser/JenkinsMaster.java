@@ -869,7 +869,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 			String computerClassName = computerJSONObject.getString("_class");
 
-			if (computerClassName.contains("hudson.slaves.SlaveComputer")) {
+			if (computerClassName.contains("EC2FleetNodeComputer") ||
+				computerClassName.contains("hudson.slaves.SlaveComputer")) {
+
 				JSONArray executorsJSONArray = computerJSONObject.getJSONArray(
 					"executors");
 

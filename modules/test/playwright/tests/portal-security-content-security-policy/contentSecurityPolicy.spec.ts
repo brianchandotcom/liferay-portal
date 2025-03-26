@@ -407,8 +407,6 @@ test('CSP frame-ancestors allows framing from specific domain', async ({
 
 		expect(errors).toHaveLength(0);
 	}).toPass();
-
-	await page.goto(liferayConfig.environment.baseUrl);
 });
 
 test('CSP frame-ancestors blocks framing from specific domain', async ({
@@ -506,8 +504,6 @@ test('CSP frame-ancestors blocks framing from specific domain', async ({
 
 		expect(errors).toHaveLength(3);
 	}).toPass();
-
-	await page.goto(liferayConfig.environment.baseUrl);
 });
 
 test('CSP frame-ancestors directive in the same instance', async ({

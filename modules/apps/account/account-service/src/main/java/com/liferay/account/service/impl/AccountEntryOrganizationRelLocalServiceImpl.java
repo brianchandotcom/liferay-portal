@@ -215,25 +215,24 @@ public class AccountEntryOrganizationRelLocalServiceImpl
 			return;
 		}
 
-		Set<Long> newOrganizationIdsSet = SetUtil.fromArray(organizationIds);
+		Set<Long> newOrganizationIds = SetUtil.fromArray(organizationIds);
 
-		Set<Long> oldOrganizationIdsSet = SetUtil.fromCollection(
+		Set<Long> oldOrganizationIds = SetUtil.fromCollection(
 			ListUtil.toList(
 				getAccountEntryOrganizationRels(accountEntryId),
 				AccountEntryOrganizationRel::getOrganizationId));
 
-		Set<Long> removeOrganizationIdsSet = new HashSet<>(
-			oldOrganizationIdsSet);
+		Set<Long> removeOrganizationIds = new HashSet<>(oldOrganizationIds);
 
-		removeOrganizationIdsSet.removeAll(newOrganizationIdsSet);
+		removeOrganizationIds.removeAll(newOrganizationIds);
 
 		deleteAccountEntryOrganizationRels(
-			accountEntryId, ArrayUtil.toLongArray(removeOrganizationIdsSet));
+			accountEntryId, ArrayUtil.toLongArray(removeOrganizationIds));
 
-		newOrganizationIdsSet.removeAll(oldOrganizationIdsSet);
+		newOrganizationIds.removeAll(oldOrganizationIds);
 
 		addAccountEntryOrganizationRels(
-			accountEntryId, ArrayUtil.toLongArray(newOrganizationIdsSet));
+			accountEntryId, ArrayUtil.toLongArray(newOrganizationIds));
 	}
 
 	private void _reindexAccountEntry(long accountEntryId)

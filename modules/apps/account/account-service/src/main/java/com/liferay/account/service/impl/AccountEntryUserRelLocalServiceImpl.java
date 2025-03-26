@@ -417,24 +417,24 @@ public class AccountEntryUserRelLocalServiceImpl
 			return;
 		}
 
-		Set<Long> newAccountUserIdsSet = SetUtil.fromArray(accountUserIds);
+		Set<Long> newAccountUserIds = SetUtil.fromArray(accountUserIds);
 
-		Set<Long> oldAccountUserIdsSet = SetUtil.fromCollection(
+		Set<Long> oldAccountUserIds = SetUtil.fromCollection(
 			ListUtil.toList(
 				getAccountEntryUserRelsByAccountEntryId(accountEntryId),
 				AccountEntryUserRel::getAccountUserId));
 
-		Set<Long> removeAccountUserIdsSet = new HashSet<>(oldAccountUserIdsSet);
+		Set<Long> removeAccountUserIds = new HashSet<>(oldAccountUserIds);
 
-		removeAccountUserIdsSet.removeAll(newAccountUserIdsSet);
+		removeAccountUserIds.removeAll(newAccountUserIds);
 
 		deleteAccountEntryUserRels(
-			accountEntryId, ArrayUtil.toLongArray(removeAccountUserIdsSet));
+			accountEntryId, ArrayUtil.toLongArray(removeAccountUserIds));
 
-		newAccountUserIdsSet.removeAll(oldAccountUserIdsSet);
+		newAccountUserIds.removeAll(oldAccountUserIds);
 
 		addAccountEntryUserRels(
-			accountEntryId, ArrayUtil.toLongArray(newAccountUserIdsSet));
+			accountEntryId, ArrayUtil.toLongArray(newAccountUserIds));
 	}
 
 	@Override

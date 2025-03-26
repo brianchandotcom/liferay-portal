@@ -1628,12 +1628,12 @@ public class AccountEntryLocalServiceTest {
 		Assert.assertEquals(
 			expectedAccountEntries.length, baseModelSearchResult.getLength());
 
-		List<AccountEntry> expectedAccountEntriesList = Arrays.asList(
-			expectedAccountEntries);
-
 		Assert.assertTrue(
-			expectedAccountEntriesList.containsAll(
-				baseModelSearchResult.getBaseModels()));
+			Arrays.asList(
+				expectedAccountEntries
+			).containsAll(
+				baseModelSearchResult.getBaseModels()
+			));
 	}
 
 	private void _assertStatus(

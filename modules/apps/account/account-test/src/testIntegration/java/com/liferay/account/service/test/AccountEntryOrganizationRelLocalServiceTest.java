@@ -248,21 +248,20 @@ public class AccountEntryOrganizationRelLocalServiceTest {
 				ListUtil.toLongArray(
 					organizations, Organization.ORGANIZATION_ID_ACCESSOR));
 
-		List<Long> expectedOrganizationIdsList = ListUtil.toList(
+		List<Long> expectedOrganizationIds = ListUtil.toList(
 			organizations, Organization.ORGANIZATION_ID_ACCESSOR);
-		List<Long> actualOrganizationIdsList = ListUtil.toList(
+		List<Long> actualOrganizationIds = ListUtil.toList(
 			_accountEntryOrganizationRelLocalService.
 				getAccountEntryOrganizationRels(
 					_accountEntry.getAccountEntryId()),
 			AccountEntryOrganizationRel::getOrganizationId);
 
 		Assert.assertEquals(
-			actualOrganizationIdsList.toString(),
-			expectedOrganizationIdsList.size(),
-			actualOrganizationIdsList.size());
+			actualOrganizationIds.toString(), expectedOrganizationIds.size(),
+			actualOrganizationIds.size());
 
 		Assert.assertTrue(
-			expectedOrganizationIdsList.containsAll(actualOrganizationIdsList));
+			expectedOrganizationIds.containsAll(actualOrganizationIds));
 	}
 
 	@DeleteAfterTestRun

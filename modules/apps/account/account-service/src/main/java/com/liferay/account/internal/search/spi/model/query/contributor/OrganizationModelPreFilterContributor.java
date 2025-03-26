@@ -75,13 +75,13 @@ public class OrganizationModelPreFilterContributor
 			return;
 		}
 
-		List<Organization> accountsOrgsTree = (List<Organization>)params.get(
+		List<Organization> organizations = (List<Organization>)params.get(
 			"accountsOrgsTree");
 
-		if (accountsOrgsTree != null) {
+		if (organizations != null) {
 			BooleanFilter treePathBooleanFilter = new BooleanFilter();
 
-			if (accountsOrgsTree.isEmpty()) {
+			if (organizations.isEmpty()) {
 				TermQuery termQuery = new TermQueryImpl(
 					Field.TREE_PATH, StringPool.BLANK);
 
@@ -91,7 +91,7 @@ public class OrganizationModelPreFilterContributor
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			for (Organization organization : accountsOrgsTree) {
+			for (Organization organization : organizations) {
 				String treePath;
 
 				try {

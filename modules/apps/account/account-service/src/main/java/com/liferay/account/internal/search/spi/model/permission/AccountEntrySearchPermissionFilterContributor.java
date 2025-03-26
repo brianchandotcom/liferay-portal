@@ -71,7 +71,7 @@ public class AccountEntrySearchPermissionFilterContributor
 			"organizationIds");
 
 		try {
-			Set<Organization> organizationsSet = new HashSet<>();
+			Set<Organization> organizations = new HashSet<>();
 
 			for (Organization organization :
 					_organizationLocalService.getUserOrganizations(userId)) {
@@ -86,7 +86,7 @@ public class AccountEntrySearchPermissionFilterContributor
 						permissionChecker, organization,
 						AccountActionKeys.MANAGE_ACCOUNTS)) {
 
-					organizationsSet.add(organization);
+					organizations.add(organization);
 				}
 
 				if (hasManageAvailableAccountsPermission ||
@@ -103,7 +103,7 @@ public class AccountEntrySearchPermissionFilterContributor
 							organization.getOrganizationId());
 
 					while (!suborganizations.isEmpty()) {
-						organizationsSet.addAll(suborganizations);
+						organizations.addAll(suborganizations);
 
 						suborganizations =
 							_organizationLocalService.getSuborganizations(
@@ -118,7 +118,7 @@ public class AccountEntrySearchPermissionFilterContributor
 					null,
 					LinkedHashMapBuilder.<String, Object>put(
 						"accountsOrgsTree",
-						ListUtil.fromCollection(organizationsSet)
+						ListUtil.fromCollection(organizations)
 					).build(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 

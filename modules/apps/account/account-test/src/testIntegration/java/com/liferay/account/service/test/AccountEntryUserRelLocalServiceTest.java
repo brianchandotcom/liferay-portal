@@ -777,23 +777,23 @@ public class AccountEntryUserRelLocalServiceTest {
 		_accountEntryUserRelLocalService.updateAccountEntryUserRels(
 			addAccountEntryIds2, new long[] {addAccountEntryIds1[0]}, userId);
 
-		List<Long> expectedAccountEntryIdsList = new ArrayList<>(
+		List<Long> expectedAccountEntryIds = new ArrayList<>(
 			ListUtil.fromArray(addAccountEntryIds2));
 
-		expectedAccountEntryIdsList.add(addAccountEntryIds1[1]);
-		expectedAccountEntryIdsList.add(addAccountEntryIds1[2]);
+		expectedAccountEntryIds.add(addAccountEntryIds1[1]);
+		expectedAccountEntryIds.add(addAccountEntryIds1[2]);
 
 		accountEntryUserRels =
 			_accountEntryUserRelLocalService.
 				getAccountEntryUserRelsByAccountUserId(userId);
 
 		Assert.assertEquals(
-			accountEntryUserRels.toString(), expectedAccountEntryIdsList.size(),
+			accountEntryUserRels.toString(), expectedAccountEntryIds.size(),
 			accountEntryUserRels.size());
 
 		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
 			Assert.assertTrue(
-				expectedAccountEntryIdsList.contains(
+				expectedAccountEntryIds.contains(
 					accountEntryUserRel.getAccountEntryId()));
 		}
 
@@ -801,7 +801,7 @@ public class AccountEntryUserRelLocalServiceTest {
 
 		long[] addAccountEntryIds3 = new long[0];
 		long[] deleteAccountEntryIds3 = ArrayUtil.toLongArray(
-			expectedAccountEntryIdsList);
+			expectedAccountEntryIds);
 
 		_accountEntryUserRelLocalService.updateAccountEntryUserRels(
 			addAccountEntryIds3, deleteAccountEntryIds3, userId);

@@ -105,21 +105,21 @@ public class UserSearchPermissionFilterContributor
 						permissionChecker, userOrgId,
 						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) {
 
-					Set<Organization> organizationsSet = new HashSet<>();
+					Set<Organization> organizations = new HashSet<>();
 
 					List<Organization> suborganizations =
 						_organizationLocalService.getSuborganizations(
 							companyId, userOrgId);
 
 					while (!suborganizations.isEmpty()) {
-						organizationsSet.addAll(suborganizations);
+						organizations.addAll(suborganizations);
 
 						suborganizations =
 							_organizationLocalService.getSuborganizations(
 								suborganizations);
 					}
 
-					for (Organization organization : organizationsSet) {
+					for (Organization organization : organizations) {
 						List<AccountEntryOrganizationRel>
 							accountEntryOrganizationRels =
 								_accountEntryOrganizationRelLocalService.

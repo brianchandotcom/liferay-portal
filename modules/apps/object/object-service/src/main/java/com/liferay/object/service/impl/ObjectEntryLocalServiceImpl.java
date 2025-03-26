@@ -334,13 +334,9 @@ public class ObjectEntryLocalServiceImpl
 			tempDLFileEntries, null, user.isGuestUser(), groupId,
 			objectDefinition, serviceContext, true, userId, values);
 
-		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
-				tempDLFileEntries.entrySet()) {
-
-			_addFileEntry(
-				dlFileEntry.getKey(), objectDefinition, objectEntryId,
-				dlFileEntry.getValue(), serviceContext, userId, values);
-		}
+		_addFileEntries(
+			objectDefinition, objectEntryId, serviceContext, tempDLFileEntries,
+			userId, values);
 
 		defaultLanguageId = _getDefaultLanguageId(defaultLanguageId, groupId);
 
@@ -1669,13 +1665,9 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry.getGroupId(), objectDefinition, serviceContext, true,
 			userId, values);
 
-		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
-				tempDLFileEntries.entrySet()) {
-
-			_addFileEntry(
-				dlFileEntry.getKey(), objectDefinition, objectEntryId,
-				dlFileEntry.getValue(), serviceContext, userId, values);
-		}
+		_addFileEntries(
+			objectDefinition, objectEntryId, serviceContext, tempDLFileEntries,
+			userId, values);
 
 		int workflowAction = serviceContext.getWorkflowAction();
 
@@ -2036,6 +2028,22 @@ public class ObjectEntryLocalServiceImpl
 	protected void modified(Map<String, Object> properties) {
 		_objectConfiguration = ConfigurableUtil.createConfigurable(
 			ObjectConfiguration.class, properties);
+	}
+
+	private void _addFileEntries(
+			ObjectDefinition objectDefinition, long objectEntryId,
+			ServiceContext serviceContext,
+			Map<DLFileEntry, ObjectField> tempDLFileEntries, long userId,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
+				tempDLFileEntries.entrySet()) {
+
+			_addFileEntry(
+				dlFileEntry.getKey(), objectDefinition, objectEntryId,
+				dlFileEntry.getValue(), serviceContext, userId, values);
+		}
 	}
 
 	private void _addFileEntry(

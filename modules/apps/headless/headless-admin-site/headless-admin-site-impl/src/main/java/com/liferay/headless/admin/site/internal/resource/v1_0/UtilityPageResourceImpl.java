@@ -95,16 +95,29 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
+		if (Validator.isNull(search)) {
+			return Page.of(
+				transform(
+					_layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
+						groupId, pagination.getStartPosition(),
+						pagination.getEndPosition(), null),
+					layoutUtilityPageEntry -> _utilityPageDTOConverter.toDTO(
+						layoutUtilityPageEntry)),
+				pagination,
+				_layoutUtilityPageEntryService.getLayoutUtilityPageEntriesCount(
+					groupId));
+		}
+
 		return Page.of(
 			transform(
 				_layoutUtilityPageEntryService.getLayoutUtilityPageEntries(
-					groupId, pagination.getStartPosition(),
+					groupId, search, null, pagination.getStartPosition(),
 					pagination.getEndPosition(), null),
 				layoutUtilityPageEntry -> _utilityPageDTOConverter.toDTO(
 					layoutUtilityPageEntry)),
 			pagination,
 			_layoutUtilityPageEntryService.getLayoutUtilityPageEntriesCount(
-				groupId));
+				groupId, search, null));
 	}
 
 	@Override

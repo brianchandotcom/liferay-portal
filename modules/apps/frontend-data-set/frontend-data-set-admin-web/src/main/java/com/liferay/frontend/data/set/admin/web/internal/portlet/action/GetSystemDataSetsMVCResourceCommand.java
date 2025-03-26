@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -22,7 +23,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import javax.portlet.ResourceRequest;
@@ -62,6 +67,22 @@ public class GetSystemDataSetsMVCResourceCommand
 			return;
 		}
 
+		List<SystemFDSEntry> systemFDSEntries = TransformUtil.transform(
+			systemFDSNames,
+			systemFDSName -> _systemFDSEntryRegistry.getSystemFDSEntry(
+				systemFDSName));
+
+		Collections.sort(
+			systemFDSEntries,
+			Comparator.comparing(
+				systemFDSEntry -> {
+					if (systemFDSEntry != null) {
+						return systemFDSEntry.getTitle();
+					}
+
+					return StringPool.BLANK;
+				}));
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -81,12 +102,8 @@ public class GetSystemDataSetsMVCResourceCommand
 			JSONUtil.put(
 				"items",
 				JSONUtil.toJSONArray(
-					systemFDSNames,
-					systemFDSName -> {
-						SystemFDSEntry systemFDSEntry =
-							_systemFDSEntryRegistry.getSystemFDSEntry(
-								systemFDSName);
-
+					systemFDSEntries,
+					systemFDSEntry -> {
 						if (!StringUtil.matchesIgnoreCase(
 								systemFDSEntry.getTitle(), search)) {
 

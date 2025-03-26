@@ -1,0 +1,5 @@
+.business-date-container {
+	.form-group>label:not(.toggle-switch) {
+		margin: 0;
+	}
+}

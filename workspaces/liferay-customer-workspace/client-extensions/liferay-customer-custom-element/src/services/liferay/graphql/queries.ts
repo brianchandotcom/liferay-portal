@@ -806,6 +806,7 @@ export const updateBusinessEvent = gql`
 			description
 			eventType
 			feedback
+			lastComment
 			name
 			newLiferayVersion
 			targetGoLiveDateTime

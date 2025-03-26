@@ -8,6 +8,11 @@
 	border-top: 0.063rem solid var(--color-neutral-2);
 }
 
+.be-cancel-event-option:hover {
+	background-color: var(--color-state-error-lighten-2);
+	color: var(--color-state-error-darken-1) !important;
+}
+
 .be-header-sub-label {
 	color: var(--color-state-neutral-darken-1);
 	font-weight: 400;

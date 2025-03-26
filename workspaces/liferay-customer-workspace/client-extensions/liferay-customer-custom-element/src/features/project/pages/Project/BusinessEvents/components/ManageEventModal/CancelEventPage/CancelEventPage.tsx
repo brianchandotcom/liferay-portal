@@ -4,9 +4,10 @@
  */
 
 import {ApolloClient} from '@apollo/client/core/ApolloClient';
-import ClayIcon from '@clayui/icon';
-import {useEffect, useState} from 'react';
-import {Badge, Button, Input} from '~/components';
+import {ClayInput} from '@clayui/form';
+import {Observer} from '@clayui/modal/lib/types';
+import {useState} from 'react';
+import {Badge} from '~/components';
 import {Liferay} from '~/services/liferay';
 import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
@@ -14,16 +15,15 @@ import {IBusinessEvent} from '~/utils/types';
 
 import Layout from '../../../../../../../../components/FormLayout';
 import useUpdateOrg from '../../../hooks/useUpdateOrg';
-
+import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 interface IProps {
 	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
 	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
-	errors?: Record<string, any>;
+	modalType: string;
+	observer: Observer;
 	onCancel: () => void;
-	touched?: any;
-	values?: any;
 }
 
 const CancelEventPage: React.FC<IProps> = ({
@@ -31,13 +31,11 @@ const CancelEventPage: React.FC<IProps> = ({
 	businessEvent,
 	client,
 	closeFunction = () => {},
-	errors,
+	modalType,
+	observer,
 	onCancel,
-	touched,
-	values,
 }) => {
-	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
-
+	const [reason, setReason] = useState('');
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
 
@@ -73,7 +71,6 @@ const CancelEventPage: React.FC<IProps> = ({
 			});
 
 			closeFunction(false);
-
 			onCancel();
 		}
 		catch (error) {
@@ -87,83 +84,48 @@ const CancelEventPage: React.FC<IProps> = ({
 		}
 	};
 
-	useEffect(() => {
-		const hasAllRequiredFieldsFilled =
-			Boolean(businessEvent) && Boolean(values.comment);
-
-		const hasError = errors && Object.keys(errors).length;
-		const hasTouched = Boolean(Object.keys(touched).length);
-
-		setBaseButtonDisabled(
-			!hasAllRequiredFieldsFilled || Boolean(hasError) || !hasTouched
-		);
-	}, [businessEvent, errors, touched, values.comment]);
+	const handleInputChange = (event: {target: {value: string}}) => {
+		setReason(event.target.value);
+	};
 
 	return (
-		<Layout
-			footerProps={{
-				leftButton: (
-					<Button
-						displayType="secondary"
-						onClick={() => {
-							closeFunction(false);
-						}}
-					>
-						{i18n.translate('cancel')}
-					</Button>
-				),
-				middleButton: (
-					<Button
-						className="bg-danger"
-						disabled={baseButtonDisabled || isLoadingSubmitButton}
-						isLoading={isLoadingSubmitButton}
-						onClick={handleSubmit}
-					>
-						{i18n.translate('cancel-business-event')}
-					</Button>
-				),
-			}}
-			headerProps={{
-				button: (
-					<Button
-						aria-label={i18n.translate('close')}
-						borderless
-						className="text-neutral-5"
-						onClick={() => closeFunction(false)}
-						size="xs"
-					>
-						<span>
-							<ClayIcon symbol="times" />
-						</span>
-					</Button>
-				),
-				greetings: i18n.translate('cancel-business-event'),
-				title: `${i18n.translate('cancel')} ${businessEvent.name}`,
-			}}
-			layoutType="match-parent"
+		<BusinessEventsModal
+			handleSubmit={handleSubmit}
+			headerTitle={i18n.translate('cancel-business-event').toUpperCase()}
+			isLoadingSubmitButton={isLoadingSubmitButton}
+			modalType={modalType}
+			observer={observer}
+			onClose={() => closeFunction(false)}
+			reason={reason}
+			submitButton={i18n.translate('cancel-business-event')}
+			title={`${i18n.translate('cancel')} ${businessEvent.name}`}
 		>
-			<>
-				<Input
-					badgeClassName="ml-3 mr-3"
-					component="textarea"
-					groupStyle="pb-1"
-					label={i18n.translate(
+			<div>
+				<div className="font-weight-bold mb-3">
+					{i18n.translate(
 						'please-let-us-know-the-reason-you-are-canceling-this-event'
 					)}
-					name="comment"
+
+					<span className="edit-modal-asterisk"> *</span>
+				</div>
+
+				<ClayInput
+					component="textarea"
+					onChange={handleInputChange}
 					required
 					type="text"
+					value={reason}
 				/>
 
-				<Badge alertType="info" badgeClassName="ml-3 mr-3">
-					<span className="pl-1">
+				<Badge alertType="info" badgeClassName="mt-3">
+					<span className="pl-1 text-paragraph">
 						{i18n.translate(
 							'once-canceled-no-further-edits-can-be-made-to-this-event'
 						)}
 					</span>
 				</Badge>
-			</>
-		</Layout>
+			</div>
+		</BusinessEventsModal>
 	);
 };
 

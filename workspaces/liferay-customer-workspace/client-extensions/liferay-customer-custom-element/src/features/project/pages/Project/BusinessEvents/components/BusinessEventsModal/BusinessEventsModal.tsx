@@ -9,29 +9,53 @@ import {Observer} from '@clayui/modal/lib/types';
 import Button from '~/components/Button';
 import i18n from '~/utils/I18n';
 
-import './BusinessEventsConfirmationPopup.css';
+import './BusinessEventsModal.css';
 
-import {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 
-interface IBusinessEventsConfirmationPopupProps {
+interface IBusinessEventsModalProps {
+	baseButtonDisabled?: boolean;
+	children: React.ReactNode;
 	handleSubmit: () => void;
-	message: string;
+	headerTitle: string;
+	isLoadingSubmitButton?: boolean;
+	modalType: string;
 	observer: Observer;
 	onClose: () => void;
-	reason: string;
-	setReason: React.Dispatch<React.SetStateAction<string>>;
+	reason?: string;
+	submitButton: string;
+	title: string;
 }
 
-const BusinessEventsConfirmationPopup = ({
+const BusinessEventsModal = ({
+	baseButtonDisabled,
+	children,
 	handleSubmit,
-	message,
+	headerTitle,
+	isLoadingSubmitButton,
+	modalType,
 	observer,
 	onClose,
 	reason,
-	setReason,
-}: IBusinessEventsConfirmationPopupProps) => {
-	const handleInputChange = (event: {target: {value: string}}) => {
-		setReason(event.target.value);
+	submitButton,
+	title,
+}: IBusinessEventsModalProps) => {
+	const isCancelModal = modalType === 'cancelEvent';
+
+	const handleDisabled = () => {
+		if (isCancelModal) {
+			return !reason?.trim() || isLoadingSubmitButton;
+		}
+
+		if (modalType === 'editEvent') {
+			return !reason?.trim();
+		}
+
+		if (modalType === 'goLiveEvent') {
+			return baseButtonDisabled || isLoadingSubmitButton;
+		}
+
+		return false;
 	};
 
 	return (
@@ -39,13 +63,11 @@ const BusinessEventsConfirmationPopup = ({
 			<div className="p-4">
 				<div className="pb-4">
 					<div className="font-weight-bold header-title mb-1">
-						{i18n
-							.translate('third-party-vendor-integration')
-							.toUpperCase()}
+						{headerTitle}
 					</div>
 
 					<div className="d-flex justify-content-between">
-						<h3>{i18n.translate('change-target-go-live')}</h3>
+						<h3>{title}</h3>
 
 						<Button
 							appendIcon="times"
@@ -57,31 +79,14 @@ const BusinessEventsConfirmationPopup = ({
 					</div>
 				</div>
 
-				<div className="pb-3">
-					<p className="mb-3">{message}</p>
-
-					<div>
-						<div className="font-weight-bold pb-2">
-							{i18n.translate('reason-for-change')}
-
-							<span className="edit-modal-asterisk">*</span>
-						</div>
-
-						<ClayInput
-							component="textarea"
-							onChange={handleInputChange}
-							placeholder={i18n.translate(
-								'unresolved-tickets-blocked-us-from-going-live'
-							)}
-							required
-							type="text"
-							value={reason}
-						/>
-					</div>
-				</div>
+				<div className="pb-3">{children}</div>
 
 				<div>
-					<div className="d-flex justify-content-end">
+					<div
+						className={classNames('d-flex justify-content-end', {
+							'cancel-event-modal': isCancelModal,
+						})}
+					>
 						<ClayButton
 							className="mr-3"
 							displayType="secondary"
@@ -91,11 +96,11 @@ const BusinessEventsConfirmationPopup = ({
 						</ClayButton>
 
 						<ClayButton
-							disabled={!reason.trim()}
+							disabled={handleDisabled()}
 							displayType="primary"
 							onClick={handleSubmit}
 						>
-							{i18n.translate('save-changes')}
+							{submitButton}
 						</ClayButton>
 					</div>
 				</div>
@@ -104,4 +109,4 @@ const BusinessEventsConfirmationPopup = ({
 	);
 };
 
-export default BusinessEventsConfirmationPopup;
+export default BusinessEventsModal;

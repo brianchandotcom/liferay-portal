@@ -412,7 +412,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 						render={() => (
 							<>
 								<Input
-									badgeClassName="ml-3 mr-3 mt-1"
+									badgeClassName="mx-3 mt-1"
 									label={i18n.translate('event-name')}
 									name="businessEvent.name"
 									placeholder={i18n.translate('event-name')}
@@ -421,7 +421,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 								/>
 
 								<Select
-									badgeClassName="ml-3 mr-3 mt-1"
+									badgeClassName="mx-3 mt-1"
 									label={i18n.translate('event-type')}
 									link="https://help.liferay.com/hc"
 									linkText="here"
@@ -434,7 +434,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 								{subscriptionGroups && !isSaasOnly && (
 									<Select
-										badgeClassName="ml-3 mr-3 mt-1"
+										badgeClassName="mx-3 mt-1"
 										label={i18n.translate(
 											'your-current-liferay-version'
 										)}
@@ -448,7 +448,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 								{isNewLiferayVersionRequired && (
 									<Select
-										badgeClassName="ml-3 mr-3 mt-1"
+										badgeClassName="mx-3 mt-1"
 										label={i18n.translate('new-version')}
 										name="businessEvent.newLiferayVersion.key"
 										options={
@@ -460,7 +460,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 								{isDescriptionRequired && (
 									<Input
-										badgeClassName="ml-3 mr-3 mt-1"
+										badgeClassName="mx-3 mt-1"
 										component="textarea"
 										label={i18n.translate(
 											'event-description'
@@ -477,7 +477,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 								<ClayInput.Group className="m-0">
 									<ClayInput.GroupItem className="m-0">
 										<DatePicker
-											badgeClassName="ml-3 mr-3 mt-1"
+											badgeClassName="mx-3 mt-1"
 											dateFormat="MM-dd-yyyy"
 											label={i18n.translate(
 												'target-go-live-date'
@@ -521,7 +521,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 								{tickets && !!tickets.length ? (
 									<>
-										<div className="ml-3 mr-3 pb-3">
+										<div className="mx-3 pb-3">
 											<label>
 												{i18n.translate(
 													'are-there-any-support-tickets-impacting-this-event'
@@ -556,7 +556,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 										</div>
 
 										{hasImpactingEvents === 'yes' && (
-											<div className="ml-3 mr-3 pb-3">
+											<div className="mx-3 pb-3">
 												<label>
 													{i18n.translate(
 														'please-select-the-tickets-that-are-impacting-this-event'
@@ -573,7 +573,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 										)}
 									</>
 								) : (
-									<div className="ml-3 mr-3 pb-3">
+									<div className="mx-3 pb-3">
 										{i18n.translate(
 											'there-are-currently-no-open-tickets-under-this-project'
 										)}

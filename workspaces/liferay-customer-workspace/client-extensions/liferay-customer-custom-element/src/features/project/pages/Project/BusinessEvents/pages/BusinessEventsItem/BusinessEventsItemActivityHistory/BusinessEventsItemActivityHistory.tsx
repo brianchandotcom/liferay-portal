@@ -6,7 +6,7 @@
 import {Nav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayModal, {useModal} from '@clayui/modal';
+import {useModal} from '@clayui/modal';
 import NavigationBar from '@clayui/navigation-bar';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
@@ -33,8 +33,8 @@ import './BusinessEventsItemActivityHistory.css';
 import {getUserAccount} from '~/services/liferay/graphql/queries';
 
 import Avatar from '../../../../TeamMembers/components/TeamMembersTable/components/columns/NameColumn/components/Avatar';
-import CancelEventForm from '../../../components/CancelEventForm';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
+import ManageEventModal from '../../../components/ManageEventModal';
 
 const BusinessEventsItemActivityHistory = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
@@ -51,6 +51,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
+	const [modalType, setModalType] = useState('');
 	const [loading, setLoading] = useState(true);
 	const {observer, onOpenChange, open} = useModal();
 
@@ -239,13 +240,17 @@ const BusinessEventsItemActivityHistory = () => {
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="check-circle" />,
 			label: i18n.translate('record-actual-go-live'),
-			onClick: () => {},
+			onClick: () => {
+				setModalType('goLiveEvent');
+				onOpenChange(true);
+			},
 		},
 		{
 			customOptionStyle: 'cancel-event-option pr-5',
 			icon: <ClayIcon symbol="trash" />,
 			label: i18n.translate('cancel-event'),
 			onClick: () => {
+				setModalType('cancelEvent');
 				onOpenChange(true);
 			},
 		},
@@ -340,15 +345,15 @@ const BusinessEventsItemActivityHistory = () => {
 			<div className="mt-4"></div>
 
 			{businessEvent && open && (
-				<ClayModal center disableAutoClose observer={observer}>
-					<CancelEventForm
-						accountExternalReferenceCode={accountKey || ''}
-						businessEvent={businessEvent}
-						client={client}
-						closeFunction={onOpenChange}
-						onCancel={handleEventCanceled}
-					/>
-				</ClayModal>
+				<ManageEventModal
+					accountExternalReferenceCode={accountKey || ''}
+					businessEvent={businessEvent}
+					client={client}
+					closeFunction={onOpenChange}
+					modalType={modalType}
+					observer={observer}
+					onCancel={handleEventCanceled}
+				/>
 			)}
 
 			<div className="">

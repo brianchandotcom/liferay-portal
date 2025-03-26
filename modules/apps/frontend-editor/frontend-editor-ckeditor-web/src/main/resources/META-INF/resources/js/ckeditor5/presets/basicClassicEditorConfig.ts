@@ -6,19 +6,22 @@
 import {EditorConfig} from 'ckeditor5';
 
 const basicClassicEditorConfig: EditorConfig = {
-	toolbar: [
-		'undo',
-		'redo',
-		'|',
-		'bold',
-		'italic',
-		'underline',
-		'|',
-		'numberedList',
-		'bulletedList',
-		'|',
-		'link',
-	],
+	toolbar: {
+		items: [
+			'undo',
+			'redo',
+			'|',
+			'bold',
+			'italic',
+			'underline',
+			'|',
+			'numberedList',
+			'bulletedList',
+			'|',
+			'link',
+		],
+		shouldNotGroupWhenFull: false,
+	},
 };
 
 export default basicClassicEditorConfig;

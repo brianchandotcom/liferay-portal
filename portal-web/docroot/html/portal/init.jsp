@@ -31,7 +31,6 @@ page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
 page import="com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ClassUtil" %><%@
-page import="com.liferay.portal.kernel.util.ProgressTracker" %><%@
 page import="com.liferay.portal.setup.SetupWizardUtil" %><%@
 page import="com.liferay.portal.util.LicenseUtil" %><%@
 page import="com.liferay.portal.util.MaintenanceUtil" %><%@

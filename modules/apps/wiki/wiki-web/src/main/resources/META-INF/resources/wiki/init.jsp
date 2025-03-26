@@ -7,8 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/document-library" prefix="liferay-document-library" %><%@
-taglib uri="http://liferay.com/tld/portal-workflow" prefix="liferay-portal-workflow" %>
+<%@ taglib uri="http://liferay.com/tld/portal-workflow" prefix="liferay-portal-workflow" %>
 
 <%@ page import="com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@

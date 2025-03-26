@@ -14,7 +14,10 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  * }
  */
 export default function getProjectDependencies(projectDir = '.') {
-	const {dependencies} = projectScopeRequire('./package.json', projectDir);
+	const {dependencies = {}, devDependencies = {}} = projectScopeRequire(
+		'./package.json',
+		projectDir
+	);
 
-	return dependencies || {};
+	return {...dependencies, ...devDependencies};
 }

@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type {OpenToastProps} from 'frontend-js-components-web';
-
 interface SessionConfig {
 	autoExtend: boolean;
 	redirectOnExpire: boolean;
@@ -235,7 +233,7 @@ class Session {
 				message: this._warningText,
 				type: 'warning',
 				...toastDefaultConfig,
-			} as any);
+			});
 
 			const toastComponent = Liferay.component(TOAST_ID);
 
@@ -365,7 +363,7 @@ class Session {
 		this.sessionState = newVal;
 	}
 
-	async openToast(args: OpenToastProps) {
+	async openToast(args: any) {
 		const {openToast} = await import(
 			Liferay.ThemeDisplay.getPathContext() +
 				'/o/frontend-js-components-web/__liferay__/index.js'

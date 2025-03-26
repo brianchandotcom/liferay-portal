@@ -1,15 +1,30 @@
-<#list schemaMap?keys?sort as key>
-	import {${key}} from './${key?uncap_first}';
-</#list>
-
-<#list schemaMap?keys?sort as key>
-	export * from './${key?uncap_first}';
+<#list schemaMap?keys?sort as schema>
+	import {${schema}} from './models/${schema}';
 </#list>
 
 /**
  * @author ${configYAML.author}
  * @generated
  */
+
+<#list schemaMap?keys?sort as schema>
+	export {${schema}} from './models/${schema}';
+</#list>
+
+<#list apiContexts?sort_by("className") as apiContext>
+	export {${apiContext.className}} from './apis/${apiContext.className}';
+</#list>
+
+export class HttpError extends Error {
+	constructor(
+		public body: any,
+		public response: Response,
+		public statusCode: number
+	) {
+		super('HTTP request failed');
+		this.name = 'HttpError';
+	}
+}
 
 /* tslint:disable:no-unused-variable */
 const primitives = [
@@ -24,8 +39,8 @@ const primitives = [
 ];
 
 const typeMap: {[index: string]: any} = {
-<#list schemaMap?keys?sort as key>
-	${key},
+<#list schemaMap?keys?sort as schema>
+	${schema},
 </#list>
 };
 

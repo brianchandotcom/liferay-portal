@@ -1,7 +1,7 @@
 <#if importClasses??>
 	<#list importClasses?sort as import>
 		<#if import?lower_case != modelName?lower_case>
-			import {${import}} from './${import?uncap_first}';
+			import {${import}} from './${import}';
 		</#if>
 	</#list>
 </#if>

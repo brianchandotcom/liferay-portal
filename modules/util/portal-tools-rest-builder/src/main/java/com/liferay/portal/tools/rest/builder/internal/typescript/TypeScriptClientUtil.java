@@ -79,17 +79,9 @@ public class TypeScriptClientUtil {
 				entry.getValue(), configYAML, copyrightFile, files,
 				"typescript/api",
 				StringBundler.concat(
-					baseClientDir.getPath(), "/src/api/",
-					StringUtil.lowerCaseFirstLetter(entry.getKey()), "Api.ts"));
+					baseClientDir.getPath(), "/src/apis/", entry.getKey(),
+					"API.ts"));
 		}
-
-		_createFile(
-			null, configYAML, copyrightFile, files, "typescript/api_global",
-			baseClientDir.getPath() + "/src/api.ts");
-		_createFile(
-			Collections.singletonMap("apiContexts", apiContexts.values()),
-			configYAML, copyrightFile, files, "typescript/apis",
-			baseClientDir.getPath() + "/src/api/apis.ts");
 
 		Components components = openAPIYAML.getComponents();
 
@@ -103,8 +95,7 @@ public class TypeScriptClientUtil {
 					_buildModelContext(entry.getKey(), entry.getValue()),
 					configYAML, copyrightFile, files, "typescript/model",
 					StringBundler.concat(
-						baseClientDir.getPath(), "/src/model/",
-						StringUtil.lowerCaseFirstLetter(entry.getKey()),
+						baseClientDir.getPath(), "/src/models/", entry.getKey(),
 						".ts"));
 				_createRelatedSchemaModels(
 					baseClientDir, configYAML, copyrightFile, files, "",
@@ -113,9 +104,13 @@ public class TypeScriptClientUtil {
 		}
 
 		_createFile(
-			Collections.singletonMap("schemaMap", schemas), configYAML,
-			copyrightFile, files, "typescript/models",
-			baseClientDir.getPath() + "/src/model/models.ts");
+			HashMapBuilder.<String, Object>put(
+				"apiContexts", apiContexts.values()
+			).put(
+				"schemaMap", schemas
+			).build(),
+			configYAML, copyrightFile, files, "typescript/index",
+			baseClientDir.getPath() + "/src/index.ts");
 
 		FileUtil.deleteFiles(baseClientDir.getPath(), files);
 	}
@@ -254,7 +249,7 @@ public class TypeScriptClientUtil {
 			apiContexts.put(
 				entry.getKey(),
 				HashMapBuilder.<String, Object>put(
-					"className", entry.getKey() + "Api"
+					"className", entry.getKey() + "API"
 				).put(
 					"importClasses",
 					importsMap.getOrDefault(entry.getKey(), new HashSet<>())
@@ -704,9 +699,8 @@ public class TypeScriptClientUtil {
 					_buildModelContext(referencedSchemaName, referencedSchema),
 					configYAML, copyrightFile, files, "typescript/model",
 					StringBundler.concat(
-						baseClientDir.getPath(), "/src/model/",
-						StringUtil.lowerCaseFirstLetter(referencedSchemaName),
-						".ts"));
+						baseClientDir.getPath(), "/src/models/",
+						referencedSchemaName, ".ts"));
 				_createRelatedSchemaModels(
 					baseClientDir, configYAML, copyrightFile, files,
 					referencedYAMLFile.getAbsolutePath(), processedReferences,

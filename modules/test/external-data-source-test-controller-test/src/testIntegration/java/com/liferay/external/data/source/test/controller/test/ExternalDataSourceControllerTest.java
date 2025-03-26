@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -45,6 +46,9 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.runtime.ServiceComponentRuntime;
+import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
+import org.osgi.util.promise.Promise;
 
 /**
  * @author Preston Crary
@@ -83,6 +87,17 @@ public class ExternalDataSourceControllerTest {
 			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
 			_serviceBundle.start();
+
+			ComponentDescriptionDTO componentDescriptionDTO =
+				_serviceComponentRuntime.getComponentDescriptionDTO(
+					_serviceBundle,
+					"com.liferay.external.data.source.test.internal.upgrade." +
+						"registry.TestEntityUpgradeStepRegistrator");
+
+			Promise<Void> promise = _serviceComponentRuntime.enableComponent(
+				componentDescriptionDTO);
+
+			promise.getValue();
 		}
 		finally {
 			PropsUtil.set(
@@ -210,6 +225,9 @@ public class ExternalDataSourceControllerTest {
 	private Bundle _apiBundle;
 	private BundleContext _bundleContext;
 	private Bundle _serviceBundle;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 	/**
 	 * A carrier Throwable to overcome Arquillian Exception serialization

@@ -20,6 +20,7 @@ export class DataSetFragmentPage {
 	readonly emptyStateTitle: Locator;
 	readonly filterButton: Locator;
 	filterItem: Locator;
+	readonly filterConfirmButton: Locator;
 	readonly filterResumeButton: Locator;
 	readonly fragmentWidgetSearchInput: Locator;
 	readonly listWrapper: Locator;
@@ -40,7 +41,6 @@ export class DataSetFragmentPage {
 		headRow: Locator;
 		itemActionsCells: Locator;
 	};
-	readonly filterConfirmButton: Locator;
 
 	constructor(page: Page) {
 		this.activeViewSelector = page.getByLabel('Show View Options');

@@ -432,22 +432,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 				waitForFinish(expectedExecuteStatus, JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 			}
 
-			<#list getterJavaMethodParametersMap?values as javaMethodParameter>
-				<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-					protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaName} ${schemaVarName}) throws Exception {
+			<@getTestGetterMethods
+				getterJavaMethodParametersMap = getterJavaMethodParametersMap
+				javaMethodSignature = javaMethodSignature
+				testNamePrefix = "test"
+			/>
 
-					return ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}();
-				<#else>
-					protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
-
-					<#if properties?keys?seq_contains("id") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
-						return testDelete${schemaName}_get${javaMethodParameter.parameterName?cap_first}();
-					<#else>
-						throw new UnsupportedOperationException("This method needs to be implemented");
-					</#if>
-				</#if>
-					}
-			</#list>
 		<#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
 			<#continue>
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
@@ -4235,7 +4225,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#else>
 				protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
 
-				throw new UnsupportedOperationException("This method needs to be implemented");
+				<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && properties?keys?seq_contains("id") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
+					return testDelete${schemaName}_get${javaMethodParameter.parameterName?cap_first}();
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
 			</#if>
 		}
 	</#list>

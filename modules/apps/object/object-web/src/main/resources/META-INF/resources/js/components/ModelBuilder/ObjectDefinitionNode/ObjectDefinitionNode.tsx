@@ -131,6 +131,7 @@ export function ObjectDefinitionNode({
 						hasObjectDefinitionDeleteResourcePermission,
 						hasObjectDefinitionManagePermissionsResourcePermission,
 						hasObjectDefinitionUpdateResourcePermission,
+						isTreeStructure,
 						objectDefinitionId: id,
 						objectDefinitionName: name,
 						objectDefinitionPermissionsURL,

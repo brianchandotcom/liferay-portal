@@ -86,18 +86,16 @@ const Congratulations = () => {
 	return (
 		<div className="align-items-center border d-flex flex-column justify-content-center p-5 rounded">
 			<div className="align-items-center d-flex justify-content-center">
-				<img
-					alt="Congratulations Icon"
-					className="congratulations-image"
-					src={CongratulationsIcon}
-				/>
+				<img draggable={false} src={CongratulationsIcon} />
 			</div>
 
-			<h1 className="pt-7">{i18n.translate('congratulations')}</h1>
+			<h1 className="pt-7">
+				{i18n.translate('do-not-close-this-window')}
+			</h1>
 
 			<p className="align-items-center d-flex mt-4 px-3 secondary-text">
 				{i18n.translate(
-					'you-are-one-step-away-from-finalizing-your-connection-with-the-marketplace'
+					'you-are-finalizing-your-connection-with-the-marketplace'
 				)}
 			</p>
 		</div>

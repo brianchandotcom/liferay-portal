@@ -17,14 +17,12 @@ import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.entry.validation.ValidationError;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryCountException;
-import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.object.tree.Edge;
@@ -444,40 +442,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			groupId, objectEntry.getObjectDefinitionId(),
 			objectEntry.getValues());
 
-		List<ValidationError> validationErrorList = new ArrayList<>();
-
-		try {
-			_objectValidationRuleLocalService.validate(
-				objectValidationRuleExternalReferenceCodes, objectEntry,
-				getUserId());
-		}
-		catch (ObjectValidationRuleEngineException
-					objectValidationRuleEngineException) {
-
-			validationErrorList = ListUtil.toList(
-				objectValidationRuleEngineException.
-					getObjectValidationRuleResults(),
-				objectValidationRuleResult -> new ValidationError(
-					objectValidationRuleResult.getErrorMessage(),
-					objectValidationRuleResult.getObjectFieldName(),
-					objectValidationRuleResult.getExternalReferenceCode()));
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
-		validationErrorList.addAll(
-			ListUtil.toList(
-				objectEntryLocalService.validateValues(
-					Collections.emptyMap(), Collections.emptySet(), objectEntry,
-					false, groupId, objectDefinition,
-					objectEntry.getObjectEntryId(), serviceContext, false,
-					serviceContext.getUserId(), objectEntry.getValues()),
-				objectEntryValuesException -> new ValidationError(
-					objectEntryValuesException.getMessage())));
-
-		return validationErrorList;
+		return objectEntryLocalService.validate(
+			groupId, objectEntry, objectValidationRuleExternalReferenceCodes,
+			serviceContext, getUserId());
 	}
 
 	@Activate
@@ -920,9 +887,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Reference
-	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;

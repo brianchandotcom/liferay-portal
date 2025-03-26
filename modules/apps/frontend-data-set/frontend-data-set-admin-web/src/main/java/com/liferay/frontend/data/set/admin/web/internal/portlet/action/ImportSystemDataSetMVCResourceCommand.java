@@ -346,40 +346,18 @@ public class ImportSystemDataSetMVCResourceCommand
 						String label = fdsTableSchemaField.getLabel();
 
 						if (!fdsTableSchemaField.isLocalizeLabel()) {
-							Locale locale = _portal.getLocale(
-								httpServletRequest);
-
 							return HashMapBuilder.put(
 								dataSetTableSectionObjectDefinition.
 									getDefaultLanguageId(),
 								label
 							).put(
-								LocaleUtil.toLanguageId(locale), label
+								LocaleUtil.toLanguageId(
+									_portal.getLocale(httpServletRequest)),
+								label
 							).build();
 						}
 
-						HashMap<String, String> labels = new HashMap<>();
-
-						for (Locale locale :
-								LanguageUtil.getAvailableLocales()) {
-
-							ResourceBundle resourceBundle =
-								ResourceBundleUtil.getBundle(
-									"content.Language", locale, getClass());
-
-							String translatedLabel = LanguageUtil.get(
-								resourceBundle, label);
-
-							if (Validator.isNull(translatedLabel)) {
-								translatedLabel = StringPool.BLANK;
-							}
-
-							labels.put(
-								LocaleUtil.toLanguageId(locale),
-								translatedLabel);
-						}
-
-						return labels;
+						return _buildLocaleMap(label);
 					}
 				).put(
 					"r_dataSetToDataSetTableSections_l_dataSetId",
@@ -594,10 +572,7 @@ public class ImportSystemDataSetMVCResourceCommand
 				).put(
 					"fieldName", fdsFilter.getId()
 				).put(
-					"label_i18n",
-					HashMapBuilder.put(
-						"en_US", fdsFilter.getLabel()
-					).build()
+					"label_i18n", _buildLocaleMap(fdsFilter.getLabel())
 				).put(
 					"type", fdsFilter.getType()
 				);
@@ -781,7 +756,6 @@ public class ImportSystemDataSetMVCResourceCommand
 							fdsActionDropdownItem.get("icon"))
 					).put(
 						"label_i18n",
-						// TODO: add all locales
 						() -> _getLocalizeableValue(
 							defaultLanguageId,
 							_getOptionalValue(
@@ -963,6 +937,25 @@ public class ImportSystemDataSetMVCResourceCommand
 				).build(),
 				new ServiceContext());
 		}
+	}
+
+	private HashMap<String, String> _buildLocaleMap(String key) {
+		HashMap<String, String> labels = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass());
+
+			String label = LanguageUtil.get(resourceBundle, key);
+
+			if (Validator.isNull(label)) {
+				label = StringPool.BLANK;
+			}
+
+			labels.put(LocaleUtil.toLanguageId(locale), label);
+		}
+
+		return labels;
 	}
 
 	private Serializable _getLocalizeableValue(

@@ -15,6 +15,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,7 +84,7 @@ public interface ObjectEntryManager {
 			String scopeKey)
 		throws Exception {
 
-		return null;
+		return Collections.emptyList();
 	}
 
 }

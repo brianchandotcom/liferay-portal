@@ -36,7 +36,7 @@
 		},
 		{
 			"active": true,
-			"conditionExpression": "oldValue(targetGoLiveDateTime) != targetGoLiveDateTime",
+			"conditionExpression": "isEmpty(actualGoLiveDateTime)",
 			"label": {
 				"en_US": "Business Event Edited"
 			},
@@ -71,7 +71,7 @@
 		},
 		{
 			"active": true,
-			"conditionExpression": "oldValue(actualGoLiveDateTime) != actualGoLiveDateTime",
+			"conditionExpression": "isEmpty(actualGoLiveDateTime) == false",
 			"label": {
 				"en_US": "Business Event Go Live"
 			},

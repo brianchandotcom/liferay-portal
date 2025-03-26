@@ -140,7 +140,8 @@ public class CORSSupport {
 		if (Validator.isBlank(accessControlAllowOrigin) ||
 			StringUtil.equals(accessControlAllowOrigin, StringPool.STAR) ||
 			ArrayUtil.contains(
-				StringUtil.split(accessControlAllowOrigin), origin)) {
+				StringUtil.split(accessControlAllowOrigin, CharPool.SPACE),
+				origin)) {
 
 			return true;
 		}

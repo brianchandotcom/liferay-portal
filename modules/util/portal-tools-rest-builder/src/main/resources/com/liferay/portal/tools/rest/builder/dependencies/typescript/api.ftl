@@ -205,17 +205,20 @@ export class ${className} {
 				<#if operationData.returnDataType??>
 					if (contentType.includes('application/json')) {
 						return {body: ObjectSerializer.deserialize(await response.json(), "${operationData.returnDataType}"), response};
-					} else {
+					}
+					else {
 						return {body: await response.text() as any, response};
 					}
 				<#else>
 					if (contentType.includes('application/json')) {
 						return {body: await response.json(), response};
-					} else {
+					}
+					else {
 						return {body: await response.text(), response};
 					}
 				</#if>
-			} else {
+			}
+			else {
 				throw new HttpError(
 					await response.text(),
 					response,

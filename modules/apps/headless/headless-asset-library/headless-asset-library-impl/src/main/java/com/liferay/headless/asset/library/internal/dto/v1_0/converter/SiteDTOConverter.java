@@ -71,7 +71,7 @@ public class SiteDTOConverter
 
 						return group.getLogoURL(themeDisplay, true);
 					});
-				setName(group::getName);
+				setName(() -> group.getName(dtoConverterContext.getLocale()));
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),

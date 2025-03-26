@@ -6,11 +6,9 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
-import React, {useCallback} from 'react';
+import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectInvalids from '../selectors/selectInvalids';
-import selectSelection from '../selectors/selectSelection';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
@@ -20,7 +18,7 @@ import selectStructureName from '../selectors/selectStructureName';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import StructureService from '../services/StructureService';
-import focusInvalidInput from '../utils/focusInvalidInput';
+import {useValidate} from '../utils/validation';
 import AsyncButton from './AsyncButton';
 
 export default function ManagementBar() {
@@ -235,44 +233,4 @@ function PublishButton() {
 			onClick={onPublish}
 		/>
 	);
-}
-
-function useValidate() {
-	const dispatch = useStateDispatch();
-	const fields = useSelector(selectStructureFields);
-	const invalids = useSelector(selectInvalids);
-	const selection = useSelector(selectSelection);
-
-	return useCallback(() => {
-		if (!fields.length) {
-			dispatch({
-				error: Liferay.Language.get(
-					'at-least-one-field-must-be-added-to-save-or-publish-the-structure'
-				),
-				type: 'set-error',
-			});
-
-			return false;
-		}
-
-		if (!invalids.size) {
-			return true;
-		}
-
-		const [uuid] = [...invalids];
-
-		const isSelected = selection.length === 1 && selection.includes(uuid);
-
-		if (isSelected) {
-			focusInvalidInput();
-		}
-		else {
-			dispatch({
-				selection: [uuid],
-				type: 'set-selection',
-			});
-		}
-
-		return false;
-	}, [dispatch, fields, invalids, selection]);
 }

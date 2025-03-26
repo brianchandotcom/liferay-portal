@@ -12,6 +12,35 @@ class HeadlessAdminTaxonomy {
 			`/o/headless-admin-taxonomy/v1.0/sites/${Liferay.ThemeDisplay.getCompanyGroupId()}/taxonomy-vocabularies`
 		);
 	}
+
+	async getTaxonomyVocabulariesWithCategories() {
+		const response = await fetcher.post<{
+			data: {taxonomyVocabularies: APIResponse<TaxonomyVocabulary>};
+		}>('/o/graphql', {
+			query: `{
+				taxonomyVocabularies(siteKey: "${Liferay.ThemeDisplay.getScopeGroupId()}") {
+					items {
+						id
+						name
+						taxonomyCategories {
+							items {
+								externalReferenceCode
+								id
+								name
+							}
+						}
+					}
+					lastPage
+					page
+					pageSize
+					totalCount
+				}
+			}`,
+		});
+
+		return response.data.taxonomyVocabularies;
+	}
+
 	async getTaxonomyCategories(
 		vocabularyId: number,
 		searchParams = new URLSearchParams()

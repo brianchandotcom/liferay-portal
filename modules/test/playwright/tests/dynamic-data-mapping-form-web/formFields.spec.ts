@@ -192,7 +192,7 @@ test.describe('Manage fields through Form Preview page', () => {
 		await newTabPage.close();
 	});
 
-	test('make sure upload field does not show file count on preview', async ({
+	test('Verify if temporary files are removed', async ({
 		apiHelpers,
 		formBuilderPage,
 		formBuilderSidePanelPage,

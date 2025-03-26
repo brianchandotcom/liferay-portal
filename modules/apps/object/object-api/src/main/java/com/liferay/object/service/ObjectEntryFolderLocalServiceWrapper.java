@@ -463,12 +463,13 @@ public class ObjectEntryFolderLocalServiceWrapper
 	public com.liferay.object.model.ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId,
-			java.util.Map<java.util.Locale, String> labelMap, String name)
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryFolderLocalService.updateObjectEntryFolder(
 			userId, objectEntryFolderId, parentObjectEntryFolderId, labelMap,
-			name);
+			name, serviceContext);
 	}
 
 	/**

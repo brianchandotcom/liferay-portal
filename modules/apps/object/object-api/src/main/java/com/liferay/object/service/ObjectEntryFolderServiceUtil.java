@@ -111,11 +111,13 @@ public class ObjectEntryFolderServiceUtil {
 
 	public static ObjectEntryFolder updateObjectEntryFolder(
 			long objectEntryFolderId, long parentObjectEntryFolderId,
-			Map<java.util.Locale, String> labelMap, String name)
+			Map<java.util.Locale, String> labelMap, String name,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateObjectEntryFolder(
-			objectEntryFolderId, parentObjectEntryFolderId, labelMap, name);
+			objectEntryFolderId, parentObjectEntryFolderId, labelMap, name,
+			serviceContext);
 	}
 
 	public static ObjectEntryFolderService getService() {

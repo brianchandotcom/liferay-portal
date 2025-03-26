@@ -8,8 +8,6 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 DDMFormInstance formInstance = ddmFormAdminDisplayContext.getDDMFormInstance();
@@ -23,6 +21,8 @@ boolean disableCopyButton = false;
 if (!ddmFormAdminDisplayContext.isFormPublished()) {
 	disableCopyButton = true;
 }
+
+JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

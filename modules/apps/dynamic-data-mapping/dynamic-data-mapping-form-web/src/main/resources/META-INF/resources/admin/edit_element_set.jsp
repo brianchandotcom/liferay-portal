@@ -8,8 +8,6 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 DDMStructure structure = ddmFormAdminDisplayContext.getDDMStructure();
@@ -23,6 +21,8 @@ if (structure != null) {
 }
 
 String structureKey = BeanParamUtil.getString(structure, request, "structureKey");
+
+JSONObject formBuilderContextJSONObject = ddmFormAdminDisplayContext.getFormBuilderContextJSONObject();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

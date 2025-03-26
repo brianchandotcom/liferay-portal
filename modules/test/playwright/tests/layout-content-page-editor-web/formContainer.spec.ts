@@ -4,10 +4,10 @@
  */
 
 import {
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 	ObjectField,
-	ObjectFieldApi,
-	ObjectValidationRuleApi,
+	ObjectFieldAPI,
+	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
@@ -265,11 +265,11 @@ test.describe('Form Configuration', () => {
 
 			// Create a default display page for lemon object
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -534,11 +534,11 @@ test.describe('Captcha Fragment', () => {
 
 			// Create a page with a form fragment with a captcha fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -601,11 +601,11 @@ test.describe('Checkbox Fragment', () => {
 
 			// Create a page with a form fragment with a checkbox fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -695,11 +695,11 @@ test.describe('Checkbox Fragment', () => {
 
 			// Adds checkbox validation
 
-			const objectValidationRuleApiClient =
-				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
 
 			const {body: objectValidationRule} =
-				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 					getObjectERC('All Fields'),
 					{
 						active: true,
@@ -725,11 +725,11 @@ test.describe('Checkbox Fragment', () => {
 
 			// Create a page with a form fragment with a checkbox fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -777,7 +777,7 @@ test.describe('Checkbox Fragment', () => {
 
 			// Delete validation
 
-			await objectValidationRuleApiClient.deleteObjectValidationRule(
+			await objectValidationRuleAPIClient.deleteObjectValidationRule(
 				objectValidationRule.id
 			);
 		}
@@ -794,11 +794,11 @@ test.describe('Date Fragment', () => {
 
 			// Create a page with a form fragment with a date fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -886,11 +886,11 @@ test.describe('Date Fragment', () => {
 
 			// Adds date validation
 
-			const objectValidationRuleApiClient =
-				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
 
 			const {body: objectValidationRule} =
-				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 					getObjectERC('All Fields'),
 					{
 						active: true,
@@ -916,11 +916,11 @@ test.describe('Date Fragment', () => {
 
 			// Create a page with a form fragment with a date fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -976,10 +976,10 @@ test.describe('Date Fragment', () => {
 
 			// Delete validation
 
-			const objectvalidationRuleApiClient =
-				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
+			const objectvalidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
 
-			await objectvalidationRuleApiClient.deleteObjectValidationRule(
+			await objectvalidationRuleAPIClient.deleteObjectValidationRule(
 				objectValidationRule.id
 			);
 		}
@@ -996,11 +996,11 @@ test.describe('Date and Time Fragment', () => {
 
 			// Create a page with a form fragment with a date and time fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -1198,11 +1198,11 @@ test.describe('File Upload Fragment', () => {
 
 			// Create a page with a form fragment with a file upload fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -1334,11 +1334,11 @@ test.describe('File Upload Fragment', () => {
 
 			// Create a page with a form fragment with a file upload fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -1442,11 +1442,11 @@ test.describe('File Upload Fragment', () => {
 
 			// Create a page with a form fragment with a file upload fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -1529,11 +1529,11 @@ test.describe('File Upload Fragment', () => {
 
 			// Create a page with a form fragment with a file upload fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -1604,11 +1604,11 @@ test.describe('File Upload Fragment', () => {
 
 			// Create a page with a form fragment with a file upload fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -1847,7 +1847,7 @@ test.describe('Form Localization', () => {
 			// Create object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -2037,7 +2037,7 @@ test.describe('Form Localization', () => {
 			// Create object definition with a localized boolean
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -2165,8 +2165,8 @@ test.describe('Form Localization', () => {
 
 			// Create object definition with a localized select
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const listTypeDefinition =
 				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
@@ -2181,7 +2181,7 @@ test.describe('Form Localization', () => {
 			}
 
 			const {body: objectDefinition} =
-				await objectDefinitionApiClient.postObjectDefinition({
+				await objectDefinitionAPIClient.postObjectDefinition({
 					active: true,
 					enableLocalization: true,
 					externalReferenceCode: 'SelectERC',
@@ -2333,7 +2333,7 @@ test.describe('Form Localization', () => {
 			}
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -2472,7 +2472,7 @@ test.describe('Form Localization', () => {
 			// Create object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -2630,7 +2630,7 @@ test.describe('Form Localization', () => {
 			// Create object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -2886,7 +2886,7 @@ test.describe('Form Localization', () => {
 			// Create object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -3125,7 +3125,7 @@ test.describe('Form Localization', () => {
 			// Create object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -3386,7 +3386,7 @@ test.describe('Form Localization', () => {
 			}
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -3883,11 +3883,11 @@ test.describe('Form Localization', () => {
 
 			// Create an object with translations
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
-				await objectDefinitionApiClient.postObjectDefinition({
+				await objectDefinitionAPIClient.postObjectDefinition({
 					active: true,
 					enableLocalization: true,
 					externalReferenceCode: 'translationFieldsGroupERC',
@@ -4181,8 +4181,8 @@ test.describe('Form Localization', () => {
 		'Visualize text fields in RTL languages',
 		{tag: '@LPD-48787'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const listTypeDefinition =
 				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
@@ -4292,7 +4292,7 @@ test.describe('Form Localization', () => {
 			// Create an object with localizable fields
 
 			const {body: localizableObjectDefinition} =
-				await objectDefinitionApiClient.postObjectDefinition({
+				await objectDefinitionAPIClient.postObjectDefinition({
 					active: true,
 					enableLocalization: true,
 					externalReferenceCode: 'localizableFieldsGroupERC',
@@ -4320,7 +4320,7 @@ test.describe('Form Localization', () => {
 			// Create an object with unlocalizable fields
 
 			const {body: nonLocalizableObjectDefinition} =
-				await objectDefinitionApiClient.postObjectDefinition({
+				await objectDefinitionAPIClient.postObjectDefinition({
 					active: true,
 					enableLocalization: true,
 					externalReferenceCode: 'UnlocalizableFieldsGroupERC',
@@ -5001,7 +5001,7 @@ test.describe('Submit button', () => {
 			// Create object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -5191,11 +5191,8 @@ test.describe('Submit button', () => {
 
 			// Go to display page
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -5535,7 +5532,7 @@ test.describe('Picklist input field', () => {
 			// Create object definition
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -5736,11 +5733,11 @@ test.describe('Picklist input field', () => {
 
 			// Create a page with a Form fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon Basket')
 				)
 			).body;
@@ -5852,11 +5849,11 @@ test.describe('Rich Text Fragment', () => {
 
 			// Create a page with a form fragment with a rich text fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -5946,11 +5943,11 @@ test.describe('Rich Text Fragment', () => {
 
 			// Adds rich text validation
 
-			const objectValidationRuleApiClient =
-				await apiHelpers.buildRestClient(ObjectValidationRuleApi);
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
 
 			const {body: objectValidationRule} =
-				await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 					getObjectERC('All Fields'),
 					{
 						active: true,
@@ -5976,11 +5973,11 @@ test.describe('Rich Text Fragment', () => {
 
 			// Create a page with a form fragment with a rich text fragment
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('All Fields')
 				)
 			).body;
@@ -6028,7 +6025,7 @@ test.describe('Rich Text Fragment', () => {
 
 			// Delete validation
 
-			await objectValidationRuleApiClient.deleteObjectValidationRule(
+			await objectValidationRuleAPIClient.deleteObjectValidationRule(
 				objectValidationRule.id
 			);
 		}
@@ -6303,11 +6300,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -6383,11 +6380,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -6480,11 +6477,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -6581,11 +6578,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -6712,11 +6709,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -6808,11 +6805,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -6876,11 +6873,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -6955,11 +6952,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -7086,11 +7083,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Potato object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Potato')
 				)
 			).body;
@@ -7236,11 +7233,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -7308,11 +7305,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -7433,11 +7430,11 @@ test.describe('Multistep', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -7878,7 +7875,7 @@ test.describe('Edit mode form errors', () => {
 			// Create a new object definition with a required field
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {body: objectDefinition} =
 				await objectDefinitionAPIClient.postObjectDefinition({
@@ -8103,11 +8100,11 @@ test.describe('Edit mode form errors', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -8152,11 +8149,11 @@ test.describe('Edit mode form errors', () => {
 
 			// Get the id of Lemon object from the site initializer
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -8314,11 +8311,11 @@ test.describe('View mode form errors', () => {
 
 			// Create a default display page for lemon object
 
-			const objectDefinitionApiClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 					getObjectERC('Lemon')
 				)
 			).body;
@@ -8455,7 +8452,7 @@ test(
 		// Create a new object definition with all fields
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({
@@ -8608,11 +8605,11 @@ test(
 
 		// Set readOnly to true for all fields
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
 		for (const objectField of objectDefinition.objectFields) {
-			await objectFieldApiClient.putObjectField(objectField.id, {
+			await objectFieldAPIClient.putObjectField(objectField.id, {
 				...objectField,
 				readOnly: 'true',
 			});
@@ -8689,11 +8686,11 @@ test(
 	'Submitted entry status configuration is only visible if the form button is submit',
 	{tag: '@LPD-37217'},
 	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
-		const objectDefinitionApiClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {className: objectDefinitionClassName} = (
-			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 				getObjectERC('Lemon')
 			)
 		).body;

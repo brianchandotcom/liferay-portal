@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
+import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {mergeTests} from '@playwright/test';
 
 import {backendPageTest} from '../../../fixtures/backendPageTest';
@@ -33,17 +33,17 @@ test('Teardown: Delete site and data for Page Management tests', async ({
 	const ERCs = Object.values(OBJECT_ENTITIES).map((entity) => entity.ERC);
 
 	for (const ERC of ERCs) {
-		const objectDefinitionApiClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {id: objectDefinitionId} = (
-			await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
 				ERC
 			)
 		).body;
 
 		if (objectDefinitionId) {
-			await objectDefinitionApiClient.deleteObjectDefinition(
+			await objectDefinitionAPIClient.deleteObjectDefinition(
 				objectDefinitionId
 			);
 		}

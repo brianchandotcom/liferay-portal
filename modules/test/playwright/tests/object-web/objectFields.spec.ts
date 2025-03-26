@@ -5,11 +5,11 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
-	ObjectFieldApi,
+	ObjectDefinitionAPI,
+	ObjectFieldAPI,
 	ObjectFolder,
-	ObjectFolderApi,
-	ObjectValidationRuleApi,
+	ObjectFolderAPI,
+	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
@@ -59,7 +59,7 @@ test.afterEach(async ({apiHelpers}) => {
 	>();
 
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	await asyncArray.map({
 		array: createdEntities.objectDefinitions,
@@ -72,13 +72,13 @@ test.afterEach(async ({apiHelpers}) => {
 
 	createdEntities.objectDefinitions = [];
 
-	const objectFolderApiClient =
-		await apiHelpers.buildRestClient(ObjectFolderApi);
+	const objectFolderAPIClient =
+		await apiHelpers.buildRestClient(ObjectFolderAPI);
 
 	await asyncArray.map({
 		array: createdEntities.objectFolders,
 		predicate: async (objectFolder: ObjectFolder) => {
-			await objectFolderApiClient.deleteObjectFolder(objectFolder.id);
+			await objectFolderAPIClient.deleteObjectFolder(objectFolder.id);
 		},
 	});
 
@@ -254,10 +254,10 @@ test.describe('Manage object fields through Model Builder', () => {
 	}) => {
 		const [objectDefinition] = createdEntities.objectDefinitions;
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
 				DBType: 'Integer',
@@ -328,10 +328,10 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		let picklistFieldName = 'picklistField' + getRandomInt();
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			draftObjectDefinition.externalReferenceCode,
 			{
 				DBType: 'String',
@@ -396,10 +396,10 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		listTypeDefinitionIds.push(listTypeDefinition.id);
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			createObjectFields(
 				'picklist',
@@ -559,10 +559,10 @@ test.describe('Manage object fields through Model Builder', () => {
 		const dateFieldName = 'dateField' + getRandomInt();
 		const integerFieldName = 'integerField' + getRandomInt();
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
 				DBType: 'Integer',
@@ -582,7 +582,7 @@ test.describe('Manage object fields through Model Builder', () => {
 			}
 		);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
 				DBType: 'Date',
@@ -640,10 +640,10 @@ test.describe('Manage object fields through Model Builder', () => {
 
 		const integerFieldName = 'integerField' + getRandomInt();
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
 				DBType: 'Integer',
@@ -666,11 +666,11 @@ test.describe('Manage object fields through Model Builder', () => {
 		const objectValidationName =
 			'Unique Composite Key Object Validation' + getRandomInt();
 
-		const objectValidationRuleApiClient = await apiHelpers.buildRestClient(
-			ObjectValidationRuleApi
+		const objectValidationRuleAPIClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleAPI
 		);
 
-		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+		await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			objectDefinition.externalReferenceCode,
 			{
 				active: true,
@@ -938,10 +938,10 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		const [objectDefinition] = createdEntities.objectDefinitions;
 		const integerFieldName = 'integerField' + getRandomInt();
 
-		const objectFieldApiClient =
-			await apiHelpers.buildRestClient(ObjectFieldApi);
+		const objectFieldAPIClient =
+			await apiHelpers.buildRestClient(ObjectFieldAPI);
 
-		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
+		await objectFieldAPIClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
 				DBType: 'Integer',
@@ -964,11 +964,11 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		const objectValidationName =
 			'Unique Composite Key Object Validation' + getRandomInt();
 
-		const objectValidationRuleApiClient = await apiHelpers.buildRestClient(
-			ObjectValidationRuleApi
+		const objectValidationRuleAPIClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleAPI
 		);
 
-		await objectValidationRuleApiClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+		await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
 			objectDefinition.externalReferenceCode,
 			{
 				active: true,

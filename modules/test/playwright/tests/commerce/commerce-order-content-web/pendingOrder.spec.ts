@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectActionApi} from '@liferay/object-admin-rest-client-js';
+import {ObjectActionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
@@ -262,11 +262,11 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 		type: 'notificationTemplate',
 	});
 
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectActionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectActionAPI);
 
 	const {body: objectAction} =
-		await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+		await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
 			'L_COMMERCE_ORDER',
 			{
 				active: true,

@@ -4,7 +4,7 @@
  */
 
 import {
-	ObjectDefinitionApi,
+	ObjectDefinitionAPI,
 	ObjectField,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
@@ -266,7 +266,7 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 		'ObjectDefinition' + getRandomInt();
 
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: objectDefinition} =
 		await objectDefinitionAPIClient.postObjectDefinition({

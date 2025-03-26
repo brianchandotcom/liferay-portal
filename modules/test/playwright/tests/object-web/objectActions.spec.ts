@@ -5,7 +5,7 @@
 
 import {
 	ObjectAction,
-	ObjectActionApi,
+	ObjectActionAPI,
 	ObjectDefinition,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
@@ -116,11 +116,11 @@ test.describe('Manage object actions through object actions tab', () => {
 			);
 		}
 
-		const objectActionApiClient =
-			await apiHelpers.buildRestClient(ObjectActionApi);
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
 
 		const {body: objectActions} =
-			await objectActionApiClient.getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
+			await objectActionAPIClient.getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
 				'L_COMMERCE_ORDER'
 			);
 
@@ -229,10 +229,10 @@ test('can send notification email via download action', async ({
 
 	// Create an action to send notification after attachment download
 
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectActionApi);
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectActionAPI);
 
-	await objectActionApiClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+	await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
 		objectDefinition.externalReferenceCode,
 		{
 			active: true,

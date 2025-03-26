@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +123,13 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 			_ddmTemplateLocalService.deleteTemplates(
 				portletDataContext.getScopeGroupId(), classNameId);
 		}
+
+		_ddmTemplateLocalService.deleteTemplates(
+			portletDataContext.getScopeGroupId(),
+			_portal.getClassNameId(TemplateEntry.class));
+
+		_templateEntryLocalService.deleteTemplateEntries(
+			portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -356,6 +364,9 @@ public class TemplatePortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private TemplateEntryLocalService _templateEntryLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.template.model.TemplateEntry)"

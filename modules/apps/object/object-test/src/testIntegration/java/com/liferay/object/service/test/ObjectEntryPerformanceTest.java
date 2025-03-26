@@ -89,22 +89,13 @@ public class ObjectEntryPerformanceTest {
 	public static void setUpClass() throws Exception {
 		Class<?> clazz = ObjectEntryPerformanceTest.class;
 
-		Properties properties = PropertiesUtil.load(
+		_properties = PropertiesUtil.load(
 			clazz.getResourceAsStream(
 				"dependencies/object-entry-performance.properties"),
 			"UTF-8");
 
 		_objectEntriesCount = GetterUtil.getInteger(
-			properties.getProperty("test.object.entries.count"));
-
-		_deleteObjectEntriesMaxTime = GetterUtil.getInteger(
-			properties.getProperty("test.object.entries.delete.max.time"));
-
-		_getObjectEntriesMaxTime = GetterUtil.getInteger(
-			properties.getProperty("test.object.entries.get.max.time"));
-
-		_importObjectEntryMaxTime = GetterUtil.getInteger(
-			properties.getProperty("test.object.entries.import.max.time"));
+			_properties.getProperty("object.entries.count"));
 	}
 
 	@Test
@@ -146,7 +137,8 @@ public class ObjectEntryPerformanceTest {
 		}
 
 		try (Closeable closeable = new PerformanceTimer(
-				_getObjectEntriesMaxTime,
+				GetterUtil.getInteger(
+					_properties.getProperty("object.entries.get.max.time")),
 				"Get all the Object Entries by ObjectEntryLocalService with " +
 					"CustomObjectDefinitionId:" +
 						_customObjectDefinition.getObjectDefinitionId())) {
@@ -215,8 +207,9 @@ public class ObjectEntryPerformanceTest {
 		objectFolderResource.putObjectFolderByExternalReferenceCode(
 			objectFolder.getExternalReferenceCode(), objectFolder);
 
-		try (PerformanceTimer performanceTimer1 = new PerformanceTimer(
-				_importObjectEntryMaxTime,
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(
+				GetterUtil.getInteger(
+					_properties.getProperty("object.entries.import.max.time")),
 				StringBundler.concat(
 					"Import ", _objectEntriesCount, " Object Entries"))) {
 
@@ -235,7 +228,8 @@ public class ObjectEntryPerformanceTest {
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				_deleteObjectEntriesMaxTime,
+				GetterUtil.getInteger(
+					_properties.getProperty("object.entries.delete.max.time")),
 				StringBundler.concat(
 					"Delete ", _objectEntriesCount, " Object Entries"))) {
 
@@ -313,10 +307,8 @@ public class ObjectEntryPerformanceTest {
 
 	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
-	private static long _deleteObjectEntriesMaxTime;
-	private static long _getObjectEntriesMaxTime;
-	private static long _importObjectEntryMaxTime;
 	private static int _objectEntriesCount;
+	private static Properties _properties;
 
 	@DeleteAfterTestRun
 	private Company _company;

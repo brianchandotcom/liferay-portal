@@ -55,7 +55,6 @@
 		<orderEntry type="module" module-name="util-java" />
 		<orderEntry type="module" module-name="util-taglib" />
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
-		<orderEntry type="module" module-name="portal-log4j" scope="PROVIDED" />
 		<orderEntry type="module" module-name="portal-test" scope="TEST" />
 		<orderEntry type="module" module-name="portal-test-integration" scope="TEST" />
 		<orderEntry type="library" scope="PROVIDED" name="development" level="project" />

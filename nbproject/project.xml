@@ -105,12 +105,6 @@
 					<encoding>UTF-8</encoding>
 				</source-folder>
 				<source-folder>
-					<label>modules\apps\portal\portal-log4j\src\main\java</label>
-					<type>java</type>
-					<location>modules/apps/portal/portal-log4j/src/main/java</location>
-					<encoding>UTF-8</encoding>
-				</source-folder>
-				<source-folder>
 					<label>portal-impl\src</label>
 					<type>java</type>
 					<location>portal-impl/src</location>
@@ -259,10 +253,6 @@
 						<location>modules/core/petra/petra-string/src</location>
 					</source-folder>
 					<source-folder style="packages">
-						<label>modules\apps\portal\portal-log4j\src</label>
-						<location>modules/apps/portal/portal-log4j/src</location>
-					</source-folder>
-					<source-folder style="packages">
 						<label>portal-impl\src</label>
 						<location>portal-impl/src</location>
 					</source-folder>
@@ -341,7 +331,6 @@
 				<package-root>modules/core/petra/petra-sql-dsl-api/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-sql-dsl-spi/src/main/java</package-root>
 				<package-root>modules/core/petra/petra-string/src/main/java</package-root>
-				<package-root>modules/apps/portal/portal-log4j/src/main/java</package-root>
 				<package-root>portal-impl/src</package-root>
 				<package-root>portal-impl/test/unit</package-root>
 				<package-root>portal-kernel/src</package-root>

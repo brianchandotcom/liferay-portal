@@ -332,8 +332,8 @@ public class ObjectEntryLocalServiceImpl
 
 		validateValues(
 			dlFileEntries, tempDLFileEntryIds, null, user.isGuestUser(),
-			groupId, objectDefinition, objectEntryId, serviceContext, userId,
-			false, values);
+			groupId, objectDefinition, objectEntryId, serviceContext, true,
+			userId, values);
 
 		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
 				dlFileEntries.entrySet()) {
@@ -492,8 +492,7 @@ public class ObjectEntryLocalServiceImpl
 
 		validateValues(
 			dlFileEntries, dlFileEntryIds, null, user.isGuestUser(), 0,
-			objectDefinition, primaryKey, serviceContext, userId, false,
-			values);
+			objectDefinition, primaryKey, serviceContext, true, userId, values);
 
 		insertIntoOrUpdateExtensionTable(
 			userId, objectDefinition.getObjectDefinitionId(), primaryKey,
@@ -1671,7 +1670,7 @@ public class ObjectEntryLocalServiceImpl
 		validateValues(
 			dlFileEntries, dlFileEntryIds, objectEntry, user.isGuestUser(),
 			objectEntry.getGroupId(), objectDefinition, objectEntryId,
-			serviceContext, userId, false, values);
+			serviceContext, true, userId, values);
 
 		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
 				dlFileEntries.entrySet()) {
@@ -1966,8 +1965,8 @@ public class ObjectEntryLocalServiceImpl
 			Map<DLFileEntry, ObjectField> dlFileEntries,
 			Set<Long> tempDLFileEntryIds, ObjectEntry existingObjectEntry,
 			boolean guestUser, long groupId, ObjectDefinition objectDefinition,
-			long objectEntryId, ServiceContext serviceContext, long userId,
-			boolean fictitious, Map<String, Serializable> values)
+			long objectEntryId, ServiceContext serviceContext,
+			boolean throwError, long userId, Map<String, Serializable> values)
 		throws PortalException {
 
 		List<ObjectField> objectFields =
@@ -1985,7 +1984,7 @@ public class ObjectEntryLocalServiceImpl
 					dlFileEntries, tempDLFileEntryIds, existingObjectEntry,
 					guestUser, groupId, objectDefinition,
 					objectEntryValuesExceptions, objectField, serviceContext,
-					fictitious, userId, values.get(objectField.getName()),
+					throwError, userId, values.get(objectField.getName()),
 					StringPool.BLANK);
 			}
 
@@ -2002,7 +2001,7 @@ public class ObjectEntryLocalServiceImpl
 					dlFileEntries, tempDLFileEntryIds, existingObjectEntry,
 					guestUser, groupId, objectDefinition,
 					objectEntryValuesExceptions, objectField, serviceContext,
-					fictitious, userId, entry.getValue(), entry.getKey());
+					throwError, userId, entry.getValue(), entry.getKey());
 			}
 		}
 

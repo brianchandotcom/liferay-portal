@@ -472,8 +472,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				objectEntryLocalService.validateValues(
 					Collections.emptyMap(), Collections.emptySet(), objectEntry,
 					false, groupId, objectDefinition,
-					objectEntry.getObjectEntryId(), serviceContext,
-					serviceContext.getUserId(), true, objectEntry.getValues()),
+					objectEntry.getObjectEntryId(), serviceContext, false,
+					serviceContext.getUserId(), objectEntry.getValues()),
 				objectEntryValuesException -> new ValidationError(
 					objectEntryValuesException.getMessage())));
 

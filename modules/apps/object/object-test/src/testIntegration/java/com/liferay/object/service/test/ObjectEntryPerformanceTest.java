@@ -94,17 +94,17 @@ public class ObjectEntryPerformanceTest {
 				"dependencies/object-entry-performance.properties"),
 			"UTF-8");
 
-		_objectEntryCount = GetterUtil.getInteger(
-			properties.getProperty("object.entries.count"));
+		_objectEntriesCount = GetterUtil.getInteger(
+			properties.getProperty("test.object.entries.count"));
 
-		_objectEntryDeletionExpectedMaxTime = GetterUtil.getInteger(
-			properties.getProperty("object.entries.deletion.expected.maxTime"));
+		_deleteObjectEntriesMaxTime = GetterUtil.getInteger(
+			properties.getProperty("test.object.entries.delete.max.time"));
 
-		_objectEntryGetExpectedMaxTime = GetterUtil.getInteger(
-			properties.getProperty("object.entries.get.expected.maxTime"));
+		_getObjectEntriesMaxTime = GetterUtil.getInteger(
+			properties.getProperty("test.object.entries.get.max.time"));
 
-		_objectEntryImportExpectedMaxTime = GetterUtil.getInteger(
-			properties.getProperty("object.entries.import.expected.maxTime"));
+		_importObjectEntryMaxTime = GetterUtil.getInteger(
+			properties.getProperty("test.object.entries.import.max.time"));
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class ObjectEntryPerformanceTest {
 				false, Collections.emptyMap(), _dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, TestPropsValues.getUser());
 
-		for (int i = 0; i < _objectEntryCount; i++) {
+		for (int i = 0; i < _objectEntriesCount; i++) {
 			objectEntryManager.addObjectEntry(
 				dtoConverterContext, _customObjectDefinition,
 				new ObjectEntry() {
@@ -146,7 +146,7 @@ public class ObjectEntryPerformanceTest {
 		}
 
 		try (Closeable closeable = new PerformanceTimer(
-				_objectEntryGetExpectedMaxTime,
+				_getObjectEntriesMaxTime,
 				"Get all the Object Entries by ObjectEntryLocalService with " +
 					"CustomObjectDefinitionId:" +
 						_customObjectDefinition.getObjectDefinitionId())) {
@@ -216,9 +216,9 @@ public class ObjectEntryPerformanceTest {
 			objectFolder.getExternalReferenceCode(), objectFolder);
 
 		try (PerformanceTimer performanceTimer1 = new PerformanceTimer(
-				_objectEntryImportExpectedMaxTime,
+				_importObjectEntryMaxTime,
 				StringBundler.concat(
-					" Import ", _objectEntryCount, " Object Entries"))) {
+					" Import ", _objectEntriesCount, " Object Entries"))) {
 
 			_invokeHttp(
 				_createObjectEntryJSON(), HttpInvoker.HttpMethod.POST,
@@ -231,17 +231,18 @@ public class ObjectEntryPerformanceTest {
 			_customObjectDefinition = objectDefinitions.get(
 				_OBJECT_DEFINITION_LIST_INDEX);
 
-			_waitForObjectEntriesCountChangedTo(_objectEntryCount);
+			_waitForObjectEntriesCountChangedTo(_objectEntriesCount);
 		}
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
-				_objectEntryDeletionExpectedMaxTime,
+				_deleteObjectEntriesMaxTime,
 				StringBundler.concat(
-					" Delete ", _objectEntryCount, " Object Entries"))) {
+					" Delete ", _objectEntriesCount, " Object Entries"))) {
 
 			HttpInvoker.HttpResponse httpResponse = _invokeHttp(
 				null, HttpInvoker.HttpMethod.GET,
-				_getPath("/o/c/foos/?fields=id&pageSize=" + _objectEntryCount));
+				_getPath(
+					"/o/c/foos/?fields=id&pageSize=" + _objectEntriesCount));
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				httpResponse.getContent());
@@ -259,7 +260,7 @@ public class ObjectEntryPerformanceTest {
 	private String _createObjectEntryJSON() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (int i = 0; i < _objectEntryCount; i++) {
+		for (int i = 0; i < _objectEntriesCount; i++) {
 			jsonArray.put(JSONUtil.put("alpha", "foo"));
 		}
 
@@ -312,10 +313,10 @@ public class ObjectEntryPerformanceTest {
 
 	private static final String _VIRTUAL_HOST_NAME = "www.able.com";
 
-	private static int _objectEntryCount;
-	private static long _objectEntryDeletionExpectedMaxTime;
-	private static long _objectEntryGetExpectedMaxTime;
-	private static long _objectEntryImportExpectedMaxTime;
+	private static long _deleteObjectEntriesMaxTime;
+	private static long _getObjectEntriesMaxTime;
+	private static long _importObjectEntryMaxTime;
+	private static int _objectEntriesCount;
 
 	@DeleteAfterTestRun
 	private Company _company;

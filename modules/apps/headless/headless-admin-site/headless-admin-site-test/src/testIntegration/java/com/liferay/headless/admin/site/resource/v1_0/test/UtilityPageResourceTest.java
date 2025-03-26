@@ -179,16 +179,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithPagination()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodeUtilityPagesPageWithSortDateTime()
 		throws Exception {
 

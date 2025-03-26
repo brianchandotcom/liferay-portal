@@ -5,6 +5,8 @@
 
 package com.liferay.asset.kernel.model;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 /**
  * @author Rubén Pulido
  */
@@ -17,5 +19,29 @@ public class AssetVocabularyConstants {
 	public static final int[] VISIBILITY_TYPES = {
 		VISIBILITY_TYPE_INTERNAL, VISIBILITY_TYPE_PUBLIC
 	};
+
+	public static int fromString(String visibilityType) {
+		if (StringUtil.equalsIgnoreCase(visibilityType, "INTERNAL")) {
+			return VISIBILITY_TYPE_INTERNAL;
+		}
+		else if (StringUtil.equalsIgnoreCase(visibilityType, "PUBLIC")) {
+			return VISIBILITY_TYPE_PUBLIC;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid visibility type: " + visibilityType);
+	}
+
+	public static String toString(int visibilityType) {
+		if (visibilityType == VISIBILITY_TYPE_INTERNAL) {
+			return "INTERNAL";
+		}
+		else if (visibilityType == VISIBILITY_TYPE_PUBLIC) {
+			return "PUBLIC";
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid visibility type: " + visibilityType);
+	}
 
 }

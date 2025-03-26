@@ -310,104 +310,6 @@ test('CSP connect-src blocks connections', async ({
 	expect(errors.length).toBeGreaterThanOrEqual(9);
 });
 
-test('CSP frame-ancestors directive in the same instance', async ({
-	apiHelpers,
-	contentSecurityPolicyPage,
-	page,
-	pageEditorPage,
-	site,
-}) => {
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([
-			getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-html',
-			}),
-		]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
-
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-	await pageEditorPage.editHTMLEditable({
-		editableId: 'element-html',
-		fragmentId: await pageEditorPage.getFragmentId('HTML'),
-		value: `<object
-					type="text/html"
-					data="${liferayConfig.environment.baseUrl}"
-					width="300"
-					height="200">
-				</object>
-
-				<embed
-					type="text/html"
-					src="${liferayConfig.environment.baseUrl}"
-					width="300"
-					height="200" />
-
-				<iframe
-					id="inlineFrameExample"
-					title="Inline Frame Example"
-					width="300"
-					height="200"
-					src="${liferayConfig.environment.baseUrl}">
-				</iframe>`,
-	});
-
-	await pageEditorPage.publishPage();
-
-	await test.step('CSP frame-ancestors allows framing from same instance', async () => {
-		await contentSecurityPolicyPage.gotoAndConfigurePolicy(
-			`frame-ancestors 'self';`
-		);
-
-		const errors = [];
-
-		page.on('console', (msg) => {
-			if (
-				msg.type() === 'error' &&
-				msg
-					.text()
-					.includes(
-						'Content Security Policy directive: "frame-ancestors'
-					)
-			) {
-				errors.push({text: msg.text(), type: msg.type()});
-			}
-		});
-
-		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
-
-		expect(errors).toHaveLength(0);
-	});
-
-	await test.step('CSP frame-ancestors blocks framing from same instance', async () => {
-		await contentSecurityPolicyPage.gotoAndConfigurePolicy(
-			`frame-ancestors 'none';`
-		);
-
-		const errors = [];
-
-		page.on('console', (msg) => {
-			if (
-				msg.type() === 'error' &&
-				msg
-					.text()
-					.includes(
-						'Content Security Policy directive: "frame-ancestors'
-					)
-			) {
-				errors.push({text: msg.text(), type: msg.type()});
-			}
-		});
-
-		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
-
-		expect(errors.length).toBeGreaterThanOrEqual(3);
-	});
-});
-
 test('CSP frame-ancestors allows framing from specific domain', async ({
 	apiHelpers,
 	browser,
@@ -606,6 +508,104 @@ test('CSP frame-ancestors blocks framing from specific domain', async ({
 	}).toPass();
 
 	await page.goto(liferayConfig.environment.baseUrl);
+});
+
+test('CSP frame-ancestors directive in the same instance', async ({
+	apiHelpers,
+	contentSecurityPolicyPage,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-html',
+			}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	await pageEditorPage.editHTMLEditable({
+		editableId: 'element-html',
+		fragmentId: await pageEditorPage.getFragmentId('HTML'),
+		value: `<object
+					type="text/html"
+					data="${liferayConfig.environment.baseUrl}"
+					width="300"
+					height="200">
+				</object>
+
+				<embed
+					type="text/html"
+					src="${liferayConfig.environment.baseUrl}"
+					width="300"
+					height="200" />
+
+				<iframe
+					id="inlineFrameExample"
+					title="Inline Frame Example"
+					width="300"
+					height="200"
+					src="${liferayConfig.environment.baseUrl}">
+				</iframe>`,
+	});
+
+	await pageEditorPage.publishPage();
+
+	await test.step('CSP frame-ancestors allows framing from same instance', async () => {
+		await contentSecurityPolicyPage.gotoAndConfigurePolicy(
+			`frame-ancestors 'self';`
+		);
+
+		const errors = [];
+
+		page.on('console', (msg) => {
+			if (
+				msg.type() === 'error' &&
+				msg
+					.text()
+					.includes(
+						'Content Security Policy directive: "frame-ancestors'
+					)
+			) {
+				errors.push({text: msg.text(), type: msg.type()});
+			}
+		});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		expect(errors).toHaveLength(0);
+	});
+
+	await test.step('CSP frame-ancestors blocks framing from same instance', async () => {
+		await contentSecurityPolicyPage.gotoAndConfigurePolicy(
+			`frame-ancestors 'none';`
+		);
+
+		const errors = [];
+
+		page.on('console', (msg) => {
+			if (
+				msg.type() === 'error' &&
+				msg
+					.text()
+					.includes(
+						'Content Security Policy directive: "frame-ancestors'
+					)
+			) {
+				errors.push({text: msg.text(), type: msg.type()});
+			}
+		});
+
+		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+
+		expect(errors.length).toBeGreaterThanOrEqual(3);
+	});
 });
 
 test("CSP frame-src allow frames from 'self'", async ({

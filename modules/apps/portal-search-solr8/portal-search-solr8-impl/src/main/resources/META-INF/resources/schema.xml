@@ -739,6 +739,7 @@
 		<field docValues="true" indexed="true" name="modified_sortable" stored="true" type="long" />
 		<field indexed="true" name="name" stored="true" termPositions="true" termVectors="true" type="text" />
 		<field indexed="true" name="nodeId" stored="true" type="string" />
+		<field indexed="true" name="objectFolderExternalReferenceCode" stored="true" type="string" />
 		<field docValues="true" indexed="true" name="organizationId" stored="true" type="string" />
 		<field indexed="true" multiValued="true" name="organizationIds" stored="true" type="string" />
 		<field indexed="true" name="parentCategoryId" stored="true" type="string" />

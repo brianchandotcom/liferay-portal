@@ -43,6 +43,7 @@ import {LeftSidebarItem, ObjectRelationshipEdgeData} from './types';
 import {updatePreviousURLParam} from './utils';
 
 import './EditObjectFolder.scss';
+import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
 import {ModalMoveObjectDefinition} from '../ViewObjectDefinitions/ModalMoveObjectDefinition';
 
 interface EditObjectFolder {
@@ -546,6 +547,32 @@ export default function EditObjectFolder({
 								type: TYPES.SET_MOVED_OBJECT_DEFINITION,
 							});
 						}}
+					/>
+				)}
+
+			{modelBuilderModals.objectDefinitionOnRootModelDeletionNotAllowed &&
+				Liferay.FeatureFlags['LPD-34594'] && (
+					<ModalDeletionNotAllowed
+						content={
+							<span
+								dangerouslySetInnerHTML={{
+									__html: Liferay.Language.get(
+										'to-delete-this-object-you-must-first-disable-inheritance-and-delete-its-relationships'
+									),
+								}}
+							/>
+						}
+						onModalClose={() =>
+							dispatch({
+								payload: {
+									updatedModelBuilderModals: {
+										objectDefinitionOnRootModelDeletionNotAllowed:
+											false,
+									},
+								},
+								type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
+							})
+						}
 					/>
 				)}
 

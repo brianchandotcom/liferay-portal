@@ -187,6 +187,8 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 
 				Set<String> tags = zendeskTicket.getTags();
 
+				tags.remove("impacting_business_event");
+
 				if (ArrayUtil.contains(
 						associatedTicketIds,
 						zendeskTicket.getZendeskTicketId())) {

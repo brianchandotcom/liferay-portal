@@ -29,17 +29,6 @@ public class DBPartitionInsertPortalInstanceOperationTest
 	@FeatureFlags("LPD-11342")
 	@Test
 	public void testDeployConfigurationWithFF() throws Exception {
-		_testDeployConfiguration(
-			"Portal instance with company ID " +
-				PortalInstancePool.getDefaultCompanyId() + " already exists");
-	}
-
-	@Test
-	public void testDeployConfigurationWithoutFF() throws Exception {
-		_testDeployConfiguration("Feature flag LPD-11342 is disabled");
-	}
-
-	private void _testDeployConfiguration(String message) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
 					"InsertPortalInstanceOperation",
@@ -50,7 +39,30 @@ public class DBPartitionInsertPortalInstanceOperationTest
 				"newWebId=\"testNewWebId\"\ninsertCompanyId=L\"" +
 					PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
-			assertLog(logCapture, message);
+			assertLog(
+				logCapture,
+				"Portal instance with company ID " +
+					PortalInstancePool.getDefaultCompanyId() +
+						" already exists");
+		}
+
+		assertConfigurationIsDeletedAfterDeploy(_PID);
+	}
+
+	@Test
+	public void testDeployConfigurationWithoutFF() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"BasePortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(
+				_PID,
+				"newWebId=\"testNewWebId\"\ninsertCompanyId=L\"" +
+					PortalInstancePool.getDefaultCompanyId() + "\"\n");
+
+			assertLogException(
+				logCapture, "Feature flag LPD-11342 is disabled");
 		}
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);

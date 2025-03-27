@@ -28,16 +28,6 @@ public class DBPartitionExtractPortalInstanceOperationTest
 	@FeatureFlags("LPD-11342")
 	@Test
 	public void testDeployConfigurationWithFF() throws Exception {
-		_testDeployConfiguration(
-			"Portal instance with company ID 0 does not exist");
-	}
-
-	@Test
-	public void testDeployConfigurationWithoutFF() throws Exception {
-		_testDeployConfiguration("Feature flag LPD-11342 is disabled");
-	}
-
-	private void _testDeployConfiguration(String message) throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
 					"ExtractPortalInstanceOperation",
@@ -45,7 +35,24 @@ public class DBPartitionExtractPortalInstanceOperationTest
 
 			deployConfiguration(_PID, "extractCompanyId=L\"0\"\n");
 
-			assertLog(logCapture, message);
+			assertLog(
+				logCapture, "Portal instance with company ID 0 does not exist");
+		}
+
+		assertConfigurationIsDeletedAfterDeploy(_PID);
+	}
+
+	@Test
+	public void testDeployConfigurationWithoutFF() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"BasePortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(_PID, "extractCompanyId=L\"0\"\n");
+
+			assertLogException(
+				logCapture, "Feature flag LPD-11342 is disabled");
 		}
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);

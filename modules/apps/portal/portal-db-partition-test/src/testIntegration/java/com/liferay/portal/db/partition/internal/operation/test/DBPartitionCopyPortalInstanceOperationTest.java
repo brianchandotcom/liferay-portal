@@ -81,23 +81,6 @@ public class DBPartitionCopyPortalInstanceOperationTest
 	public void testDeployConfigurationExistingDestinationCompanyIdWithFF()
 		throws Exception {
 
-		_testDeployConfigurationExistingDestinationCompanyId(
-			"Portal instance with company ID " +
-				PortalInstancePool.getDefaultCompanyId() + " already exists");
-	}
-
-	@Test
-	public void testDeployConfigurationExistingDestinationCompanyIdWithoutFF()
-		throws Exception {
-
-		_testDeployConfigurationExistingDestinationCompanyId(
-			"Feature flag LPD-11342 is disabled");
-	}
-
-	private void _testDeployConfigurationExistingDestinationCompanyId(
-			String message)
-		throws Exception {
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.instances.internal.operation." +
 					"CopyPortalInstanceOperation",
@@ -111,7 +94,35 @@ public class DBPartitionCopyPortalInstanceOperationTest
 					"name=\"testName\"\nsourceCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
-			assertLog(logCapture, message);
+			assertLog(
+				logCapture,
+				"Portal instance with company ID " +
+					PortalInstancePool.getDefaultCompanyId() +
+						" already exists");
+		}
+
+		assertConfigurationIsDeletedAfterDeploy(_PID);
+	}
+
+	@Test
+	public void testDeployConfigurationExistingDestinationCompanyIdWithoutFF()
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.instances.internal.operation." +
+					"BasePortalInstanceOperation",
+				LoggerTestUtil.ERROR)) {
+
+			deployConfiguration(
+				_PID,
+				StringBundler.concat(
+					"destinationCompanyId=L\"",
+					PortalInstancePool.getDefaultCompanyId(), "\"\n",
+					"name=\"testName\"\nsourceCompanyId=L\"",
+					_company.getCompanyId(), "\"\nvirtualHostname=",
+					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
+			assertLogException(
+				logCapture, "Feature flag LPD-11342 is disabled");
 		}
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);

@@ -83,6 +83,21 @@ public abstract class BasePortalInstanceOperationTestCase
 		Assert.assertEquals(expectedMessage, logEntry.getMessage());
 	}
 
+	protected void assertLogException(
+		LogCapture logCapture, String expectedMessage) {
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(
+			expectedMessage,
+			logEntry.getThrowable(
+			).getMessage());
+	}
+
 	protected void deployConfiguration(String pid, String content)
 		throws Exception {
 

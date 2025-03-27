@@ -9,7 +9,7 @@ module.exports = {
 	customBuild: {
 		esbuild: {
 			bundle: true,
-			entryNames: 'global.bundle',
+			entryNames: 'Liferay',
 			entryPoints: [
 				path.resolve(
 					'src',
@@ -18,7 +18,7 @@ module.exports = {
 					'META-INF',
 					'resources',
 					'liferay',
-					'global.es.js'
+					'index.js'
 				),
 			],
 			loader: {
@@ -28,8 +28,7 @@ module.exports = {
 				'build',
 				'node',
 				'packageRunBuild',
-				'resources',
-				'liferay'
+				'resources'
 			),
 			sourcemap: true,
 			target: ['es2020'],

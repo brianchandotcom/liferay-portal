@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -281,27 +280,11 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'update-structure': {
-			let nextErc = state.erc;
-			let nextLabel = state.label;
-			let nextName = state.name;
-
-			if (!isNullOrUndefined(action.erc)) {
-				nextErc = action.erc;
-			}
-
-			if (!isNullOrUndefined(action.label)) {
-				nextLabel = action.label;
-			}
-
-			if (!isNullOrUndefined(action.name)) {
-				nextName = action.name;
-			}
-
 			const nextState = {
 				...state,
-				erc: nextErc,
-				label: nextLabel,
-				name: nextName,
+				erc: action.erc ?? state.erc,
+				label: action.label ?? state.label,
+				name: action.name ?? state.name,
 				spaces: action.spaces ?? state.spaces,
 			};
 

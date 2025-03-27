@@ -21,7 +21,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -50,11 +49,6 @@ public class GroupUtilTest {
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	@After
-	public void tearDown() throws PortalException {
-		_depotEntryLocalService.deleteDepotEntry(_depotEntry.getDepotEntryId());
 	}
 
 	@Test

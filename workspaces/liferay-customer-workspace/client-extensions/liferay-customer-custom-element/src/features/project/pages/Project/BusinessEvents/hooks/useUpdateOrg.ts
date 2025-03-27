@@ -8,7 +8,7 @@ import {Liferay} from '~/services/liferay';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {IBusinessEvent} from '~/utils/types';
 
-export default function useUpdateZendeskOrg(
+export default function useUpdateOrg(
 	accountExternalReferenceCode: string,
 	businessEvent: IBusinessEvent,
 	isEdition: boolean,
@@ -29,7 +29,7 @@ export default function useUpdateZendeskOrg(
 		isRemoval,
 	]);
 
-	const updateZendeskOrg = async () => {
+	const updateOrg = async () => {
 		const businessEventsResponse = await getBusinessEvents(
 			encodeURI(filterQuery)
 		);
@@ -95,13 +95,11 @@ export default function useUpdateZendeskOrg(
 			);
 
 		if (!response.ok) {
-			throw new Error(
-				`Failed to update Zendesk Org: ${response.statusText}`
-			);
+			throw new Error(`Failed to update Org: ${response.statusText}`);
 		}
 
 		return response;
 	};
 
-	return {updateZendeskOrg};
+	return {updateOrg};
 }

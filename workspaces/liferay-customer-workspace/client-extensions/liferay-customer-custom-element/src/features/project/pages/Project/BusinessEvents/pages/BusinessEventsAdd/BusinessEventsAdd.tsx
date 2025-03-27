@@ -27,7 +27,7 @@ import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesLi
 import useGetGMTTimeZonesList from '../../hooks/useGetGMTTimeZonesList';
 import useGetVersionOfLiferaySoftwareList from '../../hooks/useGetVersionOfLiferaySoftwareList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
-import useUpdateZendeskOrg from '../../hooks/useUpdateZendeskOrg';
+import useUpdateOrg from '../../hooks/useUpdateOrg';
 import formatDateToISO from '../../utils/formatDateToISO';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
 
@@ -100,7 +100,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	const navigate = useNavigate();
 
-	const {updateZendeskOrg} = useUpdateZendeskOrg(
+	const {updateOrg} = useUpdateOrg(
 		project?.accountKey || '',
 		businessEvent,
 		false,
@@ -171,7 +171,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 				businessEvent.associatedTickets !== '[]' &&
 				hasImpactingEvents === 'yes'
 			) {
-				await updateZendeskOrg();
+				await updateOrg();
 			}
 
 			await client.mutate<{

@@ -130,22 +130,25 @@ const BusinessEvents = () => {
 
 					return (
 						<div className="align-items-center d-flex">
-							<div className="text-neutral-10">
-								{businessEvent?.currentLiferayVersion?.name}
-							</div>
-
 							{!isSaasOnly && (
 								<>
+									<div className="text-neutral-10">
+										{
+											businessEvent?.currentLiferayVersion
+												?.name
+										}
+									</div>
+
 									<ClayIcon
 										className="mx-2 text-neutral-4"
 										symbol="order-arrow-right"
 									/>
-
-									<div className="text-neutral-10">
-										{businessEvent?.newLiferayVersion?.name}
-									</div>
 								</>
 							)}
+
+							<div className="text-neutral-10">
+								{businessEvent?.newLiferayVersion?.name}
+							</div>
 						</div>
 					);
 				};

@@ -5,11 +5,15 @@
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
+import classNames from 'classnames';
+import {FieldFeedback} from 'frontend-js-components-web';
 import React from 'react';
 
 import {useCache} from '../contexts/CacheContext';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
+import selectStructureUuid from '../selectors/selectStructureUuid';
+import selectValidationErrors from '../selectors/selectValidationErrors';
 import {Space} from '../types/Space';
 
 type Item = {
@@ -20,8 +24,12 @@ type Item = {
 export default function Spaces() {
 	const dispatch = useStateDispatch();
 	const structureSpaces = useSelector(selectStructureSpaces);
+	const structureUuid = useSelector(selectStructureUuid);
+	const validationErrors = useSelector(selectValidationErrors(structureUuid));
 
 	const {data: spaces, status} = useCache('spaces');
+
+	const hasError = validationErrors.has('no-space');
 
 	return (
 		<div className="mt-5">
@@ -35,7 +43,7 @@ export default function Spaces() {
 				)}
 			</p>
 
-			<ClayForm.Group>
+			<ClayForm.Group className={classNames({'has-error': hasError})}>
 				<ClayMultiSelect
 					disabled={structureSpaces === 'all'}
 					items={getSelection(structureSpaces, spaces)}
@@ -59,6 +67,14 @@ export default function Spaces() {
 							: ''
 					}
 				/>
+
+				{hasError ? (
+					<FieldFeedback
+						errorMessage={Liferay.Language.get(
+							'spaces-must-be-selected'
+						)}
+					/>
+				) : null}
 			</ClayForm.Group>
 
 			<ClayForm.Group>

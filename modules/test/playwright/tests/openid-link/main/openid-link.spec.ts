@@ -54,7 +54,7 @@ test.afterEach(
 		await page.goto(liferayConfig.environment.baseUrl);
 
 		if (page.getByRole('button', {name: 'Sign In'}).isVisible) {
-			await performLoginViaApi(page, 'test');
+			await performLoginViaApi({page, screenName: 'test'});
 		}
 
 		if (providerName) {

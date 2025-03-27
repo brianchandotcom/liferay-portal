@@ -54,7 +54,7 @@ test('LPD-30098 Invite user as admin', async ({
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, user1.alternateName);
+	await performLoginViaApi({page, screenName: user1.alternateName});
 
 	await page.getByTestId('userPersonalMenu').click();
 
@@ -100,7 +100,7 @@ test('LPD-30098 Invite user as admin', async ({
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, 'test');
+	await performLoginViaApi({page, screenName: 'test'});
 
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user1.id));
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user2.id));

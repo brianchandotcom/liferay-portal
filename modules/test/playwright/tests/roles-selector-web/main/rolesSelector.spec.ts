@@ -105,7 +105,7 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, user1.alternateName);
+		await performLoginViaApi({page, screenName: user1.alternateName});
 
 		await usersAndOrganizationsPage.goToOrganizationsWithLimitedAccess();
 

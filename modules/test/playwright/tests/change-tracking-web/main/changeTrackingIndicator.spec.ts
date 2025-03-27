@@ -28,7 +28,7 @@ test('LPD-31710 Publication bar disappears when trying to select a publication',
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, user.alternateName);
+	await performLoginViaApi({page, screenName: user.alternateName});
 
 	const ctCollection =
 		await apiHelpers.headlessChangeTracking.createCTCollection(
@@ -37,7 +37,7 @@ test('LPD-31710 Publication bar disappears when trying to select a publication',
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, 'test');
+	await performLoginViaApi({page, screenName: 'test'});
 
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 
@@ -127,7 +127,7 @@ test('LPD-44274 Assert cursor type is pointer when hover over a not selected pub
 		);
 
 	await performLogout(page);
-	await performLoginViaApi(page, 'test');
+	await performLoginViaApi({page, screenName: 'test'});
 
 	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
 		ctCollection2.body.id

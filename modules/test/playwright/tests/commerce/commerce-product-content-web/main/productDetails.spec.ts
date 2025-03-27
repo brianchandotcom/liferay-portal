@@ -905,7 +905,7 @@ test('LPD-39598 Can view SKU UOM discount is applied on product details page', a
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, 'test');
+	await performLoginViaApi({page, screenName: 'test'});
 
 	await apiHelpers.headlessCommerceAdminPricing.deleteDiscountSku(
 		discount2.discountSkuId

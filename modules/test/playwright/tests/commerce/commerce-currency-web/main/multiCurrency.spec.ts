@@ -153,7 +153,7 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		await page.goto(`/web/${site.name}`);
 
@@ -180,7 +180,7 @@ test(
 		).toContain(`${currency3.symbol}`);
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await commerceAdminChannelsPage.goto();
 
@@ -204,7 +204,7 @@ test(
 		).toHaveLength(2);
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		await page.goto(`/web/${site.name}`);
 
@@ -371,7 +371,7 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		await page.goto(`/web/${site.name}`);
 
@@ -593,7 +593,7 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		await page.goto(`/web/${site.name}`);
 

@@ -381,7 +381,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 	apiHelpers.data.push({id: order.id, type: 'order'});
 
 	await performLogout(page);
-	await performLoginViaApi(page, 'demo.unprivileged');
+	await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 	await applicationsMenuPage.goToCommerceOrders(false);
 

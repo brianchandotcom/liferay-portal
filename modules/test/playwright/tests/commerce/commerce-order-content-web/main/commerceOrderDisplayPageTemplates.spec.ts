@@ -395,7 +395,7 @@ test('LPD-41395 Can map display page and schedule fields to fragments', async ({
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, 'demo.unprivileged');
+	await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 	await page.goto(
 		`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${product.id}`
@@ -596,7 +596,7 @@ test('LPD-41395 Can map detailed information fields to fragments', async ({
 
 		await performLogout(page);
 
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		await page.goto(
 			`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${product.id}`
@@ -635,7 +635,7 @@ test('LPD-41395 Can map detailed information fields to fragments', async ({
 	finally {
 		await performLogout(page);
 
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		page.on('dialog', (dialog) => {
 			dialog.accept();

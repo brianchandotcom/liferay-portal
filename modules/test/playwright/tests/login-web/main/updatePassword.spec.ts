@@ -43,7 +43,7 @@ test('LPD-52234: Check if you can change languages in the update password page',
 		await page.getByLabel('Email Address').fill(userAccount.emailAddress);
 		await page.getByRole('button', {name: 'Send New Password'}).click();
 
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		const ticket =
 			await apiHelpers.headlessAdminUser.getUserAccountPasswordResetTicket(
@@ -73,7 +73,7 @@ test('LPD-52234: Check if you can change languages in the update password page',
 	finally {
 		await page.goto('/en');
 
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await apiHelpers.headlessAdminUser.deleteUserAccount(
 			Number(userAccount.id)

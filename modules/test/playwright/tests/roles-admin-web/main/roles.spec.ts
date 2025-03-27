@@ -38,7 +38,7 @@ test.beforeAll(async ({browser}) => {
 	const page = await browser.newPage();
 	const rolesPage = new RolesPage(page);
 
-	await performLoginViaApi(page, 'test');
+	await performLoginViaApi({page, screenName: 'test'});
 
 	await rolesPage.goto();
 
@@ -559,12 +559,12 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await rolesPage.goto();
 
@@ -588,7 +588,7 @@ test(
 		).toHaveCount(0);
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -678,12 +678,12 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await rolesPage.goto();
 
@@ -711,7 +711,7 @@ test(
 		).toHaveCount(0);
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -806,12 +806,12 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await rolesPage.goto();
 
@@ -841,7 +841,7 @@ test(
 		).toHaveCount(0);
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -1045,12 +1045,12 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await rolesPage.goto();
 
@@ -1076,7 +1076,7 @@ test(
 		).toHaveCount(0);
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(rolesPage.applicationsMenuButton).toHaveCount(0);
 	}
@@ -1712,7 +1712,7 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await page.goto(`/web/${site1.name}/${layout1.friendlyUrlPath}`);
 
@@ -1723,7 +1723,7 @@ test(
 		await expect(bookmarksPage.bookmarkItem(bookmarkName2)).toHaveCount(0);
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await apiHelpers.headlessAdminUser.assignUserToRole(
 			role.externalReferenceCode,
@@ -1731,7 +1731,7 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await page.goto(`/web/${site1.name}/${layout1.friendlyUrlPath}`);
 

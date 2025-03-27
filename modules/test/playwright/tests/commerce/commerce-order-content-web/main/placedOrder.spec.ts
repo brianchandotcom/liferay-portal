@@ -1085,7 +1085,7 @@ test('LPD-41398 Local date format', async ({
 
 		await performLogout(page);
 
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await page.goto(`hu/web/${site.name}`);
 
@@ -1180,7 +1180,7 @@ test('LPD-41398 Local date format', async ({
 
 		await performLogout(page);
 
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await commerceInstanceSettingsPage.goToInstanceSetting(
 			'Orders',
@@ -1321,7 +1321,7 @@ test(
 		});
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await page.goto(`web/${site.name}`);
 

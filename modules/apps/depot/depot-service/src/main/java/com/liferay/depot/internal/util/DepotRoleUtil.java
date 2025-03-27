@@ -9,8 +9,10 @@ import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.internal.instance.lifecycle.DepotRolesPortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -44,6 +46,26 @@ public class DepotRoleUtil {
 		}
 
 		return descriptionMap;
+	}
+
+	public static Map<Locale, String> getTitleMap(
+		long companyId, Language language, String name) {
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			return null;
+		}
+
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		for (Locale locale : language.getAvailableLocales()) {
+			String title = _getTitle(locale, name);
+
+			if (title != null) {
+				titleMap.put(locale, title);
+			}
+		}
+
+		return titleMap;
 	}
 
 	private static String _getDescription(
@@ -100,6 +122,35 @@ public class DepotRoleUtil {
 		}
 
 		return null;
+	}
+
+	private static String _getTitle(Locale locale, String name) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, DepotRolesPortalInstanceLifecycleListener.class);
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, _roleNameTitleMap.get(name));
+	}
+
+	private static final Map<String, String> _roleNameTitleMap;
+
+	static {
+		Map<String, String> roleNameTitleMap = HashMapBuilder.put(
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+			"space-administrator"
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+			"space-connected-site-member"
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+			"space-content-reviewer"
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_MEMBER, "space-member"
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_OWNER, "space-owner"
+		).build();
+
+		_roleNameTitleMap = Collections.unmodifiableMap(roleNameTitleMap);
 	}
 
 }

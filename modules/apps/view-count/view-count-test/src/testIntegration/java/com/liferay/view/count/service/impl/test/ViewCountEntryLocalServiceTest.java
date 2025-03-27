@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -96,18 +97,20 @@ public class ViewCountEntryLocalServiceTest {
 				BatchingBatch.class.getName(), LoggerTestUtil.OFF)) {
 
 			FutureTask<Void> futureTask = new FutureTask<>(
-				() -> {
-					try (SafeCloseable safeCloseable =
-							BufferedIncrementThreadLocal.
-								setForceSyncWithSafeCloseable(true)) {
+				new CompanyInheritableThreadLocalCallable<>(
+					() -> {
+						try (SafeCloseable safeCloseable =
+								BufferedIncrementThreadLocal.
+									setForceSyncWithSafeCloseable(true)) {
 
-						_viewCountEntryLocalService.incrementViewCount(
-							TestPropsValues.getCompanyId(),
-							_className.getClassNameId(), classPK, viewCount);
-					}
+							_viewCountEntryLocalService.incrementViewCount(
+								TestPropsValues.getCompanyId(),
+								_className.getClassNameId(), classPK,
+								viewCount);
+						}
 
-					return null;
-				});
+						return null;
+					}));
 
 			Thread thread = new Thread(
 				futureTask, "Inner View Count Incrementer");

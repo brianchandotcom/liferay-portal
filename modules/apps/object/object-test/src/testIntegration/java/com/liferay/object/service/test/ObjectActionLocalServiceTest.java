@@ -94,6 +94,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -162,6 +163,7 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.FutureTask;
 
 import org.hamcrest.CoreMatchers;
 
@@ -1737,41 +1739,8 @@ public class ObjectActionLocalServiceTest {
 				PermissionCheckerFactoryUtil.create(_user));
 			PrincipalThreadLocal.setName(_user.getUserId());
 
-			Thread thread1 = new Thread(
-				() -> {
-					try {
-						_objectEntryLocalService.addObjectEntry(
-							TestPropsValues.getUserId(), 0,
-							_objectDefinition.getObjectDefinitionId(),
-							ObjectEntryFolderConstants.
-								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-							null,
-							HashMapBuilder.<String, Serializable>put(
-								"firstName", "John"
-							).build(),
-							ServiceContextTestUtil.getServiceContext());
-					}
-					catch (PortalException portalException) {
-					}
-				});
-
-			Thread thread2 = new Thread(
-				() -> {
-					try {
-						_objectEntryLocalService.addObjectEntry(
-							TestPropsValues.getUserId(), 0,
-							_objectDefinition.getObjectDefinitionId(),
-							ObjectEntryFolderConstants.
-								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-							null,
-							HashMapBuilder.<String, Serializable>put(
-								"firstName", "Peter"
-							).build(),
-							ServiceContextTestUtil.getServiceContext());
-					}
-					catch (PortalException portalException) {
-					}
-				});
+			Thread thread1 = new Thread(_getAddObjectEntryFutureTask("John"));
+			Thread thread2 = new Thread(_getAddObjectEntryFutureTask("Peter"));
 
 			thread1.start();
 			thread2.start();
@@ -3198,6 +3167,29 @@ public class ObjectActionLocalServiceTest {
 				JSONUtil.getValue(
 					payloadJSONObject, "JSONObject/originalObjectEntry"));
 		}
+	}
+
+	private FutureTask<Void> _getAddObjectEntryFutureTask(String firstName) {
+		return new FutureTask<Void>(
+			new CompanyInheritableThreadLocalCallable(
+				() -> {
+					try {
+						_objectEntryLocalService.addObjectEntry(
+							TestPropsValues.getUserId(), 0,
+							_objectDefinition.getObjectDefinitionId(),
+							ObjectEntryFolderConstants.
+								PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+							null,
+							HashMapBuilder.<String, Serializable>put(
+								"firstName", firstName
+							).build(),
+							ServiceContextTestUtil.getServiceContext());
+					}
+					catch (PortalException portalException) {
+					}
+
+					return null;
+				}));
 	}
 
 	private Object _getAndSetFieldValue(

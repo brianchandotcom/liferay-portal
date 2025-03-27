@@ -333,30 +333,32 @@ public class PortletTracker
 
 		DependencyManagerSyncUtil.registerSyncFutureTask(
 			new FutureTask<>(
-				() -> {
-					_portalPortletModel = _portletLocalService.getPortletById(
-						CompanyConstants.SYSTEM, PortletKeys.PORTAL);
+				new CompanyInheritableThreadLocalCallable<>(
+					() -> {
+						_portalPortletModel =
+							_portletLocalService.getPortletById(
+								CompanyConstants.SYSTEM, PortletKeys.PORTAL);
 
-					ServiceRegistration
-						<IndividualPortletResourcePermissionProvider>
-							serviceRegistration = bundleContext.registerService(
-								IndividualPortletResourcePermissionProvider.
-									class,
-								new StartupIndividualPortletResourcePermissionProvider(
-									_resourcePermissionLocalService),
-								null);
+						ServiceRegistration
+							<IndividualPortletResourcePermissionProvider>
+								serviceRegistration =
+									bundleContext.registerService(
+										IndividualPortletResourcePermissionProvider.class,
+										new StartupIndividualPortletResourcePermissionProvider(
+											_resourcePermissionLocalService),
+										null);
 
-					InitialRequestSyncUtil.registerSyncCallable(
-						() -> {
-							serviceRegistration.unregister();
+						InitialRequestSyncUtil.registerSyncCallable(
+							() -> {
+								serviceRegistration.unregister();
 
-							return null;
-						});
+								return null;
+							});
 
-					_serviceTracker.open();
+						_serviceTracker.open();
 
-					return null;
-				}),
+						return null;
+					})),
 			PortletTracker.class.getName() + "-ServiceTrackerOpener");
 
 		if (_log.isInfoEnabled()) {

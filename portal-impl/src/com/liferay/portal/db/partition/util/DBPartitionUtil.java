@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -1071,18 +1072,17 @@ public class DBPartitionUtil {
 					}
 
 					Future<Void> future = executorService.submit(
-						() -> {
-							try (SafeCloseable safeCloseable =
-									CompanyThreadLocal.lock(companyId)) {
+						new CompanyInheritableThreadLocalCallable<>(
+							() -> {
+								try {
+									unsafeConsumer.accept(companyId);
+								}
+								catch (Exception exception) {
+									throwableCollector.collect(exception);
+								}
 
-								unsafeConsumer.accept(companyId);
-							}
-							catch (Exception exception) {
-								throwableCollector.collect(exception);
-							}
-
-							return null;
-						});
+								return null;
+							}));
 
 					futures.add(future);
 				}

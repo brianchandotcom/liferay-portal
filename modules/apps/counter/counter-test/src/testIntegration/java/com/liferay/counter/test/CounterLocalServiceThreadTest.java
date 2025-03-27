@@ -7,6 +7,7 @@ package com.liferay.counter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsUtil;
@@ -51,17 +52,18 @@ public class CounterLocalServiceThreadTest {
 		for (int i = 0; i < _THREAD_COUNT; i++) {
 			futures.add(
 				executorService.submit(
-					() -> {
-						List<Long> ids = new ArrayList<>();
+					new CompanyInheritableThreadLocalCallable<>(
+						() -> {
+							List<Long> ids = new ArrayList<>();
 
-						for (int j = 0; j < _INCREMENT_COUNT; j++) {
-							ids.add(
-								CounterLocalServiceUtil.increment(
-									_COUNTER_NAME));
-						}
+							for (int j = 0; j < _INCREMENT_COUNT; j++) {
+								ids.add(
+									CounterLocalServiceUtil.increment(
+										_COUNTER_NAME));
+							}
 
-						return ids.toArray(new Long[0]);
-					}));
+							return ids.toArray(new Long[0]);
+						})));
 		}
 
 		int total = _THREAD_COUNT * _INCREMENT_COUNT;

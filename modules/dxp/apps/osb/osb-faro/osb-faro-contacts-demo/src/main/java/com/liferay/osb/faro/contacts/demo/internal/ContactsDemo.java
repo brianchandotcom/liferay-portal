@@ -11,6 +11,7 @@ import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,43 +43,45 @@ public class ContactsDemo {
 		}
 
 		_futureTask = new FutureTask<>(
-			() -> {
-				long startTime = System.currentTimeMillis();
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					long startTime = System.currentTimeMillis();
 
-				while ((System.currentTimeMillis() - startTime) <
-							(Time.MINUTE * 5)) {
+					while ((System.currentTimeMillis() - startTime) <
+								(Time.MINUTE * 5)) {
 
-					try {
-						FaroProject faroProject =
-							_faroProjectLocalService.createFaroProject(0);
+						try {
+							FaroProject faroProject =
+								_faroProjectLocalService.createFaroProject(0);
 
-						faroProject.setWeDeployKey(
-							FaroPropsValues.FARO_DEFAULT_WE_DEPLOY_KEY);
+							faroProject.setWeDeployKey(
+								FaroPropsValues.FARO_DEFAULT_WE_DEPLOY_KEY);
 
-						break;
+							break;
+						}
+						catch (Exception exception) {
+							_log.error(exception);
+
+							Thread.sleep(Time.SECOND * 30);
+						}
 					}
-					catch (Exception exception) {
-						_log.error(exception);
 
-						Thread.sleep(Time.SECOND * 30);
+					if (StringUtil.equals(
+							FaroPropsValues.FARO_DEMO_CREATOR_METHOD,
+							"nanite")) {
+
+						_naniteDemoCreatorService.createDemo();
 					}
-				}
+					else {
+						_snapshotDemoCreatorService.createDemo();
+					}
 
-				if (StringUtil.equals(
-						FaroPropsValues.FARO_DEMO_CREATOR_METHOD, "nanite")) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Completed demo data creation");
+					}
 
-					_naniteDemoCreatorService.createDemo();
-				}
-				else {
-					_snapshotDemoCreatorService.createDemo();
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Completed demo data creation");
-				}
-
-				return null;
-			});
+					return null;
+				}));
 
 		Thread thread = new Thread(
 			_futureTask, "Contacts Demo Creation Thread");

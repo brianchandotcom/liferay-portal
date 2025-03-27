@@ -38,7 +38,8 @@ public class DepotServiceVerifyProcess extends VerifyProcess {
 
 					if (role != null) {
 						Map<Locale, String> descriptionMap =
-							DepotRoleUtil.getDescriptionMap(_language, name);
+							DepotRoleUtil.getDescriptionMap(
+								companyId, _language, name);
 
 						if (!Objects.equals(
 								descriptionMap, role.getDescriptionMap())) {

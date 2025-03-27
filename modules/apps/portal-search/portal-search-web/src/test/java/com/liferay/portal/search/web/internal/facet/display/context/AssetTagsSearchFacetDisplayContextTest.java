@@ -71,6 +71,29 @@ public class AssetTagsSearchFacetDisplayContextTest
 	}
 
 	@Override
+	protected void setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		TagFacetPortletInstanceConfiguration
+			tagFacetPortletInstanceConfiguration = Mockito.mock(
+				TagFacetPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			tagFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			tagFacetPortletInstanceConfiguration
+		);
+	}
+
+	@Override
 	protected void testOrderBy(
 			int[] expectedFrequencies, String[] expectedTerms,
 			int[] frequencies, String order, String[] terms)

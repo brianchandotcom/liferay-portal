@@ -154,6 +154,29 @@ public class FolderSearchFacetDisplayContextTest
 	}
 
 	@Override
+	protected void setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		FolderFacetPortletInstanceConfiguration
+			folderFacetPortletInstanceConfiguration = Mockito.mock(
+				FolderFacetPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			folderFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			folderFacetPortletInstanceConfiguration
+		);
+	}
+
+	@Override
 	protected void testOrderBy(
 			int[] expectedFrequencies, String[] expectedTerms,
 			int[] frequencies, String order, String[] terms)

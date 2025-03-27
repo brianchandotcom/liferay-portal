@@ -359,21 +359,34 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return jobPropertyValue;
 		}
 
-		if (JenkinsResultsParserUtil.isCloudCINode()) {
-			try {
-				Properties buildProperties =
-					JenkinsResultsParserUtil.getBuildProperties();
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return SLAVE_LABEL_DEFAULT;
+		}
 
-				if (buildProperties.containsKey(
-						"master.auto.scaling.group.name")) {
+		String slaveLabel = null;
 
-					return buildProperties.getProperty(
-						"master.auto.scaling.group.name");
-				}
+		try {
+			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.osb.jenkins.web.slave.label", getBatchJobName(),
+				getTestSuiteName());
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.osb.jenkins.web.slave.label.minimum.ram",
+					String.valueOf(getMinimumSlaveRAM()));
 			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"master.auto.scaling.group.name");
 			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
 		}
 
 		return SLAVE_LABEL_DEFAULT;

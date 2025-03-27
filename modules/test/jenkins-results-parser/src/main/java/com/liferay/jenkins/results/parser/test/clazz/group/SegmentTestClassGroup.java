@@ -11,6 +11,7 @@ import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,9 +110,26 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public String getSlaveLabel() {
-		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+			return _getSlaveLabel();
+		}
 
-		return batchTestClassGroup.getSlaveLabel();
+		String slaveLabel = null;
+
+		try {
+			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.osb.jenkins.web.slave.label.minimum.ram",
+				String.valueOf(getMinimumSlaveRAM()));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
+		return _getSlaveLabel();
 	}
 
 	public File getTestBaseDir() {
@@ -201,6 +219,12 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 
 			_batchTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
 		}
+	}
+
+	private String _getSlaveLabel() {
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		return batchTestClassGroup.getSlaveLabel();
 	}
 
 	private final List<AxisTestClassGroup> _axisTestClassGroups =

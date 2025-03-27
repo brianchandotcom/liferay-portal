@@ -65,6 +65,10 @@ const INITIAL_STATE: State = {
 
 type AddFieldAction = {field: Field; type: 'add-field'};
 
+type ClearErrorAction = {
+	type: 'clear-error';
+};
+
 type CreateStructureAction = {
 	id: number;
 	type: 'create-structure';
@@ -112,6 +116,7 @@ type ValidateAction = {
 
 export type Action =
 	| AddFieldAction
+	| ClearErrorAction
 	| CreateStructureAction
 	| DeleteFieldAction
 	| DeleteSelectionAction
@@ -134,6 +139,12 @@ function reducer(state: State, action: Action): State {
 			nextFields.set(field.uuid, {...field, name});
 
 			return {...state, fields: nextFields, selection: [field.uuid]};
+		}
+		case 'clear-error': {
+			return {
+				...state,
+				error: INITIAL_STATE.error,
+			};
 		}
 		case 'create-structure': {
 			return {

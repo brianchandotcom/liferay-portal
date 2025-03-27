@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -388,20 +387,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, masterPage.getPageSpecifications(), true, titleMap,
-			LayoutConstants.TYPE_CONTENT,
-			UnicodePropertiesBuilder.create(
-				true
-			).setProperty(
-				"lfr-theme:regular:show-footer", Boolean.FALSE.toString()
-			).setProperty(
-				"lfr-theme:regular:show-header", Boolean.FALSE.toString()
-			).setProperty(
-				"lfr-theme:regular:show-header-search", Boolean.FALSE.toString()
-			).setProperty(
-				"lfr-theme:regular:wrap-widget-page-content",
-				Boolean.FALSE.toString()
-			).build(),
-			true, true, WorkflowConstants.STATUS_APPROVED, serviceContext);
+			LayoutConstants.TYPE_CONTENT, true, true,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		if (layout == null) {
 			return 0;

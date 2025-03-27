@@ -110,6 +110,8 @@ function SaveButton() {
 					name,
 					spaces,
 				});
+
+				dispatch({type: 'clear-error'});
 			}
 
 			openToast({

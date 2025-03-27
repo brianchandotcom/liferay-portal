@@ -6,8 +6,10 @@
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.KeywordEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
@@ -18,9 +20,15 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,6 +48,7 @@ import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
 
 import java.sql.Timestamp;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -142,6 +151,51 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	@Override
+	public Page<Keyword> getKeywordsPage(
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+			},
+			filter, AssetTag.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setAttribute(Field.NAME, search);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				BooleanFilter booleanFilter = new BooleanFilter();
+
+				booleanFilter.addRequiredTerm(
+					Field.GROUP_ID, GroupConstants.DEFAULT_LIVE_GROUP_ID);
+
+				searchContext.setBooleanClauses(
+					new BooleanClause[] {
+						BooleanClauseFactoryUtil.create(
+							new BooleanQueryImpl() {
+								{
+									if (filter != null) {
+										booleanFilter.add(
+											filter, BooleanClauseOccur.MUST);
+									}
+
+									setPreBooleanFilter(booleanFilter);
+								}
+							},
+							BooleanClauseOccur.MUST.getName())
+					});
+			},
+			sorts,
+			document -> _toKeyword(
+				_assetTagService.getTag(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
 	public Page<Keyword> getKeywordsRankedPage(
 		String search, Long siteId, Pagination pagination) {
 
@@ -226,6 +280,22 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		throws Exception {
 
 		return postSiteKeyword(assetLibraryId, keyword);
+	}
+
+	@Override
+	public Keyword postKeyword(Keyword keyword) throws Exception {
+		AssetTag assetTag = _assetTagService.addTag(
+			keyword.getExternalReferenceCode(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, keyword.getName(),
+			new ServiceContext());
+
+		_assetTagGroupRelLocalService.setAssetTagGroupRels(
+			assetTag.getTagId(),
+			transformToLongArray(
+				Arrays.asList(keyword.getAssetLibraries()),
+				AssetLibrary::getId));
+
+		return _toKeyword(assetTag);
 	}
 
 	@Override
@@ -422,6 +492,9 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	}
 
 	private static final EntityModel _entityModel = new KeywordEntityModel();
+
+	@Reference
+	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

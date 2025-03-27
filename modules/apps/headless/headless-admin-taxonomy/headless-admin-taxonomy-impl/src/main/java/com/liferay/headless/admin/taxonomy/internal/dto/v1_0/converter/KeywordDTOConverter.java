@@ -7,8 +7,11 @@ package com.liferay.headless.admin.taxonomy.internal.dto.v1_0.converter;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -19,6 +22,7 @@ import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.GroupUtil;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,7 +56,40 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 						assetTag.getGroupId(), assetTag.getTagId(),
 						dtoConverterContext.getUriInfo(),
 						dtoConverterContext.getUserId()));
-				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
+				setAssetLibraries(
+					() -> TransformUtil.transformToArray(
+						_assetTagGroupRelLocalService.
+							getAssetTagGroupRelsByTagId(assetTag.getTagId()),
+						assetTagGroupRel -> {
+							Group depotEntryGroup =
+								_groupLocalService.fetchGroup(
+									assetTagGroupRel.getGroupId());
+
+							return new AssetLibrary() {
+								{
+									setId(depotEntryGroup::getGroupId);
+									setName(
+										() ->
+											depotEntryGroup.getDescriptiveName(
+												dtoConverterContext.
+													getLocale()));
+									setName_i18n(
+										() -> LocalizedMapUtil.getI18nMap(
+											dtoConverterContext.
+												isAcceptAllLanguages(),
+											depotEntryGroup.getNameMap()));
+								}
+							};
+						},
+						AssetLibrary.class));
+				setAssetLibraryKey(
+					() -> {
+						if (group == null) {
+							return null;
+						}
+
+						return GroupUtil.getAssetLibraryKey(group);
+					});
 				setCreator(
 					() -> {
 						if (assetTag.getUserId() == 0) {
@@ -85,8 +122,21 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 					});
 				setName(assetTag::getName);
 				setSiteExternalReferenceCode(
-					() -> GroupUtil.getSiteExternalReferenceCode(group));
-				setSiteId(() -> GroupUtil.getSiteId(group));
+					() -> {
+						if (group == null) {
+							return null;
+						}
+
+						return GroupUtil.getSiteExternalReferenceCode(group);
+					});
+				setSiteId(
+					() -> {
+						if (group == null) {
+							return null;
+						}
+
+						return GroupUtil.getSiteId(group);
+					});
 				setSubscribed(
 					() -> _subscriptionLocalService.isSubscribed(
 						assetTag.getCompanyId(),
@@ -98,6 +148,9 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
 
 	@Reference(
 		target = "(dto.class.name=com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword)"

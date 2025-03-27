@@ -158,17 +158,27 @@ test('Assert that the style books in page editor are based on the applied theme 
 });
 
 test.describe('Style books applied to master pages', async () => {
-	async function setUp(
-		apiHelpers: ApiHelpers,
-		masterPagesPage: MasterPagesPage,
-		page: Page,
-		pageEditorPage: PageEditorPage,
-		pagesAdminPage: PagesAdminPage,
-		site: Site,
-		styleBooksPage: StyleBooksPage,
-		markStyleBookAsDefault?: boolean,
-		selectStyleBookForMasterPage?: boolean
-	) {
+	async function setUp({
+		apiHelpers,
+		markStyleBookAsDefault,
+		masterPagesPage,
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		selectStyleBookForMasterPage,
+		site,
+		styleBooksPage,
+	}: {
+		apiHelpers: ApiHelpers;
+		markStyleBookAsDefault?: boolean;
+		masterPagesPage: MasterPagesPage;
+		page: Page;
+		pageEditorPage: PageEditorPage;
+		pagesAdminPage: PagesAdminPage;
+		selectStyleBookForMasterPage?: boolean;
+		site: Site;
+		styleBooksPage: StyleBooksPage;
+	}) {
 		const styleBookName = getRandomString();
 
 		await styleBooksPage.goto(site.friendlyUrlPath);
@@ -231,15 +241,17 @@ test.describe('Style books applied to master pages', async () => {
 		site,
 		styleBooksPage,
 	}) => {
-		await setUp(
+		await setUp({
 			apiHelpers,
+			markStyleBookAsDefault: false,
 			masterPagesPage,
 			page,
 			pageEditorPage,
 			pagesAdminPage,
+			selectStyleBookForMasterPage: false,
 			site,
-			styleBooksPage
-		);
+			styleBooksPage,
+		});
 
 		await test.step('Assert that the style book "styles from classic theme" is applied to the child page', async () => {
 			await pageEditorPage.goToSidebarTab('Page Design Options');
@@ -261,17 +273,17 @@ test.describe('Style books applied to master pages', async () => {
 		site,
 		styleBooksPage,
 	}) => {
-		await setUp(
+		await setUp({
 			apiHelpers,
+			markStyleBookAsDefault: false,
 			masterPagesPage,
 			page,
 			pageEditorPage,
 			pagesAdminPage,
+			selectStyleBookForMasterPage: true,
 			site,
 			styleBooksPage,
-			false,
-			true
-		);
+		});
 
 		await test.step('Assert that the selected style book from master is applied to the child page', async () => {
 			await pageEditorPage.goToSidebarTab('Page Design Options');
@@ -291,17 +303,17 @@ test.describe('Style books applied to master pages', async () => {
 		site,
 		styleBooksPage,
 	}) => {
-		await setUp(
+		await setUp({
 			apiHelpers,
+			markStyleBookAsDefault: true,
 			masterPagesPage,
 			page,
 			pageEditorPage,
 			pagesAdminPage,
+			selectStyleBookForMasterPage: false,
 			site,
 			styleBooksPage,
-			true,
-			false
-		);
+		});
 
 		await test.step('Assert that the selected style book from master is applied to the child page', async () => {
 			await pageEditorPage.goToSidebarTab('Page Design Options');

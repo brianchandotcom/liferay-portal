@@ -35,7 +35,9 @@ export class StyleBooksPage {
 	async create(styleBookName: string) {
 		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
 
-		await this.page.getByRole('textbox').fill(styleBookName);
+		await this.page
+			.getByRole('textbox', {name: 'Name'})
+			.fill(styleBookName);
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 

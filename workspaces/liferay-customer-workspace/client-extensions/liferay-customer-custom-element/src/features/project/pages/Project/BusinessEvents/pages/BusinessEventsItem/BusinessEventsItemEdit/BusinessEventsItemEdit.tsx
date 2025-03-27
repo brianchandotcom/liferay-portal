@@ -43,7 +43,6 @@ interface IProps {
 		value: any,
 		shouldValidate?: boolean
 	) => void;
-	touched?: any;
 	values: any;
 }
 
@@ -52,7 +51,6 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	errors,
 	originalBusinessEvent,
 	setFieldValue,
-	touched,
 	values,
 }) => {
 	const {client} = useAppPropertiesContext();
@@ -366,7 +364,6 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		const hasEventType = values.businessEvent.eventType.key;
 		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
 		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
-		const hasTouched = Boolean(Object.keys(touched).length);
 
 		let hasAllRequiredFieldsFilled =
 			Boolean(hasEventName) &&
@@ -388,15 +385,12 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 				hasAllRequiredFieldsFilled && hasCurrentLiferayVersion;
 		}
 
-		setBaseButtonDisabled(
-			!hasAllRequiredFieldsFilled || Boolean(hasError) || !hasTouched
-		);
+		setBaseButtonDisabled(!hasAllRequiredFieldsFilled || Boolean(hasError));
 	}, [
 		errors,
 		isDescriptionRequired,
 		isNewLiferayVersionRequired,
 		isSaasOnly,
-		touched,
 		values.businessEvent.currentLiferayVersion,
 		values.businessEvent.description,
 		values.businessEvent.eventType,
@@ -793,7 +787,6 @@ const BusinessEventsItemEdit: React.FC = () => {
 					errors={formikProps.errors}
 					originalBusinessEvent={businessEvent}
 					setFieldValue={formikProps.setFieldValue}
-					touched={formikProps.touched}
 					values={formikProps.values}
 				/>
 			)}

@@ -244,8 +244,10 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				String.join(
-					StringPool.BLANK, "(segmentEntryIds eq '30' or ",
-					"segmentEntryIds eq '31') and (segmentEntryIds eq '32')"),
+					StringPool.BLANK,
+					"(((lastName eq 'test' or (not (dateModified eq ",
+					"2025-01-08T00:00:00.000Z)) or jobTitle eq 'Test')) and ",
+					"((userId eq '0'))) and (classPK eq '1')"),
 				_userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
@@ -256,10 +258,8 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				String.join(
-					StringPool.BLANK,
-					"(((lastName eq 'test' or (not (dateModified eq ",
-					"2025-01-08T00:00:00.000Z)) or jobTitle eq 'Test')) and ",
-					"((userId eq '0'))) and (classPK eq '1')"),
+					StringPool.BLANK, "(segmentEntryIds eq '30' or ",
+					"segmentEntryIds eq '31') and (segmentEntryIds eq '32')"),
 				_userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(

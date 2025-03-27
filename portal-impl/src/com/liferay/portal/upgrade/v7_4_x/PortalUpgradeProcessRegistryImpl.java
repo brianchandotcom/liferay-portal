@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DBColumnSizeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRows;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.DuplicateIndexEntriesUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
@@ -607,18 +607,18 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(32, 0, 0),
-			new DuplicateIndexEntriesUpgradeProcess(
+			new DeleteDuplicateUniqueFinderRows(
 				"PortalPreferences", new String[] {"ownerType", "ownerId"}),
-			new DuplicateIndexEntriesUpgradeProcess(
+			new DeleteDuplicateUniqueFinderRows(
 				"PortletItem",
 				new String[] {"groupId", "classNameId", "portletId", "name"}),
-			new DuplicateIndexEntriesUpgradeProcess(
+			new DeleteDuplicateUniqueFinderRows(
 				"SocialActivitySetting",
 				new String[] {
 					"groupId", "classNameId", "activityType", "name",
 					"ctCollectionId"
 				}),
-			new DuplicateIndexEntriesUpgradeProcess(
+			new DeleteDuplicateUniqueFinderRows(
 				"Ticket", new String[] {"key_"}, "ticketId asc"));
 	}
 

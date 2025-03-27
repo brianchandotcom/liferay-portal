@@ -213,6 +213,82 @@ public class LayoutUtil {
 				LayoutTypeSettingsConstants.KEY_PUBLISHED));
 	}
 
+	public static Layout updateContentLayout(
+			long plid, PageSpecification[] pageSpecifications,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (pageSpecifications == null) {
+			return LayoutLocalServiceUtil.getLayout(plid);
+		}
+
+		if (pageSpecifications.length != 2) {
+			throw new UnsupportedOperationException();
+		}
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		ContentPageSpecification draftContentPageSpecification = null;
+		ContentPageSpecification publishedContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[0];
+
+		if (!Objects.equals(
+				layout.getExternalReferenceCode(),
+				publishedContentPageSpecification.getExternalReferenceCode())) {
+
+			draftContentPageSpecification = publishedContentPageSpecification;
+			publishedContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+		else {
+			draftContentPageSpecification =
+				(ContentPageSpecification)pageSpecifications[1];
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (!Objects.equals(
+				draftLayout.getExternalReferenceCode(),
+				draftContentPageSpecification.getExternalReferenceCode()) ||
+			!Objects.equals(
+				layout.getExternalReferenceCode(),
+				publishedContentPageSpecification.getExternalReferenceCode()) ||
+			!Objects.equals(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode(),
+				draftContentPageSpecification.getExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		int draftLayoutStatus = WorkflowConstants.STATUS_APPROVED;
+
+		if (Objects.equals(
+				draftContentPageSpecification.getStatus(),
+				PageSpecification.Status.DRAFT)) {
+
+			draftLayoutStatus = WorkflowConstants.STATUS_DRAFT;
+		}
+
+		int status = layout.getStatus();
+
+		if (Objects.equals(
+				publishedContentPageSpecification.getStatus(),
+				PageSpecification.Status.APPROVED)) {
+
+			serviceContext.setAttribute("published", Boolean.TRUE.toString());
+
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+
+		updateLayout(
+			draftContentPageSpecification, draftLayout, draftLayoutStatus,
+			serviceContext);
+
+		return updateLayout(
+			publishedContentPageSpecification, layout, status, serviceContext);
+	}
+
 	public static Layout updateLayout(
 			ContentPageSpecification contentPageSpecification, Layout layout,
 			int status, ServiceContext serviceContext)

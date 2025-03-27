@@ -232,85 +232,16 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					previewFileEntryId);
 		}
 
-		PageSpecification[] pageSpecifications =
-			masterPage.getPageSpecifications();
+		Layout layout = LayoutUtil.updateContentLayout(
+			layoutPageTemplateEntry.getPlid(),
+			masterPage.getPageSpecifications(),
+			_getServiceContext(groupId, masterPage));
 
-		if (pageSpecifications != null) {
-			if (pageSpecifications.length != 2) {
-				throw new UnsupportedOperationException();
-			}
-
-			Layout layout = _layoutLocalService.getLayout(
-				layoutPageTemplateEntry.getPlid());
-
-			ContentPageSpecification draftContentPageSpecification = null;
-			ContentPageSpecification publishedContentPageSpecification =
-				(ContentPageSpecification)pageSpecifications[0];
-
-			if (!Objects.equals(
-					layout.getExternalReferenceCode(),
-					publishedContentPageSpecification.
-						getExternalReferenceCode())) {
-
-				draftContentPageSpecification =
-					publishedContentPageSpecification;
-				publishedContentPageSpecification =
-					(ContentPageSpecification)pageSpecifications[1];
-			}
-			else {
-				draftContentPageSpecification =
-					(ContentPageSpecification)pageSpecifications[1];
-			}
-
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			if (!Objects.equals(
-					draftLayout.getExternalReferenceCode(),
-					draftContentPageSpecification.getExternalReferenceCode()) ||
-				!Objects.equals(
-					layout.getExternalReferenceCode(),
-					publishedContentPageSpecification.
-						getExternalReferenceCode()) ||
-				!Objects.equals(
-					publishedContentPageSpecification.
-						getDraftContentPageSpecificationExternalReferenceCode(),
-					draftContentPageSpecification.getExternalReferenceCode())) {
-
-				throw new UnsupportedOperationException();
-			}
-
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			if (Objects.equals(
-					draftContentPageSpecification.getStatus(),
-					PageSpecification.Status.DRAFT)) {
-
-				status = WorkflowConstants.STATUS_DRAFT;
-			}
-
-			ServiceContext serviceContext = _getServiceContext(
-				groupId, masterPage);
-
-			serviceContext.setAttribute(
-				"published",
-				Objects.equals(
-					publishedContentPageSpecification.getStatus(),
-					PageSpecification.Status.APPROVED));
-
-			LayoutUtil.updateLayout(
-				draftContentPageSpecification, draftLayout, status,
-				serviceContext);
-
-			layout = LayoutUtil.updateLayout(
-				publishedContentPageSpecification, layout,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-			if (!layoutPageTemplateEntry.isApproved() && layout.isPublished()) {
-				layoutPageTemplateEntry =
-					_layoutPageTemplateEntryService.updateStatus(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-						WorkflowConstants.STATUS_APPROVED);
-			}
+		if (!layoutPageTemplateEntry.isApproved() && layout.isPublished()) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateStatus(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					WorkflowConstants.STATUS_APPROVED);
 		}
 
 		if (Validator.isNotNull(masterPage.getMarkedAsDefault()) &&

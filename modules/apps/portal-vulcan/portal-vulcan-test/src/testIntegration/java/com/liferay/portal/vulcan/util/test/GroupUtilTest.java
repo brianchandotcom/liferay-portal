@@ -32,7 +32,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Adolfo Pérez
  */
-@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 public class GroupUtilTest {
 
@@ -79,31 +78,32 @@ public class GroupUtilTest {
 
 	@Test
 	public void testGetDepotGroupId() throws Exception {
-		Group depotEntryGroup = _depotEntry.getGroup();
+		_testGetDepotGroupId();
 
 		// Depot entry group ID
+
+		Group depotEntryGroup = _depotEntry.getGroup();
+
+		Assert.assertNull(
+			GroupUtil.getDepotGroupId(
+				String.valueOf(depotEntryGroup.getGroupId()),
+				depotEntryGroup.getCompanyId(), _depotEntryLocalService,
+				_groupLocalService));
+	}
+
+	@FeatureFlags("LPD-17564")
+	@Test
+	public void testGetDepotGroupIdWithFeatureFlag() throws Exception {
+		_testGetDepotGroupId();
+
+		// Depot entry group ID
+
+		Group depotEntryGroup = _depotEntry.getGroup();
 
 		Assert.assertEquals(
 			Long.valueOf(depotEntryGroup.getGroupId()),
 			GroupUtil.getDepotGroupId(
 				String.valueOf(depotEntryGroup.getGroupId()),
-				depotEntryGroup.getCompanyId(), _depotEntryLocalService,
-				_groupLocalService));
-
-		// Depot entry group key
-
-		Assert.assertEquals(
-			Long.valueOf(depotEntryGroup.getGroupId()),
-			GroupUtil.getDepotGroupId(
-				depotEntryGroup.getGroupKey(), depotEntryGroup.getCompanyId(),
-				_depotEntryLocalService, _groupLocalService));
-
-		// Depot entry ID
-
-		Assert.assertEquals(
-			Long.valueOf(depotEntryGroup.getGroupId()),
-			GroupUtil.getDepotGroupId(
-				String.valueOf(_depotEntry.getDepotEntryId()),
 				depotEntryGroup.getCompanyId(), _depotEntryLocalService,
 				_groupLocalService));
 	}
@@ -163,6 +163,27 @@ public class GroupUtilTest {
 		Assert.assertEquals(
 			Long.valueOf(siteGroup.getGroupId()),
 			GroupUtil.getSiteId(siteGroup));
+	}
+
+	private void _testGetDepotGroupId() throws Exception {
+		Group depotEntryGroup = _depotEntry.getGroup();
+
+		// Depot entry group key
+
+		Assert.assertEquals(
+			Long.valueOf(depotEntryGroup.getGroupId()),
+			GroupUtil.getDepotGroupId(
+				depotEntryGroup.getGroupKey(), depotEntryGroup.getCompanyId(),
+				_depotEntryLocalService, _groupLocalService));
+
+		// Depot entry ID
+
+		Assert.assertEquals(
+			Long.valueOf(depotEntryGroup.getGroupId()),
+			GroupUtil.getDepotGroupId(
+				String.valueOf(_depotEntry.getDepotEntryId()),
+				depotEntryGroup.getCompanyId(), _depotEntryLocalService,
+				_groupLocalService));
 	}
 
 	private DepotEntry _depotEntry;

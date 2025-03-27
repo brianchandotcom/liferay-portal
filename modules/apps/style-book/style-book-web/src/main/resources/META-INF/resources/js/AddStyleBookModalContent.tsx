@@ -128,6 +128,7 @@ const AddStyleBookModalContent = ({
 						required
 					>
 						<ClayInput
+							id={nameId}
 							onChange={(event) => {
 								const name = event.target.value;
 

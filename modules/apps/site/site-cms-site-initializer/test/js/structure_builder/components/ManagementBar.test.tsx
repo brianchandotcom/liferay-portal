@@ -23,7 +23,9 @@ const DEFAULT_FIELDS = new Map([[getUuid(), {} as Field]]);
 
 const renderComponent = ({state}: Props = {}) => {
 	return render(
-		<MockStateProvider state={{...state, fields: DEFAULT_FIELDS}}>
+		<MockStateProvider
+			state={{...state, fields: DEFAULT_FIELDS, spaces: 'all'}}
+		>
 			<ManagementBar />
 		</MockStateProvider>
 	);

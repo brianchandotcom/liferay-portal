@@ -37,6 +37,15 @@ export const userData = {
 	},
 };
 
+interface LoginOptions {
+	apiHelpers?: ApiHelpers;
+    page: Page;
+    screenName: LoginScreenName | string;
+	loginUrl?: string;
+	domain?: string;
+	rememberMe?: boolean;
+}
+
 async function performLogin(
 	page: Page,
 	screenName: LoginScreenName | string,
@@ -85,11 +94,14 @@ async function performLogin(
 }
 
 export async function performLoginViaApi(
-	page: Page,
-	screenName: LoginScreenName | string,
-	loginUrl: string = liferayConfig.environment.baseUrl,
-	domain = '@liferay.com',
-	rememberMe = true
+	{
+		apiHelpers,
+		page,
+		screenName,
+		loginUrl = liferayConfig.environment.baseUrl,
+		domain = '@liferay.com',
+		rememberMe = true
+	} : LoginOptions
 ) {
 	const {password} = userData[screenName || 'test'];
 
@@ -111,7 +123,9 @@ export async function performLoginViaApi(
 
 		await page.goto(loginUrl);
 
-		const apiHelpers = new ApiHelpers(page);
+		if (!apiHelpers) {
+			apiHelpers = new ApiHelpers(page);
+		}
 
 		const {alternateName} =
 			await apiHelpers.headlessAdminUser.getMyUserAccount();

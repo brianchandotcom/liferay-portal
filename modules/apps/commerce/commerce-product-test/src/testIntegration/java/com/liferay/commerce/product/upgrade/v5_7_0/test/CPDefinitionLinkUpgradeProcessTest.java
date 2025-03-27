@@ -122,10 +122,9 @@ public class CPDefinitionLinkUpgradeProcessTest {
 			assetEntry.getTitle(),
 			LocalizationUtil.getXml(
 				_getLanguageStringMapWithBlank(nameMap.get(LocaleUtil.US)),
-				cpDefinition.getDefaultLanguageId(), "Description"));
-
+				cpDefinition.getDefaultLanguageId(), "Name"));
 		Assert.assertEquals(
-			assetEntry.getTitle(),
+			assetEntry.getDescription(),
 			LocalizationUtil.getXml(
 				_getLanguageStringMapWithBlank(
 					descriptionMap.get(LocaleUtil.US)),

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import AOP from '../../../src/main/resources/META-INF/resources/liferay/aop/AOP.es';
+import AOP from '../../../src/main/resources/META-INF/resources/main/aop/AOP.es';
 
 let callOrder = [];
 

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="CompanyThreadLocalCheck" files="src/main/java/com/liferay/portal/messaging/internal/MessageBusThreadLocalUtil\.java" />
-	</checkstyle>
-</suppressions>

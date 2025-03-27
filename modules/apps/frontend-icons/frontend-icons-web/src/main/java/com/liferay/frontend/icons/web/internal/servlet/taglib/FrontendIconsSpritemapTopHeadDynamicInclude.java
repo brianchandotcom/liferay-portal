@@ -35,14 +35,13 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("<script");
 		sb.append(
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
 				httpServletRequest));
 		sb.append(" data-senna-track=\"temporary\">");
-		sb.append("var Liferay = window.Liferay || {};");
 		sb.append("Liferay.Icons = Liferay.Icons || {};");
 		sb.append("Liferay.Icons.controlPanelSpritemap = '");
 

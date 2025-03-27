@@ -127,17 +127,15 @@ public class RichTextDDMFormFieldTemplateContextContributor
 			return editorConfiguration.getData();
 		}
 
-		Map<String, Object> editorConfigurationData =
-			editorConfiguration.getData();
+		Map<String, Object> data = editorConfiguration.getData();
 
-		for (String key : editorConfigurationData.keySet()) {
+		for (String key : data.keySet()) {
 			if (ddmFormFieldProperties.containsKey(key)) {
-				editorConfigurationData.put(
-					key, ddmFormFieldProperties.get(key));
+				data.put(key, ddmFormFieldProperties.get(key));
 			}
 		}
 
-		return editorConfigurationData;
+		return data;
 	}
 
 	private String _getPredefinedValue(

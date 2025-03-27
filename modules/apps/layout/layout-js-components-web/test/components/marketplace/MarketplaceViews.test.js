@@ -48,8 +48,14 @@ jest.mock('@liferay/marketplace-js-components-web', () => {
 					</div>
 				);
 			},
-			Storefront: ({primaryButton}) => (
+			Storefront: ({onClickBack, primaryButton}) => (
 				<div data-testid="mock-marketplace-storefront">
+					{onClickBack && (
+						<button onClick={onClickBack} role="button">
+							back-to-list
+						</button>
+					)}
+
 					{primaryButton}
 				</div>
 			),
@@ -80,17 +86,28 @@ jest.mock(
 const mockProps = {
 	fragmentPortletNamespace: 'testNamespace',
 	fragmentsImportURL: '/testImportURL',
+	hideBackButton: false,
 };
 
 const renderComponent = (props = mockProps) =>
 	render(<MarketplaceViews {...props} />);
 
 describe('MarketplaceViews', () => {
+	let consoleErrorSpy;
+
 	beforeEach(() => {
 		jest.clearAllMocks();
+
+		consoleErrorSpy = jest
+			.spyOn(console, 'error')
+			.mockImplementation(() => {});
 	});
 
-	it('renders products view correctly', () => {
+	afterEach(() => {
+		consoleErrorSpy.mockRestore();
+	});
+
+	it('renders products view correctly', async () => {
 		renderComponent();
 
 		expect(
@@ -98,6 +115,40 @@ describe('MarketplaceViews', () => {
 		).toBeInTheDocument();
 
 		expect(screen.getByText('install')).toBeInTheDocument();
+	});
+
+	it('renders storefront view correctly', async () => {
+		const mockContext = {
+			...mockUseMarketplaceContext,
+			view: MarketplaceView.STOREFRONT,
+		};
+		require('@liferay/marketplace-js-components-web').useMarketplaceContext.mockReturnValue(
+			mockContext
+		);
+
+		renderComponent();
+
+		expect(
+			screen.getByTestId('mock-marketplace-storefront')
+		).toBeInTheDocument();
+
+		const installButton = screen.getByText('install');
+		expect(installButton).toBeInTheDocument();
+		userEvent.click(installButton);
+
+		await waitFor(() => {
+			expect(
+				require('../../../src/main/resources/META-INF/resources/js/components/import/importZipFile')
+			).toHaveBeenCalled();
+		});
+
+		const backButton = screen.queryByRole('button', {name: 'back-to-list'});
+		expect(backButton).toBeInTheDocument();
+
+		await userEvent.click(backButton);
+		expect(mockContext.setView).toHaveBeenCalledWith(
+			MarketplaceView.PRODUCTS
+		);
 	});
 
 	it('handles product installation', async () => {
@@ -127,29 +178,6 @@ describe('MarketplaceViews', () => {
 			expect(
 				require('frontend-js-components-web').openToast
 			).toHaveBeenCalledWith(expect.objectContaining({type: 'success'}));
-		});
-	});
-
-	it('renders storefront view correctly', async () => {
-		require('@liferay/marketplace-js-components-web').useMarketplaceContext.mockReturnValue(
-			{
-				...mockUseMarketplaceContext,
-				view: MarketplaceView.STOREFRONT,
-			}
-		);
-
-		renderComponent();
-
-		expect(
-			screen.getByTestId('mock-marketplace-storefront')
-		).toBeInTheDocument();
-
-		userEvent.click(screen.getByText('install'));
-
-		await waitFor(() => {
-			expect(
-				require('../../../src/main/resources/META-INF/resources/js/components/import/importZipFile')
-			).toHaveBeenCalled();
 		});
 	});
 
@@ -196,5 +224,20 @@ describe('MarketplaceViews', () => {
 
 			expect(mockContext.modal.onOpenChange).toHaveBeenCalledWith(false);
 		});
+	});
+
+	it('hideBackButton prop controls back button visibility', async () => {
+		require('@liferay/marketplace-js-components-web').useMarketplaceContext.mockReturnValue(
+			{
+				...mockUseMarketplaceContext,
+				view: MarketplaceView.STOREFRONT,
+			}
+		);
+
+		renderComponent({...mockProps, hideBackButton: true});
+
+		expect(
+			screen.queryByRole('button', {name: 'back-to-list'})
+		).not.toBeInTheDocument();
 	});
 });

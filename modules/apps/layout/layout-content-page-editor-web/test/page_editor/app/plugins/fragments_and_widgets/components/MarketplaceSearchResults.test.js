@@ -444,6 +444,7 @@ describe('MarketplaceSearchResults', () => {
 			expect.objectContaining({
 				fragmentPortletNamespace: mockConfig.fragmentPortletNamespace,
 				fragmentsImportURL: mockConfig.fragmentsImportURL,
+				hideBackButton: true,
 				trigger: null,
 			}),
 			expect.anything()

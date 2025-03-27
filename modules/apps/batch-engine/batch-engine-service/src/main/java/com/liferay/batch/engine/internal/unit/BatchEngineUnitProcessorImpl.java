@@ -157,6 +157,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 						_getObjectEntryClassName(batchEngineUnitConfiguration),
 						")(batch.engine.task.item.delegate.name=",
 						batchEngineUnitConfiguration.getTaskItemDelegateName(),
+						")(companyId=",
+						batchEngineUnitConfiguration.getCompanyId(),
 						"))(&(batch.engine.entity.class.name=",
 						batchEngineUnitConfiguration.getClassName(),
 						")(batch.engine.task.item.delegate.name=",

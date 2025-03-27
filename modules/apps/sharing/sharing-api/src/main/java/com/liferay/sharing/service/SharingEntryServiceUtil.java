@@ -133,6 +133,12 @@ public class SharingEntryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static SharingEntry getSharingEntry(long sharingEntryId)
+		throws PortalException {
+
+		return getService().getSharingEntry(sharingEntryId);
+	}
+
 	public static SharingEntry getSharingEntryByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {

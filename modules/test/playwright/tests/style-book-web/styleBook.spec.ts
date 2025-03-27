@@ -225,11 +225,7 @@ test.describe('Style books applied to master pages', async () => {
 			template: masterPageName,
 		});
 
-		return {
-			masterPageName,
-			pageName,
-			styleBookName,
-		};
+		return;
 	}
 
 	test('Without selected style book and without default style book for the theme', async ({

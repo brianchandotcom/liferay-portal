@@ -10,7 +10,7 @@
 	<%
 	String updateLanguageFormAction = HttpComponentsUtil.addParameter(themeDisplay.getPathMain() + "/portal/update_language", "p_l_id", themeDisplay.getPlid());
 
-	String updateLanguageRedirect = HttpComponentsUtil.addParameter(PortalUtil.getCurrentURL(request), "ticketKey", ParamUtil.getString(request, "ticketKey"));
+	String updateLanguageRedirect = HttpComponentsUtil.addParameters(PortalUtil.getCurrentURL(request), "ticketId", ParamUtil.getString(request, "ticketId"), "ticketKey", ParamUtil.getString(request, "ticketKey"));
 
 	updateLanguageFormAction = HttpComponentsUtil.addParameter(updateLanguageFormAction, "redirect", updateLanguageRedirect);
 	%>

@@ -13,7 +13,6 @@ import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
-import Layout from '../../../../../../../../components/FormLayout';
 import useUpdateOrg from '../../../hooks/useUpdateOrg';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 

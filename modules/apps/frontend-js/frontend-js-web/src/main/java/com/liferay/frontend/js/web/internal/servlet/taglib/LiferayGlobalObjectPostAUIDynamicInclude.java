@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -32,10 +32,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  */
 @Component(
-	property = "service.ranking:Integer=" + (Integer.MAX_VALUE - 1),
+	property = "service.ranking:Integer=" + (Integer.MAX_VALUE - 2),
 	service = DynamicInclude.class
 )
-public class GlobalJSDynamicInclude extends BaseDynamicInclude {
+public class LiferayGlobalObjectPostAUIDynamicInclude
+	extends BaseDynamicInclude {
 
 	@Override
 	public void include(
@@ -104,7 +105,7 @@ public class GlobalJSDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GlobalJSDynamicInclude.class);
+		LiferayGlobalObjectPostAUIDynamicInclude.class);
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;

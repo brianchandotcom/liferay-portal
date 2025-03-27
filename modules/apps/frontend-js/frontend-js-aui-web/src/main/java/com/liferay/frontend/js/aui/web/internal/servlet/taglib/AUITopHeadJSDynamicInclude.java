@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration",
-	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
+	property = "service.ranking:Integer=" + (Integer.MAX_VALUE - 1),
 	service = DynamicInclude.class
 )
 public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {

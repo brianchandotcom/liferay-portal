@@ -42,6 +42,17 @@ SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServi
 			/>
 		</c:if>
 
+		<div>
+			<react:component
+				module="{NavigationMenuIconSelector} from site-navigation-taglib"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"selectedIcon", siteNavigationMenuItemType.getDisplayIcon(siteNavigationMenuItem)
+					).build()
+				%>'
+			/>
+		</div>
+
 		<clay:button
 			block="<%= true %>"
 			label="save"

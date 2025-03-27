@@ -67,12 +67,6 @@ test('Assert that the style books in page editor are based on the applied theme'
 		await expect(page.getByText('Styles from Classic Theme')).toBeVisible();
 
 		await expect(page.getByText(styleBookName)).toBeVisible();
-
-		await pagesAdminPage.goto(site.friendlyUrlPath);
-
-		await pagesAdminPage.goToDesignTabConfiguration(pageName);
-
-		await pagesAdminPage.changeTheme('Dialect');
 	});
 
 	await test.step('Apply the Dialect theme and assert the Dialect style book is applied', async () => {

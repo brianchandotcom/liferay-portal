@@ -53,11 +53,11 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 
 		_db = DBManagerUtil.getDB();
 
-		_oldDuplicateEntryPrimaryKeyValue = 1;
+		_oldDuplicateRowPrimaryKeyValue = 1;
 
-		_newDuplicateEntryPrimaryKeyValue = 3;
+		_newDuplicateRowPrimaryKeyValue = 3;
 
-		_uniqueEntryPrimaryKeyValue = 4;
+		_uniqueRowPrimaryKeyValue = 4;
 	}
 
 	@Before
@@ -73,7 +73,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_oldDuplicateEntryPrimaryKeyValue,
+						_oldDuplicateRowPrimaryKeyValue,
 						", [$TRUE$], 2, '3')"));
 
 				_db.runSQL(
@@ -82,13 +82,13 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_newDuplicateEntryPrimaryKeyValue,
+						_newDuplicateRowPrimaryKeyValue,
 						", [$TRUE$], 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_uniqueEntryPrimaryKeyValue, ", [$FALSE$], 2, '3')"));
+						_uniqueRowPrimaryKeyValue, ", [$FALSE$], 2, '3')"));
 			});
 	}
 
@@ -99,9 +99,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcess()
-		throws SQLException, UpgradeException {
-
+	public void testUpgrade() throws SQLException, UpgradeException {
 		_assert(false, null);
 
 		DeleteDuplicateUniqueFinderRows upgradeProcess =
@@ -110,17 +108,17 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
-					"DuplicateIndexEntriesUpgradeProcess",
+					"DeleteDuplicateUniqueFinderRows",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();
 		}
 
-		_assert(true, _oldDuplicateEntryPrimaryKeyValue);
+		_assert(true, _oldDuplicateRowPrimaryKeyValue);
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessWithOrderBy()
+	public void testUpgradeWithOrderByClause()
 		throws SQLException, UpgradeException {
 
 		_assert(false, null);
@@ -132,17 +130,17 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
-					"DuplicateIndexEntriesUpgradeProcess",
+					"DeleteDuplicateUniqueFinderRows",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();
 		}
 
-		_assert(true, _newDuplicateEntryPrimaryKeyValue);
+		_assert(true, _newDuplicateRowPrimaryKeyValue);
 	}
 
 	private void _assert(
-			boolean duplicatesRemoved, Long remainedEntryPrimaryKeyValue)
+			boolean duplicatesRemoved, Long remainedRowPrimaryKeyValue)
 		throws SQLException {
 
 		_companyLocalService.forEachCompany(
@@ -170,18 +168,19 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 							"select primaryKeyColumn from TestTable");
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					List<Long> primaryKeys = new ArrayList<>();
+					List<Long> primaryKeyValues = new ArrayList<>();
 
 					while (resultSet.next()) {
-						primaryKeys.add(resultSet.getLong(1));
+						primaryKeyValues.add(resultSet.getLong(1));
 					}
 
 					Assert.assertEquals(
-						primaryKeys.toString(), 2, primaryKeys.size());
+						primaryKeyValues.toString(), 2,
+						primaryKeyValues.size());
 					Assert.assertTrue(
-						primaryKeys.contains(remainedEntryPrimaryKeyValue));
+						primaryKeyValues.contains(remainedRowPrimaryKeyValue));
 					Assert.assertTrue(
-						primaryKeys.contains(_uniqueEntryPrimaryKeyValue));
+						primaryKeyValues.contains(_uniqueRowPrimaryKeyValue));
 				}
 			});
 	}
@@ -191,8 +190,8 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 
 	private static Connection _connection;
 	private static DB _db;
-	private static long _newDuplicateEntryPrimaryKeyValue;
-	private static long _oldDuplicateEntryPrimaryKeyValue;
-	private static long _uniqueEntryPrimaryKeyValue;
+	private static long _newDuplicateRowPrimaryKeyValue;
+	private static long _oldDuplicateRowPrimaryKeyValue;
+	private static long _uniqueRowPrimaryKeyValue;
 
 }

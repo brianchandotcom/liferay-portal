@@ -33,6 +33,11 @@
 			<version>${version}</version>
 		</dependency>
 	</dependencies>
+	<properties>
+		<java.compiler.source.version>1.8</java.compiler.source.version>
+		<java.compiler.target.version>1.8</java.compiler.target.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -56,6 +61,15 @@
 					<sqlDirName>src/main/resources/META-INF/sql</sqlDirName>
 					<sqlFileName>tables.sql</sqlFileName>
 					<testDirName>../${artifactId}-test/src/testIntegration/java</testDirName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.compiler.source.version}</source>
+					<target>${java.compiler.target.version}</target>
 				</configuration>
 			</plugin>
 		</plugins>

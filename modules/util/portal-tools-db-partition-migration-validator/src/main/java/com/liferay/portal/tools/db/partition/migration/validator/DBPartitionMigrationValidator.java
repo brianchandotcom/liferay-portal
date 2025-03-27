@@ -205,7 +205,6 @@ public class DBPartitionMigrationValidator {
 			printWriter, _HELP_WIDTH,
 			"Liferay Database Partition Migration Validator Tool. This tool " +
 				"is a beta feature. It is experimental and not supported.\n\n");
-
 		helpFormatter.printUsage(
 			printWriter, _HELP_WIDTH,
 			"./db_partition_migration_validator.sh <command> [parameters]");

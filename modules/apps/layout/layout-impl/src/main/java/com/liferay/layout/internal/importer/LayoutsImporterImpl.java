@@ -187,6 +187,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
 
+		_processMasterLayoutLayoutPageTemplateEntries(
+			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
+			preserveItemIds, userId, zipReader);
+
 		_processBasicLayoutPageTemplateEntries(
 			groupId, layoutPageTemplateCollectionId,
 			layoutsImporterResultEntries, layoutsImportStrategy,
@@ -205,9 +209,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			layoutsImportStrategy, preserveItemIds, userId, zipReader);
 
 		_processLayoutUtilityPageEntries(
-			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
-			preserveItemIds, userId, zipReader);
-		_processMasterLayoutLayoutPageTemplateEntries(
 			groupId, layoutsImporterResultEntries, layoutsImportStrategy,
 			preserveItemIds, userId, zipReader);
 

@@ -1,6 +1,6 @@
 ## CompanyThreadLocalCheck
 
-Do not use `CompanyThreadLocal.setCompanyId`, use `CompanyThreadLocal.lock` or `CompanyThreadLocal.setCompanyIdWithSafeCloseable` instead.
+Do not use `CompanyThreadLocal.setCompanyId`, use `CompanyThreadLocal.setCompanyIdWithSafeCloseable` instead.
 
 ### Examples
 

@@ -6,6 +6,8 @@
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
@@ -15,12 +17,16 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.Assert;
 
@@ -67,6 +73,82 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static void assertPageSpecifications(
+		ContentPageSpecification expectedDraftContentPageSpecification,
+		ContentPageSpecification expectedPublishedContentPageSpecification,
+		PageSpecification[] pageSpecifications, Layout layout,
+		PageSpecification.Status status) {
+
+		ContentPageSpecification publishedContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[0];
+
+		Assert.assertEquals(
+			expectedDraftContentPageSpecification.getExternalReferenceCode(),
+			publishedContentPageSpecification.
+				getDraftContentPageSpecificationExternalReferenceCode());
+		Assert.assertEquals(
+			expectedPublishedContentPageSpecification.
+				getExternalReferenceCode(),
+			publishedContentPageSpecification.getExternalReferenceCode());
+		Assert.assertEquals(
+			expectedPublishedContentPageSpecification.getStatus(),
+			publishedContentPageSpecification.getStatus());
+
+		ContentPageSpecification draftContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[1];
+
+		Assert.assertNull(
+			draftContentPageSpecification.
+				getDraftContentPageSpecificationExternalReferenceCode());
+		Assert.assertEquals(
+			expectedDraftContentPageSpecification.getExternalReferenceCode(),
+			draftContentPageSpecification.getExternalReferenceCode());
+		Assert.assertEquals(
+			expectedDraftContentPageSpecification.getStatus(),
+			draftContentPageSpecification.getStatus());
+
+		Assert.assertEquals(
+			status, publishedContentPageSpecification.getStatus());
+
+		Assert.assertEquals(
+			expectedPublishedContentPageSpecification.
+				getExternalReferenceCode(),
+			layout.getExternalReferenceCode());
+
+		PageExperiencesTestUtil.assertPageExperiences(
+			expectedPublishedContentPageSpecification.getPageExperiences(),
+			layout, publishedContentPageSpecification.getPageExperiences());
+
+		if (Objects.equals(PageSpecification.Status.APPROVED, status)) {
+			Assert.assertTrue(layout.isPublished());
+		}
+		else {
+			Assert.assertFalse(layout.isPublished());
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertEquals(
+			expectedDraftContentPageSpecification.getExternalReferenceCode(),
+			draftLayout.getExternalReferenceCode());
+
+		PageExperiencesTestUtil.assertPageExperiences(
+			expectedDraftContentPageSpecification.getPageExperiences(),
+			draftLayout, draftContentPageSpecification.getPageExperiences());
+
+		if (Objects.equals(
+				PageSpecification.Status.APPROVED,
+				expectedDraftContentPageSpecification.getStatus())) {
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, draftLayout.getStatus());
+		}
+		else {
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_DRAFT, draftLayout.getStatus());
+		}
+	}
+
+	public static void assertPageSpecifications(
 			Layout layout, PageSpecification[] pageSpecifications)
 		throws Exception {
 
@@ -101,6 +183,42 @@ public class PageSpecificationsTestUtil {
 
 		assertContentPageSpecification(
 			pageSpecifications[1], draftLayout.getPlid());
+	}
+
+	public static ContentPageSpecification getContentPageSpecification(
+		String curDraftContentPageSpecificationExternalReferenceCode,
+		PageSpecification.Status curStatus) {
+
+		ContentPageSpecification contentPageSpecification =
+			new ContentPageSpecification() {
+				{
+					setDraftContentPageSpecificationExternalReferenceCode(
+						() ->
+							curDraftContentPageSpecificationExternalReferenceCode);
+					setExternalReferenceCode(RandomTestUtil::randomString);
+					setStatus(() -> curStatus);
+					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
+				}
+			};
+
+		contentPageSpecification.setPageExperiences(
+			() -> {
+				PageExperience pageExperience = new PageExperience();
+
+				pageExperience.setExternalReferenceCode(
+					RandomTestUtil::randomString);
+				pageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
+				pageExperience.setName_i18n(
+					Collections.singletonMap(
+						"en-US", RandomTestUtil.randomString()));
+				pageExperience.setPageElements(new PageElement[0]);
+				pageExperience.setPageSpecificationExternalReferenceCode(
+					contentPageSpecification.getExternalReferenceCode());
+
+				return new PageExperience[] {pageExperience};
+			});
+
+		return contentPageSpecification;
 	}
 
 	public static void testPostSiteSiteByExternalReferenceCodePageSpecification(

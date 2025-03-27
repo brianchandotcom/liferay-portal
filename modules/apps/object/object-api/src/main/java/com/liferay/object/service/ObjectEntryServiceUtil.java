@@ -212,11 +212,13 @@ public class ObjectEntryServiceUtil {
 
 	public static void validate(
 			long groupId, ObjectEntry objectEntry,
-			List<String> objectValidationRuleExternalReferenceCodes)
+			List<String> objectValidationRuleExternalReferenceCodes,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		getService().validate(
-			groupId, objectEntry, objectValidationRuleExternalReferenceCodes);
+			groupId, objectEntry, objectValidationRuleExternalReferenceCodes,
+			serviceContext);
 	}
 
 	public static ObjectEntryService getService() {

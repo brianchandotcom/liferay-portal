@@ -525,4 +525,10 @@ public interface ObjectEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void validate(
+			long groupId, ObjectEntry objectEntry,
+			List<String> objectValidationRuleExternalReferenceCodes,
+			ServiceContext serviceContext, long userId)
+		throws PortalException;
+
 }

@@ -707,6 +707,18 @@ public class ObjectEntryLocalServiceUtil {
 			userId, objectEntry, status, serviceContext);
 	}
 
+	public static void validate(
+			long groupId, ObjectEntry objectEntry,
+			List<String> objectValidationRuleExternalReferenceCodes,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext,
+			long userId)
+		throws PortalException {
+
+		getService().validate(
+			groupId, objectEntry, objectValidationRuleExternalReferenceCodes,
+			serviceContext, userId);
+	}
+
 	public static ObjectEntryLocalService getService() {
 		return _serviceSnapshot.get();
 	}

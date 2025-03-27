@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -45,6 +46,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -110,6 +112,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
@@ -244,6 +248,98 @@ public class LayoutsImporterTest {
 		Assert.assertEquals(
 			LayoutsImporterResultEntry.Status.IMPORTED,
 			layoutsImporterResultEntry.getStatus());
+	}
+
+	@Test
+	@TestInfo("LPD-51823")
+	public void testExportImportLayoutPageTemplateEntryWithImportedMasterLayout()
+		throws Exception {
+
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				_group1.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				WorkflowConstants.STATUS_APPROVED);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group1.getGroupId(),
+				_portal.getClassNameId(AssetCategory.class.getName()), 0);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.publishLayout(
+			_layoutLocalService.updateMasterLayoutPlid(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(),
+				masterLayoutPageTemplateEntry.getPlid()),
+			layout);
+
+		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				masterLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+			},
+			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+		ZipReader zipReader = _zipReaderFactory.getZipReader(file);
+
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
+
+		for (String entry : zipReader.getEntries()) {
+			zipWriter.addEntry(entry, zipReader.getEntryAsString(entry));
+		}
+
+		file = _layoutsExporter.exportLayoutPageTemplateEntries(
+			new long[] {
+				masterLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+			},
+			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
+
+		zipReader = _zipReaderFactory.getZipReader(file);
+
+		for (String entry : zipReader.getEntries()) {
+			zipWriter.addEntry(entry, zipReader.getEntryAsString(entry));
+		}
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group2.getGroupId(), 0,
+				zipWriter.getFile(), LayoutsImportStrategy.DO_NOT_OVERWRITE,
+				true);
+
+		Assert.assertEquals(
+			layoutsImporterResultEntries.toString(), 2,
+			layoutsImporterResultEntries.size());
+
+		for (LayoutsImporterResultEntry layoutsImporterResultEntry :
+				layoutsImporterResultEntries) {
+
+			Assert.assertEquals(
+				LayoutsImporterResultEntry.Status.IMPORTED,
+				layoutsImporterResultEntry.getStatus());
+		}
+
+		LayoutPageTemplateEntry importedMasterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				_group2.getGroupId(),
+				masterLayoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+		LayoutPageTemplateEntry importedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				_group2.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+		Layout importedLayoutPageTemplateEntryLayout =
+			_layoutLocalService.getLayout(
+				importedLayoutPageTemplateEntry.getPlid());
+
+		Assert.assertEquals(
+			importedMasterLayoutPageTemplateEntry.getPlid(),
+			importedLayoutPageTemplateEntryLayout.getMasterLayoutPlid());
 	}
 
 	@Test
@@ -2102,6 +2198,9 @@ public class LayoutsImporterTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

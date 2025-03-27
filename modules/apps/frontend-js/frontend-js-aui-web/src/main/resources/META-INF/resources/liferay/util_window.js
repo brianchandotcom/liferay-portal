@@ -384,18 +384,16 @@ AUI.add(
 				if (!modal) {
 					const titleNode = A.Node.create(instance.TITLE_TEMPLATE);
 
-					if (config.stack !== false) {
-						A.mix(modalConfig, {
-							plugins: [Liferay.WidgetZIndex],
-						});
-					}
-
 					modal = new LiferayModal({
 						cssClass: 'modal-full-screen',
 						headerContent: titleNode,
 						id,
 						...modalConfig,
 					});
+
+					if (config.stack !== false) {
+						modal.set('zIndex', ++Liferay.zIndex.WINDOW);
+					}
 
 					Liferay.once('screenLoad', () => {
 						modal.destroy();
@@ -408,10 +406,6 @@ AUI.add(
 					instance._bindWindowHooks(modal, config);
 				}
 				else {
-					if (!config.zIndex && modal.hasPlugin('zindex')) {
-						delete modalConfig.zIndex;
-					}
-
 					const openingWindow = config.openingWindow;
 
 					modal._opener = openingWindow;
@@ -661,7 +655,6 @@ AUI.add(
 			'aui-modal',
 			'aui-url',
 			'event-resize',
-			'liferay-widget-zindex',
 		],
 	}
 );

@@ -229,12 +229,7 @@
 							'aui-modal',
 							'aui-url',
 							'event-resize',
-							'liferay-widget-zindex',
 						],
-					},
-					'liferay-widget-zindex': {
-						path: 'widget_zindex.js',
-						requires: ['aui-modal', 'plugin'],
 					},
 				},
 				root: PATH_JAVASCRIPT + '/liferay/',

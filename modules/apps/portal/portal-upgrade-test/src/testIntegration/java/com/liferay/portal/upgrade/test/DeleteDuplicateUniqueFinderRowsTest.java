@@ -57,7 +57,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 
 		_newDuplicateRowPrimaryKeyValue = 3;
 
-		_uniqueRowPrimaryKeyValue = 4;
+		_nonduplicateRowPrimaryKeyValue = 4;
 	}
 
 	@Before
@@ -88,7 +88,8 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_uniqueRowPrimaryKeyValue, ", [$FALSE$], 2, '3')"));
+						_nonduplicateRowPrimaryKeyValue,
+						", [$FALSE$], 2, '3')"));
 			});
 	}
 
@@ -140,7 +141,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 	}
 
 	private void _assert(
-			boolean duplicatesRemoved, Long remainedRowPrimaryKeyValue)
+			boolean duplicateRowsRemoved, Long uniqueRowPrimaryKeyValue)
 		throws SQLException {
 
 		_companyLocalService.forEachCompany(
@@ -152,7 +153,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 									"1");
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					if (!duplicatesRemoved) {
+					if (!duplicateRowsRemoved) {
 						Assert.assertTrue(resultSet.next());
 
 						Assert.assertEquals(3, resultSet.getInt(1));
@@ -178,9 +179,10 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 						primaryKeyValues.toString(), 2,
 						primaryKeyValues.size());
 					Assert.assertTrue(
-						primaryKeyValues.contains(remainedRowPrimaryKeyValue));
+						primaryKeyValues.contains(uniqueRowPrimaryKeyValue));
 					Assert.assertTrue(
-						primaryKeyValues.contains(_uniqueRowPrimaryKeyValue));
+						primaryKeyValues.contains(
+							_nonduplicateRowPrimaryKeyValue));
 				}
 			});
 	}
@@ -191,7 +193,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 	private static Connection _connection;
 	private static DB _db;
 	private static long _newDuplicateRowPrimaryKeyValue;
+	private static long _nonduplicateRowPrimaryKeyValue;
 	private static long _oldDuplicateRowPrimaryKeyValue;
-	private static long _uniqueRowPrimaryKeyValue;
 
 }

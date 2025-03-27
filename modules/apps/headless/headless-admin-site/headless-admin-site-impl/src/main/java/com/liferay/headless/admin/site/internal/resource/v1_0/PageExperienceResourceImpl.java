@@ -51,9 +51,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			String pageExperienceExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
+		FeatureFlagManagerUtil.checkEnabled("LPD-35443");
 
 		long groupId = GroupUtil.getGroupId(
 			false, contextCompany.getCompanyId(), siteExternalReferenceCode);

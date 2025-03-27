@@ -14,6 +14,8 @@ import com.liferay.layout.converter.ContentDisplayConverter;
 import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -21,6 +23,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -97,6 +101,17 @@ public class FormLayoutStructureItemImporter
 			if (Objects.equals(
 					ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
 					(String)itemReferenceMap.get("contextSource"))) {
+
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_getLayoutPageTemplateEntry(
+						layoutStructureItemImporterContext);
+
+				if (layoutPageTemplateEntry != null) {
+					formStyledLayoutStructureItem.setClassNameId(
+						layoutPageTemplateEntry.getClassNameId());
+					formStyledLayoutStructureItem.setClassTypeId(
+						layoutPageTemplateEntry.getClassTypeId());
+				}
 
 				formStyledLayoutStructureItem.setFormConfig(
 					FormStyledLayoutStructureItem.
@@ -231,6 +246,35 @@ public class FormLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.FORM;
+	}
+
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
+
+		Layout layout = layoutStructureItemImporterContext.getLayout();
+
+		if (!layout.isTypeAssetDisplay()) {
+			return null;
+		}
+
+		if (layout.isDraftLayout()) {
+			LayoutLocalService layoutLocalService =
+				layoutStructureItemImporterContext.getLayoutLocalService();
+
+			layout = layoutLocalService.fetchLayout(layout.getClassPK());
+		}
+
+		if (layout == null) {
+			return null;
+		}
+
+		LayoutPageTemplateEntryLocalService
+			layoutPageTemplateEntryLocalService =
+				layoutStructureItemImporterContext.
+					getLayoutPageTemplateEntryLocalService();
+
+		return layoutPageTemplateEntryLocalService.
+			fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 	}
 
 	private JSONObject _getLocalizationConfigJSONObject(

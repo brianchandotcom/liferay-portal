@@ -382,7 +382,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 					file="${project.dir}/test.properties"
 				>
 					<replacetoken><![CDATA[test.batch.run.property.query[functional-tomcat*][portal-release-acceptance]=\]]></replacetoken>
-					<replacevalue><![CDATA[playwright.projects.includes[playwright-js-tomcat90-postgresql155][portal-release-acceptance]=\
+					<replacevalue><![CDATA[playwright.projects.includes[playwright-js-tomcat90-postgresql163][portal-release-acceptance]=\
 
     test.batch.run.property.query[functional-tomcat-postgresql163-jdk21_zulu][portal-release-acceptance]=\]]></replacevalue>
 				</replace>
@@ -490,7 +490,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 							<replaceregexp
 								file="${project.dir}/test.properties"
 								flags="g"
-								match="(playwright\.projects\.includes\[playwright-js-tomcat90-postgresql155\]\[portal-release-acceptance\]=\\\n)"
+								match="(playwright\.projects\.includes\[playwright-js-tomcat90-postgresql163\]\[portal-release-acceptance\]=\\\n)"
 								replace="\1        ${testcase.file.name},\\\\${line.separator}"
 							/>
 						</then>

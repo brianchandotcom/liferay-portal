@@ -119,11 +119,13 @@ public class StartupHelperUtil {
 	}
 
 	public static void setUpgrading(boolean upgrading) {
-		if (upgrading != _upgrading) {
-			_dbWarmedSCLSingleton.destroy(null);
-
-			_upgrading = upgrading;
+		if (upgrading == _upgrading) {
+			return;
 		}
+
+		_dbWarmedSCLSingleton.destroy(null);
+
+		_upgrading = upgrading;
 
 		if (upgrading) {
 			if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {

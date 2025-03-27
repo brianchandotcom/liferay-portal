@@ -320,7 +320,7 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	private long _getParentObjectEntryFolderId(
-			boolean createIfNotExist,
+			boolean addObjectEntryFolder,
 			ParentObjectEntryFolderBrief parentObjectEntryFolderBrief,
 			long groupId)
 		throws Exception {
@@ -349,7 +349,9 @@ public class ObjectEntryFolderResourceImpl
 								getExternalReferenceCode(),
 							groupId, contextUser.getCompanyId());
 
-			if ((objectEntryFolderPersistence == null) && !createIfNotExist) {
+			if ((objectEntryFolderPersistence == null) &&
+				!addObjectEntryFolder) {
+
 				throw new PortalException();
 			}
 

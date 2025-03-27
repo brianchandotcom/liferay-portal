@@ -108,8 +108,8 @@ public class FragmentCollectionsDisplayContext {
 		if (_isSearch()) {
 			searchContainer.setResultsAndTotal(
 				() -> FragmentCollectionServiceUtil.getFragmentCollections(
-					allGroupIds, _getKeywords(), searchContainer.getStart(),
-					searchContainer.getEnd(),
+					allGroupIds, _getKeywords(), false,
+					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
 					allGroupIds, _getKeywords()));
@@ -117,7 +117,7 @@ public class FragmentCollectionsDisplayContext {
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> FragmentCollectionServiceUtil.getFragmentCollections(
-					allGroupIds, searchContainer.getStart(),
+					allGroupIds, false, searchContainer.getStart(),
 					searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(

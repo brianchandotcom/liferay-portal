@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {showCapsLock} from '../../../src/main/resources/META-INF/resources/index.es';
+import showCapsLock from '../../../src/main/resources/META-INF/resources/liferay/util/show_caps_lock';
 
 describe('Liferay.Util.showCapsLock', () => {
 	it('finds an element by id and sets the display property to an empty string', () => {

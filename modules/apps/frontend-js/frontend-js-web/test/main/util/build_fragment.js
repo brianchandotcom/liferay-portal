@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import buildFragment from '../../../src/main/resources/META-INF/resources/liferay/util/build_fragment';
+import buildFragment from '../../../src/main/resources/META-INF/resources/main/util/build_fragment';
 
 describe('Liferay.Util.buildFragment', () => {
 	it('creates a document fragment from a string', () => {

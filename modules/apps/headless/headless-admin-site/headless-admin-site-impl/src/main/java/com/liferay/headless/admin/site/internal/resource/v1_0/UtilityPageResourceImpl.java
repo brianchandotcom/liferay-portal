@@ -223,6 +223,16 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 				utilityPage.getName()));
 	}
 
+	@Override
+	protected void preparePatch(
+		UtilityPage utilityPage, UtilityPage existingUtilityPage) {
+
+		if (utilityPage.getPageSpecifications() != null) {
+			existingUtilityPage.setPageSpecifications(
+				utilityPage::getPageSpecifications);
+		}
+	}
+
 	private UtilityPage _addLayoutUtilityPageEntry(
 			long groupId, UtilityPage utilityPage)
 		throws Exception {

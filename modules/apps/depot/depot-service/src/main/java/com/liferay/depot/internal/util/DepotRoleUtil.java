@@ -7,6 +7,7 @@ package com.liferay.depot.internal.util;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.internal.instance.lifecycle.DepotRolesPortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -52,6 +53,13 @@ public class DepotRoleUtil {
 		if (Objects.equals(
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, name)) {
 
+			if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+				return ResourceBundleUtil.getString(
+					resourceBundle,
+					"space-administrators-are-super-users-of-their-space-but-" +
+						"cannot-make-other-users-into-space-administrators");
+			}
+
 			return ResourceBundleUtil.getString(
 				resourceBundle,
 				"asset-library-administrators-are-super-users-of-their-asset-" +
@@ -61,6 +69,13 @@ public class DepotRoleUtil {
 		else if (Objects.equals(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER, name)) {
 
+			if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+				return ResourceBundleUtil.getString(
+					resourceBundle,
+					"all-users-who-belong-to-a-space-have-this-role-within-" +
+						"that-space");
+			}
+
 			return ResourceBundleUtil.getString(
 				resourceBundle,
 				"all-users-who-belong-to-an-asset-library-have-this-role-" +
@@ -68,6 +83,13 @@ public class DepotRoleUtil {
 		}
 		else if (Objects.equals(
 					DepotRolesConstants.ASSET_LIBRARY_OWNER, name)) {
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+				return ResourceBundleUtil.getString(
+					resourceBundle,
+					"space-owners-are-super-users-of-their-space-and-can-" +
+						"assign-space-roles-to-users");
+			}
 
 			return ResourceBundleUtil.getString(
 				resourceBundle,

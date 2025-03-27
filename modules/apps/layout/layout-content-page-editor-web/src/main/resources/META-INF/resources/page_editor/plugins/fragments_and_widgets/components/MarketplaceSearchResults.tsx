@@ -182,6 +182,7 @@ function SearchResults({
 				<MarketplaceModal
 					fragmentPortletNamespace={config.fragmentPortletNamespace}
 					fragmentsImportURL={config.fragmentsImportURL}
+					hideBackButton={true}
 					trigger={null}
 				>
 					<ul

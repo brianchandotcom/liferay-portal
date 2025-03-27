@@ -1,5 +1,25 @@
 components:
     schemas:
+        AssetLibrary:
+            properties:
+                id:
+                    description:
+                        The asset library's site ID.
+                    format: int64
+                    type: integer
+                name:
+                    description:
+                        The asset library's name.
+                    readOnly: true
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized asset library's name.
+                    readOnly: true
+                    type: object
+            type: object
         AssetType:
             description:
                 Represents the asset type associated with a `TaxonomyCategory`.
@@ -84,6 +104,12 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraries:
+                    description:
+                        A list of asset libraries that are associated with this keyword.
+                    items:
+                        $ref: "#/components/schemas/AssetLibrary"
+                    type: array
                 assetLibraryKey:
                     readOnly: true
                     type: string
@@ -876,6 +902,78 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["TaxonomyVocabulary"]
+    "/keywords":
+        get:
+            operationId: getKeywordsPage
+            parameters:
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Keyword"
+                                type: array
+            tags: ["Keyword"]
+        post:
+            operationId: postKeyword
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Keyword"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Keyword"
+            tags: ["Keyword"]
     "/keywords/ranked":
         get:
             operationId: getKeywordsRankedPage

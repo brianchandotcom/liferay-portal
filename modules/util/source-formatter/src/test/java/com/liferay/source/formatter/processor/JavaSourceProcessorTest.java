@@ -117,8 +117,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				StringBundler.concat(
 					"Do not use \"CompanyThreadLocal.setCompanyId\", use ",
-					"\"CompanyThreadLocal.lock\" or \"CompanyThreadLocal.",
-					"setCompanyIdWithSafeCloseable\" instead"),
+					"\"CompanyThreadLocal.setCompanyIdWithSafeCloseable\" ",
+					"instead"),
 				16
 			).addExpectedMessage(
 				StringBundler.concat(

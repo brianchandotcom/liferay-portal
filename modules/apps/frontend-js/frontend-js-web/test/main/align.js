@@ -6,8 +6,8 @@
 import {
 	ALIGN_POSITIONS,
 	align,
-} from '../../src/main/resources/META-INF/resources/liferay/align';
-import buildFragment from '../../src/main/resources/META-INF/resources/liferay/util/build_fragment';
+} from '../../src/main/resources/META-INF/resources/main/align';
+import buildFragment from '../../src/main/resources/META-INF/resources/main/util/build_fragment';
 
 let center;
 let element;

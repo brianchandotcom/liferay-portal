@@ -18,14 +18,18 @@ export function InstallFragmentModalBody() {
 				size="md"
 			/>
 
-			<div className="ml-4 mr-4 text-center text-secondary">
-				{Liferay.Language.get(
-					'the-installation-process-is-ongoing-and-may-take-some-time'
-				)}
+			<div className="d-flex flex-column ml-4 mr-4 text-center text-secondary">
+				<span>
+					{Liferay.Language.get(
+						'the-installation-process-is-ongoing-and-may-take-some-time'
+					)}
+				</span>
 
-				{Liferay.Language.get(
-					'closing-the-window-will-not-cancel-the-process'
-				)}
+				<span>
+					{Liferay.Language.get(
+						'closing-the-window-will-not-cancel-the-process'
+					)}
+				</span>
 			</div>
 		</>
 	);

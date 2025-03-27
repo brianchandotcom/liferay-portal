@@ -10,7 +10,7 @@ import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import selectStructureFields from '../selectors/selectStructureFields';
 import {Field} from './field';
-import focusInvalidInput from './focusInvalidInput';
+import focusInvalidElement from './focusInvalidElement';
 
 export type ValidationError = 'no-erc' | 'no-label' | 'no-name' | 'no-space';
 
@@ -131,7 +131,7 @@ export function useValidate() {
 				type: 'validate',
 			});
 
-			focusInvalidInput();
+			focusInvalidElement();
 
 			return false;
 		}

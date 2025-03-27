@@ -240,14 +240,14 @@ public class DBUpgrader {
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);
 
+		if (_upgradeClient || StartupHelperUtil.isNewRelease()) {
+			IndexUpdaterUtil.updateAllIndexes();
+		}
+
 		StartupHelperUtil.setUpgrading(false);
 
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortletsInitialized);
-
-		if (_upgradeClient || StartupHelperUtil.isNewRelease()) {
-			IndexUpdaterUtil.updateAllIndexes();
-		}
 	}
 
 	public static void upgradePortal() throws Exception {

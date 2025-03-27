@@ -726,11 +726,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 				dangerouslySetInnerHTML={{
 					__html: i18n.sub(
 						'we-apologize-for-the-inconvenience-but-we-ve-detected-a-system-error-with-this-project',
-						[
-							'<a href="https://help.liferay.com">' +
-								i18n.translate('support-ticket') +
-								'</a>',
-						]
+						['<a href="https://help.liferay.com">', '</a>']
 					),
 				}}
 			/>

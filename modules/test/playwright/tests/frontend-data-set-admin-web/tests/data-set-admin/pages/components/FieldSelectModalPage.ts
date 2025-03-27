@@ -66,7 +66,7 @@ export class FieldSelectModalPage {
 
 	getFieldCheckboxByLabel(label: string) {
 		return this.fieldSelectModalContainer
-			.getByRole('treeitem', {name: label})
+			.getByRole('treeitem', {exact: true, name: label})
 			.locator('input[type="checkbox"]');
 	}
 

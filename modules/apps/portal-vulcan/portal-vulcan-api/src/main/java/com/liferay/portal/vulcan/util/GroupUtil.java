@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.util;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -105,6 +106,10 @@ public class GroupUtil {
 			if (depotEntryGroup != null) {
 				return depotEntryGroup;
 			}
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			return null;
 		}
 
 		return groupLocalService.fetchGroup(assetLibraryId);

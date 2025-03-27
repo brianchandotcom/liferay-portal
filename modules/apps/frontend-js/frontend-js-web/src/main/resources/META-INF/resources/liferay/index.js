@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import loadClientExtensions from '../utils/client_extensions/loadClientExtensions';
-import loadEditorClientExtensions from '../utils/client_extensions/loadEditorClientExtensions';
 import DynamicInlineScroll from './DynamicInlineScroll.es';
 import DynamicSelect from './DynamicSelect';
 import AutoSize from './autosize/autosize.es';
@@ -107,6 +105,8 @@ import toggleControls from './util/toggle_controls';
 import toggleDisabled from './util/toggle_disabled';
 import toggleRadio from './util/toggle_radio';
 import toggleSelectBox from './util/toggle_select_box';
+import loadClientExtensions from './utils/client_extensions/loadClientExtensions';
+import loadEditorClientExtensions from './utils/client_extensions/loadEditorClientExtensions';
 
 import './workflow';
 import zIndex from './zIndex';

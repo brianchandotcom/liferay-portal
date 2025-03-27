@@ -84,8 +84,9 @@ export {default as toggleControls} from '../liferay/util/toggle_controls';
 export {default as toggleDisabled} from '../liferay/util/toggle_disabled';
 export {default as toggleRadio} from '../liferay/util/toggle_radio';
 export {default as toggleSelectBox} from '../liferay/util/toggle_select_box';
+export {default as loadClientExtensions} from '../liferay/utils/client_extensions/loadClientExtensions';
+
+export {default as loadEditorClientExtensions} from '../liferay/utils/client_extensions/loadEditorClientExtensions';
+export {loadModule} from '../liferay/utils/client_extensions/loadModule';
+export {default as dateUtils} from '../liferay/utils/date_time/index';
 export {default as zIndex} from '../liferay/zIndex';
-export {default as loadClientExtensions} from '../utils/client_extensions/loadClientExtensions';
-export {default as loadEditorClientExtensions} from '../utils/client_extensions/loadEditorClientExtensions';
-export {loadModule} from '../utils/client_extensions/loadModule';
-export {default as dateUtils} from '../utils/date_time/index';

@@ -15695,8 +15695,7 @@ public class ObjectEntryResourceTest {
 				validationResponse.getValidationErrors()[0].getErrorMessage());
 
 			ObjectEntryTestUtil.addObjectEntry(
-				objectDefinition, objectField2.getName(),
-				"Peter");
+				objectDefinition, objectField2.getName(), "Peter");
 
 			validationResponse = _validate(
 				scopeKey, objectEntryResource,
@@ -15708,8 +15707,8 @@ public class ObjectEntryResourceTest {
 			Assert.assertEquals(
 				String.format(
 					"Unique value constraint violation for %s.%s with value %s",
-					objectField2.getDBTableName(), objectField2.getDBColumnName(),
-					"Peter"),
+					objectField2.getDBTableName(),
+					objectField2.getDBColumnName(), "Peter"),
 				validationResponse.getValidationErrors()[0].getErrorMessage());
 
 			_objectFieldLocalService.deleteObjectField(

@@ -1,15 +1,6 @@
 Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
 Bundle-Version: 5.0.126
-Liferay-JS-Resources-Top-Head:\
-	/liferay/dom_task_runner.js,\
-	/liferay/events.js,\
-	/liferay/lazy_load.js,\
-	/liferay/liferay.js,\
-	\
-	/liferay/global.bundle.js,\
-	/liferay/portlet.js,\
-	/liferay/workflow.js
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="liferay.js";\

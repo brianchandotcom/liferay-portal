@@ -12,7 +12,6 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.UtilityPageResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
@@ -260,9 +259,8 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 	private ServiceContext _getServiceContext(
 		long groupId, UtilityPage utilityPage) {
 
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, null
-		).build();
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			groupId, contextHttpServletRequest, contextUser.getUserId());
 
 		serviceContext.setCreateDate(utilityPage.getDateCreated());
 		serviceContext.setModifiedDate(utilityPage.getDateModified());

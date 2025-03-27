@@ -1,5 +1,5 @@
 {
-	"@generated": "66bbb4530d569d75d0423d11ada82d3df6000276",
+	"@generated": "a94c1d838b0d37d0fcb138987de7f124aa2340a6",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -15,7 +15,7 @@
 				"../../../../../../../../../apps/frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [
-				"../../../../../../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+				"../../../../../../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
 			]
 		},
 		"rootDir": "../../../../../../../../..",

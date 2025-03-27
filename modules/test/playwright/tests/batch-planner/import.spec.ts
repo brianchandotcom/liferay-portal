@@ -579,11 +579,6 @@ test('can import CSV file with an unexisting field', async ({
 	).toMatchObject([
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			keywords: [],
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
-			taxonomyCategoryBriefs: [],
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-05T00:00:00.000Z',
@@ -594,9 +589,6 @@ test('can import CSV file with an unexisting field', async ({
 			testLongInteger: 123456789,
 			testLongTextField: 'This is a long text to test testLongTextField',
 			testPrecisionDecimalField: 321.123,
-			testRelationshipERC: '',
-			testRichTextField: '',
-			testRichTextFieldRawText: '',
 			testTextField: 'Test',
 		},
 	]);
@@ -643,12 +635,7 @@ test('can import CSV file with custom columns order', async ({
 	).toMatchObject([
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			keywords: [],
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			taxonomyCategoryBriefs: [],
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-05T00:00:00.000Z',
@@ -659,7 +646,6 @@ test('can import CSV file with custom columns order', async ({
 			testLongInteger: 123456789,
 			testLongTextField: 'This is a long text to test testLongTextField',
 			testPrecisionDecimalField: 321.123,
-			testRelationshipERC: '',
 			testRichTextField:
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField  </p>',
 			testRichTextFieldRawText:
@@ -708,12 +694,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 	).toMatchObject([
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			keywords: [],
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			taxonomyCategoryBriefs: [],
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-05T00:00:00.000Z',
@@ -725,7 +706,6 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			testLongTextField:
 				'This is a long text to test testLongTextField. The first entry',
 			testPrecisionDecimalField: 321.123,
-			testRelationshipERC: '',
 			testRichTextField:
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The first entry.  </p>',
 			testRichTextFieldRawText:
@@ -734,11 +714,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 		},
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			taxonomyCategoryBriefs: [],
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-2-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-06T00:00:00.000Z',
@@ -750,7 +726,6 @@ test('can import CSV file with multiple site scoped object entries', async ({
 			testLongTextField:
 				'This is a long text to test testLongTextField. The second entry',
 			testPrecisionDecimalField: 123.321,
-			testRelationshipERC: '',
 			testRichTextField:
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The second entry.  </p>',
 			testRichTextFieldRawText:
@@ -811,12 +786,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 	).toMatchObject([
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			keywords: [],
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			taxonomyCategoryBriefs: [],
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-05T00:00:00.000Z',
@@ -828,7 +798,6 @@ test('can import CSV file with new and existing site scoped object entries', asy
 			testLongTextField:
 				'This is a long text to test testLongTextField. The first entry',
 			testPrecisionDecimalField: 321.123,
-			testRelationshipERC: '',
 			testRichTextField:
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField.  </p>',
 			testRichTextFieldRawText:
@@ -837,12 +806,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 		},
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			keywords: [],
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
 			scopeKey: 'Guest',
-			taxonomyCategoryBriefs: [],
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-2-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-06T00:00:00.000Z',
@@ -854,7 +818,6 @@ test('can import CSV file with new and existing site scoped object entries', asy
 			testLongTextField:
 				'This is a long text to test testLongTextField. The second entry',
 			testPrecisionDecimalField: 123.321,
-			testRelationshipERC: '',
 			testRichTextField:
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. New entry.  </p>',
 			testRichTextFieldRawText:
@@ -914,10 +877,6 @@ test('can import CSV file with new and modified existing company scoped object e
 	).toMatchObject([
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08271',
-			keywords: [],
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-1-suffix',
 			testBooleanField: true,
 			testDateField: '2024-01-05T00:00:00.000Z',
@@ -929,7 +888,6 @@ test('can import CSV file with new and modified existing company scoped object e
 			testLongTextField:
 				'This is a long text to test testLongTextField. The first entry',
 			testPrecisionDecimalField: 321.123,
-			testRelationshipERC: '',
 			testRichTextField:
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The modified entry.  </p>',
 			testRichTextFieldRawText:
@@ -938,11 +896,6 @@ test('can import CSV file with new and modified existing company scoped object e
 		},
 		{
 			externalReferenceCode: '83b46736-f89b-9b90-188c-497d06c08273',
-			keywords: [],
-			r_testRelationship_c_testERC: '',
-			r_testRelationship_c_testId: 0,
-			taxonomyCategoryBriefs: [],
-			testAggregationField: '0',
 			testAutoIncrementField: 'prefix-2-suffix',
 			testBooleanField: false,
 			testDateField: '2024-01-06T00:00:00.000Z',
@@ -954,7 +907,6 @@ test('can import CSV file with new and modified existing company scoped object e
 			testLongTextField:
 				'This is a long text to test testLongTextField. The second entry',
 			testPrecisionDecimalField: 123.321,
-			testRelationshipERC: '',
 			testRichTextField:
 				'<p>This is a long text <strong>with some fomatting</strong> to text\n  testRichTextField. The new entry.  </p>',
 			testRichTextFieldRawText:

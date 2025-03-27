@@ -5,6 +5,7 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.entry.validation.ValidationError;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -156,9 +157,10 @@ public interface ObjectEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void validate(
+	public List<ValidationError> validate(
 			long groupId, ObjectEntry objectEntry,
-			List<String> objectValidationRuleExternalReferenceCodes)
+			List<String> objectValidationRuleExternalReferenceCodes,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

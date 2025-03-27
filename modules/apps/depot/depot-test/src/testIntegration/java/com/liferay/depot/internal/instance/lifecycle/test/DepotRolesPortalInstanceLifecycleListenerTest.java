@@ -10,6 +10,7 @@ import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -18,9 +19,13 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -41,6 +46,7 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@FeatureFlags("LPD-17564")
 	@Test
 	public void testAddCompany() throws Exception {
 		Company company = null;
@@ -50,13 +56,20 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 
 			_assertRole(
 				company.getCompanyId(),
-				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
+				"space-administrators-are-super-users-of-their-space-but-" +
+					"cannot-make-other-users-into-space-administrators",
+				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+				"space-administrator");
 			_assertRole(
 				company.getCompanyId(),
-				DepotRolesConstants.ASSET_LIBRARY_MEMBER);
+				"all-users-who-belong-to-a-space-have-this-role-within-that-" +
+					"space",
+				DepotRolesConstants.ASSET_LIBRARY_MEMBER, "space-member");
 			_assertRole(
 				company.getCompanyId(),
-				DepotRolesConstants.ASSET_LIBRARY_OWNER);
+				"space-owners-are-super-users-of-their-space-and-can-assign-" +
+					"space-roles-to-users",
+				DepotRolesConstants.ASSET_LIBRARY_OWNER, "space-owner");
 		}
 		finally {
 			if (company != null) {
@@ -65,7 +78,8 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 		}
 	}
 
-	private void _assertRole(long companyId, String name)
+	private void _assertRole(
+			long companyId, String descriptionKey, String name, String titleKey)
 		throws PortalException {
 
 		try {
@@ -77,6 +91,14 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 					companyId, Role.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
 					String.valueOf(role.getRoleId())));
+
+			Locale locale = LocaleUtil.getDefault();
+
+			Assert.assertEquals(
+				role.getDescription(locale),
+				LanguageUtil.get(locale, descriptionKey));
+			Assert.assertEquals(
+				role.getTitle(locale), LanguageUtil.get(locale, titleKey));
 		}
 		catch (NoSuchRoleException noSuchRoleException) {
 			throw new AssertionError(noSuchRoleException.getMessage());

@@ -157,7 +157,7 @@ export class ${className} {
 					<#if stringUtil.equals(parameter.type, "query")>
 
 						if (${parameter.name} !== undefined) {
-							queryParameters['${parameter.name}'] = JSON.stringify(ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"));
+							queryParameters['${parameter.name}'] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
 						}
 					</#if>
 				</#list>

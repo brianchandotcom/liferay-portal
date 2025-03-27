@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom';
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -49,7 +49,7 @@ const DEFAULT_STATE: State = {
 	error: null,
 	fields: new Map([[TEXT_FIELD_UUID, FIELD]]),
 	id: null,
-	invalids: new Set(),
+	invalids: new Map(),
 	label: 'untitled-structure',
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
@@ -483,12 +483,9 @@ describe('StructureFieldSettings', () => {
 		const mockDispatch = jest.fn();
 		const uuid = getUuid();
 
-		jest.spyOn(PicklistService, 'getPicklists').mockImplementation(() =>
-			Promise.resolve([])
-		);
-
 		renderComponent({
 			dispatch: mockDispatch,
+			picklists: [],
 			state: {
 				...DEFAULT_STATE,
 				fields: new Map([

@@ -48,6 +48,15 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
+		<finder name="G_M" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column name="marketplace" />
+		</finder>
+		<finder name="G_LikeN_M" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+			<finder-column comparator="LIKE" name="name" />
+			<finder-column name="marketplace" />
+		</finder>
 	</entity>
 	<entity external-reference-code="group" local-service="true" name="FragmentComposition" remote-service="true" uuid="true">
 

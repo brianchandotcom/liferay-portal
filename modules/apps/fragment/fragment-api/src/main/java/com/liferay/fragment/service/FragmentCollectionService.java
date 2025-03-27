@@ -119,7 +119,17 @@ public interface FragmentCollectionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getFragmentCollections(
 		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

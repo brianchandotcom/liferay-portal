@@ -886,6 +886,493 @@ public interface FragmentCollectionPersistence
 	public int countByG_LikeN(long[] groupIds, String name);
 
 	/**
+	 * Returns all the fragment collections where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @return the matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long groupId, boolean marketplace);
+
+	/**
+	 * Returns a range of all the fragment collections where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @return the range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long groupId, boolean marketplace, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long groupId, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long groupId, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment collection
+	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
+	 */
+	public FragmentCollection findByG_M_First(
+			long groupId, boolean marketplace,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
+	 * Returns the first fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
+	 */
+	public FragmentCollection fetchByG_M_First(
+		long groupId, boolean marketplace,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns the last fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment collection
+	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
+	 */
+	public FragmentCollection findByG_M_Last(
+			long groupId, boolean marketplace,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
+	 * Returns the last fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
+	 */
+	public FragmentCollection fetchByG_M_Last(
+		long groupId, boolean marketplace,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * @param fragmentCollectionId the primary key of the current fragment collection
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment collection
+	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
+	 */
+	public FragmentCollection[] findByG_M_PrevAndNext(
+			long fragmentCollectionId, long groupId, boolean marketplace,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
+	 * Returns all the fragment collections where groupId = any &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param marketplace the marketplace
+	 * @return the matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long[] groupIds, boolean marketplace);
+
+	/**
+	 * Returns a range of all the fragment collections where groupId = any &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @return the range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long[] groupIds, boolean marketplace, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = any &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long[] groupIds, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63; and marketplace = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_M(
+		long[] groupIds, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Removes all the fragment collections where groupId = &#63; and marketplace = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 */
+	public void removeByG_M(long groupId, boolean marketplace);
+
+	/**
+	 * Returns the number of fragment collections where groupId = &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param marketplace the marketplace
+	 * @return the number of matching fragment collections
+	 */
+	public int countByG_M(long groupId, boolean marketplace);
+
+	/**
+	 * Returns the number of fragment collections where groupId = any &#63; and marketplace = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param marketplace the marketplace
+	 * @return the number of matching fragment collections
+	 */
+	public int countByG_M(long[] groupIds, boolean marketplace);
+
+	/**
+	 * Returns all the fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @return the matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long groupId, String name, boolean marketplace);
+
+	/**
+	 * Returns a range of all the fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @return the range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long groupId, String name, boolean marketplace, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long groupId, String name, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long groupId, String name, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment collection
+	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
+	 */
+	public FragmentCollection findByG_LikeN_M_First(
+			long groupId, String name, boolean marketplace,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
+	 * Returns the first fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
+	 */
+	public FragmentCollection fetchByG_LikeN_M_First(
+		long groupId, String name, boolean marketplace,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment collection
+	 * @throws NoSuchCollectionException if a matching fragment collection could not be found
+	 */
+	public FragmentCollection findByG_LikeN_M_Last(
+			long groupId, String name, boolean marketplace,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
+	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
+	 */
+	public FragmentCollection fetchByG_LikeN_M_Last(
+		long groupId, String name, boolean marketplace,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param fragmentCollectionId the primary key of the current fragment collection
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next fragment collection
+	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
+	 */
+	public FragmentCollection[] findByG_LikeN_M_PrevAndNext(
+			long fragmentCollectionId, long groupId, String name,
+			boolean marketplace,
+			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+				orderByComparator)
+		throws NoSuchCollectionException;
+
+	/**
+	 * Returns all the fragment collections where groupId = any &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @return the matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long[] groupIds, String name, boolean marketplace);
+
+	/**
+	 * Returns a range of all the fragment collections where groupId = any &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @return the range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long[] groupIds, String name, boolean marketplace, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = any &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment collections
+	 */
+	public java.util.List<FragmentCollection> findByG_LikeN_M(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Removes all the fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 */
+	public void removeByG_LikeN_M(
+		long groupId, String name, boolean marketplace);
+
+	/**
+	 * Returns the number of fragment collections where groupId = &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @return the number of matching fragment collections
+	 */
+	public int countByG_LikeN_M(long groupId, String name, boolean marketplace);
+
+	/**
+	 * Returns the number of fragment collections where groupId = any &#63; and name LIKE &#63; and marketplace = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param name the name
+	 * @param marketplace the marketplace
+	 * @return the number of matching fragment collections
+	 */
+	public int countByG_LikeN_M(
+		long[] groupIds, String name, boolean marketplace);
+
+	/**
 	 * Returns the fragment collection where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code

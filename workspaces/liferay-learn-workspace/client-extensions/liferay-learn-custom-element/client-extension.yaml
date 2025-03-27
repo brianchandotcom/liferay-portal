@@ -7,7 +7,7 @@ liferay-learn-custom-element:
     friendlyURLMapping: liferay-learn-custom-element
     htmlElementName: liferay-learn-custom-element
     instanceable: true
-    name: Liferay Learn LMS
+    name: Liferay Learn
     portletCategoryName: category.client-extensions
     type: customElement
     urls:

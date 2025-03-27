@@ -6,10 +6,10 @@
 import React, {Suspense} from 'react';
 
 const lazyRoutes = {
-	'lms-course-list': React.lazy(() =>	import('./components/Course/CoursesList')),
-	'lms-certification-list': React.lazy(() => import('./components/Certification/CertificationList')),
-	'lms-landingpage-view': React.lazy(() => import('./components/LandingPageView')),
-	'lms-learningpath-list': React.lazy(() => import('./components/LearningPath/LearningPathList')
+	'course-list': React.lazy(() =>	import('./components/Course/CoursesList')),
+	'certification-list': React.lazy(() => import('./components/Certification/CertificationList')),
+	'landing-page-view': React.lazy(() => import('./components/LandingPageView')),
+	'learning-path-list': React.lazy(() => import('./components/LearningPath/LearningPathList')
 	),
 };
 

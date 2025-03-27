@@ -41,7 +41,7 @@ test.afterEach(
 		await page.goto('/');
 
 		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
-			await performLoginViaApi(page, 'test');
+			await performLoginViaApi({page, screenName: 'test'});
 		}
 
 		if (hasVirtualInstance) {
@@ -370,11 +370,11 @@ test('CSP frame-ancestors allows framing from specific domain', async ({
 		baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
 	});
 
-	await performLoginViaApi(
-		newInstancePage,
-		'test',
-		`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
-	);
+	await performLoginViaApi({
+		domain: `@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`,
+		page: newInstancePage,
+		screenName: 'test',
+	});
 
 	const virtualInstanceContentSecurityPolicyPage =
 		new ContentSecurityPolicyPage(newInstancePage);
@@ -469,11 +469,11 @@ test('CSP frame-ancestors blocks framing from specific domain', async ({
 		baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
 	});
 
-	await performLoginViaApi(
-		newInstancePage,
-		'test',
-		`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
-	);
+	await performLoginViaApi({
+		domain: `@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`,
+		page: newInstancePage,
+		screenName: 'test',
+	});
 
 	const virtualInstanceContentSecurityPolicyPage =
 		new ContentSecurityPolicyPage(newInstancePage);

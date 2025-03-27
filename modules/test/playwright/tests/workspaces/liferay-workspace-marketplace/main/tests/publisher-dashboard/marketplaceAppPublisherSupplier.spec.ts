@@ -36,7 +36,7 @@ let _user;
 
 test.describe('Publish Marketplace Apps', () => {
 	test.afterEach(async ({apiHelpers, page}) => {
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(_productId);
 
@@ -121,7 +121,7 @@ test.describe('Publish Marketplace Apps', () => {
 
 			await performLogout(page);
 
-			await performLoginViaApi(page, 'demo.unprivileged');
+			await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 			// Go to Publisher Dashboard
 

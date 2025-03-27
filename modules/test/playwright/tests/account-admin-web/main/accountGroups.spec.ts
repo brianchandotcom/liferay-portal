@@ -976,7 +976,7 @@ test('User without Assign Account permission can not assign/unassign account to 
 	);
 
 	await performLogout(page);
-	await performLoginViaApi(page, userAccount.alternateName);
+	await performLoginViaApi({page, screenName: userAccount.alternateName});
 
 	await accountGroupsPage.goto(false);
 
@@ -1075,7 +1075,7 @@ test('User with Assign Account permission can assign/unassign account to an acco
 	);
 
 	await performLogout(page);
-	await performLoginViaApi(page, userAccount.alternateName);
+	await performLoginViaApi({page, screenName: userAccount.alternateName});
 
 	await accountGroupsPage.goto(false);
 
@@ -1189,7 +1189,7 @@ test('User without View Account permission can not view accounts in an account g
 	);
 
 	await performLogout(page);
-	await performLoginViaApi(page, userAccount.alternateName);
+	await performLoginViaApi({page, screenName: userAccount.alternateName});
 
 	await accountGroupsPage.goto(false);
 
@@ -1270,7 +1270,7 @@ test('User with View Account permission can view accounts in an account group', 
 	);
 
 	await performLogout(page);
-	await performLoginViaApi(page, userAccount.alternateName);
+	await performLoginViaApi({page, screenName: userAccount.alternateName});
 
 	await accountGroupsPage.goto(false);
 
@@ -1338,7 +1338,7 @@ test('User with Access in Control Panel permission can view account groups secti
 	);
 
 	await performLogout(page);
-	await performLoginViaApi(page, userAccount.alternateName);
+	await performLoginViaApi({page, screenName: userAccount.alternateName});
 
 	await accountGroupsPage.goto(false);
 
@@ -1405,7 +1405,7 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, userAccount.alternateName);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
 
 		await accountGroupsPage.goto(false);
 

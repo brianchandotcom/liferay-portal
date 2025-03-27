@@ -1123,7 +1123,7 @@ test(
 		});
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await page.goto(`web/${site.name}`);
 

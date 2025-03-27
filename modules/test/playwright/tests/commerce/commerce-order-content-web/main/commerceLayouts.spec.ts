@@ -1196,7 +1196,7 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
@@ -1315,7 +1315,7 @@ test(
 		await displayPageTemplatesPage.publishTemplate();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		const cart1 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
@@ -1381,7 +1381,7 @@ test(
 		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
 			'Single Approver (Version 1)',
@@ -1394,7 +1394,7 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		const cart2 = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 			{
@@ -1428,7 +1428,7 @@ test(
 		await commerceLayoutsPage.expectOrderActionButtons({});
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
@@ -1452,7 +1452,7 @@ test(
 		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'demo.unprivileged');
+		await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +
@@ -1485,7 +1485,7 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await page.goto(
 			liferayConfig.environment.baseUrl +

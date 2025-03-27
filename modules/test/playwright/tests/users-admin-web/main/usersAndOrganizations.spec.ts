@@ -860,7 +860,10 @@ test(
 		await waitForAlert(page);
 
 		await performLogout(page);
-		await performLoginViaApi(page, userAccount1.alternateName);
+		await performLoginViaApi({
+			page,
+			screenName: userAccount1.alternateName,
+		});
 
 		const document = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
@@ -894,7 +897,10 @@ test(
 		await waitForAlert(page, 'Success:The item was shared successfully.');
 
 		await performLogout(page);
-		await performLoginViaApi(page, userAccount2.alternateName);
+		await performLoginViaApi({
+			page,
+			screenName: userAccount2.alternateName,
+		});
 
 		await notificationsPage.goto(userAccount2.name);
 
@@ -989,7 +995,10 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, userAccount1.alternateName);
+		await performLoginViaApi({
+			page,
+			screenName: userAccount1.alternateName,
+		});
 
 		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
 
@@ -1005,7 +1014,7 @@ test(
 		).not.toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
 			role2.externalReferenceCode,
@@ -1013,7 +1022,10 @@ test(
 		);
 
 		await performLogout(page);
-		await performLoginViaApi(page, userAccount1.alternateName);
+		await performLoginViaApi({
+			page,
+			screenName: userAccount1.alternateName,
+		});
 
 		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
 
@@ -1044,7 +1056,10 @@ test(
 		await newPage.close();
 
 		await performLogout(page);
-		await performLoginViaApi(page, userAccount3.alternateName);
+		await performLoginViaApi({
+			page,
+			screenName: userAccount3.alternateName,
+		});
 
 		await usersAndOrganizationsPage.goToUsers();
 
@@ -1332,7 +1347,7 @@ test(
 		};
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await accountSettingsPage.goToAccountSettings();
 		await accountSettingsPage.passwordMenuItem.click();
@@ -1353,7 +1368,7 @@ test(
 		};
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(accountSettingsPage.userPersonalMenuButton).toBeVisible();
 	}
@@ -1372,7 +1387,7 @@ test(
 		};
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await accountSettingsPage.goToAccountSettings();
 		await accountSettingsPage.passwordMenuItem.click();
@@ -1397,7 +1412,7 @@ test(
 		).toBeVisible();
 
 		await performLogout(page);
-		await performLoginViaApi(page, user.alternateName);
+		await performLoginViaApi({page, screenName: user.alternateName});
 
 		await expect(accountSettingsPage.userPersonalMenuButton).toBeVisible();
 	}

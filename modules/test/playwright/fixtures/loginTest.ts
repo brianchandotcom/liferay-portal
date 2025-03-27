@@ -44,7 +44,7 @@ function loginTest(options: LoginOptions = {}) {
 			async ({page}, use) => {
 				const screenName = options.screenName || 'test';
 
-				const cookies = await performLoginViaApi(page, screenName);
+				const cookies = await performLoginViaApi({page, screenName});
 
 				await use({
 					screenName,

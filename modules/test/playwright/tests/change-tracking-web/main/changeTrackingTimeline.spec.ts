@@ -328,7 +328,7 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, user.alternateName);
+	await performLoginViaApi({page, screenName: user.alternateName});
 
 	await documentLibraryPage.goto(site.friendlyUrlPath);
 
@@ -350,7 +350,7 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 
 	await performLogout(page);
 
-	await performLoginViaApi(page, 'test');
+	await performLoginViaApi({page, screenName: 'test'});
 });
 
 test('LPD-26155 Conflict warning is visible when content is edited in more than one publication', async ({

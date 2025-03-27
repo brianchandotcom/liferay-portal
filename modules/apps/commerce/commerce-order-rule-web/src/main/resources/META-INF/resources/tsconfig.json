@@ -1,5 +1,5 @@
 {
-	"@generated": "e66cdad35ee2493ca2f99fae955f8d2246f82008",
+	"@generated": "04b48cb3f5ce51198861a4b6b0d3804f86bae455",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -15,7 +15,7 @@
 				"../../../../../../commerce-frontend-js/src/main/resources/META-INF/resources/index.js"
 			],
 			"frontend-js-web": [
-				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",

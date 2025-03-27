@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
@@ -459,6 +460,36 @@ public class CustomFacetDisplayContextBuilderTest
 				"[20180508235959 TO 20180415235959]",
 				"[20180508235959 TO 20180514235959]"
 			});
+	}
+
+	@Override
+	protected FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
+	protected void setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		CustomFacetPortletInstanceConfiguration
+			customFacetPortletInstanceConfiguration = Mockito.mock(
+				CustomFacetPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			customFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			customFacetPortletInstanceConfiguration
+		);
 	}
 
 	@Override

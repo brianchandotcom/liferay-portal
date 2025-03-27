@@ -73,6 +73,29 @@ public class AssetEntriesSearchFacetDisplayContextTest
 	}
 
 	@Override
+	protected void setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		TypeFacetPortletInstanceConfiguration
+			typeFacetPortletInstanceConfiguration = Mockito.mock(
+				TypeFacetPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			typeFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			typeFacetPortletInstanceConfiguration
+		);
+	}
+
+	@Override
 	protected void testOrderBy(
 			int[] expectedFrequencies, String[] expectedClassNames,
 			int[] frequencies, String order, String[] classNames)

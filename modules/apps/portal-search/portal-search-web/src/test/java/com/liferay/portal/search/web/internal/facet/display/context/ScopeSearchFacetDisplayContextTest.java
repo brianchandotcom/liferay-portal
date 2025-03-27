@@ -111,6 +111,29 @@ public class ScopeSearchFacetDisplayContextTest
 	}
 
 	@Override
+	protected void setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		SiteFacetPortletInstanceConfiguration
+			siteFacetPortletInstanceConfiguration = Mockito.mock(
+				SiteFacetPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			siteFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			siteFacetPortletInstanceConfiguration
+		);
+	}
+
+	@Override
 	protected void testOrderBy(
 			int[] expectedFrequencies, String[] expectedGroupNames,
 			int[] frequencies, String order, String[] groupNames)

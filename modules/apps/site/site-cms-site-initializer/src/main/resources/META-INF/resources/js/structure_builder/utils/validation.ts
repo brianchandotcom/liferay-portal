@@ -12,7 +12,7 @@ import selectStructureFields from '../selectors/selectStructureFields';
 import {Field} from './field';
 import focusInvalidInput from './focusInvalidInput';
 
-export type ValidationError = 'no-erc' | 'no-label' | 'no-name';
+export type ValidationError = 'no-erc' | 'no-label' | 'no-name' | 'no-space';
 
 export function validateField({
 	currentErrors,
@@ -56,7 +56,7 @@ export function validateStructure({
 	currentErrors?: Set<ValidationError>;
 	data: Partial<State>;
 }): Set<ValidationError> {
-	const {erc, label, name} = data;
+	const {erc, label, name, spaces} = data;
 
 	const errors = new Set(currentErrors);
 
@@ -72,6 +72,10 @@ export function validateStructure({
 		Object.values(label ?? {}).every(Boolean)
 			? errors.delete('no-label')
 			: errors.add('no-label');
+	}
+
+	if (!isNullOrUndefined(spaces)) {
+		spaces.length ? errors.delete('no-space') : errors.add('no-space');
 	}
 
 	return errors;

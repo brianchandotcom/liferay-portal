@@ -20,6 +20,10 @@ import {
 } from './component.es';
 import debounce from './debounce/debounce.es';
 import delegate from './delegate/delegate.es';
+
+import './dom_task_runner';
+
+import './events';
 import {
 	getLayoutIcons,
 	hideLayoutPane,
@@ -28,8 +32,14 @@ import {
 	showLayoutPane,
 	toggleLayoutDetails,
 } from './layout_exporter.es';
+
+import './lazy_load';
+
+import './liferay';
 import {showTab} from './portal/tabs.es';
 import {showTooltip} from './portal/tooltip.es';
+
+import './portlet';
 import portlet, {minimizePortlet} from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
 import statusCode from './status_code';
@@ -97,6 +107,8 @@ import toggleControls from './util/toggle_controls';
 import toggleDisabled from './util/toggle_disabled';
 import toggleRadio from './util/toggle_radio';
 import toggleSelectBox from './util/toggle_select_box';
+
+import './workflow';
 import zIndex from './zIndex';
 
 Liferay = window.Liferay || {};

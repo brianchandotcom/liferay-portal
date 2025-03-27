@@ -242,13 +242,15 @@ export class PagesAdminPage {
 			.getByRole('button', {name: 'Change Current Theme'})
 			.click();
 
-		const iframe = this.page.frameLocator(
-			'iframe[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_selectTheme_iframe_"]'
-		);
+		const themeCard = this.page
+			.frameLocator(
+				'iframe[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_selectTheme_iframe_"]'
+			)
+			.getByText(themeName);
 
-		await iframe.getByText(themeName).waitFor();
+		await themeCard.waitFor();
 
-		await iframe.getByText(themeName).click();
+		await themeCard.click();
 
 		await this.configurationSaveButton.waitFor({state: 'visible'});
 

@@ -326,7 +326,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
 			<#assign
-				getterJavaMethodParametersMap = {}
 				getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id")
 				hasGetJavaMethodSignature = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 				idParameterName = properties?keys?seq_contains("id")?then("id", schemaVarName + "Id")
@@ -338,6 +337,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if !useDeleteByERC && !useDeleteById>
 				<#continue>
 			</#if>
+
+			<#assign deleteJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) />
 
 			@Test
 			public void testDelete${schemaName}Batch() throws Exception {
@@ -354,7 +355,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 							<@getGetParameters
 								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
+								testJavaMethodSignature = deleteJavaMethodSignature
 								varName = schemaVarName + "1"
 							/>));
 					</#if>
@@ -369,7 +370,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 							<@getGetParameters
 								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
+								testJavaMethodSignature = deleteJavaMethodSignature
 								varName = schemaVarName + "2"
 							/>));
 					</#if>
@@ -385,14 +386,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 							<@getGetParameters
 								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
+								testJavaMethodSignature = deleteJavaMethodSignature
 								varName = schemaVarName + "1"
 							/>));
 
 						assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 							<@getGetParameters
 								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
+								testJavaMethodSignature = deleteJavaMethodSignature
 								varName = schemaVarName + "2"
 							/>));
 					</#if>
@@ -403,7 +404,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
 							<@getGetParameters
 								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
+								testJavaMethodSignature = deleteJavaMethodSignature
 								varName = schemaVarName + "2"
 							/>));
 					</#if>
@@ -431,12 +432,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				waitForFinish(expectedExecuteStatus, JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 			}
-
-			<@getTestGetterMethods
-				getterJavaMethodParametersMap = getterJavaMethodParametersMap
-				javaMethodSignature = javaMethodSignature
-				testNamePrefix = "test"
-			/>
 
 		<#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
 			<#continue>
@@ -4225,11 +4220,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#else>
 				protected ${javaMethodParameter.parameterType} ${testNamePrefix}${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() throws Exception {
 
-				<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && properties?keys?seq_contains("id") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
-					return testDelete${schemaName}_get${javaMethodParameter.parameterName?cap_first}();
-				<#else>
-					throw new UnsupportedOperationException("This method needs to be implemented");
-				</#if>
+				throw new UnsupportedOperationException("This method needs to be implemented");
 			</#if>
 		}
 	</#list>

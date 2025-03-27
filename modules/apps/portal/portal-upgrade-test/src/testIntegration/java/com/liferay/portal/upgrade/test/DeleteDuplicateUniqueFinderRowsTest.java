@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.upgrade.DuplicateIndexEntriesUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRows;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Jorge Avalos
  */
 @RunWith(Arquillian.class)
-public class DuplicateIndexEntriesUpgradeProcessTest {
+public class DeleteDuplicateUniqueFinderRowsTest {
 
 	@ClassRule
 	@Rule
@@ -104,8 +104,8 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		_assert(false, null);
 
-		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
-			new DuplicateIndexEntriesUpgradeProcess(
+		DeleteDuplicateUniqueFinderRows upgradeProcess =
+			new DeleteDuplicateUniqueFinderRows(
 				"TestTable", new String[] {"column1", "column2", "column3"});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -125,8 +125,8 @@ public class DuplicateIndexEntriesUpgradeProcessTest {
 
 		_assert(false, null);
 
-		DuplicateIndexEntriesUpgradeProcess upgradeProcess =
-			new DuplicateIndexEntriesUpgradeProcess(
+		DeleteDuplicateUniqueFinderRows upgradeProcess =
+			new DeleteDuplicateUniqueFinderRows(
 				"TestTable", new String[] {"column1", "column2", "column3"},
 				"primaryKeyColumn asc");
 

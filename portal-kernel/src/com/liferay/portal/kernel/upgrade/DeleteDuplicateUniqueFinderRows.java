@@ -25,15 +25,15 @@ import java.util.Map;
 /**
  * @author Jorge Avalos
  */
-public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
+public class DeleteDuplicateUniqueFinderRows extends UpgradeProcess {
 
-	public DuplicateIndexEntriesUpgradeProcess(
+	public DeleteDuplicateUniqueFinderRows(
 		String tableName, String[] columnNames) {
 
 		this(tableName, columnNames, null);
 	}
 
-	public DuplicateIndexEntriesUpgradeProcess(
+	public DeleteDuplicateUniqueFinderRows(
 		String tableName, String[] columnNames, String orderByClause) {
 
 		_tableName = tableName;
@@ -47,13 +47,13 @@ public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 			_getDuplicateColumnValuesList();
 
 		for (String[] duplicateColumnValues : duplicateColumnValuesList) {
-			List<Map<String, String>> duplicateEntries = getDuplicateEntries(
+			List<Map<String, String>> duplicateRows = getDuplicateRows(
 				duplicateColumnValues);
 
-			int duplicateEntriesCount = duplicateEntries.size();
+			int duplicateRowsCount = duplicateRows.size();
 
-			for (Map<String, String> duplicateEntry : duplicateEntries) {
-				if (duplicateEntriesCount == 1) {
+			for (Map<String, String> duplicateRow : duplicateRows) {
+				if (duplicateRowsCount == 1) {
 					break;
 				}
 
@@ -69,7 +69,7 @@ public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 				for (String primaryKeyColumnName : primaryKeyColumnNames) {
 					sb.append(primaryKeyColumnName);
 					sb.append(" = ");
-					sb.append(duplicateEntry.get(primaryKeyColumnName));
+					sb.append(duplicateRow.get(primaryKeyColumnName));
 					sb.append("and ");
 				}
 
@@ -83,33 +83,33 @@ public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 				catch (SQLException sqlException) {
 					_log.error(
 						StringBundler.concat(
-							"Failed to delete duplicate entry from table ",
+							"Failed to delete duplicate row from table ",
 							_tableName, " for index columns (",
 							String.join(", ", _columnNames), "): ",
-							duplicateEntry.toString()),
+							duplicateRow.toString()),
 						sqlException);
 				}
 				finally {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Deleted duplicate entry from table ",
-								_tableName, " for index columns (",
+								"Deleted duplicate row from table ", _tableName,
+								" for index columns (",
 								String.join(", ", _columnNames), "): ",
-								duplicateEntry.toString()));
+								duplicateRow.toString()));
 					}
 
-					duplicateEntriesCount--;
+					duplicateRowsCount--;
 				}
 			}
 		}
 	}
 
-	protected List<Map<String, String>> getDuplicateEntries(
+	protected List<Map<String, String>> getDuplicateRows(
 			String[] duplicateColumnValues)
 		throws SQLException {
 
-		List<Map<String, String>> duplicateEntries = new ArrayList<>();
+		List<Map<String, String>> duplicateRows = new ArrayList<>();
 
 		StringBundler sb = new StringBundler();
 
@@ -177,24 +177,24 @@ public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 				}
 
 				while (resultSet.next()) {
-					Map<String, String> duplicateEntry = new LinkedHashMap<>();
+					Map<String, String> duplicateRow = new LinkedHashMap<>();
 
 					for (String columnName : columnNames) {
-						duplicateEntry.put(
+						duplicateRow.put(
 							dbInspector.normalizeName(columnName),
 							resultSet.getString(columnName));
 					}
 
-					duplicateEntries.add(duplicateEntry);
+					duplicateRows.add(duplicateRow);
 				}
 			}
 		}
 
 		if (_orderByClause == null) {
-			Collections.reverse(duplicateEntries);
+			Collections.reverse(duplicateRows);
 		}
 
-		return duplicateEntries;
+		return duplicateRows;
 	}
 
 	private List<String[]> _getDuplicateColumnValuesList() throws Exception {
@@ -229,7 +229,7 @@ public class DuplicateIndexEntriesUpgradeProcess extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DuplicateIndexEntriesUpgradeProcess.class);
+		DeleteDuplicateUniqueFinderRows.class);
 
 	private final String[] _columnNames;
 	private final String _orderByClause;

@@ -60,7 +60,7 @@ public class BatchEngineBundleTracker {
 
 	private BundleTracker<Bundle> _bundleTracker;
 
-	@Reference(target = ModuleServiceLifecycle.LICENSE_INSTALL)
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	@Reference

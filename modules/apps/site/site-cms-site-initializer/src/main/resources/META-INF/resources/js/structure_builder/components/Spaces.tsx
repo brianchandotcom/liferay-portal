@@ -49,6 +49,15 @@ export default function Spaces() {
 					disabled={structureSpaces === 'all'}
 					items={getSelection(structureSpaces, spaces)}
 					loadingState={status === 'saving' ? 1 : 0}
+					onBlur={() => {
+						if (!structureSpaces.length) {
+							dispatch({
+								error: 'no-space',
+								type: 'add-validation-error',
+								uuid: structureUuid,
+							});
+						}
+					}}
 					onItemsChange={(items: Item[]) => {
 						const ercs = items
 							.filter((item) =>

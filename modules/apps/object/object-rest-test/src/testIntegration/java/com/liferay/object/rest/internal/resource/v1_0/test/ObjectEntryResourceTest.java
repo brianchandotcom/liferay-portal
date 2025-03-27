@@ -15675,10 +15675,7 @@ public class ObjectEntryResourceTest {
 
 			validationResponse = _validate(
 				scopeKey, objectEntryResource,
-				_getValidationRequest(
-					HashMapBuilder.<String, Object>put(
-						objectField2.getName(), ""
-					).build()));
+				_getValidationRequest(Collections.emptyMap()));
 
 			Assert.assertEquals(
 				"No value was provided for required object field " +
@@ -15689,7 +15686,7 @@ public class ObjectEntryResourceTest {
 				scopeKey, objectEntryResource,
 				_getValidationRequest(
 					HashMapBuilder.<String, Object>put(
-						objectField2.getName(), "0123456789"
+						objectField2.getName(), RandomTestUtil.randomString(10)
 					).build()));
 
 			Assert.assertEquals(
@@ -15699,20 +15696,21 @@ public class ObjectEntryResourceTest {
 
 			ObjectEntryTestUtil.addObjectEntry(
 				objectDefinition, objectField2.getName(),
-				"unique");
+				"Peter");
 
 			validationResponse = _validate(
 				scopeKey, objectEntryResource,
 				_getValidationRequest(
 					HashMapBuilder.<String, Object>put(
-						objectField2.getName(), "unique"
+						objectField2.getName(), "Peter"
 					).build()));
 
-			Assert.assertTrue(
-				validationResponse.getValidationErrors()[0].getErrorMessage(
-				).contains(
-					"Unique value constraint violation for"
-				));
+			Assert.assertEquals(
+				String.format(
+					"Unique value constraint violation for %s.%s with value %s",
+					objectField2.getDBTableName(), objectField2.getDBColumnName(),
+					"Peter"),
+				validationResponse.getValidationErrors()[0].getErrorMessage());
 
 			_objectFieldLocalService.deleteObjectField(
 				objectField2.getObjectFieldId());

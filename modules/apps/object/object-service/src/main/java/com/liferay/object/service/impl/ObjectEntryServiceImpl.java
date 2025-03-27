@@ -432,7 +432,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<ValidationError> validate(
+	public void validate(
 			long groupId, ObjectEntry objectEntry,
 			List<String> objectValidationRuleExternalReferenceCodes,
 			ServiceContext serviceContext)
@@ -442,7 +442,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			groupId, objectEntry.getObjectDefinitionId(),
 			objectEntry.getValues());
 
-		return objectEntryLocalService.validate(
+		 objectEntryLocalService.validate(
 			groupId, objectEntry, objectValidationRuleExternalReferenceCodes,
 			serviceContext, getUserId());
 	}

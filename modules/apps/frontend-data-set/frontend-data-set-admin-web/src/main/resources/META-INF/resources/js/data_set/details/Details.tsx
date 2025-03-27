@@ -7,7 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {LearnMessage} from 'frontend-js-components-web';
 import {fetch, navigate, sub} from 'frontend-js-web';
@@ -208,7 +210,26 @@ const Details = ({
 								</ClayList.ItemTitle>
 
 								<ClayList.ItemText>
-									{restApplication}
+									<ClayTooltipProvider>
+										<ClayLink
+											data-tooltip-align="top"
+											decoration="underline"
+											displayType="tertiary"
+											href={`${Liferay.ThemeDisplay.getPortalURL()}/o/api?endpoint=${Liferay.ThemeDisplay.getPortalURL()}/o${restApplication}/openapi.json`}
+											rel="noopener noreferrer"
+											target="_blank"
+											title={`${Liferay.ThemeDisplay.getPortalURL()}/o/api?endpoint=${Liferay.ThemeDisplay.getPortalURL()}/o${restApplication}/openapi.json`}
+										>
+											{restApplication}
+
+											<span className="inline-item inline-item-after">
+												<ClayIcon
+													className="text-2 text-secondary"
+													symbol="shortcut"
+												/>
+											</span>
+										</ClayLink>
+									</ClayTooltipProvider>
 								</ClayList.ItemText>
 							</ClayList.ItemField>
 						</ClayList.Item>

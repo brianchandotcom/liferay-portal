@@ -45,6 +45,7 @@ export default function Spaces() {
 
 			<ClayForm.Group className={classNames({'has-error': hasError})}>
 				<ClayMultiSelect
+					aria-label={Liferay.Language.get('space-selector')}
 					disabled={structureSpaces === 'all'}
 					items={getSelection(structureSpaces, spaces)}
 					loadingState={status === 'saving' ? 1 : 0}

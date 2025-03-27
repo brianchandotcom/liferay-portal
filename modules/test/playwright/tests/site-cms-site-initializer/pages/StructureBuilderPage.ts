@@ -42,6 +42,7 @@ export class StructureBuilderPage {
 		this.nameInput = this.page.getByLabel('Structure Name');
 		this.publishButton = this.page.getByRole('button', {name: 'Publish'});
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});
+		this.spacesSelector = this.page.
 	}
 
 	async goto() {
@@ -185,6 +186,10 @@ export class StructureBuilderPage {
 		} = await APIClient.deleteObjectDefinition(id);
 
 		expect(statusCode).toBe(204);
+	}
+
+	async enableForAllSpaces() {
+
 	}
 
 	async publishStructure() {

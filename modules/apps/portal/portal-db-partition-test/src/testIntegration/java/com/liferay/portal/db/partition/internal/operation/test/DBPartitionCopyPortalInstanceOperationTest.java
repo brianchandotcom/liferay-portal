@@ -91,7 +91,7 @@ public class DBPartitionCopyPortalInstanceOperationTest
 		throws Exception {
 
 		_testDeployConfigurationExistingDestinationCompanyId(
-			"Feature flag LPD-11342 must be enabled");
+			"Feature flag LPD-11342 is disabled");
 	}
 
 	private void _testDeployConfigurationExistingDestinationCompanyId(

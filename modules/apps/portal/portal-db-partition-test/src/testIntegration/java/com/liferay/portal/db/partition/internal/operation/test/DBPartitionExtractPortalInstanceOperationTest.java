@@ -34,7 +34,7 @@ public class DBPartitionExtractPortalInstanceOperationTest
 
 	@Test
 	public void testDeployConfigurationWithoutFF() throws Exception {
-		_testDeployConfiguration("Feature flag LPD-11342 must be enabled");
+		_testDeployConfiguration("Feature flag LPD-11342 is disabled");
 	}
 
 	private void _testDeployConfiguration(String message) throws Exception {

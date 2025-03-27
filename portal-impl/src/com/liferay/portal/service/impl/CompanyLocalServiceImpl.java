@@ -364,10 +364,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			long companyId, String name, String virtualHostname, String webId)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11342")) {
-			throw new UnsupportedOperationException(
-				"Feature flag LPD-11342 must be enabled");
-		}
+		FeatureFlagManagerUtil.checkEnabled("LPD-11342");
 
 		if (!DBPartition.isPartitionEnabled()) {
 			throw new UnsupportedOperationException(
@@ -518,10 +515,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			String virtualHostname, String webId)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11342")) {
-			throw new UnsupportedOperationException(
-				"Feature flag LPD-11342 must be enabled");
-		}
+		FeatureFlagManagerUtil.checkEnabled("LPD-11342");
 
 		if (!DBPartition.isPartitionEnabled()) {
 			throw new UnsupportedOperationException(
@@ -691,10 +685,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	@Override
 	public Company extractCompany(long companyId) throws PortalException {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-11342")) {
-			throw new UnsupportedOperationException(
-				"Feature flag LPD-11342 must be enabled");
-		}
+		FeatureFlagManagerUtil.checkEnabled("LPD-11342");
 
 		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			throw new RequiredCompanyException(

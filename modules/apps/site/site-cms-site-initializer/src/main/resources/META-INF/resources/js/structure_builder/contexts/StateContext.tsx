@@ -106,6 +106,11 @@ type UpdateStructureAction = {
 	type: 'update-structure';
 };
 
+type ValidateAction = {
+	invalids: State['invalids'];
+	type: 'validate';
+};
+
 export type Action =
 	| AddFieldAction
 	| CreateStructureAction
@@ -115,7 +120,8 @@ export type Action =
 	| SetErrorAction
 	| SetSelection
 	| UpdateFieldAction
-	| UpdateStructureAction;
+	| UpdateStructureAction
+	| ValidateAction;
 
 function reducer(state: State, action: Action): State {
 	switch (action.type) {
@@ -316,6 +322,18 @@ function reducer(state: State, action: Action): State {
 			return {
 				...nextState,
 				invalids,
+			};
+		}
+		case 'validate': {
+			const {invalids} = action;
+
+			const [firstUuid] = [...invalids.keys()];
+
+			return {
+				...state,
+				error: INITIAL_STATE.error,
+				invalids,
+				selection: [firstUuid],
 			};
 		}
 		default:

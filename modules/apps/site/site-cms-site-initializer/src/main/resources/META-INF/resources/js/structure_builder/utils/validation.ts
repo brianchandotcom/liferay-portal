@@ -7,8 +7,10 @@ import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {useCallback} from 'react';
 
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectState from '../selectors/selectState';
 import selectStructureFields from '../selectors/selectStructureFields';
 import {Field} from './field';
+import focusInvalidInput from './focusInvalidInput';
 
 export type ValidationError = 'no-erc' | 'no-label' | 'no-name';
 
@@ -78,8 +80,7 @@ export function validateStructure({
 export function useValidate() {
 	const dispatch = useStateDispatch();
 	const fields = useSelector(selectStructureFields);
-	const invalids = useSelector(selectInvalids);
-	const selection = useSelector(selectSelection);
+	const state = useSelector(selectState);
 
 	return useCallback(() => {
 
@@ -96,23 +97,37 @@ export function useValidate() {
 			return false;
 		}
 
-		// Check whether some item is invalid and select it
+		// Validate structure
+
+		let errors: Set<ValidationError> = new Set();
+
+		const invalids = new Map(state.invalids);
+
+		errors = validateStructure({data: state});
+
+		if (errors.size) {
+			invalids.set(state.uuid, errors);
+		}
+
+		// Validate fields
+
+		for (const field of fields) {
+			errors = validateField({data: field});
+
+			if (errors.size) {
+				invalids.set(field.uuid, errors);
+			}
+		}
+
+		// If there's some invalid, dispatch validate action
 
 		if (invalids.size) {
-			const [uuid] = [...invalids];
+			dispatch({
+				invalids,
+				type: 'validate',
+			});
 
-			const isSelected =
-				selection.length === 1 && selection.includes(uuid);
-
-			if (isSelected) {
-				focusInvalidInput();
-			}
-			else {
-				dispatch({
-					selection: [uuid],
-					type: 'set-selection',
-				});
-			}
+			focusInvalidInput();
 
 			return false;
 		}
@@ -120,5 +135,5 @@ export function useValidate() {
 		// It's valid
 
 		return true;
-	}, [dispatch, fields, invalids, selection]);
+	}, [dispatch, fields, state]);
 }

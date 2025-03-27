@@ -167,12 +167,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			if (
-				businessEvent.associatedTickets !== '[]' &&
-				hasImpactingEvents === 'yes'
-			) {
-				await updateOrg();
-			}
+			await updateOrg();
 
 			await client.mutate<{
 				addBusinessEvent: IBusinessEvent;

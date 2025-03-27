@@ -15,7 +15,7 @@ export default function useUpdateOrg(
 	isRemoval: boolean
 ): any {
 	const filterQuery = useMemo<string>(() => {
-		let filterQuery = `filter=associatedTickets ne '[]' and eventStatus ne 'canceled' and eventStatus ne 'completed' and r_accountEntryToBusinessEvents_accountEntryId eq '${businessEvent.r_accountEntryToBusinessEvents_accountEntryId || ''}'`;
+		let filterQuery = `filter=eventStatus ne 'canceled' and eventStatus ne 'completed' and r_accountEntryToBusinessEvents_accountEntryId eq '${businessEvent.r_accountEntryToBusinessEvents_accountEntryId || ''}'`;
 
 		if (isEdition || isRemoval) {
 			filterQuery += ` and id ne '${businessEvent.id || ''}'`;
@@ -57,10 +57,7 @@ export default function useUpdateOrg(
 			}
 		);
 
-		if (
-			businessEvent.associatedTickets !== '[]' &&
-			(isEdition || !isRemoval)
-		) {
+		if (isEdition || !isRemoval) {
 			formattedBusinessEvents.push({
 				associatedTicketIds: JSON.parse(
 					businessEvent.associatedTickets!

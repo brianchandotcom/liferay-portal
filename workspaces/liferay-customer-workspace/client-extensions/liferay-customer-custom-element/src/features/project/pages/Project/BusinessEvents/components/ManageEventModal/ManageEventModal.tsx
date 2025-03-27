@@ -19,6 +19,7 @@ interface IProps {
 	modalType: string;
 	observer: Observer;
 	onCancel: () => void;
+	onCompleted: () => void;
 }
 
 const ManageEventModal: React.FC<IProps> = ({
@@ -29,6 +30,7 @@ const ManageEventModal: React.FC<IProps> = ({
 	modalType,
 	observer,
 	onCancel,
+	onCompleted,
 }) => {
 	return (
 		<>
@@ -58,12 +60,16 @@ const ManageEventModal: React.FC<IProps> = ({
 				>
 					{(formikProps) => (
 						<RecordGoLiveEventPage
+							accountExternalReferenceCode={
+								accountExternalReferenceCode
+							}
 							businessEvent={businessEvent}
 							client={client}
 							closeFunction={closeFunction}
 							errors={formikProps.errors}
 							modalType={modalType}
 							observer={observer}
+							onCompleted={onCompleted}
 							setFieldValue={formikProps.setFieldValue}
 							touched={formikProps.touched}
 							values={formikProps.values}

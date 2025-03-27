@@ -19,16 +19,19 @@ import './RecordGoLiveEventPage.css';
 import {Observer} from '@clayui/modal/lib/types';
 
 import useGetGMTTimeZonesList from '../../../hooks/useGetGMTTimeZonesList';
+import useUpdateOrg from '../../../hooks/useUpdateOrg';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
 interface IProps {
+	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
 	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
 	errors?: Record<string, any>;
 	modalType: string;
 	observer: Observer;
+	onCompleted: () => void;
 	setFieldValue: (
 		field: string,
 		value: any,
@@ -39,12 +42,14 @@ interface IProps {
 }
 
 const RecordGoLiveEventPage: React.FC<IProps> = ({
+	accountExternalReferenceCode,
 	businessEvent,
 	client,
 	closeFunction = () => {},
 	errors,
 	modalType,
 	observer,
+	onCompleted,
 	setFieldValue,
 	touched,
 	values,
@@ -65,6 +70,13 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 	const {gmtTimeZonesList} = useGetGMTTimeZonesList();
 	const [gmtTimeZonesOptions, setGMTTimeZonesOptions] = useState<IOption[]>(
 		[]
+	);
+
+	const {updateOrg} = useUpdateOrg(
+		accountExternalReferenceCode,
+		businessEvent,
+		false,
+		true
 	);
 
 	const handleInputChange = (event: {target: {value: string}}) => {
@@ -105,13 +117,18 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 				updatedBusinessEvent.actualGoLiveDate,
 				updatedBusinessEvent.actualGoLiveTime
 			),
+			eventStatus: 'completed',
 			lastComment: updatedBusinessEvent?.lastComment,
+			r_accountEntryToBusinessEvents_accountEntryId:
+				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
 			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
 			timeZone: updatedBusinessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
+
+			await updateOrg();
 
 			await client.mutate<{
 				updateBusinessEvent: IBusinessEvent;
@@ -129,12 +146,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 
 			closeFunction(false);
 
-			Liferay.Util.openToast({
-				message: i18n.translate(
-					'business-event-actual-go-live-date-recorded-successfully'
-				),
-				type: 'success',
-			});
+			onCompleted();
 		}
 		catch (error) {
 			setIsLoadingSubmitButton(false);

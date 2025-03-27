@@ -47,9 +47,15 @@ const CancelEventPage: React.FC<IProps> = ({
 	);
 
 	const handleSubmit = async () => {
-		const businessEventId = businessEvent.id;
+		const updatedBusinessEvent = {...businessEvent};
 
-		const updatedBusinessEvent = {eventStatus: 'canceled'};
+		const businessEventId = updatedBusinessEvent.id;
+
+		const formattedBusinessEvent = {
+			eventStatus: 'canceled',
+			r_accountEntryToBusinessEvents_accountEntryId:
+				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
+		};
 
 		try {
 			setIsLoadingSubmitButton(true);
@@ -65,7 +71,7 @@ const CancelEventPage: React.FC<IProps> = ({
 				},
 				mutation: updateBusinessEvent,
 				variables: {
-					businessEvent: updatedBusinessEvent,
+					businessEvent: formattedBusinessEvent,
 					businessEventId,
 				},
 			});

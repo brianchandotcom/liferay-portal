@@ -1,0 +1,196 @@
+{
+	"pageElement": {
+		"id": "57d4eed3-1c3a-ba8e-a88e-6f62f43facdc",
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingBottom": "6",
+						"paddingTop": "6"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 6,
+						"paddingTop": 6
+					}
+				},
+				"id": "6011b370-e76e-c709-45b3-1e87782cdd6f",
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"id": "042e3816-fb17-6507-34c7-c06f5ef78878",
+						"pageElements": [
+							{
+								"definition": {
+									"formConfig": {
+										"formReference": {
+											"contextSource": "DisplayPageItem"
+										},
+										"formSuccessSubmissionResult": {
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.model.Layout",
+												"fields": [
+													{
+														"fieldName": "friendlyURL",
+														"fieldValue": "/contents"
+													},
+													{
+														"fieldName": "privatePage",
+														"fieldValue": "false"
+													},
+													{
+														"fieldName": "siteKey",
+														"fieldValue": "CMS"
+													}
+												]
+											}
+										},
+										"formType": "simple",
+										"numberOfSteps": 0
+									},
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"id": "510694d3-b03e-7891-dfe3-0d6be3ab6701",
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-text-input"
+											},
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_title",
+												"placeholder": "",
+												"showCharactersCount": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "29f080c3-1fd8-e00d-03e4-27912798d900",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-text-input"
+											},
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_subtitle",
+												"placeholder": "",
+												"showCharactersCount": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "d803ae66-5301-c439-6979-4a35a9dc3edc",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-rich-text-input"
+											},
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_content"
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "f422b29c-c20b-aaa1-c2b8-7f76ed04832d",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-file-upload"
+											},
+											"fragmentConfig": {
+												"buttonText": "Select File",
+												"inputFieldId": "ObjectField_coverImage",
+												"showSupportedFileInfo": true
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "24aafc0c-b029-b00b-f26d-fe247a29dbd1",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-submit-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "primary",
+												"submittedEntryStatus": "approved",
+												"type": "submit"
+											},
+											"fragmentFields": [
+												{
+													"id": "next-button-text",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "previous-button-text",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "submit-button-text",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"id": "c5732650-f9d2-3f7f-70c0-526e4a69d6e9",
+										"type": "Fragment"
+									}
+								],
+								"type": "Form"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

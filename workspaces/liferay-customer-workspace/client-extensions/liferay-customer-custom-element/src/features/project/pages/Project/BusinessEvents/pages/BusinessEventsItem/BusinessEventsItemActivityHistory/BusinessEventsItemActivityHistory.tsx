@@ -33,8 +33,8 @@ import './BusinessEventsItemActivityHistory.css';
 import {getUserAccount} from '~/services/liferay/graphql/queries';
 
 import Avatar from '../../../../TeamMembers/components/TeamMembersTable/components/columns/NameColumn/components/Avatar';
-import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 import ManageEventModal from '../../../components/ManageEventModal';
+import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 
 const BusinessEventsItemActivityHistory = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();

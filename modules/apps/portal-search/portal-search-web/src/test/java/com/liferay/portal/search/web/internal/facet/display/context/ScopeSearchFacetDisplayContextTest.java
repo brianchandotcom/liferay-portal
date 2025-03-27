@@ -99,6 +99,18 @@ public class ScopeSearchFacetDisplayContextTest
 	}
 
 	@Override
+	protected FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception {
+
+		ScopeSearchFacetDisplayContextBuilder
+			scopeSearchFacetDisplayContextBuilder =
+				new ScopeSearchFacetDisplayContextBuilder(
+					getRenderRequest(group));
+
+		return scopeSearchFacetDisplayContextBuilder.build();
+	}
+
+	@Override
 	protected String getFilterValue(String term) {
 		return String.valueOf(_groupId);
 	}
@@ -108,6 +120,29 @@ public class ScopeSearchFacetDisplayContextTest
 		_groupId = RandomTestUtil.randomLong();
 
 		_addGroup(_groupId, term);
+	}
+
+	@Override
+	protected void setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		SiteFacetPortletInstanceConfiguration
+			siteFacetPortletInstanceConfiguration = Mockito.mock(
+				SiteFacetPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			siteFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			siteFacetPortletInstanceConfiguration
+		);
 	}
 
 	@Override

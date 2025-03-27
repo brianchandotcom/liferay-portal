@@ -17,12 +17,13 @@ import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
 import {ITicket} from '~/utils/types';
+
 import './BusinessEventsItemDetails.css';
 import TicketList from '../../../components/AssociatedTicketsContainer/TicketList';
+import ManageEventModal from '../../../components/ManageEventModal';
 import useAccountTickets from '../../../hooks/useAccountTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
-import ManageEventModal from '../../../components/ManageEventModal';
 
 const BusinessEventsItemDetails = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();

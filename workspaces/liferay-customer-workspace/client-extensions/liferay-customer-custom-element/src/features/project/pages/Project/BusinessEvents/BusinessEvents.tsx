@@ -10,7 +10,7 @@ import './BusinessEvents.css';
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
@@ -23,10 +23,10 @@ import {getFormattedTime} from '~/utils/getFormattedTime';
 import {IBusinessEvent} from '~/utils/types';
 
 import ManageEventModal from './components/ManageEventModal';
-import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
-import useIsSaasOnly from './utils/useIsSaasOnly';
 import useFilters from './hooks/useFilters';
 import useGetBusinessEvents from './hooks/useGetBusinessEvents';
+import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
+import useIsSaasOnly from './utils/useIsSaasOnly';
 
 const columns = [
 	{

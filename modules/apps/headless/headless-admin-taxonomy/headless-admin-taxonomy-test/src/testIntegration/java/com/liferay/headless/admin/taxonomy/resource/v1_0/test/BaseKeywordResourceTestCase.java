@@ -1025,6 +1025,402 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
+	public void testGetKeywordsPage() throws Exception {
+		Page<Keyword> page = keywordResource.getKeywordsPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		Keyword keyword1 = testGetKeywordsPage_addKeyword(randomKeyword());
+
+		Keyword keyword2 = testGetKeywordsPage_addKeyword(randomKeyword());
+
+		page = keywordResource.getKeywordsPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(keyword1, (List<Keyword>)page.getItems());
+		assertContains(keyword2, (List<Keyword>)page.getItems());
+		assertValid(page, testGetKeywordsPage_getExpectedActions());
+
+		keywordResource.deleteKeyword(keyword1.getId());
+
+		keywordResource.deleteKeyword(keyword2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetKeywordsPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetKeywordsPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Keyword keyword1 = randomKeyword();
+
+		keyword1 = testGetKeywordsPage_addKeyword(keyword1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Keyword> page = keywordResource.getKeywordsPage(
+				null, null, getFilterString(entityField, "between", keyword1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(keyword1),
+				(List<Keyword>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetKeywordsPageWithFilterDoubleEquals() throws Exception {
+		testGetKeywordsPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetKeywordsPageWithFilterStringContains() throws Exception {
+		testGetKeywordsPageWithFilter("contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetKeywordsPageWithFilterStringEquals() throws Exception {
+		testGetKeywordsPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetKeywordsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetKeywordsPageWithFilter("startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetKeywordsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Keyword keyword1 = testGetKeywordsPage_addKeyword(randomKeyword());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Keyword keyword2 = testGetKeywordsPage_addKeyword(randomKeyword());
+
+		for (EntityField entityField : entityFields) {
+			Page<Keyword> page = keywordResource.getKeywordsPage(
+				null, null, getFilterString(entityField, operator, keyword1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(keyword1),
+				(List<Keyword>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetKeywordsPageWithPagination() throws Exception {
+		Page<Keyword> keywordPage = keywordResource.getKeywordsPage(
+			null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(keywordPage.getTotalCount());
+
+		Keyword keyword1 = testGetKeywordsPage_addKeyword(randomKeyword());
+
+		Keyword keyword2 = testGetKeywordsPage_addKeyword(randomKeyword());
+
+		Keyword keyword3 = testGetKeywordsPage_addKeyword(randomKeyword());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<Keyword> page1 = keywordResource.getKeywordsPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(keyword1, (List<Keyword>)page1.getItems());
+
+			Page<Keyword> page2 = keywordResource.getKeywordsPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(keyword2, (List<Keyword>)page2.getItems());
+
+			Page<Keyword> page3 = keywordResource.getKeywordsPage(
+				null, null, null,
+				Pagination.of(
+					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+					pageSizeLimit),
+				null);
+
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
+		else {
+			Page<Keyword> page1 = keywordResource.getKeywordsPage(
+				null, null, null, Pagination.of(1, totalCount + 2), null);
+
+			List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
+
+			Assert.assertEquals(
+				keywords1.toString(), totalCount + 2, keywords1.size());
+
+			Page<Keyword> page2 = keywordResource.getKeywordsPage(
+				null, null, null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<Keyword> keywords2 = (List<Keyword>)page2.getItems();
+
+			Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
+
+			Page<Keyword> page3 = keywordResource.getKeywordsPage(
+				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(keyword1, (List<Keyword>)page3.getItems());
+			assertContains(keyword2, (List<Keyword>)page3.getItems());
+			assertContains(keyword3, (List<Keyword>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetKeywordsPageWithSortDateTime() throws Exception {
+		testGetKeywordsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, keyword1, keyword2) -> {
+				BeanTestUtil.setProperty(
+					keyword1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetKeywordsPageWithSortDouble() throws Exception {
+		testGetKeywordsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, keyword1, keyword2) -> {
+				BeanTestUtil.setProperty(keyword1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(keyword2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetKeywordsPageWithSortInteger() throws Exception {
+		testGetKeywordsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, keyword1, keyword2) -> {
+				BeanTestUtil.setProperty(keyword1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(keyword2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetKeywordsPageWithSortString() throws Exception {
+		testGetKeywordsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, keyword1, keyword2) -> {
+				Class<?> clazz = keyword1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						keyword1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						keyword2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						keyword1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						keyword2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						keyword1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						keyword2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetKeywordsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Keyword, Keyword, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Keyword keyword1 = randomKeyword();
+		Keyword keyword2 = randomKeyword();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, keyword1, keyword2);
+		}
+
+		keyword1 = testGetKeywordsPage_addKeyword(keyword1);
+
+		keyword2 = testGetKeywordsPage_addKeyword(keyword2);
+
+		Page<Keyword> page = keywordResource.getKeywordsPage(
+			null, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<Keyword> ascPage = keywordResource.getKeywordsPage(
+				null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
+
+			assertContains(keyword1, (List<Keyword>)ascPage.getItems());
+			assertContains(keyword2, (List<Keyword>)ascPage.getItems());
+
+			Page<Keyword> descPage = keywordResource.getKeywordsPage(
+				null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
+
+			assertContains(keyword2, (List<Keyword>)descPage.getItems());
+			assertContains(keyword1, (List<Keyword>)descPage.getItems());
+		}
+	}
+
+	protected Keyword testGetKeywordsPage_addKeyword(Keyword keyword)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetKeywordsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"keywords",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject keywordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/keywords");
+
+		long totalCount = keywordsJSONObject.getLong("totalCount");
+
+		Keyword keyword1 = testGraphQLGetKeywordsPage_addKeyword();
+		Keyword keyword2 = testGraphQLGetKeywordsPage_addKeyword();
+
+		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/keywords");
+
+		Assert.assertEquals(
+			totalCount + 2, keywordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			keyword1,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
+		assertContains(
+			keyword2,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
+
+		// Using the namespace headlessAdminTaxonomy_v1_0
+
+		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField("headlessAdminTaxonomy_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
+			"JSONObject/keywords");
+
+		Assert.assertEquals(
+			totalCount + 2, keywordsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			keyword1,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
+		assertContains(
+			keyword2,
+			Arrays.asList(
+				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
+	}
+
+	protected Keyword testGraphQLGetKeywordsPage_addKeyword() throws Exception {
+		return testGraphQLKeyword_addKeyword();
+	}
+
+	@Test
+	public void testPostKeyword() throws Exception {
+		Keyword randomKeyword = randomKeyword();
+
+		Keyword postKeyword = testPostKeyword_addKeyword(randomKeyword);
+
+		assertEquals(randomKeyword, postKeyword);
+		assertValid(postKeyword);
+	}
+
+	protected Keyword testPostKeyword_addKeyword(Keyword keyword)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetKeywordsRankedPage() throws Exception {
 		Page<Keyword> page = keywordResource.getKeywordsRankedPage(
 			null, null, Pagination.of(1, 10));
@@ -2002,77 +2398,6 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteKeywordsPage() throws Exception {
-		Long siteId = testGetSiteKeywordsPage_getSiteId();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"keywords",
-			new HashMap<String, Object>() {
-				{
-					put("page", 1);
-					put("pageSize", 10);
-
-					put("siteKey", "\"" + siteId + "\"");
-				}
-			},
-			new GraphQLField("items", getGraphQLFields()),
-			new GraphQLField("page"), new GraphQLField("totalCount"));
-
-		// No namespace
-
-		JSONObject keywordsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/keywords");
-
-		long totalCount = keywordsJSONObject.getLong("totalCount");
-
-		Keyword keyword1 = testGraphQLGetSiteKeywordsPage_addKeyword();
-		Keyword keyword2 = testGraphQLGetSiteKeywordsPage_addKeyword();
-
-		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(graphQLField), "JSONObject/data",
-			"JSONObject/keywords");
-
-		Assert.assertEquals(
-			totalCount + 2, keywordsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			keyword1,
-			Arrays.asList(
-				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
-		assertContains(
-			keyword2,
-			Arrays.asList(
-				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
-
-		// Using the namespace headlessAdminTaxonomy_v1_0
-
-		keywordsJSONObject = JSONUtil.getValueAsJSONObject(
-			invokeGraphQLQuery(
-				new GraphQLField("headlessAdminTaxonomy_v1_0", graphQLField)),
-			"JSONObject/data", "JSONObject/headlessAdminTaxonomy_v1_0",
-			"JSONObject/keywords");
-
-		Assert.assertEquals(
-			totalCount + 2, keywordsJSONObject.getLong("totalCount"));
-
-		assertContains(
-			keyword1,
-			Arrays.asList(
-				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
-		assertContains(
-			keyword2,
-			Arrays.asList(
-				KeywordSerDes.toDTOs(keywordsJSONObject.getString("items"))));
-	}
-
-	protected Keyword testGraphQLGetSiteKeywordsPage_addKeyword()
-		throws Exception {
-
-		return testGraphQLKeyword_addKeyword();
-	}
-
-	@Test
 	public void testPostSiteKeyword() throws Exception {
 		Keyword randomKeyword = randomKeyword();
 
@@ -2631,6 +2956,14 @@ public abstract class BaseKeywordResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assetLibraries", additionalAssertFieldName)) {
+				if (keyword.getAssetLibraries() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
 				if (keyword.getAssetLibraryKey() == null) {
 					valid = false;
@@ -2815,6 +3148,17 @@ public abstract class BaseKeywordResourceTestCase {
 				if (!equals(
 						(Map)keyword1.getActions(),
 						(Map)keyword2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraries", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						keyword1.getAssetLibraries(),
+						keyword2.getAssetLibraries())) {
 
 					return false;
 				}
@@ -3028,6 +3372,11 @@ public abstract class BaseKeywordResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("assetLibraries")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

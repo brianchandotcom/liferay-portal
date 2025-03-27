@@ -174,6 +174,48 @@ public class Mutation {
 			});
 	}
 
+	@GraphQLField
+	public Response createKeywordsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.postKeywordsPageExportBatch(
+				search, _filterBiFunction.apply(keywordResource, filterString),
+				_sortsBiFunction.apply(keywordResource, sortsString),
+				callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public Keyword createKeyword(@GraphQLName("keyword") Keyword keyword)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.postKeyword(keyword));
+	}
+
+	@GraphQLField
+	public Response createKeywordBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_keywordResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			keywordResource -> keywordResource.postKeywordBatch(
+				callbackURL, object));
+	}
+
 	@GraphQLField(
 		description = "Deletes the keyword and returns a 204 if the operation succeeds."
 	)

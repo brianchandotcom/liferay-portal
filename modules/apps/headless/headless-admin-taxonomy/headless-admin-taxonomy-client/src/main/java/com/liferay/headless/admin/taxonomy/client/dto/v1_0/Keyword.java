@@ -49,6 +49,28 @@ public class Keyword implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public AssetLibrary[] getAssetLibraries() {
+		return assetLibraries;
+	}
+
+	public void setAssetLibraries(AssetLibrary[] assetLibraries) {
+		this.assetLibraries = assetLibraries;
+	}
+
+	public void setAssetLibraries(
+		UnsafeSupplier<AssetLibrary[], Exception>
+			assetLibrariesUnsafeSupplier) {
+
+		try {
+			assetLibraries = assetLibrariesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AssetLibrary[] assetLibraries;
+
 	public String getAssetLibraryKey() {
 		return assetLibraryKey;
 	}

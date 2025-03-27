@@ -93,6 +93,17 @@ const BusinessEvents = () => {
 		});
 	}, [fetchBusinessEvents]);
 
+	const handleOnCompleted = useCallback(() => {
+		fetchBusinessEvents();
+
+		Liferay.Util.openToast({
+			message: i18n.translate(
+				'business-event-actual-go-live-date-recorded-successfully'
+			),
+			type: 'success',
+		});
+	}, [fetchBusinessEvents]);
+
 	const rows = useMemo(() => {
 		if (businessEvents?.length > 0) {
 			return businessEvents.map((businessEvent) => {
@@ -330,6 +341,7 @@ const BusinessEvents = () => {
 								modalType={modalType}
 								observer={observer}
 								onCancel={handleOnCancel}
+								onCompleted={handleOnCompleted}
 							/>
 						)}
 					</>

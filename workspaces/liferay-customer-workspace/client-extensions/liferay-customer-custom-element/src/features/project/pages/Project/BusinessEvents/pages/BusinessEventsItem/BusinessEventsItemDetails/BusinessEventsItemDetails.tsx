@@ -85,6 +85,17 @@ const BusinessEventsItemDetails = () => {
 		});
 	}, [fetchBusinessEvent]);
 
+	const handleOnCompleted = useCallback(() => {
+		fetchBusinessEvent();
+
+		Liferay.Util.openToast({
+			message: i18n.translate(
+				'business-event-actual-go-live-date-recorded-successfully'
+			),
+			type: 'success',
+		});
+	}, [fetchBusinessEvent]);
+
 	useEffect(() => {
 		if (businessEvent && tickets) {
 			const associatedTickets = JSON.parse(
@@ -321,6 +332,7 @@ const BusinessEventsItemDetails = () => {
 					modalType={modalType}
 					observer={observer}
 					onCancel={handleOnCancel}
+					onCompleted={handleOnCompleted}
 				/>
 			)}
 		</div>

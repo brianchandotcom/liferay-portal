@@ -34,7 +34,7 @@ const TicketOption: React.FC<IProps> = ({
 					onClick={() => primaryAction(ticket)}
 				>
 					<div className="d-flex justify-content-between ticket-text w-100">
-						{ticket.subject}
+						{`${ticket.ticketId} - ${ticket.subject}`}
 
 						<div
 							className={`d-none ticket-link-icon ticket-link-icon-${type}`}

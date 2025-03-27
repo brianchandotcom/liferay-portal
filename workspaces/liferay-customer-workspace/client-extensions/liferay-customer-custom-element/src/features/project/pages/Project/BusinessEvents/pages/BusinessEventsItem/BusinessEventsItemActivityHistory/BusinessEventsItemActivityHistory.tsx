@@ -75,11 +75,22 @@ const BusinessEventsItemActivityHistory = () => {
 		}
 	}, [id]);
 
-	const handleEventCanceled = useCallback(() => {
+	const handleOnCancel = useCallback(() => {
 		fetchBusinessEvent();
 
 		Liferay.Util.openToast({
 			message: i18n.translate('business-event-canceled-successfully'),
+			type: 'success',
+		});
+	}, [fetchBusinessEvent]);
+
+	const handleOnCompleted = useCallback(() => {
+		fetchBusinessEvent();
+
+		Liferay.Util.openToast({
+			message: i18n.translate(
+				'business-event-actual-go-live-date-recorded-successfully'
+			),
 			type: 'success',
 		});
 	}, [fetchBusinessEvent]);
@@ -352,7 +363,8 @@ const BusinessEventsItemActivityHistory = () => {
 					closeFunction={onOpenChange}
 					modalType={modalType}
 					observer={observer}
-					onCancel={handleEventCanceled}
+					onCancel={handleOnCancel}
+					onCompleted={handleOnCompleted}
 				/>
 			)}
 

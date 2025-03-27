@@ -1,0 +1,156 @@
+{
+	"pageElement": {
+		"id": "9df01e0b-2975-c5aa-d039-4307447122e2",
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingBottom": "6",
+						"paddingTop": "6"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 6,
+						"paddingTop": 6
+					}
+				},
+				"id": "00383e96-3ba8-bd29-0354-9eec5707f677",
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+								"widthType": "Fixed"
+							}
+						},
+						"id": "aeb8c7f6-2ba0-9b86-a65d-abbeb7c0f910",
+						"pageElements": [
+							{
+								"definition": {
+									"formConfig": {
+										"formReference": {
+											"contextSource": "DisplayPageItem"
+										},
+										"formSuccessSubmissionResult": {
+											"itemReference": {
+												"className": "com.liferay.portal.kernel.model.Layout",
+												"fields": [
+													{
+														"fieldName": "friendlyURL",
+														"fieldValue": "/contents"
+													},
+													{
+														"fieldName": "privatePage",
+														"fieldValue": "false"
+													},
+													{
+														"fieldName": "siteKey",
+														"fieldValue": "CMS"
+													}
+												]
+											}
+										},
+										"formType": "simple",
+										"numberOfSteps": 0
+									},
+									"indexed": true,
+									"layout": {
+									}
+								},
+								"id": "385f80b1-a9ce-3834-11dd-46a9ac1b7dd6",
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-text-input"
+											},
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_title",
+												"placeholder": "",
+												"showCharactersCount": false
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "bf4c8c93-0ee7-11c6-8e04-b21d9926fb2f",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-rich-text-input"
+											},
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_content"
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "b1f3eba7-598a-468b-e5f9-e567c67d41ea",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-submit-button"
+											},
+											"fragmentConfig": {
+												"buttonSize": "nm",
+												"buttonType": "primary",
+												"submittedEntryStatus": "approved",
+												"type": "submit"
+											},
+											"fragmentFields": [
+												{
+													"id": "next-button-text",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "previous-button-text",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												},
+												{
+													"id": "submit-button-text",
+													"value": {
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"id": "58c67ecf-859e-9eeb-1354-0cadf4c1702a",
+										"type": "Fragment"
+									}
+								],
+								"type": "Form"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

@@ -86,6 +86,14 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long companyId = _portal.getCompanyId(actionRequest);
+
+		if (!_mfaPolicy.isMFAEnabled(companyId)) {
+			_loginMVCActionCommand.processAction(actionRequest, actionResponse);
+
+			return;
+		}
+
 		HttpServletRequest httpServletRequest =
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(actionRequest));
@@ -93,13 +101,9 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		if (AuthenticatedSessionManagerUtil.isPasswordParameterInQueryString(
 				httpServletRequest)) {
 
-			return;
-		}
+			_postProcessAuthFailure(actionRequest, actionResponse);
 
-		long companyId = _portal.getCompanyId(actionRequest);
-
-		if (!_mfaPolicy.isMFAEnabled(companyId)) {
-			_loginMVCActionCommand.processAction(actionRequest, actionResponse);
+			hideDefaultErrorMessage(actionRequest);
 
 			return;
 		}

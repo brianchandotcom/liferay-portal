@@ -259,6 +259,22 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_getUtilityPage(
 				null, layoutUtilityPageEntry.getExternalReferenceCode()));
 
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED);
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.DRAFT);
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
 		_assertProblemException(
 			"NOT_FOUND",
 			() ->
@@ -723,6 +739,60 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Assert.assertEquals(
 			expectedMarkedAsDefault, pathUtilityPage.getMarkedAsDefault());
+	}
+
+	private void
+			_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+				PageSpecification.Status newDraftLayoutStatus,
+				PageSpecification.Status newPublishedLayoutStatus,
+				PageSpecification.Status oldDraftLayoutStatus,
+				PageSpecification.Status oldPublishedLayoutStatus)
+		throws Exception {
+
+		UtilityPage utilityPage = _getUtilityPage(
+			Boolean.FALSE, RandomTestUtil.randomString());
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, oldDraftLayoutStatus);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				oldPublishedLayoutStatus);
+
+		utilityPage.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
+		UtilityPageResource utilityPageResource = _getUtilityPageResource();
+
+		UtilityPage postUtilityPage =
+			utilityPageResource.postSiteSiteByExternalReferenceCodeUtilityPage(
+				testGroup.getExternalReferenceCode(), utilityPage);
+
+		_assertPageSpecifications(
+			postUtilityPage, draftContentPageSpecification,
+			publishedContentPageSpecification);
+
+		draftContentPageSpecification.setStatus(newDraftLayoutStatus);
+		publishedContentPageSpecification.setStatus(newPublishedLayoutStatus);
+
+		_assertPageSpecifications(
+			utilityPageResource.patchSiteSiteByExternalReferenceCodeUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				utilityPage.getExternalReferenceCode(),
+				new UtilityPage() {
+					{
+						setPageSpecifications(
+							() -> new PageSpecification[] {
+								publishedContentPageSpecification,
+								draftContentPageSpecification
+							});
+					}
+				}),
+			draftContentPageSpecification, publishedContentPageSpecification);
 	}
 
 	private void

@@ -136,6 +136,7 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 										<liferay-ui:search-container
 											deltaConfigurable="<%= false %>"
 											headerNames="name,version"
+											id="<%= connectionInformation.getConnectionId() %>"
 											total="<%= nodeInformationList.size() %>"
 										>
 											<liferay-ui:search-container-results

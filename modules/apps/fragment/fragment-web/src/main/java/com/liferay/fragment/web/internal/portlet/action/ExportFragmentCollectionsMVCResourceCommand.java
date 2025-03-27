@@ -65,9 +65,13 @@ public class ExportFragmentCollectionsMVCResourceCommand
 			for (long exportFragmentCollectionId :
 					exportFragmentCollectionIds) {
 
-				fragmentCollections.add(
+				FragmentCollection fragmentCollection =
 					_fragmentCollectionService.fetchFragmentCollection(
-						exportFragmentCollectionId));
+						exportFragmentCollectionId);
+
+				if (!fragmentCollection.isMarketplace()) {
+					fragmentCollections.add(fragmentCollection);
+				}
 			}
 
 			ZipWriter zipWriter = _zipWriterFactory.getZipWriter();

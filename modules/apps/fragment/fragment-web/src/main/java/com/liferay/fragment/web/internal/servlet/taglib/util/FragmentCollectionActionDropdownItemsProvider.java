@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.web.internal.display.context.FragmentDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -33,6 +34,9 @@ public class FragmentCollectionActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
+		FragmentCollection fragmentCollection =
+			_fragmentDisplayContext.getFragmentCollection();
+
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -62,6 +66,7 @@ public class FragmentCollectionActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() -> !fragmentCollection.isMarketplace(),
 						dropdownItem -> {
 							ResourceURL
 								exportFragmentCompositionsAndFragmentEntriesURL =

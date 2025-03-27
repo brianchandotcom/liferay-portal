@@ -33,7 +33,7 @@ const test = mergeTests(
 	styleBookPageTest
 );
 
-test('Assert that the style books in page editor are based on the applied theme', async ({
+test('Assert that the style books in the page editor are based on the applied theme', async ({
 	page,
 	pageEditorPage,
 	pagesAdminPage,
@@ -89,7 +89,7 @@ test('Assert that the style books in page editor are based on the applied theme'
 	});
 });
 
-test('Assert that the style books in page editor are based on the applied theme CSS client extension', async ({
+test('Assert that the style books in the page editor are based on the applied theme CSS client extension', async ({
 	page,
 	pageEditorPage,
 	pagesAdminPage,
@@ -97,7 +97,7 @@ test('Assert that the style books in page editor are based on the applied theme 
 }) => {
 	const pageName = getRandomString();
 
-	await test.step('Create a content page and apply the Liferay Sample Theme CSS 3', async () => {
+	await test.step('Create a content page and apply the "Liferay Sample Theme CSS 3" client extension', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
 		await pagesAdminPage.createNewPage({
@@ -114,7 +114,7 @@ test('Assert that the style books in page editor are based on the applied theme 
 		);
 	});
 
-	await test.step('Assert the message that warns that the theme does not support style books', async () => {
+	await test.step('Assert that the style books not supported message is visible', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
 		await pagesAdminPage.editPage(pageName);
@@ -130,7 +130,7 @@ test('Assert that the style books in page editor are based on the applied theme 
 		).toBeVisible();
 	});
 
-	await test.step('Create a content page and apply the Liferay Sample Theme CSS 4', async () => {
+	await test.step('Apply the "Liferay Sample Theme CSS 4" client extension to a content page', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
 		await pagesAdminPage.goToDesignTabConfiguration(pageName);
@@ -140,7 +140,7 @@ test('Assert that the style books in page editor are based on the applied theme 
 		);
 	});
 
-	await test.step('Assert that the applied style book is the one provided by Liferay Sample Theme CSS 4', async () => {
+	await test.step('Assert that the applied style book is the one provided by "Liferay Sample Theme CSS 4" client extension', async () => {
 		await pagesAdminPage.goto(site.friendlyUrlPath);
 
 		await pagesAdminPage.editPage(pageName);
@@ -335,7 +335,7 @@ test.describe('Style book is incompatible with the applied theme', () => {
 	}) => {
 		const styleBookName = getRandomString();
 
-		await test.step('Create style book', async () => {
+		await test.step('Create a style book', async () => {
 			await styleBooksPage.goto(site.friendlyUrlPath);
 
 			await styleBooksPage.create(styleBookName);
@@ -345,7 +345,7 @@ test.describe('Style book is incompatible with the applied theme', () => {
 
 		const pageName = getRandomString();
 
-		await test.step('Create content page and apply the new style book', async () => {
+		await test.step('Create a content page and apply the new style book', async () => {
 			await pagesAdminPage.goto(site.friendlyUrlPath);
 
 			await pagesAdminPage.createNewPage({
@@ -358,7 +358,7 @@ test.describe('Style book is incompatible with the applied theme', () => {
 			await pageEditorPage.publishPage();
 		});
 
-		await test.step('Change theme and assert that the applied style book is the one from the new theme', async () => {
+		await test.step('Change the theme and assert that the applied style book is the one from the new theme', async () => {
 			await pagesAdminPage.goto(site.friendlyUrlPath);
 
 			await pagesAdminPage.goToDesignTabConfiguration(pageName);

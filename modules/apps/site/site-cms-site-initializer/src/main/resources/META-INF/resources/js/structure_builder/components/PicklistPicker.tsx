@@ -21,7 +21,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 	const selectField = field as SingleSelectField | MultiselectField;
 
 	const [selectedKey, setSelectedKey] = useState<React.Key>(
-		selectField.picklistId || ''
+		selectField.picklistId
 	);
 
 	const dispatch = useStateDispatch();
@@ -63,7 +63,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 
 							setSelectedKey(selectedKey);
 						}}
-						selectedKey={selectedKey}
+						selectedKey={String(selectedKey)}
 					>
 						{(item) => <Option key={item.id}>{item.name}</Option>}
 					</Picker>

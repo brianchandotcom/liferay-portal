@@ -129,11 +129,13 @@ public abstract class RedirectNotFoundEntryLocalServiceBaseImpl
 	 *
 	 * @param redirectNotFoundEntry the redirect not found entry
 	 * @return the redirect not found entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RedirectNotFoundEntry deleteRedirectNotFoundEntry(
-		RedirectNotFoundEntry redirectNotFoundEntry) {
+			RedirectNotFoundEntry redirectNotFoundEntry)
+		throws PortalException {
 
 		return redirectNotFoundEntryPersistence.remove(redirectNotFoundEntry);
 	}

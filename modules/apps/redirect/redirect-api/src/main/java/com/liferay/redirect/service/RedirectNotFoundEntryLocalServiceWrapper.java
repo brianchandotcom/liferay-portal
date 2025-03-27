@@ -96,6 +96,14 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 			persistedModel);
 	}
 
+	@Override
+	public void deleteRedirectNotFoundEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_redirectNotFoundEntryLocalService.deleteRedirectNotFoundEntries(
+			groupId);
+	}
+
 	/**
 	 * Deletes the redirect not found entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -125,12 +133,14 @@ public class RedirectNotFoundEntryLocalServiceWrapper
 	 *
 	 * @param redirectNotFoundEntry the redirect not found entry
 	 * @return the redirect not found entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.redirect.model.RedirectNotFoundEntry
-		deleteRedirectNotFoundEntry(
-			com.liferay.redirect.model.RedirectNotFoundEntry
-				redirectNotFoundEntry) {
+			deleteRedirectNotFoundEntry(
+				com.liferay.redirect.model.RedirectNotFoundEntry
+					redirectNotFoundEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _redirectNotFoundEntryLocalService.deleteRedirectNotFoundEntry(
 			redirectNotFoundEntry);

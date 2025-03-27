@@ -177,7 +177,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -293,7 +292,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -413,7 +411,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -643,7 +640,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 				'Active',
@@ -664,7 +660,6 @@ test(
 			await waitForAlert(page);
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 				'Inactive',
@@ -685,7 +680,6 @@ test(
 			await waitForAlert(page);
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 				'Active',

@@ -68,11 +68,7 @@ async function assertTableCellContent({actionData, page, rowIndex = 0}) {
 			.nth(rowIndex)
 			.locator('td');
 
-		const expectedRowContent = [
-			actionData.icon,
-			actionData.label,
-			actionData.type,
-		];
+		const expectedRowContent = [actionData.label, actionData.type];
 
 		await expect(tableRowContent).toContainText(expectedRowContent);
 	});
@@ -368,7 +364,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -514,7 +509,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -649,7 +643,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -780,7 +773,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -915,7 +907,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 			]);
@@ -1264,7 +1255,6 @@ test(
 			});
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 				'Active',
@@ -1285,7 +1275,6 @@ test(
 			await waitForAlert(page);
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 				'Inactive',
@@ -1306,7 +1295,6 @@ test(
 			await waitForAlert(page);
 
 			await expect(actionRow.getByRole('cell')).toContainText([
-				icon,
 				label,
 				type,
 				'Active',

@@ -60,6 +60,15 @@ export default function PicklistPicker({field}: {field: Field}) {
 						disabled={isPublished || !picklists.length}
 						id={pickerId}
 						items={picklists}
+						onBlur={() => {
+							if (!selectedKey) {
+								dispatch({
+									error: 'no-picklist',
+									type: 'add-validation-error',
+									uuid: field.uuid,
+								});
+							}
+						}}
 						onSelectionChange={(selectedKey: React.Key) => {
 							dispatch({
 								picklistId: Number(selectedKey),

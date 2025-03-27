@@ -329,7 +329,10 @@ Liferay.Util.unescape = (string) => {
 Liferay.Util.unescapeHTML = unescapeHTML;
 
 Liferay.Util.checkAll = (...args) => {
-	import('frontend-js-web/legacy').then(({checkAll}) => {
+	import(
+		themeDisplay.getPathContext() +
+			'/o/frontend-js-web/__liferay__/legacy.js'
+	).then(({checkAll}) => {
 		checkAll(...args);
 	});
 };

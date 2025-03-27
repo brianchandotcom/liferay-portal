@@ -589,7 +589,10 @@ AUI.add(
 				_onAllRowIdsClick() {
 					const instance = this;
 
-					import('frontend-js-web/legacy').then(({checkAll}) => {
+					import(
+						themeDisplay.getPathContext() +
+							'/o/frontend-js-web/__liferay__/legacy.js'
+					).then(({checkAll}) => {
 						checkAll(
 							instance._fileListSelector,
 							instance._selectUploadedFileCheckboxId,
@@ -789,7 +792,10 @@ AUI.add(
 					const instance = this;
 
 					if (instance.get('multipleFiles')) {
-						import('frontend-js-web/legacy').then(({checkAll}) => {
+						import(
+							themeDisplay.getPathContext() +
+								'/o/frontend-js-web/__liferay__/legacy.js'
+						).then(({checkAll}) => {
 							checkAll(
 								instance._fileListSelector,
 								instance._selectUploadedFileCheckboxId,

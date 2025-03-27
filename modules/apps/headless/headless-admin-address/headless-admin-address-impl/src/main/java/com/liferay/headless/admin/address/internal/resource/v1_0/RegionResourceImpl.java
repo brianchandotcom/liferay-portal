@@ -163,15 +163,17 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 	private OrderByComparator<com.liferay.portal.kernel.model.Region>
 		_toOrderByComparator(Sort[] sorts) {
 
-		if (ArrayUtil.isEmpty(sorts)) {
-			return null;
-		}
-
 		List<Object> objects = new ArrayList<>();
 
-		for (Sort sort : sorts) {
-			objects.add(sort.getFieldName());
-			objects.add(!sort.isReverse());
+		if (ArrayUtil.isEmpty(sorts)) {
+			objects.add(RegionTable.INSTANCE.regionId.getName());
+			objects.add(true);
+		}
+		else {
+			for (Sort sort : sorts) {
+				objects.add(sort.getFieldName());
+				objects.add(!sort.isReverse());
+			}
 		}
 
 		return OrderByComparatorFactoryUtil.create(

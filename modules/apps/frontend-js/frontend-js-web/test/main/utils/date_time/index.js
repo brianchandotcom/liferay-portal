@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {default as dateTimeUtils} from '../../../src/main/resources/META-INF/resources/utils/date_time/index';
+import {default as dateTimeUtils} from '../../../../src/main/resources/META-INF/resources/main/utils/date_time/index';
 
 describe('date_time utils', () => {
 	it('returns the first day of the week for a given locale', () => {

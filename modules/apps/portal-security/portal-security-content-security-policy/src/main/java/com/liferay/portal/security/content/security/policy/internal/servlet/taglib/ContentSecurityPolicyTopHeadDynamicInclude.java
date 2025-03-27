@@ -47,9 +47,8 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 			printWriter.print(StringPool.QUOTE);
 		}
 
-		printWriter.print(
-			" type=\"text/javascript\">window.Liferay = window.Liferay || ");
-		printWriter.print("{}; window.Liferay.CSP = {nonce: '");
+		printWriter.print(" type=\"text/javascript\">");
+		printWriter.print("window.Liferay.CSP = {nonce: '");
 
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration =
 			ContentSecurityPolicyConfigurationUtil.

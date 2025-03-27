@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-Liferay = window.Liferay || {};
-
 (function () {
 	const isFunction = function (val) {
 		return typeof val === 'function';

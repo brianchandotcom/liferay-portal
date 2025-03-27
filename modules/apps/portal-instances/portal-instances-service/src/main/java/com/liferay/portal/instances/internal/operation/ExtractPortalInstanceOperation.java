@@ -57,11 +57,7 @@ public class ExtractPortalInstanceOperation
 	protected void activate(Map<String, Object> properties) {
 		onPortalInstance(
 			() -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPD-11342")) {
-					_log.error("Feature flag LPD-11342 must be enabled");
-
-					return null;
-				}
+				FeatureFlagManagerUtil.checkEnabled("LPD-11342");
 
 				ExtractPortalInstanceConfiguration
 					extractPortalInstanceConfiguration =

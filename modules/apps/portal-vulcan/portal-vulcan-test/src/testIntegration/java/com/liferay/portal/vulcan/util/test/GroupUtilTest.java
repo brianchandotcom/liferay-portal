@@ -59,16 +59,11 @@ public class GroupUtilTest {
 
 	@Test
 	public void testGetAssetLibraryKey() throws Exception {
-
-		// Depot entry
-
 		Group depotEntryGroup = _depotEntry.getGroup();
 
 		Assert.assertEquals(
 			depotEntryGroup.getGroupKey(),
 			GroupUtil.getAssetLibraryKey(depotEntryGroup));
-
-		// Site
 
 		Group siteGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
@@ -79,8 +74,6 @@ public class GroupUtilTest {
 	@Test
 	public void testGetDepotGroupId() throws Exception {
 		_testGetDepotGroupId();
-
-		// Depot entry group ID
 
 		Group depotEntryGroup = _depotEntry.getGroup();
 
@@ -95,8 +88,6 @@ public class GroupUtilTest {
 	@Test
 	public void testGetDepotGroupIdWithFeatureFlag() throws Exception {
 		_testGetDepotGroupId();
-
-		// Depot entry group ID
 
 		Group depotEntryGroup = _depotEntry.getGroup();
 
@@ -113,15 +104,11 @@ public class GroupUtilTest {
 		Group siteGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
 
-		// Site group key
-
 		Assert.assertEquals(
 			Long.valueOf(siteGroup.getGroupId()),
 			GroupUtil.getGroupId(
 				siteGroup.getCompanyId(), siteGroup.getGroupKey(),
 				_groupLocalService));
-
-		// Site group ID
 
 		Assert.assertEquals(
 			Long.valueOf(siteGroup.getGroupId()),
@@ -132,13 +119,8 @@ public class GroupUtilTest {
 
 	@Test
 	public void testGetSiteExternalReferenceCode() throws Exception {
-
-		// Depot entry group
-
 		Assert.assertNull(
 			GroupUtil.getSiteExternalReferenceCode(_depotEntry.getGroup()));
-
-		// Site group
 
 		Group siteGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
@@ -150,12 +132,7 @@ public class GroupUtilTest {
 
 	@Test
 	public void testGetSiteId() throws Exception {
-
-		// Depot entry group
-
 		Assert.assertNull(GroupUtil.getSiteId(_depotEntry.getGroup()));
-
-		// Site group
 
 		Group siteGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
@@ -168,15 +145,11 @@ public class GroupUtilTest {
 	private void _testGetDepotGroupId() throws Exception {
 		Group depotEntryGroup = _depotEntry.getGroup();
 
-		// Depot entry group key
-
 		Assert.assertEquals(
 			Long.valueOf(depotEntryGroup.getGroupId()),
 			GroupUtil.getDepotGroupId(
 				depotEntryGroup.getGroupKey(), depotEntryGroup.getCompanyId(),
 				_depotEntryLocalService, _groupLocalService));
-
-		// Depot entry ID
 
 		Assert.assertEquals(
 			Long.valueOf(depotEntryGroup.getGroupId()),

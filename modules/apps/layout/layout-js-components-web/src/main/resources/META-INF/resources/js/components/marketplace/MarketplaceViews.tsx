@@ -18,13 +18,13 @@ import React, {useCallback} from 'react';
 import importZipFile from '../import/importZipFile';
 import {InstallFragmentModalBody} from './InstallFragmentModal';
 
-async function fetchFragmentBlob(marketplaceRest: MarketplaceRest, url: URL) {
-	const response = await marketplaceRest.fetchMarketplace<Response>(
-		url.pathname,
-		{
-			earlyReturn: true,
-		}
-	);
+async function fetchFragmentBlob(
+	marketplaceRest: MarketplaceRest,
+	url: string
+) {
+	const response = await marketplaceRest.fetchMarketplace<Response>(url, {
+		earlyReturn: true,
+	});
 
 	return response.blob();
 }
@@ -39,18 +39,20 @@ function getProductAttachmentBlob(
 
 	return fetchFragmentBlob(
 		marketplaceRest,
-		new URL(product.attachments[0].src)
+		new URL(product.attachments[0].src).pathname
 	);
 }
 
 interface MarketplaceViewsProps {
 	fragmentPortletNamespace: string;
 	fragmentsImportURL: string;
+	hideBackButton?: boolean;
 }
 
 export default function MarketplaceViews({
 	fragmentPortletNamespace,
 	fragmentsImportURL,
+	hideBackButton,
 }: MarketplaceViewsProps) {
 	const {
 		marketplaceRest,
@@ -101,9 +103,13 @@ export default function MarketplaceViews({
 			setProduct(product);
 
 			try {
-				const cart = await marketplaceRest.createCart(product, {
-					orderTypeExternalReferenceCode: 'FRAGMENT',
-				});
+				const cart = await marketplaceRest.createCart(
+					product as Product,
+					{
+						orderTypeExternalReferenceCode:
+							'LOW_CODE_CONFIGURATION',
+					}
+				);
 
 				await marketplaceRest.checkoutCart(cart);
 
@@ -116,10 +122,9 @@ export default function MarketplaceViews({
 					const file = new File(
 						[blob],
 						`${product.name.replace(' ', '-').toLowerCase()}.zip`,
-						{
-							type: 'application/zip',
-						}
+						{type: 'application/zip'}
 					);
+
 					await handleImportFile(file);
 
 					openToast({
@@ -131,7 +136,7 @@ export default function MarketplaceViews({
 					});
 				}
 			}
-			catch (error: any) {
+			catch (error) {
 				console.error('Installation failed:', error);
 				openToast({
 					message: Liferay.Language.get(
@@ -168,6 +173,11 @@ export default function MarketplaceViews({
 
 			{view === MarketplaceView.STOREFRONT && (
 				<Marketplace.Storefront
+					onClickBack={
+						hideBackButton
+							? undefined
+							: () => setView(MarketplaceView.PRODUCTS)
+					}
 					primaryButton={
 						<ClayButton
 							className="ml-auto mt-3 rounded"

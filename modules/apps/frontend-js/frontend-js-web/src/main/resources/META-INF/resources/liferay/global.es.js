@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {checkAll} from '../legacy/checkAll';
 import loadClientExtensions from '../utils/client_extensions/loadClientExtensions';
 import loadEditorClientExtensions from '../utils/client_extensions/loadEditorClientExtensions';
 import DynamicInlineScroll from './DynamicInlineScroll.es';
@@ -329,7 +328,11 @@ Liferay.Util.unescape = (string) => {
 
 Liferay.Util.unescapeHTML = unescapeHTML;
 
-Liferay.Util.checkAll = checkAll;
+Liferay.Util.checkAll = (...args) => {
+	import('frontend-js-web/legacy').then(({checkAll}) => {
+		checkAll(...args);
+	});
+};
 Liferay.Util.Cookie = Cookie;
 
 Liferay.Util.LocalStorage = localStorage;

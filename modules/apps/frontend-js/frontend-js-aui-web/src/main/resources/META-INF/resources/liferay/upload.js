@@ -589,22 +589,24 @@ AUI.add(
 				_onAllRowIdsClick() {
 					const instance = this;
 
-					Liferay.Util.checkAll(
-						instance._fileListSelector,
-						instance._selectUploadedFileCheckboxId,
-						instance._allRowIdsCheckboxSelector
-					);
+					import('frontend-js-web/legacy').then(({checkAll}) => {
+						checkAll(
+							instance._fileListSelector,
+							instance._selectUploadedFileCheckboxId,
+							instance._allRowIdsCheckboxSelector
+						);
 
-					const uploadedFiles = instance._fileListContent.all(
-						'.upload-file.upload-complete'
-					);
+						const uploadedFiles = instance._fileListContent.all(
+							'.upload-file.upload-complete'
+						);
 
-					uploadedFiles.toggleClass(
-						'selected',
-						instance._allRowIdsCheckbox.attr('checked')
-					);
+						uploadedFiles.toggleClass(
+							'selected',
+							instance._allRowIdsCheckbox.attr('checked')
+						);
 
-					instance._updateMetadataContainer();
+						instance._updateMetadataContainer();
+					});
 				},
 
 				_onAllUploadsComplete() {
@@ -787,16 +789,23 @@ AUI.add(
 					const instance = this;
 
 					if (instance.get('multipleFiles')) {
-						Liferay.Util.checkAll(
-							instance._fileListSelector,
-							instance._selectUploadedFileCheckboxId,
-							instance._allRowIdsCheckboxSelector
-						);
+						import('frontend-js-web/legacy').then(({checkAll}) => {
+							checkAll(
+								instance._fileListSelector,
+								instance._selectUploadedFileCheckboxId,
+								instance._allRowIdsCheckboxSelector
+							);
+
+							instance._markSelected(currentTarget);
+
+							instance._updateMetadataContainer();
+						});
 					}
+					else {
+						instance._markSelected(currentTarget);
 
-					instance._markSelected(currentTarget);
-
-					instance._updateMetadataContainer();
+						instance._updateMetadataContainer();
+					}
 				},
 
 				_onUploadComplete(event) {

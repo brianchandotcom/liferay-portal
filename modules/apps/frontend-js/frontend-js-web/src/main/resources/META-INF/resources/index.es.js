@@ -3,9 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {registerIcon} from './legacy/icon';
-
-export {default as Session} from './legacy/session';
 export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
 export {default as DynamicInlineScroll} from './liferay/DynamicInlineScroll.es';
 export {default as PortletBase} from './liferay/PortletBase.es';

@@ -36,6 +36,9 @@ module.exports = {
 		},
 	},
 	main: './src/main/resources/META-INF/resources/index.es.js',
+	submodules: {
+		legacy: './src/main/resources/META-INF/resources/legacy/index.ts',
+	},
 	typescript: {
 		main: './src/main/resources/META-INF/resources/index.d.ts',
 	},

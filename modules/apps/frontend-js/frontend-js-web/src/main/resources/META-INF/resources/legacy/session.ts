@@ -18,7 +18,7 @@ const TOAST_ID = 'sessionToast';
 
 const BUFFER_TIME: Array<any> = [];
 
-class Session {
+export class Session {
 	private _expiredText: string;
 	private _warningText: string;
 	private _timestamp: string;
@@ -388,5 +388,3 @@ class Session {
 		this.setSessionState('warned');
 	}
 }
-
-export default Session;

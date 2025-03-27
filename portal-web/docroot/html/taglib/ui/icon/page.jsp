@@ -80,7 +80,7 @@ if (!linkCssClass.contains("keep-aria-attributes") && (useDialog || (urlIsNotNul
 
 <c:if test="<%= Validator.isNotNull(srcHover) || forcePost || useDialog %>">
 	<aui:script>
-		import {registerIcon} from '<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-web") %>';
+		import {registerIcon} from '<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-web", "legacy") %>';
 
 		registerIcon(
 			{

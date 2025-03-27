@@ -235,13 +235,17 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
-	public void validate(
-			long groupId, com.liferay.object.model.ObjectEntry objectEntry,
-			java.util.List<String> objectValidationRuleExternalReferenceCodes)
+	public java.util.List<com.liferay.object.entry.validation.ValidationError>
+			validate(
+				long groupId, com.liferay.object.model.ObjectEntry objectEntry,
+				java.util.List<String>
+					objectValidationRuleExternalReferenceCodes,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_objectEntryService.validate(
-			groupId, objectEntry, objectValidationRuleExternalReferenceCodes);
+		return _objectEntryService.validate(
+			groupId, objectEntry, objectValidationRuleExternalReferenceCodes,
+			serviceContext);
 	}
 
 	@Override

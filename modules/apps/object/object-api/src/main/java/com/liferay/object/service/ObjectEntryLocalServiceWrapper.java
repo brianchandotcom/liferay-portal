@@ -813,6 +813,21 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.entry.validation.ValidationError>
+			validate(
+				long groupId, com.liferay.object.model.ObjectEntry objectEntry,
+				java.util.List<String>
+					objectValidationRuleExternalReferenceCodes,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext,
+				long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.validate(
+			groupId, objectEntry, objectValidationRuleExternalReferenceCodes,
+			serviceContext, userId);
+	}
+
+	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _objectEntryLocalService.getBasePersistence();
 	}

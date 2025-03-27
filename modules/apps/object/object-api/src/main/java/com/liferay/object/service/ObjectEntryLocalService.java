@@ -6,6 +6,7 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.entry.validation.ValidationError;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
@@ -523,6 +524,12 @@ public interface ObjectEntryLocalService
 	public ObjectEntry updateStatus(
 			long userId, ObjectEntry objectEntry, int status,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public List<ValidationError> validate(
+			long groupId, ObjectEntry objectEntry,
+			List<String> objectValidationRuleExternalReferenceCodes,
+			ServiceContext serviceContext, long userId)
 		throws PortalException;
 
 }

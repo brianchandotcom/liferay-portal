@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {checkAll} from '../legacy/checkAll';
 import loadClientExtensions from '../utils/client_extensions/loadClientExtensions';
 import loadEditorClientExtensions from '../utils/client_extensions/loadEditorClientExtensions';
 import DynamicInlineScroll from './DynamicInlineScroll.es';
@@ -36,7 +37,6 @@ import statusCode from './status_code';
 import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
-import {checkAll} from './util/checkAll';
 import Cookie from './util/cookie/cookie';
 import fetch from './util/fetch.es';
 import focusFormField from './util/focus_form_field';

@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
+export {registerIcon} from './legacy/icon';
 
+export {default as Session} from './legacy/session';
+export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
 export {default as DynamicInlineScroll} from './liferay/DynamicInlineScroll.es';
 export {default as PortletBase} from './liferay/PortletBase.es';
 export {
@@ -22,7 +24,6 @@ export {default as delegate} from './liferay/delegate/delegate.es';
 export {default as Disposable} from './liferay/events/Disposable';
 export {default as EventEmitter} from './liferay/events/EventEmitter';
 export {default as EventHandler} from './liferay/events/EventHandler';
-export {default as Session} from './liferay/session';
 export {default as STATUS_CODE} from './liferay/status_code';
 export {default as throttle} from './liferay/throttle.es';
 export {default as addParams} from './liferay/util/add_params';

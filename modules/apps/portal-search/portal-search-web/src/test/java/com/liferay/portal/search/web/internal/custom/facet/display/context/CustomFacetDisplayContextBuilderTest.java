@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.builder.CustomFacetDisplayContextBuilder;
@@ -31,6 +32,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -466,7 +469,17 @@ public class CustomFacetDisplayContextBuilderTest
 	protected FacetDisplayContext getFacetDisplayContext(Group group)
 		throws Exception {
 
-		return null;
+		CustomFacetDisplayContextBuilder customFacetDisplayContextBuilder =
+			new CustomFacetDisplayContextBuilder(
+				_AGGREGATION_TYPE_TERMS, _getHttpServletRequest(group));
+
+		return customFacetDisplayContextBuilder.currentURL(
+			"/search"
+		).facet(
+			facet
+		).frequenciesVisible(
+			true
+		).build();
 	}
 
 	@Override
@@ -577,6 +590,21 @@ public class CustomFacetDisplayContextBuilderTest
 		facetConfiguration.setDataJSONObject(dataJSONObject);
 
 		return facetConfiguration;
+	}
+
+	private HttpServletRequest _getHttpServletRequest(Group group) {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.doReturn(
+			getThemeDisplay(group)
+		).when(
+			httpServletRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+
+		return httpServletRequest;
 	}
 
 	private void _mockFacetConfiguration(String... labelsAndRanges) {

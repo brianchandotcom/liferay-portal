@@ -225,15 +225,15 @@ export class ObjectFolderAPI {
 			const queryParameters: any = {};
 
 						if (page !== undefined) {
-							queryParameters['page'] = JSON.stringify(ObjectSerializer.serialize(page, "number"));
+							queryParameters['page'] = ObjectSerializer.serialize(page, "number");
 						}
 
 						if (pageSize !== undefined) {
-							queryParameters['pageSize'] = JSON.stringify(ObjectSerializer.serialize(pageSize, "number"));
+							queryParameters['pageSize'] = ObjectSerializer.serialize(pageSize, "number");
 						}
 
 						if (search !== undefined) {
-							queryParameters['search'] = JSON.stringify(ObjectSerializer.serialize(search, "string"));
+							queryParameters['search'] = ObjectSerializer.serialize(search, "string");
 						}
 
 			const queryString = Object.keys(queryParameters).length

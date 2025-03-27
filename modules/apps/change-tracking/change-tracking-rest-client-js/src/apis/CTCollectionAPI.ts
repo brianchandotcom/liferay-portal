@@ -398,23 +398,23 @@ export class CTCollectionAPI {
 			const queryParameters: any = {};
 
 						if (page !== undefined) {
-							queryParameters['page'] = JSON.stringify(ObjectSerializer.serialize(page, "number"));
+							queryParameters['page'] = ObjectSerializer.serialize(page, "number");
 						}
 
 						if (pageSize !== undefined) {
-							queryParameters['pageSize'] = JSON.stringify(ObjectSerializer.serialize(pageSize, "number"));
+							queryParameters['pageSize'] = ObjectSerializer.serialize(pageSize, "number");
 						}
 
 						if (search !== undefined) {
-							queryParameters['search'] = JSON.stringify(ObjectSerializer.serialize(search, "string"));
+							queryParameters['search'] = ObjectSerializer.serialize(search, "string");
 						}
 
 						if (sort !== undefined) {
-							queryParameters['sort'] = JSON.stringify(ObjectSerializer.serialize(sort, "string"));
+							queryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 						}
 
 						if (status !== undefined) {
-							queryParameters['status'] = JSON.stringify(ObjectSerializer.serialize(status, "Array<number>"));
+							queryParameters['status'] = ObjectSerializer.serialize(status, "Array<number>");
 						}
 
 			const queryString = Object.keys(queryParameters).length
@@ -842,7 +842,7 @@ export class CTCollectionAPI {
 						}
 
 						if (publishDate !== undefined) {
-							queryParameters['publishDate'] = JSON.stringify(ObjectSerializer.serialize(publishDate, "Date"));
+							queryParameters['publishDate'] = ObjectSerializer.serialize(publishDate, "Date");
 						}
 
 			const queryString = Object.keys(queryParameters).length
@@ -1019,7 +1019,7 @@ export class CTCollectionAPI {
 						}
 
 						if (publishDate !== undefined) {
-							queryParameters['publishDate'] = JSON.stringify(ObjectSerializer.serialize(publishDate, "Date"));
+							queryParameters['publishDate'] = ObjectSerializer.serialize(publishDate, "Date");
 						}
 
 			const queryString = Object.keys(queryParameters).length

@@ -233,7 +233,7 @@ export class SiteTestEntityAPI {
 						}
 
 						if (roleNames !== undefined) {
-							queryParameters['roleNames'] = JSON.stringify(ObjectSerializer.serialize(roleNames, "string"));
+							queryParameters['roleNames'] = ObjectSerializer.serialize(roleNames, "string");
 						}
 
 			const queryString = Object.keys(queryParameters).length

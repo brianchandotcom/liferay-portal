@@ -120,19 +120,19 @@ export class ObjectLayoutAPI {
 						}
 
 						if (page !== undefined) {
-							queryParameters['page'] = JSON.stringify(ObjectSerializer.serialize(page, "number"));
+							queryParameters['page'] = ObjectSerializer.serialize(page, "number");
 						}
 
 						if (pageSize !== undefined) {
-							queryParameters['pageSize'] = JSON.stringify(ObjectSerializer.serialize(pageSize, "number"));
+							queryParameters['pageSize'] = ObjectSerializer.serialize(pageSize, "number");
 						}
 
 						if (search !== undefined) {
-							queryParameters['search'] = JSON.stringify(ObjectSerializer.serialize(search, "string"));
+							queryParameters['search'] = ObjectSerializer.serialize(search, "string");
 						}
 
 						if (sort !== undefined) {
-							queryParameters['sort'] = JSON.stringify(ObjectSerializer.serialize(sort, "string"));
+							queryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 						}
 
 			const queryString = Object.keys(queryParameters).length
@@ -203,19 +203,19 @@ export class ObjectLayoutAPI {
 						}
 
 						if (page !== undefined) {
-							queryParameters['page'] = JSON.stringify(ObjectSerializer.serialize(page, "number"));
+							queryParameters['page'] = ObjectSerializer.serialize(page, "number");
 						}
 
 						if (pageSize !== undefined) {
-							queryParameters['pageSize'] = JSON.stringify(ObjectSerializer.serialize(pageSize, "number"));
+							queryParameters['pageSize'] = ObjectSerializer.serialize(pageSize, "number");
 						}
 
 						if (search !== undefined) {
-							queryParameters['search'] = JSON.stringify(ObjectSerializer.serialize(search, "string"));
+							queryParameters['search'] = ObjectSerializer.serialize(search, "string");
 						}
 
 						if (sort !== undefined) {
-							queryParameters['sort'] = JSON.stringify(ObjectSerializer.serialize(sort, "string"));
+							queryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 						}
 
 			const queryString = Object.keys(queryParameters).length

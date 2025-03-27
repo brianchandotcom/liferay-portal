@@ -235,7 +235,7 @@ export class TestEntityAPI {
 						}
 
 						if (optionalParameter !== undefined) {
-							queryParameters['optionalParameter'] = JSON.stringify(ObjectSerializer.serialize(optionalParameter, "number"));
+							queryParameters['optionalParameter'] = ObjectSerializer.serialize(optionalParameter, "number");
 						}
 
 			const queryString = Object.keys(queryParameters).length
@@ -539,7 +539,7 @@ export class TestEntityAPI {
 						}
 
 						if (optionalParameter !== undefined) {
-							queryParameters['optionalParameter'] = JSON.stringify(ObjectSerializer.serialize(optionalParameter, "number"));
+							queryParameters['optionalParameter'] = ObjectSerializer.serialize(optionalParameter, "number");
 						}
 
 			const queryString = Object.keys(queryParameters).length

@@ -65,27 +65,27 @@ export class CTEntryAPI {
 						}
 
 						if (filter !== undefined) {
-							queryParameters['filter'] = JSON.stringify(ObjectSerializer.serialize(filter, "string"));
+							queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
 						}
 
 						if (page !== undefined) {
-							queryParameters['page'] = JSON.stringify(ObjectSerializer.serialize(page, "number"));
+							queryParameters['page'] = ObjectSerializer.serialize(page, "number");
 						}
 
 						if (pageSize !== undefined) {
-							queryParameters['pageSize'] = JSON.stringify(ObjectSerializer.serialize(pageSize, "number"));
+							queryParameters['pageSize'] = ObjectSerializer.serialize(pageSize, "number");
 						}
 
 						if (search !== undefined) {
-							queryParameters['search'] = JSON.stringify(ObjectSerializer.serialize(search, "string"));
+							queryParameters['search'] = ObjectSerializer.serialize(search, "string");
 						}
 
 						if (showHideable !== undefined) {
-							queryParameters['showHideable'] = JSON.stringify(ObjectSerializer.serialize(showHideable, "boolean"));
+							queryParameters['showHideable'] = ObjectSerializer.serialize(showHideable, "boolean");
 						}
 
 						if (sort !== undefined) {
-							queryParameters['sort'] = JSON.stringify(ObjectSerializer.serialize(sort, "string"));
+							queryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 						}
 
 			const queryString = Object.keys(queryParameters).length
@@ -230,35 +230,35 @@ export class CTEntryAPI {
 						}
 
 						if (classNameId !== undefined) {
-							queryParameters['classNameId'] = JSON.stringify(ObjectSerializer.serialize(classNameId, "number"));
+							queryParameters['classNameId'] = ObjectSerializer.serialize(classNameId, "number");
 						}
 
 						if (classPK !== undefined) {
-							queryParameters['classPK'] = JSON.stringify(ObjectSerializer.serialize(classPK, "number"));
+							queryParameters['classPK'] = ObjectSerializer.serialize(classPK, "number");
 						}
 
 						if (filter !== undefined) {
-							queryParameters['filter'] = JSON.stringify(ObjectSerializer.serialize(filter, "string"));
+							queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
 						}
 
 						if (page !== undefined) {
-							queryParameters['page'] = JSON.stringify(ObjectSerializer.serialize(page, "number"));
+							queryParameters['page'] = ObjectSerializer.serialize(page, "number");
 						}
 
 						if (pageSize !== undefined) {
-							queryParameters['pageSize'] = JSON.stringify(ObjectSerializer.serialize(pageSize, "number"));
+							queryParameters['pageSize'] = ObjectSerializer.serialize(pageSize, "number");
 						}
 
 						if (search !== undefined) {
-							queryParameters['search'] = JSON.stringify(ObjectSerializer.serialize(search, "string"));
+							queryParameters['search'] = ObjectSerializer.serialize(search, "string");
 						}
 
 						if (siteId !== undefined) {
-							queryParameters['siteId'] = JSON.stringify(ObjectSerializer.serialize(siteId, "number"));
+							queryParameters['siteId'] = ObjectSerializer.serialize(siteId, "number");
 						}
 
 						if (sort !== undefined) {
-							queryParameters['sort'] = JSON.stringify(ObjectSerializer.serialize(sort, "string"));
+							queryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 						}
 
 			const queryString = Object.keys(queryParameters).length

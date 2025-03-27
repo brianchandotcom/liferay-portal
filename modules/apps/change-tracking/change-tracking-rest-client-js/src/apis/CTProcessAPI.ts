@@ -172,27 +172,27 @@ export class CTProcessAPI {
 			const queryParameters: any = {};
 
 						if (filter !== undefined) {
-							queryParameters['filter'] = JSON.stringify(ObjectSerializer.serialize(filter, "string"));
+							queryParameters['filter'] = ObjectSerializer.serialize(filter, "string");
 						}
 
 						if (page !== undefined) {
-							queryParameters['page'] = JSON.stringify(ObjectSerializer.serialize(page, "number"));
+							queryParameters['page'] = ObjectSerializer.serialize(page, "number");
 						}
 
 						if (pageSize !== undefined) {
-							queryParameters['pageSize'] = JSON.stringify(ObjectSerializer.serialize(pageSize, "number"));
+							queryParameters['pageSize'] = ObjectSerializer.serialize(pageSize, "number");
 						}
 
 						if (search !== undefined) {
-							queryParameters['search'] = JSON.stringify(ObjectSerializer.serialize(search, "string"));
+							queryParameters['search'] = ObjectSerializer.serialize(search, "string");
 						}
 
 						if (sort !== undefined) {
-							queryParameters['sort'] = JSON.stringify(ObjectSerializer.serialize(sort, "string"));
+							queryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 						}
 
 						if (status !== undefined) {
-							queryParameters['status'] = JSON.stringify(ObjectSerializer.serialize(status, "Array<number>"));
+							queryParameters['status'] = ObjectSerializer.serialize(status, "Array<number>");
 						}
 
 			const queryString = Object.keys(queryParameters).length
@@ -257,11 +257,11 @@ export class CTProcessAPI {
 						}
 
 						if (description !== undefined) {
-							queryParameters['description'] = JSON.stringify(ObjectSerializer.serialize(description, "string"));
+							queryParameters['description'] = ObjectSerializer.serialize(description, "string");
 						}
 
 						if (name !== undefined) {
-							queryParameters['name'] = JSON.stringify(ObjectSerializer.serialize(name, "string"));
+							queryParameters['name'] = ObjectSerializer.serialize(name, "string");
 						}
 
 			const queryString = Object.keys(queryParameters).length

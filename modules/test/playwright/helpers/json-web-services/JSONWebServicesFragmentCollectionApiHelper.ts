@@ -18,16 +18,19 @@ export class JSONWebServicesFragmentCollectionApiHelper {
 	async addFragmentCollection({
 		externalReferenceCode = '',
 		groupId,
+		marketplace = false,
 		name,
 	}: {
 		externalReferenceCode?: string;
 		groupId: string;
+		marketplace?: boolean;
 		name: string;
 	}): Promise<FragmentCollection> {
 		const urlSearchParams = new URLSearchParams();
 
 		urlSearchParams.append('externalReferenceCode', externalReferenceCode);
 		urlSearchParams.append('groupId', groupId);
+		urlSearchParams.append('marketplace', String(marketplace));
 		urlSearchParams.append('name', name);
 		urlSearchParams.append('description', '');
 		urlSearchParams.append('serviceContext', JSON.stringify({}));

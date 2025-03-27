@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRows;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -22,7 +21,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +98,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 	}
 
 	@Test
-	public void testUpgrade() throws SQLException, UpgradeException {
+	public void testUpgrade() throws Exception {
 		_assert(false, null);
 
 		DeleteDuplicateUniqueFinderRows upgradeProcess =
@@ -119,9 +117,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 	}
 
 	@Test
-	public void testUpgradeWithOrderByClause()
-		throws SQLException, UpgradeException {
-
+	public void testUpgradeWithOrderByClause() throws Exception {
 		_assert(false, null);
 
 		DeleteDuplicateUniqueFinderRows upgradeProcess =
@@ -142,7 +138,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 
 	private void _assert(
 			boolean duplicateRowsRemoved, Long uniqueRowPrimaryKeyValue)
-		throws SQLException {
+		throws Exception {
 
 		_companyLocalService.forEachCompany(
 			company -> {

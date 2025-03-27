@@ -88,14 +88,14 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_assertJournalArticleNotifications(
 			article, 1, UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			0, subscribedUser);
+			subscribedUser, 0);
 
 		_journalArticleLocalService.moveArticleToTrash(
 			user.getUserId(), article);
 
 		_assertJournalArticleNotifications(
 			article, 1, UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			0, subscribedUser);
+			subscribedUser, 0);
 
 		_deactivateSingleApproverWorkflow();
 	}
@@ -118,8 +118,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_assertJournalArticleNotifications(
 			expiredArticle, 2,
-			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1,
-			user);
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, user,
+			1);
 	}
 
 	@Test
@@ -138,8 +138,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_assertJournalArticleNotifications(
 			expiredArticle, 1,
-			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1,
-			user);
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, user,
+			1);
 	}
 
 	@Test
@@ -161,7 +161,7 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 		_assertJournalArticleNotifications(
 			journalArticle, 2,
-			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY, 2, user);
+			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY, user, 2);
 	}
 
 	@Override
@@ -208,8 +208,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 
 	private void _assertJournalArticleNotifications(
 			JournalArticle article, int emailNotificationCount,
-			int notificationType, int userNotificationCount,
-			User subscribedUser)
+			int notificationType, User subscribedUser,
+			int userNotificationCount)
 		throws Exception {
 
 		Assert.assertEquals(

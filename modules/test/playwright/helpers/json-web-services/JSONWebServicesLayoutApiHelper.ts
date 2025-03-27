@@ -44,7 +44,7 @@ export class JSONWebServicesLayoutApiHelper {
 		externalReferenceCode?: string;
 		groupId: string;
 		masterLayoutPlid?: string;
-		options?: {publish?: boolean; type: string};
+		options?: {publish?: boolean; type?: string};
 		parentLayoutId?: string;
 		privateLayout?: string;
 		title: string;

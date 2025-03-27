@@ -13,11 +13,11 @@ import {
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
 const DEFAULT_STATE: State = {
-	erc: '',
+	erc: 'default-erc',
 	error: null,
 	fields: new Map(),
 	id: null,
-	invalids: new Set(),
+	invalids: new Map(),
 	label: 'untitled-structure',
 	name: 'UntitledStructure',
 	publishedFields: new Set(),

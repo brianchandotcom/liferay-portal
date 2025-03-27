@@ -109,7 +109,6 @@ public class ObjectEntryFolderDTOConverter
 
 						return null;
 					});
-
 				setScopeKey(
 					() -> String.valueOf(objectEntryFolder.getGroupId()));
 			}

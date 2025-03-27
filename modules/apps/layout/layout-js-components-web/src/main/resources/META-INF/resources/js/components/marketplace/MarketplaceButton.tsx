@@ -4,7 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {useCallback, useState} from 'react';
+import React, {ComponentProps, useCallback, useState} from 'react';
 
 import openModalComponent from '../modals/openModalComponent';
 import MarketplaceModal from './MarketplaceModal';
@@ -14,10 +14,10 @@ import '../../../css/MarketplaceButton.scss';
 
 import classNames from 'classnames';
 
+import MarketplaceViews from './MarketplaceViews';
+
 interface MarketplaceButtonProps {
 	body: string;
-	fragmentPortletNamespace: string;
-	fragmentsImportURL: string;
 	heading: string;
 	isMarketplaceButtonVisited: boolean;
 	portletNamespace: string;
@@ -25,12 +25,11 @@ interface MarketplaceButtonProps {
 
 function MarketplaceButton({
 	body,
-	fragmentPortletNamespace,
-	fragmentsImportURL,
 	heading,
 	isMarketplaceButtonVisited,
 	portletNamespace,
-}: MarketplaceButtonProps) {
+	...marketplaceViewProps
+}: MarketplaceButtonProps & ComponentProps<typeof MarketplaceViews>) {
 	const [visited, setVisited] = useState(isMarketplaceButtonVisited);
 
 	const handleClick = useCallback(() => {
@@ -38,9 +37,8 @@ function MarketplaceButton({
 			ModalComponent: MarketplacePresentationModal,
 			modalComponentProps: {
 				body,
-				fragmentPortletNamespace,
-				fragmentsImportURL,
 				heading,
+				...marketplaceViewProps,
 			},
 		});
 
@@ -49,21 +47,10 @@ function MarketplaceButton({
 			`${portletNamespace}isMarketplaceButtonVisited`,
 			true
 		);
-	}, [
-		body,
-		fragmentPortletNamespace,
-		fragmentsImportURL,
-		heading,
-		portletNamespace,
-	]);
+	}, [body, marketplaceViewProps, heading, portletNamespace]);
 
 	if (visited) {
-		return (
-			<MarketplaceModal
-				fragmentPortletNamespace={fragmentPortletNamespace}
-				fragmentsImportURL={fragmentsImportURL}
-			/>
-		);
+		return <MarketplaceModal {...marketplaceViewProps} />;
 	}
 
 	return (

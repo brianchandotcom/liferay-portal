@@ -6,6 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {
 	Marketplace,
+	MarketplaceContext,
 	MarketplaceContextProvider,
 	MarketplaceRest,
 	MarketplaceView,
@@ -13,6 +14,7 @@ import {
 } from '@liferay/marketplace-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {
+	ComponentProps,
 	ReactElement,
 	ReactNode,
 	cloneElement,
@@ -25,19 +27,16 @@ import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplaceModalProps {
 	children?: ReactNode;
-	fragmentPortletNamespace: string;
-	fragmentsImportURL: string;
 	openOnRender?: boolean;
 	trigger?: ReactElement | null;
 }
 
 export default function MarketplaceModal({
 	children,
-	fragmentPortletNamespace,
-	fragmentsImportURL,
 	openOnRender,
 	trigger,
-}: MarketplaceModalProps) {
+	...marketplaceViewProps
+}: MarketplaceModalProps & ComponentProps<typeof MarketplaceViews>) {
 	const [title, setTitle] = useState<string | undefined>();
 
 	const props = {
@@ -61,12 +60,20 @@ export default function MarketplaceModal({
 		>
 			{children}
 
-			<Marketplace.Modal {...props}>
-				<MarketplaceViews
-					fragmentPortletNamespace={fragmentPortletNamespace}
-					fragmentsImportURL={fragmentsImportURL}
-				/>
-			</Marketplace.Modal>
+			<MarketplaceContext.Consumer>
+				{({view}) => (
+					<Marketplace.Modal
+						{...props}
+						size={
+							view === MarketplaceView.PURCHASE
+								? ('md' as any)
+								: 'full-screen'
+						}
+					>
+						<MarketplaceViews {...marketplaceViewProps} />
+					</Marketplace.Modal>
+				)}
+			</MarketplaceContext.Consumer>
 		</MarketplaceContextProvider>
 	);
 }

@@ -6,27 +6,26 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useState} from 'react';
+import React, {ComponentProps, useState} from 'react';
 
 import MarketplaceModal from './MarketplaceModal';
 
 import '../../../css/MarketplaceModal.scss';
+import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplacePresentationModalProps {
 	body: string;
-	fragmentPortletNamespace: string;
-	fragmentsImportURL: string;
 	heading: string;
 	onCloseModal: () => void;
 }
 
 export default function MarketplacePresentationModal({
 	body,
-	fragmentPortletNamespace,
-	fragmentsImportURL,
 	heading,
 	onCloseModal,
-}: MarketplacePresentationModalProps) {
+	...marketplaceViewProps
+}: MarketplacePresentationModalProps &
+	ComponentProps<typeof MarketplaceViews>) {
 	const [openMarketplace, setOpenMarketplace] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -37,10 +36,9 @@ export default function MarketplacePresentationModal({
 
 	return openMarketplace ? (
 		<MarketplaceModal
-			fragmentPortletNamespace={fragmentPortletNamespace}
-			fragmentsImportURL={fragmentsImportURL}
 			openOnRender={true}
 			trigger={null}
+			{...marketplaceViewProps}
 		/>
 	) : (
 		<ClayModal center observer={observer}>

@@ -13,7 +13,7 @@ import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
 import Layout from '../../../../../../../../components/FormLayout';
-import useUpdateZendeskOrg from '../../../hooks/useUpdateZendeskOrg';
+import useUpdateOrg from '../../../hooks/useUpdateOrg';
 
 interface IProps {
 	accountExternalReferenceCode: string;
@@ -41,7 +41,7 @@ const CancelEventPage: React.FC<IProps> = ({
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
 
-	const {updateZendeskOrg} = useUpdateZendeskOrg(
+	const {updateOrg} = useUpdateOrg(
 		accountExternalReferenceCode,
 		businessEvent,
 		false,
@@ -56,7 +56,7 @@ const CancelEventPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateZendeskOrg();
+			await updateOrg();
 
 			await client.mutate<{
 				updateBusinessEvent: IBusinessEvent;

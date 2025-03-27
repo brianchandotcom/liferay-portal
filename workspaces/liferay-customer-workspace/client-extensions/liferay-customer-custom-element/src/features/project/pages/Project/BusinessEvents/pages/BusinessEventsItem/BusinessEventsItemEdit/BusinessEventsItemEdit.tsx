@@ -29,7 +29,7 @@ import AssociatedTicketsContainer from '../../../components/AssociatedTicketsCon
 import useAccountTickets from '../../../hooks/useAccountTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
-import useUpdateZendeskOrg from '../../../hooks/useUpdateZendeskOrg';
+import useUpdateOrg from '../../../hooks/useUpdateOrg';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import useIsSaasOnly from '../../../utils/useIsSaasOnly';
 import BusinessEventsConfirmationPopup from './components/BusinessEventsConfirmationPopup';
@@ -108,7 +108,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		onClose: () => setIsModalOpen(false),
 	});
 
-	const {updateZendeskOrg} = useUpdateZendeskOrg(
+	const {updateOrg} = useUpdateOrg(
 		project?.accountKey || '',
 		businessEvent,
 		true,
@@ -172,7 +172,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateZendeskOrg();
+			await updateOrg();
 
 			await client.mutate<{
 				updateBusinessEvent: IBusinessEvent;

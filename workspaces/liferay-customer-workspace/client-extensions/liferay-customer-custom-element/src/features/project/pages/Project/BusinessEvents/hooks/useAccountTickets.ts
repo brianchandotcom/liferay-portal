@@ -14,7 +14,6 @@ const useAccountTickets = (externalReferenceCode: string) => {
 	const fetchTickets = useCallback(async () => {
 		if (!externalReferenceCode) {
 			setTickets(undefined);
-			setLoading(false);
 
 			return;
 		}

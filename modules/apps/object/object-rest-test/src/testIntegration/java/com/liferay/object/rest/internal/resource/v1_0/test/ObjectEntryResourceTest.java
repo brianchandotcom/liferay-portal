@@ -15642,9 +15642,6 @@ public class ObjectEntryResourceTest {
 				validationResponse.getValidationErrors()[1].
 					getObjectFieldName());
 
-			_objectValidationRuleLocalService.deleteObjectValidationRules(
-				objectDefinition.getObjectDefinitionId());
-
 			ObjectField objectField2 =
 				ObjectFieldLocalServiceUtil.addCustomObjectField(
 					StringUtil.randomString(), TestPropsValues.getUserId(), 0,
@@ -15678,9 +15675,16 @@ public class ObjectEntryResourceTest {
 				_getValidationRequest(Collections.emptyMap()));
 
 			Assert.assertEquals(
+				errorMessage1,
+				validationResponse.getValidationErrors()[0].getErrorMessage());
+
+			Assert.assertEquals(
 				"No value was provided for required object field " +
 					"\"nameRequired\"",
-				validationResponse.getValidationErrors()[0].getErrorMessage());
+				validationResponse.getValidationErrors()[1].getErrorMessage());
+
+			_objectValidationRuleLocalService.deleteObjectValidationRules(
+				objectDefinition.getObjectDefinitionId());
 
 			validationResponse = _validate(
 				scopeKey, objectEntryResource,

@@ -33,6 +33,9 @@ export class StructureBuilderPage {
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
 	private readonly publishButton: Locator;
+	private readonly spaceCheckbox: Locator;
+	private readonly spaceSelector: Locator;
+
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
@@ -42,7 +45,10 @@ export class StructureBuilderPage {
 		this.nameInput = this.page.getByLabel('Structure Name');
 		this.publishButton = this.page.getByRole('button', {name: 'Publish'});
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});
-		this.spacesSelector = this.page.
+		this.spaceCheckbox = this.page.getByRole('checkbox', {
+			name: 'Make this structure available in all spaces',
+		});
+		this.spaceSelector = this.page.getByLabel('Space Selector');
 	}
 
 	async goto() {
@@ -210,7 +216,13 @@ export class StructureBuilderPage {
 	}
 
 	async enableForAllSpaces() {
+		await expect(async () => {
+			await this.page.getByText('Structure Fields').click({timeout: 500});
 
+			await this.spaceCheckbox.click({timeout: 500});
+
+			await expect(this.spaceSelector).toBeDisabled({timeout: 500});
+		}).toPass();
 	}
 
 	async publishStructure() {

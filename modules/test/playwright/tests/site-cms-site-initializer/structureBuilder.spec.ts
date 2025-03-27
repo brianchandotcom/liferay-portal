@@ -32,6 +32,8 @@ test(
 
 		await structureBuilderPage.goto();
 
+		await structureBuilderPage.enableForAllSpaces();
+
 		// Change label and name
 
 		const label = `Structure${getRandomInt()}`;
@@ -99,9 +101,15 @@ test(
 	{tag: '@LPD-36752'},
 	async ({structureBuilderPage}) => {
 
+		// Add a picklist
+
+		const picklist = await structureBuilderPage.createPicklist();
+
 		// Go to the Structure Builder
 
 		await structureBuilderPage.goto();
+
+		await structureBuilderPage.enableForAllSpaces();
 
 		// Change label and name
 
@@ -116,6 +124,12 @@ test(
 
 		for (const type of FIELD_TYPES) {
 			await structureBuilderPage.addField(type);
+
+			if (type === 'Single Select' || type === 'Multiselect') {
+				await structureBuilderPage.changeFieldSettings({
+					picklist: picklist.name,
+				});
+			}
 		}
 
 		// Save and publish the structure
@@ -123,6 +137,10 @@ test(
 		const {id} = await structureBuilderPage.saveStructure();
 
 		await structureBuilderPage.publishStructure();
+
+		// Delete picklist
+
+		await structureBuilderPage.deletePicklist(picklist.id);
 
 		// Delete structure
 
@@ -138,6 +156,8 @@ test(
 		// Go to the Structure Builder
 
 		await structureBuilderPage.goto();
+
+		await structureBuilderPage.enableForAllSpaces();
 
 		// Change label and name
 
@@ -206,6 +226,8 @@ test(
 		// Go to the Structure Builder
 
 		await structureBuilderPage.goto();
+
+		await structureBuilderPage.enableForAllSpaces();
 
 		// Change label,name and erc
 
@@ -296,6 +318,24 @@ test.describe('Frontend validations', () => {
 
 			await structureBuilderPage.goto();
 
+			// Add a Text field
+
+			await structureBuilderPage.addField('Text');
+
+			// Try to save and check we can't publish without spaces
+
+			await expect(async () => {
+				await structureBuilderPage.saveButton.click();
+
+				await expect(
+					page.getByText('Spaces must be selected')
+				).toBeAttached({
+					timeout: 500,
+				});
+			}).toPass();
+
+			await structureBuilderPage.enableForAllSpaces();
+
 			// Set label and empty name
 
 			const label = `Structure${getRandomInt()}`;
@@ -339,13 +379,23 @@ test.describe('Frontend validations', () => {
 				trigger: structureBuilderPage.saveButton,
 			});
 
-			// Fill name and save again
+			// Fill name, select picklist and save again
 
-			await structureBuilderPage.changeFieldSettings({name: 'text'});
+			await structureBuilderPage.changeFieldSettings({name: 'name'});
 
 			await structureBuilderPage.changeFieldSettings({
 				picklist: picklist.name,
 			});
+
+			// Check picklist setting is saved
+
+			await structureBuilderPage.selectField({label: 'Text'});
+
+			await structureBuilderPage.selectField({label: 'Single Select'});
+
+			await expect(page.getByText(picklist.name)).toBeVisible();
+
+			// Save
 
 			const {id} = await structureBuilderPage.saveStructure();
 

@@ -294,6 +294,40 @@ public class FragmentCollectionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_M() throws Exception {
+		_persistence.countByG_M(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_M(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_MArrayable() throws Exception {
+		_persistence.countByG_M(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_LikeN_M() throws Exception {
+		_persistence.countByG_LikeN_M(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_LikeN_M(
+			0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_LikeN_M(
+			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_LikeN_MArrayable() throws Exception {
+		_persistence.countByG_LikeN_M(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByERC_G() throws Exception {
 		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 

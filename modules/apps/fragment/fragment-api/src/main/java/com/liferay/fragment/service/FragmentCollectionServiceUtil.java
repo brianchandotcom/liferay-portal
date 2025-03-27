@@ -155,11 +155,27 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupIds, marketplace, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
 		long[] groupIds, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return getService().getFragmentCollections(
 			groupIds, start, end, orderByComparator);
+	}
+
+	public static List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return getService().getFragmentCollections(
+			groupIds, name, marketplace, start, end, orderByComparator);
 	}
 
 	public static List<FragmentCollection> getFragmentCollections(

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayActionRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -275,7 +276,27 @@ public class LoginMVCActionCommandTest {
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+			new MockLiferayPortletActionRequest() {
+
+				@Override
+				public Portlet getPortlet() {
+					return _portletLocalService.getPortletById(
+						LoginPortletKeys.LOGIN);
+				}
+
+				@Override
+				public String getPortletName() {
+					return LoginPortletKeys.LOGIN;
+				}
+
+				{
+					Portlet portlet = getPortlet();
+
+					PortletApp portletApp = portlet.getPortletApp();
+
+					portletApp.setSpecMajorVersion(2);
+				}
+			};
 
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());

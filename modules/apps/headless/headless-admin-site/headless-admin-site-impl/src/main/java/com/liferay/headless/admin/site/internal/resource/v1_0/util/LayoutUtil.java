@@ -51,8 +51,8 @@ public class LayoutUtil {
 	public static Layout addContentLayout(
 			long groupId, PageSpecification[] pageSpecifications,
 			boolean privateLayout, Map<Locale, String> titleMap, String type,
-			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
-			boolean system, int status, ServiceContext serviceContext)
+			boolean hidden, boolean system, int status,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (pageSpecifications == null) {
@@ -89,6 +89,26 @@ public class LayoutUtil {
 					getDraftContentPageSpecificationExternalReferenceCode())) {
 
 			throw new UnsupportedOperationException();
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
+
+		Settings settings = publishedContentPageSpecification.getSettings();
+
+		if ((settings == null) ||
+			Validator.isNull(settings.getMasterPageItemExternalReference())) {
+
+			typeSettingsUnicodeProperties.setProperty(
+				"lfr-theme:regular:show-footer", Boolean.FALSE.toString());
+			typeSettingsUnicodeProperties.setProperty(
+				"lfr-theme:regular:show-header", Boolean.FALSE.toString());
+			typeSettingsUnicodeProperties.setProperty(
+				"lfr-theme:regular:show-header-search",
+				Boolean.FALSE.toString());
+			typeSettingsUnicodeProperties.setProperty(
+				"lfr-theme:regular:wrap-widget-page-content",
+				Boolean.FALSE.toString());
 		}
 
 		if (Objects.equals(

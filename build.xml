@@ -299,12 +299,6 @@ message.
 
 		<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 
-		<gradle-execute dir="modules/apps" task="deploy">
-			<arg value="--parallel" />
-			<arg value="-Dbuild.profile=portal-pre" />
-			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-		</gradle-execute>
-
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="support-tomcat" inheritAll="false" target="compile" />
 			<ant dir="util-bridges" inheritAll="false" target="compile" />

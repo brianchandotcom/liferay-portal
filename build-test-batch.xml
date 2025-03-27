@@ -1763,12 +1763,6 @@ app.server.type=@{app.server.type}]]></echo>
 
 								<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 
-								<gradle-execute dir="modules/apps" task="deploy">
-									<arg value="--parallel" />
-									<arg value="-Dbuild.profile=portal-pre" />
-									<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-								</gradle-execute>
-
 								<get-test-app-server-lib-portal-dir />
 
 								<unzip
@@ -2522,12 +2516,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 							<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 
-							<gradle-execute dir="modules/apps" task="deploy">
-								<arg value="--parallel" />
-								<arg value="-Dbuild.profile=portal-pre" />
-								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-							</gradle-execute>
-
 							<get-test-app-server-lib-portal-dir />
 
 							<unzip
@@ -2975,12 +2963,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 							</gradle-execute>
 
 							<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
-
-							<gradle-execute dir="modules/apps" task="deploy">
-								<arg value="--parallel" />
-								<arg value="-Dbuild.profile=portal-pre" />
-								<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
-							</gradle-execute>
 
 							<get-test-app-server-lib-portal-dir />
 

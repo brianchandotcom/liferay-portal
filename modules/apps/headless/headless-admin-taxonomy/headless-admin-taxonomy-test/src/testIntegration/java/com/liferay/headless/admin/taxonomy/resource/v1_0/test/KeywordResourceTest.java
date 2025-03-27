@@ -7,18 +7,28 @@ package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTagGroupRel;
+import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
@@ -32,6 +42,8 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
+@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
@@ -261,6 +273,33 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		keywordResource.deleteKeyword(keyword.getId());
 	}
 
+	@Test
+	public void testGetKeywordsPageWithFilterByGroupIds() throws Exception {
+		AssetLibrary assetLibrary1 = _randomAssetLibrary();
+		AssetLibrary assetLibrary2 = _randomAssetLibrary();
+
+		Keyword keyword1 = _addKeywordWithAssetLibraries(assetLibrary1);
+		Keyword keyword2 = _addKeywordWithAssetLibraries(assetLibrary2);
+		Keyword keyword3 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+
+		Page<Keyword> page = keywordResource.getKeywordsPage(
+			null, null, null, Pagination.of(1, 5), null);
+
+		assertEquals(
+			Arrays.asList(keyword1, keyword2, keyword3),
+			(List<Keyword>)page.getItems());
+
+		String filter = StringBundler.concat(
+			"(groupIds in ('", assetLibrary1.getId(), "', '",
+			assetLibrary2.getId(), "'))");
+
+		page = keywordResource.getKeywordsPage(
+			null, null, filter, Pagination.of(1, 5), null);
+
+		assertEquals(
+			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());
+	}
+
 	@Override
 	@Test
 	public void testGetKeywordsRankedPage() throws Exception {
@@ -348,6 +387,25 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@Override
 	@Test
+	public void testPostKeyword() throws Exception {
+		AssetLibrary assetLibrary = _randomAssetLibrary();
+
+		Keyword keyword = _addKeywordWithAssetLibraries(assetLibrary);
+
+		List<AssetTagGroupRel> assetTagGroupRels =
+			_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+				keyword.getId());
+
+		Assert.assertFalse(assetTagGroupRels.isEmpty());
+
+		AssetTagGroupRel assetTagGroupRel = assetTagGroupRels.get(0);
+
+		Assert.assertEquals(
+			(long)assetLibrary.getId(), assetTagGroupRel.getGroupId());
+	}
+
+	@Override
+	@Test
 	public void testPutAssetLibraryKeywordByExternalReferenceCode()
 		throws Exception {
 
@@ -367,6 +425,24 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		Assert.assertEquals(
 			externalReferenceCode, putKeyword.getExternalReferenceCode());
 		assertValid(putKeyword);
+	}
+
+	@Override
+	@Test
+	public void testPutKeyword() throws Exception {
+		super.testPutKeyword();
+
+		Keyword keyword = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+
+		Keyword randomKeyword = randomKeyword();
+
+		randomKeyword.setAssetLibraries(
+			new AssetLibrary[] {_randomAssetLibrary()});
+
+		Keyword putKeyword = keywordResource.putKeyword(
+			keyword.getId(), randomKeyword);
+
+		assertEquals(randomKeyword, putKeyword);
 	}
 
 	@Override
@@ -421,6 +497,13 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	}
 
 	@Override
+	protected Keyword testGetKeywordsPage_addKeyword(Keyword keyword)
+		throws Exception {
+
+		return _addKeywordWithAssetLibraries(_randomAssetLibrary());
+	}
+
+	@Override
 	protected Keyword testGetKeywordsRankedPage_addKeyword(Keyword keyword)
 		throws Exception {
 
@@ -452,11 +535,47 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	}
 
 	@Override
+	protected Keyword testGraphQLGetKeywordsPage_addKeyword() throws Exception {
+		return _addKeywordWithAssetLibraries(_randomAssetLibrary());
+	}
+
+	@Override
 	protected Long
 			testPutAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
 	}
+
+	private Keyword _addKeywordWithAssetLibraries(
+			AssetLibrary... assetLibraries)
+		throws Exception {
+
+		Keyword keyword = randomKeyword();
+
+		keyword.setAssetLibraries(assetLibraries);
+
+		return keywordResource.postKeyword(keyword);
+	}
+
+	private AssetLibrary _randomAssetLibrary() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		Group depotEntryGroup = depotEntry.getGroup();
+
+		return new AssetLibrary() {
+			{
+				id = depotEntryGroup.getGroupId();
+			}
+		};
+	}
+
+	@Inject
+	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 }

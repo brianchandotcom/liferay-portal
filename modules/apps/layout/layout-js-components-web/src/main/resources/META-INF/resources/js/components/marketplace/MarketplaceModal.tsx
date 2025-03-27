@@ -39,20 +39,6 @@ export default function MarketplaceModal({
 }: MarketplaceModalProps & ComponentProps<typeof MarketplaceViews>) {
 	const [title, setTitle] = useState<string | undefined>();
 
-	const props = {
-		noConnectionMessage: Liferay.Language.get(
-			'please-go-to-instance-settings-to-enable-the-connection'
-		),
-		trigger: (
-			<MarketplaceModalTrigger
-				openOnRender={openOnRender}
-				setTitle={setTitle}
-				trigger={trigger}
-			/>
-		),
-		...(title && {title}),
-	};
-
 	return (
 		<MarketplaceContextProvider
 			baseResourceURL={MarketplaceRest.getBaseResourceURL()}
@@ -63,11 +49,21 @@ export default function MarketplaceModal({
 			<MarketplaceContext.Consumer>
 				{({view}) => (
 					<Marketplace.Modal
-						{...props}
+						noConnectionMessage={Liferay.Language.get(
+							'please-go-to-instance-settings-to-enable-the-connection'
+						)}
 						size={
 							view === MarketplaceView.PURCHASE
 								? ('md' as any)
 								: 'full-screen'
+						}
+						title={title}
+						trigger={
+							<MarketplaceModalTrigger
+								openOnRender={openOnRender}
+								setTitle={setTitle}
+								trigger={trigger}
+							/>
 						}
 					>
 						<MarketplaceViews {...marketplaceViewProps} />
@@ -108,7 +104,7 @@ function MarketplaceModalTrigger({
 		setTitle(
 			view === MarketplaceView.PURCHASE && product
 				? sub(Liferay.Language.get('installing-x'), product.name)
-				: ''
+				: undefined
 		);
 	}, [view, product, setTitle]);
 

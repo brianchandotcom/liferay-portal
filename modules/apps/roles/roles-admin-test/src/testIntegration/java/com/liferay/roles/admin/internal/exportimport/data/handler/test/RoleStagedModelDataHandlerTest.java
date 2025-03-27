@@ -78,7 +78,10 @@ public class RoleStagedModelDataHandlerTest
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 		if (_user == null) {
@@ -91,7 +94,10 @@ public class RoleStagedModelDataHandlerTest
 	}
 
 	@After
+	@Override
 	public void tearDown() throws Exception {
+		super.tearDown();
+
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 		PrincipalThreadLocal.setName(_originalName);
 	}

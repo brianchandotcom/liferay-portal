@@ -392,7 +392,7 @@ public class ImportSystemDataSetMVCResourceCommand
 							return "clientExtension";
 						}
 
-						return null;
+						return "internal";
 					}
 				).put(
 					"sortable", fdsTableSchemaField.isSortable()

@@ -60,7 +60,7 @@ public class LiferayGlobalObjectPostAUIDynamicInclude
 			BundleScriptAbsolutePortalURLBuilder
 				bundleScriptAbsolutePortalURLBuilder =
 					absolutePortalURLBuilder.forBundleScript(
-						_bundle, "/liferay/global.bundle.js");
+						_bundle, "/Liferay.js");
 
 			_renderScript(
 				httpServletRequest, printWriter,

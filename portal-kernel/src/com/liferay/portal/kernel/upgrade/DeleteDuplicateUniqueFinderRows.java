@@ -198,7 +198,7 @@ public class DeleteDuplicateUniqueFinderRows extends UpgradeProcess {
 	}
 
 	private List<String[]> _getDuplicateColumnValuesList() throws Exception {
-		List<String[]> duplicateColumnEntries = new ArrayList<>();
+		List<String[]> duplicateColumnValuesList = new ArrayList<>();
 
 		StringBundler sb = new StringBundler(7);
 
@@ -215,17 +215,18 @@ public class DeleteDuplicateUniqueFinderRows extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				String[] columnValues = new String[_columnNames.length];
+				String[] duplicateColumnValues =
+					new String[_columnNames.length];
 
-				for (int i = 0; i < columnValues.length; i++) {
-					columnValues[i] = resultSet.getString(i + 1);
+				for (int i = 0; i < duplicateColumnValues.length; i++) {
+					duplicateColumnValues[i] = resultSet.getString(i + 1);
 				}
 
-				duplicateColumnEntries.add(columnValues);
+				duplicateColumnValuesList.add(duplicateColumnValues);
 			}
 		}
 
-		return duplicateColumnEntries;
+		return duplicateColumnValuesList;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

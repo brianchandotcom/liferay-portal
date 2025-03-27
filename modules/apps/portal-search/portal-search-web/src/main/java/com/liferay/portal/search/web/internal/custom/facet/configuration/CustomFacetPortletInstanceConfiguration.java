@@ -30,8 +30,8 @@ public interface CustomFacetPortletInstanceConfiguration {
 	public String displayStyleGroupExternalReferenceCode();
 
 	@Meta.AD(
-		description = "display-style-group-key-description",
-		name = "display-style-group-key", required = false
+		description = "display-style-group-id-description",
+		name = "display-style-group-id", required = false
 	)
 	public long displayStyleGroupId();
 

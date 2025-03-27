@@ -881,7 +881,8 @@ public class ObjectEntryServiceHttp {
 	public static void validate(
 			HttpPrincipal httpPrincipal, long groupId,
 			com.liferay.object.model.ObjectEntry objectEntry,
-			java.util.List<String> objectValidationRuleExternalReferenceCodes)
+			java.util.List<String> objectValidationRuleExternalReferenceCodes,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -891,7 +892,7 @@ public class ObjectEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, objectEntry,
-				objectValidationRuleExternalReferenceCodes);
+				objectValidationRuleExternalReferenceCodes, serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -994,7 +995,8 @@ public class ObjectEntryServiceHttp {
 		};
 	private static final Class<?>[] _validateParameterTypes20 = new Class[] {
 		long.class, com.liferay.object.model.ObjectEntry.class,
-		java.util.List.class
+		java.util.List.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 
 }

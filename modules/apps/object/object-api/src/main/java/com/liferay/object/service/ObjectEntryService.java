@@ -158,7 +158,8 @@ public interface ObjectEntryService extends BaseService {
 
 	public void validate(
 			long groupId, ObjectEntry objectEntry,
-			List<String> objectValidationRuleExternalReferenceCodes)
+			List<String> objectValidationRuleExternalReferenceCodes,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

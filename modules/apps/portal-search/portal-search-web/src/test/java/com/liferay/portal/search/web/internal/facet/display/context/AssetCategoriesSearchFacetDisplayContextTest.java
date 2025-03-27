@@ -396,6 +396,18 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		return termCollector;
 	}
 
+	@Override
+	protected FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception {
+
+		AssetCategoriesSearchFacetDisplayContextBuilder
+			assetCategoriesSearchFacetDisplayContextBuilder =
+				new AssetCategoriesSearchFacetDisplayContextBuilder(
+					getRenderRequest(group));
+
+		return assetCategoriesSearchFacetDisplayContextBuilder.build();
+	}
+
 	protected String getFacetFieldName() {
 		return "assetVocabularyCategoryIds";
 	}

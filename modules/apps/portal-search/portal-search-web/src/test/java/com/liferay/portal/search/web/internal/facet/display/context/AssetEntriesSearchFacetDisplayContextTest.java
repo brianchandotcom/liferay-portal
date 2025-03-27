@@ -7,6 +7,7 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -70,6 +71,18 @@ public class AssetEntriesSearchFacetDisplayContextTest
 			new int[] {4, 2, 3}, new String[] {"charlie", "bravo", "alpha"},
 			new int[] {2, 3, 4}, "key:desc",
 			new String[] {"bravo", "alpha", "charlie"});
+	}
+
+	@Override
+	protected FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception {
+
+		AssetEntriesSearchFacetDisplayContextBuilder
+			assetEntriesSearchFacetDisplayContextBuilder =
+				new AssetEntriesSearchFacetDisplayContextBuilder(
+					getRenderRequest(group));
+
+		return assetEntriesSearchFacetDisplayContextBuilder.build();
 	}
 
 	@Override

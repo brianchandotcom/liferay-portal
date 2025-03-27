@@ -99,6 +99,18 @@ public class ScopeSearchFacetDisplayContextTest
 	}
 
 	@Override
+	protected FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception {
+
+		ScopeSearchFacetDisplayContextBuilder
+			scopeSearchFacetDisplayContextBuilder =
+				new ScopeSearchFacetDisplayContextBuilder(
+					getRenderRequest(group));
+
+		return scopeSearchFacetDisplayContextBuilder.build();
+	}
+
+	@Override
 	protected String getFilterValue(String term) {
 		return String.valueOf(_groupId);
 	}

@@ -7,6 +7,7 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -68,6 +69,18 @@ public class UserSearchFacetDisplayContextTest
 		userSearchFacetDisplayContextBuilder.setParamValue(parameterValue);
 		userSearchFacetDisplayContextBuilder.setUserLocalService(
 			_userLocalService);
+
+		return userSearchFacetDisplayContextBuilder.build();
+	}
+
+	@Override
+	protected FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception {
+
+		UserSearchFacetDisplayContextBuilder
+			userSearchFacetDisplayContextBuilder =
+				new UserSearchFacetDisplayContextBuilder(
+					getRenderRequest(group));
 
 		return userSearchFacetDisplayContextBuilder.build();
 	}

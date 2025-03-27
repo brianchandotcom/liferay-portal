@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.UserSearchFacetDisplayContextBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -468,6 +466,9 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return RandomTestUtil.randomString();
 	}
 
+	protected abstract FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception;
+
 	protected String getFilterValue(String term) {
 		return term;
 	}
@@ -510,17 +511,10 @@ public abstract class BaseFacetDisplayContextTestCase {
 		FacetCollector.class);
 
 	private void _assertDisplayContext(Group group) throws Exception {
-		UserSearchFacetDisplayContextBuilder
-			userSearchFacetDisplayContextBuilder =
-				new UserSearchFacetDisplayContextBuilder(
-					getRenderRequest(group));
-
-		UserSearchFacetDisplayContext userSearchFacetDisplayContext =
-			userSearchFacetDisplayContextBuilder.build();
+		FacetDisplayContext facetDisplayContext = getFacetDisplayContext(group);
 
 		Assert.assertEquals(
-			group.getGroupId(),
-			userSearchFacetDisplayContext.getDisplayStyleGroupId());
+			group.getGroupId(), facetDisplayContext.getDisplayStyleGroupId());
 	}
 
 	private Group _getGroup() {

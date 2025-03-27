@@ -6,11 +6,13 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
+import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -139,6 +141,18 @@ public class FolderSearchFacetDisplayContextTest
 		Assert.assertEquals(
 			bucketDisplayContexts.toString(), 21,
 			_getTotalBucketDisplayContextFrequencyCount(bucketDisplayContexts));
+	}
+
+	@Override
+	protected FacetDisplayContext getFacetDisplayContext(Group group)
+		throws Exception {
+
+		AssetEntriesSearchFacetDisplayContextBuilder
+			assetEntriesSearchFacetDisplayContextBuilder =
+				new AssetEntriesSearchFacetDisplayContextBuilder(
+					getRenderRequest(group));
+
+		return assetEntriesSearchFacetDisplayContextBuilder.build();
 	}
 
 	@Override

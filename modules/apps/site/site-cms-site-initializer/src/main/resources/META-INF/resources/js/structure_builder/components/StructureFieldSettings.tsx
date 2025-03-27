@@ -18,7 +18,7 @@ import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {FIELD_TYPE_LABEL, Field} from '../utils/field';
-import focusInvalidInput from '../utils/focusInvalidInput';
+import focusInvalidElement from '../utils/focusInvalidElement';
 import getFieldComponents from '../utils/getFieldComponents';
 import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
 import ERCInput from './ERCInput';
@@ -31,7 +31,7 @@ export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 	const structureUuid = useSelector(selectStructureUuid);
 
 	useEffect(() => {
-		focusInvalidInput();
+		focusInvalidElement();
 	}, []);
 
 	return (

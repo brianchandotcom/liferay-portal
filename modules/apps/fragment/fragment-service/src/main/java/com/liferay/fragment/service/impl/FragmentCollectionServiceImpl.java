@@ -232,11 +232,31 @@ public class FragmentCollectionServiceImpl
 
 	@Override
 	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByG_M(
+			groupIds, marketplace, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
 		long[] groupIds, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
 		return fragmentCollectionPersistence.findByGroupId(
 			groupIds, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, boolean marketplace, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByG_LikeN_M(
+			groupIds,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			marketplace, start, end, orderByComparator);
 	}
 
 	@Override

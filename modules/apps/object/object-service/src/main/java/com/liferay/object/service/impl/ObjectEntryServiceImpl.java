@@ -14,7 +14,6 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
-import com.liferay.object.entry.validation.ValidationError;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
@@ -442,7 +441,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			groupId, objectEntry.getObjectDefinitionId(),
 			objectEntry.getValues());
 
-		 objectEntryLocalService.validate(
+		objectEntryLocalService.validate(
 			groupId, objectEntry, objectValidationRuleExternalReferenceCodes,
 			serviceContext, getUserId());
 	}

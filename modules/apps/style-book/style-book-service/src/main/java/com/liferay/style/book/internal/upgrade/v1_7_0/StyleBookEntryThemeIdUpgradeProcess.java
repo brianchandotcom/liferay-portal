@@ -28,7 +28,7 @@ public class StyleBookEntryThemeIdUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select ctCollectionId, groupId, styleBookEntryId from " +
+				"select ctCollectionId, styleBookEntryId, groupId from " +
 					"StyleBookEntry");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(

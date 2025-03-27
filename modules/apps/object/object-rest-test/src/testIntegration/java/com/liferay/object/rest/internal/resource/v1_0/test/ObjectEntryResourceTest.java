@@ -15656,12 +15656,6 @@ public class ObjectEntryResourceTest {
 					Arrays.asList(
 						new ObjectFieldSettingBuilder(
 						).name(
-							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-						).value(
-							"true"
-						).build(),
-						new ObjectFieldSettingBuilder(
-						).name(
 							ObjectFieldSettingConstants.NAME_MAX_LENGTH
 						).value(
 							"9"
@@ -15669,6 +15663,12 @@ public class ObjectEntryResourceTest {
 						new ObjectFieldSettingBuilder(
 						).name(
 							ObjectFieldSettingConstants.NAME_SHOW_COUNTER
+						).value(
+							"true"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
 						).value(
 							"true"
 						).build()));

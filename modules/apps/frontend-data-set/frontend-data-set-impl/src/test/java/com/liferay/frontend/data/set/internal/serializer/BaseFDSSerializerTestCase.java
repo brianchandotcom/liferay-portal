@@ -5,10 +5,26 @@
 
 package com.liferay.frontend.data.set.internal.serializer;
 
+import com.liferay.frontend.data.set.SystemFDSEntry;
+import com.liferay.frontend.data.set.action.FDSCreationMenu;
+import com.liferay.frontend.data.set.action.FDSItemsActions;
+import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
+import com.liferay.frontend.data.set.internal.action.FDSCreationMenuRegistryImpl;
+import com.liferay.frontend.data.set.internal.action.FDSItemsActionsRegistryImpl;
+import com.liferay.frontend.data.set.internal.sort.FDSSortsRegistryImpl;
+import com.liferay.frontend.data.set.internal.view.FDSViewContextContributorRegistryImpl;
+import com.liferay.frontend.data.set.internal.view.FDSViewRegistryImpl;
+import com.liferay.frontend.data.set.sort.FDSSorts;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.FDSViewContextContributor;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -19,11 +35,17 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
+
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Daniel Sanz
@@ -40,6 +62,90 @@ public abstract class BaseFDSSerializerTestCase {
 		).put(
 			"initialDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA
 		).toString();
+
+		bundleContext = SystemBundleUtil.getBundleContext();
+
+		systemFDSSerializer.systemFDSEntryRegistry =
+			new SystemFDSEntryRegistryImpl(
+				(ServiceTrackerMap<String, SystemFDSEntry>)
+					_registerServiceTrackerMap(
+						ServiceTrackerMapFactory.openSingleValueMap(
+							bundleContext, SystemFDSEntry.class,
+							"frontend.data.set.name")));
+
+		systemFDSSerializer.fdsCreationMenuRegistry =
+			new FDSCreationMenuRegistryImpl(
+				(ServiceTrackerMap
+					<String,
+					 ServiceTrackerCustomizerFactory.ServiceWrapper
+						 <FDSCreationMenu>>)_registerServiceTrackerMap(
+							 ServiceTrackerMapFactory.openSingleValueMap(
+								 bundleContext, FDSCreationMenu.class,
+								 "frontend.data.set.name",
+								 ServiceTrackerCustomizerFactory.
+									 <FDSCreationMenu>serviceWrapper(
+										 bundleContext))));
+
+		systemFDSSerializer.fdsItemsActionsRegistry =
+			new FDSItemsActionsRegistryImpl(
+				(ServiceTrackerMap
+					<String,
+					 ServiceTrackerCustomizerFactory.ServiceWrapper
+						 <FDSItemsActions>>)_registerServiceTrackerMap(
+							 ServiceTrackerMapFactory.openSingleValueMap(
+								 bundleContext, FDSItemsActions.class,
+								 "frontend.data.set.name",
+								 ServiceTrackerCustomizerFactory.
+									 <FDSItemsActions>serviceWrapper(
+										 bundleContext))));
+
+		systemFDSSerializer.fdsSortsRegistry = new FDSSortsRegistryImpl(
+			(ServiceTrackerMap
+				<String,
+				 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSSorts>>)
+					 _registerServiceTrackerMap(
+						 ServiceTrackerMapFactory.openSingleValueMap(
+							 bundleContext, FDSSorts.class,
+							 "frontend.data.set.name",
+							 ServiceTrackerCustomizerFactory.
+								 <FDSSorts>serviceWrapper(bundleContext))));
+
+		systemFDSSerializer.fdsViewContextContributorRegistry =
+			new FDSViewContextContributorRegistryImpl(
+				(ServiceTrackerMap
+					<String,
+					 List
+						 <ServiceTrackerCustomizerFactory.ServiceWrapper
+							 <FDSViewContextContributor>>>)
+								 _registerServiceTrackerMap(
+									 ServiceTrackerMapFactory.openMultiValueMap(
+										 bundleContext,
+										 FDSViewContextContributor.class,
+										 "frontend.data.set.view.name",
+										 ServiceTrackerCustomizerFactory.
+											 <FDSViewContextContributor>
+												 serviceWrapper(
+													 bundleContext))));
+
+		systemFDSSerializer.fdsViewRegistry = new FDSViewRegistryImpl(
+			(ServiceTrackerMap
+				<String,
+				 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSView>>>)
+					 _registerServiceTrackerMap(
+						 ServiceTrackerMapFactory.openMultiValueMap(
+							 bundleContext, FDSView.class,
+							 "frontend.data.set.name",
+							 ServiceTrackerCustomizerFactory.
+								 <FDSView>serviceWrapper(bundleContext))));
+	}
+
+	@After
+	public void tearDown() {
+		for (ServiceTrackerMap<String, ?> serviceTrackerMap :
+				_serviceTrackerMaps) {
+
+			serviceTrackerMap.close();
+		}
 	}
 
 	protected void mockLanguage() {
@@ -142,8 +248,22 @@ public abstract class BaseFDSSerializerTestCase {
 
 	protected static final String URL = RandomTestUtil.randomString();
 
+	protected BundleContext bundleContext;
 	protected String defaultPagination;
 	protected final HttpServletRequest httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
+	protected final SystemFDSSerializer systemFDSSerializer =
+		new SystemFDSSerializer();
+
+	private ServiceTrackerMap<String, ?> _registerServiceTrackerMap(
+		ServiceTrackerMap<String, ?> serviceTrackerMap) {
+
+		_serviceTrackerMaps.add(serviceTrackerMap);
+
+		return serviceTrackerMap;
+	}
+
+	private final List<ServiceTrackerMap<String, ?>> _serviceTrackerMaps =
+		new ArrayList<>();
 
 }

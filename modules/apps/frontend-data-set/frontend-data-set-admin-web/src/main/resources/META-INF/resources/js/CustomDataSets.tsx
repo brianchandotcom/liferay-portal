@@ -6,7 +6,10 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {openModal} from 'frontend-js-components-web';
@@ -596,6 +599,37 @@ const CustomDataSets = ({
 		});
 	};
 
+	const restApplicationRenderer = function ({
+		itemData,
+	}: {
+		itemData: IDataSet;
+	}) {
+		const apiExplorerURL = `${Liferay.ThemeDisplay.getPortalURL()}/o/api?endpoint=${Liferay.ThemeDisplay.getPortalURL()}/o${itemData.restApplication}/openapi.json`;
+
+		return (
+			<ClayTooltipProvider>
+				<ClayLink
+					data-tooltip-align="top"
+					decoration="underline"
+					displayType="tertiary"
+					href={apiExplorerURL}
+					rel="noopener noreferrer"
+					target="_blank"
+					title={apiExplorerURL}
+				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon
+							className="mr-1 text-2 text-secondary"
+							symbol="shortcut"
+						/>
+					</span>
+
+					{itemData.restApplication}
+				</ClayLink>
+			</ClayTooltipProvider>
+		);
+	};
+
 	const creationMenu = {
 		primaryItems: [
 			{
@@ -635,6 +669,7 @@ const CustomDataSets = ({
 						sortable: true,
 					},
 					{
+						contentRenderer: 'restApplicationRenderer',
 						fieldName: 'restApplication',
 						label: Liferay.Language.get('rest-application'),
 						sortable: true,
@@ -670,6 +705,7 @@ const CustomDataSets = ({
 						? creationMenu
 						: undefined
 				}
+				customDataRenderers={{restApplicationRenderer}}
 				emptyState={{
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'

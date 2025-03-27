@@ -12,9 +12,11 @@ import ClayButton from '@clayui/button';
 import {ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {openModal} from 'frontend-js-components-web';
 import {fetch, navigate} from 'frontend-js-web';
@@ -379,6 +381,37 @@ const SystemDataSets = ({
 		],
 	};
 
+	const restApplicationRenderer = function ({
+		itemData,
+	}: {
+		itemData: IDataSet;
+	}) {
+		const apiExplorerURL = `${Liferay.ThemeDisplay.getPortalURL()}/o/api?endpoint=${Liferay.ThemeDisplay.getPortalURL()}/o${itemData.restApplication}/openapi.json`;
+
+		return (
+			<ClayTooltipProvider>
+				<ClayLink
+					data-tooltip-align="top"
+					decoration="underline"
+					displayType="tertiary"
+					href={apiExplorerURL}
+					rel="noopener noreferrer"
+					target="_blank"
+					title={apiExplorerURL}
+				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon
+							className="mr-1 text-2 text-secondary"
+							symbol="shortcut"
+						/>
+					</span>
+
+					{itemData.restApplication}
+				</ClayLink>
+			</ClayTooltipProvider>
+		);
+	};
+
 	const toggleRenderer = function ({
 		itemData,
 		onItemsChange,
@@ -417,6 +450,7 @@ const SystemDataSets = ({
 						sortable: true,
 					},
 					{
+						contentRenderer: 'restApplicationRenderer',
 						fieldName: 'restApplication',
 						label: Liferay.Language.get('rest-application'),
 						sortable: true,
@@ -459,7 +493,7 @@ const SystemDataSets = ({
 				{...FDS_DEFAULT_PROPS}
 				apiURL={getAPIURL()}
 				creationMenu={creationMenu}
-				customDataRenderers={{toggleRenderer}}
+				customDataRenderers={{restApplicationRenderer, toggleRenderer}}
 				emptyState={{
 					description: Liferay.Language.get(
 						'start-creating-one-to-show-your-data'

@@ -80,6 +80,20 @@ public class RedirectNotFoundEntryLocalServiceImpl
 		return redirectNotFoundEntry;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public RedirectNotFoundEntry deleteRedirectNotFoundEntry(
+			RedirectNotFoundEntry redirectNotFoundEntry)
+		throws PortalException {
+
+		_viewCountManager.deleteViewCount(
+			redirectNotFoundEntry.getCompanyId(),
+			_portal.getClassNameId(RedirectNotFoundEntry.class),
+			redirectNotFoundEntry.getRedirectNotFoundEntryId());
+
+		return super.deleteRedirectNotFoundEntry(redirectNotFoundEntry);
+	}
+
 	@Override
 	public RedirectNotFoundEntry fetchRedirectNotFoundEntry(
 		long groupId, String url) {

@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Document Library Repository Search
 Bundle-SymbolicName: com.liferay.document.library.repository.search
 Bundle-Version: 7.0.15
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore

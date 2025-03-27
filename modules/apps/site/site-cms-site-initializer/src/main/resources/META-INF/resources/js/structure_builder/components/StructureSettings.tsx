@@ -21,7 +21,7 @@ import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import focusInvalidInput from '../utils/focusInvalidInput';
+import focusInvalidElement from '../utils/focusInvalidElement';
 import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
 import Input from './Input';
@@ -54,7 +54,7 @@ function StructureSettings() {
 		useState<Liferay.Language.LocalizedValue<string>>(structureLabel);
 
 	useEffect(() => {
-		focusInvalidInput();
+		focusInvalidElement();
 	}, []);
 
 	return (

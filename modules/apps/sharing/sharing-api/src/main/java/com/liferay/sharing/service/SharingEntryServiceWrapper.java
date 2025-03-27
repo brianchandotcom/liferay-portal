@@ -139,6 +139,14 @@ public class SharingEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.sharing.model.SharingEntry getSharingEntry(
+			long sharingEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryService.getSharingEntry(sharingEntryId);
+	}
+
+	@Override
 	public com.liferay.sharing.model.SharingEntry
 			getSharingEntryByExternalReferenceCode(
 				String externalReferenceCode, long groupId)

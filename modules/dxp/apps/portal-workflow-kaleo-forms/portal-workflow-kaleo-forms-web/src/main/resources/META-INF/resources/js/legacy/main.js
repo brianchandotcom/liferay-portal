@@ -395,7 +395,6 @@ AUI.add(
 			'aui-parse-content',
 			'aui-url',
 			'liferay-kaleo-forms-components',
-			'liferay-store',
 			'node-load',
 		],
 	}

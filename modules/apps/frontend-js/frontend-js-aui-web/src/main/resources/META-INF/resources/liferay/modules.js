@@ -205,9 +205,6 @@
 						path: 'source_editor.js',
 						requires: ['aui-ace-editor'],
 					},
-					'liferay-store': {
-						path: 'store.js',
-					},
 					'liferay-translation-manager': {
 						path: 'translation_manager.js',
 						requires: ['aui-base'],

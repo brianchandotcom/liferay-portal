@@ -12,26 +12,22 @@
 </div>
 
 <c:if test="<%= collapsible %>">
-	<aui:script sandbox="<%= true %>" use="aui-base,liferay-store">
-		var storeTask = A.debounce(Liferay.Store, 100);
+	<aui:script type="module">
+		function storeTask(id, value) {
+			import('<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-web") %>').then(
+				({setSessionValue}) => setSessionValue(id, value)
+			);
+		}
 
 		function onPanelHide(event) {
 			if (event.panel.getAttribute('id') === '<%= id %>Content') {
-				var task = {};
-
-				task['<%= id %>'] = true;
-
-				storeTask(task);
+				storeTask('<%= id %>', true);
 			}
 		}
 
 		function onPanelShow(event) {
 			if (event.panel.getAttribute('id') === '<%= id %>Content') {
-				var task = {};
-
-				task['<%= id %>'] = false;
-
-				storeTask(task);
+				storeTask('<%= id %>', false);
 			}
 		}
 

@@ -225,7 +225,7 @@ public class SimulationProductNavigationControlMenuEntry
 
 			ScriptTag scriptTag = new ScriptTag();
 
-			scriptTag.setUse("liferay-store,io-request,parse-content");
+			scriptTag.setUse("io-request,parse-content");
 
 			scriptTag.doBodyTag(pageContext, this::_processScriptTagBody);
 		}

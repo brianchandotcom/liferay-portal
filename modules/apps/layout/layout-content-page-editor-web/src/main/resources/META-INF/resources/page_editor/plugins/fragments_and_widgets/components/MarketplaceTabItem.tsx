@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import {
+	MarketplaceProduct,
 	MarketplaceView,
 	Product,
 	useMarketplaceContext,
@@ -22,6 +23,8 @@ export default function MarketplaceTabItem({
 	item: Product;
 	onClickRef: React.RefObject<() => void | null>;
 }) {
+	const marketplaceProduct = new MarketplaceProduct(item);
+
 	const {
 		modal: {onOpenChange},
 		setProduct,
@@ -49,7 +52,7 @@ export default function MarketplaceTabItem({
 							<img
 								alt=""
 								className="card-item-first"
-								src={item.urlImage}
+								src={marketplaceProduct.productImage}
 							/>
 						</ClaySticker>
 					</ClayLayout.ContentCol>
@@ -61,7 +64,7 @@ export default function MarketplaceTabItem({
 							</span>
 
 							<span className="card-subtitle text-truncate">
-								{item.catalogName}
+								{marketplaceProduct.catalogName}
 							</span>
 						</ClayLayout.ContentSection>
 					</ClayLayout.ContentCol>

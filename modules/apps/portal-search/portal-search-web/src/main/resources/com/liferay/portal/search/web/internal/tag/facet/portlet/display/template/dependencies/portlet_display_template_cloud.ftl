@@ -1,3 +1,9 @@
+<style ${nonceAttribute} type="text/css">
+	.tag-cloud .facet-term {
+		line-height: 1.2;
+	}
+</style>
+
 <@liferay_ui["panel-container"]
 	extended=true
 	id="${namespace + 'facetAssetTagsPanelContainer'}"
@@ -33,7 +39,6 @@
 							disabled="true"
 							displayType="link"
 							onClick="Liferay.Search.FacetUtil.changeSelection(event);"
-							style="line-height: 1.2;"
 						>
 							<#if entry.isSelected()>
 								<strong>${htmlUtil.escape(entry.getBucketText())}</strong>

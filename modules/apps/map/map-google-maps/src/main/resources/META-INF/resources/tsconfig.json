@@ -1,5 +1,5 @@
 {
-	"@generated": "c0bf69c0aee36b951d1e882906fb0630a8fbc73e",
+	"@generated": "0d9e2eaf6898f9d647a67012ac7f03296e82ac59",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -15,7 +15,7 @@
 				"../../../../../../map-common/src/main/resources/META-INF/resources/js/index.js"
 			],
 			"frontend-js-web": [
-				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",

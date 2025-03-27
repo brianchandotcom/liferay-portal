@@ -18,10 +18,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
-page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
-page import="com.liferay.layout.seo.kernel.LayoutSEOLink" %><%@
-page import="com.liferay.layout.seo.kernel.LayoutSEOLinkManager" %><%@
-page import="com.liferay.layout.seo.kernel.LayoutSEOLinkManagerUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -76,8 +72,6 @@ page import="com.liferay.portal.kernel.service.permission.RolePermissionUtil" %>
 page import="com.liferay.portal.kernel.servlet.BufferCacheServletResponse" %><%@
 page import="com.liferay.portal.kernel.servlet.MultiSessionMessages" %><%@
 page import="com.liferay.portal.kernel.servlet.PortalMessages" %><%@
-page import="com.liferay.portal.kernel.servlet.PortalWebResourceConstants" %><%@
-page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
@@ -129,7 +123,6 @@ page import="com.liferay.portal.struts.StrutsUtil" %><%@
 page import="com.liferay.portal.struts.TilesUtil" %><%@
 page import="com.liferay.portal.util.PropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portal.util.ShutdownUtil" %><%@
 page import="com.liferay.portlet.HeaderRequestFactory" %><%@
 page import="com.liferay.portlet.HeaderResponseFactory" %><%@
 page import="com.liferay.portlet.LiferayPortletUtil" %><%@

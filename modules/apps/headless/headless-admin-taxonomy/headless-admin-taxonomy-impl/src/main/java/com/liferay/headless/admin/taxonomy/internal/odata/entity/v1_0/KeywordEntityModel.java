@@ -11,6 +11,7 @@ import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
@@ -31,6 +32,8 @@ public class KeywordEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new IdEntityField(
+				"groupIds", locale -> "groupIds", String::valueOf),
 			new StringEntityField(
 				Field.NAME,
 				locale -> Field.getSortableFieldName(Field.NAME + "_String")));

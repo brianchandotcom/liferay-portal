@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.taxonomy.client.serdes.v1_0;
 
+import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 
@@ -58,6 +59,26 @@ public class KeywordSerDes {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(keyword.getActions()));
+		}
+
+		if (keyword.getAssetLibraries() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraries\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < keyword.getAssetLibraries().length; i++) {
+				sb.append(String.valueOf(keyword.getAssetLibraries()[i]));
+
+				if ((i + 1) < keyword.getAssetLibraries().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (keyword.getAssetLibraryKey() != null) {
@@ -223,6 +244,14 @@ public class KeywordSerDes {
 			map.put("actions", String.valueOf(keyword.getActions()));
 		}
 
+		if (keyword.getAssetLibraries() == null) {
+			map.put("assetLibraries", null);
+		}
+		else {
+			map.put(
+				"assetLibraries", String.valueOf(keyword.getAssetLibraries()));
+		}
+
 		if (keyword.getAssetLibraryKey() == null) {
 			map.put("assetLibraryKey", null);
 		}
@@ -332,6 +361,9 @@ public class KeywordSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "assetLibraries")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
 				return false;
 			}
@@ -382,6 +414,22 @@ public class KeywordSerDes {
 				if (jsonParserFieldValue != null) {
 					keyword.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetLibraries")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					AssetLibrary[] assetLibrariesArray =
+						new AssetLibrary[jsonParserFieldValues.length];
+
+					for (int i = 0; i < assetLibrariesArray.length; i++) {
+						assetLibrariesArray[i] = AssetLibrarySerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					keyword.setAssetLibraries(assetLibrariesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {

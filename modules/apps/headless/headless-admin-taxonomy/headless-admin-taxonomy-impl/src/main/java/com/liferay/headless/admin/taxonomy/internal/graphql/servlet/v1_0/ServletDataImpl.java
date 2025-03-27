@@ -118,6 +118,19 @@ public class ServletDataImpl implements ServletData {
 							KeywordResourceImpl.class,
 							"putAssetLibraryKeywordPermissionsPage"));
 					put(
+						"mutation#createKeywordsPageExportBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class,
+							"postKeywordsPageExportBatch"));
+					put(
+						"mutation#createKeyword",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "postKeyword"));
+					put(
+						"mutation#createKeywordBatch",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "postKeywordBatch"));
+					put(
 						"mutation#deleteKeyword",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "deleteKeyword"));
@@ -337,6 +350,10 @@ public class ServletDataImpl implements ServletData {
 							KeywordResourceImpl.class,
 							"getAssetLibraryKeywordPermissionsPage"));
 					put(
+						"query#keywords",
+						new ObjectValuePair<>(
+							KeywordResourceImpl.class, "getKeywordsPage"));
+					put(
 						"query#keywordsRanked",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class,
@@ -346,7 +363,7 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "getKeyword"));
 					put(
-						"query#keywords",
+						"query#siteKeywords",
 						new ObjectValuePair<>(
 							KeywordResourceImpl.class, "getSiteKeywordsPage"));
 					put(

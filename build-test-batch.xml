@@ -3746,7 +3746,7 @@ information. Make sure to commit in all build-lib-versions results.
 		<run-bundle-blacklist-restart-test database.type="mysql" />
 	</target>
 
-	<target name="bundle-blacklist-restart-postgresql155">
+	<target name="bundle-blacklist-restart-postgresql163">
 		<run-bundle-blacklist-restart-test database.type="postgresql" />
 	</target>
 
@@ -3824,11 +3824,11 @@ information. Make sure to commit in all build-lib-versions results.
 		<run-empty-osgi-core-dir-test database.type="mysql" />
 	</target>
 
-	<target name="empty-osgi-core-dir-postgresql155">
+	<target name="empty-osgi-core-dir-postgresql163">
 		<run-empty-osgi-core-dir-test database.type="postgresql" />
 	</target>
 
-	<target name="empty-osgi-core-dir-postgresql155-jdk21_zulu">
+	<target name="empty-osgi-core-dir-postgresql163-jdk21_zulu">
 		<run-empty-osgi-core-dir-test database.type="postgresql" />
 	</target>
 
@@ -6713,7 +6713,7 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="gogo-shell-client-postgresql155">
+	<target name="gogo-shell-client-postgresql163">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="postgresql" stop.app.server="true">
@@ -6954,7 +6954,7 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="jsp-runtime-compile-postgresql155">
+	<target name="jsp-runtime-compile-postgresql163">
 		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="postgresql" stop.app.server="true">
@@ -7035,7 +7035,7 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-container-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-container-postgresql155">
+	<target name="lpkg-container-postgresql163">
 		<run-lpkg-container-test database.type="postgresql" />
 	</target>
 
@@ -7043,7 +7043,7 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-controller-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-controller-postgresql155">
+	<target name="lpkg-controller-postgresql163">
 		<run-lpkg-controller-test database.type="postgresql" />
 	</target>
 
@@ -7051,7 +7051,7 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-override-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-override-postgresql155">
+	<target name="lpkg-override-postgresql163">
 		<run-lpkg-override-test database.type="postgresql" />
 	</target>
 
@@ -7059,7 +7059,7 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-persistence-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-persistence-postgresql155">
+	<target name="lpkg-persistence-postgresql163">
 		<run-lpkg-persistence-test database.type="postgresql" />
 	</target>
 
@@ -7067,7 +7067,7 @@ information. Make sure to commit in all format-javadoc results.
 		<run-lpkg-startup-test database.type="mysql" />
 	</target>
 
-	<target name="lpkg-startup-postgresql155">
+	<target name="lpkg-startup-postgresql163">
 		<run-lpkg-startup-test database.type="postgresql" />
 	</target>
 
@@ -8058,16 +8058,16 @@ ${output.content}</echo>
 		<antcall target="playwright-js-tomcat90-mysql57" />
 	</target>
 
-	<target name="playwright-js-tomcat90-postgresql155">
+	<target name="playwright-js-tomcat90-postgresql163">
 		<run-playwright-js-test database.type="postgresql" />
 	</target>
 
-	<target name="playwright-js-tomcat90-postgresql155-jdk21_zulu">
+	<target name="playwright-js-tomcat90-postgresql163-jdk21_zulu">
 		<run-playwright-js-test database.type="postgresql" />
 	</target>
 
-	<target name="playwright-js-tomcat90-postgresql155_stable">
-		<antcall target="playwright-js-tomcat90-postgresql155" />
+	<target name="playwright-js-tomcat90-postgresql163_stable">
+		<antcall target="playwright-js-tomcat90-postgresql163" />
 	</target>
 
 	<target name="plugins-compile">

@@ -15,7 +15,7 @@
 			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
 		]
 	},
-	"main": "index.es.js",
+	"main": "main/index.js",
 	"name": "frontend-js-web",
 	"scripts": {
 		"build": "node-scripts build && node-scripts build:custom",

@@ -111,8 +111,6 @@ import toggleSelectBox from './util/toggle_select_box';
 import './workflow';
 import zIndex from './zIndex';
 
-Liferay = window.Liferay || {};
-
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {BREAKPOINTS} from 'frontend-js-web'`
  */

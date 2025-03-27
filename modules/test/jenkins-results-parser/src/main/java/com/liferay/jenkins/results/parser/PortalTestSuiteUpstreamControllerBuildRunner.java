@@ -108,6 +108,11 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
 				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+					"cloud.fleet.primary.label");
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+				slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
 					"master.auto.scaling.group.name");
 			}
 		}

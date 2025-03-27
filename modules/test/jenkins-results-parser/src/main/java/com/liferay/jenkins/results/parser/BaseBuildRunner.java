@@ -75,6 +75,11 @@ public abstract class BaseBuildRunner<T extends BuildData>
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
 				labelExpression = JenkinsResultsParserUtil.getBuildProperty(
+					"cloud.fleet.primary.label");
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
+				labelExpression = JenkinsResultsParserUtil.getBuildProperty(
 					"master.auto.scaling.group.name");
 			}
 		}

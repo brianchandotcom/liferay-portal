@@ -48,8 +48,13 @@ import throttle from './throttle.es';
 import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
-import {CONSENT_TYPES, checkConsent} from './util/consent';
-import Cookie, {getCookie, removeCookie, setCookie} from './util/cookie/cookie';
+import Cookie, {
+	CONSENT_TYPES,
+	checkConsent,
+	getCookie,
+	removeCookie,
+	setCookie,
+} from './util/cookie/cookie';
 import fetch from './util/fetch.es';
 import focusFormField from './util/focus_form_field';
 import getFormElement from './util/form/get_form_element.es';

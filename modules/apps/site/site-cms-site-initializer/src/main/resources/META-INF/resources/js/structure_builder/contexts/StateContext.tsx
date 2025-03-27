@@ -16,10 +16,13 @@ import {Field, MultiselectField, SingleSelectField} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
-import isFieldInvalid from '../utils/isFieldInvalid';
-import isStructureInvalid from '../utils/isStructureInvalid';
 import normalizeName from '../utils/normalizeName';
 import openDeletionModal from '../utils/openDeletionModal';
+import {
+	ValidationError,
+	validateField,
+	validateStructure,
+} from '../utils/validation';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
@@ -34,7 +37,7 @@ export type State = {
 	error: string | null;
 	fields: Map<Uuid, Field>;
 	id: number | null;
-	invalids: Set<Uuid>;
+	invalids: Map<Uuid, Set<ValidationError>>;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
 	publishedFields: Set<Uuid>;
@@ -49,7 +52,7 @@ const INITIAL_STATE: State = {
 	error: null,
 	fields: new Map(),
 	id: null,
-	invalids: new Set(),
+	invalids: new Map(),
 	label: {
 		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_STRUCTURE_LABEL,
 	},
@@ -148,7 +151,11 @@ function reducer(state: State, action: Action): State {
 
 			nextFields.delete(uuid);
 
-			let nextState = {...state, fields: nextFields};
+			const invalids = new Map(state.invalids);
+
+			invalids.delete(uuid);
+
+			let nextState = {...state, fields: nextFields, invalids};
 
 			if (state.selection.includes(uuid)) {
 				nextState = {
@@ -244,10 +251,17 @@ function reducer(state: State, action: Action): State {
 
 			nextFields.set(nextField.uuid, nextField);
 
-			const invalids = new Set(state.invalids);
+			const invalids = new Map(state.invalids);
 
-			if (isFieldInvalid(nextField)) {
-				invalids.add(nextField.uuid);
+			const {type: _, ...data} = action;
+
+			const errors = validateField({
+				currentErrors: invalids.get(nextField.uuid),
+				data,
+			});
+
+			if (errors.size) {
+				invalids.set(nextField.uuid, errors);
 			}
 			else {
 				invalids.delete(nextField.uuid);
@@ -285,10 +299,15 @@ function reducer(state: State, action: Action): State {
 				spaces: action.spaces ?? state.spaces,
 			};
 
-			const invalids = new Set(state.invalids);
+			const invalids = new Map(state.invalids);
 
-			if (isStructureInvalid(nextState)) {
-				invalids.add(state.uuid);
+			const errors = validateStructure({
+				currentErrors: invalids.get(state.uuid),
+				data: action,
+			});
+
+			if (errors.size) {
+				invalids.set(state.uuid, errors);
 			}
 			else {
 				invalids.delete(state.uuid);

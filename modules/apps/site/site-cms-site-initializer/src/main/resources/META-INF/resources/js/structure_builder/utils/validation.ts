@@ -3,13 +3,77 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {useCallback} from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectInvalids from '../selectors/selectInvalids';
-import selectSelection from '../selectors/selectSelection';
+import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureFields from '../selectors/selectStructureFields';
-import focusInvalidInput from './focusInvalidInput';
+import {Field} from './field';
+
+export type ValidationError = 'no-erc' | 'no-label' | 'no-name';
+
+export function validateField({
+	currentErrors,
+	data,
+}: {
+	currentErrors?: Set<ValidationError>;
+	data: {
+		erc?: Field['erc'];
+		label?: Field['label'];
+		name?: Field['name'];
+		picklistId?:
+			| SingleSelectField['picklistId']
+			| MultiselectField['picklistId'];
+	};
+}): Set<ValidationError> {
+	const {erc, label, name} = data;
+
+	const errors = new Set(currentErrors);
+
+	if (!isNullOrUndefined(erc)) {
+		erc ? errors.delete('no-erc') : errors.add('no-erc');
+	}
+
+	if (!isNullOrUndefined(name)) {
+		name ? errors.delete('no-name') : errors.add('no-name');
+	}
+
+	if (!isNullOrUndefined(label)) {
+		Object.values(label ?? {}).every(Boolean)
+			? errors.delete('no-label')
+			: errors.add('no-label');
+	}
+
+	return errors;
+}
+
+export function validateStructure({
+	currentErrors,
+	data,
+}: {
+	currentErrors?: Set<ValidationError>;
+	data: Partial<State>;
+}): Set<ValidationError> {
+	const {erc, label, name} = data;
+
+	const errors = new Set(currentErrors);
+
+	if (!isNullOrUndefined(erc)) {
+		erc ? errors.delete('no-erc') : errors.add('no-erc');
+	}
+
+	if (!isNullOrUndefined(name)) {
+		name ? errors.delete('no-name') : errors.add('no-name');
+	}
+
+	if (!isNullOrUndefined(label)) {
+		Object.values(label ?? {}).every(Boolean)
+			? errors.delete('no-label')
+			: errors.add('no-label');
+	}
+
+	return errors;
+}
 
 export function useValidate() {
 	const dispatch = useStateDispatch();

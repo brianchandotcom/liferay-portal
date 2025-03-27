@@ -60,7 +60,7 @@ export default function buildState(
 		error: null,
 		fields,
 		id: objectDefinition.id ?? null,
-		invalids: new Set(),
+		invalids: new Map(),
 		label: objectDefinition.label,
 		name: objectDefinition.name ?? '',
 		publishedFields: isPublished ? new Set(fields.keys()) : new Set(),

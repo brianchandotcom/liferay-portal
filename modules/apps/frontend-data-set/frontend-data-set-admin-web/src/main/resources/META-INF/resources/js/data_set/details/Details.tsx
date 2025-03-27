@@ -18,6 +18,7 @@ import React, {useRef, useState} from 'react';
 import {IDataSet} from '../..//utils/types';
 import RequiredMark from '../../components/RequiredMark';
 import {API_URL, DEFAULT_FETCH_HEADERS} from '../../utils/constants';
+import getAPIExplorerURL from '../../utils/getAPIExplorerURL';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IDataSetSectionProps} from '../DataSet';
@@ -127,6 +128,8 @@ const Details = ({
 
 	const {restApplication, restEndpoint, restSchema} = dataSet;
 
+	const apiExplorerURL = getAPIExplorerURL(restApplication);
+
 	return (
 		<ClayLayout.ContainerFluid
 			className="mt-3 visualization-modes"
@@ -215,10 +218,10 @@ const Details = ({
 											data-tooltip-align="top"
 											decoration="underline"
 											displayType="tertiary"
-											href={`${Liferay.ThemeDisplay.getPortalURL()}/o/api?endpoint=${Liferay.ThemeDisplay.getPortalURL()}/o${restApplication}/openapi.json`}
+											href={apiExplorerURL}
 											rel="noopener noreferrer"
 											target="_blank"
-											title={`${Liferay.ThemeDisplay.getPortalURL()}/o/api?endpoint=${Liferay.ThemeDisplay.getPortalURL()}/o${restApplication}/openapi.json`}
+											title={apiExplorerURL}
 										>
 											{restApplication}
 

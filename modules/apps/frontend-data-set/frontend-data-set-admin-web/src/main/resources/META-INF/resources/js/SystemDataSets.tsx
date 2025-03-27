@@ -27,6 +27,7 @@ import {
 	DEFAULT_FETCH_HEADERS,
 	FDS_DEFAULT_PROPS,
 } from './utils/constants';
+import getAPIExplorerURL from './utils/getAPIExplorerURL';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 import {IDataSet, ISystemDataSet} from './utils/types';
@@ -386,7 +387,7 @@ const SystemDataSets = ({
 	}: {
 		itemData: IDataSet;
 	}) {
-		const apiExplorerURL = `${Liferay.ThemeDisplay.getPortalURL()}/o/api?endpoint=${Liferay.ThemeDisplay.getPortalURL()}/o${itemData.restApplication}/openapi.json`;
+		const apiExplorerURL = getAPIExplorerURL(itemData.restApplication);
 
 		return (
 			<ClayTooltipProvider>

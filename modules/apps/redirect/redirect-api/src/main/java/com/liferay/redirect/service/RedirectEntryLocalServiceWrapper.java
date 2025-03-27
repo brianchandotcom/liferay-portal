@@ -126,6 +126,13 @@ public class RedirectEntryLocalServiceWrapper
 		return _redirectEntryLocalService.deletePersistedModel(persistedModel);
 	}
 
+	@Override
+	public void deleteRedirectEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_redirectEntryLocalService.deleteRedirectEntries(groupId);
+	}
+
 	/**
 	 * Deletes the redirect entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

@@ -114,6 +114,8 @@ public interface RedirectEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRedirectEntries(long groupId) throws PortalException;
+
 	/**
 	 * Deletes the redirect entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

@@ -107,6 +107,9 @@ public interface RedirectNotFoundEntryLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteRedirectNotFoundEntries(long groupId)
+		throws PortalException;
+
 	/**
 	 * Deletes the redirect not found entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -132,10 +135,12 @@ public interface RedirectNotFoundEntryLocalService
 	 *
 	 * @param redirectNotFoundEntry the redirect not found entry
 	 * @return the redirect not found entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public RedirectNotFoundEntry deleteRedirectNotFoundEntry(
-		RedirectNotFoundEntry redirectNotFoundEntry);
+			RedirectNotFoundEntry redirectNotFoundEntry)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);

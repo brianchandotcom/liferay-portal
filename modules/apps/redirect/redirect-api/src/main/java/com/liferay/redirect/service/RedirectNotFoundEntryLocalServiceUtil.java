@@ -91,6 +91,12 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static void deleteRedirectNotFoundEntries(long groupId)
+		throws PortalException {
+
+		getService().deleteRedirectNotFoundEntries(groupId);
+	}
+
 	/**
 	 * Deletes the redirect not found entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -119,9 +125,11 @@ public class RedirectNotFoundEntryLocalServiceUtil {
 	 *
 	 * @param redirectNotFoundEntry the redirect not found entry
 	 * @return the redirect not found entry that was removed
+	 * @throws PortalException
 	 */
 	public static RedirectNotFoundEntry deleteRedirectNotFoundEntry(
-		RedirectNotFoundEntry redirectNotFoundEntry) {
+			RedirectNotFoundEntry redirectNotFoundEntry)
+		throws PortalException {
 
 		return getService().deleteRedirectNotFoundEntry(redirectNotFoundEntry);
 	}

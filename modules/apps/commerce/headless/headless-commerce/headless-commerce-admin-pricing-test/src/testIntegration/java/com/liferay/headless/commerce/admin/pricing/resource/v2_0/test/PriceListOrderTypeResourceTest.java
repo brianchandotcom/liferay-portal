@@ -65,8 +65,8 @@ public class PriceListOrderTypeResourceTest
 
 		_commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
-				RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
-				_user.getUserId(), commerceCurrency.getCode(), true,
+				RandomTestUtil.randomString(), _user.getUserId(),
+				TestPropsValues.getGroupId(), commerceCurrency.getCode(), true,
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 				RandomTestUtil.randomString(), 0, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),

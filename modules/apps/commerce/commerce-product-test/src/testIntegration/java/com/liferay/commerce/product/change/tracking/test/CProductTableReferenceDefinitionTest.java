@@ -38,7 +38,7 @@ public class CProductTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _cProductLocalService.addCProduct(
 			CProductTableReferenceDefinitionTest.class.getSimpleName(),
-			group.getGroupId(), TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(), group.getGroupId(),
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

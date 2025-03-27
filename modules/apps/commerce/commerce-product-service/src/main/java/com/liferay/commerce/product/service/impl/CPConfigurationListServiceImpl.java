@@ -53,7 +53,7 @@ public class CPConfigurationListServiceImpl
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpConfigurationListLocalService.addCPConfigurationList(
-			externalReferenceCode, groupId, getUserId(),
+			externalReferenceCode, getUserId(), groupId,
 			parentCPConfigurationListId, masterCPConfigurationList, name,
 			priority, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -76,7 +76,7 @@ public class CPConfigurationListServiceImpl
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpConfigurationListLocalService.addOrUpdateCPConfigurationList(
-			externalReferenceCode, companyId, groupId, getUserId(),
+			externalReferenceCode, companyId, getUserId(), groupId,
 			parentCPConfigurationListId, masterCPConfigurationList, name,
 			priority, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
@@ -226,7 +226,7 @@ public class CPConfigurationListServiceImpl
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpConfigurationListLocalService.updateCPConfigurationList(
-			externalReferenceCode, cpConfigurationListId, groupId, getUserId(),
+			externalReferenceCode, cpConfigurationListId, getUserId(), groupId,
 			parentCPConfigurationListId, masterCPConfigurationList, name,
 			priority, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,

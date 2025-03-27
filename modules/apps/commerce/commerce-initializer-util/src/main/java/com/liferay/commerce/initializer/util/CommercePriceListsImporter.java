@@ -159,7 +159,7 @@ public class CommercePriceListsImporter {
 
 			CommercePriceList commercePriceList =
 				_commercePriceListLocalService.addOrUpdateCommercePriceList(
-					externalReferenceCode, catalogGroupId, user.getUserId(), 0,
+					externalReferenceCode, user.getUserId(), catalogGroupId, 0,
 					commerceCurrency.getCode(), true,
 					CommercePriceListConstants.TYPE_PRICE_LIST,
 					parentPriceListId, false, name, priority, displayDateMonth,

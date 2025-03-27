@@ -71,7 +71,7 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(), commerceCurrency.getCode(), true,
+			null, user.getUserId(), groupId, commerceCurrency.getCode(), true,
 			CommercePriceListConstants.TYPE_PRICE_LIST, 0, catalogBasePriceList,
 			RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
@@ -107,7 +107,7 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(), commerceCurrency.getCode(), true,
+			null, user.getUserId(), groupId, commerceCurrency.getCode(), true,
 			type, 0, catalogBasePriceList, RandomTestUtil.randomString(),
 			priority, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
@@ -141,7 +141,7 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(), commerceCurrency.getCode(), true,
+			null, user.getUserId(), groupId, commerceCurrency.getCode(), true,
 			CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 			RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
@@ -175,7 +175,7 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(), commerceCurrency.getCode(), true,
+			null, user.getUserId(), groupId, commerceCurrency.getCode(), true,
 			CommercePriceListConstants.TYPE_PROMOTION, 0, false,
 			RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),

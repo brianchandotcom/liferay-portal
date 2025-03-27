@@ -250,7 +250,7 @@ public class CommercePriceListTestUtil {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, groupId, user.getUserId(), currencyCode, true, type, 0,
+			null, user.getUserId(), groupId, currencyCode, true, type, 0,
 			catalogBasePriceList, RandomTestUtil.randomString(), priority,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
@@ -299,8 +299,8 @@ public class CommercePriceListTestUtil {
 			expirationDate, defaultExpirationCalendar);
 
 		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			externalReferenceCode, commerceCatalog.getGroupId(),
-			user.getUserId(), currency, netPrice,
+			externalReferenceCode, user.getUserId(),
+			commerceCatalog.getGroupId(), currency, netPrice,
 			CommercePriceListConstants.TYPE_PRICE_LIST,
 			parentCommercePriceListId, false, name, priority,
 			displayDateElements.getMonth(), displayDateElements.getDay(),
@@ -384,8 +384,8 @@ public class CommercePriceListTestUtil {
 			expirationDate, defaultExpirationCalendar);
 
 		return CommercePriceListLocalServiceUtil.addOrUpdateCommercePriceList(
-			externalReferenceCode, commerceCatalog.getGroupId(),
-			user.getUserId(), commercePriceListId, currency, true,
+			externalReferenceCode, user.getUserId(),
+			commerceCatalog.getGroupId(), commercePriceListId, currency, true,
 			CommercePriceListConstants.TYPE_PRICE_LIST,
 			parentCommercePriceListId, false, name, priority,
 			displayDateElements.getMonth(), displayDateElements.getDay(),

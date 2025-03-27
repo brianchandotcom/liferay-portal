@@ -99,7 +99,7 @@ public class CPDefinitionModelListenerTest {
 
 		CPConfigurationList cpConfigurationList2 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				null, cpConfigurationList1.getGroupId(), _user.getUserId(),
+				null, _user.getUserId(), cpConfigurationList1.getGroupId(),
 				cpConfigurationList1.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 1.0,
 				calendar.get(Calendar.MONTH),

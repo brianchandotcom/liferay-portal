@@ -121,7 +121,7 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 
 					CPConfigurationList cpConfigurationList =
 						_cpConfigurationListLocalService.addCPConfigurationList(
-							null, groupId, userId, 0, true,
+							null, userId, groupId, 0, true,
 							_language.format(
 								LocaleUtil.fromLanguageId(
 									catalogDefaultLanguageId),

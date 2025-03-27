@@ -87,8 +87,8 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		_cpConfigurationList =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				RandomTestUtil.randomString(), _commerceCatalog.getGroupId(),
-				_user.getUserId(),
+				RandomTestUtil.randomString(), _user.getUserId(),
+				_commerceCatalog.getGroupId(),
 				masterCPConfigurationList.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 2, 1, 1, 2024, 0, 0, 0, 0, 0, 0,
 				0, true);
@@ -219,7 +219,7 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		CPConfigurationList cpConfigurationList1 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				null, _user.getUserId(), _cpConfigurationList.getGroupId(),
 				_cpConfigurationList.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
@@ -248,7 +248,7 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		CPConfigurationList cpConfigurationList2 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				null, _user.getUserId(), _cpConfigurationList.getGroupId(),
 				cpConfigurationList1.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
@@ -308,7 +308,7 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		CPConfigurationList cpConfigurationList3 =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				null, _user.getUserId(), _cpConfigurationList.getGroupId(),
 				cpConfigurationList2.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
@@ -457,7 +457,7 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		CPConfigurationList cpConfigurationList =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				null, _cpConfigurationList.getGroupId(), _user.getUserId(),
+				null, _user.getUserId(), _cpConfigurationList.getGroupId(),
 				_cpConfigurationList.getCPConfigurationListId(), false,
 				RandomTestUtil.randomString(), 1, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),

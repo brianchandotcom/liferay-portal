@@ -64,7 +64,7 @@ public class CommercePriceListServiceImpl
 			groupId, CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST);
 
 		return commercePriceListLocalService.addCommercePriceList(
-			externalReferenceCode, groupId, getUserId(), commerceCurrencyCode,
+			externalReferenceCode, getUserId(), groupId, commerceCurrencyCode,
 			netPrice, type, parentCommercePriceListId, catalogBasePriceList,
 			name, priority, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,

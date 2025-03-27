@@ -171,7 +171,7 @@ public class CPDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinition addCPDefinition(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
@@ -239,7 +239,7 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionId);
 
 		CProduct cProduct = _cProductLocalService.addCProduct(
-			externalReferenceCode, groupId, userId, new ServiceContext());
+			externalReferenceCode, userId, groupId, new ServiceContext());
 
 		cpDefinition.setGroupId(groupId);
 		cpDefinition.setCompanyId(user.getCompanyId());
@@ -375,7 +375,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition addCPDefinition(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
@@ -400,7 +400,7 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return cpDefinitionLocalService.addCPDefinition(
-			externalReferenceCode, groupId, userId, nameMap,
+			externalReferenceCode, userId, groupId, nameMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 			metaDescriptionMap, metaKeywordsMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -417,7 +417,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition addOrUpdateCPDefinition(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
@@ -477,7 +477,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinitionLocalService.addCPDefinition(
-			externalReferenceCode, groupId, userId, nameMap,
+			externalReferenceCode, userId, groupId, nameMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 			metaDescriptionMap, metaKeywordsMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -496,7 +496,7 @@ public class CPDefinitionLocalServiceImpl
 
 	@Override
 	public CPDefinition addOrUpdateCPDefinition(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,
 			Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
@@ -521,7 +521,7 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return cpDefinitionLocalService.addOrUpdateCPDefinition(
-			externalReferenceCode, groupId, userId, nameMap,
+			externalReferenceCode, userId, groupId, nameMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 			metaDescriptionMap, metaKeywordsMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,

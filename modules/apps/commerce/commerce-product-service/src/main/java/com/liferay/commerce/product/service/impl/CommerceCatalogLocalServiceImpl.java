@@ -130,7 +130,7 @@ public class CommerceCatalogLocalServiceImpl
 		}
 
 		_cpConfigurationListLocalService.addCPConfigurationList(
-			null, commerceCatalog.getGroupId(), user.getUserId(), 0, true,
+			null, user.getUserId(), commerceCatalog.getGroupId(), 0, true,
 			_language.format(
 				LocaleUtil.fromLanguageId(
 					commerceCatalog.getCatalogDefaultLanguageId()),

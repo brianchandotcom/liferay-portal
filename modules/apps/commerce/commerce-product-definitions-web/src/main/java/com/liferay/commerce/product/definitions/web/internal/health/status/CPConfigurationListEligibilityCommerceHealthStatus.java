@@ -299,8 +299,8 @@ public class CPConfigurationListEligibilityCommerceHealthStatus
 
 			CPConfigurationList cpConfigurationList =
 				_cpConfigurationListLocalService.addCPConfigurationList(
-					null, masterCPConfigurationList.getGroupId(),
-					masterCPConfigurationList.getUserId(),
+					null, masterCPConfigurationList.getUserId(),
+					masterCPConfigurationList.getGroupId(),
 					masterCPConfigurationList.getCPConfigurationListId(), false,
 					masterCPConfigurationList.getName() + " " + index,
 					masterCPConfigurationList.getPriority(),

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import buildFragment from '../../../src/main/resources/META-INF/resources/liferay/util/build_fragment';
 import getCropRegion from '../../../src/main/resources/META-INF/resources/liferay/util/get_crop_region.es';
+import buildFragment from '../../../src/main/resources/META-INF/resources/main/util/build_fragment';
 
 describe('Liferay.Util.getCropRegion', () => {
 	it('returns an object with original image height and width if region is an empty object', () => {

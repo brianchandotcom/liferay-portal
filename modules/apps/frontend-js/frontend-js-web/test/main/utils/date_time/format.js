@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {format} from '../../../src/main/resources/META-INF/resources/utils/date_time/format';
+import {format} from '../../../../src/main/resources/META-INF/resources/main/utils/date_time/format';
 
 describe('format', () => {
 	it('formats date as "MM/dd/yyyy"', () => {

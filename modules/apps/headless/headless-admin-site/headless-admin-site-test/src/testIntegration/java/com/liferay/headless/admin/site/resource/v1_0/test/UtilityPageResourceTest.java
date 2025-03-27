@@ -6,7 +6,9 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -268,6 +270,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-48987")
 	public void testPostSiteSiteByExternalReferenceCodeUtilityPagePageSpecification()
 		throws Exception {
 
@@ -296,6 +299,16 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 							testGroup.getExternalReferenceCode(),
 							utilityPage.getExternalReferenceCode(),
 							contentPageSpecification));
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
 	}
 
 	@Override
@@ -445,6 +458,32 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			layout, utilityPage.getPageSpecifications());
+	}
+
+	private void _assertPageSpecifications(
+			UtilityPage utilityPage,
+			ContentPageSpecification draftContentPageSpecification,
+			ContentPageSpecification publishedContentPageSpecification)
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPage.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		PageSpecification.Status status = PageSpecification.Status.APPROVED;
+
+		if (!layout.isPublished()) {
+			status = PageSpecification.Status.DRAFT;
+		}
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			draftContentPageSpecification, publishedContentPageSpecification,
+			utilityPage.getPageSpecifications(), layout, status);
 	}
 
 	private void _assertProblemException(
@@ -668,6 +707,37 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		Assert.assertEquals(
 			expectedMarkedAsDefault, pathUtilityPage.getMarkedAsDefault());
+	}
+
+	private void
+			_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+				PageSpecification.Status draftLayoutStatus,
+				PageSpecification.Status publishedLayoutStatus)
+		throws Exception {
+
+		UtilityPage utilityPage = _getUtilityPage(
+			Boolean.FALSE, RandomTestUtil.randomString());
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, draftLayoutStatus);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				publishedLayoutStatus);
+
+		utilityPage.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
+		UtilityPageResource utilityPageResource = _getUtilityPageResource();
+
+		_assertPageSpecifications(
+			utilityPageResource.postSiteSiteByExternalReferenceCodeUtilityPage(
+				testGroup.getExternalReferenceCode(), utilityPage),
+			draftContentPageSpecification, publishedContentPageSpecification);
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeUtilityPage(

@@ -1084,8 +1084,7 @@ public class CompanyLocalServiceTest {
 				exception instanceof UnsupportedOperationException);
 
 			Assert.assertEquals(
-				"Feature flag LPD-11342 is disabled",
-				exception.getMessage());
+				"Feature flag LPD-11342 is disabled", exception.getMessage());
 		}
 	}
 

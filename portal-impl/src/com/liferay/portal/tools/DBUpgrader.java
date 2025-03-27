@@ -240,6 +240,8 @@ public class DBUpgrader {
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);
 
+		StartupHelperUtil.setUpgrading(false);
+
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortletsInitialized);
 

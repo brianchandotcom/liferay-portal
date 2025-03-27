@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
 import {State, Uuid} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
-import {Field, FieldType} from './field';
+import {Field, FieldType, MultiselectField, SingleSelectField} from './field';
 import getUuid from './getUuid';
 
 export default function buildState(
@@ -37,18 +39,25 @@ export default function buildState(
 
 		const uuid = getUuid();
 
-		const field = {
+		const field: Field = {
 			erc: objectField.externalReferenceCode,
 			indexableConfig,
 			label: objectField.label,
 			localized: objectField.localized,
 			name: objectField.name,
-			picklistId: objectField.listTypeDefinitionId,
 			required: objectField.required,
 			settings: getFieldSettings(objectField),
 			type: getFieldType(objectField),
 			uuid,
 		};
+
+		if (
+			(field.type === 'single-select' || field.type === 'multiselect') &&
+			!isNullOrUndefined(objectField.listTypeDefinitionId)
+		) {
+			(field as SingleSelectField | MultiselectField).picklistId =
+				objectField.listTypeDefinitionId;
+		}
 
 		fields.set(uuid, field);
 	});

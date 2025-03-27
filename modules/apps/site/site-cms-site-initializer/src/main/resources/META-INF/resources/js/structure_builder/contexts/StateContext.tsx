@@ -238,6 +238,8 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
+			// Prepare updated field
+
 			const nextField: Field = {
 				...field,
 				erc: erc ?? field.erc,
@@ -256,6 +258,8 @@ function reducer(state: State, action: Action): State {
 
 			nextFields.set(nextField.uuid, nextField);
 
+			// Validate the data sent in the action
+
 			const invalids = new Map(state.invalids);
 
 			const {type: _, ...data} = action;
@@ -272,6 +276,8 @@ function reducer(state: State, action: Action): State {
 				invalids.delete(nextField.uuid);
 			}
 
+			// Return new state
+
 			return {
 				...state,
 				fields: nextFields,
@@ -280,6 +286,9 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'update-structure': {
+
+			// Prepare updated state
+
 			const nextState = {
 				...state,
 				erc: action.erc ?? state.erc,
@@ -287,6 +296,8 @@ function reducer(state: State, action: Action): State {
 				name: action.name ?? state.name,
 				spaces: action.spaces ?? state.spaces,
 			};
+
+			// Validate the data sent in the action
 
 			const invalids = new Map(state.invalids);
 
@@ -301,6 +312,8 @@ function reducer(state: State, action: Action): State {
 			else {
 				invalids.delete(state.uuid);
 			}
+
+			// Return new state
 
 			return {
 				...nextState,

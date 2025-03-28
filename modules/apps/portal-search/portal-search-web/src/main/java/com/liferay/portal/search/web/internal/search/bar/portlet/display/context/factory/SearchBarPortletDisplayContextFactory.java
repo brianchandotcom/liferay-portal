@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -250,10 +251,24 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletInstanceConfiguration,
 		ThemeDisplay themeDisplay) {
 
-		long displayStyleGroupId =
-			searchBarPortletInstanceConfiguration.displayStyleGroupId();
+		long displayStyleGroupId;
 
-		if (displayStyleGroupId <= 0) {
+		String displayStyleGroupExternalReferenceCode =
+			searchBarPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			displayStyleGroupId = group.getGroupId();
+		}
+		else {
 			displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
 

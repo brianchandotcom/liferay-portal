@@ -326,6 +326,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 			<div className="mb-4">
 				<NavigationBar
+					fluidSize={false}
 					triggerLabel={i18n.translate('activity-history')}
 				>
 					<Nav.Item

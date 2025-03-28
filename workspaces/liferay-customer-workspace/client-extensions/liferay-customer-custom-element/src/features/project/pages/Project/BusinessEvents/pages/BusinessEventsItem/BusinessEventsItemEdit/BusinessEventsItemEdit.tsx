@@ -489,6 +489,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 					<div className="mb-4">
 						<NavigationBar
+							fluidSize={false}
 							triggerLabel={i18n.translate('event-details')}
 						>
 							<Nav.Item>

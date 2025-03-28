@@ -161,7 +161,10 @@ const BusinessEventsItemDetails = () => {
 			</div>
 
 			<div className="mb-4">
-				<NavigationBar triggerLabel={i18n.translate('event-details')}>
+				<NavigationBar
+					fluidSize={false}
+					triggerLabel={i18n.translate('event-details')}
+				>
 					<Nav.Item>
 						<Nav.Link
 							active={true}

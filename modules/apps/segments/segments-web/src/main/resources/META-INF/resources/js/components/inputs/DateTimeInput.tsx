@@ -95,6 +95,8 @@ function DateTimeInput({
 					input: `${propertyLabel}: ${Liferay.Language.get(
 						'input-a-value'
 					)}`,
+					selectMonth: `${Liferay.Language.get('select-a-month')}`,
+					selectYear: `${Liferay.Language.get('select-a-year')}`,
 				}}
 				data-testid="date-input"
 				dateFormat="yyyy/MM/dd"

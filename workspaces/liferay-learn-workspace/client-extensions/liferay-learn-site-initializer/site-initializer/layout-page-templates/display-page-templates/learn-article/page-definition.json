@@ -4,7 +4,7 @@
 		"pageElements": [
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n}",
+					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n  \nh1 {\n\tcolor: #282934 !important;\n}\n  \n.learn-article-nav-item a{\n  font-weight: 600;\n  line-height: 24px;\n}\n\n.learn-article, .learn-recipe-container {\n  & .learn-article-content {\n    & table {\n      word-break: unset !important;\n    }\n  }\n}\n\n}",
 					"customCSSViewports": [
 						{
 							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\nflex-wrap: wrap;\n}",
@@ -12,10 +12,11 @@
 						}
 					],
 					"fragmentStyle": {
+						"fontFamily": "\"Source Sans 3\", system-ui",
 						"paddingBottom": "4",
 						"paddingLeft": "4",
 						"paddingRight": "4",
-						"paddingTop": "4"
+						"paddingTop": "9"
 					},
 					"indexed": true,
 					"layout": {
@@ -24,7 +25,6 @@
 						"paddingBottom": 2,
 						"paddingLeft": 2,
 						"paddingRight": 2,
-						"paddingTop": 2,
 						"widthType": "Fixed"
 					}
 				},
@@ -63,6 +63,7 @@
 								}
 							],
 							"fragmentStyle": {
+								"fontWeight": "400",
 								"marginRight": "3",
 								"maxWidth": "336px",
 								"width": "100%"
@@ -91,7 +92,7 @@
 							],
 							"indexed": true,
 							"layout": {
-								"contentDisplay": "FlexRow",
+								"contentDisplay": "FlexColumn",
 								"widthType": "Fixed"
 							}
 						},
@@ -119,9 +120,27 @@
 											}
 										}
 									],
+									"fragmentStyle": {
+										"fontWeight": "400"
+									},
 									"indexed": true
 								},
 								"id": "c61417b1-3fdb-5204-d3be-b20d6d1b376d",
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "feature-recipes",
+										"siteKey": "Guest"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"id": "2e392672-4521-96ae-f7d7-84be65a8b6ee",
 								"type": "Fragment"
 							}
 						],
@@ -138,7 +157,11 @@
 		"masterPage": {
 			"key": "liferay-learn"
 		},
+		"styleBook": {
+			"key": "liferay-learn",
+			"name": "Liferay Learn"
+		},
 		"themeName": "Dialect"
 	},
-	"version": 1.0
+	"version": 1.1
 }

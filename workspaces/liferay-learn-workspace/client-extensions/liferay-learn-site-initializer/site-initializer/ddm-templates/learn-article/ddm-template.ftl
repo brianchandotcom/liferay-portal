@@ -19,8 +19,8 @@
 	}
 
 	window.addEventListener('load', function() {
-		_addEventListener(".toc li a");
 		_addEventListener("h1 a, h2 a, h3 a");
+		_addEventListener(".toc li a");
 	});
 </script>
 
@@ -159,6 +159,8 @@
 						</div>
 					</#list>
 				</div>
+
+				<div class="article-related-recipes" data-article-id="${.vars["reserved-article-id"].data}" id="article-related-recipes"></div>
 			</div>
 
 			<div class="learn-article-page-nav">

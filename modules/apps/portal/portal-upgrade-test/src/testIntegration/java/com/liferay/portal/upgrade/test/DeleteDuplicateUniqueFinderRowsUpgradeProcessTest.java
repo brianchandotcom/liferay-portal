@@ -57,9 +57,9 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			company -> {
 				_db.runSQL(
 					StringBundler.concat(
-						"create table TestTable (primaryKeyColumn LONG not ",
-						"null primary key, column1 BOOLEAN, column2 LONG, ",
-						"column3 VARCHAR(75) null)"));
+						"create table TestTable (primaryKey LONG not null ",
+						"primary key, column1 BOOLEAN, column2 LONG, column3 ",
+						"VARCHAR(75) null)"));
 
 				_db.runSQL(
 					"insert into TestTable values (1, [$TRUE$], 2, '3')");
@@ -104,7 +104,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		DeleteDuplicateUniqueFinderRowsUpgradeProcess upgradeProcess =
 			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 				"TestTable", new String[] {"column1", "column2", "column3"},
-				"primaryKeyColumn asc");
+				"primaryKey asc");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
@@ -117,8 +117,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		_assert(true, 3L);
 	}
 
-	private void _assert(
-			boolean duplicateRowsRemoved, Long uniqueRowPrimaryKeyValue)
+	private void _assert(boolean duplicateRowsRemoved, Long uniqueRowPrimaryKey)
 		throws Exception {
 
 		_companyLocalService.forEachCompany(
@@ -143,21 +142,20 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 				try (PreparedStatement preparedStatement =
 						_connection.prepareStatement(
-							"select primaryKeyColumn from TestTable");
+							"select primaryKey from TestTable");
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
-					List<Long> primaryKeyValues = new ArrayList<>();
+					List<Long> primaryKeys = new ArrayList<>();
 
 					while (resultSet.next()) {
-						primaryKeyValues.add(resultSet.getLong(1));
+						primaryKeys.add(resultSet.getLong(1));
 					}
 
 					Assert.assertEquals(
-						primaryKeyValues.toString(), 2,
-						primaryKeyValues.size());
+						primaryKeys.toString(), 2, primaryKeys.size());
 					Assert.assertTrue(
-						primaryKeyValues.contains(uniqueRowPrimaryKeyValue));
-					Assert.assertTrue(primaryKeyValues.contains(4));
+						primaryKeys.contains(uniqueRowPrimaryKey));
+					Assert.assertTrue(primaryKeys.contains(4));
 				}
 			});
 	}

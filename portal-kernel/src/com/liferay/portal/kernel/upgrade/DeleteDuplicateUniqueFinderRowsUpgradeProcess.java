@@ -140,9 +140,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 				sb.toString())) {
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
 			DBInspector dbInspector = new DBInspector(connection);
-
 			int parameterIndex = 1;
 
 			for (int i = 0; i < _columnNames.length; i++) {

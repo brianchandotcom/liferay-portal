@@ -32,7 +32,7 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "name",
+			"label", "label",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"nameTableCellRenderer"
 			).setSortable(

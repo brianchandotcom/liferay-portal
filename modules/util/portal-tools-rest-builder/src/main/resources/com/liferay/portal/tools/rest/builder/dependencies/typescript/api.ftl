@@ -64,14 +64,14 @@ export class ${className} {
 					</#list>
 				<#else>
 					requestBody:
-						<#list operationData.bodyParameters?keys as requestBodyContentType>
+						<#list operationData.bodyParameters?keys?sort as requestBodyContentType>
 							{
-								type: '${requestBodyContentType}',
 								parameters: {
 									<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
 										${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType}<#if bodyParameter?has_next>,</#if>
 									</#list>
-								}
+								},
+								type: '${requestBodyContentType}'
 							}
 							<#if requestBodyContentType?has_next>
 								|
@@ -277,12 +277,12 @@ export class ${className} {
 								</#list>
 							</#if>
 							{
-								type: 'application/json',
 								parameters: {
 									<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
 										${bodyParameter.name}: ${bodyParameter.name}<#if bodyParameter?has_next>,</#if>
 									</#list>
-								}
+								},
+								type: 'application/json'
 							},
 							<#if operationData.parameters??>
 								<#list operationData.parameters as parameter>

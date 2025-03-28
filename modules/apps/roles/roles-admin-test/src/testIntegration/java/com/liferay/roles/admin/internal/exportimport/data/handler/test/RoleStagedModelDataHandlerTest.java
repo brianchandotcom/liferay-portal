@@ -42,7 +42,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,6 +62,19 @@ public class RoleStagedModelDataHandlerTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws PortalException {
+		_companyLocalService.deleteCompany(_company);
+	}
+
 	@Test
 	public void testImportAccountRole() throws Exception {
 		initExport();
@@ -68,17 +83,11 @@ public class RoleStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, role);
 
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		Company company = CompanyTestUtil.addCompany();
-
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+					_company.getCompanyId())) {
 
-			User user = UserTestUtil.getAdminUser(company.getCompanyId());
+			User user = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 			Assert.assertNotNull(user);
 
@@ -88,12 +97,12 @@ public class RoleStagedModelDataHandlerTest
 
 			_roleLocalService.deleteRole(role);
 
-			initImport(stagingGroup, company.getGroup());
+			initImport(stagingGroup, _company.getGroup());
 
 			Role exportedRole = (Role)readExportedStagedModel(role);
 
 			Role importedRole = _getImportedRole(
-				exportedRole, company.getGroup(), role, user);
+				exportedRole, _company.getGroup(), role, user);
 
 			Assert.assertEquals(
 				exportedRole.getExternalReferenceCode(),
@@ -104,10 +113,8 @@ public class RoleStagedModelDataHandlerTest
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
-
-			_companyLocalService.deleteCompany(company);
+				_originalPermissionChecker);
+			PrincipalThreadLocal.setName(_originalName);
 		}
 	}
 
@@ -132,17 +139,11 @@ public class RoleStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, role);
 
-		String originalName = PrincipalThreadLocal.getName();
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		Company company = CompanyTestUtil.addCompany();
-
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
+					_company.getCompanyId())) {
 
-			User user = UserTestUtil.getAdminUser(company.getCompanyId());
+			User user = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 			Assert.assertNotNull(user);
 
@@ -150,12 +151,12 @@ public class RoleStagedModelDataHandlerTest
 				PermissionCheckerFactoryUtil.create(user));
 			PrincipalThreadLocal.setName(user.getUserId());
 
-			initImport(stagingGroup, company.getGroup());
+			initImport(stagingGroup, _company.getGroup());
 
 			Role exportedRole = (Role)readExportedStagedModel(role);
 
 			Role importedRole = _getImportedRole(
-				exportedRole, company.getGroup(), role, user);
+				exportedRole, _company.getGroup(), role, user);
 
 			Assert.assertEquals(
 				exportedRole.getExternalReferenceCode(),
@@ -167,10 +168,8 @@ public class RoleStagedModelDataHandlerTest
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
-
-			_companyLocalService.deleteCompany(company);
+				_originalPermissionChecker);
+			PrincipalThreadLocal.setName(_originalName);
 		}
 	}
 
@@ -244,8 +243,13 @@ public class RoleStagedModelDataHandlerTest
 		return (Role)getStagedModel(importedRole.getUuid(), group);
 	}
 
+	private static Company _company;
+
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private static CompanyLocalService _companyLocalService;
+
+	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

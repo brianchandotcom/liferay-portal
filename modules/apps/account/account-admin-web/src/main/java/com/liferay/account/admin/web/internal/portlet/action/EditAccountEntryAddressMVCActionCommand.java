@@ -129,7 +129,8 @@ public class EditAccountEntryAddressMVCActionCommand
 			ParamUtil.getString(actionRequest, "name"), false,
 			ParamUtil.getString(actionRequest, "street1"),
 			ParamUtil.getString(actionRequest, "street2"),
-			ParamUtil.getString(actionRequest, "street3"), null,
+			ParamUtil.getString(actionRequest, "street3"),
+			ParamUtil.getString(actionRequest, "subtype"),
 			ParamUtil.getString(actionRequest, "zip"),
 			ParamUtil.getString(actionRequest, "phoneNumber"),
 			ServiceContextFactory.getInstance(
@@ -157,26 +158,20 @@ public class EditAccountEntryAddressMVCActionCommand
 		Address address = _addressLocalService.getAddress(
 			accountEntryAddressId);
 
-		long addressCountryId = ParamUtil.getLong(
-			actionRequest, "addressCountryId");
-		long addressListTypeId = ParamUtil.getLong(
-			actionRequest, "addressListTypeId");
-		long addressRegionId = ParamUtil.getLong(
-			actionRequest, "addressRegionId");
-		String city = ParamUtil.getString(actionRequest, "city");
-		String description = ParamUtil.getString(actionRequest, "description");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String street1 = ParamUtil.getString(actionRequest, "street1");
-		String street2 = ParamUtil.getString(actionRequest, "street2");
-		String street3 = ParamUtil.getString(actionRequest, "street3");
-		String zip = ParamUtil.getString(actionRequest, "zip");
-		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
-
 		_addressLocalService.updateAddress(
 			address.getExternalReferenceCode(), accountEntryAddressId,
-			addressCountryId, addressListTypeId, addressRegionId, city,
-			description, address.isMailing(), name, address.isPrimary(),
-			street1, street2, street3, address.getSubtype(), zip, phoneNumber);
+			ParamUtil.getLong(actionRequest, "addressCountryId"),
+			ParamUtil.getLong(actionRequest, "addressListTypeId"),
+			ParamUtil.getLong(actionRequest, "addressRegionId"),
+			ParamUtil.getString(actionRequest, "city"),
+			ParamUtil.getString(actionRequest, "description"),
+			address.isMailing(), ParamUtil.getString(actionRequest, "name"),
+			address.isPrimary(), ParamUtil.getString(actionRequest, "street1"),
+			ParamUtil.getString(actionRequest, "street2"),
+			ParamUtil.getString(actionRequest, "street3"),
+			ParamUtil.getString(actionRequest, "subtype"),
+			ParamUtil.getString(actionRequest, "zip"),
+			ParamUtil.getString(actionRequest, "phoneNumber"));
 	}
 
 	@Reference(

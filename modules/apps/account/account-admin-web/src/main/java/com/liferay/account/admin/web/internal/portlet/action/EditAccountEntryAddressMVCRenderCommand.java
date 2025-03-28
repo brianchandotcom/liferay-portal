@@ -8,15 +8,19 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplayFactoryUtil;
 import com.liferay.account.admin.web.internal.display.AddressDisplay;
+import com.liferay.account.admin.web.internal.display.context.AccountEntryAddressDisplayContext;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -48,11 +52,20 @@ public class EditAccountEntryAddressMVCRenderCommand
 		long accountEntryAddressId = ParamUtil.getLong(
 			renderRequest, "accountEntryAddressId");
 
+		AddressDisplay addressDisplay = AddressDisplay.of(
+			accountEntryAddressId);
+
 		renderRequest.setAttribute(
-			AccountWebKeys.ADDRESS_DISPLAY,
-			AddressDisplay.of(accountEntryAddressId));
+			AccountWebKeys.ADDRESS_DISPLAY, addressDisplay);
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			new AccountEntryAddressDisplayContext(
+				addressDisplay, _portal, renderResponse));
 
 		return "/account_entries_admin/edit_account_entry_address.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

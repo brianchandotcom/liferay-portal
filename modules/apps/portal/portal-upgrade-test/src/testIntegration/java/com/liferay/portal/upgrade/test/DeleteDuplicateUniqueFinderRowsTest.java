@@ -50,12 +50,6 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 		_connection = DataAccess.getConnection();
 
 		_db = DBManagerUtil.getDB();
-
-		_oldDuplicateRowPrimaryKeyValue = 1;
-
-		_newDuplicateRowPrimaryKeyValue = 3;
-
-		_nonduplicateRowPrimaryKeyValue = 4;
 	}
 
 	@Before
@@ -71,7 +65,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_oldDuplicateRowPrimaryKeyValue,
+						_OLD_DUPLICATE_ROW_PRIMARY_KEY_VALUE,
 						", [$TRUE$], 2, '3')"));
 
 				_db.runSQL(
@@ -80,13 +74,13 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_newDuplicateRowPrimaryKeyValue,
+						_NEW_DUPLICATE_ROW_PRIMARY_KEY_VALUE,
 						", [$TRUE$], 2, '3')"));
 
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
-						_nonduplicateRowPrimaryKeyValue,
+						_NONDUPLICATE_ROW_PRIMARY_KEY_VALUE,
 						", [$FALSE$], 2, '3')"));
 			});
 	}
@@ -113,7 +107,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 			upgradeProcess.upgrade();
 		}
 
-		_assert(true, _oldDuplicateRowPrimaryKeyValue);
+		_assert(true, _OLD_DUPLICATE_ROW_PRIMARY_KEY_VALUE);
 	}
 
 	@Test
@@ -133,7 +127,7 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 			upgradeProcess.upgrade();
 		}
 
-		_assert(true, _newDuplicateRowPrimaryKeyValue);
+		_assert(true, _NEW_DUPLICATE_ROW_PRIMARY_KEY_VALUE);
 	}
 
 	private void _assert(
@@ -178,18 +172,21 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 						primaryKeyValues.contains(uniqueRowPrimaryKeyValue));
 					Assert.assertTrue(
 						primaryKeyValues.contains(
-							_nonduplicateRowPrimaryKeyValue));
+							_NONDUPLICATE_ROW_PRIMARY_KEY_VALUE));
 				}
 			});
 	}
+
+	private static final long _NEW_DUPLICATE_ROW_PRIMARY_KEY_VALUE = 3;
+
+	private static final long _NONDUPLICATE_ROW_PRIMARY_KEY_VALUE = 4;
+
+	private static final long _OLD_DUPLICATE_ROW_PRIMARY_KEY_VALUE = 1;
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
 	private static Connection _connection;
 	private static DB _db;
-	private static long _newDuplicateRowPrimaryKeyValue;
-	private static long _nonduplicateRowPrimaryKeyValue;
-	private static long _oldDuplicateRowPrimaryKeyValue;
 
 }

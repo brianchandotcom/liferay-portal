@@ -4,6 +4,7 @@
  */
 
 const Liferay = {
+	...global.Liferay,
 	FeatureFlags: {},
 	Icons: {
 		spritemap: '/assets',

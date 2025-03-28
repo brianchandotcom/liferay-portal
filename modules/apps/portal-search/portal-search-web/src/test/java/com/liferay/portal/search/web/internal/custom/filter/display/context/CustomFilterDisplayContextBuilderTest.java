@@ -34,8 +34,8 @@ public class CustomFilterDisplayContextBuilderTest {
 
 	@Test
 	public void testGetDisplayStyleGroup() throws Exception {
-		setUpGroupLocalServiceUtil(_getGroup());
-		setUpPortletDisplayStyleGroupExternalReferenceCode(null);
+		_setUpGroupLocalServiceUtil(_getGroup());
+		_setUpPortletDisplayStyleGroupExternalReferenceCode(null);
 
 		_assertDisplayContext(_getGroup());
 
@@ -46,8 +46,8 @@ public class CustomFilterDisplayContextBuilderTest {
 	public void testGetDisplayStyleGroupWithConfiguration() throws Exception {
 		Group group = _getGroup();
 
-		setUpGroupLocalServiceUtil(group);
-		setUpPortletDisplayStyleGroupExternalReferenceCode(
+		_setUpGroupLocalServiceUtil(group);
+		_setUpPortletDisplayStyleGroupExternalReferenceCode(
 			group.getExternalReferenceCode());
 
 		_assertDisplayContext(group);
@@ -58,90 +58,11 @@ public class CustomFilterDisplayContextBuilderTest {
 			Mockito.times(1));
 	}
 
-	protected static PortletDisplay getPortletDisplay() {
-		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
-
-		Mockito.when(
-			portletDisplay.getPortletResource()
-		).thenReturn(
-			"test"
-		);
-
-		return portletDisplay;
-	}
-
-	protected static ThemeDisplay getThemeDisplay() {
-		return getThemeDisplay(null);
-	}
-
-	protected static ThemeDisplay getThemeDisplay(Group group) {
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.doReturn(
-			LocaleUtil.getDefault()
-		).when(
-			themeDisplay
-		).getLocale();
-
-		Mockito.doReturn(
-			getPortletDisplay()
-		).when(
-			themeDisplay
-		).getPortletDisplay();
-
-		if (group != null) {
-			Mockito.doReturn(
-				group
-			).when(
-				themeDisplay
-			).getScopeGroup();
-		}
-
-		return themeDisplay;
-	}
-
-	protected void setUpGroupLocalServiceUtil(Group group) throws Exception {
-		_groupLocalServiceUtilMockedStatic.reset();
-
-		Mockito.when(
-			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				group.getExternalReferenceCode(), 0L)
-		).thenReturn(
-			group
-		);
-	}
-
-	protected void setUpPortletDisplayStyleGroupExternalReferenceCode(
-		String externalReferenceCode) {
-
-		CustomFilterPortletInstanceConfiguration
-			customFilterPortletInstanceConfiguration = Mockito.mock(
-				CustomFilterPortletInstanceConfiguration.class);
-
-		Mockito.when(
-			customFilterPortletInstanceConfiguration.
-				displayStyleGroupExternalReferenceCode()
-		).thenReturn(
-			externalReferenceCode
-		);
-
-		configurationProviderUtilMockedStatic.when(
-			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
-				Mockito.any(), Mockito.any())
-		).thenReturn(
-			customFilterPortletInstanceConfiguration
-		);
-	}
-
-	protected static MockedStatic<ConfigurationProviderUtil>
-		configurationProviderUtilMockedStatic = Mockito.mockStatic(
-			ConfigurationProviderUtil.class);
-
 	private void _assertDisplayContext(Group group) throws Exception {
 		CustomFilterDisplayContextBuilder customFilterDisplayContextBuilder =
 			new CustomFilterDisplayContextBuilder();
 
-		customFilterDisplayContextBuilder.themeDisplay(getThemeDisplay(group));
+		customFilterDisplayContextBuilder.themeDisplay(_getThemeDisplay(group));
 
 		CustomFilterDisplayContext customFilterDisplayContext =
 			customFilterDisplayContextBuilder.build();
@@ -169,6 +90,80 @@ public class CustomFilterDisplayContextBuilderTest {
 		return group;
 	}
 
+	private PortletDisplay _getPortletDisplay() {
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
+
+		Mockito.when(
+			portletDisplay.getPortletResource()
+		).thenReturn(
+			"test"
+		);
+
+		return portletDisplay;
+	}
+
+	private ThemeDisplay _getThemeDisplay(Group group) {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.doReturn(
+			LocaleUtil.getDefault()
+		).when(
+			themeDisplay
+		).getLocale();
+
+		Mockito.doReturn(
+			_getPortletDisplay()
+		).when(
+			themeDisplay
+		).getPortletDisplay();
+
+		if (group != null) {
+			Mockito.doReturn(
+				group
+			).when(
+				themeDisplay
+			).getScopeGroup();
+		}
+
+		return themeDisplay;
+	}
+
+	private void _setUpGroupLocalServiceUtil(Group group) throws Exception {
+		_groupLocalServiceUtilMockedStatic.reset();
+
+		Mockito.when(
+			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), 0L)
+		).thenReturn(
+			group
+		);
+	}
+
+	private void _setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		CustomFilterPortletInstanceConfiguration
+			customFilterPortletInstanceConfiguration = Mockito.mock(
+				CustomFilterPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			customFilterPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		_configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			customFilterPortletInstanceConfiguration
+		);
+	}
+
+	private static final MockedStatic<ConfigurationProviderUtil>
+		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
+			ConfigurationProviderUtil.class);
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);

@@ -14,7 +14,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -135,8 +134,6 @@ public class CPDefinitionLinkUpgradeProcessTest {
 		String previousRandomValue) {
 
 		return HashMapBuilder.put(
-			LanguageUtil.getLanguageId(LocaleUtil.JAPAN), StringPool.BLANK
-		).put(
 			LanguageUtil.getLanguageId(LocaleUtil.US), previousRandomValue
 		).build();
 	}

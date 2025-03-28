@@ -6,6 +6,7 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -86,7 +87,12 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 				new ConfigurationTemporarySwapper(
 					PortalCORSConfiguration.class.getName() + "~default",
 					HashMapDictionaryBuilder.<String, Object>put(
-						"headers", _HEADERS
+						"headers",
+						StringBundler.concat(
+							"Access-Control-Allow-Credentials: true|",
+							"Access-Control-Allow-Headers: *|",
+							"Access-Control-Allow-Methods: *|",
+							"Access-Control-Allow-Origin: *")
 					).build())) {
 
 			Response response = invocationBuilder.get();
@@ -137,7 +143,12 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 				new ConfigurationTemporarySwapper(
 					PortalCORSConfiguration.class.getName() + "~default",
 					HashMapDictionaryBuilder.<String, Object>put(
-						"headers", _HEADERS
+						"headers",
+						StringBundler.concat(
+							"Access-Control-Allow-Credentials: true|",
+							"Access-Control-Allow-Headers: *|",
+							"Access-Control-Allow-Methods: *|",
+							"Access-Control-Allow-Origin: *")
 					).build())) {
 
 			Response response = invocationBuilder.options();
@@ -168,10 +179,6 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 	protected BundleActivator getBundleActivator() {
 		return new CORSApplicationTestPreparatorBundleActivator();
 	}
-
-	private static final String _HEADERS =
-		"Access-Control-Allow-Credentials: true|Access-Control-Allow-Headers:" +
-			"*|Access-Control-Allow-Methods: *|Access-Control-Allow-Origin:*";
 
 	private static final String _TEST_CORS_URI = "http://test-cors.com";
 

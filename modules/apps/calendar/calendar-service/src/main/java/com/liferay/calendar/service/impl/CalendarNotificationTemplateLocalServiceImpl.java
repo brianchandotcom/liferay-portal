@@ -75,6 +75,10 @@ public class CalendarNotificationTemplateLocalServiceImpl
 		calendarNotificationTemplate.setSubject(subject);
 		calendarNotificationTemplate.setBody(body);
 
+		calendarNotificationTemplate =
+			calendarNotificationTemplatePersistence.update(
+				calendarNotificationTemplate);
+
 		_resourceLocalService.addResources(
 			calendarNotificationTemplate.getCompanyId(), 0,
 			calendarNotificationTemplate.getUserId(),
@@ -82,8 +86,7 @@ public class CalendarNotificationTemplateLocalServiceImpl
 			calendarNotificationTemplate.getCalendarNotificationTemplateId(),
 			false, false, false);
 
-		return calendarNotificationTemplatePersistence.update(
-			calendarNotificationTemplate);
+		return calendarNotificationTemplate;
 	}
 
 	@Override

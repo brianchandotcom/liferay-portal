@@ -69,7 +69,6 @@ CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguratio
 				<liferay-template:template-selector
 					className="<%= CustomFilterDisplayContext.class.getName() %>"
 					displayStyle="<%= customFilterPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= customFilterDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

@@ -51,7 +51,7 @@
 									"widgetInstance": {
 										"widgetConfig": {
 											"assetCategoryId": "0",
-											"displayStyle": "default",
+											"displayStyle": "ddmTemplate_PRODUCT-CATEGORY-BANNER",
 											"displayStyleGroupId": "[$GROUP_ID$]",
 											"displayStyleGroupKey": "[$GROUP_KEY$]",
 											"useAssetCategory": "false"
@@ -187,7 +187,7 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"displayStyle": "default",
+															"displayStyle": "deffault",
 															"displayStyleGroupId": "[$GROUP_ID$]",
 															"displayStyleGroupKey": "[$GROUP_KEY$]",
 															"frequenciesVisible": "true",

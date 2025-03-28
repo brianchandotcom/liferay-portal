@@ -9,13 +9,15 @@ import ImportStructureModalContent from '../../components/modal/ImportStructureM
 
 export default function importStructureAction(
 	importURL: string,
-	objectFolderExternalReferenceCode: string
+	objectFolderExternalReferenceCode: string,
+	loadData?: () => {}
 ) {
 	openModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			ImportStructureModalContent({
 				closeModal,
 				importURL,
+				loadData,
 				objectFolderExternalReferenceCode,
 			}),
 		size: 'md',

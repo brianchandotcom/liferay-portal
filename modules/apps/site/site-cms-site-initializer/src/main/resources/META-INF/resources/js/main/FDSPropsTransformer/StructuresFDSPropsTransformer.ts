@@ -46,6 +46,7 @@ export default function StructuresFDSPropsTransformer({
 			action,
 			event,
 			itemData,
+			loadData,
 		}: {
 			action: {
 				data: {
@@ -56,6 +57,7 @@ export default function StructuresFDSPropsTransformer({
 			itemData: {
 				objectFolderExternalReferenceCode: string;
 			};
+			loadData: () => {};
 		}) {
 			if (action.data.id === 'import') {
 				event.preventDefault();
@@ -63,7 +65,8 @@ export default function StructuresFDSPropsTransformer({
 
 				importStructureAction(
 					target.href,
-					itemData.objectFolderExternalReferenceCode
+					itemData.objectFolderExternalReferenceCode,
+					loadData
 				);
 			}
 		},

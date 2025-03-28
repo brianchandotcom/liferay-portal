@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import DefaultEventHandler from './DefaultEventHandler.es';
 import DynamicInlineScroll from './DynamicInlineScroll.es';
 import DynamicSelect from './DynamicSelect';
 import PortletBase from './PortletBase.es';
@@ -25,6 +26,7 @@ import './dom_task_runner';
 import './events';
 import Disposable from './events/Disposable';
 import EventEmitter from './events/EventEmitter';
+import EventHandler from './events/EventHandler';
 import {
 	getLayoutIcons,
 	hideLayoutPane,
@@ -361,9 +363,11 @@ Liferay.__INTERNALS = {
 	AutoSize,
 	BREAKPOINTS,
 	CONSENT_TYPES,
+	DefaultEventHandler,
 	Disposable,
 	DynamicInlineScroll,
 	EventEmitter,
+	EventHandler,
 	PortletBase,
 	STATUS_CODE,
 	addParams,

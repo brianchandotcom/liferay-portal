@@ -7,11 +7,11 @@ package com.liferay.portal.search.web.internal.tag.facet.portlet.action;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + TagFacetPortletKeys.TAG_FACET,
 	service = ConfigurationAction.class
 )
-public class TagFacetConfigurationAction extends DefaultConfigurationAction {
+public class TagFacetConfigurationAction extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {

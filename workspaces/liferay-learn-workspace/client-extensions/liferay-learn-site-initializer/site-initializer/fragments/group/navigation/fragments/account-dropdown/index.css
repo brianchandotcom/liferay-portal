@@ -130,9 +130,10 @@
 		gap: 0.25rem;
 		justify-content: center;
 		margin: 0;
+		margin-top: 0.2rem;
 		outline: rgba(99, 153, 255, 0) solid 2px;
 		outline-offset: 2px;
-		padding: 0.5rem;
+		padding: 0.2rem;
 		position: relative;
 		width: fit-content;
 
@@ -181,6 +182,7 @@
 	input:focus ~ .account-dropdown-toggle,
 	input:focus-visible ~ .account-dropdown-toggle {
 		background: var(--utility-nav-item-text-color-background, #EDF3FE);
+		outline: var(--color-brand-primary-lighten-2) solid 2px;
 		transition: all 0.1s linear;
 		
 		.account-dropdown-icon,

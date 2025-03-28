@@ -27,7 +27,7 @@
 			outline: rgba(99, 153, 255, 0) solid 2px;
 			outline-offset: 2px;
 			padding: 0.75rem 0.75rem 0.75rem 3rem;
-			transition: all 0.1slinear;
+			transition: all 0.1s linear;
 			width: 100%;
 
 			&:hover, &:focus, &:focus-visible {

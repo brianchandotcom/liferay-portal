@@ -169,23 +169,23 @@
 
 	[#if configuration.showSearch]
 		<div class="search-wrapper" id="siteSearchWrapper">
-			<form action="${canonicalURL}/search" class="mb-5 search" id="siteSearch" name="siteSearch">
-				<input class="search-input search-suggestions-input w-100" id="searchInput" name="q" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
+			<div class="search-wrapper-title-form">
+				<div class="search-wrapper-title">${languageUtil.get(locale, 'search')}</div>
 
-				<a class="search-submit" href="${canonicalURL}/search" id="searchSubmitBtn" type="submit">
-					<span>[@clay["icon"] symbol="search"/]
-				</a>
-			</form>
+				<form action="${canonicalURL}/search" class="search" id="siteSearch" name="siteSearch">
+					<input class="search-input search-suggestions-input w-100" id="searchInput" name="q" type="text" />
+
+					<a class="search-submit" href="${canonicalURL}/search" id="searchSubmitBtn" type="submit">
+						<span>[@clay["icon"] symbol="search"/]
+					</a>
+				</form>
+			</div>
 
 			<div class="suggestions w-100">
 				<span class="loading-animation-lg loading-animation-primary loading-animation-squares search-loading-animation"></span>
 
 				<div class="mb-4 suggestions-default">
 					<lfr-drop-zone></lfr-drop-zone>
-				</div>
-
-				<div class="mb-4 suggested-text">
-					${languageUtil.get(locale, "suggested", "Suggested")}
 				</div>
 
 				<div class="search-suggestions">

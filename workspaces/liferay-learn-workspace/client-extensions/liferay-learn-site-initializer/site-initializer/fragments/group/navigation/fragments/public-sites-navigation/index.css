@@ -2,39 +2,52 @@
 	display: none;
 }
 
-.language-dropdown-list {
-	padding: 10px !important;
+.search-account-container {
+	padding-right: 8px;
 }
 
-.search-account-container {
-	padding-right: 12px;
+.search-results-found {
+    &::-webkit-scrollbar { 
+		width: 15px; 
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: rgba(201, 201, 207, 1);
+        background-clip: padding-box;
+        border: 4px solid transparent;
+        border-radius: 100px;
+    }
+
+    &::-webkit-scrollbar-track { 
+		background: rgba(247, 247, 248, 1); margin-left: -3px; 
+	}
 }
 
 .search-wrapper {
 	align-items: center;
-	background-color: var(--color-brand-primary-darken-5, #00256c);
+	backdrop-filter: blur(24px);
+    background: rgba(9, 31, 73, 0.8);
 	border-radius: var(--border-radius);
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
 	bottom: auto;
 	display: flex;
 	flex-direction: column;
+	justify-self: center;
 	left: 0;
+	max-height: 90vh;
 	opacity: 0;
-	padding: 3.5rem;
-	padding-top: 8rem;
 	position: fixed;
 	right: 0;
-	top: 0;
+	top: 120px;
 	transform: translate3d(0, -800px, 0);
 	transform-style: preserve-3d;
 	transition:
 		transform 0.25s,
 		opacity 0.25s;
+	width: 33.625rem;
 	z-index: -2;
 
 	.close-search {
-		background-color: var(--color-brand-primary-lighten-2, #6399ff);
+		background: rgba(0, 23, 67, 1);
 		border: 1px solid transparent;
 		border-radius: var(--border-radius-sm);
 		bottom: auto;
@@ -44,8 +57,8 @@
 		left: auto;
 		padding: 0.5rem;
 		position: absolute;
-		right: 3.5rem;
-		top: 3.5rem;
+		right: 1.7rem;
+		top: 1.5rem;
 		width: 2rem;
 
 		svg {
@@ -64,15 +77,30 @@
 		display: none;
 	}
 
-	.suggestions {
-		max-width: 480px;
+	.search-wrapper-title {
+		color: rgba(231, 239, 255, 1);
+		font-size: 1.5rem;
+		font-weight: 700;
+		place-self: start;
+	}
 
+	.search-wrapper-title-form {
+		padding: 24px 24px 0px 24px;
+		width: 100%;
+	}
+
+	.suggestions {
 		.search-loading-animation {
 			display: none;
 		}
 
+		.search-suggestions {
+			padding: 0 24px 0 24px;
+            width: 100%;
+		}
+
 		.search-suggestion-item {
-			background-color: var(--color-brand-primary-lighten-2, #6399ff);
+			background: rgba(0, 23, 67, 1);
 			border: 1px solid transparent;
 			border-radius: var(--border-radius-sm);
 			cursor: pointer;
@@ -116,13 +144,12 @@
 			}
 
 			&:hover {
-				background-color: var(--color-brand-primary-lighten-3, #8fb5ff);
 				border-color: var(--white);
 			}
 		}
 
 		.search-suggestions-see-all-results {
-			background-color: var(--color-brand-primary-lighten-2, #6399ff);
+			background: rgba(0, 23, 67, 1);
 			border: 1px solid transparent;
 			border-radius: var(--border-radius-sm);
 			cursor: pointer;
@@ -141,7 +168,6 @@
 			}
 
 			&:hover {
-				background-color: var(--color-brand-primary-lighten-3, #8fb5ff);
 				border-color: var(--white);
 			}
 		}
@@ -167,12 +193,18 @@
 
 			.search-loading-animation {
 				display: block;
+				margin-top: 30px;
+
+				&.loading-animation-squares::after, &.loading-animation-squares::before {
+					background: rgba(255, 255, 255, 1);
+				}
 			}
 		}
 
 		&.performing-search {
 			.no-results-message {
 				display: block;
+				margin-bottom: 30px;
 			}
 
 			.search-loading-animation {
@@ -193,6 +225,12 @@
 		}
 
 		&.search-results-found {
+			margin-bottom: 30px;
+			margin-top: 25px;
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 100% !important;
+
 			.no-results-message,
 			.search-loading-animation,
 			.suggestions-default {
@@ -211,14 +249,11 @@
 
 	form {
 		&.search {
-			background-color: var(--color-brand-primary-lighten-1, #377cff);
+			background: rgba(6, 30, 76, 1);
 			border-radius: var(--border-radius);
-			margin-bottom: 0;
-			margin-left: auto;
-			margin-right: auto;
-			max-height: 3.5rem;
+			margin-top: 15px;
 			position: relative;
-			width: 30rem;
+			width: 100%;
 
 			.search-submit {
 				color: var(--white);
@@ -238,7 +273,7 @@
 					border: 1px solid transparent;
 					border-radius: var(--border-radius);
 					color: var(--white);
-					font-size: 28px;
+					font-size: 1.1rem;
 					font-weight: var(--font-weight-semi-bold);
 					height: 3.5rem;
 					line-height: 32px;
@@ -275,7 +310,6 @@
 	}
 
 	&.search-open {
-		min-height: 80vh;
 		opacity: 1;
 		transform: translate3d(0, 0, 0);
 		z-index: 4;
@@ -285,6 +319,15 @@
 .utility-nav-container {
 	text-align: -moz-center;
 	text-align: -webkit-center;
+
+	.language-selector-container, .sites-container {
+		&:active, &:focus, &:hover {
+			background: var(--utility-nav-item-text-color-background, #EDF3FE);
+			border-radius: 10px;
+			outline: var(--color-brand-primary-lighten-2) solid 2px;
+			transition: all 0.1s linear;
+		}
+	}
 
 	.sites-languages-container {
 		margin-left: calc(var(--spacer-2) * -1);
@@ -456,7 +499,7 @@ nav {
 					border-radius: var(--border-radius);
 					display: flex;
 					flex-direction: column;
-					padding: 0.5rem 0.25rem 0;
+					padding: 10px;
 					width: 15rem;
 
 					.language-nav-item {
@@ -564,6 +607,16 @@ nav {
 		}
 
 		.liferay-logo {
+			padding: 4px;
+
+			&:active, &:focus, &:hover {
+				background: #1A3B7B;
+				border-radius: 10px;
+				outline: var(--color-brand-primary-lighten-2) solid 2px;
+				transition: all 0.1s linear;
+			}
+
+			&:active, &:focus, &:hover
 			.logo-text:hover, &:hover {
 				text-decoration: none;
 			}
@@ -611,19 +664,22 @@ nav {
 		}
 
 		.search-account-container {
+			gap: 0.2rem;
 			.question-icon, .search-icon {
 				border-radius: var(--border-radius-sm);
 				color: var(--body-color);
 				cursor: pointer;
-				padding: 0.75rem;
+				padding: 0.6rem 0.75rem;
 				text-decoration: none;
 				transition-duration: 0.2s, 0.2s;
 				transition-property: color, background-color;
 				transition-timing-function: ease, ease;
 
 				&:active, &:focus, &:hover {
-					background-color: var(--color-action-primary-hover-lighten);
+					background: var(--utility-nav-item-text-color-background, #EDF3FE);
 					opacity: 1;
+					outline: var(--color-brand-primary-lighten-2) solid 2px;
+					transition: all 0.1s linear;
 
 					svg {
 						fill: var(--color-action-primary-hover, #0053f0);
@@ -815,8 +871,8 @@ nav {
 				overflow-y: scroll;
 				padding-left: 1.5rem;
 				padding-right: 1.5rem;
-				padding-top: 6rem;
 				scrollbar-width: none;
+				width: 95%;
 
 				.close-search {
 					right: 1.5rem;
@@ -826,6 +882,11 @@ nav {
 				.suggestions {
 					max-width: none;
 					width: 100%;
+
+					.search-suggestions-see-all-results {
+						text-align-last: center;
+						width: 88%;
+					}
 				}
 
 				&::-webkit-scrollbar {
@@ -929,7 +990,7 @@ nav {
 		justify-self: anchor-center;
 		position: absolute;
 		right: 10px;
-		top: 100px;
+		top: 107px;
 		width: 100vw;
 	}
 }

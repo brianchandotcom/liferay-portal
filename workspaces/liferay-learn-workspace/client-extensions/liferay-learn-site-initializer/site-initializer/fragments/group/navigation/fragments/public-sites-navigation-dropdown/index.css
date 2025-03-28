@@ -1,9 +1,29 @@
 .btn.btn-nm.dropdown-fragment-toggle {
+	position: relative;
+
 	svg {
 		height: 16px;
 		opacity: 35%;
 		transition: all 0.2s ease-in-out;
 		width: 16px;
+	}
+
+	&::before {
+		content: '';
+            position: absolute;
+            bottom: -4px;
+            left: -2px;
+            right: -2px;
+            height: 3px;
+            border-radius: var(--border-radius-circle);
+            transform: scaleX(0%);
+            transition: transform 0.2s ease-in-out;
+            background: var(--color-neutral-0, #ffffff);
+	}
+
+	&.btn[aria-expanded=true]::before {
+		transform: scaleX(100%);
+		transition: transform 0.3s ease-in-out;
 	}
 
 	&:hover, &:focus, &:focus-visible {
@@ -29,6 +49,7 @@
 	display: none;
 	min-width: 240px;
 	position: fixed;
+	top: 162px !important;
 	z-index: 976;
 }
 
@@ -62,7 +83,7 @@ html:not(#__):not(#___) .page-editor.is-dragging .page-editor__fragment-content 
 		&:hover, &:focus, &:focus-visible {
 			background: var(--color-action-primary-active-lighten, #E6EDFB);
 			outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
-			transition: all 0.1slinear;
+			transition: all 0.1s linear;
 		}
 	}
 

@@ -122,7 +122,7 @@ public class FragmentCollectionsDisplayContext {
 						searchContainer.getStart(), searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 					FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-						allGroupIds, _getKeywords()));
+						allGroupIds, _getKeywords(), false));
 			}
 		}
 		else {
@@ -142,7 +142,7 @@ public class FragmentCollectionsDisplayContext {
 						searchContainer.getEnd(),
 						searchContainer.getOrderByComparator()),
 					FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-						allGroupIds));
+						allGroupIds, false));
 			}
 		}
 

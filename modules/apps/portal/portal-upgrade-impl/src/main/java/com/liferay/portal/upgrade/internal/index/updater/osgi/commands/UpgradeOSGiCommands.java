@@ -38,7 +38,9 @@ public class UpgradeOSGiCommands implements OSGiCommands {
 				"Module " + bundleId + " does not exist");
 		}
 
-		if (BundleUtil.isLiferayServiceBundle(bundle)) {
+		if (BundleUtil.isLiferayRequireSchemaVersionBundle(bundle) ||
+			BundleUtil.isLiferayServiceBundle(bundle)) {
+
 			IndexUpdaterUtil.updateIndexes(bundle);
 
 			return "Completed update of indexes for module " + bundleId;
@@ -60,7 +62,9 @@ public class UpgradeOSGiCommands implements OSGiCommands {
 					" does not exist");
 		}
 
-		if (BundleUtil.isLiferayServiceBundle(bundle)) {
+		if (BundleUtil.isLiferayRequireSchemaVersionBundle(bundle) ||
+			BundleUtil.isLiferayServiceBundle(bundle)) {
+
 			IndexUpdaterUtil.updateIndexes(bundle);
 
 			return "Completed update of indexes for module " +

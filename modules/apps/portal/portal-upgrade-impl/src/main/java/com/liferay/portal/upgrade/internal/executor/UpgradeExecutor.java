@@ -250,7 +250,9 @@ public class UpgradeExecutor {
 	private boolean _requiresUpdateIndexes(
 		Bundle bundle, List<UpgradeInfo> upgradeInfos) {
 
-		if (!BundleUtil.isLiferayServiceBundle(bundle)) {
+		if (!BundleUtil.isLiferayRequireSchemaVersionBundle(bundle) &&
+			!BundleUtil.isLiferayServiceBundle(bundle)) {
+
 			return false;
 		}
 

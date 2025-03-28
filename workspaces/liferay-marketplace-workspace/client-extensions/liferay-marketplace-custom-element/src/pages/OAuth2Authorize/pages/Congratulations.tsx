@@ -56,7 +56,7 @@ const Congratulations = () => {
 					),
 					paymentMethodFilter: SearchBuilder.lambda(
 						'categoryNames',
-						'Payment Integration'
+						'Payment methods'
 					),
 				},
 				siteId: Liferay.ThemeDisplay.getScopeGroupId(),

@@ -327,7 +327,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		// import deletions
 
-		_importLayouts(file, false, _objectDefinition1);
+		_importLayouts(false, file, _objectDefinition1);
 
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
@@ -344,7 +344,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry3.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
 
-		_importLayouts(file, true, _objectDefinition1);
+		_importLayouts(true, file, _objectDefinition1);
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
@@ -505,11 +505,11 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _importLayouts() throws Exception {
-		_importLayouts(_larFile, false, _objectDefinition1);
+		_importLayouts(false, _larFile, _objectDefinition1);
 	}
 
 	private void _importLayouts(
-			File file, boolean deletions, ObjectDefinition... objectDefinitions)
+			boolean deletions, File file, ObjectDefinition... objectDefinitions)
 		throws Exception {
 
 		ExportImportConfiguration exportImportConfiguration =

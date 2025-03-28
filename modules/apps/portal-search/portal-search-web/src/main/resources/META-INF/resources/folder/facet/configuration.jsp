@@ -52,7 +52,6 @@ FolderFacetPortletPreferences folderFacetPortletPreferences = new FolderFacetPor
 				<liferay-template:template-selector
 					className="<%= FolderFacetPortlet.class.getName() %>"
 					displayStyle="<%= folderFacetPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= folderSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

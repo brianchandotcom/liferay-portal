@@ -359,7 +359,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		}
 
 		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-			!actionId.equals(ActionKeys.VIEW)) {
+			actionId.equals(ActionKeys.VIEW)) {
 
 			// Check upward recursively to see if any pages above grant the
 			// action

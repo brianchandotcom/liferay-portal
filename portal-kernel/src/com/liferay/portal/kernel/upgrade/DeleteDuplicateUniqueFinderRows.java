@@ -169,12 +169,12 @@ public class DeleteDuplicateUniqueFinderRows extends UpgradeProcess {
 			}
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				ResultSetMetaData metaData = resultSet.getMetaData();
+				ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
-				String[] columnNames = new String[metaData.getColumnCount()];
+				String[] columnNames = new String[resultSetMetaData.getColumnCount()];
 
 				for (int i = 0; i < columnNames.length; i++) {
-					columnNames[i] = metaData.getColumnName(i + 1);
+					columnNames[i] = resultSetMetaData.getColumnName(i + 1);
 				}
 
 				while (resultSet.next()) {

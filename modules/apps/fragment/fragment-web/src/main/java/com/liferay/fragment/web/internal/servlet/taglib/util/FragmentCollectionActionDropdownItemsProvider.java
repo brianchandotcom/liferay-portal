@@ -34,9 +34,6 @@ public class FragmentCollectionActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		FragmentCollection fragmentCollection =
-			_fragmentDisplayContext.getFragmentCollection();
-
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
@@ -66,7 +63,12 @@ public class FragmentCollectionActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> !fragmentCollection.isMarketplace(),
+						() -> {
+							FragmentCollection fragmentCollection =
+								_fragmentDisplayContext.getFragmentCollection();
+
+							return !fragmentCollection.isMarketplace();
+						},
 						dropdownItem -> {
 							ResourceURL
 								exportFragmentCompositionsAndFragmentEntriesURL =

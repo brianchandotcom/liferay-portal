@@ -476,8 +476,7 @@ public class CompanyLocalServiceDBPartitionTest
 				exception instanceof UnsupportedOperationException);
 
 			Assert.assertEquals(
-				"Feature flag LPD-11342 is disabled",
-				exception.getMessage());
+				"Feature flag LPD-11342 is disabled", exception.getMessage());
 		}
 	}
 
@@ -679,8 +678,7 @@ public class CompanyLocalServiceDBPartitionTest
 				exception instanceof UnsupportedOperationException);
 
 			Assert.assertEquals(
-				"Feature flag LPD-11342 is disabled",
-				exception.getMessage());
+				"Feature flag LPD-11342 is disabled", exception.getMessage());
 		}
 	}
 

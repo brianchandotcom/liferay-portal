@@ -21,8 +21,8 @@ type LicenceTiersPrices = {
 export type LicensePrice = {key: number; value: number};
 
 export type InitialStateProps = {
-	appBuild: string;
 	appAreas: Categories[];
+	appBuild: string;
 	appCategory: string;
 	appDescription: string;
 	appDocumentationURL: Specification;

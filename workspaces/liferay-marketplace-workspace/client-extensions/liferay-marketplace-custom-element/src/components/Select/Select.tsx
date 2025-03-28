@@ -81,8 +81,8 @@ const Select = React.forwardRef<HTMLInputElement, InputProps>(
 					{options?.map((option) => {
 						return (
 							<option
-								key={option.key}
 								disabled={option.disabled}
+								key={option.key}
 								value={option.key}
 							>
 								{option.name}

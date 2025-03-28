@@ -40,17 +40,17 @@ class HeadlessCommerceAdminCatalog {
 		categories,
 		description,
 		name,
+		productSpecifications,
 		productStatus,
 		workflowStatusInfo,
-		productSpecifications,
 	}: {
 		catalogId: number;
 		categories: Partial<Categories>[];
 		description: string;
 		name: string;
+		productSpecifications?: any;
 		productStatus?: number;
 		workflowStatusInfo?: number;
-		productSpecifications?: any;
 	}) {
 		return fetcher.post(
 			`/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=productVirtualSettings`,

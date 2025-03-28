@@ -95,7 +95,7 @@ public class StyleBookEntryLocalServiceTest {
 
 	@FeatureFlags(enable = false, value = "LPD-13311")
 	@Test
-	public void testAddStyleBookEntryWithFrontendTokensFromClientExtension()
+	public void testAddStyleBookEntryWithFrontendTokensFromClientExtensionEntry()
 		throws Exception {
 
 		_clientExtensionEntry =
@@ -109,15 +109,22 @@ public class StyleBookEntryLocalServiceTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
-					"clayRTLURL", _URL_CLAY_RTL_CSS
+					"clayRTLURL",
+					"http://" + RandomTestUtil.randomString() +
+						".com/styles_rtl.css"
 				).put(
-					"clayURL", _URL_CLAY_CSS
+					"clayURL",
+					"http://" + RandomTestUtil.randomString() +
+						".com/styles.css"
 				).put(
 					"frontendTokenDefinitionJSON", "{}"
 				).put(
-					"mainRTLURL", _URL_MAIN_RTL_CSS
+					"mainRTLURL",
+					"http://" + RandomTestUtil.randomString() +
+						".com/main_rtl.css"
 				).put(
-					"mainURL", _URL_MAIN_CSS
+					"mainURL",
+					"http://" + RandomTestUtil.randomString() + ".com/main.css"
 				).buildString());
 
 		LayoutSet publicLayoutSet = _group.getPublicLayoutSet();
@@ -180,18 +187,6 @@ public class StyleBookEntryLocalServiceTest {
 			_styleBookEntryLocalService.fetchStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId()));
 	}
-
-	private static final String _URL_CLAY_CSS =
-		"http://" + RandomTestUtil.randomString() + ".com/styles.css";
-
-	private static final String _URL_CLAY_RTL_CSS =
-		"http://" + RandomTestUtil.randomString() + ".com/styles_rtl.css";
-
-	private static final String _URL_MAIN_CSS =
-		"http://" + RandomTestUtil.randomString() + ".com/main.css";
-
-	private static final String _URL_MAIN_RTL_CSS =
-		"http://" + RandomTestUtil.randomString() + ".com/main_rtl.css";
 
 	private ClientExtensionEntry _clientExtensionEntry;
 

@@ -6,12 +6,16 @@
 package com.liferay.marketplace.settings.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.marketplace.constants.CPPortletKeys;
+import com.liferay.marketplace.constants.MarketplaceActionKeys;
+import com.liferay.marketplace.constants.MarketplacePortletKeys;
 import com.liferay.marketplace.settings.web.internal.util.MarketplaceUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -27,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+		"javax.portlet.name=" + CPPortletKeys.COMMERCE_CHANNELS,
 		"mvc.command.name=/marketplace_settings/get_authorization"
 	},
 	service = MVCResourceCommand.class
@@ -40,6 +45,10 @@ public class GetAuthorizationMVCResourceCommand extends BaseMVCResourceCommand {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		PortletPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.GENERAL,
+			MarketplaceActionKeys.GET_AUTHORIZATION);
 
 		String accessToken = PrefsPropsUtil.getString(
 			themeDisplay.getCompanyId(), "marketplaceAccessToken");

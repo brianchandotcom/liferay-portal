@@ -5,6 +5,7 @@
 
 package com.liferay.calendar.internal.change.tracking.spi.reference;
 
+import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.model.CalendarNotificationTemplateTable;
 import com.liferay.calendar.model.CalendarTable;
 import com.liferay.calendar.service.persistence.CalendarNotificationTemplatePersistence;
@@ -27,6 +28,11 @@ public class CalendarNotificationTemplateTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<CalendarNotificationTemplateTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.resourcePermissionReference(
+			CalendarNotificationTemplateTable.INSTANCE.
+				calendarNotificationTemplateId,
+			CalendarNotificationTemplate.class);
 	}
 
 	@Override

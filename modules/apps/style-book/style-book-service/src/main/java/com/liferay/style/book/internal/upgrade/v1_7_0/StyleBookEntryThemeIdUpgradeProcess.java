@@ -5,6 +5,8 @@
 
 package com.liferay.style.book.internal.upgrade.v1_7_0;
 
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -20,8 +22,10 @@ import java.sql.ResultSet;
 public class StyleBookEntryThemeIdUpgradeProcess extends UpgradeProcess {
 
 	public StyleBookEntryThemeIdUpgradeProcess(
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		GroupLocalService groupLocalService) {
 
+		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_groupLocalService = groupLocalService;
 	}
 
@@ -43,7 +47,17 @@ public class StyleBookEntryThemeIdUpgradeProcess extends UpgradeProcess {
 
 				LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
-				preparedStatement2.setString(1, publicLayoutSet.getThemeId());
+				String themeId = publicLayoutSet.getThemeId();
+
+				FrontendTokenDefinition frontendTokenDefinition =
+					_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+						publicLayoutSet);
+
+				if (frontendTokenDefinition != null) {
+					themeId = frontendTokenDefinition.getThemeId();
+				}
+
+				preparedStatement2.setString(1, themeId);
 
 				preparedStatement2.setLong(
 					2, resultSet.getLong("ctCollectionId"));
@@ -57,6 +71,8 @@ public class StyleBookEntryThemeIdUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private final FrontendTokenDefinitionRegistry
+		_frontendTokenDefinitionRegistry;
 	private final GroupLocalService _groupLocalService;
 
 }

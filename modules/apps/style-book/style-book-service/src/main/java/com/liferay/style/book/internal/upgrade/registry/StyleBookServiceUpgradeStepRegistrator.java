@@ -5,6 +5,7 @@
 
 package com.liferay.style.book.internal.upgrade.registry;
 
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -87,8 +88,12 @@ public class StyleBookServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.6.0", "1.7.0",
-			new StyleBookEntryThemeIdUpgradeProcess(_groupLocalService));
+			new StyleBookEntryThemeIdUpgradeProcess(
+				_frontendTokenDefinitionRegistry, _groupLocalService));
 	}
+
+	@Reference
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

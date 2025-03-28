@@ -147,7 +147,20 @@ public class DLSizeLimitConfigurationDisplayContext {
 	}
 
 	public long getRequestFileSizeBuffer() {
-		return 0;
+		if (_scope.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
+
+			return _dlSizeLimitConfigurationProvider.
+				getCompanyRequestFileSizeBuffer(_scopePK);
+		}
+		else if (_scope.equals(
+					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
+
+			return _dlSizeLimitConfigurationProvider.
+				getSystemRequestFileSizeBuffer();
+		}
+
+		throw new IllegalArgumentException("Unsupported scope: " + _scope);
 	}
 
 	private Map<String, Long> _getMimeTypeSizeLimit() {

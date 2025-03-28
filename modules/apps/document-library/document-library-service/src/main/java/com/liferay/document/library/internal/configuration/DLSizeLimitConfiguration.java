@@ -34,4 +34,10 @@ public interface DLSizeLimitConfiguration {
 	@Meta.AD(deflt = "52428800", name = "max-size-to-copy", required = false)
 	public long maxSizeToCopy();
 
+	@Meta.AD(
+		deflt = "1048576", name = "request-file-size-buffer-title",
+		required = false
+	)
+	public long requestFileSizeBuffer();
+
 }

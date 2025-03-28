@@ -74,6 +74,13 @@ public class DLSizeLimitConfigurationHelper {
 		return map.getOrDefault(String.format("%s/*", parts.get(0)), 0L);
 	}
 
+	public long getCompanyRequestFileSizeBuffer(long companyId) {
+		DLSizeLimitConfiguration dlSizeLimitConfiguration =
+			_getCompanyDLSizeLimitConfiguration(companyId);
+
+		return dlSizeLimitConfiguration.requestFileSizeBuffer();
+	}
+
 	public long getGroupFileMaxSize(long groupId) {
 		DLSizeLimitConfiguration dlSizeLimitConfiguration =
 			_getGroupDLSizeLimitConfiguration(groupId);
@@ -122,6 +129,10 @@ public class DLSizeLimitConfigurationHelper {
 
 	public Map<String, Long> getSystemMimeTypeSizeLimit() {
 		return _computeMimeTypeSizeLimit(_systemDLSizeLimitConfiguration);
+	}
+
+	public long getSystemRequestFileSizeBuffer() {
+		return _systemDLSizeLimitConfiguration.requestFileSizeBuffer();
 	}
 
 	public void unmapPid(String pid) {

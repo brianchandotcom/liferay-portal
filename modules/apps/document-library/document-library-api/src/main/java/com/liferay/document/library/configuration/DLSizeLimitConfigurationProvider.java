@@ -21,6 +21,8 @@ public interface DLSizeLimitConfigurationProvider {
 
 	public Map<String, Long> getCompanyMimeTypeSizeLimit(long companyId);
 
+	public long getCompanyRequestFileSizeBuffer(long companyId);
+
 	public long getGroupFileMaxSize(long groupId);
 
 	public long getGroupMaxSizeToCopy(long groupId);
@@ -32,6 +34,8 @@ public interface DLSizeLimitConfigurationProvider {
 	public long getSystemMaxSizeToCopy();
 
 	public Map<String, Long> getSystemMimeTypeSizeLimit();
+
+	public long getSystemRequestFileSizeBuffer();
 
 	public void updateCompanySizeLimit(
 			long companyId, long fileMaxSize, long maxSizeToCopy,

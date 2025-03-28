@@ -45,6 +45,12 @@ public class DLSizeLimitConfigurationProviderImpl
 	}
 
 	@Override
+	public long getCompanyRequestFileSizeBuffer(long companyId) {
+		return _dlSizeLimitConfigurationHelper.getCompanyRequestFileSizeBuffer(
+			companyId);
+	}
+
+	@Override
 	public long getGroupFileMaxSize(long groupId) {
 		return _dlSizeLimitConfigurationHelper.getGroupFileMaxSize(groupId);
 	}
@@ -73,6 +79,11 @@ public class DLSizeLimitConfigurationProviderImpl
 	@Override
 	public Map<String, Long> getSystemMimeTypeSizeLimit() {
 		return _dlSizeLimitConfigurationHelper.getSystemMimeTypeSizeLimit();
+	}
+
+	@Override
+	public long getSystemRequestFileSizeBuffer() {
+		return _dlSizeLimitConfigurationHelper.getSystemRequestFileSizeBuffer();
 	}
 
 	@Override

@@ -277,6 +277,50 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	@Override
+	protected Page<TaxonomyVocabulary> doGetTaxonomyVocabulariesPage(
+			String search, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _getTaxonomyVocabulariesPage(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabulary",
+					AssetCategoriesPermission.RESOURCE_NAME,
+					GroupConstants.DEFAULT_LIVE_GROUP_ID)
+			).put(
+				"createBatch",
+				addAction(
+					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME,
+					GroupConstants.DEFAULT_LIVE_GROUP_ID)
+			).put(
+				"deleteBatch",
+				addAction(
+					ActionKeys.DELETE, "deleteTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, null)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getTaxonomyVocabulariesPage",
+					AssetCategoriesPermission.RESOURCE_NAME,
+					GroupConstants.DEFAULT_LIVE_GROUP_ID)
+			).put(
+				"updateBatch",
+				addAction(
+					ActionKeys.UPDATE, "putTaxonomyVocabularyBatch",
+					AssetCategoriesPermission.RESOURCE_NAME, null)
+			).build(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, search, aggregation, filter,
+			pagination, sorts);
+	}
+
+	@Override
 	protected TaxonomyVocabulary doGetTaxonomyVocabulary(
 			Long taxonomyVocabularyId)
 		throws Exception {

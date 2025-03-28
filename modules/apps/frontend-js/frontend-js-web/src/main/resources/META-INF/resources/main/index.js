@@ -7,9 +7,11 @@ export const {
 	AutoSize: autoSize,
 	BREAKPOINTS,
 	CONSENT_TYPES: COOKIE_TYPES,
+	DefaultEventHandler,
 	Disposable,
 	DynamicInlineScroll,
 	EventEmitter,
+	EventHandler,
 	PortletBase,
 	STATUS_CODE,
 	addParams,
@@ -76,7 +78,6 @@ export const {
 	zIndex,
 } = Liferay.__INTERNALS;
 
-export {default as DefaultEventHandler} from './DefaultEventHandler.es';
 export {
 	ALIGN_POSITIONS,
 	align,
@@ -85,7 +86,6 @@ export {
 	suggestAlignBestRegion,
 } from './align';
 export {default as AOP} from './aop/AOP.es';
-export {default as EventHandler} from './events/EventHandler';
 export {default as buildFragment} from './util/build_fragment';
 export {default as printPage} from './util/print_page';
 export {isReducedMotion} from './util/reducedMotion';

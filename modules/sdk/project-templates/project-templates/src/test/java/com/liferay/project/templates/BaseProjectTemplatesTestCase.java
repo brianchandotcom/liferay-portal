@@ -413,26 +413,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		String gradleOutputFileName = gradleOutputFile.getName();
 
-		List<String> completeArgs = new ArrayList<>();
-
-		completeArgs.add(MAVEN_GOAL_PACKAGE);
-
-		String javaVersion = System.getProperty("java.version");
-
-		if (javaVersion.startsWith("17")) {
-			javaVersion = "17";
-		}
-
-		if (javaVersion.startsWith("21")) {
-			javaVersion = "21";
-		}
-
-		completeArgs.add("-Djava.compiler.source.version=" + javaVersion);
-		completeArgs.add("-Djava.compiler.target.version=" + javaVersion);
-
-		executeMaven(
-			mavenProjectDir, mavenExecutor,
-			completeArgs.toArray(new String[0]));
+		executeMaven(mavenProjectDir, mavenExecutor, MAVEN_GOAL_PACKAGE);
 
 		Path mavenOutputPath = FileTestUtil.getFile(
 			mavenOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
@@ -1098,7 +1079,7 @@ public interface BaseProjectTemplatesTestCase {
 			String... args)
 		throws Exception {
 
-		String[] completeArgs = new String[args.length + 3];
+		String[] completeArgs = new String[args.length + 5];
 
 		System.arraycopy(args, 0, completeArgs, 0, args.length);
 
@@ -1109,6 +1090,21 @@ public interface BaseProjectTemplatesTestCase {
 		completeArgs[args.length + 2] =
 			"-Drepository.private.password=" +
 				System.getProperty("repository.private.password");
+
+		String javaVersion = System.getProperty("java.version");
+
+		if (javaVersion.startsWith("17")) {
+			javaVersion = "17";
+		}
+
+		if (javaVersion.startsWith("21")) {
+			javaVersion = "21";
+		}
+
+		completeArgs[args.length + 3] =
+			"-Djava.compiler.source.version=" + javaVersion;
+		completeArgs[args.length + 4] =
+			"-Djava.compiler.target.version=" + javaVersion;
 
 		MavenExecutor.Result result = mavenExecutor.execute(
 			projectDir, completeArgs);

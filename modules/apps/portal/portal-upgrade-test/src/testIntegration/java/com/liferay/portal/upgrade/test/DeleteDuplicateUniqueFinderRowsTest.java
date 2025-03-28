@@ -48,7 +48,6 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
-
 		_db = DBManagerUtil.getDB();
 	}
 
@@ -63,25 +62,22 @@ public class DeleteDuplicateUniqueFinderRowsTest {
 						"column3 VARCHAR(75) null)"));
 
 				_db.runSQL(
-					StringBundler.concat(
-						"insert into TestTable values (",
-						_OLD_DUPLICATE_ROW_PRIMARY_KEY_VALUE,
-						", [$TRUE$], 2, '3')"));
-
-				_db.runSQL(
 					"insert into TestTable values (2, [$TRUE$], 2, '3')");
-
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
 						_NEW_DUPLICATE_ROW_PRIMARY_KEY_VALUE,
 						", [$TRUE$], 2, '3')"));
-
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into TestTable values (",
 						_NONDUPLICATE_ROW_PRIMARY_KEY_VALUE,
 						", [$FALSE$], 2, '3')"));
+				_db.runSQL(
+					StringBundler.concat(
+						"insert into TestTable values (",
+						_OLD_DUPLICATE_ROW_PRIMARY_KEY_VALUE,
+						", [$TRUE$], 2, '3')"));
 			});
 	}
 

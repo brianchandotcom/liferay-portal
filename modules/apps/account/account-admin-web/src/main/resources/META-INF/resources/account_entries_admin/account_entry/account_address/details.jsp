@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+AccountEntryAddressDisplayContext accountEntryAddressDisplayContext = (AccountEntryAddressDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 AddressDisplay addressDisplay = (AddressDisplay)request.getAttribute(AccountWebKeys.ADDRESS_DISPLAY);
 
 Address address = AddressLocalServiceUtil.fetchAddress(addressDisplay.getAddressId());
@@ -76,13 +78,21 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 				ListType listType = ListTypeLocalServiceUtil.getListType(themeDisplay.getCompanyId(), type, AccountEntry.class.getName() + ListTypeConstants.ADDRESS);
 			%>
 
-				<aui:option label="<%= LanguageUtil.get(request, type) %>" selected="<%= (address != null) ? Objects.equals(addressListType.getListTypeId(), listType.getListTypeId()) : false %>" value="<%= listType.getListTypeId() %>" />
+				<aui:option data-listTypeKey="<%= listType.getName() %>" label="<%= LanguageUtil.get(request, type) %>" selected="<%= (address != null) ? Objects.equals(addressListType.getListTypeId(), listType.getListTypeId()) : false %>" value="<%= listType.getListTypeId() %>" />
 
 			<%
 			}
 			%>
 
 		</aui:select>
+
+		<div class="form-group input-select-wrapper">
+			<label class="control-label">
+				<liferay-ui:message key="subtype" />
+			</label>
+
+			<div id="autocomplete-root"></div>
+		</div>
 
 		<aui:select label="country" name="addressCountryId" required="<%= true %>">
 			<aui:validator errorMessage='<%= LanguageUtil.get(request, "this-field-is-required") %>' name="custom">
@@ -158,4 +168,9 @@ renderResponse.setTitle((addressDisplay.getAddressId() == 0) ? LanguageUtil.get(
 		).build()
 		%>'
 	module="{CountryRegionDynamicSelect} from account-admin-web"
+/>
+
+<liferay-frontend:component
+	context="<%= accountEntryAddressDisplayContext.getContext() %>"
+	module="{AddressSubtypeListAutocomplete} from account-admin-web"
 />

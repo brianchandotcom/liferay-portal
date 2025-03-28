@@ -201,9 +201,7 @@ public class DBUpgrader {
 	}
 
 	public static void startUpgradeLogAppender() {
-		if (_stopWatch == null) {
-			_initUpgradeStopwatch();
-		}
+		_initUpgradeStopwatch();
 
 		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 

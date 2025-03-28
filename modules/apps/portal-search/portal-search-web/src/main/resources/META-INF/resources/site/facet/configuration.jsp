@@ -52,7 +52,6 @@ SiteFacetPortletPreferences siteFacetPortletPreferences = new SiteFacetPortletPr
 				<liferay-template:template-selector
 					className="<%= SiteFacetPortlet.class.getName() %>"
 					displayStyle="<%= siteFacetPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= scopeSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

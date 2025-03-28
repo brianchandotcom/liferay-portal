@@ -138,25 +138,25 @@ public abstract class BaseFacetDisplayContextTestCase {
 
 	@Test
 	public void testGetDisplayStyleGroup() throws Exception {
-		_setUpGroupLocalServiceUtil(_getGroup());
+		setUpGroupLocalServiceUtil(getGroup());
 		setUpPortletDisplayStyleGroupExternalReferenceCode(null);
 
-		_assertDisplayContext(_getGroup());
+		_assertDisplayContext(getGroup());
 
-		_groupLocalServiceUtilMockedStatic.verifyNoInteractions();
+		groupLocalServiceUtilMockedStatic.verifyNoInteractions();
 	}
 
 	@Test
 	public void testGetDisplayStyleGroupWithConfiguration() throws Exception {
-		Group group = _getGroup();
+		Group group = getGroup();
 
-		_setUpGroupLocalServiceUtil(group);
+		setUpGroupLocalServiceUtil(group);
 		setUpPortletDisplayStyleGroupExternalReferenceCode(
 			group.getExternalReferenceCode());
 
 		_assertDisplayContext(group);
 
-		_groupLocalServiceUtilMockedStatic.verify(
+		groupLocalServiceUtilMockedStatic.verify(
 			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 				group.getExternalReferenceCode(), 0L),
 			Mockito.times(1));
@@ -473,7 +473,36 @@ public abstract class BaseFacetDisplayContextTestCase {
 		return term;
 	}
 
+	protected Group getGroup() {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		return group;
+	}
+
 	protected void setUpAsset(String term) throws Exception {
+	}
+
+	protected void setUpGroupLocalServiceUtil(Group group) throws Exception {
+		groupLocalServiceUtilMockedStatic.reset();
+
+		Mockito.when(
+			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), 0L)
+		).thenReturn(
+			group
+		);
 	}
 
 	protected abstract void setUpPortletDisplayStyleGroupExternalReferenceCode(
@@ -489,6 +518,9 @@ public abstract class BaseFacetDisplayContextTestCase {
 
 	protected static MockedStatic<ConfigurationProviderUtil>
 		configurationProviderUtilMockedStatic;
+	protected static final MockedStatic<GroupLocalServiceUtil>
+		groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
 
 	protected int[] expectedFrequenciesFrequencyAscending = {4, 5, 5, 6};
 	protected int[] expectedFrequenciesFrequencyDescending = {6, 5, 5, 4};
@@ -516,38 +548,5 @@ public abstract class BaseFacetDisplayContextTestCase {
 		Assert.assertEquals(
 			group.getGroupId(), facetDisplayContext.getDisplayStyleGroupId());
 	}
-
-	private Group _getGroup() {
-		Group group = Mockito.mock(Group.class);
-
-		Mockito.when(
-			group.getExternalReferenceCode()
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			group.getGroupId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
-		return group;
-	}
-
-	private void _setUpGroupLocalServiceUtil(Group group) throws Exception {
-		_groupLocalServiceUtilMockedStatic.reset();
-
-		Mockito.when(
-			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				group.getExternalReferenceCode(), 0L)
-		).thenReturn(
-			group
-		);
-	}
-
-	private static final MockedStatic<GroupLocalServiceUtil>
-		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
-			GroupLocalServiceUtil.class);
 
 }

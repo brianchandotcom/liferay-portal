@@ -6,6 +6,8 @@
 package com.liferay.style.book.service.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -106,7 +108,16 @@ public class StyleBookEntryLocalServiceImpl
 			LayoutSet publicLayoutSet = _layoutSetLocalService.getLayoutSet(
 				groupId, false);
 
-			styleBookEntry.setThemeId(publicLayoutSet.getThemeId());
+			FrontendTokenDefinition frontendTokenDefinition =
+				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+					publicLayoutSet);
+
+			if (frontendTokenDefinition != null) {
+				styleBookEntry.setThemeId(frontendTokenDefinition.getThemeId());
+			}
+			else {
+				styleBookEntry.setThemeId(publicLayoutSet.getThemeId());
+			}
 		}
 
 		return publishDraft(styleBookEntry);
@@ -599,6 +610,9 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
 	private Language _language;

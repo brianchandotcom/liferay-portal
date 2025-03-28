@@ -4341,14 +4341,14 @@ public class DataFactory {
 		List<FragmentEntryLinkModel> originalFragmentEntryLinkModels =
 			new ArrayList<>();
 
-		LayoutModel nonhiddenLayout = null;
+		LayoutModel nonhiddenLayoutModel = null;
 
 		String imageRenderNamespace = StringUtil.randomId();
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
 			if (!layoutModel.isHidden()) {
-				nonhiddenLayout = layoutModel;
+				nonhiddenLayoutModel = layoutModel;
 
 				continue;
 			}
@@ -4404,7 +4404,7 @@ public class DataFactory {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					nonhiddenLayout,
+					nonhiddenLayoutModel,
 					originalFragmentEntryLinkModel.getFragmentEntryLinkId(),
 					originalFragmentEntryLinkModel.getSegmentsExperienceId(),
 					originalFragmentEntryLinkModel.getCss(),

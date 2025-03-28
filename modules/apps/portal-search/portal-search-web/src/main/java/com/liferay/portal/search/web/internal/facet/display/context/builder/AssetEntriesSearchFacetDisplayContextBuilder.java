@@ -12,11 +12,13 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.security.permission.comparator.ModelResourceComparator;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
@@ -172,10 +174,24 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	}
 
 	protected long getDisplayStyleGroupId() {
-		long displayStyleGroupId =
-			_typeFacetPortletInstanceConfiguration.displayStyleGroupId();
+		long displayStyleGroupId;
 
-		if (displayStyleGroupId <= 0) {
+		String displayStyleGroupExternalReferenceCode =
+			_typeFacetPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			displayStyleGroupId = group.getGroupId();
+		}
+		else {
 			displayStyleGroupId = _themeDisplay.getScopeGroupId();
 		}
 

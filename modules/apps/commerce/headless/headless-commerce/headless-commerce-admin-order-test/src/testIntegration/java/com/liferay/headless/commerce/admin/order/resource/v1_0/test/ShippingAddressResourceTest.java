@@ -24,6 +24,10 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.ShippingAddress;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -39,7 +43,9 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -47,6 +53,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -239,18 +248,36 @@ public class ShippingAddressResourceTest
 		assertValid(getShippingAddress);
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPatchOrderIdShippingAddress() throws Exception {
-		super.testPatchOrderIdShippingAddress();
+		ShippingAddress randomPatchShippingAddress =
+			randomPatchShippingAddress();
+
+		shippingAddressResource.patchOrderIdShippingAddress(
+			_commerceOrder.getCommerceOrderId(), randomPatchShippingAddress);
+
+		ShippingAddress expectedPatchShippingAddress =
+			randomPatchShippingAddress.clone();
+
+		BeanPropertiesUtil.copyProperties(
+			expectedPatchShippingAddress, randomPatchShippingAddress);
+
+		ShippingAddress getShippingAddress =
+			shippingAddressResource.getOrderIdShippingAddress(
+				_commerceOrder.getCommerceOrderId());
+
+		assertEquals(expectedPatchShippingAddress, getShippingAddress);
+		assertValid(getShippingAddress);
+
+		_testPatchOrderIdShippingAddressWithSubtype();
 	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"city", "countryISOCode", "description", "name", "phoneNumber",
-			"street1", "street2", "street3", "zip"
+			"street1", "street2", "street3", "subtype", "zip"
 		};
 	}
 
@@ -274,9 +301,40 @@ public class ShippingAddressResourceTest
 				street1 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street3 = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				subtype = StringPool.BLANK;
 				zip = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
+	}
+
+	private void _testPatchOrderIdShippingAddressWithSubtype()
+		throws Exception {
+
+		ShippingAddress shippingAddress = randomShippingAddress();
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				false);
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				null, TestPropsValues.getUserId(),
+				listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		shippingAddress.setSubtype(listTypeEntry.getKey());
+
+		shippingAddressResource.patchOrderIdShippingAddress(
+			_commerceOrder.getCommerceOrderId(), shippingAddress);
+
+		shippingAddress = shippingAddressResource.getOrderIdShippingAddress(
+			_commerceOrder.getCommerceOrderId());
+
+		Assert.assertEquals(
+			listTypeEntry.getKey(), shippingAddress.getSubtype());
 	}
 
 	@Inject
@@ -304,6 +362,12 @@ public class ShippingAddressResourceTest
 
 	@Inject
 	private CountryLocalService _countryLocalService;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	private Region _region;
 

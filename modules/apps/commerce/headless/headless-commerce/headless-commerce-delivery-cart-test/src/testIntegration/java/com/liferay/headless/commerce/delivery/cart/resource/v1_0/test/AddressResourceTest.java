@@ -117,7 +117,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"city", "country", "description", "name", "phoneNumber", "region",
-			"zip"
+			"subtype", "zip"
 		};
 	}
 
@@ -312,6 +312,7 @@ public class AddressResourceTest extends BaseAddressResourceTestCase {
 				name = commerceAddress.getName();
 				phoneNumber = commerceAddress.getPhoneNumber();
 				region = region1.getName();
+				subtype = commerceAddress.getSubtype();
 				zip = commerceAddress.getZip();
 			}
 		};

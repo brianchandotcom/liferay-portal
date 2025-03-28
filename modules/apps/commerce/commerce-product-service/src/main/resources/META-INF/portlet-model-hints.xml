@@ -145,7 +145,6 @@
 		<field name="shippingExtraPrice" type="double" />
 		<field name="shipSeparately" type="boolean" />
 		<field name="taxExempt" type="boolean" />
-		<field name="visible" type="boolean" />
 		<field name="weight" type="double" />
 		<field name="width" type="double" />
 	</model>

@@ -84,7 +84,6 @@ create table CPConfigurationEntry (
 	shippingExtraPrice DOUBLE,
 	shipSeparately BOOLEAN,
 	taxExempt BOOLEAN,
-	visible BOOLEAN,
 	weight DOUBLE,
 	width DOUBLE,
 	primary key (CPConfigurationEntryId, ctCollectionId)

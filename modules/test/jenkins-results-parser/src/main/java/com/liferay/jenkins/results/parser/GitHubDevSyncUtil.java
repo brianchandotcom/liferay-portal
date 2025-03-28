@@ -1633,7 +1633,9 @@ public class GitHubDevSyncUtil {
 	private static final Pattern _lockedCacheBranchPattern = Pattern.compile(
 		"(cache-.*)-LOCK");
 	private static final ThreadPoolExecutor _threadPoolExecutor =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
+		JenkinsResultsParserUtil.isCloudCINode() ?
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(1, true) :
+				JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
 
 	private abstract static class SafeCallable<T>
 		extends ParallelExecutor.SequentialCallable<T> {

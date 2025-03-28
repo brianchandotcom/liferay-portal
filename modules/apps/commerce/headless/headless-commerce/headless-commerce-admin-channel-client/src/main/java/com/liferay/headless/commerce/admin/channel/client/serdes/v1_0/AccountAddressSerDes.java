@@ -236,6 +236,20 @@ public class AccountAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (accountAddress.getSubtype() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(accountAddress.getSubtype()));
+
+			sb.append("\"");
+		}
+
 		if (accountAddress.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -396,6 +410,13 @@ public class AccountAddressSerDes {
 			map.put("street3", String.valueOf(accountAddress.getStreet3()));
 		}
 
+		if (accountAddress.getSubtype() == null) {
+			map.put("subtype", null);
+		}
+		else {
+			map.put("subtype", String.valueOf(accountAddress.getSubtype()));
+		}
+
 		if (accountAddress.getType() == null) {
 			map.put("type", null);
 		}
@@ -473,6 +494,9 @@ public class AccountAddressSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -573,6 +597,11 @@ public class AccountAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
 				if (jsonParserFieldValue != null) {
 					accountAddress.setStreet3((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
+				if (jsonParserFieldValue != null) {
+					accountAddress.setSubtype((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

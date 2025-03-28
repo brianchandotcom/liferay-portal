@@ -216,6 +216,20 @@ public class ShippingAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (shippingAddress.getSubtype() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shippingAddress.getSubtype()));
+
+			sb.append("\"");
+		}
+
 		if (shippingAddress.getZip() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -351,6 +365,13 @@ public class ShippingAddressSerDes {
 			map.put("street3", String.valueOf(shippingAddress.getStreet3()));
 		}
 
+		if (shippingAddress.getSubtype() == null) {
+			map.put("subtype", null);
+		}
+		else {
+			map.put("subtype", String.valueOf(shippingAddress.getSubtype()));
+		}
+
 		if (shippingAddress.getZip() == null) {
 			map.put("zip", null);
 		}
@@ -415,6 +436,9 @@ public class ShippingAddressSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "zip")) {
@@ -502,6 +526,11 @@ public class ShippingAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
 				if (jsonParserFieldValue != null) {
 					shippingAddress.setStreet3((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
+				if (jsonParserFieldValue != null) {
+					shippingAddress.setSubtype((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "zip")) {

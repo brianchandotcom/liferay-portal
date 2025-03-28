@@ -175,6 +175,7 @@ public abstract class BaseBillingAddressResourceTestCase {
 		billingAddress.setStreet1(regex);
 		billingAddress.setStreet2(regex);
 		billingAddress.setStreet3(regex);
+		billingAddress.setSubtype(regex);
 		billingAddress.setVatNumber(regex);
 		billingAddress.setZip(regex);
 
@@ -194,6 +195,7 @@ public abstract class BaseBillingAddressResourceTestCase {
 		Assert.assertEquals(regex, billingAddress.getStreet1());
 		Assert.assertEquals(regex, billingAddress.getStreet2());
 		Assert.assertEquals(regex, billingAddress.getStreet3());
+		Assert.assertEquals(regex, billingAddress.getSubtype());
 		Assert.assertEquals(regex, billingAddress.getVatNumber());
 		Assert.assertEquals(regex, billingAddress.getZip());
 	}
@@ -682,6 +684,14 @@ public abstract class BaseBillingAddressResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (billingAddress.getSubtype() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("vatNumber", additionalAssertFieldName)) {
 				if (billingAddress.getVatNumber() == null) {
 					valid = false;
@@ -952,6 +962,17 @@ public abstract class BaseBillingAddressResourceTestCase {
 				if (!Objects.deepEquals(
 						billingAddress1.getStreet3(),
 						billingAddress2.getStreet3())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						billingAddress1.getSubtype(),
+						billingAddress2.getSubtype())) {
 
 					return false;
 				}
@@ -1565,6 +1586,52 @@ public abstract class BaseBillingAddressResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("subtype")) {
+			Object object = billingAddress.getSubtype();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("vatNumber")) {
 			Object object = billingAddress.getVatNumber();
 
@@ -1720,6 +1787,7 @@ public abstract class BaseBillingAddressResourceTestCase {
 				street1 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street3 = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				subtype = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				vatNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				zip = StringUtil.toLowerCase(RandomTestUtil.randomString());

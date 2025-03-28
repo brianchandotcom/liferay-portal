@@ -177,6 +177,7 @@ public abstract class BaseAddressResourceTestCase {
 		address.setStreet1(regex);
 		address.setStreet2(regex);
 		address.setStreet3(regex);
+		address.setSubtype(regex);
 		address.setType(regex);
 		address.setVatNumber(regex);
 		address.setZip(regex);
@@ -199,6 +200,7 @@ public abstract class BaseAddressResourceTestCase {
 		Assert.assertEquals(regex, address.getStreet1());
 		Assert.assertEquals(regex, address.getStreet2());
 		Assert.assertEquals(regex, address.getStreet3());
+		Assert.assertEquals(regex, address.getSubtype());
 		Assert.assertEquals(regex, address.getType());
 		Assert.assertEquals(regex, address.getVatNumber());
 		Assert.assertEquals(regex, address.getZip());
@@ -947,6 +949,14 @@ public abstract class BaseAddressResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (address.getSubtype() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (address.getType() == null) {
 					valid = false;
@@ -1241,6 +1251,16 @@ public abstract class BaseAddressResourceTestCase {
 			if (Objects.equals("street3", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						address1.getStreet3(), address2.getStreet3())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						address1.getSubtype(), address2.getSubtype())) {
 
 					return false;
 				}
@@ -1962,6 +1982,52 @@ public abstract class BaseAddressResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("subtype")) {
+			Object object = address.getSubtype();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("type")) {
 			Object object = address.getType();
 
@@ -2171,6 +2237,7 @@ public abstract class BaseAddressResourceTestCase {
 				street1 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street3 = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				subtype = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				typeId = RandomTestUtil.randomInt();
 				vatNumber = StringUtil.toLowerCase(

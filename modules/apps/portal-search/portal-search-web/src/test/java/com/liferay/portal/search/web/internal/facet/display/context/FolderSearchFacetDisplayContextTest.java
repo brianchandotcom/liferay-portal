@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
-import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetEntriesSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.FolderSearchFacetDisplayContextBuilder;
 import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -147,12 +146,12 @@ public class FolderSearchFacetDisplayContextTest
 	protected FacetDisplayContext getFacetDisplayContext(Group group)
 		throws Exception {
 
-		AssetEntriesSearchFacetDisplayContextBuilder
-			assetEntriesSearchFacetDisplayContextBuilder =
-				new AssetEntriesSearchFacetDisplayContextBuilder(
+		FolderSearchFacetDisplayContextBuilder
+			folderSearchFacetDisplayContextBuilder =
+				new FolderSearchFacetDisplayContextBuilder(
 					getRenderRequest(group));
 
-		return assetEntriesSearchFacetDisplayContextBuilder.build();
+		return folderSearchFacetDisplayContextBuilder.build();
 	}
 
 	@Override

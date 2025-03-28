@@ -303,10 +303,27 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
+	public int getFragmentCollectionsCount(
+		long[] groupIds, boolean marketplace) {
+
+		return fragmentCollectionPersistence.countByG_M(groupIds, marketplace);
+	}
+
+	@Override
 	public int getFragmentCollectionsCount(long[] groupIds, String name) {
 		return fragmentCollectionPersistence.countByG_LikeN(
 			groupIds,
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long[] groupIds, String name, boolean marketplace) {
+
+		return fragmentCollectionPersistence.countByG_LikeN_M(
+			groupIds,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			marketplace);
 	}
 
 	@Override

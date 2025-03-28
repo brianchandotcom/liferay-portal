@@ -495,8 +495,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			_getRegionId(null, country, address), address.getCity(),
 			address.getDescription(), address.getName(),
 			address.getPhoneNumber(), address.getStreet1(),
-			address.getStreet2(), address.getStreet3(), StringPool.BLANK, type,
-			address.getZip(), serviceContext);
+			address.getStreet2(), address.getStreet3(), address.getSubtype(),
+			type, address.getZip(), serviceContext);
 	}
 
 	private CommerceOrder _addCommerceOrder(
@@ -1183,8 +1183,8 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			address.getStreet1(),
 			GetterUtil.get(address.getStreet2(), commerceAddress.getStreet2()),
 			GetterUtil.get(address.getStreet3(), commerceAddress.getStreet3()),
-			commerceAddress.getSubtype(), type,
-			GetterUtil.get(address.getZip(), commerceAddress.getZip()),
+			GetterUtil.get(address.getSubtype(), commerceAddress.getSubtype()),
+			type, GetterUtil.get(address.getZip(), commerceAddress.getZip()),
 			serviceContext);
 	}
 

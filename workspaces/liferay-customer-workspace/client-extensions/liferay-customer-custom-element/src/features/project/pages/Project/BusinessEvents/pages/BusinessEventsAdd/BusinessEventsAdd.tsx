@@ -5,7 +5,6 @@
 
 import {ClayInput, ClayRadio} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {Input as TimeInput} from '@clayui/time-picker/lib';
 import {FieldArray, Formik} from 'formik';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -28,7 +27,7 @@ import useGetGMTTimeZonesList from '../../hooks/useGetGMTTimeZonesList';
 import useGetVersionOfLiferaySoftwareList from '../../hooks/useGetVersionOfLiferaySoftwareList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
 import useUpdateOrg from '../../hooks/useUpdateOrg';
-import formatDateToISO from '../../utils/formatDateToISO';
+import {getFormattedGoLiveDateTime} from '../../utils/getFormattedGoLiveDate';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
 
 interface IProps {
@@ -149,21 +148,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 			newLiferayVersion: {key: businessEvent.newLiferayVersion?.key},
 		};
 
-		if (updatedBusinessEvent.targetGoLiveDate) {
-			const formattedDate = formatDateToISO(
-				updatedBusinessEvent.targetGoLiveDate
-			);
-
-			if (updatedBusinessEvent.targetGoLiveTime) {
-				const targetGoLiveTime =
-					updatedBusinessEvent.targetGoLiveTime as unknown as TimeInput;
-				updatedBusinessEvent.targetGoLiveDateTime = `${formattedDate}T${targetGoLiveTime.hours}:${targetGoLiveTime.minutes}:00.000`;
-			}
-			else {
-				updatedBusinessEvent.targetGoLiveDateTime = `${formattedDate}T00:00:00.000`;
-			}
-		}
-
 		try {
 			setIsLoadingSubmitButton(true);
 
@@ -262,6 +246,20 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		businessEvent.newLiferayVersion?.key,
 		setFieldValue,
 		versionOfLiferaySoftwareOptions,
+	]);
+
+	useEffect(() => {
+		setFieldValue(
+			'businessEvent.targetGoLiveDateTime',
+			getFormattedGoLiveDateTime(
+				businessEvent.targetGoLiveDate,
+				businessEvent.targetGoLiveTime
+			)
+		);
+	}, [
+		businessEvent.targetGoLiveDate,
+		businessEvent.targetGoLiveTime,
+		setFieldValue,
 	]);
 
 	useEffect(() => {

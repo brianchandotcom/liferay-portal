@@ -11,7 +11,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -55,14 +54,14 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		_bundleContext = bundle.getBundleContext();
 
-		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
-			StartupHelperUtil.class, "_upgrading", false);
+		_upgrading = StartupHelperUtil.isUpgrading();
+
+		StartupHelperUtil.setUpgrading(false);
 	}
 
 	@After
 	public void tearDown() {
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", _upgrading);
+		StartupHelperUtil.setUpgrading(_upgrading);
 
 		Release release = _releaseLocalService.fetchRelease(_symbolicName);
 
@@ -394,11 +393,9 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		_releaseLocalService.updateRelease(release);
 
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", true);
+		StartupHelperUtil.setUpgrading(true);
 
-		return () -> ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", false);
+		return () -> StartupHelperUtil.setUpgrading(false);
 	}
 
 	private static BundleContext _bundleContext;

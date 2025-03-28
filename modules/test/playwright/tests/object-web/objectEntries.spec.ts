@@ -938,7 +938,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			});
 
 		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
 			await objectDefinitionAPIClient.postObjectDefinition({

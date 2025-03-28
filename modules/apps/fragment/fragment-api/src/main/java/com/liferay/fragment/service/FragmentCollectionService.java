@@ -154,7 +154,15 @@ public interface FragmentCollectionService extends BaseService {
 	public int getFragmentCollectionsCount(long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentCollectionsCount(
+		long[] groupIds, boolean marketplace);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentCollectionsCount(long[] groupIds, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentCollectionsCount(
+		long[] groupIds, String name, boolean marketplace);
 
 	/**
 	 * Returns the OSGi service identifier.

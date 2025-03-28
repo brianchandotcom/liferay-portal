@@ -212,9 +212,22 @@ public class FragmentCollectionServiceUtil {
 	}
 
 	public static int getFragmentCollectionsCount(
+		long[] groupIds, boolean marketplace) {
+
+		return getService().getFragmentCollectionsCount(groupIds, marketplace);
+	}
+
+	public static int getFragmentCollectionsCount(
 		long[] groupIds, String name) {
 
 		return getService().getFragmentCollectionsCount(groupIds, name);
+	}
+
+	public static int getFragmentCollectionsCount(
+		long[] groupIds, String name, boolean marketplace) {
+
+		return getService().getFragmentCollectionsCount(
+			groupIds, name, marketplace);
 	}
 
 	/**

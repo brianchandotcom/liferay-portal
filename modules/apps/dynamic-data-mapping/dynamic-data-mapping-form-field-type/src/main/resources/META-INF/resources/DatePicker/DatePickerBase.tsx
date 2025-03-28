@@ -278,6 +278,8 @@ export default function DatePickerBase({
 							'select-previous-month'
 						)}`,
 						dialog: `${Liferay.Language.get('select-date')}`,
+						selectMonth: `${Liferay.Language.get('select-a-month')}`,
+						selectYear: `${Liferay.Language.get('select-a-year')}`,
 					}}
 					dateFormat={clayFormat}
 					dir={dir}

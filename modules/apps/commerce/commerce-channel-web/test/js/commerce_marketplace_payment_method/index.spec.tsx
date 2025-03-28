@@ -11,6 +11,7 @@ import {act} from 'react-dom/test-utils';
 import '@testing-library/jest-dom/extend-expect';
 
 import CommerceChannelAddPaymentMethod from '../../../src/main/resources/META-INF/resources/js/commerce_marketplace_payment_method';
+import marketplacePermissionsMock from '../__mock__/marketplacePermissions';
 import {marketplaceSettingsMock} from '../__mock__/marketplaceSettings';
 import placedOrders from '../__mock__/placedOrderresponse';
 import {productResponseMock} from '../__mock__/product';
@@ -82,7 +83,10 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		fetch.mockResponseOnce(JSON.stringify({authorized: false, data: null}));
 
 		const {queryByRole, queryByText} = render(
-			<CommerceChannelAddPaymentMethod />
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
 		);
 		const marketplaceIcon = queryByRole('presentation');
 
@@ -111,7 +115,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		fetch.mockResponseOnce(JSON.stringify({authorized: false, data: null}));
 
-		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -130,7 +139,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		fetch.mockResponseOnce(JSON.stringify({authorized: false, data: null}));
 
-		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -155,7 +169,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(placedOrders))
 			.mockResponseOnce(JSON.stringify(projectsMockResponse));
 
-		const {queryByText} = await render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = await render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -187,7 +206,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(productResponseMock))
 			.mockResponseOnce(JSON.stringify(placedOrders));
 
-		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -214,7 +238,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(placedOrders))
 			.mockResponseOnce(JSON.stringify(projectsMockResponse));
 
-		const {queryByText} = await render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = await render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -243,7 +272,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(placedOrders))
 			.mockResponse(JSON.stringify(projectsMockResponse));
 
-		const {queryByText} = await render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = await render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -276,7 +310,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(cartResponseMock))
 			.mockRejectOnce();
 
-		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -330,7 +369,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(placedOrders))
 			.mockResponse(JSON.stringify(noResources));
 
-		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -377,7 +421,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(projectsMockResponse))
 			.mockResponse(JSON.stringify(cartResponseMock));
 
-		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);
@@ -426,7 +475,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			.mockResponseOnce(JSON.stringify(placedOrderResponse))
 			.mockResponseOnce(JSON.stringify(projectsMockResponse));
 
-		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
+		const {queryByText} = render(
+			<CommerceChannelAddPaymentMethod
+				baseResourceURL=""
+				permissions={marketplacePermissionsMock}
+			/>
+		);
 
 		await act(() => {
 			fireEvent.click(queryByText('add') as HTMLButtonElement);

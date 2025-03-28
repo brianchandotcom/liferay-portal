@@ -50,7 +50,7 @@ export default async function deleteStructureAction({
 		openModal({
 			bodyHTML: `<p>${sub(
 				Liferay.Language.get(
-					'x-is-currently-referenced-by-or-referencing-other-structures-and-cannot-be-deleted'
+					'x-is-currently-referenced-by-or-referencing-other-structures,-and-so-cannot-be-deleted'
 				),
 				`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
 			)}</p>`,

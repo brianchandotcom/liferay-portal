@@ -61,7 +61,6 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 				<liferay-template:template-selector
 					className="<%= ModifiedFacetPortlet.class.getName() %>"
 					displayStyle="<%= modifiedFacetPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= modifiedFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

@@ -1,7 +1,5 @@
 apply plugin: "war"
 
-task deployWar(type: Copy)
-
 dependencies {
 	compileOnly group: "javax.enterprise", name: "cdi-api", version: "1.2"
 	compileOnly group: "javax.faces", name: "javax.faces-api", version: "2.2"
@@ -13,20 +11,13 @@ dependencies {
 }
 
 deploy {
-	setActions([])
+	from war
 
-	dependsOn = []
-	finalizedBy deployWar
+	rename {
+		"bean-portlet-cdi-extension-sample-test.war"
+	}
 }
 
-deployWar {
-	dependsOn war
-
-	def warTask = tasks.named("war").get()
-
-	from warTask.outputs.files.singleFile
-	into "${liferay.liferayHome}/osgi/war"
-	rename {
-		String fileName -> "bean-portlet-cdi-extension-sample-test.war"
-	}
+liferay {
+	deployDir = file("${liferayHome}/osgi/war")
 }

@@ -530,8 +530,32 @@
 																	"frequencyThreshold": "1",
 																	"maxTerms": "10",
 																	"order": "key:asc",
-																	"parameterName": "Category",
+																	"parameterName": "Area",
 																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace App Category$]"
+																},
+																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor",
+																"borderRadius": "10px",
+																"marginTop": "4",
+																"overflow": "hidden"
+															},
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_APPS-VOCABULARY-FACETS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"maxTerms": "10",
+																	"order": "key:asc",
+																	"parameterName": "Category",
+																	"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Category$]"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}

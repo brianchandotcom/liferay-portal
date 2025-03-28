@@ -15,6 +15,10 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
+		"styleBook": {
+			"key": "Marketplace",
+			"name": "Marketplace"
+		},
 		"themeName": "Classic",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

@@ -68,7 +68,7 @@ public class ShippingAddressUtil {
 			shippingAddress.getCity(), shippingAddress.getDescription(),
 			shippingAddress.getName(), shippingAddress.getPhoneNumber(),
 			shippingAddress.getStreet1(), shippingAddress.getStreet2(),
-			shippingAddress.getStreet3(), StringPool.BLANK,
+			shippingAddress.getStreet3(), shippingAddress.getSubtype(),
 			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
 			shippingAddress.getZip(), serviceContext);
 	}

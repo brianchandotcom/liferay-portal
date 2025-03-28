@@ -60,6 +60,7 @@ public class BillingAddressDTOConverter
 				setStreet1(commerceAddress::getStreet1);
 				setStreet2(commerceAddress::getStreet2);
 				setStreet3(commerceAddress::getStreet3);
+				setSubtype(commerceAddress::getSubtype);
 				setZip(commerceAddress::getZip);
 			}
 		};

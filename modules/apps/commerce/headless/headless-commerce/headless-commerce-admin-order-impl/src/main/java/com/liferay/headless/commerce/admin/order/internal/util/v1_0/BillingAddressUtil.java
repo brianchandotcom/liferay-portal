@@ -69,7 +69,7 @@ public class BillingAddressUtil {
 			billingAddress.getCity(), billingAddress.getDescription(),
 			billingAddress.getName(), billingAddress.getPhoneNumber(),
 			billingAddress.getStreet1(), billingAddress.getStreet2(),
-			billingAddress.getStreet3(), StringPool.BLANK,
+			billingAddress.getStreet3(), billingAddress.getSubtype(),
 			CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING,
 			billingAddress.getZip(), serviceContext);
 	}

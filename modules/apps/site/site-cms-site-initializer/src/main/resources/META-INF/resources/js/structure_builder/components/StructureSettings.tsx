@@ -96,7 +96,6 @@ function StructureSettings() {
 					translations={
 						label as Liferay.Language.LocalizedValue<string>
 					}
-					validate
 				/>
 			</ClayForm.Group>
 

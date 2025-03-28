@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -205,7 +206,13 @@ public class SharingEntryLocalServiceImpl
 	 */
 	@Override
 	public void deleteExpiredEntries() {
-		sharingEntryPersistence.removeByLtExpirationDate(DateUtil.newDate());
+		for (SharingEntry sharingEntry :
+				sharingEntryPersistence.findByLtExpirationDate(
+					DateUtil.newDate(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+		}
 	}
 
 	/**
@@ -250,7 +257,8 @@ public class SharingEntryLocalServiceImpl
 	public SharingEntry deleteSharingEntry(long sharingEntryId)
 		throws PortalException {
 
-		return sharingEntryLocalService.deleteSharingEntry(getSharingEntry(sharingEntryId));
+		return sharingEntryLocalService.deleteSharingEntry(
+			getSharingEntry(sharingEntryId));
 	}
 
 	/**

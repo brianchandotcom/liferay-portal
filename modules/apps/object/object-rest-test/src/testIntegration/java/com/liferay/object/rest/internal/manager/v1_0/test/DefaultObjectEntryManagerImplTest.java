@@ -1305,6 +1305,140 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testAddObjectEntryWithDefaultValue() throws Exception {
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Arrays.asList(
+				new BooleanObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					"localizedBooleanObjectFieldName"
+				).build(),
+				new PicklistObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).listTypeDefinitionId(
+					listTypeDefinition.getListTypeDefinitionId()
+				).localized(
+					true
+				).name(
+					"localizedPicklistObjectFieldName"
+				).build()));
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition,
+			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName_i18n", () -> null
+			).put(
+				"localizedPicklistObjectFieldName_i18n", () -> null
+			).build());
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		Assert.assertNull(
+			properties.get("localizedBooleanObjectFieldName_i18n"));
+		Assert.assertNull(
+			properties.get("localizedPicklistObjectFieldName_i18n"));
+
+		Map<String, Object> localizedObjectFieldI18nValues =
+			HashMapBuilder.<String, Object>put(
+				"localizedBooleanObjectFieldName_i18n",
+				HashMapBuilder.<String, Object>put(
+					"en_US", RandomTestUtil.randomBoolean()
+				).put(
+					"pt_BR", RandomTestUtil.randomBoolean()
+				).build()
+			).put(
+				"localizedPicklistObjectFieldName_i18n",
+				HashMapBuilder.<String, Object>put(
+					"en_US", _listTypeEntryKey1
+				).put(
+					"pt_BR", _listTypeEntryKey2
+				).build()
+			).build();
+
+		assertEquals(
+			_addObjectEntry(objectDefinition, localizedObjectFieldI18nValues),
+			new ObjectEntry() {
+				{
+					properties = localizedObjectFieldI18nValues;
+				}
+			});
+
+		_addObjectFieldSettingDefaultValue(
+			StringPool.TRUE, objectDefinition,
+			"localizedBooleanObjectFieldName");
+		_addObjectFieldSettingDefaultValue(
+			_listTypeEntryKey1, objectDefinition,
+			"localizedPicklistObjectFieldName");
+
+		assertEquals(
+			_addObjectEntry(
+				objectDefinition,
+				HashMapBuilder.<String, Object>put(
+					"localizedBooleanObjectFieldName_i18n", () -> null
+				).put(
+					"localizedPicklistObjectFieldName_i18n", () -> null
+				).build()),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedBooleanObjectFieldName_i18n",
+						HashMapBuilder.<String, Object>put(
+							"en_US", true
+						).build()
+					).put(
+						"localizedPicklistObjectFieldName_i18n",
+						HashMapBuilder.<String, Object>put(
+							"en_US", _listTypeEntryKey1
+						).build()
+					).build();
+				}
+			});
+		assertEquals(
+			_addObjectEntry(
+				objectDefinition,
+				HashMapBuilder.<String, Object>put(
+					"localizedBooleanObjectFieldName_i18n",
+					HashMapBuilder.<String, Object>put(
+						"pt_BR", true
+					).build()
+				).put(
+					"localizedPicklistObjectFieldName_i18n",
+					HashMapBuilder.<String, Object>put(
+						"pt_BR", _listTypeEntryKey2
+					).build()
+				).build()),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"localizedBooleanObjectFieldName_i18n",
+						HashMapBuilder.<String, Object>put(
+							"en_US", true
+						).put(
+							"pt_BR", true
+						).build()
+					).put(
+						"localizedPicklistObjectFieldName_i18n",
+						HashMapBuilder.<String, Object>put(
+							"en_US", _listTypeEntryKey1
+						).put(
+							"pt_BR", _listTypeEntryKey2
+						).build()
+					).build();
+				}
+			});
+
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
 	public void testAddObjectEntryWithDynamicObjectFieldValues()
 		throws Exception {
 
@@ -2224,18 +2358,9 @@ public class DefaultObjectEntryManagerImplTest
 				_addAndAssertObjectEntryWithPicklistObjectField(
 					"listTypeEntryKey2", "listTypeEntryKey2", objectDefinition);
 
-			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectDefinition.getObjectDefinitionId(),
+			_addObjectFieldSettingDefaultValue(
+				"listTypeEntryKey1", objectDefinition,
 				"picklistObjectFieldName");
-
-			_objectFieldSettingLocalService.addObjectFieldSetting(
-				TestPropsValues.getUserId(), objectField.getObjectFieldId(),
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
-				"listTypeEntryKey1");
-			_objectFieldSettingLocalService.addObjectFieldSetting(
-				TestPropsValues.getUserId(), objectField.getObjectFieldId(),
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
-				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE);
 
 			Assert.assertEquals(
 				StringPool.BLANK,
@@ -6009,6 +6134,23 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	private void _addObjectFieldSettingDefaultValue(
+			String defaultValue, ObjectDefinition objectDefinition,
+			String objectFieldName)
+		throws Exception {
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), objectFieldName);
+
+		_objectFieldSettingLocalService.addObjectFieldSetting(
+			TestPropsValues.getUserId(), objectField.getObjectFieldId(),
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE, defaultValue);
+		_objectFieldSettingLocalService.addObjectFieldSetting(
+			TestPropsValues.getUserId(), objectField.getObjectFieldId(),
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+			ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE);
 	}
 
 	private void _addRelatedObjectEntries(

@@ -67,7 +67,8 @@ export default function StructuresFDSPropsTransformer({
 
 				importStructureAction(
 					target.href,
-					itemData.objectFolderExternalReferenceCode
+					itemData.objectFolderExternalReferenceCode,
+					loadData
 				);
 			}
 			else if (action.data.id === 'delete') {

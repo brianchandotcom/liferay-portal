@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -27,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.cxf.rs.security.jose.jwa.SignatureAlgorithm;
 import org.apache.cxf.rs.security.jose.jwk.JsonWebKey;
 import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
@@ -252,7 +254,12 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 				JwtClaims jwtClaims = jwtToken.getClaims();
 				JwsHeaders jwsHeaders = jwtToken.getJwsHeaders();
 
-				_initGrantHandler(companyId, jwtClaims, jwsHeaders);
+				if (StringUtil.equals(
+						jwsHeaders.getAlgorithm(),
+						SignatureAlgorithm.RS256.getJwaName())) {
+
+					_initGrantHandler(companyId, jwtClaims, jwsHeaders);
+				}
 
 				validateSignature(
 					new JwsHeaders(jwsHeaders),

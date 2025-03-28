@@ -5,9 +5,18 @@
 
 package com.liferay.address.service.test;
 
+import com.liferay.account.configuration.AccountEntryAddressSubtypeConfiguration;
+import com.liferay.account.constants.AccountListTypeConstants;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.AddressSubtypeException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -28,8 +37,10 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -83,6 +94,67 @@ public class AddressLocalServiceTest {
 				_phoneLocalService.getPhones(
 					address.getCompanyId(), address.getClassName(),
 					address.getAddressId())));
+	}
+
+	@Test
+	public void testAddAddressWithSubtype() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		long listTypeId = _listTypeLocalService.getListTypeId(
+			user.getCompanyId(),
+			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
+			AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
+
+		try {
+			_addressLocalService.addAddress(
+				null, user.getUserId(), AccountEntry.class.getName(),
+				user.getContactId(), 0, listTypeId, 0,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), false,
+				RandomTestUtil.randomString(), null, null,
+				RandomTestUtil.randomString(), null, null,
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (AddressSubtypeException addressSubtypeException) {
+			Assert.assertNotNull(addressSubtypeException);
+		}
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, user.getUserId(), true);
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				null, TestPropsValues.getUserId(),
+				listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AccountEntryAddressSubtypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"billingAddressSubtypeListTypeDefinition" +
+								"ExternalReferenceCode",
+							listTypeDefinition.getExternalReferenceCode()
+						).build())) {
+
+			Address address = _addressLocalService.addAddress(
+				null, user.getUserId(), AccountEntry.class.getName(),
+				user.getContactId(), 0, listTypeId, 0,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), false,
+				RandomTestUtil.randomString(), null, null,
+				listTypeEntry.getKey(), null, null,
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
+		}
 	}
 
 	@Test
@@ -345,6 +417,13 @@ public class AddressLocalServiceTest {
 
 	@Inject
 	private static CountryLocalService _countryLocalService;
+
+	@Inject
+	private static ListTypeDefinitionLocalService
+		_listTypeDefinitionLocalService;
+
+	@Inject
+	private static ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private static ListTypeLocalService _listTypeLocalService;

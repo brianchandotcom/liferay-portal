@@ -80,6 +80,9 @@ components:
                 street3:
                     example: suite 200
                     type: string
+                subtype:
+                    example: box
+                    type: string
                 type:
                     example: 1
                     format: int32

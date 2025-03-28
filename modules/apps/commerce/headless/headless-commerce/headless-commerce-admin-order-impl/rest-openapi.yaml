@@ -82,6 +82,9 @@ components:
                 street3:
                     example: suite 200
                     type: string
+                subtype:
+                    example: box
+                    type: string
                 vatNumber:
                     example: "353246836565"
                     type: string
@@ -1258,6 +1261,9 @@ components:
                     type: string
                 street3:
                     example: suite 200
+                    type: string
+                subtype:
+                    example: box
                     type: string
                 zip:
                     example: "91765"

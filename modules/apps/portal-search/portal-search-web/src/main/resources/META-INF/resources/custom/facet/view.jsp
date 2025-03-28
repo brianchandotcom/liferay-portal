@@ -208,7 +208,7 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 											id='<%= liferayPortletResponse.getNamespace() + "customRangeFrom" %>'
 											md="6"
 										>
-											<aui:field-wrapper label="from">
+											<aui:field-wrapper label="from" name="fromInput">
 												<liferay-ui:input-date
 													cssClass="custom-range-input-date-from"
 													dayParam="fromDay"
@@ -228,7 +228,7 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 											id='<%= liferayPortletResponse.getNamespace() + "customRangeTo" %>'
 											md="6"
 										>
-											<aui:field-wrapper label="to">
+											<aui:field-wrapper label="to" name="toInput">
 												<liferay-ui:input-date
 													cssClass="custom-range-input-date-to"
 													dayParam="toDay"

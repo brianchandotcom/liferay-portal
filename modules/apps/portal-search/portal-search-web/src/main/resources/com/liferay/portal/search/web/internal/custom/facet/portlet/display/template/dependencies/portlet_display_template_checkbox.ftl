@@ -162,7 +162,10 @@
 				<#if customFacetDisplayContext.getAggregationType() == "dateRange">
 					<div class="${(!customFacetCalendarDisplayContext.isSelected())?then("hide", "")} date-custom-range" id="${namespace}customRange">
 						<div class="col-md-6" id="${namespace}customRangeFrom">
-							<@liferay_aui["field-wrapper"] label="from">
+							<@liferay_aui["field-wrapper"]
+								label="from"
+								name="fromInput"
+							>
 								<@liferay_ui["input-date"]
 									cssClass="custom-range-input-date-from"
 									dayParam="fromDay"
@@ -179,7 +182,10 @@
 						</div>
 
 						<div class="col-md-6" id="${namespace}customRangeTo">
-							<@liferay_aui["field-wrapper"] label="to">
+							<@liferay_aui["field-wrapper"]
+								label="to"
+								name="toInput"
+							>
 								<@liferay_ui["input-date"]
 									cssClass="custom-range-input-date-to"
 									dayParam="toDay"

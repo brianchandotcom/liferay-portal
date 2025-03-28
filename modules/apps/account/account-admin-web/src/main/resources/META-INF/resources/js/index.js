@@ -11,6 +11,7 @@ export {default as AccountOrganizationsManagementToolbarPropsTransformer} from '
 export {default as AccountRolesManagementToolbarPropsTransformer} from './account_entries_admin/AccountRolesManagementToolbarPropsTransformer';
 export {default as AccountUserDropdownDefaultPropsTransformer} from './account_entries_admin/AccountUserDropdownDefaultPropsTransformer';
 export {default as AccountUsersManagementToolbarPropsTransformer} from './account_entries_admin/AccountUsersManagementToolbarPropsTransformer';
+export {default as AddressSubtypeListAutocomplete} from './account_entries_admin/AddressSubtypeListAutocomplete';
 export {default as CountryRegionDynamicSelect} from './account_entries_admin/CountryRegionDynamicSelect';
 export {default as DefaultAddresses} from './account_entries_admin/DefaultAddresses';
 export {default as InviteUsersForm} from './account_entries_admin/InviteUsersForm';

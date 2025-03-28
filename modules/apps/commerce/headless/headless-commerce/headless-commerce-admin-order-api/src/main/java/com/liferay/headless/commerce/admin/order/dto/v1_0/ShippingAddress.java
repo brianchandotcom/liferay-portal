@@ -588,6 +588,47 @@ public class ShippingAddress implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _street3Supplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "box")
+	public String getSubtype() {
+		if (_subtypeSupplier != null) {
+			subtype = _subtypeSupplier.get();
+
+			_subtypeSupplier = null;
+		}
+
+		return subtype;
+	}
+
+	public void setSubtype(String subtype) {
+		this.subtype = subtype;
+
+		_subtypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSubtype(
+		UnsafeSupplier<String, Exception> subtypeUnsafeSupplier) {
+
+		_subtypeSupplier = () -> {
+			try {
+				return subtypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String subtype;
+
+	@JsonIgnore
+	private Supplier<String> _subtypeSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(example = "91765")
 	public String getZip() {
 		if (_zipSupplier != null) {
@@ -846,6 +887,22 @@ public class ShippingAddress implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(street3));
+
+			sb.append("\"");
+		}
+
+		String subtype = getSubtype();
+
+		if (subtype != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(subtype));
 
 			sb.append("\"");
 		}

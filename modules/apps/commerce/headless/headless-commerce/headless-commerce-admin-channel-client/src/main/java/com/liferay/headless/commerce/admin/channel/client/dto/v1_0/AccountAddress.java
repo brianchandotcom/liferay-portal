@@ -334,6 +334,27 @@ public class AccountAddress implements Cloneable, Serializable {
 
 	protected String street3;
 
+	public String getSubtype() {
+		return subtype;
+	}
+
+	public void setSubtype(String subtype) {
+		this.subtype = subtype;
+	}
+
+	public void setSubtype(
+		UnsafeSupplier<String, Exception> subtypeUnsafeSupplier) {
+
+		try {
+			subtype = subtypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String subtype;
+
 	public Integer getType() {
 		return type;
 	}

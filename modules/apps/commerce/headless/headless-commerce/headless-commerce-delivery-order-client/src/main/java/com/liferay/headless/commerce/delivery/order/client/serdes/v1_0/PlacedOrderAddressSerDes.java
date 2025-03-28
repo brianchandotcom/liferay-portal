@@ -244,6 +244,20 @@ public class PlacedOrderAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderAddress.getSubtype() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderAddress.getSubtype()));
+
+			sb.append("\"");
+		}
+
 		if (placedOrderAddress.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -434,6 +448,13 @@ public class PlacedOrderAddressSerDes {
 			map.put("street3", String.valueOf(placedOrderAddress.getStreet3()));
 		}
 
+		if (placedOrderAddress.getSubtype() == null) {
+			map.put("subtype", null);
+		}
+		else {
+			map.put("subtype", String.valueOf(placedOrderAddress.getSubtype()));
+		}
+
 		if (placedOrderAddress.getType() == null) {
 			map.put("type", null);
 		}
@@ -526,6 +547,9 @@ public class PlacedOrderAddressSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -632,6 +656,11 @@ public class PlacedOrderAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderAddress.setStreet3((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderAddress.setSubtype((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

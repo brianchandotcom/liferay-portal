@@ -175,6 +175,7 @@ public abstract class BaseShippingAddressResourceTestCase {
 		shippingAddress.setStreet1(regex);
 		shippingAddress.setStreet2(regex);
 		shippingAddress.setStreet3(regex);
+		shippingAddress.setSubtype(regex);
 		shippingAddress.setZip(regex);
 
 		String json = ShippingAddressSerDes.toJSON(shippingAddress);
@@ -193,6 +194,7 @@ public abstract class BaseShippingAddressResourceTestCase {
 		Assert.assertEquals(regex, shippingAddress.getStreet1());
 		Assert.assertEquals(regex, shippingAddress.getStreet2());
 		Assert.assertEquals(regex, shippingAddress.getStreet3());
+		Assert.assertEquals(regex, shippingAddress.getSubtype());
 		Assert.assertEquals(regex, shippingAddress.getZip());
 	}
 
@@ -827,6 +829,14 @@ public abstract class BaseShippingAddressResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (shippingAddress.getSubtype() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("zip", additionalAssertFieldName)) {
 				if (shippingAddress.getZip() == null) {
 					valid = false;
@@ -1092,6 +1102,17 @@ public abstract class BaseShippingAddressResourceTestCase {
 				if (!Objects.deepEquals(
 						shippingAddress1.getStreet3(),
 						shippingAddress2.getStreet3())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						shippingAddress1.getSubtype(),
+						shippingAddress2.getSubtype())) {
 
 					return false;
 				}
@@ -1694,6 +1715,52 @@ public abstract class BaseShippingAddressResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("subtype")) {
+			Object object = shippingAddress.getSubtype();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("zip")) {
 			Object object = shippingAddress.getZip();
 
@@ -1803,6 +1870,7 @@ public abstract class BaseShippingAddressResourceTestCase {
 				street1 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street2 = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				street3 = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				subtype = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				zip = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

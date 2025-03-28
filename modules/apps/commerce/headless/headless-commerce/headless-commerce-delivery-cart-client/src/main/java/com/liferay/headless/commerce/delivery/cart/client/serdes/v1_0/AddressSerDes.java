@@ -242,6 +242,20 @@ public class AddressSerDes {
 			sb.append("\"");
 		}
 
+		if (address.getSubtype() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(address.getSubtype()));
+
+			sb.append("\"");
+		}
+
 		if (address.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -421,6 +435,13 @@ public class AddressSerDes {
 			map.put("street3", String.valueOf(address.getStreet3()));
 		}
 
+		if (address.getSubtype() == null) {
+			map.put("subtype", null);
+		}
+		else {
+			map.put("subtype", String.valueOf(address.getSubtype()));
+		}
+
 		if (address.getType() == null) {
 			map.put("type", null);
 		}
@@ -511,6 +532,9 @@ public class AddressSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -612,6 +636,11 @@ public class AddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "street3")) {
 				if (jsonParserFieldValue != null) {
 					address.setStreet3((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
+				if (jsonParserFieldValue != null) {
+					address.setSubtype((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

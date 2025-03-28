@@ -58,43 +58,43 @@ public class WebContextConfigurationCORSClientTest
 
 	@Test
 	public void testApplicationCORSForGuestUser() throws Exception {
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, false, false);
 		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, false, false);
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, false, true,
-			"http://localhost:8080");
-		assertJaxRSUrl(
 			"/cors/cors-app", HttpMethod.GET, false, true,
 			"http://localhost:8080");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, false, true,
+			"/cors/cors-app", HttpMethod.GET, false, true,
 			"http://127.0.0.1:8080");
+		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, false, true, "::1");
+		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, false, false);
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.GET, false, true,
+			"/cors/cors-app", HttpMethod.OPTIONS, false, true,
+			"http://localhost:8080");
+		assertJaxRSUrl(
+			"/cors/cors-app", HttpMethod.OPTIONS, false, true,
 			"http://127.0.0.1:8080");
 		assertJaxRSUrl(
 			"/cors/cors-app", HttpMethod.OPTIONS, false, true, "::1");
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, false, true, "::1");
 	}
 
 	@Test
 	public void testApplicationCORSWithoutOAuth2() throws Exception {
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, true, false);
 		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, true, false);
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, true, true,
-			"http://localhost:8080");
-		assertJaxRSUrl(
 			"/cors/cors-app", HttpMethod.GET, true, false,
 			"http://localhost:8080");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, true, true,
+			"/cors/cors-app", HttpMethod.GET, true, false,
 			"http://127.0.0.1:8080");
+		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, true, false, "::1");
+		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, true, false);
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.GET, true, false,
+			"/cors/cors-app", HttpMethod.OPTIONS, true, true,
+			"http://localhost:8080");
+		assertJaxRSUrl(
+			"/cors/cors-app", HttpMethod.OPTIONS, true, true,
 			"http://127.0.0.1:8080");
 		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, true, true, "::1");
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, true, false, "::1");
 	}
 
 }

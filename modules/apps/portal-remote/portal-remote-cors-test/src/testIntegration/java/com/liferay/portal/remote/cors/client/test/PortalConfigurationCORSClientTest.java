@@ -53,23 +53,23 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 	@Test
 	public void testCORSUsingBasicWithDefaultConfig() throws Exception {
-		assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, false);
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false);
 		assertJsonWSUrl(
-			"/user/get-current-user", HttpMethod.OPTIONS, true,
-			"http://localhost:8080");
-		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.GET, false,
 			"http://localhost:8080");
 		assertJsonWSUrl(
-			"/user/get-current-user", HttpMethod.OPTIONS, true,
+			"/user/get-current-user", HttpMethod.GET, false,
 			"http://127.0.0.1:8080");
+		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false, "::1");
+		assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, false);
 		assertJsonWSUrl(
-			"/user/get-current-user", HttpMethod.GET, false,
+			"/user/get-current-user", HttpMethod.OPTIONS, true,
+			"http://localhost:8080");
+		assertJsonWSUrl(
+			"/user/get-current-user", HttpMethod.OPTIONS, true,
 			"http://127.0.0.1:8080");
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.OPTIONS, true, "::1");
-		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false, "::1");
 	}
 
 	@Test
@@ -78,25 +78,26 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"CORS_DISABLE_AUTHORIZATION_CONTEXT_CHECK", true)) {
 
-			assertJsonWSUrl(
-				"/user/get-current-user", HttpMethod.OPTIONS, false);
 			assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false);
 			assertJsonWSUrl(
-				"/user/get-current-user", HttpMethod.OPTIONS, true,
-				"http://localhost:8080");
-			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.GET, true,
 				"http://localhost:8080");
 			assertJsonWSUrl(
-				"/user/get-current-user", HttpMethod.OPTIONS, true,
+				"/user/get-current-user", HttpMethod.GET, true,
 				"http://127.0.0.1:8080");
 			assertJsonWSUrl(
-				"/user/get-current-user", HttpMethod.GET, true,
+				"/user/get-current-user", HttpMethod.GET, true, "::1");
+
+			assertJsonWSUrl(
+				"/user/get-current-user", HttpMethod.OPTIONS, false);
+			assertJsonWSUrl(
+				"/user/get-current-user", HttpMethod.OPTIONS, true,
+				"http://localhost:8080");
+			assertJsonWSUrl(
+				"/user/get-current-user", HttpMethod.OPTIONS, true,
 				"http://127.0.0.1:8080");
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, true, "::1");
-			assertJsonWSUrl(
-				"/user/get-current-user", HttpMethod.GET, true, "::1");
 		}
 	}
 

@@ -15,6 +15,9 @@
 			"futuristic"
 		],
 		"relatedContents": [
+		],
+		"taxonomyCategoryIds": [
+			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/technology.json#]"
 		]
 	},
 	{
@@ -33,6 +36,9 @@
 			"colored"
 		],
 		"relatedContents": [
+		],
+		"taxonomyCategoryIds": [
+			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
 	},
 	{
@@ -52,6 +58,9 @@
 			"womens"
 		],
 		"relatedContents": [
+		],
+		"taxonomyCategoryIds": [
+			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
 	},
 	{
@@ -74,6 +83,9 @@
 			"womens"
 		],
 		"relatedContents": [
+		],
+		"taxonomyCategoryIds": [
+			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/technology.json#]"
 		]
 	},
 	{

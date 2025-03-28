@@ -470,7 +470,7 @@
 												},
 												"text": {
 													"mapping": {
-														"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Blog Posts$]",
+														"fieldKey": "AssetCategory_categories",
 														"itemReference": {
 															"contextSource": "DisplayPageItem"
 														}
@@ -479,6 +479,10 @@
 											}
 										}
 									],
+									"fragmentStyle": {
+										"fontSize": "1.125rem",
+										"fontWeight": "fontWeightBolder"
+									},
 									"indexed": true
 								},
 								"type": "Fragment"
@@ -1336,7 +1340,7 @@
 																	"value": {
 																		"html": {
 																			"value_i18n": {
-																				"en_US": "<p class=\"mb-0\">\n © 2024 Clarity Vision Solutions, INC\n</p>"
+																				"en_US": "<p class=\"mb-0\">\n © 2025 Clarity Vision Solutions, INC\n</p>"
 																			}
 																		}
 																	}

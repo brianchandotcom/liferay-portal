@@ -22,6 +22,7 @@ const languageMap = {
 };
 
 window.Liferay = {
+	...Liferay,
 	Language: {
 		available: {
 			ar_SA: 'Arabic (Saudi Arabia)',

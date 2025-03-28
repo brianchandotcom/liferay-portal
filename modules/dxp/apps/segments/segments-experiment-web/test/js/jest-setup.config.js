@@ -4,6 +4,7 @@
  */
 
 const Liferay = {
+	...global.Liferay,
 	Language: {
 		available: {
 			en_US: 'English (United States)',

@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -85,7 +86,7 @@ public class DeleteDuplicateUniqueFinderRows extends UpgradeProcess {
 						StringBundler.concat(
 							"Failed to delete duplicate row from table ",
 							_tableName, " for index columns (",
-							String.join(", ", _columnNames), "): ",
+							StringUtil.merge(_columnNames,", "), "): ",
 							duplicateRow.toString()),
 						sqlException);
 				}
@@ -95,7 +96,7 @@ public class DeleteDuplicateUniqueFinderRows extends UpgradeProcess {
 							StringBundler.concat(
 								"Deleted duplicate row from table ", _tableName,
 								" for index columns (",
-								String.join(", ", _columnNames), "): ",
+								StringUtil.merge(_columnNames,", "), "): ",
 								duplicateRow.toString()));
 					}
 
@@ -203,11 +204,11 @@ public class DeleteDuplicateUniqueFinderRows extends UpgradeProcess {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("select ");
-		sb.append(String.join(", ", _columnNames));
+		sb.append(StringUtil.merge(_columnNames,", "));
 		sb.append(" from ");
 		sb.append(_tableName);
 		sb.append(" group by ");
-		sb.append(String.join(", ", _columnNames));
+		sb.append(StringUtil.merge(_columnNames,", "));
 		sb.append(" having count(*) > 1");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

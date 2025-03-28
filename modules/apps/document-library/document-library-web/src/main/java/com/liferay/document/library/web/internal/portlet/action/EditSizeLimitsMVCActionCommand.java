@@ -113,12 +113,14 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 
 		long fileMaxSize = ParamUtil.getLong(actionRequest, "fileMaxSize");
 		long maxSizeToCopy = ParamUtil.getLong(actionRequest, "maxSizeToCopy");
+		long requestFileSizeBuffer = ParamUtil.getLong(
+			actionRequest, "requestFileSizeBuffer");
 
 		if (scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateCompanySizeLimit(
-				scopePK, fileMaxSize, maxSizeToCopy,
+				scopePK, fileMaxSize, maxSizeToCopy, requestFileSizeBuffer,
 				_getMimeTypeSizeLimits(actionRequest));
 		}
 		else if (scope.equals(
@@ -132,7 +134,7 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 					ExtendedObjectClassDefinition.Scope.SYSTEM.getValue())) {
 
 			_dlSizeLimitConfigurationProvider.updateSystemSizeLimit(
-				fileMaxSize, maxSizeToCopy,
+				fileMaxSize, maxSizeToCopy, requestFileSizeBuffer,
 				_getMimeTypeSizeLimits(actionRequest));
 		}
 		else {

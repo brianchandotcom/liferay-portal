@@ -39,7 +39,7 @@ public interface DLSizeLimitConfigurationProvider {
 
 	public void updateCompanySizeLimit(
 			long companyId, long fileMaxSize, long maxSizeToCopy,
-			Map<String, Long> mimeTypeSizeLimit)
+			long requestFileSizeBuffer, Map<String, Long> mimeTypeSizeLimit)
 		throws Exception;
 
 	public void updateGroupSizeLimit(
@@ -48,7 +48,7 @@ public interface DLSizeLimitConfigurationProvider {
 		throws Exception;
 
 	public void updateSystemSizeLimit(
-			long fileMaxSize, long maxSizeToCopy,
+			long fileMaxSize, long maxSizeToCopy, long requestFileSizeBuffer,
 			Map<String, Long> mimeTypeSizeLimit)
 		throws Exception;
 

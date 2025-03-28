@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -120,7 +120,7 @@ export class TemplatesPage {
 			name
 		);
 
-		await this.saveTemplate();
+		await this.saveTemplate(name);
 	}
 
 	async deleteInformationTemplate(title: string) {
@@ -163,13 +163,18 @@ export class TemplatesPage {
 		await waitForAlert(this.page, `Success:${fileName} Imported`);
 	}
 
-	async saveTemplate() {
-		await this.saveButton.click();
+	async saveTemplate(name: string) {
+		await expect(async () => {
+			await this.saveButton.click();
 
-		// Wait for the redirection to the templates admin when the template is saved
+			await waitForAlert(this.page);
 
-		await this.page.waitForURL(
-			(url) => !url.href.includes('ddmTemplateId=')
-		);
+			await expect(
+				this.page.getByRole('link', {
+					exact: true,
+					name,
+				})
+			).toBeAttached();
+		}).toPass();
 	}
 }

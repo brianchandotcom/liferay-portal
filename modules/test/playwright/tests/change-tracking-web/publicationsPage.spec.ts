@@ -167,7 +167,7 @@ test('Add and apply information template', async ({
 	});
 
 	await page.getByRole('button', {name: 'Title'}).click();
-	await templatesPage.saveTemplate();
+	await templatesPage.saveTemplate(informationTemplateName);
 
 	// Add a page with an HTML fragment
 
@@ -247,7 +247,7 @@ test('Add and apply widget template', async ({
 
 	await page.getByRole('button', {name: 'Locale'}).click();
 
-	await templatesPage.saveTemplate();
+	await templatesPage.saveTemplate(widgetTemplateName);
 
 	// Create a widget page layout using the template
 

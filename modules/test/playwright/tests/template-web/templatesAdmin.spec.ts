@@ -52,7 +52,7 @@ test(
 			'information_template_blogs.ftl'
 		);
 
-		await templatesPage.saveTemplate();
+		await templatesPage.saveTemplate(informationTemplateName);
 
 		// View the script content is shown in code mirror
 
@@ -168,7 +168,7 @@ test(
 
 		// Save information template
 
-		await templatesPage.saveTemplate();
+		await templatesPage.saveTemplate(informationTemplateName);
 
 		// View the script content is shown in code mirror
 
@@ -390,7 +390,7 @@ test('View widget template based on script file applied and with corrupt script 
 		'rss_publisher_corrupt_script.ftl'
 	);
 
-	await templatesPage.saveTemplate();
+	await templatesPage.saveTemplate(widgetTemplateName);
 
 	// Go to page
 

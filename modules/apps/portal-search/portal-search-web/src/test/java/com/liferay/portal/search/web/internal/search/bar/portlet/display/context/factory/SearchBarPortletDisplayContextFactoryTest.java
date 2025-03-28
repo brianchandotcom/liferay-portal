@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -228,6 +229,32 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	}
 
 	@Test
+	public void testGetDisplayStyleGroup() throws Exception {
+		_setUpGroupLocalServiceUtil(_getGroup());
+		_setUpPortletDisplayStyleGroupExternalReferenceCode(null);
+
+		_assertDisplayContext(_group);
+
+		_groupLocalServiceUtilMockedStatic.verifyNoInteractions();
+	}
+
+	@Test
+	public void testGetDisplayStyleGroupWithConfiguration() throws Exception {
+		Group group = _getGroup();
+
+		_setUpGroupLocalServiceUtil(group);
+		_setUpPortletDisplayStyleGroupExternalReferenceCode(
+			group.getExternalReferenceCode());
+
+		_assertDisplayContext(group);
+
+		_groupLocalServiceUtilMockedStatic.verify(
+			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), 0L),
+			Mockito.times(1));
+	}
+
+	@Test
 	public void testSamePageNoDestination() throws Exception {
 		Mockito.doReturn(
 			"http://example.com/web/guest/home?param=arg"
@@ -407,6 +434,21 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		}
 
 		return url.substring(0, pos);
+	}
+
+	private void _assertDisplayContext(Group group) throws Exception {
+		SearchBarPortletDisplayContextFactory
+			searchBarPortletDisplayContextFactory =
+				_createSearchBarPortletDisplayContextFactory(null);
+
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper, _searchCapabilities);
+
+		Assert.assertEquals(
+			group.getGroupId(),
+			searchBarPortletDisplayContext.getDisplayStyleGroupId());
 	}
 
 	private void _assertScope(
@@ -590,6 +632,35 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			null, false, false, scope, scopeParameterName, scopeParameterValue);
 	}
 
+	private Group _getGroup() {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		return group;
+	}
+
+	private void _setUpGroupLocalServiceUtil(Group group) throws Exception {
+		_groupLocalServiceUtilMockedStatic.reset();
+
+		Mockito.when(
+			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				group.getExternalReferenceCode(), 0L)
+		).thenReturn(
+			group
+		);
+	}
+
 	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -606,6 +677,30 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 	}
 
+	private void _setUpPortletDisplayStyleGroupExternalReferenceCode(
+		String externalReferenceCode) {
+
+		SearchBarPortletInstanceConfiguration
+			searchBarPortletInstanceConfiguration = Mockito.mock(
+				SearchBarPortletInstanceConfiguration.class);
+
+		Mockito.when(
+			searchBarPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		_configurationProviderUtilMockedStatic.reset();
+
+		_configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			searchBarPortletInstanceConfiguration
+		);
+	}
+
 	private void _setUpThemeDisplay() throws ConfigurationException {
 		Mockito.when(
 			_themeDisplay.getScopeGroup()
@@ -617,6 +712,18 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			_group.getClassPK()
 		).thenReturn(
 			_CLASS_PK
+		);
+
+		Mockito.when(
+			_group.getExternalReferenceCode()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_group.getGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
 		);
 
 		Mockito.when(
@@ -749,6 +856,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 	private static MockedStatic<ConfigurationProviderUtil>
 		_configurationProviderUtilMockedStatic;
+	private static final MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
 
 	private final Group _group = Mockito.mock(Group.class);
 	private final LayoutLocalService _layoutLocalService = Mockito.mock(

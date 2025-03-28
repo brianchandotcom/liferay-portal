@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.web.internal.display.context.FragmentDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -37,6 +38,7 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 	@Test
 	public void testGetActionDropdowns() {
 		setUpFragmentPermission(true);
+		_setUpFragmentCollection(false);
 
 		FragmentCollectionActionDropdownItemsProvider
 			fragmentCollectionActionDropdownItemsProvider =
@@ -48,6 +50,37 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 			fragmentCollectionActionDropdownItemsProvider.
 				getActionDropdownItems(),
 			"edit", "export", "import", "delete");
+	}
+
+	@Test
+	public void testGetActionDropdownsForMarketplaceFragmentCollection() {
+		setUpFragmentPermission(true);
+		_setUpFragmentCollection(true);
+
+		FragmentCollectionActionDropdownItemsProvider
+			fragmentCollectionActionDropdownItemsProvider =
+				new FragmentCollectionActionDropdownItemsProvider(
+					_fragmentDisplayContext, httpServletRequest,
+					renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			fragmentCollectionActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"edit", "import", "delete");
+	}
+
+	private void _setUpFragmentCollection(boolean marketplace) {
+		Mockito.when(
+			_fragmentDisplayContext.getFragmentCollection()
+		).thenReturn(
+			_fragmentCollection
+		);
+
+		Mockito.when(
+			_fragmentCollection.isMarketplace()
+		).thenReturn(
+			marketplace
+		);
 	}
 
 	private void _setUpFragmentDisplayContext() {
@@ -64,6 +97,8 @@ public class FragmentCollectionActionDropdownItemsProviderTest
 		);
 	}
 
+	private final FragmentCollection _fragmentCollection = Mockito.mock(
+		FragmentCollection.class);
 	private final FragmentDisplayContext _fragmentDisplayContext = Mockito.mock(
 		FragmentDisplayContext.class);
 

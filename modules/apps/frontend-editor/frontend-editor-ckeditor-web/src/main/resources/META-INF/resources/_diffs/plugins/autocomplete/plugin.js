@@ -8,26 +8,34 @@
 		init(editor) {
 			const instance = this;
 
-			AUI().use('aui-debounce', 'liferay-autocomplete-input', () => {
-				const path = instance.path;
+			AUI().use(
+				'aui-event-key',
+				'aui-debounce',
+				'aui-base',
+				'autocomplete',
+				'autocomplete-filters',
+				'autocomplete-highlighters',
+				() => {
+					const path = instance.path;
 
-				const dependencies = [
-					CKEDITOR.getUrl(path + 'autocomplete.js'),
-				];
+					const dependencies = [
+						CKEDITOR.getUrl(path + 'autocomplete.js'),
+					];
 
-				CKEDITOR.scriptLoader.load(dependencies, () => {
-					const liferayAutoCompleteCKEditor =
-						new Liferay.AutoCompleteCKEditor({
-							...editor.config.autocomplete,
-							editor,
-							width: 300,
-						});
+					CKEDITOR.scriptLoader.load(dependencies, () => {
+						const liferayAutoCompleteCKEditor =
+							new Liferay.AutoCompleteCKEditor({
+								...editor.config.autocomplete,
+								editor,
+								width: 300,
+							});
 
-					liferayAutoCompleteCKEditor.render();
+						liferayAutoCompleteCKEditor.render();
 
-					liferayAutoCompleteCKEditor.detach('valueChange');
-				});
-			});
+						liferayAutoCompleteCKEditor.detach('valueChange');
+					});
+				}
+			);
 		},
 	});
 })();

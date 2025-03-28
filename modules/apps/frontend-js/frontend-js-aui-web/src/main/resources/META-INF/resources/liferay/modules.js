@@ -59,15 +59,6 @@
 							'sortable',
 						],
 					},
-					'liferay-autocomplete-input': {
-						path: 'autocomplete_input.js',
-						requires: [
-							'aui-base',
-							'autocomplete',
-							'autocomplete-filters',
-							'autocomplete-highlighters',
-						],
-					},
 					'liferay-form': {
 						path: 'form.js',
 						requires: ['aui-base', 'aui-form-validator'],

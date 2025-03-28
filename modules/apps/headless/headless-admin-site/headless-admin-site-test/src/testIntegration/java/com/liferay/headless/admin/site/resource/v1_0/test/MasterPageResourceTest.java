@@ -890,6 +890,17 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			MasterPage masterPage)
 		throws Exception {
 
+		masterPage.setMarkedAsDefault(Boolean.TRUE);
+
+		_assertProblemException(
+			"CONFLICT", "The default Master Page must be published first.",
+			() ->
+				masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
+					testGroup.getExternalReferenceCode(),
+					masterPage.getExternalReferenceCode(), masterPage));
+
+		masterPage.setMarkedAsDefault(Boolean.FALSE);
+
 		MasterPage putMasterPage =
 			masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
 				testGroup.getExternalReferenceCode(),

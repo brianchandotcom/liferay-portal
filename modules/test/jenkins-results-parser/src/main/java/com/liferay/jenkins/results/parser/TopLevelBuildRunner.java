@@ -43,7 +43,14 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 		prepareInvocationBuildDataList();
 
-		propagateBuildDatabaseToDistNodes();
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+			buildDatabase.uploadBuildDatabaseFileToCloudBucket();
+		}
+		else {
+			propagateBuildDatabaseToDistNodes();
+		}
 
 		invokeDownstreamBuilds();
 

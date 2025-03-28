@@ -15,10 +15,14 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Address;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CouponCode;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
@@ -30,13 +34,16 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -166,6 +173,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 	public void testPatchCart() throws Exception {
 		super.testPatchCart();
 
+		_testPatchCartWithAddressSubtype();
 		_testPatchCartWithMoreExternalReferenceCodes();
 	}
 
@@ -449,29 +457,33 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Cart randomPatchCart = randomPatchCart();
 
-		Address randomAddress = _addressLocalService.addAddress(
-			RandomTestUtil.randomString(), _user.getUserId(),
-			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
-			_country.getCountryId(), 0, _region.getRegionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			RandomTestUtil.randomString(), true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+			_addressLocalService.addAddress(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				_country.getCountryId(), 0, _region.getRegionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		randomPatchCart.setBillingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 
 		randomPatchCart.setBillingAddressId(0L);
 		randomPatchCart.setShippingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 		randomPatchCart.setShippingAddressId(0L);
 
 		Cart patchCart = cartResource.patchCartByExternalReferenceCode(
 			postCart.getExternalReferenceCode(), randomPatchCart);
 
-		randomPatchCart.setBillingAddressId(randomAddress.getAddressId());
-		randomPatchCart.setShippingAddressId(randomAddress.getAddressId());
+		randomPatchCart.setBillingAddressId(
+			serviceBuilderAddress.getAddressId());
+		randomPatchCart.setShippingAddressId(
+			serviceBuilderAddress.getAddressId());
 
 		Cart expectedPatchCart = postCart.clone();
 
@@ -483,17 +495,85 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		assertEquals(expectedPatchCart, getCart);
 		assertValid(getCart);
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getBillingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getShippingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getShippingAddressExternalReferenceCode());
+	}
+
+	private void _testPatchCartWithAddressSubtype() throws Exception {
+		Cart postCart = cartResource.postChannelCart(
+			_commerceChannel.getCommerceChannelId(), randomCart());
+
+		Cart randomPatchCart = randomPatchCart();
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				false);
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.addListTypeEntry(
+				null, TestPropsValues.getUserId(),
+				listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+
+		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+			_addressLocalService.addAddress(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				_country.getCountryId(), 0, _region.getRegionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), listTypeEntry.getKey(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
+
+		randomPatchCart.setBillingAddress(
+			new Address() {
+				{
+					city = RandomTestUtil.randomString();
+					countryISOCode = _country.getA2();
+					name = RandomTestUtil.randomString();
+					street1 = RandomTestUtil.randomString();
+					subtype = listTypeEntry.getKey();
+					zip = RandomTestUtil.randomString();
+				}
+			});
+		randomPatchCart.setBillingAddressId(0L);
+		randomPatchCart.setShippingAddress(
+			new Address() {
+				{
+					city = serviceBuilderAddress.getCity();
+					id = serviceBuilderAddress.getAddressId();
+					name = serviceBuilderAddress.getName();
+					street1 = serviceBuilderAddress.getStreet1();
+					subtype = serviceBuilderAddress.getSubtype();
+				}
+			});
+		randomPatchCart.setShippingAddressId(
+			serviceBuilderAddress.getAddressId());
+
+		Cart patchCart = cartResource.patchCart(
+			postCart.getId(), randomPatchCart);
+
+		Address address = patchCart.getBillingAddress();
+
+		Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
+
+		address = patchCart.getShippingAddress();
+
+		Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
 	}
 
 	private void _testPatchCartWithMoreExternalReferenceCodes()
@@ -504,30 +584,34 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Cart randomPatchCart = randomPatchCart();
 
-		Address randomAddress = _addressLocalService.addAddress(
-			RandomTestUtil.randomString(), _user.getUserId(),
-			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
-			_country.getCountryId(), 0, _region.getRegionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			RandomTestUtil.randomString(), true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+			_addressLocalService.addAddress(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				_country.getCountryId(), 0, _region.getRegionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		randomPatchCart.setBillingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 
 		randomPatchCart.setBillingAddressId(0L);
 
 		randomPatchCart.setShippingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 		randomPatchCart.setShippingAddressId(0L);
 
 		Cart patchCart = cartResource.patchCart(
 			postCart.getId(), randomPatchCart);
 
-		randomPatchCart.setBillingAddressId(randomAddress.getAddressId());
-		randomPatchCart.setShippingAddressId(randomAddress.getAddressId());
+		randomPatchCart.setBillingAddressId(
+			serviceBuilderAddress.getAddressId());
+		randomPatchCart.setShippingAddressId(
+			serviceBuilderAddress.getAddressId());
 
 		Cart expectedPatchCart = postCart.clone();
 
@@ -538,16 +622,16 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		assertEquals(expectedPatchCart, getCart);
 		assertValid(getCart);
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getBillingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getShippingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getShippingAddressExternalReferenceCode());
 	}
 
@@ -556,43 +640,45 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Cart randomCart = randomCart();
 
-		Address randomAddress = _addressLocalService.addAddress(
-			RandomTestUtil.randomString(), _user.getUserId(),
-			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
-			_country.getCountryId(), 0, _region.getRegionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			RandomTestUtil.randomString(), true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+			_addressLocalService.addAddress(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				_country.getCountryId(), 0, _region.getRegionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		randomCart.setBillingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 
 		randomCart.setBillingAddressId(0L);
 		randomCart.setShippingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 		randomCart.setShippingAddressId(0L);
 
 		Cart postCart = cartResource.postChannelCartByExternalReferenceCode(
 			_commerceChannel.getExternalReferenceCode(), randomCart);
 
-		randomCart.setBillingAddressId(randomAddress.getAddressId());
-		randomCart.setShippingAddressId(randomAddress.getAddressId());
+		randomCart.setBillingAddressId(serviceBuilderAddress.getAddressId());
+		randomCart.setShippingAddressId(serviceBuilderAddress.getAddressId());
 
 		assertEquals(randomCart, postCart);
 		assertValid(postCart);
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(postCart.getBillingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			postCart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(postCart.getShippingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			postCart.getShippingAddressExternalReferenceCode());
 	}
 
@@ -601,42 +687,44 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Cart randomCart = randomCart();
 
-		Address randomAddress = _addressLocalService.addAddress(
-			RandomTestUtil.randomString(), _user.getUserId(),
-			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
-			_country.getCountryId(), 0, _region.getRegionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			RandomTestUtil.randomString(), true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+			_addressLocalService.addAddress(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				_country.getCountryId(), 0, _region.getRegionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		randomCart.setBillingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 
 		randomCart.setBillingAddressId(0L);
 		randomCart.setShippingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 		randomCart.setShippingAddressId(0L);
 
 		Cart postCart = testPostChannelCart_addCart(randomCart);
 
-		randomCart.setBillingAddressId(randomAddress.getAddressId());
-		randomCart.setShippingAddressId(randomAddress.getAddressId());
+		randomCart.setBillingAddressId(serviceBuilderAddress.getAddressId());
+		randomCart.setShippingAddressId(serviceBuilderAddress.getAddressId());
 
 		assertEquals(randomCart, postCart);
 		assertValid(postCart);
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(postCart.getBillingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			postCart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(postCart.getShippingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			postCart.getShippingAddressExternalReferenceCode());
 	}
 
@@ -648,30 +736,32 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Cart randomCart = randomCart();
 
-		Address randomAddress = _addressLocalService.addAddress(
-			RandomTestUtil.randomString(), _user.getUserId(),
-			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
-			_country.getCountryId(), 0, _region.getRegionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			RandomTestUtil.randomString(), true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+			_addressLocalService.addAddress(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				_country.getCountryId(), 0, _region.getRegionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		randomCart.setBillingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 
 		randomCart.setBillingAddressId(0L);
 
 		randomCart.setShippingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 		randomCart.setShippingAddressId(0L);
 
 		Cart putCart = cartResource.putCartByExternalReferenceCode(
 			postCart.getExternalReferenceCode(), randomCart);
 
-		randomCart.setBillingAddressId(randomAddress.getAddressId());
-		randomCart.setShippingAddressId(randomAddress.getAddressId());
+		randomCart.setBillingAddressId(serviceBuilderAddress.getAddressId());
+		randomCart.setShippingAddressId(serviceBuilderAddress.getAddressId());
 
 		assertEquals(randomCart, putCart);
 		assertValid(putCart);
@@ -682,16 +772,16 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		assertEquals(randomCart, getCart);
 		assertValid(getCart);
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getBillingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getShippingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getShippingAddressExternalReferenceCode());
 	}
 
@@ -701,28 +791,30 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Cart randomCart = randomCart();
 
-		Address randomAddress = _addressLocalService.addAddress(
-			RandomTestUtil.randomString(), _user.getUserId(),
-			AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
-			_country.getCountryId(), 0, _region.getRegionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			RandomTestUtil.randomString(), true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+			_addressLocalService.addAddress(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				_country.getCountryId(), 0, _region.getRegionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, RandomTestUtil.randomString(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_serviceContext);
 
 		randomCart.setBillingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 
 		randomCart.setBillingAddressId(0L);
 		randomCart.setShippingAddressExternalReferenceCode(
-			randomAddress.getExternalReferenceCode());
+			serviceBuilderAddress.getExternalReferenceCode());
 		randomCart.setShippingAddressId(0L);
 
 		Cart putCart = cartResource.putCart(postCart.getId(), randomCart);
 
-		randomCart.setBillingAddressId(randomAddress.getAddressId());
-		randomCart.setShippingAddressId(randomAddress.getAddressId());
+		randomCart.setBillingAddressId(serviceBuilderAddress.getAddressId());
+		randomCart.setShippingAddressId(serviceBuilderAddress.getAddressId());
 
 		assertEquals(randomCart, putCart);
 		assertValid(putCart);
@@ -732,16 +824,16 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		assertEquals(randomCart, getCart);
 		assertValid(getCart);
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getBillingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getBillingAddressExternalReferenceCode());
 		Assert.assertEquals(
-			randomAddress.getAddressId(),
+			serviceBuilderAddress.getAddressId(),
 			GetterUtil.getLong(getCart.getShippingAddressId()));
 		Assert.assertEquals(
-			randomAddress.getExternalReferenceCode(),
+			serviceBuilderAddress.getExternalReferenceCode(),
 			getCart.getShippingAddressExternalReferenceCode());
 	}
 
@@ -769,6 +861,12 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 	@Inject
 	private CountryLocalService _countryLocalService;
+
+	@Inject
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Region _region;

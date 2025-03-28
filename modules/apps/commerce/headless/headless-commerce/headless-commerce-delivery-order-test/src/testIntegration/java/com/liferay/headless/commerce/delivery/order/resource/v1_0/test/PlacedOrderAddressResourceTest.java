@@ -106,7 +106,7 @@ public class PlacedOrderAddressResourceTest
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
 			"city", "description", "name", "phoneNumber", "street1", "street2",
-			"street3", "zip"
+			"street3", "subtype", "zip"
 		};
 	}
 
@@ -141,6 +141,7 @@ public class PlacedOrderAddressResourceTest
 				street1 = address.getStreet1();
 				street2 = address.getStreet2();
 				street3 = address.getStreet3();
+				subtype = address.getSubtype();
 				type = RandomTestUtil.randomString();
 				typeId = RandomTestUtil.randomInt();
 				vatNumber = StringUtil.toLowerCase(

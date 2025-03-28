@@ -127,7 +127,6 @@ function GeneralTab({field}: {field: Field}) {
 					translations={
 						label as Liferay.Language.LocalizedValue<string>
 					}
-					validate
 				/>
 
 				<Input

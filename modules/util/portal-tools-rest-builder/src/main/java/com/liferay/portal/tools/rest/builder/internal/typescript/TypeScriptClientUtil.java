@@ -112,6 +112,11 @@ public class TypeScriptClientUtil {
 			configYAML, copyrightFile, files, "typescript/index",
 			baseClientDir.getPath() + "/src/index.ts");
 
+		_createFile(
+			Collections.singletonMap("schemas", schemas), configYAML,
+			copyrightFile, files, "typescript/serdes",
+			baseClientDir.getPath() + "/src/utils/SerDes.ts");
+
 		FileUtil.deleteFiles(baseClientDir.getPath(), files);
 	}
 

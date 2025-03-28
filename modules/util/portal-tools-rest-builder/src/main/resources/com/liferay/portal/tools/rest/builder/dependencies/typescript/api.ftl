@@ -1,12 +1,10 @@
-import {ObjectSerializer} from '../index';
+import {ObjectSerializer} from '../utils/SerDes';
 
 <#if importClasses??>
 	<#list importClasses?sort as import>
 		import {${import}} from '../models/${import}';
 	</#list>
 </#if>
-
-import {HttpError} from '../index';
 
 /**
  * @author ${configYAML.author}
@@ -168,7 +166,9 @@ export class ${className} {
 					"";
 
 			const response = await fetch(path + queryString, {
-				method: "${operationData.httpMethod}",
+				<#if operationData.bodyParameters?has_content>
+					body: body,
+				</#if>
 				headers:
 					Object.assign({}, this._defaultHeaders
 					<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
@@ -193,10 +193,8 @@ export class ${className} {
 						</#if>
 					</#if>
 					,headers || {}
-					)
-				<#if operationData.bodyParameters?has_content>
-					,body: body
-				</#if>
+					),
+				method: "${operationData.httpMethod}",
 			});
 
 			if (response.ok) {
@@ -219,11 +217,7 @@ export class ${className} {
 				</#if>
 			}
 			else {
-				throw new HttpError(
-					await response.text(),
-					response,
-					response.status
-				);
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
 			}
 		}
 

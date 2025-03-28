@@ -93,6 +93,8 @@ components:
                     type: string
                 street3:
                     type: string
+                subtype:
+                    type: string
                 type:
                     readOnly: true
                     type: string

@@ -142,15 +142,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_companyGroupId = companyGroup.getGroupId();
 
-		_larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), _companyGroupId, false,
-							new long[0], _getExportParameterMap())));
+		_larFile = _exportLayouts();
 	}
 
 	@Test
@@ -245,19 +237,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry4);
 
-		Map<String, String[]> parameterMap =
-			_getExportIndividualDeletionsParameterMap(
-				Collections.singletonList(_objectDefinition1));
-
-		File file = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), _companyGroupId, false,
-							new long[0], parameterMap)));
+		File file = _exportLayouts(
+			true, false, Collections.singletonList(_objectDefinition1));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -278,18 +259,8 @@ public class BatchEnginePortletDataHandlerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		parameterMap = _getExportIndividualDeletionsParameterMap(
-			Collections.singletonList(_objectDefinition2));
-
-		file = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), _companyGroupId, true,
-							new long[0], parameterMap)));
+		file = _exportLayouts(
+			true, true, Collections.singletonList(_objectDefinition2));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -308,18 +279,8 @@ public class BatchEnginePortletDataHandlerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		parameterMap = _getExportIndividualDeletionsParameterMap(
-			Arrays.asList(_objectDefinition1, _objectDefinition2));
-
-		file = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), _companyGroupId, false,
-							new long[0], parameterMap)));
+		file = _exportLayouts(
+			true, false, Arrays.asList(_objectDefinition1, _objectDefinition2));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -355,36 +316,13 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testImportIndividualDeletionsCompanyGroup() throws Exception {
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
-		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
-
-		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(),
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
-					false)),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_objectEntry4 = _addObjectEntry(
-			_objectDefinition2, RandomTestUtil.randomString());
 
 		// export deletions
 
-		Map<String, String[]> parameterMap =
-			_getExportIndividualDeletionsParameterMap(
-				Collections.singletonList(_objectDefinition1));
+		File file = _exportLayouts(
+			true, Collections.singletonList(_objectDefinition1));
 
-		File file = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), _companyGroupId, false,
-							new long[0], parameterMap)));
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
 
 		// import to recreate deleted entries
 
@@ -392,21 +330,26 @@ public class BatchEnginePortletDataHandlerTest {
 
 		// import deletions
 
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(), _companyGroupId, false,
-							null, parameterMap));
+		_importLayouts(
+			file, false, Collections.singletonList(_objectDefinition1));
 
-		_exportImportLocalService.importLayoutsDataDeletions(
-			exportImportConfiguration, file);
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry1.getExternalReferenceCode(),
+				_objectDefinition1.getObjectDefinitionId()));
 
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, file);
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry2.getExternalReferenceCode(),
+				_objectDefinition1.getObjectDefinitionId()));
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				_objectEntry3.getExternalReferenceCode(),
+				_objectDefinition1.getObjectDefinitionId()));
+
+		_importLayouts(
+			file, true, Collections.singletonList(_objectDefinition1));
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
@@ -418,15 +361,10 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry2.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
 
-		Assert.assertNull(
+		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				_objectEntry3.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
-
-		Assert.assertNotNull(
-			_objectEntryLocalService.fetchObjectEntry(
-				_objectEntry4.getExternalReferenceCode(),
-				_objectDefinition2.getObjectDefinitionId()));
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -477,6 +415,36 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
+	private File _exportLayouts() throws Exception {
+		return _exportLayouts(
+			false, Collections.singletonList(_objectDefinition1));
+	}
+
+	private File _exportLayouts(
+			boolean deletions, boolean privateLayouts,
+			List<ObjectDefinition> objectDefinitions)
+		throws Exception {
+
+		return _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), _companyGroupId,
+							privateLayouts, new long[0],
+							_getExportImportParameterMap(
+								deletions, objectDefinitions))));
+	}
+
+	private File _exportLayouts(
+			boolean deletions, List<ObjectDefinition> objectDefinitions)
+		throws Exception {
+
+		return _exportLayouts(deletions, false, objectDefinitions);
+	}
+
 	private JSONArray _getClassExternalReferenceCodesJSONArray(
 			long groupId, File larFile)
 		throws Exception {
@@ -510,15 +478,27 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
-	private Map<String, String[]> _getExportIndividualDeletionsParameterMap(
-		List<ObjectDefinition> objectDefinitions) {
+	private Map<String, String[]> _getExportImportParameterMap(
+		boolean deletions, List<ObjectDefinition> objectDefinitions) {
 
 		Map<String, String[]> parameterMap = HashMapBuilder.put(
-			"DELETIONS", new String[] {"true"}
+			PortletDataHandlerKeys.DELETIONS,
+			new String[] {Boolean.toString(deletions)}
 		).put(
-			"PERMISSIONS", new String[] {"false"}
+			PortletDataHandlerKeys.PERMISSIONS,
+			new String[] {Boolean.FALSE.toString()}
 		).put(
-			"PORTLET_DATA", new String[] {"true"}
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
+			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
+			new String[] {Boolean.TRUE.toString()}
 		).build();
 
 		objectDefinitions.forEach(
@@ -530,28 +510,17 @@ public class BatchEnginePortletDataHandlerTest {
 		return parameterMap;
 	}
 
-	private Map<String, String[]> _getExportParameterMap() {
-		return HashMapBuilder.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_DATA + "_" +
-				_objectDefinition1.getPortletId(),
-			new String[] {Boolean.TRUE.toString()}
-		).put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()}
-		).build();
+	private void _importLayouts() throws Exception {
+		_importLayouts(
+			_larFile, false, Collections.singletonList(_objectDefinition1));
 	}
 
-	private void _importLayouts() throws Exception {
-		_exportImportLocalService.importLayouts(
+	private void _importLayouts(
+			File file, boolean deletions,
+			List<ObjectDefinition> objectDefinitions)
+		throws Exception {
+
+		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					TestPropsValues.getUserId(),
@@ -559,8 +528,17 @@ public class BatchEnginePortletDataHandlerTest {
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildImportLayoutSettingsMap(
 							TestPropsValues.getUser(), _companyGroupId, false,
-							null, _getExportParameterMap())),
-			_larFile);
+							null,
+							_getExportImportParameterMap(
+								deletions, objectDefinitions)));
+
+		if (deletions) {
+			_exportImportLocalService.importLayoutsDataDeletions(
+				exportImportConfiguration, file);
+		}
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, file);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT =

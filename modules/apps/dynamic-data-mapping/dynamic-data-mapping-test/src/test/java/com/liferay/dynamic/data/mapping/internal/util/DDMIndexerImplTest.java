@@ -280,8 +280,9 @@ public class DDMIndexerImplTest {
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
+		ddmFormFieldOptions.addOptionLabel("apple", LocaleUtil.US, "Apple");
 		ddmFormFieldOptions.addOptionLabel(
-			"Option Value", LocaleUtil.US, "Option Label");
+			"pineapple", LocaleUtil.US, "Pineapple");
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 
@@ -296,17 +297,16 @@ public class DDMIndexerImplTest {
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					_FIELD_NAME,
 					DDMFormValuesTestUtil.createLocalizedValue(
-						"[\"Option Value\"]", LocaleUtil.US))));
+						"[\"pineapple\"]", LocaleUtil.US))));
 
 		FieldValuesAssert.assertFieldValues(
 			HashMapBuilder.put(
-				"ddmFieldArray.ddmFieldValueKeyword_en_US", "Option Value"
+				"ddmFieldArray.ddmFieldValueKeyword_en_US", "pineapple"
 			).put(
-				"ddmFieldArray.ddmFieldValueKeyword_en_US_String",
-				"Option Label"
+				"ddmFieldArray.ddmFieldValueKeyword_en_US_String", "Pineapple"
 			).put(
 				"ddmFieldArray.ddmFieldValueKeyword_en_US_String_sortable",
-				"option label"
+				"pineapple"
 			).build(),
 			"ddmFieldArray.ddmFieldValueKeyword_en_US", document,
 			StringPool.BLANK);

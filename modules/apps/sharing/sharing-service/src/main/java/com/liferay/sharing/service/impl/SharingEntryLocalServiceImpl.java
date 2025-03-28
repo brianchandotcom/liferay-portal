@@ -219,7 +219,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryPersistence.findByGroupId(groupId);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			deleteSharingEntry(sharingEntry);
+			sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -236,7 +236,7 @@ public class SharingEntryLocalServiceImpl
 			classNameId, classPK);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			deleteSharingEntry(sharingEntry);
+			sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -250,7 +250,7 @@ public class SharingEntryLocalServiceImpl
 	public SharingEntry deleteSharingEntry(long sharingEntryId)
 		throws PortalException {
 
-		return deleteSharingEntry(getSharingEntry(sharingEntryId));
+		return sharingEntryLocalService.deleteSharingEntry(getSharingEntry(sharingEntryId));
 	}
 
 	/**
@@ -271,7 +271,7 @@ public class SharingEntryLocalServiceImpl
 		SharingEntry sharingEntry = sharingEntryPersistence.findByTUG_TU_C_C(
 			0, toUserId, classNameId, classPK);
 
-		return deleteSharingEntry(sharingEntry);
+		return sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 	}
 
 	/**
@@ -330,7 +330,7 @@ public class SharingEntryLocalServiceImpl
 			sharingEntryPersistence.findByToUserId(toUserId);
 
 		for (SharingEntry sharingEntry : sharingEntries) {
-			deleteSharingEntry(sharingEntry);
+			sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 		}
 	}
 
@@ -660,7 +660,7 @@ public class SharingEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateSharingEntry(
+		return sharingEntryLocalService.updateSharingEntry(
 			serviceContext.getUserId(), sharingEntryId, sharingEntryActions,
 			shareable, expirationDate, serviceContext);
 	}

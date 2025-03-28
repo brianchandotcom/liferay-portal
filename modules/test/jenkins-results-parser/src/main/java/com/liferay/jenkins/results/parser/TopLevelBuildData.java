@@ -20,6 +20,8 @@ public interface TopLevelBuildData extends BuildData {
 
 	public List<BuildData> getDownstreamBuildDataList();
 
+	public String getS3BucketDistPath();
+
 	public void setDistNodes(List<String> distNodes);
 
 }

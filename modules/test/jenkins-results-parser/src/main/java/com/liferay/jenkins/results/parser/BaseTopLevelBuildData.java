@@ -75,6 +75,11 @@ public abstract class BaseTopLevelBuildData
 	}
 
 	@Override
+	public String getS3BucketDistPath() {
+		return optString("s3_bucket_dist_path");
+	}
+
+	@Override
 	public TopLevelBuildData getTopLevelBuildData() {
 		return this;
 	}
@@ -120,6 +125,7 @@ public abstract class BaseTopLevelBuildData
 
 		put("dist_nodes", _getDistNodes());
 		put("dist_path", _getDistPath());
+		put("s3_bucket_dist_path", _getS3BucketDistPath());
 		put("top_level_run_id", getRunID());
 
 		validateKeys(_KEYS_REQUIRED);
@@ -187,6 +193,19 @@ public abstract class BaseTopLevelBuildData
 			JenkinsResultsParserUtil.getJenkinsDistRootPath(), "/",
 			getMasterHostname(), "/", getJobName(), "/",
 			String.valueOf(getBuildNumber()), "/dist");
+	}
+
+	private String _getS3BucketDistPath() {
+		try {
+			return JenkinsResultsParserUtil.combine(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"cloud.ci.s3.bucket.dist.path"),
+				"/", getMasterHostname(), "/", getJobName(), "/",
+				String.valueOf(getBuildNumber()), "/dist");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private static final String[] _KEYS_REQUIRED = {

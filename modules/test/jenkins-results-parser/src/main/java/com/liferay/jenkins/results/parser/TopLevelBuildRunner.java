@@ -46,7 +46,11 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		if (JenkinsResultsParserUtil.isCloudCINode()) {
 			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
-			buildDatabase.uploadBuildDatabaseFileToCloudBucket();
+			TopLevelBuildData topLevelBuildData = getBuildData();
+
+			buildDatabase.uploadBuildDatabaseFileToCloudBucket(
+				topLevelBuildData.getS3BucketDistPath() + "/" +
+					BuildDatabase.FILE_NAME_BUILD_DATABASE);
 		}
 		else {
 			propagateBuildDatabaseToDistNodes();
@@ -367,6 +371,8 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 		invocationParameters.put(
 			"JENKINS_GITHUB_URL", topLevelBuildData.getJenkinsGitHubURL());
 		invocationParameters.put("RUN_ID", buildData.getRunID());
+		invocationParameters.put(
+			"S3_BUCKET_DIST_PATH", topLevelBuildData.getS3BucketDistPath());
 		invocationParameters.put(
 			"TOP_LEVEL_RUN_ID", topLevelBuildData.getRunID());
 

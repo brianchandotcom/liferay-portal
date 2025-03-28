@@ -5,13 +5,10 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayEmptyState from '@clayui/empty-state';
-import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import classNames from 'classnames';
-import {InputLocalized} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
@@ -25,6 +22,7 @@ import focusInvalidElement from '../utils/focusInvalidElement';
 import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
 import Input from './Input';
+import {LocalizedInput} from './LocalizedInput';
 import Spaces from './Spaces';
 import StructureFieldSettings from './StructureFieldSettings';
 
@@ -50,9 +48,6 @@ function StructureSettings() {
 	const error = useSelector(selectStructureError);
 	const structureLabel = useSelector(selectStructureLabel);
 
-	const [label, setLabel] =
-		useState<Liferay.Language.LocalizedValue<string>>(structureLabel);
-
 	useEffect(() => {
 		focusInvalidElement();
 	}, []);
@@ -73,31 +68,19 @@ function StructureSettings() {
 				{Liferay.Language.get('content')}
 			</ClayLabel>
 
-			<ClayForm.Group
-				className={classNames('ml-n3', {'has-error': !label})}
-			>
-				<InputLocalized
-					aria-label={Liferay.Language.get('structure-label')}
-					className="form-control-inline structure-builder__title-input"
-					error={
-						label
-							? ''
-							: Liferay.Language.get('this-field-is-required')
-					}
-					label=""
-					onBlur={() => {
-						dispatch({
-							label,
-							type: 'update-structure',
-						});
-					}}
-					onChange={(label) => setLabel(label)}
-					required
-					translations={
-						label as Liferay.Language.LocalizedValue<string>
-					}
-				/>
-			</ClayForm.Group>
+			<LocalizedInput
+				aria-label={Liferay.Language.get('structure-label')}
+				className="form-control-inline structure-builder__title-input"
+				formGroupClassName="ml-n3"
+				onSave={(translations) => {
+					dispatch({
+						label: translations,
+						type: 'update-structure',
+					});
+				}}
+				required
+				translations={structureLabel}
+			/>
 
 			<ClayTabs>
 				<ClayTabs.List>

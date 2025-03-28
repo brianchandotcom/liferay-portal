@@ -9,8 +9,8 @@ import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import {InputLocalized, useId} from 'frontend-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import {useId} from 'frontend-js-components-web';
+import React, {useEffect, useMemo} from 'react';
 
 import {Uuid, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
@@ -23,6 +23,7 @@ import getFieldComponents from '../utils/getFieldComponents';
 import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
 import ERCInput from './ERCInput';
 import Input from './Input';
+import {LocalizedInput} from './LocalizedInput';
 
 export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 	const dispatch = useStateDispatch();
@@ -89,10 +90,6 @@ function GeneralTab({field}: {field: Field}) {
 
 	const isPublished = publishedFields.has(field.uuid);
 
-	const [label, setLabel] = useState<Liferay.Language.LocalizedValue<string>>(
-		field.label
-	);
-
 	const {FirstSectionComponent, SecondSectionComponent} = getFieldComponents(
 		field.type
 	);
@@ -112,21 +109,18 @@ function GeneralTab({field}: {field: Field}) {
 			</div>
 
 			<div className="mt-4 pb-2">
-				<InputLocalized
+				<LocalizedInput
 					id={labelInputId}
 					label={Liferay.Language.get('label')}
-					onBlur={() => {
+					onSave={(translations) => {
 						dispatch({
-							label,
+							label: translations,
 							type: 'update-field',
 							uuid: field.uuid,
 						});
 					}}
-					onChange={(label) => setLabel(label)}
 					required
-					translations={
-						label as Liferay.Language.LocalizedValue<string>
-					}
+					translations={field.label}
 				/>
 
 				<Input

@@ -3202,6 +3202,7 @@
 	<exceptions>
 		<exception>AddressCity</exception>
 		<exception>AddressStreet</exception>
+		<exception>AddressSubtype</exception>
 		<exception>AddressZip</exception>
 		<exception>AvailableLocale</exception>
 		<exception>CompanyMaxUsers</exception>

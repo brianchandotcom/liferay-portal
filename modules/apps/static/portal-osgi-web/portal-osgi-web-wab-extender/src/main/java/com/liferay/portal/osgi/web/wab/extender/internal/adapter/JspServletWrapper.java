@@ -14,8 +14,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 
-import org.apache.jasper.Constants;
-
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
@@ -47,20 +45,21 @@ public class JspServletWrapper extends HttpServlet {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		String curJspFile = (String)servletRequest.getAttribute(
-			Constants.JSP_FILE);
+		String curJspFile = (String)servletRequest.getAttribute(_JSP_FILE);
 
 		if (_jspFile != null) {
-			servletRequest.setAttribute(Constants.JSP_FILE, _jspFile);
+			servletRequest.setAttribute(_JSP_FILE, _jspFile);
 		}
 
 		try {
 			_servlet.service(servletRequest, servletResponse);
 		}
 		finally {
-			servletRequest.setAttribute(Constants.JSP_FILE, curJspFile);
+			servletRequest.setAttribute(_JSP_FILE, curJspFile);
 		}
 	}
+
+	private static final String _JSP_FILE = "org.apache.catalina.jsp_file";
 
 	private final String _jspFile;
 	private final Servlet _servlet;

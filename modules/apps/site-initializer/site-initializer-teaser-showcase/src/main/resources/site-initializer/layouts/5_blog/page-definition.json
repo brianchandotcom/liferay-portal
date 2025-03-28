@@ -505,7 +505,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Blog Posts$]",
+																				"fieldKey": "AssetCategory_categories",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}

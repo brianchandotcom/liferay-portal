@@ -17,10 +17,12 @@ const JSON_EXTENSION = '.json';
 export default function ImportStructureModalContent({
 	closeModal,
 	importURL,
+	loadData,
 	objectFolderExternalReferenceCode,
 }: {
 	closeModal: () => void;
 	importURL: string;
+	loadData?: () => {};
 	objectFolderExternalReferenceCode: string;
 }) {
 	const [warning, setWarning] = useState(true);
@@ -58,6 +60,8 @@ export default function ImportStructureModalContent({
 				),
 				type: 'success',
 			});
+
+			loadData?.();
 		}
 		else if (errorMessage) {
 			setErrorMessage(errorMessage);

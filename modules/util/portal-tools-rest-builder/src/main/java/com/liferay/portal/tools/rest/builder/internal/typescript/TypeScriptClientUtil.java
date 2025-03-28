@@ -791,13 +791,13 @@ public class TypeScriptClientUtil {
 				return sb.toString();
 			}
 
-			if (Validator.isNotNull(schema.getFormat())) {
-				if (Objects.equals(schema.getFormat(), "date") ||
-					Objects.equals(schema.getFormat(), "date-time")) {
+			String format = schema.getFormat();
 
+			if (Validator.isNotNull(format)) {
+				if (format.equals("date") || format.equals("date-time")) {
 					return "Date";
 				}
-				else if (Objects.equals(schema.getFormat(), "binary")) {
+				else if (format.equals("binary")) {
 					return "File";
 				}
 			}

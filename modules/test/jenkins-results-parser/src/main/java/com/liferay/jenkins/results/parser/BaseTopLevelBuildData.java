@@ -140,7 +140,9 @@ public abstract class BaseTopLevelBuildData
 	}
 
 	private String _getDistNodes() {
-		if (!JenkinsResultsParserUtil.isCINode()) {
+		if (!JenkinsResultsParserUtil.isCINode() ||
+			JenkinsResultsParserUtil.isCloudCINode()) {
+
 			return "";
 		}
 

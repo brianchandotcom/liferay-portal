@@ -62,10 +62,9 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		Response response = tokenInvocationBuilder.post(Entity.form(formData));
 
-		String corsHeaderString = response.getHeaderString(
-			"Access-Control-Allow-Origin");
-
-		Assert.assertEquals(_TEST_CORS_URI, corsHeaderString);
+		Assert.assertEquals(
+			_TEST_CORS_URI,
+			response.getHeaderString("Access-Control-Allow-Origin"));
 	}
 
 	@Test
@@ -92,10 +91,9 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 			Response response = invocationBuilder.get();
 
-			String corsHeaderString = response.getHeaderString(
-				"Access-Control-Allow-Origin");
-
-			Assert.assertEquals(_TEST_CORS_URI, corsHeaderString);
+			Assert.assertEquals(
+				_TEST_CORS_URI,
+				response.getHeaderString("Access-Control-Allow-Origin"));
 		}
 	}
 
@@ -112,10 +110,8 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 		Response response = invocationBuilder.get();
 
-		String corsHeaderString = response.getHeaderString(
-			"Access-Control-Allow-Origin");
-
-		Assert.assertEquals(null, corsHeaderString);
+		Assert.assertEquals(
+			null, response.getHeaderString("Access-Control-Allow-Origin"));
 
 		Assert.assertEquals(401, response.getStatus());
 	}
@@ -146,10 +142,9 @@ public class CORSApplicationClientTest extends BaseClientTestCase {
 
 			Response response = invocationBuilder.options();
 
-			String corsHeaderString = response.getHeaderString(
-				"Access-Control-Allow-Origin");
-
-			Assert.assertEquals(_TEST_CORS_URI, corsHeaderString);
+			Assert.assertEquals(
+				_TEST_CORS_URI,
+				response.getHeaderString("Access-Control-Allow-Origin"));
 		}
 	}
 

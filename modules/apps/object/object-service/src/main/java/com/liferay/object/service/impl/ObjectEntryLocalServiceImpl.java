@@ -317,20 +317,19 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.isEnableObjectEntryDraft(), objectDefinition, null,
 			workflowAction);
 
-		User user = _userLocalService.getUser(userId);
+		defaultLanguageId = _getDefaultLanguageId(defaultLanguageId, groupId);
 
-		_fillDefaultValue(objectDefinitionId, values);
+		_fillDefaultValue(defaultLanguageId, objectDefinitionId, values);
 
 		_contributeValues(groupId, objectDefinition, userId, values);
 
 		Set<Long> dlFileEntryIds = new HashSet<>();
 		long objectEntryId = counterLocalService.increment();
+		User user = _userLocalService.getUser(userId);
 
 		_validateValues(
 			dlFileEntryIds, null, user.isGuestUser(), groupId, objectDefinition,
 			objectEntryId, serviceContext, userId, values);
-
-		defaultLanguageId = _getDefaultLanguageId(defaultLanguageId, groupId);
 
 		Map<String, Serializable> insertedValues = new HashMap<>();
 
@@ -2555,13 +2554,22 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _fillDefaultValue(
-		long objectDefinitionId, Map<String, Serializable> values) {
+		String defaultLanguageId, long objectDefinitionId,
+		Map<String, Serializable> values) {
 
 		for (ObjectField objectField :
 				_objectFieldPersistence.findByObjectDefinitionId(
 					objectDefinitionId)) {
 
-			if (values.get(objectField.getName()) != null) {
+			Map<String, Object> localizedValues =
+				(Map<String, Object>)values.getOrDefault(
+					objectField.getI18nObjectFieldName(), new HashMap<>());
+
+			if ((objectField.isLocalized() &&
+				 (localizedValues.get(defaultLanguageId) != null)) ||
+				(!objectField.isLocalized() &&
+				 (values.get(objectField.getName()) != null))) {
+
 				continue;
 			}
 
@@ -2575,6 +2583,21 @@ public class ObjectEntryLocalServiceImpl
 
 			if (value != null) {
 				values.put(objectField.getName(), (Serializable)value);
+
+				if (!objectField.isLocalized()) {
+					continue;
+				}
+
+				if (localizedValues.isEmpty()) {
+					values.put(
+						objectField.getI18nObjectFieldName(),
+						HashMapBuilder.put(
+							defaultLanguageId, value
+						).build());
+				}
+				else {
+					localizedValues.putIfAbsent(defaultLanguageId, value);
+				}
 			}
 		}
 	}

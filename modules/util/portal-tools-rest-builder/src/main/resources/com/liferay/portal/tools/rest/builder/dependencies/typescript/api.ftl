@@ -99,7 +99,7 @@ export class ${className} {
 				let body;
 				<#if (operationData.bodyParameters?keys?size > 1)>
 					<#assign hasMultipartContentType = false />
-					<#list operationData.bodyParameters?keys as requestBodyContentType>
+					<#list operationData.bodyParameters?keys?sort as requestBodyContentType>
 						<#if requestBodyContentType == "multipart/form-data">
 							<#assign hasMultipartContentType = true />
 						</#if>

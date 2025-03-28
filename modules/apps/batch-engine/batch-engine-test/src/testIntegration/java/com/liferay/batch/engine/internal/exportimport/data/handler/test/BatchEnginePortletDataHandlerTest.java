@@ -237,8 +237,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry4);
 
-		File file = _exportLayouts(
-			true, false, Collections.singletonList(_objectDefinition1));
+		File file = _exportLayouts(true, false, _objectDefinition1);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -259,8 +258,7 @@ public class BatchEnginePortletDataHandlerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		file = _exportLayouts(
-			true, true, Collections.singletonList(_objectDefinition2));
+		file = _exportLayouts(true, true, _objectDefinition2);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -280,7 +278,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONCompareMode.STRICT);
 
 		file = _exportLayouts(
-			true, false, Arrays.asList(_objectDefinition1, _objectDefinition2));
+			true, false, _objectDefinition1, _objectDefinition2);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -319,8 +317,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		// export deletions
 
-		File file = _exportLayouts(
-			true, Collections.singletonList(_objectDefinition1));
+		File file = _exportLayouts(true, _objectDefinition1);
 
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
 
@@ -330,8 +327,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		// import deletions
 
-		_importLayouts(
-			file, false, Collections.singletonList(_objectDefinition1));
+		_importLayouts(file, false, _objectDefinition1);
 
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
@@ -348,8 +344,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry3.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
 
-		_importLayouts(
-			file, true, Collections.singletonList(_objectDefinition1));
+		_importLayouts(file, true, _objectDefinition1);
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
@@ -416,13 +411,12 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private File _exportLayouts() throws Exception {
-		return _exportLayouts(
-			false, Collections.singletonList(_objectDefinition1));
+		return _exportLayouts(false, _objectDefinition1);
 	}
 
 	private File _exportLayouts(
 			boolean deletions, boolean privateLayouts,
-			List<ObjectDefinition> objectDefinitions)
+			ObjectDefinition... objectDefinitions)
 		throws Exception {
 
 		return _exportImportLocalService.exportLayoutsAsFile(
@@ -435,11 +429,11 @@ public class BatchEnginePortletDataHandlerTest {
 							TestPropsValues.getUser(), _companyGroupId,
 							privateLayouts, new long[0],
 							_getExportImportParameterMap(
-								deletions, objectDefinitions))));
+								deletions, Arrays.asList(objectDefinitions)))));
 	}
 
 	private File _exportLayouts(
-			boolean deletions, List<ObjectDefinition> objectDefinitions)
+			boolean deletions, ObjectDefinition... objectDefinitions)
 		throws Exception {
 
 		return _exportLayouts(deletions, false, objectDefinitions);
@@ -511,13 +505,11 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _importLayouts() throws Exception {
-		_importLayouts(
-			_larFile, false, Collections.singletonList(_objectDefinition1));
+		_importLayouts(_larFile, false, _objectDefinition1);
 	}
 
 	private void _importLayouts(
-			File file, boolean deletions,
-			List<ObjectDefinition> objectDefinitions)
+			File file, boolean deletions, ObjectDefinition... objectDefinitions)
 		throws Exception {
 
 		ExportImportConfiguration exportImportConfiguration =
@@ -530,7 +522,7 @@ public class BatchEnginePortletDataHandlerTest {
 							TestPropsValues.getUser(), _companyGroupId, false,
 							null,
 							_getExportImportParameterMap(
-								deletions, objectDefinitions)));
+								deletions, Arrays.asList(objectDefinitions))));
 
 		if (deletions) {
 			_exportImportLocalService.importLayoutsDataDeletions(

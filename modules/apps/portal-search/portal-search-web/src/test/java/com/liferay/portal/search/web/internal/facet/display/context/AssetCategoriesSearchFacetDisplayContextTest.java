@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetCategoriesSearchFacetDisplayContextBuilder;
@@ -30,6 +31,8 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -405,6 +408,9 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 				new AssetCategoriesSearchFacetDisplayContextBuilder(
 					getRenderRequest(group));
 
+		assetCategoriesSearchFacetDisplayContextBuilder.setPortal(
+			_getPortal(group));
+
 		return assetCategoriesSearchFacetDisplayContextBuilder.build();
 	}
 
@@ -517,11 +523,40 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		return assetCategory;
 	}
 
+	private HttpServletRequest _getHttpServletRequest(Group group) {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.doReturn(
+			getThemeDisplay(group)
+		).when(
+			httpServletRequest
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
+
+		return httpServletRequest;
+	}
+
 	private Portal _getPortal() throws ConfigurationException {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.doReturn(
 			getHttpServletRequest()
+		).when(
+			portal
+		).getHttpServletRequest(
+			Mockito.any()
+		);
+
+		return portal;
+	}
+
+	private Portal _getPortal(Group group) throws ConfigurationException {
+		Portal portal = Mockito.mock(Portal.class);
+
+		Mockito.doReturn(
+			_getHttpServletRequest(group)
 		).when(
 			portal
 		).getHttpServletRequest(

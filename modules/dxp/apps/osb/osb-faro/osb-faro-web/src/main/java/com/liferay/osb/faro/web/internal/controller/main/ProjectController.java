@@ -40,6 +40,7 @@ import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisp
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.TimeZoneUtil;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -78,6 +79,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ExecutorService;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -656,13 +658,11 @@ public class ProjectController extends BaseFaroController {
 			@QueryParam("startDateString") String startDateString)
 		throws Exception {
 
-		if ((_thread != null) && _thread.isAlive()) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Usage reset is running already");
-			}
-		}
+		ExecutorService executorService =
+			_portalExecutorManager.getPortalExecutor(
+				ProjectController.class.getName());
 
-		_thread = new Thread(
+		executorService.submit(
 			() -> {
 				try {
 					List<FaroProject> faroProjects = new ArrayList<>();
@@ -694,8 +694,6 @@ public class ProjectController extends BaseFaroController {
 					_log.error(exception);
 				}
 			});
-
-		_thread.start();
 	}
 
 	@Path("/{groupId}/send-created-workspace-email")
@@ -1472,6 +1470,9 @@ public class ProjectController extends BaseFaroController {
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
+
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
@@ -1480,7 +1481,5 @@ public class ProjectController extends BaseFaroController {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	private Thread _thread;
 
 }

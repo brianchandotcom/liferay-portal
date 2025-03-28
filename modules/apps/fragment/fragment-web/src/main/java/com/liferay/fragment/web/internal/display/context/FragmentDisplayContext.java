@@ -430,6 +430,8 @@ public class FragmentDisplayContext {
 				_renderResponse
 			).setMVCRenderCommandName(
 				"/fragment/view_fragment_collections"
+			).setParameter(
+				"includeMarketplaceFragmentCollections", true
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()
@@ -441,6 +443,8 @@ public class FragmentDisplayContext {
 				"/fragment/view_fragment_collections"
 			).setParameter(
 				"includeGlobalFragmentCollections", true
+			).setParameter(
+				"includeMarketplaceFragmentCollections", false
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()

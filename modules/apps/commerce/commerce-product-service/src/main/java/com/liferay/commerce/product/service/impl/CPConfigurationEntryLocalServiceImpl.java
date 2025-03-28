@@ -63,8 +63,8 @@ public class CPConfigurationEntryLocalServiceImpl
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
 			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
 			boolean purchasable, boolean shippable, double shippingExtraPrice,
-			boolean shipSeparately, boolean taxExempt, boolean visible,
-			double weight, double width)
+			boolean shipSeparately, boolean taxExempt, double weight,
+			double width)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -103,7 +103,6 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry.setShippingExtraPrice(shippingExtraPrice);
 		cpConfigurationEntry.setShipSeparately(shipSeparately);
 		cpConfigurationEntry.setTaxExempt(taxExempt);
-		cpConfigurationEntry.setVisible(visible);
 		cpConfigurationEntry.setWeight(weight);
 		cpConfigurationEntry.setWidth(width);
 
@@ -316,14 +315,6 @@ public class CPConfigurationEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<CPConfigurationEntry> getCPConfigurationEntries(
-		long classNameId, long classPK, boolean visible) {
-
-		return cpConfigurationEntryPersistence.findByC_C_V(
-			classNameId, classPK, visible);
-	}
-
-	@Override
 	public CPConfigurationEntry getCPConfigurationEntry(
 			long classNameId, long classPK, long cpConfigurationListId)
 		throws PortalException {
@@ -344,8 +335,8 @@ public class CPConfigurationEntryLocalServiceImpl
 			BigDecimal maxOrderQuantity, BigDecimal minOrderQuantity,
 			BigDecimal minStockQuantity, BigDecimal multipleOrderQuantity,
 			boolean purchasable, boolean shippable, double shippingExtraPrice,
-			boolean shipSeparately, boolean taxExempt, boolean visible,
-			double weight, double width)
+			boolean shipSeparately, boolean taxExempt, double weight,
+			double width)
 		throws PortalException {
 
 		CPConfigurationEntry cpConfigurationEntry =
@@ -375,7 +366,6 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry.setShippingExtraPrice(shippingExtraPrice);
 		cpConfigurationEntry.setShipSeparately(shipSeparately);
 		cpConfigurationEntry.setTaxExempt(taxExempt);
-		cpConfigurationEntry.setVisible(visible);
 		cpConfigurationEntry.setWeight(weight);
 		cpConfigurationEntry.setWidth(width);
 

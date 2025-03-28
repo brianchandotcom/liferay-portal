@@ -15,7 +15,6 @@ import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalS
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -62,12 +61,7 @@ public class CPDefinitionModelPreFilterContributor
 		_filterByStatuses(booleanFilter, searchContext);
 		_filterBySubscriptionEnabled(booleanFilter, searchContext);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				searchContext.getCompanyId(), "LPD-10889")) {
-
-			_filterByCPConfigurationListIds(booleanFilter, searchContext);
-		}
-		else if (GetterUtil.getBoolean(searchContext.getAttribute("secure"))) {
+		if (GetterUtil.getBoolean(searchContext.getAttribute("secure"))) {
 			_filterByAccountGroupIds(booleanFilter, searchContext);
 			_filterByCommerceChannelId(booleanFilter, searchContext);
 		}

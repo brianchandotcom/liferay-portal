@@ -180,7 +180,6 @@ public class ProductConfigurationDTOConverter
 				});
 			productConfiguration.setPurchasable(
 				cpConfigurationEntry::getPurchasable);
-			productConfiguration.setVisible(cpConfigurationEntry::getVisible);
 		}
 		else {
 			CPDAvailabilityEstimate cpdAvailabilityEstimate =
@@ -418,12 +417,6 @@ public class ProductConfigurationDTOConverter
 					cpConfigurationEntry.isTaxExempt()) {
 
 				differences.add("taxExempt");
-			}
-
-			if (jsonObject.getBoolean("visible", true) !=
-					cpConfigurationEntry.isVisible()) {
-
-				differences.add("visible");
 			}
 
 			if (jsonObject.getDouble("weight") !=

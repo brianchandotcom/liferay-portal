@@ -440,23 +440,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public boolean isVisible(long cpConfigurationListId)
-		throws PortalException {
-
-		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
-			cpConfigurationListId,
-			CPConfigurationEntryLocalServiceUtil.getCPConfigurationEntries(
-				ClassNameLocalServiceUtil.getClassNameId(CPDefinition.class),
-				getCPDefinitionId(), true));
-
-		if (cpConfigurationEntry == null) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public void setDeliverySubscriptionTypeSettings(
 		String subscriptionTypeSettings) {
 

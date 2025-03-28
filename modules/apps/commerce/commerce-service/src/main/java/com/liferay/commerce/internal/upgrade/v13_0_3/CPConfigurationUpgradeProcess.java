@@ -184,7 +184,7 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 						configurationEntryResultSet.getBoolean(
 							"shipSeparately"),
 						configurationEntryResultSet.getBoolean("taxExempt"),
-						true, configurationEntryResultSet.getDouble("weight"),
+						configurationEntryResultSet.getDouble("weight"),
 						configurationEntryResultSet.getDouble("width"));
 				}
 			}

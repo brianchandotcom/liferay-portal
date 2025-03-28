@@ -769,8 +769,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				depth, displayAvailability, displayStockQuantity, freeShipping,
 				height, lowStockActivity, maxOrderQuantity, minOrderQuantity,
 				minStockQuantity, multipleOrderQuantity, purchasable, shippable,
-				shippingExtraPrice, shipSeparately, taxExempt, true, weight,
-				width);
+				shippingExtraPrice, shipSeparately, taxExempt, weight, width);
 		}
 		else {
 			_cpConfigurationEntryService.updateCPConfigurationEntry(
@@ -781,8 +780,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				depth, displayAvailability, displayStockQuantity, freeShipping,
 				height, lowStockActivity, maxOrderQuantity, minOrderQuantity,
 				minStockQuantity, multipleOrderQuantity, purchasable, shippable,
-				shippingExtraPrice, shipSeparately, taxExempt,
-				cpConfigurationEntry.isVisible(), weight, width);
+				shippingExtraPrice, shipSeparately, taxExempt, weight, width);
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled(

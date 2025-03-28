@@ -1092,9 +1092,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					GetterUtil.getBoolean(
 						!_isTaxable(productTaxConfiguration),
 						masterCPConfigurationEntry.isTaxExempt()),
-					GetterUtil.getBoolean(
-						productConfiguration.getVisible(),
-						masterCPConfigurationEntry.isVisible()),
 					GetterUtil.getDouble(
 						productShippingConfiguration.getWeight(),
 						masterCPConfigurationEntry.getWeight()),

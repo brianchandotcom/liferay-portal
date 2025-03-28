@@ -44,12 +44,13 @@ public class ShippingAddressUtil {
 			shippingAddress, serviceContext);
 
 		return commerceOrderService.updateShippingAddress(
-			commerceOrder.getCommerceOrderId(), commerceAddress.getName(),
-			commerceAddress.getDescription(), commerceAddress.getStreet1(),
+			commerceOrder.getCommerceOrderId(), commerceAddress.getCountryId(),
+			commerceAddress.getRegionId(), commerceAddress.getCity(),
+			commerceAddress.getDescription(), commerceAddress.getName(),
+			commerceAddress.getPhoneNumber(), commerceAddress.getStreet1(),
 			commerceAddress.getStreet2(), commerceAddress.getStreet3(),
-			commerceAddress.getCity(), commerceAddress.getZip(),
-			commerceAddress.getRegionId(), commerceAddress.getCountryId(),
-			commerceAddress.getPhoneNumber(), serviceContext);
+			commerceAddress.getSubtype(), commerceAddress.getZip(),
+			serviceContext);
 	}
 
 	private static CommerceAddress _addCommerceAddress(
@@ -143,6 +144,14 @@ public class ShippingAddressUtil {
 		return commerceAddress.getStreet3();
 	}
 
+	private static String _getSubtype(CommerceAddress commerceAddress) {
+		if (commerceAddress == null) {
+			return null;
+		}
+
+		return commerceAddress.getSubtype();
+	}
+
 	private static String _getZip(CommerceAddress commerceAddress) {
 		if (commerceAddress == null) {
 			return null;
@@ -166,22 +175,25 @@ public class ShippingAddressUtil {
 			commerceOrder.getCompanyId(), shippingAddress.getCountryISOCode());
 
 		return commerceOrderService.updateShippingAddress(
-			commerceOrder.getCommerceOrderId(), shippingAddress.getName(),
+			commerceOrder.getCommerceOrderId(),
+			_getCountryId(commerceAddress, country, shippingAddress),
+			_getRegionId(commerceAddress, country, shippingAddress),
+			shippingAddress.getCity(),
 			GetterUtil.get(
 				shippingAddress.getDescription(),
 				_getDescription(commerceAddress)),
+			shippingAddress.getName(),
+			GetterUtil.get(
+				shippingAddress.getPhoneNumber(),
+				_getPhoneNumber(commerceAddress)),
 			shippingAddress.getStreet1(),
 			GetterUtil.get(
 				shippingAddress.getStreet2(), _getStreet2(commerceAddress)),
 			GetterUtil.get(
 				shippingAddress.getStreet3(), _getStreet3(commerceAddress)),
-			shippingAddress.getCity(),
-			GetterUtil.get(shippingAddress.getZip(), _getZip(commerceAddress)),
-			_getRegionId(commerceAddress, country, shippingAddress),
-			_getCountryId(commerceAddress, country, shippingAddress),
 			GetterUtil.get(
-				shippingAddress.getPhoneNumber(),
-				_getPhoneNumber(commerceAddress)),
+				shippingAddress.getSubtype(), _getSubtype(commerceAddress)),
+			GetterUtil.get(shippingAddress.getZip(), _getZip(commerceAddress)),
 			serviceContext);
 	}
 

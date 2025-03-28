@@ -198,6 +198,19 @@ export class FiltersPage {
 		];
 
 		await expect(tableRowContent).toContainText(expectedRowContent);
+
+		if (!Object.keys(filterData).includes('actionsDropdown')) {
+			return;
+		}
+
+		if (filterData.actionsDropdown) {
+			await expect(tableRowContent.locator('.dropdown')).toBeAttached();
+		}
+		else {
+			await expect(
+				tableRowContent.locator('.dropdown')
+			).not.toBeAttached();
+		}
 	}
 
 	async cancelAddFilterForm() {
@@ -411,6 +424,14 @@ export class FiltersPage {
 
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
 		await this.dataSetPage.goto({
+			dataSetLabel,
+		});
+
+		await this.dataSetPage.selectTab('Filters');
+	}
+
+	async open({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.open({
 			dataSetLabel,
 		});
 

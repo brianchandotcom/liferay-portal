@@ -18,6 +18,10 @@ export class VisualizationModesPage {
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
 	readonly tableVisualizationModeContainer: Locator;
+	readonly LABEL_COLUMN_INDEX = 2;
+	readonly RENDERER_COLUMN_INDEX = 4;
+	readonly SORTABLE_COLUMN_INDEX = 5;
+	readonly TYPE_COLUMN_INDEX = 3;
 
 	constructor(page: Page) {
 		this.addCustomFieldInput = page.getByPlaceholder('Type Field Here.');
@@ -75,6 +79,14 @@ export class VisualizationModesPage {
 
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
 		await this.dataSetPage.goto({
+			dataSetLabel,
+		});
+
+		await this.dataSetPage.selectTab('Visualization Modes');
+	}
+
+	async open({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.open({
 			dataSetLabel,
 		});
 

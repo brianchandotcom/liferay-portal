@@ -12,14 +12,20 @@ import {waitForAlert} from '../../../../utils/waitForAlert';
 import {fdsSamplePageTest} from '../../../frontend-data-set-web/fixtures/fdsSamplePageTest';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import {actionsPageTest} from './fixtures/actionsPageTest';
+import {filtersPageTest} from './fixtures/filtersPageTest';
+import {sortingPageTest} from './fixtures/sortingPageTest';
 import {systemDataSetsPageTest} from './fixtures/systemDataSetsPageTest';
+import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 
 export const test = mergeTests(
 	actionsPageTest,
 	dataSetManagerApiHelpersTest,
+	filtersPageTest,
 	fdsSamplePageTest,
 	isolatedSiteTest,
+	sortingPageTest,
 	systemDataSetsPageTest,
+	visualizationModesPageTest,
 	featureFlagsTest({
 		'LPD-37531': {enabled: true},
 		'LPS-164563': {enabled: true},
@@ -53,7 +59,16 @@ async function findTextIndexInLocators(
 test(
 	'Import a system data set to customize',
 	{tag: ['@LPD-37531', '@LPD-40949', '@LPD-49128']},
-	async ({actionsPage, fdsSamplePage, page, site, systemDataSetsPage}) => {
+	async ({
+		actionsPage,
+		fdsSamplePage,
+		filtersPage,
+		page,
+		site,
+		sortingPage,
+		systemDataSetsPage,
+		visualizationModesPage,
+	}) => {
 		await test.step('Add FDS Sample Widget for object definition generation', async () => {
 			await fdsSamplePage.setupFDSSampleWidget({site});
 		});
@@ -379,6 +394,223 @@ test(
 			await page.getByTitle('Back').click();
 		});
 
+		await test.step('Table sections are imported', async () => {
+			const assertTableSectionEntries = async (
+				dataSetLabel: string,
+				fields: object
+			) => {
+				await visualizationModesPage.open({
+					dataSetLabel,
+				});
+
+				await visualizationModesPage.selectTab('Table');
+
+				for (const fieldName of Object.keys(fields)) {
+					for (const cell of fields[fieldName]) {
+						await expect(
+							visualizationModesPage
+								.getRowByText(fieldName)
+								.locator('td')
+								.nth(cell.index)
+						).toHaveText(cell.expected);
+					}
+				}
+				await visualizationModesPage.assertTableFieldRowCount(
+					Object.keys(fields).length
+				);
+			};
+
+			const buildTableRowSpec = (sortableValue, rendererValue) => [
+				{
+					expected: sortableValue,
+					index: visualizationModesPage.SORTABLE_COLUMN_INDEX,
+				},
+				{
+					expected: rendererValue,
+					index: visualizationModesPage.RENDERER_COLUMN_INDEX,
+				},
+			];
+
+			await assertTableSectionEntries('Advanced Sample', {
+				'color': buildTableRowSpec('false', ''),
+				'creator.name': buildTableRowSpec(
+					'false',
+					'customAuthorTableCellRenderer'
+				),
+				'date': buildTableRowSpec('false', 'Date and Time'),
+				'description': buildTableRowSpec('false', 'Default'),
+				'id': buildTableRowSpec('true', 'Action Link'),
+				'size': buildTableRowSpec('false', 'Default'),
+				'status': buildTableRowSpec('false', 'Status'),
+				'title': buildTableRowSpec('true', 'Default'),
+			});
+
+			await page.getByTitle('Back').click();
+
+			await assertTableSectionEntries('Classic Sample', {
+				emailAddress: buildTableRowSpec('false', 'Default'),
+				firstName: buildTableRowSpec('false', 'Default'),
+				lastName: buildTableRowSpec('true', 'Default'),
+			});
+
+			await page.getByTitle('Back').click();
+		});
+
+		await test.step('Cards sections are imported', async () => {
+			const assertCardsSectionEntries = async (
+				dataSetLabel: string,
+				sections: object
+			) => {
+				await visualizationModesPage.open({
+					dataSetLabel,
+				});
+
+				await visualizationModesPage.selectTab('Cards');
+
+				for (const sectionLabel of Object.keys(sections)) {
+					const assignedFieldLocator =
+						await visualizationModesPage.getAssignedFieldLocator({
+							container:
+								visualizationModesPage.cardsVisualizationModeContainer,
+							sectionLabel,
+						});
+					await expect(assignedFieldLocator).toHaveText(
+						sections[sectionLabel]
+					);
+				}
+			};
+
+			await assertCardsSectionEntries('Advanced Sample', {
+				Description: 'description',
+				Title: 'title',
+			});
+
+			await page.getByTitle('Back').click();
+		});
+
+		await test.step('List sections are imported', async () => {
+			const assertListSectionEntries = async (
+				dataSetLabel: string,
+				sections: object
+			) => {
+				await visualizationModesPage.open({
+					dataSetLabel,
+				});
+
+				await visualizationModesPage.selectTab('List');
+
+				for (const sectionLabel of Object.keys(sections)) {
+					const assignedFieldLocator =
+						await visualizationModesPage.getAssignedFieldLocator({
+							container:
+								visualizationModesPage.cardsVisualizationModeContainer,
+							sectionLabel,
+						});
+					await expect(assignedFieldLocator).toHaveText(
+						sections[sectionLabel]
+					);
+				}
+			};
+
+			await assertListSectionEntries('Advanced Sample', {
+				Description: 'description',
+				Title: 'title',
+			});
+
+			await page.getByTitle('Back').click();
+		});
+
+		await test.step('Filters are imported', async () => {
+			const assertFilterEntries = async (
+				dataSetLabel: string,
+				sections: Array<Array<string | boolean>>
+			) => {
+				await filtersPage.open({
+					dataSetLabel,
+				});
+
+				let i = 0;
+
+				for (const section of sections) {
+					await filtersPage.assertTableCellContent({
+						filterData: {
+							actionsDropdown: section[3],
+							fieldName: section[1],
+							name: section[0],
+							status: 'Active',
+							type: section[2],
+						},
+						page: filtersPage.page,
+						rowIndex: i++,
+					});
+				}
+
+				await filtersPage.assertFiltersTableRowCount(sections.length);
+			};
+
+			await assertFilterEntries('Advanced Sample', [
+				['Client Extension', 'id', 'Client Extension Filter', true],
+				['Date Range', 'date', 'Date Filter', true],
+				['Color', 'color', 'System Filter', false],
+				['Size', 'size', 'System Filter', false],
+				['Status', 'status', 'System Filter', false],
+				['Title', 'title', 'System Filter', false],
+			]);
+
+			await page.getByTitle('Back').click();
+		});
+
+		await test.step('Sorts are imported', async () => {
+			const assertSortEntries = async (
+				dataSetLabel: string,
+				sections: Array<Array<string | boolean>>
+			) => {
+				await sortingPage.open({
+					dataSetLabel,
+				});
+
+				let i = 0;
+
+				for (const section of sections) {
+					await sortingPage.assertTableCellContent({
+						page: sortingPage.page,
+						rowIndex: i++,
+						sortData: {
+							actionsDropdown: section[3],
+							default: section[2],
+							name: section[0],
+							sortBy: section[1],
+							status: 'Active',
+						},
+					});
+				}
+
+				await sortingPage.assertSortsTableRowCount(
+					Object.keys(sections).length
+				);
+			};
+
+			await assertSortEntries('Advanced Sample', [
+				['By Title', 'title', 'Yes', true],
+				['By Color', 'color', 'No', true],
+			]);
+
+			await page.getByTitle('Back').click();
+
+			await assertSortEntries('Classic Sample', [
+				['Last Name', 'lastName', 'Yes', false],
+				['Email Address', 'emailAddress', 'No', false],
+				['First Name', 'firstName', 'No', false],
+			]);
+
+			await page.getByTitle('Back').click();
+
+			await assertSortEntries('Custom Internal View Sample', [
+				['*', '*', 'No', false],
+			]);
+
+			await page.getByTitle('Back').click();
+		});
 		await test.step('Delete an imported system data set', async () => {
 			await advancedSampleRow.locator('.dropdown-toggle').click();
 

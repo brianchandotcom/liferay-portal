@@ -52,7 +52,6 @@ TagFacetPortletPreferences tagFacetPortletPreferences = new TagFacetPortletPrefe
 				<liferay-template:template-selector
 					className="<%= TagFacetPortlet.class.getName() %>"
 					displayStyle="<%= tagFacetPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= assetTagsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

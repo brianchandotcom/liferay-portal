@@ -13,12 +13,9 @@ import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
-import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
-import com.liferay.commerce.product.model.CPConfigurationEntry;
-import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -43,7 +40,6 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -146,10 +142,6 @@ public class CPDefinitionModelDocumentContributor
 
 						return commerceChannel.getGroupId();
 					}));
-
-			document.addKeyword(
-				CPField.CP_CONFIGURATION_LIST_IDS,
-				_getCPConfigurationListIds(cpDefinition.getCPDefinitionId()));
 
 			long cpAttachmentFileEntryId = 0;
 
@@ -608,35 +600,6 @@ public class CPDefinitionModelDocumentContributor
 		}
 
 		return lowestPrice;
-	}
-
-	private String[] _getCPConfigurationListIds(long cpDefinitionId) {
-		List<String> cpConfigurationListIds = new ArrayList<>();
-
-		for (CPConfigurationEntry cpConfigurationEntry :
-				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
-					_classNameLocalService.getClassNameId(CPDefinition.class),
-					cpDefinitionId, true)) {
-
-			cpConfigurationListIds.add(
-				String.valueOf(
-					cpConfigurationEntry.getCPConfigurationListId()));
-
-			CPConfigurationEntrySetting cpConfigurationEntrySetting =
-				_cpConfigurationEntrySettingLocalService.
-					fetchCPConfigurationEntrySetting(
-						cpConfigurationEntry.getCPConfigurationEntryId(),
-						CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
-
-			if (cpConfigurationEntrySetting == null) {
-				continue;
-			}
-
-			cpConfigurationListIds.addAll(
-				StringUtil.split(cpConfigurationEntrySetting.getValue()));
-		}
-
-		return cpConfigurationListIds.toArray(new String[0]);
 	}
 
 	private List<CPOption> _getCPOptions(

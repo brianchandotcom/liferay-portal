@@ -669,7 +669,8 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				CPSpecificationOptionUpgradeProcess());
 
 		registry.register(
-			"5.28.0", "6.0.0", UpgradeProcessFactory.dropColumns(
+			"5.28.0", "6.0.0",
+			UpgradeProcessFactory.dropColumns(
 				"CPConfigurationEntry", "visible"));
 
 		if (_log.isInfoEnabled()) {

@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %>
+
 <%--
 /**
  * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
@@ -20,10 +22,6 @@ CPConfigurationEntry cpConfigurationEntry = cpConfigurationListDisplayContext.ge
 		label="base-settings"
 	>
 		<div class="row">
-			<div class="col-6">
-				<aui:input checked='<%= BeanParamUtil.getBoolean(cpConfigurationEntry, request, "visible", true) %>' data-qa-id="visibleInput" inlineLabel="right" name="visible" type="toggle-switch" />
-			</div>
-
 			<div class="col-6">
 				<aui:input checked='<%= BeanParamUtil.getBoolean(cpConfigurationEntry, request, "purchasable", true) %>' data-qa-id="purchasableInput" inlineLabel="right" name="purchasable" type="toggle-switch" />
 			</div>

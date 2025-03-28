@@ -94,7 +94,7 @@ public class CPDefinitionInventoryEngineTest {
 				_cpConfigurationList.getCPConfigurationListId(), 0, "1234",
 				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE,
-				true, true, 1.0, true, true, true, 1.0, 1.0);
+				true, true, 1.0, true, true, 1.0, 1.0);
 	}
 
 	@Test

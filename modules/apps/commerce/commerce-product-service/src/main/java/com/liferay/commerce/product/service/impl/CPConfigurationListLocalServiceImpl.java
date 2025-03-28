@@ -208,7 +208,7 @@ public class CPConfigurationListLocalServiceImpl
 				CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
 				BigDecimal.ZERO,
 				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY,
-				true, true, 0, false, false, true, 0, 0);
+				true, true, 0, false, false, 0, 0);
 		}
 
 		return cpConfigurationList;

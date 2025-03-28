@@ -81,6 +81,7 @@
     /**/*-client-js/src/apis/*.ts
     /**/*-client-js/src/index.ts
     /**/*-client-js/src/models/*.ts
+    /**/*-client-js/src/utils/SerDes.ts
 
     #
     # LRAC-12941 Temporarily ignore SF on FARO files.

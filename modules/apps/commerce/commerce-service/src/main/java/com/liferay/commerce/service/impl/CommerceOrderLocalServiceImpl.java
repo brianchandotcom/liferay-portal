@@ -1244,17 +1244,17 @@ public class CommerceOrderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateBillingAddress(
-			long commerceOrderId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
+			long commerceOrderId, long countryId, long regionId, String city,
+			String description, String name, String phoneNumber, String street1,
+			String street2, String street3, String subtype, String zip,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _updateAddress(
-			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, regionId, countryId, phoneNumber,
-			CommerceOrder::getBillingAddressId,
-			CommerceOrder::setBillingAddressId, serviceContext);
+			city, CommerceOrder::getBillingAddressId,
+			CommerceOrder::setBillingAddressId, commerceOrderId, countryId,
+			description, name, phoneNumber, regionId, street1, street2, street3,
+			serviceContext, subtype, zip);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -2107,17 +2107,17 @@ public class CommerceOrderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateShippingAddress(
-			long commerceOrderId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
+			long commerceOrderId, long countryId, long regionId, String city,
+			String description, String name, String phoneNumber, String street1,
+			String street2, String street3, String subtype, String zip,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _updateAddress(
-			commerceOrderId, name, description, street1, street2, street3, city,
-			zip, regionId, countryId, phoneNumber,
-			CommerceOrder::getShippingAddressId,
-			CommerceOrder::setShippingAddressId, serviceContext);
+			city, CommerceOrder::getShippingAddressId,
+			CommerceOrder::setShippingAddressId, commerceOrderId, countryId,
+			description, name, phoneNumber, regionId, street1, street2, street3,
+			serviceContext, subtype, zip);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -2710,12 +2710,12 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	private CommerceOrder _updateAddress(
-			long commerceOrderId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			Function<CommerceOrder, Long> commerceAddressIdGetter,
+			String city, Function<CommerceOrder, Long> commerceAddressIdGetter,
 			BiConsumer<CommerceOrder, Long> commerceAddressIdSetter,
-			ServiceContext serviceContext)
+			long commerceOrderId, long countryId, String description,
+			String name, String phoneNumber, long regionId, String street1,
+			String street2, String street3, ServiceContext serviceContext,
+			String subtype, String zip)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
@@ -2733,16 +2733,15 @@ public class CommerceOrderLocalServiceImpl
 				_commerceAddressLocalService.updateCommerceAddress(
 					commerceAddress.getExternalReferenceCode(),
 					commerceAddressId, countryId, regionId, city, description,
-					name, phoneNumber, street1, street2, street3,
-					StringPool.BLANK, commerceAddress.getType(), zip,
-					serviceContext);
+					name, phoneNumber, street1, street2, street3, subtype,
+					commerceAddress.getType(), zip, serviceContext);
 		}
 		else {
 			commerceAddress = _commerceAddressLocalService.addCommerceAddress(
 				StringPool.BLANK, commerceOrder.getModelClassName(),
 				commerceOrder.getCommerceOrderId(), countryId, regionId, city,
 				description, name, phoneNumber, street1, street2, street3,
-				StringPool.BLANK,
+				subtype,
 				CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING, zip,
 				serviceContext);
 		}

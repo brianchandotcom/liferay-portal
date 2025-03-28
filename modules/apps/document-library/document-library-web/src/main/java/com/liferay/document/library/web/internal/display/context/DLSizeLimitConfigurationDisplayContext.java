@@ -146,6 +146,10 @@ public class DLSizeLimitConfigurationDisplayContext {
 		throw new IllegalArgumentException("Unsupported scope: " + _scope);
 	}
 
+	public long getRequestFileSizeBuffer() {
+		return 0;
+	}
+
 	private Map<String, Long> _getMimeTypeSizeLimit() {
 		if (_scope.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue())) {

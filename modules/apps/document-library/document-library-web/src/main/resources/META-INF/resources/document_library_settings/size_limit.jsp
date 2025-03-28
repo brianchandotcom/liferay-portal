@@ -62,6 +62,16 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 			<aui:input label="size-limit-copy-files" name="maxSizeToCopy" type="number" value="<%= dlSizeLimitConfigurationDisplayContext.getMaxSizeToCopy() %>" />
 		</clay:sheet-section>
 
+		<clay:sheet-section>
+			<h3 class="c-mb-2 sheet-subtitle text-secondary"><liferay-ui:message key="request-file-size-buffer-title" /></h3>
+
+			<p class="c-mb-4 text-3 text-secondary">
+				<liferay-ui:message key="request-file-size-buffer-help" />
+			</p>
+
+			<aui:input label="buffer-limit" name="requestFileSizeBuffer" type="number" value="<%= dlSizeLimitConfigurationDisplayContext.getRequestFileSizeBuffer() %>" />
+		</clay:sheet-section>
+
 		<clay:sheet-footer>
 			<aui:button primary="<%= true %>" type="submit" />
 		</clay:sheet-footer>

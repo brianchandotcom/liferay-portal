@@ -26,11 +26,6 @@ export const test = mergeTests(
 	dataSetManagerSetupTest
 );
 
-const LABEL_COLUMN_INDEX = 2;
-const RENDERER_COLUMN_INDEX = 4;
-const SORTABLE_COLUMN_INDEX = 5;
-const TYPE_COLUMN_INDEX = 3;
-
 let dataSetERC: string;
 
 const dataSetLabel: string = getRandomString();
@@ -468,21 +463,21 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(SORTABLE_COLUMN_INDEX)
+					.nth(visualizationModesPage.SORTABLE_COLUMN_INDEX)
 			).toHaveText('true');
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(sampleScalarFieldName)
 					.locator('td')
-					.nth(SORTABLE_COLUMN_INDEX)
+					.nth(visualizationModesPage.SORTABLE_COLUMN_INDEX)
 			).toHaveText('true');
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(`${sampleObjectField}.*`)
 					.locator('td')
-					.nth(SORTABLE_COLUMN_INDEX)
+					.nth(visualizationModesPage.SORTABLE_COLUMN_INDEX)
 			).toHaveText('false');
 
 			await expect(
@@ -491,7 +486,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 						`${sampleObjectField}.${sampleObjectChildField}`
 					)
 					.locator('td')
-					.nth(SORTABLE_COLUMN_INDEX)
+					.nth(visualizationModesPage.SORTABLE_COLUMN_INDEX)
 			).toHaveText('false');
 		});
 
@@ -521,7 +516,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(SORTABLE_COLUMN_INDEX)
+					.nth(visualizationModesPage.SORTABLE_COLUMN_INDEX)
 			).toHaveText('false');
 		});
 
@@ -719,42 +714,42 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(SAMPLE_SCALAR_ARRAY_FIELD)
 					.locator('td')
-					.nth(TYPE_COLUMN_INDEX)
+					.nth(visualizationModesPage.TYPE_COLUMN_INDEX)
 			).toHaveText('array');
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(SAMPLE_SCALAR_ARRAY_FIELD)
 					.locator('td')
-					.nth(SORTABLE_COLUMN_INDEX)
+					.nth(visualizationModesPage.SORTABLE_COLUMN_INDEX)
 			).toHaveText('false');
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(SAMPLE_COMPLEX_ARRAY_FIELD)
 					.locator('td')
-					.nth(TYPE_COLUMN_INDEX)
+					.nth(visualizationModesPage.TYPE_COLUMN_INDEX)
 			).toHaveText('array');
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(SAMPLE_COMPLEX_ARRAY_FIELD)
 					.locator('td')
-					.nth(SORTABLE_COLUMN_INDEX)
+					.nth(visualizationModesPage.SORTABLE_COLUMN_INDEX)
 			).toHaveText('false');
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(SAMPLE_COMPLEX_OBJECT_CHILD_FIELD)
 					.locator('td')
-					.nth(TYPE_COLUMN_INDEX)
+					.nth(visualizationModesPage.TYPE_COLUMN_INDEX)
 			).toHaveText('string');
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(SAMPLE_FULL_COMPLEX_FIELD)
 					.locator('td')
-					.nth(TYPE_COLUMN_INDEX)
+					.nth(visualizationModesPage.TYPE_COLUMN_INDEX)
 			).toHaveText('object');
 		});
 	});
@@ -822,7 +817,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(LABEL_COLUMN_INDEX)
+					.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 			).toHaveText(sampleScalarField);
 
 			await visualizationModesPage.assertTableFieldRowCount(1);
@@ -851,7 +846,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(LABEL_COLUMN_INDEX)
+					.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 			).toHaveText(sampleScalarField);
 
 			await visualizationModesPage.assertTableFieldRowCount(1);
@@ -872,7 +867,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(LABEL_COLUMN_INDEX)
+					.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 			).toHaveText(sampleScalarField);
 
 			await visualizationModesPage.assertTableFieldRowCount(1);
@@ -915,7 +910,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(LABEL_COLUMN_INDEX)
+					.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 			).toHaveText(sampleScalarField);
 
 			await visualizationModesPage.assertTableFieldRowCount(1);
@@ -938,14 +933,14 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(LABEL_COLUMN_INDEX)
+					.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 			).toHaveText(sampleScalarField);
 
 			await expect(
 				visualizationModesPage
 					.getRowByText(SAMPLE_FIELD)
 					.locator('td')
-					.nth(LABEL_COLUMN_INDEX)
+					.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 			).toHaveText(SAMPLE_FIELD);
 
 			await visualizationModesPage.assertTableFieldRowCount(2);
@@ -987,7 +982,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(LABEL_COLUMN_INDEX)
+					.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 			).toHaveText(sampleScalarField);
 
 			await visualizationModesPage.assertTableFieldRowCount(1);
@@ -1021,7 +1016,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(RENDERER_COLUMN_INDEX)
+					.nth(visualizationModesPage.RENDERER_COLUMN_INDEX)
 			).toHaveText('Default');
 
 			await clickActionInRow({
@@ -1059,7 +1054,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				visualizationModesPage
 					.getRowByText(sampleScalarField)
 					.locator('td')
-					.nth(RENDERER_COLUMN_INDEX)
+					.nth(visualizationModesPage.RENDERER_COLUMN_INDEX)
 			).toHaveText('Boolean');
 		});
 	});
@@ -1102,7 +1097,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					visualizationModesPage
 						.getRowByText(SAMPLE_FIELD)
 						.locator('td')
-						.nth(LABEL_COLUMN_INDEX)
+						.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 				).toHaveText(SAMPLE_FIELD);
 
 				await visualizationModesPage.assertTableFieldRowCount(1);
@@ -1132,7 +1127,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					visualizationModesPage
 						.getRowByText(SAMPLE_FIELD)
 						.locator('td')
-						.nth(LABEL_COLUMN_INDEX)
+						.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 				).toHaveText(SAMPLE_FIELD_EN_US);
 
 				await visualizationModesPage.assertTableFieldRowCount(1);
@@ -1265,7 +1260,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					visualizationModesPage
 						.getRowByText(SAMPLE_FIELD)
 						.locator('td')
-						.nth(LABEL_COLUMN_INDEX)
+						.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 				).toHaveText(SAMPLE_FIELD_ES_ES);
 
 				await visualizationModesPage.assertTableFieldRowCount(1);
@@ -1283,7 +1278,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					visualizationModesPage
 						.getRowByText(SAMPLE_FIELD)
 						.locator('td')
-						.nth(LABEL_COLUMN_INDEX)
+						.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
 				).toHaveText(SAMPLE_FIELD_PT_BR);
 
 				await visualizationModesPage.assertTableFieldRowCount(1);

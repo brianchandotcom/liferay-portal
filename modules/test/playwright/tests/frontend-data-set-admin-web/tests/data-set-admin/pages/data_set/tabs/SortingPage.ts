@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {DataSetPage} from '../DataSetPage';
 
@@ -40,8 +40,56 @@ export class SortingPage {
 		this.page = page;
 	}
 
+	async assertTableCellContent({page, rowIndex = 0, sortData}) {
+		await page
+			.locator('.orderable-table > tbody > .orderable-table-row')
+			.first()
+			.waitFor();
+
+		const tableRowContent = await page
+			.locator('.orderable-table-row')
+			.nth(rowIndex)
+			.locator('td');
+
+		const expectedRowContent = [
+			sortData.name,
+			sortData.sortBy,
+			sortData.default,
+			sortData.status,
+		];
+
+		await expect(tableRowContent).toContainText(expectedRowContent);
+
+		if (!Object.keys(sortData).includes('actionsDropdown')) {
+			return;
+		}
+
+		if (sortData.actionsDropdown) {
+			await expect(tableRowContent.locator('.dropdown')).toBeAttached();
+		}
+		else {
+			await expect(
+				tableRowContent.locator('.dropdown')
+			).not.toBeAttached();
+		}
+	}
+
+	async assertSortsTableRowCount(rowCount: number) {
+		await expect(
+			this.sortingTable.locator('tbody').locator('tr')
+		).toHaveCount(rowCount);
+	}
+
 	async goto({dataSetLabel}: {dataSetLabel: string}) {
 		await this.dataSetPage.goto({
+			dataSetLabel,
+		});
+
+		await this.dataSetPage.selectTab('Sorting');
+	}
+
+	async open({dataSetLabel}: {dataSetLabel: string}) {
+		await this.dataSetPage.open({
 			dataSetLabel,
 		});
 

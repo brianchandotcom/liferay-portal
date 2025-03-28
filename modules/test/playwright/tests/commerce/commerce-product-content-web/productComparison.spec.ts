@@ -53,7 +53,9 @@ test(
 		const productComparisonBarWidgetTemplateKey =
 			await templatesPage.getTemplateKey();
 
-		await templatesPage.saveTemplate();
+		await templatesPage.saveTemplate(
+			productComparisonBarWidgetTemplateName
+		);
 		await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
 
 		const productComparisonTableWidgetTemplateName = getRandomString();
@@ -73,7 +75,9 @@ test(
 		const productComparisonTableWidgetTemplateKey =
 			await templatesPage.getTemplateKey();
 
-		await templatesPage.saveTemplate();
+		await templatesPage.saveTemplate(
+			productComparisonTableWidgetTemplateName
+		);
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([

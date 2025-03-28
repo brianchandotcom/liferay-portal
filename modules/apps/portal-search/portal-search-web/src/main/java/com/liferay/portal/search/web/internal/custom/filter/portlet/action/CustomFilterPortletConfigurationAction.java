@@ -7,13 +7,13 @@ package com.liferay.portal.search.web.internal.custom.filter.portlet.action;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.custom.filter.constants.CustomFilterPortletKeys;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.builder.CustomFilterDisplayContextBuilder;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ConfigurationAction.class
 )
 public class CustomFilterPortletConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {

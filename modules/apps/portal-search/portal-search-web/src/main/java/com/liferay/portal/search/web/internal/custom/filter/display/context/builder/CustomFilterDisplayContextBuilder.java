@@ -7,7 +7,9 @@ package com.liferay.portal.search.web.internal.custom.filter.display.context.bui
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -120,14 +122,28 @@ public class CustomFilterDisplayContextBuilder {
 	}
 
 	protected long getDisplayStyleGroupId() throws ConfigurationException {
+		long displayStyleGroupId;
+
 		CustomFilterPortletInstanceConfiguration
 			customFilterPortletInstanceConfiguration =
 				getCustomFilterPortletInstanceConfiguration();
 
-		long displayStyleGroupId =
-			customFilterPortletInstanceConfiguration.displayStyleGroupId();
+		String displayStyleGroupExternalReferenceCode =
+			customFilterPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
 
-		if (displayStyleGroupId <= 0) {
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			displayStyleGroupId = group.getGroupId();
+		}
+		else {
 			displayStyleGroupId = _themeDisplay.getScopeGroupId();
 		}
 

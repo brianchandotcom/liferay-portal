@@ -12,6 +12,12 @@ export type APIResponse<T = any> = {
 	totalCount: number;
 };
 
+export type AppsPermissions = {
+	installFreeApps: boolean;
+	purchaseAndInstallPaidApps: boolean;
+	viewApps: boolean;
+};
+
 type Attachment = {
 	customFields: CustomField[];
 	galleryEnabled: boolean;

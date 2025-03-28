@@ -6,21 +6,32 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {
+	AppsPermissions,
 	Marketplace,
 	MarketplaceContext,
 	MarketplaceContextProvider,
-	MarketplaceRest,
 	MarketplaceView,
 } from '@liferay/marketplace-js-components-web';
 import React from 'react';
 
 import MarketplaceViews from './MarketplaceViews';
 
-const CommerceChannelAddPaymentMethod = () => (
+type CommerceChannelAddPaymentMethodProps = {
+	baseResourceURL: string;
+	permissions: AppsPermissions;
+};
+
+const CommerceChannelAddPaymentMethod = ({
+	baseResourceURL,
+	permissions,
+}: CommerceChannelAddPaymentMethodProps) => (
 	<MarketplaceContextProvider
-		baseResourceURL={MarketplaceRest.getBaseResourceURL()}
+		baseResourceURL={baseResourceURL}
 		className="d-flex justify-content-end my-2 px-2 py-2"
-		settings={{productFilter: 'payments'}}
+		permissions={permissions}
+		settings={{
+			productFilter: 'payments',
+		}}
 	>
 		<MarketplaceContext.Consumer>
 			{({view}) => (

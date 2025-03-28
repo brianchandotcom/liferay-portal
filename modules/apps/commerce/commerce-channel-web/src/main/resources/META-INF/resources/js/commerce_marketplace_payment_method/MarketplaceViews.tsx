@@ -26,6 +26,7 @@ export default function MarketplaceViews() {
 	const {
 		marketplaceConfiguration,
 		marketplaceRest,
+		permissions,
 		product,
 		setProduct,
 		setView,
@@ -64,6 +65,24 @@ export default function MarketplaceViews() {
 			),
 		[placedOrders]
 	);
+
+	const getButtonConfiguration = (product: Product) => {
+		if (isProductInstalled(product)) {
+			return {
+				disabled: true,
+				title: Liferay.Language.get('installed'),
+			};
+		}
+
+		const marketplaceProduct = new MarketplaceProduct(product);
+
+		if (!marketplaceProduct.hasPermissionToInstall(permissions)) {
+			return {
+				disabled: true,
+				title: Liferay.Language.get('action-not-allowed'),
+			};
+		}
+	};
 
 	useEffect(() => {
 		marketplaceRest
@@ -140,10 +159,7 @@ export default function MarketplaceViews() {
 				>
 					{(product) => (
 						<ClayButton
-							{...(isProductInstalled(product) && {
-								disabled: true,
-								title: Liferay.Language.get('installed'),
-							})}
+							{...getButtonConfiguration(product)}
 							className="w-100"
 							onClick={() => {
 								setProduct(product);
@@ -163,10 +179,7 @@ export default function MarketplaceViews() {
 					onClickBack={() => setView(MarketplaceView.PRODUCTS)}
 					primaryButton={
 						<ClayButton
-							{...(isProductInstalled(product) && {
-								disabled: true,
-								title: Liferay.Language.get('installed'),
-							})}
+							{...getButtonConfiguration(product)}
 							className="ml-auto mt-3 rounded"
 							onClick={() => {
 								setState(States.CONFIRM_INSTALLATION);

@@ -5,6 +5,88 @@
 
 /* eslint-env jest */
 
+import DefaultEventHandler from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/DefaultEventHandler.es';
+import DynamicInlineScroll from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/DynamicInlineScroll.es';
+import PortletBase from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/PortletBase.es';
+import AutoSize from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/autosize/autosize.es';
+import BREAKPOINTS from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/breakpoints';
+import debounce, {
+	cancelDebounce,
+} from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/debounce/debounce.es';
+import delegate from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/delegate/delegate.es';
+import Disposable from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/events/Disposable';
+import EventEmitter from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/events/EventEmitter';
+import EventHandler from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/events/EventHandler';
+import STATUS_CODE from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/status_code';
+import throttle from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/throttle.es';
+import addParams from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/add_params';
+import getCountries from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/address/get_countries.es';
+import getRegions from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/address/get_regions.es';
+import {
+	CONSENT_TYPES,
+	checkConsent,
+	getCookie,
+	removeCookie,
+	setCookie,
+} from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/cookie/cookie';
+import fetch from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/fetch.es';
+import focusFormField from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/focus_form_field';
+import getFormElement from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/form/get_form_element.es';
+import objectToFormData from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/form/object_to_form_data.es';
+import postForm from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/form/post_form.es';
+import setFormValues from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/form/set_form_values.es';
+import formatStorage from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/format_storage.es';
+import {
+	getCheckedCheckboxes,
+	getUncheckedCheckboxes,
+} from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_checkboxes';
+import getCropRegion from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_crop_region.es';
+import getGeolocation from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_geolocation';
+import getLexiconIcon from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_lexicon_icon';
+import getLexiconIconTpl from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_lexicon_icon_template';
+import getOpener from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_opener';
+import getPortletId from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_portlet_id';
+import getPortletNamespace from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_portlet_namespace.es';
+import getSelectedOptionValues from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_selected_option_values';
+import getTop from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_top';
+import getWindow from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/get_window';
+import {
+	escapeHTML,
+	unescapeHTML,
+} from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/html_util';
+import inBrowserView from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/in_browser_view';
+import isObject from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/is_object';
+import isPhone from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/is_phone';
+import isTablet from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/is_tablet';
+import localStorage from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/local_storage';
+import memoize from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/memoize';
+import navigate from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/navigate.es';
+import normalizeFriendlyURL from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/normalize_friendly_url';
+import openWindow from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/open_window';
+import createActionURL from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/portlet_url/create_action_url.es';
+import createPortletURL from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/portlet_url/create_portlet_url.es';
+import createRenderURL from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/portlet_url/create_render_url.es';
+import createResourceURL from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/portlet_url/create_resource_url.es';
+import removeEntitySelection from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/remove_entity_selection';
+import runScriptsInElement from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/run_scripts_in_element.es';
+import selectFolder from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/select_folder';
+import {
+	getSessionValue,
+	setSessionValue,
+} from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/session.es';
+import sessionStorage from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/session_storage';
+import showCapsLock from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/show_caps_lock';
+import sub from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/sub';
+import toggleBoxes from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/toggle_boxes';
+import toggleControls from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/toggle_controls';
+import toggleDisabled from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/toggle_disabled';
+import toggleRadio from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/toggle_radio';
+import toggleSelectBox from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/toggle_select_box';
+import loadClientExtensions from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/utils/client_extensions/loadClientExtensions';
+import loadEditorClientExtensions from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/utils/client_extensions/loadEditorClientExtensions';
+import {loadModule} from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/utils/client_extensions/loadModule';
+import zIndex from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/zIndex';
+
 const languageMap = {
 	'days-abbreviation': 'd',
 	'decimal-delimiter': '.',
@@ -281,8 +363,84 @@ const CSP = {
 	nonce: '',
 };
 
+const __INTERNALS = {
+	AutoSize,
+	BREAKPOINTS,
+	CONSENT_TYPES,
+	DefaultEventHandler,
+	Disposable,
+	DynamicInlineScroll,
+	EventEmitter,
+	EventHandler,
+	PortletBase,
+	STATUS_CODE,
+	addParams,
+	cancelDebounce,
+	checkConsent,
+	createActionURL,
+	createPortletURL,
+	createRenderURL,
+	createResourceURL,
+	debounce,
+	delegate,
+	escapeHTML,
+	fetch,
+	focusFormField,
+	formatStorage,
+	getCheckedCheckboxes,
+	getCookie,
+	getCountries,
+	getCropRegion,
+	getFormElement,
+	getGeolocation,
+	getLexiconIcon,
+	getLexiconIconTpl,
+	getOpener,
+	getPortletId,
+	getPortletNamespace,
+	getRegions,
+	getSelectedOptionValues,
+	getSessionValue,
+	getTop,
+	getUncheckedCheckboxes,
+	getWindow,
+	inBrowserView,
+	isObject,
+	isPhone,
+	isTablet,
+	loadClientExtensions,
+	loadEditorClientExtensions,
+	loadModule,
+	localStorage,
+	memoize,
+	navigate,
+	normalizeFriendlyURL,
+	objectToFormData,
+	openWindow,
+	postForm,
+	removeCookie,
+	removeEntitySelection,
+	runScriptsInElement,
+	selectFolder,
+	sessionStorage,
+	setCookie,
+	setFormValues,
+	setSessionValue,
+	showCapsLock,
+	sub,
+	throttle,
+	toggleBoxes,
+	toggleControls,
+	toggleDisabled,
+	toggleRadio,
+	toggleSelectBox,
+	unescapeHTML,
+	zIndex,
+};
+
 module.exports = {
 	...events,
+	__INTERNALS,
 	CSP,
 	FeatureFlags,
 	Icons,

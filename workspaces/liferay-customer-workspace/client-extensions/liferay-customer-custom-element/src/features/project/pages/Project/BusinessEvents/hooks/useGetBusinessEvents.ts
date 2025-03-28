@@ -17,8 +17,6 @@ export default function useGetBusinessEvents(filterQuery: string): {
 	const [loading, setLoading] = useState(true);
 
 	const fetchBusinessEvents = useCallback(async () => {
-		setLoading(true);
-
 		try {
 			const businessEventsResponse = await getBusinessEvents(filterQuery);
 
@@ -33,14 +31,8 @@ export default function useGetBusinessEvents(filterQuery: string): {
 	}, [filterQuery]);
 
 	useEffect(() => {
-		if (!filterQuery) {
-			setLoading(true);
-
-			return;
-		}
-
 		fetchBusinessEvents();
-	}, [fetchBusinessEvents, filterQuery]);
+	}, [fetchBusinessEvents]);
 
 	return {businessEvents, fetchBusinessEvents, loading};
 }

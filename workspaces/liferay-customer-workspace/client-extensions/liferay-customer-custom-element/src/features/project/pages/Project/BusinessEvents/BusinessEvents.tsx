@@ -9,6 +9,7 @@ import './BusinessEvents.css';
 
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {useCallback, useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -295,7 +296,9 @@ const BusinessEvents = () => {
 	]);
 
 	return loading ? (
-		<div className="py-4">{i18n.translate('loading')}</div>
+		<div className="mx-auto">
+			<ClayLoadingIndicator size="sm" />
+		</div>
 	) : (
 		<div className="py-4">
 			<div>

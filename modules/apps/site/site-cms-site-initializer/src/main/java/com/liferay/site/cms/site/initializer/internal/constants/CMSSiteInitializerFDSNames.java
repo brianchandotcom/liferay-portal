@@ -29,4 +29,7 @@ public class CMSSiteInitializerFDSNames {
 	public static final String STRUCTURES_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-structuresSection";
 
+	public static final String VOCABULARIES =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-vocabularies";
+
 }

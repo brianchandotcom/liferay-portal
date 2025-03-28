@@ -12,10 +12,20 @@ ViewVocabulariesDisplayContext viewVocabulariesDisplayContext = (ViewVocabularie
 %>
 
 <div class="cms-section">
-	<div id="<%= CMSSiteInitializerFDSNames.CATEGORIZATION_SECTION %>">
-		<react:component
-			module="{ViewVocabularies} from site-cms-site-initializer"
-			props="<%= viewVocabulariesDisplayContext.getReactData() %>"
+	<div class="categorization-section">
+		<div>
+			<react:component
+				module="{CategorizationToolbar} from site-cms-site-initializer"
+				props="<%= viewVocabulariesDisplayContext.getReactData() %>"
+			/>
+		</div>
+
+		<frontend-data-set:headless-display
+			apiURL="<%= viewVocabulariesDisplayContext.getAPIURL() %>"
+			creationMenu="<%= viewVocabulariesDisplayContext.getCreationMenu() %>"
+			fdsFilters="<%= viewVocabulariesDisplayContext.getFDSFilters() %>"
+			id="test"
+			propsTransformer="{VocabularyFDSPropsTransformer} from site-cms-site-initializer"
 		/>
 	</div>
 </div>

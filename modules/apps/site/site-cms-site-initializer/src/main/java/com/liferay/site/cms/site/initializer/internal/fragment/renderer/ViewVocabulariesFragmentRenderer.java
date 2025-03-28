@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewVocabulariesDisplayContext;
 
-import java.io.IOException;
-
 import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
@@ -43,10 +41,9 @@ public class ViewVocabulariesFragmentRenderer
 
 	@Override
 	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
 			RequestDispatcher requestDispatcher =
@@ -55,6 +52,7 @@ public class ViewVocabulariesFragmentRenderer
 			httpServletRequest.setAttribute(
 				ViewVocabulariesDisplayContext.class.getName(),
 				new ViewVocabulariesDisplayContext(
+					httpServletRequest,
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)));
 

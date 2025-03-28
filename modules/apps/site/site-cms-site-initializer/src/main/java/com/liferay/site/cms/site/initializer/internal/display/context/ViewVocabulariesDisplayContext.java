@@ -7,25 +7,41 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter.VocabularyAssetTypesSelectionFDSFilter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Noor Najjar
  */
 public class ViewVocabulariesDisplayContext {
 
-	public ViewVocabulariesDisplayContext(ThemeDisplay themeDisplay) {
+	public ViewVocabulariesDisplayContext(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
+	}
+
+	public String getAPIURL() {
+		return "/o/headless-admin-taxonomy/v1.0/sites/" +
+			_themeDisplay.getScopeGroupId() + "/taxonomy-vocabularies";
 	}
 
 	public List<AssetRendererFactory<?>> getAvailableAssetRendererFactories() {
@@ -64,6 +80,27 @@ public class ViewVocabulariesDisplayContext {
 		return selectOptions;
 	}
 
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					PortalUtil.getLayoutFullURL(
+						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+							_themeDisplay.getScopeGroupId(), false,
+							"/categorization/new_vocabulary"),
+						_themeDisplay));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "new-vocabulary"));
+			}
+		).build();
+	}
+
+	public List<FDSFilter> getFDSFilters() {
+		return ListUtil.fromArray(
+			new VocabularyAssetTypesSelectionFDSFilter(
+				getClassNameIdOptions()));
+	}
+
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"addVocabularyURL",
@@ -93,6 +130,7 @@ public class ViewVocabulariesDisplayContext {
 		).build();
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

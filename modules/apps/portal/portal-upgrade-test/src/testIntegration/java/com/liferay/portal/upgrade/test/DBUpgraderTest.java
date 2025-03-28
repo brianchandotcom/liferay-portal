@@ -62,8 +62,7 @@ public class DBUpgraderTest {
 				DBUpgrader.class, "moduleServiceLifecyclePortletsInitialized",
 				"test");
 
-		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
-			StartupHelperUtil.class, "_upgrading", true);
+		_upgrading = StartupHelperUtil.isUpgrading();
 	}
 
 	@AfterClass
@@ -77,8 +76,7 @@ public class DBUpgraderTest {
 			DBUpgrader.class, "moduleServiceLifecyclePortletsInitialized",
 			_moduleServiceLifecyclePortletsInitialized);
 
-		ReflectionTestUtil.setFieldValue(
-			StartupHelperUtil.class, "_upgrading", _upgrading);
+		StartupHelperUtil.setUpgrading(_upgrading);
 	}
 
 	@After
@@ -92,7 +90,14 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_GOOD);
 
-		DBUpgrader.upgradePortal();
+		try {
+			StartupHelperUtil.setUpgrading(true);
+
+			DBUpgrader.upgradePortal();
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
+		}
 	}
 
 	@Test
@@ -110,6 +115,8 @@ public class DBUpgraderTest {
 		try {
 			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "false");
 
+			StartupHelperUtil.setUpgrading(true);
+
 			DBUpgrader.upgradeModules();
 
 			DBInspector dbInspector = new DBInspector(_connection);
@@ -118,12 +125,16 @@ public class DBUpgraderTest {
 
 			PropsUtil.set(PropsKeys.UPGRADE_DATABASE_AUTO_RUN, "true");
 
+			StartupHelperUtil.setUpgrading(true);
+
 			DBUpgrader.upgradeModules();
 
 			Assert.assertTrue(dbInspector.hasIndex("Lock_", "IX_TEST"));
 
 			ReflectionTestUtil.setFieldValue(
 				StartupHelperUtil.class, "_newRelease", true);
+
+			StartupHelperUtil.setUpgrading(true);
 
 			DBUpgrader.upgradeModules();
 
@@ -135,6 +146,8 @@ public class DBUpgraderTest {
 
 			ReflectionTestUtil.setFieldValue(
 				StartupHelperUtil.class, "_newRelease", newRelease);
+
+			StartupHelperUtil.setUpgrading(false);
 		}
 	}
 
@@ -145,11 +158,16 @@ public class DBUpgraderTest {
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
 		try {
+			StartupHelperUtil.setUpgrading(true);
+
 			DBUpgrader.upgradePortal();
 
 			Assert.fail();
 		}
 		catch (IllegalStateException illegalStateException) {
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
 		}
 	}
 
@@ -159,7 +177,14 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
-		DBUpgrader.upgradePortal();
+		try {
+			StartupHelperUtil.setUpgrading(true);
+
+			DBUpgrader.upgradePortal();
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(false);
+		}
 	}
 
 	private void _updatePortalRelease(int buildNumber, int state)

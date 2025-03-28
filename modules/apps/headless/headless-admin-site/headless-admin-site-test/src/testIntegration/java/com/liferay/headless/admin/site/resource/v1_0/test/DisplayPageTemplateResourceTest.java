@@ -389,6 +389,8 @@ public class DisplayPageTemplateResourceTest
 	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateMarkAsDefault();
+
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			randomDisplayPageTemplate());
 
@@ -988,6 +990,29 @@ public class DisplayPageTemplateResourceTest
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getExternalReferenceCode(),
 			displayPageTemplateFolder.getExternalReferenceCode());
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateMarkAsDefault()
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		DisplayPageTemplate postDisplayPageTemplate =
+			displayPageTemplateResource.
+				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(), displayPageTemplate);
+
+		postDisplayPageTemplate.setMarkedAsDefault(true);
+
+		_assertProblemException(
+			"CONFLICT",
+			"The default Display Page Template must be published first.",
+			() ->
+				displayPageTemplateResource.
+					putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						postDisplayPageTemplate.getExternalReferenceCode(),
+						postDisplayPageTemplate));
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

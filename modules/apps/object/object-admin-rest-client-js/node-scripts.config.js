@@ -4,5 +4,5 @@
  */
 
 module.exports = {
-	main: './src/node/api.ts',
+	main: './src/index.ts',
 };

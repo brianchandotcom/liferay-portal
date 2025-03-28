@@ -26,7 +26,8 @@ import java.util.Map;
 /**
  * @author Jorge Avalos
  */
-public class DeleteDuplicateUniqueFinderRowsUpgradeProcess extends UpgradeProcess {
+public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
+	extends UpgradeProcess {
 
 	public DeleteDuplicateUniqueFinderRowsUpgradeProcess(
 		String tableName, String[] columnNames) {

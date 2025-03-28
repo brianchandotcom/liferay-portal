@@ -60,7 +60,7 @@ export class ${className} {
 			<#if operationData.bodyParameters?has_content>
 				<#if (operationData.bodyParameters?keys?size == 1)>
 					<#list operationData.bodyParameters[firstRequestBodyContentType] as bodyParameter>
-						${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType},
+						${bodyParameter.name}${bodyParameter.required?then("", "?")}: ${bodyParameter.dataType},
 					</#list>
 				<#else>
 					requestBody:
@@ -68,10 +68,10 @@ export class ${className} {
 							{
 								parameters: {
 									<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
-										${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType}<#if bodyParameter?has_next>,</#if>
+										${bodyParameter.name}${bodyParameter.required?then("", "?")}: ${bodyParameter.dataType}<#if bodyParameter?has_next>,</#if>
 									</#list>
 								},
-								type: '${requestBodyContentType}'
+								type: "${requestBodyContentType}"
 							}
 							<#if requestBodyContentType?has_next>
 								|
@@ -102,17 +102,17 @@ export class ${className} {
 				<#if (operationData.bodyParameters?keys?size > 1)>
 					<#assign hasMultipartContentType = false />
 					<#list operationData.bodyParameters?keys as requestBodyContentType>
-						<#if requestBodyContentType == 'multipart/form-data'>
+						<#if requestBodyContentType == "multipart/form-data">
 							<#assign hasMultipartContentType = true />
 						</#if>
-						if (requestBody.type === '${requestBodyContentType}') {
-							<#if requestBodyContentType == 'multipart/form-data'>
+						if (requestBody.type === "${requestBodyContentType}") {
+							<#if requestBodyContentType == "multipart/form-data">
 								const formData = new FormData();
 								<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
 									<#if stringUtil.equals(bodyParameter.dataType, "File")>
-										formData.append('${bodyParameter.name}', requestBody.parameters.${bodyParameter.name});
+										formData.append("${bodyParameter.name}", requestBody.parameters.${bodyParameter.name});
 									<#else>
-										formData.append('${bodyParameter.name}', JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
+										formData.append("${bodyParameter.name}", JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
 									</#if>
 								</#list>
 								body = formData;
@@ -122,13 +122,13 @@ export class ${className} {
 						}
 					</#list>
 				<#else>
-					<#if firstRequestBodyContentType == 'multipart/form-data'>
+					<#if firstRequestBodyContentType == "multipart/form-data">
 						const formData = new FormData();
 						<#list operationData.bodyParameters[firstRequestBodyContentType] as bodyParameter>
 							<#if stringUtil.equals(bodyParameter.dataType, "File")>
-								formData.append('${bodyParameter.name}', requestBody.parameters.${bodyParameter.name});
+								formData.append("${bodyParameter.name}", requestBody.parameters.${bodyParameter.name});
 							<#else>
-								formData.append('${bodyParameter.name}', JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
+								formData.append("${bodyParameter.name}", JSON.stringify(ObjectSerializer.serialize(requestBody.parameters.${bodyParameter.name}, "${bodyParameter.dataType}")));
 							</#if>
 						</#list>
 						body = formData;
@@ -138,10 +138,10 @@ export class ${className} {
 				</#if>
 			</#if>
 
-			const path = this._basePath + '${operationData.path}'
+			const path = this._basePath + "${operationData.path}"
 				<#list operationData.parameters as parameter>
 					<#if stringUtil.equals(parameter.type, "path")>
-						.replace('{${parameter.name}}',encodeURIComponent(${parameter.name}))
+						.replace("{${parameter.name}}",encodeURIComponent(${parameter.name}))
 					</#if>
 				</#list>;
 
@@ -151,45 +151,45 @@ export class ${className} {
 					<#if parameter.required>
 
 						if (${parameter.name} === null || ${parameter.name} === undefined) {
-							throw new Error('Required parameter ${parameter.name} was null or undefined when calling ${operationData.operationId}.');
+							throw new Error("Required parameter ${parameter.name} was null or undefined when calling ${operationData.operationId}.");
 						}
 					</#if>
 					<#if stringUtil.equals(parameter.type, "query")>
 
 						if (${parameter.name} !== undefined) {
-							queryParameters['${parameter.name}'] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
+							queryParameters["${parameter.name}"] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
 						}
 					</#if>
 				</#list>
 			</#if>
 
-			const queryString = Object.keys(queryParameters).length
-				? '?' + new URLSearchParams(queryParameters).toString()
-				: '';
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
 
 			const response = await fetch(path + queryString, {
-				method: '${operationData.httpMethod}',
+				method: "${operationData.httpMethod}",
 				headers:
 					Object.assign({}, this._defaultHeaders
 					<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
 						,{
 							<#if operationData.responseContentTypes?seq_contains("application/json")>
-								Accept: 'application/json'
+								Accept: "application/json"
 							<#else>
-								Accept: '${operationData.responseContentTypes[0]}'
+								Accept: "${operationData.responseContentTypes[0]}"
 							</#if>
 						}
 					</#if>
 					<#if operationData.bodyParameters?has_content>
 						<#if (operationData.bodyParameters?keys?size > 1)>
 							<#if hasMultipartContentType>
-								,(requestBody.type !== 'multipart/form-data') ?
-									{'Content-Type': requestBody.type} : {}
+								,(requestBody.type !== "multipart/form-data") ?
+									{"Content-Type": requestBody.type} : {}
 							<#else>
-								,{'Content-Type': requestBody.type}
+								,{"Content-Type": requestBody.type}
 							</#if>
-						<#elseif firstRequestBodyContentType != 'multipart/form-data'>
-							,{'Content-Type': ${firstRequestBodyContentType}}
+						<#elseif firstRequestBodyContentType != "multipart/form-data">
+							,{"Content-Type": ${firstRequestBodyContentType}}
 						</#if>
 					</#if>
 					,headers || {}
@@ -200,17 +200,17 @@ export class ${className} {
 			});
 
 			if (response.ok) {
-				const contentType = response.headers.get('content-type') || '';
+				const contentType = response.headers.get("content-type") || "";
 
 				<#if operationData.returnDataType??>
-					if (contentType.includes('application/json')) {
+					if (contentType.includes("application/json")) {
 						return {body: ObjectSerializer.deserialize(await response.json(), "${operationData.returnDataType}"), response};
 					}
 					else {
 						return {body: await response.text() as any, response};
 					}
 				<#else>
-					if (contentType.includes('application/json')) {
+					if (contentType.includes("application/json")) {
 						return {body: await response.json(), response};
 					}
 					else {
@@ -229,7 +229,7 @@ export class ${className} {
 
 		<#if operationData.bodyParameters?has_content && (operationData.bodyParameters?keys?size > 1)>
 			<#list operationData.bodyParameters?keys as requestBodyContentType>
-				<#if requestBodyContentType == 'application/json'>
+				<#if requestBodyContentType == "application/json">
 					/**
 					 * ${operationData.description!} - Default method for JSON body
 					 <#if operationData.parameters??>
@@ -250,7 +250,7 @@ export class ${className} {
 							</#list>
 						</#if>
 						<#list operationData.bodyParameters[requestBodyContentType] as bodyParameter>
-							${bodyParameter.name}${bodyParameter.required?then('', '?')}: ${bodyParameter.dataType},
+							${bodyParameter.name}${bodyParameter.required?then("", "?")}: ${bodyParameter.dataType},
 						</#list>
 						<#if operationData.parameters??>
 							<#list operationData.parameters as parameter>
@@ -282,7 +282,7 @@ export class ${className} {
 										${bodyParameter.name}: ${bodyParameter.name}<#if bodyParameter?has_next>,</#if>
 									</#list>
 								},
-								type: 'application/json'
+								type: "application/json"
 							},
 							<#if operationData.parameters??>
 								<#list operationData.parameters as parameter>

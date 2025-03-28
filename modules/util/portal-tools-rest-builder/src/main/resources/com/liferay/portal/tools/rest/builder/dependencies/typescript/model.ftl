@@ -25,12 +25,12 @@
 <#else>
 	export class ${modelName} <#if parentClass??>extends ${parentClass} </#if>{
 		<#list properties as property>
-			'${property.name}'?: ${property.dataType};
+			"${property.name}"?: ${property.dataType};
 		</#list>
 
-		static 'discriminator': string | undefined = <#if discriminator??>"${discriminator}"<#else>undefined</#if>;
+		static "discriminator": string | undefined = <#if discriminator??>"${discriminator}"<#else>undefined</#if>;
 
-	static 'attributeTypeMap': Array<{
+	static "attributeTypeMap": Array<{
 		baseName: string;
 		name: string;
 		type: string;

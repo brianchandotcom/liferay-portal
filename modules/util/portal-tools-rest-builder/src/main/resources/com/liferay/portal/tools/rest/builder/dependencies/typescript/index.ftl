@@ -21,8 +21,8 @@ export class HttpError extends Error {
 		public response: Response,
 		public statusCode: number
 	) {
-		super('HTTP request failed');
-		this.name = 'HttpError';
+		super("HTTP request failed");
+		this.name = "HttpError";
 	}
 }
 
@@ -37,21 +37,21 @@ function startsWith(str: string, match: string): boolean {
 	return str.substring(0, match.length) === match;
 }
 
-const arrayPrefix = 'Array<';
-const arraySuffix = '>';
-const mapPrefix = '{ [key: string]: ';
-const mapSuffix = '; }';
-const nullableSuffix = ' | null';
-const optionalSuffix = ' | undefined';
+const arrayPrefix = "Array<";
+const arraySuffix = ">";
+const mapPrefix = "{ [key: string]: ";
+const mapSuffix = "; }";
+const nullableSuffix = " | null";
+const optionalSuffix = " | undefined";
 const primitives = new Set([
-	'string',
-	'boolean',
-	'double',
-	'integer',
-	'long',
-	'float',
-	'number',
-	'any',
+	"string",
+	"boolean",
+	"double",
+	"integer",
+	"long",
+	"float",
+	"number",
+	"any",
 ]);
 const typeMap: {[index: string]: any} = {
 <#list schemas?keys?sort as schema>
@@ -108,7 +108,7 @@ export class ObjectSerializer {
 
 			return transformedData;
 		}
-		else if (type === 'Date') {
+		else if (type === "Date") {
 			return new Date(data);
 		}
 		else {
@@ -136,7 +136,7 @@ export class ObjectSerializer {
 		else if (primitives.has(expectedType.toLowerCase())) {
 			return expectedType;
 		}
-		else if (expectedType === 'Date') {
+		else if (expectedType === "Date") {
 			return expectedType;
 		}
 		else {
@@ -212,7 +212,7 @@ export class ObjectSerializer {
 
 			return transformedData;
 		}
-		else if (type === 'Date') {
+		else if (type === "Date") {
 			return data.toISOString();
 		}
 		else {

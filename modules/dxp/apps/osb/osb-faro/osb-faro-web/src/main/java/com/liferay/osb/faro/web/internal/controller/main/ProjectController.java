@@ -687,7 +687,7 @@ public class ProjectController extends BaseFaroController {
 					}
 
 					if (_log.isInfoEnabled()) {
-						_log.info("Usage reset finished successfully");
+						_log.info("Finished resetting project usage");
 					}
 				}
 				catch (Exception exception) {

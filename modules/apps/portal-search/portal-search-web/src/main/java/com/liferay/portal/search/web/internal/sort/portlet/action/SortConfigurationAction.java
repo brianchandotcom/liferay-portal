@@ -8,7 +8,6 @@ package com.liferay.portal.search.web.internal.sort.portlet.action;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -18,6 +17,7 @@ import com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreference
 import com.liferay.portal.search.web.internal.sort.portlet.SortPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + SortPortletKeys.SORT,
 	service = ConfigurationAction.class
 )
-public class SortConfigurationAction extends DefaultConfigurationAction {
+public class SortConfigurationAction extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {

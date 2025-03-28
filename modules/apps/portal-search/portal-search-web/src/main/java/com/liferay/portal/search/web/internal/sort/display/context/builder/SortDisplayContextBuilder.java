@@ -9,9 +9,12 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.sort.configuration.SortPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.sort.display.context.SortDisplayContext;
@@ -96,10 +99,24 @@ public class SortDisplayContextBuilder {
 	}
 
 	protected long getDisplayStyleGroupId() {
-		long displayStyleGroupId =
-			_sortPortletInstanceConfiguration.displayStyleGroupId();
+		long displayStyleGroupId;
 
-		if (displayStyleGroupId <= 0) {
+		String displayStyleGroupExternalReferenceCode =
+			_sortPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				_themeDisplay.getCompanyId());
+		}
+
+		if (group != null) {
+			displayStyleGroupId = group.getGroupId();
+		}
+		else {
 			displayStyleGroupId = _themeDisplay.getScopeGroupId();
 		}
 

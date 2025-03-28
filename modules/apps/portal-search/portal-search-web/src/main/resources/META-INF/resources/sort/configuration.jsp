@@ -58,7 +58,6 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 				<liferay-template:template-selector
 					className="<%= SortDisplayContext.class.getName() %>"
 					displayStyle="<%= sortPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= sortDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

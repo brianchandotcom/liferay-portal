@@ -28,6 +28,7 @@ import Portal from '../Portal';
 import RenewTable from '../RenewTable';
 import TeamMembers from '../TeamMembers';
 import ActivationOutlet from './Outlets/ActivationOutlet';
+import BusinessEventOutlet from './Outlets/BusinessEventOutlet';
 import ProductOutlet from './Outlets/ProductOutlet';
 import ProjectUsage from '../ProjectUsage';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
@@ -274,7 +275,7 @@ const ProjectRoutes = () => {
 						<Route path="business-events">
 							<Route element={<BusinessEvents />} index />
 							<Route element={<BusinessEventAdd />} path="new"/>
-							<Route path=":id">
+							<Route path=":id" element={<BusinessEventOutlet project={project} skip={!project} />}>
 								<Route element={<BusinessEventsItemDetails />} index />
 								<Route element={<BusinessEventsItemEdit />} path="edit"/>
 								<Route element={<BusinessEventsItemActivityHistory />} path="activity-history"/>

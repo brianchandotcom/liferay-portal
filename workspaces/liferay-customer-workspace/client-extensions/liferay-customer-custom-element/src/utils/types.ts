@@ -74,7 +74,7 @@ export interface IBusinessEventVersion {
 	};
 	dateModified?: string;
 	r_accountEntryToBusinessEventVersions_accountEntryId?: number;
-	r_businessEventtoBusinesssEventVersions_c_businessEventId?: number;
+	r_businessEventToBusinessEventVersions_c_businessEventId?: number;
 }
 
 export interface IKoroneikiAccount {

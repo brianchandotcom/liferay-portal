@@ -272,7 +272,7 @@ public class ImportSystemDataSetMVCResourceCommand
 			"title", baseListFDSView.getTitle()
 		).build();
 
-		for (Map.Entry<String, String> entry : listSections.entrySet()) {
+		for (Map.Entry<String, String> entry : map.entrySet()) {
 			if (Validator.isNull(entry.getValue())) {
 				continue;
 			}
@@ -321,7 +321,11 @@ public class ImportSystemDataSetMVCResourceCommand
 			fdsTableSchema.getFDSTableSchemaFieldsMap();
 
 		for (FDSTableSchemaField fdsTableSchemaField : map.values()) {
-			HashMapBuilder.HashMapWrapper<String, Serializable> hashMapBuilder =
+			_objectEntryService.addObjectEntry(
+				0, objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"externalReferenceCode",
 					StringBundler.concat(
@@ -338,9 +342,7 @@ public class ImportSystemDataSetMVCResourceCommand
 
 						if (!fdsTableSchemaField.isLocalizeLabel()) {
 							return HashMapBuilder.put(
-								dataSetTableSectionObjectDefinition.
-									getDefaultLanguageId(),
-								label
+								objectDefinition.getDefaultLanguageId(), label
 							).put(
 								LocaleUtil.toLanguageId(
 									_portal.getLocale(httpServletRequest)),
@@ -386,13 +388,8 @@ public class ImportSystemDataSetMVCResourceCommand
 					"sortable", fdsTableSchemaField.isSortable()
 				).put(
 					"type", "string"
-				);
-
-			_objectEntryService.addObjectEntry(
-				0, dataSetTableSectionObjectDefinition.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, values.build(), new ServiceContext());
+				).build(),
+				new ServiceContext());
 		}
 
 		if (baseTableFDSView.isDefault()) {

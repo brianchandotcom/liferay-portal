@@ -11,6 +11,7 @@ import com.liferay.portal.search.web.constants.SearchResultsPortletKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -21,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ConfigurationAction.class
 )
 public class SearchResultsConfigurationAction
-	extends DefaultConfigurationAction {
+	extends BaseConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {

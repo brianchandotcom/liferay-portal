@@ -66,9 +66,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -90,16 +88,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		super.setUp();
-	}
-
-	@After
-	public void tearDown() {
-		super.tearDown();
-	}
 
 	@Test
 	public void testSerializeAPIURL() throws Exception {

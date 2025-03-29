@@ -147,6 +147,10 @@ public class ImportSystemDataSetMVCResourceCommand
 				objectEntry);
 		}
 
+		_addFDSFilterObjectEntries(
+			_fdsFilterRegistry.getFDSFilters(fdsName),
+			_portal.getHttpServletRequest(resourceRequest), objectEntry);
+
 		FDSItemsActions fdsItemsActions =
 			_fdsItemsActionsRegistry.getFDSItemsActions(fdsName);
 
@@ -155,6 +159,14 @@ public class ImportSystemDataSetMVCResourceCommand
 				dataSetActionObjectDefinition.getDefaultLanguageId(),
 				fdsItemsActions, _portal.getHttpServletRequest(resourceRequest),
 				dataSetActionObjectDefinition.getObjectDefinitionId(),
+				objectEntry);
+		}
+
+		FDSSorts fdsSorts = _fdsSortsRegistry.getFDSSorts(fdsName);
+
+		if (fdsSorts != null) {
+			_addFDSSortObjectEntries(
+				fdsSorts, _portal.getHttpServletRequest(resourceRequest),
 				objectEntry);
 		}
 
@@ -181,18 +193,6 @@ public class ImportSystemDataSetMVCResourceCommand
 					_portal.getHttpServletRequest(resourceRequest),
 					objectEntry);
 			}
-		}
-
-		_addFDSFilterObjectEntries(
-			_fdsFilterRegistry.getFDSFilters(fdsName),
-			_portal.getHttpServletRequest(resourceRequest), objectEntry);
-
-		FDSSorts fdsSorts = _fdsSortsRegistry.getFDSSorts(fdsName);
-
-		if (fdsSorts != null) {
-			_addFDSSortObjectEntries(
-				fdsSorts, _portal.getHttpServletRequest(resourceRequest),
-				objectEntry);
 		}
 
 		JSONPortletResponseUtil.writeJSON(

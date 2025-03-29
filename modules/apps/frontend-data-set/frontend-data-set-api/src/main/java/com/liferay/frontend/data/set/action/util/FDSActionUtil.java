@@ -19,15 +19,15 @@ public class FDSActionUtil {
 		return StringBundler.concat(fdsName, _SEPARATOR_CREATION_ACTION, id);
 	}
 
+	public static String getFDSCreationActionId(String externalReferenceCode) {
+		return StringUtil.extractLast(
+			externalReferenceCode, _SEPARATOR_CREATION_ACTION);
+	}
+
 	public static String getFDSItemActionExternalReferenceCode(
 		String fdsName, String id) {
 
 		return StringBundler.concat(fdsName, _SEPARATOR_ITEM_ACTION, id);
-	}
-
-	public static String getFDSCreationActionId(String externalReferenceCode) {
-		return StringUtil.extractLast(
-			externalReferenceCode, _SEPARATOR_CREATION_ACTION);
 	}
 
 	public static String getFDSItemActionId(String externalReferenceCode) {

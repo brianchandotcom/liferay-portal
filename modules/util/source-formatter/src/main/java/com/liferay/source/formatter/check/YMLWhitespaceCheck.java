@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
 import java.io.IOException;
@@ -47,11 +48,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 				continue;
 			}
 
-			contentBlock = contentBlock.replaceAll(
-				"(\\{\\{)(?!(-| [^ ])[^\\}]*[^ ] \\}\\})( *)(?!-)(.*?) *(\\}" +
-					"\\})",
-				"$1 $4 $5");
-
 			contentBlock = StringUtil.replace(
 				contentBlock, CharPool.TAB, StringPool.FOUR_SPACES);
 
@@ -74,13 +70,11 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatSequencesAndMappings(content);
 
-		if (isAllowTrailingEmptyLines(fileName, absolutePath) &&
-			content.endsWith("\n")) {
-
-			return content;
+		if (content.endsWith("\n")) {
+			content = content.substring(0, content.length() - 1);
 		}
 
-		return _formatWhitespace(content);
+		return _removeWhitespace(content);
 	}
 
 	private String _formatDefinition(
@@ -284,42 +278,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
-	private String _formatWhitespace(String content) throws IOException {
-		StringBundler sb = new StringBundler();
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = formatIncorrectSyntax(line, "{ ", "{", false);
-				line = formatIncorrectSyntax(line, "[ ", "[", false);
-
-				String trimmedLine = StringUtil.trimLeading(line);
-
-				if (!trimmedLine.startsWith("}") &&
-					!trimmedLine.startsWith("]")) {
-
-					line = formatIncorrectSyntax(line, " }", "}", false);
-					line = formatIncorrectSyntax(line, " ]", "]", false);
-				}
-
-				sb.append(line);
-
-				sb.append("\n");
-			}
-		}
-
-		content = sb.toString();
-
-		if (content.endsWith("\n")) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		return content;
-	}
-
 	private boolean _hasMapInsideList(String[] lines) {
 		if (lines.length <= 1) {
 			return false;
@@ -340,6 +298,127 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return false;
+	}
+
+	private String _removeWhitespace(String content) throws IOException {
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = _removeWhitespaceBeforeCloseBracket(line);
+				line = _removeWhitespaceBeforeCloseCurlyBrace(line);
+				line = _removeWhitespaceAfterOpenBracket(line);
+				line = _removeWhitespaceAfterOpenCurlyBrace(line);
+
+				sb.append(line);
+
+				sb.append("\n");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
+	private String _removeWhitespaceAfterOpenBracket(String line) {
+		String trimmedLine = line.trim();
+
+		if (trimmedLine.startsWith("elif [") ||
+			trimmedLine.startsWith("if [")) {
+
+			return line;
+		}
+
+		int x = line.indexOf("[ ");
+
+		if ((x == -1) || ToolsUtil.isInsideQuotes(line, x) ||
+			(getLevel(line, "[", "]") != 0)) {
+
+			return line;
+		}
+
+		return StringUtil.replaceFirst(
+			line, StringPool.SPACE, StringPool.BLANK, x);
+	}
+
+	private String _removeWhitespaceAfterOpenCurlyBrace(String line) {
+		int x = line.indexOf("{ ");
+
+		if (x == -1) {
+			return line;
+		}
+
+		if (x == 0) {
+			return StringUtil.replaceFirst(
+				line, StringPool.SPACE, StringPool.BLANK, 0);
+		}
+
+		if (ToolsUtil.isInsideQuotes(line, x) ||
+			(getLevel(line, "{", "}") != 0)) {
+
+			return line;
+		}
+
+		char c = line.charAt(x - 1);
+
+		if (c == CharPool.OPEN_CURLY_BRACE) {
+			return line;
+		}
+
+		return StringUtil.replaceFirst(
+			line, StringPool.SPACE, StringPool.BLANK, x);
+	}
+
+	private String _removeWhitespaceBeforeCloseBracket(String line) {
+		String trimmedLine = line.trim();
+
+		if (trimmedLine.startsWith("elif [") ||
+			trimmedLine.startsWith("if [")) {
+
+			return line;
+		}
+
+		int x = line.indexOf(" ]");
+
+		if ((x == -1) || ToolsUtil.isInsideQuotes(line, x) ||
+			(getLevel(line, "[", "]") != 0)) {
+
+			return line;
+		}
+
+		return StringUtil.replaceFirst(
+			line, StringPool.SPACE, StringPool.BLANK, x);
+	}
+
+	private String _removeWhitespaceBeforeCloseCurlyBrace(String line) {
+		int x = line.indexOf(" }");
+
+		if ((x == -1) || ToolsUtil.isInsideQuotes(line, x) ||
+			(getLevel(line, "{", "}") != 0)) {
+
+			return line;
+		}
+
+		if (x == (line.length() - 2)) {
+			return StringUtil.replaceFirst(
+				line, StringPool.SPACE, StringPool.BLANK, x);
+		}
+
+		char c = line.charAt(x + 2);
+
+		if (c == CharPool.CLOSE_CURLY_BRACE) {
+			return line;
+		}
+
+		return StringUtil.replaceFirst(
+			line, StringPool.SPACE, StringPool.BLANK, x);
 	}
 
 	private static final Pattern _mappingEntryPattern = Pattern.compile(

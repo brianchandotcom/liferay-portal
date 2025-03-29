@@ -55,14 +55,6 @@ public abstract class BaseFDSSerializerTestCase {
 	public void setUp() {
 		bundleContext = SystemBundleUtil.getBundleContext();
 
-		systemFDSSerializer.systemFDSEntryRegistry =
-			new SystemFDSEntryRegistryImpl(
-				(ServiceTrackerMap<String, SystemFDSEntry>)
-					_registerServiceTrackerMap(
-						ServiceTrackerMapFactory.openSingleValueMap(
-							bundleContext, SystemFDSEntry.class,
-							"frontend.data.set.name")));
-
 		systemFDSSerializer.fdsCreationMenuRegistry =
 			new FDSCreationMenuRegistryImpl(
 				(ServiceTrackerMap
@@ -75,7 +67,6 @@ public abstract class BaseFDSSerializerTestCase {
 								 ServiceTrackerCustomizerFactory.
 									 <FDSCreationMenu>serviceWrapper(
 										 bundleContext))));
-
 		systemFDSSerializer.fdsItemsActionsRegistry =
 			new FDSItemsActionsRegistryImpl(
 				(ServiceTrackerMap
@@ -88,7 +79,6 @@ public abstract class BaseFDSSerializerTestCase {
 								 ServiceTrackerCustomizerFactory.
 									 <FDSItemsActions>serviceWrapper(
 										 bundleContext))));
-
 		systemFDSSerializer.fdsSortsRegistry = new FDSSortsRegistryImpl(
 			(ServiceTrackerMap
 				<String,
@@ -99,7 +89,6 @@ public abstract class BaseFDSSerializerTestCase {
 							 "frontend.data.set.name",
 							 ServiceTrackerCustomizerFactory.
 								 <FDSSorts>serviceWrapper(bundleContext))));
-
 		systemFDSSerializer.fdsViewContextContributorRegistry =
 			new FDSViewContextContributorRegistryImpl(
 				(ServiceTrackerMap
@@ -116,7 +105,6 @@ public abstract class BaseFDSSerializerTestCase {
 											 <FDSViewContextContributor>
 												 serviceWrapper(
 													 bundleContext))));
-
 		systemFDSSerializer.fdsViewRegistry = new FDSViewRegistryImpl(
 			(ServiceTrackerMap
 				<String,
@@ -127,6 +115,13 @@ public abstract class BaseFDSSerializerTestCase {
 							 "frontend.data.set.name",
 							 ServiceTrackerCustomizerFactory.
 								 <FDSView>serviceWrapper(bundleContext))));
+		systemFDSSerializer.systemFDSEntryRegistry =
+			new SystemFDSEntryRegistryImpl(
+				(ServiceTrackerMap<String, SystemFDSEntry>)
+					_registerServiceTrackerMap(
+						ServiceTrackerMapFactory.openSingleValueMap(
+							bundleContext, SystemFDSEntry.class,
+							"frontend.data.set.name")));
 	}
 
 	@After

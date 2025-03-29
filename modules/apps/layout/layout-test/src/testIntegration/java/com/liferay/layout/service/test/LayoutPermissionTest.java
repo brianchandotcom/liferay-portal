@@ -329,6 +329,51 @@ public class LayoutPermissionTest {
 	}
 
 	@Test
+	@TestInfo("LPD-52364")
+	public void testContainsWithParentLayoutWithUpdateLayoutBasicPermission()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(layout.getPlid()), role.getRoleId(),
+			new String[] {ActionKeys.UPDATE});
+
+		PermissionChecker permissionChecker = _getPermissionChecker(
+			role, UserTestUtil.addUser());
+
+		Assert.assertTrue(
+			_layoutPermission.contains(
+				permissionChecker, layout, ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutRestrictedUpdatePermission(
+				permissionChecker, layout));
+		Assert.assertTrue(
+			_layoutPermission.containsLayoutUpdatePermission(
+				permissionChecker, layout));
+
+		Layout childLayout = LayoutTestUtil.addTypeContentLayout(
+			_group, layout.getPlid());
+
+		Assert.assertEquals(layout.getPlid(), childLayout.getParentPlid());
+
+		Assert.assertFalse(
+			_layoutPermission.contains(
+				permissionChecker, childLayout, ActionKeys.UPDATE));
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutRestrictedUpdatePermission(
+				permissionChecker, childLayout));
+		Assert.assertFalse(
+			_layoutPermission.containsLayoutUpdatePermission(
+				permissionChecker, childLayout));
+	}
+
+	@Test
 	@TestInfo("LPS-140136")
 	public void testContainsWithPreviewDraftPermissionWithLocalStaging()
 		throws Exception {

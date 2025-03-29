@@ -6,9 +6,12 @@
 package com.liferay.portal.search.similar.results.web.internal.display.context;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.similar.results.web.internal.configuration.SimilarResultsPortletInstanceConfiguration;
 
@@ -35,22 +38,32 @@ public class SimilarResultsDisplayContext {
 	}
 
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
+		long displayStyleGroupId;
+
+		String displayStyleGroupExternalReferenceCode =
+			_similarResultsPortletInstanceConfiguration.
+				displayStyleGroupExternalReferenceCode();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
+			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				displayStyleGroupExternalReferenceCode,
+				themeDisplay.getCompanyId());
 		}
 
-		_displayStyleGroupId =
-			_similarResultsPortletInstanceConfiguration.displayStyleGroupId();
-
-		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		if (group != null) {
+			displayStyleGroupId = group.getGroupId();
+		}
+		else {
+			displayStyleGroupId = themeDisplay.getScopeGroupId();
 		}
 
-		return _displayStyleGroupId;
+		return displayStyleGroupId;
 	}
 
 	public List<Document> getDocuments() {
@@ -92,8 +105,6 @@ public class SimilarResultsDisplayContext {
 	public void setTotalHits(int totalHits) {
 		_totalHits = totalHits;
 	}
-
-	private long _displayStyleGroupId;
 	private List<Document> _documents;
 	private final HttpServletRequest _httpServletRequest;
 	private List<SimilarResultsDocumentDisplayContext>

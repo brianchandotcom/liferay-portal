@@ -183,6 +183,12 @@ public class CustomFDSSerializer
 
 		CreationMenu creationMenu = new CreationMenu();
 
+		CreationMenu systemCreationMenu =
+			_systemFDSSerializer.serializeCreationMenu(
+				fdsName, httpServletRequest);
+		List<DropdownItem> systemDropdownItems =
+			(List<DropdownItem>)systemCreationMenu.get("primaryItems");
+
 		List<DropdownItem> customDropdownItems = TransformUtil.transform(
 			getSortedRelatedObjectEntries(
 				fdsName, httpServletRequest,
@@ -212,13 +218,6 @@ public class CustomFDSSerializer
 
 				return fdsActionDropdownItem;
 			});
-
-		CreationMenu systemCreationMenu =
-			_systemFDSSerializer.serializeCreationMenu(
-				fdsName, httpServletRequest);
-
-		List<DropdownItem> systemDropdownItems =
-			(List<DropdownItem>)systemCreationMenu.get("primaryItems");
 
 		for (DropdownItem customDropdownItem : customDropdownItems) {
 			if (Objects.equals(

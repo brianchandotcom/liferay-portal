@@ -175,8 +175,8 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 					String trimmedDefinition2 = StringUtil.trimLeading(
 						definition2);
 
-					if (trimmedDefinition1.startsWith("{{") ||
-						trimmedDefinition2.startsWith("{{") ||
+					if (trimmedDefinition1.matches("( *#.*\n)* *\\{\\{.*") ||
+						trimmedDefinition2.matches("( *#.*\n)* *\\{\\{.*") ||
 						Validator.isNull(trimmedDefinition1) ||
 						Validator.isNull(trimmedDefinition2)) {
 

@@ -274,6 +274,8 @@ public class CustomFDSSerializer
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
+		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
+
 		List<FDSActionDropdownItem> customFDSActionDropdownItems =
 			TransformUtil.transform(
 				getSortedRelatedObjectEntries(
@@ -317,8 +319,6 @@ public class CustomFDSSerializer
 
 					return fdsActionDropdownItem;
 				});
-
-		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
 
 		List<FDSActionDropdownItem> systemFDSActionDropdownItems =
 			_systemFDSSerializer.serializeItemsActions(

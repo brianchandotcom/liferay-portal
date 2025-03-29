@@ -9,6 +9,7 @@ import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfi
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -50,6 +51,7 @@ import java.util.Map;
 public class ExportImportConfigurationLocalServiceImpl
 	extends ExportImportConfigurationLocalServiceBaseImpl {
 
+	@CTAware
 	@Override
 	public ExportImportConfiguration addDraftExportImportConfiguration(
 			long userId, int type, Map<String, Serializable> settingsMap)
@@ -61,6 +63,7 @@ public class ExportImportConfigurationLocalServiceImpl
 				type, settingsMap);
 	}
 
+	@CTAware
 	@Override
 	public ExportImportConfiguration addDraftExportImportConfiguration(
 			long userId, String name, int type,
@@ -81,6 +84,7 @@ public class ExportImportConfigurationLocalServiceImpl
 				WorkflowConstants.STATUS_DRAFT, new ServiceContext());
 	}
 
+	@CTAware
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration addExportImportConfiguration(
@@ -119,6 +123,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			exportImportConfiguration);
 	}
 
+	@CTAware
 	@Override
 	public ExportImportConfiguration addExportImportConfiguration(
 			long userId, long groupId, String name, String description,
@@ -132,6 +137,7 @@ public class ExportImportConfigurationLocalServiceImpl
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
+	@CTAware
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -143,6 +149,7 @@ public class ExportImportConfigurationLocalServiceImpl
 		return exportImportConfiguration;
 	}
 
+	@CTAware
 	@Override
 	public ExportImportConfiguration deleteExportImportConfiguration(
 			long exportImportConfigurationId)
@@ -156,6 +163,7 @@ public class ExportImportConfigurationLocalServiceImpl
 			deleteExportImportConfiguration(exportImportConfiguration);
 	}
 
+	@CTAware
 	@Override
 	public void deleteExportImportConfigurations(long groupId) {
 		List<ExportImportConfiguration> exportImportConfigurations =

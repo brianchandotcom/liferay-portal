@@ -7,6 +7,7 @@ package com.liferay.exportimport.kernel.service;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -65,10 +66,12 @@ public interface ExportImportConfigurationLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the export import configuration local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExportImportConfigurationLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	@CTAware
 	public ExportImportConfiguration addDraftExportImportConfiguration(
 			long userId, int type, Map<String, Serializable> settingsMap)
 		throws PortalException;
 
+	@CTAware
 	public ExportImportConfiguration addDraftExportImportConfiguration(
 			long userId, String name, int type,
 			Map<String, Serializable> settingsMap)
@@ -88,6 +91,7 @@ public interface ExportImportConfigurationLocalService
 	public ExportImportConfiguration addExportImportConfiguration(
 		ExportImportConfiguration exportImportConfiguration);
 
+	@CTAware
 	@Indexable(type = IndexableType.REINDEX)
 	public ExportImportConfiguration addExportImportConfiguration(
 			long userId, long groupId, String name, String description,
@@ -95,6 +99,7 @@ public interface ExportImportConfigurationLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@CTAware
 	public ExportImportConfiguration addExportImportConfiguration(
 			long userId, long groupId, String name, String description,
 			int type, Map<String, Serializable> settingsMap,
@@ -127,6 +132,7 @@ public interface ExportImportConfigurationLocalService
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was removed
 	 */
+	@CTAware
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ExportImportConfiguration deleteExportImportConfiguration(
@@ -143,11 +149,13 @@ public interface ExportImportConfigurationLocalService
 	 * @return the export import configuration that was removed
 	 * @throws PortalException if a export import configuration with the primary key could not be found
 	 */
+	@CTAware
 	@Indexable(type = IndexableType.DELETE)
 	public ExportImportConfiguration deleteExportImportConfiguration(
 			long exportImportConfigurationId)
 		throws PortalException;
 
+	@CTAware
 	public void deleteExportImportConfigurations(long groupId);
 
 	/**

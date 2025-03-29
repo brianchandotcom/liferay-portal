@@ -105,6 +105,7 @@ public class SimilarResultsDisplayContext {
 	public void setTotalHits(int totalHits) {
 		_totalHits = totalHits;
 	}
+
 	private List<Document> _documents;
 	private final HttpServletRequest _httpServletRequest;
 	private List<SimilarResultsDocumentDisplayContext>

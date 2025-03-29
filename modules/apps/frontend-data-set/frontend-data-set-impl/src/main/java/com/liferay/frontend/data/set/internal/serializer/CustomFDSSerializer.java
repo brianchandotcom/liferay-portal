@@ -418,6 +418,11 @@ public class CustomFDSSerializer
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
+		List<FDSSortItem> fdsSortItems = new ArrayList<>();
+
+		List<FDSSortItem> systemFDSSortItems =
+			_systemFDSSerializer.serializeSorts(fdsName, httpServletRequest);
+
 		List<FDSSortItem> customFDSSortItems = TransformUtil.transform(
 			getSortedRelatedObjectEntries(
 				fdsName, httpServletRequest,
@@ -446,11 +451,6 @@ public class CustomFDSSerializer
 					label
 				).build();
 			});
-
-		List<FDSSortItem> systemFDSSortItems =
-			_systemFDSSerializer.serializeSorts(fdsName, httpServletRequest);
-
-		List<FDSSortItem> fdsSortItems = new ArrayList<>();
 
 		for (FDSSortItem customFDSSortItem : customFDSSortItems) {
 			if (Objects.equals(

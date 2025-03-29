@@ -276,6 +276,10 @@ public class CustomFDSSerializer
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems = new ArrayList<>();
 
+		List<FDSActionDropdownItem> systemFDSActionDropdownItems =
+			_systemFDSSerializer.serializeItemsActions(
+				fdsName, httpServletRequest);
+
 		List<FDSActionDropdownItem> customFDSActionDropdownItems =
 			TransformUtil.transform(
 				getSortedRelatedObjectEntries(
@@ -319,10 +323,6 @@ public class CustomFDSSerializer
 
 					return fdsActionDropdownItem;
 				});
-
-		List<FDSActionDropdownItem> systemFDSActionDropdownItems =
-			_systemFDSSerializer.serializeItemsActions(
-				fdsName, httpServletRequest);
 
 		for (FDSActionDropdownItem customFDSActionDropdownItem :
 				customFDSActionDropdownItems) {

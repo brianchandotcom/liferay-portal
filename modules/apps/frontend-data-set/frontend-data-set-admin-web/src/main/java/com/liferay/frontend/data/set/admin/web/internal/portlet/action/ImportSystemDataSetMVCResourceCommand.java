@@ -161,13 +161,6 @@ public class ImportSystemDataSetMVCResourceCommand
 		List<FDSView> fdsViews = _fdsViewRegistry.getFDSViews(fdsName);
 
 		for (FDSView fdsView : fdsViews) {
-			if (fdsView instanceof BaseTableFDSView) {
-				_addBaseTableFDSViewObjectEntries(
-					(BaseTableFDSView)fdsView,
-					_portal.getHttpServletRequest(resourceRequest),
-					objectEntry);
-			}
-
 			if (fdsView instanceof BaseCardsFDSView) {
 				_addBaseCardsFDSViewObjectEntries(
 					(BaseCardsFDSView)fdsView,
@@ -178,6 +171,13 @@ public class ImportSystemDataSetMVCResourceCommand
 			if (fdsView instanceof BaseListFDSView) {
 				_addBaseListFDSViewObjectEntries(
 					(BaseListFDSView)fdsView,
+					_portal.getHttpServletRequest(resourceRequest),
+					objectEntry);
+			}
+
+			if (fdsView instanceof BaseTableFDSView) {
+				_addBaseTableFDSViewObjectEntries(
+					(BaseTableFDSView)fdsView,
 					_portal.getHttpServletRequest(resourceRequest),
 					objectEntry);
 			}

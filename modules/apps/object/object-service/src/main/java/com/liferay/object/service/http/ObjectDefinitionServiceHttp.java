@@ -146,8 +146,8 @@ public class ObjectDefinitionServiceHttp {
 	public static com.liferay.object.model.ObjectDefinition
 			addSystemObjectDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long userId, long objectFolderId, boolean enableComments,
-				boolean enableFriendlyURLCustomization,
+				long userId, long objectFolderId, String className,
+				boolean enableComments, boolean enableFriendlyURLCustomization,
 				boolean enableIndexSearch, boolean enableLocalization,
 				boolean enableObjectEntryDraft,
 				boolean enableObjectEntryVersioning,
@@ -168,7 +168,7 @@ public class ObjectDefinitionServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, userId, objectFolderId,
-				enableComments, enableFriendlyURLCustomization,
+				className, enableComments, enableFriendlyURLCustomization,
 				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 				enableObjectEntryVersioning, labelMap, name, panelAppOrder,
 				panelCategoryKey, pluralLabelMap, portlet, scope,
@@ -891,10 +891,10 @@ public class ObjectDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _addSystemObjectDefinitionParameterTypes2 =
 		new Class[] {
-			String.class, long.class, long.class, boolean.class, boolean.class,
+			String.class, long.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			java.util.Map.class, boolean.class, String.class,
+			boolean.class, java.util.Map.class, String.class, String.class,
+			String.class, java.util.Map.class, boolean.class, String.class,
 			java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes3 =

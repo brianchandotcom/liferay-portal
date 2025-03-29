@@ -6,12 +6,11 @@
 package com.liferay.portal.search.similar.results.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.search.similar.results.web.internal.constants.SimilarResultsPortletKeys;
+import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 import org.osgi.service.component.annotations.Component;
 
 /**

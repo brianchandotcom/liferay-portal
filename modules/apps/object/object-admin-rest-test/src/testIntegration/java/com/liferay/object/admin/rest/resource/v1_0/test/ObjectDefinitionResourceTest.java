@@ -435,6 +435,9 @@ public class ObjectDefinitionResourceTest
 		assertEquals(
 			postObjectDefinition, randomModifiableSystemObjectDefinition);
 		assertValid(postObjectDefinition);
+		Assert.assertEquals(
+			postObjectDefinition.getClassName(),
+			randomModifiableSystemObjectDefinition.getClassName());
 
 		ListTypeDefinition serviceBuilderlistTypeDefinition =
 			_listTypeDefinitionLocalService.

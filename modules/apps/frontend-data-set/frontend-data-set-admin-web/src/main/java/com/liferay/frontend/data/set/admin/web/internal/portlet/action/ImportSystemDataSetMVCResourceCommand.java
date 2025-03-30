@@ -774,7 +774,7 @@ public class ImportSystemDataSetMVCResourceCommand
 			return;
 		}
 
-		ObjectDefinition dataSetSortObjectDefinition =
+		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_DATA_SET_SORT",
@@ -785,7 +785,7 @@ public class ImportSystemDataSetMVCResourceCommand
 
 			for (FDSSortItem fdsSortItem : fdsSortItems) {
 				_objectEntryService.addObjectEntry(
-					0, dataSetSortObjectDefinition.getObjectDefinitionId(),
+					0, objectDefinition.getObjectDefinitionId(),
 					ObjectEntryFolderConstants.
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 					null,
@@ -798,7 +798,7 @@ public class ImportSystemDataSetMVCResourceCommand
 					).put(
 						"label_i18n",
 						() -> _getLocalizeableValue(
-							dataSetSortObjectDefinition.getDefaultLanguageId(),
+							objectDefinition.getDefaultLanguageId(),
 							_getOptionalValue(fdsSortItem.get("label")))
 					).put(
 						"orderType",
@@ -821,7 +821,7 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 		else {
 			_objectEntryService.addObjectEntry(
-				0, dataSetSortObjectDefinition.getObjectDefinitionId(),
+				0, objectDefinition.getObjectDefinitionId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
@@ -832,7 +832,7 @@ public class ImportSystemDataSetMVCResourceCommand
 				).put(
 					"label_i18n",
 					() -> _getLocalizeableValue(
-						dataSetSortObjectDefinition.getDefaultLanguageId(), "*")
+						objectDefinition.getDefaultLanguageId(), "*")
 				).put(
 					"orderType", FDSEntryItemImportPolicy.GROUP_PROXY
 				).put(

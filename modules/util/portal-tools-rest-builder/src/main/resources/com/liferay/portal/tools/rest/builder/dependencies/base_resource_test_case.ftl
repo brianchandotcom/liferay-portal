@@ -4060,40 +4060,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#if>
 </#macro>
 
-<#macro getPermissionParameter
-	javaMethodParameter
-	javaMethodSignature
-	properties
-	roleName
-	schemaVarName
-	schemaVarNameId
->
-	<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-		 ${schemaVarNameId}
-	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-		 ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-	<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-		 testDepotEntry.getDepotEntryId()
-	<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-		testGroup.getGroupId()
-	<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-		${schemaVarName}
-	<#elseif stringUtil.equals(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
-		new Permission[] {
-			new Permission() {
-				{
-					setActionIds(new String[] {
-						<#nested>
-					});
-					setRoleName(${roleName});
-				}
-			}
-		}
-	<#else>
-		null
-	</#if>
-</#macro>
-
 <#macro getGetParameters
 	javaMethodSignature
 	testJavaMethodSignature
@@ -4159,6 +4125,40 @@ public abstract class Base${schemaName}ResourceTestCase {
 			/>
 		</#if>
 	</#list>
+</#macro>
+
+<#macro getPermissionParameter
+	javaMethodParameter
+	javaMethodSignature
+	properties
+	roleName
+	schemaVarName
+	schemaVarNameId
+>
+	<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+		 ${schemaVarNameId}
+	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+		 ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+	<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+		 testDepotEntry.getDepotEntryId()
+	<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+		testGroup.getGroupId()
+	<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+		${schemaVarName}
+	<#elseif stringUtil.equals(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
+		new Permission[] {
+			new Permission() {
+				{
+					setActionIds(new String[] {
+						<#nested>
+					});
+					setRoleName(${roleName});
+				}
+			}
+		}
+	<#else>
+		null
+	</#if>
 </#macro>
 
 <#macro getPutParameters

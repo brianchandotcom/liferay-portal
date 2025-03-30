@@ -330,11 +330,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 				hasGetJavaMethodSignature = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
 				idParameterName = properties?keys?seq_contains("id")?then("id", schemaVarName + "Id")
 
-				useDeleteByERC = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
+				useDeleteByExternalReferenceCode = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
 				useDeleteById = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
 			/>
 
-			<#if !useDeleteByERC && !useDeleteById>
+			<#if !useDeleteByExternalReferenceCode && !useDeleteById>
 				<#continue>
 			</#if>
 
@@ -361,7 +361,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				</#if>
 
-				<#if useDeleteByERC>
+				<#if useDeleteByExternalReferenceCode>
 					${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
@@ -376,7 +376,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				</#if>
 
-				<#if useDeleteByERC && useDeleteById>
+				<#if useDeleteByExternalReferenceCode && useDeleteById>
 					${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 					${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 

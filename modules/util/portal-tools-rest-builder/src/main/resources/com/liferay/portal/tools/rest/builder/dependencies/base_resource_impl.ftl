@@ -1033,7 +1033,7 @@ public abstract class Base${schemaName}ResourceImpl
 							return ${schemaVarName};
 						}
 
-						throw new UnsupportedOperationException("Unable to delete ${schemaVarName}. No valid identifier provided.");
+						throw new UnsupportedOperationException("Unable to delete by external reference code or ID");
 					</#if>
 				};
 

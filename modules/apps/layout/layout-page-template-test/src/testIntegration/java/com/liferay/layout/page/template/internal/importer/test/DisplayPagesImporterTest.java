@@ -19,9 +19,15 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,6 +54,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.File;
 import java.io.InputStream;
@@ -55,6 +62,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -84,6 +92,103 @@ public class DisplayPagesImporterTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testExportImportDisplayPageWithFormStyledLayoutStructureItem()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+							"firstName")));
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					null,
+					_portal.getClassNameId(objectDefinition.getClassName()), 0,
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			LayoutStructure layoutStructure = new LayoutStructure();
+
+			LayoutStructureItem rootLayoutStructureItem =
+				layoutStructure.addRootLayoutStructureItem();
+
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				(FormStyledLayoutStructureItem)
+					layoutStructure.addFormStyledLayoutStructureItem(
+						rootLayoutStructureItem.getItemId(), 0);
+
+			formStyledLayoutStructureItem.setFormConfig(
+				FormStyledLayoutStructureItem.
+					FORM_CONFIG_DISPLAY_PAGE_ITEM_TYPE);
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					_group.getGroupId(), draftLayout.getPlid(),
+					layoutStructure.toString());
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+				new long[] {
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				},
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group.getGroupId(), file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						_group.getGroupId(),
+						layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryKey());
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						_group.getGroupId(), layoutPageTemplateEntry.getPlid());
+
+			layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(
+					SegmentsExperienceConstants.KEY_DEFAULT));
+
+			List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+				layoutStructure.getFormStyledLayoutStructureItems();
+
+			formStyledLayoutStructureItem = formStyledLayoutStructureItems.get(
+				0);
+
+			Assert.assertEquals(
+				_portal.getClassNameId(objectDefinition.getClassName()),
+				formStyledLayoutStructureItem.getClassNameId());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test

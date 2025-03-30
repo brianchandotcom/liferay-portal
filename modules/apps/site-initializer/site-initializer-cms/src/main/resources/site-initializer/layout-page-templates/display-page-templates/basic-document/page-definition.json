@@ -27,6 +27,25 @@
 						"pageElements": [
 							{
 								"definition": {
+									"fragment": {
+										"key": "localization-select"
+									},
+									"fragmentConfig": {
+										"hideLanguageLabel": false,
+										"size": "small"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"id": "72268961-743a-6755-cc7d-df387abdd4f3",
+								"type": "Fragment"
+							},
+							{
+								"definition": {
 									"formConfig": {
 										"formReference": {
 											"contextSource": "DisplayPageItem"
@@ -77,6 +96,23 @@
 											"indexed": true
 										},
 										"id": "ff08f6c9-5ae6-f398-75b7-def48ae5e188",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-friendly-url-input"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "308a037a-0f07-b1da-2a7b-6f96826c9ca2",
 										"type": "Fragment"
 									},
 									{

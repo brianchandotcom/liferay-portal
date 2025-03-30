@@ -1003,7 +1003,7 @@ public abstract class Base${schemaName}ResourceImpl
 						<#assign getterMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id") />
 
 						<#if useDeleteByERC>
-							if(${schemaVarName}.${getterMethodName}() != null) {
+							if (${schemaVarName}.${getterMethodName}() != null) {
 								try {
 						</#if>
 
@@ -1012,7 +1012,8 @@ public abstract class Base${schemaName}ResourceImpl
 						return ${schemaVarName};
 
 						<#if useDeleteByERC>
-								} catch (Exception exception) {
+								}
+								catch (Exception exception) {
 									if(${schemaVarName}.getExternalReferenceCode() != null) {
 										${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
 
@@ -1024,9 +1025,9 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					<#if useDeleteByERC>
-						<#if useDeleteById>else </#if>
+						<#if useDeleteById>else</#if>
 
-						if(${schemaVarName}.getExternalReferenceCode() != null) {
+						if (${schemaVarName}.getExternalReferenceCode() != null) {
 							${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
 
 							return ${schemaVarName};

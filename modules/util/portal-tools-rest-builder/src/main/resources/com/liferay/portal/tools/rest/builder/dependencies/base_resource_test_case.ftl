@@ -3816,8 +3816,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#if generateWaitForFinishMethod>
 		protected final JSONObject waitForFinish(String expectedExecuteStatus, JSONObject jsonObject) throws Exception {
 			while (true) {
-				ImportTask importTask = importTaskResource.getImportTask(
-					jsonObject.getLong("id"));
+				ImportTask importTask = importTaskResource.getImportTask(jsonObject.getLong("id"));
 
 				ImportTask.ExecuteStatus executeStatus = importTask.getExecuteStatus();
 

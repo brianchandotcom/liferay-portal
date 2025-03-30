@@ -1019,82 +1019,79 @@ public class CustomFDSSerializer
 			);
 		}
 
-		if (Objects.equals(sourceType, "OBJECT_PICKLIST")) {
-			ListTypeDefinition listTypeDefinition =
-				_listTypeDefinitionLocalService.
-					getListTypeDefinitionByExternalReferenceCode(
-						source, PortalUtil.getCompanyId(httpServletRequest));
-
-			List<ListTypeEntry> listTypeEntries =
-				_listTypeEntryLocalService.getListTypeEntries(
-					listTypeDefinition.getListTypeDefinitionId());
-
-			return jsonObject.put(
-				"items",
-				JSONUtil.toJSONArray(
-					listTypeEntries,
-					listTypeEntry -> JSONUtil.put(
-						"key", listTypeEntry.getKey()
-					).put(
-						"label",
-						listTypeEntry.getName(
-							PortalUtil.getLocale(httpServletRequest))
-					).put(
-						"value", listTypeEntry.getKey()
-					))
-			).put(
-				"preloadedData",
-				() -> {
-					JSONArray selectedItemsJSONArray =
-						_jsonFactory.createJSONArray();
-
-					JSONArray preselectedValuesJSONArray =
-						_jsonFactory.createJSONArray(
-							MapUtil.getString(properties, "preselectedValues"));
-
-					for (int i = 0; i < preselectedValuesJSONArray.length();
-						 i++) {
-
-						JSONObject preselectedValueJSONObject =
-							preselectedValuesJSONArray.getJSONObject(i);
-
-						for (ListTypeEntry listTypeEntry : listTypeEntries) {
-							if (!Objects.equals(
-									listTypeEntry.getExternalReferenceCode(),
-									preselectedValueJSONObject.getString(
-										"value"))) {
-
-								continue;
-							}
-
-							selectedItemsJSONArray.put(
-								JSONUtil.put(
-									"label",
-									listTypeEntry.getName(
-										PortalUtil.getLocale(
-											httpServletRequest))
-								).put(
-									"value", listTypeEntry.getKey()
-								));
-						}
-					}
-
-					if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
-						return null;
-					}
-
-					return JSONUtil.put(
-						"exclude",
-						() -> Boolean.FALSE.equals(
-							(Boolean)properties.get("include"))
-					).put(
-						"selectedItems", selectedItemsJSONArray
-					);
-				}
-			);
+		if (!Objects.equals(sourceType, "OBJECT_PICKLIST")) {
+			return null;
 		}
 
-		return null;
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				getListTypeDefinitionByExternalReferenceCode(
+					source, PortalUtil.getCompanyId(httpServletRequest));
+
+		List<ListTypeEntry> listTypeEntries =
+			_listTypeEntryLocalService.getListTypeEntries(
+				listTypeDefinition.getListTypeDefinitionId());
+
+		return jsonObject.put(
+			"items",
+			JSONUtil.toJSONArray(
+				listTypeEntries,
+				listTypeEntry -> JSONUtil.put(
+					"key", listTypeEntry.getKey()
+				).put(
+					"label",
+					listTypeEntry.getName(
+						PortalUtil.getLocale(httpServletRequest))
+				).put(
+					"value", listTypeEntry.getKey()
+				))
+		).put(
+			"preloadedData",
+			() -> {
+				JSONArray selectedItemsJSONArray =
+					_jsonFactory.createJSONArray();
+
+				JSONArray preselectedValuesJSONArray =
+					_jsonFactory.createJSONArray(
+						MapUtil.getString(properties, "preselectedValues"));
+
+				for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
+					JSONObject preselectedValueJSONObject =
+						preselectedValuesJSONArray.getJSONObject(i);
+
+					for (ListTypeEntry listTypeEntry : listTypeEntries) {
+						if (!Objects.equals(
+								listTypeEntry.getExternalReferenceCode(),
+								preselectedValueJSONObject.getString(
+									"value"))) {
+
+							continue;
+						}
+
+						selectedItemsJSONArray.put(
+							JSONUtil.put(
+								"label",
+								listTypeEntry.getName(
+									PortalUtil.getLocale(httpServletRequest))
+							).put(
+								"value", listTypeEntry.getKey()
+							));
+					}
+				}
+
+				if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
+					return null;
+				}
+
+				return JSONUtil.put(
+					"exclude",
+					() -> Boolean.FALSE.equals(
+						(Boolean)properties.get("include"))
+				).put(
+					"selectedItems", selectedItemsJSONArray
+				);
+			}
+		);
 	}
 
 	private JSONObject _serializeViewSchema(

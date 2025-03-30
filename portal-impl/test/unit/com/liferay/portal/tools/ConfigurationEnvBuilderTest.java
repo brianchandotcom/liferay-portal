@@ -5,6 +5,7 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -113,19 +114,19 @@ public class ConfigurationEnvBuilderTest extends ConfigurationEnvBuilder {
 	}
 
 	private List<String> _formatList(List<String> lines) {
-		List<String> result = new ArrayList<>();
+		return TransformUtil.transform(
+			lines,
+			line -> {
+				if (!line.contains("configuration.override")) {
+					return null;
+				}
 
-		for (String line : lines) {
-			if (line.contains("configuration.override")) {
 				line =
 					com.liferay.portal.kernel.util.StringUtil.removeSubstring(
 						line, StringPool.POUND);
 
-				result.add(line.trim());
-			}
-		}
-
-		return result;
+				return line.trim();
+			});
 	}
 
 	private PathMatcher _getPathMatcher(String pattern) {

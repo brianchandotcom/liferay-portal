@@ -596,7 +596,7 @@ public class ImportSystemDataSetMVCResourceCommand
 
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
-					fetchObjectDefinitionByExternalReferenceCode(
+					getObjectDefinitionByExternalReferenceCode(
 						externalReferenceCode,
 						_portal.getCompanyId(httpServletRequest));
 

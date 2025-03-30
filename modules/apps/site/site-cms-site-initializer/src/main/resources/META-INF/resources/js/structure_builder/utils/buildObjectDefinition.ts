@@ -31,6 +31,7 @@ export default function buildObjectDefinition({
 	spaces: State['spaces'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
+		enableFriendlyURLCustomization: true,
 		enableIndexSearch: true,
 		enableLocalization: true,
 		enableObjectEntryDraft: true,

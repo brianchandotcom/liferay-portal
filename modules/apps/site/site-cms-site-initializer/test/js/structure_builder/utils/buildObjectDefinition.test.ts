@@ -55,6 +55,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableFriendlyURLCustomization: true,
 			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
@@ -93,6 +94,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableFriendlyURLCustomization: true,
 			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
@@ -131,6 +133,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableFriendlyURLCustomization: true,
 			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,

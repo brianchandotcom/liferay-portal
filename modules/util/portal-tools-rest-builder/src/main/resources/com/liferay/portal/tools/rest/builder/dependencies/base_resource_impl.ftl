@@ -747,7 +747,7 @@ public abstract class Base${schemaName}ResourceImpl
 					String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 
 					<#if putByExternalReferenceCodeBatchJavaMethodSignature??>
-						if(StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+						if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 							<#if stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
 								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 							<#else>
@@ -785,7 +785,7 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					<#if getByExternalReferenceCodeBatchJavaMethodSignature?? && patchBatchJavaMethodSignature?? && (postAssetLibraryBatchJavaMethodSignature?? || postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content || postSiteBatchJavaMethodSignature??)>
-						if(StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+						if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
 								${schemaName} persisted${schemaName} = null;
 
@@ -1014,7 +1014,7 @@ public abstract class Base${schemaName}ResourceImpl
 						<#if useDeleteByExternalReferenceCode>
 								}
 								catch (Exception exception) {
-									if(${schemaVarName}.getExternalReferenceCode() != null) {
+									if (${schemaVarName}.getExternalReferenceCode() != null) {
 										${deleteByExternalReferenceCodeJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
 
 										return ${schemaVarName};

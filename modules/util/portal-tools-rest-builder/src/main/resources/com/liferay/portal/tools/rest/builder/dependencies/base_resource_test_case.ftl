@@ -4090,11 +4090,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<@getDefaultParameter javaMethodParameter = javaMethodParameter />
 			<#else>
 				${varName}.
-					<#if properties?keys?seq_contains("id")>
-						getId()
-					<#else>
-						get${schemaName}Id()
-					</#if>
+
+				<#if properties?keys?seq_contains("id")>
+					getId()
+				<#else>
+					get${schemaName}Id()
+				</#if>
 			</#if>
 		<#elseif pathParameter && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 			<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>

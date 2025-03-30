@@ -351,12 +351,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.${getterMethodName}());
 
 					<#if hasGetJavaMethodSignature>
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = deleteJavaMethodSignature
-								varName = schemaVarName + "1"
-							/>));
+						assertHttpResponseStatusCode(
+							404,
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+								<@getGetParameters
+									javaMethodSignature = getJavaMethodSignature
+									testJavaMethodSignature = deleteJavaMethodSignature
+									varName = schemaVarName + "1"
+								/>));
 					</#if>
 				</#if>
 
@@ -366,12 +368,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
 
 					<#if hasGetJavaMethodSignature>
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = deleteJavaMethodSignature
-								varName = schemaVarName + "2"
-							/>));
+						assertHttpResponseStatusCode(
+							404,
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+								<@getGetParameters
+									javaMethodSignature = getJavaMethodSignature
+									testJavaMethodSignature = deleteJavaMethodSignature
+									varName = schemaVarName + "2"
+								/>));
 					</#if>
 				</#if>
 
@@ -382,30 +386,35 @@ public abstract class Base${schemaName}ResourceTestCase {
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
 					<#if hasGetJavaMethodSignature>
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = deleteJavaMethodSignature
-								varName = schemaVarName + "1"
-							/>));
-
-						assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = deleteJavaMethodSignature
-								varName = schemaVarName + "2"
-							/>));
+						assertHttpResponseStatusCode(
+							404,
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+								<@getGetParameters
+									javaMethodSignature = getJavaMethodSignature
+									testJavaMethodSignature = deleteJavaMethodSignature
+									varName = schemaVarName + "1"
+								/>));
+						assertHttpResponseStatusCode(
+							200,
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+								<@getGetParameters
+									javaMethodSignature = getJavaMethodSignature
+									testJavaMethodSignature = deleteJavaMethodSignature
+									varName = schemaVarName + "2"
+								/>));
 					</#if>
 
 					test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getterMethodName}());
 
 					<#if hasGetJavaMethodSignature>
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = deleteJavaMethodSignature
-								varName = schemaVarName + "2"
-							/>));
+						assertHttpResponseStatusCode(
+							404,
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+								<@getGetParameters
+									javaMethodSignature = getJavaMethodSignature
+									testJavaMethodSignature = deleteJavaMethodSignature
+									varName = schemaVarName + "2"
+								/>));
 					</#if>
 				</#if>
 			}

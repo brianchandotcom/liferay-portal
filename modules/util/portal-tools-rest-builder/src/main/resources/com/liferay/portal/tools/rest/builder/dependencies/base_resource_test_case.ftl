@@ -3207,25 +3207,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#if>
 
-	<#if generateWaitForFinishMethod>
-		protected final JSONObject waitForFinish(String expectedExecuteStatus, JSONObject jsonObject) throws Exception {
-			while (true) {
-				ImportTask importTask = importTaskResource.getImportTask(
-					jsonObject.getLong("id"));
-
-				ImportTask.ExecuteStatus executeStatus = importTask.getExecuteStatus();
-
-				if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
-					StringUtil.equals(executeStatus.getValue(), "FAILED")) {
-
-					Assert.assertEquals(expectedExecuteStatus, executeStatus.getValue());
-
-					return jsonObject;
-				}
-			}
-		}
-	</#if>
-
 	protected void assertValid(Page<${schemaClientJavaType}> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -3831,6 +3812,25 @@ public abstract class Base${schemaName}ResourceTestCase {
 			};
 		}
 	</#list>
+
+	<#if generateWaitForFinishMethod>
+		protected final JSONObject waitForFinish(String expectedExecuteStatus, JSONObject jsonObject) throws Exception {
+			while (true) {
+				ImportTask importTask = importTaskResource.getImportTask(
+					jsonObject.getLong("id"));
+
+				ImportTask.ExecuteStatus executeStatus = importTask.getExecuteStatus();
+
+				if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+					StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+					Assert.assertEquals(expectedExecuteStatus, executeStatus.getValue());
+
+					return jsonObject;
+				}
+			}
+		}
+	</#if>
 
 	protected ${schemaName}Resource ${schemaVarName}Resource;
 

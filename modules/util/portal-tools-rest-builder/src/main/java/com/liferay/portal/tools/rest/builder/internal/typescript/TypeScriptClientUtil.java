@@ -392,11 +392,11 @@ public class TypeScriptClientUtil {
 					Map<String, Schema> propertySchemas =
 						schema.getPropertySchemas();
 
-					List<Map<String, Object>> contentDatas = new ArrayList<>();
+					List<Map<String, Object>> list = new ArrayList<>();
 
 					if (propertySchemas != null) {
 						propertySchemas.forEach(
-							(name, propertySchema) -> contentDatas.add(
+							(name, propertySchema) -> list.add(
 								HashMapBuilder.<String, Object>put(
 									"dataType",
 									_getDataType(importClasses, propertySchema)
@@ -411,7 +411,7 @@ public class TypeScriptClientUtil {
 					else {
 						String dataType = _getDataType(importClasses, schema);
 
-						contentDatas.add(
+						list.add(
 							HashMapBuilder.<String, Object>put(
 								"dataType", dataType
 							).put(
@@ -435,7 +435,7 @@ public class TypeScriptClientUtil {
 							).build());
 					}
 
-					bodyParameters.put(entry.getKey(), contentDatas);
+					bodyParameters.put(entry.getKey(), list);
 				}
 
 				return bodyParameters;

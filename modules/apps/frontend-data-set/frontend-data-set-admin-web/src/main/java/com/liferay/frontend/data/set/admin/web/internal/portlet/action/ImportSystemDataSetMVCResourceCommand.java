@@ -593,9 +593,6 @@ public class ImportSystemDataSetMVCResourceCommand
 					"r_dataSetToDataSetClientExtensionFilters_l_dataSetId",
 					objectEntry.getObjectEntryId());
 			}
-			else {
-				values.put(StringPool.BLANK, objectEntry.getObjectEntryId());
-			}
 
 			ObjectDefinition filterObjectDefinition =
 				_objectDefinitionLocalService.

@@ -12,7 +12,7 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
-import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion;
+import com.liferay.layout.page.template.item.selector.LayoutPageTemplateCollectionTreeNodeItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

@@ -4041,6 +4041,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		@Inject
 		private VulcanCRUDItemDelegateBuilderRegistry _vulcanCRUDItemDelegateBuilderRegistry;
 	</#if>
+
 }
 
 <#macro getDefaultParameter

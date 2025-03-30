@@ -3833,15 +3833,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	protected ${schemaName}Resource ${schemaVarName}Resource;
 
-	<#if (generatePermissionsJavaMethodSignatures?size > 0)>
-		protected ${schemaName}Resource permissions${schemaName}Resource;
-	</#if>
-
 	<#if generateWaitForFinishMethod>
 		protected ImportTaskResource importTaskResource;
 	</#if>
 
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+
+	<#if (generatePermissionsJavaMethodSignatures?size > 0)>
+		protected ${schemaName}Resource permissions${schemaName}Resource;
+	</#if>
+
 	protected com.liferay.portal.kernel.model.Company testCompany;
 
 	<#if generateDepotEntry>

@@ -429,7 +429,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(String expectedExecuteStatus, String externalReferenceCode, ${properties[idParameterName]} id) throws Exception {
 				HttpInvoker.HttpResponse httpResponse = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
-					null, JSONUtil.putAll(
+					null,
+					JSONUtil.putAll(
 						JSONUtil.put(
 							"externalReferenceCode", () -> externalReferenceCode
 						).put(
@@ -505,20 +506,23 @@ public abstract class Base${schemaName}ResourceTestCase {
 							getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))
 						/>
 
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
-								varName = schemaVarName
-							/>));
-
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
-							<@getGetParameters
-								javaMethodSignature = getJavaMethodSignature
-								testJavaMethodSignature = javaMethodSignature
-								varName = schemaVarName
-								defaultParameter = true
-							/>));
+						assertHttpResponseStatusCode(
+							404,
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+								<@getGetParameters
+									javaMethodSignature = getJavaMethodSignature
+									testJavaMethodSignature = javaMethodSignature
+									varName = schemaVarName
+								/>));
+						assertHttpResponseStatusCode(
+							404,
+							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
+								<@getGetParameters
+									defaultParameter = true
+									javaMethodSignature = getJavaMethodSignature
+									testJavaMethodSignature = javaMethodSignature
+									varName = schemaVarName
+								/>));
 					</#if>
 				<#else>
 					Assert.assertTrue(false);

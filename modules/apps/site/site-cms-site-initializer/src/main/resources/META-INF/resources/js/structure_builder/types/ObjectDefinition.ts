@@ -22,6 +22,7 @@ export type ObjectField = {
 };
 
 export type ObjectDefinition = {
+	enableFriendlyURLCustomization: boolean;
 	enableIndexSearch: boolean;
 	enableLocalization: boolean;
 	enableObjectEntryDraft: boolean;

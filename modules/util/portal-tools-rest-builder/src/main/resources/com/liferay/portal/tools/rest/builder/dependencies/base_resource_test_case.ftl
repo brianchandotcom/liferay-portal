@@ -210,6 +210,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 
+		<#if generateWaitForFinishMethod>
+			importTaskResource = ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+		</#if>
+
 		<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 			permissions${schemaName}Resource = ${schemaName}Resource.builder(
 			).authentication(
@@ -220,17 +231,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 				LocaleUtil.getDefault()
 			).parameter(
 				"nestedFields", "permissions"
-			).build();
-		</#if>
-
-		<#if generateWaitForFinishMethod>
-			importTaskResource = ImportTaskResource.builder(
-			).authentication(
-				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
-			).locale(
-				LocaleUtil.getDefault()
 			).build();
 		</#if>
 	}

@@ -350,7 +350,7 @@ public class ImportSystemDataSetMVCResourceCommand
 							).build();
 						}
 
-						return _buildLocaleMap(label);
+						return _getI18nMap(label);
 					}
 				).put(
 					"r_dataSetToDataSetTableSections_l_dataSetId",
@@ -550,7 +550,7 @@ public class ImportSystemDataSetMVCResourceCommand
 				).put(
 					"fieldName", fdsFilter.getId()
 				).put(
-					"label_i18n", _buildLocaleMap(fdsFilter.getLabel())
+					"label_i18n", _getI18nMap(fdsFilter.getLabel())
 				).put(
 					"type", fdsFilter.getType()
 				).build();
@@ -843,8 +843,8 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 	}
 
-	private HashMap<String, String> _buildLocaleMap(String key) {
-		HashMap<String, String> labels = new HashMap<>();
+	private Map<String, String> _getI18nMap(String key) {
+		hMap<String, String> labels = new HashMap<>();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(

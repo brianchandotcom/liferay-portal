@@ -6,6 +6,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -655,17 +656,10 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	private List<Long> _getRelatedPlids(long layoutSetBranchId) {
-		List<Long> relatedPlids = new ArrayList<>();
-
-		List<LayoutBranch> layoutBranches =
+		return TransformUtil.transform(
 			_layoutBranchLocalService.getLayoutSetBranchLayoutBranches(
-				layoutSetBranchId);
-
-		for (LayoutBranch layoutBranch : layoutBranches) {
-			relatedPlids.add(layoutBranch.getPlid());
-		}
-
-		return relatedPlids;
+				layoutSetBranchId),
+			layoutBranch -> layoutBranch.getPlid());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

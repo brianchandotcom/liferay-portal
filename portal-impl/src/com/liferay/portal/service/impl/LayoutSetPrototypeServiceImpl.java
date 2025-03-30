@@ -5,6 +5,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -19,7 +20,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.LayoutSetPrototypeServiceBaseImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -205,22 +205,21 @@ public class LayoutSetPrototypeServiceImpl
 			List<LayoutSetPrototype> layoutSetPrototypes)
 		throws PortalException {
 
-		List<LayoutSetPrototype> filteredLayoutSetPrototypes =
-			new ArrayList<>();
-
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-			if (LayoutSetPrototypePermissionUtil.contains(
-					permissionChecker,
-					layoutSetPrototype.getLayoutSetPrototypeId(),
-					ActionKeys.VIEW)) {
+		return TransformUtil.transform(
+			layoutSetPrototypes,
+			layoutSetPrototype -> {
+				if (LayoutSetPrototypePermissionUtil.contains(
+						permissionChecker,
+						layoutSetPrototype.getLayoutSetPrototypeId(),
+						ActionKeys.VIEW)) {
 
-				filteredLayoutSetPrototypes.add(layoutSetPrototype);
-			}
-		}
+					return layoutSetPrototype;
+				}
 
-		return filteredLayoutSetPrototypes;
+				return null;
+			});
 	}
 
 }

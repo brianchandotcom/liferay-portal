@@ -5,6 +5,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.LayoutPrototypeServiceBaseImpl;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -87,23 +87,21 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 			OrderByComparator<LayoutPrototype> orderByComparator)
 		throws PortalException {
 
-		List<LayoutPrototype> filteredLayoutPrototypes = new ArrayList<>();
-
-		List<LayoutPrototype> layoutPrototypes =
+		return TransformUtil.transform(
 			layoutPrototypeLocalService.search(
 				companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				orderByComparator);
+				orderByComparator),
+			layoutPrototype -> {
+				if (LayoutPrototypePermissionUtil.contains(
+						getPermissionChecker(),
+						layoutPrototype.getLayoutPrototypeId(),
+						ActionKeys.VIEW)) {
 
-		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			if (LayoutPrototypePermissionUtil.contains(
-					getPermissionChecker(),
-					layoutPrototype.getLayoutPrototypeId(), ActionKeys.VIEW)) {
+					return layoutPrototype;
+				}
 
-				filteredLayoutPrototypes.add(layoutPrototype);
-			}
-		}
-
-		return filteredLayoutPrototypes;
+				return null;
+			});
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfi
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1675,15 +1676,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	protected List<Layout> filterLayouts(List<Layout> layouts) {
-		List<Layout> filteredLayouts = new ArrayList<>();
+		return TransformUtil.transform(
+			layouts,
+			layout -> {
+				if (_hasViewPermission(layout)) {
+					return layout;
+				}
 
-		for (Layout layout : layouts) {
-			if (_hasViewPermission(layout)) {
-				filteredLayouts.add(layout);
-			}
-		}
-
-		return filteredLayouts;
+				return null;
+			});
 	}
 
 	protected List<Layout> filterLayouts(

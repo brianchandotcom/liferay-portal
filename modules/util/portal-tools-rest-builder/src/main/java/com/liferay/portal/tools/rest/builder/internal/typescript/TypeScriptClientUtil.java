@@ -362,9 +362,12 @@ public class TypeScriptClientUtil {
 					return null;
 				}
 
-				Map<String, Content> contentsMap = requestBody.getContent();
+				Map<String, Content> requestBodyContent =
+					requestBody.getContent();
 
-				if ((contentsMap == null) || contentsMap.isEmpty()) {
+				if ((requestBodyContent == null) ||
+					requestBodyContent.isEmpty()) {
+
 					return null;
 				}
 
@@ -372,7 +375,7 @@ public class TypeScriptClientUtil {
 					new HashMap<>();
 
 				for (Map.Entry<String, Content> entry :
-						contentsMap.entrySet()) {
+						requestBodyContent.entrySet()) {
 
 					if (entry.getValue() == null) {
 						continue;

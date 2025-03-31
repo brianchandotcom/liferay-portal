@@ -9,6 +9,10 @@ Import-Package:\
 	\
 	!io.netty.*,\
 	\
+	!javax.annotation.*,\
+	\
+	!javax.servlet.*,\
+	\
 	!jline.*,\
 	\
 	!org.apache.commons.cli.*,\

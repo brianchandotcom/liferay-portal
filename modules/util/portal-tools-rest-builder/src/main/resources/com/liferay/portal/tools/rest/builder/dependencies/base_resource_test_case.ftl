@@ -394,6 +394,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									testJavaMethodSignature = deleteJavaMethodSignature
 									varName = schemaVarName + "1"
 								/>));
+
 						assertHttpResponseStatusCode(
 							200,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(
@@ -514,6 +515,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									testJavaMethodSignature = javaMethodSignature
 									varName = schemaVarName
 								/>));
+
 						assertHttpResponseStatusCode(
 							404,
 							${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(

@@ -4061,11 +4061,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 </#macro>
 
 <#macro getGetParameters
-	allowQueryParameter = true
-	defaultParameter = false
 	javaMethodSignature
 	testJavaMethodSignature
 	varName
+	allowQueryParameter = true
+	defaultParameter = false
 >
 	<#assign firstParameter = true />
 

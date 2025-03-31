@@ -731,7 +731,7 @@ public abstract class BaseOrderTypeResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete orderType. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

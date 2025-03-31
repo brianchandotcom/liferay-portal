@@ -556,7 +556,7 @@ public abstract class BaseCurrencyResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete currency. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

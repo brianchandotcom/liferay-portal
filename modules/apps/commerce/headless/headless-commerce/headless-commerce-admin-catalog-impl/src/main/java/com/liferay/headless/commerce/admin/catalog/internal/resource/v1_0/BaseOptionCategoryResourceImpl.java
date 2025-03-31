@@ -677,7 +677,7 @@ public abstract class BaseOptionCategoryResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete optionCategory. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -681,7 +681,7 @@ public abstract class BaseOrderRuleResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete orderRule. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

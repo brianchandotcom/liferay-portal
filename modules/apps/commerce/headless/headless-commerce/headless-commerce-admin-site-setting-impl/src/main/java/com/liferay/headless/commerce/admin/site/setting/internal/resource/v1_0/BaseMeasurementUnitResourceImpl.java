@@ -792,7 +792,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete measurementUnit. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

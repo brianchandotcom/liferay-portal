@@ -1146,7 +1146,7 @@ public abstract class BaseCartResourceImpl
 			}
 
 			throw new UnsupportedOperationException(
-				"Unable to delete cart. No valid identifier provided.");
+				"Unable to delete by external reference code or ID");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

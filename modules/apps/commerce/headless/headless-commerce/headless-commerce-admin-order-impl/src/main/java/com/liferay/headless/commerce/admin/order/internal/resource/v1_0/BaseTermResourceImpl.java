@@ -667,7 +667,7 @@ public abstract class BaseTermResourceImpl
 			}
 
 			throw new UnsupportedOperationException(
-				"Unable to delete term. No valid identifier provided.");
+				"Unable to delete by external reference code or ID");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

@@ -756,7 +756,7 @@ public abstract class BaseReplenishmentItemResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete replenishmentItem. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

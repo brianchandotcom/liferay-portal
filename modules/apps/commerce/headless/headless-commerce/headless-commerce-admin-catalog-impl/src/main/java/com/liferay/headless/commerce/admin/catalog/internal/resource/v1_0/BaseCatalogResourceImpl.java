@@ -712,7 +712,7 @@ public abstract class BaseCatalogResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete catalog. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

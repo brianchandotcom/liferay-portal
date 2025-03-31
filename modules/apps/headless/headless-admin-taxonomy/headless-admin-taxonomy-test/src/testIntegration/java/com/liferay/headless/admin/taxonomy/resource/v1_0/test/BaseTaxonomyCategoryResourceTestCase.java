@@ -119,6 +119,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
 		permissionsTaxonomyCategoryResource = TaxonomyCategoryResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
@@ -129,16 +139,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			LocaleUtil.getDefault()
 		).parameter(
 			"nestedFields", "permissions"
-		).build();
-
-		importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
 		).build();
 	}
 
@@ -2481,28 +2481,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected final JSONObject waitForFinish(
-			String expectedExecuteStatus, JSONObject jsonObject)
-		throws Exception {
-
-		while (true) {
-			ImportTask importTask = importTaskResource.getImportTask(
-				jsonObject.getLong("id"));
-
-			ImportTask.ExecuteStatus executeStatus =
-				importTask.getExecuteStatus();
-
-			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
-				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
-
-				Assert.assertEquals(
-					expectedExecuteStatus, executeStatus.getValue());
-
-				return jsonObject;
-			}
-		}
-	}
-
 	protected void assertValid(Page<TaxonomyCategory> page) {
 		assertValid(page, Collections.emptyMap());
 	}
@@ -3433,10 +3411,32 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		return taxonomyCategory;
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected TaxonomyCategoryResource taxonomyCategoryResource;
-	protected TaxonomyCategoryResource permissionsTaxonomyCategoryResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected TaxonomyCategoryResource permissionsTaxonomyCategoryResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

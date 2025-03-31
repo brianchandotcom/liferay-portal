@@ -765,7 +765,7 @@ public abstract class BasePhoneResourceImpl
 			}
 
 			throw new UnsupportedOperationException(
-				"Unable to delete phone. No valid identifier provided.");
+				"Unable to delete by external reference code or ID");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

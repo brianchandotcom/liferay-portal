@@ -1016,7 +1016,7 @@ public abstract class BaseAccountGroupResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete accountGroup. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

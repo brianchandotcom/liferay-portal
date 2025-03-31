@@ -760,7 +760,7 @@ public abstract class BaseWarehouseItemResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete warehouseItem. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

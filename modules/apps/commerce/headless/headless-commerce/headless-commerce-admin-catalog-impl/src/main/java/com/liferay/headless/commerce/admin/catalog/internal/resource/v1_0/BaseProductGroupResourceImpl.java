@@ -635,7 +635,7 @@ public abstract class BaseProductGroupResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete productGroup. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

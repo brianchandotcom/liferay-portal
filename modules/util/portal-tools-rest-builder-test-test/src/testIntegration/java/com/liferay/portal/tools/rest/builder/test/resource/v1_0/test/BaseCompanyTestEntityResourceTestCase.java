@@ -1464,8 +1464,8 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 	}
 
 	protected CompanyTestEntityResource companyTestEntityResource;
-	protected CompanyTestEntityResource permissionsCompanyTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected CompanyTestEntityResource permissionsCompanyTestEntityResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

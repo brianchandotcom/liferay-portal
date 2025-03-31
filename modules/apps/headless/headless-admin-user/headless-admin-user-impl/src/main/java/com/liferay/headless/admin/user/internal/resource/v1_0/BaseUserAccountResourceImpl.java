@@ -2616,7 +2616,7 @@ public abstract class BaseUserAccountResourceImpl
 				}
 
 				throw new UnsupportedOperationException(
-					"Unable to delete userAccount. No valid identifier provided.");
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

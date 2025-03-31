@@ -1623,8 +1623,8 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 	}
 
 	protected SiteTestEntityResource siteTestEntityResource;
-	protected SiteTestEntityResource permissionsSiteTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected SiteTestEntityResource permissionsSiteTestEntityResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

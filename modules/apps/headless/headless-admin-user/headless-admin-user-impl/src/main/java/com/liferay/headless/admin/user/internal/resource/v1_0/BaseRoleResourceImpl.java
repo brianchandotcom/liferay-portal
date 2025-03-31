@@ -1353,7 +1353,7 @@ public abstract class BaseRoleResourceImpl
 			}
 
 			throw new UnsupportedOperationException(
-				"Unable to delete role. No valid identifier provided.");
+				"Unable to delete by external reference code or ID");
 		};
 
 		if (contextBatchUnsafeBiConsumer != null) {

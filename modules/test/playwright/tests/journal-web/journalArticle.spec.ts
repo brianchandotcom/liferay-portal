@@ -1750,13 +1750,7 @@ ckeditor5Test(
 		await ckeditor5Test.step(
 			'Switch to Arabic locale, check content direction',
 			async () => {
-				await journalEditArticlePage.page
-					.getByLabel('Select a language')
-					.click();
-
-				await journalEditArticlePage.page
-					.locator('button[id="ar_SA"]')
-					.click();
+				await journalEditArticlePage.changeLanguage('ar_SA');
 
 				await expect(
 					journalEditArticlePage.page.getByLabel(
@@ -1790,13 +1784,7 @@ ckeditor5Test(
 					editable.getByText(articleContentEN)
 				).toBeVisible();
 
-				await journalEditArticlePage.page
-					.getByLabel('Select a language')
-					.click();
-
-				await journalEditArticlePage.page
-					.locator('button[id="ar_SA"]')
-					.click();
+				await journalEditArticlePage.changeLanguage('ar_SA');
 
 				await expect(
 					editable.getByText(articleContentAR)

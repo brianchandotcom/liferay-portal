@@ -214,6 +214,16 @@ export class JournalEditArticlePage {
 		);
 	}
 
+	async changeLanguage(languageId: string) {
+		await this.page
+			.getByRole('combobox', {
+				name: 'Select a language',
+			})
+			.click();
+
+		await this.page.locator(`button[id="${languageId}"]`).click();
+	}
+
 	async createBasicArticleWithFriendlyURL(site, structureName?: string) {
 		await this.journalPage.goto(site.friendlyUrlPath);
 		await this.journalPage.goToCreateArticle(

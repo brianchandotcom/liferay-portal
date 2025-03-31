@@ -606,6 +606,16 @@ public class ImportSystemDataSetMVCResourceCommand
 					"r_dataSetToDataSetClientExtensionFilters_l_dataSetId",
 					objectEntry.getObjectEntryId());
 			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"FDSFilter instance must extend either " +
+							"BaseDateRangeFDSFilter, BaseSelectionFDSFilter " +
+								"or BaseClientExtensionFDSFilter");
+				}
+
+				continue;
+			}
 
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
@@ -894,6 +904,9 @@ public class ImportSystemDataSetMVCResourceCommand
 
 		return String.valueOf(value);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImportSystemDataSetMVCResourceCommand.class);
 
 	@Reference
 	private FDSCreationMenuRegistry _fdsCreationMenuRegistry;

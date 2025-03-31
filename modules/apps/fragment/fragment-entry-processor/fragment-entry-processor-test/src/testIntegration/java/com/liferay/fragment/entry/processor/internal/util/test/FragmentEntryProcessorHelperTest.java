@@ -40,11 +40,13 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -79,6 +82,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -95,6 +101,7 @@ import java.time.format.FormatStyle;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -659,7 +666,7 @@ public class FragmentEntryProcessorHelperTest {
 
 	@FeatureFlags("LPD-19955")
 	@Test
-	@TestInfo("LPD-12834")
+	@TestInfo({"LPD-12834", "LPD-52354"})
 	public void testHasViewPermission() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0L);
@@ -935,10 +942,23 @@ public class FragmentEntryProcessorHelperTest {
 				FragmentEntryLinkConstants.EDIT,
 				_portal.getSiteDefaultLocale(_group));
 
-		Assert.assertEquals(
-			expected,
-			_fragmentEntryProcessorHelper.hasViewPermission(
-				editableValueJSONObject, fragmentEntryProcessorContext));
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					CompanyConstants.SYSTEM);
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.feature.flag.web.internal.feature.flag." +
+					"FeatureFlagsBag",
+				LoggerTestUtil.ERROR)) {
+
+			Assert.assertEquals(
+				expected,
+				_fragmentEntryProcessorHelper.hasViewPermission(
+					editableValueJSONObject, fragmentEntryProcessorContext));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.isEmpty());
+		}
 	}
 
 	private String _toJSON(FileEntry fileEntry) {

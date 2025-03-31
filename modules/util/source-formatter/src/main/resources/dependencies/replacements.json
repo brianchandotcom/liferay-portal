@@ -3860,6 +3860,15 @@
 	},
 	{
 		"classNames": [
+			"CPSpecificationOptionLocalService",
+			"CPSpecificationOptionLocalServiceUtil"
+		],
+		"from": "addCPSpecificationOption(long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, boolean paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-49731",
+		"to": "addCPSpecificationOption(null, param#0#, param#1#, null, param#2#, param#3#, param#4#, param#5#, 0, param#6#)"
+	},
+	{
+		"classNames": [
 			"CommerceOrderItem"
 		],
 		"from": "getDeliveryGroup",

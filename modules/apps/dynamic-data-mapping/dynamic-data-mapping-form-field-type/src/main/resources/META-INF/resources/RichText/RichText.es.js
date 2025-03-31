@@ -16,6 +16,7 @@ import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
 	convertStringToObject,
 	getEditingValue,
+	getISO639LanguageCode,
 	getInitialInternalValue,
 	normalizeLocaleId,
 	transformAvailableLocalesAndValue,
@@ -95,18 +96,39 @@ const RichText = ({
 			value: currentValue,
 		})
 	);
+	const [ckEditor5Config, setCKEditor5Config] = useState({
+		...editorConfig,
+		initialData: contents,
+		language: {
+			content: getISO639LanguageCode(editingLocale?.localeId),
+		},
+	});
 
 	const {portletNamespace} = useConfig();
 
 	useEffect(() => {
-		const editor = editorRef.current?.editor;
-
-		if (editor) {
-			editor.config.contentsLangDirection =
-				Liferay.Language.direction[currentEditingLocale.localeId];
-			editor.config.contentsLanguage = currentEditingLocale.localeId;
-			editor.setData(currentInternalValue);
+		if (Liferay.FeatureFlags['LPD-11235']) {
+			setCKEditor5Config({
+				...ckEditor5Config,
+				initialData: currentInternalValue,
+				language: {
+					content: getISO639LanguageCode(
+						currentEditingLocale.localeId
+					),
+				},
+			});
 		}
+		else {
+			const editor = editorRef.current?.editor;
+
+			if (editor) {
+				editor.config.contentsLangDirection =
+					Liferay.Language.direction[currentEditingLocale.localeId];
+				editor.config.contentsLanguage = currentEditingLocale.localeId;
+				editor.setData(currentInternalValue);
+			}
+		}
+
 		const {availableLocales} = {
 			...transformAvailableLocalesAndValue({
 				availableLocales: currentAvailableLocales,
@@ -228,12 +250,30 @@ const RichText = ({
 	}
 
 	const resetTranslation = useCallback(() => {
-		editorRef.current.editor.setData(currentValue[defaultLocale.localeId]);
-	}, [editorRef, currentValue, defaultLocale]);
+		const data = currentValue[defaultLocale.localeId];
+
+		if (Liferay.FeatureFlags['LPD-11235']) {
+			setCKEditor5Config({
+				...ckEditor5Config,
+				initialData: data ?? '',
+			});
+		}
+		else {
+			editorRef.current.editor.setData(data);
+		}
+	}, [ckEditor5Config, currentValue, defaultLocale, editorRef]);
 
 	useEffect(() => {
 		const handleRestoreState = () => {
-			editorRef.current.editor.setData(value);
+			if (Liferay.FeatureFlags['LPD-11235']) {
+				setCKEditor5Config({
+					...ckEditor5Config,
+					initialData: value,
+				});
+			}
+			else {
+				editorRef.current.editor.setData(value);
+			}
 		};
 
 		Liferay.after('ddm:restoreState', handleRestoreState);
@@ -241,7 +281,7 @@ const RichText = ({
 		return () => {
 			Liferay.detach('ddm:restoreState', handleRestoreState);
 		};
-	}, [value, currentValue]);
+	}, [ckEditor5Config, currentValue, value]);
 
 	useEffect(() => {
 		Liferay.after('inputLocalized:resetTranslations', resetTranslation);
@@ -270,14 +310,7 @@ const RichText = ({
 					{Liferay.FeatureFlags['LPD-11235'] ? (
 						<CKEditor5ClassicEditor
 							className="w-100"
-							config={editorConfig}
-							data={
-								currentValue
-									? currentValue[
-											currentEditingLocale?.localeId
-										]
-									: ''
-							}
+							config={ckEditor5Config}
 							onChange={(event, editor) =>
 								handleContentChange(editor.getData())
 							}

@@ -88,6 +88,15 @@ public class GitHubDevSyncUtil {
 			remoteGitRef.getSHA(), remoteGitRef.getSHA());
 	}
 
+	public static String getCacheBranchName(
+		String receiverUsername, String senderUsername, String senderSHA,
+		String upstreamSHA) {
+
+		return JenkinsResultsParserUtil.combine(
+			"cache-", receiverUsername, "-", upstreamSHA, "-", senderUsername,
+			"-", senderSHA);
+	}
+
 	public static List<GitRemote> getGitHubDevGitRemotes(
 		GitWorkingDirectory gitWorkingDirectory) {
 
@@ -753,15 +762,6 @@ public class GitHubDevSyncUtil {
 		}
 
 		gitWorkingDirectory.deleteRemoteGitBranches(remoteGitBranches);
-	}
-
-	protected static String getCacheBranchName(
-		String receiverUsername, String senderUsername, String senderSHA,
-		String upstreamSHA) {
-
-		return JenkinsResultsParserUtil.combine(
-			"cache-", receiverUsername, "-", upstreamSHA, "-", senderUsername,
-			"-", senderSHA);
 	}
 
 	protected static List<RemoteGitBranch> getCacheRemoteGitBranches(

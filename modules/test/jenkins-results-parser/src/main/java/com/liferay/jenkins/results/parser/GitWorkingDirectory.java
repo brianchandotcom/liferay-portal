@@ -550,6 +550,10 @@ public class GitWorkingDirectory {
 		Map<String, Set<String>> remoteURLGitBranchNameMap = new HashMap<>();
 
 		for (RemoteGitBranch remoteGitBranch : remoteGitBranches) {
+			if (remoteGitBranch == null) {
+				continue;
+			}
+
 			RemoteGitRepository remoteGitRepository =
 				remoteGitBranch.getRemoteGitRepository();
 
@@ -605,10 +609,16 @@ public class GitWorkingDirectory {
 			callables.add(callable);
 		}
 
+		int maximumPoolSize = callables.size();
+
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			maximumPoolSize = 1;
+		}
+
 		ParallelExecutor<Boolean> parallelExecutor = new ParallelExecutor<>(
 			callables, true,
 			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				callables.size(), true),
+				maximumPoolSize, true),
 			"deleteRemoteGitBranches");
 
 		try {

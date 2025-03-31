@@ -428,9 +428,7 @@ test.describe('Frontend validations', () => {
 
 			await structureBuilderPage.selectField({label: 'Single Select'});
 
-			const picklistPicker = page.getByRole('combobox', {
-				name: 'Select Picklist',
-			});
+			const picklistPicker = page.getByLabel('Picklist');
 
 			const errorMessage = page.getByText('This field is required.');
 

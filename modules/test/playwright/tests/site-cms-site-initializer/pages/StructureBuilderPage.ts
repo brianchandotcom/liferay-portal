@@ -115,7 +115,7 @@ export class StructureBuilderPage {
 		}
 
 		if (picklist !== undefined) {
-			const labelInput = this.page.getByLabel('Select Picklist');
+			const labelInput = this.page.getByLabel('Picklist');
 
 			await labelInput.click();
 			await this.page.getByRole('option', {name: picklist}).click();

@@ -15536,7 +15536,7 @@ public class ObjectEntryResourceTest {
 
 		String errorMessage1 = RandomTestUtil.randomString();
 
-		ObjectValidationRule objectValidationRule =
+		ObjectValidationRule objectValidationRule1 =
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				StringUtil.randomString(), TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(), true,
@@ -15549,22 +15549,23 @@ public class ObjectEntryResourceTest {
 
 		String errorMessage2 = RandomTestUtil.randomString();
 
-		_objectValidationRuleLocalService.addObjectValidationRule(
-			StringUtil.randomString(), TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true,
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap(errorMessage2),
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
-			"NOT(isInteger(" + objectField1.getName() + "))", false,
-			Arrays.asList(
-				new ObjectValidationRuleSettingBuilder(
-				).name(
-					ObjectValidationRuleSettingConstants.
-						NAME_OUTPUT_OBJECT_FIELD_ID
-				).value(
-					String.valueOf(objectField1.getObjectFieldId())
-				).build()));
+		ObjectValidationRule objectValidationRule2 =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				StringUtil.randomString(), TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(errorMessage2),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
+				"NOT(isInteger(" + objectField1.getName() + "))", false,
+				Arrays.asList(
+					new ObjectValidationRuleSettingBuilder(
+					).name(
+						ObjectValidationRuleSettingConstants.
+							NAME_OUTPUT_OBJECT_FIELD_ID
+					).value(
+						String.valueOf(objectField1.getObjectFieldId())
+					).build()));
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -15597,7 +15598,7 @@ public class ObjectEntryResourceTest {
 						HashMapBuilder.<String, Object>put(
 							objectField1.getName(), StringUtil.randomString()
 						).build(),
-						objectValidationRule.getExternalReferenceCode())));
+						objectValidationRule1.getExternalReferenceCode())));
 
 			_setUpPermissionThreadLocal(TestPropsValues.getUser());
 
@@ -15607,7 +15608,7 @@ public class ObjectEntryResourceTest {
 					HashMapBuilder.<String, Object>put(
 						objectField1.getName(), StringUtil.randomString()
 					).build(),
-					objectValidationRule.getExternalReferenceCode()));
+					objectValidationRule1.getExternalReferenceCode()));
 
 			Assert.assertEquals(
 				errorMessage1,
@@ -15619,7 +15620,7 @@ public class ObjectEntryResourceTest {
 					HashMapBuilder.<String, Object>put(
 						objectField1.getName(), "foo"
 					).build(),
-					objectValidationRule.getExternalReferenceCode()));
+					objectValidationRule1.getExternalReferenceCode()));
 
 			Assert.assertTrue(
 				ArrayUtil.isEmpty(validationResponse.getValidationErrors()));
@@ -15641,6 +15642,24 @@ public class ObjectEntryResourceTest {
 				objectField1.getName(),
 				validationResponse.getValidationErrors()[1].
 					getObjectFieldName());
+
+			objectValidationRule2.setActive(false);
+
+			_objectValidationRuleLocalService.updateObjectValidationRule(
+				objectValidationRule2);
+
+			validationResponse = _validate(
+				scopeKey, objectEntryResource,
+				_getValidationRequest(
+					HashMapBuilder.<String, Object>put(
+						objectField1.getName(), RandomTestUtil.randomInt()
+					).build()));
+
+			Assert.assertEquals(
+				1, validationResponse.getValidationErrors().length);
+			Assert.assertEquals(
+				errorMessage1,
+				validationResponse.getValidationErrors()[0].getErrorMessage());
 
 			ObjectField objectField2 =
 				ObjectFieldLocalServiceUtil.addCustomObjectField(

@@ -83,6 +83,28 @@ public class CustomValue {
 
 	protected Geo geo;
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof CustomValue)) {
+			return false;
+		}
+
+		CustomValue customValue = (CustomValue)object;
+
+		return Objects.equals(toString(), customValue.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
 	public String toString() {
 		return CustomValueJSONParser.toJSON(this);
 	}

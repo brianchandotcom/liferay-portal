@@ -59,6 +59,32 @@ public class Geo {
 
 	protected Double longitude;
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Geo)) {
+			return false;
+		}
+
+		Geo geo = (Geo)object;
+
+		return Objects.equals(toString(), geo.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		return GeoJSONParser.toJSON(this);
+	}
+
 	private static class GeoJSONParser extends BaseJSONParser<Geo> {
 
 		@Override
@@ -95,6 +121,40 @@ public class Geo {
 					geo.setLongitude(Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
+		}
+
+		public static String toJSON(Geo geo) {
+			if (geo == null) {
+				return "null";
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("{");
+
+			if (geo.getLatitude() != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append("\"latitude\": ");
+
+				sb.append(geo.getLatitude());
+			}
+
+			if (geo.getLongitude() != null) {
+				if (sb.length() > 1) {
+					sb.append(", ");
+				}
+
+				sb.append("\"longitude\": ");
+
+				sb.append(geo.getLongitude());
+			}
+
+			sb.append("}");
+
+			return sb.toString();
 		}
 	}
 

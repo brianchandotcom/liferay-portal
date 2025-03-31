@@ -77,6 +77,28 @@ public class CustomField {
 
 	protected String name;
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof CustomField)) {
+			return false;
+		}
+
+		CustomField customField = (CustomField)object;
+
+		return Objects.equals(toString(), customField.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
 	public String toString() {
 		return CustomFieldJSONParser.toJSON(this);
 	}

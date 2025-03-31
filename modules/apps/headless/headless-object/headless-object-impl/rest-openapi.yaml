@@ -1,5 +1,63 @@
 components:
     schemas:
+        Collaborator:
+            description:
+                Represents a collaborator for an entry.
+            properties:
+                actionIds:
+                    description:
+                        The collaborator actions for the shared asset.
+                    items:
+                        type: string
+                    type: array
+                actions:
+                    additionalProperties:
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
+                creator:
+                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    description:
+                        The object entry folder's creator.
+                    readOnly: true
+                dateExpired:
+                    description:
+                        The expiration date to be a collaborator of the asset.
+                    format: date-time
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The collaborator external reference code.
+                    type: string
+                name:
+                    description:
+                        The collaborator name.
+                    readOnly: true
+                    type: string
+                portrait:
+                    description:
+                        The collaborator portrait.
+                    readOnly: true
+                    type: string
+                share:
+                    description:
+                        If the collaborator can share or not the asset.
+                    type: boolean
+                type:
+                    description:
+                        The collaborator type.
+                    enum: [User,UserGroup]
+                    example: User
+                    type: string
+            required:
+                -   actionIds
+                -   externalReferenceCode
+                -   type
+            type: object
         ObjectEntryFolder:
             description:
                 Represents a object entry folder that contains objects entries and other object entry folders.
@@ -214,6 +272,91 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntryFolder"
             tags: ["ObjectEntryFolder"]
+    "/object-entry-folders/{objectEntryFolderId}/collaborators":
+        get:
+            description:
+                Retrieves the collaborators of an object entry folder.
+            operationId: getObjectEntryFolderCollaboratorsPage
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+            tags: ["Collaborator"]
+        post:
+            description:
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not
+                included in the request. Send a notification for the new collaborators and those whose permissions are
+                different.
+            operationId: postObjectEntryFolderCollaboratorsPage
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Collaborator"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Collaborator"
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+            tags: ["Collaborator"]
     "/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode
@@ -422,3 +565,94 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntryFolder"
             tags: ["ObjectEntryFolder"]
+    "/scopes/{scopeKey}/object-entry-folders/by-external-reference-code/{externalReferenceCode}/collaborators":
+        get:
+            description:
+                Retrieves the collaborators of an object entry.
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+            tags: ["Collaborator"]
+        post:
+            description:
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not
+                included in the request. Send a notification for the new collaborators and those whose permissions are
+                different.
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Collaborator"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/Collaborator"
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Collaborator"
+                                type: array
+            tags: ["Collaborator"]

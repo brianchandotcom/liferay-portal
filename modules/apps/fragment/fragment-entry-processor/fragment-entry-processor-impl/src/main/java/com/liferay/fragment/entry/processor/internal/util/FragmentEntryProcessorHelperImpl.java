@@ -605,7 +605,16 @@ public class FragmentEntryProcessorHelperImpl
 		JSONObject editableValueJSONObject,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-19955")) {
+		HttpServletRequest httpServletRequest =
+			fragmentEntryProcessorContext.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-19955")) {
+
 			return true;
 		}
 
@@ -883,13 +892,15 @@ public class FragmentEntryProcessorHelperImpl
 		HttpServletRequest httpServletRequest,
 		InfoItemReference infoItemReference) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-19955")) {
-			return true;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-19955")) {
+
+			return true;
+		}
 
 		try {
 			InfoItemPermissionProvider infoItemPermissionProvider =

@@ -28,6 +28,14 @@ export function convertStringToObject(value, localeId) {
 	return value;
 }
 
+export function getISO639LanguageCode(localeId) {
+	if (localeId?.match(/[a-z]{2}_[A-Z]{2}/)) {
+		return localeId.split('_')[0];
+	}
+
+	return localeId;
+}
+
 export function getEditingValue({
 	defaultLocale,
 	editingLocale,

@@ -121,6 +121,13 @@ public abstract class BaseSectionDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
+				StringBundler.concat(
+					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+					"/cms/edit_content_item?className={entryClassName}&",
+					"objectEntryId={embedded.id}"),
+				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
+				"get", "update", null),
+			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortalUtil.getControlPanelPortletURL(
 						httpServletRequest,

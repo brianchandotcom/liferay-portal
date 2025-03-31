@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -56,6 +57,8 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -484,7 +487,34 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	private Keyword _toKeyword(AssetTag assetTag) throws Exception {
 		return _keywordDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.put(
+					"delete",
+					addAction(
+						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
+						"deleteKeyword", _assetTagModelResourcePermission)
+				).put(
+					"get",
+					addAction(
+						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
+						"getKeyword", _assetTagModelResourcePermission)
+				).put(
+					"replace",
+					addAction(
+						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
+						"putKeyword", _assetTagModelResourcePermission)
+				).put(
+					"subscribe",
+					addAction(
+						ActionKeys.SUBSCRIBE, assetTag.getTagId(),
+						"putKeywordSubscribe", _assetTagModelResourcePermission)
+				).put(
+					"unsubscribe",
+					addAction(
+						ActionKeys.SUBSCRIBE, assetTag.getTagId(),
+						"putKeywordUnsubscribe",
+						_assetTagModelResourcePermission)
+				).build(),
 				_dtoConverterRegistry, assetTag.getTagId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
@@ -498,6 +528,14 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.asset.kernel.model.AssetTag)"
+	)
+	private volatile ModelResourcePermission<AssetTag>
+		_assetTagModelResourcePermission;
 
 	@Reference
 	private AssetTagService _assetTagService;

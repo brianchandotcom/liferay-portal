@@ -53,6 +53,10 @@ function BulkActions({
 	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
 		useState(null);
 
+	const highlightedBulkActions = bulkActions.filter(
+		(bulkAction) => bulkAction.data.highlighted
+	);
+
 	function handleActionClick(
 		actionDefinition,
 		formId,
@@ -225,37 +229,46 @@ function BulkActions({
 
 						{showBulkActionsManagementBarActions && (
 							<ul className="bulk-actions navbar-nav">
-								{bulkActions.map((actionDefinition) => (
-									<li
-										className="nav-item"
-										key={actionDefinition.label}
-									>
-										<ClayButton
-											className="nav-link"
-											displayType="unstyled"
-											onClick={() =>
-												handleActionClick(
-													actionDefinition,
-													formId,
-													formName,
-													loadData,
-													namespace,
-													sidePanelId
-												)
-											}
-										>
-											<span className="inline-item inline-item-before">
-												<ClayIcon
-													symbol={
-														actionDefinition.icon
+								{highlightedBulkActions.map(
+									(highlightedBulkAction) => {
+										return (
+											<li
+												className="nav-item"
+												key={
+													highlightedBulkAction.data
+														.id
+												}
+											>
+												<ClayButton
+													className="nav-link"
+													displayType="unstyled"
+													onClick={() =>
+														handleActionClick(
+															highlightedBulkAction,
+															formId,
+															formName,
+															loadData,
+															namespace,
+															sidePanelId
+														)
 													}
-												/>
-											</span>
+												>
+													<span className="inline-item inline-item-before">
+														<ClayIcon
+															symbol={
+																highlightedBulkAction.icon
+															}
+														/>
+													</span>
 
-											{actionDefinition.label}
-										</ClayButton>
-									</li>
-								))}
+													{
+														highlightedBulkAction.label
+													}
+												</ClayButton>
+											</li>
+										);
+									}
+								)}
 
 								{!!bulkActions.length && (
 									<li className="nav-item">

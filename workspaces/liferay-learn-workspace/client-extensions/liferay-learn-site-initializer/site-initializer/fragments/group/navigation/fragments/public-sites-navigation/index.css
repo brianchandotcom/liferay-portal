@@ -7,18 +7,18 @@
 }
 
 .search-results-found {
-    &::-webkit-scrollbar { 
+	&::-webkit-scrollbar { 
 		width: 15px; 
 	}
 
 	&::-webkit-scrollbar-thumb {
 		background: rgba(201, 201, 207, 1);
-        background-clip: padding-box;
-        border: 4px solid transparent;
-        border-radius: 100px;
-    }
+		background-clip: padding-box;
+		border: 4px solid transparent;
+		border-radius: 100px;
+	}
 
-    &::-webkit-scrollbar-track { 
+	&::-webkit-scrollbar-track { 
 		background: rgba(247, 247, 248, 1); margin-left: -3px; 
 	}
 }
@@ -26,7 +26,7 @@
 .search-wrapper {
 	align-items: center;
 	backdrop-filter: blur(24px);
-    background: rgba(9, 31, 73, 0.8);
+	background: rgba(9, 31, 73, 0.8);
 	border-radius: var(--border-radius);
 	bottom: auto;
 	display: flex;
@@ -96,7 +96,7 @@
 
 		.search-suggestions {
 			padding: 0 24px 0 24px;
-            width: 100%;
+			width: 100%;
 		}
 
 		.search-suggestion-item {
@@ -228,9 +228,9 @@
 		&.search-results-found {
 			margin-bottom: 30px;
 			margin-top: 25px;
-            max-height: 80vh;
-            overflow-y: auto;
-            width: 100% !important;
+			max-height: 80vh;
+			overflow-y: auto;
+			width: 100% !important;
 
 			.no-results-message,
 			.search-loading-animation,

@@ -9,16 +9,16 @@
 	}
 
 	&::before {
+		background: var(--color-neutral-0, #ffffff);
+		border-radius: var(--border-radius-circle);
+		bottom: -4px;
 		content: '';
-            position: absolute;
-            bottom: -4px;
-            left: -2px;
-            right: -2px;
-            height: 3px;
-            border-radius: var(--border-radius-circle);
-            transform: scaleX(0%);
-            transition: transform 0.2s ease-in-out;
-            background: var(--color-neutral-0, #ffffff);
+		height: 3px;
+		left: -2px;
+		position: absolute;
+		right: -2px;
+		transform: scaleX(0%);
+		transition: transform 0.2s ease-in-out;
 	}
 
 	&.btn[aria-expanded=true]::before {

@@ -2105,6 +2105,89 @@ public class GitWorkingDirectory {
 		return log(Integer.parseInt(result.getStandardOut()));
 	}
 
+	public List<RemoteGitBranch> pushBranchesToRemoteGitRepository(
+		boolean force, LocalGitBranch localGitBranch,
+		List<String> remoteGitBranchNames, GitRemote gitRemote) {
+
+		if (localGitBranch == null) {
+			throw new GitWorkingDirectoryIllegalArgumentException(
+				this, "Local Git branch is null");
+		}
+
+		if (gitRemote == null) {
+			throw new GitWorkingDirectoryIllegalArgumentException(
+				this, "Git Remote is null");
+		}
+
+		String remoteURL = gitRemote.getRemoteURL();
+
+		if (!GitUtil.isValidRemoteURL(remoteURL)) {
+			throw new GitWorkingDirectoryIllegalArgumentException(
+				this, "Invalid remote url " + remoteURL);
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git push ");
+
+		if (force) {
+			sb.append("-f ");
+		}
+
+		sb.append(remoteURL);
+		sb.append(" ");
+
+		if (remoteGitBranchNames.isEmpty()) {
+			sb.append(localGitBranch.getName());
+		}
+		else {
+			for (String remoteGitBranchName : remoteGitBranchNames) {
+				sb.append(localGitBranch.getName());
+
+				if (remoteGitBranchName != null) {
+					sb.append(":");
+					sb.append(remoteGitBranchName);
+				}
+
+				sb.append(" ");
+			}
+		}
+
+		try {
+			GitUtil.ExecutionResult executionResult = executeBashCommands(
+				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+				1000 * 60 * 10, sb.toString());
+
+			if (executionResult.getExitValue() != 0) {
+				return null;
+			}
+		}
+		catch (RuntimeException runtimeException) {
+			runtimeException.printStackTrace();
+
+			return null;
+		}
+
+		List<RemoteGitBranch> remoteGitBranches = new ArrayList<>();
+
+		if (remoteGitBranchNames.isEmpty()) {
+			remoteGitBranches.add(
+				(RemoteGitBranch)GitBranchFactory.newRemoteGitRef(
+					GitRepositoryFactory.getRemoteGitRepository(remoteURL),
+					null, localGitBranch.getSHA(), "heads"));
+		}
+		else {
+			for (String remoteGitBranchName : remoteGitBranchNames) {
+				remoteGitBranches.add(
+					(RemoteGitBranch)GitBranchFactory.newRemoteGitRef(
+						GitRepositoryFactory.getRemoteGitRepository(remoteURL),
+						remoteGitBranchName, localGitBranch.getSHA(), "heads"));
+			}
+		}
+
+		return remoteGitBranches;
+	}
+
 	public RemoteGitBranch pushToRemoteGitRepository(
 		boolean force, LocalGitBranch localGitBranch,
 		String remoteGitBranchName, GitRemote gitRemote) {

@@ -9,13 +9,12 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeoutException;
@@ -212,26 +211,10 @@ public class GitHubDevSyncUtil {
 		GitWorkingDirectory gitWorkingDirectory, LocalGitBranch localGitBranch,
 		String cacheBranchName, GitRemote gitRemote, long timestamp) {
 
-		RemoteGitBranch lockRemoteGitBranch = null;
-
-		try {
-			lockRemoteGitBranch = gitWorkingDirectory.pushToRemoteGitRepository(
-				true, localGitBranch, cacheBranchName + "-LOCK", gitRemote);
-
-			gitWorkingDirectory.pushToRemoteGitRepository(
-				true, localGitBranch, cacheBranchName, gitRemote);
-
-			gitWorkingDirectory.pushToRemoteGitRepository(
-				true, localGitBranch,
-				JenkinsResultsParserUtil.combine(
-					cacheBranchName, "-", String.valueOf(timestamp)),
-				gitRemote);
-		}
-		finally {
-			if (lockRemoteGitBranch != null) {
-				gitWorkingDirectory.deleteRemoteGitBranch(lockRemoteGitBranch);
-			}
-		}
+		gitWorkingDirectory.pushBranchesToRemoteGitRepository(
+			true, localGitBranch,
+			Arrays.asList(cacheBranchName, cacheBranchName + "-" + timestamp),
+			gitRemote);
 	}
 
 	protected static void cacheBranches(
@@ -786,7 +769,6 @@ public class GitHubDevSyncUtil {
 
 		List<RemoteGitBranch> cacheRemoteGitBranches = new ArrayList<>();
 
-		Set<String> lockedBaseCacheRemoteGitBranchNames = new HashSet<>();
 		Map<String, RemoteGitBranch> remoteGitBranches = new HashMap<>();
 
 		GitWorkingDirectory gitWorkingDirectory =
@@ -795,37 +777,7 @@ public class GitHubDevSyncUtil {
 		for (RemoteGitBranch remoteGitBranch :
 				gitWorkingDirectory.getRemoteGitBranches(gitRemote)) {
 
-			Matcher matcher = _lockedCacheBranchPattern.matcher(
-				remoteGitBranch.getName());
-
-			if (matcher.matches()) {
-				lockedBaseCacheRemoteGitBranchNames.add(matcher.group(1));
-
-				continue;
-			}
-
 			remoteGitBranches.put(remoteGitBranch.getName(), remoteGitBranch);
-		}
-
-		for (String remoteGitBranchName :
-				new HashSet<>(remoteGitBranches.keySet())) {
-
-			for (String lockedBaseCacheRemoteGitBranchName :
-					lockedBaseCacheRemoteGitBranchNames) {
-
-				if (remoteGitBranchName.startsWith(
-						lockedBaseCacheRemoteGitBranchName)) {
-
-					remoteGitBranches.remove(remoteGitBranchName);
-
-					System.out.println(
-						JenkinsResultsParserUtil.combine(
-							"Ignoring ", remoteGitBranchName,
-							" because this branch is currently locked."));
-
-					break;
-				}
-			}
 		}
 
 		for (Map.Entry<String, RemoteGitBranch> entry :
@@ -1630,8 +1582,6 @@ public class GitHubDevSyncUtil {
 
 	private static final Pattern _cacheBranchPattern = Pattern.compile(
 		"cache(-([^-]+))+");
-	private static final Pattern _lockedCacheBranchPattern = Pattern.compile(
-		"(cache-.*)-LOCK");
 	private static final ThreadPoolExecutor _threadPoolExecutor =
 		JenkinsResultsParserUtil.isCloudCINode() ?
 			JenkinsResultsParserUtil.getNewThreadPoolExecutor(1, true) :

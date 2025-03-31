@@ -204,6 +204,7 @@
 		&.performing-search {
 			.no-results-message {
 				display: block;
+				justify-self: anchor-center;
 				margin-bottom: 30px;
 			}
 
@@ -323,7 +324,7 @@
 	.language-selector-container, .sites-container {
 		&:active, &:focus, &:hover {
 			background: var(--utility-nav-item-text-color-background, #EDF3FE);
-			border-radius: 10px;
+			border-radius: 5px;
 			outline: var(--color-brand-primary-lighten-2) solid 2px;
 			transition: all 0.1s linear;
 		}
@@ -611,7 +612,7 @@ nav {
 
 			&:active, &:focus, &:hover {
 				background: #1A3B7B;
-				border-radius: 10px;
+				border-radius: 5px;
 				outline: var(--color-brand-primary-lighten-2) solid 2px;
 				transition: all 0.1s linear;
 			}

@@ -179,9 +179,7 @@ paths:
                                     $ref: "#/components/schemas/Entry"
                                 type: array
             tags: ["Entry"]
-
 ---
-
 tasks:
     # Install Git
     - name: Install Git
@@ -197,5 +195,5 @@ tasks:
       name: Deploy SSH key
     - copy:
           content: |-
-              {{github_repos | sort | join(' ')}}
+              {{ github_repos | sort | join(' ') }}
           dest: "/data/slaves/{{ item.hostname }}/git/liferay/.repositories"

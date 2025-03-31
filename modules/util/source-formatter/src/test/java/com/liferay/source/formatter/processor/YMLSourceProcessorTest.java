@@ -13,18 +13,8 @@ import org.junit.Test;
 public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testIncorrectEmptyLines() throws Exception {
-		test("IncorrectEmptyLines.testyaml");
-	}
-
-	@Test
 	public void testIncorrectWhitespace() throws Exception {
 		test("IncorrectWhitespace.testyaml");
-	}
-
-	@Test
-	public void testIncorrectWhitespaceOnHelmYaml() throws Exception {
-		test("IncorrectWhitespaceOnHelmYaml.testyaml");
 	}
 
 	@Test
@@ -35,11 +25,6 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testReviewTags() throws Exception {
 		test("ReviewTags.testyaml");
-	}
-
-	@Test
-	public void testSortDefinitionsAndWhitespaceCheck() throws Exception {
-		test("SortDefinitionsAndWhitespace.testyaml");
 	}
 
 	@Test

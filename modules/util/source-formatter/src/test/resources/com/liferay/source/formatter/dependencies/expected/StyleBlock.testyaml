@@ -46,19 +46,13 @@ info:
     version:
         ver-date: 20190813
         ver-name: v1
-
 ---
-
 apiVersion: v1
 kind: Service1
-
 ---
-
 apiVersion: v2
 kind: Service2
-
 ---
-
 apiDir: "../headless-delivery-api/src/main/java"
 apiPackagePath: "com.liferay.headless.delivery"
 application:

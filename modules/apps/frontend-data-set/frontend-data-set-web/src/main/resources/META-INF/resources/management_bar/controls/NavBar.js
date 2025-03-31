@@ -20,7 +20,7 @@ import SortDropdown from './SortDropdown';
 import FiltersDropdown from './filters/FiltersDropdown';
 
 function NavBar({creationMenu, handleCheckboxClick, items, showSearch}) {
-	const {selectable} = useContext(FrontendDataSetContext);
+	const {selectable, selectionType} = useContext(FrontendDataSetContext);
 
 	const [{customViewsEnabled, filters, sorts, views}] =
 		useContext(ViewsContext);
@@ -33,17 +33,19 @@ function NavBar({creationMenu, handleCheckboxClick, items, showSearch}) {
 			data-qa-id="management-toolbar"
 		>
 			<ManagementToolbar.ItemList>
-				{!!items.length && selectable && (
-					<ManagementToolbar.Item>
-						{Liferay.FeatureFlags['LPD-42570'] && (
-							<SelectionCheckbox
-								handleCheckboxClick={handleCheckboxClick}
-								items={items}
-								selectedItemsValue={[]}
-							/>
-						)}
-					</ManagementToolbar.Item>
-				)}
+				{!!items.length &&
+					selectable &&
+					selectionType === 'multiple' && (
+						<ManagementToolbar.Item>
+							{Liferay.FeatureFlags['LPD-42570'] && (
+								<SelectionCheckbox
+									handleCheckboxClick={handleCheckboxClick}
+									items={items}
+									selectedItemsValue={[]}
+								/>
+							)}
+						</ManagementToolbar.Item>
+					)}
 
 				{!!filters.length && (
 					<ManagementToolbar.Item>

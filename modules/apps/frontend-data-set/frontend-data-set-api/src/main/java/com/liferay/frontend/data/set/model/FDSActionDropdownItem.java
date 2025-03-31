@@ -15,6 +15,17 @@ import java.util.Map;
 public class FDSActionDropdownItem extends DropdownItem {
 
 	public FDSActionDropdownItem(
+		String confirmationMessage, Boolean highlighted, String href,
+		String icon, String id, String label, String method,
+		String permissionKey, String target) {
+
+		this(href, icon, id, label, method, permissionKey, target);
+
+		setConfirmationMessage(confirmationMessage);
+		setHighlighted(highlighted);
+	}
+
+	public FDSActionDropdownItem(
 		String href, String icon, String id, String label, String method,
 		String permissionKey, String target) {
 
@@ -103,6 +114,10 @@ public class FDSActionDropdownItem extends DropdownItem {
 
 	public void setErrorMessage(String errorMessage) {
 		putData("errorMessage", errorMessage);
+	}
+
+	public void setHighlighted(Boolean highlighted) {
+		putData("highlighted", highlighted);
 	}
 
 	public void setId(String id) {

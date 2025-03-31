@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -170,9 +172,7 @@ public class ImportSystemDataSetMVCResourceCommand
 				objectEntry);
 		}
 
-		List<FDSView> fdsViews = _fdsViewRegistry.getFDSViews(fdsName);
-
-		for (FDSView fdsView : fdsViews) {
+		for (FDSView fdsView : _fdsViewRegistry.getFDSViews(fdsName)) {
 			if (fdsView instanceof BaseCardsFDSView) {
 				_addBaseCardsFDSViewObjectEntries(
 					(BaseCardsFDSView)fdsView,

@@ -4,7 +4,8 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {openModal} from 'frontend-js-components-web';
+import {openModal, openToast} from 'frontend-js-components-web';
+import {fetch, navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 import SpaceSticker from '../../components/SpaceSticker';
@@ -96,6 +97,77 @@ export default function ViewTags({
 		title: Liferay.Language.get('no-tags-yet'),
 	};
 
+	const onDeleteClick = (itemData: {
+		itemData: {actions: {delete: {href: string; method: string}}};
+	}) => {
+		openModal({
+			bodyHTML: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this'
+			),
+			buttons: [
+				{
+					autoFocus: true,
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					displayType: 'danger',
+					label: Liferay.Language.get('delete'),
+					onClick: ({processClose}: {processClose: Function}) => {
+						processClose();
+
+						const deleteURL = itemData.itemData.actions.delete.href;
+
+						fetch(deleteURL, {
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json',
+								'x-csrf-token': Liferay.authToken,
+							},
+							method: itemData.itemData.actions.delete.method,
+						})
+							.then((response) => {
+								if (response.ok) {
+									openToast({
+										message: Liferay.Language.get(
+											'your-request-completed-successfully'
+										),
+										title: Liferay.Language.get('success'),
+										type: 'success',
+									});
+								}
+								else {
+									openToast({
+										message: Liferay.Language.get(
+											'an-unexpected-error-occurred'
+										),
+										title: Liferay.Language.get('error'),
+										type: 'danger',
+									});
+								}
+							})
+							.catch(() => {
+								openToast({
+									message: Liferay.Language.get(
+										'an-unexpected-error-occurred'
+									),
+									title: Liferay.Language.get('error'),
+									type: 'danger',
+								});
+							});
+						navigate(tagsURL);
+					},
+				},
+			],
+			status: 'danger',
+			title: sub(
+				Liferay.Language.get('delete-x'),
+				Liferay.Language.get('tag')
+			),
+		});
+	};
+
 	return (
 		<div className="categorization-section">
 			<CategorizationToolbar
@@ -125,8 +197,12 @@ export default function ViewTags({
 						label: Liferay.Language.get('edit'),
 					},
 					{
+						data: {
+							permissionKey: 'delete',
+						},
 						icon: 'trash',
 						label: Liferay.Language.get('delete'),
+						onClick: onDeleteClick,
 					},
 				]}
 				showManagementBar={true}

@@ -56,8 +56,16 @@ export default function PicklistPicker({field}: {field: Field}) {
 						disabled={isPublished || !picklists.length}
 						id={pickerId}
 						items={picklists}
-						onBlur={() => {
-							if (!selectedKey) {
+						onBlur={(
+							event: React.FocusEvent<HTMLButtonElement>
+						) => {
+							const noOptionSelected = !picklists.some(
+								(picklist) =>
+									picklist.id ===
+									Number(event.relatedTarget?.id)
+							);
+
+							if (!selectedKey && noOptionSelected) {
 								dispatch({
 									error: 'no-picklist',
 									type: 'add-validation-error',

@@ -102,7 +102,7 @@ export default function ViewTags({
 	}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-this'
+				'are-you-sure-you-want-to-delete-this-tag?-deleting-it-will-permanently-remove-the-tag'
 			),
 			buttons: [
 				{

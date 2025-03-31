@@ -62,7 +62,7 @@
 	width: 10%;
 }
 
-@media(max-width: 514px) {
+@media (max-width: 514px) {
 	.banner-content {
 		gap: 5px;
 		max-width: 90%;
@@ -73,28 +73,7 @@
 	}
 }
 
-@media(max-width: 690px) {
-	.login-button {
-		font-size: 0.8rem;
-	}
-}
-
-@media(max-width: 913px) {
-	.banner-sign-in-lesson {
-		width: 92vw;
-	}
-}
-
-@media(max-width: 940px) {
-	.login-button {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-		width: 50%;
-	}
-}
-
-@media(max-width: 1300px) {
+@media (max-width: 940px) {
 	.banner-content {
 		display: flex;
 		flex-direction: column;
@@ -104,6 +83,7 @@
 
 	.banner-sign-in-lesson {
 		height: 124px;
+		width: 92vw;
 	}
 
 	.icon-x-lesson {
@@ -111,7 +91,12 @@
 	}
 
 	.login-button {
+		align-items: center;
+		display: flex;
+		font-size: 0.8rem;
+		justify-content: center;
 		margin-left: 0;
 		width: 40%;
 	}
 }
+

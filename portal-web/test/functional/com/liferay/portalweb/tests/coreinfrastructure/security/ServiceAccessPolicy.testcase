@@ -1,10 +1,10 @@
-@component-name = "portal-security"
+@component-name = "portal-application-security"
 definition {
 
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Security";
+	property testray.main.component.name = "Service Access Policy";
 
 	setUp {
 		TestCase.setUpPortalInstance();

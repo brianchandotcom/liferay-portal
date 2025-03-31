@@ -7,7 +7,9 @@ package com.liferay.headless.object.internal.graphql.servlet.v1_0;
 
 import com.liferay.headless.object.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.object.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.object.internal.resource.v1_0.CollaboratorResourceImpl;
 import com.liferay.headless.object.internal.resource.v1_0.ObjectEntryFolderResourceImpl;
+import com.liferay.headless.object.resource.v1_0.CollaboratorResource;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -34,9 +36,13 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setCollaboratorResourceComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects);
 		Mutation.setObjectEntryFolderResourceComponentServiceObjects(
 			_objectEntryFolderResourceComponentServiceObjects);
 
+		Query.setCollaboratorResourceComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects);
 		Query.setObjectEntryFolderResourceComponentServiceObjects(
 			_objectEntryFolderResourceComponentServiceObjects);
 	}
@@ -76,6 +82,21 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createObjectEntryFolderCollaboratorsPage",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"postObjectEntryFolderCollaboratorsPage"));
+					put(
+						"mutation#createObjectEntryFolderCollaboratorsPageExportBatch",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"postObjectEntryFolderCollaboratorsPageExportBatch"));
+					put(
+						"mutation#createScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage"));
+					put(
 						"mutation#deleteObjectEntryFolder",
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,
@@ -112,6 +133,16 @@ public class ServletDataImpl implements ServletData {
 							"putScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
 
 					put(
+						"query#objectEntryFolderCollaborators",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"getObjectEntryFolderCollaboratorsPage"));
+					put(
+						"query#scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaborators",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage"));
+					put(
 						"query#objectEntryFolder",
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,
@@ -128,12 +159,22 @@ public class ServletDataImpl implements ServletData {
 							"getScopeScopeKeyObjectEntryFoldersPage"));
 
 					put(
+						"query#ObjectEntryFolder.collaborators",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"getObjectEntryFolderCollaboratorsPage"));
+
+					put(
 						"query#ObjectEntryFolder.parentObjectEntryFolder",
 						new ObjectValuePair<>(
 							ObjectEntryFolderResourceImpl.class,
 							"getObjectEntryFolder"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<CollaboratorResource>
+		_collaboratorResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ObjectEntryFolderResource>

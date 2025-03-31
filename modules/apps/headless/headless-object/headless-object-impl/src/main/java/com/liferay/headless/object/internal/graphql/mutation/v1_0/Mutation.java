@@ -5,7 +5,9 @@
 
 package com.liferay.headless.object.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
+import com.liferay.headless.object.resource.v1_0.CollaboratorResource;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -16,6 +18,7 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTa
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.function.BiFunction;
 
@@ -36,12 +39,83 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setCollaboratorResourceComponentServiceObjects(
+		ComponentServiceObjects<CollaboratorResource>
+			collaboratorResourceComponentServiceObjects) {
+
+		_collaboratorResourceComponentServiceObjects =
+			collaboratorResourceComponentServiceObjects;
+	}
+
 	public static void setObjectEntryFolderResourceComponentServiceObjects(
 		ComponentServiceObjects<ObjectEntryFolderResource>
 			objectEntryFolderResourceComponentServiceObjects) {
 
 		_objectEntryFolderResourceComponentServiceObjects =
 			objectEntryFolderResourceComponentServiceObjects;
+	}
+
+	@GraphQLField(
+		description = "Add or update all the collaborators received in the request. Delete existing collaborators that are not included in the request. Send a notification for the new collaborators and those whose permissions are different."
+	)
+	public java.util.Collection<Collaborator>
+			createObjectEntryFolderCollaboratorsPage(
+				@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+				@GraphQLName("collaborators") Collaborator[] collaborators)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource -> {
+				Page paginationPage =
+					collaboratorResource.postObjectEntryFolderCollaboratorsPage(
+						objectEntryFolderId, collaborators);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	public Response createObjectEntryFolderCollaboratorsPageExportBatch(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					postObjectEntryFolderCollaboratorsPageExportBatch(
+						objectEntryFolderId, callbackURL, contentType,
+						fieldNames));
+	}
+
+	@GraphQLField(
+		description = "Add or update all the collaborators received in the request. Delete existing collaborators that are not included in the request. Send a notification for the new collaborators and those whose permissions are different."
+	)
+	public java.util.Collection<Collaborator>
+			createScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("collaborators") Collaborator[] collaborators)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource -> {
+				Page paginationPage =
+					collaboratorResource.
+						postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage(
+							scopeKey, externalReferenceCode, collaborators);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField(
@@ -201,6 +275,27 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
+			CollaboratorResource collaboratorResource)
+		throws Exception {
+
+		collaboratorResource.setContextAcceptLanguage(_acceptLanguage);
+		collaboratorResource.setContextCompany(_company);
+		collaboratorResource.setContextHttpServletRequest(_httpServletRequest);
+		collaboratorResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		collaboratorResource.setContextUriInfo(_uriInfo);
+		collaboratorResource.setContextUser(_user);
+		collaboratorResource.setGroupLocalService(_groupLocalService);
+		collaboratorResource.setRoleLocalService(_roleLocalService);
+
+		collaboratorResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		collaboratorResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
+	private void _populateResourceContext(
 			ObjectEntryFolderResource objectEntryFolderResource)
 		throws Exception {
 
@@ -222,6 +317,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<CollaboratorResource>
+		_collaboratorResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectEntryFolderResource>
 		_objectEntryFolderResourceComponentServiceObjects;
 

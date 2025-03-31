@@ -921,7 +921,7 @@ test('can import CSV file with new and modified existing company scoped object e
 test('can import json file with attachment field', async ({
 	apiHelpers,
 	dataMigrationCenterPage,
-	page
+	page,
 }) => {
 	const studentObjectDefinitionWithAttachment: ObjectDefinition = {
 		active: true,
@@ -1085,19 +1085,19 @@ test('can import json file with attachment field', async ({
 
 	await apiHelpers.objectEntry.postObjectEntry(
 		{
-			externalReferenceCode: "Math",
+			externalReferenceCode: 'Math',
 			name: 'Math',
 		},
 		'c/subjects'
 	);
 
-	const objectEntry =	await apiHelpers.objectEntry.postObjectEntry(
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			diploma: {
 				fileBase64: 'R0lGODlhAQABAAAAACw=',
 				name: 'diploma.png',
 			},
-			externalReferenceCode: "studentERC",
+			externalReferenceCode: 'studentERC',
 			name: 'Jane',
 			r_subjectStudents_c_subjectERC: 'Math',
 		},
@@ -1138,68 +1138,68 @@ test('can import json file with attachment field', async ({
 	await expect(
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
-		expect(
-			(
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					'c/students'
-				)
-			).items
-		).toEqual([
-			{
-				actions: expect.any(Object),
-				creator: expect.any(Object),
-				dateCreated: expect.any(String),
-				dateModified: expect.any(String),
-				diploma: {
-					externalReferenceCode: expect.any(String),
-					id: expect.any(Number),
-					link: {
-						href:  expect.any(String),
-						label: "diploma.png",
-					},
-					name: "diploma.png",
-					scope: expect.any(Object),
-				},
-				externalReferenceCode:  expect.any(String),
+	expect(
+		(
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/students'
+			)
+		).items
+	).toEqual([
+		{
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
+			diploma: {
+				externalReferenceCode: expect.any(String),
 				id: expect.any(Number),
-				keywords: [],
-				name: 'Jane',
-				objectEntryFolderExternalReferenceCode: "",
-				objectEntryFolderId: 0,
-				r_subjectStudents_c_subjectERC: 'Math',
-				r_subjectStudents_c_subjectId: expect.any(Number),
-				status: expect.any(Object),
-				subjectStudentsERC: "Math",
-				taxonomyCategoryBriefs: []
-			},{
-				actions: expect.any(Object),
-				creator: expect.any(Object),
-				dateCreated: expect.any(String),
-				dateModified: expect.any(String),
-				diploma: {
-					externalReferenceCode: expect.any(String),
-					id: expect.any(Number),
-					link: {
-						href:  expect.any(String),
-						label: "diploma.png",
-					},
-					name: "diploma.png",
-					scope: expect.any(Object),
+				link: {
+					href: expect.any(String),
+					label: 'diploma.png',
 				},
-				externalReferenceCode:  expect.any(String),
+				name: 'diploma.png',
+				scope: expect.any(Object),
+			},
+			externalReferenceCode: expect.any(String),
+			id: expect.any(Number),
+			keywords: [],
+			name: 'Jane',
+			objectEntryFolderExternalReferenceCode: '',
+			objectEntryFolderId: 0,
+			r_subjectStudents_c_subjectERC: 'Math',
+			r_subjectStudents_c_subjectId: expect.any(Number),
+			status: expect.any(Object),
+			subjectStudentsERC: 'Math',
+			taxonomyCategoryBriefs: [],
+		},
+		{
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
+			diploma: {
+				externalReferenceCode: expect.any(String),
 				id: expect.any(Number),
-				keywords: [],
-				name: 'John',
-				objectEntryFolderExternalReferenceCode: "",
-				objectEntryFolderId: 0,
-				r_subjectStudents_c_subjectERC: 'Math',
-				r_subjectStudents_c_subjectId: expect.any(Number),
-				status: expect.any(Object),
-				subjectStudentsERC: "Math",
-				taxonomyCategoryBriefs: []
-			}
-		]
-	);
+				link: {
+					href: expect.any(String),
+					label: 'diploma.png',
+				},
+				name: 'diploma.png',
+				scope: expect.any(Object),
+			},
+			externalReferenceCode: expect.any(String),
+			id: expect.any(Number),
+			keywords: [],
+			name: 'John',
+			objectEntryFolderExternalReferenceCode: '',
+			objectEntryFolderId: 0,
+			r_subjectStudents_c_subjectERC: 'Math',
+			r_subjectStudents_c_subjectId: expect.any(Number),
+			status: expect.any(Object),
+			subjectStudentsERC: 'Math',
+			taxonomyCategoryBriefs: [],
+		},
+	]);
 });
 
 test('can map all imported fields', async ({

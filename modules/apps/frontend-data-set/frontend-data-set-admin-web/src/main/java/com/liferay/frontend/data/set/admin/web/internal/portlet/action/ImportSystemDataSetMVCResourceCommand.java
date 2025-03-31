@@ -361,6 +361,9 @@ public class ImportSystemDataSetMVCResourceCommand
 						if (fdsTableSchemaField.
 								isContentRendererClientExtension()) {
 
+							/* current fdsTableSchemaField API does not return
+							 the client extension ERC. It can not be imported
+							 */
 							return null;
 						}
 
@@ -368,6 +371,11 @@ public class ImportSystemDataSetMVCResourceCommand
 							fdsTableSchemaField.getContentRenderer();
 
 						if (Validator.isNotNull(contentRenderer)) {
+
+							/* import is not considering per-renderer data. So,
+								actionId parameter is ignored for "ActionLink"
+								contentRenderer
+							 */
 							return contentRenderer;
 						}
 
@@ -388,6 +396,11 @@ public class ImportSystemDataSetMVCResourceCommand
 					"sortable", fdsTableSchemaField.isSortable()
 				).put(
 					"type", "string"
+					/*
+						type doesn't come in fdsTableSchemaField. It's created
+						 by the DSM from metadata in the openapi. At import time
+						 we will assume a "string" default value
+					 */
 				).build(),
 				new ServiceContext());
 		}

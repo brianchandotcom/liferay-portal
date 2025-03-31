@@ -13,6 +13,7 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet',
 	categoriesAdmin: '/~/control_panel/manage/-/categories_admin/vocabularies',
 	cmsStructureBuilder: 'web/cms/structure-builder',
+	cmsStructures: 'web/cms/structures',
 	collections:
 		'/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet',
 	contentDashboard:

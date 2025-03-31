@@ -1,0 +1,51 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Locator, Page} from '@playwright/test';
+
+export class DataSetPage {
+	readonly table: {
+		bodyRows: Locator;
+		container: Locator;
+		headRow: Locator;
+	};
+
+	readonly page: Page;
+
+	constructor(page: Page) {
+		const tableContainer = page.locator('.fds table');
+
+		this.table = {
+			bodyRows: tableContainer.locator('tbody tr'),
+			container: tableContainer,
+			headRow: tableContainer.locator('thead tr'),
+		};
+
+		this.page = page;
+	}
+
+	async execItemAction({action, filter}: {action: string; filter: string}) {
+		const row = this.table.bodyRows.filter({hasText: filter});
+		const button = row.getByRole('button', {
+			exact: true,
+			name: 'Actions',
+		});
+
+		const dropdownId = await button.getAttribute('aria-controls');
+		await button.click();
+
+		const dropdownMenu = this.page
+			.locator(`#${dropdownId}`)
+			.filter({has: this.page.getByRole('menu')});
+
+		await dropdownMenu.waitFor();
+
+		const dropdownMenuActionItem = dropdownMenu.getByRole('menuitem', {
+			name: action,
+		});
+		await dropdownMenuActionItem.waitFor();
+		await dropdownMenuActionItem.click();
+	}
+}

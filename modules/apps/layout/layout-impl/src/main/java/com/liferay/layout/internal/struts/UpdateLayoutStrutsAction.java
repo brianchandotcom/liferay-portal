@@ -447,7 +447,8 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		Set<String> categoryNames, PortletCategory portletCategory) {
 
 		if (!portletCategory.isHidden() &&
-			categoryNames.contains(portletCategory.getName())) {
+			(categoryNames.contains(portletCategory.getName()) ||
+			 categoryNames.contains(portletCategory.getPath()))) {
 
 			return true;
 		}

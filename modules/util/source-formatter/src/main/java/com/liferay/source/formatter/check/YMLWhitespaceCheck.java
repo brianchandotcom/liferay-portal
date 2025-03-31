@@ -183,7 +183,11 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 		String[] lines = content.split("\n");
 
-		int pos = lines[0].length();
+		if (lines.length == 1) {
+			return content;
+		}
+
+		int pos = lines[0].length() + 1;
 
 		for (String definition : definitions) {
 			lines = definition.split("\n");
@@ -197,7 +201,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 						content, definition, newDefinition, pos);
 				}
 
-				pos = pos + newDefinition.length();
+				pos = pos + newDefinition.length() + 1;
 
 				continue;
 			}
@@ -233,7 +237,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 					content, definition, newDefinition, pos);
 			}
 
-			pos = pos + newDefinition.length();
+			pos = pos + newDefinition.length() + 1;
 		}
 
 		return content;

@@ -666,6 +666,7 @@ nav {
 
 		.search-account-container {
 			gap: 0.2rem;
+
 			.question-icon, .search-icon {
 				border-radius: var(--border-radius-sm);
 				color: var(--body-color);

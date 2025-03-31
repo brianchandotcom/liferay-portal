@@ -202,6 +202,17 @@ function BulkActions({
 									href="#"
 									onClick={(event) => {
 										event.preventDefault();
+										onClear();
+									}}
+								>
+									{Liferay.Language.get('clear')}
+								</ClayLink>
+
+								<ClayLink
+									className="ml-3"
+									href="#"
+									onClick={(event) => {
+										event.preventDefault();
 										selectItems(
 											items.map(
 												(item) => item[selectedItemsKey]

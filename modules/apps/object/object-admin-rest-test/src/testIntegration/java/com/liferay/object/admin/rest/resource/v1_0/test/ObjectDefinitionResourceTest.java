@@ -754,6 +754,23 @@ public class ObjectDefinitionResourceTest
 						localized = true;
 						name = StringUtil.randomId();
 					}
+				},
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						label = Collections.singletonMap("en_US", "Column");
+						localized = false;
+						name = StringUtil.randomId();
+					}
+				},
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						label = Collections.singletonMap("en_US", "Column");
+						name = StringUtil.randomId();
+					}
 				}
 			});
 		randomObjectDefinition.setStatus(

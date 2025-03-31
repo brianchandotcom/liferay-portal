@@ -1122,7 +1122,7 @@ public class ObjectDefinitionResourceTest
 						indexed = true;
 						label = Collections.singletonMap(
 							"en_US", RandomTestUtil.randomString());
-						name = "relationshipObjectFieldName";
+						name = "r_relationshipName_c_objectDefinition1Id";
 						objectDefinitionExternalReferenceCode1 =
 							"TESTOBJECTDEFINITION1";
 						objectRelationshipExternalReferenceCode =
@@ -1137,7 +1137,8 @@ public class ObjectDefinitionResourceTest
 					objectLayoutColumns = new ObjectLayoutColumn[] {
 						new ObjectLayoutColumn() {
 							{
-								objectFieldName = "relationshipObjectFieldName";
+								objectFieldName =
+									"r_relationshipName_c_objectDefinition1Id";
 								priority = 0;
 								size = 6;
 							}
@@ -1190,7 +1191,7 @@ public class ObjectDefinitionResourceTest
 		ObjectField objectField = objectFields[0];
 
 		Assert.assertEquals(
-			"relationshipObjectFieldName", objectField.getName());
+			"r_relationshipName_c_objectDefinition1Id", objectField.getName());
 		Assert.assertEquals(
 			"TESTOBJECTDEFINITION1",
 			objectField.getObjectDefinitionExternalReferenceCode1());

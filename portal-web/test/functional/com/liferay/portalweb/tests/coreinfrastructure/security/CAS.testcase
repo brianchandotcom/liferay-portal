@@ -1,4 +1,4 @@
-@component-name = "portal-security"
+@component-name = "portal-application-security"
 definition {
 
 	property app.server.bundles.size = "0";

@@ -116,22 +116,22 @@ public class LiferayJWTBearerAuthenticationHandler
 
 		try {
 			if (tokenEndpointAuthMethod.equals("client_secret_jwt")) {
-				try {
-					Base64.getDecoder(
-					).decode(
-						client.getClientSecret(
-						).getBytes(
-							StandardCharsets.UTF_8
-						)
-					);
+				String clientSecret = client.getClientSecret();
 
-					return new HmacJwsSignatureVerifier(
-						client.getClientSecret());
+				byte[] clientSecretBytes = clientSecret.getBytes(
+					StandardCharsets.UTF_8);
+
+				try {
+					Base64.Decoder decoder = Base64.getDecoder();
+
+					decoder.decode(clientSecretBytes);
+
+					return new HmacJwsSignatureVerifier(clientSecret);
 				}
 				catch (IllegalArgumentException illegalArgumentException) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"secret is not base64Encoded ",
+							"Client secret is not base64Encoded ",
 							illegalArgumentException);
 					}
 				}
@@ -139,12 +139,7 @@ public class LiferayJWTBearerAuthenticationHandler
 				Base64.Encoder encoder = Base64.getEncoder();
 
 				String encodedSecret = new String(
-					encoder.encode(
-						client.getClientSecret(
-						).getBytes(
-							"UTF-8"
-						)),
-					"UTF-8");
+					encoder.encode(clientSecretBytes), "UTF-8");
 
 				return new HmacJwsSignatureVerifier(encodedSecret);
 			}

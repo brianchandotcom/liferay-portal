@@ -207,7 +207,7 @@ public class ObjectFieldUtil {
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(
-		String defaultLanguageId, boolean enableLocalization,
+		String defaultLanguageId,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -262,8 +262,7 @@ public class ObjectFieldUtil {
 		serviceBuilderObjectField.setLabelMap(localizedLabelMap);
 
 		serviceBuilderObjectField.setLocalized(
-			GetterUtil.getBoolean(
-				objectField.getLocalized(), enableLocalization));
+			GetterUtil.getBoolean(objectField.getLocalized()));
 		serviceBuilderObjectField.setName(objectField.getName());
 		serviceBuilderObjectField.setObjectFieldSettings(
 			ObjectFieldSettingUtil.toObjectFieldSettings(

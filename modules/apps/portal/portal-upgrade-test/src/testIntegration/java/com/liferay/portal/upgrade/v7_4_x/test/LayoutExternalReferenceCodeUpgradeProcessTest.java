@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -42,8 +41,6 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 
 		serviceContext.setUuid(_UUID);
 
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
 		Layout layout = _layoutLocalService.addLayout(
 			"", TestPropsValues.getUserId(), group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -52,12 +49,7 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 
 		Assert.assertEquals(_UUID, layout.getUuid());
 
-		serviceContext = ServiceContextTestUtil.getServiceContext(
-			group.getGroupId());
-
 		serviceContext.setUuid(_UUID);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		Layout privateLayout = _layoutLocalService.addLayout(
 			"", TestPropsValues.getUserId(), group.getGroupId(), true,

@@ -194,17 +194,6 @@ public class DBCopyTablesProcess {
 		String valueString = null;
 
 		if ((sourceType == Types.BIGINT) || (sourceType == Types.NUMERIC)) {
-			if ((targetType == Types.BINARY) ||
-				(targetType == Types.LONGVARBINARY) ||
-				(targetType == Types.BLOB)) {
-
-				preparedStatement.setBytes(
-					index,
-					PostgreSQLJDBCUtil.getLargeObject(resultSet, columnName));
-
-				return;
-			}
-
 			long value = resultSet.getLong(columnName);
 
 			if ((value == 0L) && resultSet.wasNull()) {

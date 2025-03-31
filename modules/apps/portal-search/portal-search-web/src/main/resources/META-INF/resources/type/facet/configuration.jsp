@@ -64,6 +64,7 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 				<liferay-template:template-selector
 					className="<%= TypeFacetPortlet.class.getName() %>"
 					displayStyle="<%= typeFacetPortletInstanceConfiguration.displayStyle() %>"
+					displayStyleGroupId="<%= assetEntriesSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 					refreshURL="<%= configurationRenderURL %>"
 					showEmptyOption="<%= true %>"
 				/>

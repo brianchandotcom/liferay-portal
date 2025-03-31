@@ -440,7 +440,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				});
 		}
 		catch (Throwable throwable) {
-			try {
+			try (SafeCloseable safeCloseable3 =
+					PortalInstances.
+						setCompanyInDeletionProcessWithSafeCloseable(
+							companyId)) {
+
 				_transactionAwareInvoke(
 					() -> {
 						extractCompany(companyId);
@@ -605,7 +609,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				});
 		}
 		catch (Throwable throwable) {
-			try {
+			try (SafeCloseable safeCloseable3 =
+					PortalInstances.
+						setCompanyInDeletionProcessWithSafeCloseable(
+							companyId)) {
+
 				_transactionAwareInvoke(
 					() -> {
 						DBPartitionUtil.removeDBPartition(companyId);

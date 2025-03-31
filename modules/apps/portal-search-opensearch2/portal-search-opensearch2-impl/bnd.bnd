@@ -5,6 +5,10 @@ Import-Package:\
 	!jakarta.enterprise.context.*,\
 	!jakarta.enterprise.inject.*,\
 	\
+	!javax.annotation.*,\
+	\
+	!javax.servlet.*,\
+	\
 	!org.apache.avalon.framework.*,\
 	!org.apache.log.*,\
 	\

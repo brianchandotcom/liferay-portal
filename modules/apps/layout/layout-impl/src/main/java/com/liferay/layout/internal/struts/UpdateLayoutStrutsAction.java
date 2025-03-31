@@ -429,8 +429,8 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		for (PortletCategory curPortletCategory :
 				portletCategory.getCategories()) {
 
-			if (!curPortletCategory.isHidden() &&
-				categoryNames.contains(curPortletCategory.getName())) {
+			if (_containsPortletCategoryPermission(
+					categoryNames, curPortletCategory)) {
 
 				return;
 			}
@@ -441,6 +441,28 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			StringBundler.concat(
 				Portlet.class.getName(), StringPool.UNDERLINE, portletId),
 			0, ActionKeys.ADD_TO_PAGE);
+	}
+
+	private boolean _containsPortletCategoryPermission(
+		Set<String> categoryNames, PortletCategory portletCategory) {
+
+		if (!portletCategory.isHidden() &&
+			categoryNames.contains(portletCategory.getName())) {
+
+			return true;
+		}
+
+		for (PortletCategory childPortletCategory :
+				portletCategory.getCategories()) {
+
+			if (_containsPortletCategoryPermission(
+					categoryNames, childPortletCategory)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Reference

@@ -53,10 +53,6 @@ export default function PicklistPicker({field}: {field: Field}) {
 
 					<Picker
 						aria-describedby={feedbackId}
-						aria-label={sub(
-							Liferay.Language.get('select-x'),
-							Liferay.Language.get('picklist')
-						)}
 						disabled={isPublished || !picklists.length}
 						id={pickerId}
 						items={picklists}
@@ -78,6 +74,10 @@ export default function PicklistPicker({field}: {field: Field}) {
 
 							setSelectedKey(selectedKey);
 						}}
+						placeholder={sub(
+							Liferay.Language.get('select-x'),
+							Liferay.Language.get('picklist')
+						)}
 						selectedKey={String(selectedKey)}
 					>
 						{(item) => <Option key={item.id}>{item.name}</Option>}

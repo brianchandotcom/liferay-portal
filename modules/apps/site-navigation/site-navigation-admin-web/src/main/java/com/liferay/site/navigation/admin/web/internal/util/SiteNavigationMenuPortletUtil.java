@@ -77,6 +77,10 @@ public class SiteNavigationMenuPortletUtil {
 						siteNavigationMenuItemId, siteNavigationMenuId,
 						siteNavigationMenuItemTypeRegistry, themeDisplay)
 				).put(
+					"displayIcon",
+					siteNavigationMenuItemType.getDisplayIcon(
+						siteNavigationMenuItem)
+				).put(
 					"dynamic",
 					() -> {
 						if (siteNavigationMenuItemType != null) {

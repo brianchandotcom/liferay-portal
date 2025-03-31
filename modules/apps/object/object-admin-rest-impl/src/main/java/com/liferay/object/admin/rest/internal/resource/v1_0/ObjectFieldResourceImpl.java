@@ -135,9 +135,7 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.populateLocalizedMap(objectField.getLabel()),
-				GetterUtil.getBoolean(
-					objectField.getLocalized(),
-					objectDefinition.isEnableLocalization()),
+				GetterUtil.getBoolean(objectField.getLocalized()),
 				objectField.getName(), objectField.getReadOnlyAsString(),
 				objectField.getReadOnlyConditionExpression(),
 				objectField.getRequired(),

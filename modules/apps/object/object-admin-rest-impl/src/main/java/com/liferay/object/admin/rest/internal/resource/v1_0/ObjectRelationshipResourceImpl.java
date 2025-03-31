@@ -221,7 +221,7 @@ public class ObjectRelationshipResourceImpl
 				GetterUtil.getBoolean(objectRelationship.getSystem()),
 				objectRelationship.getTypeAsString(),
 				ObjectFieldUtil.toObjectField(
-					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), false,
+					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 					_listTypeDefinitionLocalService,
 					objectRelationship.getObjectField(),
 					_objectFieldLocalService, _objectFieldSettingLocalService,
@@ -272,7 +272,7 @@ public class ObjectRelationshipResourceImpl
 				LocalizedMapUtil.populateLocalizedMap(
 					objectRelationship.getLabel()),
 				ObjectFieldUtil.toObjectField(
-					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), false,
+					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 					_listTypeDefinitionLocalService,
 					objectRelationship.getObjectField(),
 					_objectFieldLocalService, _objectFieldSettingLocalService,

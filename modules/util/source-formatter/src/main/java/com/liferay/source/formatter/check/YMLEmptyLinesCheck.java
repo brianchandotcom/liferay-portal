@@ -17,6 +17,10 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		return _removeEmptyLinesAroundDocumentSeparator(content);
+	}
+
+	private String _removeEmptyLinesAroundDocumentSeparator(String content) {
 		String trimmedContent = content.trim();
 
 		if (trimmedContent.startsWith("---")) {

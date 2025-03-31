@@ -86,7 +86,6 @@ test('COMMERCE-5839 As a system admin i want to be able to create / update and d
 	await commerceAdminCurrenciesPage.filterButton.click();
 	await commerceAdminCurrenciesPage.activeFilter('No').check();
 	await commerceAdminCurrenciesPage.addFilterButton.click();
-	await commerceAdminCurrenciesPage.filterManagementToolbar.click();
 
 	await expect(
 		commerceAdminCurrenciesPage.currencyNameLink(currencyName)

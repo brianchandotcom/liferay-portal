@@ -86,7 +86,7 @@ export default function PicklistPicker({field}: {field: Field}) {
 							Liferay.Language.get('select-x'),
 							Liferay.Language.get('picklist')
 						)}
-						selectedKey={String(selectedKey)}
+						selectedKey={selectedKey ? String(selectedKey) : ''}
 					>
 						{(item) => <Option key={item.id}>{item.name}</Option>}
 					</Picker>

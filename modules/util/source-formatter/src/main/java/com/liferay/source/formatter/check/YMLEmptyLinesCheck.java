@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.check;
 
+import java.io.IOException;
+
 /**
  * @author Alan Huang
  */
@@ -12,13 +14,22 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
-		content = content.replaceAll("(?<!\n)(\n---\n)", "\n$1");
-		content = content.replaceAll("(\n---\n)(?!\n)", "$1\n");
-		content = content.replaceAll("(?<!---)\n\n(?!---)", "\n");
+		String trimmedContent = content.trim();
 
-		return content;
+		if (trimmedContent.startsWith("---")) {
+			return trimmedContent.substring(3);
+		}
+
+		if (trimmedContent.endsWith("---")) {
+			return trimmedContent.substring(0, trimmedContent.length() - 3);
+		}
+
+		trimmedContent = trimmedContent.replaceAll("\n\n---", "\n---");
+
+		return trimmedContent.replaceAll("---\n\n", "---\n");
 	}
 
 }

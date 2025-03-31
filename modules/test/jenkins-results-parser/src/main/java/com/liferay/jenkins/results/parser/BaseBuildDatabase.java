@@ -25,6 +25,11 @@ import org.json.JSONObject;
 public abstract class BaseBuildDatabase implements BuildDatabase {
 
 	@Override
+	public File getBuildDatabaseFile() {
+		return _buildDatabaseFile;
+	}
+
+	@Override
 	public JSONObject getBuildDataJSONObject(String key) {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("builds");
 

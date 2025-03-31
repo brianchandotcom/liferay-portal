@@ -62,4 +62,24 @@ public class DataSourceFactoryUtil {
 		return new HikariDataSource(hikariConfig);
 	}
 
+	public static boolean isValidSourceDatabase(String jdbcURL) {
+		if (jdbcURL.indexOf("postgresql") > 0) {
+			return false;
+		}
+
+		if (jdbcURL.indexOf("mysql") > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isValidTargetDatabase(String jdbcURL) {
+		if (jdbcURL.indexOf("postgresql") > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.schema.importer.jdbc.ConnectionConfigUtil;
+import com.liferay.portal.tools.db.schema.importer.jdbc.DataSourceFactoryUtil;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -45,6 +46,25 @@ public class DBSchemaImporter {
 		}
 		catch (ParseException parseException) {
 			System.err.println(parseException.getMessage());
+
+			_printHelpAndExit(options);
+		}
+
+		if (!DataSourceFactoryUtil.isValidSourceDatabase(
+				commandLine.getOptionValue("source-jdbc-url"))) {
+
+			System.err.println(
+				"Invalid source database. Refer to README.markdown to check " +
+					"available source databases.");
+
+			_printHelpAndExit(options);
+		}
+
+		if (!DataSourceFactoryUtil.isValidTargetDatabase(
+				commandLine.getOptionValue("target-jdbc-url"))) {
+
+			System.err.println(
+				"Invalid target database. Only PostgreSQL is available.");
 
 			_printHelpAndExit(options);
 		}

@@ -115,8 +115,11 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 					BooleanFilter booleanFilter = (BooleanFilter)_createFilter(
 						searchContext);
 
-					_assertNoEmptyClauses(
-						booleanFilter.getMustBooleanClauses());
+					List<BooleanClause<Filter>> clauses =
+						booleanFilter.getMustBooleanClauses();
+
+					Assert.assertNotEquals(
+						clauses.toString(), 0, clauses.size());
 				}));
 	}
 
@@ -170,10 +173,6 @@ public abstract class BaseGroupIdQueryPreFilterContributorTestCase
 
 	private void _assertEmptyClauses(List<BooleanClause<Filter>> clauses) {
 		Assert.assertEquals(clauses.toString(), 0, clauses.size());
-	}
-
-	private void _assertNoEmptyClauses(List<BooleanClause<Filter>> clauses) {
-		Assert.assertNotEquals(clauses.toString(), 0, clauses.size());
 	}
 
 	private void _assertSearch(long scopeGroupId, String expected) {

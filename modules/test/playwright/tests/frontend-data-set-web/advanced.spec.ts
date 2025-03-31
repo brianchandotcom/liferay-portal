@@ -798,7 +798,10 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 		await test.step('Check the bulk actions are listed', async () => {
 			await expect(
 				page.locator('.dropdown-menu.show').getByRole('menuitem')
-			).toHaveText('Label');
+			).toHaveCount(2);
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveText(['Label', 'Delete']);
 		});
 
 		await test.step('Close ellipsis actions menu', async () => {

@@ -255,13 +255,13 @@ function BulkActions({
 
 												<ClayButtonWithIcon
 													aria-label={
-														actionDefinition.label
+														highlightedBulkAction.label
 													}
 													className="d-lg-none nav-link nav-link-monospaced"
 													displayType="unstyled"
 													onClick={() =>
 														handleActionClick(
-															actionDefinition,
+															highlightedBulkAction,
 															formId,
 															formName,
 															loadData,
@@ -270,10 +270,10 @@ function BulkActions({
 														)
 													}
 													symbol={
-														actionDefinition.icon
+														highlightedBulkAction.icon
 													}
 													title={
-														actionDefinition.label
+														highlightedBulkAction.label
 													}
 												/>
 											</li>

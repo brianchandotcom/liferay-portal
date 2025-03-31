@@ -45,7 +45,10 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
@@ -90,135 +93,9 @@ public class JournalContentTest {
 	}
 
 	@Test
-	public void testClearCacheForLocalization() throws Exception {
-		String englishLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-		String spanishLanguageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
-
-		String englishContent = RandomTestUtil.randomString();
-		String spanishContent = RandomTestUtil.randomString();
-
-		_journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			_portal.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, RandomTestUtil.randomString()
-			).put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, RandomTestUtil.randomString()
-			).put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, spanishContent
-			).put(
-				LocaleUtil.US, englishContent
-			).build(),
-			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
-
-		long groupId = _journalArticle.getGroupId();
-		String articleId = _journalArticle.getArticleId();
-		String ddmTemplateKey = _journalArticle.getDDMTemplateKey();
-
-		JournalArticleDisplay englishArticleDisplay1 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, englishLanguageId,
-				_portletRequestModel);
-		JournalArticleDisplay spanishArticleDisplay1 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, spanishLanguageId,
-				_portletRequestModel);
-
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay1.getContent());
-		Assert.assertEquals(
-			spanishContent, spanishArticleDisplay1.getContent());
-
-		_journalArticleLocalService.removeArticleLocale(
-			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-			_journalArticle.getVersion(), spanishLanguageId);
-
-		_journalContent.clearCache(groupId, articleId, ddmTemplateKey);
-
-		JournalArticleDisplay englishArticleDisplay2 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, englishLanguageId,
-				_portletRequestModel);
-		JournalArticleDisplay spanishArticleDisplay2 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, spanishLanguageId,
-				_portletRequestModel);
-
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay2.getContent());
-		Assert.assertNotEquals(
-			spanishContent, spanishArticleDisplay2.getContent());
-	}
-
-	@Test
-	public void testClearCacheForPartialLocalization() throws Exception {
-		String englishLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-		String spanishLanguageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
-
-		String englishContent = RandomTestUtil.randomString();
-		String spanishContent = RandomTestUtil.randomString();
-
-		_journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			_portal.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.SPAIN, spanishContent
-			).put(
-				LocaleUtil.US, englishContent
-			).build(),
-			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
-
-		long groupId = _journalArticle.getGroupId();
-		String articleId = _journalArticle.getArticleId();
-		String ddmTemplateKey = _journalArticle.getDDMTemplateKey();
-
-		JournalArticleDisplay englishArticleDisplay1 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, englishLanguageId,
-				_portletRequestModel);
-		JournalArticleDisplay spanishArticleDisplay1 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, spanishLanguageId,
-				_portletRequestModel);
-
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay1.getContent());
-		Assert.assertEquals(
-			spanishContent, spanishArticleDisplay1.getContent());
-
-		_journalArticleLocalService.removeArticleLocale(
-			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-			_journalArticle.getVersion(), spanishLanguageId);
-
-		_journalContent.clearCache(groupId, articleId, ddmTemplateKey);
-
-		JournalArticleDisplay englishArticleDisplay2 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, englishLanguageId,
-				_portletRequestModel);
-		JournalArticleDisplay spanishArticleDisplay2 =
-			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, spanishLanguageId,
-				_portletRequestModel);
-
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay2.getContent());
-		Assert.assertNotEquals(
-			spanishContent, spanishArticleDisplay2.getContent());
+	public void testClearCache() throws Exception {
+		_testClearCache(new Locale[] {LocaleUtil.US});
+		_testClearCache(new Locale[] {LocaleUtil.SPAIN, LocaleUtil.US});
 	}
 
 	@Test
@@ -342,6 +219,76 @@ public class JournalContentTest {
 
 	protected void tearDownServiceContext() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	private Map<Locale, String> _getLocalizedMap(Locale[] locales) {
+		Map<Locale, String> map = new HashMap<>();
+
+		for (Locale locale : locales) {
+			map.put(locale, RandomTestUtil.randomString());
+		}
+
+		return map;
+	}
+
+	private void _testClearCache(Locale[] locales) throws Exception {
+		String englishLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+		String spanishLanguageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
+
+		String englishContent = RandomTestUtil.randomString();
+		String spanishContent = RandomTestUtil.randomString();
+
+		_journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			_portal.getClassNameId(JournalArticle.class),
+			_getLocalizedMap(locales), _getLocalizedMap(locales),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, spanishContent
+			).put(
+				LocaleUtil.US, englishContent
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
+
+		long groupId = _journalArticle.getGroupId();
+		String articleId = _journalArticle.getArticleId();
+		String ddmTemplateKey = _journalArticle.getDDMTemplateKey();
+
+		JournalArticleDisplay englishArticleDisplay1 =
+			_journalContent.getDisplay(
+				groupId, articleId, Constants.VIEW, englishLanguageId,
+				_portletRequestModel);
+
+		JournalArticleDisplay spanishArticleDisplay1 =
+			_journalContent.getDisplay(
+				groupId, articleId, Constants.VIEW, spanishLanguageId,
+				_portletRequestModel);
+
+		Assert.assertEquals(
+			englishContent, englishArticleDisplay1.getContent());
+		Assert.assertEquals(
+			spanishContent, spanishArticleDisplay1.getContent());
+
+		_journalArticleLocalService.removeArticleLocale(
+			groupId, articleId, _journalArticle.getVersion(),
+			spanishLanguageId);
+
+		_journalContent.clearCache(groupId, articleId, ddmTemplateKey);
+
+		JournalArticleDisplay englishArticleDisplay2 =
+			_journalContent.getDisplay(
+				groupId, articleId, Constants.VIEW, englishLanguageId,
+				_portletRequestModel);
+
+		JournalArticleDisplay spanishArticleDisplay2 =
+			_journalContent.getDisplay(
+				groupId, articleId, Constants.VIEW, spanishLanguageId,
+				_portletRequestModel);
+
+		Assert.assertEquals(
+			englishContent, englishArticleDisplay2.getContent());
+		Assert.assertNotEquals(
+			spanishContent, spanishArticleDisplay2.getContent());
 	}
 
 	@Inject

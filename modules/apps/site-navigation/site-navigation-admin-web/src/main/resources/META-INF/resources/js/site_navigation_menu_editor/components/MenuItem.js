@@ -319,6 +319,19 @@ export function MenuItem({item, onMenuItemRemoved, sidebarPanelRef}) {
 									/>
 								</ClayLayout.ContentCol>
 
+								{item.displayIcon && (
+									<ClayLayout.ContentCol gutters>
+										<ClayIcon
+											className="lfr-portal-tooltip mr-3"
+											style={{
+												height: '1.5rem',
+												width: '1.5rem',
+											}}
+											symbol={item.displayIcon}
+										/>
+									</ClayLayout.ContentCol>
+								)}
+
 								<ClayLayout.ContentCol expand>
 									<ClayCard.Description
 										displayType="title"

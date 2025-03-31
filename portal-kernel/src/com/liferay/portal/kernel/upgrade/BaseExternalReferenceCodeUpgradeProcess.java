@@ -60,7 +60,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 			selectSB.append("select ");
 			selectSB.append(primKeyColumnName);
 
-			boolean hasUuid = hasColumn(tableName, "uuid_");
+			boolean hasUuid = useUuid(tableName);
 
 			if (hasUuid) {
 				selectSB.append(", uuid_");
@@ -107,6 +107,10 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 				preparedStatement2.executeBatch();
 			}
 		}
+	}
+
+	protected boolean useUuid(String tableName) throws Exception {
+		return hasColumn(tableName, "uuid_");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

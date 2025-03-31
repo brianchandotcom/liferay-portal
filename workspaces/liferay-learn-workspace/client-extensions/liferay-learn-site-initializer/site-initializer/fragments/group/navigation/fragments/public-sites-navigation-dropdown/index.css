@@ -1,13 +1,6 @@
 .btn.btn-nm.dropdown-fragment-toggle {
 	position: relative;
 
-	svg {
-		height: 16px;
-		opacity: 35%;
-		transition: all 0.2s ease-in-out;
-		width: 16px;
-	}
-
 	&::before {
 		background: var(--color-neutral-0, #ffffff);
 		border-radius: var(--border-radius-circle);
@@ -35,6 +28,13 @@
 			opacity: 1;
 			transition: all 0.1s linear;
 		}
+	}
+
+	svg {
+		height: 16px;
+		opacity: 35%;
+		transition: all 0.2s ease-in-out;
+		width: 16px;
 	}
 }
 

@@ -433,14 +433,23 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		if (ListUtil.isEmpty(externalReferenceCodes)) {
 			objectValidationRules = getObjectValidationRules(
-				objectEntry.getObjectDefinitionId());
+				objectEntry.getObjectDefinitionId(), true);
 		}
 		else {
 			objectValidationRules = TransformUtil.transform(
 				externalReferenceCodes,
-				externalReferenceCode -> fetchObjectValidationRule(
-					externalReferenceCode,
-					objectEntry.getObjectDefinitionId()));
+				externalReferenceCode -> {
+					ObjectValidationRule objectValidationRule =
+						fetchObjectValidationRule(
+							externalReferenceCode,
+							objectEntry.getObjectDefinitionId());
+
+					if (objectValidationRule.isActive()) {
+						return objectValidationRule;
+					}
+
+					return null;
+				});
 		}
 
 		_validate(

@@ -76,6 +76,16 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 	}
 
 	@Override
+	protected String getExternalReferenceCode(
+		ExternalReferenceCodeModel externalReferenceCodeModel,
+		String tableName) {
+
+		Layout layout = (Layout)externalReferenceCodeModel;
+
+		return String.valueOf(layout.getPlid());
+	}
+
+	@Override
 	protected String[] getTableNames() {
 		return new String[] {"Layout"};
 	}

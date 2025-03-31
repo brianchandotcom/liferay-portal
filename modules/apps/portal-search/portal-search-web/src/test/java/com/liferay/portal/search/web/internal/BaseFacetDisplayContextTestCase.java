@@ -316,7 +316,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 			HttpServletRequest.class);
 
 		Mockito.doReturn(
-			getThemeDisplay()
+			getThemeDisplay(null)
 		).when(
 			httpServletRequest
 		).getAttribute(
@@ -341,17 +341,7 @@ public abstract class BaseFacetDisplayContextTestCase {
 	protected static RenderRequest getRenderRequest()
 		throws ConfigurationException {
 
-		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
-
-		Mockito.doReturn(
-			getThemeDisplay()
-		).when(
-			renderRequest
-		).getAttribute(
-			WebKeys.THEME_DISPLAY
-		);
-
-		return renderRequest;
+		return getRenderRequest(null);
 	}
 
 	protected static RenderRequest getRenderRequest(Group group)
@@ -380,10 +370,6 @@ public abstract class BaseFacetDisplayContextTestCase {
 		}
 
 		return termCollectors;
-	}
-
-	protected static ThemeDisplay getThemeDisplay() {
-		return getThemeDisplay(null);
 	}
 
 	protected static ThemeDisplay getThemeDisplay(Group group) {

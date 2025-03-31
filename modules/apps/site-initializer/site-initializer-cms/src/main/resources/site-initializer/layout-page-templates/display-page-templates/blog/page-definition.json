@@ -224,9 +224,5 @@
 		],
 		"type": "Root"
 	},
-	"settings": {
-		"colorSchemeName": "01",
-		"themeName": "Classic"
-	},
 	"version": 1.1
 }

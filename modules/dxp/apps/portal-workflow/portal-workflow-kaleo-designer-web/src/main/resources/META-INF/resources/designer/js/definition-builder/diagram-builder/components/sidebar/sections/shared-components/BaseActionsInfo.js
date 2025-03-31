@@ -150,7 +150,7 @@ const BaseActionsInfo = ({
 							priority,
 							script,
 							scriptLanguage,
-							status: undefined,
+							status,
 						})
 					}
 				>

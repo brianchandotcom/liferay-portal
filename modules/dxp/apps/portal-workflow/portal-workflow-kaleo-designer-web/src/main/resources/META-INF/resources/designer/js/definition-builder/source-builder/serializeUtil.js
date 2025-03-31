@@ -92,7 +92,7 @@ function appendXMLActions(
 				);
 			}
 
-			if (isValidValue(status, index)) {
+			if (isValidValue(status, index) && status[index]) {
 				buffer.push(
 					createTagWithEscapedContent('status', status[index])
 				);

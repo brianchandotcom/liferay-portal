@@ -5,7 +5,8 @@ network. This tool is a beta feature. It is experimental and not supported.
 
 ## Requirements
 
-- MySQL or PostgreSQL
+- Source database must be MySQL
+- Target database must be PostgreSQL
 - Database user with read access to all partitions
 - Previous run of DBSchemaDefinitionExporter to generate SQL schema files
 
@@ -23,9 +24,9 @@ Import parameters:
 - `--source-jdbc-url <arg>` Set the source JDBC URL.
 - `--source-password <arg>` Set the source database user password.
 - `--source-user <arg>` Set the source database user.
-- `--target-jdbc-url <arg>` Set the target JDBC URL.
-- `--target-password <arg>` Set the target database user password.
-- `--target-user <arg>` Set the target database user.
+- `--target-jdbc-url <arg>` Set the target PostgreSQL JDBC URL.
+- `--target-password <arg>` Set the target PostgreSQL database user password.
+- `--target-user <arg>` Set the target PostgreSQL database user.
 
 ## Examples
 

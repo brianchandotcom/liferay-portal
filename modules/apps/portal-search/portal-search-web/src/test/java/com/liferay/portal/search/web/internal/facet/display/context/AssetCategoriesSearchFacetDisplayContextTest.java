@@ -93,7 +93,8 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 			facet.getFieldId());
 		assetCategoriesSearchFacetDisplayContextBuilder.setParameterValue(
 			parameterValue);
-		assetCategoriesSearchFacetDisplayContextBuilder.setPortal(_getPortal());
+		assetCategoriesSearchFacetDisplayContextBuilder.setPortal(
+			_getPortal(null));
 
 		if (_excludedGroupId > 0) {
 			assetCategoriesSearchFacetDisplayContextBuilder.setExcludedGroupId(
@@ -536,20 +537,6 @@ public class AssetCategoriesSearchFacetDisplayContextTest
 		);
 
 		return httpServletRequest;
-	}
-
-	private Portal _getPortal() throws ConfigurationException {
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.doReturn(
-			getHttpServletRequest()
-		).when(
-			portal
-		).getHttpServletRequest(
-			Mockito.any()
-		);
-
-		return portal;
 	}
 
 	private Portal _getPortal(Group group) throws ConfigurationException {

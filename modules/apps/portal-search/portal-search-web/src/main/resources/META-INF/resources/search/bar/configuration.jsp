@@ -64,6 +64,7 @@ String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPE
 			<liferay-template:template-selector
 				className="<%= SearchBarPortlet.class.getName() %>"
 				displayStyle="<%= searchBarPortletInstanceConfiguration.displayStyle() %>"
+				displayStyleGroupId="<%= searchBarPortletDisplayContext.getDisplayStyleGroupId() %>"
 				refreshURL="<%= configurationRenderURL %>"
 				showEmptyOption="<%= true %>"
 			/>

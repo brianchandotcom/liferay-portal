@@ -13,7 +13,7 @@ import StateContextProvider, {useSelector} from '../contexts/StateContext';
 import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildState from '../utils/buildState';
-import ManagementBar from './ManagementBar';
+import StructureBuilderManagementBar from './StructureBuilderManagementBar';
 import StructureFields from './StructureFields';
 import StructureSettings from './StructureSettings';
 
@@ -32,7 +32,7 @@ export default function StructureBuilder({
 				<div className="d-flex flex-column structure-builder__wrapper">
 					<HistoryManager />
 
-					<ManagementBar />
+					<StructureBuilderManagementBar />
 
 					<div className="d-flex flex-grow-1 p-4">
 						<StructureFields />

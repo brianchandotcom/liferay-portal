@@ -311,6 +311,7 @@ const RichText = ({
 						<CKEditor5ClassicEditor
 							className="w-100"
 							config={ckEditor5Config}
+							key={JSON.stringify(ckEditor5Config)}
 							onChange={(event, editor) =>
 								handleContentChange(editor.getData())
 							}

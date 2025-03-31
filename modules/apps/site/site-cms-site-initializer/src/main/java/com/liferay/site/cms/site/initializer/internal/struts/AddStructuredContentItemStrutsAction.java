@@ -27,16 +27,11 @@ import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
-import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,6 +46,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,17 +147,9 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			String.valueOf(ParamUtil.getLong(httpServletRequest, "groupId")));
 
 		httpServletResponse.sendRedirect(
-			_portal.escapeRedirect(
-				_portal.addPreservedParameters(
-					themeDisplay,
-					StringBundler.concat(
-						_portal.getGroupFriendlyURL(
-							group.getPublicLayoutSet(), themeDisplay, false,
-							false),
-						_getURLSeparator(),
-						layout.getFriendlyURL(themeDisplay.getLocale()),
-						StringPool.SLASH, classNameId, StringPool.SLASH,
-						objectEntry.getId()))));
+			ActionUtil.getEditURL(
+				String.valueOf(classNameId),
+				String.valueOf(objectEntry.getId()), layout, themeDisplay));
 
 		return null;
 	}
@@ -299,21 +287,6 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			typeSettingsUnicodeProperties.toString());
 
 		return layoutPageTemplateEntry;
-	}
-
-	private String _getURLSeparator() {
-		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.
-				getFriendlyURLResolverByDefaultURLSeparator(
-					FriendlyURLResolverConstants.URL_SEPARATOR_CUSTOM_ASSET);
-
-		if (friendlyURLResolver != null) {
-			String urlSeparator = friendlyURLResolver.getURLSeparator();
-
-			return urlSeparator.substring(0, urlSeparator.length() - 1);
-		}
-
-		return FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
 	}
 
 	@Reference

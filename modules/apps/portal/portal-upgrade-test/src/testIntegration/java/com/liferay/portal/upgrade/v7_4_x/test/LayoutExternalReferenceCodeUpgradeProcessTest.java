@@ -22,6 +22,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.BaseExternalReferenceCodeUpgradeProcessTestCase;
 import com.liferay.portal.upgrade.v7_4_x.LayoutExternalReferenceCodeUpgradeProcess;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -49,6 +50,8 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
 
+		Assert.assertEquals(_UUID, layout.getUuid());
+
 		serviceContext = ServiceContextTestUtil.getServiceContext(
 			group.getGroupId());
 
@@ -61,6 +64,8 @@ public class LayoutExternalReferenceCodeUpgradeProcessTest
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
+
+		Assert.assertEquals(_UUID, privateLayout.getUuid());
 
 		return new ExternalReferenceCodeModel[] {
 			layout, layout.fetchDraftLayout(), privateLayout,

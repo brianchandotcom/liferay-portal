@@ -42,6 +42,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
+import org.junit.Before;
 
 import org.mockito.Mockito;
 
@@ -52,6 +53,7 @@ import org.osgi.framework.BundleContext;
  */
 public abstract class BaseFDSSerializerTestCase {
 
+	@Before
 	public void setUp() {
 		bundleContext = SystemBundleUtil.getBundleContext();
 

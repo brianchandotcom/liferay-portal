@@ -60,9 +60,9 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 			selectSB.append("select ");
 			selectSB.append(primKeyColumnName);
 
-			boolean hasUuid = useUuid(tableName);
+			boolean useUuid = useUuid(tableName);
 
-			if (hasUuid) {
+			if (useUuid) {
 				selectSB.append(", uuid_");
 			}
 
@@ -89,7 +89,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 				while (resultSet.next()) {
 					long primKey = resultSet.getLong(1);
 
-					if (hasUuid) {
+					if (useUuid) {
 						String uuid = resultSet.getString(2);
 
 						preparedStatement2.setString(1, uuid);

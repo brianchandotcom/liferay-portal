@@ -8,12 +8,10 @@ package com.liferay.portal.search.web.internal.facet.display.context.builder;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -23,6 +21,7 @@ import com.liferay.portal.search.web.internal.facet.display.context.BucketDispla
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
 import com.liferay.portal.search.web.internal.folder.facet.configuration.FolderFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.DisplayContextHelperUtil;
 import com.liferay.portal.search.web.internal.util.comparator.BucketDisplayContextComparatorFactoryUtil;
 
 import java.util.ArrayList;
@@ -134,28 +133,10 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	protected long getDisplayStyleGroupId() {
-		long displayStyleGroupId;
-
-		String displayStyleGroupExternalReferenceCode =
+		return DisplayContextHelperUtil.getDisplayStyleGroupId(
 			_folderFacetPortletInstanceConfiguration.
-				displayStyleGroupExternalReferenceCode();
-
-		Group group = _themeDisplay.getScopeGroup();
-
-		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
-			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				displayStyleGroupExternalReferenceCode,
-				_themeDisplay.getCompanyId());
-		}
-
-		if (group != null) {
-			displayStyleGroupId = group.getGroupId();
-		}
-		else {
-			displayStyleGroupId = _themeDisplay.getScopeGroupId();
-		}
-
-		return displayStyleGroupId;
+				displayStyleGroupExternalReferenceCode(),
+			_themeDisplay);
 	}
 
 	protected String getFirstParameterValueString() {

@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Joshua Cords
  */
-public class DisplayContextBuilderHelperUtil {
+public class DisplayContextHelperUtil {
 
 	public static long getDisplayStyleGroupId(
 		String displayStyleGroupExternalReferenceCode,

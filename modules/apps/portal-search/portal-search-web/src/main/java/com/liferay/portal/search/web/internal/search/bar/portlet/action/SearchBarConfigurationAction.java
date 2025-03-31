@@ -7,12 +7,9 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
@@ -20,6 +17,7 @@ import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
 import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
+import com.liferay.portal.search.web.internal.util.DisplayContextHelperUtil;
 import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,28 +90,10 @@ public class SearchBarConfigurationAction extends BaseConfigurationAction {
 			searchBarPortletInstanceConfiguration,
 		ThemeDisplay themeDisplay) {
 
-		long displayStyleGroupId;
-
-		String displayStyleGroupExternalReferenceCode =
+		return DisplayContextHelperUtil.getDisplayStyleGroupId(
 			searchBarPortletInstanceConfiguration.
-				displayStyleGroupExternalReferenceCode();
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
-			group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				displayStyleGroupExternalReferenceCode,
-				themeDisplay.getCompanyId());
-		}
-
-		if (group != null) {
-			displayStyleGroupId = group.getGroupId();
-		}
-		else {
-			displayStyleGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		return displayStyleGroupId;
+				displayStyleGroupExternalReferenceCode(),
+			themeDisplay);
 	}
 
 	private SearchBarPortletInstanceConfiguration
@@ -139,8 +119,5 @@ public class SearchBarConfigurationAction extends BaseConfigurationAction {
 			throw new RuntimeException(configurationException);
 		}
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -42,7 +43,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Serializable;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 
@@ -811,7 +811,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			defaultObjectEntryManager.validateObjectEntry(
 				_getDTOConverterContext(null), _objectDefinition,
 				validationRequest.getValues(),
-				Arrays.asList(
+				ListUtil.fromArray(
 					validationRequest.
 						getObjectValidationRuleExternalReferenceCodes()),
 				scopeKey);

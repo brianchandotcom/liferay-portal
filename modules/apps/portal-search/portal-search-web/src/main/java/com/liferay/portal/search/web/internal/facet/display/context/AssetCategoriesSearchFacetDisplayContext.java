@@ -6,13 +6,11 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.category.facet.configuration.CategoryFacetPortletInstanceConfiguration;
+import com.liferay.portal.search.web.internal.util.DisplayContextHelperUtil;
 
 import java.io.Serializable;
 
@@ -66,30 +64,10 @@ public class AssetCategoriesSearchFacetDisplayContext
 
 	@Override
 	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId != 0) {
-			return _displayStyleGroupId;
-		}
-
-		String displayStyleGroupExternalReferenceCode =
+		return DisplayContextHelperUtil.getDisplayStyleGroupId(
 			_categoryFacetPortletInstanceConfiguration.
-				displayStyleGroupExternalReferenceCode();
-
-		Group group = _themeDisplay.getScopeGroup();
-
-		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
-			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				displayStyleGroupExternalReferenceCode,
-				_themeDisplay.getCompanyId());
-		}
-
-		if (group != null) {
-			_displayStyleGroupId = group.getGroupId();
-		}
-		else {
-			_displayStyleGroupId = _themeDisplay.getScopeGroupId();
-		}
-
-		return _displayStyleGroupId;
+				displayStyleGroupExternalReferenceCode(),
+			_themeDisplay);
 	}
 
 	@Override
@@ -181,7 +159,6 @@ public class AssetCategoriesSearchFacetDisplayContext
 	private final CategoryFacetPortletInstanceConfiguration
 		_categoryFacetPortletInstanceConfiguration;
 	private boolean _cloud;
-	private long _displayStyleGroupId;
 	private boolean _nothingSelected;
 	private String _paginationStartParameterName;
 	private String _parameterName;

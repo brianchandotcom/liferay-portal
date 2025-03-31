@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -49,6 +48,7 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortle
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
 import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
+import com.liferay.portal.search.web.internal.util.DisplayContextHelperUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
@@ -251,28 +251,10 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletInstanceConfiguration,
 		ThemeDisplay themeDisplay) {
 
-		long displayStyleGroupId;
-
-		String displayStyleGroupExternalReferenceCode =
+		return DisplayContextHelperUtil.getDisplayStyleGroupId(
 			searchBarPortletInstanceConfiguration.
-				displayStyleGroupExternalReferenceCode();
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
-			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				displayStyleGroupExternalReferenceCode,
-				themeDisplay.getCompanyId());
-		}
-
-		if (group != null) {
-			displayStyleGroupId = group.getGroupId();
-		}
-		else {
-			displayStyleGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		return displayStyleGroupId;
+				displayStyleGroupExternalReferenceCode(),
+			themeDisplay);
 	}
 
 	protected HttpServletRequest getHttpServletRequest(

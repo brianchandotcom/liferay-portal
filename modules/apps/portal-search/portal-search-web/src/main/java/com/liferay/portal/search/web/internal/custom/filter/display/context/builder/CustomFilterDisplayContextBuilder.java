@@ -7,14 +7,13 @@ package com.liferay.portal.search.web.internal.custom.filter.display.context.bui
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.custom.filter.configuration.CustomFilterPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.custom.filter.display.context.CustomFilterDisplayContext;
+import com.liferay.portal.search.web.internal.util.DisplayContextHelperUtil;
 
 /**
  * @author André de Oliveira
@@ -122,32 +121,14 @@ public class CustomFilterDisplayContextBuilder {
 	}
 
 	protected long getDisplayStyleGroupId() throws ConfigurationException {
-		long displayStyleGroupId;
-
 		CustomFilterPortletInstanceConfiguration
 			customFilterPortletInstanceConfiguration =
 				getCustomFilterPortletInstanceConfiguration();
 
-		String displayStyleGroupExternalReferenceCode =
+		return DisplayContextHelperUtil.getDisplayStyleGroupId(
 			customFilterPortletInstanceConfiguration.
-				displayStyleGroupExternalReferenceCode();
-
-		Group group = _themeDisplay.getScopeGroup();
-
-		if (Validator.isNotNull(displayStyleGroupExternalReferenceCode)) {
-			group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				displayStyleGroupExternalReferenceCode,
-				_themeDisplay.getCompanyId());
-		}
-
-		if (group != null) {
-			displayStyleGroupId = group.getGroupId();
-		}
-		else {
-			displayStyleGroupId = _themeDisplay.getScopeGroupId();
-		}
-
-		return displayStyleGroupId;
+				displayStyleGroupExternalReferenceCode(),
+			_themeDisplay);
 	}
 
 	protected String getFilterValue() {

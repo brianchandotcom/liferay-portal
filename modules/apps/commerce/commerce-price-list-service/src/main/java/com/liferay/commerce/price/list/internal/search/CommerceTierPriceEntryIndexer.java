@@ -124,7 +124,7 @@ public class CommerceTierPriceEntryIndexer
 			commerceTierPriceEntry.getCommercePriceEntryId());
 		document.addKeyword(
 			FIELD_EXTERNAL_REFERENCE_CODE,
-			commerceTierPriceEntry.getExternalReferenceCode());
+			commerceTierPriceEntry.getExternalReferenceCode(), true);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

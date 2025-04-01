@@ -134,11 +134,13 @@ public class CommerceInventoryWarehouseIndexer
 			CLASS_NAME, commerceInventoryWarehouse);
 
 		document.addKeyword(
-			Field.DESCRIPTION, commerceInventoryWarehouse.getDescription());
+			Field.DESCRIPTION, commerceInventoryWarehouse.getDescription(),
+			true);
 		document.addNumberSortable(
 			Field.ENTRY_CLASS_PK,
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
-		document.addKeyword(Field.NAME, commerceInventoryWarehouse.getName());
+		document.addKeyword(
+			Field.NAME, commerceInventoryWarehouse.getName(), true);
 		document.addKeyword(
 			FIELD_ACTIVE, commerceInventoryWarehouse.isActive());
 		document.addKeyword(

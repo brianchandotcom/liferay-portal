@@ -129,7 +129,7 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 			commercePriceEntry.getCommercePriceListId());
 		document.addKeyword(
 			FIELD_EXTERNAL_REFERENCE_CODE,
-			commercePriceEntry.getExternalReferenceCode());
+			commercePriceEntry.getExternalReferenceCode(), true);
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			commercePriceEntry.getCProductId(),
@@ -137,10 +137,10 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 
 		if (cpInstance != null) {
 			document.addKeyword("cpInstanceId", cpInstance.getCPInstanceId());
-			document.addKeyword("sku", cpInstance.getSku());
+			document.addKeyword("sku", cpInstance.getSku(), true);
 			document.addKeyword(
 				"skuExternalReferenceCode",
-				cpInstance.getExternalReferenceCode());
+				cpInstance.getExternalReferenceCode(), true);
 
 			CPDefinition cpDefinition = cpInstance.getCPDefinition();
 

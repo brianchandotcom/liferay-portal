@@ -163,8 +163,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		document.addNumber(FIELD_QUANTITY, commerceOrderItem.getQuantity());
 		document.addNumberSortable(
 			FIELD_QUANTITY, commerceOrderItem.getQuantity());
-		document.addKeyword(FIELD_SKU, commerceOrderItem.getSku());
-		document.addKeywordSortable(FIELD_SKU, commerceOrderItem.getSku());
+		document.addKeyword(FIELD_SKU, commerceOrderItem.getSku(), true);
 		document.addNumber(FIELD_UNIT_PRICE, commerceOrderItem.getUnitPrice());
 
 		String unitOfMeasureKey = commerceOrderItem.getUnitOfMeasureKey();

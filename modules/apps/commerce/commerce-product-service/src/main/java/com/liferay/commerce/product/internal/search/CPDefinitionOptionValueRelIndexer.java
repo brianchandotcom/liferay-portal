@@ -140,7 +140,7 @@ public class CPDefinitionOptionValueRelIndexer
 		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
 
 		if (cpInstance != null) {
-			document.addKeyword("sku", cpInstance.getSku());
+			document.addKeyword("sku", cpInstance.getSku(), true);
 		}
 
 		if (_log.isDebugEnabled()) {

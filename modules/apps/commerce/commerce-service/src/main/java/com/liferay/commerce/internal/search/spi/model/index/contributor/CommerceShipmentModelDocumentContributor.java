@@ -51,7 +51,8 @@ public class CommerceShipmentModelDocumentContributor
 			document.addKeyword(
 				"commerceAccountId", commerceShipment.getCommerceAccountId());
 			document.addKeyword(
-				"commerceAccountName", commerceShipment.getAccountEntryName());
+				"commerceAccountName", commerceShipment.getAccountEntryName(),
+				true);
 
 			CommerceChannel commerceChannel =
 				_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
@@ -60,7 +61,7 @@ public class CommerceShipmentModelDocumentContributor
 			document.addKeyword(
 				"commerceChannelId", commerceChannel.getCommerceChannelId());
 			document.addKeyword(
-				"commerceChannelName", commerceChannel.getName());
+				"commerceChannelName", commerceChannel.getName(), true);
 
 			document.addKeyword(
 				"commerceOrderIds",

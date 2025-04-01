@@ -41,9 +41,9 @@ public class CommerceTermEntryModelDocumentContributor
 				commerceTermEntry.getCommerceTermEntryId());
 
 		for (String languageId : languageIds) {
-			document.addKeywordSortable(
+			document.addKeyword(
 				_localization.getLocalizedName("label", languageId),
-				commerceTermEntry.getLabel(languageId));
+				commerceTermEntry.getLabel(languageId), true);
 		}
 	}
 

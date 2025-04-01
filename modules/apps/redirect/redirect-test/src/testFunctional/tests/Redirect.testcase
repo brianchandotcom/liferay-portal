@@ -495,28 +495,6 @@ definition {
 			entry2 = 2);
 	}
 
-	@description = "This test covers LPS-110773. It ensures that a redirect entry can be found by search."
-	@priority = 3
-	@refactordone
-	test CanSearchForEntry {
-		property portal.acceptance = "false";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			groupName = "Test Site Name",
-			sourceURL = "test-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		for (var searchTerm : list "source,destination") {
-			Redirect.viewResultEntryTitle(
-				searchEntryTitle = "${portalURL}/web/test-site-name/test-source-page",
-				searchTerm = ${searchTerm});
-		}
-	}
-
 	@description = "This ensures that the 404 URLs can be viewed after reactivating."
 	@priority = 5
 	@refactordone
@@ -574,46 +552,6 @@ definition {
 				ignoreURL = "${portalURL}/web/test-site-name/test-destination-page${i}",
 				multipleUrLs = "true");
 		}
-	}
-
-	@description = "This ensures that the information related to the redirection can be viewed."
-	@priority = 5
-	@refactordone
-	test CanViewEntryInfo {
-		property custom.properties = "company.default.time.zone=America/Los_Angeles";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			groupName = "Test Site Name",
-			sourceURL = "test-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		for (var redirectURL : list "${portalURL}/web/test-site-name/test-source-page,${portalURL}/web/test-site-name/test-destination-page") {
-			Redirect.viewEntryFloatingURL(redirectURL = ${redirectURL});
-		}
-
-		var currentYear = DateUtil.getFormattedCurrentDate("yyyy");
-
-		Redirect.viewEntryInfo(
-			createDate = ${currentYear},
-			createdBy = "Test Test",
-			expirationDate = "January 1, 2100",
-			latestOccurrence = "Never",
-			type = "Temporary");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntryInfo(
-			createDate = ${currentYear},
-			createdBy = "Test Test",
-			expirationDate = "January 1, 2100",
-			latestOccurrence = ${currentYear},
-			type = "Temporary");
 	}
 
 	@description = "This ensures that an ignored URL can be viewed."

@@ -361,3 +361,70 @@ test('Ensure an expired redirect entry can be reset', async ({
 
 	await expect(page.url()).toContain(destinationPage.friendlyURL);
 });
+
+test('Ensure redirect entries can be found by search', async ({
+	page,
+	redirectPage,
+	site,
+}) => {
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await redirectPage.addRedirect(
+		'test/source',
+		`http://localhost:8080/web/${site.name}/test/destination`,
+		false
+	);
+
+	await redirectPage.addRedirect(
+		'test/origin',
+		`http://localhost:8080/web/${site.name}/test/landing`,
+		true,
+		'12/31/2099'
+	);
+
+	await page.getByPlaceholder('Search for').fill('source');
+
+	await page.keyboard.press('Enter');
+
+	await expect(page.getByText('1 Result Found')).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-source-url-column', {hasText: 'test/source'})
+	).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-destination-url-column', {
+			hasText: 'test/destination',
+		})
+	).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-type-column', {hasText: 'Temporary'})
+	).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-expiration-column', {hasText: '-'})
+	).toBeVisible();
+
+	await page.getByPlaceholder('Search for').fill('origin');
+
+	await page.keyboard.press('Enter');
+
+	await expect(page.getByText('1 Result Found')).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-source-url-column', {hasText: 'test/origin'})
+	).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-destination-url-column', {hasText: 'test/landing'})
+	).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-type-column', {hasText: 'Permanent'})
+	).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-expiration-column', {hasText: '12/31/99'})
+	).toBeVisible();
+});

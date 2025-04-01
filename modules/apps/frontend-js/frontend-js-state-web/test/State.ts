@@ -9,7 +9,7 @@ import {
 	Atom,
 	Selector,
 	default as State,
-} from '../src/main/resources/META-INF/resources/impl/State';
+} from '../src/main/resources/META-INF/resources/main/State';
 import {withEnv} from './helpers';
 
 describe('State', () => {

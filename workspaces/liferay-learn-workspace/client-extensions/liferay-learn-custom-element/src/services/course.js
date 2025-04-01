@@ -3,17 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getCurrentSiteId} from '../utils/util';
-
 import {config} from '../utils/constants';
 import {request} from '../utils/request';
+import {getCurrentSiteId} from '../utils/util';
 
 export async function getCoursesAndFirstLessons() {
 	const data = await request({
-		method: 'get',
-		url: `${
-			config.moduleEndpoint
-		}scopes/${getCurrentSiteId()}?filter=position eq 0&nestedFields=course,lesson&pageSize=-1`,
+		params: {
+			filter: 'position eq 0',
+			nestedFields: 'course,lesson',
+			pageSize: -1,
+		},
+		url: `${config.moduleEndpoint}scopes/${getCurrentSiteId()}`,
 	});
 
 	return data.items;

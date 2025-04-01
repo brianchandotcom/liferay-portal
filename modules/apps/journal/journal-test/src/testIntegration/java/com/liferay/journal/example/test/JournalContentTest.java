@@ -246,24 +246,20 @@ public class JournalContentTest {
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
 
-		long groupId = _journalArticle.getGroupId();
-		String articleId = _journalArticle.getArticleId();
-		String ddmTemplateKey = _journalArticle.getDDMTemplateKey();
-
 		String englishLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
 		JournalArticleDisplay englishArticleDisplay1 =
 			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, englishLanguageId,
-				_portletRequestModel);
+				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+				Constants.VIEW, englishLanguageId, _portletRequestModel);
 
 		String spanishLanguageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
 
 		JournalArticleDisplay spanishArticleDisplay1 =
 			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, spanishLanguageId,
-				_portletRequestModel);
+				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+				Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
 		Assert.assertEquals(
 			englishContent, englishArticleDisplay1.getContent());
@@ -271,20 +267,22 @@ public class JournalContentTest {
 			spanishContent, spanishArticleDisplay1.getContent());
 
 		_journalArticleLocalService.removeArticleLocale(
-			groupId, articleId, _journalArticle.getVersion(),
-			spanishLanguageId);
+			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+			_journalArticle.getVersion(), spanishLanguageId);
 
-		_journalContent.clearCache(groupId, articleId, ddmTemplateKey);
+		_journalContent.clearCache(
+			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+			_journalArticle.getDDMTemplateKey());
 
 		JournalArticleDisplay englishArticleDisplay2 =
 			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, englishLanguageId,
-				_portletRequestModel);
+				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+				Constants.VIEW, englishLanguageId, _portletRequestModel);
 
 		JournalArticleDisplay spanishArticleDisplay2 =
 			_journalContent.getDisplay(
-				groupId, articleId, Constants.VIEW, spanishLanguageId,
-				_portletRequestModel);
+				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+				Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
 		Assert.assertEquals(
 			englishContent, englishArticleDisplay2.getContent());

@@ -1,5 +1,5 @@
 {
-	"@generated": "6b393aefcc399d44a52899163dacd0a4c76d02a6",
+	"@generated": "517b3228f9ef4acc742418bb17dc0e368fa2ed64",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,9 +16,6 @@
 			],
 			"@liferay/frontend-js-state-web": [
 				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/main/index.ts"
-			],
-			"@liferay/frontend-js-state-web/impl": [
-				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/impl/index.ts"
 			],
 			"@liferay/frontend-js-state-web/react": [
 				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/react/index.ts"

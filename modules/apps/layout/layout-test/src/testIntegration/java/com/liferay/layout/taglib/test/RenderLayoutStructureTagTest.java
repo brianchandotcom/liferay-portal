@@ -237,7 +237,7 @@ public class RenderLayoutStructureTagTest {
 	@FeatureFlags("LPD-21926")
 	@Test
 	@TestInfo("LPD-50584")
-	public void testDisplayPageWithFormWithFriendlyURLInfoField()
+	public void testDisplayPageTemplateWithMappedFriendlyURLInfoField()
 		throws Exception {
 
 		ObjectDefinition objectDefinition =

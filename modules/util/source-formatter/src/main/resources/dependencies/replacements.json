@@ -3230,6 +3230,15 @@
 		"to": "getVirtualHostnames().firstKey"
 	},
 	{
+		"from": "MailEngine.send(InternetAddress paramName, InternetAddress paramName, String paramName, String paramName, boolean paramName)",
+		"issueKey": "LPD-32001",
+		"newImports": [
+			"com.liferay.mail.kernel.model.MailMessage",
+			"com.liferay.mail.kernel.service.MailServiceUtil"
+		],
+		"to": "MailServiceUtil.sendEmail(new MailMessage(param#0#, param#1#, param#2#, param#3#, param#4#))"
+	},
+	{
 		"classNames": [
 			"Country"
 		],

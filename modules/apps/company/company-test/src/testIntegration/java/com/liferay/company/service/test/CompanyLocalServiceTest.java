@@ -1009,6 +1009,8 @@ public class CompanyLocalServiceTest {
 	@FeatureFlags("LPD-11342")
 	@Test
 	public void testExtractCompanyDefaultCompany() {
+		Assume.assumeTrue(_db.isSupportsDBPartition());
+
 		try {
 			_companyLocalService.extractCompany(
 				PortalInstancePool.getDefaultCompanyId());

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const getCurrentSiteId = () => {
+export function getCurrentSiteId() {
 	return Liferay.ThemeDisplay.getScopeGroupId();
-};
+}
 
-export const getPersonas = (personaArray) => {
+export function getPersonas(personaArray) {
 	let persona = '';
 
 	if (personaArray) {
@@ -19,9 +19,9 @@ export const getPersonas = (personaArray) => {
 	}
 
 	return persona;
-};
+}
 
-export const getShortText = (text, characterLimit = 150) => {
+export function getShortText(text, characterLimit = 150) {
 	if (text.length > characterLimit) {
 		const lastSpaceIndex = text
 			.substring(0, characterLimit)
@@ -30,9 +30,9 @@ export const getShortText = (text, characterLimit = 150) => {
 	}
 
 	return text;
-};
+}
 
-export const getTooltipPersona = (personaArray) => {
+export function getTooltipPersona(personaArray) {
 	let persona = '';
 
 	personaArray.forEach((personas) => {
@@ -40,4 +40,4 @@ export const getTooltipPersona = (personaArray) => {
 	});
 
 	return persona.slice(0, -2);
-};
+}

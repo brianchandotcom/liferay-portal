@@ -168,7 +168,7 @@ public class LayoutSetPrototypePropagationTest
 			writer.write(RandomTestUtil.randomString());
 		}
 
-		long backgroundTaskId;
+		long backgroundTaskId = 0;
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.background.task.internal.messaging." +

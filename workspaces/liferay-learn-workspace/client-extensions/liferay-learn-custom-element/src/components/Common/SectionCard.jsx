@@ -19,15 +19,7 @@ const SectionCard = ({
 	title,
 }) => {
 	return (
-		<ClayLayout.Col
-			className="d-flex course-layout-col"
-      key={index}
-      lg={4}
-      md={6}
-      sm={12}
-			xl={4}
-			xs={12}
-		>
+		<ClayLayout.Col className="d-flex course-layout-col" key={index} lg={4} md={6} sm={12} xl={4} xs={12}>
 			<a className="education-home-card-link" href={link} >
 				<div className="d-flex education-home-card-container learn-education__landing-card">
 					<div className="card-content d-flex flex-column justify-content-between">

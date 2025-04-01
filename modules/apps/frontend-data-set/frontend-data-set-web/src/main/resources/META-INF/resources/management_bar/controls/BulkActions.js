@@ -53,10 +53,6 @@ function BulkActions({
 	const [currentSidePanelActionPayload, setCurrentSidePanelActionPayload] =
 		useState(null);
 
-	const highlightedBulkActions = bulkActions.filter(
-		(bulkAction) => bulkAction.data.highlighted
-	);
-
 	function handleActionClick(
 		actionDefinition,
 		formId,
@@ -227,70 +223,52 @@ function BulkActions({
 
 						{showBulkActionsManagementBarActions && (
 							<ul className="bulk-actions navbar-nav">
-								{highlightedBulkActions.map(
-									(highlightedBulkAction) => {
-										return (
-											<li
-												className="d-none d-sm-flex nav-item"
-												key={
-													highlightedBulkAction.data
-														.id
-												}
-											>
-												<ClayButton
-													className="d-lg-inline d-none nav-link"
-													displayType="unstyled"
-													onClick={() =>
-														handleActionClick(
-															highlightedBulkAction,
-															formId,
-															formName,
-															loadData,
-															namespace,
-															sidePanelId
-														)
+								{!!bulkActions.length &&
+									bulkActions
+										.filter(
+											(bulkAction) =>
+												bulkAction.data?.highlighted
+										)
+										.map((highlightedBulkAction) => {
+											return (
+												<li
+													className="nav-item"
+													key={
+														highlightedBulkAction
+															.data?.id
 													}
 												>
-													<span className="inline-item inline-item-before">
-														<ClayIcon
-															symbol={
-																highlightedBulkAction.icon
+													<ClayButton
+														className="bulk-action-btn nav-link"
+														displayType="unstyled"
+														onClick={() =>
+															handleActionClick(
+																highlightedBulkAction,
+																formId,
+																formName,
+																loadData,
+																namespace,
+																sidePanelId
+															)
+														}
+													>
+														<span className="bulk-action-btn-icon inline-item inline-item-before">
+															<ClayIcon
+																symbol={
+																	highlightedBulkAction.icon
+																}
+															/>
+														</span>
+
+														<span className="bulk-action-btn-text">
+															{
+																highlightedBulkAction.label
 															}
-														/>
-													</span>
-
-													{
-														highlightedBulkAction.label
-													}
-												</ClayButton>
-
-												<ClayButtonWithIcon
-													aria-label={
-														highlightedBulkAction.label
-													}
-													className="d-lg-none nav-link nav-link-monospaced"
-													displayType="unstyled"
-													onClick={() =>
-														handleActionClick(
-															highlightedBulkAction,
-															formId,
-															formName,
-															loadData,
-															namespace,
-															sidePanelId
-														)
-													}
-													symbol={
-														highlightedBulkAction.icon
-													}
-													title={
-														highlightedBulkAction.label
-													}
-												/>
-											</li>
-										);
-									}
-								)}
+														</span>
+													</ClayButton>
+												</li>
+											);
+										})}
 
 								{!!bulkActions.length && (
 									<li className="nav-item">

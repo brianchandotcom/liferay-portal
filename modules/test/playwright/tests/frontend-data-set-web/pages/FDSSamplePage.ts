@@ -101,20 +101,6 @@ export class FDSSamplePage {
 			.click();
 	}
 
-	async getVisibleLocator(locator: Locator): Promise<Locator> {
-		const locators = await locator.all();
-
-		let visibleLocator: Locator;
-
-		for (const locator of locators) {
-			if (await locator.isVisible()) {
-				visibleLocator = locator;
-			}
-		}
-
-		return visibleLocator;
-	}
-
 	selectItemActionsByRow(text: string) {
 		return this.table.bodyRows
 			.filter({

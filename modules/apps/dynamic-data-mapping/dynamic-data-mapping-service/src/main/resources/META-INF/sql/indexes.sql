@@ -10,7 +10,7 @@ create unique index IX_EC5795A0 on DDMDataProviderInstanceLink (dataProviderInst
 create index IX_CB823541 on DDMDataProviderInstanceLink (structureId);
 
 create index IX_DEA6624F on DDMField (companyId, fieldType[$COLUMN_LENGTH:255$]);
-create index IX_10FC3BA2 on DDMField (storageId, fieldName[$COLUMN_LENGTH:255$]);
+create index IX_10FC3BA2 on DDMField (storageId, fieldName[$COLUMN_LENGTH:500$]);
 create unique index IX_1BB20E75 on DDMField (storageId, instanceId[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_DE90A287 on DDMField (structureVersionId);
 

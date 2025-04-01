@@ -10,6 +10,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPage;
+import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSEOSettings;
+import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
@@ -39,6 +41,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -404,7 +407,9 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "name"};
+		return new String[] {
+			"externalReferenceCode", "name", "utilityPageSettings"
+		};
 	}
 
 	@Override
@@ -413,6 +418,26 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		utilityPage.setMarkedAsDefault(Boolean.FALSE);
 		utilityPage.setType(UtilityPage.Type.ERROR);
+		utilityPage.setUtilityPageSettings(
+			() -> new UtilityPageSettings() {
+				{
+					setSeoSettings(
+						() -> new UtilityPageSEOSettings() {
+							{
+								setDescription_i18n(
+									() -> LocalizedMapUtil.getI18nMap(
+										true,
+										RandomTestUtil.
+											randomLocaleStringMap()));
+								setHtmlTitle_i18n(
+									() -> LocalizedMapUtil.getI18nMap(
+										true,
+										RandomTestUtil.
+											randomLocaleStringMap()));
+							}
+						});
+				}
+			});
 
 		return utilityPage;
 	}

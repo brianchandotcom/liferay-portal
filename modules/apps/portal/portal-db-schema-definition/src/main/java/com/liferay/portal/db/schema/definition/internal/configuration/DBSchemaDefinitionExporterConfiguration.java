@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DBSchemaDefinitionExporterConfiguration {
 
-	@Meta.AD(name = "path")
-	public String path();
+	@Meta.AD(name = "export-files-path")
+	public String exportFilesPath();
 
 }

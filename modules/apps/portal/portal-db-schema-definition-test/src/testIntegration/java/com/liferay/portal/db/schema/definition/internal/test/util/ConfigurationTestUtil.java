@@ -68,7 +68,7 @@ public class ConfigurationTestUtil {
 	}
 
 	private static String _getConfigurationContent(String path) {
-		return "path=\"" + path + "\"\n";
+		return "exportFilesPath=\"" + path + "\"\n";
 	}
 
 	private static AutoCloseable

@@ -113,7 +113,7 @@ public class DBSchemaDefinitionExporter {
 			SQLWriter sqlWriter = new SQLWriter();
 
 			File file = new File(
-				dbSchemaDefinitionExporterConfiguration.path());
+				dbSchemaDefinitionExporterConfiguration.exportFilesPath());
 
 			sqlWriter.writeFiles(file);
 
@@ -123,7 +123,8 @@ public class DBSchemaDefinitionExporter {
 						file.getAbsolutePath());
 			}
 
-			_generateReport(dbSchemaDefinitionExporterConfiguration.path());
+			_generateReport(
+				dbSchemaDefinitionExporterConfiguration.exportFilesPath());
 		}
 		catch (Exception exception) {
 			_log.error(

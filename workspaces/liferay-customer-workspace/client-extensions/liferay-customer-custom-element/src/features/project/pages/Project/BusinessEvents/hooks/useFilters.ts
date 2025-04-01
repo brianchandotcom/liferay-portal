@@ -61,7 +61,7 @@ export default function useFilters(project?: IProject): {
 			oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
 			queryParams.push(
-				`(eventStatus ne 'canceled' or (eventStatus eq 'canceled' and dateModified ge ${oneYearAgo.toISOString()}))`
+				`((eventStatus ne 'canceled' and eventStatus ne 'completed') or (eventStatus eq 'canceled' and dateModified ge ${oneYearAgo.toISOString()}) or (eventStatus eq 'completed' and actualGoLiveDateTime ge ${oneYearAgo.toISOString()}))`
 			);
 
 			return queryParams.length

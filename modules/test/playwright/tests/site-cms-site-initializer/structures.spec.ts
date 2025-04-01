@@ -3,12 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
+import {
+	ObjectDefinition,
+	ObjectRelationshipApi,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -76,5 +80,72 @@ test(
 		});
 
 		await expect(structuresPage.getItem(stucctureName)).toBeHidden();
+	}
+);
+
+test(
+	'Structures cannot be deleted if they have a relation',
+	{tag: '@LPD-51516'},
+	async ({apiHelpers, page, structuresPage}) => {
+		const objectDefinition1 =
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				status: {code: 0},
+			})) as ObjectDefinition;
+
+		const objectDefinition2 =
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				status: {code: 0},
+			})) as ObjectDefinition;
+
+		const objectRelationshipLabel =
+			'objectRelationshipLabel' + getRandomInt();
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipApi
+		);
+
+		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition1.externalReferenceCode,
+			{
+				label: {
+					en_US: objectRelationshipLabel,
+				},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				objectDefinitionId1: objectDefinition1.id,
+				objectDefinitionId2: objectDefinition2.id,
+				objectDefinitionName2: objectDefinition2.name,
+				type: 'oneToMany',
+			}
+		);
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: objectDefinition1.name,
+		});
+
+		await expect(
+			page.getByRole('heading', {name: 'Deletion Not Allowed'})
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'OK'}).click();
+
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: objectDefinition2.name,
+		});
+
+		await expect(
+			page.getByRole('heading', {name: 'Deletion Not Allowed'})
+		).toBeVisible();
 	}
 );

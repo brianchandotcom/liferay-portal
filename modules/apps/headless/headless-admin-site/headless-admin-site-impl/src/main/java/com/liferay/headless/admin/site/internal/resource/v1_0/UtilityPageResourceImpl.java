@@ -247,6 +247,11 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			existingUtilityPage.setPageSpecifications(
 				utilityPage::getPageSpecifications);
 		}
+
+		if (utilityPage.getUtilityPageSettings() != null) {
+			existingUtilityPage.setUtilityPageSettings(
+				utilityPage::getUtilityPageSettings);
+		}
 	}
 
 	private UtilityPage _addLayoutUtilityPageEntry(

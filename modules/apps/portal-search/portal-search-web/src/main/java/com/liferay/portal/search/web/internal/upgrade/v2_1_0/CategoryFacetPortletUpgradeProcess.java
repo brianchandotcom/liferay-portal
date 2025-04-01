@@ -69,13 +69,9 @@ public class CategoryFacetPortletUpgradeProcess
 			CategoryFacetPortletPreferences.
 				PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES,
 			_getGroupVocabularyExternalReferenceCodes(
-				portletId,
-				portletPreferences.getValue(
-					CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS,
-					null)));
+				portletId, portletPreferences.getValue("vocabularyIds", null)));
 
-		portletPreferences.reset(
-			CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS);
+		portletPreferences.reset("vocabularyIds");
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

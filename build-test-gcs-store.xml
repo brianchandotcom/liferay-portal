@@ -11,36 +11,45 @@
 				<arg line="storage ls --project=liferay-qa-automated-tests --json" />
 			</exec>
 
-			<script language="javascript"><![CDATA[
-				var bucketList = project.getProperty("bucket.list");
+			<beanshell>
+				<![CDATA[
+					import java.time.Instant;
+					import java.time.OffsetDateTime;
 
-				var expiredBuckets = [];
+					import org.json.JSONArray;
+					import org.json.JSONObject;
 
-				var json = JSON.parse(bucketList);
+					List expiredBuckets = new ArrayList();
 
-				for (var i = 0; i < json.length; i++) {
-					var bucket = json[i];
+					JSONArray bucketListJSONArray = new JSONArray(project.getProperty("bucket.list"));
 
-					var name = JSON.stringify(bucket.metadata.name);
+					for (int i = 0; i < bucketListJSONArray.length(); i++) {
+						JSONObject bucketJSONObject = bucketListJSONArray.getJSONObject(i);
 
-					if (name.indexOf('lfr-qa-poshi-test') > -1) {
-						var createDate = bucket.metadata.timeCreated;
+						JSONObject metadataJSONObject = bucketJSONObject.getJSONObject("metadata");
 
-						createDate = createDate.replace(/\..*/,'');
+						String bucketName = metadataJSONObject.getString("name");
 
-						var currentDate = new Date();
-						var bucketDate = new Date(createDate);
+						if (!bucketName.contains("lfr-qa-poshi-test")) {
+							continue;
+						}
 
-						var diffHours = (currentDate - bucketDate) / (1000 * 60 * 60);
+						OffsetDateTime offsetDateTime = OffsetDateTime.parse(metadataJSONObject.getString("timeCreated"));
 
-						if (diffHours > 12) {
-							expiredBuckets.push(name);
+						Instant instant = offsetDateTime.toInstant();
+
+						if (((System.currentTimeMillis() - instant.toEpochMilli()) / (1000 * 60 * 60)) > 12) {
+							expiredBuckets.add(bucketName);
 						}
 					}
-				}
 
-				project.setProperty("expired.buckets", expiredBuckets.toString());]]>
-			</script>
+					String expiredBucketsString = expiredBuckets.toString();
+
+					expiredBucketsString = expiredBucketsString.replaceAll(" ", "");
+
+					project.setProperty("expired.buckets", expiredBucketsString.substring(1, expiredBucketsString.length() - 1));
+				]]>
+			</beanshell>
 
 			<for list="${expired.buckets}" param="delete.name">
 				<sequential>

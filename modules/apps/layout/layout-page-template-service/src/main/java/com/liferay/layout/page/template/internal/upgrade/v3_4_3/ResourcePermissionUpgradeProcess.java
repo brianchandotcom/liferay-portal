@@ -99,7 +99,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select layoutPageTemplateEntryId from ",
 					"LayoutPageTemplateEntry where layoutPrototypeId = ? ",
-					"order by name asc limit 1"))) {
+					"order by name asc"))) {
 
 			preparedStatement.setLong(1, layoutPrototypeId);
 

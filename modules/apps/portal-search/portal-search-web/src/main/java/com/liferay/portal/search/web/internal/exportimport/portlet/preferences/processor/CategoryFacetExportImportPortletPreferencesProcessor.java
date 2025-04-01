@@ -255,10 +255,7 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
 			}
-			else if (name.equals(
-						CategoryFacetPortletPreferences.
-							PREFERENCE_VOCABULARY_IDS)) {
-
+			else if (name.equals("vocabularyIds")) {
 				updateImportPortletPreferencesExternalReferenceCodes(
 					portletDataContext, portletPreferences, name,
 					AssetVocabulary.class, companyGroup.getGroupId());
@@ -266,13 +263,9 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 				portletPreferences.setValues(
 					CategoryFacetPortletPreferences.
 						PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES,
-					portletPreferences.getValues(
-						CategoryFacetPortletPreferences.
-							PREFERENCE_VOCABULARY_IDS,
-						null));
+					portletPreferences.getValues("vocabularyIds", null));
 
-				portletPreferences.reset(
-					CategoryFacetPortletPreferences.PREFERENCE_VOCABULARY_IDS);
+				portletPreferences.reset("vocabularyIds");
 			}
 		}
 

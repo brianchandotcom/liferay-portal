@@ -1,10 +1,10 @@
 .card-tag {
-	background-color: var(--color-state-info-lighten-2, #e6ebf5) !important;
-	border-radius: var(--border-radius-sm, 0.25rem) !important;
-	color: var(--color-state-info-darken-2, #1c3667) !important;
+	background-color: var(--color-state-info-lighten-2, #e6ebf5);
+	border-radius: var(--border-radius-sm, 0.25rem);
+	color: var(--color-state-info-darken-2, #1c3667);
 	display: flex;
-	font-family: var(--font-family-sans-serif) !important;
-	font-weight: var(--font-weight-normal, 500) !important;
+	font-family: var(--font-family-sans-serif);
+	font-weight: var(--font-weight-normal, 500);
 	padding: var(--spacer-1, 0.25rem) var(--spacer-2, 0.5rem);
 	white-space: nowrap;
 	width: fit-content;
@@ -21,6 +21,12 @@
 	padding: var(--spacer-5, 3rem) var(--spacer-4, 1.5rem)
 		var(--spacer-4, 1.5rem);
 	width: 100%;
+
+	&:hover {
+		background: var(--color-action-primary-hover-10, #edf3fe);
+		border-color: var(--color-action-primary-hover, #0053f0);
+		cursor: pointer;
+	}
 
 	.card-tags-container {
 		flex-wrap: wrap;

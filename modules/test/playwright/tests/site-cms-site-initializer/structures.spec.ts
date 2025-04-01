@@ -50,3 +50,37 @@ test(
 		await expect(row).toBeHidden();
 	}
 );
+
+test(
+	'Structure can be deleted after manual confirmation if it has an approved status',
+	{tag: '@LPD-51516'},
+	async ({apiHelpers, page, structuresPage}) => {
+		const objectDefinition =
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
+				status: {code: 0},
+			})) as ObjectDefinition;
+		const stucctureName = objectDefinition.name;
+
+		await structuresPage.goto();
+
+		const row = structuresPage.getItem(stucctureName);
+		await row.waitFor();
+
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: stucctureName,
+		});
+
+		await page
+			.getByPlaceholder('Confirm Structure Name')
+			.fill(stucctureName);
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(page, `${stucctureName} was deleted successfully`, {
+			type: 'success',
+		});
+
+		await expect(row).toBeHidden();
+	}
+);

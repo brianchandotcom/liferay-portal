@@ -6,6 +6,7 @@
 package com.liferay.segments.criteria.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -77,10 +77,10 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 			bundleContext,
 			bundleContext.createFilter(
 				StringBundler.concat(
-					"(&(objectClass=",SegmentsCriteriaContributor.class.
-							getName(),
+					"(&(objectClass=",
+					SegmentsCriteriaContributor.class.getName(),
 					")(segments.criteria.contributor.key=user-",
-					"organizations))")),
+					"organization))")),
 			null);
 
 		_segmentsCriteriaContributorServiceTracker.open();

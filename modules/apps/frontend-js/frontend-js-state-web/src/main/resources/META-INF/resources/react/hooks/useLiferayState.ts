@@ -5,7 +5,7 @@
 
 import {useCallback, useEffect, useState} from 'react';
 
-import {Atom, Immutable, Selector, State} from '../../impl/index';
+import {Atom, Immutable, Selector, State} from '../../main/index';
 
 /**
  * Hook-based abstraction over `State.read()`, `State.write()`, and

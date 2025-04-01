@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -346,10 +347,21 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 	public Keyword putKeyword(Long keywordId, Keyword keyword)
 		throws Exception {
 
-		return _toKeyword(
-			_assetTagService.updateTag(
-				keyword.getExternalReferenceCode(), keywordId,
-				keyword.getName(), null));
+		AssetTag assetTag = _assetTagService.updateTag(
+			keyword.getExternalReferenceCode(), keywordId, keyword.getName(),
+			null);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
+			ArrayUtil.isNotEmpty(keyword.getAssetLibraries())) {
+
+			_assetTagGroupRelLocalService.setAssetTagGroupRels(
+				assetTag.getTagId(),
+				transformToLongArray(
+					Arrays.asList(keyword.getAssetLibraries()),
+					AssetLibrary::getId));
+		}
+
+		return _toKeyword(assetTag);
 	}
 
 	@Override

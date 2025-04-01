@@ -1933,6 +1933,10 @@ public class PropsValues {
 	public static final String[] RATINGS_UPGRADE_THUMBS_CLASS_NAMES =
 		PropsUtil.getArray(PropsKeys.RATINGS_UPGRADE_THUMBS_CLASS_NAMES);
 
+	public static long READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT));
+
 	public static final int RECENT_CONTENT_MAX_DISPLAY_ITEMS =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.RECENT_CONTENT_MAX_DISPLAY_ITEMS));

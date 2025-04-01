@@ -2205,6 +2205,9 @@ public interface PropsKeys {
 	public static final String RATINGS_UPGRADE_THUMBS_CLASS_NAMES =
 		"ratings.upgrade.thumbs.class.names";
 
+	public static final String READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT =
+		"read.data.source.unavailable.timeout";
+
 	public static final String RECENT_CONTENT_MAX_DISPLAY_ITEMS =
 		"recent.content.max.display.items";
 

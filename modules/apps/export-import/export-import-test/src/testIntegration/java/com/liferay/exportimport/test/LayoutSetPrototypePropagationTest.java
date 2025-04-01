@@ -212,8 +212,8 @@ public class LayoutSetPrototypePropagationTest
 		ExportImportConfiguration exportExportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
+					TestPropsValues.getUserId(), group.getGroupId(),
+					StringPool.BLANK, StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildExportLayoutSettingsMap(
@@ -232,8 +232,8 @@ public class LayoutSetPrototypePropagationTest
 		ExportImportConfiguration importExportExportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					group.getGroupId(), StringPool.BLANK, StringPool.BLANK,
+					TestPropsValues.getUserId(), group.getGroupId(),
+					StringPool.BLANK, StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildImportLayoutSettingsMap(
@@ -247,8 +247,8 @@ public class LayoutSetPrototypePropagationTest
 					ServiceContextTestUtil.getServiceContext());
 
 		ExportImportLocalServiceUtil.importLayoutSetPrototypeInBackground(
-			TestPropsValues.getUserId(),
-			importExportExportImportConfiguration, larFile);
+			TestPropsValues.getUserId(), importExportExportImportConfiguration,
+			larFile);
 
 		Thread.sleep(2000);
 

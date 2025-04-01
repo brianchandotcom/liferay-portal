@@ -4,10 +4,10 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "CMS Product Menu",
-					"label": "sidebar-aria-label",
+					"defaultValue": "Site Logo",
+					"label": "header-image-alt-description",
 					"localizable": true,
-					"name": "sidebarAriaLabel",
+					"name": "alt",
 					"type": "text"
 				}
 			]

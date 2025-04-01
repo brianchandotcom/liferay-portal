@@ -9,7 +9,6 @@ const sidebarId = `${fragmentEntryLinkNamespace}sidebar`;
 const sidebarOpenKey = `${fragmentEntryLinkNamespace}sidebarOpen`;
 
 const sidebar = fragmentElement.querySelector('.sidebar-container');
-const sidebarCloseButton = fragmentElement.querySelector('.sidebar-close');
 const sidebarContainer = fragmentElement.querySelector('.sidebar-fragment');
 const sidebarTrigger = fragmentElement.querySelector('.sidebar-toggle');
 
@@ -19,8 +18,6 @@ if (sidebarTrigger) {
 
 	addSidebarToggleClickEventListener(sidebarTrigger);
 }
-
-addSidebarToggleClickEventListener(sidebarCloseButton);
 
 const sidebarOpenString = Liferay.Util.LocalStorage.getItem(
 	sidebarOpenKey,
@@ -79,10 +76,7 @@ function toggleSidebar(moveFocus = true) {
 	}
 
 	if (moveFocus) {
-		if (sidebarOpen) {
-			sidebarCloseButton.focus();
-		}
-		else if (sidebarTrigger) {
+		if (sidebarTrigger) {
 			sidebarTrigger.focus();
 		}
 	}

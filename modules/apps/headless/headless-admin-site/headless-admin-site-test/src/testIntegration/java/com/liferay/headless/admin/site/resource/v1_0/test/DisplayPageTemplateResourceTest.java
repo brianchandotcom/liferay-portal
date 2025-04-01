@@ -995,12 +995,11 @@ public class DisplayPageTemplateResourceTest
 	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateMarkAsDefault()
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
-
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.
 				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(), displayPageTemplate);
+					testGroup.getExternalReferenceCode(),
+					randomDisplayPageTemplate());
 
 		postDisplayPageTemplate.setMarkedAsDefault(true);
 

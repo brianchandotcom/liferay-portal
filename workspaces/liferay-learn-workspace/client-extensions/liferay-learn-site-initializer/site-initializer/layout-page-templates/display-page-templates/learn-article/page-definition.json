@@ -131,7 +131,7 @@
 							{
 								"definition": {
 									"fragment": {
-										"key": "feature-recipes",
+										"key": "article-related-recipes",
 										"siteKey": "Guest"
 									},
 									"fragmentConfig": {
@@ -140,7 +140,7 @@
 									],
 									"indexed": true
 								},
-								"id": "2e392672-4521-96ae-f7d7-84be65a8b6ee",
+								"id": "2ddc3af8-e329-6e03-6f62-8152e5c1cc2f",
 								"type": "Fragment"
 							}
 						],

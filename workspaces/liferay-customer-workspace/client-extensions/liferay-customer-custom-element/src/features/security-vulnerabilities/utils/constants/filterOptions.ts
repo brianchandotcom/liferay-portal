@@ -23,7 +23,7 @@ export const FILTER_MAP: {[key: string]: string} = {
 
 export const FILTER_OPTIONS: IProps = {
 	[JiraEnum.AFFECTED_VERSIONS]: ['2024.Q4', '2024.Q3', '2024.Q2', '2024.Q1'],
-	[JiraEnum.CATEGORIES]: ['Docker', 'On Premise', 'PaaS', 'SaaS'],
+	[JiraEnum.CATEGORIES]: ['Docker', 'DXP', 'PaaS', 'SaaS'],
 	[JiraEnum.FIX_VERSIONS]: ['2024.Q4', '2024.Q3', '2024.Q2', '2024.Q1'],
 	[JiraEnum.ISSUE_CLASSIFICATION]: [
 		'Advisory',

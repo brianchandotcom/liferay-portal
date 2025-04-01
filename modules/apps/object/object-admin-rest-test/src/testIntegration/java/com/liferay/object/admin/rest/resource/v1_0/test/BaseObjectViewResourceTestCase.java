@@ -971,7 +971,6 @@ public abstract class BaseObjectViewResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			objectViewResource.getObjectViewHttpResponse(objectView.getId()));
-
 		assertHttpResponseStatusCode(
 			404, objectViewResource.getObjectViewHttpResponse(0L));
 	}

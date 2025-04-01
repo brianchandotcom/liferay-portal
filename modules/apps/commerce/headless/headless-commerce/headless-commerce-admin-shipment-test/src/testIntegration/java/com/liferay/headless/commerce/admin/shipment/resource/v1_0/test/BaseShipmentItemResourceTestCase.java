@@ -409,7 +409,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 			404,
 			shipmentItemResource.getShipmentItemHttpResponse(
 				shipmentItem.getId()));
-
 		assertHttpResponseStatusCode(
 			404, shipmentItemResource.getShipmentItemHttpResponse(0L));
 	}
@@ -536,7 +535,6 @@ public abstract class BaseShipmentItemResourceTestCase {
 			404,
 			shipmentItemResource.getShipmentItemHttpResponse(
 				shipmentItem1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			shipmentItemResource.getShipmentItemHttpResponse(

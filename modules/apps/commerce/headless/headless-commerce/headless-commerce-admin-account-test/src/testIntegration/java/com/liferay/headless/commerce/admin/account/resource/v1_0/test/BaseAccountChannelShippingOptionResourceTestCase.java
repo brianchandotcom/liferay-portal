@@ -258,7 +258,6 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			accountChannelShippingOptionResource.
 				getAccountChannelShippingOptionHttpResponse(
 					accountChannelShippingOption.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelShippingOptionResource.

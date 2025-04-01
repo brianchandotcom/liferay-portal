@@ -642,7 +642,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			404,
 			dataDefinitionResource.getDataDefinitionHttpResponse(
 				dataDefinition.getId()));
-
 		assertHttpResponseStatusCode(
 			404, dataDefinitionResource.getDataDefinitionHttpResponse(0L));
 	}
@@ -1866,7 +1865,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 						dataDefinition),
 					dataDefinition.getContentType(),
 					dataDefinition.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			dataDefinitionResource.

@@ -507,7 +507,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 				getAssetLibraryDocumentMetadataSetByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_getAssetLibraryId(),
 					documentMetadataSet.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentMetadataSetResource.
@@ -801,7 +800,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			404,
 			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
 				documentMetadataSet.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(0L));
@@ -1603,7 +1601,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 					testDeleteSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
 						documentMetadataSet),
 					documentMetadataSet.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentMetadataSetResource.

@@ -480,7 +480,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			404,
 			documentShortcutResource.getDocumentShortcutHttpResponse(
 				documentShortcut.getId()));
-
 		assertHttpResponseStatusCode(
 			404, documentShortcutResource.getDocumentShortcutHttpResponse(0L));
 	}
@@ -1323,7 +1322,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 					testDeleteSiteDocumentShortcutByExternalReferenceCode_getSiteId(
 						documentShortcut),
 					documentShortcut.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentShortcutResource.

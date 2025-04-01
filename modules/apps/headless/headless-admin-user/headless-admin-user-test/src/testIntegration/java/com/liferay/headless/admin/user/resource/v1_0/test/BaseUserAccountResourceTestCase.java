@@ -274,7 +274,6 @@ public abstract class BaseUserAccountResourceTestCase {
 				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
 					userAccount.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.
@@ -1636,7 +1635,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			userAccountResource.getAccountUserAccountHttpResponse(
 				testDeleteAccountUserAccount_getAccountId(),
 				userAccount.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.getAccountUserAccountHttpResponse(
@@ -3809,7 +3807,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			userAccountResource.
 				getUserAccountByExternalReferenceCodeHttpResponse(
 					userAccount.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.
@@ -4488,7 +4485,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			404,
 			userAccountResource.getUserAccountHttpResponse(
 				userAccount.getId()));
-
 		assertHttpResponseStatusCode(
 			404, userAccountResource.getUserAccountHttpResponse(0L));
 	}
@@ -4610,7 +4606,6 @@ public abstract class BaseUserAccountResourceTestCase {
 			404,
 			userAccountResource.getUserAccountHttpResponse(
 				userAccount1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			userAccountResource.getUserAccountHttpResponse(

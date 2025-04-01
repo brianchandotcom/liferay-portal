@@ -700,7 +700,6 @@ public abstract class BaseOrganizationResourceTestCase {
 					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
 						organization),
 					organization.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.
@@ -1372,7 +1371,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			organizationResource.getAccountOrganizationHttpResponse(
 				testDeleteAccountOrganization_getAccountId(),
 				organization.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.getAccountOrganizationHttpResponse(
@@ -2029,7 +2027,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			organizationResource.
 				getOrganizationByExternalReferenceCodeHttpResponse(
 					organization.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.
@@ -2818,7 +2815,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			404,
 			organizationResource.getOrganizationHttpResponse(
 				organization.getId()));
-
 		assertHttpResponseStatusCode(
 			404, organizationResource.getOrganizationHttpResponse("-"));
 	}
@@ -2950,7 +2946,6 @@ public abstract class BaseOrganizationResourceTestCase {
 			404,
 			organizationResource.getOrganizationHttpResponse(
 				organization1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			organizationResource.getOrganizationHttpResponse(

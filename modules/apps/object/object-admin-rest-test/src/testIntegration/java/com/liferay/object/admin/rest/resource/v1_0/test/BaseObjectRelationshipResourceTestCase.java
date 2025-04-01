@@ -1372,7 +1372,6 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			404,
 			objectRelationshipResource.getObjectRelationshipHttpResponse(
 				objectRelationship.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			objectRelationshipResource.getObjectRelationshipHttpResponse(0L));

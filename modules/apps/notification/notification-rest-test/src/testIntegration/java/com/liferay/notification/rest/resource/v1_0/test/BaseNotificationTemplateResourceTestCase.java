@@ -971,7 +971,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			404,
 			notificationTemplateResource.getNotificationTemplateHttpResponse(
 				notificationTemplate.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			notificationTemplateResource.getNotificationTemplateHttpResponse(

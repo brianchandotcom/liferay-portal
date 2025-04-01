@@ -842,7 +842,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				getAssetLibraryTaxonomyVocabularyByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
 					taxonomyVocabulary.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.
@@ -1877,7 +1876,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					testDeleteSiteTaxonomyVocabularyByExternalReferenceCode_getSiteId(
 						taxonomyVocabulary),
 					taxonomyVocabulary.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.
@@ -2284,7 +2282,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			404,
 			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
 				taxonomyVocabulary.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(0L));

@@ -660,7 +660,6 @@ public abstract class BaseOrderItemResourceTestCase {
 			404,
 			orderItemResource.getOrderItemByExternalReferenceCodeHttpResponse(
 				orderItem.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			orderItemResource.getOrderItemByExternalReferenceCodeHttpResponse(
@@ -879,7 +878,6 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, orderItemResource.getOrderItemHttpResponse(orderItem.getId()));
-
 		assertHttpResponseStatusCode(
 			404, orderItemResource.getOrderItemHttpResponse(0L));
 	}
@@ -994,7 +992,6 @@ public abstract class BaseOrderItemResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			orderItemResource.getOrderItemHttpResponse(orderItem1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			orderItemResource.getOrderItemHttpResponse(orderItem2.getId()));

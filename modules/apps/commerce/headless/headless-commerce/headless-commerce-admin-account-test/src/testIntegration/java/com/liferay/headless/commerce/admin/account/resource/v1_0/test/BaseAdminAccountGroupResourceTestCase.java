@@ -603,7 +603,6 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 			adminAccountGroupResource.
 				getAccountGroupByExternalReferenceCodeHttpResponse(
 					adminAccountGroup.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			adminAccountGroupResource.
@@ -776,7 +775,6 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 			404,
 			adminAccountGroupResource.getAccountGroupHttpResponse(
 				adminAccountGroup.getId()));
-
 		assertHttpResponseStatusCode(
 			404, adminAccountGroupResource.getAccountGroupHttpResponse(0L));
 	}

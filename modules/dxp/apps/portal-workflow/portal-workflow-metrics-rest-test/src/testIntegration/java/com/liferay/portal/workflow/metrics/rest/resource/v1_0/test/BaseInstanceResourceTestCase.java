@@ -518,7 +518,6 @@ public abstract class BaseInstanceResourceTestCase {
 			instanceResource.getProcessInstanceHttpResponse(
 				testDeleteProcessInstance_getProcessId(instance),
 				instance.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.getProcessInstanceHttpResponse(

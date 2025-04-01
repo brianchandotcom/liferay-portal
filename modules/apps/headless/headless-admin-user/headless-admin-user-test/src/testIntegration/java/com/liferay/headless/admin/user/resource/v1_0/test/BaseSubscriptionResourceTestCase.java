@@ -331,7 +331,6 @@ public abstract class BaseSubscriptionResourceTestCase {
 			404,
 			subscriptionResource.getMyUserAccountSubscriptionHttpResponse(
 				subscription.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			subscriptionResource.getMyUserAccountSubscriptionHttpResponse(0L));

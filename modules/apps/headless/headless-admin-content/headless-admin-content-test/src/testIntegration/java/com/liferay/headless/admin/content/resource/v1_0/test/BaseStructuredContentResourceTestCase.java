@@ -756,7 +756,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 			structuredContentResource.getStructuredContentByVersionHttpResponse(
 				structuredContent.getId(),
 				testDeleteStructuredContentByVersion_getVersion()));
-
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.getStructuredContentByVersionHttpResponse(

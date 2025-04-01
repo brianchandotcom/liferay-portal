@@ -204,7 +204,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			accountChannelEntryResource.
 				getAccountChannelBillingAddressIdHttpResponse(
 					accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
@@ -393,7 +392,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			404,
 			accountChannelEntryResource.getAccountChannelCurrencyIdHttpResponse(
 				accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.getAccountChannelCurrencyIdHttpResponse(
@@ -581,7 +579,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			accountChannelEntryResource.
 				getAccountChannelDeliveryTermIdHttpResponse(
 					accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
@@ -768,7 +765,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			404,
 			accountChannelEntryResource.getAccountChannelDiscountIdHttpResponse(
 				accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.getAccountChannelDiscountIdHttpResponse(
@@ -956,7 +952,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			accountChannelEntryResource.
 				getAccountChannelPaymentMethodIdHttpResponse(
 					accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
@@ -1144,7 +1139,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			accountChannelEntryResource.
 				getAccountChannelPaymentTermIdHttpResponse(
 					accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
@@ -1332,7 +1326,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			accountChannelEntryResource.
 				getAccountChannelPriceListIdHttpResponse(
 					accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
@@ -1520,7 +1513,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			accountChannelEntryResource.
 				getAccountChannelShippingAddressIdHttpResponse(
 					accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.
@@ -1708,7 +1700,6 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 			404,
 			accountChannelEntryResource.getAccountChannelUserIdHttpResponse(
 				accountChannelEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelEntryResource.getAccountChannelUserIdHttpResponse(

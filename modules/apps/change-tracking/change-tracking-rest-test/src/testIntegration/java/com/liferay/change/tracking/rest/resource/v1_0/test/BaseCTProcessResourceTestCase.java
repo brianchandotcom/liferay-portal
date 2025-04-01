@@ -566,7 +566,6 @@ public abstract class BaseCTProcessResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, ctProcessResource.getCTProcessHttpResponse(ctProcess.getId()));
-
 		assertHttpResponseStatusCode(
 			404, ctProcessResource.getCTProcessHttpResponse(0L));
 	}

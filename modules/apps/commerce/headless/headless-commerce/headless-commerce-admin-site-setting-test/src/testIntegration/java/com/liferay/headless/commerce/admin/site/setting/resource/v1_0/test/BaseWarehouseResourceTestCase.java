@@ -441,7 +441,6 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, warehouseResource.getWarehouseHttpResponse(warehouse.getId()));
-
 		assertHttpResponseStatusCode(
 			404, warehouseResource.getWarehouseHttpResponse(0L));
 	}

@@ -417,7 +417,6 @@ public abstract class BaseEmailAddressResourceTestCase {
 			emailAddressResource.
 				getEmailAddressByExternalReferenceCodeHttpResponse(
 					emailAddress.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			emailAddressResource.
@@ -617,7 +616,6 @@ public abstract class BaseEmailAddressResourceTestCase {
 			404,
 			emailAddressResource.getEmailAddressHttpResponse(
 				emailAddress.getId()));
-
 		assertHttpResponseStatusCode(
 			404, emailAddressResource.getEmailAddressHttpResponse(0L));
 	}
@@ -743,7 +741,6 @@ public abstract class BaseEmailAddressResourceTestCase {
 			404,
 			emailAddressResource.getEmailAddressHttpResponse(
 				emailAddress1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			emailAddressResource.getEmailAddressHttpResponse(

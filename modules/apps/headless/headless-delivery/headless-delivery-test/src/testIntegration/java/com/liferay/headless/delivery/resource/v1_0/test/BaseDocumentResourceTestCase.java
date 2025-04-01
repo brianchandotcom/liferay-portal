@@ -730,7 +730,6 @@ public abstract class BaseDocumentResourceTestCase {
 				getAssetLibraryDocumentByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId(),
 					document.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentResource.
@@ -1709,7 +1708,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(document.getId()));
-
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(0L));
 	}
@@ -2193,7 +2191,6 @@ public abstract class BaseDocumentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			documentResource.getDocumentMyRatingHttpResponse(document.getId()));
-
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentMyRatingHttpResponse(0L));
 	}
@@ -2770,7 +2767,6 @@ public abstract class BaseDocumentResourceTestCase {
 				testDeleteSiteDocumentByExternalReferenceCode_getSiteId(
 					document),
 				document.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentResource.getSiteDocumentByExternalReferenceCodeHttpResponse(

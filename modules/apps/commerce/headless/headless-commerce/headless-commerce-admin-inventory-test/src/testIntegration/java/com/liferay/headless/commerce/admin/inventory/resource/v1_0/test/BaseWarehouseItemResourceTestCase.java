@@ -243,7 +243,6 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			warehouseItemResource.
 				getWarehouseItemByExternalReferenceCodeHttpResponse(
 					warehouseItem.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			warehouseItemResource.
@@ -643,7 +642,6 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			404,
 			warehouseItemResource.getWarehouseItemHttpResponse(
 				warehouseItem.getId()));
-
 		assertHttpResponseStatusCode(
 			404, warehouseItemResource.getWarehouseItemHttpResponse(0L));
 	}
@@ -768,7 +766,6 @@ public abstract class BaseWarehouseItemResourceTestCase {
 			404,
 			warehouseItemResource.getWarehouseItemHttpResponse(
 				warehouseItem1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			warehouseItemResource.getWarehouseItemHttpResponse(

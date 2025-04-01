@@ -993,7 +993,6 @@ public abstract class BaseRegionResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, regionResource.getRegionHttpResponse(region.getId()));
-
 		assertHttpResponseStatusCode(
 			404, regionResource.getRegionHttpResponse(0L));
 	}

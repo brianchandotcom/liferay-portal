@@ -796,7 +796,6 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 			productConfigurationListResource.
 				getProductConfigurationListByExternalReferenceCodeHttpResponse(
 					productConfigurationList.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			productConfigurationListResource.
@@ -1009,7 +1008,6 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 			productConfigurationListResource.
 				getProductConfigurationListHttpResponse(
 					productConfigurationList.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			productConfigurationListResource.
@@ -1146,7 +1144,6 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 			productConfigurationListResource.
 				getProductConfigurationListHttpResponse(
 					productConfigurationList1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			productConfigurationListResource.

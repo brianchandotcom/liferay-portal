@@ -1209,7 +1209,6 @@ public abstract class BaseObjectFieldResourceTestCase {
 			404,
 			objectFieldResource.getObjectFieldHttpResponse(
 				objectField.getId()));
-
 		assertHttpResponseStatusCode(
 			404, objectFieldResource.getObjectFieldHttpResponse(0L));
 	}

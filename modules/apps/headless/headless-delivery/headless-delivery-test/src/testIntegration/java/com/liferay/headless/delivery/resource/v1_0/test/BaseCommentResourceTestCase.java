@@ -654,7 +654,6 @@ public abstract class BaseCommentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, commentResource.getCommentHttpResponse(comment.getId()));
-
 		assertHttpResponseStatusCode(
 			404, commentResource.getCommentHttpResponse(0L));
 	}
@@ -1914,7 +1913,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getBlogPostingExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
@@ -2268,7 +2266,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
@@ -2622,7 +2619,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getDocumentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
@@ -2976,7 +2972,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getStructuredContentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.

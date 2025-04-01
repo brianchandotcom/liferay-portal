@@ -239,7 +239,6 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			404,
 			productOptionValueResource.getProductOptionValueHttpResponse(
 				productOptionValue.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			productOptionValueResource.getProductOptionValueHttpResponse(0L));

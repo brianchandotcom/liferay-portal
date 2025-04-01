@@ -398,7 +398,6 @@ public abstract class BaseSLAResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, slaResource.getSLAHttpResponse(sla.getId()));
-
 		assertHttpResponseStatusCode(404, slaResource.getSLAHttpResponse(0L));
 	}
 

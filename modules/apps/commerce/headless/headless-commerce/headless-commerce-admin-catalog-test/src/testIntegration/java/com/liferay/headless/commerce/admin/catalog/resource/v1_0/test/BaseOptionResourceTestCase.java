@@ -628,7 +628,6 @@ public abstract class BaseOptionResourceTestCase {
 			404,
 			optionResource.getOptionByExternalReferenceCodeHttpResponse(
 				option.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			optionResource.getOptionByExternalReferenceCodeHttpResponse(
@@ -834,7 +833,6 @@ public abstract class BaseOptionResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, optionResource.getOptionHttpResponse(option.getId()));
-
 		assertHttpResponseStatusCode(
 			404, optionResource.getOptionHttpResponse(0L));
 	}
@@ -943,7 +941,6 @@ public abstract class BaseOptionResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, optionResource.getOptionHttpResponse(option1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, optionResource.getOptionHttpResponse(option2.getId()));
 

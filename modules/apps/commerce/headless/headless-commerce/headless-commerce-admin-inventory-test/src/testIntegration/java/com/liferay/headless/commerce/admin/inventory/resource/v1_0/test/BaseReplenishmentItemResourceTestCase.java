@@ -242,7 +242,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			replenishmentItemResource.
 				getReplenishmentItemByExternalReferenceCodeHttpResponse(
 					replenishmentItem.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			replenishmentItemResource.
@@ -516,7 +515,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			404,
 			replenishmentItemResource.getReplenishmentItemHttpResponse(
 				replenishmentItem.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			replenishmentItemResource.getReplenishmentItemHttpResponse(0L));
@@ -654,7 +652,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 			404,
 			replenishmentItemResource.getReplenishmentItemHttpResponse(
 				replenishmentItem1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			replenishmentItemResource.getReplenishmentItemHttpResponse(

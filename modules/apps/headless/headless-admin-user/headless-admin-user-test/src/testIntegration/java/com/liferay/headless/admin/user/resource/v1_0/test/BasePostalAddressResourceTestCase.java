@@ -648,7 +648,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			postalAddressResource.
 				getPostalAddressByExternalReferenceCodeHttpResponse(
 					postalAddress.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			postalAddressResource.
@@ -907,7 +906,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			404,
 			postalAddressResource.getPostalAddressHttpResponse(
 				postalAddress.getId()));
-
 		assertHttpResponseStatusCode(
 			404, postalAddressResource.getPostalAddressHttpResponse(0L));
 	}
@@ -1033,7 +1031,6 @@ public abstract class BasePostalAddressResourceTestCase {
 			404,
 			postalAddressResource.getPostalAddressHttpResponse(
 				postalAddress1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			postalAddressResource.getPostalAddressHttpResponse(

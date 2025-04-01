@@ -1100,7 +1100,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			404,
 			messageBoardThreadResource.getMessageBoardThreadHttpResponse(
 				messageBoardThread.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardThreadResource.getMessageBoardThreadHttpResponse(0L));
@@ -1641,7 +1640,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			messageBoardThreadResource.
 				getMessageBoardThreadMyRatingHttpResponse(
 					messageBoardThread.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardThreadResource.

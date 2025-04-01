@@ -1229,7 +1229,6 @@ public abstract class BaseListTypeEntryResourceTestCase {
 			404,
 			listTypeEntryResource.getListTypeEntryHttpResponse(
 				listTypeEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404, listTypeEntryResource.getListTypeEntryHttpResponse(0L));
 	}

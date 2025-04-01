@@ -609,7 +609,6 @@ public abstract class BaseWishListResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, wishListResource.getWishListHttpResponse(wishList.getId()));
-
 		assertHttpResponseStatusCode(
 			404, wishListResource.getWishListHttpResponse(0L));
 	}

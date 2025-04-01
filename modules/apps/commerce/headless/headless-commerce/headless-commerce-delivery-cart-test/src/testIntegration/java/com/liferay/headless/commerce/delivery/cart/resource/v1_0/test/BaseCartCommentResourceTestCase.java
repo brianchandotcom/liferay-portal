@@ -242,7 +242,6 @@ public abstract class BaseCartCommentResourceTestCase {
 			cartCommentResource.
 				getCartCommentByExternalReferenceCodeHttpResponse(
 					cartComment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			cartCommentResource.
@@ -498,7 +497,6 @@ public abstract class BaseCartCommentResourceTestCase {
 			404,
 			cartCommentResource.getCartCommentHttpResponse(
 				cartComment.getId()));
-
 		assertHttpResponseStatusCode(
 			404, cartCommentResource.getCartCommentHttpResponse(0L));
 	}
@@ -621,7 +619,6 @@ public abstract class BaseCartCommentResourceTestCase {
 			404,
 			cartCommentResource.getCartCommentHttpResponse(
 				cartComment1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			cartCommentResource.getCartCommentHttpResponse(

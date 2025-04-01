@@ -662,7 +662,6 @@ public abstract class BasePaymentResourceTestCase {
 			404,
 			paymentResource.getPaymentByExternalReferenceCodeHttpResponse(
 				payment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			paymentResource.getPaymentByExternalReferenceCodeHttpResponse(
@@ -921,7 +920,6 @@ public abstract class BasePaymentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, paymentResource.getPaymentHttpResponse(payment.getId()));
-
 		assertHttpResponseStatusCode(
 			404, paymentResource.getPaymentHttpResponse(0L));
 	}
@@ -1031,7 +1029,6 @@ public abstract class BasePaymentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, paymentResource.getPaymentHttpResponse(payment1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, paymentResource.getPaymentHttpResponse(payment2.getId()));
 

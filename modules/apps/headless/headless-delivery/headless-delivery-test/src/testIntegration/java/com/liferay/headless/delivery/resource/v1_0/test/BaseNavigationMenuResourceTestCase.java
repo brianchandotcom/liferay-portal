@@ -239,7 +239,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			404,
 			navigationMenuResource.getNavigationMenuHttpResponse(
 				navigationMenu.getId()));
-
 		assertHttpResponseStatusCode(
 			404, navigationMenuResource.getNavigationMenuHttpResponse(0L));
 	}
@@ -1098,7 +1097,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
 						navigationMenu),
 					navigationMenu.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			navigationMenuResource.

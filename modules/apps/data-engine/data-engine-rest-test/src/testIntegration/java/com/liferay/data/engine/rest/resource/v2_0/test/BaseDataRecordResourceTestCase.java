@@ -957,7 +957,6 @@ public abstract class BaseDataRecordResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			dataRecordResource.getDataRecordHttpResponse(dataRecord.getId()));
-
 		assertHttpResponseStatusCode(
 			404, dataRecordResource.getDataRecordHttpResponse(0L));
 	}

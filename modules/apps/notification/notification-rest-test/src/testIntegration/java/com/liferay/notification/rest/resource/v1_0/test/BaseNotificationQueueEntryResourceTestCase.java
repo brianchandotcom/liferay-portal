@@ -771,7 +771,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			notificationQueueEntryResource.
 				getNotificationQueueEntryHttpResponse(
 					notificationQueueEntry.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			notificationQueueEntryResource.

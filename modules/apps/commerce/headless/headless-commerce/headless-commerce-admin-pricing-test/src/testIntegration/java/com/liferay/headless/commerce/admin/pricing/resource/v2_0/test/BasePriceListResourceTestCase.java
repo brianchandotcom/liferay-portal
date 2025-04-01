@@ -661,7 +661,6 @@ public abstract class BasePriceListResourceTestCase {
 			404,
 			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
 				priceList.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			priceListResource.getPriceListByExternalReferenceCodeHttpResponse(
@@ -907,7 +906,6 @@ public abstract class BasePriceListResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, priceListResource.getPriceListHttpResponse(priceList.getId()));
-
 		assertHttpResponseStatusCode(
 			404, priceListResource.getPriceListHttpResponse(0L));
 	}
@@ -1023,7 +1021,6 @@ public abstract class BasePriceListResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			priceListResource.getPriceListHttpResponse(priceList1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			priceListResource.getPriceListHttpResponse(priceList2.getId()));

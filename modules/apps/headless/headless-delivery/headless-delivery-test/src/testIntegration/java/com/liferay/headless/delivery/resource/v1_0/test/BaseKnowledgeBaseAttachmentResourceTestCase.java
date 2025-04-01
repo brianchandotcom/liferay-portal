@@ -404,7 +404,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			knowledgeBaseAttachmentResource.
 				getKnowledgeBaseAttachmentHttpResponse(
 					knowledgeBaseAttachment.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseAttachmentResource.
@@ -892,7 +891,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode(),
 					knowledgeBaseAttachment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseAttachmentResource.

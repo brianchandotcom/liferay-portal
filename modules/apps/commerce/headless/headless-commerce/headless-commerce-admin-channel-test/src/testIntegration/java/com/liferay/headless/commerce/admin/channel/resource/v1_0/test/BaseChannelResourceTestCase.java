@@ -776,7 +776,6 @@ public abstract class BaseChannelResourceTestCase {
 			404,
 			channelResource.getChannelByExternalReferenceCodeHttpResponse(
 				channel.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			channelResource.getChannelByExternalReferenceCodeHttpResponse(
@@ -1013,7 +1012,6 @@ public abstract class BaseChannelResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, channelResource.getChannelHttpResponse(channel.getId()));
-
 		assertHttpResponseStatusCode(
 			404, channelResource.getChannelHttpResponse(0L));
 	}
@@ -1123,7 +1121,6 @@ public abstract class BaseChannelResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, channelResource.getChannelHttpResponse(channel1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, channelResource.getChannelHttpResponse(channel2.getId()));
 

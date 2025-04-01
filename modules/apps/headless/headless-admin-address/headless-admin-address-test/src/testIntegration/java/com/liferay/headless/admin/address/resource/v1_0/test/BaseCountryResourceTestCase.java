@@ -997,7 +997,6 @@ public abstract class BaseCountryResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, countryResource.getCountryHttpResponse(country.getId()));
-
 		assertHttpResponseStatusCode(
 			404, countryResource.getCountryHttpResponse(0L));
 	}

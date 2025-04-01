@@ -287,7 +287,6 @@ public abstract class BasePriceEntryResourceTestCase {
 			404,
 			priceEntryResource.getPriceEntryHttpResponse(
 				priceEntry1.getPriceEntryId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			priceEntryResource.getPriceEntryHttpResponse(

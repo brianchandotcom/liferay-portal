@@ -251,7 +251,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			404,
 			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
 				messageBoardMessage.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.getMessageBoardMessageHttpResponse(0L));
@@ -819,7 +818,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			messageBoardMessageResource.
 				getMessageBoardMessageMyRatingHttpResponse(
 					messageBoardMessage.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.
@@ -2596,7 +2594,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 					testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
 						messageBoardMessage),
 					messageBoardMessage.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.

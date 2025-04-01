@@ -816,7 +816,6 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			documentDataDefinitionTypeResource.
 				getDocumentDataDefinitionTypeHttpResponse(
 					documentDataDefinitionType.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentDataDefinitionTypeResource.

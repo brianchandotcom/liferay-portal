@@ -883,7 +883,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			404,
 			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
 				taxonomyCategory.getId()));
-
 		assertHttpResponseStatusCode(
 			404, taxonomyCategoryResource.getTaxonomyCategoryHttpResponse("-"));
 	}
@@ -1889,7 +1888,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
 						taxonomyCategory),
 					taxonomyCategory.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.

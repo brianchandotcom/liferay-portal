@@ -567,7 +567,6 @@ public abstract class BasePhoneResourceTestCase {
 			404,
 			phoneResource.getPhoneByExternalReferenceCodeHttpResponse(
 				phone.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			phoneResource.getPhoneByExternalReferenceCodeHttpResponse(
@@ -746,7 +745,6 @@ public abstract class BasePhoneResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, phoneResource.getPhoneHttpResponse(phone.getId()));
-
 		assertHttpResponseStatusCode(
 			404, phoneResource.getPhoneHttpResponse(0L));
 	}
@@ -854,7 +852,6 @@ public abstract class BasePhoneResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, phoneResource.getPhoneHttpResponse(phone1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, phoneResource.getPhoneHttpResponse(phone2.getId()));
 

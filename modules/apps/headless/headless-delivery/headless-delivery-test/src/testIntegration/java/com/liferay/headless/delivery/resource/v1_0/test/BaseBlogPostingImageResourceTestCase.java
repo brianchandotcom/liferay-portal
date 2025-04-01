@@ -248,7 +248,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			404,
 			blogPostingImageResource.getBlogPostingImageHttpResponse(
 				blogPostingImage.getId()));
-
 		assertHttpResponseStatusCode(
 			404, blogPostingImageResource.getBlogPostingImageHttpResponse(0L));
 	}
@@ -1282,7 +1281,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				getSiteBlogPostingImageByExternalReferenceCodeHttpResponse(
 					testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId(),
 					blogPostingImage.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingImageResource.

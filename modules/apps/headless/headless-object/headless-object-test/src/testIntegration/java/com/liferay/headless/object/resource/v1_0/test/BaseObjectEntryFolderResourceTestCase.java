@@ -248,7 +248,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			404,
 			objectEntryFolderResource.getObjectEntryFolderHttpResponse(
 				objectEntryFolder.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			objectEntryFolderResource.getObjectEntryFolderHttpResponse(0L));
@@ -762,7 +761,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
 						objectEntryFolder),
 					objectEntryFolder.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			objectEntryFolderResource.

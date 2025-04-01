@@ -711,7 +711,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			measurementUnitResource.
 				getMeasurementUnitByExternalReferenceCodeHttpResponse(
 					measurementUnit.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			measurementUnitResource.
@@ -947,7 +946,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			404,
 			measurementUnitResource.getMeasurementUnitByKeyHttpResponse(
 				measurementUnit.getKey()));
-
 		assertHttpResponseStatusCode(
 			404,
 			measurementUnitResource.getMeasurementUnitByKeyHttpResponse(
@@ -1449,7 +1447,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			404,
 			measurementUnitResource.getMeasurementUnitHttpResponse(
 				measurementUnit.getId()));
-
 		assertHttpResponseStatusCode(
 			404, measurementUnitResource.getMeasurementUnitHttpResponse(0L));
 	}
@@ -1575,7 +1572,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			404,
 			measurementUnitResource.getMeasurementUnitHttpResponse(
 				measurementUnit1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			measurementUnitResource.getMeasurementUnitHttpResponse(

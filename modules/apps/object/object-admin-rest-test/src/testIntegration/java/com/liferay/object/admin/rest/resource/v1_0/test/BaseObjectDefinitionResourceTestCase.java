@@ -938,7 +938,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			404,
 			objectDefinitionResource.getObjectDefinitionHttpResponse(
 				objectDefinition.getId()));
-
 		assertHttpResponseStatusCode(
 			404, objectDefinitionResource.getObjectDefinitionHttpResponse(0L));
 	}

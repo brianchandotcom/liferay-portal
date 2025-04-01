@@ -1089,7 +1089,6 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			404,
 			objectValidationRuleResource.getObjectValidationRuleHttpResponse(
 				objectValidationRule.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			objectValidationRuleResource.getObjectValidationRuleHttpResponse(

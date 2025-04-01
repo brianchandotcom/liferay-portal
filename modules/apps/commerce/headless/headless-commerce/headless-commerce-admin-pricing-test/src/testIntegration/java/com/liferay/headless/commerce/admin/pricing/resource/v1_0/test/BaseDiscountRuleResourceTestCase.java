@@ -458,7 +458,6 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			404,
 			discountRuleResource.getDiscountRuleHttpResponse(
 				discountRule.getId()));
-
 		assertHttpResponseStatusCode(
 			404, discountRuleResource.getDiscountRuleHttpResponse(0L));
 	}

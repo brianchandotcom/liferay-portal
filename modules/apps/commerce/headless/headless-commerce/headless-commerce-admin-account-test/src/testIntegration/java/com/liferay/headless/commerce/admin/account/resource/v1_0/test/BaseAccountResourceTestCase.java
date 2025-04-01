@@ -674,7 +674,6 @@ public abstract class BaseAccountResourceTestCase {
 			404,
 			accountResource.getAccountByExternalReferenceCodeHttpResponse(
 				account.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountResource.getAccountByExternalReferenceCodeHttpResponse(
@@ -840,7 +839,6 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, accountResource.getAccountHttpResponse(account.getId()));
-
 		assertHttpResponseStatusCode(
 			404, accountResource.getAccountHttpResponse(0L));
 	}
@@ -950,7 +948,6 @@ public abstract class BaseAccountResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, accountResource.getAccountHttpResponse(account1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, accountResource.getAccountHttpResponse(account2.getId()));
 

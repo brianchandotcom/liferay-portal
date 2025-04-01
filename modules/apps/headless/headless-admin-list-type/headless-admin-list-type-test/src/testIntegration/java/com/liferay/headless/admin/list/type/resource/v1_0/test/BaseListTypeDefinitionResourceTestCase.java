@@ -952,7 +952,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			404,
 			listTypeDefinitionResource.getListTypeDefinitionHttpResponse(
 				listTypeDefinition.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			listTypeDefinitionResource.getListTypeDefinitionHttpResponse(0L));

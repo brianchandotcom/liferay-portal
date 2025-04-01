@@ -444,7 +444,6 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			404,
 			taxCategoryResource.getTaxCategoryHttpResponse(
 				taxCategory.getId()));
-
 		assertHttpResponseStatusCode(
 			404, taxCategoryResource.getTaxCategoryHttpResponse(0L));
 	}

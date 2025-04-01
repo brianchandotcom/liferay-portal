@@ -699,7 +699,6 @@ public abstract class BaseSpecificationResourceTestCase {
 			specificationResource.
 				getSpecificationByExternalReferenceCodeHttpResponse(
 					specification.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			specificationResource.
@@ -959,7 +958,6 @@ public abstract class BaseSpecificationResourceTestCase {
 			404,
 			specificationResource.getSpecificationHttpResponse(
 				specification.getId()));
-
 		assertHttpResponseStatusCode(
 			404, specificationResource.getSpecificationHttpResponse(0L));
 	}
@@ -1084,7 +1082,6 @@ public abstract class BaseSpecificationResourceTestCase {
 			404,
 			specificationResource.getSpecificationHttpResponse(
 				specification1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			specificationResource.getSpecificationHttpResponse(

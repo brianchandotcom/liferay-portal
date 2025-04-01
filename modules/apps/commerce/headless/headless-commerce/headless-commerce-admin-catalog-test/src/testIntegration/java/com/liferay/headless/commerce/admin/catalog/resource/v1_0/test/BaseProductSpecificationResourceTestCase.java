@@ -252,7 +252,6 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			productSpecificationResource.
 				getProductSpecificationByExternalReferenceCodeHttpResponse(
 					productSpecification.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			productSpecificationResource.
@@ -462,7 +461,6 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			404,
 			productSpecificationResource.getProductSpecificationHttpResponse(
 				productSpecification.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			productSpecificationResource.getProductSpecificationHttpResponse(
@@ -594,7 +592,6 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			404,
 			productSpecificationResource.getProductSpecificationHttpResponse(
 				productSpecification1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			productSpecificationResource.getProductSpecificationHttpResponse(

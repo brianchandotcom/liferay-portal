@@ -242,7 +242,6 @@ public abstract class BaseObjectActionResourceTestCase {
 			404,
 			objectActionResource.getObjectActionHttpResponse(
 				objectAction.getId()));
-
 		assertHttpResponseStatusCode(
 			404, objectActionResource.getObjectActionHttpResponse(0L));
 	}

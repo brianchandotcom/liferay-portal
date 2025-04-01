@@ -728,7 +728,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			404,
 			userGroupResource.getUserGroupByExternalReferenceCodeHttpResponse(
 				userGroup.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			userGroupResource.getUserGroupByExternalReferenceCodeHttpResponse(
@@ -1025,7 +1024,6 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, userGroupResource.getUserGroupHttpResponse(userGroup.getId()));
-
 		assertHttpResponseStatusCode(
 			404, userGroupResource.getUserGroupHttpResponse(0L));
 	}
@@ -1140,7 +1138,6 @@ public abstract class BaseUserGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			userGroupResource.getUserGroupHttpResponse(userGroup1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			userGroupResource.getUserGroupHttpResponse(userGroup2.getId()));

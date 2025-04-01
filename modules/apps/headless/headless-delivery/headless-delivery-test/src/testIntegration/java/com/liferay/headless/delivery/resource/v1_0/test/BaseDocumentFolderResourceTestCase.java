@@ -1014,7 +1014,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			404,
 			documentFolderResource.getDocumentFolderHttpResponse(
 				documentFolder.getId()));
-
 		assertHttpResponseStatusCode(
 			404, documentFolderResource.getDocumentFolderHttpResponse(0L));
 	}
@@ -1537,7 +1536,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			404,
 			documentFolderResource.getDocumentFolderMyRatingHttpResponse(
 				documentFolder.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentFolderResource.getDocumentFolderMyRatingHttpResponse(0L));
@@ -2964,7 +2962,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
 						documentFolder),
 					documentFolder.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentFolderResource.

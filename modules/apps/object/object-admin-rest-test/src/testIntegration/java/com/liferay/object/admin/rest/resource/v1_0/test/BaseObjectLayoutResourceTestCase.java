@@ -998,7 +998,6 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			404,
 			objectLayoutResource.getObjectLayoutHttpResponse(
 				objectLayout.getId()));
-
 		assertHttpResponseStatusCode(
 			404, objectLayoutResource.getObjectLayoutHttpResponse(0L));
 	}

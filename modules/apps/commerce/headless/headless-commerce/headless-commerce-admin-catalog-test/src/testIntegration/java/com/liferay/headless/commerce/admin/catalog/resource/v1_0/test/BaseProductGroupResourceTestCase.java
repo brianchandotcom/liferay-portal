@@ -682,7 +682,6 @@ public abstract class BaseProductGroupResourceTestCase {
 			productGroupResource.
 				getProductGroupByExternalReferenceCodeHttpResponse(
 					productGroup.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			productGroupResource.
@@ -912,7 +911,6 @@ public abstract class BaseProductGroupResourceTestCase {
 			404,
 			productGroupResource.getProductGroupHttpResponse(
 				productGroup.getId()));
-
 		assertHttpResponseStatusCode(
 			404, productGroupResource.getProductGroupHttpResponse(0L));
 	}
@@ -1037,7 +1035,6 @@ public abstract class BaseProductGroupResourceTestCase {
 			404,
 			productGroupResource.getProductGroupHttpResponse(
 				productGroup1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			productGroupResource.getProductGroupHttpResponse(

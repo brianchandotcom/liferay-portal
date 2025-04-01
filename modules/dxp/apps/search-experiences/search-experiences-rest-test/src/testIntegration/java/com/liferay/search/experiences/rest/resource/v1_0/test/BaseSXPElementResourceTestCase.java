@@ -823,7 +823,6 @@ public abstract class BaseSXPElementResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			sxpElementResource.getSXPElementHttpResponse(sxpElement.getId()));
-
 		assertHttpResponseStatusCode(
 			404, sxpElementResource.getSXPElementHttpResponse(0L));
 	}

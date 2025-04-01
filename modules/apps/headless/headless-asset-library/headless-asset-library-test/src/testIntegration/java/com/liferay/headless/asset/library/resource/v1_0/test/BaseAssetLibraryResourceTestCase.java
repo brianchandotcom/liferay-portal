@@ -601,7 +601,6 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			assetLibraryResource.
 				getAssetLibraryByExternalReferenceCodeHttpResponse(
 					assetLibrary.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			assetLibraryResource.
@@ -746,7 +745,6 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			404,
 			assetLibraryResource.getAssetLibraryHttpResponse(
 				assetLibrary.getId()));
-
 		assertHttpResponseStatusCode(
 			404, assetLibraryResource.getAssetLibraryHttpResponse(0L));
 	}

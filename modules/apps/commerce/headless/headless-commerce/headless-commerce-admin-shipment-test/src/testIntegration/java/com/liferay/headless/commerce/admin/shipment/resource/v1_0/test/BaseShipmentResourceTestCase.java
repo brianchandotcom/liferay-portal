@@ -647,7 +647,6 @@ public abstract class BaseShipmentResourceTestCase {
 			404,
 			shipmentResource.getShipmentByExternalReferenceCodeHttpResponse(
 				shipment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			shipmentResource.getShipmentByExternalReferenceCodeHttpResponse(
@@ -958,7 +957,6 @@ public abstract class BaseShipmentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, shipmentResource.getShipmentHttpResponse(shipment.getId()));
-
 		assertHttpResponseStatusCode(
 			404, shipmentResource.getShipmentHttpResponse(0L));
 	}
@@ -1071,7 +1069,6 @@ public abstract class BaseShipmentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, shipmentResource.getShipmentHttpResponse(shipment1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, shipmentResource.getShipmentHttpResponse(shipment2.getId()));
 

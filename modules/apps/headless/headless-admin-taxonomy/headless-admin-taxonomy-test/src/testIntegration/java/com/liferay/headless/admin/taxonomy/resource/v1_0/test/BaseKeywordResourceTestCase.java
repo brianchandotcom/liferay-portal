@@ -694,7 +694,6 @@ public abstract class BaseKeywordResourceTestCase {
 				getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
 					keyword.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			keywordResource.
@@ -1152,7 +1151,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword.getId()));
-
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(0L));
 	}
@@ -2121,7 +2119,6 @@ public abstract class BaseKeywordResourceTestCase {
 			keywordResource.getSiteKeywordByExternalReferenceCodeHttpResponse(
 				testDeleteSiteKeywordByExternalReferenceCode_getSiteId(keyword),
 				keyword.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			keywordResource.getSiteKeywordByExternalReferenceCodeHttpResponse(

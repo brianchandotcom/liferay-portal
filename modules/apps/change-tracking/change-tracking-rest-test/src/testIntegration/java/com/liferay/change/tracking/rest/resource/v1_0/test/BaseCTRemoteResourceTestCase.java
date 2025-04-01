@@ -495,7 +495,6 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, ctRemoteResource.getCTRemoteHttpResponse(ctRemote.getId()));
-
 		assertHttpResponseStatusCode(
 			404, ctRemoteResource.getCTRemoteHttpResponse(0L));
 	}

@@ -532,7 +532,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 			ctCollectionResource.
 				getCTCollectionByExternalReferenceCodeHttpResponse(
 					ctCollection.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			ctCollectionResource.
@@ -802,7 +801,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 			404,
 			ctCollectionResource.getCTCollectionHttpResponse(
 				ctCollection.getId()));
-
 		assertHttpResponseStatusCode(
 			404, ctCollectionResource.getCTCollectionHttpResponse(0L));
 	}
@@ -928,7 +926,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 			404,
 			ctCollectionResource.getCTCollectionHttpResponse(
 				ctCollection1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			ctCollectionResource.getCTCollectionHttpResponse(

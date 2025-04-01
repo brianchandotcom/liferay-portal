@@ -237,7 +237,6 @@ public abstract class BaseWishListItemResourceTestCase {
 			wishListItemResource.getWishListItemHttpResponse(
 				wishListItem.getId(), testDeleteWishListItem_getAccountId(),
 				testDeleteWishListItem_getCurrencyCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			wishListItemResource.getWishListItemHttpResponse(

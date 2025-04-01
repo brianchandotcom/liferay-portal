@@ -646,7 +646,6 @@ public abstract class BaseObjectFolderResourceTestCase {
 			404,
 			objectFolderResource.getObjectFolderHttpResponse(
 				objectFolder.getId()));
-
 		assertHttpResponseStatusCode(
 			404, objectFolderResource.getObjectFolderHttpResponse(0L));
 	}

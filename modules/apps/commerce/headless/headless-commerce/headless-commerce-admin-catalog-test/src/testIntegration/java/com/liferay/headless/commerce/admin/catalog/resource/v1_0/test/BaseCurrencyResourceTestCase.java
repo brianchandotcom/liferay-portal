@@ -650,7 +650,6 @@ public abstract class BaseCurrencyResourceTestCase {
 			404,
 			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
 				currency.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
@@ -839,7 +838,6 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, currencyResource.getCurrencyHttpResponse(currency.getId()));
-
 		assertHttpResponseStatusCode(
 			404, currencyResource.getCurrencyHttpResponse(0L));
 	}
@@ -952,7 +950,6 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, currencyResource.getCurrencyHttpResponse(currency1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, currencyResource.getCurrencyHttpResponse(currency2.getId()));
 

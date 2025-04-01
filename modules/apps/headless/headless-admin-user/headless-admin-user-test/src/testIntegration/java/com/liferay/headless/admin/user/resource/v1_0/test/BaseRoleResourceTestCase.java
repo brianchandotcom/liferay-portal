@@ -495,7 +495,6 @@ public abstract class BaseRoleResourceTestCase {
 			404,
 			roleResource.getRoleByExternalReferenceCodeHttpResponse(
 				role.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			roleResource.getRoleByExternalReferenceCodeHttpResponse(
@@ -926,7 +925,6 @@ public abstract class BaseRoleResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, roleResource.getRoleHttpResponse(role.getId()));
-
 		assertHttpResponseStatusCode(404, roleResource.getRoleHttpResponse(0L));
 	}
 
@@ -1033,7 +1031,6 @@ public abstract class BaseRoleResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, roleResource.getRoleHttpResponse(role1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, roleResource.getRoleHttpResponse(role2.getId()));
 

@@ -809,7 +809,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
 					structuredContentFolder.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentFolderResource.
@@ -1799,7 +1798,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
 						structuredContentFolder),
 					structuredContentFolder.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentFolderResource.
@@ -2779,7 +2777,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			structuredContentFolderResource.
 				getStructuredContentFolderHttpResponse(
 					structuredContentFolder.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentFolderResource.

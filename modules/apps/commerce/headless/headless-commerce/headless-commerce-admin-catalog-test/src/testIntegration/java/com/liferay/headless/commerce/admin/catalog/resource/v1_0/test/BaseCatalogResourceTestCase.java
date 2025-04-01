@@ -241,7 +241,6 @@ public abstract class BaseCatalogResourceTestCase {
 			404,
 			catalogResource.getCatalogByExternalReferenceCodeHttpResponse(
 				catalog.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			catalogResource.getCatalogByExternalReferenceCodeHttpResponse(
@@ -453,7 +452,6 @@ public abstract class BaseCatalogResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, catalogResource.getCatalogHttpResponse(catalog.getId()));
-
 		assertHttpResponseStatusCode(
 			404, catalogResource.getCatalogHttpResponse(0L));
 	}
@@ -563,7 +561,6 @@ public abstract class BaseCatalogResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, catalogResource.getCatalogHttpResponse(catalog1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, catalogResource.getCatalogHttpResponse(catalog2.getId()));
 

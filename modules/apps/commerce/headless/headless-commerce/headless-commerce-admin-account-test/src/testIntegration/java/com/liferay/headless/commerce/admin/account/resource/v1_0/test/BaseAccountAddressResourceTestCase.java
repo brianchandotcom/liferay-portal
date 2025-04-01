@@ -256,7 +256,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 			accountAddressResource.
 				getAccountAddressByExternalReferenceCodeHttpResponse(
 					accountAddress.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountAddressResource.
@@ -431,7 +430,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 			404,
 			accountAddressResource.getAccountAddressHttpResponse(
 				accountAddress.getId()));
-
 		assertHttpResponseStatusCode(
 			404, accountAddressResource.getAccountAddressHttpResponse(0L));
 	}
@@ -556,7 +554,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 			404,
 			accountAddressResource.getAccountAddressHttpResponse(
 				accountAddress1.getId()));
-
 		assertHttpResponseStatusCode(
 			200,
 			accountAddressResource.getAccountAddressHttpResponse(

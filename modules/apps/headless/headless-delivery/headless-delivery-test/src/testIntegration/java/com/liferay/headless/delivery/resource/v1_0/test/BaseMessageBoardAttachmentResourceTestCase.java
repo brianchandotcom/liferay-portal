@@ -252,7 +252,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			messageBoardAttachmentResource.
 				getMessageBoardAttachmentHttpResponse(
 					messageBoardAttachment.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardAttachmentResource.
@@ -1039,7 +1038,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getMessageBoardMessageExternalReferenceCode(),
 					messageBoardAttachment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardAttachmentResource.

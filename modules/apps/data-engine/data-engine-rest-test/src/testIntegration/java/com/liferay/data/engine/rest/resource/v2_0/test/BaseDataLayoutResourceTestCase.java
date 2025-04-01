@@ -622,7 +622,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			dataLayoutResource.getDataLayoutHttpResponse(dataLayout.getId()));
-
 		assertHttpResponseStatusCode(
 			404, dataLayoutResource.getDataLayoutHttpResponse(0L));
 	}

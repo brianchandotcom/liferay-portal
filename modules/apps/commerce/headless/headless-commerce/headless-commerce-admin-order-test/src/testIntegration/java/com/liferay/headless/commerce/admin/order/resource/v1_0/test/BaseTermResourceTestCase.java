@@ -626,7 +626,6 @@ public abstract class BaseTermResourceTestCase {
 			404,
 			termResource.getTermByExternalReferenceCodeHttpResponse(
 				term.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			termResource.getTermByExternalReferenceCodeHttpResponse(
@@ -855,7 +854,6 @@ public abstract class BaseTermResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, termResource.getTermHttpResponse(term.getId()));
-
 		assertHttpResponseStatusCode(404, termResource.getTermHttpResponse(0L));
 	}
 
@@ -962,7 +960,6 @@ public abstract class BaseTermResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, termResource.getTermHttpResponse(term1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, termResource.getTermHttpResponse(term2.getId()));
 

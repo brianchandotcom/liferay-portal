@@ -209,7 +209,6 @@ public abstract class BaseExperimentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			experimentResource.getExperimentHttpResponse(experiment.getId()));
-
 		assertHttpResponseStatusCode(
 			404, experimentResource.getExperimentHttpResponse("-"));
 	}

@@ -739,7 +739,6 @@ public abstract class BaseWebUrlResourceTestCase {
 			404,
 			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse(
 				webUrl.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse(
@@ -918,7 +917,6 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, webUrlResource.getWebUrlHttpResponse(webUrl.getId()));
-
 		assertHttpResponseStatusCode(
 			404, webUrlResource.getWebUrlHttpResponse(0L));
 	}
@@ -1026,7 +1024,6 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, webUrlResource.getWebUrlHttpResponse(webUrl1.getId()));
-
 		assertHttpResponseStatusCode(
 			200, webUrlResource.getWebUrlHttpResponse(webUrl2.getId()));
 

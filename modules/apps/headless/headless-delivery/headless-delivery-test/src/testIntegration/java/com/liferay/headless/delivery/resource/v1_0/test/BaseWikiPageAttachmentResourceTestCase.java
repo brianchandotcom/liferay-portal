@@ -252,7 +252,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode(),
 					wikiPageAttachment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			wikiPageAttachmentResource.
@@ -511,7 +510,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			404,
 			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(
 				wikiPageAttachment.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(0L));

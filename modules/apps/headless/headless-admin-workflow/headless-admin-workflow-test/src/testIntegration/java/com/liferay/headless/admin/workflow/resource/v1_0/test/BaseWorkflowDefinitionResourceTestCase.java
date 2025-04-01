@@ -869,7 +869,6 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			404,
 			workflowDefinitionResource.getWorkflowDefinitionHttpResponse(
 				workflowDefinition.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			workflowDefinitionResource.getWorkflowDefinitionHttpResponse(0L));

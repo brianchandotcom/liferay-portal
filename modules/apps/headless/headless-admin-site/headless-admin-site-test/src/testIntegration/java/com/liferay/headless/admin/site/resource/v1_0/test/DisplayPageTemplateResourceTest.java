@@ -995,13 +995,13 @@ public class DisplayPageTemplateResourceTest
 	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateMarkAsDefault()
 		throws Exception {
 
-		DisplayPageTemplate postDisplayPageTemplate =
+		DisplayPageTemplate displayPageTemplate =
 			displayPageTemplateResource.
 				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 					testGroup.getExternalReferenceCode(),
 					randomDisplayPageTemplate());
 
-		postDisplayPageTemplate.setMarkedAsDefault(true);
+		displayPageTemplate.setMarkedAsDefault(true);
 
 		_assertProblemException(
 			"CONFLICT",
@@ -1010,8 +1010,8 @@ public class DisplayPageTemplateResourceTest
 				displayPageTemplateResource.
 					putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 						testGroup.getExternalReferenceCode(),
-						postDisplayPageTemplate.getExternalReferenceCode(),
-						postDisplayPageTemplate));
+						displayPageTemplate.getExternalReferenceCode(),
+						displayPageTemplate));
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

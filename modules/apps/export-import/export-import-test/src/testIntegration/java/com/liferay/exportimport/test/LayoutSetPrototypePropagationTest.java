@@ -109,6 +109,7 @@ import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.Writer;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -164,7 +165,7 @@ public class LayoutSetPrototypePropagationTest
 
 		File larFile = File.createTempFile("corrupt", ".lar");
 
-		try (FileWriter writer = new FileWriter(larFile)) {
+		try (Writer writer = new FileWriter(larFile)) {
 			writer.write(RandomTestUtil.randomString());
 		}
 

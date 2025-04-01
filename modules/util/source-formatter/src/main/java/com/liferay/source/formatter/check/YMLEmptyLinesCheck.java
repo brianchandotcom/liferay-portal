@@ -23,22 +23,12 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _removeEmptyLines(content);
+		content = _fixEmptyLines(content);
 
 		return _removeEmptyLinesAroundDocumentSeparator(content);
 	}
 
-	private String _getLeadingSpaces(String line) {
-		for (int i = 0; i < line.length(); i++) {
-			if (line.charAt(i) != CharPool.SPACE) {
-				return line.substring(0, i);
-			}
-		}
-
-		return line;
-	}
-
-	private String _removeEmptyLines(String content) throws IOException {
+	private String _fixEmptyLines(String content) throws IOException {
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
@@ -50,6 +40,10 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			String multilineLeadingSpaces = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith("{{- define ") && (sb.index() > 0)) {
+					sb.append("\n");
+				}
+
 				if (!insideMultiline) {
 					if (line.endsWith("|") || line.endsWith("|+") ||
 						line.endsWith("|-")) {
@@ -89,6 +83,16 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getLeadingSpaces(String line) {
+		for (int i = 0; i < line.length(); i++) {
+			if (line.charAt(i) != CharPool.SPACE) {
+				return line.substring(0, i);
+			}
+		}
+
+		return line;
 	}
 
 	private String _removeEmptyLinesAroundDocumentSeparator(String content) {

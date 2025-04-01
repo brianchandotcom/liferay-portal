@@ -16,6 +16,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "upgrades", featureFlagKey = "LPD-23840"
 )
 @Meta.OCD(
+	description = "db-schema-definition-exporter-configuration-description",
 	id = "com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration",
 	localization = "content/Language",
 	name = "db-schema-definition-exporter-configuration-name"

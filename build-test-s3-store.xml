@@ -45,16 +45,13 @@
 
 			<beanshell>
 				<![CDATA[
-					import java.text.SimpleDateFormat;
+					import java.time.Instant;
+					import java.time.OffsetDateTime;
 
 					import org.json.JSONArray;
 					import org.json.JSONObject;
 
 					List expiredBuckets = new ArrayList();
-
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss");
-
-					simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 					JSONObject bucketListJSONObject = new JSONObject(project.getProperty("bucket.list"));
 
@@ -69,9 +66,11 @@
 							continue;
 						}
 
-						Date creationDate = simpleDateFormat.parse(bucketJSONObject.getString("CreationDate"));
+						OffsetDateTime offsetDateTime = OffsetDateTime.parse(bucketJSONObject.getString("CreationDate"));
 
-						if (((System.currentTimeMillis() - creationDate.getTime()) / (1000 * 60 * 60)) > 12) {
+						Instant instant = offsetDateTime.toInstant();
+
+						if (((System.currentTimeMillis() - instant.toEpochMilli()) / (1000 * 60 * 60)) > 12) {
 							expiredBuckets.add(bucketName);
 						}
 					}

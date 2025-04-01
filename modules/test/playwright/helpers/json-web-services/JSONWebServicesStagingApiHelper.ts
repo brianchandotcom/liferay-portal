@@ -66,4 +66,74 @@ export class JSONWebServicesStagingApiHelper {
 			}
 		);
 	}
+
+	/**
+	 * Enables remote staging for a given site (group).
+	 *
+	 * @param branchingPrivate
+	 * Whether private pages should support branching.
+	 *
+	 * @param branchingPublic
+	 * Whether public pages should support branching.
+	 *
+	 * @param groupId
+	 * The ID of the group (site) for which staging should be enabled.
+	 *
+	 * @param remoteAddress
+	 * The address of the remote instance.
+	 *
+	 * @param remoteGroupId
+	 * The ID of the group (site) in the remote instance for which staging should be enabled.
+	 *
+	 * @param remotePort
+	 * The port of the remote instance.
+	 *
+	 * @param secureConnection
+	 * Whether the conection should be secure (HTTPS).
+	 *
+	 * @param serviceContext
+	 * Context for the staging operation.
+	 */
+	async enableRemoteStaging({
+		branchingPrivate = false,
+		branchingPublic = false,
+		groupId,
+		remoteAddress = 'localhost',
+		remoteGroupId,
+		remotePort,
+		secureConnection = false,
+		serviceContext = {},
+	}: {
+		branchingPrivate?: boolean;
+		branchingPublic?: boolean;
+		groupId: number | string;
+		remoteAddress?: string;
+		remoteGroupId: string;
+		remotePort: number;
+		secureConnection?: boolean;
+		serviceContext?: Object;
+	}): Promise<void> {
+		const portalURL = liferayConfig.environment.baseUrl;
+		const serviceContextString = JSON.stringify(serviceContext);
+
+		const urlSearchParams = new URLSearchParams();
+		urlSearchParams.append('groupId', groupId.toString());
+		urlSearchParams.append('branchingPrivate', String(branchingPrivate));
+		urlSearchParams.append('branchingPublic', String(branchingPublic));
+		urlSearchParams.append('remoteAddress', remoteAddress);
+		urlSearchParams.append('remoteGroupId', remoteGroupId);
+		urlSearchParams.append('remotePathContext', '');
+		urlSearchParams.append('remotePort', remotePort.toString());
+		urlSearchParams.append('secureConnection', String(secureConnection));
+		urlSearchParams.append('serviceContext', serviceContextString);
+
+		await this.apiHelpers.post(
+			`${portalURL}${this.basePath}/enable-remote-staging`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
 }

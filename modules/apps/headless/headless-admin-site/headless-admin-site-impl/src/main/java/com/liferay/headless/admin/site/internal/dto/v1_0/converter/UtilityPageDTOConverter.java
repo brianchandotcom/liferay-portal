@@ -7,6 +7,8 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
+import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSEOSettings;
+import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSettings;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.model.Layout;
@@ -85,6 +87,23 @@ public class UtilityPageDTOConverter
 						};
 					});
 				setType(() -> _getType(layoutUtilityPageEntry.getType()));
+				setUtilityPageSettings(
+					() -> new UtilityPageSettings() {
+						{
+							setSeoSettings(
+								() -> new UtilityPageSEOSettings() {
+									{
+										setDescription_i18n(
+											() -> LocalizedMapUtil.getI18nMap(
+												true,
+												layout.getDescriptionMap()));
+										setHtmlTitle_i18n(
+											() -> LocalizedMapUtil.getI18nMap(
+												true, layout.getTitleMap()));
+									}
+								});
+						}
+					});
 				setUuid(layoutUtilityPageEntry::getUuid);
 			}
 		};

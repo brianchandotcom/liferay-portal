@@ -254,8 +254,7 @@ public class JournalContentTest {
 				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 				Constants.VIEW, englishLanguageId, _portletRequestModel);
 
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay.getContent());
+		Assert.assertEquals(englishContent, englishArticleDisplay.getContent());
 
 		String spanishLanguageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
 
@@ -264,8 +263,7 @@ public class JournalContentTest {
 				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 				Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
-		Assert.assertEquals(
-			spanishContent, spanishArticleDisplay.getContent());
+		Assert.assertEquals(spanishContent, spanishArticleDisplay.getContent());
 
 		_journalArticleLocalService.removeArticleLocale(
 			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
@@ -275,18 +273,15 @@ public class JournalContentTest {
 			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 			_journalArticle.getDDMTemplateKey());
 
-		englishArticleDisplay =
-			_journalContent.getDisplay(
-				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-				Constants.VIEW, englishLanguageId, _portletRequestModel);
+		englishArticleDisplay = _journalContent.getDisplay(
+			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+			Constants.VIEW, englishLanguageId, _portletRequestModel);
 
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay.getContent());
+		Assert.assertEquals(englishContent, englishArticleDisplay.getContent());
 
-		spanishArticleDisplay =
-			_journalContent.getDisplay(
-				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-				Constants.VIEW, spanishLanguageId, _portletRequestModel);
+		spanishArticleDisplay = _journalContent.getDisplay(
+			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+			Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
 		Assert.assertNotEquals(
 			spanishContent, spanishArticleDisplay.getContent());

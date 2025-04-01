@@ -25,6 +25,7 @@ export class NavigationMenusPage {
 	readonly journalArticleModal: FrameLocator;
 	readonly pagesModal: FrameLocator;
 	readonly previewButton: Locator;
+	readonly saveButton: Locator;
 	readonly selectButton: Locator;
 	readonly submenuModal: FrameLocator;
 	readonly urlModal: FrameLocator;
@@ -63,6 +64,7 @@ export class NavigationMenusPage {
 		);
 		this.pagesModal = page.frameLocator('iframe[title="Select Pages"]');
 		this.previewButton = page.getByRole('button', {name: 'Preview'});
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.selectButton = page.getByRole('button', {name: 'Select'});
 		this.submenuModal = page.frameLocator('iframe[title="Add Submenu"]');
 		this.urlModal = page.frameLocator('iframe[title="Add URL"]');
@@ -112,6 +114,14 @@ export class NavigationMenusPage {
 		}
 
 		await this.page.waitForSelector('iframe', {state: 'detached'});
+	}
+
+	async addOrChangeIcon(iconName: string) {
+		await this.page.getByLabel('Select an Icon').click();
+
+		await this.page.getByLabel('Select ' + iconName + ' icon').click();
+
+		await this.saveButton.click();
 	}
 
 	async addSubmenuItem(submenuName: string) {
@@ -205,7 +215,7 @@ export class NavigationMenusPage {
 
 		await input.fill(menuName);
 
-		await this.page.getByRole('button', {name: 'Save'}).click();
+		await this.saveButton.click();
 
 		await waitForAlert(this.page);
 	}

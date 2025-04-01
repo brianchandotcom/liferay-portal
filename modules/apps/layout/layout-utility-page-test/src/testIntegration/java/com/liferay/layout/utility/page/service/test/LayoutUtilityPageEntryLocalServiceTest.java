@@ -24,17 +24,21 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -233,6 +237,37 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 
 		Assert.assertFalse(
 			layoutUtilityPageEntry1.isDefaultLayoutUtilityPageEntry());
+	}
+
+	@Test
+	@TestInfo("LPD-52440")
+	public void testUpdateLayoutUtilityPageEntry() throws Exception {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				true, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, 0,
+				_serviceContext);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		String title = layout.getTitle(locale);
+
+		Assert.assertEquals(title, layout.getName(locale));
+
+		String name = RandomTestUtil.randomString();
+
+		_layoutUtilityPageEntryService.updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(), name);
+
+		layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertEquals(name, layout.getName(locale));
+		Assert.assertEquals(title, layout.getTitle(locale));
 	}
 
 	private void _testGetExternalReferenceCode(

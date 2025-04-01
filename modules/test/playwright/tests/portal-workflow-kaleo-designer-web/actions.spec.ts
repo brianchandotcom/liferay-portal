@@ -178,8 +178,6 @@ test('can save a workflow definition that has a customer extension action after 
 
 	await diagramViewPage.clickNode('Review');
 
-	await page.getByRole('link', {name: 'action1'}).click();
-
 	await page
 		.locator('#type')
 		.selectOption(
@@ -187,6 +185,35 @@ test('can save a workflow definition that has a customer extension action after 
 		);
 
 	await diagramViewPage.saveWorkflowDefinition();
+
+	await diagramViewPage.publishWorkflowDefinition();
+
+	await expect(
+		page.getByText('Workflow published successfully.')
+	).toBeVisible();
+});
+
+test('can save a workflow definition that uses a script type action filling it type before the action name', async ({
+	actionPage,
+	diagramViewPage,
+	nodePropertiesSidebarPage,
+	page,
+	processBuilderPage,
+}) => {
+	await processBuilderPage.goto();
+
+	await processBuilderPage.clickWorkflowDefinitionName(
+		workflowDefinitionName
+	);
+
+	await diagramViewPage.clickNode('created');
+
+	await nodePropertiesSidebarPage.addActionButton.click();
+
+	await actionPage.selectActionType.selectOption('Groovy');
+	await actionPage.scriptInput.fill('scriptTest');
+	await actionPage.scriptInput.blur();
+	await actionPage.nameInput.fill('Groovy Action');
 
 	await diagramViewPage.publishWorkflowDefinition();
 

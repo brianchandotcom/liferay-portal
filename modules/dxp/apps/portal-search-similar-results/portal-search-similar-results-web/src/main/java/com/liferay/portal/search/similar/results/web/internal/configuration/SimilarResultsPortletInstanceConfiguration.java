@@ -30,7 +30,7 @@ public interface SimilarResultsPortletInstanceConfiguration {
 	public String displayStyleGroupExternalReferenceCode();
 
 	@Meta.AD(
-		description = "display-style-group-id-description",
+		deflt = "0", description = "display-style-group-id-description",
 		name = "display-style-group-id", required = false
 	)
 	public long displayStyleGroupId();

@@ -283,6 +283,10 @@ export function FormInputGeneralPanel({item}) {
 	);
 
 	const configFields = useMemo(() => {
+		if (allowedInputTypes?.includes('friendly-url')) {
+			return [];
+		}
+
 		const fieldSetsWithoutLabel =
 			fragmentEntryLinkRef.current.configuration?.fieldSets
 				?.filter(

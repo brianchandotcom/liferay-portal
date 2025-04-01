@@ -8,6 +8,8 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
+import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSEOSettings;
+import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSettings;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -31,6 +33,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -256,12 +259,22 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId), utilityPage.getName());
 
+		UtilityPageSettings utilityPageSettings =
+			utilityPage.getUtilityPageSettings();
+
+		UtilityPageSEOSettings utilityPageSEOSettings =
+			utilityPageSettings.getSeoSettings();
+
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, utilityPage.getPageSpecifications(), false, nameMap,
-			nameMap, nameMap, LayoutConstants.TYPE_UTILITY, true, true,
+			LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getHtmlTitle_i18n()),
+			LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getDescription_i18n()),
+			LayoutConstants.TYPE_UTILITY, true, true,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		if (layout == null) {

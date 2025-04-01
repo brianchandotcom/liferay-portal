@@ -8,13 +8,13 @@ import {getCurrentSiteId} from '';
 import {config} from '../utils/constants';
 import {request} from '../utils/request';
 
-export const getCoursesAndFirstLessons = async () => {
+export async function getCoursesAndFirstLessons() {
 	const data = await request({
+		method: 'get',
 		url: `${
 			config.moduleEndpoint
 		}scopes/${getCurrentSiteId()}?filter=position eq 0&nestedFields=course,lesson&pageSize=-1`,
-		method: 'get',
 	});
 
 	return data.items;
-};
+}

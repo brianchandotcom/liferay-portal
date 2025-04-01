@@ -318,7 +318,9 @@ public class PageSpecificationResourceImpl
 
 			return _pageSpecificationDTOConverter.toDTO(
 				LayoutUtil.updateLayout(
-					layout, pageSpecification.getSettings(), serviceContext));
+					layout, layout.getNameMap(), layout.getTitleMap(),
+					layout.getDescriptionMap(), pageSpecification.getSettings(),
+					serviceContext));
 		}
 
 		if (!Objects.equals(
@@ -335,7 +337,9 @@ public class PageSpecificationResourceImpl
 		return _pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.updateLayout(
 				(ContentPageSpecification)pageSpecification, layout,
-				WorkflowConstants.STATUS_DRAFT, serviceContext));
+				layout.getNameMap(), layout.getTitleMap(),
+				layout.getDescriptionMap(), WorkflowConstants.STATUS_DRAFT,
+				serviceContext));
 	}
 
 	@Override

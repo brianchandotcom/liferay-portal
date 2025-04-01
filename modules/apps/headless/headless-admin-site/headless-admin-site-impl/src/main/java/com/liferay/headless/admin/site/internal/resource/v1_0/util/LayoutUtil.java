@@ -157,11 +157,12 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			draftContentPageSpecification, layout.fetchDraftLayout(),
-			draftLayoutStatus, serviceContext);
+			draftContentPageSpecification, layout.fetchDraftLayout(), nameMap,
+			titleMap, descriptionMap, draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			publishedContentPageSpecification, layout, status, serviceContext);
+			publishedContentPageSpecification, layout, nameMap, titleMap,
+			descriptionMap, status, serviceContext);
 	}
 
 	public static Layout addDraftToLayout(
@@ -192,7 +193,8 @@ public class LayoutUtil {
 		}
 
 		return updateLayout(
-			contentPageSpecification, draftLayout,
+			contentPageSpecification, draftLayout, layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
@@ -215,19 +217,19 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateContentLayout(
-			long plid, PageSpecification[] pageSpecifications,
+			Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		if (pageSpecifications == null) {
-			return LayoutLocalServiceUtil.getLayout(plid);
+			return layout;
 		}
 
 		if (pageSpecifications.length != 2) {
 			throw new UnsupportedOperationException();
 		}
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		ContentPageSpecification draftContentPageSpecification = null;
 		ContentPageSpecification publishedContentPageSpecification =
@@ -283,20 +285,25 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			draftContentPageSpecification, draftLayout, draftLayoutStatus,
-			serviceContext);
+			draftContentPageSpecification, draftLayout, nameMap, titleMap,
+			descriptionMap, draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			publishedContentPageSpecification, layout, status, serviceContext);
+			publishedContentPageSpecification, layout, layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(), status,
+			serviceContext);
 	}
 
 	public static Layout updateLayout(
 			ContentPageSpecification contentPageSpecification, Layout layout,
-			int status, ServiceContext serviceContext)
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, int status,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		updateLayout(
-			layout, contentPageSpecification.getSettings(), serviceContext);
+			layout, nameMap, titleMap, descriptionMap,
+			contentPageSpecification.getSettings(), serviceContext);
 
 		_updatePageExperiences(
 			layout, contentPageSpecification.getPageExperiences(),
@@ -308,7 +315,9 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateLayout(
-			Layout layout, Settings settings, ServiceContext serviceContext)
+			Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Settings settings, ServiceContext serviceContext)
 		throws Exception {
 
 		layout = _updateLookAndFeel(layout, settings);
@@ -320,8 +329,7 @@ public class LayoutUtil {
 
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getParentLayoutId(), layout.getNameMap(),
-			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getParentLayoutId(), nameMap, titleMap, descriptionMap,
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, _getStyleBookEntryId(layout, settings),

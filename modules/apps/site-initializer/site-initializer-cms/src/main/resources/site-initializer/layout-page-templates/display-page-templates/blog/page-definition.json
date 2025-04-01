@@ -1,6 +1,6 @@
 {
 	"pageElement": {
-		"id": "57d4eed3-1c3a-ba8e-a88e-6f62f43facdc",
+		"id": "57d4eedz3-1c3a-ba8e-a88e-6f62f43facdc",
 		"pageElements": [
 			{
 				"definition": {
@@ -18,25 +18,6 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "localization-select"
-							},
-							"fragmentConfig": {
-								"hideLanguageLabel": false,
-								"size": "small"
-							},
-							"fragmentFields": [
-							],
-							"fragmentStyle": {
-								"marginBottom": "3"
-							},
-							"indexed": true
-						},
-						"id": "9e663e94-06aa-bd8b-d432-3432ba397cea",
-						"type": "Fragment"
-					},
-					{
-						"definition": {
 							"indexed": true,
 							"layout": {
 								"widthType": "Fixed"
@@ -44,6 +25,25 @@
 						},
 						"id": "042e3816-fb17-6507-34c7-c06f5ef78878",
 						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "localization-select"
+									},
+									"fragmentConfig": {
+										"hideLanguageLabel": false,
+										"size": "small"
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"marginBottom": "3"
+									},
+									"indexed": true
+								},
+								"id": "9e663e94-06aa-bd8b-d432-3432ba397cea",
+								"type": "Fragment"
+							},
 							{
 								"definition": {
 									"formConfig": {

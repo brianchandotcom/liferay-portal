@@ -31,6 +31,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
+import com.liferay.object.model.ObjectValidationRuleTable;
 import com.liferay.object.scripting.exception.ObjectScriptingException;
 import com.liferay.object.scripting.validator.ObjectScriptingValidator;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -47,6 +48,7 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngineRegistry;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -436,20 +438,23 @@ public class ObjectValidationRuleLocalServiceImpl
 				objectEntry.getObjectDefinitionId(), true);
 		}
 		else {
-			objectValidationRules = TransformUtil.transform(
-				externalReferenceCodes,
-				externalReferenceCode -> {
-					ObjectValidationRule objectValidationRule =
-						fetchObjectValidationRule(
-							externalReferenceCode,
-							objectEntry.getObjectDefinitionId());
-
-					if (objectValidationRule.isActive()) {
-						return objectValidationRule;
-					}
-
-					return null;
-				});
+			objectValidationRules = objectValidationRulePersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+				).from(
+					ObjectValidationRuleTable.INSTANCE
+				).where(
+					ObjectValidationRuleTable.INSTANCE.externalReferenceCode.in(
+						externalReferenceCodes.toArray(new String[0])
+					).and(
+						ObjectValidationRuleTable.INSTANCE.companyId.eq(
+							objectEntry.getCompanyId())
+					).and(
+						ObjectValidationRuleTable.INSTANCE.objectDefinitionId.
+							eq(objectEntry.getObjectDefinitionId())
+					).and(
+						ObjectValidationRuleTable.INSTANCE.active.eq(true)
+					)
+				));
 		}
 
 		_validate(

@@ -124,4 +124,12 @@ export class ModelBuilderDiagramPage {
 			{waitUntil: 'load'}
 		);
 	}
+
+	async openObjectDefinitionMenu(objectDefinitionLabel: string) {
+		this.page
+			.locator('.lfr-objects__model-builder-node-header-label-container')
+			.filter({hasText: objectDefinitionLabel})
+			.getByRole('button')
+			.click();
+	}
 }

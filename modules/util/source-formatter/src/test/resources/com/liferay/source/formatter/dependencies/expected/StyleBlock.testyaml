@@ -2,23 +2,12 @@ components:
     schemas:
         ExternalLink :
             description: |-
-              Represents a link
-               to
-               an entity 
-              in a 
-              different
-               domain.
-              
-              www.liferay-server2.com
-              DUPLICATED EMPTYLINES:
-              
-              
-              www.liferay-server1.com
-              ONE EMPTYLINE:
-              
-              DUPULICATE SPACE(  )
-              END WITH SPACE  
-              TOW TABS		
+                Represents a link
+                 to
+                 an entity
+                in a
+                different
+                 domain.
             properties:
                 dateCreated:
                     description:
@@ -36,11 +25,11 @@ components:
                     type: string
 info:
     description: |-
-        This 
+        This
         is
          the description
     title: |-
-        End 
+        End
         of
          file
     version:
@@ -59,7 +48,7 @@ application:
     baseURI: "/headless-delivery"
     className: "HeadlessDeliveryApplication"
     name: |-
-       "Liferay.Headless.Delivery"
+        "Liferay.Headless.Delivery"
 author: "Javier Gamarra"
 clientDir: "../headless-delivery-client/src/main/java"
 testDir: "../headless-delivery-test/src/testIntegration/java"

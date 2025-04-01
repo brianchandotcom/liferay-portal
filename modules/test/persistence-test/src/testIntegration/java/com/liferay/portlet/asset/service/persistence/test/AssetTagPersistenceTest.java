@@ -256,6 +256,15 @@ public class AssetTagPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_N() throws Exception {
+		_persistence.countByG_N(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_N(0L, "null");
+
+		_persistence.countByG_N(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_LikeN() throws Exception {
 		_persistence.countByG_LikeN(RandomTestUtil.nextLong(), "");
 

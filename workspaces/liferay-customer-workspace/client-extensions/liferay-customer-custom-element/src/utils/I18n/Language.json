@@ -91,6 +91,7 @@
 	"cancel": "Cancel",
 	"cancel-business-event": "Cancel Business Event",
 	"cancel-event": "Cancel Event",
+	"cannot-edit-canceled-or-completed-events": "Cannot edit canceled or completed events.",
 	"categories": "Categories",
 	"category": "Category",
 	"change": "Change",

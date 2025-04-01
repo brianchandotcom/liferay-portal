@@ -194,11 +194,12 @@ public class LayoutSetPrototypePropagationTest
 
 		Thread.sleep(2000);
 
-		BackgroundTask failedTask = BackgroundTaskManagerUtil.getBackgroundTask(
-			backgroundTaskId);
+		BackgroundTask failedBackgroundTask =
+			BackgroundTaskManagerUtil.getBackgroundTask(backgroundTaskId);
 
 		Assert.assertEquals(
-			BackgroundTaskConstants.STATUS_FAILED, failedTask.getStatus());
+			BackgroundTaskConstants.STATUS_FAILED,
+			failedBackgroundTask.getStatus());
 
 		List<BackgroundTask> backgroundTasks =
 			BackgroundTaskManagerUtil.getBackgroundTasks(

@@ -14,6 +14,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -143,6 +146,38 @@ public class BatchEnginePortletDataHandlerTest {
 		_companyGroupId = companyGroup.getGroupId();
 
 		_larFile = _exportLayouts();
+	}
+
+	@Test
+	@TestInfo("LPD-51604")
+	public void testEnableLocalStaging() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.lifecycle." +
+					"LoggerExportImportLifecycleListener",
+				LoggerTestUtil.ERROR)) {
+
+			_stagingLocalService.enableLocalStaging(
+				TestPropsValues.getUserId(), group, false, false,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			for (LogEntry logEntry : logEntries) {
+				Assert.assertFalse(
+					logEntry.getMessage(),
+					logEntry.getMessage(
+					).contains(
+						"Portlet export failed for portlet com_liferay_object" +
+							"_web_internal_object_definitions_portlet" +
+								"_ObjectDefinitionsPortlet"
+					));
+			}
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
 	}
 
 	@Test
@@ -544,5 +579,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

@@ -337,10 +337,10 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = _removeWhitespaceBeforeCloseBracket(line);
-				line = _removeWhitespaceBeforeCloseCurlyBrace(line);
 				line = _removeWhitespaceAfterOpenBracket(line);
 				line = _removeWhitespaceAfterOpenCurlyBrace(line);
+				line = _removeWhitespaceBeforeCloseBracket(line);
+				line = _removeWhitespaceBeforeCloseCurlyBrace(line);
 
 				sb.append(line);
 

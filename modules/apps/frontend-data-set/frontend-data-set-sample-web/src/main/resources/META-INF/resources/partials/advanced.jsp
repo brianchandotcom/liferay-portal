@@ -28,5 +28,6 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 	propsTransformer="{AdvancedPropsTransformer} from frontend-data-set-sample-web"
 	selectedItemsKey="id"
 	selectionType="multiple"
+	showSelectAll="<%= true %>"
 	style="fluid"
 />

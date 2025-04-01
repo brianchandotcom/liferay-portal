@@ -51,7 +51,11 @@ public class FDSSampleDisplayContext {
 			new FDSActionDropdownItem(
 				null, null, null, false, "#", "trash", "delete",
 				LanguageUtil.get(_fdsRequestHelper.getRequest(), "delete"),
-				null, "lg", null, null, null, "modal", null, null, null));
+				null, "lg", null, null, null, "modal", null, null, null),
+			new FDSActionDropdownItem(
+				"/o/c/fdssamples/", "check", "testBulkAction",
+				LanguageUtil.get(_fdsRequestHelper.getRequest(), "test"),
+				"POST", null, null));
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {

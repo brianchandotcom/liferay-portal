@@ -781,10 +781,10 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 		await test.step('Check the bulk actions are listed', async () => {
 			await expect(
 				page.locator('.dropdown-menu.show').getByRole('menuitem')
-			).toHaveCount(2);
+			).toHaveCount(3);
 			await expect(
 				page.locator('.dropdown-menu.show').getByRole('menuitem')
-			).toHaveText(['Label', 'Delete']);
+			).toHaveText(['Label', 'Delete', 'Test']);
 		});
 
 		await test.step('Close ellipsis actions menu', async () => {
@@ -1078,6 +1078,89 @@ test('Use client extensions', async ({fdsSamplePage, page}) => {
 		expect(await bodyRows.count()).toEqual(1);
 	});
 });
+
+test(
+	'Check Select All behavior',
+	{tag: '@LPD-52063'},
+	async ({fdsSamplePage, page}) => {
+		const itemsSelectorCheckbox = page.locator(
+			'input[name="items-selector"]'
+		);
+		let sentItems: Array<number>;
+		let sentKeyValues: Array<number>;
+		let sentSelectAll: boolean;
+
+		await page.route('/o/c/fdssamples/', async (route, request) => {
+			if (request.method() === 'POST') {
+				const postData = request.postDataJSON();
+
+				sentItems = postData.items;
+				sentKeyValues = postData.keyValues;
+				sentSelectAll = postData.selectAll;
+			}
+
+			await route.continue();
+		});
+
+		await test.step('Check Select All buton selects all elements', async () => {
+			await itemsSelectorCheckbox.click();
+
+			await expect(
+				page.getByText('10 of 75 Items Selected')
+			).toBeVisible();
+
+			await page.getByText('Select All').click();
+
+			await expect(
+				page.getByText('All Selected (75 of 75 Items)')
+			).toBeVisible();
+		});
+
+		await test.step('Deselect an element disables Select All flag', async () => {
+			await fdsSamplePage.table.container
+				.locator('tbody .cell-select-item')
+				.first()
+				.getByRole('checkbox')
+				.uncheck();
+
+			await expect(
+				page.getByText('9 of 75 Items Selected')
+			).toBeVisible();
+
+			await expect(page.getByText('Select All')).not.toBeVisible();
+		});
+
+		await test.step('Without Select All flag active, requests sent actual item selection to bulk actions', async () => {
+			await page.locator('.bulk-actions').getByLabel('Actions').click();
+
+			await page
+				.locator('.dropdown-menu.show')
+				.getByRole('menuitem', {name: 'test'})
+				.click();
+
+			expect(sentItems).toHaveLength(9);
+			expect(sentKeyValues).toHaveLength(9);
+			expect(sentSelectAll).toBe(false);
+		});
+
+		await test.step('With Select All flag active, requests sent the flag instead of selected items', async () => {
+			await itemsSelectorCheckbox.click();
+
+			await page.getByText('Select All').click();
+
+			await page.locator('.bulk-actions').getByLabel('Actions').click();
+
+			await page
+				.locator('.dropdown-menu.show')
+				.getByRole('menuitem', {name: 'test'})
+				.click();
+
+			expect(sentItems).toEqual([]);
+			expect(sentKeyValues).toEqual([]);
+			expect(sentSelectAll).toBe(true);
+		});
+	}
+);
 
 const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
 

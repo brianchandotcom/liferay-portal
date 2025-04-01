@@ -4,7 +4,9 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/constants';
 import {openModal} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 
 import CustomAuthorTableCell from './CustomAuthorTableCell';
 
@@ -43,7 +45,7 @@ export default function propsTransformer({
 		onBulkActionItemClick({
 			action,
 			loadData,
-			selectedData: {items, keyValues},
+			selectedData: {items, keyValues, selectAll},
 		}: any) {
 			if (action.data.id === 'sampleBulkAction') {
 				openModal({
@@ -72,6 +74,14 @@ export default function propsTransformer({
 					],
 					size: 'md',
 					title: 'You selected:',
+				});
+			}
+
+			if (action.data.id === 'testBulkAction') {
+				fetch(action.href, {
+					body: JSON.stringify({items, keyValues, selectAll}),
+					headers: DEFAULT_FETCH_HEADERS,
+					method: action.data.method,
 				});
 			}
 		},

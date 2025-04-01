@@ -98,11 +98,32 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		if (definitionLines[0].endsWith("|-")) {
+			String leadingSpaces = null;
+			int leadingSpacesLength = 0;
 			StringBundler sb = new StringBundler(definitionLines.length * 3);
 
-			for (String line : definitionLines) {
-				sb.append(expectedIndent);
-				sb.append(line.substring(indent.length()));
+			for (int i = 0; i < definitionLines.length; i++) {
+				if (i == 0) {
+					leadingSpaces = _getLeadingSpaces(definitionLines[i]);
+
+					leadingSpacesLength = leadingSpaces.length();
+
+					sb.append(expectedIndent);
+					sb.append(
+						definitionLines[i].substring(leadingSpacesLength));
+					sb.append("\n");
+
+					continue;
+				}
+
+				if (i == 1) {
+					leadingSpaces = _getLeadingSpaces(definitionLines[i]);
+
+					leadingSpacesLength = leadingSpaces.length();
+				}
+
+				sb.append(expectedIndent + StringPool.FOUR_SPACES);
+				sb.append(definitionLines[i].substring(leadingSpacesLength));
 				sb.append("\n");
 			}
 
@@ -198,7 +219,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 				if (!newDefinition.equals(definition)) {
 					content = StringUtil.replaceFirst(
-						content, definition, newDefinition, pos);
+						content, definition, newDefinition, 0);
 				}
 
 				pos = pos + newDefinition.length() + 1;
@@ -280,6 +301,16 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return content;
+	}
+
+	private String _getLeadingSpaces(String line) {
+		for (int i = 0; i < line.length(); i++) {
+			if (line.charAt(i) != CharPool.SPACE) {
+				return line.substring(0, i);
+			}
+		}
+
+		return line;
 	}
 
 	private boolean _hasMapInsideList(String[] lines) {

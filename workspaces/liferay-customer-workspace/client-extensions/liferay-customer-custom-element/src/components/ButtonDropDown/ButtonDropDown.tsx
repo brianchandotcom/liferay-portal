@@ -24,6 +24,7 @@ interface IProps {
 	customDropDownButton?: any;
 	items: IItem[];
 	label: string;
+	menuElementAttrs?: React.HTMLAttributes<HTMLDivElement>;
 }
 
 const ButtonDropDown = ({

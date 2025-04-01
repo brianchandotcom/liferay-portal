@@ -7828,7 +7828,7 @@ ${docker.start.error}</fail>
 						<equals arg1="${database.type}" arg2="mysql" />
 					</or>
 					<then>
-						<property name="docker.database.wait.condition">mysqladmin ping --host=${database.host} --silent</property>
+						<property name="docker.database.wait.condition">mysqladmin ping > /dev/null 2>&amp;1</property>
 					</then>
 				</elseif>
 				<elseif>

@@ -9,6 +9,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {remoteStagingApiHelperTest} from '../../fixtures/remoteStagingApiHelpersTest';
+import {performLoginViaApi} from '../../utils/performLogin';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -17,6 +19,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
 	}),
+	remoteStagingApiHelperTest,
 );
 
 test(
@@ -24,6 +27,8 @@ test(
 	{tag: '@LPS-81950'},
 	async ({
 		apiHelpers,
+		page,
+		remoteStagingApiHelper,
 	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'Site Name',
@@ -38,5 +43,23 @@ test(
 			},
 			title: 'Staging Test Page',
 		});
+
+		const remoteUrl = remoteStagingApiHelper.baseUrl.substring(
+			0,
+			remoteStagingApiHelper.baseUrl.length - 3
+		);
+
+		await performLoginViaApi({
+			apiHelpers: remoteStagingApiHelper,
+			loginUrl: remoteUrl,
+			page,
+			screenName: 'test',
+		});
+
+		const remoteSite = await remoteStagingApiHelper.headlessSite.createSite(
+			{
+				name: 'Remote Site Name',
+			}
+		);
 	}
 );

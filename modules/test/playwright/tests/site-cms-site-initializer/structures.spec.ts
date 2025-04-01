@@ -36,9 +36,6 @@ test(
 
 		await structuresPage.goto();
 
-		const row = structuresPage.getItem(stucctureName);
-		await row.waitFor();
-
 		await structuresPage.execItemAction({
 			action: 'Delete',
 			filter: stucctureName,
@@ -47,7 +44,7 @@ test(
 			type: 'success',
 		});
 
-		await expect(row).toBeHidden();
+		await expect(structuresPage.getItem(stucctureName)).toBeHidden();
 	}
 );
 
@@ -64,9 +61,6 @@ test(
 
 		await structuresPage.goto();
 
-		const row = structuresPage.getItem(stucctureName);
-		await row.waitFor();
-
 		await structuresPage.execItemAction({
 			action: 'Delete',
 			filter: stucctureName,
@@ -81,6 +75,6 @@ test(
 			type: 'success',
 		});
 
-		await expect(row).toBeHidden();
+		await expect(structuresPage.getItem(stucctureName)).toBeHidden();
 	}
 );

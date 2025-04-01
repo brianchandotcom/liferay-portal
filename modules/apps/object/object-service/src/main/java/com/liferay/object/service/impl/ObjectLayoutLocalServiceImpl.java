@@ -336,7 +336,7 @@ public class ObjectLayoutLocalServiceImpl
 			List<ObjectLayoutColumn> objectLayoutColumns)
 		throws PortalException {
 
-		return TransformUtil.transform(
+		return TransformUtil.unsafeTransform(
 			objectLayoutColumns,
 			objectLayoutColumn -> _addObjectLayoutColumn(
 				user, objectDefinitionId, objectLayoutColumn.getObjectFieldId(),

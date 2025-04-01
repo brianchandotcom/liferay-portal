@@ -124,5 +124,19 @@ test(
 			layoutFriendlyURL: layout.friendlyURL,
 			siteFriendlyUrl: site.friendlyUrlPath,
 		});
+
+		await performLoginViaApi({
+			apiHelpers: remoteStagingApiHelper,
+			loginUrl: remoteUrl,
+			page,
+			screenName: 'test',
+		});
+
+		await page.goto(`${remoteUrl}/web${remoteSite.friendlyUrlPath}`);
+
+		expect(
+			page.getByRole('heading', {name: 'WC WebContent Title'})
+		).toBeVisible();
+		expect(page.getByText('WC WebContent Content')).toBeVisible();
 	}
 );

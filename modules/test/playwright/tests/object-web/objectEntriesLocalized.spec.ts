@@ -7,6 +7,7 @@ import {
 	ObjectDefinitionAPI,
 	ObjectField,
 	ObjectFieldAPI,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -1144,6 +1145,183 @@ test.describe('Localized object entries are saved correctly', () => {
 		await catalanOption.first().click();
 
 		await expectFinalCatalanState();
+	});
+});
+
+test.describe('Manage object entries through Page Templates', () => {
+	test('can view all entries related to an object in the relationship field', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields: ObjectField[] = [
+			{
+				DBType: 'Boolean',
+				businessType: 'Boolean',
+				externalReferenceCode: 'booleanField',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: 'booleanField'},
+				listTypeDefinitionId: 0,
+				localized: true,
+				name: 'booleanField',
+				required: false,
+				system: false,
+				type: 'Boolean',
+			},
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'textField',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: '',
+				label: {en_US: 'textField'},
+				listTypeDefinitionId: 0,
+				localized: true,
+				name: 'textField',
+				required: false,
+				system: false,
+				type: 'String',
+			},
+		];
+
+		const objectDefinitionExternalReferenceCode =
+			'ObjectDefinition' + getRandomInt();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition1} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				externalReferenceCode: objectDefinitionExternalReferenceCode,
+				label: {
+					en_US: objectDefinitionExternalReferenceCode,
+				},
+				name: objectDefinitionExternalReferenceCode,
+				objectFields,
+				objectFolderExternalReferenceCode: 'default',
+				pluralLabel: {
+					en_US: objectDefinitionExternalReferenceCode,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {code: 0},
+				titleObjectFieldName: 'booleanField',
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipLabel =
+			'objectRelationshipLabel' + getRandomInt();
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition1.externalReferenceCode,
+			{
+				label: {
+					en_US: objectRelationshipLabel,
+				},
+				name: objectRelationshipName,
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				objectDefinitionId1: objectDefinition1.id,
+				objectDefinitionId2: objectDefinition2.id,
+				objectDefinitionName2: objectDefinition2.name,
+				type: 'oneToMany',
+			}
+		);
+
+		const applicationName =
+			'c/' + objectDefinition1.name.toLowerCase() + 's';
+
+		const itemValues = [];
+
+		for (let i = 0; i <= 15; i++) {
+			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					booleanField_i18n: {
+						en_US: false,
+						pt_BR: true,
+					},
+					textField_i18n: {
+						en_US: 'entry_en_US' + i,
+						pt_BR: 'entry_pt_BR' + i,
+					},
+				},
+				applicationName
+			);
+
+			itemValues.push({
+				booleanField: objectEntry.booleanField_i18n['pt_BR'],
+				textField: objectEntry.textField_i18n['pt_BR'],
+			});
+		}
+
+		await viewObjectEntriesPage.goto(objectDefinition2.className, 'pt');
+
+		siteLanguage = 'pt';
+
+		await viewObjectEntriesPage.clickAddObjectEntry();
+
+		await page.getByPlaceholder('Buscar', {exact: true}).click();
+
+		itemValues.forEach((itemValue, index) => {
+			expect(
+				page
+					.getByRole('menuitem', {
+						exact: true,
+						name: String(itemValue.booleanField),
+					})
+					.nth(index)
+			).toBeVisible();
+		});
+
+		await objectDefinitionAPIClient.patchObjectDefinition(
+			objectDefinition1.id,
+			{
+				titleObjectFieldName: 'textField',
+			}
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition2.className, 'pt');
+
+		await viewObjectEntriesPage.clickAddObjectEntry();
+
+		await page.getByPlaceholder('Buscar', {exact: true}).click();
+
+		itemValues.forEach((itemValue) => {
+			expect(
+				page.getByRole('menuitem', {
+					exact: true,
+					name: String(itemValue.textField),
+				})
+			).toBeVisible();
+		});
 	});
 });
 

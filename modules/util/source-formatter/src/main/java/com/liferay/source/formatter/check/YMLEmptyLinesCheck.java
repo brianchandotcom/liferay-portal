@@ -50,21 +50,14 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			String multilineLeadingSpaces = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (!insideMultiline &&
-					(line.endsWith("|") || line.endsWith("|+") ||
-					 line.endsWith("|-"))) {
-
-					insideMultiline = true;
-					multilineLeadingSpaces = _getLeadingSpaces(line);
-
-					sb.append(line);
-
-					sb.append("\n");
-
-					continue;
-				}
-
 				if (!insideMultiline) {
+					if (line.endsWith("|") || line.endsWith("|+") ||
+						line.endsWith("|-")) {
+
+						insideMultiline = true;
+						multilineLeadingSpaces = _getLeadingSpaces(line);
+					}
+
 					if (Validator.isBlank(line)) {
 						continue;
 					}
@@ -83,7 +76,7 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 				leadingSpaces = _getLeadingSpaces(line);
 
 				if (!Validator.isBlank(line) &&
-					(leadingSpaces.length() <
+					(leadingSpaces.length() <=
 						multilineLeadingSpaces.length())) {
 
 					insideMultiline = false;

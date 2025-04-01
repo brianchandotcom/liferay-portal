@@ -5,6 +5,7 @@
 
 import {
 	ObjectDefinition,
+	ObjectDefinitionApi,
 	ObjectRelationshipApi,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
@@ -108,44 +109,62 @@ test(
 			ObjectRelationshipApi
 		);
 
-		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			objectDefinition1.externalReferenceCode,
-			{
-				label: {
-					en_US: objectRelationshipLabel,
-				},
-				name: objectRelationshipName,
-				objectDefinitionExternalReferenceCode1:
-					objectDefinition1.externalReferenceCode,
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition2.externalReferenceCode,
-				objectDefinitionId1: objectDefinition1.id,
-				objectDefinitionId2: objectDefinition2.id,
-				objectDefinitionName2: objectDefinition2.name,
-				type: 'oneToMany',
-			}
-		);
+		const {body: objectRelationship} =
+			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition1.externalReferenceCode,
+				{
+					label: {
+						en_US: objectRelationshipLabel,
+					},
+					name: objectRelationshipName,
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition1.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId1: objectDefinition1.id,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: 'oneToMany',
+				}
+			);
 
-		await structuresPage.goto();
+		try {
+			await structuresPage.goto();
 
-		await structuresPage.execItemAction({
-			action: 'Delete',
-			filter: objectDefinition1.name,
-		});
+			await structuresPage.execItemAction({
+				action: 'Delete',
+				filter: objectDefinition1.name,
+			});
 
-		await expect(
-			page.getByRole('heading', {name: 'Deletion Not Allowed'})
-		).toBeVisible();
+			await expect(
+				page.getByRole('heading', {name: 'Deletion Not Allowed'})
+			).toBeVisible();
 
-		await page.getByRole('button', {name: 'OK'}).click();
+			await page.getByRole('button', {name: 'OK'}).click();
 
-		await structuresPage.execItemAction({
-			action: 'Delete',
-			filter: objectDefinition2.name,
-		});
+			await structuresPage.execItemAction({
+				action: 'Delete',
+				filter: objectDefinition2.name,
+			});
 
-		await expect(
-			page.getByRole('heading', {name: 'Deletion Not Allowed'})
-		).toBeVisible();
+			await expect(
+				page.getByRole('heading', {name: 'Deletion Not Allowed'})
+			).toBeVisible();
+		}
+		finally {
+			await objectRelationshipApiClient.deleteObjectRelationship(
+				objectRelationship.id
+			);
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			await objectDefinitionAPIClient.deleteObjectDefinition(
+				objectDefinition1.id
+			);
+			await objectDefinitionAPIClient.deleteObjectDefinition(
+				objectDefinition2.id
+			);
+		}
 	}
 );

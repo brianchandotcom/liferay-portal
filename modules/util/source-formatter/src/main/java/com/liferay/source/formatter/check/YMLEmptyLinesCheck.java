@@ -102,9 +102,7 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			return trimmedContent.substring(0, trimmedContent.length() - 3);
 		}
 
-		trimmedContent = trimmedContent.replaceAll("\n\n---", "\n---");
-
-		return trimmedContent.replaceAll("---\n\n", "---\n");
+		return content;
 	}
 
 }

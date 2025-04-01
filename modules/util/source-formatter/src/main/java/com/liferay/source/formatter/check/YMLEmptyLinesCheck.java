@@ -5,6 +5,12 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.IOException;
 
 /**
@@ -17,7 +23,79 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
+		content = _removeEmptyLines(content);
+
 		return _removeEmptyLinesAroundDocumentSeparator(content);
+	}
+
+	private String _getLeadingSpaces(String line) {
+		for (int i = 0; i < line.length(); i++) {
+			if (line.charAt(i) != CharPool.SPACE) {
+				return line.substring(0, i);
+			}
+		}
+
+		return line;
+	}
+
+	private String _removeEmptyLines(String content) throws IOException {
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			boolean insideMultiline = false;
+			String leadingSpaces = null;
+			String line = null;
+			String multilineLeadingSpaces = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (!insideMultiline &&
+					(line.endsWith("|") || line.endsWith("|+") ||
+					 line.endsWith("|-"))) {
+
+					insideMultiline = true;
+					multilineLeadingSpaces = _getLeadingSpaces(line);
+
+					sb.append(line);
+
+					sb.append("\n");
+
+					continue;
+				}
+
+				if (!insideMultiline) {
+					if (Validator.isBlank(line)) {
+						continue;
+					}
+
+					sb.append(line);
+
+					sb.append("\n");
+
+					continue;
+				}
+
+				sb.append(line);
+
+				sb.append("\n");
+
+				leadingSpaces = _getLeadingSpaces(line);
+
+				if (!Validator.isBlank(line) &&
+					(leadingSpaces.length() <
+						multilineLeadingSpaces.length())) {
+
+					insideMultiline = false;
+				}
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private String _removeEmptyLinesAroundDocumentSeparator(String content) {

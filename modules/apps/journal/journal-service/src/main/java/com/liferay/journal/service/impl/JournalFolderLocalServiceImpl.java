@@ -124,6 +124,9 @@ public class JournalFolderLocalServiceImpl
 		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
+		folder.setStatusByUserId(user.getUserId());
+		folder.setStatusByUserName(user.getFullName());
+		folder.setStatusDate(serviceContext.getModifiedDate(new Date()));
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		folder = journalFolderPersistence.update(folder);
@@ -1392,6 +1395,8 @@ public class JournalFolderLocalServiceImpl
 
 		_validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
 
+		User user = _userLocalService.getUser(userId);
+
 		long oldParentFolderId = folder.getParentFolderId();
 
 		if (oldParentFolderId != parentFolderId) {
@@ -1402,6 +1407,9 @@ public class JournalFolderLocalServiceImpl
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setRestrictionType(restrictionType);
+		folder.setStatusByUserId(user.getUserId());
+		folder.setStatusByUserName(user.getFullName());
+		folder.setStatusDate(serviceContext.getModifiedDate(new Date()));
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		folder = journalFolderPersistence.update(folder);

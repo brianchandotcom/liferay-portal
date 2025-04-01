@@ -261,7 +261,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, utilityPage.getPageSpecifications(), false, titleMap,
-			LayoutConstants.TYPE_UTILITY, true, true,
+			titleMap, titleMap, LayoutConstants.TYPE_UTILITY, true, true,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		if (layout == null) {

@@ -50,8 +50,9 @@ public class LayoutUtil {
 
 	public static Layout addContentLayout(
 			long groupId, PageSpecification[] pageSpecifications,
-			boolean privateLayout, Map<Locale, String> titleMap, String type,
-			boolean hidden, boolean system, int status,
+			boolean privateLayout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String type, boolean hidden, boolean system, int status,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -142,7 +143,7 @@ public class LayoutUtil {
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			publishedContentPageSpecification.getExternalReferenceCode(),
 			serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,
-			titleMap, titleMap, null, null, null, type,
+			nameMap, titleMap, descriptionMap, null, null, type,
 			typeSettingsUnicodeProperties.toString(), hidden, system,
 			new HashMap<>(), 0L, serviceContext);
 

@@ -197,9 +197,19 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
+		UtilityPageSettings utilityPageSettings =
+			utilityPage.getUtilityPageSettings();
+
+		UtilityPageSEOSettings utilityPageSEOSettings =
+			utilityPageSettings.getSeoSettings();
+
 		LayoutUtil.updateContentLayout(
-			layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), utilityPage.getPageSpecifications(),
+			layout, layout.getNameMap(),
+			LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getHtmlTitle_i18n()),
+			LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getDescription_i18n()),
+			utilityPage.getPageSpecifications(),
 			_getServiceContext(groupId, utilityPage));
 
 		if (Validator.isNotNull(utilityPage.getMarkedAsDefault())) {

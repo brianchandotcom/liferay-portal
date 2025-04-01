@@ -7,7 +7,13 @@ package com.liferay.friendly.url.internal.configuration.manager;
 
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
+import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
@@ -39,14 +45,35 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 			long companyId, String friendlyURLSeparatorsJSON)
 		throws ConfigurationException {
 
+		PortalCache<Long, JSONObject> portalCache =
+			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
+				FriendlyURLSeparatorProvider.class.getName());
+
+		portalCache.remove(companyId);
+
 		_configurationProvider.saveCompanyConfiguration(
 			FriendlyURLSeparatorCompanyConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"friendlyURLSeparatorsJSON", friendlyURLSeparatorsJSON
 			).build());
+
+		try {
+			portalCache.put(
+				companyId,
+				_jsonFactory.createJSONObject(friendlyURLSeparatorsJSON));
+		}
+		catch (JSONException jsonException) {
+			throw new ConfigurationException(jsonException);
+		}
 	}
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private MultiVMPool _multiVMPool;
 
 }

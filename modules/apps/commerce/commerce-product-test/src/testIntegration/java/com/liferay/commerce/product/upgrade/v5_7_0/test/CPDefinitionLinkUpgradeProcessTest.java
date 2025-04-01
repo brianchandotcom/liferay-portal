@@ -33,8 +33,8 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -54,8 +54,14 @@ public class CPDefinitionLinkUpgradeProcessTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testUpgradeCPDefinitionWithNullNameAndDescription()
-		throws Exception {
+	public void testUpgrade() throws Exception {
+		Map<Locale, String> nameMap = _getLocaleStringMapWithNull();
+
+		nameMap.put(LocaleUtil.JAPAN, null);
+
+		Map<Locale, String> descriptionMap = _getLocaleStringMapWithNull();
+
+		descriptionMap.put(LocaleUtil.JAPAN, null);
 
 		User user = UserTestUtil.addUser();
 
@@ -70,14 +76,6 @@ public class CPDefinitionLinkUpgradeProcessTest {
 
 		Date displayDate = cpDefinition.getDisplayDate();
 		Date expirationDate = cpDefinition.getExpirationDate();
-
-		HashMap<Locale, String> nameMap = _getLocaleStringMapWithNull();
-
-		nameMap.put(LocaleUtil.JAPAN, null);
-
-		HashMap<Locale, String> descriptionMap = _getLocaleStringMapWithNull();
-
-		descriptionMap.put(LocaleUtil.JAPAN, null);
 
 		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
 			cpDefinition.getCPDefinitionId(), nameMap,
@@ -130,7 +128,7 @@ public class CPDefinitionLinkUpgradeProcessTest {
 				cpDefinition.getDefaultLanguageId(), "Description"));
 	}
 
-	private HashMap<String, String> _getLanguageStringMapWithBlank(
+	private Map<String, String> _getLanguageStringMapWithBlank(
 		String previousRandomValue) {
 
 		return HashMapBuilder.put(
@@ -138,7 +136,7 @@ public class CPDefinitionLinkUpgradeProcessTest {
 		).build();
 	}
 
-	private HashMap<Locale, String> _getLocaleStringMapWithNull() {
+	private Map<Locale, String> _getLocaleStringMapWithNull() {
 		return HashMapBuilder.put(
 			LocaleUtil.JAPAN, RandomTestUtil.randomString()
 		).put(

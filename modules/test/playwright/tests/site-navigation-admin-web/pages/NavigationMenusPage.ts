@@ -79,25 +79,6 @@ export class NavigationMenusPage {
 		);
 	}
 
-	async addWebContentArticleItem(name: string) {
-		await this.addMenuItemButton.click();
-
-		await (await this.getMenuItem('Web Content Article')).click();
-
-		await this.page.waitForSelector('iframe', {state: 'attached'});
-
-		const journalArticleItemButton =
-			this.journalArticleModal.getByText(name);
-
-		await journalArticleItemButton.click();
-
-		while (await journalArticleItemButton.isVisible()) {
-			await journalArticleItemButton.click();
-		}
-
-		await this.page.waitForSelector('iframe', {state: 'detached'});
-	}
-
 	async addBlogItem(name: string) {
 		await this.addMenuItemButton.click();
 
@@ -181,6 +162,25 @@ export class NavigationMenusPage {
 		await this.page.waitForSelector('iframe', {state: 'detached'});
 	}
 
+	async addWebContentArticleItem(name: string) {
+		await this.addMenuItemButton.click();
+
+		await (await this.getMenuItem('Web Content Article')).click();
+
+		await this.page.waitForSelector('iframe', {state: 'attached'});
+
+		const journalArticleItemButton =
+			this.journalArticleModal.getByText(name);
+
+		await journalArticleItemButton.click();
+
+		while (await journalArticleItemButton.isVisible()) {
+			await journalArticleItemButton.click();
+		}
+
+		await this.page.waitForSelector('iframe', {state: 'detached'});
+	}
+
 	async addWidgetToPageTemplate(templateName: string) {
 		const displayPageTemplatesPage = new DisplayPageTemplatesPage(
 			this.page
@@ -220,16 +220,6 @@ export class NavigationMenusPage {
 		await waitForAlert(this.page);
 	}
 
-	async openAddPageModal() {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: await this.getMenuItem('Page'),
-			trigger: this.addMenuItemButton,
-		});
-
-		await this.pagesModal.getByPlaceholder('Search').waitFor();
-	}
-
 	async openAddCategoryModal() {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -238,6 +228,16 @@ export class NavigationMenusPage {
 		});
 
 		await this.categoriesModal.getByPlaceholder('Search').waitFor();
+	}
+
+	async openAddPageModal() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: await this.getMenuItem('Page'),
+			trigger: this.addMenuItemButton,
+		});
+
+		await this.pagesModal.getByPlaceholder('Search').waitFor();
 	}
 
 	async openAddVocabularyModal() {

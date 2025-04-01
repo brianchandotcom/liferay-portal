@@ -65,14 +65,53 @@ public class GitHubDevSyncUtil {
 		List<GitRemote> gitHubDevGitRemotes = getGitHubDevGitRemotes(
 			gitWorkingDirectory);
 
+		List<GitRemote> gitRemotes = new ArrayList<>(gitHubDevGitRemotes);
+
 		try {
-			return _fetchCacheBranchFromGitHubDev(
-				gitWorkingDirectory, cacheBranchName,
-				getGitRemotesWithBranch(
-					cacheBranchName, gitHubDevGitRemotes, gitWorkingDirectory));
+			while (!gitHubDevGitRemotes.isEmpty()) {
+				GitRemote gitHubDevGitRemote = getRandomGitRemote(
+					gitHubDevGitRemotes);
+
+				gitHubDevGitRemotes.remove(gitHubDevGitRemote);
+
+				if (!gitWorkingDirectory.remoteGitBranchExists(
+						cacheBranchName, gitHubDevGitRemote.getRemoteURL())) {
+
+					continue;
+				}
+
+				try {
+					RemoteGitBranch cachedRemoteGitBranch =
+						gitWorkingDirectory.getRemoteGitBranch(
+							cacheBranchName, gitHubDevGitRemote, true);
+
+					gitWorkingDirectory.fetch(cachedRemoteGitBranch, 1);
+
+					return cachedRemoteGitBranch;
+				}
+				catch (RuntimeException runtimeException) {
+					String message = JenkinsResultsParserUtil.combine(
+						"Unable to fetch cached remote Git branch ",
+						cacheBranchName, "\n", runtimeException.getMessage());
+
+					if (gitHubDevGitRemotes.isEmpty()) {
+						System.out.println(message);
+
+						throw new RuntimeException(
+							JenkinsResultsParserUtil.combine(
+								"Unable to fetch ", cacheBranchName,
+								" from git@github-dev.com"),
+							runtimeException);
+					}
+
+					System.out.println("Retrying: " + message);
+				}
+			}
+
+			return null;
 		}
 		finally {
-			gitWorkingDirectory.removeGitRemotes(gitHubDevGitRemotes);
+			gitWorkingDirectory.removeGitRemotes(gitRemotes);
 		}
 	}
 
@@ -139,48 +178,6 @@ public class GitHubDevSyncUtil {
 
 		ParallelExecutor<GitRemote> parallelExecutor = new ParallelExecutor<>(
 			callables, true, _threadPoolExecutor, "getGitHubDevGitRemotes");
-
-		try {
-			return parallelExecutor.execute(60L * 5L);
-		}
-		catch (TimeoutException timeoutException) {
-			throw new RuntimeException(timeoutException);
-		}
-	}
-
-	public static List<GitRemote> getGitRemotesWithBranch(
-		final String branchName, List<GitRemote> gitRemotes,
-		final GitWorkingDirectory gitWorkingDirectory) {
-
-		List<Callable<GitRemote>> callables = new ArrayList<>(
-			gitRemotes.size());
-
-		for (final GitRemote gitRemote : gitRemotes) {
-			SafeCallable<GitRemote> callable = new SafeCallable<GitRemote>(
-				gitRemote.getHostname()) {
-
-				public GitRemote safeCall() {
-					try {
-						if (gitWorkingDirectory.remoteGitBranchExists(
-								branchName, gitRemote.getRemoteURL())) {
-
-							return gitRemote;
-						}
-					}
-					catch (Exception exception) {
-						return null;
-					}
-
-					return null;
-				}
-
-			};
-
-			callables.add(callable);
-		}
-
-		ParallelExecutor<GitRemote> parallelExecutor = new ParallelExecutor<>(
-			callables, true, _threadPoolExecutor, "getGitRemotesWithBranch");
 
 		try {
 			return parallelExecutor.execute(60L * 5L);
@@ -1504,76 +1501,6 @@ public class GitHubDevSyncUtil {
 	}
 
 	protected static List<String> gitHubDevNodeHostnames;
-
-	private static RemoteGitBranch _fetchCacheBranchFromGitHubDev(
-		GitWorkingDirectory gitWorkingDirectory, String cacheBranchName,
-		List<GitRemote> gitHubDevGitRemotesWithCacheBranch) {
-
-		List<GitRemote> gitRemotesWithoutCacheBranch = getGitHubDevGitRemotes(
-			gitWorkingDirectory);
-
-		gitRemotesWithoutCacheBranch.removeAll(
-			gitHubDevGitRemotesWithCacheBranch);
-
-		while (!gitHubDevGitRemotesWithCacheBranch.isEmpty()) {
-			GitRemote gitHubDevGitRemote = getRandomGitRemote(
-				gitHubDevGitRemotesWithCacheBranch);
-
-			gitHubDevGitRemotesWithCacheBranch.remove(gitHubDevGitRemote);
-
-			try {
-				RemoteGitBranch cachedRemoteGitBranch =
-					gitWorkingDirectory.getRemoteGitBranch(
-						cacheBranchName, gitHubDevGitRemote, true);
-
-				LocalGitBranch cachedLocalGitBranch = gitWorkingDirectory.fetch(
-					cachedRemoteGitBranch, 1);
-
-				if (!gitRemotesWithoutCacheBranch.isEmpty()) {
-					StringBuilder sb = new StringBuilder();
-
-					for (GitRemote gitRemoteWithoutCacheBranch :
-							gitRemotesWithoutCacheBranch) {
-
-						sb.append("    ");
-						sb.append(gitRemoteWithoutCacheBranch.getHostname());
-						sb.append("\n");
-					}
-
-					System.out.println(
-						JenkinsResultsParserUtil.combine(
-							"Pushing ", cacheBranchName,
-							" to the following GitHub-dev nodes because they ",
-							"do not have it.\n", sb.toString()));
-
-					pushToAllRemotes(
-						true, cachedLocalGitBranch, cacheBranchName,
-						gitRemotesWithoutCacheBranch);
-				}
-
-				return cachedRemoteGitBranch;
-			}
-			catch (RuntimeException runtimeException) {
-				String message = JenkinsResultsParserUtil.combine(
-					"Unable to fetch cached remote Git branch ",
-					cacheBranchName, "\n", runtimeException.getMessage());
-
-				if (gitHubDevGitRemotesWithCacheBranch.isEmpty()) {
-					System.out.println(message);
-
-					throw new RuntimeException(
-						JenkinsResultsParserUtil.combine(
-							"Unable to fetch ", cacheBranchName,
-							" from git@github-dev.com"),
-						runtimeException);
-				}
-
-				System.out.println("Retrying: " + message);
-			}
-		}
-
-		return null;
-	}
 
 	private static final long _MILLIS_BRANCH_EXPIRATION =
 		1000 * 60 * 60 * 24 * 2;

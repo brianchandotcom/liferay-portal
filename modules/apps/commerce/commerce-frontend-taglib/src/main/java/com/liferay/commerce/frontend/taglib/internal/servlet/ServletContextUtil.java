@@ -19,6 +19,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -49,6 +50,10 @@ public class ServletContextUtil {
 		getCommerceOrderItemLocalService() {
 
 		return _commerceOrderItemLocalServiceSnapshot.get();
+	}
+
+	public static CommerceOrderLocalService getCommerceOrderLocalService() {
+		return _commerceOrderLocalServiceSnapshot.get();
 	}
 
 	public static PortletResourcePermission
@@ -127,6 +132,9 @@ public class ServletContextUtil {
 	private static final Snapshot<CommerceOrderItemLocalService>
 		_commerceOrderItemLocalServiceSnapshot = new Snapshot<>(
 			ServletContextUtil.class, CommerceOrderItemLocalService.class);
+	private static final Snapshot<CommerceOrderLocalService>
+		_commerceOrderLocalServiceSnapshot = new Snapshot<>(
+			ServletContextUtil.class, CommerceOrderLocalService.class);
 	private static final Snapshot<PortletResourcePermission>
 		_commerceOrderPortletResourcePermissionSnapshot = new Snapshot<>(
 			ServletContextUtil.class, PortletResourcePermission.class,

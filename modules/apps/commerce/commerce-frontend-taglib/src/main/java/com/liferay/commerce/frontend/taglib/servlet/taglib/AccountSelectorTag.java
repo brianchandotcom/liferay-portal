@@ -8,9 +8,11 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -23,6 +25,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -157,6 +160,8 @@ public class AccountSelectorTag extends IncludeTag {
 
 		_commerceOrderHttpHelper =
 			ServletContextUtil.getCommerceOrderHttpHelper();
+		_commerceOrderLocalService =
+			ServletContextUtil.getCommerceOrderLocalService();
 		_commerceOrderPortletResourcePermission =
 			ServletContextUtil.getCommerceOrderPortletResourcePermission();
 		_commerceOrderTypeLocalService =
@@ -180,6 +185,7 @@ public class AccountSelectorTag extends IncludeTag {
 		_commerceChannelId = 0;
 		_commerceOrder = null;
 		_commerceOrderHttpHelper = null;
+		_commerceOrderLocalService = null;
 		_commerceOrderPortletResourcePermission = null;
 		_commerceOrderTypeLocalService = null;
 		_configurationProvider = null;
@@ -392,6 +398,29 @@ public class AccountSelectorTag extends IncludeTag {
 		}
 
 		try {
+			CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderFieldsConfiguration.class,
+					new GroupServiceSettingsLocator(
+						_commerceChannelGroupId,
+						CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+			int pendingCommerceOrdersCount =
+				(int)_commerceOrderLocalService.getCommerceOrdersCount(
+					_accountEntry.getCompanyId(), _commerceChannelGroupId,
+					new long[] {_accountEntry.getAccountEntryId()},
+					StringPool.BLANK,
+					new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN},
+					false);
+
+			if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() >
+					0) &&
+				(pendingCommerceOrdersCount >=
+					commerceOrderFieldsConfiguration.accountCartMaxAllowed())) {
+
+				return false;
+			}
+
 			CommerceOrderCheckoutConfiguration
 				commerceOrderCheckoutConfiguration =
 					_configurationProvider.getConfiguration(
@@ -455,6 +484,7 @@ public class AccountSelectorTag extends IncludeTag {
 	private long _commerceChannelId;
 	private CommerceOrder _commerceOrder;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private CommerceOrderLocalService _commerceOrderLocalService;
 	private PortletResourcePermission _commerceOrderPortletResourcePermission;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 	private ConfigurationProvider _configurationProvider;

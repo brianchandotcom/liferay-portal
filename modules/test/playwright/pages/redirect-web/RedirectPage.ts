@@ -114,7 +114,7 @@ export class RedirectPage {
 		if (expirationDate) {
 			await this.expirationDate.click();
 
-			await this.expirationDate.fill(expirationDate);
+			await this.expirationDate.pressSequentially(expirationDate);
 		}
 	}
 

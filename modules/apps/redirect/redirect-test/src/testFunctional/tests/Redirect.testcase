@@ -512,35 +512,6 @@ definition {
 		AssertTextPresent(value1 = "The requested address was not found on the system.");
 	}
 
-	@description = "This ensures that an expired permanent redirect can be reset."
-	@priority = 5
-	@refactordone
-	test CanResetExpiredEntry {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2013-12-31",
-			groupName = "Test Site Name",
-			permanent = "true",
-			sourceURL = "test-source-page");
-
-		JSONRedirect.updateEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2099-12-31",
-			groupName = "Test Site Name",
-			permanent = "true",
-			sourceURL = "test-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "12/31/99",
-			redirectType = "Permanent",
-			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
-	}
-
 	@description = "This test covers LPS-110773. It ensures that a redirect entry can be found by search."
 	@priority = 3
 	@refactordone
@@ -660,81 +631,6 @@ definition {
 			expirationDate = "January 1, 2100",
 			latestOccurrence = ${currentYear},
 			type = "Temporary");
-	}
-
-	@description = "This ensures that an expired temporary redirect can be reactivated."
-	@priority = 5
-	@refactordone
-	test CanViewExpiredAndActiveEntries {
-		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-		JSONRedirect.addRedirect(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2013-12-31",
-			groupName = "Test Site Name",
-			sourceURL = "test-source-page");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
-
-		SelectWindow(value1 = "title=Test Source Page - Test Site Name - ${siteName}");
-
-		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-source-page");
-
-		JSONRedirect.updateEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2099-12-31",
-			groupName = "Test Site Name",
-			sourceURL = "test-source-page");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
-
-		SelectWindow(value1 = "title=Test Destination Page - Test Site Name - ${siteName}");
-
-		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
-	}
-
-	@description = "This ensures that an expired permanent redirect can be viewed."
-	@priority = 5
-	@refactordone
-	test CanViewExpiredPermanentEntry {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2013-12-31",
-			groupName = "Test Site Name",
-			permanent = "true",
-			sourceURL = "test-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "Expired",
-			redirectType = "Permanent",
-			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
-	}
-
-	@description = "This ensures that an expired temporary redirect can be viewed."
-	@priority = 5
-	@refactordone
-	test CanViewExpiredTempEntry {
-		var portalURL = PropsUtil.get("portal.url");
-
-		JSONRedirect.addRedirect(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "2013-12-31",
-			groupName = "Test Site Name",
-			sourceURL = "test-source-page");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "Expired",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
 	@description = "This ensures that an ignored URL can be viewed."

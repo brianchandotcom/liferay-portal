@@ -322,3 +322,42 @@ test('Ensure all redirect entries can be deleted simultaneously', async ({
 
 	await expect(page.url()).toContain('test/source/url');
 });
+
+test('Ensure an expired redirect entry can be reset', async ({
+	apiHelpers,
+	page,
+	redirectPage,
+	site,
+}) => {
+	const destinationPage = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: 'Destination Page',
+	});
+
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await redirectPage.addRedirect(
+		'test/source/url',
+		`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`,
+		false,
+		'01/01/2000'
+	);
+
+	await page.goto(`/web/${site.name}/test/source/url`);
+
+	await expect(page.url()).toContain('/test/source/url');
+
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await redirectPage.editRedirect(
+		'/test/source/url',
+		'test/source/url',
+		`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`,
+		false,
+		'12/31/2099'
+	);
+
+	await page.goto(`/web/${site.name}/test/source/url`);
+
+	await expect(page.url()).toContain(destinationPage.friendlyURL);
+});

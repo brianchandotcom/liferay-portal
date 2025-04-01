@@ -5,8 +5,8 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionApi,
-	ObjectRelationshipApi,
+	ObjectDefinitionAPI,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -106,7 +106,7 @@ test(
 			'objectRelationshipName' + Math.floor(Math.random() * 99);
 
 		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipApi
+			ObjectRelationshipAPI
 		);
 
 		const {body: objectRelationship} =
@@ -157,7 +157,7 @@ test(
 			);
 
 			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 			await objectDefinitionAPIClient.deleteObjectDefinition(
 				objectDefinition1.id

@@ -73,7 +73,7 @@ test(
 		await test.step('Check reset filters button', async () => {
 			await test.step('Check the total amount of items is 75', async () => {
 				expect
-					.soft(page.getByText('Showing 1 to 10 of 75 entries.'))
+					.soft(page.getByText('Showing 1 to 20 of 75 entries.'))
 					.toBeVisible();
 			});
 
@@ -95,7 +95,7 @@ test(
 
 			await test.step('Check the total amount of items is now 100', async () => {
 				expect
-					.soft(page.getByText('Showing 1 to 10 of 100 entries.'))
+					.soft(page.getByText('Showing 1 to 20 of 100 entries.'))
 					.toBeVisible();
 			});
 
@@ -224,12 +224,6 @@ test(
 					.waitFor();
 			});
 
-			await test.step('Close filters dropdown or else the cells cannot be located', async () => {
-				await fdsSamplePage.managementToolbar
-					.getByRole('button', {name: 'Filter'})
-					.click();
-			});
-
 			await test.step('Check the results are filtered by checking all results appear', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
 				const greenCells = page.getByRole('cell', {name: '🍏'});
@@ -272,12 +266,6 @@ test(
 					.waitFor();
 			});
 
-			await test.step('Close filters dropdown or else the cells cannot be located', async () => {
-				await fdsSamplePage.managementToolbar
-					.getByRole('button', {name: 'Filter'})
-					.click();
-			});
-
 			await test.step('Check the only Red results are displayed', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
 				const greenCells = page.getByRole('cell', {name: '🍏'});
@@ -315,12 +303,6 @@ test(
 				await page
 					.getByText('This is a description for sample 1.')
 					.waitFor();
-			});
-
-			await test.step('Close filters dropdown or else the cells cannot be located', async () => {
-				await page
-					.getByRole('button', {name: 'Color: Green, Yellow, Red'})
-					.click();
 			});
 
 			await test.step('Check the results only show "Green", "Yellow", and "Red"', async () => {

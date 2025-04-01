@@ -54,6 +54,7 @@ export class PageEditorPage {
 	readonly languageSelector: Locator;
 	readonly publishButton: Locator;
 	readonly publishMasterButton: Locator;
+	readonly publishToLiveButton: Locator;
 	readonly redoButton: Locator;
 	readonly segmentEditorPage: SegmentEditorPage;
 	readonly selectItemMappingButton: Locator;
@@ -77,6 +78,9 @@ export class PageEditorPage {
 		);
 		this.publishMasterButton = page.getByLabel('Publish Master', {
 			exact: true,
+		});
+		this.publishToLiveButton = page.getByRole('button', {
+			name: 'Publish to Live',
 		});
 		this.redoButton = page.getByTitle('Redo');
 		this.segmentEditorPage = new SegmentEditorPage(page);

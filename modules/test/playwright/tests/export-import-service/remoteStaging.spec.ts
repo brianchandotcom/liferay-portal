@@ -9,8 +9,10 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {remoteDataApiHelpersTest} from '../../fixtures/remoteDataApiHelpersTest';
 import {remoteStagingApiHelperTest} from '../../fixtures/remoteStagingApiHelpersTest';
 import {performLoginViaApi} from '../../utils/performLogin';
+import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -19,7 +21,9 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
 	}),
+	remoteDataApiHelpersTest,
 	remoteStagingApiHelperTest,
+	remoteStagingPagesTest,
 );
 
 test(
@@ -28,7 +32,8 @@ test(
 	async ({
 		apiHelpers,
 		page,
-		remoteStagingApiHelper
+		remoteStagingApiHelper,
+		remoteStagingPage,
 	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'Site Name',
@@ -71,6 +76,11 @@ test(
 			groupId: site.id,
 			remoteGroupId: remoteSite.id,
 			remotePort: 9080,
+		});
+
+		await remoteStagingPage.publishToLive({
+			layoutFriendlyURL: layout.friendlyURL,
+			siteFriendlyUrl: site.friendlyUrlPath,
 		});
 	}
 );

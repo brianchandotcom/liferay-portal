@@ -750,27 +750,10 @@ public class ObjectDefinitionResourceTest
 			new ObjectField[] {
 				new ObjectField() {
 					{
-						businessType = BusinessType.TEXT;
-						DBType = ObjectField.DBType.create("String");
-						label = Collections.singletonMap("en_US", "Column");
-						localized = true;
-						name = StringUtil.randomId();
-					}
-				},
-				new ObjectField() {
-					{
-						businessType = BusinessType.TEXT;
-						DBType = ObjectField.DBType.create("String");
-						label = Collections.singletonMap("en_US", "Column");
-						localized = false;
-						name = StringUtil.randomId();
-					}
-				},
-				new ObjectField() {
-					{
 						businessType = BusinessType.AUTO_INCREMENT;
 						DBType = ObjectField.DBType.create("String");
-						label = Collections.singletonMap("en_US", "Column");
+						label = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
 						name = StringUtil.randomId();
 						objectFieldSettings = new ObjectFieldSetting[] {
 							new ObjectFieldSetting() {
@@ -782,6 +765,25 @@ public class ObjectDefinitionResourceTest
 								}
 							}
 						};
+					}
+				},
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						label = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						localized = true;
+						name = StringUtil.randomId();
+					}
+				},
+				new ObjectField() {
+					{
+						businessType = BusinessType.TEXT;
+						DBType = ObjectField.DBType.create("String");
+						label = Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString());
+						name = StringUtil.randomId();
 					}
 				}
 			});

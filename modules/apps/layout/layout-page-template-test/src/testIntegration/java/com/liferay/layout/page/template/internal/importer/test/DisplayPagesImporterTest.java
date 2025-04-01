@@ -6,6 +6,13 @@
 package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
@@ -31,6 +38,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -55,6 +63,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 import java.io.InputStream;
@@ -64,7 +73,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -185,6 +197,123 @@ public class DisplayPagesImporterTest {
 			Assert.assertEquals(
 				_portal.getClassNameId(objectDefinition.getClassName()),
 				formStyledLayoutStructureItem.getClassNameId());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52428")
+	public void testExportImportDisplayPageWithFragmentRendererFragmentEntryLink()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+							"firstName")));
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					null,
+					_portal.getClassNameId(objectDefinition.getClassName()), 0,
+					RandomTestUtil.randomString(),
+					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid());
+
+			FragmentRenderer fragmentRenderer =
+				_fragmentRendererRegistry.getFragmentRenderer(
+					"localization-select");
+
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					null, TestPropsValues.getUserId(), draftLayout.getGroupId(),
+					0, 0, segmentsExperienceId, draftLayout.getPlid(),
+					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					fragmentRenderer.getConfiguration(
+						new DefaultFragmentRendererContext(null)),
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							"hideLanguageLabel", false
+						).put(
+							"size", "small"
+						)
+					).toString(),
+					StringPool.BLANK, 0, fragmentRenderer.getKey(),
+					fragmentRenderer.getType(),
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId())),
+				draftLayout, null, 0, segmentsExperienceId);
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			File file = _layoutsExporter.exportLayoutPageTemplateEntries(
+				new long[] {
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				},
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
+
+			_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group.getGroupId(), file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						_group.getGroupId(),
+						layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryKey());
+
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						_group.getGroupId(), layoutPageTemplateEntry.getPlid());
+
+			LayoutStructure layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(
+					SegmentsExperienceConstants.KEY_DEFAULT));
+
+			Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+				layoutStructure.getFragmentLayoutStructureItems();
+
+			Set<Long> keySet = fragmentLayoutStructureItems.keySet();
+
+			Iterator<Long> iterator = keySet.iterator();
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					iterator.next());
+
+			Assert.assertEquals(
+				"small",
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getEditableValues(),
+					LocaleUtil.getDefault(), "size"));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -609,6 +738,15 @@ public class DisplayPagesImporterTest {
 	private static final String _BASE_PATH =
 		"com/liferay/layout/page/template/internal/importer/test/dependencies/";
 
+	@Inject
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentRendererRegistry _fragmentRendererRegistry;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -638,6 +776,9 @@ public class DisplayPagesImporterTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

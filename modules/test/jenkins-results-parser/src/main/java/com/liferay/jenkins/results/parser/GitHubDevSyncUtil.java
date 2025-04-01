@@ -142,49 +142,27 @@ public class GitHubDevSyncUtil {
 		List<String> gitHubDevRemoteURLs = getGitHubDevRemoteURLs(
 			gitWorkingDirectory);
 
-		List<Callable<GitRemote>> callables = new ArrayList<>(
-			gitHubDevRemoteURLs.size());
+		List<GitRemote> gitRemotes = new ArrayList<>();
 
-		for (final String gitHubDevRemoteURL : gitHubDevRemoteURLs) {
-			SafeCallable<GitRemote> callable = new SafeCallable<GitRemote>(
-				gitHubDevRemoteURL) {
+		for (int i = 0; i < gitHubDevRemoteURLs.size(); i++) {
+			String gitHubDevRemoteURL = gitHubDevRemoteURLs.get(i);
 
-				public GitRemote safeCall() {
-					String gitHubDevRemoteName =
-						"git-hub-dev-remote-" +
-							gitHubDevRemoteURLs.indexOf(gitHubDevRemoteURL);
+			String gitHubDevRemoteName = "git-hub-dev-remote-" + i;
 
-					GitRemote gitRemote = gitWorkingDirectory.getGitRemote(
-						gitHubDevRemoteName);
+			GitRemote gitRemote = gitWorkingDirectory.getGitRemote(
+				gitHubDevRemoteName);
 
-					if ((gitRemote == null) ||
-						!gitHubDevRemoteURL.equals(gitRemote.getRemoteURL())) {
+			if ((gitRemote == null) ||
+				!gitHubDevRemoteURL.equals(gitRemote.getRemoteURL())) {
 
-						gitRemote = gitWorkingDirectory.addGitRemote(
-							true, gitHubDevRemoteName, gitHubDevRemoteURL);
-					}
+				gitRemote = gitWorkingDirectory.addGitRemote(
+					true, gitHubDevRemoteName, gitHubDevRemoteURL);
+			}
 
-					if (!gitRemote.isAvailable()) {
-						return null;
-					}
-
-					return gitRemote;
-				}
-
-			};
-
-			callables.add(callable);
+			gitRemotes.add(gitRemote);
 		}
 
-		ParallelExecutor<GitRemote> parallelExecutor = new ParallelExecutor<>(
-			callables, true, _threadPoolExecutor, "getGitHubDevGitRemotes");
-
-		try {
-			return parallelExecutor.execute(60L * 5L);
-		}
-		catch (TimeoutException timeoutException) {
-			throw new RuntimeException(timeoutException);
-		}
+		return gitRemotes;
 	}
 
 	public static String synchronizeToGitHubDev(

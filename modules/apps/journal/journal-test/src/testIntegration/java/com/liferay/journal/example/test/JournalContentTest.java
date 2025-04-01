@@ -254,6 +254,9 @@ public class JournalContentTest {
 				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 				Constants.VIEW, englishLanguageId, _portletRequestModel);
 
+		Assert.assertEquals(
+			englishContent, englishArticleDisplay1.getContent());
+
 		String spanishLanguageId = LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
 
 		JournalArticleDisplay spanishArticleDisplay1 =
@@ -261,8 +264,6 @@ public class JournalContentTest {
 				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 				Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay1.getContent());
 		Assert.assertEquals(
 			spanishContent, spanishArticleDisplay1.getContent());
 
@@ -279,13 +280,14 @@ public class JournalContentTest {
 				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 				Constants.VIEW, englishLanguageId, _portletRequestModel);
 
+		Assert.assertEquals(
+			englishContent, englishArticleDisplay2.getContent());
+
 		JournalArticleDisplay spanishArticleDisplay2 =
 			_journalContent.getDisplay(
 				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
 				Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
-		Assert.assertEquals(
-			englishContent, englishArticleDisplay2.getContent());
 		Assert.assertNotEquals(
 			spanishContent, spanishArticleDisplay2.getContent());
 	}

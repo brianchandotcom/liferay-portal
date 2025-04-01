@@ -58,7 +58,8 @@ public class CommerceInventoryBookedQuantityModelDocumentContributor
 					commerceOrder.getCommerceAccountId());
 
 			if (accountEntry != null) {
-				document.addKeyword("accountName", accountEntry.getName());
+				document.addKeyword(
+					"accountName", accountEntry.getName(), true);
 			}
 
 			document.addKeyword(

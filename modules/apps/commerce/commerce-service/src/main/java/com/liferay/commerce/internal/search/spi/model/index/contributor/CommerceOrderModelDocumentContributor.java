@@ -52,16 +52,13 @@ public class CommerceOrderModelDocumentContributor
 
 			document.addNumberSortable(
 				Field.ENTRY_CLASS_PK, commerceOrder.getCommerceOrderId());
-			document.addKeyword(Field.NAME, commerceOrder.getName());
-			document.addKeywordSortable(Field.NAME, commerceOrder.getName());
+			document.addKeyword(Field.NAME, commerceOrder.getName(), true);
 			document.addKeyword(Field.STATUS, commerceOrder.getStatus());
 
 			User user = _userLocalService.fetchUser(commerceOrder.getUserId());
 
 			if (user != null) {
-				document.addKeyword(Field.USER_NAME, user.getFullName());
-				document.addKeywordSortable(
-					Field.USER_NAME, user.getFullName());
+				document.addKeyword(Field.USER_NAME, user.getFullName(), true);
 			}
 
 			AccountEntry accountEntry =
@@ -69,9 +66,8 @@ public class CommerceOrderModelDocumentContributor
 					commerceOrder.getCommerceAccountId());
 
 			if (accountEntry != null) {
-				document.addKeyword("accountName", accountEntry.getName());
-				document.addKeywordSortable(
-					"accountName", accountEntry.getName());
+				document.addKeyword(
+					"accountName", accountEntry.getName(), true);
 			}
 
 			document.addKeyword(
@@ -104,10 +100,7 @@ public class CommerceOrderModelDocumentContributor
 
 			document.addKeyword(
 				"externalReferenceCode",
-				commerceOrder.getExternalReferenceCode());
-			document.addKeywordSortable(
-				"externalReferenceCode",
-				commerceOrder.getExternalReferenceCode());
+				commerceOrder.getExternalReferenceCode(), true);
 			document.addNumber(
 				"itemsQuantity", _getItemsQuantity(commerceOrder));
 
@@ -122,8 +115,6 @@ public class CommerceOrderModelDocumentContributor
 				"orderItemNames", _getCommerceOrderItemNames(commerceOrder));
 			document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
 			document.addKeyword(
-				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
-			document.addKeywordSortable(
 				"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
 			document.addKeyword(
 				"sku", _getCommerceOrderItemSKUs(commerceOrder));

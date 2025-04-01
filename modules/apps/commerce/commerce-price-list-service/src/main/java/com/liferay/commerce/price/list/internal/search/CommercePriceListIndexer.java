@@ -221,7 +221,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		document.addText(Field.USER_NAME, commercePriceList.getUserName());
 		document.addKeyword(
 			FIELD_EXTERNAL_REFERENCE_CODE,
-			commercePriceList.getExternalReferenceCode());
+			commercePriceList.getExternalReferenceCode(), true);
 
 		long commerceCatalogId = _getCatalogId(commercePriceList);
 

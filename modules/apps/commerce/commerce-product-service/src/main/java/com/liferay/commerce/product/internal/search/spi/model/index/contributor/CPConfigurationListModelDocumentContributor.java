@@ -41,7 +41,7 @@ public class CPConfigurationListModelDocumentContributor
 				cpConfigurationList.getCPConfigurationListId());
 			document.addKeyword(
 				CPField.EXTERNAL_REFERENCE_CODE,
-				cpConfigurationList.getExternalReferenceCode());
+				cpConfigurationList.getExternalReferenceCode(), true);
 			document.addKeyword(
 				Field.GROUP_ID, cpConfigurationList.getGroupId());
 			document.addText(Field.NAME, cpConfigurationList.getName());

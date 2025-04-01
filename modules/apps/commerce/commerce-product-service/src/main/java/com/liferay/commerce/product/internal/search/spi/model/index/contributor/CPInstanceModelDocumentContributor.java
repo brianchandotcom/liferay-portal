@@ -52,7 +52,7 @@ public class CPInstanceModelDocumentContributor
 				CPField.DISPLAY_DATE, cpInstance.getDisplayDate());
 			document.addKeyword(
 				CPField.EXTERNAL_REFERENCE_CODE,
-				cpInstance.getExternalReferenceCode());
+				cpInstance.getExternalReferenceCode(), true);
 			document.addText(
 				CPField.EXTERNAL_REFERENCE_CODE,
 				cpInstance.getExternalReferenceCode());

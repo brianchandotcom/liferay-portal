@@ -226,7 +226,8 @@ public class CPDefinitionModelDocumentContributor
 			document.addKeyword(
 				CPField.PRODUCT_ID, cpDefinition.getCProductId());
 			document.addKeyword(
-				CPField.PRODUCT_TYPE_NAME, cpDefinition.getProductTypeName());
+				CPField.PRODUCT_TYPE_NAME, cpDefinition.getProductTypeName(),
+				true);
 			document.addKeyword(CPField.PUBLISHED, cpDefinition.isPublished());
 			document.addText(
 				CPField.SHORT_DESCRIPTION,

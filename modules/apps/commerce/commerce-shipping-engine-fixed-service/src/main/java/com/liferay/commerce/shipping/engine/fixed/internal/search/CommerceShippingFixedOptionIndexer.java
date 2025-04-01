@@ -110,12 +110,14 @@ public class CommerceShippingFixedOptionIndexer
 			CLASS_NAME, commerceShippingFixedOption);
 
 		document.addKeyword(
-			Field.DESCRIPTION, commerceShippingFixedOption.getDescription());
-		document.addKeyword(Field.NAME, commerceShippingFixedOption.getName());
+			Field.DESCRIPTION, commerceShippingFixedOption.getDescription(),
+			true);
+		document.addKeyword(
+			Field.NAME, commerceShippingFixedOption.getName(), true);
 		document.addKeyword(
 			"commerceShippingMethodId",
 			commerceShippingFixedOption.getCommerceShippingMethodId());
-		document.addKeyword("key", commerceShippingFixedOption.getKey());
+		document.addKeyword("key", commerceShippingFixedOption.getKey(), true);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

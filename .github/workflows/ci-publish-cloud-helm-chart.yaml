@@ -1,0 +1,43 @@
+defaults:
+  run:
+    shell: bash
+env:
+  CHART_VERSION: "0.0.0"
+  GAR_REPO: "us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart"
+jobs:
+  publish-cloud-helm-chart:
+    name: Publish Cloud Helm Chart
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - id: calculate-chart-version
+        name: Calculate chart version
+        run: |
+          LATEST_CHART_TAG=$(git describe --tags --match="helm-chart-*" HEAD)
+          PUBLISH_VERSION=${LATEST_CHART_TAG#"helm-"}
+          echo "CHART_VERSION=${PUBLISH_VERSION}"
+          echo "CHART_VERSION=${PUBLISH_VERSION}" >> ${GITHUB_ENV}
+      - name: Package Helm chart
+        run: |
+          TEMP_DIST_DIR="${{ runner.temp }}/dist"
+          mkdir ${TEMP_DIST_DIR}
+          helm package --version ${CHART_VERSION} -d ${TEMP_DIST_DIR} .
+        working-directory: ./cloud/helm
+      - name: Log in to registry
+        run: echo "${{ secrets.GAR_KEY }}" | helm registry login ${GAR_REPO} -u _json_key_base64 --password-stdin
+      - name: Push Helm chart to registry
+        run: |
+          OCI_URL=$(echo "oci://${GAR_REPO}" | tr '[:upper:]' '[:lower:]')
+          for f in *.tgz ; do
+              echo "$f"
+              helm push "$f" "$OCI_URL"
+          done
+        working-directory: ${{ runner.temp }}/dist
+name: CI Publish Cloud Helm Chart
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - cloud/**

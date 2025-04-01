@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -127,49 +128,47 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 						return;
 					}
 
-					JSONArray namesJSONArray = fieldValueJSONObject.names();
+					for (String key : fieldValueJSONObject.keySet()) {
+						try {
+							String valueString = fieldValueJSONObject.getString(
+								key);
 
-					namesJSONArray.forEach(
-						languageId -> {
-							try {
-								DecimalFormat decimalFormat =
-									NumericDDMFormFieldUtil.getDecimalFormat(
-										LocaleUtil.fromLanguageId(
-											GetterUtil.getString(languageId)));
-
-								String valueString =
-									fieldValueJSONObject.getString(
-										GetterUtil.getString(languageId));
-
-								Number number = GetterUtil.getNumber(
-									decimalFormat.parse(valueString));
-
-								String formattedNumber = decimalFormat.format(
-									number);
-
-								if (!valueString.equals(formattedNumber)) {
-									DecimalFormat defaultDecimalFormat =
-										NumericDDMFormFieldUtil.
-											getDecimalFormat(LocaleUtil.US);
-
-									number = defaultDecimalFormat.parse(
-										valueString);
-
-									formattedNumber = decimalFormat.format(
-										number);
-
-									upgraded.set(true);
-
-									fieldValueJSONObject.put(
-										languageId.toString(), formattedNumber);
-								}
+							if (Validator.isNull(valueString)) {
+								continue;
 							}
-							catch (ParseException parseException) {
-								if (_log.isWarnEnabled()) {
-									_log.warn(parseException);
-								}
+
+							DecimalFormat decimalFormat =
+								NumericDDMFormFieldUtil.getDecimalFormat(
+									LocaleUtil.fromLanguageId(key));
+
+							Number number = GetterUtil.getNumber(
+								decimalFormat.parse(valueString));
+
+							String formattedNumber = decimalFormat.format(
+								number);
+
+							if (valueString.equals(formattedNumber)) {
+								continue;
 							}
-						});
+
+							DecimalFormat defaultDecimalFormat =
+								NumericDDMFormFieldUtil.getDecimalFormat(
+									LocaleUtil.US);
+
+							number = defaultDecimalFormat.parse(valueString);
+
+							formattedNumber = decimalFormat.format(number);
+
+							upgraded.set(true);
+
+							fieldValueJSONObject.put(key, formattedNumber);
+						}
+						catch (ParseException parseException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(parseException);
+							}
+						}
+					}
 				}
 			});
 

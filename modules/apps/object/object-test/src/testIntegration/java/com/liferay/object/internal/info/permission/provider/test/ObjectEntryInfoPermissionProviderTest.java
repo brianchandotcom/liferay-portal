@@ -56,7 +56,7 @@ public class ObjectEntryInfoPermissionProviderTest {
 
 	@FeatureFlags("LPD-17564")
 	@Test
-	public void testHasViewPermissionWithFeatureFlagEnabled() throws Exception {
+	public void testHasViewPermissionWithFF() throws Exception {
 		_testHasViewPermissionForCustomObjectDefinition();
 		_testHasViewPermissionForModifiableSystemObjectDefinition(true);
 		_testHasViewPermissionForUnmodifiableSystemObjectDefinition();

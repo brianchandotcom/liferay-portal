@@ -765,16 +765,17 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 		await test.step('Check in medium-width windows the text is hidden', async () => {
 			await page.setViewportSize({height: 1024, width: 800});
 
-			const visibleLabelButton = await fdsSamplePage.getVisibleLocator(
-				fdsSamplePage.bulkActions.container.getByRole('button', {
-					name: 'Label',
-				})
-			);
+			const visibleLabelButton = fdsSamplePage.bulkActions.container
+				.locator('button')
+				.filter({
+					hasText: 'Label',
+				});
 
-			await expect(visibleLabelButton).not.toHaveText('Label');
+			await expect(visibleLabelButton).toBeVisible();
+
 			await expect(
-				visibleLabelButton.locator('.lexicon-icon')
-			).toBeVisible();
+				fdsSamplePage.bulkActions.container.getByLabel('Label')
+			).not.toBeVisible();
 		});
 
 		await test.step('Check in small-width windows the text and icon are hidden', async () => {

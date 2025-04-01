@@ -138,10 +138,15 @@ public abstract class BaseFacetDisplayContextTestCase {
 
 	@Test
 	public void testGetDisplayStyleGroup() throws Exception {
-		setUpGroupLocalServiceUtil(getGroup());
+		Group group1 = getGroup();
+
+		setUpGroupLocalServiceUtil(group1);
+
 		setUpPortletDisplayStyleGroupExternalReferenceCode(null);
 
-		_assertDisplayContext(getGroup());
+		Group group2 = getGroup();
+
+		_assertDisplayContext(group2);
 
 		groupLocalServiceUtilMockedStatic.verifyNoInteractions();
 	}

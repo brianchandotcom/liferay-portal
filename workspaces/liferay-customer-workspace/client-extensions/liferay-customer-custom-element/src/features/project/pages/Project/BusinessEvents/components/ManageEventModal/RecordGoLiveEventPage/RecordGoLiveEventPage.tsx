@@ -120,7 +120,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 			eventStatus: 'completed',
 			lastComment: updatedBusinessEvent?.lastComment,
 			r_accountEntryToBusinessEvents_accountEntryId:
-				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
+				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
 			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
 			timeZone: updatedBusinessEvent.timeZone?.key,
 		};

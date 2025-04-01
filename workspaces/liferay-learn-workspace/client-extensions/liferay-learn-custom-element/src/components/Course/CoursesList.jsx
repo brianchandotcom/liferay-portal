@@ -7,6 +7,7 @@ import '../../index.scss';
 import ClayLayout from '@clayui/layout';
 import {getCoursesAndFirstLessons} from '../../services/course';
 import {useEffect, useState} from 'react';
+import React from 'react'; 
 import SectionCard from '../Common/SectionCard';
 
 const CoursesList = () => {

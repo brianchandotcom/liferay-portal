@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -557,7 +555,21 @@ public class ImportSystemDataSetMVCResourceCommand
 
 			String externalReferenceCode = StringPool.BLANK;
 
-			if (fdsFilter instanceof BaseDateRangeFDSFilter) {
+			if (fdsFilter instanceof BaseClientExtensionFDSFilter) {
+				externalReferenceCode = "L_DATA_SET_CLIENT_EXTENSION_FILTER";
+
+				BaseClientExtensionFDSFilter clientExtensionFDSFilter =
+					(BaseClientExtensionFDSFilter)fdsFilter;
+
+				values.put(
+					"clientExtensionEntryERC",
+					clientExtensionFDSFilter.getCETExternalReferenceCode());
+
+				values.put(
+					"r_dataSetToDataSetClientExtensionFilters_l_dataSetId",
+					objectEntry.getObjectEntryId());
+			}
+			else if (fdsFilter instanceof BaseDateRangeFDSFilter) {
 				externalReferenceCode = "L_DATA_SET_DATE_FILTER";
 
 				JSONObject jsonObject = JSONUtil.put(
@@ -579,29 +591,12 @@ public class ImportSystemDataSetMVCResourceCommand
 					"r_dataSetToDataSetSelectionFilters_l_dataSetId",
 					objectEntry.getObjectEntryId());
 			}
-			else if (fdsFilter instanceof BaseClientExtensionFDSFilter) {
-				externalReferenceCode = "L_DATA_SET_CLIENT_EXTENSION_FILTER";
-
-				BaseClientExtensionFDSFilter clientExtensionFDSFilter =
-					(BaseClientExtensionFDSFilter)fdsFilter;
-
-				values.put(
-					"clientExtensionEntryERC",
-					clientExtensionFDSFilter.getCETExternalReferenceCode());
-
-				values.put(
-					"r_dataSetToDataSetClientExtensionFilters_l_dataSetId",
-					objectEntry.getObjectEntryId());
-			}
 			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"FDSFilter instance must extend either " +
-							"BaseDateRangeFDSFilter, BaseSelectionFDSFilter " +
-								"or BaseClientExtensionFDSFilter");
-				}
-
-				continue;
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"FDSFilter is not an instance of ",
+						"BaseClientExtensionFDSFilter, ",
+						"BaseDateRangeFDSFilter, or BaseSelectionFDSFilter"));
 			}
 
 			ObjectDefinition objectDefinition =
@@ -891,9 +886,6 @@ public class ImportSystemDataSetMVCResourceCommand
 
 		return String.valueOf(value);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ImportSystemDataSetMVCResourceCommand.class);
 
 	@Reference
 	private FDSCreationMenuRegistry _fdsCreationMenuRegistry;

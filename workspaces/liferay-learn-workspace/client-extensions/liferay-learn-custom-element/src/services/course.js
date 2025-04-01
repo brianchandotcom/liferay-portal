@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getCurrentSiteId} from '';
+
+import {config} from '../utils/constants';
+import {request} from '../utils/request';
+
 export const getCoursesAndFirstLessons = async () => {
 	const data = await request({
 		url: `${

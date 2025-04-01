@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
 import java.io.IOException;
@@ -104,7 +105,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 			for (int i = 0; i < definitionLines.length; i++) {
 				if (i == 0) {
-					leadingSpaces = _getLeadingSpaces(definitionLines[i]);
+					leadingSpaces = SourceUtil.getLeadingSpaces(
+						definitionLines[i]);
 
 					leadingSpacesLength = leadingSpaces.length();
 
@@ -117,7 +119,8 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 				}
 
 				if (i == 1) {
-					leadingSpaces = _getLeadingSpaces(definitionLines[i]);
+					leadingSpaces = SourceUtil.getLeadingSpaces(
+						definitionLines[i]);
 
 					leadingSpacesLength = leadingSpaces.length();
 				}
@@ -301,16 +304,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return content;
-	}
-
-	private String _getLeadingSpaces(String line) {
-		for (int i = 0; i < line.length(); i++) {
-			if (line.charAt(i) != CharPool.SPACE) {
-				return line.substring(0, i);
-			}
-		}
-
-		return line;
 	}
 
 	private boolean _hasMapInsideList(String[] lines) {

@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -47,9 +48,9 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 				}
 
 				if (previousLine.matches("\\s*[^\\s#].*[,=]\\\\")) {
-					String leadingSpaces = _getLeadingSpaces(line);
+					String leadingSpaces = SourceUtil.getLeadingSpaces(line);
 
-					String expectedLeadingSpaces = _getLeadingSpaces(
+					String expectedLeadingSpaces = SourceUtil.getLeadingSpaces(
 						previousLine);
 
 					if (previousLine.endsWith("=\\")) {
@@ -84,7 +85,7 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private String _fixLeadingSpaces(String line) {
-		String leadingSpaces = _getLeadingSpaces(line);
+		String leadingSpaces = SourceUtil.getLeadingSpaces(line);
 
 		int leadingSpacesLength = leadingSpaces.length();
 
@@ -110,16 +111,6 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return leadingSpaces + StringUtil.trimLeading(line);
-	}
-
-	private String _getLeadingSpaces(String line) {
-		for (int i = 0; i < line.length(); i++) {
-			if (line.charAt(i) != CharPool.SPACE) {
-				return line.substring(0, i);
-			}
-		}
-
-		return line;
 	}
 
 }

@@ -154,6 +154,16 @@ public class SourceUtil {
 		return sb.toString();
 	}
 
+	public static String getLeadingSpaces(String line) {
+		for (int i = 0; i < line.length(); i++) {
+			if (line.charAt(i) != CharPool.SPACE) {
+				return line.substring(0, i);
+			}
+		}
+
+		return line;
+	}
+
 	public static String getLine(String content, int lineNumber) {
 		int nextLineStartPos = getLineStartPos(content, lineNumber);
 

@@ -5,11 +5,11 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -49,7 +49,8 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 						line.endsWith("|-")) {
 
 						insideMultiline = true;
-						multilineLeadingSpaces = _getLeadingSpaces(line);
+						multilineLeadingSpaces = SourceUtil.getLeadingSpaces(
+							line);
 					}
 
 					if (Validator.isBlank(line)) {
@@ -67,7 +68,7 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 
 				sb.append("\n");
 
-				leadingSpaces = _getLeadingSpaces(line);
+				leadingSpaces = SourceUtil.getLeadingSpaces(line);
 
 				if (!Validator.isBlank(line) &&
 					(leadingSpaces.length() <=
@@ -83,16 +84,6 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 		}
 
 		return sb.toString();
-	}
-
-	private String _getLeadingSpaces(String line) {
-		for (int i = 0; i < line.length(); i++) {
-			if (line.charAt(i) != CharPool.SPACE) {
-				return line.substring(0, i);
-			}
-		}
-
-		return line;
 	}
 
 	private String _removeEmptyLinesAroundDocumentSeparator(String content) {

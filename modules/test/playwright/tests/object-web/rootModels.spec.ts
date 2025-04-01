@@ -1084,4 +1084,111 @@ test.describe('Manage root models elements through Model Builder', () => {
 			}
 		}
 	});
+
+	test('cannot delete an object relationship with inheritance', async ({
+		apiHelpers,
+		modelBuilderDiagramPage,
+		page,
+	}) => {
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					status: {code: 2},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					status: {code: 2},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipLabel =
+				'objectRelationshipLabel' + getRandomInt();
+			const objectRelationshipName =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
+					{
+						edge: true,
+						label: {
+							en_US: objectRelationshipLabel,
+						},
+						name: objectRelationshipName,
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: 'oneToMany',
+					}
+				);
+
+			objectRelationships.push(objectRelationship);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+			await modelBuilderDiagramPage.toggleSidebarsButton.click();
+
+			await modelBuilderDiagramPage.openObjectDefinitionMenu(
+				objectDefinition2.label['en_US']
+			);
+
+			await page
+				.getByRole('menuitem')
+				.filter({hasText: 'Delete Object'})
+				.click();
+
+			await expect(
+				page.getByRole('dialog').locator('.modal-body span')
+			).toHaveText(
+				'To delete this object, you must first disable inheritance and delete its relationships.'
+			);
+
+			await page.getByRole('button', {name: 'Done'}).click();
+
+			await expect(
+				page.getByText(
+					'To delete this object, you must first disable inheritance and delete its relationships.'
+				)
+			).not.toBeVisible();
+		}
+		finally {
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectRelationshipAPIClient.putObjectRelationship(
+					objectRelationship.id,
+					{
+						...objectRelationship,
+						edge: false,
+					}
+				);
+			}
+		}
+	});
 });

@@ -694,6 +694,11 @@ public class DDMServiceUpgradeStepRegistrator
 				"DDMFormInstance", "expirationDate"));
 
 		registry.register("7.0.3", "7.0.4", new PollsToDDMUpgradeProcess());
+
+		registry.register(
+			"7.0.4", "7.0.5",
+			UpgradeProcessFactory.alterColumnType(
+				"DDMField", "fieldName", "VARCHAR(500) null"));
 	}
 
 	@Activate

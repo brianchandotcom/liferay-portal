@@ -234,6 +234,9 @@ const BusinessEvents = () => {
 								}
 								items={userOptions}
 								label="Options"
+								menuElementAttrs={{
+									className: 'p-0',
+								}}
 							/>
 						</div>
 					),

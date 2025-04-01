@@ -73,18 +73,14 @@ public class DefaultSegmentsEntryProviderTest {
 	@Test
 	public void testGetOrganizationSegmentsWithDateModified() throws Exception {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
-		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		_user1 = UserTestUtil.addOrganizationUser(
 			OrganizationTestUtil.addOrganization(),
 			RoleConstants.ORGANIZATION_USER);
 
+		_user2 = UserTestUtil.addUser(_group.getGroupId());
+
 		_user2.setModifiedDate(_getDateBefore(_user1));
-
-		Organization organization = OrganizationTestUtil.addOrganization();
-
-		_user1 = UserTestUtil.addOrganizationUser(
-			organization, RoleConstants.ORGANIZATION_USER);
 
 		Criteria criteria = new Criteria();
 		String filterString = String.format(
@@ -962,15 +958,14 @@ public class DefaultSegmentsEntryProviderTest {
 		_userSegmentsCriteriaContributor.contribute(
 			criteria, filterString, Criteria.Conjunction.AND);
 
-		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
-
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
 
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+
 		Assert.assertArrayEquals(
 			new long[] {segmentsEntry.getSegmentsEntryId()}, segmentsEntryIds);
-
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
 			segmentsEntryIds.length);

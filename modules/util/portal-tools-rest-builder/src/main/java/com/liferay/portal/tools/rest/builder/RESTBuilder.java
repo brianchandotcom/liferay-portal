@@ -181,7 +181,6 @@ public class RESTBuilder {
 		if (Validator.isNotNull(_configYAML.getClientDir())) {
 			_createClientAggregationFile(context);
 			_createClientBaseJSONParserFile(context);
-			_createClientCustomFieldFiles(context);
 			_createClientFacetFile(context);
 			_createClientHttpInvokerFile(context);
 			_createClientPageFile(context);
@@ -191,12 +190,13 @@ public class RESTBuilder {
 			_createClientUnsafeSupplierFile(context);
 		}
 
+		boolean createClientCustomFieldFiles = true;
+
 		List<String> validationErrorMessages = new ArrayList<>();
 
-		File[] openAPIYAMLFiles = FileUtil.getFiles(
-			_configDir, "rest-openapi", ".yaml");
+		for (File openAPIYAMLFile :
+				FileUtil.getFiles(_configDir, "rest-openapi", ".yaml")) {
 
-		for (File openAPIYAMLFile : openAPIYAMLFiles) {
 			try {
 				_checkOpenAPIYAMLFile(freeMarkerTool, openAPIYAMLFile);
 			}
@@ -344,6 +344,14 @@ public class RESTBuilder {
 				if (Validator.isNotNull(_configYAML.getClientDir())) {
 					_createClientResourceFile(
 						context, escapedVersion, schemaName);
+
+					if (createClientCustomFieldFiles &&
+						_containsVulcanCustomFields(schema)) {
+
+						_createClientCustomFieldFiles(context);
+
+						createClientCustomFieldFiles = false;
+					}
 				}
 
 				if (Validator.isNotNull(_configYAML.getTestDir())) {
@@ -489,6 +497,31 @@ public class RESTBuilder {
 		}
 
 		FileUtil.write(file, yamlString);
+	}
+
+	private boolean _containsVulcanCustomFields(Schema schema) {
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if (MapUtil.isEmpty(propertySchemas)) {
+			return false;
+		}
+
+		for (Schema propertySchema : propertySchemas.values()) {
+			if (Objects.equals(propertySchema.getType(), "array")) {
+				Items items = propertySchema.getItems();
+
+				if ((items != null) &&
+					Objects.equals(items.getType(), "customField")) {
+
+					return true;
+				}
+			}
+			else if (Objects.equals(propertySchema.getType(), "customField")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _createApplicationFile(Map<String, Object> context)

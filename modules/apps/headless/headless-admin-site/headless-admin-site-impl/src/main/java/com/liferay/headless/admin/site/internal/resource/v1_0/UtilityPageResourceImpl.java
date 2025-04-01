@@ -253,15 +253,15 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = Collections.singletonMap(
+		Map<Locale, String> nameMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId), utilityPage.getName());
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			groupId, utilityPage.getPageSpecifications(), false, titleMap,
-			titleMap, titleMap, LayoutConstants.TYPE_UTILITY, true, true,
+			groupId, utilityPage.getPageSpecifications(), false, nameMap,
+			nameMap, nameMap, LayoutConstants.TYPE_UTILITY, true, true,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		if (layout == null) {

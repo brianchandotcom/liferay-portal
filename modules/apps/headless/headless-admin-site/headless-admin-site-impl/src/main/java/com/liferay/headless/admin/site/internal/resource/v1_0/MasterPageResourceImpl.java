@@ -378,7 +378,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			long groupId, MasterPage masterPage, ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = Collections.singletonMap(
+		Map<Locale, String> nameMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId), masterPage.getName());
 
 		serviceContext.setAttribute(
@@ -388,8 +388,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			groupId, masterPage.getPageSpecifications(), true, titleMap,
-			titleMap, titleMap, LayoutConstants.TYPE_CONTENT, true, true,
+			groupId, masterPage.getPageSpecifications(), true, nameMap,
+			nameMap, nameMap, LayoutConstants.TYPE_CONTENT, true, true,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		if (layout == null) {

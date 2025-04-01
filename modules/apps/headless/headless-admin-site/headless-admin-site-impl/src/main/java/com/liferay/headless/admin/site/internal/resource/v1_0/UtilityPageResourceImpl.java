@@ -277,22 +277,30 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId), utilityPage.getName());
 
+		Map<Locale, String> titleMap = Collections.emptyMap();
+		Map<Locale, String> descriptionMap = Collections.emptyMap();
+
 		UtilityPageSettings utilityPageSettings =
 			utilityPage.getUtilityPageSettings();
 
-		UtilityPageSEOSettings utilityPageSEOSettings =
-			utilityPageSettings.getSeoSettings();
+		if ((utilityPageSettings != null) &&
+			(utilityPageSettings.getSeoSettings() != null)) {
+
+			UtilityPageSEOSettings utilityPageSEOSettings =
+				utilityPageSettings.getSeoSettings();
+
+			titleMap = LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getHtmlTitle_i18n());
+			descriptionMap = LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getDescription_i18n());
+		}
 
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, utilityPage.getPageSpecifications(), false, nameMap,
-			LocalizedMapUtil.getLocalizedMap(
-				utilityPageSEOSettings.getHtmlTitle_i18n()),
-			LocalizedMapUtil.getLocalizedMap(
-				utilityPageSEOSettings.getDescription_i18n()),
-			LayoutConstants.TYPE_UTILITY, true, true,
+			titleMap, descriptionMap, LayoutConstants.TYPE_UTILITY, true, true,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		if (layout == null) {

@@ -22,6 +22,10 @@ export class StructuresPage {
 		await this.page.getByRole('heading', {name: 'Structures'}).waitFor();
 	}
 
+	getItem(filter: string) {
+		return this.dataSetFragmentPage.getRow(filter);
+	}
+
 	async execItemAction({action, filter}: {action: 'Delete'; filter: string}) {
 		await this.dataSetFragmentPage.execItemAction({
 			action,

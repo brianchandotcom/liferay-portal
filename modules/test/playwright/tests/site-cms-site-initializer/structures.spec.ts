@@ -4,7 +4,7 @@
  */
 
 import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
@@ -24,7 +24,7 @@ const test = mergeTests(
 );
 
 test(
-	'Structure can be deleted directly if it does not have an approved status',
+	'Structure can be deleted without confirmation if it does not have an approved status',
 	{tag: '@LPD-51516'},
 	async ({apiHelpers, page, structuresPage}) => {
 		const objectDefinition =
@@ -32,18 +32,21 @@ test(
 				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
 				status: {code: 2},
 			})) as ObjectDefinition;
-
 		const stucctureName = objectDefinition.name;
 
 		await structuresPage.goto();
+
+		const row = structuresPage.getItem(stucctureName);
+		await row.waitFor();
 
 		await structuresPage.execItemAction({
 			action: 'Delete',
 			filter: stucctureName,
 		});
-
 		await waitForAlert(page, `${stucctureName} was deleted successfully`, {
 			type: 'success',
 		});
+
+		await expect(row).toBeHidden();
 	}
 );

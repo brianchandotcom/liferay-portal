@@ -26,20 +26,22 @@ export class DataSetPage {
 		this.page = page;
 	}
 
+	getRow(filter: string) {
+		return this.table.bodyRows.filter({hasText: filter});
+	}
+
 	async execItemAction({action, filter}: {action: string; filter: string}) {
-		const row = this.table.bodyRows.filter({hasText: filter});
-		const button = row.getByRole('button', {
+		const item = this.getRow(filter);
+		const button = item.getByRole('button', {
 			exact: true,
 			name: 'Actions',
 		});
-
 		const dropdownId = await button.getAttribute('aria-controls');
 		await button.click();
 
 		const dropdownMenu = this.page
 			.locator(`#${dropdownId}`)
 			.filter({has: this.page.getByRole('menu')});
-
 		await dropdownMenu.waitFor();
 
 		const dropdownMenuActionItem = dropdownMenu.getByRole('menuitem', {

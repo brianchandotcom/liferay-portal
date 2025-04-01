@@ -39,11 +39,11 @@ export const userData = {
 
 interface LoginOptions {
 	apiHelpers?: ApiHelpers;
-    page: Page;
-    screenName: LoginScreenName | string;
-	loginUrl?: string;
 	domain?: string;
+	loginUrl?: string;
+	page: Page;
 	rememberMe?: boolean;
+	screenName: LoginScreenName | string;
 }
 
 async function performLogin(
@@ -93,16 +93,14 @@ async function performLogin(
 	return await page.context().cookies();
 }
 
-export async function performLoginViaApi(
-	{
-		apiHelpers,
-		page,
-		screenName,
-		loginUrl = liferayConfig.environment.baseUrl,
-		domain = '@liferay.com',
-		rememberMe = true
-	} : LoginOptions
-) {
+export async function performLoginViaApi({
+	apiHelpers,
+	domain = '@liferay.com',
+	loginUrl = liferayConfig.environment.baseUrl,
+	page,
+	rememberMe = true,
+	screenName,
+}: LoginOptions) {
 	const {password} = userData[screenName || 'test'];
 
 	const params = new URLSearchParams({

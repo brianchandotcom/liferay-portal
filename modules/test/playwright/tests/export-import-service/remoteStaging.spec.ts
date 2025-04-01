@@ -28,7 +28,7 @@ test(
 	async ({
 		apiHelpers,
 		page,
-		remoteStagingApiHelper,
+		remoteStagingApiHelper
 	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'Site Name',
@@ -61,5 +61,16 @@ test(
 				name: 'Remote Site Name',
 			}
 		);
+
+		await performLoginViaApi({
+			page,
+			screenName: 'test',
+		});
+
+		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
+			groupId: site.id,
+			remoteGroupId: remoteSite.id,
+			remotePort: 9080,
+		});
 	}
 );

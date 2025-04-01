@@ -45,13 +45,13 @@ public class FDSSampleDisplayContext {
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				null, true, "#", "document", "sampleBulkAction",
+				null, null, null, true, "#", "document", "sampleBulkAction",
 				LanguageUtil.get(_fdsRequestHelper.getRequest(), "label"), null,
-				null, "modal"),
+				"lg", null, null, null, "modal", null, null, null),
 			new FDSActionDropdownItem(
-				null, false, "#", "trash", "delete",
+				null, null, null, false, "#", "trash", "delete",
 				LanguageUtil.get(_fdsRequestHelper.getRequest(), "delete"),
-				null, null, "modal"));
+				null, "lg", null, null, null, "modal", null, null, null));
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {

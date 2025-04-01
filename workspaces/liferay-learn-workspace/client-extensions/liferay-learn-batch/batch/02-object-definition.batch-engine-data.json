@@ -596,6 +596,17 @@
 					"objectDefinitionExternalReferenceCode1": "P2S3_COURSE",
 					"objectDefinitionExternalReferenceCode2": "P2S3_MODULE",
 					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_COURSE_TO_P2S3_LEARNING_PATH_STEP",
+					"label": {
+						"en_US": "P2S3 Course to P2S3 Learning Path Step"
+					},
+					"name": "p2s3CourseToP2S3LPSteps",
+					"objectDefinitionExternalReferenceCode1": "P2S3_COURSE",
+					"objectDefinitionExternalReferenceCode2": "P2S3_LEARNING_PATH_STEP",
+					"type": "oneToMany"
 				}
 			],
 			"pluralLabel": {
@@ -1083,6 +1094,19 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_EXTERNAL_MEDIA_TO_P2S3_LEARNING_PATH_STEP",
+					"label": {
+						"en_US": "P2S3 External Medias to P2S3 Learning Path Steps"
+					},
+					"name": "p2S3ExtMediaToP2s3LPSteps",
+					"objectDefinitionExternalReferenceCode1": "P2S3_EXTERNAL_MEDIA",
+					"objectDefinitionExternalReferenceCode2": "P2S3_LEARNING_PATH_STEP",
+					"type": "oneToMany"
+				}
+			],
 			"pluralLabel": {
 				"en_US": "P2S3 External Medias"
 			},
@@ -1689,30 +1713,6 @@
 				}
 			],
 			"objectFolderExternalReferenceCode": "P2S3_LEARNING_MANAGEMENT_SYSTEM",
-			"objectRelationships": [
-				{
-					"deletionType": "disassociate",
-					"externalReferenceCode": "P2S3_LEARNING_PATH_STEP_TO_P2S3_COURSES",
-					"label": {
-						"en_US": "P2S3 Learning Path Step to P2S3 Courses"
-					},
-					"name": "p2s3LearningPathStepToP2S3Courses",
-					"objectDefinitionExternalReferenceCode1": "P2S3_LEARNING_PATH_STEP",
-					"objectDefinitionExternalReferenceCode2": "P2S3_COURSE",
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "disassociate",
-					"externalReferenceCode": "P2S3_LEARNING_PATH_STEP_TO_P2S3_EXTERNAL_MEDIAS",
-					"label": {
-						"en_US": "P2S3 Learning Path Step to P2S3 External Medias"
-					},
-					"name": "p2s3LPStepToP2S3ExtMedias",
-					"objectDefinitionExternalReferenceCode1": "P2S3_LEARNING_PATH_STEP",
-					"objectDefinitionExternalReferenceCode2": "P2S3_EXTERNAL_MEDIA",
-					"type": "oneToMany"
-				}
-			],
 			"pluralLabel": {
 				"en_US": "P2S3 Learning Path Steps"
 			},

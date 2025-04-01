@@ -13,7 +13,6 @@ import com.liferay.portal.dao.db.PostgreSQLDB;
 import com.liferay.portal.db.partition.db.DBPartitionPostgreSQLDB;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -24,7 +23,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import javax.sql.DataSource;
 
@@ -40,11 +38,7 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 		_rulesTableColumn = null;
 	}
 
-	public DBPartitionSQLProvider(long companyId, DBType dbType)
-		throws Exception {
-
-		super(dbType);
-
+	public DBPartitionSQLProvider(long companyId) throws Exception {
 		_objectSQLProvider = new ObjectSQLProvider(companyId, db);
 
 		_partitionName = DBPartitionUtil.getPartitionName(companyId);
@@ -68,12 +62,6 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 
 	@Override
 	public String getTablesSQL() {
-		Supplier<String> rulesSQLSupplier = () -> StringPool.BLANK;
-
-		if (db.getDBType() == DBType.POSTGRESQL) {
-			rulesSQLSupplier = this::_getRulesSQL;
-		}
-
 		return StringBundler.concat(
 			_getCreatePartitionSQL(),
 			StringUtil.replace(
@@ -82,16 +70,10 @@ public class DBPartitionSQLProvider extends BaseSQLProvider {
 				"create table ",
 				StringBundler.concat(
 					"create table ", _partitionName, StringPool.PERIOD)),
-			_getViewsSQL(), rulesSQLSupplier.get());
+			_getViewsSQL(), _getRulesSQL());
 	}
 
 	private String _getCreatePartitionSQL() {
-		if (db.getDBType() == DBType.MYSQL) {
-			return StringBundler.concat(
-				"create schema if not exists ", _partitionName,
-				" character set utf8;", StringPool.NEW_LINE);
-		}
-
 		return StringBundler.concat(
 			"create schema if not exists ", _partitionName,
 			StringPool.SEMICOLON, StringPool.NEW_LINE);

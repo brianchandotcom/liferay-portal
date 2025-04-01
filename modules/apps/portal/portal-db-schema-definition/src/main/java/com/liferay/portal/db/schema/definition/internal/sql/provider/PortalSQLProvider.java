@@ -6,7 +6,6 @@
 package com.liferay.portal.db.schema.definition.internal.sql.provider;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 
 /**
@@ -14,9 +13,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
  */
 public class PortalSQLProvider extends BaseSQLProvider {
 
-	public PortalSQLProvider(DBType dbType) throws Exception {
-		super(dbType);
-
+	public PortalSQLProvider() throws Exception {
 		_objectSQLProvider = new ObjectSQLProvider(
 			PortalInstancePool.getDefaultCompanyId(), db);
 	}

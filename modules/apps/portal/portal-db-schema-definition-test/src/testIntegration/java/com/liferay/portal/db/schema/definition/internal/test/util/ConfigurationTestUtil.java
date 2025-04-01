@@ -5,7 +5,6 @@
 
 package com.liferay.portal.db.schema.definition.internal.test.util;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -32,8 +31,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationTestUtil {
 
 	public static void deployConfiguration(
-			ConfigurationAdmin configurationAdmin, String databaseType,
-			String path, String pid)
+			ConfigurationAdmin configurationAdmin, String path, String pid)
 		throws Exception {
 
 		Assert.assertNull(
@@ -42,8 +40,7 @@ public class ConfigurationTestUtil {
 		try (AutoCloseable autoCloseable =
 				_registerOnAfterDeleteConfigurationModelListener(pid)) {
 
-			_createConfiguration(
-				pid, _getConfigurationContent(databaseType, path));
+			_createConfiguration(pid, _getConfigurationContent(path));
 
 			Assert.assertNotNull(
 				configurationAdmin.listConfigurations(
@@ -70,11 +67,8 @@ public class ConfigurationTestUtil {
 					content.getBytes(Charset.defaultCharset())));
 	}
 
-	private static String _getConfigurationContent(
-		String databaseType, String path) {
-
-		return StringBundler.concat(
-			"databaseType=\"", databaseType, "\"\npath=\"", path, "\"\n");
+	private static String _getConfigurationContent(String path) {
+		return "path=\"" + path + "\"\n";
 	}
 
 	private static AutoCloseable

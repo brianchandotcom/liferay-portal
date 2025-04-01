@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.db.schema.definition.internal.test.util.DatabaseTestUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -43,7 +44,7 @@ public class DefaultDBSchemaDefinitionExporterTest
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		assumeDB();
+		Assume.assumeTrue(DBManagerUtil.getDBType() == DBType.POSTGRESQL);
 
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 	}

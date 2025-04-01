@@ -5,11 +5,9 @@
 
 package com.liferay.portal.db.schema.definition.internal.test.util;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,12 +35,7 @@ public class DatabaseTestUtil {
 	public static void createSchema(String schemaName) throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			db.runSQL("create schema " + schemaName + " character set utf8");
-		}
-		else {
-			db.runSQL("create schema " + schemaName);
-		}
+		db.runSQL("create schema " + schemaName);
 	}
 
 	public static void destroyDataSource(DataSource dataSource)
@@ -54,12 +47,7 @@ public class DatabaseTestUtil {
 	public static void dropSchema(String schemaName) throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			db.runSQL("drop schema " + schemaName);
-		}
-		else {
-			db.runSQL("drop schema " + schemaName + " cascade");
-		}
+		db.runSQL("drop schema " + schemaName + " cascade");
 	}
 
 	public static List<String> getIndexColumnNames(DataSource dataSource)
@@ -91,11 +79,15 @@ public class DatabaseTestUtil {
 	}
 
 	public static String getSchemaURL(String schemaName) {
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			return _getMySQLSchemaURL(schemaName);
+		String jdbcURL = PropsValues.JDBC_DEFAULT_URL;
+
+		int index = jdbcURL.indexOf("?");
+
+		if (index == -1) {
+			return jdbcURL + "?currentSchema=" + schemaName;
 		}
 
-		return _getPostgreSQLSchemaURL(schemaName);
+		return jdbcURL + "&currentSchema=" + schemaName;
 	}
 
 	public static List<String> getTableColumnNames(DataSource dataSource)
@@ -201,35 +193,6 @@ public class DatabaseTestUtil {
 		}
 
 		return indexColumnNames;
-	}
-
-	private static String _getMySQLSchemaURL(String schemaName) {
-		String jdbcURL = PropsValues.JDBC_DEFAULT_URL;
-
-		int index = jdbcURL.indexOf("?");
-
-		if (index == -1) {
-			return jdbcURL.substring(0, jdbcURL.lastIndexOf("/") + 1) +
-				schemaName;
-		}
-
-		String baseJDBCURL = jdbcURL.substring(0, index);
-
-		return StringBundler.concat(
-			jdbcURL.substring(0, baseJDBCURL.lastIndexOf("/") + 1), schemaName,
-			jdbcURL.substring(index));
-	}
-
-	private static String _getPostgreSQLSchemaURL(String schemaName) {
-		String jdbcURL = PropsValues.JDBC_DEFAULT_URL;
-
-		int index = jdbcURL.indexOf("?");
-
-		if (index == -1) {
-			return jdbcURL + "?currentSchema=" + schemaName;
-		}
-
-		return jdbcURL + "&currentSchema=" + schemaName;
 	}
 
 }

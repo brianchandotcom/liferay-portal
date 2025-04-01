@@ -35,8 +35,8 @@ import org.osgi.framework.ServiceReference;
  */
 public abstract class BaseSQLProvider implements SQLProvider {
 
-	public BaseSQLProvider(DBType dbType) throws Exception {
-		db = _getDB(dbType);
+	public BaseSQLProvider() throws Exception {
+		db = _getDB();
 
 		_appendPortalSQL();
 
@@ -110,17 +110,18 @@ public abstract class BaseSQLProvider implements SQLProvider {
 		}
 	}
 
-	private DB _getDB(DBType dbType) {
+	private DB _getDB() {
 		ServiceLoader<DBFactory> serviceLoader = ServiceLoader.load(
 			DBFactory.class, DBFactory.class.getClassLoader());
 
 		for (DBFactory dbFactory : serviceLoader) {
-			if (dbFactory.getDBType() == dbType) {
+			if (dbFactory.getDBType() == DBType.POSTGRESQL) {
 				return dbFactory.create(0, 0);
 			}
 		}
 
-		throw new IllegalArgumentException("Database type " + dbType);
+		throw new IllegalStateException(
+			"Not able to load database type " + DBType.POSTGRESQL);
 	}
 
 	private String _read(String contextName, String path) throws Exception {

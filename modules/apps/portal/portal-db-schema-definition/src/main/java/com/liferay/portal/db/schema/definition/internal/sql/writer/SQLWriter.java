@@ -8,7 +8,6 @@ package com.liferay.portal.db.schema.definition.internal.sql.writer;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.DBPartitionSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.PortalSQLProvider;
 import com.liferay.portal.db.schema.definition.internal.sql.provider.SQLProvider;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -20,10 +19,6 @@ import java.io.File;
  * @author Mariano Álvaro Sáiz
  */
 public class SQLWriter {
-
-	public SQLWriter(DBType dbType) {
-		_dbType = dbType;
-	}
 
 	public void writeFiles(File directory) throws Exception {
 		if (DBPartition.isPartitionEnabled()) {
@@ -45,8 +40,7 @@ public class SQLWriter {
 					return;
 				}
 
-				SQLProvider sqlProvider = new DBPartitionSQLProvider(
-					companyId, _dbType);
+				SQLProvider sqlProvider = new DBPartitionSQLProvider(companyId);
 
 				FileUtil.write(
 					new File(directory, companyId + "_indexes.sql"),
@@ -58,14 +52,12 @@ public class SQLWriter {
 	}
 
 	private void _writeFiles(File directory) throws Exception {
-		SQLProvider sqlProvider = new PortalSQLProvider(_dbType);
+		SQLProvider sqlProvider = new PortalSQLProvider();
 
 		FileUtil.write(
 			new File(directory, "indexes.sql"), sqlProvider.getIndexesSQL());
 		FileUtil.write(
 			new File(directory, "tables.sql"), sqlProvider.getTablesSQL());
 	}
-
-	private final DBType _dbType;
 
 }

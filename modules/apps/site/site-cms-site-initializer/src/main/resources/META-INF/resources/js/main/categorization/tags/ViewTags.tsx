@@ -11,6 +11,7 @@ import React from 'react';
 import SpaceSticker from '../../components/SpaceSticker';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
+import EditTagsModal from './EditTagsModal';
 
 export default function ViewTags({
 	assetLibraryId,
@@ -195,6 +196,17 @@ export default function ViewTags({
 					{
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
+						onClick: (itemData: {itemData: any}) => {
+							openModal({
+								contentComponent: () =>
+									EditTagsModal({
+										tagId: itemData.itemData.id,
+										tagName: itemData.itemData.name,
+										tagsURL,
+									}),
+								size: 'md',
+							});
+						},
 					},
 					{
 						data: {

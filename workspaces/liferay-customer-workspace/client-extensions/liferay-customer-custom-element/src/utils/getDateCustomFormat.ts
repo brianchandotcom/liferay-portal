@@ -7,17 +7,16 @@ import {Liferay} from '~/services/liferay';
 
 export default function getDateCustomFormat(
 	rawDate: string | Date,
-	format: Intl.DateTimeFormatOptions | undefined
+	options: Intl.DateTimeFormatOptions = {}
 ) {
 	if (rawDate) {
-		const date =
-			typeof rawDate === 'string'
-				? new Date(rawDate.substring(0, rawDate.length - 1))
-				: rawDate;
+		const date = typeof rawDate === 'string' ? new Date(rawDate) : rawDate;
+
+		options.timeZone = 'UTC';
 
 		return date.toLocaleDateString(
 			Liferay.ThemeDisplay.getBCP47LanguageId(),
-			format
+			options
 		);
 	}
 }

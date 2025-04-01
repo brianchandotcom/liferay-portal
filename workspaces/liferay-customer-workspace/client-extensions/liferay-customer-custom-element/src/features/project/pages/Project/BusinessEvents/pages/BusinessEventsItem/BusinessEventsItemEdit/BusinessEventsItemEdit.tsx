@@ -748,6 +748,18 @@ const BusinessEventsItemEdit: React.FC = () => {
 		);
 	}
 
+	if (
+		['canceled', 'completed'].includes(
+			businessEvent?.eventStatus?.key || ''
+		)
+	) {
+		return (
+			<div className="h6 mt-4">
+				{i18n.translate('cannot-edit-canceled-or-completed-events')}
+			</div>
+		);
+	}
+
 	if (!businessEvent) {
 		return <div>{i18n.translate('no-data-found')}</div>;
 	}

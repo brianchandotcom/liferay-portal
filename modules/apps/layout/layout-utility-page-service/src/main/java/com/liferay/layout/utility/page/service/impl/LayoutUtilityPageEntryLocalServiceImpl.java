@@ -401,7 +401,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		layoutUtilityPageEntry = layoutUtilityPageEntryPersistence.update(
 			layoutUtilityPageEntry);
 
-		Map<Locale, String> titleMap = Collections.singletonMap(
+		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(), name);
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
@@ -419,8 +419,8 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		_layoutLocalService.updateLayout(
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(), draftLayout.getParentLayoutId(),
-			titleMap, titleMap, draftLayout.getDescriptionMap(),
+			draftLayout.getLayoutId(), draftLayout.getParentLayoutId(), nameMap,
+			draftLayout.getTitleMap(), draftLayout.getDescriptionMap(),
 			draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
 			draftLayout.getType(), draftLayout.isHidden(),
 			draftLayout.getFriendlyURLMap(), draftLayout.getIconImage(), null,
@@ -433,7 +433,7 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getParentLayoutId(), titleMap, titleMap,
+			layout.getParentLayoutId(), nameMap, layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getKeywordsMap(),
 			layout.getRobotsMap(), layout.getType(), layout.isHidden(),
 			layout.getFriendlyURLMap(), layout.getIconImage(), null,

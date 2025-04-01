@@ -184,10 +184,12 @@ public class CompanyLocalServiceTest {
 
 		_db = DBManagerUtil.getDB();
 
-		ReflectionTestUtil.invoke(
-			DBPartitionUtil.class, "_initializeDBPartitionDB",
-			new Class<?>[] {DB.class, DataSource.class}, _db,
-			InfrastructureUtil.getDataSource());
+		if (_db.isSupportsDBPartition()) {
+			ReflectionTestUtil.invoke(
+				DBPartitionUtil.class, "_initializeDBPartitionDB",
+				new Class<?>[] {DB.class, DataSource.class}, _db,
+				InfrastructureUtil.getDataSource());
+		}
 
 		_dbPartitionDB = ReflectionTestUtil.getFieldValue(
 			DBPartitionUtil.class, "_dbPartitionDB");
@@ -954,6 +956,8 @@ public class CompanyLocalServiceTest {
 	@FeatureFlags("LPD-11342")
 	@Test
 	public void testExtractCompany() throws Exception {
+		Assume.assumeTrue(_db.isSupportsDBPartition());
+
 		Company company = CompanyTestUtil.addCompany();
 
 		try {
@@ -1019,6 +1023,8 @@ public class CompanyLocalServiceTest {
 	@FeatureFlags("LPD-11342")
 	@Test
 	public void testExtractCompanyWhenDBPartitionUtilFails() throws Exception {
+		Assume.assumeTrue(_db.isSupportsDBPartition());
+
 		Company company = CompanyTestUtil.addCompany();
 
 		int tablesCount = _getTablesCount(company.getCompanyId());

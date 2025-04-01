@@ -150,7 +150,8 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 			String className, long primaryKeyLong)
 		throws Exception {
 
-		throw new Exception();
+		throw new Exception(
+			"Must use getGroupExportPortletPreferencesExternalReferenceCode");
 	}
 
 	protected String getImportPortletPreferencesNewExternalReferenceCode(

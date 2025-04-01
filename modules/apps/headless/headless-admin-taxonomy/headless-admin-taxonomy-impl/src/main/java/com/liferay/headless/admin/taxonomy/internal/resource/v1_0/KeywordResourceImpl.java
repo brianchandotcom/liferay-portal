@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
@@ -159,6 +160,10 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return SearchUtil.search(
 			null,
 			booleanQuery -> {
@@ -287,6 +292,10 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 	@Override
 	public Keyword postKeyword(Keyword keyword) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
 		AssetTag assetTag = _assetTagService.addTag(
 			keyword.getExternalReferenceCode(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, keyword.getName(),

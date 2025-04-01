@@ -67,7 +67,7 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 					JSONObject dataJSONObject = _jsonFactory.createJSONObject(
 						data);
 
-					if (_upgradeDDMContentData(
+					if (upgradeDDMContentData(
 							dataJSONObject.getJSONArray("fieldValues"),
 							definitionJSONObject.getJSONArray("fields"))) {
 
@@ -87,24 +87,7 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private HashMap<String, JSONObject> _mapDataFieldValues(
-		JSONArray fieldValuesJSONArray) {
-
-		HashMap<String, JSONObject> dataFieldValuesMap = new HashMap<>();
-
-		fieldValuesJSONArray.forEach(
-			object -> {
-				JSONObject fieldValueJSONObject = (JSONObject)object;
-
-				dataFieldValuesMap.put(
-					fieldValueJSONObject.getString("name"),
-					fieldValueJSONObject.getJSONObject("value"));
-			});
-
-		return dataFieldValuesMap;
-	}
-
-	private boolean _upgradeDDMContentData(
+	protected boolean upgradeDDMContentData(
 		JSONArray fieldValuesJSONArray, JSONArray fieldsJSONArray) {
 
 		AtomicBoolean upgraded = new AtomicBoolean(false);
@@ -173,6 +156,23 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 			});
 
 		return upgraded.get();
+	}
+
+	private HashMap<String, JSONObject> _mapDataFieldValues(
+		JSONArray fieldValuesJSONArray) {
+
+		HashMap<String, JSONObject> dataFieldValuesMap = new HashMap<>();
+
+		fieldValuesJSONArray.forEach(
+			object -> {
+				JSONObject fieldValueJSONObject = (JSONObject)object;
+
+				dataFieldValuesMap.put(
+					fieldValueJSONObject.getString("name"),
+					fieldValueJSONObject.getJSONObject("value"));
+			});
+
+		return dataFieldValuesMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

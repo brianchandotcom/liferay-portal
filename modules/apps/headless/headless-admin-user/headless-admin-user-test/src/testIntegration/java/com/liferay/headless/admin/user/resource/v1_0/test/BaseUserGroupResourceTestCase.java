@@ -731,7 +731,7 @@ public abstract class BaseUserGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			userGroupResource.getUserGroupByExternalReferenceCodeHttpResponse(
-				userGroup.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected UserGroup

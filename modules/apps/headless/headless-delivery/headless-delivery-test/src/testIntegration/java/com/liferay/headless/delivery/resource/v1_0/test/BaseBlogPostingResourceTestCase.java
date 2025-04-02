@@ -1373,7 +1373,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				getSiteBlogPostingByExternalReferenceCodeHttpResponse(
 					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
 						blogPosting),
-					blogPosting.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(

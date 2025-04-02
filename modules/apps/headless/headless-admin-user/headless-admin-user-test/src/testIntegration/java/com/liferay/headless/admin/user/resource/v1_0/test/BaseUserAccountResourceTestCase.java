@@ -279,7 +279,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			userAccountResource.
 				getAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
-					userAccount.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected String
@@ -3810,8 +3810,7 @@ public abstract class BaseUserAccountResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			userAccountResource.
-				getUserAccountByExternalReferenceCodeHttpResponse(
-					userAccount.getExternalReferenceCode()));
+				getUserAccountByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected UserAccount

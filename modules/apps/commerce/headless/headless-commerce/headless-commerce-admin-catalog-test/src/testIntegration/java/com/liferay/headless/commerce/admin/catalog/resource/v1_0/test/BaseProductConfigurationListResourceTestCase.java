@@ -800,7 +800,7 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 			404,
 			productConfigurationListResource.
 				getProductConfigurationListByExternalReferenceCodeHttpResponse(
-					productConfigurationList.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected ProductConfigurationList

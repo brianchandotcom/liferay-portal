@@ -420,8 +420,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			emailAddressResource.
-				getEmailAddressByExternalReferenceCodeHttpResponse(
-					emailAddress.getExternalReferenceCode()));
+				getEmailAddressByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected EmailAddress

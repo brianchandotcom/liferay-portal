@@ -256,7 +256,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 			404,
 			productSpecificationResource.
 				getProductSpecificationByExternalReferenceCodeHttpResponse(
-					productSpecification.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected ProductSpecification

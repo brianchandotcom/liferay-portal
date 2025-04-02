@@ -664,8 +664,7 @@ public abstract class BasePaymentResourceTestCase {
 				payment.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			paymentResource.getPaymentByExternalReferenceCodeHttpResponse(
-				payment.getExternalReferenceCode()));
+			paymentResource.getPaymentByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Payment testDeletePaymentByExternalReferenceCode_addPayment()

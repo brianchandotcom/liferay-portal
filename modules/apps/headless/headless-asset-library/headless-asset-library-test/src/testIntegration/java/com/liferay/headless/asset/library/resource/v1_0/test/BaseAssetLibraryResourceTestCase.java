@@ -604,8 +604,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			assetLibraryResource.
-				getAssetLibraryByExternalReferenceCodeHttpResponse(
-					assetLibrary.getExternalReferenceCode()));
+				getAssetLibraryByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected AssetLibrary

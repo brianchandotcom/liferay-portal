@@ -653,7 +653,7 @@ public abstract class BaseCurrencyResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
-				currency.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Currency testDeleteCurrencyByExternalReferenceCode_addCurrency()

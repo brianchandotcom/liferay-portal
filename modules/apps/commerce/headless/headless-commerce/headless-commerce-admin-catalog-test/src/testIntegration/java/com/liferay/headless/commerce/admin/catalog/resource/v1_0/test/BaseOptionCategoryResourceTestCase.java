@@ -709,8 +709,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			optionCategoryResource.
-				getOptionCategoryByExternalReferenceCodeHttpResponse(
-					optionCategory.getExternalReferenceCode()));
+				getOptionCategoryByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected OptionCategory

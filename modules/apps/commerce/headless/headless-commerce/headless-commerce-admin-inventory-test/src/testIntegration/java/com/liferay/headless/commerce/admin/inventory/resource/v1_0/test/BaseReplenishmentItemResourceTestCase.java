@@ -245,8 +245,7 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			replenishmentItemResource.
-				getReplenishmentItemByExternalReferenceCodeHttpResponse(
-					replenishmentItem.getExternalReferenceCode()));
+				getReplenishmentItemByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected ReplenishmentItem

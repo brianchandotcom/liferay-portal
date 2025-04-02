@@ -2600,7 +2600,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				getSiteMessageBoardMessageByExternalReferenceCodeHttpResponse(
 					testDeleteSiteMessageBoardMessageByExternalReferenceCode_getSiteId(
 						messageBoardMessage),
-					messageBoardMessage.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

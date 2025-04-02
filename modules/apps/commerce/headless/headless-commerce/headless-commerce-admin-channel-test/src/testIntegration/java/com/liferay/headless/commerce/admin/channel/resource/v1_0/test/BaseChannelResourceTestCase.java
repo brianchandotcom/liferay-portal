@@ -778,8 +778,7 @@ public abstract class BaseChannelResourceTestCase {
 				channel.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			channelResource.getChannelByExternalReferenceCodeHttpResponse(
-				channel.getExternalReferenceCode()));
+			channelResource.getChannelByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Channel testDeleteChannelByExternalReferenceCode_addChannel()

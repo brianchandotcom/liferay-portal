@@ -642,8 +642,7 @@ public abstract class BaseProductResourceTestCase {
 				product.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			productResource.getProductByExternalReferenceCodeHttpResponse(
-				product.getExternalReferenceCode()));
+			productResource.getProductByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Product testDeleteProductByExternalReferenceCode_addProduct()
@@ -864,7 +863,7 @@ public abstract class BaseProductResourceTestCase {
 			404,
 			productResource.
 				getProductByExternalReferenceCodeByVersionHttpResponse(
-					product.getExternalReferenceCode(), product.getVersion()));
+					"-", product.getVersion()));
 	}
 
 	protected Product

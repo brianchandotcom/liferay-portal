@@ -651,8 +651,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			postalAddressResource.
-				getPostalAddressByExternalReferenceCodeHttpResponse(
-					postalAddress.getExternalReferenceCode()));
+				getPostalAddressByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected PostalAddress

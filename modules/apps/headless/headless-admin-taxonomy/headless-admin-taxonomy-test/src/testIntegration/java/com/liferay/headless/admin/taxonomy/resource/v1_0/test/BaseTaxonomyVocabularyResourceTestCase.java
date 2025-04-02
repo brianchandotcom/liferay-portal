@@ -847,7 +847,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			taxonomyVocabularyResource.
 				getAssetLibraryTaxonomyVocabularyByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
-					taxonomyVocabulary.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long
@@ -1882,7 +1882,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				getSiteTaxonomyVocabularyByExternalReferenceCodeHttpResponse(
 					testDeleteSiteTaxonomyVocabularyByExternalReferenceCode_getSiteId(
 						taxonomyVocabulary),
-					taxonomyVocabulary.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

@@ -280,9 +280,7 @@ public abstract class BaseCartResourceTestCase {
 			cartResource.getCartByExternalReferenceCodeHttpResponse(
 				cart.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
-			404,
-			cartResource.getCartByExternalReferenceCodeHttpResponse(
-				cart.getExternalReferenceCode()));
+			404, cartResource.getCartByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Cart testDeleteCartByExternalReferenceCode_addCart()

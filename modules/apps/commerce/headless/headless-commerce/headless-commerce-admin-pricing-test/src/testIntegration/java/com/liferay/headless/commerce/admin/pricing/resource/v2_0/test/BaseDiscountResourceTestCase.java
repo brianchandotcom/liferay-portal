@@ -650,7 +650,7 @@ public abstract class BaseDiscountResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			discountResource.getDiscountByExternalReferenceCodeHttpResponse(
-				discount.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Discount testDeleteDiscountByExternalReferenceCode_addDiscount()

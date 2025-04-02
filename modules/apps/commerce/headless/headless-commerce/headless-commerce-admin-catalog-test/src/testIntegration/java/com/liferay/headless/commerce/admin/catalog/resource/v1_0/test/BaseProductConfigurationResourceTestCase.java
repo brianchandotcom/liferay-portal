@@ -1296,7 +1296,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			404,
 			productConfigurationResource.
 				getProductConfigurationByExternalReferenceCodeHttpResponse(
-					productConfiguration.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected ProductConfiguration

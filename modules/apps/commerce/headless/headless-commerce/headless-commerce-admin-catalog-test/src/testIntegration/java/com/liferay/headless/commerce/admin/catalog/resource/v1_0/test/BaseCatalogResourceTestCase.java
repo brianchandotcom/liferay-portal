@@ -243,8 +243,7 @@ public abstract class BaseCatalogResourceTestCase {
 				catalog.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			catalogResource.getCatalogByExternalReferenceCodeHttpResponse(
-				catalog.getExternalReferenceCode()));
+			catalogResource.getCatalogByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Catalog testDeleteCatalogByExternalReferenceCode_addCatalog()

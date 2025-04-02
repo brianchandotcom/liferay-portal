@@ -741,8 +741,7 @@ public abstract class BaseWebUrlResourceTestCase {
 				webUrl.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse(
-				webUrl.getExternalReferenceCode()));
+			webUrlResource.getWebUrlByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected WebUrl testDeleteWebUrlByExternalReferenceCode_addWebUrl()

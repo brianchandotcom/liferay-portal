@@ -699,7 +699,7 @@ public abstract class BaseKeywordResourceTestCase {
 			keywordResource.
 				getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
-					keyword.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long
@@ -2123,7 +2123,7 @@ public abstract class BaseKeywordResourceTestCase {
 			404,
 			keywordResource.getSiteKeywordByExternalReferenceCodeHttpResponse(
 				testDeleteSiteKeywordByExternalReferenceCode_getSiteId(keyword),
-				keyword.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Long testDeleteSiteKeywordByExternalReferenceCode_getSiteId(

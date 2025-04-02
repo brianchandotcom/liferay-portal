@@ -773,7 +773,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			structuredContentResource.
 				getAssetLibraryStructuredContentByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryStructuredContentByExternalReferenceCode_getAssetLibraryId(),
-					structuredContent.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long
@@ -2193,7 +2193,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				getSiteStructuredContentByExternalReferenceCodeHttpResponse(
 					testDeleteSiteStructuredContentByExternalReferenceCode_getSiteId(
 						structuredContent),
-					structuredContent.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

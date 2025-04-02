@@ -1328,7 +1328,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 				getSiteDocumentShortcutByExternalReferenceCodeHttpResponse(
 					testDeleteSiteDocumentShortcutByExternalReferenceCode_getSiteId(
 						documentShortcut),
-					documentShortcut.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

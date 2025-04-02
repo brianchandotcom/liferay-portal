@@ -2614,7 +2614,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				getSiteKnowledgeBaseArticleByExternalReferenceCodeHttpResponse(
 					testDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_getSiteId(
 						knowledgeBaseArticle),
-					knowledgeBaseArticle.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

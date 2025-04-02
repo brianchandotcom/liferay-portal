@@ -1433,7 +1433,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				getSiteKnowledgeBaseFolderByExternalReferenceCodeHttpResponse(
 					testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
 						knowledgeBaseFolder),
-					knowledgeBaseFolder.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

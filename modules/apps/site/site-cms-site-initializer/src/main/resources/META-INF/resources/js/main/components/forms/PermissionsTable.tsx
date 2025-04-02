@@ -120,6 +120,11 @@ function PermissionsTable({
 	onChange = () => {},
 
 	/*
+	 * Orientation of the table (default is horizontal).
+	 */
+	reverse = false,
+
+	/*
 	 * Roles to be listed as the row/column entries.
 	 */
 	roles = [
@@ -137,6 +142,7 @@ function PermissionsTable({
 	defaultPermissions: PermissionItem[];
 	guestUnsupportedActionIds: string[];
 	onChange: Function;
+	reverse: boolean;
 	roles: {id: string; label: string}[];
 }) {
 	const initialPermissions = useMemo(
@@ -267,13 +273,23 @@ function PermissionsTable({
 				{...otherProps}
 			>
 				<Head
-					items={[
-						{
-							id: 'role',
-							label: Liferay.Language.get('role'),
-						},
-						...actions,
-					]}
+					items={
+						reverse
+							? [
+									{
+										id: 'action',
+										label: Liferay.Language.get('action'),
+									},
+									...roles,
+								]
+							: [
+									{
+										id: 'role',
+										label: Liferay.Language.get('role'),
+									},
+									...actions,
+								]
+					}
 				>
 					{(column) => (
 						<Cell key={`action_header_${column.id}`}>
@@ -282,41 +298,87 @@ function PermissionsTable({
 					)}
 				</Head>
 
-				<Body>
-					{roles.map(({id: roleName, label: roleLabel}, index) => (
-						<Row key={roleName}>
-							<Cell>
-								<Text size={3} weight="semi-bold">
-									{roleLabel}
-								</Text>
-							</Cell>
-
-							{actions.map(({id: actionId}) => (
-								<Cell
-									key={`${roleName.replace(' ', '')}-${actionId}`}
-								>
-									<ClayCheckbox
-										aria-label={Liferay.Util.sub(
-											'give-x-permission-to-users-with-the-x-role',
-											[actionId, roleName]
-										)}
-										checked={_isActionChecked(
-											actionId,
-											index
-										)}
-										disabled={_isActionDisabled(
-											actionId,
-											roleName
-										)}
-										onChange={() =>
-											_handleChangeAction(actionId, index)
-										}
-									/>
+				{reverse ? (
+					<Body>
+						{actions.map(({id: actionId, label: actionLabel}) => (
+							<Row key={actionId}>
+								<Cell>
+									<Text size={3} weight="semi-bold">
+										{actionLabel}
+									</Text>
 								</Cell>
-							))}
-						</Row>
-					))}
-				</Body>
+
+								{roles.map(({id: roleName}, index) => (
+									<Cell
+										key={`${roleName.replace(' ', '')}-${actionId}`}
+									>
+										<ClayCheckbox
+											aria-label={Liferay.Util.sub(
+												'give-x-permission-to-users-with-the-x-role',
+												[actionId, roleName]
+											)}
+											checked={_isActionChecked(
+												actionId,
+												index
+											)}
+											disabled={_isActionDisabled(
+												actionId,
+												roleName
+											)}
+											onChange={() =>
+												_handleChangeAction(
+													actionId,
+													index
+												)
+											}
+										/>
+									</Cell>
+								))}
+							</Row>
+						))}
+					</Body>
+				) : (
+					<Body>
+						{roles.map(
+							({id: roleName, label: roleLabel}, index) => (
+								<Row key={roleName}>
+									<Cell>
+										<Text size={3} weight="semi-bold">
+											{roleLabel}
+										</Text>
+									</Cell>
+
+									{actions.map(({id: actionId}) => (
+										<Cell
+											key={`${roleName.replace(' ', '')}-${actionId}`}
+										>
+											<ClayCheckbox
+												aria-label={Liferay.Util.sub(
+													'give-x-permission-to-users-with-the-x-role',
+													[actionId, roleName]
+												)}
+												checked={_isActionChecked(
+													actionId,
+													index
+												)}
+												disabled={_isActionDisabled(
+													actionId,
+													roleName
+												)}
+												onChange={() =>
+													_handleChangeAction(
+														actionId,
+														index
+													)
+												}
+											/>
+										</Cell>
+									))}
+								</Row>
+							)
+						)}
+					</Body>
+				)}
 			</Table>
 		</>
 	);

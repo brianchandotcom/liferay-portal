@@ -4221,6 +4221,172 @@
 	},
 	{
 		"classNames": [
+			"JournalArticleLocalService",
+			"JournalArticleLocalServiceUtil"
+		],
+		"from": "addArticle(long paramName, long paramName, long paramName, long paramName, long paramName, String paramName, boolean paramName, double paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+		],
+		"to": "addArticle(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, DDMStructureLocalServiceUtil.getStructure(param#1#, param#3#, param#12#).getStructureId(), param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#, param#31#, param#32#, param#33#, 0, 0, param#34#, param#35#, param#36#, param#37#, param#38#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleLocalService",
+			"JournalArticleLocalServiceUtil"
+		],
+		"from": "addArticle(long paramName, long paramName, long paramName, long paramName, long paramName, String paramName, boolean paramName, double paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+		],
+		"to": "addArticle(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, null, param#10#, DDMStructureLocalServiceUtil.getStructure(param#1#, param#3#, param#11#).getStructureId(), param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#, param#31#, param#32#, 0, 0, param#33#, param#34#, param#35#, param#36#, param#37#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "addArticle(long paramName, long paramName, long paramName, long paramName, String paramName, boolean paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+		],
+		"to": "addArticle(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, DDMStructureLocalServiceUtil.getStructure(param#0#, param#2#, param#10#).getStructureId(), param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#, param#31#, 0, 0, param#32#, param#33#, param#34#, param#35#, param#36#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "addArticle(long paramName, long paramName, long paramName, long paramName, String paramName, boolean paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+		],
+		"to": "addArticle(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, null, param#8#, DDMStructureLocalServiceUtil.getStructure(param#0#, param#2#, param#9#).getStructureId(), param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#, 0, 0, param#31#, param#32#, param#33#, param#34#, param#35#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "addArticle(long paramName, long paramName, long paramName, long paramName, String paramName, boolean paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+		],
+		"to": "addArticle(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, null, param#8#, DDMStructureLocalServiceUtil.getStructure(param#0#, param#2#, param#9#).getStructureId(), param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, false, 0, 0, null, null, param#30#, param#31#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleLocalService",
+			"JournalArticleLocalServiceUtil"
+		],
+		"from": "addArticle(long paramName, long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil",
+			"com.liferay.portal.kernel.util.PortalUtil",
+			"com.liferay.dynamic.data.mapping.model.DDMStructure"
+		],
+		"to": "addArticle(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, DDMStructureLocalServiceUtil.getStructure(param#1#, PortalUtil.getClassNameId(DDMStructure.class), param#6#).getStructureId(), param#7#, param#8#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "addArticle(long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil",
+			"com.liferay.portal.kernel.util.PortalUtil",
+			"com.liferay.dynamic.data.mapping.model.DDMStructure"
+		],
+		"to": "addArticle(null, param#0#, param#1#, param#2#, param#3#, param#4#, DDMStructureLocalServiceUtil.getStructure(param#0#, PortalUtil.getClassNameId(DDMStructure.class), param#5#).getStructureId(), param#6#, param#7#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleLocalService",
+			"JournalArticleLocalServiceUtil"
+		],
+		"from": "addArticleDefaultValues(long paramName, long paramName, long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, boolean paramName, String paramName, File paramName, ServiceContext serviceContext)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+		],
+		"to": "addArticleDefaultValues(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, DDMStructureLocalServiceUtil.getStructure(param#1#, param#2#, param#7#).getStructureId(), param#8#, param#9#, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, param#10#, param#11#, 0, 0, param#12#, param#13#, param#14#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "addArticleDefaultValues(long paramName, long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, boolean paramName, String paramName, File paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"newImports": [
+			"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+		],
+		"to": "addArticleDefaultValues(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, DDMStructureLocalServiceUtil.getStructure(param#0#, param#1#, param#6#).getStructureId(), param#7#, param#8#, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, param#9#, param#10#, 0, 0, param#11#, param#12#, param#13#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleLocalService",
+			"JournalArticleLocalServiceUtil"
+		],
+		"from": "updateArticle(long paramName, long paramName, long paramName, String paramName, double paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"to": "updateArticle(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#, 0, 0, param#31#, param#32#, param#33#, param#34#, param#35#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleLocalService",
+			"JournalArticleLocalServiceUtil"
+		],
+		"from": "updateArticle(long paramName, long paramName, long paramName, String paramName, double paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"to": "updateArticle(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, null, param#7#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, 0, 0, param#30#, param#31#, param#32#, param#33#, param#34#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "updateArticle(long paramName, long paramName, String paramName, double paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"to": "updateArticle(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, 0, 0, param#30#, param#31#, param#32#, param#33#, param#34#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "updateArticle(long paramName, long paramName, String paramName, double paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, int paramName, int paramName, int paramName, int paramName, int paramName, boolean paramName, boolean paramName, boolean paramName, String paramName, File paramName, Map<String, byte[]> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-52326",
+		"to": "updateArticle(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, 0, 0, param#29#, param#30#, param#31#, param#32#, param#33#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleLocalService",
+			"JournalArticleLocalServiceUtil"
+		],
+		"from": "updateArticleDefaultValues(long paramName, long paramName, String paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, boolean paramName, String paramName, File paramName, ServiceContext serviceContext)",
+		"issueKey": "LPD-52326",
+		"to": "updateArticleDefaultValues(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#7#, param#8#, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, param#9#, param#10#, 0, 0, param#11#, param#12#, param#13#)"
+	},
+	{
+		"classNames": [
+			"JournalArticleService",
+			"JournalArticleServiceUtil"
+		],
+		"from": "updateArticleDefaultValues(long paramName, String paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, boolean paramName, boolean paramName, String paramName, File paramName, ServiceContext serviceContext)",
+		"issueKey": "LPD-52326",
+		"to": "updateArticleDefaultValues(param#0#, param#1#, param#2#, param#3#, param#4#, param#6#, param#7#, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, param#8#, param#9#, 0, 0, param#10#, param#11#, param#12#)"
+	},
+	{
+		"classNames": [
 			"CommercePriceEntryLocalService",
 			"CommercePriceEntryLocalServiceUtil",
 			"CommercePriceEntryService",

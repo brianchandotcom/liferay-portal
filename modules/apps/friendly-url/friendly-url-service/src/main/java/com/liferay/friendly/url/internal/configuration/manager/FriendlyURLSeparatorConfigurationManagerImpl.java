@@ -60,10 +60,6 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 			long companyId, String friendlyURLSeparatorsJSON)
 		throws PortalException {
 
-		_portalCache =
-			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
-				FriendlyURLSeparatorProvider.class.getName());
-
 		_portalCache.remove(companyId);
 
 		_configurationProvider.saveCompanyConfiguration(

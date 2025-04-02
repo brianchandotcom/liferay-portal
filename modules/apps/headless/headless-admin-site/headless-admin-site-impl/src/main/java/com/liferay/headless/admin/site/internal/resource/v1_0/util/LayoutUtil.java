@@ -124,6 +124,14 @@ public class LayoutUtil {
 		if ((settings != null) &&
 			(settings.getMasterPageItemExternalReference() != null)) {
 
+			if (Objects.equals(
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+					serviceContext.getAttribute(
+						"layout.page.template.entry.type"))) {
+
+				throw new UnsupportedOperationException();
+			}
+
 			ItemExternalReference itemExternalReference =
 				settings.getMasterPageItemExternalReference();
 

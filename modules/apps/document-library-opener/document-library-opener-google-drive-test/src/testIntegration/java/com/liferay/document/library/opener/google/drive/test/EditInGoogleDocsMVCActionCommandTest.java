@@ -6,12 +6,16 @@
 package com.liferay.document.library.opener.google.drive.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -80,6 +84,45 @@ public class EditInGoogleDocsMVCActionCommandTest {
 
 	@Test
 	public void testCheckOutedFileUploadsToGoogle() throws Exception {
+		_checkoutGoogleDriveFileEntry();
+	}
+
+	@Test
+	public void testCheckOutedFileUploadsToGoogleInPublication()
+		throws Exception {
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			_checkoutGoogleDriveFileEntry();
+		}
+	}
+
+	private FileEntry _addFileEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_company.getGroupId());
+
+		Folder folder = _dlAppLocalService.addFolder(
+			null, TestPropsValues.getUserId(), _company.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		return _dlAppLocalService.addFileEntry(
+			null, serviceContext.getUserId(), folder.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			"liferay".getBytes(), null, null, null, serviceContext);
+	}
+
+	private void _checkoutGoogleDriveFileEntry() throws Exception {
 		_test(
 			_company.getCompanyId(), _user.getUserId(),
 			() -> {
@@ -104,25 +147,6 @@ public class EditInGoogleDocsMVCActionCommandTest {
 
 				Assert.assertTrue(inputStream.available() > 0);
 			});
-	}
-
-	private FileEntry _addFileEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_company.getGroupId());
-
-		Folder folder = _dlAppLocalService.addFolder(
-			null, TestPropsValues.getUserId(), _company.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
-
-		return _dlAppLocalService.addFileEntry(
-			null, serviceContext.getUserId(), folder.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			"liferay".getBytes(), null, null, null, serviceContext);
 	}
 
 	private String _getAuthorizationToken() throws Exception {
@@ -199,6 +223,9 @@ public class EditInGoogleDocsMVCActionCommandTest {
 	}
 
 	private static Company _company;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

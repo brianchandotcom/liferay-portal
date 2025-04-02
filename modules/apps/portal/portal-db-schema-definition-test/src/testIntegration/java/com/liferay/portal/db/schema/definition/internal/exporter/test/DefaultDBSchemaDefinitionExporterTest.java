@@ -45,7 +45,6 @@ public class DefaultDBSchemaDefinitionExporterTest
 
 	public static void assume() {
 		Assume.assumeTrue(DBManagerUtil.getDBType() == DBType.POSTGRESQL);
-
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 	}
 

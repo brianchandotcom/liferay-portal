@@ -140,14 +140,12 @@ public class DBSchemaImporter {
 		options.addRequiredOption(
 			null, "source-user", true, "Set the source database user.");
 		options.addRequiredOption(
-			null, "target-jdbc-url", true,
-			"Set the target PostgreSQL JDBC URL.");
+			null, "target-jdbc-url", true, "Set the target JDBC URL.");
 		options.addRequiredOption(
 			null, "target-password", true,
-			"Set the target PostgreSQL database user password.");
+			"Set the target database user password.");
 		options.addRequiredOption(
-			null, "target-user", true,
-			"Set the target PostgreSQL database user.");
+			null, "target-user", true, "Set the target database user.");
 
 		return options;
 	}

@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon} from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import {FieldFeedback, useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
@@ -97,11 +98,13 @@ export default function PicklistPicker({field}: {field: Field}) {
 						<ClayDropDownWithItems
 							items={[
 								{
+									href: `picklist-builder?listTypeDefinitionId=${selectedKey}`,
 									label: Liferay.Language.get('edit'),
 									symbolLeft: 'pencil',
 								},
 								{type: 'divider'},
 								{
+									href: 'picklist-builder',
 									label: Liferay.Language.get('new-picklist'),
 									symbolRight: 'shortcut',
 								},
@@ -118,11 +121,16 @@ export default function PicklistPicker({field}: {field: Field}) {
 							}
 						/>
 					) : (
-						<ClayButton displayType="secondary">
+						<ClayLink
+							button
+							displayType="secondary"
+							href="picklist-builder"
+							target="_blank"
+						>
 							{Liferay.Language.get('new-picklist')}
 
 							<ClayIcon className="ml-2" symbol="shortcut" />
-						</ClayButton>
+						</ClayLink>
 					)}
 				</ClayInput.GroupItem>
 			</ClayInput.Group>

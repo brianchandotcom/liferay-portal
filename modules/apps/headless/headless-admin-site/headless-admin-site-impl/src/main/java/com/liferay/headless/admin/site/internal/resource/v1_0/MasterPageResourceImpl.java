@@ -349,7 +349,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 			Scope scope = itemExternalReferences[i].getScope();
 
-			if (Validator.isNotNull(scope)) {
+			if (scope != null) {
 				scopeGroupId = GroupUtil.getGroupId(
 					true, true, group.getCompanyId(),
 					scope.getExternalReferenceCode());

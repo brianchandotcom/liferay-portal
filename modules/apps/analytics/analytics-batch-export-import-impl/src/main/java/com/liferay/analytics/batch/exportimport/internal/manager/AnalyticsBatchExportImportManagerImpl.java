@@ -227,7 +227,7 @@ public class AnalyticsBatchExportImportManagerImpl
 	@Override
 	public void exportToAnalyticsCloud(
 			String batchEngineExportTaskItemDelegateName, long companyId,
-			List<String> fieldNamesList, String filterString,
+			List<String> fieldNames, String filterString,
 			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
 			Date resourceLastModifiedDate, String resourceName, long userId)
 		throws Exception {
@@ -266,7 +266,7 @@ public class AnalyticsBatchExportImportManagerImpl
 			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
 				null, companyId, userId, null, resourceName,
 				BatchEngineTaskContentType.JSONL.name(),
-				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNamesList,
+				BatchEngineTaskExecuteStatus.INITIAL.name(), fieldNames,
 				parameters, batchEngineExportTaskItemDelegateName);
 
 		_batchEngineExportTaskExecutor.execute(batchEngineExportTask);

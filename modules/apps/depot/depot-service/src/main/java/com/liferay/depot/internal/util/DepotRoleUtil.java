@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -126,11 +127,16 @@ public class DepotRoleUtil {
 	}
 
 	private static String _getTitle(Locale locale, String name) {
+		String title = _titleKeys.get(name);
+
+		if (Validator.isNull(title)) {
+			return name;
+		}
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, DepotRolesPortalInstanceLifecycleListener.class);
 
-		return ResourceBundleUtil.getString(
-			resourceBundle, _titleKeys.get(name));
+		return ResourceBundleUtil.getString(resourceBundle, title);
 	}
 
 	private static final Map<String, String> _titleKeys;

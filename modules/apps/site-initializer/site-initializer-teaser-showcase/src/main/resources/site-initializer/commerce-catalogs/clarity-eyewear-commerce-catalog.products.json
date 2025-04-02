@@ -12,7 +12,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Classic Aviator Sunglasses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "CLASSIC-AVIATOR-SUNGLASSES",
@@ -33,7 +34,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Sports Sunglasses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "SPORTS-SUNGLASSES",
@@ -54,7 +56,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Retro Round Sunglasses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "RETRO-ROUND-SUNGLASSES",
@@ -75,7 +78,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Cat Eye Sunglasses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "CAT-EYE-SUNGLASSES",
@@ -96,7 +100,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Oversized Square Sunglasses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "OVERSIZED-SQUARE-SUNGLASSES",
@@ -117,7 +122,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Round Metal Sunglasses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "ROUND-METAL-SUNGLASSES",
@@ -138,7 +144,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "ClearVision 1-Day Contact Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "CLEARVISION-1-DAY-CONTACT-LENSES",
@@ -159,7 +166,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Biofinity Monthly Contact Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "BIOFINITY-MONTHLY-CONTACT-LENSES",
@@ -180,7 +188,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Air Optix Aqua Monthly Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "AIR-OPTIX-AQUA-MONTHLY-LENSES",
@@ -201,7 +210,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Air Optix Colors",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "AIR-OPTIX-COLORS",
@@ -222,7 +232,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Bifocal Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "BIFOCAL-LENSES",
@@ -243,7 +254,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Progressive Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "PROGRESSIVE-LENSES",
@@ -264,7 +276,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Clear Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "CLEAR-LENSES",
@@ -285,7 +298,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Blue Light Blocking Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "BLUE-LIGHT-BLOCKING-LENSES",
@@ -306,7 +320,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "FreshLook ColorBlends",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "FRESHLOOK-COLORBLENDS",
@@ -327,7 +342,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Biofinity Toric Lenses",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "BIOFINITY-TORIC-LENSES",
@@ -348,7 +364,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Sophisticated Rectangle",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "SOPHISTICATED-RECTANGLE",
@@ -369,7 +386,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Trendy Oversized",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "TRENDY-OVERSIZED",
@@ -390,7 +408,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Elegant Cat Eye",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "ELEGANT-CAT-EYE",
@@ -411,7 +430,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Modern Rectangle",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "MODERN-RECTANGLE",
@@ -432,7 +452,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Vintage Round",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "VINTAGE-ROUND",
@@ -453,7 +474,8 @@
 		],
 		"minStockQuantity": 5,
 		"name": "Classic Aviator",
-		"options": [],
+		"options": [
+		],
 		"price": 0,
 		"promoPrice": 0,
 		"sku": "CLASSIC-AVIATOR",

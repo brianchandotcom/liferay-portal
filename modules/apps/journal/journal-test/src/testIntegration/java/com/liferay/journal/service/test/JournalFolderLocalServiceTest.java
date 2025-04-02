@@ -60,53 +60,20 @@ public class JournalFolderLocalServiceTest {
 	public void testAddJournalFolder() throws Exception {
 		User user = UserTestUtil.addGroupAdminUser(_group);
 
-		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
-			_journalFolderLocalService);
+		JournalFolder journalFolder = _addJournalFolder(
+			user.getUserId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		JournalFolder journalFolder = journalFolderFixture.addFolder(
-			user.getUserId(), _group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
-
-		_assertFolderStatusByUser(
-			journalFolder, user);
-	}
-
-	@Test
-	public void testUpdateJournalFolder() throws Exception {
-		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
-			_journalFolderLocalService);
-
-		JournalFolder journalFolder = journalFolderFixture.addFolder(
-			_group.getGroupId(), RandomTestUtil.randomString());
-
-		User user = UserTestUtil.addGroupAdminUser(_group);
-
-		journalFolder = _journalFolderLocalService.updateFolder(
-			user.getUserId(), _group.getGroupId(), journalFolder.getFolderId(),
-			journalFolder.getParentFolderId(), journalFolder.getName(),
-			journalFolder.getDescription(), new long[0],
-			JournalFolderConstants.RESTRICTION_TYPE_INHERIT, false,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId()));
-
-		_assertFolderStatusByUser(
-			journalFolder, user);
+		_assertFolderStatusByUser(journalFolder, user);
 	}
 
 	@Test
 	public void testGetFoldersAndArticlesCount() throws Exception {
-		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
-			_journalFolderLocalService);
-
-		JournalFolder parentJournalFolder = journalFolderFixture.addFolder(
-			_group.getGroupId(), RandomTestUtil.randomString());
+		JournalFolder parentJournalFolder = _addJournalFolder();
 
 		_addApprovedJournalArticle(parentJournalFolder);
 
-		JournalFolder journalFolder = journalFolderFixture.addFolder(
-			_group.getGroupId(), parentJournalFolder.getFolderId(),
-			RandomTestUtil.randomString());
+		JournalFolder journalFolder = _addJournalFolder(
+			TestPropsValues.getUserId(), parentJournalFolder.getFolderId());
 
 		_addExpiredJournalArticle(
 			journalFolder,
@@ -129,14 +96,9 @@ public class JournalFolderLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetFolders() throws Exception {
-		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
-			_journalFolderLocalService);
+		_addJournalFolder();
 
-		journalFolderFixture.addFolder(
-			_group.getGroupId(), RandomTestUtil.randomString());
-
-		JournalFolder folder = journalFolderFixture.addFolder(
-			_group.getGroupId(), RandomTestUtil.randomString());
+		JournalFolder folder = _addJournalFolder();
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalFolder.class.getName(), folder.getFolderId());
@@ -150,6 +112,23 @@ public class JournalFolderLocalServiceTest {
 
 		Assert.assertEquals(folders.toString(), 1, folders.size());
 		Assert.assertEquals(folders.toString(), folder, folders.get(0));
+	}
+
+	@Test
+	public void testUpdateJournalFolder() throws Exception {
+		JournalFolder journalFolder = _addJournalFolder();
+
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		journalFolder = _journalFolderLocalService.updateFolder(
+			user.getUserId(), _group.getGroupId(), journalFolder.getFolderId(),
+			journalFolder.getParentFolderId(), journalFolder.getName(),
+			journalFolder.getDescription(), new long[0],
+			JournalFolderConstants.RESTRICTION_TYPE_INHERIT, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user.getUserId()));
+
+		_assertFolderStatusByUser(journalFolder, user);
 	}
 
 	private JournalArticle _addApprovedJournalArticle(
@@ -185,6 +164,25 @@ public class JournalFolderLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			journalArticle.getArticleId(), journalArticle.getVersion(), null,
 			serviceContext);
+	}
+
+	private JournalFolder _addJournalFolder() throws Exception {
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		return journalFolderFixture.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+	}
+
+	private JournalFolder _addJournalFolder(long userId, long parentFolderId)
+		throws Exception {
+
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		return journalFolderFixture.addFolder(
+			userId, _group.getGroupId(), parentFolderId,
+			RandomTestUtil.randomString());
 	}
 
 	private void _assertFoldersAndArticlesCount(

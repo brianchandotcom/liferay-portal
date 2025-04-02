@@ -10,10 +10,12 @@ package com.liferay.source.formatter.dependencies.upgrade;
  */
 public class LPD_48783 {
 
-	public void method() {
+	public void method(AccountEntry accountEntry) {
 		AccountConstants.ACCOUNT_TYPE_BUSINESS;
 		AccountConstants.ACCOUNT_TYPE_GUEST;
-		AccountConstants.ACCOUNT_TYPE_PERSONAL;
+
+		if (accountEntry.getType() == AccountConstants.ACCOUNT_TYPE_PERSONAL) {
+		}
 	}
 
 }

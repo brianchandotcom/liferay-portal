@@ -26,6 +26,7 @@ export function getShortText(text, characterLimit = 150) {
 		const lastSpaceIndex = text
 			.substring(0, characterLimit)
 			.lastIndexOf(' ');
+
 		text = text.substring(0, lastSpaceIndex) + '...';
 	}
 

@@ -13,7 +13,6 @@ const SectionCard = ({
 	description,
 	expertise,
 	index,
-	key,
 	link,
 	personas,
 	title,
@@ -27,10 +26,7 @@ const SectionCard = ({
 						<div className="description">
 							{getShortText(description, 150)}
 						</div>
-						<div
-							className="card-tags-container d-flex learn-education"
-							key={key}
-						>
+						<div className="card-tags-container d-flex learn-education">
 							<ClayTooltipProvider>
 								<div
 									className="card-tag card-tag__persona"

@@ -16,7 +16,7 @@ const LearningPathsList = () => {
         getLearningPaths(3)
             .then(data => setLearningPaths(data))
             .catch(error =>
-                console.error('Error fetching learning paths:', error)
+                console.error(error)
             );
     }, []);
 

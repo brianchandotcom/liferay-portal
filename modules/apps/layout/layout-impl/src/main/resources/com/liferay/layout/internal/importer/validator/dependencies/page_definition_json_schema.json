@@ -294,7 +294,7 @@
 					"title": "The contentType Schema",
 					"type": "string"
 				},
-				"contentURL": {
+				"contentUrl": {
 					"title": "The contentURL Schema",
 					"type": "string"
 				},

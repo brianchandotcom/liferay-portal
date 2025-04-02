@@ -120,6 +120,8 @@ public class MasterPageDTOConverter
 				if (groupId != group.getGroupId()) {
 					Scope scope = new Scope();
 
+					scope.setExternalReferenceCode(
+						group::getExternalReferenceCode);
 					scope.setType(
 						() -> {
 							if (group.getType() == GroupConstants.TYPE_DEPOT) {
@@ -128,8 +130,6 @@ public class MasterPageDTOConverter
 
 							return Scope.Type.SITE;
 						});
-					scope.setExternalReferenceCode(
-						group::getExternalReferenceCode);
 
 					itemExternalReference.setScope(() -> scope);
 				}

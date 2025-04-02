@@ -260,7 +260,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				regex, StringPool.COMMA_AND_SPACE, ",[?\\s\\w]*");
 		}
 		else {
-			regex = regex + "[,;> ({]";
+			regex = regex + "[,;> (){]";
 		}
 
 		if (regex.contains(StringPool.PERIOD)) {

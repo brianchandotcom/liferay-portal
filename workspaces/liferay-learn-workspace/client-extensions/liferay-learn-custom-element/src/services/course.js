@@ -7,7 +7,7 @@ import {endpoints} from '../utils/constants';
 import {request} from '../utils/request';
 
 export async function getCoursesAndFirstLessons() {
-	const data = await request({
+	const response = await request({
 		params: {
 			filter: 'position eq 0',
 			nestedFields: 'course,lesson',
@@ -16,5 +16,5 @@ export async function getCoursesAndFirstLessons() {
 		url: `${endpoints.modules}scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
 	});
 
-	return data.items;
+	return response.items;
 }

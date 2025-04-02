@@ -154,7 +154,7 @@ public class DBSchemaImporter {
 		new HelpFormatter(
 		).printHelp(
 			"Liferay Portal Tools Database Schema Importer. This tool is a " +
-				"beta feature. It is expiremental and not supported.",
+				"beta feature. It is experimental and not supported.",
 			options
 		);
 

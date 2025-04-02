@@ -7,6 +7,8 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForAlert} from '../../utils/waitForAlert';
+import {SystemSettingsPage} from '../configuration-admin-web/SystemSettingsPage';
 
 export class RedirectPage {
 	readonly createButton: Locator;
@@ -17,6 +19,7 @@ export class RedirectPage {
 	readonly redirectChainModal: Locator;
 	readonly saveButton: Locator;
 	readonly sourceURL: Locator;
+	readonly systemSettingsPage: SystemSettingsPage;
 	readonly type: Locator;
 
 	constructor(page: Page) {
@@ -30,6 +33,7 @@ export class RedirectPage {
 		this.redirectChainModal = page.getByRole('dialog');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.sourceURL = page.getByLabel('Source URL');
+		this.systemSettingsPage = new SystemSettingsPage(page);
 		this.type = page.getByLabel('Type');
 	}
 
@@ -59,6 +63,21 @@ export class RedirectPage {
 		await this.createButton.click();
 
 		await expect(this.destinationURLErrorMessage).toBeVisible();
+	}
+
+	async configureRedirectNotFound(enabled: boolean) {
+		await this.systemSettingsPage.goToSystemSetting('Pages', 'Redirection');
+
+		if (enabled) {
+			await this.page.getByLabel('Enabled').check();
+		}
+		else {
+			await this.page.getByLabel('Enabled').uncheck();
+		}
+
+		await this.page.getByRole('button', {name: /save|update/i}).click();
+
+		await waitForAlert(this.page);
 	}
 
 	async deleteRedirect(currentSourceURL: string) {

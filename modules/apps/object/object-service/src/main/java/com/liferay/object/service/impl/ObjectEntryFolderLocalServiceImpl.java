@@ -5,6 +5,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
@@ -85,6 +86,8 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		objectEntryFolder = objectEntryFolderPersistence.update(
 			objectEntryFolder);
+
+		_updateAsset(objectEntryFolder, serviceContext);
 
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
@@ -187,6 +190,10 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		actionableDynamicQuery.performActions();
 
+		_assetEntryLocalService.deleteEntry(
+			ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getObjectEntryFolderId());
+
 		objectEntryFolderPersistence.removeByG_C_LikeT(
 			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
 			objectEntryFolder.getTreePath() + "%");
@@ -264,7 +271,12 @@ public class ObjectEntryFolderLocalServiceImpl
 		objectEntryFolder.setName(name);
 		objectEntryFolder.setTreePath(objectEntryFolder.buildTreePath());
 
-		return objectEntryFolderPersistence.update(objectEntryFolder);
+		objectEntryFolder = objectEntryFolderPersistence.update(
+			objectEntryFolder);
+
+		_updateAsset(objectEntryFolder, serviceContext);
+
+		return objectEntryFolder;
 	}
 
 	private Map<Locale, String> _getLabelMap(
@@ -281,6 +293,23 @@ public class ObjectEntryFolderLocalServiceImpl
 		}
 
 		return labelMap;
+	}
+
+	private void _updateAsset(
+			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext)
+		throws PortalException {
+
+		_assetEntryLocalService.updateEntry(
+			serviceContext.getUserId(), objectEntryFolder.getGroupId(),
+			objectEntryFolder.getCreateDate(),
+			objectEntryFolder.getModifiedDate(),
+			ObjectEntryFolder.class.getName(),
+			objectEntryFolder.getObjectEntryFolderId(),
+			objectEntryFolder.getUuid(), 0,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(), true, true, null, null,
+			objectEntryFolder.getCreateDate(), null, null,
+			objectEntryFolder.getName(), null, null, null, null, 0, 0, null);
 	}
 
 	private void _validateExternalReferenceCode(
@@ -342,6 +371,9 @@ public class ObjectEntryFolderLocalServiceImpl
 					objectEntryFolder.getGroupId()));
 		}
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

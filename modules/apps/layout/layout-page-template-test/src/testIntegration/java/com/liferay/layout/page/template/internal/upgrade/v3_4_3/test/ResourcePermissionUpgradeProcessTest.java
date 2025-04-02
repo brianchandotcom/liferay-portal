@@ -107,6 +107,7 @@ public class ResourcePermissionUpgradeProcessTest {
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
+	@DeleteAfterTestRun
 	private LayoutPrototype _layoutPrototype;
 
 	@Inject

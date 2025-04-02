@@ -23,7 +23,7 @@ const GenerateCardLayout = ({
 	const formatDate = (
 		date,
 		formatType = FORMAT_DATE_TYPES.day2DMonthSYearN
-	) => getDateCustomFormat(date, formatType);
+	) => getDateCustomFormat(formatType, date);
 
 	const currentDate = `${formatDate(startDate)} - ${formatDate(
 		licenseEndDate ?? endDate

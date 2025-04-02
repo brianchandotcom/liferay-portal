@@ -9,13 +9,13 @@ import getDateCustomFormat from '~/utils/getDateCustomFormat';
 export default function getSLACard(endDate, startDate, title, label) {
 	return {
 		endDate: getDateCustomFormat(
-			endDate,
-			FORMAT_DATE_TYPES.day2DMonth2DYearN
+			FORMAT_DATE_TYPES.day2DMonth2DYearN,
+			endDate
 		),
 		label,
 		startDate: getDateCustomFormat(
-			startDate,
-			FORMAT_DATE_TYPES.day2DMonth2DYearN
+			FORMAT_DATE_TYPES.day2DMonth2DYearN,
+			startDate
 		),
 		title: title.split(' ')[0],
 	};

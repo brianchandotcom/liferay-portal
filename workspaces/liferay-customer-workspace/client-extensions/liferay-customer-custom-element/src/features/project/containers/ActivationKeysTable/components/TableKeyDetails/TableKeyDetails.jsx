@@ -54,8 +54,8 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 	const handleExpiredDate = isPermanentLicenseKey
 		? i18n.translate('does-not-expire')
 		: getDateCustomFormat(
-				currentActivationKey.expirationDate,
-				FORMAT_DATE_TYPES.day2DMonthSYearN
+				FORMAT_DATE_TYPES.day2DMonthSYearN,
+				currentActivationKey.expirationDate
 		  );
 
 	useEffect(() => {
@@ -208,8 +208,8 @@ const TableKeyDetails = ({currentActivationKey, setValueToCopyToClipboard}) => {
 				<div className="col-3">
 					<p className="bg-neutral-1 cp-key-details-paragraph px-3 py-2 rounded">
 						{getDateCustomFormat(
-							currentActivationKey.startDate,
-							FORMAT_DATE_TYPES.day2DMonthSYearN
+							FORMAT_DATE_TYPES.day2DMonthSYearN,
+							currentActivationKey.startDate
 						)}
 					</p>
 				</div>

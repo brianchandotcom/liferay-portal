@@ -32,11 +32,11 @@ export default function getActivationStatusDateRange(orderItems: any[]) {
 		)
 	).toString();
 	const activationStatusDateRange = `${getDateCustomFormat(
-		earliestStartDate,
-		FORMAT_DATE_TYPES.day2DMonthSYearN as Intl.DateTimeFormatOptions
+		FORMAT_DATE_TYPES.day2DMonthSYearN,
+		earliestStartDate
 	)} - ${getDateCustomFormat(
-		farthestEndDate,
-		FORMAT_DATE_TYPES.day2DMonthSYearN as Intl.DateTimeFormatOptions
+		FORMAT_DATE_TYPES.day2DMonthSYearN,
+		farthestEndDate
 	)}`;
 
 	return activationStatusDateRange;

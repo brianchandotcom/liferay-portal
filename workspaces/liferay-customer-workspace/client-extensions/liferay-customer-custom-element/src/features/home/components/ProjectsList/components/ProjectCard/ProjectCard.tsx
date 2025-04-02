@@ -62,8 +62,8 @@ const ProjectCard: React.FC<IProps> = ({
 
 				<span className="font-weight-bold ml-1 text-paragraph">
 					{getDateCustomFormat(
-						displayDate[koroneikiAccount.status] as string,
-						FORMAT_DATE_TYPES.day2DMonthSYearN
+						FORMAT_DATE_TYPES.day2DMonthSYearN,
+						displayDate[koroneikiAccount.status] as string
 					)}
 				</span>
 			</div>

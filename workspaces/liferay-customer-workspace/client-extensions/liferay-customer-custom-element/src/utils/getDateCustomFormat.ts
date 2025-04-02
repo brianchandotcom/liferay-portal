@@ -6,8 +6,8 @@
 import {Liferay} from '~/services/liferay';
 
 export default function getDateCustomFormat(
-	rawDate: string | Date,
-	options: Intl.DateTimeFormatOptions = {}
+	options: Intl.DateTimeFormatOptions = {},
+	rawDate: string | Date
 ) {
 	if (rawDate) {
 		const date = typeof rawDate === 'string' ? new Date(rawDate) : rawDate;

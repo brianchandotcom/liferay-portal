@@ -490,14 +490,14 @@ const SelectSubscription = ({
 		const handleAlertFirstDate = () => {
 			if (subscriptionTerm.perpetual) {
 				return getDateCustomFormat(
-					new Date(),
-					FORMAT_DATE_TYPES.day2DMonthSYearN
+					FORMAT_DATE_TYPES.day2DMonthSYearN,
+					new Date()
 				);
 			}
 
 			return getDateCustomFormat(
-				subscriptionTerm.startDate,
-				FORMAT_DATE_TYPES.day2DMonthSYearN
+				FORMAT_DATE_TYPES.day2DMonthSYearN,
+				subscriptionTerm.startDate
 			);
 		};
 
@@ -512,8 +512,8 @@ const SelectSubscription = ({
 					});
 
 			return getDateCustomFormat(
-				endDateToFormat,
-				FORMAT_DATE_TYPES.day2DMonthSYearN
+				FORMAT_DATE_TYPES.day2DMonthSYearN,
+				endDateToFormat
 			);
 		};
 
@@ -529,8 +529,8 @@ const SelectSubscription = ({
 								'activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
 								[
 									getDateCustomFormat(
-										subscriptionTerm.startDate,
-										FORMAT_DATE_TYPES.day2DMonthSYearN
+										FORMAT_DATE_TYPES.day2DMonthSYearN,
+										subscriptionTerm.startDate
 									),
 								]
 							)}
@@ -772,11 +772,11 @@ const SelectSubscription = ({
 										index,
 									});
 								const currentStartAndEndDate = `${getDateCustomFormat(
-									subscriptionTerm.startDate,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
+									FORMAT_DATE_TYPES.day2DMonthSYearN,
+									subscriptionTerm.startDate
 								)} - ${getDateCustomFormat(
-									subscriptionTerm.endDate,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
+									FORMAT_DATE_TYPES.day2DMonthSYearN,
+									subscriptionTerm.endDate
 								)}`;
 
 								const selectedKeyData = {

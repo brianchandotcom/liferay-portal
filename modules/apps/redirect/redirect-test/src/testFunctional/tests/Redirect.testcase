@@ -35,53 +35,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that no new 404 tracking is performed when the option is manually disabled at system settings."
-	@priority = 4
-	test CanDisable404InSystemSettings {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Redirect.openToConfigInSystemSettings();
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/my-url-that-does-not-exist");
-
-		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
-
-		Redirect.view404URLs(
-			ignoreURL = "${portalURL}/web/test-site-name/my-url-that-does-not-exist",
-			requestNumber = 1);
-
-		Redirect.openToConfigInSystemSettings();
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.view404URLsTab(disabled404Tracking = "true");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/my-url-that-does-not-exist");
-
-		Redirect.openToConfigInSystemSettings();
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
-
-		Redirect.view404URLs(
-			ignoreURL = "${portalURL}/web/test-site-name/my-url-that-does-not-exist",
-			requestNumber = 1);
-	}
-
 	@description = "This ensures that a URL can be ignored after reactivation."
 	@priority = 5
 	@refactordone
@@ -130,40 +83,6 @@ definition {
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = 1);
-	}
-
-	@description = "This ensures that the 404 tab is not shown and no new 404 tracking is performed when 404 tracking is disabled. Also covers LPS-121346, it ensures that the home page is not shown when accessing a not existing page."
-	@priority = 4
-	test CannotView404ByDefault {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/my-url-that-does-not-exist");
-
-		ContentPages.viewFragmentText(
-			fragmentName = "paragraph",
-			id = "element-text",
-			text = "Page Not Found");
-
-		AssertElementNotPresent(
-			key_title = "Welcome to Liferay",
-			locator1 = "Redirect#FRAGMENT_HEADING");
-
-		Redirect.openRedirectAdmin(siteURLKey = "guest");
-
-		Redirect.view404URLsTab(disabled404Tracking = "true");
-
-		Redirect.openToConfigInSystemSettings();
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		PortletEntry.save();
-
-		Redirect.open404URLsAdmin(siteURLKey = "guest");
-
-		Redirect.view404URLsDefault();
 	}
 
 	@description = "This ensures that the 404 URLs can be ordered by requests."

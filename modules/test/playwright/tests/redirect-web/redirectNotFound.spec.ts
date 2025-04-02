@@ -129,3 +129,45 @@ test('Ensure that a redirect can be added from an ignored 404 URL', async ({
 
 	await expect(page.url()).toContain(destinationPage.friendlyURL);
 });
+
+test('Ensure that 404 URL tracking is not performed when disabled', async ({
+	page,
+	redirectPage,
+	site,
+}) => {
+	await page.goto(`/web/${site.name}/invalid-page`);
+
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {name: 'URLs'}).click();
+
+	await expect(page.getByText('invalid-page')).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-requests-column', {hasText: '1'})
+	).toBeVisible();
+
+	await redirectPage.configureRedirectNotFound(false);
+
+	await page.goto(`/web/${site.name}/invalid-page`);
+
+	await page.goto(`/web/${site.name}/non-existing-url`);
+
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await expect(page.getByText('404 URLs')).not.toBeVisible();
+
+	await redirectPage.configureRedirectNotFound(true);
+
+	await redirectPage.goto(site.friendlyUrlPath);
+
+	await page.getByRole('link', {name: 'URLs'}).click();
+
+	await expect(page.getByText('invalid-page')).toBeVisible();
+
+	await expect(
+		page.locator('.lfr-requests-column', {hasText: '1'})
+	).toBeVisible();
+
+	await expect(page.getByText('non-existing-url')).not.toBeVisible();
+});

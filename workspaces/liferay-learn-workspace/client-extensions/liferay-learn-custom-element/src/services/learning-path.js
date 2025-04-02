@@ -9,7 +9,7 @@ import {request} from '../utils/request';
 export async function getLearningPaths(pageSize) {
 	const reponse = await request({
 		params: {
-			fields: 'id,description,level,persona,title,position',
+			fields: 'description,id,level,persona,title,position',
 			pageSize,
 			sort: 'position:asc',
 		},

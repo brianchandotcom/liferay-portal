@@ -11,10 +11,9 @@ import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,22 +27,22 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 	implements FriendlyURLSeparatorConfigurationManager {
 
 	@Override
-	public String getFriendlyURLSeparatorsJSON(long companyId)
-		throws ConfigurationException {
+	public JSONObject getFriendlyURLSeparatorsJSON(long companyId)
+		throws PortalException {
 
 		FriendlyURLSeparatorCompanyConfiguration
 			friendlyURLSeparatorCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					FriendlyURLSeparatorCompanyConfiguration.class, companyId);
 
-		return friendlyURLSeparatorCompanyConfiguration.
-			friendlyURLSeparatorsJSON();
+		return _jsonFactory.createJSONObject(friendlyURLSeparatorCompanyConfiguration.
+			friendlyURLSeparatorsJSON());
 	}
 
 	@Override
 	public void updateFriendlyURLSeparatorCompanyConfiguration(
 			long companyId, String friendlyURLSeparatorsJSON)
-		throws ConfigurationException {
+		throws PortalException {
 
 		PortalCache<Long, JSONObject> portalCache =
 			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
@@ -57,14 +56,9 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 				"friendlyURLSeparatorsJSON", friendlyURLSeparatorsJSON
 			).build());
 
-		try {
-			portalCache.put(
-				companyId,
-				_jsonFactory.createJSONObject(friendlyURLSeparatorsJSON));
-		}
-		catch (JSONException jsonException) {
-			throw new ConfigurationException(jsonException);
-		}
+		portalCache.put(
+			companyId,
+			_jsonFactory.createJSONObject(friendlyURLSeparatorsJSON));
 	}
 
 	@Reference

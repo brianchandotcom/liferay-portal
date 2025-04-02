@@ -1005,7 +1005,7 @@ public class DisplayPageTemplateResourceTest
 
 		_assertProblemException(
 			"CONFLICT",
-			"The default Display Page Template must be published first.",
+			"The default display page template must be published first.",
 			() ->
 				displayPageTemplateResource.
 					putSiteSiteByExternalReferenceCodeDisplayPageTemplate(

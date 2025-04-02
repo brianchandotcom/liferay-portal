@@ -277,6 +277,33 @@ const FrontendDataSet = ({
 		}
 	}
 
+	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
+		items.some((item) => item.id === id)
+	);
+
+	if (
+		selectAll &&
+		!!pageSelectedItemsValue.length &&
+		pageSelectedItemsValue.length !== items.length
+	) {
+		setSelectAll(false);
+		deselectItems(
+			selectedItemsValue.filter(
+				(item) => !pageSelectedItemsValue.includes(item)
+			)
+		);
+	}
+	else if (selectAll) {
+		const currentItems = items.map((item) => item.id);
+		const newItems = currentItems.filter(
+			(item) => !selectedItemsValue.includes(item)
+		);
+
+		if (newItems.length) {
+			selectItems(newItems);
+		}
+	}
+
 	useEffect(() => {
 		loadClientExtensions([
 			{
@@ -483,14 +510,6 @@ const FrontendDataSet = ({
 	);
 
 	useEffect(() => {
-		if (selectAll) {
-			const newItems = items.map((item) => item.id);
-
-			selectItems(newItems);
-		}
-	}, [items, selectAll]);
-
-	useEffect(() => {
 		setSelectedItems((selectedItems) => {
 			const newSelectedItems = [];
 
@@ -637,6 +656,7 @@ const FrontendDataSet = ({
 					setSelectAll(false);
 				}}
 				onSelectAll={(value) => setSelectAll(value)}
+				pageSelectedItemsValue={pageSelectedItemsValue}
 				selectAll={selectAll}
 				selectItems={(items) => selectItems(items)}
 				selectedItems={selectedItems}

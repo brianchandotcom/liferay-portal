@@ -19,6 +19,7 @@ function ManagementBar({
 	items,
 	onBulkActionsClear,
 	onSelectAll,
+	pageSelectedItemsValue,
 	selectAll,
 	selectItems,
 	selectedItems,
@@ -29,10 +30,6 @@ function ManagementBar({
 	showSelectAll,
 	total,
 }) {
-	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
-		items.some((item) => item.id === id)
-	);
-
 	function handleCheckboxClick() {
 		if (selectAll) {
 			return deselectItems(selectedItemsValue);
@@ -120,6 +117,7 @@ ManagementBar.propTypes = {
 	items: PropTypes.array.isRequired,
 	onBulkActionsClear: PropTypes.func.isRequired,
 	onSelectAll: PropTypes.func.isRequired,
+	pageSelectedItemsValue: PropTypes.array.isRequired,
 	selectItems: PropTypes.func.isRequired,
 	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,

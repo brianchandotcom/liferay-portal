@@ -32,7 +32,6 @@ function getRichPayload(payload, key, values = []) {
 
 function BulkActions({
 	bulkActions,
-	deselectItems,
 	fluid,
 	handleCheckboxClick,
 	handleSelectAll,
@@ -145,22 +144,6 @@ function BulkActions({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[selectedItemsValue]
 	);
-
-	useEffect(() => {
-		if (
-			selectAll &&
-			!!pageSelectedItemsValue.length &&
-			pageSelectedItemsValue.length !== items.length
-		) {
-			deselectItems(
-				selectedItemsValue.filter(
-					(item) => !pageSelectedItemsValue.includes(item)
-				)
-			);
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pageSelectedItemsValue]);
 
 	return showBulkActionsManagementBar && selectedItemsValue.length ? (
 		<FrontendDataSetContext.Consumer>

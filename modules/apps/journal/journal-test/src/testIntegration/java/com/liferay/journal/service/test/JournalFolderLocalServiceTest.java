@@ -8,6 +8,7 @@ package com.liferay.journal.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -15,6 +16,7 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,6 +54,44 @@ public class JournalFolderLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddJournalFolder() throws Exception {
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		JournalFolder journalFolder = journalFolderFixture.addFolder(
+			user.getUserId(), _group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
+
+		_assertFolderStatusByUser(
+			journalFolder, user);
+	}
+
+	@Test
+	public void testUpdateJournalFolder() throws Exception {
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		JournalFolder journalFolder = journalFolderFixture.addFolder(
+			_group.getGroupId(), RandomTestUtil.randomString());
+
+		User user = UserTestUtil.addGroupAdminUser(_group);
+
+		journalFolder = _journalFolderLocalService.updateFolder(
+			user.getUserId(), _group.getGroupId(), journalFolder.getFolderId(),
+			journalFolder.getParentFolderId(), journalFolder.getName(),
+			journalFolder.getDescription(), new long[0],
+			JournalFolderConstants.RESTRICTION_TYPE_INHERIT, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user.getUserId()));
+
+		_assertFolderStatusByUser(
+			journalFolder, user);
 	}
 
 	@Test
@@ -153,6 +194,15 @@ public class JournalFolderLocalServiceTest {
 			expectedCount,
 			_journalFolderLocalService.getFoldersAndArticlesCount(
 				groupId, folderIds, status));
+	}
+
+	private void _assertFolderStatusByUser(
+		JournalFolder journalFolder, User user) {
+
+		Assert.assertEquals(
+			journalFolder.getStatusByUserId(), user.getUserId());
+		Assert.assertEquals(
+			journalFolder.getStatusByUserName(), user.getFullName());
 	}
 
 	@Inject

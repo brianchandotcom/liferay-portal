@@ -217,6 +217,48 @@ public class SharedAsset implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public String getFileTypeIcon() {
+		return fileTypeIcon;
+	}
+
+	public void setFileTypeIcon(String fileTypeIcon) {
+		this.fileTypeIcon = fileTypeIcon;
+	}
+
+	public void setFileTypeIcon(
+		UnsafeSupplier<String, Exception> fileTypeIconUnsafeSupplier) {
+
+		try {
+			fileTypeIcon = fileTypeIconUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fileTypeIcon;
+
+	public String getFileTypeIconColor() {
+		return fileTypeIconColor;
+	}
+
+	public void setFileTypeIconColor(String fileTypeIconColor) {
+		this.fileTypeIconColor = fileTypeIconColor;
+	}
+
+	public void setFileTypeIconColor(
+		UnsafeSupplier<String, Exception> fileTypeIconColorUnsafeSupplier) {
+
+		try {
+			fileTypeIconColor = fileTypeIconColorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fileTypeIconColor;
+
 	public Long getId() {
 		return id;
 	}

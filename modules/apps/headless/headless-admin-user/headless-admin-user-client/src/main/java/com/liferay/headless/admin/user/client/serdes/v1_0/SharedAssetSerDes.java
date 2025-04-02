@@ -174,6 +174,34 @@ public class SharedAssetSerDes {
 			sb.append("\"");
 		}
 
+		if (sharedAsset.getFileTypeIcon() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileTypeIcon\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sharedAsset.getFileTypeIcon()));
+
+			sb.append("\"");
+		}
+
+		if (sharedAsset.getFileTypeIconColor() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileTypeIconColor\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sharedAsset.getFileTypeIconColor()));
+
+			sb.append("\"");
+		}
+
 		if (sharedAsset.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -313,6 +341,23 @@ public class SharedAssetSerDes {
 				String.valueOf(sharedAsset.getExternalReferenceCode()));
 		}
 
+		if (sharedAsset.getFileTypeIcon() == null) {
+			map.put("fileTypeIcon", null);
+		}
+		else {
+			map.put(
+				"fileTypeIcon", String.valueOf(sharedAsset.getFileTypeIcon()));
+		}
+
+		if (sharedAsset.getFileTypeIconColor() == null) {
+			map.put("fileTypeIconColor", null);
+		}
+		else {
+			map.put(
+				"fileTypeIconColor",
+				String.valueOf(sharedAsset.getFileTypeIconColor()));
+		}
+
 		if (sharedAsset.getId() == null) {
 			map.put("id", null);
 		}
@@ -388,6 +433,12 @@ public class SharedAssetSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "fileTypeIcon")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileTypeIconColor")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -460,6 +511,17 @@ public class SharedAssetSerDes {
 
 				if (jsonParserFieldValue != null) {
 					sharedAsset.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileTypeIcon")) {
+				if (jsonParserFieldValue != null) {
+					sharedAsset.setFileTypeIcon((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileTypeIconColor")) {
+				if (jsonParserFieldValue != null) {
+					sharedAsset.setFileTypeIconColor(
 						(String)jsonParserFieldValue);
 				}
 			}

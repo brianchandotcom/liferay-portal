@@ -441,6 +441,92 @@ public class SharedAsset implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The shared asset file type icon."
+	)
+	public String getFileTypeIcon() {
+		if (_fileTypeIconSupplier != null) {
+			fileTypeIcon = _fileTypeIconSupplier.get();
+
+			_fileTypeIconSupplier = null;
+		}
+
+		return fileTypeIcon;
+	}
+
+	public void setFileTypeIcon(String fileTypeIcon) {
+		this.fileTypeIcon = fileTypeIcon;
+
+		_fileTypeIconSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileTypeIcon(
+		UnsafeSupplier<String, Exception> fileTypeIconUnsafeSupplier) {
+
+		_fileTypeIconSupplier = () -> {
+			try {
+				return fileTypeIconUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The shared asset file type icon.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String fileTypeIcon;
+
+	@JsonIgnore
+	private Supplier<String> _fileTypeIconSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The shared asset file type icon color."
+	)
+	public String getFileTypeIconColor() {
+		if (_fileTypeIconColorSupplier != null) {
+			fileTypeIconColor = _fileTypeIconColorSupplier.get();
+
+			_fileTypeIconColorSupplier = null;
+		}
+
+		return fileTypeIconColor;
+	}
+
+	public void setFileTypeIconColor(String fileTypeIconColor) {
+		this.fileTypeIconColor = fileTypeIconColor;
+
+		_fileTypeIconColorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileTypeIconColor(
+		UnsafeSupplier<String, Exception> fileTypeIconColorUnsafeSupplier) {
+
+		_fileTypeIconColorSupplier = () -> {
+			try {
+				return fileTypeIconColorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The shared asset file type icon color.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String fileTypeIconColor;
+
+	@JsonIgnore
+	private Supplier<String> _fileTypeIconColorSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The shared asset ID."
 	)
 	public Long getId() {
@@ -780,6 +866,38 @@ public class SharedAsset implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String fileTypeIcon = getFileTypeIcon();
+
+		if (fileTypeIcon != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileTypeIcon\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileTypeIcon));
+
+			sb.append("\"");
+		}
+
+		String fileTypeIconColor = getFileTypeIconColor();
+
+		if (fileTypeIconColor != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileTypeIconColor\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileTypeIconColor));
 
 			sb.append("\"");
 		}

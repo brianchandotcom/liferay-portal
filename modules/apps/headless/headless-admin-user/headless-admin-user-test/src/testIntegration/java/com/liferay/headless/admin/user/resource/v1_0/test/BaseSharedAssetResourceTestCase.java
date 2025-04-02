@@ -173,6 +173,8 @@ public abstract class BaseSharedAssetResourceTestCase {
 		sharedAsset.setAssetType(regex);
 		sharedAsset.setClassName(regex);
 		sharedAsset.setExternalReferenceCode(regex);
+		sharedAsset.setFileTypeIcon(regex);
+		sharedAsset.setFileTypeIconColor(regex);
 		sharedAsset.setSiteName(regex);
 		sharedAsset.setTitle(regex);
 
@@ -185,6 +187,8 @@ public abstract class BaseSharedAssetResourceTestCase {
 		Assert.assertEquals(regex, sharedAsset.getAssetType());
 		Assert.assertEquals(regex, sharedAsset.getClassName());
 		Assert.assertEquals(regex, sharedAsset.getExternalReferenceCode());
+		Assert.assertEquals(regex, sharedAsset.getFileTypeIcon());
+		Assert.assertEquals(regex, sharedAsset.getFileTypeIconColor());
 		Assert.assertEquals(regex, sharedAsset.getSiteName());
 		Assert.assertEquals(regex, sharedAsset.getTitle());
 	}
@@ -1120,6 +1124,24 @@ public abstract class BaseSharedAssetResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("fileTypeIcon", additionalAssertFieldName)) {
+				if (sharedAsset.getFileTypeIcon() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fileTypeIconColor", additionalAssertFieldName)) {
+
+				if (sharedAsset.getFileTypeIconColor() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("shareable", additionalAssertFieldName)) {
 				if (sharedAsset.getShareable() == null) {
 					valid = false;
@@ -1355,6 +1377,30 @@ public abstract class BaseSharedAssetResourceTestCase {
 				if (!Objects.deepEquals(
 						sharedAsset1.getExternalReferenceCode(),
 						sharedAsset2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fileTypeIcon", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sharedAsset1.getFileTypeIcon(),
+						sharedAsset2.getFileTypeIcon())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"fileTypeIconColor", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						sharedAsset1.getFileTypeIconColor(),
+						sharedAsset2.getFileTypeIconColor())) {
 
 					return false;
 				}
@@ -1727,6 +1773,98 @@ public abstract class BaseSharedAssetResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("fileTypeIcon")) {
+			Object object = sharedAsset.getFileTypeIcon();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("fileTypeIconColor")) {
+			Object object = sharedAsset.getFileTypeIconColor();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1882,6 +2020,10 @@ public abstract class BaseSharedAssetResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				fileTypeIcon = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				fileTypeIconColor = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				shareable = RandomTestUtil.randomBoolean();

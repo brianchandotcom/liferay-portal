@@ -5,18 +5,19 @@
 
 package com.liferay.friendly.url.configuration.manager;
 
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Mikel Lorza
  */
 public interface FriendlyURLSeparatorConfigurationManager {
 
-	public String getFriendlyURLSeparatorsJSON(long companyId)
-		throws ConfigurationException;
+	public JSONObject getFriendlyURLSeparatorsJSONObject(long companyId)
+		throws PortalException;
 
 	public void updateFriendlyURLSeparatorCompanyConfiguration(
 			long companyId, String friendlyURLSeparatorsJSON)
-		throws ConfigurationException;
+		throws PortalException;
 
 }

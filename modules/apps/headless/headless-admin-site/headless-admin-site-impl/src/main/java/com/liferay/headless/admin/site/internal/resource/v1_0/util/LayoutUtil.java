@@ -57,7 +57,14 @@ public class LayoutUtil {
 		throws Exception {
 
 		if (pageSpecifications == null) {
-			return null;
+			Layout layout = LayoutLocalServiceUtil.addLayout(
+				null, serviceContext.getUserId(), groupId, privateLayout, 0, 0,
+				0, nameMap, titleMap, descriptionMap, null, null, type, null,
+				hidden, system, new HashMap<>(), 0L, serviceContext);
+
+			return LayoutLocalServiceUtil.updateStatus(
+				serviceContext.getUserId(), layout.getPlid(), status,
+				serviceContext);
 		}
 
 		if (pageSpecifications.length != 2) {
@@ -224,7 +231,10 @@ public class LayoutUtil {
 		throws Exception {
 
 		if (pageSpecifications == null) {
-			return layout;
+			return _updateLayout(
+				layout, nameMap, titleMap, descriptionMap,
+				layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
+				layout.getMasterLayoutPlid(), serviceContext);
 		}
 
 		if (pageSpecifications.length != 2) {
@@ -322,17 +332,9 @@ public class LayoutUtil {
 
 		layout = _updateLookAndFeel(layout, settings);
 
-		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
-			serviceContext.setAttribute(
-				"layout.instanceable.allowed", Boolean.TRUE);
-		}
-
-		return LayoutServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getParentLayoutId(), nameMap, titleMap, descriptionMap,
-			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
-			layout.isHidden(), layout.getFriendlyURLMap(),
-			layout.getIconImage(), null, _getStyleBookEntryId(layout, settings),
+		return _updateLayout(
+			layout, nameMap, titleMap, descriptionMap,
+			_getStyleBookEntryId(layout, settings),
 			_getFaviconFileEntryId(layout, settings),
 			_getMasterLayoutPlid(layout, settings), serviceContext);
 	}
@@ -445,6 +447,27 @@ public class LayoutUtil {
 				layout.getGroupId());
 
 		return styleBookEntry.getStyleBookEntryId();
+	}
+
+	private static Layout _updateLayout(
+			Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long styleBookEntryId, long faviconFileEntryId,
+			long masterLayoutPlid, ServiceContext serviceContext)
+		throws Exception {
+
+		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
+			serviceContext.setAttribute(
+				"layout.instanceable.allowed", Boolean.TRUE);
+		}
+
+		return LayoutServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), nameMap, titleMap, descriptionMap,
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(), layout.getFriendlyURLMap(),
+			layout.getIconImage(), null, styleBookEntryId, faviconFileEntryId,
+			masterLayoutPlid, serviceContext);
 	}
 
 	private static Layout _updateLookAndFeel(Layout layout, Settings settings)

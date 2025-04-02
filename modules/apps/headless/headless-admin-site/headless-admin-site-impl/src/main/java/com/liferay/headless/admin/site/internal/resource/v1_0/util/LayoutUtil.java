@@ -119,6 +119,30 @@ public class LayoutUtil {
 				Boolean.FALSE.toString());
 		}
 
+		long masterLayoutPlid = 0L;
+
+		if ((settings != null) &&
+			(settings.getMasterPageItemExternalReference() != null)) {
+
+			ItemExternalReference itemExternalReference =
+				settings.getMasterPageItemExternalReference();
+
+			if (Validator.isNotNull(
+					itemExternalReference.getExternalReferenceCode())) {
+
+				Layout masterLayout =
+					LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+						itemExternalReference.getExternalReferenceCode(),
+						groupId);
+
+				if (masterLayout == null) {
+					throw new UnsupportedOperationException();
+				}
+
+				masterLayoutPlid = masterLayout.getPlid();
+			}
+		}
+
 		serviceContext.setAttribute(
 			"defaultSegmentsExperienceExternalReferenceCode",
 			SegmentsExperienceUtil.
@@ -152,7 +176,7 @@ public class LayoutUtil {
 			serviceContext.getUserId(), groupId, privateLayout, 0, 0, 0,
 			nameMap, titleMap, descriptionMap, null, null, type,
 			typeSettingsUnicodeProperties.toString(), hidden, system,
-			new HashMap<>(), 0L, serviceContext);
+			new HashMap<>(), masterLayoutPlid, serviceContext);
 
 		int draftLayoutStatus = WorkflowConstants.STATUS_APPROVED;
 

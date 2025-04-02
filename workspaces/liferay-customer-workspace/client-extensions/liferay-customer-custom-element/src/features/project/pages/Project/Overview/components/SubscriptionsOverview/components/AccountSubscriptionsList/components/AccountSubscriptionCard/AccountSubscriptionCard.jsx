@@ -289,8 +289,8 @@ const AccountSubscriptionCard = ({
 										isValidPerpetualStartDate
 										? i18n.translate('not-applicable')
 										: getDateCustomFormat(
-											accountSubscription.startDate,
-											FORMAT_DATE_TYPES.day2DMonthSYearN
+											FORMAT_DATE_TYPES.day2DMonthSYearN,
+											accountSubscription.startDate
 										)}
 								</p>
 							</div>
@@ -311,8 +311,8 @@ const AccountSubscriptionCard = ({
 										isValidPerpetualStartDate
 										? i18n.translate('not-applicable')
 										: getDateCustomFormat(
-											accountSubscription.endDate,
-											FORMAT_DATE_TYPES.day2DMonthSYearN
+											FORMAT_DATE_TYPES.day2DMonthSYearN,
+											accountSubscription.endDate
 										)}
 								</p>
 							</div>

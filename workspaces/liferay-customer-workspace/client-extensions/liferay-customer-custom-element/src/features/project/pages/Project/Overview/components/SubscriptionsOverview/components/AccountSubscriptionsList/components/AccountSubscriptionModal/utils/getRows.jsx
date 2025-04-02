@@ -29,11 +29,11 @@ export default function getRows(orderItems) {
 			isPermanentLicenseKey && isValidPerpetualStartDate
 				? i18n.translate('not-applicable')
 				: `${getDateCustomFormat(
+						FORMAT_DATE_TYPES.day2DMonth2DYearN,
 						options?.startDate,
-						FORMAT_DATE_TYPES.day2DMonth2DYearN
 				  )} - ${getDateCustomFormat(
+						FORMAT_DATE_TYPES.day2DMonth2DYearN,
 						options?.endDate,
-						FORMAT_DATE_TYPES.day2DMonth2DYearN
 				  )}`;
 
 		return {

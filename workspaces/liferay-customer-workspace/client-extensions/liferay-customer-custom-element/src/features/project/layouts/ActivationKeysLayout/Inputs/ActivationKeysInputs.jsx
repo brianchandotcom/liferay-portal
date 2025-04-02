@@ -275,11 +275,11 @@ const ActivationKeysInputs = ({
 						>
 							{orderItemsDates.map((dateInterval, index) => {
 								const formattedDate = `${getDateCustomFormat(
-									dateInterval.startDate,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
+									FORMAT_DATE_TYPES.day2DMonthSYearN,
+									dateInterval.startDate
 								)} - ${getDateCustomFormat(
-									dateInterval.endDate,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
+									FORMAT_DATE_TYPES.day2DMonthSYearN,
+									dateInterval.endDate
 								)}`;
 
 								return (

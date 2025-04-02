@@ -21,8 +21,8 @@ const ExpirationDateColumn = ({activationKey}) => {
 				title={[i18n.translate('this-key-does-not-expire')]}
 			>
 				{getDateCustomFormat(
-					activationKey.startDate,
-					FORMAT_DATE_TYPES.day2DMonthSYearN
+					FORMAT_DATE_TYPES.day2DMonthSYearN,
+					activationKey.startDate
 				)}
 
 				<br></br>
@@ -35,15 +35,15 @@ const ExpirationDateColumn = ({activationKey}) => {
 	return (
 		<p className="font-weight-bold m-0 text-neutral-10">
 			{getDateCustomFormat(
-				activationKey.startDate,
-				FORMAT_DATE_TYPES.day2DMonthSYearN
+				FORMAT_DATE_TYPES.day2DMonthSYearN,
+				activationKey.startDate
 			)}
 
 			<br></br>
 
 			{getDateCustomFormat(
-				activationKey.expirationDate,
-				FORMAT_DATE_TYPES.day2DMonthSYearN
+				FORMAT_DATE_TYPES.day2DMonthSYearN,
+				activationKey.expirationDate
 			)}
 		</p>
 	);

@@ -51,8 +51,8 @@ const TableKeyDetails = ({activationKeys, setValueToCopyToClipboard}) => {
 		new Date(unlimitedLicenseDate)
 			? 'Does Not Expire'
 			: getDateCustomFormat(
-					activationKeys.expirationDate,
-					FORMAT_DATE_TYPES.day2DMonthSYearN
+					FORMAT_DATE_TYPES.day2DMonthSYearN,
+					activationKeys.expirationDate
 			  );
 
 	useEffect(() => {
@@ -205,8 +205,8 @@ const TableKeyDetails = ({activationKeys, setValueToCopyToClipboard}) => {
 					<div className="col-3">
 						<p className="bg-neutral-1 cp-key-details-paragraph px-3 py-2 rounded">
 							{getDateCustomFormat(
-								activationKeys.createDate,
-								FORMAT_DATE_TYPES.day2DMonthSYearN
+								FORMAT_DATE_TYPES.day2DMonthSYearN,
+								activationKeys.createDate
 							)}
 						</p>
 					</div>

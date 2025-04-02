@@ -31,8 +31,8 @@ const BadgeFilter = ({
 
 			dateDisplays.push(
 				getDateCustomFormat(
-					dateFilterState.value?.onOrAfter,
-					FORMAT_DATE_TYPES.day2DMonthSYearN
+					FORMAT_DATE_TYPES.day2DMonthSYearN,
+					dateFilterState.value?.onOrAfter
 				)
 			);
 		}
@@ -40,8 +40,8 @@ const BadgeFilter = ({
 		if (dateFilterState.value?.onOrBefore) {
 			dateDisplays.push(
 				getDateCustomFormat(
-					dateFilterState.value?.onOrBefore,
-					FORMAT_DATE_TYPES.day2DMonthSYearN
+					FORMAT_DATE_TYPES.day2DMonthSYearN,
+					dateFilterState.value?.onOrBefore
 				)
 			);
 		}

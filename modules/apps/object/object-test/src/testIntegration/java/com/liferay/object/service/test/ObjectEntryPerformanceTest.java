@@ -93,18 +93,6 @@ public class ObjectEntryPerformanceTest {
 				TestPropsValues.getUserId(),
 				_customObjectDefinition.getObjectDefinitionId());
 
-		_addObjectEntries(
-			GetterUtil.getInteger(
-				_properties.getProperty("object.entries.count")));
-
-		try (Closeable closeable = new PerformanceTimer(_logFilePath, 60000)) {
-			_objectEntryLocalService.getObjectEntries(
-				0, _customObjectDefinition.getObjectDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-	}
-
-	private void _addObjectEntries(Integer numberOfEntries) throws Exception {
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_customObjectDefinition.getStorageType());
@@ -114,7 +102,11 @@ public class ObjectEntryPerformanceTest {
 				false, Collections.emptyMap(), _dtoConverterRegistry, null,
 				LocaleUtil.getDefault(), null, TestPropsValues.getUser());
 
-		for (int counter = 0; counter < numberOfEntries; counter++) {
+		for (int counter = 0;
+			 counter < GetterUtil.getInteger(
+				 _properties.getProperty("object.entries.count"));
+			 counter++) {
+
 			objectEntryManager.addObjectEntry(
 				dtoConverterContext, _customObjectDefinition,
 				new ObjectEntry() {
@@ -125,6 +117,12 @@ public class ObjectEntryPerformanceTest {
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY);
+		}
+
+		try (Closeable closeable = new PerformanceTimer(_logFilePath, 60000)) {
+			_objectEntryLocalService.getObjectEntries(
+				0, _customObjectDefinition.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		}
 	}
 

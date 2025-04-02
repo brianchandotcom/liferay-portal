@@ -84,25 +84,24 @@ public class CategoryFacetPortletPreferencesImpl
 
 	@Override
 	public String[] getVocabularyIds() {
-		String[] externalReferenceCodes =
-			getGroupVocabularyExternalReferenceCodes();
-
 		List<String> vocabularyIds = new LinkedList<>();
 
-		for (String externalReferenceCode : externalReferenceCodes) {
-			String[] externalReferenceCodes2 = StringUtil.split(
+		for (String externalReferenceCode :
+				getGroupVocabularyExternalReferenceCodes()) {
+
+			String[] externalReferenceCodes = StringUtil.split(
 				externalReferenceCode, "&&");
 
 			try {
 				Group group =
 					_groupLocalService.getGroupByExternalReferenceCode(
-						externalReferenceCodes2[0],
+						externalReferenceCodes[0],
 						CompanyThreadLocal.getCompanyId());
 
 				AssetVocabulary assetVocabulary =
 					_assetVocabularyLocalService.
 						getAssetVocabularyByExternalReferenceCode(
-							externalReferenceCodes2[1], group.getGroupId());
+							externalReferenceCodes[1], group.getGroupId());
 
 				vocabularyIds.add(
 					String.valueOf(assetVocabulary.getVocabularyId()));

@@ -35,8 +35,9 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 				_configurationProvider.getCompanyConfiguration(
 					FriendlyURLSeparatorCompanyConfiguration.class, companyId);
 
-		return _jsonFactory.createJSONObject(friendlyURLSeparatorCompanyConfiguration.
-			friendlyURLSeparatorsJSON());
+		return _jsonFactory.createJSONObject(
+			friendlyURLSeparatorCompanyConfiguration.
+				friendlyURLSeparatorsJSON());
 	}
 
 	@Override

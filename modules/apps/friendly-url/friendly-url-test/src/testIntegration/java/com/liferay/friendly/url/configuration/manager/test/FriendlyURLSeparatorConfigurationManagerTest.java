@@ -63,20 +63,20 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 
 	@Test
 	public void testGetEmptyFriendlyURLSeparatorsJSON() throws Exception {
-		String friendlyURLSeparatorsJSON =
+		JSONObject friendlyURLSeparatorsJSONObject =
 			_friendlyURLSeparatorConfigurationManager.
-				getFriendlyURLSeparatorsJSON(_companyId);
+				getFriendlyURLSeparatorsJSONObject(_companyId);
 
-		Assert.assertNotNull(friendlyURLSeparatorsJSON);
+		Assert.assertNotNull(friendlyURLSeparatorsJSONObject);
 		Assert.assertEquals(
 			_jsonFactory.createJSONObject(
 			).toString(),
-			friendlyURLSeparatorsJSON);
+			friendlyURLSeparatorsJSONObject.toString());
 	}
 
 	@Test
 	public void testGetFriendlyURLSeparatorsJSON() throws Exception {
-		JSONObject friendlyURLSeparatorsJSONObject = JSONUtil.put(
+		JSONObject originalFriendlyURLSeparatorsJSONObject = JSONUtil.put(
 			JournalArticle.class.getName(), "/test1/");
 
 		try (CompanyConfigurationTemporarySwapper
@@ -87,17 +87,17 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 							getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
 							"friendlyURLSeparatorsJSON",
-							friendlyURLSeparatorsJSONObject.toString()
+							originalFriendlyURLSeparatorsJSONObject.toString()
 						).build())) {
 
-			String friendlyURLSeparatorsJSON =
+			JSONObject friendlyURLSeparatorsJSONObject =
 				_friendlyURLSeparatorConfigurationManager.
-					getFriendlyURLSeparatorsJSON(_companyId);
+					getFriendlyURLSeparatorsJSONObject(_companyId);
 
-			Assert.assertNotNull(friendlyURLSeparatorsJSON);
+			Assert.assertNotNull(friendlyURLSeparatorsJSONObject);
 			Assert.assertEquals(
-				friendlyURLSeparatorsJSONObject.toString(),
-				friendlyURLSeparatorsJSON);
+				originalFriendlyURLSeparatorsJSONObject.toString(),
+				friendlyURLSeparatorsJSONObject.toString());
 		}
 	}
 

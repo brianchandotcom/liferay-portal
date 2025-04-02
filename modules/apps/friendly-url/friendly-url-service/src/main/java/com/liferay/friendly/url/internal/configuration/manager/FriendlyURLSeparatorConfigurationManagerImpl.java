@@ -16,7 +16,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -30,14 +34,25 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 	public JSONObject getFriendlyURLSeparatorsJSONObject(long companyId)
 		throws PortalException {
 
+		JSONObject jsonObject = _portalCache.get(companyId);
+
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
 		FriendlyURLSeparatorCompanyConfiguration
 			friendlyURLSeparatorCompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					FriendlyURLSeparatorCompanyConfiguration.class, companyId);
 
-		return _jsonFactory.createJSONObject(
-			friendlyURLSeparatorCompanyConfiguration.
-				friendlyURLSeparatorsJSON());
+		JSONObject friendlyURLSeparatorsJSONObject =
+			_jsonFactory.createJSONObject(
+				friendlyURLSeparatorCompanyConfiguration.
+					friendlyURLSeparatorsJSON());
+
+		_portalCache.put(companyId, friendlyURLSeparatorsJSONObject);
+
+		return friendlyURLSeparatorsJSONObject;
 	}
 
 	@Override
@@ -45,11 +60,11 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 			long companyId, String friendlyURLSeparatorsJSON)
 		throws PortalException {
 
-		PortalCache<Long, JSONObject> portalCache =
+		_portalCache =
 			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
 				FriendlyURLSeparatorProvider.class.getName());
 
-		portalCache.remove(companyId);
+		_portalCache.remove(companyId);
 
 		_configurationProvider.saveCompanyConfiguration(
 			FriendlyURLSeparatorCompanyConfiguration.class, companyId,
@@ -57,9 +72,22 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 				"friendlyURLSeparatorsJSON", friendlyURLSeparatorsJSON
 			).build());
 
-		portalCache.put(
+		_portalCache.put(
 			companyId,
 			_jsonFactory.createJSONObject(friendlyURLSeparatorsJSON));
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_portalCache =
+			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
+				FriendlyURLSeparatorProvider.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_multiVMPool.removePortalCache(
+			FriendlyURLSeparatorProvider.class.getName());
 	}
 
 	@Reference
@@ -70,5 +98,7 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 
 	@Reference
 	private MultiVMPool _multiVMPool;
+
+	private PortalCache<Long, JSONObject> _portalCache;
 
 }

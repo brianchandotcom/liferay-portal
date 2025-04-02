@@ -40,9 +40,6 @@ public class OrganizationEntityModel extends BaseExpandoEntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
-			new DateTimeEntityField(
-				"dateModifiedTruncated", locale -> "dateModifiedTruncated",
-				locale -> "dateModifiedTruncated"),
 			new IdEntityField(
 				"assetCategoryIds", locale -> Field.ASSET_CATEGORY_IDS,
 				String::valueOf),

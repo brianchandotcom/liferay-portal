@@ -65,7 +65,7 @@ public class UserSegmentsCriteriaContributor
 
 		String newFilterString = filterString;
 
-		Matcher matcher = _pattern1.matcher(filterString);
+		Matcher matcher = _roleIdsPattern.matcher(filterString);
 
 		while (matcher.find()) {
 			long roleId = _getRoleId(matcher.group());
@@ -80,7 +80,7 @@ public class UserSegmentsCriteriaContributor
 					StringPool.CLOSE_PARENTHESIS));
 		}
 
-		matcher = _pattern2.matcher(filterString);
+		matcher = _dateModifiedPattern.matcher(filterString);
 
 		while (matcher.find()) {
 			String date = matcher.group("date");
@@ -261,10 +261,10 @@ public class UserSegmentsCriteriaContributor
 		return String.join(" or ", conditions);
 	}
 
-	private static final Pattern _pattern1 = Pattern.compile(
-		"roleIds eq '\\d+'");
-	private static final Pattern _pattern2 = Pattern.compile(
+	private static final Pattern _dateModifiedPattern = Pattern.compile(
 		"dateModified eq (?<date>\\d{4}-\\d{2}-\\d{2})T.*Z");
+	private static final Pattern _roleIdsPattern = Pattern.compile(
+		"roleIds eq '\\d+'");
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,

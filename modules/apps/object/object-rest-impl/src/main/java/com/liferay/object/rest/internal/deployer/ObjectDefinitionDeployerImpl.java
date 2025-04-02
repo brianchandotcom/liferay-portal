@@ -55,10 +55,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -376,12 +378,18 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			applicationServiceRegistration.setProperties(properties);
 		}
 
+		boolean featureFlagEnabled = FeatureFlagManagerUtil.isEnabled(
+			CompanyConstants.SYSTEM, "LPD-35914");
+
 		_scopedServiceRegistrationsMap.compute(
 			restContextPath,
 			(key1, serviceRegistrationsMap) -> {
 				if (serviceRegistrationsMap == null) {
 					serviceRegistrationsMap = new HashMap<>();
 				}
+
+				String portletId =
+					featureFlagEnabled ? objectDefinition.getPortletId() : null;
 
 				serviceRegistrationsMap.computeIfAbsent(
 					objectDefinition.getCompanyId(),
@@ -460,7 +468,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								objectDefinition.getName()
 							).put(
 								"batch.engine.task.item.delegate.portlet.id",
-								objectDefinition.getPortletId()
+								portletId
 							).put(
 								"batch.planner.export.enabled", "true"
 							).put(

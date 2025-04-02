@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -56,6 +57,7 @@ public class DepotRoleContributorTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@FeatureFlags("LPD-17564")
 	@Test
 	public void testCMSConsumerRoleAssignment() throws Exception {
 		Group group = GroupTestUtil.addGroup(

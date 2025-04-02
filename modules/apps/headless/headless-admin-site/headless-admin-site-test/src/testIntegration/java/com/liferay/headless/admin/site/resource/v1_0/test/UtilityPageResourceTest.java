@@ -411,6 +411,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	protected UtilityPage randomUtilityPage() throws Exception {
 		UtilityPage utilityPage = super.randomUtilityPage();
 
+		utilityPage.setMarkedAsDefault(Boolean.FALSE);
 		utilityPage.setType(UtilityPage.Type.ERROR);
 
 		return utilityPage;

@@ -60,17 +60,13 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 			long companyId, String friendlyURLSeparatorsJSON)
 		throws PortalException {
 
-		_portalCache.remove(companyId);
-
 		_configurationProvider.saveCompanyConfiguration(
 			FriendlyURLSeparatorCompanyConfiguration.class, companyId,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"friendlyURLSeparatorsJSON", friendlyURLSeparatorsJSON
 			).build());
 
-		_portalCache.put(
-			companyId,
-			_jsonFactory.createJSONObject(friendlyURLSeparatorsJSON));
+		_portalCache.remove(companyId);
 	}
 
 	@Activate

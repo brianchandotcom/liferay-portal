@@ -13,3 +13,4 @@ liferay-learn-batch-oauth-application-headless-server:
         - Liferay.Headless.Batch.Engine.everything
         - Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

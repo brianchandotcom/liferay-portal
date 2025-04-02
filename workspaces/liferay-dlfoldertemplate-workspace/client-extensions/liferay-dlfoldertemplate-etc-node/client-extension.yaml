@@ -16,6 +16,7 @@ liferay-dlfoldertemplate-etc-node-oauth-application-server:
         - Liferay.Object.Admin.REST.everything.read
         - Liferay.Object.Admin.REST.everything.write
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-dlfoldertemplate-etc-node-oauth-application-user-agent:
     .serviceAddress: localhost:3001
     .serviceScheme: http

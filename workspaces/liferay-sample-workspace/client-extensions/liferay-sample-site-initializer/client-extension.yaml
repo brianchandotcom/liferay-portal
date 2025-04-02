@@ -11,3 +11,4 @@ liferay-sample-site-initializer-oauth-application-headless-server:
     scopes:
         - Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

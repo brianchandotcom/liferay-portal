@@ -25,6 +25,7 @@ liferay-adyen-commerce-payment-integration-oauth-application-headless-server:
         - Liferay.Object.Admin.REST.everything
         - c_n1a0adyenwebhook.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-adyen-commerce-payment-integration-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http

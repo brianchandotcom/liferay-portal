@@ -8,3 +8,4 @@ liferay-sample-etc-cron-oauth-application-headless-server:
         - Liferay.Headless.Admin.User.everything.read
         - Liferay.Headless.Delivery.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

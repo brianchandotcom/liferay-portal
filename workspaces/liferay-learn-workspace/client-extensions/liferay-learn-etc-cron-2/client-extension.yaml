@@ -7,3 +7,4 @@ liferay-learn-etc-cron-2-oauth-application-headless-server:
     scopes:
         - c_p2s3examresultssynchronization.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account

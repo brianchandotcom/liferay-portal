@@ -24,6 +24,7 @@ liferay-paypal-commerce-payment-integration-oauth-application-headless-server:
         - c_b9k3paypaltransaction.everything
         - c_b9k3paypalwebhook.everything
     type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-paypal-commerce-payment-integration-oauth-application-user-agent:
     .serviceAddress: localhost:58082
     .serviceScheme: http

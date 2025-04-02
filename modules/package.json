@@ -44,5 +44,8 @@
 			"util/portal-tools-rest-builder-test-client-js",
 			"_node-scripts"
 		]
+	},
+	"dependencies": {
+		"eslint-plugin-sort-class-members": "^1.21.0"
 	}
 }

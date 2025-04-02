@@ -5,14 +5,6 @@
 
 import getTop from './get_top';
 
-export default function openWindow(config, callback) {
-	const topUtil = getTop();
-
-	config.openingWindow = window;
-
-	topUtil.Liferay.Util.openModal(config, callback);
-}
-
 export function openInDialog(event, config) {
 	event.preventDefault();
 
@@ -37,4 +29,12 @@ export function openInDialog(event, config) {
 	}
 
 	openWindow(config);
+}
+
+export default function openWindow(config, callback) {
+	const topUtil = getTop();
+
+	config.openingWindow = window;
+
+	topUtil.Liferay.Util.openModal(config, callback);
 }

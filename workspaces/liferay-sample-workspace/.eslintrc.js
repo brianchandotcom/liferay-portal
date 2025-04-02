@@ -27,9 +27,11 @@ const config = {
 		},
 		ecmaVersion: 2023,
 	},
-	plugins: ['@liferay'],
+	plugins: ['@liferay', 'sort-class-members'],
 	root: true,
 	rules: {
+		"@typescript-eslint/member-ordering": "error"
+		"sort-class-members/sort-class-members": 2,
 		'@liferay/empty-line-between-elements': 'off',
 		'@liferay/import-extensions': 'off',
 		'@liferay/portal/deprecation': 'off',

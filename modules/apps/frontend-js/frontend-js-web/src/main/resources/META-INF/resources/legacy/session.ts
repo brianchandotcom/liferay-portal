@@ -19,28 +19,25 @@ const TOAST_ID = 'sessionToast';
 const BUFFER_TIME: Array<any> = [];
 
 export class Session {
-	private _expiredText: string;
-	private _warningText: string;
-	private _timestamp: string;
-	private _cookieKey: string;
-	private _cookieOptions: {
-		path: string;
-		secure: boolean;
-	};
-	private sessionState: TSessionState;
-	private _intervalId?: number | NodeJS.Timeout;
-	private _initTimestamp?: string;
-	private _warningLength: number;
-	private _initPageTitle: string;
-	private _banner: any;
-	private _pageTitle: string;
-	private _alertClosed: any;
-
 	autoExtend: boolean;
 	redirectOnExpire: boolean;
 	redirectUrl: string;
 	sessionLength: number;
 	sessionTimeoutOffset: number;
+
+	private _alertClosed: any;
+	private _banner: any;
+	private _cookieKey: string;
+	private _cookieOptions: {path: string; secure: boolean};
+	private _expiredText: string;
+	private _initPageTitle: string;
+	private _initTimestamp?: string;
+	private _intervalId?: number | NodeJS.Timeout;
+	private _pageTitle: string;
+	private _timestamp: string;
+	private _warningLength: number;
+	private _warningText: string;
+	private sessionState: TSessionState;
 
 	constructor(config: SessionConfig) {
 		this.autoExtend = config.autoExtend || false;
@@ -63,7 +60,6 @@ export class Session {
 		this._initPageTitle = document.title;
 		this._initTimestamp = Date.now().toString();
 		this._pageTitle = document.title;
-		this.sessionState = 'active';
 		this._timestamp = '';
 		this._warningLength = config.warningLength * 1000 || this.sessionLength;
 		this._warningText = Liferay.Util.sub(
@@ -74,12 +70,104 @@ export class Session {
 				`<a class="alert-link" href="javascript:void(0);">${Liferay.Language.get('extend')}</a>`,
 			]
 		);
+		this.sessionState = 'active';
 
 		this._startTimer();
 	}
 
-	private _getWarningTime() {
-		return this.sessionLength - this._warningLength;
+	destructor() {
+		clearInterval(this._intervalId);
+
+		this._destroyBanner();
+	}
+
+	expire() {
+		this.setSessionState('expired');
+	}
+
+	extend() {
+		this.setSessionState('active');
+	}
+
+	async openToast(args: any) {
+		const {openToast} = await import(
+			Liferay.ThemeDisplay.getPathContext() +
+				'/o/frontend-js-components-web/__liferay__/index.js'
+		);
+
+		openToast(args);
+	}
+
+	setSessionState(newVal: TSessionState) {
+		const prevVal = this.sessionState;
+
+		if (newVal === 'warned') {
+			this._uiSetWarned();
+		}
+		else if (prevVal === 'expired' && prevVal !== newVal) {
+			return;
+		}
+		else if (prevVal === 'active') {
+			if (newVal === 'active') {
+				this._uiSetActivated();
+				this._extendSession();
+			}
+			else if (newVal === 'expired') {
+				this._expireSession();
+				this._uiSetExpired();
+			}
+		}
+
+		this.sessionState = newVal;
+	}
+
+	warn() {
+		this.setSessionState('warned');
+	}
+
+	private _destroyBanner() {
+		const toast = document.getElementById(TOAST_ID);
+
+		const toastRootElement = toast?.parentElement;
+
+		Liferay.destroyComponent(TOAST_ID);
+
+		if (toastRootElement) {
+			toastRootElement.remove();
+		}
+
+		this._banner = false;
+	}
+
+	private _expireSession() {
+		Liferay.Util.fetch(
+			Liferay.ThemeDisplay.getPathMain() + '/portal/' + 'expire_session'
+		).then((response) => {
+			if (response.ok) {
+				Liferay.fire('sessionExpired');
+
+				if (this.redirectOnExpire) {
+					location.href = this.redirectUrl;
+				}
+			}
+			else {
+				setTimeout(() => {
+					this._expireSession;
+				}, 1000);
+			}
+		});
+	}
+
+	private _extendSession() {
+		this._setTimestamp();
+
+		Liferay.Util.fetch(
+			Liferay.ThemeDisplay.getPathMain() + '/portal/' + 'extend_session'
+		).then((response) => {
+			if (response.status === 500) {
+				this.expire();
+			}
+		});
 	}
 
 	private _formatNumber(value: number) {
@@ -109,101 +197,6 @@ export class Session {
 		}
 
 		return time.toString();
-	}
-
-	private _startTimer() {
-		this._intervalId = setInterval(() => {
-
-			// LPS-82336 Maintain session state in multiple tabs
-
-			if (this._initTimestamp !== this._timestamp) {
-				this._setTimestamp();
-
-				if (this.sessionState !== 'active') {
-					this.setSessionState('active');
-				}
-			}
-
-			const elapsed =
-				Math.floor(
-					(Date.now() - parseInt(this._timestamp, 10)) / 1000
-				) * 1000;
-
-			const hasExpired = elapsed >= this.sessionLength;
-			const hasExpiredTimeoutOffset =
-				elapsed >= this.sessionLength - this.sessionTimeoutOffset;
-			const hasWarned = elapsed >= this._getWarningTime();
-
-			if (hasExpired && this.sessionState !== 'expired') {
-				this.expire();
-			}
-			else if (this.autoExtend && hasExpiredTimeoutOffset) {
-				this.extend();
-			}
-			else if (
-				!this.autoExtend &&
-				hasWarned &&
-				this.sessionState !== 'warned'
-			) {
-				this.warn();
-			}
-
-			if (!hasWarned) {
-				this._uiSetActivated();
-			}
-			else if (!hasExpired) {
-				this._uiSetRemainingTime(
-					this.sessionLength - elapsed,
-					document.querySelector(`#${TOAST_ID} .countdown-timer`)
-				);
-			}
-		}, 1000);
-	}
-
-	private _setTimestamp() {
-		this._timestamp = Date.now().toString();
-
-		this._initTimestamp = this._timestamp;
-
-		if (navigator.cookieEnabled) {
-			Liferay.Util.Cookie.set(
-				this._cookieKey,
-				this._timestamp,
-				Liferay.Util.Cookie.TYPES.NECESSARY,
-				this._cookieOptions
-			);
-		}
-	}
-
-	private _extendSession() {
-		this._setTimestamp();
-
-		Liferay.Util.fetch(
-			Liferay.ThemeDisplay.getPathMain() + '/portal/' + 'extend_session'
-		).then((response) => {
-			if (response.status === 500) {
-				this.expire();
-			}
-		});
-	}
-
-	private _expireSession() {
-		Liferay.Util.fetch(
-			Liferay.ThemeDisplay.getPathMain() + '/portal/' + 'expire_session'
-		).then((response) => {
-			if (response.ok) {
-				Liferay.fire('sessionExpired');
-
-				if (this.redirectOnExpire) {
-					location.href = this.redirectUrl;
-				}
-			}
-			else {
-				setTimeout(() => {
-					this._expireSession;
-				}, 1000);
-			}
-		});
 	}
 
 	private _getBanner() {
@@ -255,45 +248,92 @@ export class Session {
 		return banner;
 	}
 
-	private _destroyBanner() {
-		const toast = document.getElementById(TOAST_ID);
-
-		const toastRootElement = toast?.parentElement;
-
-		Liferay.destroyComponent(TOAST_ID);
-
-		if (toastRootElement) {
-			toastRootElement.remove();
-		}
-
-		this._banner = false;
+	private _getWarningTime() {
+		return this.sessionLength - this._warningLength;
 	}
 
-	private _uiSetWarned() {
-		const sessionLength = this.sessionLength;
-		const timestamp = parseInt(this._timestamp, 10);
-		const warningLength = this._warningLength;
+	private _setTimestamp() {
+		this._timestamp = Date.now().toString();
 
-		let elapsed = sessionLength;
+		this._initTimestamp = this._timestamp;
 
-		if (timestamp) {
-			elapsed = Math.floor((Date.now() - timestamp) / 1000) * 1000;
-		}
-
-		let remainingTime = sessionLength - elapsed;
-
-		if (remainingTime > warningLength) {
-			remainingTime = warningLength;
-		}
-
-		this._getBanner();
-
-		setTimeout(() => {
-			this._uiSetRemainingTime(
-				remainingTime,
-				document.querySelector(`#${TOAST_ID} .countdown-timer`)
+		if (navigator.cookieEnabled) {
+			Liferay.Util.Cookie.set(
+				this._cookieKey,
+				this._timestamp,
+				Liferay.Util.Cookie.TYPES.NECESSARY,
+				this._cookieOptions
 			);
-		}, 60);
+		}
+	}
+
+	private _startTimer() {
+		this._intervalId = setInterval(() => {
+
+			// LPS-82336 Maintain session state in multiple tabs
+
+			if (this._initTimestamp !== this._timestamp) {
+				this._setTimestamp();
+
+				if (this.sessionState !== 'active') {
+					this.setSessionState('active');
+				}
+			}
+
+			const elapsed =
+				Math.floor(
+					(Date.now() - parseInt(this._timestamp, 10)) / 1000
+				) * 1000;
+
+			const hasExpired = elapsed >= this.sessionLength;
+			const hasExpiredTimeoutOffset =
+				elapsed >= this.sessionLength - this.sessionTimeoutOffset;
+			const hasWarned = elapsed >= this._getWarningTime();
+
+			if (hasExpired && this.sessionState !== 'expired') {
+				this.expire();
+			}
+			else if (this.autoExtend && hasExpiredTimeoutOffset) {
+				this.extend();
+			}
+			else if (
+				!this.autoExtend &&
+				hasWarned &&
+				this.sessionState !== 'warned'
+			) {
+				this.warn();
+			}
+
+			if (!hasWarned) {
+				this._uiSetActivated();
+			}
+			else if (!hasExpired) {
+				this._uiSetRemainingTime(
+					this.sessionLength - elapsed,
+					document.querySelector(`#${TOAST_ID} .countdown-timer`)
+				);
+			}
+		}, 1000);
+	}
+
+	private _uiSetActivated() {
+		document.title = this._initPageTitle;
+
+		if (this._banner) {
+			this._destroyBanner();
+		}
+	}
+
+	private _uiSetExpired() {
+		if (this._banner) {
+			this._banner.open({
+				message: this._expiredText,
+				title: Liferay.Language.get('danger'),
+				type: 'danger',
+			});
+
+			document.title = this._pageTitle;
+		}
 	}
 
 	private _uiSetRemainingTime(
@@ -321,70 +361,31 @@ export class Session {
 			' | ' +
 			this._pageTitle;
 	}
-	private _uiSetActivated() {
-		document.title = this._initPageTitle;
 
-		if (this._banner) {
-			this._destroyBanner();
-		}
-	}
-	private _uiSetExpired() {
-		if (this._banner) {
-			this._banner.open({
-				message: this._expiredText,
-				title: Liferay.Language.get('danger'),
-				type: 'danger',
-			});
+	private _uiSetWarned() {
+		const sessionLength = this.sessionLength;
+		const timestamp = parseInt(this._timestamp, 10);
+		const warningLength = this._warningLength;
 
-			document.title = this._pageTitle;
-		}
-	}
+		let elapsed = sessionLength;
 
-	setSessionState(newVal: TSessionState) {
-		const prevVal = this.sessionState;
-
-		if (newVal === 'warned') {
-			this._uiSetWarned();
-		}
-		else if (prevVal === 'expired' && prevVal !== newVal) {
-			return;
-		}
-		else if (prevVal === 'active') {
-			if (newVal === 'active') {
-				this._uiSetActivated();
-				this._extendSession();
-			}
-			else if (newVal === 'expired') {
-				this._expireSession();
-				this._uiSetExpired();
-			}
+		if (timestamp) {
+			elapsed = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 		}
 
-		this.sessionState = newVal;
-	}
+		let remainingTime = sessionLength - elapsed;
 
-	async openToast(args: any) {
-		const {openToast} = await import(
-			Liferay.ThemeDisplay.getPathContext() +
-				'/o/frontend-js-components-web/__liferay__/index.js'
-		);
+		if (remainingTime > warningLength) {
+			remainingTime = warningLength;
+		}
 
-		openToast(args);
-	}
+		this._getBanner();
 
-	destructor() {
-		clearInterval(this._intervalId);
-
-		this._destroyBanner();
-	}
-
-	expire() {
-		this.setSessionState('expired');
-	}
-	extend() {
-		this.setSessionState('active');
-	}
-	warn() {
-		this.setSessionState('warned');
+		setTimeout(() => {
+			this._uiSetRemainingTime(
+				remainingTime,
+				document.querySelector(`#${TOAST_ID} .countdown-timer`)
+			);
+		}, 60);
 	}
 }

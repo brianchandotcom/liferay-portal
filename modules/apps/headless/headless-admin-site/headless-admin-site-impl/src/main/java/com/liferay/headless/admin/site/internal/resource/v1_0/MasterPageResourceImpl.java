@@ -316,9 +316,13 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
-		serviceContext.setAssetTagNames(
-			_getAssetTagNames(
-				groupId, masterPage.getKeywordItemExternalReferences()));
+		if (ArrayUtil.isNotEmpty(
+				masterPage.getKeywordItemExternalReferences())) {
+
+			serviceContext.setAssetTagNames(
+				_getAssetTagNames(
+					groupId, masterPage.getKeywordItemExternalReferences()));
+		}
 
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(

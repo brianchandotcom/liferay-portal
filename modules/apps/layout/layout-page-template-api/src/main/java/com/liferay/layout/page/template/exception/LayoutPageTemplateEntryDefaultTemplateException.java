@@ -20,7 +20,7 @@ public class LayoutPageTemplateEntryDefaultTemplateException
 
 	public LayoutPageTemplateEntryDefaultTemplateException(int type) {
 		super(
-			"The default Layout Page Template Entry must be published first.");
+			"The default layout page template entry must be published first.");
 
 		_type = type;
 	}

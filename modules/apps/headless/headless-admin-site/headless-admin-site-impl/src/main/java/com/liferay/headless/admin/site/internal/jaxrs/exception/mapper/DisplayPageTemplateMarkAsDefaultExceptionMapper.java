@@ -40,20 +40,20 @@ public class DisplayPageTemplateMarkAsDefaultExceptionMapper
 		LayoutPageTemplateEntryDefaultTemplateException
 			layoutPageTemplateEntryDefaultTemplateException) {
 
-		String name = "Display Page Template";
+		String name = "display page template";
 
 		if (Objects.equals(
 				layoutPageTemplateEntryDefaultTemplateException.getType(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
-			name = "Master Page";
+			name = "master page";
 		}
 
 		return new Problem(
 			Response.Status.CONFLICT,
 			StringUtil.replace(
 				layoutPageTemplateEntryDefaultTemplateException.getMessage(),
-				"Layout Page Template Entry", name));
+				"layout page template entry", name));
 	}
 
 }

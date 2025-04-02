@@ -14,34 +14,32 @@ public class AssetVocabularyConstants {
 
 	public static final int VISIBILITY_TYPE_INTERNAL = 1;
 
+	public static final String VISIBILITY_TYPE_INTERNAL_LABEL = "INTERNAL";
+
 	public static final int VISIBILITY_TYPE_PUBLIC = 0;
+
+	public static final String VISIBILITY_TYPE_PUBLIC_LABEL = "PUBLIC";
 
 	public static final int[] VISIBILITY_TYPES = {
 		VISIBILITY_TYPE_INTERNAL, VISIBILITY_TYPE_PUBLIC
 	};
 
-	public static int fromString(String visibilityType) {
-		if (StringUtil.equalsIgnoreCase(visibilityType, "INTERNAL")) {
+	public static int getLabelVisibilityType(String label) {
+		if (StringUtil.equalsIgnoreCase(
+				VISIBILITY_TYPE_INTERNAL_LABEL, label)) {
+
 			return VISIBILITY_TYPE_INTERNAL;
 		}
-		else if (StringUtil.equalsIgnoreCase(visibilityType, "PUBLIC")) {
-			return VISIBILITY_TYPE_PUBLIC;
-		}
 
-		throw new IllegalArgumentException(
-			"Invalid visibility type: " + visibilityType);
+		return VISIBILITY_TYPE_PUBLIC;
 	}
 
-	public static String toString(int visibilityType) {
+	public static String getVisibilityTypeLabel(int visibilityType) {
 		if (visibilityType == VISIBILITY_TYPE_INTERNAL) {
-			return "INTERNAL";
-		}
-		else if (visibilityType == VISIBILITY_TYPE_PUBLIC) {
-			return "PUBLIC";
+			return VISIBILITY_TYPE_INTERNAL_LABEL;
 		}
 
-		throw new IllegalArgumentException(
-			"Invalid visibility type: " + visibilityType);
+		return VISIBILITY_TYPE_PUBLIC_LABEL;
 	}
 
 }

@@ -117,6 +117,10 @@ public class MasterPageDTOConverter
 				ItemExternalReference itemExternalReference =
 					new ItemExternalReference();
 
+				itemExternalReference.setClassName(AssetTag.class::getName);
+				itemExternalReference.setExternalReferenceCode(
+					assetTag::getExternalReferenceCode);
+
 				if (groupId != group.getGroupId()) {
 					Scope scope = new Scope();
 
@@ -133,10 +137,6 @@ public class MasterPageDTOConverter
 
 					itemExternalReference.setScope(() -> scope);
 				}
-
-				itemExternalReference.setClassName(AssetTag.class::getName);
-				itemExternalReference.setExternalReferenceCode(
-					assetTag::getExternalReferenceCode);
 
 				return itemExternalReference;
 			}

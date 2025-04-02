@@ -39,10 +39,12 @@ import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -215,6 +217,22 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 		).put(
 			Field.VISIBILITY_TYPE,
 			String.valueOf(assetVocabulary.getVisibilityType())
+		).put(
+			"classNameIds",
+			() -> {
+				AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+					new AssetVocabularySettingsHelper(
+						assetVocabulary.getSettings());
+
+				long[] classNameIds =
+					assetVocabularySettingsHelper.getClassNameIds();
+
+				if (classNameIds.length == 1) {
+					return String.valueOf(classNameIds[0]);
+				}
+
+				return Arrays.toString(classNameIds);
+			}
 		).put(
 			"externalReferenceCode", assetVocabulary.getExternalReferenceCode()
 		).put(

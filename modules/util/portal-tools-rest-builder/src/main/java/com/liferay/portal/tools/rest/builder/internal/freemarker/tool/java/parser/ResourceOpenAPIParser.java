@@ -490,10 +490,12 @@ public class ResourceOpenAPIParser {
 		}
 
 		Operation batchOperation = _getBatchOperation(
-			batchOperationType, javaMethodSignature, methodName, schemaName);
+			batchOperationType, configYAML, javaMethodSignature, methodName,
+			schemaName);
 
 		String batchPath = _getBatchPath(
-			batchOperationType, javaMethodSignature.getPath(), schemaName);
+			batchOperationType, configYAML, javaMethodSignature.getPath(),
+			schemaName);
 
 		for (JavaMethodSignature existingJavaMethodSignature :
 				javaMethodSignatures) {
@@ -516,7 +518,8 @@ public class ResourceOpenAPIParser {
 				javaMethodSignature.getJavaMethodParameters()) {
 
 			if (_isValidParameter(
-					javaMethodParameter.getParameterName(), schemaName)) {
+					configYAML, javaMethodParameter.getParameterName(),
+					schemaName)) {
 
 				javaMethodParameters.add(javaMethodParameter);
 			}
@@ -602,7 +605,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static Operation _getBatchOperation(
-		BatchOperationType batchOperationType,
+		BatchOperationType batchOperationType, ConfigYAML configYAML,
 		JavaMethodSignature javaMethodSignature, String methodName,
 		String schemaName) {
 
@@ -632,7 +635,8 @@ public class ResourceOpenAPIParser {
 		}
 
 		batchOperation.setParameters(
-			_getBatchParameters(batchOperationType, operation, schemaName));
+			_getBatchParameters(
+				batchOperationType, configYAML, operation, schemaName));
 		batchOperation.setTags(operation.getTags());
 
 		Response response = new Response();
@@ -653,13 +657,15 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static List<Parameter> _getBatchParameters(
-		BatchOperationType batchOperationType, Operation operation,
-		String schemaName) {
+		BatchOperationType batchOperationType, ConfigYAML configYAML,
+		Operation operation, String schemaName) {
 
 		List<Parameter> parameters = new ArrayList<>();
 
 		for (Parameter parameter : operation.getParameters()) {
-			if (_isValidParameter(parameter.getName(), schemaName)) {
+			if (_isValidParameter(
+					configYAML, parameter.getName(), schemaName)) {
+
 				parameters.add(parameter);
 			}
 		}
@@ -675,17 +681,21 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getBatchPath(
-		BatchOperationType batchOperationType, String path, String schemaName) {
+		BatchOperationType batchOperationType, ConfigYAML configYAML,
+		String path, String schemaName) {
 
 		if (batchOperationType == BatchOperationType.EXPORT) {
 			return path + "/export-batch";
 		}
 		else if (batchOperationType == BatchOperationType.IMPORT) {
+			String schemaVarName = StringUtil.lowerCaseFirstLetter(schemaName);
+
+			if (ConfigUtil.isVersionCompatible(configYAML, 8)) {
+				schemaVarName = OpenAPIParserUtil.getSchemaVarName(schemaName);
+			}
+
 			String batchPath = StringUtil.removeSubstrings(
-				path,
-				"/{" + TextFormatter.format(schemaName, TextFormatter.I) +
-					"Id}",
-				"/{id}");
+				path, "/{" + schemaVarName + "Id}", "/{id}");
 
 			return batchPath + "/batch";
 		}
@@ -1413,8 +1423,14 @@ public class ResourceOpenAPIParser {
 		return false;
 	}
 
-	private static boolean _isValidParameter(String name, String schemaName) {
-		String schemaVarName = OpenAPIParserUtil.getSchemaVarName(schemaName);
+	private static boolean _isValidParameter(
+		ConfigYAML configYAML, String name, String schemaName) {
+
+		String schemaVarName = StringUtil.lowerCaseFirstLetter(schemaName);
+
+		if (ConfigUtil.isVersionCompatible(configYAML, 8)) {
+			schemaVarName = OpenAPIParserUtil.getSchemaVarName(schemaName);
+		}
 
 		if (StringUtil.equals(name, "aggregation") ||
 			StringUtil.equals(name, "aggregationTerms") ||

@@ -479,6 +479,16 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	@Override
+	protected MasterPage randomIrrelevantMasterPage() throws Exception {
+		MasterPage masterPage = super.randomIrrelevantMasterPage();
+
+		masterPage.setKeywordItemExternalReferences(
+			new ItemExternalReference[0]);
+
+		return masterPage;
+	}
+
+	@Override
 	protected MasterPage randomMasterPage() throws Exception {
 		MasterPage masterPage = super.randomMasterPage();
 

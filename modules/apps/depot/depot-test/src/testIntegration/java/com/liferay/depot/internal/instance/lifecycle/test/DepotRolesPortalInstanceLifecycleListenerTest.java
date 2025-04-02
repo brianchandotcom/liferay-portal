@@ -79,8 +79,7 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 	}
 
 	private void _assertRole(
-			long companyId, String descriptionKey, String name,
-			String titleKey)
+			long companyId, String descriptionKey, String name, String titleKey)
 		throws PortalException {
 
 		try {

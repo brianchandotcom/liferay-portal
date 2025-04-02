@@ -117,7 +117,6 @@ public class MasterPageDTOConverter
 				ItemExternalReference itemExternalReference =
 					new ItemExternalReference();
 
-				itemExternalReference.setClassName(AssetTag.class::getName);
 				itemExternalReference.setExternalReferenceCode(
 					assetTag::getExternalReferenceCode);
 

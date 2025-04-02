@@ -67,12 +67,15 @@ public class ObjectEntryPerformanceTest {
 	public void setUp() throws Exception {
 		Class<?> clazz = ObjectEntryPerformanceTest.class;
 
-		Properties properties = PropertiesUtil.load(
+		_properties = PropertiesUtil.load(
 			clazz.getResourceAsStream(
 				"dependencies/object-entry-performance.properties"),
 			"UTF-8");
+	}
 
-		_logFilePath = Paths.get(properties.getProperty("log.file"));
+	@Test
+	public void testGetObjectEntries() throws Exception {
+		_logFilePath = Paths.get(_properties.getProperty("log.file"));
 
 		Files.deleteIfExists(_logFilePath);
 
@@ -92,11 +95,8 @@ public class ObjectEntryPerformanceTest {
 
 		_addObjectEntries(
 			GetterUtil.getInteger(
-				properties.getProperty("object.entries.count")));
-	}
+				_properties.getProperty("object.entries.count")));
 
-	@Test
-	public void testGetObjectEntries() throws Exception {
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 60000)) {
 			_objectEntryLocalService.getObjectEntries(
 				0, _customObjectDefinition.getObjectDefinitionId(),
@@ -129,6 +129,7 @@ public class ObjectEntryPerformanceTest {
 	}
 
 	private static Path _logFilePath;
+	private static Properties _properties;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _customObjectDefinition;

@@ -87,6 +87,13 @@ type TServices = {
 	serviceType: string;
 };
 
+type TTicket = {
+	expirationDate: string;
+	extraInfo: string;
+	id: number;
+	key: string;
+};
+
 type TUserGroup = {
 	description?: string;
 	externalReferenceCode?: string;
@@ -378,6 +385,14 @@ export class HeadlessAdminUserApiHelper {
 	async getUserAccountByEmailAddress(emailAddress: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/by-email-address/${emailAddress}`
+		);
+	}
+
+	async getUserAccontPasswordResetTicket(
+		userAccountId: string
+	): Promise<TTicket> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-accounts/${userAccountId}/password-reset-ticket`
 		);
 	}
 

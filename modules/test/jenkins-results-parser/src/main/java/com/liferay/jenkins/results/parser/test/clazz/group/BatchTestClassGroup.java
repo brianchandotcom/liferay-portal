@@ -189,12 +189,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		String batchJobSuffix = "-batch";
 
-		String slaveLabel = getSlaveLabel();
-
-		if (slaveLabel.contains("win")) {
-			batchJobSuffix = "-windows-batch";
-		}
-
 		if (jobNameMatcher.find()) {
 			return JenkinsResultsParserUtil.combine(
 				jobNameMatcher.group("jobBaseName"), batchJobSuffix,

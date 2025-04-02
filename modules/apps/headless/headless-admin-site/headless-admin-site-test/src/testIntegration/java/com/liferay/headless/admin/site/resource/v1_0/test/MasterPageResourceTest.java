@@ -701,7 +701,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			ItemExternalReference itemExternalReference =
 				new ItemExternalReference();
 
-			itemExternalReference.setClassName(AssetTag.class.getName());
 			itemExternalReference.setExternalReferenceCode(
 				assetTag.getExternalReferenceCode());
 

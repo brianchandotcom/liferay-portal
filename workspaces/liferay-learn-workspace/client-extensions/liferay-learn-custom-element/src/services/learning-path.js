@@ -7,7 +7,7 @@ import {endpoints} from '../utils/constants';
 import {request} from '../utils/request';
 
 export async function getLearningPaths(pageSize) {
-	const data = await request({
+	const reponse = await request({
 		params: {
 			fields: 'id,description,level,persona,title,position',
 			pageSize,
@@ -16,5 +16,5 @@ export async function getLearningPaths(pageSize) {
 		url: `${endpoints.learningPaths}scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`,
 	});
 
-	return data.items;
+	return reponse.items;
 }

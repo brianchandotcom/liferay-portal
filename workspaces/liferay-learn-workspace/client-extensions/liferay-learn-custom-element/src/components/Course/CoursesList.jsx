@@ -4,10 +4,12 @@
  */
 
 import '../../index.scss';
+
 import ClayLayout from '@clayui/layout';
-import {getCoursesAndFirstLessons} from '../../services/course';
+import React from 'react';
 import {useEffect, useState} from 'react';
-import React from 'react'; 
+
+import {getCoursesAndFirstLessons} from '../../services/course';
 import SectionCard from '../Common/SectionCard';
 
 const CoursesList = () => {
@@ -15,10 +17,10 @@ const CoursesList = () => {
 
 	useEffect(() => {
 		async () => {
-			const data = await getCoursesAndFirstLessons();
+			const response = await getCoursesAndFirstLessons();
 
 			setCourses(
-				data
+				response
 					.filter(
 						(course) => course.lesson && course.r_module_c_course
 					)
@@ -36,7 +38,7 @@ const CoursesList = () => {
 	return (
 		<ClayLayout.ContainerFluid view>
 			<ClayLayout.Row justify="start">
-				{courses && courses.length > 0 && (
+				{courses && !!courses.length && (
 					<>
 						{courses.map((course, index) => {
 							return (

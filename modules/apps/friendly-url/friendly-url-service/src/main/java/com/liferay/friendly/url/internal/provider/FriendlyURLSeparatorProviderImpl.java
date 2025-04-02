@@ -9,7 +9,6 @@ import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfig
 import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,9 +37,8 @@ public class FriendlyURLSeparatorProviderImpl
 			}
 
 			JSONObject friendlyURLSeparatorsJSONObject =
-				_jsonFactory.createJSONObject(
-					_friendlyURLSeparatorConfigurationManager.
-						getFriendlyURLSeparatorsJSON(companyId));
+				_friendlyURLSeparatorConfigurationManager.
+					getFriendlyURLSeparatorsJSONObject(companyId);
 
 			_portalCache.put(companyId, friendlyURLSeparatorsJSONObject);
 
@@ -74,9 +72,6 @@ public class FriendlyURLSeparatorProviderImpl
 	@Reference
 	private FriendlyURLSeparatorConfigurationManager
 		_friendlyURLSeparatorConfigurationManager;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private MultiVMPool _multiVMPool;

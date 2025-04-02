@@ -341,34 +341,33 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			return new String[0];
 		}
 
-		String[] assetTagNames = new String[itemExternalReferences.length];
-
 		Group group = _groupService.getGroup(groupId);
 
-		for (int i = 0; i < itemExternalReferences.length; i++) {
-			long scopeGroupId = groupId;
+		return transform(
+			itemExternalReferences,
+			itemExternalReference -> {
+				long scopeGroupId = groupId;
 
-			Scope scope = itemExternalReferences[i].getScope();
+				Scope scope = itemExternalReference.getScope();
 
-			if (scope != null) {
-				scopeGroupId = GroupUtil.getGroupId(
-					true, true, group.getCompanyId(),
-					scope.getExternalReferenceCode());
-			}
+				if (scope != null) {
+					scopeGroupId = GroupUtil.getGroupId(
+						true, true, group.getCompanyId(),
+						scope.getExternalReferenceCode());
+				}
 
-			AssetTag assetTag =
-				_assetTagService.fetchAssetTagByExternalReferenceCode(
-					itemExternalReferences[i].getExternalReferenceCode(),
-					scopeGroupId);
+				AssetTag assetTag =
+					_assetTagService.fetchAssetTagByExternalReferenceCode(
+						itemExternalReference.getExternalReferenceCode(),
+						scopeGroupId);
 
-			if (assetTag == null) {
-				throw new UnsupportedOperationException();
-			}
+				if (assetTag == null) {
+					throw new UnsupportedOperationException();
+				}
 
-			assetTagNames[i] = assetTag.getName();
-		}
-
-		return assetTagNames;
+				return assetTag.getName();
+			},
+			String.class);
 	}
 
 	private long _getLayoutPlid(

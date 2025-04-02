@@ -7,52 +7,9 @@ import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import {ClayCheckbox, ClaySelect} from '@clayui/form';
 import React, {useMemo, useState} from 'react';
 
-export enum ActionId {
-	AddCategory = 'ADD_CATEGORY',
-	Delete = 'DELETE',
-	Download = 'DOWNLOAD',
-	Permissions = 'PERMISSIONS',
-	Update = 'UPDATE',
-	View = 'VIEW',
-}
-
-export enum Role {
-	Guest = 'Guest',
-	OrganizationUser = 'Organization User',
-	Owner = 'Owner',
-	PowerUser = 'Power User',
-	SiteMember = 'Site Member',
-	User = 'User',
-}
-
-type ActionLabels = {
-	[key in ActionId]: string;
-};
-
-const ACTION_LABELS: ActionLabels = {
-	[ActionId.AddCategory]: Liferay.Language.get('add-category'),
-	[ActionId.Delete]: Liferay.Language.get('delete'),
-	[ActionId.Download]: Liferay.Language.get('download'),
-	[ActionId.Permissions]: Liferay.Language.get('permissions'),
-	[ActionId.Update]: Liferay.Language.get('update'),
-	[ActionId.View]: Liferay.Language.get('view'),
-};
-
-type RoleLabels = {
-	[key in Role]: string;
-};
-
-const ROLE_LABELS: RoleLabels = {
-	[Role.Guest]: Liferay.Language.get('guest'),
-	[Role.OrganizationUser]: Liferay.Language.get('organization-members'),
-	[Role.PowerUser]: Liferay.Language.get('power-users'),
-	[Role.SiteMember]: Liferay.Language.get('site-members'),
-	[Role.User]: Liferay.Language.get('user'),
-	[Role.Owner]: Liferay.Language.get('owner'),
-};
 interface PermissionItem {
-	actionIds: ActionId[];
-	roleName: Role;
+	actionIds: string[];
+	roleName: string;
 }
 
 /**
@@ -67,7 +24,7 @@ interface PermissionItem {
  */
 const toggleActionIdAtIndex = (
 	permissions: PermissionItem[],
-	actionId: ActionId,
+	actionId: string,
 	index: number
 ) => {
 	const newPermissions = permissions.slice();
@@ -87,14 +44,14 @@ const toggleActionIdAtIndex = (
  * disabled. Called when selecting from the 'Viewable By' dropdown.
  *
  * @param permissions
- * @param roles
+ * @param roleNames
  * @param actionIdsToEnable
  * @returns PermissionItem[]
  */
 const enableActionIdsForRoles = (
 	permissions: PermissionItem[],
-	roles: Role[],
-	actionIdsToEnable: ActionId[]
+	roleNamesToEnable: string[],
+	actionIdsToEnable: string[]
 ) => {
 	return permissions.map(({actionIds, roleName}) => {
 		const actionIdsNotEnabled = actionIdsToEnable.filter(
@@ -102,7 +59,7 @@ const enableActionIdsForRoles = (
 		);
 
 		return {
-			actionIds: roles.includes(roleName)
+			actionIds: roleNamesToEnable.includes(roleName)
 				? [...actionIds, ...actionIdsNotEnabled]
 				: actionIds.filter((item) => !actionIdsToEnable.includes(item)),
 			roleName,
@@ -113,6 +70,19 @@ const enableActionIdsForRoles = (
 function PermissionsTable({
 
 	/*
+	 * Actions to be listed as the row/column entries.
+	 */
+	actions = [
+		{
+			id: 'DELETE',
+			label: Liferay.Language.get('delete'),
+		},
+		{id: 'PERMISSIONS', label: Liferay.Language.get('permissions')},
+		{id: 'UPDATE', label: Liferay.Language.get('update')},
+		{id: 'VIEW', label: Liferay.Language.get('view')},
+	],
+
+	/*
 	 * Classname to apply extra styles to the table.
 	 */
 	className,
@@ -120,29 +90,29 @@ function PermissionsTable({
 	/*
 	 * Default group role that is between Guest and Owner, featured
 	 * in the Viewable By options and should be included as one of the roles
-	 * in defaultPermissions (example: organization member, power user,
-	 * site member).
+	 * in "roles" (example: Organization Member, Power User,
+	 * Site Member).
 	 */
-	defaultGroupRole = Role.SiteMember,
+	defaultGroupRole = 'Site Member',
 
 	/*
 	 * Default state for permissions.
 	 */
 	defaultPermissions = [
 		{
-			actionIds: [ActionId.View],
-			roleName: Role.Guest,
+			actionIds: ['VIEW'],
+			roleName: 'Guest',
 		},
 		{
-			actionIds: [ActionId.View],
-			roleName: Role.SiteMember,
+			actionIds: ['VIEW'],
+			roleName: 'Site Member',
 		},
 	],
 
 	/*
 	 * Checkboxes to be disabled for the guest role.
 	 */
-	guestUnsupportedActions = [ActionId.Update],
+	guestUnsupportedActionIds = ['UPDATE'],
 
 	/*
 	 * Callback for when permissions gets changed.
@@ -150,54 +120,68 @@ function PermissionsTable({
 	onChange = () => {},
 
 	/*
-	 * Actions to be listed as the row/column entries.
+	 * Roles to be listed as the row/column entries.
 	 */
-	supportedActions = [
-		ActionId.Delete,
-		ActionId.Permissions,
-		ActionId.Update,
-		ActionId.View,
+	roles = [
+		{id: 'Guest', label: Liferay.Language.get('guest')},
+		{
+			id: 'Site Member',
+			label: Liferay.Language.get('site-member'),
+		},
 	],
 	...otherProps
 }: {
+	actions: {id: string; label: string}[];
 	className: string;
-	defaultGroupRole: Role;
+	defaultGroupRole: string;
 	defaultPermissions: PermissionItem[];
-	guestUnsupportedActions: ActionId[];
+	guestUnsupportedActionIds: string[];
 	onChange: Function;
-	supportedActions: ActionId[];
+	roles: {id: string; label: string}[];
 }) {
+	const initialPermissions = useMemo(
+		() =>
+			roles.map(({id}) => ({
+				actionIds:
+					defaultPermissions.find(({roleName}) => id === roleName)
+						?.actionIds || [],
+				roleName: id,
+			})),
+		[roles, defaultPermissions]
+	);
+	const supportedActionIds: string[] = useMemo(
+		() => actions.map(({id}) => id),
+		[actions]
+	);
+	const supportedRoleNames: string[] = useMemo(
+		() => roles.map(({id}) => id),
+		[roles]
+	);
+
 	const [permissions, setPermissions] =
-		useState<PermissionItem[]>(defaultPermissions);
-	const [viewableBy, setViewableBy] = useState<Role>(
-		defaultPermissions.every(({actionIds}: {actionIds: ActionId[]}) =>
-			actionIds.includes(ActionId.View)
-		) // Guest -> all permissions enabled
-			? Role.Guest
-			: defaultPermissions.every(
-						({actionIds}: {actionIds: ActionId[]}) =>
-							!actionIds.includes(ActionId.View)
+		useState<PermissionItem[]>(initialPermissions);
+	const [viewableBy, setViewableBy] = useState<string>(
+		initialPermissions.every(({actionIds}) => actionIds.includes('VIEW')) // Guest -> all permissions enabled
+			? 'Guest'
+			: initialPermissions.every(
+						({actionIds}) => !actionIds.includes('VIEW')
 				  ) // Owner -> no permissions enabled
-				? Role.Owner
+				? 'Owner'
 				: defaultGroupRole // Group -> group permissions enabled
 	);
 
-	const allRoles: Role[] = useMemo(() => {
-		return defaultPermissions.map(({roleName}) => roleName);
-	}, [defaultPermissions]);
-
 	const viewableByOptions = [
 		{
-			label: `${Liferay.Language.get('anyone')} (${Liferay.Util.sub(Liferay.Language.get('x-role'), ROLE_LABELS[Role.Guest])})`,
-			value: Role.Guest,
+			label: `${Liferay.Language.get('anyone')} (${Liferay.Util.sub(Liferay.Language.get('x-role'), Liferay.Language.get('guest'))})`,
+			value: 'Guest',
 		},
 		{
-			label: ROLE_LABELS[defaultGroupRole],
+			label: roles.find(({id}) => id === defaultGroupRole)?.label,
 			value: defaultGroupRole,
 		},
 		{
-			label: ROLE_LABELS[Role.Owner],
-			value: Role.Owner,
+			label: Liferay.Language.get('Owner'),
+			value: 'Owner',
 		},
 	];
 
@@ -206,46 +190,46 @@ function PermissionsTable({
 		onChange(newPermissions);
 	};
 
-	const _handleChangeAction = (index: number, action: ActionId) => {
+	const _handleChangeAction = (actionId: string, index: number) => {
 		_handleChangePermissions(
-			toggleActionIdAtIndex(permissions, action, index)
+			toggleActionIdAtIndex(permissions, actionId, index)
 		);
 	};
 
 	const _handleChangeViewableBy = (event: any) => {
-		setViewableBy(event.target.value as Role);
+		setViewableBy(event.target.value);
 
-		const actionIdsToUpdate = supportedActions.includes(ActionId.Download)
-			? [ActionId.View, ActionId.Download]
-			: [ActionId.View];
+		const actionIdsToEnable = supportedActionIds.includes('DOWNLOAD')
+			? ['VIEW', 'DOWNLOAD']
+			: ['VIEW'];
 
-		const rolesToEnable =
-			event.target.value === Role.Guest
-				? allRoles
-				: event.target.value === Role.Owner
+		const roleNamesToEnable =
+			event.target.value === 'Guest'
+				? supportedRoleNames
+				: event.target.value === 'Owner'
 					? []
 					: [defaultGroupRole];
 
 		_handleChangePermissions(
 			enableActionIdsForRoles(
 				permissions,
-				rolesToEnable,
-				actionIdsToUpdate
+				roleNamesToEnable,
+				actionIdsToEnable
 			)
 		);
 	};
 
-	const _isActionChecked = (action: ActionId, index: number) => {
-		return permissions[index].actionIds.includes(action);
+	const _isActionChecked = (actionId: string, index: number) => {
+		return permissions[index].actionIds.includes(actionId);
 	};
 
-	const _isActionDisabled = (action: ActionId, role: Role) => {
-		if (action === ActionId.View) {
+	const _isActionDisabled = (actionId: string, roleName: string) => {
+		if (actionId === 'VIEW') {
 			return true;
 		}
 
-		if (role === Role.Guest) {
-			return guestUnsupportedActions.includes(action);
+		if (roleName === 'Guest') {
+			return guestUnsupportedActionIds.includes(actionId);
 		}
 
 		return false;
@@ -255,7 +239,7 @@ function PermissionsTable({
 		<>
 			<p>
 				<label htmlFor="viewableBy">
-					{supportedActions.includes(ActionId.Download)
+					{supportedActionIds.includes('DOWNLOAD')
 						? Liferay.Language.get('viewable-and-downloadable-by')
 						: Liferay.Language.get('viewable-by')}
 				</label>
@@ -286,52 +270,46 @@ function PermissionsTable({
 					items={[
 						{
 							id: 'role',
-							name: Liferay.Language.get('role'),
+							label: Liferay.Language.get('role'),
 						},
-						...supportedActions.map((action: ActionId) => ({
-							id: action,
-							name: ACTION_LABELS[action] || action,
-						})),
+						...actions,
 					]}
 				>
 					{(column) => (
 						<Cell key={`action_header_${column.id}`}>
-							{column.name}
+							{column.label}
 						</Cell>
 					)}
 				</Head>
 
 				<Body>
-					{permissions.map((item: PermissionItem, index) => (
-						<Row key={item.roleName}>
+					{roles.map(({id: roleName, label: roleLabel}, index) => (
+						<Row key={roleName}>
 							<Cell>
 								<Text size={3} weight="semi-bold">
-									{item.roleName}
+									{roleLabel}
 								</Text>
 							</Cell>
 
-							{supportedActions.map((action: ActionId) => (
+							{actions.map(({id: actionId}) => (
 								<Cell
-									key={`${item.roleName.replace(' ', '')}-${action}`}
+									key={`${roleName.replace(' ', '')}-${actionId}`}
 								>
 									<ClayCheckbox
 										aria-label={Liferay.Util.sub(
 											'give-x-permission-to-users-with-the-x-role',
-											[
-												ACTION_LABELS[action],
-												item.roleName,
-											]
+											[actionId, roleName]
 										)}
 										checked={_isActionChecked(
-											action,
+											actionId,
 											index
 										)}
 										disabled={_isActionDisabled(
-											action,
-											item.roleName
+											actionId,
+											roleName
 										)}
 										onChange={() =>
-											_handleChangeAction(index, action)
+											_handleChangeAction(actionId, index)
 										}
 									/>
 								</Cell>

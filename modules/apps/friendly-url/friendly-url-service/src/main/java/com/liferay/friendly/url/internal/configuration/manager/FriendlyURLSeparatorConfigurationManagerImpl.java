@@ -16,8 +16,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -70,7 +68,7 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate() {
 		_portalCache =
 			(PortalCache<Long, JSONObject>)_multiVMPool.getPortalCache(
 				FriendlyURLSeparatorProvider.class.getName());

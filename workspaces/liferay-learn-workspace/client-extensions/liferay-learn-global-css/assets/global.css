@@ -580,6 +580,27 @@ pre[class*='language-'] {
 	}
 }
 
+.learn-article-page-container {
+	position: relative;
+	
+	h1 {
+		color: #282934 !important;
+	}
+		
+	.learn-article-nav-item a{
+		font-weight: 600;
+		line-height: 24px;
+	}
+
+	.learn-article, .learn-recipe-container {
+		& .learn-article-content {
+			& table {
+				word-break: unset !important;
+			}
+		}
+	}
+}
+
 .learn-article-content,
 .learn-article-nav-container .component-html,
 .learn-course-side-nav,
@@ -807,6 +828,11 @@ pre[class*='language-'] {
 
 .learn-article-nav-container {
 	min-width: 21rem;
+
+	> div {
+		display: flex;
+		height: 100%;
+	}
 }
 
 .learn-banner {

@@ -1,10 +1,9 @@
 {
 	"pageElement": {
-		"id": "9c26c401-0591-47ad-fb60-31b0b2104486",
 		"pageElements": [
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\n  \nh1 {\n\tcolor: #282934 !important;\n}\n  \n.learn-article-nav-item a{\n  font-weight: 600;\n  line-height: 24px;\n}\n\n.learn-article, .learn-recipe-container {\n  & .learn-article-content {\n    & table {\n      word-break: unset !important;\n    }\n  }\n}\n\n}",
+					"cssClasses": ["learn-article-page-container"],
 					"customCSSViewports": [
 						{
 							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\nflex-wrap: wrap;\n}",
@@ -28,14 +27,13 @@
 						"widthType": "Fixed"
 					}
 				},
-				"id": "0e780a34-f7eb-e287-ba77-43217e8796b6",
 				"pageElements": [
 					{
 						"definition": {
 							"cssClasses": [
 								"learn-article-nav-container"
 							],
-							"customCSS": ".[$FRAGMENT_CLASS$] > div {\n  display: flex;\n  height: 100%;\n}",
+							"customCSS": ".[$FRAGMENT_CLASS$]  {\n}",
 							"customCSSViewports": [
 								{
 									"customCSS": ".[$FRAGMENT_CLASS$] > div {\n  display: flex;\n  height: 100%;\n  width: 100%;\n  .component-html {\n    width: 100%;\n  }\n}",
@@ -44,8 +42,6 @@
 							],
 							"fragment": {
 								"key": "BASIC_COMPONENT-html"
-							},
-							"fragmentConfig": {
 							},
 							"fragmentFields": [
 								{
@@ -79,7 +75,6 @@
 							],
 							"indexed": true
 						},
-						"id": "79f87ec5-c193-644a-338d-b517885caedf",
 						"type": "Fragment"
 					},
 					{
@@ -96,14 +91,11 @@
 								"widthType": "Fixed"
 							}
 						},
-						"id": "37e5c0df-e4bb-9e32-ccfa-4145f150f47b",
 						"pageElements": [
 							{
 								"definition": {
 									"fragment": {
 										"key": "BASIC_COMPONENT-html"
-									},
-									"fragmentConfig": {
 									},
 									"fragmentFields": [
 										{
@@ -125,7 +117,6 @@
 									},
 									"indexed": true
 								},
-								"id": "c61417b1-3fdb-5204-d3be-b20d6d1b376d",
 								"type": "Fragment"
 							},
 							{
@@ -134,13 +125,8 @@
 										"key": "article-related-recipes",
 										"siteKey": "Guest"
 									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									],
 									"indexed": true
 								},
-								"id": "2ddc3af8-e329-6e03-6f62-8152e5c1cc2f",
 								"type": "Fragment"
 							}
 						],

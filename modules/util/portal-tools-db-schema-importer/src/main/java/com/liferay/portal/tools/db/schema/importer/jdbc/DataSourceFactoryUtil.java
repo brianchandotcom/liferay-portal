@@ -63,10 +63,6 @@ public class DataSourceFactoryUtil {
 	}
 
 	public static boolean isValidSourceDatabase(String jdbcURL) {
-		if (jdbcURL.indexOf("postgresql") > 0) {
-			return false;
-		}
-
 		if (jdbcURL.indexOf("mysql") > 0) {
 			return true;
 		}

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,12 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Noor Najjar
  */
 public class EditVocabularyDisplayContext {
 
-	public EditVocabularyDisplayContext(ThemeDisplay themeDisplay) {
+	public EditVocabularyDisplayContext(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;
 	}
 
@@ -102,9 +108,13 @@ public class EditVocabularyDisplayContext {
 			"siteId", _themeDisplay.getScopeGroupId()
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
+		).put(
+			"vocabularyId",
+			ParamUtil.getLong(_httpServletRequest, "vocabularyId")
 		).build();
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

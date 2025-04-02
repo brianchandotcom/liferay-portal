@@ -7,12 +7,15 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -24,6 +27,8 @@ import com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter.V
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -95,6 +100,49 @@ public class ViewVocabulariesDisplayContext {
 		).build();
 	}
 
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws PortalException {
+
+		String fullLayoutURL = PortalUtil.getLayoutFullURL(
+			LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+				_themeDisplay.getScopeGroupId(), false,
+				"/categorization/edit_vocabulary"),
+			_themeDisplay);
+
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				fullLayoutURL + "?vocabularyId={id}", "pencil", "edit",
+				LanguageUtil.get(_httpServletRequest, "edit"), "get", "update",
+				null),
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						"com_liferay_portlet_configuration_web_portlet_" +
+							"PortletConfigurationPortlet",
+						ActionRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/edit_permissions.jsp"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"modelResource", AssetVocabulary.class.getName()
+				).setParameter(
+					"modelResourceDescription", "{name}"
+				).setParameter(
+					"resourcePrimKey", "{id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"password-policies", "permissions",
+				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
+				null, "modal-permissions"),
+			new FDSActionDropdownItem(
+				null, "times-circle", "delete",
+				LanguageUtil.get(_httpServletRequest, "delete"), null, "delete",
+				null));
+	}
+
 	public List<FDSFilter> getFDSFilters() {
 		return ListUtil.fromArray(
 			new VocabularyAssetTypesSelectionFDSFilter(
@@ -103,16 +151,7 @@ public class ViewVocabulariesDisplayContext {
 
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
-			"addVocabularyURL",
-			PortalUtil.getLayoutFullURL(
-				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-					_themeDisplay.getScopeGroupId(), false,
-					"/categorization/new_vocabulary"),
-				_themeDisplay)
-		).put(
-			"assetTypes", getClassNameIdOptions()
-		).put(
-			"siteId", _themeDisplay.getScopeGroupId()
+			"activeTab", "vocabularies"
 		).put(
 			"tagsURL",
 			PortalUtil.getLayoutFullURL(

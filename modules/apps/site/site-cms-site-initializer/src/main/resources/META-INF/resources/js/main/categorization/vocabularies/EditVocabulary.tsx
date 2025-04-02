@@ -6,10 +6,11 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {useModal} from '@clayui/modal';
 import {ClayVerticalNav} from '@clayui/nav';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import VocabularyService from '../services/VocabularyService';
 import {AssetType} from '../types/AssetType';
@@ -26,52 +27,76 @@ export default function EditVocabulary({
 	assetTypes,
 	backURL,
 	defaultLanguageId,
-	initialVocabulary,
 	locales,
 	siteId,
 	spritemap,
+	vocabularyId,
 }: {
 	assetTypes: AssetType[];
 	backURL: string;
 	defaultLanguageId: string;
-	initialVocabulary: IVocabulary;
 	locales: any[];
 	siteId: number;
 	spritemap: string;
+	vocabularyId: number;
 }) {
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		NAVIGATION_TABS.GENERAL
 	);
-	const [vocabulary, setVocabulary] = useState<IVocabulary>(
-		initialVocabulary
-			? initialVocabulary
-			: {
-					description: '',
-					name: '',
-					name_i18n: {
-						[defaultLanguageId]: '',
-					},
-				}
-	);
 	const [nameInputError, setNameInputError] = useState<string>('');
+	const {observer, onOpenChange, open} = useModal();
+	const [title, setTitle] = useState<string>('');
+	const [vocabulary, setVocabulary] = useState<IVocabulary>({
+		description: '',
+		description_i18n: {
+			[defaultLanguageId]: '',
+		},
+		name: '',
+		name_i18n: {
+			[defaultLanguageId]: '',
+		},
+	});
+
+	const isNew = Number(vocabularyId) === 0;
+
+	useEffect(() => {
+		const fetchData = async () => {
+			if (isNew) {
+				return;
+			}
+			else {
+				try {
+					const fetchedData =
+						await VocabularyService.fetchVocabulary(vocabularyId);
+
+					setTitle(fetchedData.name);
+					setVocabulary(fetchedData);
+				}
+				catch (error) {
+					console.error(error);
+					navigate(backURL);
+				}
+			}
+		};
+
+		fetchData();
+	}, [backURL, isNew, vocabularyId]);
 
 	const _handleValidateInputs = () => {
-		if (nameInputError === '') {
-			return true;
-		}
-
-		if (vocabulary.name === '') {
+		if (nameInputError || vocabulary.name === '') {
 			setNameInputError(
 				sub(
 					Liferay.Language.get('the-x-field-is-required'),
 					Liferay.Language.get('name')
 				)
 			);
+
+			setActiveVerticalNavKey('general');
+
+			return false;
 		}
 
-		setActiveVerticalNavKey(NAVIGATION_TABS.GENERAL);
-
-		return false;
+		return true;
 	};
 
 	const _handleSave = async () => {
@@ -80,17 +105,33 @@ export default function EditVocabulary({
 				return;
 			}
 
-			await VocabularyService.createVocabulary(siteId, vocabulary);
+			if (isNew) {
+				await VocabularyService.createVocabulary(siteId, vocabulary);
+			}
+			else {
+				await VocabularyService.updateVocabulary(siteId, vocabulary);
+			}
 
 			await navigate(backURL);
 
-			Liferay.Util.openToast({
-				message: Liferay.Util.sub(
-					Liferay.Language.get('x-was-published-successfully'),
-					vocabulary.name
-				),
-				type: 'success',
-			});
+			if (isNew) {
+				Liferay.Util.openToast({
+					message: Liferay.Util.sub(
+						Liferay.Language.get('x-was-published-successfully'),
+						vocabulary.name
+					),
+					type: 'success',
+				});
+			}
+			else {
+				Liferay.Util.openToast({
+					message: Liferay.Util.sub(
+						Liferay.Language.get('x-was-updated-successfully'),
+						vocabulary.name
+					),
+					type: 'success',
+				});
+			}
 		}
 		catch (error) {
 			Liferay.Util.openToast({
@@ -123,11 +164,8 @@ export default function EditVocabulary({
 
 						<ManagementToolbar.Item className="nav-item-expand">
 							<h2 className="font-weight-semi-bold m-0 text-5">
-								{vocabulary
-									? sub(
-											Liferay.Language.get('edit-x'),
-											vocabulary.name
-										)
+								{title
+									? sub(Liferay.Language.get('edit-x'), title)
 									: Liferay.Language.get('new-vocabulary')}
 							</h2>
 						</ManagementToolbar.Item>

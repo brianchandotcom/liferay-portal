@@ -13,7 +13,6 @@ import ClayForm, {
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {selectedLanguageIdAtom} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -51,12 +50,16 @@ export default function EditGeneralInfo({
 	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
 	const [toggled, setToggle] = useState<boolean>(true);
 
+	const getLanguageLabel = (languageId: string) => {
+		return languageId.replace('_', '-');
+	};
+
 	const onChangeDescription = (newDescription: string) => {
 		onChangeVocabulary(() => ({
 			...vocabulary,
 			description_i18n: {
 				...vocabulary.description_i18n,
-				[languageId]: newDescription,
+				[getLanguageLabel(languageId)]: newDescription,
 			},
 		}));
 	};
@@ -78,7 +81,7 @@ export default function EditGeneralInfo({
 			...vocabulary,
 			name_i18n: {
 				...vocabulary.name_i18n,
-				[languageId]: newName,
+				[getLanguageLabel(languageId)]: newName,
 			},
 		}));
 	};
@@ -125,7 +128,11 @@ export default function EditGeneralInfo({
 						onChange={({target: {value}}) => onChangeName(value)}
 						required
 						type="text"
-						value={vocabulary.name_i18n[languageId] || ''}
+						value={
+							vocabulary.name_i18n[
+								getLanguageLabel(languageId)
+							] || ''
+						}
 					/>
 
 					{nameInputError && (
@@ -146,7 +153,9 @@ export default function EditGeneralInfo({
 						type="text"
 						value={
 							vocabulary.description_i18n
-								? vocabulary.description_i18n[languageId] || ''
+								? vocabulary.description_i18n[
+										getLanguageLabel(languageId)
+									] || ''
 								: ''
 						}
 					/>

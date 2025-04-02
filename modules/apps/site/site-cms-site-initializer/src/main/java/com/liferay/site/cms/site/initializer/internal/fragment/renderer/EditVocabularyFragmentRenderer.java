@@ -58,7 +58,8 @@ public class EditVocabularyFragmentRenderer
 
 			httpServletRequest.setAttribute(
 				EditVocabularyDisplayContext.class.getName(),
-				new EditVocabularyDisplayContext(themeDisplay));
+				new EditVocabularyDisplayContext(
+					httpServletRequest, themeDisplay));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

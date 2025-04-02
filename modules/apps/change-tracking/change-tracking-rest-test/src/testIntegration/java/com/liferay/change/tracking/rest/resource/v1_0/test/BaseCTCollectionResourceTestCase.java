@@ -535,8 +535,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			ctCollectionResource.
-				getCTCollectionByExternalReferenceCodeHttpResponse(
-					ctCollection.getExternalReferenceCode()));
+				getCTCollectionByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected CTCollection

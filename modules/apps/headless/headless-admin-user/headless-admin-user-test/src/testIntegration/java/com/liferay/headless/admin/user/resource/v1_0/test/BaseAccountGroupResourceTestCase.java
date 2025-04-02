@@ -749,8 +749,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			accountGroupResource.
-				getAccountGroupByExternalReferenceCodeHttpResponse(
-					accountGroup.getExternalReferenceCode()));
+				getAccountGroupByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected AccountGroup

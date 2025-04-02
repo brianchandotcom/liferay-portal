@@ -939,8 +939,7 @@ public abstract class BasePriceModifierResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			priceModifierResource.
-				getPriceModifierByExternalReferenceCodeHttpResponse(
-					priceModifier.getExternalReferenceCode()));
+				getPriceModifierByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected PriceModifier

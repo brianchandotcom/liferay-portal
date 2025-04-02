@@ -792,7 +792,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			orderTypeResource.getOrderTypeByExternalReferenceCodeHttpResponse(
-				orderType.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected OrderType

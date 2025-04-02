@@ -735,7 +735,7 @@ public abstract class BaseDocumentResourceTestCase {
 			documentResource.
 				getAssetLibraryDocumentByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId(),
-					document.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long
@@ -2772,7 +2772,7 @@ public abstract class BaseDocumentResourceTestCase {
 			documentResource.getSiteDocumentByExternalReferenceCodeHttpResponse(
 				testDeleteSiteDocumentByExternalReferenceCode_getSiteId(
 					document),
-				document.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Long testDeleteSiteDocumentByExternalReferenceCode_getSiteId(

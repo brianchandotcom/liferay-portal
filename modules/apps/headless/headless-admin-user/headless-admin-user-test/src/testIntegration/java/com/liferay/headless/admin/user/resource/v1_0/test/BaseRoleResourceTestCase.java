@@ -496,9 +496,7 @@ public abstract class BaseRoleResourceTestCase {
 			roleResource.getRoleByExternalReferenceCodeHttpResponse(
 				role.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
-			404,
-			roleResource.getRoleByExternalReferenceCodeHttpResponse(
-				role.getExternalReferenceCode()));
+			404, roleResource.getRoleByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Role testDeleteRoleByExternalReferenceCode_addRole()

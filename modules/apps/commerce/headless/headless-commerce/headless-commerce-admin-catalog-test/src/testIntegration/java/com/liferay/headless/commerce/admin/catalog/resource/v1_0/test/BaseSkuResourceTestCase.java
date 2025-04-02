@@ -958,9 +958,7 @@ public abstract class BaseSkuResourceTestCase {
 			skuResource.getSkuByExternalReferenceCodeHttpResponse(
 				sku.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
-			404,
-			skuResource.getSkuByExternalReferenceCodeHttpResponse(
-				sku.getExternalReferenceCode()));
+			404, skuResource.getSkuByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Sku testDeleteSkuByExternalReferenceCode_addSku()

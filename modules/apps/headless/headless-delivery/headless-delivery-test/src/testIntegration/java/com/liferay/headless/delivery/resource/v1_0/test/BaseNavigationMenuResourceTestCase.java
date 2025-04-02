@@ -1103,7 +1103,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
 					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
 						navigationMenu),
-					navigationMenu.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

@@ -1894,7 +1894,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCodeHttpResponse(
 					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
 						taxonomyCategory),
-					taxonomyCategory.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

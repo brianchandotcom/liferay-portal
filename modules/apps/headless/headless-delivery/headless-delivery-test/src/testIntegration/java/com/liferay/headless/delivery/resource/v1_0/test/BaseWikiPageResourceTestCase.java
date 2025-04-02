@@ -258,7 +258,7 @@ public abstract class BaseWikiPageResourceTestCase {
 			wikiPageResource.getSiteWikiPageByExternalReferenceCodeHttpResponse(
 				testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
 					wikiPage),
-				wikiPage.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Long testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(

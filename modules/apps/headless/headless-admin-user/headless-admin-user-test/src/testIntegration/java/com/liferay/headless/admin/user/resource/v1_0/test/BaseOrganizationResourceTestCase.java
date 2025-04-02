@@ -697,16 +697,13 @@ public abstract class BaseOrganizationResourceTestCase {
 			404,
 			organizationResource.
 				getAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-						organization),
+					organization.getExternalReferenceCode(),
 					organization.getId()));
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.
 				getAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
-						organization),
-					"-"));
+					"-", "-"));
 	}
 
 	protected String
@@ -2030,8 +2027,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.
-				getOrganizationByExternalReferenceCodeHttpResponse(
-					organization.getExternalReferenceCode()));
+				getOrganizationByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Organization

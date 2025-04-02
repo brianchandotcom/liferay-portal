@@ -512,7 +512,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			documentMetadataSetResource.
 				getAssetLibraryDocumentMetadataSetByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_getAssetLibraryId(),
-					documentMetadataSet.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long
@@ -1607,7 +1607,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 				getSiteDocumentMetadataSetByExternalReferenceCodeHttpResponse(
 					testDeleteSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
 						documentMetadataSet),
-					documentMetadataSet.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

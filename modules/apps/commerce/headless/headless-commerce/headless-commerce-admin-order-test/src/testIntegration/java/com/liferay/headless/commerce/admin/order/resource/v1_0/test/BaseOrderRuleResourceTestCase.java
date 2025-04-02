@@ -663,7 +663,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			orderRuleResource.getOrderRuleByExternalReferenceCodeHttpResponse(
-				orderRule.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected OrderRule

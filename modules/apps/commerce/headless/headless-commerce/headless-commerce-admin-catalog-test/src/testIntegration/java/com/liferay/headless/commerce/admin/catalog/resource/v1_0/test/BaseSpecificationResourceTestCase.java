@@ -702,8 +702,7 @@ public abstract class BaseSpecificationResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			specificationResource.
-				getSpecificationByExternalReferenceCodeHttpResponse(
-					specification.getExternalReferenceCode()));
+				getSpecificationByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Specification

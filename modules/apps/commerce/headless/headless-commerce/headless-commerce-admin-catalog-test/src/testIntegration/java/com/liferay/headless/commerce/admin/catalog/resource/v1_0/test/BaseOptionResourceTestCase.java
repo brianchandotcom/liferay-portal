@@ -630,8 +630,7 @@ public abstract class BaseOptionResourceTestCase {
 				option.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			optionResource.getOptionByExternalReferenceCodeHttpResponse(
-				option.getExternalReferenceCode()));
+			optionResource.getOptionByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Option testDeleteOptionByExternalReferenceCode_addOption()

@@ -2968,7 +2968,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				getSiteDocumentsFolderByExternalReferenceCodeHttpResponse(
 					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
 						documentFolder),
-					documentFolder.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

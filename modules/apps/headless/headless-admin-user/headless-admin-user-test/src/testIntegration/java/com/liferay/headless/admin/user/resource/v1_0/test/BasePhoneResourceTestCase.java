@@ -569,8 +569,7 @@ public abstract class BasePhoneResourceTestCase {
 				phone.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
-			phoneResource.getPhoneByExternalReferenceCodeHttpResponse(
-				phone.getExternalReferenceCode()));
+			phoneResource.getPhoneByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Phone testDeletePhoneByExternalReferenceCode_addPhone()

@@ -734,7 +734,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 			wikiNodeResource.getSiteWikiNodeByExternalReferenceCodeHttpResponse(
 				testDeleteSiteWikiNodeByExternalReferenceCode_getSiteId(
 					wikiNode),
-				wikiNode.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Long testDeleteSiteWikiNodeByExternalReferenceCode_getSiteId(

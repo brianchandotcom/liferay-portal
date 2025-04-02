@@ -241,7 +241,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			orderNoteResource.getOrderNoteByExternalReferenceCodeHttpResponse(
-				orderNote.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected OrderNote

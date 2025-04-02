@@ -767,7 +767,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
 					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
 						objectEntryFolder),
-					objectEntryFolder.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected String

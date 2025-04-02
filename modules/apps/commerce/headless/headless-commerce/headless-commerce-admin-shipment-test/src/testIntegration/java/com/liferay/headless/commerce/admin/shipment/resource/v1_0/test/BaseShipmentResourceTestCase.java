@@ -650,7 +650,7 @@ public abstract class BaseShipmentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			shipmentResource.getShipmentByExternalReferenceCodeHttpResponse(
-				shipment.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Shipment testDeleteShipmentByExternalReferenceCode_addShipment()

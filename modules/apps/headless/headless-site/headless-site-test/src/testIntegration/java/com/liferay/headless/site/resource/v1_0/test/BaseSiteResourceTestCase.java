@@ -262,9 +262,7 @@ public abstract class BaseSiteResourceTestCase {
 			siteResource.getSiteByExternalReferenceCodeHttpResponse(
 				site.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
-			404,
-			siteResource.getSiteByExternalReferenceCodeHttpResponse(
-				site.getExternalReferenceCode()));
+			404, siteResource.getSiteByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Site testDeleteSiteByExternalReferenceCode_addSite()

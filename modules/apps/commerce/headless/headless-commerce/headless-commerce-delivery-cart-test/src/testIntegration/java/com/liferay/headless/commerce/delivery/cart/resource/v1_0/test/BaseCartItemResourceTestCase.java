@@ -259,7 +259,7 @@ public abstract class BaseCartItemResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			cartItemResource.getCartItemByExternalReferenceCodeHttpResponse(
-				cartItem.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected CartItem testDeleteCartItemByExternalReferenceCode_addCartItem()

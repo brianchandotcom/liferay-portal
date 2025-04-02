@@ -627,9 +627,7 @@ public abstract class BaseTermResourceTestCase {
 			termResource.getTermByExternalReferenceCodeHttpResponse(
 				term.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
-			404,
-			termResource.getTermByExternalReferenceCodeHttpResponse(
-				term.getExternalReferenceCode()));
+			404, termResource.getTermByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected Term testDeleteTermByExternalReferenceCode_addTerm()

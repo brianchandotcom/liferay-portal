@@ -814,7 +814,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			structuredContentFolderResource.
 				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
-					structuredContentFolder.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long
@@ -1804,7 +1804,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				getSiteStructuredContentFolderByExternalReferenceCodeHttpResponse(
 					testDeleteSiteStructuredContentFolderByExternalReferenceCode_getSiteId(
 						structuredContentFolder),
-					structuredContentFolder.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

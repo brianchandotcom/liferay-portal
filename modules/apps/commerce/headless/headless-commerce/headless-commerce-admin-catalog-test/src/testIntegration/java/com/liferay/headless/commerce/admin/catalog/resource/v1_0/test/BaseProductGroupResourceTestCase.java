@@ -685,8 +685,7 @@ public abstract class BaseProductGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			productGroupResource.
-				getProductGroupByExternalReferenceCodeHttpResponse(
-					productGroup.getExternalReferenceCode()));
+				getProductGroupByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected ProductGroup

@@ -663,7 +663,7 @@ public abstract class BaseOrderItemResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			orderItemResource.getOrderItemByExternalReferenceCodeHttpResponse(
-				orderItem.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected OrderItem

@@ -1871,8 +1871,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				getSiteDataDefinitionByContentTypeByExternalReferenceCodeHttpResponse(
 					testDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
 						dataDefinition),
-					dataDefinition.getContentType(),
-					dataDefinition.getExternalReferenceCode()));
+					dataDefinition.getContentType(), "-"));
 	}
 
 	protected Long

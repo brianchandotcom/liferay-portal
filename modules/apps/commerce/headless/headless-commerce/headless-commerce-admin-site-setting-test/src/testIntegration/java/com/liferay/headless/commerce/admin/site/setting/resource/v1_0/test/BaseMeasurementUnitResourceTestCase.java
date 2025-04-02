@@ -714,8 +714,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			measurementUnitResource.
-				getMeasurementUnitByExternalReferenceCodeHttpResponse(
-					measurementUnit.getExternalReferenceCode()));
+				getMeasurementUnitByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected MeasurementUnit

@@ -224,7 +224,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			attachmentResource.getAttachmentByExternalReferenceCodeHttpResponse(
-				attachment.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Attachment

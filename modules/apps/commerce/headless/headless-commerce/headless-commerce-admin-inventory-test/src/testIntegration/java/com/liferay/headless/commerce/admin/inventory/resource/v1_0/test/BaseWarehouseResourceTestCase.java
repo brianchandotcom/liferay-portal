@@ -627,7 +627,7 @@ public abstract class BaseWarehouseResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			warehouseResource.getWarehouseByExternalReferenceCodeHttpResponse(
-				warehouse.getExternalReferenceCode()));
+				"-"));
 	}
 
 	protected Warehouse

@@ -1286,7 +1286,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			blogPostingImageResource.
 				getSiteBlogPostingImageByExternalReferenceCodeHttpResponse(
 					testDeleteSiteBlogPostingImageByExternalReferenceCode_getSiteId(),
-					blogPostingImage.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected Long

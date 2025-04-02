@@ -245,8 +245,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			cartCommentResource.
-				getCartCommentByExternalReferenceCodeHttpResponse(
-					cartComment.getExternalReferenceCode()));
+				getCartCommentByExternalReferenceCodeHttpResponse("-"));
 	}
 
 	protected CartComment

@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
@@ -157,6 +156,14 @@ public class TaxonomyVocabularyResourceImpl
 				assetVocabulary.getGroupId());
 		}
 
+		boolean multivalued = false;
+
+		if ((taxonomyVocabulary.getMultiValued() == null) ||
+			taxonomyVocabulary.getMultiValued()) {
+
+			multivalued = true;
+		}
+
 		assetVocabulary = _assetVocabularyService.updateVocabulary(
 			assetVocabulary.getVocabularyId(), null,
 			LocalizedMapUtil.patchLocalizedMap(
@@ -169,7 +176,7 @@ public class TaxonomyVocabularyResourceImpl
 				contextAcceptLanguage.getPreferredLocale(),
 				taxonomyVocabulary.getDescription(),
 				taxonomyVocabulary.getDescription_i18n()),
-			_getSettings(assetTypes, assetVocabulary.getGroupId()),
+			_getSettings(assetTypes, assetVocabulary.getGroupId(), multivalued),
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()
@@ -482,11 +489,20 @@ public class TaxonomyVocabularyResourceImpl
 			true, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
 			new HashSet<>(descriptionMap.keySet()));
 
+		boolean multivalued = false;
+
+		if ((taxonomyVocabulary.getMultiValued() == null) ||
+			taxonomyVocabulary.getMultiValued()) {
+
+			multivalued = true;
+		}
+
 		return _assetVocabularyService.addVocabulary(
 			externalReferenceCode, siteId,
 			titleMap.get(LocaleUtil.getSiteDefault()), null, titleMap,
 			descriptionMap,
-			_getSettings(taxonomyVocabulary.getAssetTypes(), siteId),
+			_getSettings(
+				taxonomyVocabulary.getAssetTypes(), siteId, multivalued),
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			ServiceContextBuilder.create(
 				siteId, contextHttpServletRequest,
@@ -535,9 +551,8 @@ public class TaxonomyVocabularyResourceImpl
 			new AssetVocabularySettingsHelper(
 				_getSettings(
 					taxonomyVocabulary.getAssetTypes(),
-					GroupConstants.DEFAULT_LIVE_GROUP_ID));
-
-		assetVocabularySettingsHelper.setMultiValued(allowMultipleCategories);
+					GroupConstants.DEFAULT_LIVE_GROUP_ID,
+					allowMultipleCategories));
 
 		AssetVocabulary assetVocabulary = _assetVocabularyService.addVocabulary(
 			externalReferenceCode, GroupConstants.DEFAULT_LIVE_GROUP_ID,
@@ -775,7 +790,8 @@ public class TaxonomyVocabularyResourceImpl
 			assetRendererFactory.getClassName());
 	}
 
-	private String _getSettings(AssetType[] assetTypes, long groupId)
+	private String _getSettings(
+			AssetType[] assetTypes, long groupId, boolean multiValued)
 		throws Exception {
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
@@ -805,7 +821,7 @@ public class TaxonomyVocabularyResourceImpl
 		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requiredClassNameIds);
 
-		assetVocabularySettingsHelper.setMultiValued(true);
+		assetVocabularySettingsHelper.setMultiValued(multiValued);
 
 		return assetVocabularySettingsHelper.toString();
 	}
@@ -951,11 +967,22 @@ public class TaxonomyVocabularyResourceImpl
 			false, LocaleUtil.getSiteDefault(), "Taxonomy vocabulary", titleMap,
 			new HashSet<>(descriptionMap.keySet()));
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-17564") &&
+			ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
+
+			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+				taxonomyVocabulary.getId(),
+				transformToLongArray(
+					Arrays.asList(taxonomyVocabulary.getAssetLibraries()),
+					AssetLibrary::getId));
+		}
+
 		return _assetVocabularyService.updateVocabulary(
 			assetVocabulary.getVocabularyId(), null, titleMap, descriptionMap,
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),
-				assetVocabulary.getGroupId()),
+				assetVocabulary.getGroupId(),
+				taxonomyVocabulary.getMultiValued()),
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()

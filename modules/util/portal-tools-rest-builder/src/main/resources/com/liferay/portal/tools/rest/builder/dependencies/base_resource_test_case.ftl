@@ -4085,17 +4085,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 			,
 		</#if>
 
-		<#if pathParameter && freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
+		<#if pathParameter && (freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) || stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode"))>
 			<#if defaultParameter>
 				<@getDefaultParameter javaMethodParameter = javaMethodParameter />
+			<#elseif stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
+				${varName}.getExternalReferenceCode()
+			<#elseif properties?keys?seq_contains("id")>
+				${varName}.getId()
 			<#else>
-				${varName}.
-
-				<#if properties?keys?seq_contains("id")>
-					getId()
-				<#else>
-					get${schemaName}Id()
-				</#if>
+				${varName}.get${schemaName}Id()
 			</#if>
 		<#elseif pathParameter && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 			<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>

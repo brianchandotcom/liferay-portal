@@ -104,14 +104,14 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			_renderLiferayThemeDisplay(definitionSB, httpServletRequest);
 			_renderLiferayUtil(definitionSB);
 
-			_renderMethod(
+			_renderValue(
 				definitionSB, "authToken",
 				_authToken.getToken(httpServletRequest));
 
 			String currentURL = _portal.getCurrentURL(httpServletRequest);
 
-			_renderMethod(definitionSB, "currentURL", currentURL);
-			_renderMethod(
+			_renderValue(definitionSB, "currentURL", currentURL);
+			_renderValue(
 				definitionSB, "currentURLEncoded",
 				HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)));
 		}
@@ -273,9 +273,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 		sb.append("Data: {");
 
-		_renderMethod(sb, "ICONS_INLINE_SVG", true);
-		_renderMethod(sb, "NAV_SELECTOR", "#navigation");
-		_renderMethod(sb, "NAV_SELECTOR_MOBILE", "#navigationCollapse");
+		_renderValue(sb, "ICONS_INLINE_SVG", true);
+		_renderValue(sb, "NAV_SELECTOR", "#navigation");
+		_renderValue(sb, "NAV_SELECTOR_MOBILE", "#navigationCollapse");
 
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
@@ -413,15 +413,15 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	private void _renderLiferayPortletKeys(StringBuilder sb) {
 		sb.append("PortletKeys: {");
 
-		_renderMethod(sb, "DOCUMENT_LIBRARY", PortletKeys.DOCUMENT_LIBRARY);
-		_renderMethod(
+		_renderValue(sb, "DOCUMENT_LIBRARY", PortletKeys.DOCUMENT_LIBRARY);
+		_renderValue(
 			sb, "DYNAMIC_DATA_MAPPING",
 			"com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet");
-		_renderMethod(
+		_renderValue(
 			sb, "INSTANCE_SETTINGS",
 			"com_liferay_configuration_admin_web_portlet_" +
 				"InstanceSettingsPortlet");
-		_renderMethod(sb, "ITEM_SELECTOR", PortletKeys.ITEM_SELECTOR);
+		_renderValue(sb, "ITEM_SELECTOR", PortletKeys.ITEM_SELECTOR);
 
 		sb.append("},");
 	}
@@ -435,14 +435,14 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_renderMethod(
+		_renderValue(
 			sb, "JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT",
 			_prefsProps.getInteger(
 				themeDisplay.getCompanyId(),
 				PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT,
 				PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT));
 
-		_renderMethod(
+		_renderValue(
 			sb, "UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE",
 			_uploadServletRequestConfigurationProvider.getMaxSize());
 
@@ -652,6 +652,27 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("', '");
 		sb.append(symbol);
 		sb.append("'),");
+	}
+
+	private void _renderValue(
+		StringBuilder sb, String fieldName, Object value) {
+
+		sb.append(fieldName);
+		sb.append(StringPool.COLON);
+
+		if (value == null) {
+			sb.append("null");
+		}
+		else if (value instanceof String) {
+			sb.append(StringPool.APOSTROPHE);
+			sb.append((String)value);
+			sb.append(StringPool.APOSTROPHE);
+		}
+		else {
+			sb.append(value.toString());
+		}
+
+		sb.append(StringPool.COMMA);
 	}
 
 	private static final String _LANGUAGE_PROLOG;

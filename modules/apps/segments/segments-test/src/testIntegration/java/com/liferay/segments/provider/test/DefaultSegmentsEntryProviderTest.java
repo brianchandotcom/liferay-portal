@@ -83,12 +83,13 @@ public class DefaultSegmentsEntryProviderTest {
 		_user2.setModifiedDate(_getDateBefore(_user1));
 
 		Criteria criteria = new Criteria();
-		String filterString = String.format(
-			"dateModified eq %s",
-			ISO8601Utils.format(_getDateModifiedTruncated(_user1)));
 
 		_userOrganizationSegmentsCriteriaContributor.contribute(
-			criteria, filterString, Criteria.Conjunction.AND);
+			criteria,
+			String.format(
+				"dateModified eq %s",
+				ISO8601Utils.format(_user1.getModifiedDate())),
+			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
@@ -946,17 +947,18 @@ public class DefaultSegmentsEntryProviderTest {
 	public void testGetSegmentsWithDateModified() throws Exception {
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
 
-		Criteria criteria = new Criteria();
-		String filterString = String.format(
-			"dateModified eq %s",
-			ISO8601Utils.format(_getDateModifiedTruncated(_user1)));
-
 		_user2 = UserTestUtil.addUser(_group.getGroupId());
 
 		_user2.setModifiedDate(_getDateBefore(_user1));
 
+		Criteria criteria = new Criteria();
+
 		_userSegmentsCriteriaContributor.contribute(
-			criteria, filterString, Criteria.Conjunction.AND);
+			criteria,
+			String.format(
+				"dateModified eq %s",
+				ISO8601Utils.format(_user1.getModifiedDate())),
+			Criteria.Conjunction.AND);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
@@ -981,23 +983,6 @@ public class DefaultSegmentsEntryProviderTest {
 		calendar.setTime(dateModified);
 
 		calendar.add(Calendar.DAY_OF_MONTH, -1);
-
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		calendar.set(Calendar.SECOND, 0);
-
-		return calendar.getTime();
-	}
-
-	private Date _getDateModifiedTruncated(User user) {
-		Date dateModified = user.getModifiedDate();
-
-		TimeZone timeZone = TimeZone.getDefault();
-
-		Calendar calendar = Calendar.getInstance(timeZone, LocaleUtil.US);
-
-		calendar.setTime(dateModified);
 
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);

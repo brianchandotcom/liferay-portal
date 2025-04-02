@@ -8,6 +8,7 @@ package com.liferay.document.library.opener.service.impl;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.service.base.DLOpenerFileEntryReferenceLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -23,6 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.document.library.opener.model.DLOpenerFileEntryReference",
 	service = AopService.class
 )
+@CTAware
 public class DLOpenerFileEntryReferenceLocalServiceImpl
 	extends DLOpenerFileEntryReferenceLocalServiceBaseImpl {
 

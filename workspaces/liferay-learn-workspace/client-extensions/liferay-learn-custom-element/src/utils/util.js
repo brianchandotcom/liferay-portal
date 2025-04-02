@@ -4,17 +4,17 @@
  */
 
 export function getPersonas(personaArray) {
-	let persona = '';
+	let personas = '';
 
 	if (personaArray) {
-		persona = personaArray[0].name;
+		personas = personaArray[0].name;
 
 		if (personaArray.length > 1) {
-			persona += ', +' + (personaArray.length - 1);
+			personas += ', +' + (personaArray.length - 1);
 		}
 	}
 
-	return persona;
+	return personas;
 }
 
 export function getShortText(text, characterLimit = 150) {

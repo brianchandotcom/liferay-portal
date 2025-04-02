@@ -83,8 +83,13 @@ public class UserSegmentsCriteriaContributor
 		matcher = _pattern2.matcher(filterString);
 
 		while (matcher.find()) {
+			String date = matcher.group("date");
+
 			newFilterString = StringUtil.replace(
-				newFilterString, matcher.group(), "dateModifiedTruncated");
+				newFilterString, matcher.group(),
+				StringBundler.concat(
+					"dateModified ge ", date, "T00:00:00.000Z and ",
+					"dateModified le ", date, "T23:59:59.999Z"));
 		}
 
 		criteria.addFilter(getType(), newFilterString, conjunction);
@@ -258,7 +263,8 @@ public class UserSegmentsCriteriaContributor
 
 	private static final Pattern _pattern1 = Pattern.compile(
 		"roleIds eq '\\d+'");
-	private static final Pattern _pattern2 = Pattern.compile("dateModified");
+	private static final Pattern _pattern2 = Pattern.compile(
+		"dateModified eq (?<date>\\d{4}-\\d{2}-\\d{2})T.*Z");
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,

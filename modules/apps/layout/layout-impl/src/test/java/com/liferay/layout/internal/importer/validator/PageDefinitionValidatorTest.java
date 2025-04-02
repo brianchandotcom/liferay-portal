@@ -6,6 +6,7 @@
 package com.liferay.layout.internal.importer.validator;
 
 import com.liferay.portal.json.validator.JSONValidatorException;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -277,6 +278,13 @@ public class PageDefinitionValidatorTest {
 
 		PageDefinitionValidator.validatePageDefinition(
 			_read("page_definition_valid_section_complete.json"));
+	}
+
+	@Test
+	@TestInfo("LPD-52471")
+	public void testValidatePageDefinitionValidSettings() throws Exception {
+		PageDefinitionValidator.validatePageDefinition(
+			_read("page_definition_valid_settings.json"));
 	}
 
 	@Rule

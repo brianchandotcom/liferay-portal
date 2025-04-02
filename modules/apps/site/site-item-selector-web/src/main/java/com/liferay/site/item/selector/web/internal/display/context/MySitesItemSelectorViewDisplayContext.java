@@ -55,6 +55,10 @@ public class MySitesItemSelectorViewDisplayContext
 
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
+		if (_groupSearch != null) {
+			return _groupSearch;
+		}
+
 		GroupItemSelectorCriterion groupItemSelectorCriterion =
 			getGroupItemSelectorCriterion();
 
@@ -67,16 +71,16 @@ public class MySitesItemSelectorViewDisplayContext
 				"groupId", String.valueOf(group.getGroupId()));
 		}
 
-		GroupSearch groupSearch = new GroupSearch(_portletRequest, portletURL);
+		_groupSearch = new GroupSearch(_portletRequest, portletURL);
 
 		GroupSearchProvider.setResultsAndTotal(
 			_getClassNames(), groupItemSelectorCriterion.getExcludedGroupIds(),
-			groupSearch, _portletRequest);
+			_groupSearch, _portletRequest);
 
-		if (groupSearch.getStart() == 0) {
+		if (_groupSearch.getStart() == 0) {
 			if (groupItemSelectorCriterion.isIncludeUserPersonalSite()) {
 				_prependGroup(
-					groupSearch,
+					_groupSearch,
 					GroupLocalServiceUtil.getGroup(
 						_themeDisplay.getCompanyId(),
 						GroupConstants.USER_PERSONAL_SITE));
@@ -84,13 +88,13 @@ public class MySitesItemSelectorViewDisplayContext
 
 			if (groupItemSelectorCriterion.isIncludeFormsSite()) {
 				_prependGroup(
-					groupSearch,
+					_groupSearch,
 					GroupLocalServiceUtil.getGroup(
 						_themeDisplay.getCompanyId(), GroupConstants.FORMS));
 			}
 		}
 
-		return groupSearch;
+		return _groupSearch;
 	}
 
 	@Override
@@ -188,6 +192,7 @@ public class MySitesItemSelectorViewDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		MySitesItemSelectorViewDisplayContext.class);
 
+	private GroupSearch _groupSearch;
 	private final PortletRequest _portletRequest;
 	private final ThemeDisplay _themeDisplay;
 

@@ -120,9 +120,13 @@ export class CommerceDNDTablePage {
 	async addDataSetFilter(
 		filterName: string,
 		filterValue: string,
-		exclude: boolean = false
+		exclude: boolean = false,
+		backButton?: boolean
 	) {
 		await this.filterButton.click();
+		if (backButton) {
+			await this.backButton.click();
+		}
 		await this.filterMenuItem(filterName).click();
 		await this.filterValue(filterValue).check();
 
@@ -131,7 +135,5 @@ export class CommerceDNDTablePage {
 		}
 
 		await this.addFilterButton.click();
-		await this.backButton.click();
-		await this.filterButton.click();
 	}
 }

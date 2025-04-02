@@ -53,9 +53,7 @@ public class DBSchemaImporter {
 		if (!DataSourceFactoryUtil.isValidSourceDatabase(
 				commandLine.getOptionValue("source-jdbc-url"))) {
 
-			System.err.println(
-				"Invalid source database. Refer to README.markdown to check " +
-					"available source databases.");
+			System.err.println("Source database must be MySQL.");
 
 			_printHelpAndExit(options);
 		}
@@ -63,8 +61,7 @@ public class DBSchemaImporter {
 		if (!DataSourceFactoryUtil.isValidTargetDatabase(
 				commandLine.getOptionValue("target-jdbc-url"))) {
 
-			System.err.println(
-				"Invalid target database. Only PostgreSQL is available.");
+			System.err.println("Target database must be PostgreSQL.");
 
 			_printHelpAndExit(options);
 		}

@@ -158,9 +158,9 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 
 	private JSONObject _getConfiguredFriendlyURLSeparatorsJSONObject() {
 		try {
-			return _jsonFactory.createJSONObject(
-				_friendlyURLSeparatorConfigurationManager.
-					getFriendlyURLSeparatorsJSON(_themeDisplay.getCompanyId()));
+			return _friendlyURLSeparatorConfigurationManager.
+				getFriendlyURLSeparatorsJSONObject(
+					_themeDisplay.getCompanyId());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

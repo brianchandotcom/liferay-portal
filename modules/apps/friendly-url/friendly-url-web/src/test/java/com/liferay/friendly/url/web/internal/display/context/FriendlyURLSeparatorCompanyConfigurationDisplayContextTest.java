@@ -79,9 +79,9 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 
 		Mockito.when(
 			_friendlyURLSeparatorConfigurationManager.
-				getFriendlyURLSeparatorsJSON(Mockito.anyLong())
+				getFriendlyURLSeparatorsJSONObject(Mockito.anyLong())
 		).thenReturn(
-			StringPool.BLANK
+			_jsonFactory.createJSONObject()
 		);
 
 		_jsonFactory = Mockito.mock(JSONFactory.class);

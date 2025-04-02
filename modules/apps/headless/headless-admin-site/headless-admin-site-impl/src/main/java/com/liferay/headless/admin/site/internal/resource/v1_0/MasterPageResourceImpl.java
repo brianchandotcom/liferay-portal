@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -347,11 +348,12 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		for (int i = 0; i < itemExternalReferences.length; i++) {
 			long scopeGroupId = groupId;
 
-			if (Validator.isNotNull(itemExternalReferences[i].getScope())) {
+			Scope scope = itemExternalReferences[i].getScope();
+
+			if (Validator.isNotNull(scope)) {
 				scopeGroupId = GroupUtil.getGroupId(
 					true, true, group.getCompanyId(),
-					itemExternalReferences[i].getScope(
-					).getExternalReferenceCode());
+					scope.getExternalReferenceCode());
 			}
 
 			AssetTag assetTag =

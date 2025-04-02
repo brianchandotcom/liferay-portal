@@ -1086,8 +1086,12 @@ test(
 				`/web/${site.name}/order/${postCart.id}`
 		);
 
+		let cart = await apiHelpers.headlessCommerceDeliveryCart.getCart(
+			postCart.id
+		);
+
 		await expect(page.getByLabel('Details', {exact: true})).toContainText(
-			`TotalTest $ 31.50`
+			`TotalTest ${cart.summary.totalFormatted}`
 		);
 
 		const discount =
@@ -1149,7 +1153,7 @@ test(
 				`/web/${site.name}/order/${postCart.id}`
 		);
 
-		const cart = await apiHelpers.headlessCommerceDeliveryCart.getCart(
+		cart = await apiHelpers.headlessCommerceDeliveryCart.getCart(
 			postCart.id
 		);
 

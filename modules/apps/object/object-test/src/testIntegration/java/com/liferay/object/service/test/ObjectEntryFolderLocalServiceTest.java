@@ -24,6 +24,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -251,7 +252,8 @@ public class ObjectEntryFolderLocalServiceTest {
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
 					objectEntryFolder.getParentObjectEntryFolderId(),
-					objectEntryFolder.getLabelMap(), name);
+					objectEntryFolder.getLabelMap(), name,
+					new ServiceContext());
 			});
 
 		AssertUtils.assertFailure(
@@ -267,7 +269,8 @@ public class ObjectEntryFolderLocalServiceTest {
 					TestPropsValues.getUserId(),
 					objectEntryFolder.getObjectEntryFolderId(),
 					objectEntryFolder.getParentObjectEntryFolderId(),
-					objectEntryFolder.getLabelMap(), null);
+					objectEntryFolder.getLabelMap(), null,
+					new ServiceContext());
 			});
 		AssertUtils.assertFailure(
 			ObjectEntryFolderScopeException.class,
@@ -294,7 +297,7 @@ public class ObjectEntryFolderLocalServiceTest {
 					objectEntryFolder.getObjectEntryFolderId(),
 					parentObjectEntryFolder.getObjectEntryFolderId(),
 					objectEntryFolder.getLabelMap(),
-					objectEntryFolder.getName());
+					objectEntryFolder.getName(), new ServiceContext());
 			});
 
 		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
@@ -312,7 +315,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				objectEntryFolder1.getObjectEntryFolderId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, objectEntryFolder1.getName());
+				null, objectEntryFolder1.getName(), new ServiceContext());
 
 		AssertUtils.assertEquals(
 			HashMapBuilder.put(

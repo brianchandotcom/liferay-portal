@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -36,12 +37,12 @@ public class SharingEntryObjectEntryFolderServiceWrapper
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name)
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntryFolder objectEntryFolder = super.updateObjectEntryFolder(
 			userId, objectEntryFolderId, parentObjectEntryFolderId, labelMap,
-			name);
+			name, serviceContext);
 
 		return _reindexSharingEntries(objectEntryFolder);
 	}

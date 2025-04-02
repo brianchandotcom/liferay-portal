@@ -281,7 +281,10 @@ public class ObjectEntryFolderResourceImpl
 					contextAcceptLanguage.getPreferredLocale(),
 					objectEntryFolder.getLabel(),
 					objectEntryFolder.getLabel_i18n()),
-				objectEntryFolder.getName()));
+				objectEntryFolder.getName(),
+				ServiceContextBuilder.create(
+					groupId, contextHttpServletRequest, null
+				).build()));
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(
@@ -411,7 +414,11 @@ public class ObjectEntryFolderResourceImpl
 					labelMap),
 				GetterUtil.getString(
 					objectEntryFolder.getName(),
-					persistedObjectEntryFolder.getName())));
+					persistedObjectEntryFolder.getName()),
+				ServiceContextBuilder.create(
+					persistedObjectEntryFolder.getGroupId(),
+					contextHttpServletRequest, null
+				).build()));
 	}
 
 	private ObjectEntryFolder _toObjectEntryFolder(

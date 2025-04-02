@@ -29,7 +29,8 @@ public class DepotRoleUtil {
 		DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
 		DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
 		DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-		DepotRolesConstants.ASSET_LIBRARY_OWNER
+		DepotRolesConstants.ASSET_LIBRARY_OWNER,
+		DepotRolesConstants.CMS_CONSUMER
 	};
 
 	public static Map<Locale, String> getDescriptionMap(

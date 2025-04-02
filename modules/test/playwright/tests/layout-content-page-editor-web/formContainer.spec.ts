@@ -44,6 +44,7 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
+		'LPD-21926': {enabled: true},
 		'LPD-32050': {enabled: true},
 		'LPD-37927': {enabled: true},
 		'LPD-46393': {enabled: true},
@@ -1677,6 +1678,96 @@ test.describe('File Upload Fragment', () => {
 					'File size is larger than the allowed maximum upload size (2 MB).'
 				)
 			).toBeVisible();
+		}
+	);
+});
+
+test.describe('Friendly URL Fragment', () => {
+	test(
+		'Check the mapping field',
+		{
+			tag: '@LPD-52418',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create an object with the friendly url field enabled
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableFriendlyURLCustomization: true,
+					enableLocalization: true,
+					externalReferenceCode: 'erc',
+					label: {
+						en_US: 'Test',
+					},
+					name: 'Test',
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'text-erc',
+							indexed: true,
+							indexedAsKeyword: true,
+							label: {
+								en_US: 'Text',
+							},
+							localized: true,
+							name: 'text',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Tests',
+					},
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to the All Field object and add only the Friendly URL field
+
+			await pageEditorPage.mapFormFragment(formId, 'Test', [
+				'Friendly URL',
+			]);
+
+			await pageEditorPage.selectFragment(
+				await pageEditorPage.getFragmentId('Friendly URL')
+			);
+
+			// Check if the mapping field
+
+			await expect(
+				page.getByRole('combobox', {name: 'Field'})
+			).toHaveValue('ObjectEntry_objectEntryFriendlyURL');
 		}
 	);
 });

@@ -39,10 +39,25 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -70,6 +85,35 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 		if (ctCollection != null) {
 			_ctCollectionService.deleteCTCollection(ctCollection);
 		}
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), for backwards compatibility as the path is incorrect, the id is not needed
+	 *
+	 * Invoke this method with the command line:
+	 * curl -X 'DELETE' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Deprecated
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "ctCollectionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/ct-collections/{ctCollectionId}/batch")
+	@Produces("application/json")
+	@Tags({@Tag(name = "CTCollection")})
+	public Response deleteCTCollectionBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("ctCollectionId") Long
+				ctCollectionId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		return deleteCTCollectionBatch(callbackURL, object);
 	}
 
 	@Override
@@ -242,6 +286,36 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			_ctCollectionService.updateCTCollection(
 				contextUser.getUserId(), ctCollectionId, ctCollection.getName(),
 				ctCollection.getDescription()));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), for backwards compatibility as the path is incorrect, the id is not needed
+	 *
+	 * Invoke this method with the command line:
+	 * curl -X 'PUT' 'http://localhost:8080/o/change-tracking-rest/v1.0/ct-collections/{ctCollectionId}/batch' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Deprecated
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "ctCollectionId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/ct-collections/{ctCollectionId}/batch")
+	@Produces("application/json")
+	@PUT
+	@Tags({@Tag(name = "CTCollection")})
+	public Response putCTCollectionBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("ctCollectionId") Long
+				ctCollectionId,
+			CTCollection ctCollection,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		return putCTCollectionBatch(callbackURL, object);
 	}
 
 	private DefaultDTOConverterContext _getDTOConverterContext(

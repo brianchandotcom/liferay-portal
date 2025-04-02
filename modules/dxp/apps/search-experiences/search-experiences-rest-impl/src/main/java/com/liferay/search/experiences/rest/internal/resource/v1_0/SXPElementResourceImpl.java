@@ -42,12 +42,27 @@ import com.liferay.search.experiences.rest.resource.v1_0.SXPElementResource;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 import com.liferay.search.experiences.service.SXPElementService;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -68,6 +83,35 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	@Override
 	public void deleteSXPElement(Long sxpElementId) throws Exception {
 		_sxpElementService.deleteSXPElement(sxpElementId);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), for backwards compatibility as the path is incorrect, the id is not needed
+	 *
+	 * Invoke this method with the command line:
+	 * curl -X 'DELETE' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Deprecated
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "sxpElementId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/sxp-elements/{sxpElementId}/batch")
+	@Produces("application/json")
+	@Tags({@Tag(name = "SXPElement")})
+	public Response deleteSXPElementBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
+				sxpElementId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		return deleteSXPElementBatch(callbackURL, object);
 	}
 
 	@Override
@@ -337,6 +381,36 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElementId);
 
 		return _putSXPElement(serviceBuilderSXPElement, sxpElement);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), for backwards compatibility as the path is incorrect, the id is not needed
+	 *
+	 * Invoke this method with the command line:
+	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}/batch' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Deprecated
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "sxpElementId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/sxp-elements/{sxpElementId}/batch")
+	@Produces("application/json")
+	@PUT
+	@Tags({@Tag(name = "SXPElement")})
+	public Response putSXPElementBatch(
+			@NotNull @Parameter(hidden = true) @PathParam("sxpElementId") Long
+				sxpElementId,
+			SXPElement sxpElement,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		return putSXPElementBatch(callbackURL, object);
 	}
 
 	@Override

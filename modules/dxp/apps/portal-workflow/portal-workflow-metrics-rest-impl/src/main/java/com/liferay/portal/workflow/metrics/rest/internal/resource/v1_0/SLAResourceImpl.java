@@ -26,8 +26,25 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.StopNodeKeys;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,6 +64,34 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 		_workflowMetricsSLADefinitionLocalService.
 			deactivateWorkflowMetricsSLADefinition(
 				slaId, _createServiceContext());
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), for backwards compatibility as the path is incorrect, the id is not needed
+	 *
+	 * Invoke this method with the command line:
+	 * curl -X 'DELETE' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch'  -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@DELETE
+	@Deprecated
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "slaId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/slas/{slaId}/batch")
+	@Produces("application/json")
+	@Tags({@Tag(name = "SLA")})
+	public Response deleteSLABatch(
+			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		return deleteSLABatch(callbackURL, object);
 	}
 
 	@Override
@@ -154,6 +199,35 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 					GetterUtil.getInteger(
 						sla.getStatus(), WorkflowConstants.STATUS_APPROVED),
 					_createServiceContext()));
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), for backwards compatibility as the path is incorrect, the id is not needed
+	 *
+	 * Invoke this method with the command line:
+	 * curl -X 'PUT' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/slas/{slaId}/batch' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes("application/json")
+	@Deprecated
+	@Parameters(
+		{
+			@Parameter(in = ParameterIn.PATH, name = "slaId"),
+			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
+		}
+	)
+	@Path("/slas/{slaId}/batch")
+	@Produces("application/json")
+	@PUT
+	@Tags({@Tag(name = "SLA")})
+	public Response putSLABatch(
+			@NotNull @Parameter(hidden = true) @PathParam("slaId") Long slaId,
+			SLA sla,
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		return putSLABatch(callbackURL, object);
 	}
 
 	private ServiceContext _createServiceContext() {

@@ -27,7 +27,7 @@ public class FriendlyURLSeparatorConfigurationManagerImpl
 	implements FriendlyURLSeparatorConfigurationManager {
 
 	@Override
-	public JSONObject getFriendlyURLSeparatorsJSON(long companyId)
+	public JSONObject getFriendlyURLSeparatorsJSONObject(long companyId)
 		throws PortalException {
 
 		FriendlyURLSeparatorCompanyConfiguration

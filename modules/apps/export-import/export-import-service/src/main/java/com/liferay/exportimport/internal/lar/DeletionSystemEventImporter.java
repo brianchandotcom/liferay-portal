@@ -89,6 +89,10 @@ public class DeletionSystemEventImporter {
 
 		Element sitePortletsElement = rootElement.element("site-portlets");
 
+		if (sitePortletsElement == null) {
+			return;
+		}
+
 		List<Element> sitePortletElements = sitePortletsElement.elements();
 
 		for (Element portletElement : sitePortletElements) {

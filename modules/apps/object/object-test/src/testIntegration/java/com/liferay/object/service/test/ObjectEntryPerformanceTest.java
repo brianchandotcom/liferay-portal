@@ -133,7 +133,8 @@ public class ObjectEntryPerformanceTest {
 		}
 
 		try (Closeable closeable = new PerformanceTimer(
-				60000,
+				GetterUtil.getInteger(
+					_properties.getProperty("object.entries.get.max.time")),
 				"Get all the Object Entries by ObjectEntryLocalService with " +
 					"CustomObjectDefinitionId:" +
 						_customObjectDefinition.getObjectDefinitionId())) {

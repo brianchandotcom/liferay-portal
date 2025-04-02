@@ -226,7 +226,8 @@ public class UserSegmentsCriteriaContributorTest {
 			Criteria.Conjunction.AND);
 
 		Assert.assertEquals(
-			"dateModifiedTruncated eq 2025-03-14T00:00:00.000Z",
+			"dateModified ge 2025-03-14T00:00:00.000Z and dateModified le " +
+				"2025-03-14T23:59:59.999Z",
 			criteria.getFilterString(Criteria.Type.MODEL));
 	}
 

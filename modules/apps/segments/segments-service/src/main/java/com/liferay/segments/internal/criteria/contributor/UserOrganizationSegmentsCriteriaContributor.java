@@ -62,8 +62,13 @@ public class UserOrganizationSegmentsCriteriaContributor
 			Matcher matcher = _pattern.matcher(filterString);
 
 			while (matcher.find()) {
+				String date = matcher.group("date");
+
 				newFilterString = StringUtil.replace(
-					filterString, matcher.group(), "dateModifiedTruncated");
+					filterString, matcher.group(),
+					StringBundler.concat(
+						"dateModified ge ", date, "T00:00:00.000Z and ",
+						"dateModified le ", date, "T23:59:59.999Z"));
 			}
 
 			List<Organization> organizations = _oDataRetriever.getResults(
@@ -136,7 +141,8 @@ public class UserOrganizationSegmentsCriteriaContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserOrganizationSegmentsCriteriaContributor.class);
 
-	private static final Pattern _pattern = Pattern.compile("dateModified");
+	private static final Pattern _pattern = Pattern.compile(
+		"dateModified eq (?<date>\\d{4}-\\d{2}-\\d{2})T.*Z");
 
 	@Reference(
 		target = "(entity.model.name=" + OrganizationEntityModel.NAME + ")"

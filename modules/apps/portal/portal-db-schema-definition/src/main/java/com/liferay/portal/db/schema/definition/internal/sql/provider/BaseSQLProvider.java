@@ -121,7 +121,7 @@ public abstract class BaseSQLProvider implements SQLProvider {
 		}
 
 		throw new IllegalStateException(
-			"Not able to load database type " + DBType.POSTGRESQL);
+			"Unable to load database type " + DBType.POSTGRESQL);
 	}
 
 	private String _read(String contextName, String path) throws Exception {

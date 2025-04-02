@@ -6,6 +6,8 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -469,13 +472,17 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "name"};
+		return new String[] {
+			"externalReferenceCode", "keywordItemExternalReferences", "name"
+		};
 	}
 
 	@Override
 	protected MasterPage randomMasterPage() throws Exception {
 		MasterPage masterPage = super.randomMasterPage();
 
+		masterPage.setKeywordItemExternalReferences(
+			_randomKeywordItemExternalReferences());
 		masterPage.setMarkedAsDefault(Boolean.FALSE);
 
 		return masterPage;
@@ -663,6 +670,35 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).parameters(
 			"nestedFields", "pageSpecifications"
 		).build();
+	}
+
+	private ItemExternalReference[] _randomKeywordItemExternalReferences()
+		throws Exception {
+
+		int length = RandomTestUtil.randomInt(1, 3);
+
+		ItemExternalReference[] itemExternalReferences =
+			new ItemExternalReference[length];
+
+		for (int i = 0; i < length; i++) {
+			AssetTag assetTag = _assetTagLocalService.addTag(
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				ServiceContextTestUtil.getServiceContext(
+					testGroup, TestPropsValues.getUserId()));
+
+			ItemExternalReference itemExternalReference =
+				new ItemExternalReference();
+
+			itemExternalReference.setClassName(AssetTag.class.getName());
+			itemExternalReference.setExternalReferenceCode(
+				assetTag.getExternalReferenceCode());
+
+			itemExternalReferences[i] = itemExternalReference;
+		}
+
+		return itemExternalReferences;
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(
@@ -969,6 +1005,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

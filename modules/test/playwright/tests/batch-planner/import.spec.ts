@@ -987,7 +987,7 @@ test('can import json file with attachment field', async ({
 		},
 	};
 	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 	const {body: studentResponse} =
 		await objectDefinitionAPIClient.postObjectDefinition(

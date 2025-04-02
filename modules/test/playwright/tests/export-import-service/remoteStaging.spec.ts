@@ -7,13 +7,13 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {dataRemoteApiHelpersTest} from '../../fixtures/dataRemoteApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
-import {remoteDataApiHelpersTest} from '../../fixtures/remoteDataApiHelpersTest';
-import {remoteStagingApiHelperTest} from '../../fixtures/remoteStagingApiHelpersTest';
+import {remoteApiHelpersTest} from '../../fixtures/remoteApiHelpersTest';
 import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
 import {performLoginViaApi} from '../../utils/performLogin';
@@ -24,6 +24,8 @@ import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
 export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	remoteApiHelpersTest,
+	dataRemoteApiHelpersTest,
 	loginTest(),
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
@@ -32,8 +34,6 @@ export const test = mergeTests(
 	pagesAdminPagesTest,
 	pagesPagesTest,
 	productMenuPageTest,
-	remoteDataApiHelpersTest,
-	remoteStagingApiHelperTest,
 	remoteStagingPagesTest,
 	uiElementsPageTest,
 	webContentDisplayPageTest
@@ -46,7 +46,7 @@ test(
 		apiHelpers,
 		page,
 		pageEditorPage,
-		remoteStagingApiHelper,
+		remoteApiHelpers,
 		remoteStagingPage,
 		uiElementsPage,
 		webContentDisplayPage,
@@ -65,23 +65,23 @@ test(
 			title: 'Staging Test Page',
 		});
 
-		const remoteUrl = remoteStagingApiHelper.baseUrl.substring(
+		const remoteUrl = remoteApiHelpers.baseUrl.substring(
 			0,
-			remoteStagingApiHelper.baseUrl.length - 3
+			remoteApiHelpers.baseUrl.length - 3
 		);
 
 		await performLoginViaApi({
-			apiHelpers: remoteStagingApiHelper,
+			apiHelpers: remoteApiHelpers,
 			loginUrl: remoteUrl,
 			page,
 			screenName: 'test',
 		});
 
-		const remoteSite = await remoteStagingApiHelper.headlessSite.createSite(
-			{
-				name: 'Remote Site Name',
-			}
-		);
+		const remoteSite = await remoteApiHelpers.headlessSite.createSite({
+			name: 'Remote Site Name',
+		});
+
+		remoteApiHelpers.data.push({id: site.id, type: 'site'});
 
 		await performLoginViaApi({
 			page,
@@ -126,7 +126,7 @@ test(
 		});
 
 		await performLoginViaApi({
-			apiHelpers: remoteStagingApiHelper,
+			apiHelpers: remoteApiHelpers,
 			loginUrl: remoteUrl,
 			page,
 			screenName: 'test',

@@ -176,9 +176,7 @@ paths:
                                     $ref: "#/components/schemas/Entry"
                                 type: array
             tags: ["Entry"]
-
 ---
-
 tasks:
     # Install Git
     - name: Install Git

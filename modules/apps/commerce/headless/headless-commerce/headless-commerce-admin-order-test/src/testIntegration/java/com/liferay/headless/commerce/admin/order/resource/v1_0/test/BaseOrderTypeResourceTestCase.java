@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseOrderTypeResourceTestCase {
 			testCompany.getCompanyId());
 
 		orderTypeResource = OrderTypeResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -777,7 +789,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 			404,
 			orderTypeResource.getOrderTypeByExternalReferenceCodeHttpResponse(
 				orderType.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			orderTypeResource.getOrderTypeByExternalReferenceCodeHttpResponse(
@@ -1023,9 +1034,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, orderTypeResource.getOrderTypeHttpResponse(orderType.getId()));
-
 		assertHttpResponseStatusCode(
-			404, orderTypeResource.getOrderTypeHttpResponse(orderType.getId()));
+			404, orderTypeResource.getOrderTypeHttpResponse(0L));
 	}
 
 	protected OrderType testDeleteOrderType_addOrderType() throws Exception {
@@ -1106,6 +1116,76 @@ public abstract class BaseOrderTypeResourceTestCase {
 		throws Exception {
 
 		return testGraphQLOrderType_addOrderType();
+	}
+
+	@Test
+	public void testDeleteOrderTypeBatch() throws Exception {
+		OrderType orderType1 = testDeleteOrderTypeBatch_addOrderType();
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", null, orderType1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType1.getId()));
+
+		OrderType orderType2 = testDeleteOrderTypeBatch_addOrderType();
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", orderType2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
+
+		orderType1 = testDeleteOrderTypeBatch_addOrderType();
+		orderType2 = testDeleteOrderTypeBatch_addOrderType();
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", orderType2.getExternalReferenceCode(),
+			orderType1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
+
+		testDeleteOrderTypeBatch_deleteOrderType(
+			"COMPLETED", orderType2.getExternalReferenceCode(),
+			orderType1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			orderTypeResource.getOrderTypeHttpResponse(orderType2.getId()));
+	}
+
+	protected OrderType testDeleteOrderTypeBatch_addOrderType()
+		throws Exception {
+
+		return testDeleteOrderType_addOrderType();
+	}
+
+	protected void testDeleteOrderTypeBatch_deleteOrderType(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			orderTypeResource.deleteOrderTypeBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2343,7 +2423,30 @@ public abstract class BaseOrderTypeResourceTestCase {
 		return randomOrderType();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected OrderTypeResource orderTypeResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

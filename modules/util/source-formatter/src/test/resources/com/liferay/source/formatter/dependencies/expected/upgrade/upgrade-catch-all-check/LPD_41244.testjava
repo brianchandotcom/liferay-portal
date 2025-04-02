@@ -1,0 +1,47 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Mateus Xavier
+ */
+public class LPD_41244 {
+
+	public void method(
+		long cpInstanceId, long cProductId, long commercePriceListId,
+		String externalReferenceCode, String cpInstanceUuid, BigDecimal price,
+		BigDecimal promoPrice, ServiceContext serviceContext) {
+
+		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(null, cpInstanceId, null, commercePriceListId, price, false, promoPrice, null, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(123, commercePriceListId, price, promoPrice, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(null, cpInstanceId, null, commercePriceListId, price, false, promoPrice, null, serviceContext);
+
+		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cpInstanceId, null, commercePriceListId, price, false, promoPrice, null, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(123, commercePriceListId, externalReferenceCode, price, promoPrice, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cpInstanceId, null, commercePriceListId, price, false, promoPrice, null, serviceContext);
+
+		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(null, cProductId, cpInstanceUuid, commercePriceListId, price, false, promoPrice, null, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(123, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(null, cProductId, cpInstanceUuid, commercePriceListId, price, false, promoPrice, null, serviceContext);
+
+		CommercePriceEntryServiceUtil.addCommercePriceEntry(null, cpInstanceId, commercePriceListId, price, false, promoPrice, null, serviceContext);
+		_commercePriceEntryService.addCommercePriceEntry(123, commercePriceListId, price, promoPrice, serviceContext);
+		_commercePriceEntryService.addCommercePriceEntry(null, cpInstanceId, commercePriceListId, price, false, promoPrice, null, serviceContext);
+
+		CommercePriceEntryServiceUtil.addCommercePriceEntry(externalReferenceCode, cpInstanceId, commercePriceListId, price, false, promoPrice, null, serviceContext);
+		_commercePriceEntryService.addCommercePriceEntry(123, commercePriceListId, externalReferenceCode, price, promoPrice, serviceContext);
+		_commercePriceEntryService.addCommercePriceEntry(externalReferenceCode, cpInstanceId, commercePriceListId, price, false, promoPrice, null, serviceContext);
+	}
+
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
+
+}

@@ -218,7 +218,6 @@ public abstract class BaseUserGroupResourceTestCase {
 				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
 					testDeleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getUserGroupExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			userGroupResource.
@@ -1027,7 +1026,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			userGroupResource.getAssetLibraryUserGroupHttpResponse(
 				testDeleteAssetLibraryUserGroup_getAssetLibraryId(),
 				userGroup.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			userGroupResource.getAssetLibraryUserGroupHttpResponse(

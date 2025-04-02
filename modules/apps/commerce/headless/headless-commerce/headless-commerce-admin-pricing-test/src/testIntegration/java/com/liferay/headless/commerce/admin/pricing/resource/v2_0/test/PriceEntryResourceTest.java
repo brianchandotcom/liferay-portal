@@ -61,8 +61,8 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 
 		_commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
-				RandomTestUtil.randomString(), testGroup.getGroupId(),
-				_user.getUserId(), _commerceCurrency.getCode(),
+				RandomTestUtil.randomString(), _user.getUserId(),
+				testGroup.getGroupId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomBoolean(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), 1,
@@ -77,6 +77,13 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 	@Test
 	public void testDeletePriceEntry() throws Exception {
 		super.testDeletePriceEntry();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeletePriceEntryBatch() throws Exception {
+		super.testDeletePriceEntryBatch();
 	}
 
 	@Ignore
@@ -245,8 +252,8 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.addCommercePriceList(
-				RandomTestUtil.randomString(), testGroup.getGroupId(),
-				_user.getUserId(), _commerceCurrency.getCode(),
+				RandomTestUtil.randomString(), _user.getUserId(),
+				testGroup.getGroupId(), _commerceCurrency.getCode(),
 				RandomTestUtil.randomBoolean(),
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), 1,

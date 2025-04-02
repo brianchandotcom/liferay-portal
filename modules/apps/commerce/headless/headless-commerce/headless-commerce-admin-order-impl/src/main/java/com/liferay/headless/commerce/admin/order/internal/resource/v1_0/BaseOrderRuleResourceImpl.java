@@ -658,9 +658,30 @@ public abstract class BaseOrderRuleResourceImpl
 
 		UnsafeFunction<OrderRule, OrderRule, Exception>
 			orderRuleUnsafeFunction = orderRule -> {
-				deleteOrderRule(orderRule.getId());
+				if (orderRule.getId() != null) {
+					try {
+						deleteOrderRule(orderRule.getId());
 
-				return orderRule;
+						return orderRule;
+					}
+					catch (Exception exception) {
+						if (orderRule.getExternalReferenceCode() != null) {
+							deleteOrderRuleByExternalReferenceCode(
+								orderRule.getExternalReferenceCode());
+
+							return orderRule;
+						}
+					}
+				}
+				else if (orderRule.getExternalReferenceCode() != null) {
+					deleteOrderRuleByExternalReferenceCode(
+						orderRule.getExternalReferenceCode());
+
+					return orderRule;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

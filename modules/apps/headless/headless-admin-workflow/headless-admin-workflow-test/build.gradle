@@ -9,6 +9,7 @@ dependencies {
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation project(":apps:headless:headless-admin-workflow:headless-admin-workflow-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-workflow:headless-admin-workflow-client")
+	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:object:object-test-util")

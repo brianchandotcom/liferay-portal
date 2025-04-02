@@ -5,21 +5,10 @@ components:
             description: |- 
               Represents a link
                to
-               an entity 
-              in a 
+               an entity
+              in a
               different
                domain.
-              
-              www.liferay-server2.com
-              DUPLICATED EMPTYLINES:
-              
-              
-              www.liferay-server1.com
-              ONE EMPTYLINE:
-              
-              DUPULICATE SPACE(  )
-              END WITH SPACE  
-              TOW TABS		
             properties:
                 dateCreated:
                     description: The external link's creation date.
@@ -39,11 +28,11 @@ info:
       ver-name: v1
       ver-date: 20190813
     title: |-
-        End 
+        End
         of
          file
     description: |-
-        This 
+        This
         is
          the description
 ---

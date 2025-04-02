@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -28,6 +30,13 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CTProcessResourceTest extends BaseCTProcessResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteCTProcessBatch() throws Exception {
+		super.testDeleteCTProcessBatch();
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

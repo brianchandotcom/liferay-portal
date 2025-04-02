@@ -11,34 +11,45 @@
 				<arg line="storage container list --account-name isit35689storage --prefix lfr-qa-poshi-test --connection-string ${azure.connection.string}" />
 			</exec>
 
-			<script language="javascript"><![CDATA[
-				var containerList = project.getProperty("container.list");
+			<beanshell>
+				<![CDATA[
+					import java.time.Instant;
+					import java.time.OffsetDateTime;
 
-				var expiredContainers = [];
+					import org.json.JSONArray;
+					import org.json.JSONObject;
 
-				var json = JSON.parse(containerList);
+					List expiredContainers = new ArrayList();
 
-				for (var i = 0; i < json.length; i++) {
-					var container = json[i];
+					JSONArray containerListJSONArray = new JSONArray(project.getProperty("container.list"));
 
-					var name = JSON.stringify(container.name);
+					for (int i = 0; i < containerListJSONArray.length(); i++) {
+						JSONObject containerJSONObject = containerListJSONArray.getJSONObject(i);
 
-					if (name.indexOf('lfr-qa-poshi-test') > -1) {
-						var lastModified = container.properties.lastModified;
+						String containerName = containerJSONObject.getString("name");
 
-						var currentDate = new Date();
-						var containerDate = new Date(lastModified);
+						if (!containerName.contains("lfr-qa-poshi-test")) {
+							continue;
+						}
 
-						var diffHours = (currentDate - containerDate) / (1000 * 60 * 60);
+						JSONObject propertiesJSONObject = containerJSONObject.getJSONObject("properties");
 
-						if (diffHours > 12) {
-							expiredContainers.push(name);
+						OffsetDateTime offsetDateTime = OffsetDateTime.parse(propertiesJSONObject.getString("lastModified"));
+
+						Instant instant = offsetDateTime.toInstant();
+
+						if (((System.currentTimeMillis() - instant.toEpochMilli()) / (1000 * 60 * 60)) > 12) {
+							expiredContainers.add(containerName);
 						}
 					}
-				}
 
-				project.setProperty("expired.containers", expiredContainers.toString());]]>
-			</script>
+					String expiredContainersString = expiredContainers.toString();
+
+					expiredContainersString = expiredContainersString.replaceAll(" ", "");
+
+					project.setProperty("expired.containers", expiredContainersString.substring(1, expiredContainersString.length() - 1));
+				]]>
+			</beanshell>
 
 			<for list="${expired.containers}" param="delete.name">
 				<sequential>

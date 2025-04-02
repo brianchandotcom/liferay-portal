@@ -82,8 +82,8 @@ public class CPConfigurationListRelTableReferenceDefinitionTest
 
 		_cpConfigurationList =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				RandomTestUtil.randomString(), _commerceCatalog.getGroupId(),
-				TestPropsValues.getUserId(), 0, false,
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_commerceCatalog.getGroupId(), 0, false,
 				RandomTestUtil.randomString(), 0D, calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,

@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationImplementation project(":apps:headless:headless-admin-list-type:headless-admin-list-type-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-list-type:headless-admin-list-type-client")
+	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
 	testIntegrationImplementation project(":apps:list-type:list-type-api")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-scope-api")

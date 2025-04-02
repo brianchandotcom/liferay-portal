@@ -1,13 +1,15 @@
 {
 	"pageElement": {
+		"id": "307eeda7-c54b-70c6-6a79-c20994668d81",
 		"pageElements": [
 			{
 				"definition": {
 					"fragment": {
 						"key": "sidebar",
-						"siteKey": "New CMS"
+						"siteKey": "CMS"
 					},
 					"fragmentConfig": {
+						"sidebarAriaLabel": "CMS Product Menu"
 					},
 					"fragmentFields": [
 						{
@@ -20,17 +22,64 @@
 					],
 					"indexed": true
 				},
+				"id": "6a354764-416e-2b1b-1cb0-47e49cb25627",
 				"pageElements": [
+					{
+						"definition": {
+							"fragmentDropZoneId": "navigationBar"
+						},
+						"id": "476e4dba-f789-9f36-c897-4323191f49c2",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "sidebar-trigger",
+										"siteKey": "CMS"
+									},
+									"fragmentConfig": {
+										"alt": "Site Logo"
+									},
+									"fragmentFields": [
+										{
+											"id": "sidebarImage",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "sidebarTitle",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"id": "44d69802-27bb-43ac-7874-d7a91243b7fe",
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
 					{
 						"definition": {
 							"fragmentDropZoneId": "sidebarBody"
 						},
+						"id": "212eb06f-da24-4b75-cde8-face21ecf4e5",
 						"pageElements": [
 							{
 								"definition": {
 									"fragment": {
 										"key": "vertical-navigation",
-										"siteKey": "New CMS"
+										"siteKey": "CMS"
 									},
 									"fragmentConfig": {
 										"displayStyle": "stacked",
@@ -43,6 +92,7 @@
 									],
 									"indexed": true
 								},
+								"id": "339a84e4-b200-a686-2e8e-724ca1458332",
 								"type": "Fragment"
 							},
 							{
@@ -61,6 +111,7 @@
 									],
 									"indexed": true
 								},
+								"id": "4f273db5-b9c7-6ff3-7c79-653b88a42fc3",
 								"type": "Fragment"
 							}
 						],
@@ -70,21 +121,8 @@
 						"definition": {
 							"fragmentDropZoneId": "content"
 						},
+						"id": "5400998b-15ff-c784-f346-4c6a2bf62947",
 						"pageElements": [
-							{
-								"definition": {
-									"fragment": {
-										"key": "sidebar-trigger",
-										"siteKey": "New CMS"
-									},
-									"fragmentConfig": {
-									},
-									"fragmentFields": [
-									],
-									"indexed": true
-								},
-								"type": "Fragment"
-							},
 							{
 								"definition": {
 									"fragmentSettings": {
@@ -92,6 +130,7 @@
 										]
 									}
 								},
+								"id": "5b085050-70dd-18d8-7227-06afb1ebac78",
 								"type": "DropZone"
 							}
 						],

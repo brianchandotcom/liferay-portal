@@ -57,12 +57,11 @@ public interface CTRemoteResource {
 	public HttpInvoker.HttpResponse postCTRemoteHttpResponse(CTRemote ctRemote)
 		throws Exception;
 
-	public void postCTRemoteBatch(
-			CTRemote ctRemote, String callbackURL, Object object)
+	public void postCTRemoteBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postCTRemoteBatchHttpResponse(
-			CTRemote ctRemote, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public void deleteCTRemote(Long id) throws Exception;
@@ -94,12 +93,11 @@ public interface CTRemoteResource {
 			Long id, CTRemote ctRemote)
 		throws Exception;
 
-	public void putCTRemoteBatch(
-			CTRemote ctRemote, String callbackURL, Object object)
+	public void putCTRemoteBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putCTRemoteBatchHttpResponse(
-			CTRemote ctRemote, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public static class Builder {
@@ -553,12 +551,11 @@ public interface CTRemoteResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postCTRemoteBatch(
-				CTRemote ctRemote, String callbackURL, Object object)
+		public void postCTRemoteBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postCTRemoteBatchHttpResponse(ctRemote, callbackURL, object);
+				postCTRemoteBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -609,7 +606,7 @@ public interface CTRemoteResource {
 		}
 
 		public HttpInvoker.HttpResponse postCTRemoteBatchHttpResponse(
-				CTRemote ctRemote, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1169,12 +1166,11 @@ public interface CTRemoteResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putCTRemoteBatch(
-				CTRemote ctRemote, String callbackURL, Object object)
+		public void putCTRemoteBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putCTRemoteBatchHttpResponse(ctRemote, callbackURL, object);
+				putCTRemoteBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -1225,7 +1221,7 @@ public interface CTRemoteResource {
 		}
 
 		public HttpInvoker.HttpResponse putCTRemoteBatchHttpResponse(
-				CTRemote ctRemote, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

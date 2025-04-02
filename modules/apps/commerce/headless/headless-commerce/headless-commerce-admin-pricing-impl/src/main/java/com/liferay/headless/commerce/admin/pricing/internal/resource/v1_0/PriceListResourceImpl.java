@@ -232,7 +232,7 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListService.addOrUpdateCommercePriceList(
-				externalReferenceCode, commerceCatalog.getGroupId(), 0L,
+				externalReferenceCode, 0L, commerceCatalog.getGroupId(),
 				commerceCurrency.getCode(), true,
 				CommercePriceListConstants.TYPE_PRICE_LIST, 0, false,
 				priceList.getName(),

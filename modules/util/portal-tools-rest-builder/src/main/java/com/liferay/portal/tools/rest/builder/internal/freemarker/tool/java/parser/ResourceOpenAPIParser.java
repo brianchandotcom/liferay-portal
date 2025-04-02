@@ -683,7 +683,8 @@ public class ResourceOpenAPIParser {
 		else if (batchOperationType == BatchOperationType.IMPORT) {
 			String batchPath = StringUtil.removeSubstrings(
 				path,
-				"/{" + StringUtil.lowerCaseFirstLetter(schemaName) + "Id}",
+				"/{" + TextFormatter.format(schemaName, TextFormatter.I) +
+					"Id}",
 				"/{id}");
 
 			return batchPath + "/batch";
@@ -1413,7 +1414,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static boolean _isValidParameter(String name, String schemaName) {
-		String schemaVarName = StringUtil.lowerCaseFirstLetter(schemaName);
+		String schemaVarName = OpenAPIParserUtil.getSchemaVarName(schemaName);
 
 		if (StringUtil.equals(name, "aggregation") ||
 			StringUtil.equals(name, "aggregationTerms") ||

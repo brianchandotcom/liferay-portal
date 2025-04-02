@@ -1054,7 +1054,7 @@ public class CPTestUtil {
 
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.addCPDefinition(
-				null, groupId, user.getUserId(), titleMap, shortDescriptionMap,
+				null, user.getUserId(), groupId, titleMap, shortDescriptionMap,
 				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 				metaDescriptionMap, productTypeName, ignoreSKUCombinations,
 				shippable, freeShipping, shipSeparately, shippingExtraPrice,
@@ -1151,7 +1151,7 @@ public class CPTestUtil {
 
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.addCPDefinition(
-				null, groupId, user.getUserId(), titleMap, shortDescriptionMap,
+				null, user.getUserId(), groupId, titleMap, shortDescriptionMap,
 				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 				metaDescriptionMap, productTypeName, true, shippable,
 				freeShipping, shipSeparately, shippingExtraPrice, width, height,
@@ -1263,7 +1263,7 @@ public class CPTestUtil {
 		}
 
 		return CPDefinitionLocalServiceUtil.addCPDefinition(
-			null, commerceCatalog.getGroupId(), user.getUserId(), titleMap,
+			null, user.getUserId(), commerceCatalog.getGroupId(), titleMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
 			metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,

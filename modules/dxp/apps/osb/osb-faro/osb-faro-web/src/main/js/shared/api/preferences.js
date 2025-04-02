@@ -51,6 +51,13 @@ export function fetchEmailReport({groupId}) {
 	});
 }
 
+export function fetchPreferences() {
+	return sendRequest({
+		method: 'GET',
+		path: 'main/preferences'
+	});
+}
+
 export function updateEmailReport({channelId, groupId, report}) {
 	return sendRequest({
 		data: pickBy({channelId, ...report}),

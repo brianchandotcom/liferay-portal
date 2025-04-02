@@ -382,10 +382,11 @@ public class PredicateExpressionVisitorImpl
 	}
 
 	private Predicate _contains(Column<?, ?> column, Object value) {
-		return DSLFunctionFactoryUtil.castText(
-			column
+		return DSLFunctionFactoryUtil.lower(
+			DSLFunctionFactoryUtil.castText(column)
 		).like(
-			StringPool.PERCENT + value + StringPool.PERCENT
+			StringPool.PERCENT + StringUtil.toLowerCase(String.valueOf(value)) +
+				StringPool.PERCENT
 		);
 	}
 

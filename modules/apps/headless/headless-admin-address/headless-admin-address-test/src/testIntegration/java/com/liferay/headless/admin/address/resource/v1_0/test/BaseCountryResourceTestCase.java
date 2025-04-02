@@ -19,6 +19,8 @@ import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.resource.v1_0.CountryResource;
 import com.liferay.headless.admin.address.client.serdes.v1_0.CountrySerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -129,6 +131,16 @@ public abstract class BaseCountryResourceTestCase {
 			testCompany.getCompanyId());
 
 		countryResource = CountryResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -985,7 +997,6 @@ public abstract class BaseCountryResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, countryResource.getCountryHttpResponse(country.getId()));
-
 		assertHttpResponseStatusCode(
 			404, countryResource.getCountryHttpResponse(0L));
 	}
@@ -1066,6 +1077,42 @@ public abstract class BaseCountryResourceTestCase {
 
 	protected Country testGraphQLDeleteCountry_addCountry() throws Exception {
 		return testGraphQLCountry_addCountry();
+	}
+
+	@Test
+	public void testDeleteCountryBatch() throws Exception {
+		Country country1 = testDeleteCountryBatch_addCountry();
+
+		testDeleteCountryBatch_deleteCountry(
+			"COMPLETED", null, country1.getId());
+
+		assertHttpResponseStatusCode(
+			404, countryResource.getCountryHttpResponse(country1.getId()));
+	}
+
+	protected Country testDeleteCountryBatch_addCountry() throws Exception {
+		return testDeleteCountry_addCountry();
+	}
+
+	protected void testDeleteCountryBatch_deleteCountry(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			countryResource.deleteCountryBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2244,7 +2291,30 @@ public abstract class BaseCountryResourceTestCase {
 		return randomCountry();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected CountryResource countryResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

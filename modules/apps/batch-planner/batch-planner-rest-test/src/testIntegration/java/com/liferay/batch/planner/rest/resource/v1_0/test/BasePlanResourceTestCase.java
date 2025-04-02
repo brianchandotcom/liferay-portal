@@ -348,7 +348,6 @@ public abstract class BasePlanResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, planResource.getPlanHttpResponse(plan.getId()));
-
 		assertHttpResponseStatusCode(404, planResource.getPlanHttpResponse(0L));
 	}
 

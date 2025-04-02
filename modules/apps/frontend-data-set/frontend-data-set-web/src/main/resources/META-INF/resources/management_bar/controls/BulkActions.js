@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -113,80 +113,6 @@ function BulkActions({
 		}
 	}
 
-	const renderNewBulkActions = ({
-		formId,
-		formName,
-		loadData,
-		namespace,
-		sidePanelId,
-	}) => {
-		return (
-			<ul className="bulk-actions navbar-nav">
-				{bulkActions.map((actionDefinition, i) => (
-					<li className="nav-item" key={actionDefinition.label}>
-						<button
-							className={classNames(
-								'btn btn-monospaced btn-link',
-								i > 0 && 'ml-1'
-							)}
-							onClick={() =>
-								handleActionClick(
-									actionDefinition,
-									formId,
-									formName,
-									loadData,
-									namespace,
-									sidePanelId
-								)
-							}
-							type="button"
-						>
-							<ClayIcon symbol={actionDefinition.icon} />
-						</button>
-					</li>
-				))}
-
-				{!!bulkActions.length && (
-					<li className="nav-item">
-						<DropDown
-							hasLeftSymbols
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get('actions')}
-									displayType="unstyled"
-									small
-									symbol="ellipsis-v"
-									title={Liferay.Language.get('actions')}
-								/>
-							}
-						>
-							<DropDown.ItemList>
-								{bulkActions.map((actionDefinition) => (
-									<DropDown.Item
-										key={actionDefinition.label}
-										onClick={() =>
-											handleActionClick(
-												actionDefinition,
-												formId,
-												formName,
-												loadData,
-												namespace,
-												sidePanelId
-											)
-										}
-										symbolLeft={actionDefinition.icon}
-									>
-										{actionDefinition.label}
-									</DropDown.Item>
-								))}
-							</DropDown.ItemList>
-						</DropDown>
-					</li>
-				)}
-			</ul>
-		);
-	};
-
 	useEffect(
 		() => {
 			if (!currentSidePanelActionPayload) {
@@ -226,31 +152,27 @@ function BulkActions({
 				selectable,
 				sidePanelId,
 			}) => (
-				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
+				<nav className="management-bar management-bar-primary navbar navbar-expand-md">
 					<div
 						className={classNames(
-							'container-fluid py-1',
+							'container-fluid',
 							!fluid && 'px-0'
 						)}
 					>
 						<ul className="navbar-nav">
-							{!!total &&
-								selectable &&
-								(Liferay.FeatureFlags['LPD-42570'] ? (
-									<li className="nav-item">
-										<SelectionCheckbox
-											handleCheckboxClick={
-												handleCheckboxClick
-											}
-											items={items}
-											selectedItemsValue={
-												pageSelectedItemsValue
-											}
-										/>
-									</li>
-								) : (
-									<li className="ml-3 nav-item"></li>
-								))}
+							{!!total && selectable && (
+								<li className="nav-item">
+									<SelectionCheckbox
+										handleCheckboxClick={
+											handleCheckboxClick
+										}
+										items={items}
+										selectedItemsValue={
+											pageSelectedItemsValue
+										}
+									/>
+								</li>
+							)}
 
 							<li className="nav-item">
 								<span className="text-truncate">
@@ -271,18 +193,16 @@ function BulkActions({
 											)}
 								</span>
 
-								{Liferay.FeatureFlags['LPD-42570'] && (
-									<ClayLink
-										className="ml-3"
-										href="#"
-										onClick={(event) => {
-											event.preventDefault();
-											onClear();
-										}}
-									>
-										{Liferay.Language.get('clear')}
-									</ClayLink>
-								)}
+								<ClayLink
+									className="ml-3"
+									href="#"
+									onClick={(event) => {
+										event.preventDefault();
+										onClear();
+									}}
+								>
+									{Liferay.Language.get('clear')}
+								</ClayLink>
 
 								<ClayLink
 									className="ml-3"
@@ -301,43 +221,106 @@ function BulkActions({
 							</li>
 						</ul>
 
-						{showBulkActionsManagementBarActions &&
-							(Liferay.FeatureFlags['LPD-42570'] ? (
-								renderNewBulkActions({
-									formId,
-									formName,
-									loadData,
-									namespace,
-									sidePanelId,
-								})
-							) : (
-								<div className="bulk-actions">
-									{bulkActions.map((actionDefinition, i) => (
-										<button
-											className={classNames(
-												'btn btn-monospaced btn-link',
-												i > 0 && 'ml-1'
-											)}
-											key={actionDefinition.label}
-											onClick={() =>
-												handleActionClick(
-													actionDefinition,
-													formId,
-													formName,
-													loadData,
-													namespace,
-													sidePanelId
-												)
+						{showBulkActionsManagementBarActions && (
+							<ul className="bulk-actions navbar-nav">
+								{!!bulkActions.length &&
+									bulkActions
+										.filter(
+											(bulkAction) =>
+												bulkAction.data?.highlighted
+										)
+										.map((highlightedBulkAction) => {
+											return (
+												<li
+													className="nav-item"
+													key={
+														highlightedBulkAction
+															.data?.id
+													}
+												>
+													<ClayButton
+														className="bulk-action-btn nav-link"
+														displayType="unstyled"
+														onClick={() =>
+															handleActionClick(
+																highlightedBulkAction,
+																formId,
+																formName,
+																loadData,
+																namespace,
+																sidePanelId
+															)
+														}
+													>
+														<span className="bulk-action-btn-icon inline-item inline-item-before">
+															<ClayIcon
+																symbol={
+																	highlightedBulkAction.icon
+																}
+															/>
+														</span>
+
+														<span className="bulk-action-btn-text">
+															{
+																highlightedBulkAction.label
+															}
+														</span>
+													</ClayButton>
+												</li>
+											);
+										})}
+
+								{!!bulkActions.length && (
+									<li className="nav-item">
+										<DropDown
+											hasLeftSymbols
+											trigger={
+												<ClayButtonWithIcon
+													aria-label={Liferay.Language.get(
+														'actions'
+													)}
+													className="nav-link nav-link-monospaced"
+													displayType="unstyled"
+													symbol="ellipsis-v"
+													title={Liferay.Language.get(
+														'actions'
+													)}
+												/>
 											}
-											type="button"
 										>
-											<ClayIcon
-												symbol={actionDefinition.icon}
-											/>
-										</button>
-									))}
-								</div>
-							))}
+											<DropDown.ItemList>
+												{bulkActions.map(
+													(actionDefinition) => (
+														<DropDown.Item
+															key={
+																actionDefinition.label
+															}
+															onClick={() =>
+																handleActionClick(
+																	actionDefinition,
+																	formId,
+																	formName,
+																	loadData,
+																	namespace,
+																	sidePanelId
+																)
+															}
+															symbolLeft={
+																actionDefinition.icon
+															}
+														>
+															{
+																actionDefinition.label
+															}
+														</DropDown.Item>
+													)
+												)}
+											</DropDown.ItemList>
+										</DropDown>
+									</li>
+								)}
+							</ul>
+						)}
 					</div>
 				</nav>
 			)}

@@ -20,6 +20,8 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyCategorySerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -108,6 +110,16 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testCompany.getCompanyId());
 
 		taxonomyCategoryResource = TaxonomyCategoryResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -871,7 +883,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			404,
 			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
 				taxonomyCategory.getId()));
-
 		assertHttpResponseStatusCode(
 			404, taxonomyCategoryResource.getTaxonomyCategoryHttpResponse("-"));
 	}
@@ -968,6 +979,49 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		throws Exception {
 
 		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	@Test
+	public void testDeleteTaxonomyCategoryBatch() throws Exception {
+		TaxonomyCategory taxonomyCategory1 =
+			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory();
+
+		testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
+			"COMPLETED", null, taxonomyCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+	}
+
+	protected TaxonomyCategory
+			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory()
+		throws Exception {
+
+		return testDeleteTaxonomyCategory_addTaxonomyCategory();
+	}
+
+	protected void testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
+			String expectedExecuteStatus, String externalReferenceCode,
+			String id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			taxonomyCategoryResource.deleteTaxonomyCategoryBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1834,7 +1888,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 					testDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
 						taxonomyCategory),
 					taxonomyCategory.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.
@@ -3356,9 +3409,32 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		return taxonomyCategory;
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected TaxonomyCategoryResource taxonomyCategoryResource;
-	protected TaxonomyCategoryResource permissionsTaxonomyCategoryResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected TaxonomyCategoryResource permissionsTaxonomyCategoryResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

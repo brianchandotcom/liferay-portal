@@ -177,6 +177,16 @@ public class WarehouseChannelResourceTest
 
 	@Override
 	protected WarehouseChannel
+			testDeleteWarehouseChannelBatch_addWarehouseChannel()
+		throws Exception {
+
+		return warehouseChannelResource.postWarehouseIdWarehouseChannel(
+			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			randomWarehouseChannel());
+	}
+
+	@Override
+	protected WarehouseChannel
 			testGetWarehouseByExternalReferenceCodeWarehouseChannelsPage_addWarehouseChannel(
 				String externalReferenceCode, WarehouseChannel warehouseChannel)
 		throws Exception {

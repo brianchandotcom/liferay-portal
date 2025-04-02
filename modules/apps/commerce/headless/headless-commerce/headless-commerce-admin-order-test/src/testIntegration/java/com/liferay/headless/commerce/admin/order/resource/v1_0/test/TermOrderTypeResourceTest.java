@@ -68,6 +68,13 @@ public class TermOrderTypeResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testDeleteTermOrderTypeBatch() throws Exception {
+		super.testDeleteTermOrderTypeBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteTermOrderType() throws Exception {
 		super.testGraphQLDeleteTermOrderType();
 	}

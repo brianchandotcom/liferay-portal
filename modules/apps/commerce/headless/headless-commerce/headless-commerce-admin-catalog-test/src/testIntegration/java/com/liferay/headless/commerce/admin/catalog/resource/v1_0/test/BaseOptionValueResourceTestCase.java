@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -137,6 +139,16 @@ public abstract class BaseOptionValueResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -227,7 +239,6 @@ public abstract class BaseOptionValueResourceTestCase {
 			optionValueResource.
 				getOptionValueByExternalReferenceCodeHttpResponse(
 					optionValue.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			optionValueResource.
@@ -397,11 +408,8 @@ public abstract class BaseOptionValueResourceTestCase {
 			404,
 			optionValueResource.getOptionValueHttpResponse(
 				optionValue.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			optionValueResource.getOptionValueHttpResponse(
-				optionValue.getId()));
+			404, optionValueResource.getOptionValueHttpResponse(0L));
 	}
 
 	protected OptionValue testDeleteOptionValue_addOptionValue()
@@ -487,6 +495,81 @@ public abstract class BaseOptionValueResourceTestCase {
 		throws Exception {
 
 		return testGraphQLOptionValue_addOptionValue();
+	}
+
+	@Test
+	public void testDeleteOptionValueBatch() throws Exception {
+		OptionValue optionValue1 = testDeleteOptionValueBatch_addOptionValue();
+
+		testDeleteOptionValueBatch_deleteOptionValue(
+			"COMPLETED", null, optionValue1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.getOptionValueHttpResponse(
+				optionValue1.getId()));
+
+		OptionValue optionValue2 = testDeleteOptionValueBatch_addOptionValue();
+
+		testDeleteOptionValueBatch_deleteOptionValue(
+			"COMPLETED", optionValue2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.getOptionValueHttpResponse(
+				optionValue2.getId()));
+
+		optionValue1 = testDeleteOptionValueBatch_addOptionValue();
+		optionValue2 = testDeleteOptionValueBatch_addOptionValue();
+
+		testDeleteOptionValueBatch_deleteOptionValue(
+			"COMPLETED", optionValue2.getExternalReferenceCode(),
+			optionValue1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.getOptionValueHttpResponse(
+				optionValue1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			optionValueResource.getOptionValueHttpResponse(
+				optionValue2.getId()));
+
+		testDeleteOptionValueBatch_deleteOptionValue(
+			"COMPLETED", optionValue2.getExternalReferenceCode(),
+			optionValue1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			optionValueResource.getOptionValueHttpResponse(
+				optionValue2.getId()));
+	}
+
+	protected OptionValue testDeleteOptionValueBatch_addOptionValue()
+		throws Exception {
+
+		return testDeleteOptionValue_addOptionValue();
+	}
+
+	protected void testDeleteOptionValueBatch_deleteOptionValue(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			optionValueResource.deleteOptionValueBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2130,7 +2213,30 @@ public abstract class BaseOptionValueResourceTestCase {
 		return randomOptionValue();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected OptionValueResource optionValueResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

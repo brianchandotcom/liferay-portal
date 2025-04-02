@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -137,6 +139,16 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -227,11 +239,9 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			404,
 			productOptionValueResource.getProductOptionValueHttpResponse(
 				productOptionValue.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
-			productOptionValueResource.getProductOptionValueHttpResponse(
-				productOptionValue.getId()));
+			productOptionValueResource.getProductOptionValueHttpResponse(0L));
 	}
 
 	protected ProductOptionValue
@@ -319,6 +329,49 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		throws Exception {
 
 		return testGraphQLProductOptionValue_addProductOptionValue();
+	}
+
+	@Test
+	public void testDeleteProductOptionValueBatch() throws Exception {
+		ProductOptionValue productOptionValue1 =
+			testDeleteProductOptionValueBatch_addProductOptionValue();
+
+		testDeleteProductOptionValueBatch_deleteProductOptionValue(
+			"COMPLETED", null, productOptionValue1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productOptionValueResource.getProductOptionValueHttpResponse(
+				productOptionValue1.getId()));
+	}
+
+	protected ProductOptionValue
+			testDeleteProductOptionValueBatch_addProductOptionValue()
+		throws Exception {
+
+		return testDeleteProductOptionValue_addProductOptionValue();
+	}
+
+	protected void testDeleteProductOptionValueBatch_deleteProductOptionValue(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			productOptionValueResource.
+				deleteProductOptionValueBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1826,7 +1879,30 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		return randomProductOptionValue();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ProductOptionValueResource productOptionValueResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

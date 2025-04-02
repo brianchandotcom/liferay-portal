@@ -624,7 +624,6 @@ public abstract class BaseWarehouseResourceTestCase {
 			404,
 			warehouseResource.getWarehouseByExternalReferenceCodeHttpResponse(
 				warehouse.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			warehouseResource.getWarehouseByExternalReferenceCodeHttpResponse(
@@ -844,10 +843,8 @@ public abstract class BaseWarehouseResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			warehouseResource.getWarehouseIdHttpResponse(warehouse.getId()));
-
 		assertHttpResponseStatusCode(
-			404,
-			warehouseResource.getWarehouseIdHttpResponse(warehouse.getId()));
+			404, warehouseResource.getWarehouseIdHttpResponse(0L));
 	}
 
 	protected Warehouse testDeleteWarehouseId_addWarehouse() throws Exception {

@@ -4338,22 +4338,22 @@ public class DataFactory {
 			List<LayoutModel> layoutModels, long segmentsExperienceId)
 		throws Exception {
 
-		List<FragmentEntryLinkModel> originalFragmentEntryLinkModels =
+		List<FragmentEntryLinkModel> nonhiddenFragmentEntryLinkModels =
 			new ArrayList<>();
 
-		LayoutModel nonhiddenLayout = null;
+		LayoutModel nonhiddenLayoutModel = null;
 
 		String imageRenderNamespace = StringUtil.randomId();
 		String paragraphRenderNamespace = StringUtil.randomId();
 
 		for (LayoutModel layoutModel : layoutModels) {
 			if (!layoutModel.isHidden()) {
-				nonhiddenLayout = layoutModel;
+				nonhiddenLayoutModel = layoutModel;
 
 				continue;
 			}
 
-			originalFragmentEntryLinkModels.add(
+			nonhiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, 0, segmentsExperienceId,
 					_readFile(
@@ -4367,7 +4367,7 @@ public class DataFactory {
 								"json"),
 					paragraphRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
-			originalFragmentEntryLinkModels.add(
+			nonhiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, 0, segmentsExperienceId,
 					_readFile(
@@ -4381,7 +4381,7 @@ public class DataFactory {
 								"json"),
 					paragraphRenderNamespace, 1,
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
-			originalFragmentEntryLinkModels.add(
+			nonhiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModel, 0, segmentsExperienceId, "",
 					_readFile(
@@ -4397,14 +4397,14 @@ public class DataFactory {
 		}
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
-			originalFragmentEntryLinkModels);
+			nonhiddenFragmentEntryLinkModels);
 
 		for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
-				originalFragmentEntryLinkModels) {
+				nonhiddenFragmentEntryLinkModels) {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					nonhiddenLayout,
+					nonhiddenLayoutModel,
 					originalFragmentEntryLinkModel.getFragmentEntryLinkId(),
 					originalFragmentEntryLinkModel.getSegmentsExperienceId(),
 					originalFragmentEntryLinkModel.getCss(),
@@ -5927,7 +5927,7 @@ public class DataFactory {
 			List<ObjectFieldModel> objectFieldModels, long segmentsExperienceId)
 		throws Exception {
 
-		List<FragmentEntryLinkModel> originalFragmentEntryLinkModels =
+		List<FragmentEntryLinkModel> nonhiddenFragmentEntryLinkModels =
 			new ArrayList<>();
 
 		String editValueJSON = _readFile(
@@ -5963,7 +5963,7 @@ public class DataFactory {
 					"ObjectField_" + objectFieldModel.getName());
 			}
 
-			originalFragmentEntryLinkModels.add(
+			nonhiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModels.get(1), 0, segmentsExperienceId, headingCss,
 					headingHtml, StringPool.BLANK, editValue,
@@ -5972,10 +5972,10 @@ public class DataFactory {
 		}
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
-			originalFragmentEntryLinkModels);
+			nonhiddenFragmentEntryLinkModels);
 
 		for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
-				originalFragmentEntryLinkModels) {
+				nonhiddenFragmentEntryLinkModels) {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(

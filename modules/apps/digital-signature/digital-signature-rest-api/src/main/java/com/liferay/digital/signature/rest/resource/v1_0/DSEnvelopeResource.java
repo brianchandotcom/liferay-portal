@@ -61,8 +61,7 @@ public interface DSEnvelopeResource {
 		throws Exception;
 
 	public Response postSiteDSEnvelopeBatch(
-			Long siteId, DSEnvelope dsEnvelope, String callbackURL,
-			Object object)
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)

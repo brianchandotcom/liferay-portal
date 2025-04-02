@@ -708,9 +708,30 @@ public abstract class BaseDiscountResourceImpl
 
 		UnsafeFunction<Discount, Discount, Exception> discountUnsafeFunction =
 			discount -> {
-				deleteDiscount(discount.getId());
+				if (discount.getId() != null) {
+					try {
+						deleteDiscount(discount.getId());
 
-				return discount;
+						return discount;
+					}
+					catch (Exception exception) {
+						if (discount.getExternalReferenceCode() != null) {
+							deleteDiscountByExternalReferenceCode(
+								discount.getExternalReferenceCode());
+
+							return discount;
+						}
+					}
+				}
+				else if (discount.getExternalReferenceCode() != null) {
+					deleteDiscountByExternalReferenceCode(
+						discount.getExternalReferenceCode());
+
+					return discount;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

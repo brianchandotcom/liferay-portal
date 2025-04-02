@@ -168,6 +168,14 @@ public class PaymentMethodGroupRelOrderTypeResourceTest
 
 	@Override
 	protected PaymentMethodGroupRelOrderType
+			testDeletePaymentMethodGroupRelOrderTypeBatch_addPaymentMethodGroupRelOrderType()
+		throws Exception {
+
+		return _addPaymentMethodGroupRelOrderType(_getId());
+	}
+
+	@Override
+	protected PaymentMethodGroupRelOrderType
 			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_addPaymentMethodGroupRelOrderType(
 				Long id,
 				PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType)

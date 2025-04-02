@@ -22,6 +22,8 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -149,6 +151,16 @@ public abstract class BaseKeywordResourceTestCase {
 			testCompany.getCompanyId());
 
 		keywordResource = KeywordResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -682,7 +694,6 @@ public abstract class BaseKeywordResourceTestCase {
 				getAssetLibraryKeywordByExternalReferenceCodeHttpResponse(
 					testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId(),
 					keyword.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			keywordResource.
@@ -1140,7 +1151,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword.getId()));
-
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(0L));
 	}
@@ -1221,6 +1231,42 @@ public abstract class BaseKeywordResourceTestCase {
 
 	protected Keyword testGraphQLDeleteKeyword_addKeyword() throws Exception {
 		return testGraphQLKeyword_addKeyword();
+	}
+
+	@Test
+	public void testDeleteKeywordBatch() throws Exception {
+		Keyword keyword1 = testDeleteKeywordBatch_addKeyword();
+
+		testDeleteKeywordBatch_deleteKeyword(
+			"COMPLETED", null, keyword1.getId());
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
+	}
+
+	protected Keyword testDeleteKeywordBatch_addKeyword() throws Exception {
+		return testDeleteKeyword_addKeyword();
+	}
+
+	protected void testDeleteKeywordBatch_deleteKeyword(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			keywordResource.deleteKeywordBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2073,7 +2119,6 @@ public abstract class BaseKeywordResourceTestCase {
 			keywordResource.getSiteKeywordByExternalReferenceCodeHttpResponse(
 				testDeleteSiteKeywordByExternalReferenceCode_getSiteId(keyword),
 				keyword.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			keywordResource.getSiteKeywordByExternalReferenceCodeHttpResponse(
@@ -3329,7 +3374,30 @@ public abstract class BaseKeywordResourceTestCase {
 		return randomKeyword();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected KeywordResource keywordResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;

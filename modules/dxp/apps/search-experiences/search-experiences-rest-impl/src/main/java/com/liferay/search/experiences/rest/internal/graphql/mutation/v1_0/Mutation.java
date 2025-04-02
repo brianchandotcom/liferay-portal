@@ -234,7 +234,6 @@ public class Mutation {
 
 	@GraphQLField
 	public Response createSXPBlueprintBatch(
-			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -243,7 +242,7 @@ public class Mutation {
 			_sxpBlueprintResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sxpBlueprintResource -> sxpBlueprintResource.postSXPBlueprintBatch(
-				sxpBlueprint, callbackURL, object));
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -288,7 +287,6 @@ public class Mutation {
 
 	@GraphQLField
 	public Response deleteSXPBlueprintBatch(
-			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -298,7 +296,7 @@ public class Mutation {
 			this::_populateResourceContext,
 			sxpBlueprintResource ->
 				sxpBlueprintResource.deleteSXPBlueprintBatch(
-					sxpBlueprintId, callbackURL, object));
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -329,8 +327,6 @@ public class Mutation {
 
 	@GraphQLField
 	public Response updateSXPBlueprintBatch(
-			@GraphQLName("sxpBlueprintId") Long sxpBlueprintId,
-			@GraphQLName("sxpBlueprint") SXPBlueprint sxpBlueprint,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -339,7 +335,7 @@ public class Mutation {
 			_sxpBlueprintResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sxpBlueprintResource -> sxpBlueprintResource.putSXPBlueprintBatch(
-				sxpBlueprintId, sxpBlueprint, callbackURL, object));
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -389,7 +385,6 @@ public class Mutation {
 
 	@GraphQLField
 	public Response createSXPElementBatch(
-			@GraphQLName("sxpElement") SXPElement sxpElement,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -398,7 +393,7 @@ public class Mutation {
 			_sxpElementResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.postSXPElementBatch(
-				sxpElement, callbackURL, object));
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -455,7 +450,6 @@ public class Mutation {
 
 	@GraphQLField
 	public Response deleteSXPElementBatch(
-			@GraphQLName("sxpElementId") Long sxpElementId,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -464,7 +458,7 @@ public class Mutation {
 			_sxpElementResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.deleteSXPElementBatch(
-				sxpElementId, callbackURL, object));
+				callbackURL, object));
 	}
 
 	@GraphQLField
@@ -495,8 +489,6 @@ public class Mutation {
 
 	@GraphQLField
 	public Response updateSXPElementBatch(
-			@GraphQLName("sxpElementId") Long sxpElementId,
-			@GraphQLName("sxpElement") SXPElement sxpElement,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("object") Object object)
 		throws Exception {
@@ -505,7 +497,7 @@ public class Mutation {
 			_sxpElementResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			sxpElementResource -> sxpElementResource.putSXPElementBatch(
-				sxpElementId, sxpElement, callbackURL, object));
+				callbackURL, object));
 	}
 
 	@GraphQLField

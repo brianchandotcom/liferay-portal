@@ -86,7 +86,7 @@ public class CommerceOSGiCommands implements OSGiCommands {
 			titleMap.put(LocaleUtil.US, title);
 
 			_cpDefinitionLocalService.addCPDefinition(
-				null, commerceCatalog.getGroupId(), user.getUserId(), titleMap,
+				null, user.getUserId(), commerceCatalog.getGroupId(), titleMap,
 				null, null, null, null, null, null, "simple", true, false,
 				false, false, 0, 0, 0, 0, 0, 0, false, false, null, true,
 				displayDateMonth, displayDateDay, displayDateYear,

@@ -74,7 +74,7 @@ public class CPConfigurationListLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPConfigurationList addCPConfigurationList(
-			String externalReferenceCode, long groupId, long userId,
+			String externalReferenceCode, long userId, long groupId,
 			long parentCPConfigurationListId, boolean master, String name,
 			double priority, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -212,8 +212,8 @@ public class CPConfigurationListLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPConfigurationList addOrUpdateCPConfigurationList(
-			String externalReferenceCode, long companyId, long groupId,
-			long userId, long parentCPConfigurationListId, boolean master,
+			String externalReferenceCode, long companyId, long userId,
+			long groupId, long parentCPConfigurationListId, boolean master,
 			String name, double priority, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
@@ -242,7 +242,7 @@ public class CPConfigurationListLocalServiceImpl
 		}
 
 		return cpConfigurationListLocalService.addCPConfigurationList(
-			externalReferenceCode, groupId, userId, parentCPConfigurationListId,
+			externalReferenceCode, userId, groupId, parentCPConfigurationListId,
 			master, name, priority, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -343,7 +343,7 @@ public class CPConfigurationListLocalServiceImpl
 	@Override
 	public CPConfigurationList updateCPConfigurationList(
 			String externalReferenceCode, long cpConfigurationListId,
-			long groupId, long userId, long parentCPConfigurationListId,
+			long userId, long groupId, long parentCPConfigurationListId,
 			boolean master, String name, double priority, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,

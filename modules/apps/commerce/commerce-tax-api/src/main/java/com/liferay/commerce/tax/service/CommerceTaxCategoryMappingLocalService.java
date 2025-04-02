@@ -70,8 +70,8 @@ public interface CommerceTaxCategoryMappingLocalService
 		CommerceTaxCategoryMapping commerceTaxCategoryMapping);
 
 	public CommerceTaxCategoryMapping addCommerceTaxCategoryMapping(
-			long userId, long groupId, long commerceTaxMethodId,
-			long cpTaxCategoryId, String externalReferenceCode)
+			String externalReferenceCode, long userId, long groupId,
+			long commerceTaxMethodId, long cpTaxCategoryId)
 		throws PortalException;
 
 	/**

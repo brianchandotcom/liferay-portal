@@ -65,13 +65,11 @@ public interface DSEnvelopeResource {
 		throws Exception;
 
 	public void postSiteDSEnvelopeBatch(
-			Long siteId, DSEnvelope dsEnvelope, String callbackURL,
-			Object object)
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteDSEnvelopeBatchHttpResponse(
-			Long siteId, DSEnvelope dsEnvelope, String callbackURL,
-			Object object)
+			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public DSEnvelope getSiteDSEnvelope(Long siteId, String dsEnvelopeId)
@@ -563,13 +561,12 @@ public interface DSEnvelopeResource {
 		}
 
 		public void postSiteDSEnvelopeBatch(
-				Long siteId, DSEnvelope dsEnvelope, String callbackURL,
-				Object object)
+				Long siteId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteDSEnvelopeBatchHttpResponse(
-					siteId, dsEnvelope, callbackURL, object);
+					siteId, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -620,8 +617,7 @@ public interface DSEnvelopeResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteDSEnvelopeBatchHttpResponse(
-				Long siteId, DSEnvelope dsEnvelope, String callbackURL,
-				Object object)
+				Long siteId, String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

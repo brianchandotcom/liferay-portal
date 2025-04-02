@@ -14,6 +14,8 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import createTempFile from '../../utils/createTempFile';
+import getRandomString from '../../utils/getRandomString';
 import {dataMigrationCenterPagesTest} from './fixtures/dataMigrationCenterPagesTest';
 import {OBJECT_ENTRY_ENTITY_TYPE} from './utils/constants';
 
@@ -912,6 +914,290 @@ test('can import CSV file with new and modified existing company scoped object e
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The new entry.',
 			testTextField: 'Test_NewEntry',
+		},
+	]);
+});
+
+test('can import json file with attachment field', async ({
+	apiHelpers,
+	dataMigrationCenterPage,
+	page,
+}) => {
+	const studentObjectDefinitionWithAttachment: ObjectDefinition = {
+		active: true,
+		externalReferenceCode: 'student-def',
+		label: {
+			en_US: 'Student',
+		},
+		name: 'Student',
+		objectFields: [
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'studentName',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: 'en_US',
+				label: {
+					en_US: 'Student name',
+				},
+				listTypeDefinitionId: 0,
+				name: 'name',
+				required: true,
+				state: false,
+				system: false,
+				type: 'String',
+			},
+			{
+				DBType: 'Long',
+				businessType: 'Attachment',
+				indexed: true,
+				indexedAsKeyword: false,
+				label: {
+					en_US: 'customAttachment',
+				},
+				name: 'diploma',
+				objectFieldSettings: [
+					{
+						name: 'acceptedFileExtensions',
+						value: 'jpeg, jpg, pdf, png',
+					} as any,
+					{
+						name: 'fileSource',
+						value: 'documentsAndMedia',
+					} as any,
+					{
+						name: 'maximumFileSize',
+						value: '100',
+					} as any,
+				],
+				required: false,
+				type: 'Long',
+			},
+		],
+		panelCategoryKey: 'control_panel.object',
+		pluralLabel: {
+			en_US: 'Students',
+		},
+		portlet: true,
+		restContextPath: '/o/c/students',
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	};
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: studentResponse} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			studentObjectDefinitionWithAttachment
+		);
+
+	apiHelpers.data.push({id: studentResponse.id, type: 'objectDefinition'});
+
+	const subjectObjectDefinition: ObjectDefinition = {
+		active: true,
+		externalReferenceCode: 'subject-def',
+		label: {
+			en_US: 'Subject',
+		},
+		name: 'Subject',
+		objectFields: [
+			{
+				DBType: 'String',
+				businessType: 'Text',
+				externalReferenceCode: 'subject-name-field',
+				indexed: true,
+				indexedAsKeyword: false,
+				indexedLanguageId: 'en_US',
+				label: {
+					en_US: 'name',
+				},
+				listTypeDefinitionId: 0,
+				name: 'name',
+				required: false,
+				state: false,
+				system: false,
+				type: 'String',
+			},
+		],
+		objectRelationships: [
+			{
+				deletionType: 'cascade',
+				externalReferenceCode: 'student-subjects-relationship',
+				label: {
+					en_US: 'Student subjects',
+				},
+				name: 'subjectStudents',
+				objectDefinitionExternalReferenceCode1: 'subject-def',
+				objectDefinitionExternalReferenceCode2: 'student-def',
+				objectDefinitionModifiable2: true,
+				objectDefinitionName2: 'Student',
+				objectDefinitionSystem2: false,
+				objectField: {
+					DBType: 'Long',
+					businessType: 'Relationship',
+					externalReferenceCode:
+						'student-subjects-relationship-field',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {
+						en_US: 'Student subjects',
+					},
+					name: 'r_subjectStudents_c_subjectId',
+					readOnly: 'false',
+					relationshipType: 'oneToMany',
+					state: false,
+					system: false,
+					type: 'Long',
+					unique: false,
+				},
+				parameterObjectFieldId: 0,
+				parameterObjectFieldName: '',
+				reverse: false,
+				system: false,
+				type: 'oneToMany',
+			},
+		],
+		panelCategoryKey: 'control_panel.object',
+		pluralLabel: {
+			en_US: 'Subjects',
+		},
+		portlet: true,
+		restContextPath: '/c/subjects',
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	};
+
+	const {body: subjectResponse} =
+		await objectDefinitionAPIClient.postObjectDefinition(
+			subjectObjectDefinition
+		);
+
+	apiHelpers.data.push({
+		id: subjectResponse.id,
+		type: 'objectDefinition',
+	});
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{
+			externalReferenceCode: 'Math',
+			name: 'Math',
+		},
+		'c/subjects'
+	);
+
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		{
+			diploma: {
+				fileBase64: 'R0lGODlhAQABAAAAACw=',
+				name: 'diploma.png',
+			},
+			externalReferenceCode: 'studentERC',
+			name: 'Jane',
+			r_subjectStudents_c_subjectERC: 'Math',
+		},
+		'c/students'
+	);
+
+	apiHelpers.data.push({
+		id: objectEntry.diploma.id,
+		type: 'document',
+	});
+
+	const filePath = createTempFile(
+		getRandomString() + '.json',
+		`[{"diploma": {
+			"id":${objectEntry.diploma.id},
+			"link":
+				{
+					"href": "${objectEntry.diploma.link.href}",
+					"label": "${objectEntry.diploma.link.label}"
+				},
+				"name": "${objectEntry.diploma.name}"
+			},
+			"name": "John",
+			"r_subjectStudents_c_subjectERC": "Math"
+		}]`
+	);
+
+	await dataMigrationCenterPage.goto();
+	await dataMigrationCenterPage.goToImportFile();
+
+	await dataMigrationCenterPage.importFile(
+		'com.liferay.object.rest.dto.v1_0.ObjectEntry#C_Student',
+		filePath,
+		'INSERT',
+		'PARTIAL_UPDATE'
+	);
+
+	await expect(
+		page.getByText('The import process completed successfully.')
+	).toBeVisible();
+	expect(
+		(
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/students'
+			)
+		).items
+	).toEqual([
+		{
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
+			diploma: {
+				externalReferenceCode: expect.any(String),
+				id: expect.any(Number),
+				link: {
+					href: expect.any(String),
+					label: 'diploma.png',
+				},
+				name: 'diploma.png',
+				scope: expect.any(Object),
+			},
+			externalReferenceCode: expect.any(String),
+			id: expect.any(Number),
+			keywords: [],
+			name: 'Jane',
+			objectEntryFolderExternalReferenceCode: '',
+			objectEntryFolderId: 0,
+			r_subjectStudents_c_subjectERC: 'Math',
+			r_subjectStudents_c_subjectId: expect.any(Number),
+			status: expect.any(Object),
+			subjectStudentsERC: 'Math',
+			taxonomyCategoryBriefs: [],
+		},
+		{
+			actions: expect.any(Object),
+			creator: expect.any(Object),
+			dateCreated: expect.any(String),
+			dateModified: expect.any(String),
+			diploma: {
+				externalReferenceCode: expect.any(String),
+				id: expect.any(Number),
+				link: {
+					href: expect.any(String),
+					label: 'diploma.png',
+				},
+				name: 'diploma.png',
+				scope: expect.any(Object),
+			},
+			externalReferenceCode: expect.any(String),
+			id: expect.any(Number),
+			keywords: [],
+			name: 'John',
+			objectEntryFolderExternalReferenceCode: '',
+			objectEntryFolderId: 0,
+			r_subjectStudents_c_subjectERC: 'Math',
+			r_subjectStudents_c_subjectId: expect.any(Number),
+			status: expect.any(Object),
+			subjectStudentsERC: 'Math',
+			taxonomyCategoryBriefs: [],
 		},
 	]);
 });

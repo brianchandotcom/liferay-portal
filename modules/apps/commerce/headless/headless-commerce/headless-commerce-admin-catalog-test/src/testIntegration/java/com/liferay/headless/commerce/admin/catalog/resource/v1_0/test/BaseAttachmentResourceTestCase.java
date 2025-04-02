@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -102,6 +104,16 @@ public abstract class BaseAttachmentResourceTestCase {
 			testCompany.getCompanyId());
 
 		attachmentResource = AttachmentResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -209,7 +221,6 @@ public abstract class BaseAttachmentResourceTestCase {
 			404,
 			attachmentResource.getAttachmentByExternalReferenceCodeHttpResponse(
 				attachment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			attachmentResource.getAttachmentByExternalReferenceCodeHttpResponse(
@@ -508,6 +519,57 @@ public abstract class BaseAttachmentResourceTestCase {
 		throws Exception {
 
 		return testGraphQLAttachment_addAttachment();
+	}
+
+	@Test
+	public void testDeleteAttachmentBatch() throws Exception {
+		Attachment attachment1 = testDeleteAttachmentBatch_addAttachment();
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", null, attachment1.getId());
+
+		Attachment attachment2 = testDeleteAttachmentBatch_addAttachment();
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", attachment2.getExternalReferenceCode(), null);
+
+		attachment1 = testDeleteAttachmentBatch_addAttachment();
+		attachment2 = testDeleteAttachmentBatch_addAttachment();
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", attachment2.getExternalReferenceCode(),
+			attachment1.getId());
+
+		testDeleteAttachmentBatch_deleteAttachment(
+			"COMPLETED", attachment2.getExternalReferenceCode(),
+			attachment1.getId());
+	}
+
+	protected Attachment testDeleteAttachmentBatch_addAttachment()
+		throws Exception {
+
+		return testDeleteAttachment_addAttachment();
+	}
+
+	protected void testDeleteAttachmentBatch_deleteAttachment(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			attachmentResource.deleteAttachmentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2665,7 +2727,30 @@ public abstract class BaseAttachmentResourceTestCase {
 		return randomAttachment();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected AttachmentResource attachmentResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -731,9 +731,32 @@ public abstract class BaseReplenishmentItemResourceImpl
 
 		UnsafeFunction<ReplenishmentItem, ReplenishmentItem, Exception>
 			replenishmentItemUnsafeFunction = replenishmentItem -> {
-				deleteReplenishmentItem(replenishmentItem.getId());
+				if (replenishmentItem.getId() != null) {
+					try {
+						deleteReplenishmentItem(replenishmentItem.getId());
 
-				return replenishmentItem;
+						return replenishmentItem;
+					}
+					catch (Exception exception) {
+						if (replenishmentItem.getExternalReferenceCode() !=
+								null) {
+
+							deleteReplenishmentItemByExternalReferenceCode(
+								replenishmentItem.getExternalReferenceCode());
+
+							return replenishmentItem;
+						}
+					}
+				}
+				else if (replenishmentItem.getExternalReferenceCode() != null) {
+					deleteReplenishmentItemByExternalReferenceCode(
+						replenishmentItem.getExternalReferenceCode());
+
+					return replenishmentItem;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

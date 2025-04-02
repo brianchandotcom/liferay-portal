@@ -1010,9 +1010,30 @@ public abstract class BaseAttachmentResourceImpl
 
 		UnsafeFunction<Attachment, Attachment, Exception>
 			attachmentUnsafeFunction = attachment -> {
-				deleteAttachment(attachment.getId());
+				if (attachment.getId() != null) {
+					try {
+						deleteAttachment(attachment.getId());
 
-				return attachment;
+						return attachment;
+					}
+					catch (Exception exception) {
+						if (attachment.getExternalReferenceCode() != null) {
+							deleteAttachmentByExternalReferenceCode(
+								attachment.getExternalReferenceCode());
+
+							return attachment;
+						}
+					}
+				}
+				else if (attachment.getExternalReferenceCode() != null) {
+					deleteAttachmentByExternalReferenceCode(
+						attachment.getExternalReferenceCode());
+
+					return attachment;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

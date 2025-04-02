@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.AccountChannelShippingOption;
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.User;
 import com.liferay.headless.commerce.admin.account.client.http.HttpInvoker;
@@ -137,6 +139,16 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -246,12 +258,10 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			accountChannelShippingOptionResource.
 				getAccountChannelShippingOptionHttpResponse(
 					accountChannelShippingOption.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			accountChannelShippingOptionResource.
-				getAccountChannelShippingOptionHttpResponse(
-					accountChannelShippingOption.getId()));
+				getAccountChannelShippingOptionHttpResponse(0L));
 	}
 
 	protected AccountChannelShippingOption
@@ -347,6 +357,52 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		throws Exception {
 
 		return testGraphQLAccountChannelShippingOption_addAccountChannelShippingOption();
+	}
+
+	@Test
+	public void testDeleteAccountChannelShippingOptionBatch() throws Exception {
+		AccountChannelShippingOption accountChannelShippingOption1 =
+			testDeleteAccountChannelShippingOptionBatch_addAccountChannelShippingOption();
+
+		testDeleteAccountChannelShippingOptionBatch_deleteAccountChannelShippingOption(
+			"COMPLETED", null, accountChannelShippingOption1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountChannelShippingOptionResource.
+				getAccountChannelShippingOptionHttpResponse(
+					accountChannelShippingOption1.getId()));
+	}
+
+	protected AccountChannelShippingOption
+			testDeleteAccountChannelShippingOptionBatch_addAccountChannelShippingOption()
+		throws Exception {
+
+		return testDeleteAccountChannelShippingOption_addAccountChannelShippingOption();
+	}
+
+	protected void
+			testDeleteAccountChannelShippingOptionBatch_deleteAccountChannelShippingOption(
+				String expectedExecuteStatus, String externalReferenceCode,
+				Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			accountChannelShippingOptionResource.
+				deleteAccountChannelShippingOptionBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2065,8 +2121,31 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		return randomAccountChannelShippingOption();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected AccountChannelShippingOptionResource
 		accountChannelShippingOptionResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

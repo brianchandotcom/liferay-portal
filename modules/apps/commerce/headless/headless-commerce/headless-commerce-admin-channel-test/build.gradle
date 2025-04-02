@@ -25,6 +25,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce-core-api")
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-channel-api")
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-channel-client")
+	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")

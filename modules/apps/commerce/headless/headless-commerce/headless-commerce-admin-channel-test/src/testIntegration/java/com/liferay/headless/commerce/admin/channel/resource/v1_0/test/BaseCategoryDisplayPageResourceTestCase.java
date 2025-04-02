@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.CategoryDisplayPage;
 import com.liferay.headless.commerce.admin.channel.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.channel.client.pagination.Page;
@@ -138,6 +140,16 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -229,11 +241,9 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 			404,
 			categoryDisplayPageResource.getCategoryDisplayPageHttpResponse(
 				categoryDisplayPage.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
-			categoryDisplayPageResource.getCategoryDisplayPageHttpResponse(
-				categoryDisplayPage.getId()));
+			categoryDisplayPageResource.getCategoryDisplayPageHttpResponse(0L));
 	}
 
 	protected CategoryDisplayPage
@@ -321,6 +331,49 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 		throws Exception {
 
 		return testGraphQLCategoryDisplayPage_addCategoryDisplayPage();
+	}
+
+	@Test
+	public void testDeleteCategoryDisplayPageBatch() throws Exception {
+		CategoryDisplayPage categoryDisplayPage1 =
+			testDeleteCategoryDisplayPageBatch_addCategoryDisplayPage();
+
+		testDeleteCategoryDisplayPageBatch_deleteCategoryDisplayPage(
+			"COMPLETED", null, categoryDisplayPage1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			categoryDisplayPageResource.getCategoryDisplayPageHttpResponse(
+				categoryDisplayPage1.getId()));
+	}
+
+	protected CategoryDisplayPage
+			testDeleteCategoryDisplayPageBatch_addCategoryDisplayPage()
+		throws Exception {
+
+		return testDeleteCategoryDisplayPage_addCategoryDisplayPage();
+	}
+
+	protected void testDeleteCategoryDisplayPageBatch_deleteCategoryDisplayPage(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			categoryDisplayPageResource.
+				deleteCategoryDisplayPageBatchHttpResponse(
+					null,
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"externalReferenceCode", () -> externalReferenceCode
+						).put(
+							"id", () -> id
+						)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2360,7 +2413,30 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 		return randomCategoryDisplayPage();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected CategoryDisplayPageResource categoryDisplayPageResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

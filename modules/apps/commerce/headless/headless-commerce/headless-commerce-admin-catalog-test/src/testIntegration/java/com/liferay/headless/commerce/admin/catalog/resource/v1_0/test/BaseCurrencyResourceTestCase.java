@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
@@ -130,6 +132,16 @@ public abstract class BaseCurrencyResourceTestCase {
 			testCompany.getCompanyId());
 
 		currencyResource = CurrencyResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -638,7 +650,6 @@ public abstract class BaseCurrencyResourceTestCase {
 			404,
 			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
 				currency.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			currencyResource.getCurrencyByExternalReferenceCodeHttpResponse(
@@ -827,9 +838,8 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, currencyResource.getCurrencyHttpResponse(currency.getId()));
-
 		assertHttpResponseStatusCode(
-			404, currencyResource.getCurrencyHttpResponse(currency.getId()));
+			404, currencyResource.getCurrencyHttpResponse(0L));
 	}
 
 	protected Currency testDeleteCurrency_addCurrency() throws Exception {
@@ -911,6 +921,69 @@ public abstract class BaseCurrencyResourceTestCase {
 		throws Exception {
 
 		return testGraphQLCurrency_addCurrency();
+	}
+
+	@Test
+	public void testDeleteCurrencyBatch() throws Exception {
+		Currency currency1 = testDeleteCurrencyBatch_addCurrency();
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", null, currency1.getId());
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency1.getId()));
+
+		Currency currency2 = testDeleteCurrencyBatch_addCurrency();
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", currency2.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency2.getId()));
+
+		currency1 = testDeleteCurrencyBatch_addCurrency();
+		currency2 = testDeleteCurrencyBatch_addCurrency();
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", currency2.getExternalReferenceCode(),
+			currency1.getId());
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency1.getId()));
+		assertHttpResponseStatusCode(
+			200, currencyResource.getCurrencyHttpResponse(currency2.getId()));
+
+		testDeleteCurrencyBatch_deleteCurrency(
+			"COMPLETED", currency2.getExternalReferenceCode(),
+			currency1.getId());
+
+		assertHttpResponseStatusCode(
+			404, currencyResource.getCurrencyHttpResponse(currency2.getId()));
+	}
+
+	protected Currency testDeleteCurrencyBatch_addCurrency() throws Exception {
+		return testDeleteCurrency_addCurrency();
+	}
+
+	protected void testDeleteCurrencyBatch_deleteCurrency(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			currencyResource.deleteCurrencyBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2040,7 +2113,30 @@ public abstract class BaseCurrencyResourceTestCase {
 		return randomCurrency();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected CurrencyResource currencyResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

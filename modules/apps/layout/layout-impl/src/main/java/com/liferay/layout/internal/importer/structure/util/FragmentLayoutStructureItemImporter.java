@@ -18,6 +18,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
@@ -349,6 +350,11 @@ public class FragmentLayoutStructureItemImporter
 			configuration = fragmentEntry.getConfiguration();
 			html = fragmentEntry.getHtml();
 			type = fragmentEntry.getType();
+		}
+		else {
+			configuration = fragmentRenderer.getConfiguration(
+				new DefaultFragmentRendererContext(null));
+			type = fragmentRenderer.getType();
 		}
 
 		JSONObject fragmentEntryProcessorValuesJSONObject =

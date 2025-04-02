@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentShortcut;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -145,6 +147,16 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			testCompany.getCompanyId());
 
 		documentShortcutResource = DocumentShortcutResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -468,7 +480,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			404,
 			documentShortcutResource.getDocumentShortcutHttpResponse(
 				documentShortcut.getId()));
-
 		assertHttpResponseStatusCode(
 			404, documentShortcutResource.getDocumentShortcutHttpResponse(0L));
 	}
@@ -564,6 +575,48 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		throws Exception {
 
 		return testGraphQLDocumentShortcut_addDocumentShortcut();
+	}
+
+	@Test
+	public void testDeleteDocumentShortcutBatch() throws Exception {
+		DocumentShortcut documentShortcut1 =
+			testDeleteDocumentShortcutBatch_addDocumentShortcut();
+
+		testDeleteDocumentShortcutBatch_deleteDocumentShortcut(
+			"COMPLETED", null, documentShortcut1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			documentShortcutResource.getDocumentShortcutHttpResponse(
+				documentShortcut1.getId()));
+	}
+
+	protected DocumentShortcut
+			testDeleteDocumentShortcutBatch_addDocumentShortcut()
+		throws Exception {
+
+		return testDeleteDocumentShortcut_addDocumentShortcut();
+	}
+
+	protected void testDeleteDocumentShortcutBatch_deleteDocumentShortcut(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			documentShortcutResource.deleteDocumentShortcutBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1269,7 +1322,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 					testDeleteSiteDocumentShortcutByExternalReferenceCode_getSiteId(
 						documentShortcut),
 					documentShortcut.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			documentShortcutResource.
@@ -2451,7 +2503,30 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		return randomDocumentShortcut();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected DocumentShortcutResource documentShortcutResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;

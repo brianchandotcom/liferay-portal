@@ -101,6 +101,13 @@ public class ProductConfigurationResourceTest
 	@FeatureFlags("LPD-10889")
 	@Override
 	@Test
+	public void testDeleteProductConfigurationBatch() throws Exception {
+		super.testDeleteProductConfigurationBatch();
+	}
+
+	@FeatureFlags("LPD-10889")
+	@Override
+	@Test
 	public void testDeleteProductConfigurationByExternalReferenceCode()
 		throws Exception {
 

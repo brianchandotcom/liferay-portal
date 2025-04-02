@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.client.http.HttpInvoker;
 import com.liferay.headless.object.client.pagination.Page;
@@ -138,6 +140,16 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -236,7 +248,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			404,
 			objectEntryFolderResource.getObjectEntryFolderHttpResponse(
 				objectEntryFolder.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			objectEntryFolderResource.getObjectEntryFolderHttpResponse(0L));
@@ -334,6 +345,48 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		throws Exception {
 
 		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	@Test
+	public void testDeleteObjectEntryFolderBatch() throws Exception {
+		ObjectEntryFolder objectEntryFolder1 =
+			testDeleteObjectEntryFolderBatch_addObjectEntryFolder();
+
+		testDeleteObjectEntryFolderBatch_deleteObjectEntryFolder(
+			"COMPLETED", null, objectEntryFolder1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.getObjectEntryFolderHttpResponse(
+				objectEntryFolder1.getId()));
+	}
+
+	protected ObjectEntryFolder
+			testDeleteObjectEntryFolderBatch_addObjectEntryFolder()
+		throws Exception {
+
+		return testDeleteObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	protected void testDeleteObjectEntryFolderBatch_deleteObjectEntryFolder(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			objectEntryFolderResource.deleteObjectEntryFolderBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -708,7 +761,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
 						objectEntryFolder),
 					objectEntryFolder.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			objectEntryFolderResource.
@@ -2593,7 +2645,30 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		return randomObjectEntryFolder();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ObjectEntryFolderResource objectEntryFolderResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

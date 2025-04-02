@@ -15,6 +15,30 @@ import java.util.Map;
 public class FDSActionDropdownItem extends DropdownItem {
 
 	public FDSActionDropdownItem(
+		String confirmationMessage, String confirmationMessageType,
+		String errorMessage, boolean highlighted, String href, String icon,
+		String id, String label, String method, String modalSize,
+		String permissionKey, String requestBody, String successMessage,
+		String target, String title, String type,
+		Map<String, Object> visibilityFilters) {
+
+		this(
+			href, icon, id, label, method, permissionKey, target,
+			visibilityFilters);
+
+		setConfirmationMessage(confirmationMessage);
+		setConfirmationMessageType(confirmationMessageType);
+		setErrorMessage(errorMessage);
+		setHighlighted(highlighted);
+		setModalSize(modalSize);
+		setRequestBody(requestBody);
+		setRequestBody(requestBody);
+		setSuccessMessage(successMessage);
+		setTitle(title);
+		setType(type);
+	}
+
+	public FDSActionDropdownItem(
 		String href, String icon, String id, String label, String method,
 		String permissionKey, String target) {
 
@@ -103,6 +127,10 @@ public class FDSActionDropdownItem extends DropdownItem {
 
 	public void setErrorMessage(String errorMessage) {
 		putData("errorMessage", errorMessage);
+	}
+
+	public void setHighlighted(Boolean highlighted) {
+		putData("highlighted", highlighted);
 	}
 
 	public void setId(String id) {

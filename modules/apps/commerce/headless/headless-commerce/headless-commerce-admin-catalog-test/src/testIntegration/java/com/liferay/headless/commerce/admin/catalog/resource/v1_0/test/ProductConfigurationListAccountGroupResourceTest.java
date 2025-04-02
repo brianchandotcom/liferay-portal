@@ -75,10 +75,10 @@ public class ProductConfigurationListAccountGroupResourceTest
 
 		_cpConfigurationList =
 			_cpConfigurationListLocalService.addCPConfigurationList(
-				RandomTestUtil.randomString(), _commerceCatalog.getGroupId(),
-				_user.getUserId(), 0, false, RandomTestUtil.randomString(), 0D,
-				dateConfig.getMonth(), dateConfig.getDay(),
-				dateConfig.getYear(), dateConfig.getHour(),
+				RandomTestUtil.randomString(), _user.getUserId(),
+				_commerceCatalog.getGroupId(), 0, false,
+				RandomTestUtil.randomString(), 0D, dateConfig.getMonth(),
+				dateConfig.getDay(), dateConfig.getYear(), dateConfig.getHour(),
 				dateConfig.getMinute(), 0, 0, 0, 0, 0, true);
 	}
 
@@ -191,6 +191,17 @@ public class ProductConfigurationListAccountGroupResourceTest
 					_cpConfigurationList.getCPConfigurationListId();
 			}
 		};
+	}
+
+	@Override
+	protected ProductConfigurationListAccountGroup
+			testDeleteProductConfigurationListAccountGroupBatch_addProductConfigurationListAccountGroup()
+		throws Exception {
+
+		return productConfigurationListAccountGroupResource.
+			postProductConfigurationListIdProductConfigurationListAccountGroup(
+				_cpConfigurationList.getCPConfigurationListId(),
+				randomProductConfigurationListAccountGroup());
 	}
 
 	@Override

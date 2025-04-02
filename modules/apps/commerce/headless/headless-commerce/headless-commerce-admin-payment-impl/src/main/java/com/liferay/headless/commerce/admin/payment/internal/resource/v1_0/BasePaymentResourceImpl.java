@@ -766,9 +766,30 @@ public abstract class BasePaymentResourceImpl
 
 		UnsafeFunction<Payment, Payment, Exception> paymentUnsafeFunction =
 			payment -> {
-				deletePayment(payment.getId());
+				if (payment.getId() != null) {
+					try {
+						deletePayment(payment.getId());
 
-				return payment;
+						return payment;
+					}
+					catch (Exception exception) {
+						if (payment.getExternalReferenceCode() != null) {
+							deletePaymentByExternalReferenceCode(
+								payment.getExternalReferenceCode());
+
+							return payment;
+						}
+					}
+				}
+				else if (payment.getExternalReferenceCode() != null) {
+					deletePaymentByExternalReferenceCode(
+						payment.getExternalReferenceCode());
+
+					return payment;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {

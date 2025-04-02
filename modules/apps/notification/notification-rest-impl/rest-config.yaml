@@ -6,6 +6,6 @@ application:
     name: "Liferay.Notification.REST"
 author: "Gabriel Albuquerque"
 clientDir: "../notification-rest-client/src/main/java"
-compatibilityVersion: 7
+compatibilityVersion: 8
 forcePredictableOperationId: true
 testDir: "../notification-rest-test/src/testIntegration/java"

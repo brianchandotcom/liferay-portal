@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -142,6 +144,16 @@ public abstract class BaseWikiPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -241,7 +253,6 @@ public abstract class BaseWikiPageResourceTestCase {
 				testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
 					wikiPage),
 				wikiPage.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			wikiPageResource.getSiteWikiPageByExternalReferenceCodeHttpResponse(
@@ -1021,7 +1032,6 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(wikiPage.getId()));
-
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(0L));
 	}
@@ -1104,6 +1114,42 @@ public abstract class BaseWikiPageResourceTestCase {
 		throws Exception {
 
 		return testGraphQLWikiPage_addWikiPage();
+	}
+
+	@Test
+	public void testDeleteWikiPageBatch() throws Exception {
+		WikiPage wikiPage1 = testDeleteWikiPageBatch_addWikiPage();
+
+		testDeleteWikiPageBatch_deleteWikiPage(
+			"COMPLETED", null, wikiPage1.getId());
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
+	}
+
+	protected WikiPage testDeleteWikiPageBatch_addWikiPage() throws Exception {
+		return testDeleteWikiPage_addWikiPage();
+	}
+
+	protected void testDeleteWikiPageBatch_deleteWikiPage(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			wikiPageResource.deleteWikiPageBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -2695,7 +2741,30 @@ public abstract class BaseWikiPageResourceTestCase {
 		return randomWikiPage();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected WikiPageResource wikiPageResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -62,12 +62,11 @@ public interface CTProcessResource {
 			Long ctProcessId)
 		throws Exception;
 
-	public void deleteCTProcessBatch(
-			Long ctProcessId, String callbackURL, Object object)
+	public void deleteCTProcessBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse deleteCTProcessBatchHttpResponse(
-			Long ctProcessId, String callbackURL, Object object)
+			String callbackURL, Object object)
 		throws Exception;
 
 	public CTProcess getCTProcess(Long ctProcessId) throws Exception;
@@ -560,13 +559,11 @@ public interface CTProcessResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteCTProcessBatch(
-				Long ctProcessId, String callbackURL, Object object)
+		public void deleteCTProcessBatch(String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteCTProcessBatchHttpResponse(
-					ctProcessId, callbackURL, object);
+				deleteCTProcessBatchHttpResponse(callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -617,7 +614,7 @@ public interface CTProcessResource {
 		}
 
 		public HttpInvoker.HttpResponse deleteCTProcessBatchHttpResponse(
-				Long ctProcessId, String callbackURL, Object object)
+				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -651,9 +648,7 @@ public interface CTProcessResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/change-tracking-rest/v1.0/ct-processes/{ctProcessId}/batch");
-
-			httpInvoker.path("ctProcessId", ctProcessId);
+						"/o/change-tracking-rest/v1.0/ct-processes/batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

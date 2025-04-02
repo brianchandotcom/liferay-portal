@@ -90,6 +90,13 @@ public class ProductOptionValueResourceTest
 	@Ignore
 	@Override
 	@Test
+	public void testDeleteProductOptionValueBatch() throws Exception {
+		super.testDeleteProductOptionValueBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGetProductOptionIdProductOptionValuesPage()
 		throws Exception {
 

@@ -188,7 +188,7 @@ public class CPConfigurationListLocalServiceTest {
 		}
 
 		return _cpConfigurationListLocalService.addCPConfigurationList(
-			externalReferenceCode, groupId, _user.getUserId(),
+			externalReferenceCode, _user.getUserId(), groupId,
 			parentCPConfigurationListId, masterCPConfigurationList, name, 0D,
 			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
 			calendar.get(Calendar.YEAR), displayDateHour,

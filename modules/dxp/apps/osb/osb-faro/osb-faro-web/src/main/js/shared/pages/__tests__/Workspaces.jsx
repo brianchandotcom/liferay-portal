@@ -51,6 +51,13 @@ jest.mock('shared/hooks/useProjects', () => ({
 
 jest.unmock('react-dom');
 
+jest.mock('shared/hooks/useIncidentAlert', () => ({
+	useIncidentAlert: jest.fn(() => ({
+		data: {incidentAlertEnabled: false},
+		loading: false
+	}))
+}));
+
 describe('Workspaces', () => {
 	afterEach(cleanup);
 
@@ -64,6 +71,42 @@ describe('Workspaces', () => {
 		const {container} = render(<DefaultComponent />);
 
 		expect(container).toMatchSnapshot();
+	});
+
+	it('should render with the incident alert message notification', () => {
+		const {useIncidentAlert} = require('shared/hooks/useIncidentAlert');
+
+		useFetchProjects.mockImplementation(() => ({data: [], loading: false}));
+
+		useIncidentAlert.mockImplementation(() => ({
+			data: {incidentAlertEnabled: true},
+			loading: false
+		}));
+
+		const {container, getByText} = render(<DefaultComponent />);
+
+		expect(
+			getByText(
+				'We are experiencing changes that may affect your workflow.'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			getByText(
+				'Visit our Help Center announcements page for more details.'
+			)
+		).toBeInTheDocument();
+
+		const helpCenterPageLink = container.querySelector(
+			'a[href="https://help.liferay.com/hc/en-us/sections/15837825517581-Analytics-Cloud-Announcements"]'
+		);
+
+		expect(helpCenterPageLink).toBeInTheDocument();
+
+		useIncidentAlert.mockImplementation(() => ({
+			data: {incidentAlertEnabled: false},
+			loading: false
+		}));
 	});
 
 	it('should render with a message that one or more basic tier workspaces are available to be configured', () => {

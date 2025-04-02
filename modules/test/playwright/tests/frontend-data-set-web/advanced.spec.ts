@@ -73,7 +73,7 @@ test(
 		await test.step('Check reset filters button', async () => {
 			await test.step('Check the total amount of items is 75', async () => {
 				expect
-					.soft(page.getByText('Showing 1 to 10 of 75 entries.'))
+					.soft(page.getByText('Showing 1 to 20 of 75 entries.'))
 					.toBeVisible();
 			});
 
@@ -95,7 +95,7 @@ test(
 
 			await test.step('Check the total amount of items is now 100', async () => {
 				expect
-					.soft(page.getByText('Showing 1 to 10 of 100 entries.'))
+					.soft(page.getByText('Showing 1 to 20 of 100 entries.'))
 					.toBeVisible();
 			});
 
@@ -224,12 +224,6 @@ test(
 					.waitFor();
 			});
 
-			await test.step('Close filters dropdown or else the cells cannot be located', async () => {
-				await fdsSamplePage.managementToolbar
-					.getByRole('button', {name: 'Filter'})
-					.click();
-			});
-
 			await test.step('Check the results are filtered by checking all results appear', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
 				const greenCells = page.getByRole('cell', {name: '🍏'});
@@ -272,12 +266,6 @@ test(
 					.waitFor();
 			});
 
-			await test.step('Close filters dropdown or else the cells cannot be located', async () => {
-				await fdsSamplePage.managementToolbar
-					.getByRole('button', {name: 'Filter'})
-					.click();
-			});
-
 			await test.step('Check the only Red results are displayed', async () => {
 				const blueCells = page.getByRole('cell', {name: 'Blue'});
 				const greenCells = page.getByRole('cell', {name: '🍏'});
@@ -315,12 +303,6 @@ test(
 				await page
 					.getByText('This is a description for sample 1.')
 					.waitFor();
-			});
-
-			await test.step('Close filters dropdown or else the cells cannot be located', async () => {
-				await page
-					.getByRole('button', {name: 'Color: Green, Yellow, Red'})
-					.click();
 			});
 
 			await test.step('Check the results only show "Green", "Yellow", and "Red"', async () => {
@@ -750,22 +732,63 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 			.first()
 			.getByRole('checkbox');
 
-		await test.step('Select one of the items in the table', async () => {
+		await test.step('Select the first item in the table', async () => {
 			await firstItemCheckbox.check();
 		});
 
+		await test.step('Check the highlighted bulk action "Label" is visible', async () => {
+			await expect(
+				fdsSamplePage.bulkActions.container.getByRole('button', {
+					name: 'Label',
+				})
+			).toHaveText('Label');
+		});
+
+		await test.step('Check in medium-width windows the text is hidden', async () => {
+			await page.setViewportSize({height: 1024, width: 800});
+
+			const visibleLabelButton = fdsSamplePage.bulkActions.container
+				.locator('button')
+				.filter({
+					hasText: 'Label',
+				});
+
+			await expect(visibleLabelButton).toBeVisible();
+
+			await expect(
+				fdsSamplePage.bulkActions.container.getByLabel('Label')
+			).not.toBeVisible();
+		});
+
+		await test.step('Check in small-width windows the text and icon are hidden', async () => {
+			await page.setViewportSize({height: 720, width: 360});
+
+			await expect(
+				fdsSamplePage.bulkActions.container.getByRole('button', {
+					name: 'Label',
+				})
+			).toBeHidden();
+		});
+
+		await test.step('Reset the window size', async () => {
+			await page.setViewportSize({height: 720, width: 1280});
+		});
+
 		await test.step('Open ellipsis actions menu', async () => {
-			await page.locator('.bulk-actions').getByLabel('Actions').click();
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
 		});
 
 		await test.step('Check the bulk actions are listed', async () => {
 			await expect(
 				page.locator('.dropdown-menu.show').getByRole('menuitem')
-			).toHaveText('Label');
+			).toHaveCount(2);
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveText(['Label', 'Delete']);
 		});
 
 		await test.step('Close ellipsis actions menu', async () => {
-			await page.locator('.bulk-actions').getByLabel('Actions').click();
+			await fdsSamplePage.bulkActions.actionsDropdownButton.click();
 
 			await expect(page.locator('.dropdown-menu.show')).toBeHidden();
 		});
@@ -785,6 +808,11 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 
 			await page.getByRole('option', {name: '60 Items'}).click();
 
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
+
 			await expect(
 				page.getByText('Showing 1 to 60 of 75 entries.')
 			).toBeVisible();
@@ -801,6 +829,11 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 		await test.step('Select all items', async () => {
 			await page.getByLabel('Go to page, 2').click();
 
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
+
 			for (let i = 1; i <= 15; i++) {
 				await page
 					.locator(
@@ -816,6 +849,11 @@ test('Check behavior of selection', async ({fdsSamplePage, page}) => {
 
 		await test.step('Check that selection are preserved through page navigation', async () => {
 			await page.getByLabel('Go to page, 1').click();
+
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
 
 			await expect(
 				page.getByText('All Selected (75 of 75 Items)')

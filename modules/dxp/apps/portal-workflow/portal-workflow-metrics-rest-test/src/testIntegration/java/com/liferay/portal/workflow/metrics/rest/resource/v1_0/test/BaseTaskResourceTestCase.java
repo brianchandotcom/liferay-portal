@@ -290,7 +290,6 @@ public abstract class BaseTaskResourceTestCase {
 			404,
 			taskResource.getProcessTaskHttpResponse(
 				testDeleteProcessTask_getProcessId(task), task.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			taskResource.getProcessTaskHttpResponse(

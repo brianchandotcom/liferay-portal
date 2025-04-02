@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Comment;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -131,6 +133,16 @@ public abstract class BaseCommentResourceTestCase {
 			testCompany.getCompanyId());
 
 		commentResource = CommentResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -642,7 +654,6 @@ public abstract class BaseCommentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, commentResource.getCommentHttpResponse(comment.getId()));
-
 		assertHttpResponseStatusCode(
 			404, commentResource.getCommentHttpResponse(0L));
 	}
@@ -723,6 +734,42 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected Comment testGraphQLDeleteComment_addComment() throws Exception {
 		return testGraphQLComment_addComment();
+	}
+
+	@Test
+	public void testDeleteCommentBatch() throws Exception {
+		Comment comment1 = testDeleteCommentBatch_addComment();
+
+		testDeleteCommentBatch_deleteComment(
+			"COMPLETED", null, comment1.getId());
+
+		assertHttpResponseStatusCode(
+			404, commentResource.getCommentHttpResponse(comment1.getId()));
+	}
+
+	protected Comment testDeleteCommentBatch_addComment() throws Exception {
+		return testDeleteComment_addComment();
+	}
+
+	protected void testDeleteCommentBatch_deleteComment(
+			String expectedExecuteStatus, String externalReferenceCode, Long id)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			commentResource.deleteCommentBatchHttpResponse(
+				null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(202, httpResponse.getStatusCode());
+
+		waitForFinish(
+			expectedExecuteStatus,
+			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
 	@Test
@@ -1866,7 +1913,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getBlogPostingExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
@@ -2220,7 +2266,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
@@ -2574,7 +2619,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getDocumentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
@@ -2928,7 +2972,6 @@ public abstract class BaseCommentResourceTestCase {
 					testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId(),
 					testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getStructuredContentExternalReferenceCode(),
 					comment.getExternalReferenceCode()));
-
 		assertHttpResponseStatusCode(
 			404,
 			commentResource.
@@ -4404,7 +4447,30 @@ public abstract class BaseCommentResourceTestCase {
 		return randomComment();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected CommentResource commentResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

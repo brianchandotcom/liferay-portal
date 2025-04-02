@@ -5,6 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
@@ -19,14 +21,18 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -255,15 +261,33 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					GetterUtil.getBoolean(masterPage.getMarkedAsDefault()));
 		}
 
-		return _masterPageDTOConverter.toDTO(
-			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				masterPage.getName()));
+		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
+
+		serviceContext.setAssetTagNames(
+			_getAssetTagNames(
+				groupId, masterPage.getKeywordItemExternalReferences()));
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			return _masterPageDTOConverter.toDTO(
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					masterPage.getName()));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Override
 	protected void preparePatch(
 		MasterPage masterPage, MasterPage existingMasterPage) {
+
+		if (masterPage.getKeywordItemExternalReferences() != null) {
+			existingMasterPage.setKeywordItemExternalReferences(
+				masterPage::getKeywordItemExternalReferences);
+		}
 
 		if (masterPage.getPageSpecifications() != null) {
 			existingMasterPage.setPageSpecifications(
@@ -291,6 +315,10 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
+		serviceContext.setAssetTagNames(
+			_getAssetTagNames(
+				groupId, masterPage.getKeywordItemExternalReferences()));
+
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				masterPage.getExternalReferenceCode(), groupId,
@@ -301,6 +329,43 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				_getPreviewFileEntryId(groupId, masterPage), defaultTemplate, 0,
 				_getLayoutPlid(groupId, masterPage, serviceContext), 0, status,
 				serviceContext));
+	}
+
+	private String[] _getAssetTagNames(
+			long groupId, ItemExternalReference[] itemExternalReferences)
+		throws Exception {
+
+		if (ArrayUtil.isEmpty(itemExternalReferences)) {
+			return new String[0];
+		}
+
+		String[] assetTagNames = new String[itemExternalReferences.length];
+
+		Group group = _groupService.getGroup(groupId);
+
+		for (int i = 0; i < itemExternalReferences.length; i++) {
+			long scopeGroupId = groupId;
+
+			if (Validator.isNotNull(itemExternalReferences[i].getScope())) {
+				scopeGroupId = GroupUtil.getGroupId(
+					true, true, group.getCompanyId(),
+					itemExternalReferences[i].getScope(
+					).getExternalReferenceCode());
+			}
+
+			AssetTag assetTag =
+				_assetTagService.fetchAssetTagByExternalReferenceCode(
+					itemExternalReferences[i].getExternalReferenceCode(),
+					scopeGroupId);
+
+			if (assetTag == null) {
+				throw new UnsupportedOperationException();
+			}
+
+			assetTagNames[i] = assetTag.getName();
+		}
+
+		return assetTagNames;
 	}
 
 	private long _getLayoutPlid(
@@ -391,6 +456,12 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		return false;
 	}
+
+	@Reference
+	private AssetTagService _assetTagService;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

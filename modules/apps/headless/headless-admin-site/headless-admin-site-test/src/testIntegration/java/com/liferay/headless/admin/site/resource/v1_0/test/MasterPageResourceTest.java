@@ -690,15 +690,15 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			new ItemExternalReference[length];
 
 		for (int i = 0; i < length; i++) {
+			ItemExternalReference itemExternalReference =
+				new ItemExternalReference();
+
 			AssetTag assetTag = _assetTagLocalService.addTag(
 				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				TestPropsValues.getUserId(), testGroup.getGroupId(),
 				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext(
 					testGroup, TestPropsValues.getUserId()));
-
-			ItemExternalReference itemExternalReference =
-				new ItemExternalReference();
 
 			itemExternalReference.setExternalReferenceCode(
 				assetTag.getExternalReferenceCode());

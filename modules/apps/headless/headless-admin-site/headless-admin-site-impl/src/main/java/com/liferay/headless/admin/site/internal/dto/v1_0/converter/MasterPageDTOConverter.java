@@ -123,28 +123,26 @@ public class MasterPageDTOConverter
 			ItemExternalReference.class);
 	}
 
-	private Scope _getScope(long groupId, long scopeGroupId)
-		throws Exception {
-
+	private Scope _getScope(long groupId, long scopeGroupId) throws Exception {
 		if (groupId == scopeGroupId) {
 			return null;
 		}
 
 		Group group = _groupLocalService.getGroup(scopeGroupId);
 
-		Scope scope = new Scope();
+		return new Scope() {
+			{
+				setExternalReferenceCode(group::getExternalReferenceCode);
+				setType(
+					() -> {
+						if (group.getType() == GroupConstants.TYPE_DEPOT) {
+							return Scope.Type.ASSET_LIBRARY;
+						}
 
-		scope.setExternalReferenceCode(group::getExternalReferenceCode);
-		scope.setType(
-			() -> {
-				if (group.getType() == GroupConstants.TYPE_DEPOT) {
-					return Scope.Type.ASSET_LIBRARY;
-				}
-
-				return Scope.Type.SITE;
-			});
-
-		return scope;
+						return Scope.Type.SITE;
+					});
+			}
+		};
 	}
 
 	@Reference

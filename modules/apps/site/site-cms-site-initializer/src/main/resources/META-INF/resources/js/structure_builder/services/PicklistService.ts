@@ -31,7 +31,26 @@ async function getPicklists(): Promise<Picklist[]> {
 	return items;
 }
 
+async function updatePicklist({
+	erc,
+	id,
+	name: name_i18n,
+}: {
+	erc?: State['erc'];
+	id: State['id'];
+	name?: State['name'];
+}) {
+	await ApiHelper.put(
+		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
+		{
+			externalReferenceCode: erc,
+			name_i18n,
+		}
+	);
+}
+
 export default {
 	createPicklist,
 	getPicklists,
+	updatePicklist,
 };

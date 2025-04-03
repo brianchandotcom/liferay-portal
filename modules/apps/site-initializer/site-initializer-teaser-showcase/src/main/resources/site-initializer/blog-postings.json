@@ -14,7 +14,8 @@
 			"biometric",
 			"futuristic"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/technology.json#]"
 		]
@@ -34,7 +35,8 @@
 			"blue light",
 			"colored"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
@@ -55,7 +57,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
@@ -79,7 +82,8 @@
 			"plastic",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/technology.json#]"
 		]
@@ -99,7 +103,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/technology.json#]"
 		]
@@ -118,7 +123,8 @@
 		"keywords": [
 			"industrial"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
@@ -139,7 +145,8 @@
 			"mens",
 			"printed"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
@@ -155,8 +162,10 @@
 			"caption": "",
 			"imageId": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Blogs/blog_8.jpeg#]"
 		},
-		"keywords": [],
-		"relatedContents": [],
+		"keywords": [
+		],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
@@ -176,7 +185,8 @@
 			"daily",
 			"sun"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/technology.json#]"
 		]
@@ -195,7 +205,8 @@
 		"keywords": [
 			"industrial"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]
@@ -215,7 +226,8 @@
 			"industrial",
 			"lasik"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/health.json#]"
 		]
@@ -234,7 +246,8 @@
 		"keywords": [
 			"lasik"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/health.json#]"
 		]
@@ -256,7 +269,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/health.json#]"
 		]
@@ -277,7 +291,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/health.json#]"
 		]
@@ -297,7 +312,8 @@
 			"diet",
 			"nutrition"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/health.json#]"
 		]
@@ -317,7 +333,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/health.json#]"
 		]
@@ -337,7 +354,8 @@
 			"daily",
 			"diet"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/health.json#]"
 		]
@@ -358,7 +376,8 @@
 			"summer",
 			"sun"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/technology.json#]"
 		]
@@ -378,7 +397,8 @@
 			"industrial",
 			"sports"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/fields/innovation.json#]"
 		]

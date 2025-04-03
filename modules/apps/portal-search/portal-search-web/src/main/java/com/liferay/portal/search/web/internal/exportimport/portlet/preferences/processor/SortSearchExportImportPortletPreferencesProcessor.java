@@ -6,7 +6,7 @@
 package com.liferay.portal.search.web.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
+import com.liferay.portal.search.web.internal.sort.constants.SortPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -14,9 +14,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Felipe Lorenz
  */
 @Component(
-	property = "javax.portlet.name=" + ModifiedFacetPortletKeys.MODIFIED_FACET,
+	property = "javax.portlet.name=" + SortPortletKeys.SORT,
 	service = ExportImportPortletPreferencesProcessor.class
 )
-public class ModifiedFacetExportImportPortletPreferencesProcessor
+public class SortSearchExportImportPortletPreferencesProcessor
 	extends BaseSearchExportImportPortletPreferencesProcessor {
 }

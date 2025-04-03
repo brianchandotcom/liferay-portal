@@ -17,6 +17,6 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + CustomFacetPortletKeys.CUSTOM_FACET,
 	service = ExportImportPortletPreferencesProcessor.class
 )
-public class CustomFacetExportImportPortletPreferencesProcessor
+public class CustomFacetSearchExportImportPortletPreferencesProcessor
 	extends BaseSearchExportImportPortletPreferencesProcessor {
 }

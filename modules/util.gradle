@@ -4,6 +4,8 @@ import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
 
+import java.nio.file.Files
+
 import java.util.regex.Matcher
 
 import org.gradle.util.GUtil
@@ -377,6 +379,12 @@ private void _createYarnTasks() {
 
 			yarnTask = tasks.create(name: "updateYarnBinariesCache" + _camelCase(yarnLockFile.parentFile.name), type: Copy) {
 				from nodeModulesCacheDir
+
+				exclude {
+					FileTreeElement fileTreeElement ->
+					return Files.isSymbolicLink(fileTreeElement.file.toPath())
+				}
+
 				into offlineCacheDir
 
 				doFirst {

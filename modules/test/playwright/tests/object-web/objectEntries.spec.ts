@@ -652,6 +652,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 		for (const objectField of objectFields) {
 			switch (objectField.businessType) {
 				case 'Attachment': {
+					await viewObjectEntriesPage.selectFileButton.click();
+
 					await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
 						ATTACHMENT_FILE_NAME
 					);

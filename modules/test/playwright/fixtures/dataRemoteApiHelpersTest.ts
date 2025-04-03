@@ -6,33 +6,36 @@
 import {mergeTests} from '@playwright/test';
 
 import {DataApiHelpers} from '../helpers/ApiHelpers';
-import {BackendPage, backendPageTest} from './backendPageTest';
-import { liferayConfig } from '../liferay.config';
+import {liferayConfig} from '../liferay.config';
+import {RemotePage, remotePageTest} from './remotePageTest';
 
-const test = mergeTests(backendPageTest);
+const test = mergeTests(remotePageTest);
 
 const dataRemoteApiHelpersTest = test.extend<{
 	remoteApiHelpers: DataApiHelpers;
-	backendPage: BackendPage;
+	remotePage: RemotePage;
 }>({
-	remoteApiHelpers: async ({backendPage, page}, use) => {
-		liferayConfig.environment.baseUrl = 
-			liferayConfig.environment.baseUrl.replace('8080', '9080')
-		const dataApiHelpers = new DataApiHelpers(page);
-		liferayConfig.environment.baseUrl = 
-			liferayConfig.environment.baseUrl.replace('9080', '8080')
-		
+	remoteApiHelpers: async ({remotePage}, use) => {
+		liferayConfig.environment.baseUrl =
+			liferayConfig.environment.baseUrl.replace('8080', '9080');
+
+		const dataApiHelpers = new DataApiHelpers(remotePage);
+
+		liferayConfig.environment.baseUrl =
+			liferayConfig.environment.baseUrl.replace('9080', '8080');
+
 		try {
 			await use(dataApiHelpers);
 		}
 		finally {
 
 			// @ts-ignore
-			liferayConfig.environment.baseUrl = 
-				liferayConfig.environment.baseUrl.replace('8080', '9080')
-			const adminDataApiHelpers = new DataApiHelpers(backendPage);
-			liferayConfig.environment.baseUrl = 
-				liferayConfig.environment.baseUrl.replace('9080', '8080')
+
+			liferayConfig.environment.baseUrl =
+				liferayConfig.environment.baseUrl.replace('8080', '9080');
+			const adminDataApiHelpers = new DataApiHelpers(remotePage);
+			liferayConfig.environment.baseUrl =
+				liferayConfig.environment.baseUrl.replace('9080', '8080');
 
 			adminDataApiHelpers.setData(dataApiHelpers.data);
 

@@ -6,6 +6,7 @@
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {
@@ -38,7 +39,14 @@ export default function PicklistFields() {
 				translations={name as Liferay.Language.LocalizedValue<string>}
 			/>
 
-			<ERCInput onValueChange={(erc) => setErc(erc)} value={erc} />
+			<ERCInput
+				helpText={sub(
+					Liferay.Language.get('unique-key-for-referencing-the-x'),
+					Liferay.Language.get('picklist')
+				)}
+				onValueChange={(erc) => setErc(erc)}
+				value={erc}
+			/>
 		</ClayForm.Group>
 	);
 }

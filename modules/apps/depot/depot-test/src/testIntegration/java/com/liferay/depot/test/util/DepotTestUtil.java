@@ -139,7 +139,7 @@ public class DepotTestUtil {
 			group.getGroupId(), RoleConstants.SITE_MEMBER, unsafeConsumer);
 	}
 
-	private static boolean _isAsignableRole(String roleName) {
+	private static boolean _isAssignableRole(String roleName) {
 		if (roleName.equals(DepotRolesConstants.ASSET_LIBRARY_MEMBER) ||
 			roleName.equals(RoleConstants.SITE_MEMBER)) {
 
@@ -159,7 +159,7 @@ public class DepotTestUtil {
 
 		User user = UserTestUtil.addUser();
 
-		if (_isAsignableRole(roleName)) {
+		if (_isAssignableRole(roleName)) {
 			UserGroupRoleLocalServiceUtil.addUserGroupRoles(
 				user.getUserId(), groupId, new long[] {role.getRoleId()});
 		}
@@ -167,7 +167,7 @@ public class DepotTestUtil {
 		UserLocalServiceUtil.addGroupUsers(
 			groupId, new long[] {user.getUserId()});
 
-		if (_isAsignableRole(roleName)) {
+		if (_isAssignableRole(roleName)) {
 			UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
 		}
 

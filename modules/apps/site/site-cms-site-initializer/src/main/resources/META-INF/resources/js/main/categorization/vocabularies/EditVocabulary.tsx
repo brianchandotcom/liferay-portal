@@ -15,6 +15,7 @@ import React, {useEffect, useState} from 'react';
 import VocabularyService from '../services/VocabularyService';
 import {AssetType} from '../types/AssetType';
 import {IVocabulary} from '../types/IVocabulary';
+import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';
 import EditGeneralInfo from './EditGeneralInfo';
 
@@ -57,6 +58,7 @@ export default function EditVocabulary({
 		},
 	});
 
+	const changeType = '';
 	const isNew = Number(vocabularyId) === 0;
 
 	useEffect(() => {
@@ -251,6 +253,17 @@ export default function EditVocabulary({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>
+
+				<>
+					{changeType && open && (
+						<ConfirmChangesModal
+							changeType={changeType}
+							observer={observer}
+							onOpenChange={onOpenChange}
+							onSave={_handleSave}
+						/>
+					)}
+				</>
 			</div>
 		</div>
 	);

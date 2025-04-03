@@ -57,6 +57,9 @@ export default function EditGeneralInfo({
 	const onChangeDescription = (newDescription: string) => {
 		onChangeVocabulary(() => ({
 			...vocabulary,
+			...(languageId === defaultLanguageId && {
+				description: newDescription,
+			}),
 			description_i18n: {
 				...vocabulary.description_i18n,
 				[getLanguageLabel(languageId)]: newDescription,
@@ -79,6 +82,7 @@ export default function EditGeneralInfo({
 
 		onChangeVocabulary(() => ({
 			...vocabulary,
+			...(languageId === defaultLanguageId && {name: newName}),
 			name_i18n: {
 				...vocabulary.name_i18n,
 				[getLanguageLabel(languageId)]: newName,

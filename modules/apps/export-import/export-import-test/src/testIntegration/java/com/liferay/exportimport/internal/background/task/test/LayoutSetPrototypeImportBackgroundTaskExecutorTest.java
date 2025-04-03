@@ -70,9 +70,7 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutorTest {
 
 	@Test
 	@TestInfo("LPS-166515")
-	public void testFailedPropagationBackgroundTaskIsRemovedWhileNewPropagationBackgroundTaskIsProcessed()
-		throws Exception {
-
+	public void testCleanUpPreviousBackgroundTasks() throws Exception {
 		File larFile = File.createTempFile("corrupt", ".lar");
 
 		try (Writer writer = new FileWriter(larFile)) {

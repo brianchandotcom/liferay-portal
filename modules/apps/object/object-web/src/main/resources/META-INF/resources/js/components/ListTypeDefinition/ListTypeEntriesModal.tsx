@@ -156,7 +156,7 @@ function ListTypeEntriesModal() {
 			errors.name = constantsUtils.REQUIRED_MSG;
 		}
 
-		if (specialCharactersInString(key as string)) {
+		if (key && specialCharactersInString(key)) {
 			errors.key = Liferay.Language.get(
 				'key-must-only-contain-letters-and-digits'
 			);

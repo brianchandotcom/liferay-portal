@@ -14,9 +14,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.SystemEvent;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -72,11 +70,6 @@ public class BatchEngineDeletionHelperImpl
 	}
 
 	@Override
-	public Set<String> getBatchDeleteSupportedClassNames() {
-		return new HashSet<>(_serviceTrackerMap.keySet());
-	}
-
-	@Override
 	public void importDeletions(
 			PortletDataContext portletDataContext, String portletId)
 		throws Exception {
@@ -87,6 +80,11 @@ public class BatchEngineDeletionHelperImpl
 		if (portletDataHandler != null) {
 			portletDataHandler.deleteData(portletDataContext, portletId, null);
 		}
+	}
+
+	@Override
+	public boolean isBatchDeleteSupported(String className) {
+		return _serviceTrackerMap.containsKey(className);
 	}
 
 	@Override

@@ -8,8 +8,6 @@ package com.liferay.batch.engine;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.SystemEvent;
 
-import java.util.Set;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -23,11 +21,11 @@ public interface BatchEngineDeletionHelper {
 
 	public void exportDeletions(PortletDataContext portletDataContext);
 
-	public Set<String> getBatchDeleteSupportedClassNames();
-
 	public void importDeletions(
 			PortletDataContext portletDataContext, String portletId)
 		throws Exception;
+
+	public boolean isBatchDeleteSupported(String className);
 
 	public boolean isBatchPortlet(String portletId);
 

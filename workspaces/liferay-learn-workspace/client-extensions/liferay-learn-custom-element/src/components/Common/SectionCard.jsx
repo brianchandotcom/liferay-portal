@@ -5,7 +5,7 @@
 
 import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {getPersonas, getShortText, getTooltipPersona} from '../../utils/util';
+import {getPersonasLabel, getPersonasTooltip, truncateText} from '../../utils/util';
 import React from 'react';
 import './SectionCard.scss';
 
@@ -25,7 +25,7 @@ const SectionCard = ({
 						<h4 className="title">{title}</h4>
 
 						<div className="description">
-							{getShortText(description, 150)}
+							{truncateText(description, 150)}
 						</div>
 
 						<div className="card-tags-container d-flex learn-education">
@@ -33,10 +33,10 @@ const SectionCard = ({
 								<div
 									className="card-tag card-tag__persona"
 									data-tool-tip-align="top"
-									title={getTooltipPersona(personas)}
+									title={getPersonasTooltip(personas)}
 								>
 									<p></p>
-									{getPersonas(personas)}
+									{getPersonasLabel(personas)}
 								</div>
 							</ClayTooltipProvider>
 							<div

@@ -9,10 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.Ticket;
@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRowsUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -30,12 +29,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.service.SocialActivitySettingLocalServiceUtil;
 
-import java.io.IOException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -60,11 +56,13 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		_connection = DataAccess.getConnection();
 
 		_db = DBManagerUtil.getDB();
+
+		_dbInspector = new DBInspector(_connection);
 	}
 
 	@Test
 	public void testDuplicateRemovalProcessOnPortalPreferences()
-		throws IOException, PortalException, SQLException {
+		throws Exception {
 
 		_dropIndexes("PortalPreferences", "ownerType");
 
@@ -91,28 +89,17 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		IndexUpdaterUtil.updateAllIndexes();
 
-		portalPreferences.setPortalPreferencesId(3);
+		_assertIndex("PortalPreferences", "IX_D1846D13");
 
-		try {
-			PortalPreferencesLocalServiceUtil.addPortalPreferences(
-				portalPreferences);
-			Assert.fail();
-		}
-		catch (Exception exception) {
-		}
-		finally {
-			portalPreferences.setPortalPreferencesId(1);
+		portalPreferences.setPortalPreferencesId(1);
 
-			Assert.assertEquals(
-				portalPreferences,
-				PortalPreferencesLocalServiceUtil.getPortalPreferences(1));
-		}
+		Assert.assertEquals(
+			portalPreferences,
+			PortalPreferencesLocalServiceUtil.getPortalPreferences(1));
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnPortletItem()
-		throws IOException, PortalException, SQLException {
-
+	public void testDuplicateRemovalProcessOnPortletItem() throws Exception {
 		_dropIndexes("PortletItem", "groupId");
 
 		PortletItem portletItem = PortletItemLocalServiceUtil.createPortletItem(
@@ -142,25 +129,17 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		IndexUpdaterUtil.updateAllIndexes();
 
-		portletItem.setPortletItemId(3);
+		_assertIndex("PortletItem", "IX_C6246ECD");
 
-		try {
-			PortletItemLocalServiceUtil.addPortletItem(portletItem);
-			Assert.fail();
-		}
-		catch (Exception exception) {
-		}
-		finally {
-			portletItem.setPortletItemId(1);
+		portletItem.setPortletItemId(1);
 
-			Assert.assertEquals(
-				portletItem, PortletItemLocalServiceUtil.getPortletItem(1));
-		}
+		Assert.assertEquals(
+			portletItem, PortletItemLocalServiceUtil.getPortletItem(1));
 	}
 
 	@Test
 	public void testDuplicateRemovalProcessOnSocialActivitySetting()
-		throws IOException, PortalException, SQLException {
+		throws Exception {
 
 		_dropIndexes("SocialActivitySetting", "groupId");
 
@@ -200,29 +179,16 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		IndexUpdaterUtil.updateAllIndexes();
 
-		socialActivitySetting.setActivitySettingId(3);
+		_assertIndex("SocialActivitySetting", "IX_4FC6CD18");
+		socialActivitySetting.setActivitySettingId(1);
 
-		try {
-			SocialActivitySettingLocalServiceUtil.addSocialActivitySetting(
-				socialActivitySetting);
-			Assert.fail();
-		}
-		catch (Exception exception) {
-		}
-		finally {
-			socialActivitySetting.setActivitySettingId(1);
-
-			Assert.assertEquals(
-				socialActivitySetting,
-				SocialActivitySettingLocalServiceUtil.getSocialActivitySetting(
-					1));
-		}
+		Assert.assertEquals(
+			socialActivitySetting,
+			SocialActivitySettingLocalServiceUtil.getSocialActivitySetting(1));
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnTicket()
-		throws IOException, PortalException, SQLException {
-
+	public void testDuplicateRemovalProcessOnTicket() throws Exception {
 		_dropIndexes("Ticket", "key_");
 
 		Ticket ticket = TicketLocalServiceUtil.createTicket(1);
@@ -243,24 +209,16 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		IndexUpdaterUtil.updateAllIndexes();
 
-		ticket.setTicketId(3);
+		_assertIndex("Ticket", "IX_B2468446");
 
-		try {
-			TicketLocalServiceUtil.addTicket(ticket);
-			Assert.fail();
-		}
-		catch (Exception exception) {
-		}
-		finally {
-			ticket.setTicketId(2);
+		ticket.setTicketId(2);
 
-			Assert.assertEquals(ticket, TicketLocalServiceUtil.getTicket(2));
-		}
+		Assert.assertEquals(ticket, TicketLocalServiceUtil.getTicket(2));
 	}
 
 	private void _assertCount(
 			String tableName, boolean duplicatesRemoved, String... columns)
-		throws SQLException {
+		throws Exception {
 
 		_companyLocalService.forEachCompany(
 			company -> {
@@ -285,23 +243,21 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			});
 	}
 
-	private void _dropIndexes(String tableName, String columnName)
-		throws IOException, SQLException {
+	private void _assertIndex(String tableName, String indexName)
+		throws Exception {
 
-		try {
-			_db.dropIndexes(_connection, tableName, columnName);
-		}
-		catch (SQLException sqlException) {
-			throw new SQLException(sqlException);
-		}
-		catch (IOException ioException) {
-			throw new IOException(ioException);
-		}
+		Assert.assertTrue(_dbInspector.hasIndex(tableName, indexName));
+	}
+
+	private void _dropIndexes(String tableName, String columnName)
+		throws Exception {
+
+		_db.dropIndexes(_connection, tableName, columnName);
 	}
 
 	private void _runUpgrade(
 			String tableName, String[] columns, String orderByClause)
-		throws UpgradeException {
+		throws Exception {
 
 		DeleteDuplicateUniqueFinderRowsUpgradeProcess upgradeProcess = null;
 
@@ -316,13 +272,10 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.kernel.upgrade." +
-					"DuplicateIndexEntriesUpgradeProcess",
+					"DeleteDuplicateUniqueFinderRowsUpgradeProcess",
 				LoggerTestUtil.OFF)) {
 
 			upgradeProcess.upgrade();
-		}
-		catch (UpgradeException upgradeException) {
-			throw new UpgradeException(upgradeException);
 		}
 		finally {
 			EntityCacheUtil.clearCache();
@@ -334,5 +287,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 	private static Connection _connection;
 	private static DB _db;
+	private static DBInspector _dbInspector;
 
 }

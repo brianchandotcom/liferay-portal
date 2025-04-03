@@ -138,6 +138,10 @@ public class LayoutUtil {
 			if (Validator.isNotNull(
 					itemExternalReference.getExternalReferenceCode())) {
 
+				if (itemExternalReference.getScope() != null) {
+					throw new UnsupportedOperationException();
+				}
+
 				Layout masterLayout =
 					LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
 						itemExternalReference.getExternalReferenceCode(),
@@ -425,6 +429,10 @@ public class LayoutUtil {
 				itemExternalReference.getExternalReferenceCode())) {
 
 			return 0;
+		}
+
+		if (itemExternalReference.getScope() != null) {
+			throw new UnsupportedOperationException();
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

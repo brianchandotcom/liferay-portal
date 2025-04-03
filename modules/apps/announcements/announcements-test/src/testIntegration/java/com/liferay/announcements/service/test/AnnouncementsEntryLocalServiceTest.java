@@ -280,17 +280,17 @@ public class AnnouncementsEntryLocalServiceTest {
 			hiddenAnnouncementsEntries.toString(), 2,
 			hiddenAnnouncementsEntries.size());
 
-		List<AnnouncementsEntry> notHiddenAnnouncementsEntry =
+		List<AnnouncementsEntry> notHiddenAnnouncementsEntries =
 			_announcementsEntryLocalService.getEntries(
 				_user.getUserId(), scopes, false,
 				AnnouncementsFlagConstants.NOT_HIDDEN, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			notHiddenAnnouncementsEntry.toString(), 1,
-			notHiddenAnnouncementsEntry.size());
+			notHiddenAnnouncementsEntries.toString(), 1,
+			notHiddenAnnouncementsEntries.size());
 
-		AnnouncementsEntry entry4 = notHiddenAnnouncementsEntry.get(0);
+		AnnouncementsEntry entry4 = notHiddenAnnouncementsEntries.get(0);
 
 		Assert.assertEquals(entry4.getEntryId(), entry3.getEntryId());
 	}

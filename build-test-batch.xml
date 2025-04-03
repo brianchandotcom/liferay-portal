@@ -460,6 +460,93 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-playwright-environment-variables">
+		<attribute name="playwright.project.name" />
+
+		<sequential>
+			<var name="playwright.environment.variables" unset="true" />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					public Properties getProjectProperties() {
+						Properties projectProperties = new Properties();
+
+						for (String propertyName : project.getPropertyNames()) {
+							String propertyValue = project.getProperty(propertyName);
+
+							if (propertyValue == null) {
+								continue;
+							}
+
+							projectProperties.setProperty(propertyName, project.getProperty(propertyName));
+						}
+
+						return projectProperties;
+					}
+
+					public String getPlaywrightEnvValue(Properties projectProperties, String playwrightEnvName) {
+						String playwrightEnvValue = project.getProperty("env." + playwrightEnvName);
+
+						if (playwrightEnvValue != null) {
+							return playwrightEnvValue;
+						}
+
+						String playwrightEnvPropertyNames = JenkinsResultsParserUtil.getProperty(projectProperties, "playwright.env.property.names[" + playwrightEnvName + "]");
+
+						if (playwrightEnvPropertyNames == null) {
+							return null;
+						}
+
+						for (String playwrightEnvPropertyName : playwrightEnvPropertyNames.split(",")) {
+							String propertyValue = JenkinsResultsParserUtil.getProperty(projectProperties, playwrightEnvPropertyName);
+
+							if (propertyValue == null) {
+								continue;
+							}
+
+							return propertyValue;
+						}
+
+						return null;
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					String playwrightProjectName = "@{playwright.project.name}";
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(playwrightProjectName)) {
+						project.setProperty("playwright.environment.variables", sb.toString());
+
+						return;
+					}
+
+					Properties projectProperties = getProjectProperties();
+
+					String playwrightEnvNames = JenkinsResultsParserUtil.getProperty(projectProperties, "playwright.env.names", new String[]{playwrightProjectName});
+
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(playwrightEnvNames)) {
+						for (String playwrightEnvName : playwrightEnvNames.split(",")) {
+							String playwrightEnvValue = getPlaywrightEnvValue(projectProperties, playwrightEnvName);
+
+							if (JenkinsResultsParserUtil.isNullOrEmpty(playwrightEnvValue)) {
+								continue;
+							}
+
+							sb.append(playwrightEnvName);
+							sb.append("=");
+							sb.append(playwrightEnvValue);
+							sb.append("\n");
+						}
+					}
+
+					project.setProperty("playwright.environment.variables", sb.toString());
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-release-dependency-modules">
 		<attribute default="false" name="post.startup.modules.only" />
 		<attribute default="false" name="pre.startup.modules.only" />
@@ -2884,7 +2971,11 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 
 									<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
 
+									<get-playwright-environment-variables playwright.project.name="${playwright.project.name}" />
+
 									<docker-execute container="${playwright.docker.host}">
+										${playwright.environment.variables}
+
 										cd ${playwright.dir}
 
 										${playwright.command}

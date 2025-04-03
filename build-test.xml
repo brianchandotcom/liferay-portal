@@ -457,6 +457,8 @@ module.framework.properties.osgi.console=11312</echo>
 
 			<echo file="${script.sh.file}"><![CDATA[@{script}]]></echo>
 
+			<print-file file.name="${script.sh.file}" />
+
 			<execute>
 				<![CDATA[
 					docker exec @{container} mkdir -p /tmp

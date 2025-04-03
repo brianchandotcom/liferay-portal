@@ -148,8 +148,9 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 			String className, long primaryKeyLong)
 		throws Exception {
 
-		throw new Exception(
-			"Must use getGroupExportPortletPreferencesExternalReferenceCode");
+		throw new UnsupportedOperationException(
+			"This method is deprecated and replaced by " +
+				"getGroupExportPortletPreferencesExternalReferenceCode");
 	}
 
 	protected String getImportPortletPreferencesNewExternalReferenceCode(

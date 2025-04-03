@@ -41,7 +41,6 @@ import java.io.Writer;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,20 +57,15 @@ public class LayoutSetPrototypeImportBackgroundTaskExecutorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	@TestInfo("LPS-166515")
+	public void testCleanUpPreviousBackgroundTasks() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext());
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		group = GroupTestUtil.addGroup();
-	}
-
-	@Test
-	@TestInfo("LPS-166515")
-	public void testFailedPropagationBackgroundTaskIsRemovedWhileNewPropagationBackgroundTaskIsProcessed()
-		throws Exception {
 
 		File larFile = File.createTempFile("corrupt", ".lar");
 

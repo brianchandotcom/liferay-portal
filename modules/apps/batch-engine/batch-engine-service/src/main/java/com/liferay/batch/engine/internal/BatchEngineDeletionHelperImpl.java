@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.SystemEvent;
 
 import java.util.HashSet;
@@ -35,9 +36,12 @@ public class BatchEngineDeletionHelperImpl
 
 		Map<String, String> newPrimaryKeysMap =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				systemEvent.getClassName() + _BATCH_DELETE_CLASS_NAME_POSTFIX);
+				systemEvent.getClassName() +
+					BatchEnginePortletDataHandler.
+						BATCH_DELETE_CLASS_NAME_POSTFIX);
 
-		newPrimaryKeysMap.put(systemEvent.getClassExternalReferenceCode(), "");
+		newPrimaryKeysMap.put(
+			systemEvent.getClassExternalReferenceCode(), StringPool.BLANK);
 	}
 
 	@Override
@@ -46,10 +50,15 @@ public class BatchEngineDeletionHelperImpl
 			portletDataContext.getNewPrimaryKeysMaps();
 
 		for (String key : newPrimaryKeysMaps.keySet()) {
-			if (key.endsWith(_BATCH_DELETE_CLASS_NAME_POSTFIX)) {
-				String className = key.substring(
-					0,
-					key.length() - _BATCH_DELETE_CLASS_NAME_POSTFIX.length());
+			if (key.endsWith(
+					BatchEnginePortletDataHandler.
+						BATCH_DELETE_CLASS_NAME_POSTFIX)) {
+
+				int length =
+					BatchEnginePortletDataHandler.
+						BATCH_DELETE_CLASS_NAME_POSTFIX.length();
+
+				String className = key.substring(0, key.length() - length);
 
 				BatchEnginePortletDataHandler batchEnginePortletDataHandler =
 					_getBatchEnginePortletDataHandler(className);
@@ -135,9 +144,6 @@ public class BatchEngineDeletionHelperImpl
 
 		return null;
 	}
-
-	private static final String _BATCH_DELETE_CLASS_NAME_POSTFIX =
-		"_batchDeleteERCs";
 
 	private ServiceTrackerMap<String, PortletDataHandler>
 		_portletIdServiceTrackerMap;

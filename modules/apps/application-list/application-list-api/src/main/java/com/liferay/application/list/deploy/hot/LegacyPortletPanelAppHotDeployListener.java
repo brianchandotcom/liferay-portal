@@ -134,7 +134,7 @@ public class LegacyPortletPanelAppHotDeployListener
 			return Collections.emptyList();
 		}
 
-		List<Dictionary<String, Object>> propertiesList = new ArrayList<>();
+		List<Dictionary<String, Object>> properties = new ArrayList<>();
 
 		Document document = UnsecureSAXReaderUtil.read(xml, true);
 
@@ -156,7 +156,7 @@ public class LegacyPortletPanelAppHotDeployListener
 				PortletCategoryUtil.getPortletCategoryKey(
 					controlPanelEntryCategory);
 
-			propertiesList.add(
+			properties.add(
 				HashMapDictionaryBuilder.<String, Object>put(
 					"panel.app.order",
 					() -> {
@@ -182,7 +182,7 @@ public class LegacyPortletPanelAppHotDeployListener
 				).build());
 		}
 
-		return propertiesList;
+		return properties;
 	}
 
 	private BundleContext _bundleContext;

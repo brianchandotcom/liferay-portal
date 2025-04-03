@@ -361,7 +361,6 @@ public class LayoutPermissionTest {
 			_group, layout.getPlid());
 
 		Assert.assertEquals(layout.getPlid(), childLayout.getParentPlid());
-
 		Assert.assertFalse(
 			_layoutPermission.contains(
 				permissionChecker, childLayout, ActionKeys.UPDATE));

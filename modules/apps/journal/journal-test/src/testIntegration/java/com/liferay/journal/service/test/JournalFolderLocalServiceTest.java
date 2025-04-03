@@ -57,7 +57,7 @@ public class JournalFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testAddJournalFolder() throws Exception {
+	public void testAddFolder() throws Exception {
 		User user = UserTestUtil.addGroupAdminUser(_group);
 
 		JournalFolder journalFolder = _addJournalFolder(
@@ -115,7 +115,7 @@ public class JournalFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateJournalFolder() throws Exception {
+	public void testUpdateFolder() throws Exception {
 		JournalFolder journalFolder = _addJournalFolder();
 
 		User user = UserTestUtil.addGroupAdminUser(_group);

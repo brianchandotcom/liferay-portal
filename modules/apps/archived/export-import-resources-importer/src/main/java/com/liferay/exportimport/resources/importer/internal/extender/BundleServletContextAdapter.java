@@ -316,7 +316,9 @@ public class BundleServletContextAdapter
 	}
 
 	@Override
-	public void setSessionTrackingModes(Set<SessionTrackingMode> set) {
+	public void setSessionTrackingModes(
+		Set<SessionTrackingMode> sessionTrackingModes) {
+
 		throw new UnsupportedOperationException();
 	}
 

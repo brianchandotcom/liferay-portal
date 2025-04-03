@@ -27,7 +27,6 @@ export const test = mergeTests(
 	systemDataSetsPageTest,
 	visualizationModesPageTest,
 	featureFlagsTest({
-		'LPD-37531': {enabled: true},
 		'LPS-164563': {enabled: true},
 	}),
 	loginTest()

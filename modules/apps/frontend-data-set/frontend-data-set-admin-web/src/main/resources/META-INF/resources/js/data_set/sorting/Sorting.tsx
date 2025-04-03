@@ -737,26 +737,18 @@ const Sorting = ({
 								label: Liferay.Language.get('default'),
 								name: 'default',
 							},
-							...(Liferay.FeatureFlags['LPD-37531']
-								? [
-										{
-											contentRenderer: {
-												component: ({item}: any) =>
-													Toggle({
-														disabled:
-															toggleActiveDisabled,
-														item,
-														toggleChange:
-															updateActive,
-													}),
-											},
-											label: Liferay.Language.get(
-												'status'
-											),
-											name: 'active',
-										},
-									]
-								: []),
+							{
+								contentRenderer: {
+									component: ({item}: any) =>
+										Toggle({
+											disabled: toggleActiveDisabled,
+											item,
+											toggleChange: updateActive,
+										}),
+								},
+								label: Liferay.Language.get('status'),
+								name: 'active',
+							},
 						]}
 						items={fdsSorts}
 						noItemsButtonLabel={Liferay.Language.get(

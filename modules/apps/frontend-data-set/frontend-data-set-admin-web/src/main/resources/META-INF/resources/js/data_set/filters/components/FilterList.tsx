@@ -72,22 +72,18 @@ const FilterList = ({
 					label: Liferay.Language.get('type'),
 					name: 'displayType',
 				},
-				...(Liferay.FeatureFlags['LPD-37531']
-					? [
-							{
-								contentRenderer: {
-									component: ({item}: any) =>
-										Toggle({
-											disabled: toogleActiveDisabled,
-											item,
-											toggleChange: updateActive,
-										}),
-								},
-								label: Liferay.Language.get('status'),
-								name: 'active',
-							},
-						]
-					: []),
+				{
+					contentRenderer: {
+						component: ({item}: any) =>
+							Toggle({
+								disabled: toogleActiveDisabled,
+								item,
+								toggleChange: updateActive,
+							}),
+					},
+					label: Liferay.Language.get('status'),
+					name: 'active',
+				},
 			]}
 			items={filters}
 			noItemsButtonLabel={Liferay.Language.get('new-filter')}

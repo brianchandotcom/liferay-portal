@@ -22,7 +22,6 @@ page import="com.liferay.frontend.data.set.admin.web.internal.display.context.FD
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.object.exception.NoSuchObjectEntryException" %><%@
-page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

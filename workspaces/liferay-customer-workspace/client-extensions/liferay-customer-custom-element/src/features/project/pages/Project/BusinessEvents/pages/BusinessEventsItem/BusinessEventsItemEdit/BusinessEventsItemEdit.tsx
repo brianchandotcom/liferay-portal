@@ -193,7 +193,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			);
 
 			Liferay.Util.openToast({
-				message: i18n.translate('business-event-updated-successfully'),
+				message: i18n.translate('the-changes-were-saved-successfully'),
 				type: 'success',
 			});
 		}

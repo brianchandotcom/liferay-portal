@@ -198,29 +198,33 @@ function VocabularyTree({
 }
 
 function SelectVocabularies({
-	initialSelectedVocabularyERCs = SELECT_OPTIONS.ALL,
+	initialSelectedVocabularyExternalReferenceCodes = SELECT_OPTIONS.ALL,
 	namespace = '',
-	vocabularyERCsInputName = '',
+	vocabularyExternalReferenceCodesInputName = '',
 }) {
-	const initialSelectedVocabularyERCsSet = useMemo(() => {
+	const initialSelectedVocabularyExternalReferenceCodesSet = useMemo(() => {
 		return new Set(
-			initialSelectedVocabularyERCs === SELECT_OPTIONS.ALL
+			initialSelectedVocabularyExternalReferenceCodes ===
+			SELECT_OPTIONS.ALL
 				? []
-				: transformCommaStringToArray(initialSelectedVocabularyERCs)
+				: transformCommaStringToArray(
+						initialSelectedVocabularyExternalReferenceCodes
+					)
 		);
-	}, [initialSelectedVocabularyERCs]);
+	}, [initialSelectedVocabularyExternalReferenceCodes]);
 
 	const [selection, setSelection] = useState(
-		initialSelectedVocabularyERCs === SELECT_OPTIONS.ALL
+		initialSelectedVocabularyExternalReferenceCodes === SELECT_OPTIONS.ALL
 			? SELECT_OPTIONS.ALL
 			: SELECT_OPTIONS.SELECT
 	);
 	const [selectedKeys, setSelectedKeys] = useState(
-		initialSelectedVocabularyERCsSet
+		initialSelectedVocabularyExternalReferenceCodesSet
 	);
-	const [unavailableVocabularyERCs, setUnavailableVocabularyERCs] = useState(
-		[]
-	);
+	const [
+		unavailableVocabularyExternalReferenceCodes,
+		setUnavailableVocabularyExternalReferenceCodes,
+	] = useState([]);
 	const [vocabularyTree, setVocabularyTree] = useState(null);
 	const [vocabularyTreeLoading, setVocabularyTreeLoading] = useState(false);
 
@@ -263,7 +267,7 @@ function SelectVocabularies({
 					)
 				)
 					.then((responses) => {
-						const fetchedERCs = [];
+						const fetchedExternalReferenceCodes = [];
 
 						setVocabularyTree(
 							responses.map((response, index) => ({
@@ -293,7 +297,9 @@ function SelectVocabularies({
 										({externalReferenceCode, id, name}) => {
 											const erc = `${itemsFilteredForSites[index].externalReferenceCode}&&${externalReferenceCode}`;
 
-											fetchedERCs.push(erc); // Collect ERCs to allow deselection of unavailable vocabularies
+											fetchedExternalReferenceCodes.push(
+												erc
+											); // Collect ExternalReferenceCodes to allow deselection of unavailable vocabularies
 
 											return {
 												erc,
@@ -305,10 +311,14 @@ function SelectVocabularies({
 							}))
 						);
 
-						setUnavailableVocabularyERCs(
-							Array.from(initialSelectedVocabularyERCsSet).filter(
-								(initialSelectedERC) =>
-									!fetchedERCs.includes(initialSelectedERC)
+						setUnavailableVocabularyExternalReferenceCodes(
+							Array.from(
+								initialSelectedVocabularyExternalReferenceCodesSet
+							).filter(
+								(initialSelectedExternalReferenceCode) =>
+									!fetchedExternalReferenceCodes.includes(
+										initialSelectedExternalReferenceCode
+									)
 							)
 						);
 					})
@@ -318,10 +328,10 @@ function SelectVocabularies({
 			.finally(() => setVocabularyTreeLoading(false));
 	};
 
-	const _handleDeselectUnavailableVocabularyERCs = () => {
+	const _handleDeselectUnavailableVocabularyExternalReferenceCodes = () => {
 		const newList = new Set(selectedKeys);
 
-		unavailableVocabularyERCs.forEach((erc) => {
+		unavailableVocabularyExternalReferenceCodes.forEach((erc) => {
 			newList.delete(erc);
 		});
 
@@ -336,8 +346,10 @@ function SelectVocabularies({
 		}
 	};
 
-	const _isUnavailableVocabularyERCsSelected = () =>
-		unavailableVocabularyERCs.some((erc) => selectedKeys.has(erc));
+	const _isUnavailableVocabularyExternalReferenceCodesSelected = () =>
+		unavailableVocabularyExternalReferenceCodes.some((erc) =>
+			selectedKeys.has(erc)
+		);
 
 	return (
 		<div className="select-vocabularies">
@@ -345,8 +357,8 @@ function SelectVocabularies({
 
 			<input
 				hidden
-				id={`${namespace}${vocabularyERCsInputName}`}
-				name={`${namespace}${vocabularyERCsInputName}`}
+				id={`${namespace}${vocabularyExternalReferenceCodesInputName}`}
+				name={`${namespace}${vocabularyExternalReferenceCodesInputName}`}
 				readOnly
 				value={
 					selection === SELECT_OPTIONS.ALL
@@ -382,9 +394,9 @@ function SelectVocabularies({
 			</ClayRadioGroup>
 
 			{selection === SELECT_OPTIONS.SELECT &&
-				!!unavailableVocabularyERCs.length && (
+				!!unavailableVocabularyExternalReferenceCodes.length && (
 					<>
-						{_isUnavailableVocabularyERCsSelected() ? (
+						{_isUnavailableVocabularyExternalReferenceCodesSelected() ? (
 							<ClayAlert
 								displayType="info"
 								style={{opacity: 1}}
@@ -404,7 +416,7 @@ function SelectVocabularies({
 									<ClayButton
 										alert
 										onClick={
-											_handleDeselectUnavailableVocabularyERCs
+											_handleDeselectUnavailableVocabularyExternalReferenceCodes
 										}
 									>
 										{Liferay.Language.get(
@@ -440,17 +452,21 @@ function SelectVocabularies({
 }
 
 export default function ({
-	initialSelectedVocabularyERCs,
+	initialSelectedVocabularyExternalReferenceCodes,
 	learnResources,
 	namespace,
-	vocabularyERCsInputName,
+	vocabularyExternalReferenceCodesInputName,
 }) {
 	return (
 		<LearnResourcesContext.Provider value={learnResources}>
 			<SelectVocabularies
-				initialSelectedVocabularyERCs={initialSelectedVocabularyERCs}
+				initialSelectedVocabularyExternalReferenceCodes={
+					initialSelectedVocabularyExternalReferenceCodes
+				}
 				namespace={namespace}
-				vocabularyERCsInputName={vocabularyERCsInputName}
+				vocabularyExternalReferenceCodesInputName={
+					vocabularyExternalReferenceCodesInputName
+				}
 			/>
 		</LearnResourcesContext.Provider>
 	);

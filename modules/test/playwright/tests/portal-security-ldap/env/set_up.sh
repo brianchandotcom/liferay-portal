@@ -20,10 +20,10 @@ function ldap_set_up {
 
 	local dependencies_dir_name=${CURRENT_DIR_NAME}/../dependencies
 
-	execute_command ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${dependencies_dir_name}/addGroups.ldif -w "secret"
-	execute_command ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${dependencies_dir_name}/addUsers.ldif -w "secret"
-	execute_command ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${dependencies_dir_name}/admin.ldif -w "secret"
 	execute_command ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${dependencies_dir_name}/exampleCompany.ldif -w "secret"
+	execute_command ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${dependencies_dir_name}/admin.ldif -w "secret"
+	execute_command ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${dependencies_dir_name}/addUsers.ldif -w "secret"
+	execute_command ldapadd -cx -D "cn=admin,dc=example,dc=com" -f ${dependencies_dir_name}/addGroups.ldif -w "secret"
 }
 
 function main {

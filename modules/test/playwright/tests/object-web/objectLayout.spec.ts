@@ -3,18 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
+import {
+	ObjectDefinitionAPI,
+	ObjectRelationshipAPI,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import getRandomObjectFieldText from './utils/getRandomObjectFieldText';
+import {mockObjectFields} from './utils/mockObjectFields';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	dataApiHelpersTest,
 	editObjectDefinitionPagesTest,
 	loginTest(),
 	objectPagesTest
@@ -36,21 +44,17 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 				status: {code: 0},
 			});
 
-		const objectLayoutBlockName = getRandomString();
-
 		const objectLayoutName = getRandomString();
-
-		const objectLayoutTabName = getRandomString();
 
 		await objectLayoutsPage.goto(objectDefinition.name);
 
 		await objectLayoutsPage.createObjectLayout(objectLayoutName);
 
-		await objectLayoutsPage.createObjectLayoutContent(
-			objectLayoutBlockName,
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectLayoutBlockName: getRandomString(),
 			objectLayoutName,
-			objectLayoutTabName
-		);
+			objectLayoutTabName: getRandomString(),
+		});
 
 		objectFields.forEach(({label}) => {
 			expect(
@@ -67,6 +71,195 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 
 		await objectDefinitionAPIClient.deleteObjectDefinition(
 			objectDefinition.id
+		);
+	});
+
+	test('can view relationship child entry when selected', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinitionLabel1 = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName1 = 'ObjectDefinitionName' + getRandomInt();
+
+		const objectDefinitionLabel2 = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName2 = 'ObjectDefinitionName' + getRandomInt();
+
+		const {objectEntry, objectFields} = await mockObjectFields({
+			apiHelpers,
+			objectEntryReturn: {format: 'API'},
+			objectFieldBusinessTypes: ['text'],
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: objectDefinitionLabel1,
+				},
+				name: objectDefinitionName1,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel1,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const {id: objectEntryId} =
+			await apiHelpers.objectEntry.postObjectEntry(
+				objectEntry,
+				applicationName
+			);
+
+		const {objectEntry: objectEntry2, objectFields: objectFields2} =
+			await mockObjectFields({
+				apiHelpers,
+				objectEntryReturn: {format: 'API'},
+				objectFieldBusinessTypes: ['text'],
+			});
+
+		const {body: objectDefinition2} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				label: {
+					en_US: objectDefinitionLabel2,
+				},
+				name: objectDefinitionName2,
+				objectFields: objectFields2,
+				pluralLabel: {
+					en_US: objectDefinitionLabel2,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		const applicationName2 =
+			'c/' + objectDefinition2.name.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			objectEntry2,
+			applicationName2
+		);
+
+		const objectRelationshipLabel =
+			'objectRelationshipLabel' + getRandomInt();
+		const objectRelationshipName =
+			'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+		const objectRelationshipApiClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition.externalReferenceCode,
+				{
+					label: {
+						en_US: objectRelationshipLabel,
+					},
+					name: objectRelationshipName,
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId1: objectDefinition.id,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		await objectLayoutsPage.goto(objectDefinitionLabel1);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectLayoutBlockName: getRandomString(),
+			objectLayoutName,
+			objectLayoutTabName: getRandomString(),
+		});
+
+		await objectLayoutsPage.addObjectLayoutObjectField(
+			objectFields[0].label.en_US
+		);
+
+		const objectLayoutRelTabName = getRandomString();
+
+		await objectLayoutsPage.createObjectRelationshipTab(
+			objectLayoutName,
+			objectLayoutRelTabName,
+			objectRelationshipLabel
+		);
+
+		await waitForAlert(
+			page,
+			'Success:The object layout was updated successfully'
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page.getByRole('link', {name: objectEntryId.toString()}).click();
+
+		await page
+			.getByRole('link')
+			.filter({hasText: objectLayoutRelTabName})
+			.click();
+
+		await page.getByTestId('fdsCreationActionButton').first().click();
+
+		await page.getByRole('menuitem', {name: 'Create New'}).click();
+
+		const objectChildEnty = 'ChildEntry' + getRandomInt();
+
+		await page
+			.getByLabel(objectFields2[0].label.en_US)
+			.fill(objectChildEnty);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page);
+
+		await page.getByRole('link', {name: 'Back'}).click();
+
+		await page.getByRole('cell').getByRole('link').click();
+
+		await page
+			.getByLabel(objectFields2[0].label.en_US)
+			.waitFor({state: 'visible'});
+
+		await expect(page.getByRole('textbox').last()).toHaveValue(
+			objectChildEnty
 		);
 	});
 });

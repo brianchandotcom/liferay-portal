@@ -613,8 +613,8 @@ XMLWebFileCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention
 XMLWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Finds missing and unnecessary whitespace in `.xml` files. |
 XMLWorkflowDefinitionFileNameCheck | [Styling](styling_checks.markdown#styling-checks) | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the file name of workflow definition files. |
 XMLWorkflowDefinitionFileStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Applies rules to enforce consistency in code style in `*workflow-definition.xml` files. |
-YMLDefinitionOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .yaml or .yml | Sorts definitions alphabetically in `.yml` files. |
-YMLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .yaml or .yml | Finds missing and unnecessary empty lines. |
-YMLLongLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .yaml or .yml | Finds lines that are longer than the specified maximum line length. |
-YMLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .yaml or .yml | Applies rules to enforce consistency in code style. |
-YMLWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .yaml or .yml | Finds missing and unnecessary whitespace in `.yml` files. |
+YMLDefinitionOrderCheck | [Styling](styling_checks.markdown#styling-checks) | .tpl, .yaml or .yml | Sorts definitions alphabetically in `.yml` files. |
+YMLEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .tpl, .yaml or .yml | Finds missing and unnecessary empty lines. |
+YMLLongLinesCheck | [Styling](styling_checks.markdown#styling-checks) | .tpl, .yaml or .yml | Finds lines that are longer than the specified maximum line length. |
+YMLStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .tpl, .yaml or .yml | Applies rules to enforce consistency in code style. |
+YMLWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .tpl, .yaml or .yml | Finds missing and unnecessary whitespace in `.yml` files. |

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SegmentsEntryFinderImpl
 	extends SegmentsEntryFinderBaseImpl implements SegmentsEntryFinder {
 
-	public static final String FIND_BY_SEGMENTSENTRYIDS =
+	public static final String FIND_BY_SEGMENTS_ENTRY_IDS =
 		SegmentsEntryFinder.class.getName() + ".findBySegmentsEntryIds";
 
 	@Override
@@ -41,7 +41,7 @@ public class SegmentsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_SEGMENTSENTRYIDS);
+			String sql = _customSQL.get(getClass(), FIND_BY_SEGMENTS_ENTRY_IDS);
 
 			sql = StringUtil.replace(
 				sql, "[$SEGMENTS_ENTRY_IDS$]",

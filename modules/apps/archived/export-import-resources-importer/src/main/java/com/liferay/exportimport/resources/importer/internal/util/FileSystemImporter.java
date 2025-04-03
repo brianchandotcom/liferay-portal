@@ -1748,9 +1748,9 @@ public class FileSystemImporter extends BaseImporter {
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
-		Set<Map.Entry<String, String>> set = unicodeProperties.entrySet();
+		Set<Map.Entry<String, String>> entries = unicodeProperties.entrySet();
 
-		Iterator<Map.Entry<String, String>> iterator = set.iterator();
+		Iterator<Map.Entry<String, String>> iterator = entries.iterator();
 
 		while (iterator.hasNext()) {
 			Map.Entry<String, String> entry = iterator.next();

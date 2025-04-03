@@ -121,10 +121,11 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 
 		sb.append("<div ");
 
-		Set<Map.Entry<String, Function<T, String>>> set = attributes.entrySet();
+		Set<Map.Entry<String, Function<T, String>>> entries =
+			attributes.entrySet();
 
 		Iterator<Map.Entry<String, Function<T, String>>> iterator =
-			set.iterator();
+			entries.iterator();
 
 		while (iterator.hasNext()) {
 			Map.Entry<String, Function<T, String>> entry = iterator.next();

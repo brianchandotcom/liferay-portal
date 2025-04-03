@@ -318,6 +318,9 @@ const BusinessEventsItemActivityHistory = () => {
 								<ButtonDropDown
 									items={userOptions}
 									label="Actions"
+									menuElementAttrs={{
+										className: 'p-0',
+									}}
 								/>
 							</div>
 						)}

@@ -101,12 +101,11 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 			return null;
 		}
 
-		String[] groupVocabularyExternalReferenceCodes = StringUtil.split(
+		String[] externalReferenceCodeParts = StringUtil.split(
 			externalReferenceCode, "&&");
 
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-			groupVocabularyExternalReferenceCodes[0],
-			portletDataContext.getCompanyId());
+			externalReferenceCodeParts[0], portletDataContext.getCompanyId());
 
 		if (group == null) {
 			return externalReferenceCode;
@@ -115,14 +114,13 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.
 				fetchAssetVocabularyByExternalReferenceCode(
-					groupVocabularyExternalReferenceCodes[1],
-					group.getGroupId());
+					externalReferenceCodeParts[1], group.getGroupId());
 
 		if (assetVocabulary == null) {
 			return StringUtil.merge(
 				new Object[] {
-					groupVocabularyExternalReferenceCodes[1],
-					group.getGroupId(), groupVocabularyExternalReferenceCodes[0]
+					externalReferenceCodeParts[1], group.getGroupId(),
+					externalReferenceCodeParts[0]
 				},
 				StringPool.POUND);
 		}
@@ -134,7 +132,7 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 
 		String groupExternalReferenceCode =
 			getGroupExportPortletPreferencesExternalReferenceCode(
-				portletDataContext, groupVocabularyExternalReferenceCodes[0]);
+				portletDataContext, externalReferenceCodeParts[0]);
 
 		return StringUtil.merge(
 			new Object[] {

@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
@@ -491,24 +492,44 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private AssetLibrary[] _getAssetLibraries(AssetVocabulary assetVocabulary) {
-		return transformToArray(
+		List<AssetVocabularyGroupRel> assetVocabularyGroupRels =
 			_assetVocabularyGroupRelLocalService.
 				getAssetVocabularyGroupRelsByVocabularyId(
-					assetVocabulary.getVocabularyId()),
+					assetVocabulary.getVocabularyId());
+
+		if (assetVocabularyGroupRels.isEmpty()) {
+			return null;
+		}
+
+		return transformToArray(
+			assetVocabularyGroupRels,
 			assetVocabularyGroupRel -> {
 				Group group = groupLocalService.fetchGroup(
 					assetVocabularyGroupRel.getGroupId());
 
 				return new AssetLibrary() {
 					{
-						setId(group::getGroupId);
+						setId(assetVocabularyGroupRel::getGroupId);
 						setName(
-							() -> group.getName(
-								contextAcceptLanguage.getPreferredLocale()));
+							() -> {
+								if (group == null) {
+									return null;
+								}
+
+								return group.getName(
+									contextAcceptLanguage.getPreferredLocale());
+							});
 						setName_i18n(
-							() -> LocalizedMapUtil.getI18nMap(
-								contextAcceptLanguage.isAcceptAllLanguages(),
-								group.getNameMap()));
+							() -> {
+								if (group == null) {
+									return null;
+								}
+
+								return LocalizedMapUtil.getI18nMap(
+									contextAcceptLanguage.
+										isAcceptAllLanguages(),
+									group.getNameMap());
+							});
 					}
 				};
 			},

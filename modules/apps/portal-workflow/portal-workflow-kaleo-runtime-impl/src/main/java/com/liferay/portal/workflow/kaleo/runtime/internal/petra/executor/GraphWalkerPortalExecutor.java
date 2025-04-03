@@ -32,6 +32,7 @@ import com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,7 +123,7 @@ public class GraphWalkerPortalExecutor {
 	}
 
 	private void _completeKaleoInstanceOnFailure(
-		ExecutionContext executionContext) {
+		ExecutionContext executionContext, String throwableMessage) {
 
 		try {
 			KaleoInstanceToken executionContextKaleoInstanceToken =
@@ -142,6 +143,10 @@ public class GraphWalkerPortalExecutor {
 
 			_kaleoInstanceLocalService.completeKaleoInstance(
 				kaleoInstance.getKaleoInstanceId());
+
+			_kaleoLogLocalService.addWorkflowInstanceFailKaleoLog(
+				executionContextKaleoInstanceToken, throwableMessage,
+				executionContext.getServiceContext());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -217,7 +222,8 @@ public class GraphWalkerPortalExecutor {
 		catch (Throwable throwable) {
 			_log.error(throwable, throwable);
 
-			_completeKaleoInstanceOnFailure(executionContext);
+			_completeKaleoInstanceOnFailure(
+				executionContext, throwable.getMessage());
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
@@ -240,6 +246,9 @@ public class GraphWalkerPortalExecutor {
 
 	@Reference
 	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
+
+	@Reference
+	private KaleoLogLocalService _kaleoLogLocalService;
 
 	private NoticeableExecutorService _noticeableExecutorService;
 

@@ -522,13 +522,13 @@ public class ObjectEntryLocalServiceImpl
 				externalReferenceCode, user.getCompanyId(), objectDefinitionId);
 
 			if (objectEntry != null) {
-				return updateObjectEntry(
+				return objectEntryLocalService.updateObjectEntry(
 					userId, objectEntry.getObjectEntryId(), values,
 					serviceContext);
 			}
 		}
 
-		objectEntry = addObjectEntry(
+		objectEntry = objectEntryLocalService.addObjectEntry(
 			userId, groupId, objectDefinitionId, objectEntryFolderId, null,
 			values, serviceContext);
 
@@ -4996,7 +4996,7 @@ public class ObjectEntryLocalServiceImpl
 				nodeObjectEntry.setRootObjectEntryId(
 					parentObjectEntry.getRootObjectEntryId());
 
-				updateObjectEntry(nodeObjectEntry);
+				objectEntryLocalService.updateObjectEntry(nodeObjectEntry);
 			}
 		}
 

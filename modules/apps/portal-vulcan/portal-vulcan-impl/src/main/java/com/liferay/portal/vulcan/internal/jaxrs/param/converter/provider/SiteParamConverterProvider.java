@@ -58,7 +58,7 @@ public class SiteParamConverterProvider
 
 		sb.append("Unable to get a valid ");
 
-		if (_containsValue(multivaluedMap, "assetLibraryId", parameter)) {
+		if (_contains("assetLibraryId", multivaluedMap, parameter)) {
 			sb.append("asset library");
 		}
 		else {
@@ -105,8 +105,8 @@ public class SiteParamConverterProvider
 		return String.valueOf(parameter);
 	}
 
-	private boolean _containsValue(
-		MultivaluedMap<String, String> multivaluedMap, String key,
+	private boolean _contains(
+		String key, MultivaluedMap<String, String> multivaluedMap,
 		String value) {
 
 		List<String> values = multivaluedMap.get(key);
@@ -121,11 +121,11 @@ public class SiteParamConverterProvider
 	private Long _getGroupId(
 		MultivaluedMap<String, String> multivaluedMap, String parameterValue) {
 
-		if (_containsValue(multivaluedMap, "assetLibraryId", parameterValue)) {
+		if (_contains("assetLibraryId", multivaluedMap, parameterValue)) {
 			return getDepotGroupId(parameterValue, _company.getCompanyId());
 		}
 
-		if (_containsValue(multivaluedMap, "siteId", parameterValue)) {
+		if (_contains("siteId", multivaluedMap, parameterValue)) {
 			return getGroupId(_company.getCompanyId(), parameterValue);
 		}
 

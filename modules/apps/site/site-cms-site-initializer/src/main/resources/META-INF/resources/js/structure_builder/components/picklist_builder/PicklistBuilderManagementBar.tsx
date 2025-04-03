@@ -7,13 +7,19 @@ import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useMemo} from 'react';
 
-import {useErc, useName, useSetId} from '../../contexts/PicklistBuilderContext';
+import {
+	useErc,
+	useId,
+	useName,
+	useSetId,
+} from '../../contexts/PicklistBuilderContext';
 import PicklistService from '../../services/PicklistService';
 import AsyncButton from '../AsyncButton';
 import ManagementBar from '../ManagementBar';
 
 export default function PicklistBuilderManagementBar() {
 	const erc = useErc();
+	const id = useId();
 	const name = useName();
 	const setId = useSetId();
 
@@ -28,12 +34,17 @@ export default function PicklistBuilderManagementBar() {
 				return;
 			}
 
-			const picklist = await PicklistService.createPicklist({
-				erc,
-				name,
-			});
+			if (!id) {
+				const picklist = await PicklistService.createPicklist({
+					erc,
+					name,
+				});
 
-			setId(picklist.id);
+				setId(picklist.id);
+			}
+			else {
+				await PicklistService.updatePicklist({erc, id, name});
+			}
 
 			openToast({
 				message: Liferay.Util.sub(

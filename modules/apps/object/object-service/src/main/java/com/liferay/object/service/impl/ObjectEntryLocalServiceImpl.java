@@ -336,7 +336,7 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition, serviceContext, userId, null, values);
 
 		_addDLFileEntries(
-			objectDefinition, objectEntryId, serviceContext, dlFileEntries,
+			dlFileEntries, objectDefinition, objectEntryId, serviceContext,
 			userId, values);
 
 		Map<String, Serializable> insertedValues = new HashMap<>();
@@ -488,7 +488,7 @@ public class ObjectEntryLocalServiceImpl
 			serviceContext, userId, null, values);
 
 		_addDLFileEntries(
-			objectDefinition, primaryKey, serviceContext, dlFileEntries,
+			dlFileEntries, objectDefinition, primaryKey, serviceContext,
 			userId, values);
 
 		insertIntoOrUpdateExtensionTable(
@@ -1668,7 +1668,7 @@ public class ObjectEntryLocalServiceImpl
 			null, values);
 
 		_addDLFileEntries(
-			objectDefinition, objectEntryId, serviceContext, dlFileEntries,
+			dlFileEntries, objectDefinition, objectEntryId, serviceContext,
 			userId, values);
 
 		int workflowAction = serviceContext.getWorkflowAction();
@@ -2036,9 +2036,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _addDLFileEntries(
+			Map<ObjectField, DLFileEntry> dlFileEntries,
 			ObjectDefinition objectDefinition, long objectEntryId,
-			ServiceContext serviceContext,
-			Map<ObjectField, DLFileEntry> dlFileEntries, long userId,
+			ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
 		throws PortalException {
 

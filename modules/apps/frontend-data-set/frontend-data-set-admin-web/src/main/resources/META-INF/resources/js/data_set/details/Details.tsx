@@ -329,6 +329,7 @@ const Details = ({
 					</ClayForm.Group>
 
 					<LearnMessage
+						className="single-link text-3"
 						resource="frontend-data-set-admin-web"
 						resourceKey="rest-parameters"
 					/>

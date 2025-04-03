@@ -22,14 +22,19 @@ const remotePageTest = test.extend<RemotePage>({
 	remotePage: async ({browser, page}, use) => {
 		await page.goto('/');
 
+		const remoteUrl = liferayConfig.environment.baseUrl.replace(
+			'8080',
+			'9080'
+		);
+
 		const remoteContext = await browser.newContext({
-			baseURL: liferayConfig.environment.baseUrl.replace('8080', '9080'),
+			baseURL: remoteUrl,
 		});
 
 		const remotePage = await remoteContext.newPage();
 
 		await performLoginViaApi({
-			loginUrl: liferayConfig.environment.baseUrl.replace('8080', '9080'),
+			loginUrl: remoteUrl,
 			page: remotePage,
 			screenName: 'test',
 		});

@@ -9,6 +9,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFacto
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTemplateContextContributorTestCase;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldOptionsTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -26,7 +27,8 @@ import org.mockito.Mockito;
 /**
  * @author Carolina Barbosa
  */
-public class TextDDMFormFieldTemplateContextContributorTest {
+public class TextDDMFormFieldTemplateContextContributorTest
+	extends BaseDDMFormFieldTemplateContextContributorTestCase {
 
 	@ClassRule
 	@Rule
@@ -34,7 +36,10 @@ public class TextDDMFormFieldTemplateContextContributorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		setUpLanguageUtil();
+
 		_setUpDDMFormFieldOptionsFactory();
 	}
 
@@ -43,7 +48,7 @@ public class TextDDMFormFieldTemplateContextContributorTest {
 		Map<String, Object> parameters =
 			_textDDMFormFieldTemplateContextContributor.getParameters(
 				new DDMFormField("field", "text"),
-				new DDMFormFieldRenderingContext());
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("confirmationErrorMessage"));
 		Assert.assertTrue(parameters.containsKey("confirmationLabel"));
@@ -56,7 +61,7 @@ public class TextDDMFormFieldTemplateContextContributorTest {
 		Map<String, Object> parameters =
 			_textDDMFormFieldTemplateContextContributor.getParameters(
 				new DDMFormField("field", "text"),
-				new DDMFormFieldRenderingContext());
+				createDDMFormFieldRenderingContext());
 
 		Assert.assertTrue(parameters.containsKey("autocompleteEnabled"));
 		Assert.assertTrue(parameters.containsKey("displayStyle"));

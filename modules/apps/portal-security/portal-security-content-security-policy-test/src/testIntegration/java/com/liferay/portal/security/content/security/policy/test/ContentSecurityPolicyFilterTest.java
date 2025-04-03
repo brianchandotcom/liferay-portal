@@ -10,7 +10,6 @@ import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporaryS
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -54,7 +53,7 @@ public class ContentSecurityPolicyFilterTest {
 					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://localhost:8080/html/" + RandomTestUtil.randomString());
+				"http://localhost:8080/html/common/null.html");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();

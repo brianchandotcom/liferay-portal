@@ -1517,11 +1517,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await objectLayoutsPage.markAsDefaultButton.check();
 
-		await objectLayoutsPage.createObjectLayoutContent(
-			'Block 1',
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectLayoutBlockName: 'Block 1',
 			objectLayoutName,
-			'Field Tab'
-		);
+			objectLayoutTabName: 'Field Tab',
+		});
 
 		await objectLayoutsPage.iframeLocator
 			.getByRole('option', {name: 'Custom Field Optional'})

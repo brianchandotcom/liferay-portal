@@ -81,12 +81,12 @@ public class AssetAutoTaggerOSGiCommands implements OSGiCommands {
 		}
 
 		if (ArrayUtil.isEmpty(classNames)) {
-			Set<String> classNamesSet = new HashSet<>(
+			Set<String> newClassNames = new HashSet<>(
 				AssetAutoTaggerUtil.getClassNames());
 
-			classNamesSet.remove("*");
+			newClassNames.remove("*");
 
-			classNames = classNamesSet.toArray(new String[0]);
+			classNames = newClassNames.toArray(new String[0]);
 		}
 
 		_forEachAssetEntry(

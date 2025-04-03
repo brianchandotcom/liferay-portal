@@ -140,9 +140,9 @@ public abstract class BaseAssetAutoTaggerTestCase {
 	}
 
 	protected void assertHasNoTags(AssetEntry assetEntry) {
-		List<AssetTag> tags = assetEntry.getTags();
+		List<AssetTag> assetTag = assetEntry.getTags();
 
-		Assert.assertEquals(tags.toString(), 0, tags.size());
+		Assert.assertEquals(assetTag.toString(), 0, assetTag.size());
 	}
 
 	protected AssetEntry updateFileEntryAssetEntry(

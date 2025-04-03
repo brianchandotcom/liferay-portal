@@ -197,7 +197,9 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 			String portletPreferencesOldValue)
 		throws Exception {
 
-		throw new Exception();
+		throw new Exception(
+			"This method is deprecated and replaced by " +
+				"getImportPortletPreferencesNewExternalReferenceCode");
 	}
 
 	@Reference(target = "(name=PortletDisplayTemplateExporter)")

@@ -933,7 +933,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			userExpandoMappings, userMappings);
 	}
 
-	private ExpandoColumn _getOrCreateExpandoColumn(long companyId)
+	private ExpandoColumn _getOrAddExpandoColumn(long companyId)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
@@ -1220,7 +1220,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 			}
 		}
 
-		ExpandoColumn expandoColumn = _getOrCreateExpandoColumn(
+		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
 			ldapImportContext.getCompanyId());
 
 		_expandoValueLocalService.addValue(
@@ -2044,7 +2044,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 					userGroupIds.remove(userGroupId);
 				}
 				else {
-					ExpandoColumn expandoColumn = _getOrCreateExpandoColumn(
+					ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
 						userGroup.getCompanyId());
 
 					ExpandoValue expandoValue =

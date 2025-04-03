@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useEffect} from 'react';
 
 import StateContextProvider, {
@@ -10,6 +11,7 @@ import StateContextProvider, {
 	useId,
 } from '../../contexts/PicklistBuilderContext';
 import {Picklist} from '../../types/Picklist';
+import PicklistFields from './PicklistFields';
 
 export default function PicklistBuilder({
 	state,
@@ -20,7 +22,13 @@ export default function PicklistBuilder({
 		<StateContextProvider
 			initialState={buildState(state.listTypeDefinition)}
 		>
-			<HistoryManager />
+			<div className="d-flex flex-column">
+				<HistoryManager />
+
+				<ClayLayout.ContainerFluid className="px-4" size="md" view>
+					<PicklistFields />
+				</ClayLayout.ContainerFluid>
+			</div>
 		</StateContextProvider>
 	);
 }

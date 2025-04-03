@@ -105,7 +105,7 @@ const FrontendDataSet = ({
 	);
 	const [searchParam, setSearchParam] = useState('');
 
-	const [selectAll, setSelectAll] = useState(false);
+	const [allItemsSelectedActive, setAllItemsSelectedActive] = useState(false);
 
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
 		initialSelectedItemsValues || []
@@ -282,18 +282,18 @@ const FrontendDataSet = ({
 	);
 
 	if (
-		selectAll &&
+		allItemsSelectedActive &&
 		!!pageSelectedItemsValue.length &&
 		pageSelectedItemsValue.length !== items.length
 	) {
-		setSelectAll(false);
+		setAllItemsSelectedActive(false);
 		deselectItems(
 			selectedItemsValue.filter(
 				(item) => !pageSelectedItemsValue.includes(item)
 			)
 		);
 	}
-	else if (selectAll) {
+	else if (allItemsSelectedActive) {
 		const currentItems = items.map((item) => item.id);
 		const newItems = currentItems.filter(
 			(item) => !selectedItemsValue.includes(item)
@@ -640,24 +640,24 @@ const FrontendDataSet = ({
 	const managementBar = showManagementBar ? (
 		<div className="management-bar-wrapper">
 			<ManagementBar
+				allItemsSelectedActive={allItemsSelectedActive}
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
 				deselectItems={(items) => {
 					deselectItems(items);
 
-					if (selectAll) {
-						setSelectAll(false);
+					if (allItemsSelectedActive) {
+						setAllItemsSelectedActive(false);
 					}
 				}}
 				fluid={style === 'fluid'}
 				items={items}
 				onBulkActionsClear={() => {
 					deselectItems(selectedItemsValue);
-					setSelectAll(false);
+					setAllItemsSelectedActive(false);
 				}}
-				onSelectAll={(value) => setSelectAll(value)}
+				onSelectAll={(value) => setAllItemsSelectedActive(value)}
 				pageSelectedItemsValue={pageSelectedItemsValue}
-				selectAll={selectAll}
 				selectItems={(items) => selectItems(items)}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}

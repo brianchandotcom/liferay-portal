@@ -12,6 +12,7 @@ import NavBar from './controls/NavBar';
 import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
 
 function ManagementBar({
+	allItemsSelectedActive,
 	bulkActions,
 	creationMenu,
 	deselectItems,
@@ -20,7 +21,6 @@ function ManagementBar({
 	onBulkActionsClear,
 	onSelectAll,
 	pageSelectedItemsValue,
-	selectAll,
 	selectItems,
 	selectedItems,
 	selectedItemsKey,
@@ -31,7 +31,7 @@ function ManagementBar({
 	total,
 }) {
 	function handleCheckboxClick() {
-		if (selectAll) {
+		if (allItemsSelectedActive) {
 			return deselectItems(selectedItemsValue);
 		}
 
@@ -52,6 +52,7 @@ function ManagementBar({
 			{selectionType === 'multiple' &&
 				(Liferay.FeatureFlags['LPD-42570'] ? (
 					<BulkActions
+						allItemsSelectedActive={allItemsSelectedActive}
 						bulkActions={bulkActions}
 						deselectItems={deselectItems}
 						fluid={fluid}
@@ -60,7 +61,6 @@ function ManagementBar({
 						items={items}
 						onClear={onBulkActionsClear}
 						pageSelectedItemsValue={pageSelectedItemsValue}
-						selectAll={selectAll}
 						selectItems={selectItems}
 						selectedItems={selectedItems}
 						selectedItemsKey={selectedItemsKey}
@@ -99,6 +99,7 @@ function ManagementBar({
 }
 
 ManagementBar.propTypes = {
+	allItemsSelectedActive: PropTypes.bool.isRequired,
 	bulkActions: PropTypes.arrayOf(
 		PropTypes.shape({
 			href: PropTypes.string.isRequired,

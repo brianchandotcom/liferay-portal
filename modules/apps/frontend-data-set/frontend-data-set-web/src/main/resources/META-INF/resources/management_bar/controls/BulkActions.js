@@ -31,6 +31,7 @@ function getRichPayload(payload, key, values = []) {
 }
 
 function BulkActions({
+	allItemsSelectedActive,
 	bulkActions,
 	fluid,
 	handleCheckboxClick,
@@ -38,7 +39,6 @@ function BulkActions({
 	items,
 	onClear,
 	pageSelectedItemsValue,
-	selectAll,
 	selectedItems,
 	selectedItemsKey,
 	selectedItemsValue,
@@ -91,9 +91,9 @@ function BulkActions({
 				loadData,
 				namespace,
 				selectedData: {
-					items: selectAll ? [] : selectedItems,
-					keyValues: selectAll ? [] : selectedItemsValue,
-					selectAll,
+					items: allItemsSelectedActive ? [] : selectedItems,
+					keyValues: allItemsSelectedActive ? [] : selectedItemsValue,
+					selectAll: allItemsSelectedActive,
 				},
 			});
 		}
@@ -107,8 +107,10 @@ function BulkActions({
 					data: {
 						...data,
 						[`${actionParameterName || selectedItemsKey}`]:
-							selectAll ? [] : selectedItemsValue.join(','),
-						selectAll,
+							allItemsSelectedActive
+								? []
+								: selectedItemsValue.join(','),
+						selectAll: allItemsSelectedActive,
 					},
 					url: href || form.action,
 				});
@@ -180,7 +182,7 @@ function BulkActions({
 							<li className="nav-item">
 								<span className="text-truncate">
 									{selectedItemsValue.length === total ||
-									selectAll
+									allItemsSelectedActive
 										? sub(
 												Liferay.Language.get(
 													'all-selected-x-of-x-items'
@@ -211,7 +213,7 @@ function BulkActions({
 								{pageSelectedItemsValue.length ===
 									items.length &&
 									showSelectAll &&
-									!selectAll && (
+									!allItemsSelectedActive && (
 										<ClayLink
 											className="ml-3"
 											href="#"
@@ -334,6 +336,7 @@ function BulkActions({
 }
 
 BulkActions.propTypes = {
+	allItemsSelectedActive: PropTypes.bool.isRequired,
 	bulkActions: PropTypes.arrayOf(
 		PropTypes.shape({
 			href: PropTypes.string.isRequired,
@@ -350,7 +353,6 @@ BulkActions.propTypes = {
 	items: PropTypes.array.isRequired,
 	onClear: PropTypes.func.isRequired,
 	pageSelectedItemsValue: PropTypes.array.isRequired,
-	selectAll: PropTypes.bool.isRequired,
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,
 	showSelectAll: PropTypes.bool.isRequired,

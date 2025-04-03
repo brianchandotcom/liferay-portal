@@ -46,11 +46,49 @@ public class ObjectDefinitionUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
+		ObjectDefinition objectDefinition1 =
+			_addModifiableSystemObjectDefinition();
+
+		_assertObjectDefinitionPKObjectFieldPrefix(
+			_objectDefinitionLocalService.publishSystemObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId()),
+			"c_");
+
+		ObjectDefinition objectDefinition2 =
+			_addModifiableSystemObjectDefinition();
+
+		_assertObjectDefinitionPKObjectFieldPrefix(objectDefinition2, "c_");
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+		}
+
+		_assertObjectDefinitionPKObjectFieldPrefix(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinition1.getObjectDefinitionId()),
+			"l_");
+		_assertObjectDefinitionPKObjectFieldPrefix(
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectDefinition2.getObjectDefinitionId()),
+			"l_");
+	}
+
+	private ObjectDefinition _addModifiableSystemObjectDefinition()
+		throws Exception {
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
 				TestPropsValues.getUserId(), null, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				"Test" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
 				Collections.singletonList(
@@ -66,30 +104,8 @@ public class ObjectDefinitionUpgradeProcessTest {
 			StringUtil.replaceFirst(
 				objectDefinition.getPKObjectFieldName(), "l_", "c_"));
 
-		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+		return _objectDefinitionLocalService.updateObjectDefinition(
 			objectDefinition);
-
-		_assertObjectDefinitionPKObjectFieldPrefix(
-			_objectDefinitionLocalService.publishSystemObjectDefinition(
-				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId()),
-			"c_");
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
-		}
-
-		_assertObjectDefinitionPKObjectFieldPrefix(
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinition.getObjectDefinitionId()),
-			"l_");
 	}
 
 	private void _assertObjectDefinitionPKObjectFieldPrefix(

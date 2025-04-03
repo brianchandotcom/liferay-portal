@@ -72,7 +72,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcess
 					sb.append(primaryKeyColumnName);
 					sb.append(" = ");
 					sb.append(duplicateRow.get(primaryKeyColumnName));
-					sb.append("and ");
+					sb.append(" and ");
 				}
 
 				sb.setIndex(sb.index() - 1);

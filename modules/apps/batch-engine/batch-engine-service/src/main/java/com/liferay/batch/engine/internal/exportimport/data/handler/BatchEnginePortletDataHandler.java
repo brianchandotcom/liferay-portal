@@ -78,10 +78,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	public void exportDeletionSystemEvents(
 		PortletDataContext portletDataContext) {
 
-		String key = _itemClassName + "_batchDeleteERCs";
-
 		Map<String, String> map =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(key);
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				_itemClassName + "_batchDeleteERCs");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

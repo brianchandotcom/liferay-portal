@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.xml.ElementProcessor;
 
 import java.io.StringReader;
 
-import java.util.List;
 import java.util.Set;
 
 import org.xml.sax.InputSource;
@@ -93,9 +92,7 @@ public class DeletionSystemEventImporter {
 			return;
 		}
 
-		List<Element> sitePortletElements = sitePortletsElement.elements();
-
-		for (Element portletElement : sitePortletElements) {
+		for (Element portletElement : sitePortletsElement.elements()) {
 			String portletId = portletElement.attributeValue("portlet-id");
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(

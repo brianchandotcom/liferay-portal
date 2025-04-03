@@ -37,13 +37,11 @@ function NavBar({creationMenu, handleCheckboxClick, items, showSearch}) {
 					selectable &&
 					selectionType === 'multiple' && (
 						<ManagementToolbar.Item>
-							{Liferay.FeatureFlags['LPD-42570'] && (
-								<SelectionCheckbox
-									handleCheckboxClick={handleCheckboxClick}
-									items={items}
-									selectedItemsValue={[]}
-								/>
-							)}
+							<SelectionCheckbox
+								handleCheckboxClick={handleCheckboxClick}
+								items={items}
+								selectedItemsValue={[]}
+							/>
 						</ManagementToolbar.Item>
 					)}
 

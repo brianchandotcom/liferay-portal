@@ -87,10 +87,7 @@ const getVisibleFields = ({
 const Head = ({
 	fields,
 	items,
-	selectItems,
 	selectable,
-	selectedItemsKey,
-	selectedItemsValue,
 	selectionType,
 }: {
 	fields: Array<Field>;
@@ -119,49 +116,6 @@ const Head = ({
 									width="51px"
 								>
 									{null}
-								</ClayTableCell>
-							);
-						}
-
-						if (!Liferay.FeatureFlags['LPD-42570']) {
-							const title =
-								items.length !== selectedItemsValue.length
-									? Liferay.Language.get('select-items')
-									: Liferay.Language.get('clear-selection');
-
-							return (
-								<ClayTableCell
-									className="cell-select-item"
-									key="select"
-									scope="col"
-									textValue={title}
-									width="51px"
-								>
-									<ClayCheckbox
-										checked={!!selectedItemsValue.length}
-										indeterminate={
-											!!selectedItemsValue.length &&
-											items.length !==
-												selectedItemsValue.length
-										}
-										name="table-head-selector"
-										onChange={() => {
-											if (
-												selectedItemsValue.length ===
-												items.length
-											) {
-												return selectItems([]);
-											}
-
-											return selectItems(
-												items.map(
-													(item) =>
-														item[selectedItemsKey]
-												)
-											);
-										}}
-										title={title}
-									/>
 								</ClayTableCell>
 							);
 						}

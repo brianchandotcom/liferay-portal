@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import BulkActions from './controls/BulkActions';
-import BulkActionsDeprecated from './controls/BulkActionsDeprecated';
 import NavBar from './controls/NavBar';
 import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
 
@@ -49,40 +48,25 @@ function ManagementBar({
 
 	return (
 		<>
-			{selectionType === 'multiple' &&
-				(Liferay.FeatureFlags['LPD-42570'] ? (
-					<BulkActions
-						allItemsSelectedActive={allItemsSelectedActive}
-						bulkActions={bulkActions}
-						deselectItems={deselectItems}
-						fluid={fluid}
-						handleCheckboxClick={handleCheckboxClick}
-						handleSelectAll={(value) => handleSelectAll(value)}
-						items={items}
-						onClear={onBulkActionsClear}
-						pageSelectedItemsValue={pageSelectedItemsValue}
-						selectItems={selectItems}
-						selectedItems={selectedItems}
-						selectedItemsKey={selectedItemsKey}
-						selectedItemsValue={selectedItemsValue}
-						showSelectAll={showSelectAll}
-						total={total}
-					/>
-				) : (
-					<BulkActionsDeprecated
-						bulkActions={bulkActions}
-						fluid={fluid}
-						handleCheckboxClick={handleCheckboxClick}
-						items={items}
-						onClear={onBulkActionsClear}
-						pageSelectedItemsValue={pageSelectedItemsValue}
-						selectItems={selectItems}
-						selectedItems={selectedItems}
-						selectedItemsKey={selectedItemsKey}
-						selectedItemsValue={selectedItemsValue}
-						total={total}
-					/>
-				))}
+			{selectionType === 'multiple' && (
+				<BulkActions
+					allItemsSelectedActive={allItemsSelectedActive}
+					bulkActions={bulkActions}
+					deselectItems={deselectItems}
+					fluid={fluid}
+					handleCheckboxClick={handleCheckboxClick}
+					handleSelectAll={(value) => handleSelectAll(value)}
+					items={items}
+					onClear={onBulkActionsClear}
+					pageSelectedItemsValue={pageSelectedItemsValue}
+					selectItems={selectItems}
+					selectedItems={selectedItems}
+					selectedItemsKey={selectedItemsKey}
+					selectedItemsValue={selectedItemsValue}
+					showSelectAll={showSelectAll}
+					total={total}
+				/>
+			)}
 
 			{(!selectedItemsValue.length || selectionType === 'single') && (
 				<NavBar

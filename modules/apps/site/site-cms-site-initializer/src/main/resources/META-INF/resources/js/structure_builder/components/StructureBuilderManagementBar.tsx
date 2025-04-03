@@ -5,6 +5,7 @@
 
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
@@ -106,8 +107,11 @@ function SaveButton() {
 			dispatch({
 				error:
 					message ||
-					Liferay.Language.get(
-						'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					sub(
+						Liferay.Language.get(
+							'an-unexpected-error-occurred-while-saving-or-publishing-the-x'
+						),
+						Liferay.Language.get('structure')
 					),
 				type: 'set-error',
 			});
@@ -215,8 +219,11 @@ function PublishButton() {
 			dispatch({
 				error:
 					message ||
-					Liferay.Language.get(
-						'an-unexpected-error-occurred-while-saving-or-publishing-the-structure'
+					sub(
+						Liferay.Language.get(
+							'an-unexpected-error-occurred-while-saving-or-publishing-the-x'
+						),
+						Liferay.Language.get('structure')
 					),
 				type: 'set-error',
 			});

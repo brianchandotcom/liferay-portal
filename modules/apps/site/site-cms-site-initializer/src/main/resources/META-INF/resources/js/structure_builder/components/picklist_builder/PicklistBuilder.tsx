@@ -11,6 +11,7 @@ import StateContextProvider, {
 	useId,
 } from '../../contexts/PicklistBuilderContext';
 import {Picklist} from '../../types/Picklist';
+import PicklistBuilderManagementBar from './PicklistBuilderManagementBar';
 import PicklistFields from './PicklistFields';
 
 export default function PicklistBuilder({
@@ -24,6 +25,8 @@ export default function PicklistBuilder({
 		>
 			<div className="d-flex flex-column">
 				<HistoryManager />
+
+				<PicklistBuilderManagementBar />
 
 				<ClayLayout.ContainerFluid className="px-4" size="md" view>
 					<PicklistFields />

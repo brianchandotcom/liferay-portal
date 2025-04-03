@@ -107,7 +107,7 @@ public class MasterPageDTOConverter
 			return new ItemExternalReference[0];
 		}
 
-		return TransformUtil.unsafeTransform(
+		return TransformUtil.unsafeTransformToArray(
 			assetTags,
 			assetTag -> {
 				ItemExternalReference itemExternalReference =
@@ -119,10 +119,8 @@ public class MasterPageDTOConverter
 					() -> _getScope(groupId, assetTag.getGroupId()));
 
 				return itemExternalReference;
-			}
-		).toArray(
-			new ItemExternalReference[0]
-		);
+			},
+			ItemExternalReference.class);
 	}
 
 	private Scope _getScope(long curGroupId, long scopeGroupId)

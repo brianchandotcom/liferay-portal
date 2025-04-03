@@ -16,13 +16,10 @@ const dataRemoteApiHelpersTest = test.extend<{
 	remotePage: RemotePage;
 }>({
 	remoteApiHelpers: async ({remotePage}, use) => {
-		liferayConfig.environment.baseUrl =
-			liferayConfig.environment.baseUrl.replace('8080', '9080');
-
-		const dataApiHelpers = new DataApiHelpers(remotePage);
-
-		liferayConfig.environment.baseUrl =
-			liferayConfig.environment.baseUrl.replace('9080', '8080');
+		const dataApiHelpers = new DataApiHelpers(
+			remotePage,
+			liferayConfig.environment.baseUrl.replace('8080', '9080')
+		);
 
 		try {
 			await use(dataApiHelpers);
@@ -31,11 +28,10 @@ const dataRemoteApiHelpersTest = test.extend<{
 
 			// @ts-ignore
 
-			liferayConfig.environment.baseUrl =
-				liferayConfig.environment.baseUrl.replace('8080', '9080');
-			const adminDataApiHelpers = new DataApiHelpers(remotePage);
-			liferayConfig.environment.baseUrl =
-				liferayConfig.environment.baseUrl.replace('9080', '8080');
+			const adminDataApiHelpers = new DataApiHelpers(
+				remotePage,
+				liferayConfig.environment.baseUrl.replace('8080', '9080')
+			);
 
 			adminDataApiHelpers.setData(dataApiHelpers.data);
 

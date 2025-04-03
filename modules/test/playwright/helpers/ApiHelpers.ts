@@ -175,9 +175,11 @@ export class ApiHelpers {
 		`test@liferay.com:test`
 	)}`;
 
-	constructor(page: Page) {
+	constructor(page: Page, baseUrl?: string) {
 		this.apiBuilder = new ApiBuilderHelper(this);
-		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
+		this.baseUrl = baseUrl
+			? baseUrl + '/o/'
+			: liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.dataEngine = new DataEngineApiHelper(this);
 		this.dynamicDataMapping = new DynamicDataMappingApiHelper(this);
@@ -422,8 +424,8 @@ export class ApiHelpers {
 export class DataApiHelpers extends ApiHelpers {
 	readonly data: TDataApiHelpersData[];
 
-	constructor(page: Page) {
-		super(page);
+	constructor(page: Page, baseUrl?: string) {
+		super(page, baseUrl);
 
 		this.data = [];
 	}

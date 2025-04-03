@@ -3024,3 +3024,64 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Add new order button disabled if max open account orders number is reached',
+	{tag: '@LPD-52401'},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		page,
+		site,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'COMMERCE_ACCOUNT_FRAGMENTS-account-selector',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.maxOpenOrderAccountInput.fill(
+			'1'
+		);
+		await commerceAdminChannelDetailsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.accountSelectorButton(account.name).click();
+		await commerceLayoutsPage.createNewOrderButton.click();
+
+		await applicationsMenuPage.goToSite(site.name);
+
+		await commerceLayoutsPage.accountSelectorButton(account.name).click();
+
+		await expect(commerceLayoutsPage.createNewOrderButton).toBeDisabled();
+	}
+);

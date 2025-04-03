@@ -9,6 +9,12 @@
 				const anchorElement = document.getElementById(element.getAttribute("id").replace("toc-", ""));
 
 				if (anchorElement) {
+					window.history.pushState(
+						{},
+						"",
+						"#" + element.getAttribute("id").replace("toc-", "")
+					);
+
 					window.scrollTo({
 						behavior: "smooth",
 						top: anchorElement.getBoundingClientRect().top + window.scrollY - 190,

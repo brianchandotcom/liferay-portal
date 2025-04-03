@@ -5,12 +5,11 @@
 
 import {
 	ObjectDefinition,
-	ObjectDefinitionAPI,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
@@ -19,7 +18,7 @@ import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
 	cmsPagesTest,
-	apiHelpersTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-11232': {enabled: true},
 		'LPD-17564': {enabled: true},
@@ -93,12 +92,20 @@ test(
 				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
 				status: {code: 0},
 			})) as ObjectDefinition;
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
 
 		const objectDefinition2 =
 			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
 				status: {code: 0},
 			})) as ObjectDefinition;
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
 
 		const objectRelationshipLabel =
 			'objectRelationshipLabel' + getRandomInt();
@@ -127,44 +134,28 @@ test(
 					type: 'oneToMany',
 				}
 			);
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
 
-		try {
-			await structuresPage.goto();
+		await structuresPage.goto();
 
-			await structuresPage.execItemAction({
-				action: 'Delete',
-				filter: objectDefinition1.name,
-			});
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: objectDefinition1.name,
+		});
+		await expect(
+			page.getByRole('heading', {name: 'Deletion Not Allowed'})
+		).toBeVisible();
+		await page.getByRole('button', {name: 'OK'}).click();
 
-			await expect(
-				page.getByRole('heading', {name: 'Deletion Not Allowed'})
-			).toBeVisible();
-
-			await page.getByRole('button', {name: 'OK'}).click();
-
-			await structuresPage.execItemAction({
-				action: 'Delete',
-				filter: objectDefinition2.name,
-			});
-
-			await expect(
-				page.getByRole('heading', {name: 'Deletion Not Allowed'})
-			).toBeVisible();
-		}
-		finally {
-			await objectRelationshipApiClient.deleteObjectRelationship(
-				objectRelationship.id
-			);
-
-			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-			await objectDefinitionAPIClient.deleteObjectDefinition(
-				objectDefinition1.id
-			);
-			await objectDefinitionAPIClient.deleteObjectDefinition(
-				objectDefinition2.id
-			);
-		}
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: objectDefinition2.name,
+		});
+		await expect(
+			page.getByRole('heading', {name: 'Deletion Not Allowed'})
+		).toBeVisible();
 	}
 );

@@ -117,7 +117,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		Map<String, Function<T, String>> attributes = _initAttributes(
 			analyticsAssetType, classPK, title);
 
-		StringBundler sb = new StringBundler((attributes.size() * 5) + 1);
+		StringBundler sb = new StringBundler((attributes.size() * 5) + 2);
 
 		sb.append("<div ");
 

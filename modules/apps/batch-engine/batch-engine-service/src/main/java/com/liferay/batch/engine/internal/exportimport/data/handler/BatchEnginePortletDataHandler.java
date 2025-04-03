@@ -52,6 +52,9 @@ import javax.portlet.PortletPreferences;
  */
 public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
+	public static final String BATCH_DELETE_CLASS_NAME_POSTFIX =
+		"_batchDeleteExternalReferenceCodes";
+
 	public static final String SCHEMA_VERSION = "4.0.0";
 
 	public BatchEnginePortletDataHandler(
@@ -80,7 +83,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		Map<String, String> map =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				_itemClassName + "_batchDeleteERCs");
+				_itemClassName + BATCH_DELETE_CLASS_NAME_POSTFIX);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

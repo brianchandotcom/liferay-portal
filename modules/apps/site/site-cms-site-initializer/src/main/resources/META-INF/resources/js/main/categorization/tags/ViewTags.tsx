@@ -14,11 +14,9 @@ import CreateTagsModal from './CreateTagsModal';
 import EditTagsModal from './EditTagsModal';
 
 export default function ViewTags({
-	assetLibraryId,
 	tagsURL,
 	vocabulariesURL,
 }: {
-	assetLibraryId: string;
 	tagsURL: string;
 	vocabulariesURL: string;
 }) {
@@ -32,7 +30,6 @@ export default function ViewTags({
 					openModal({
 						contentComponent: () =>
 							CreateTagsModal({
-								assetLibraryId,
 								tagsURL,
 							}),
 						size: 'md',
@@ -54,11 +51,34 @@ export default function ViewTags({
 	];
 
 	const ViewsSpaceTableCell = ({itemData}: {itemData: any}) => {
-		return (
-			<span className="align-items-center d-flex space-renderer-sticker">
-				<SpaceSticker name={itemData.assetLibraryKey} size="sm" />
-			</span>
+		const assetLibraryNames = itemData.assetLibraries.map(
+			(assetLibrary: any) => assetLibrary.name
 		);
+		const assetLibraryIds = itemData.assetLibraries.map(
+			(assetLibrary: any) => assetLibrary.id
+		);
+
+		if (assetLibraryIds.includes(-1)) {
+			return (
+				<span className="align-items-center d-flex space-renderer-sticker">
+					<SpaceSticker name="All Spaces" size="sm" />
+				</span>
+			);
+		}
+		else {
+			return (
+				<>
+					{assetLibraryNames.map((name: string, index: number) => (
+						<span
+							className="align-items-center d-flex space-renderer-sticker"
+							key={index}
+						>
+							<SpaceSticker name={name} size="sm" />
+						</span>
+					))}
+				</>
+			);
+		}
 	};
 
 	const views = [
@@ -76,7 +96,7 @@ export default function ViewTags({
 					},
 					{
 						contentRenderer: VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
-						fieldName: 'assetLibraryKey',
+						fieldName: 'assetLibraries',
 						label: Liferay.Language.get('space'),
 						sortable: false,
 					},
@@ -178,7 +198,7 @@ export default function ViewTags({
 			/>
 
 			<FrontendDataSet
-				apiURL={`/o/headless-admin-taxonomy/v1.0/asset-libraries/${assetLibraryId}/keywords`}
+				apiURL="/o/headless-admin-taxonomy/v1.0/keywords"
 				creationMenu={creationMenu}
 				customRenderers={{
 					tableCell: [
@@ -200,6 +220,8 @@ export default function ViewTags({
 							openModal({
 								contentComponent: () =>
 									EditTagsModal({
+										assetLibraries:
+											itemData.itemData.assetLibraries,
 										tagId: itemData.itemData.id,
 										tagName: itemData.itemData.name,
 										tagsURL,

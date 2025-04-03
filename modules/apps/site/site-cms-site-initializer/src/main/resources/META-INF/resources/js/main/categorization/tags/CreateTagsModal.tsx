@@ -8,32 +8,30 @@ import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, navigate} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
-export default function CreationTagModalContent({
-	assetLibraryId,
-	tagsURL,
-}: {
-	assetLibraryId?: string;
-	tagsURL: string;
-}) {
+export default function CreateTagsModalContent({tagsURL}: {tagsURL: string}) {
+	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
+
+	const assetLibraries = selectedSpaces.map((number) => ({
+		id: number,
+	}));
+
 	const {errors, handleChange, handleSubmit, resetForm, touched, values} =
 		useFormik({
 			initialValues: {
-				assetLibraryIds: [],
+				assetLibraries: [],
 				tagName: '',
 			},
 			onSubmit: (values) => {
-				const url =
-					'/o/headless-admin-taxonomy/v1.0/asset-libraries/' +
-					assetLibraryId +
-					'/keywords';
+				const url = '/o/headless-admin-taxonomy/v1.0/keywords';
 
 				const body = {
+					assetLibraries,
 					name: values.tagName,
 				};
 
@@ -79,7 +77,7 @@ export default function CreationTagModalContent({
 			validate: (values) => {
 				validate(
 					{
-						assetLibraryIds: [required],
+						assetLibraries: [required],
 						tagName: [required],
 					},
 					values
@@ -103,7 +101,10 @@ export default function CreationTagModalContent({
 					value={values.tagName}
 				/>
 
-				<CategorizationSpaces checkboxText="tag" />
+				<CategorizationSpaces
+					checkboxText="tag"
+					setSelectedSpaces={setSelectedSpaces}
+				/>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

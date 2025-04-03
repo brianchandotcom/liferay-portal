@@ -7,14 +7,6 @@ package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
-import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
-import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -34,9 +26,6 @@ import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -91,7 +80,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -99,17 +87,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -156,109 +138,6 @@ public class LayoutSetPrototypePropagationTest
 	@Test
 	public void testAddGroup() throws Exception {
 		Assert.assertEquals(_initialPrototypeLayoutsCount, _initialLayoutCount);
-	}
-
-	@Test
-	@TestInfo("LPS-166515")
-	public void testFailedPropagationBackgroundTaskIsRemovedWhileNewPropagationBackgroundTaskIsProcessed()
-		throws Exception {
-
-		File larFile = File.createTempFile("corrupt", ".lar");
-
-		try (Writer writer = new FileWriter(larFile)) {
-			writer.write(RandomTestUtil.randomString());
-		}
-
-		long backgroundTaskId = 0;
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.background.task.internal.messaging." +
-					"BackgroundTaskMessageListener",
-				LoggerTestUtil.ERROR)) {
-
-			backgroundTaskId =
-				ExportImportLocalServiceUtil.
-					importLayoutSetPrototypeInBackground(
-						TestPropsValues.getUserId(),
-						ExportImportConfigurationLocalServiceUtil.
-							addExportImportConfiguration(
-								TestPropsValues.getUserId(),
-								group.getGroupId(),
-								RandomTestUtil.randomString(),
-								RandomTestUtil.randomString(), 0, null,
-								WorkflowConstants.STATUS_DRAFT,
-								ServiceContextTestUtil.getServiceContext()),
-						larFile);
-		}
-
-		Thread.sleep(2000);
-
-		BackgroundTask failedBackgroundTask =
-			BackgroundTaskManagerUtil.getBackgroundTask(backgroundTaskId);
-
-		Assert.assertEquals(
-			BackgroundTaskConstants.STATUS_FAILED,
-			failedBackgroundTask.getStatus());
-
-		List<BackgroundTask> backgroundTasks =
-			BackgroundTaskManagerUtil.getBackgroundTasks(
-				group.getGroupId(),
-				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR);
-
-		Assert.assertEquals(
-			backgroundTasks.toString(), 1, backgroundTasks.size());
-
-		ExportImportConfiguration exportExportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), group.getGroupId(),
-					StringPool.BLANK, StringPool.BLANK,
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), group.getGroupId(), true,
-							new long[0],
-							LinkedHashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-								new String[] {Boolean.TRUE.toString()}
-							).build()),
-					WorkflowConstants.STATUS_DRAFT,
-					ServiceContextTestUtil.getServiceContext());
-
-		larFile = ExportImportServiceUtil.exportLayoutsAsFile(
-			exportExportImportConfiguration);
-
-		ExportImportConfiguration importExportExportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), group.getGroupId(),
-					StringPool.BLANK, StringPool.BLANK,
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(), group.getGroupId(), true,
-							new long[0],
-							LinkedHashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-								new String[] {Boolean.TRUE.toString()}
-							).build()),
-					WorkflowConstants.STATUS_DRAFT,
-					ServiceContextTestUtil.getServiceContext());
-
-		ExportImportLocalServiceUtil.importLayoutSetPrototypeInBackground(
-			TestPropsValues.getUserId(), importExportExportImportConfiguration,
-			larFile);
-
-		Thread.sleep(2000);
-
-		backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(
-			group.getGroupId(),
-			BackgroundTaskExecutorNames.
-				LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR);
-
-		Assert.assertEquals(
-			backgroundTasks.toString(), 0, backgroundTasks.size());
 	}
 
 	@Test

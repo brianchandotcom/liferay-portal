@@ -235,6 +235,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			else if (name.startsWith("com.liferay") &&
 					 !name.startsWith("com.liferay.gradle") &&
 					 !name.startsWith("com.liferay.jakarta") &&
+					 !name.startsWith("com.liferay.portletmvc4spring") &&
 					 !_isMasterOnlyFile(absolutePath)) {
 
 				for (String enforceVersionArtifact : enforceVersionArtifacts) {

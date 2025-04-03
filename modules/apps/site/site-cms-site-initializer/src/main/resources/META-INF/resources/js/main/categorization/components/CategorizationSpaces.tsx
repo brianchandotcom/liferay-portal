@@ -6,7 +6,7 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import SpaceSticker from '../../components/SpaceSticker';
 import SpaceService from '../services/SpaceService';
@@ -16,42 +16,45 @@ type Space = {
 	value: any;
 };
 
+const ALL_SPACES: Space[] = [
+	{
+		label: 'All Spaces',
+		value: -1,
+	},
+];
+
 export default function CategorizationSpaces({
+	assetLibraries,
 	checkboxText,
+	setSelectedSpaces,
 	setSpaceChange,
 }: {
+	assetLibraries?: any;
 	checkboxText: string;
+	setSelectedSpaces: (value: any) => void;
 	setSpaceChange?: (value: boolean) => void;
 }) {
-	const [allSpaces, setAllSpaces] = useState<Space[]>([]);
 	const [availableSpaces, setAvailableSpaces] = useState<Space[]>([]);
 	const [checkbox, setCheckbox] = useState(true);
-	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
+	const [newSelectedSpaces, setNewSelectedSpaces] = useState<number[]>([]);
 
 	useEffect(() => {
 		SpaceService.getSpaces().then((response) => {
-			const spaces = response.map((space) => ({
-				label: space.name,
-				value: space.id,
+			const spaces = response.map((item) => ({
+				label: item.name,
+				value: item.id,
 			}));
 
 			setAvailableSpaces(spaces);
-
-			setAllSpaces([
-				{
-					label: 'All Spaces',
-					value: response.map(({id}) => id),
-				},
-			]);
 		});
 	}, []);
 
-	const isChecked = (itemValue: string) => {
-		return selectedSpaces.includes(itemValue);
+	const isChecked = (itemValue: number) => {
+		return newSelectedSpaces.includes(itemValue);
 	};
 
 	const handleCheckboxChange = (itemValue: any) => {
-		setSelectedSpaces((prevSelectedSpaces) => {
+		setNewSelectedSpaces((prevSelectedSpaces) => {
 			if (isChecked(itemValue)) {
 				return prevSelectedSpaces.filter((id) => id !== itemValue);
 			}
@@ -63,14 +66,54 @@ export default function CategorizationSpaces({
 
 	useEffect(() => {
 		if (checkbox) {
-			setSelectedSpaces(allSpaces.flatMap((item) => item.value));
+			if (setSpaceChange) {
+				setSpaceChange(false);
+			}
+
+			setNewSelectedSpaces([-1]);
 		}
 		else {
-			if (setSpaceChange) setSpaceChange(true);
-
-			setSelectedSpaces([]);
+			if (setSpaceChange) {
+				setSpaceChange(true);
+			}
 		}
-	}, [allSpaces, checkbox, setSpaceChange]);
+	}, [checkbox, setSpaceChange]);
+
+	useEffect(() => {
+		if (assetLibraries?.some((item: {id: number}) => item.id === -1)) {
+			setCheckbox(true);
+
+			setNewSelectedSpaces([-1]);
+		}
+		else if (assetLibraries) {
+			setCheckbox(false);
+
+			const initialSpaces = assetLibraries.map(
+				(item: {id: number; name: string}) => ({
+					label: item.name,
+					value: item.id,
+				})
+			);
+
+			setNewSelectedSpaces(
+				initialSpaces.map((item: {value: number}) => item.value)
+			);
+		}
+	}, [assetLibraries]);
+
+	useEffect(() => {
+		setSelectedSpaces(newSelectedSpaces);
+	}, [newSelectedSpaces, setSelectedSpaces]);
+
+	const selectedItems = useMemo(() => {
+		if (checkbox) {
+			return ALL_SPACES;
+		}
+
+		return availableSpaces.filter((item) =>
+			newSelectedSpaces.includes(item.value)
+		);
+	}, [availableSpaces, checkbox, newSelectedSpaces]);
 
 	return (
 		<div>
@@ -86,7 +129,7 @@ export default function CategorizationSpaces({
 				<ClayMultiSelect
 					disabled={true}
 					id="multiSelect"
-					items={allSpaces}
+					items={ALL_SPACES}
 				/>
 			)}
 
@@ -94,9 +137,10 @@ export default function CategorizationSpaces({
 				<ClayMultiSelect
 					disabled={checkbox}
 					id="multiSelect"
+					items={selectedItems}
 					loadingState={3}
 					onItemsChange={(items: Space[]) => {
-						setSelectedSpaces(items.map((item) => item.value));
+						setNewSelectedSpaces(items.map((item) => item.value));
 					}}
 					sourceItems={availableSpaces}
 				>

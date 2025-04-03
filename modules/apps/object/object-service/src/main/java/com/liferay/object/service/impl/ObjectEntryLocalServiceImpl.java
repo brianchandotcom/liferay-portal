@@ -2044,12 +2044,12 @@ public class ObjectEntryLocalServiceImpl
 			Map<String, Serializable> values)
 		throws PortalException {
 
-		for (Map.Entry<DLFileEntry, ObjectField> dlFileEntry :
+		for (Map.Entry<DLFileEntry, ObjectField> entry :
 				tempDLFileEntries.entrySet()) {
 
 			_addDLFileEntry(
-				dlFileEntry.getKey(), objectDefinition, objectEntryId,
-				dlFileEntry.getValue(), serviceContext, userId, values);
+				entry.getKey(), objectDefinition, objectEntryId,
+				entry.getValue(), serviceContext, userId, values);
 		}
 	}
 

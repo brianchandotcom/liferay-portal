@@ -42,10 +42,7 @@ import com.liferay.segments.service.SegmentsEntryRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,40 +65,6 @@ public class DefaultSegmentsEntryProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-	}
-
-	@Test
-	public void testGetOrganizationSegmentsWithDateModified() throws Exception {
-		_user1 = UserTestUtil.addUser(_group.getGroupId());
-
-		_user1 = UserTestUtil.addOrganizationUser(
-			OrganizationTestUtil.addOrganization(),
-			RoleConstants.ORGANIZATION_USER);
-
-		_user2 = UserTestUtil.addUser(_group.getGroupId());
-
-		_user2.setModifiedDate(_getDateBefore(_user1));
-
-		Criteria criteria = new Criteria();
-
-		_userOrganizationSegmentsCriteriaContributor.contribute(
-			criteria,
-			String.format(
-				"dateModified eq %s",
-				ISO8601Utils.format(_user1.getModifiedDate())),
-			Criteria.Conjunction.AND);
-
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
-
-		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
-			_group.getGroupId(), User.class.getName(), _user1.getUserId());
-
-		Assert.assertArrayEquals(
-			new long[] {segmentsEntry.getSegmentsEntryId()}, segmentsEntryIds);
-		Assert.assertEquals(
-			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
-			segmentsEntryIds.length);
 	}
 
 	@Test
@@ -872,7 +835,7 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsEntryIdsWithSingleModelCriterionAndFilterSegmenntEntryIds()
+	public void testGetSegmentsEntryIdsWithSingleModelCriterionAndFilterSegmentEntryIds()
 		throws Exception {
 
 		_user1 = UserTestUtil.addUser(_group.getGroupId());
@@ -915,6 +878,34 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
+	public void testGetSegmentsEntryIdsWithUserDateModifiedCriterion()
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser(_group.getGroupId());
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria,
+			String.format(
+				"dateModified eq %s",
+				ISO8601Utils.format(_user1.getModifiedDate())),
+			Criteria.Conjunction.AND);
+
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			_group.getGroupId(), CriteriaSerializer.serialize(criteria));
+
+		long[] segmentsEntryIds = _segmentsEntryProvider.getSegmentsEntryIds(
+			_group.getGroupId(), User.class.getName(), _user1.getUserId());
+
+		Assert.assertArrayEquals(
+			new long[] {segmentsEntry.getSegmentsEntryId()}, segmentsEntryIds);
+		Assert.assertEquals(
+			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
+			segmentsEntryIds.length);
+	}
+
+	@Test
 	public void testGetSegmentsEntryIdsWithUserModelCriterionAndUserCreatedAfterSegmentsEntry()
 		throws Exception {
 
@@ -944,16 +935,16 @@ public class DefaultSegmentsEntryProviderTest {
 	}
 
 	@Test
-	public void testGetSegmentsWithDateModified() throws Exception {
-		_user1 = UserTestUtil.addUser(_group.getGroupId());
+	public void testGetSegmentsEntryIdsWithUserOrganizationDateModifiedCriterion()
+		throws Exception {
 
-		_user2 = UserTestUtil.addUser(_group.getGroupId());
-
-		_user2.setModifiedDate(_getDateBefore(_user1));
+		_user1 = UserTestUtil.addOrganizationUser(
+			OrganizationTestUtil.addOrganization(),
+			RoleConstants.ORGANIZATION_USER);
 
 		Criteria criteria = new Criteria();
 
-		_userSegmentsCriteriaContributor.contribute(
+		_userOrganizationSegmentsCriteriaContributor.contribute(
 			criteria,
 			String.format(
 				"dateModified eq %s",
@@ -971,25 +962,6 @@ public class DefaultSegmentsEntryProviderTest {
 		Assert.assertEquals(
 			StringUtil.merge(segmentsEntryIds, StringPool.COMMA), 1,
 			segmentsEntryIds.length);
-	}
-
-	private Date _getDateBefore(User user) {
-		Date dateModified = user.getModifiedDate();
-
-		TimeZone timeZone = TimeZone.getDefault();
-
-		Calendar calendar = Calendar.getInstance(timeZone, LocaleUtil.US);
-
-		calendar.setTime(dateModified);
-
-		calendar.add(Calendar.DAY_OF_MONTH, -1);
-
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		calendar.set(Calendar.SECOND, 0);
-
-		return calendar.getTime();
 	}
 
 	@Inject

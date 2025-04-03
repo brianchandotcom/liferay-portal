@@ -9,18 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -100,24 +93,10 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 
 		_organizationLocalService.addUserOrganization(
 			_user.getUserId(), _organization.getOrganizationId());
-
-		_role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_roleLocalService.addGroupRole(
-			_organization.getGroupId(), _role1.getRoleId());
-
-		_role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_userGroup = UserGroupTestUtil.addUserGroup();
-
-		_roleLocalService.addGroupRole(
-			_userGroup.getGroupId(), _role2.getRoleId());
-		_userGroupLocalService.addUserUserGroup(
-			_user.getUserId(), _userGroup.getUserGroupId());
 	}
 
 	@Test
-	public void testGetCriteriaJSONObjectWithDateModified() {
+	public void testContribute() {
 		SegmentsCriteriaContributor segmentsCriteriaContributor =
 			_getSegmentsCriteriaContributor();
 
@@ -153,21 +132,6 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 	private OrganizationLocalService _organizationLocalService;
 
 	@DeleteAfterTestRun
-	private Role _role1;
-
-	@DeleteAfterTestRun
-	private Role _role2;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
-
-	@DeleteAfterTestRun
 	private User _user;
-
-	@DeleteAfterTestRun
-	private UserGroup _userGroup;
-
-	@Inject
-	private UserGroupLocalService _userGroupLocalService;
 
 }

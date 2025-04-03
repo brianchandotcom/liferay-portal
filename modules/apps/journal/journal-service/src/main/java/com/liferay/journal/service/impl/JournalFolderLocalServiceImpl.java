@@ -1357,8 +1357,6 @@ public class JournalFolderLocalServiceImpl
 
 		// Merge folders
 
-		User user = _userLocalService.getUser(userId);
-
 		if ((restrictionType !=
 				JournalFolderConstants.
 					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) &&
@@ -1407,8 +1405,12 @@ public class JournalFolderLocalServiceImpl
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setRestrictionType(restrictionType);
+
+		User user = _userLocalService.getUser(userId);
+
 		folder.setStatusByUserId(user.getUserId());
 		folder.setStatusByUserName(user.getFullName());
+
 		folder.setStatusDate(serviceContext.getModifiedDate(new Date()));
 		folder.setExpandoBridgeAttributes(serviceContext);
 

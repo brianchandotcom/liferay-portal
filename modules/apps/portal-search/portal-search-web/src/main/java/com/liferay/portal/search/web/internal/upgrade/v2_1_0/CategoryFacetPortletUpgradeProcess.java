@@ -105,7 +105,7 @@ public class CategoryFacetPortletUpgradeProcess
 			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
-						"Unable to portlet ", portletId,
+						"Unable to upgrade portlet ", portletId,
 						" referencing vocabulary ID ", vocabularyId));
 
 				throw exception;

@@ -3483,12 +3483,20 @@ tell application "Safari" to quit
 			<get-testcase-property property.name="analytics.cloud.enabled" />
 
 			<if>
-				<isset property="test.analytics.cloud.url" />
+				<isset property="env.FARO_URL" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">
-						analytics.cloud.url=${test.analytics.cloud.url}
+						analytics.cloud.url=${env.FARO_URL}
 					</echo>
 				</then>
+				<elseif>
+					<isset property="test.analytics.cloud.url" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.url=${test.analytics.cloud.url}
+						</echo>
+					</then>
+				</elseif>
 				<elseif>
 					<equals arg1="${analytics.cloud.enabled}" arg2="true" />
 					<then>
@@ -3497,6 +3505,41 @@ tell application "Safari" to quit
 						</echo>
 					</then>
 				</elseif>
+			</if>
+
+			<if>
+				<isset property="env.FARO_WORKSPACE_ID" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.workspace.id=${env.FARO_WORKSPACE_ID}
+					</echo>
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.workspace.id" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.workspace.id=${analytics.cloud.faro.workspace.id}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<isset property="analytics.cloud.faro.user.name" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.user.name=${analytics.cloud.faro.user.name}
+					</echo>
+				</then>
+			</if>
+
+			<if>
+				<isset property="analytics.cloud.faro.user.password" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.user.password=${analytics.cloud.faro.user.password}
+					</echo>
+				</then>
 			</if>
 
 			<if>

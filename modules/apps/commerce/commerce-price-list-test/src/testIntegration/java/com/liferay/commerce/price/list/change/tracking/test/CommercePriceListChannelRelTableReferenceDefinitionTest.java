@@ -5,18 +5,20 @@
 
 package com.liferay.commerce.price.list.change.tracking.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
-import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListChannelRelLocalService;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -51,11 +53,12 @@ public class CommercePriceListChannelRelTableReferenceDefinitionTest
 			group.getGroupId(), false,
 			CommercePriceListConstants.TYPE_PRICE_LIST, 1.0);
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(group.getCompanyId());
-
-		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			group.getGroupId(), commerceCurrency.getCode());
+		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
+			StringPool.BLANK, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			group.getGroupId(), RandomTestUtil.randomString(),
+			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	@Override
@@ -67,6 +70,9 @@ public class CommercePriceListChannelRelTableReferenceDefinitionTest
 				_commerceChannel.getCommerceChannelId(), 0,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
+
+	@Inject
+	private static CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Inject
 	private static CommercePriceListChannelRelLocalService

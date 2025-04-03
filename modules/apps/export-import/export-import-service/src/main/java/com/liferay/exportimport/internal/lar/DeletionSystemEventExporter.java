@@ -209,9 +209,9 @@ public class DeletionSystemEventExporter {
 	}
 
 	private void _exportDeletionSystemEvent(
-		PortletDataContext portletDataContext, SystemEvent systemEvent,
+		Set<String> batchDeleteSupportedClassNames,
 		Element deletionSystemEventsElement,
-		Set<String> batchDeleteSupportedClassNames) {
+		PortletDataContext portletDataContext, SystemEvent systemEvent) {
 
 		String className = PortalUtil.getClassName(
 			systemEvent.getClassNameId());
@@ -320,8 +320,8 @@ public class DeletionSystemEventExporter {
 		actionableDynamicQuery.setPerformActionMethod(
 			(SystemEvent systemEvent) -> {
 				_exportDeletionSystemEvent(
-					portletDataContext, systemEvent, rootElement,
-					batchDeleteSupportedClassNames);
+					batchDeleteSupportedClassNames, rootElement,
+					portletDataContext, systemEvent);
 
 				systemEventIds.add(systemEvent.getSystemEventId());
 			});

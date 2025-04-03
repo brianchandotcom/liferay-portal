@@ -26,7 +26,7 @@ const toggleActionIdAtIndex = (
 	permissions: PermissionItem[],
 	actionId: string,
 	index: number
-) => {
+): PermissionItem[] => {
 	const newPermissions = permissions.slice();
 
 	newPermissions[index].actionIds = permissions[index].actionIds.includes(
@@ -52,7 +52,7 @@ const enableActionIdsForRoles = (
 	permissions: PermissionItem[],
 	roleNamesToEnable: string[],
 	actionIdsToEnable: string[]
-) => {
+): PermissionItem[] => {
 	return permissions.map(({actionIds, roleName}) => {
 		const actionIdsNotEnabled = actionIdsToEnable.filter(
 			(id) => !actionIds.includes(id)
@@ -167,13 +167,13 @@ function PermissionsTable({
 	const [permissions, setPermissions] =
 		useState<PermissionItem[]>(initialPermissions);
 	const [viewableBy, setViewableBy] = useState<string>(
-		initialPermissions.every(({actionIds}) => actionIds.includes('VIEW')) // Guest -> all permissions enabled
+		initialPermissions.every(({actionIds}) => actionIds.includes('VIEW')) // All "view" permissions enabled -> Guest
 			? 'Guest'
 			: initialPermissions.every(
 						({actionIds}) => !actionIds.includes('VIEW')
-				  ) // Owner -> no permissions enabled
+				  ) // No "view" permissions enabled -> Owner
 				? 'Owner'
-				: defaultGroupRole // Group -> group permissions enabled
+				: defaultGroupRole // Some "view" permissions enabled -> Default Group Role
 	);
 
 	const viewableByOptions = [

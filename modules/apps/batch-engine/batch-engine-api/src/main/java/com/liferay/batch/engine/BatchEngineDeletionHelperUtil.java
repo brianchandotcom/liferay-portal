@@ -9,8 +9,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
-import java.util.Set;
-
 /**
  * @author Vendel Toreki
  */
@@ -33,13 +31,6 @@ public class BatchEngineDeletionHelperUtil {
 		batchEngineDeletionHelper.exportDeletions(portletDataContext);
 	}
 
-	public static Set<String> getBatchDeleteSupportedClassNames() {
-		BatchEngineDeletionHelper batchEngineDeletionHelper =
-			_batchEngineDeletionHelper.get();
-
-		return batchEngineDeletionHelper.getBatchDeleteSupportedClassNames();
-	}
-
 	public static void importDeletions(
 			PortletDataContext portletDataContext, String portletId)
 		throws Exception {
@@ -49,6 +40,13 @@ public class BatchEngineDeletionHelperUtil {
 
 		batchEngineDeletionHelper.importDeletions(
 			portletDataContext, portletId);
+	}
+
+	public static boolean isBatchDeleteSupported(String className) {
+		BatchEngineDeletionHelper batchEngineDeletionHelper =
+			_batchEngineDeletionHelper.get();
+
+		return batchEngineDeletionHelper.isBatchDeleteSupported(className);
 	}
 
 	public static boolean isBatchPortlet(String portletId) {

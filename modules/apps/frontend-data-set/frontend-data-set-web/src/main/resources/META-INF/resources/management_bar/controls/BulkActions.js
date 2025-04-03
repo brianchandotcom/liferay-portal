@@ -31,7 +31,6 @@ function getRichPayload(payload, key, values = []) {
 }
 
 function BulkActions({
-	allItemsSelectedActive,
 	bulkActions,
 	fluid,
 	handleCheckboxClick,
@@ -47,6 +46,7 @@ function BulkActions({
 }) {
 	const {
 		actionParameterName,
+		allItemsSelectedActive,
 		onBulkActionItemClick,
 		showBulkActionsManagementBar,
 		showBulkActionsManagementBarActions,

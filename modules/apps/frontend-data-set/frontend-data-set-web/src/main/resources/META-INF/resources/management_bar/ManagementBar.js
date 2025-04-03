@@ -11,7 +11,6 @@ import NavBar from './controls/NavBar';
 import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
 
 function ManagementBar({
-	allItemsSelectedActive,
 	bulkActions,
 	creationMenu,
 	deselectItems,
@@ -19,7 +18,6 @@ function ManagementBar({
 	items,
 	onBulkActionsClear,
 	onSelectAll,
-	pageSelectedItemsValue,
 	selectItems,
 	selectedItems,
 	selectedItemsKey,
@@ -29,11 +27,11 @@ function ManagementBar({
 	showSelectAll,
 	total,
 }) {
-	function handleCheckboxClick() {
-		if (allItemsSelectedActive) {
-			return deselectItems(selectedItemsValue);
-		}
+	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
+		items.some((item) => item.id === id)
+	);
 
+	function handleCheckboxClick() {
 		const itemKeys = items.map((item) => item[selectedItemsKey]);
 
 		if (pageSelectedItemsValue.length === items.length) {
@@ -42,20 +40,16 @@ function ManagementBar({
 
 		return selectItems(itemKeys);
 	}
-	function handleSelectAll(value) {
-		onSelectAll(value);
-	}
 
 	return (
 		<>
 			{selectionType === 'multiple' && (
 				<BulkActions
-					allItemsSelectedActive={allItemsSelectedActive}
 					bulkActions={bulkActions}
 					deselectItems={deselectItems}
 					fluid={fluid}
 					handleCheckboxClick={handleCheckboxClick}
-					handleSelectAll={(value) => handleSelectAll(value)}
+					handleSelectAll={(value) => onSelectAll(value)}
 					items={items}
 					onClear={onBulkActionsClear}
 					pageSelectedItemsValue={pageSelectedItemsValue}
@@ -83,7 +77,6 @@ function ManagementBar({
 }
 
 ManagementBar.propTypes = {
-	allItemsSelectedActive: PropTypes.bool.isRequired,
 	bulkActions: PropTypes.arrayOf(
 		PropTypes.shape({
 			href: PropTypes.string.isRequired,

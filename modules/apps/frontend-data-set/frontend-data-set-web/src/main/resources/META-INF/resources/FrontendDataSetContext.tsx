@@ -9,6 +9,7 @@ import {IInlineEditingSettings, IItemsActions, ISchema} from '.';
 
 export interface IFrontendDataSetContext {
 	actionParameterName?: string | null;
+	allItemsSelectedActive: boolean;
 	apiURL?: string;
 	appURL?: string;
 	applyItemInlineUpdates: Function;
@@ -91,6 +92,7 @@ export interface IInternalRenderer {
 export type TRenderer = IClientExtensionRenderer | IInternalRenderer;
 
 const FrontendDataSetContext = React.createContext({
+	allItemsSelectedActive: false,
 	applyItemInlineUpdates: () => {},
 	createInlineItem: () => {},
 	executeAsyncItemAction: () => {},

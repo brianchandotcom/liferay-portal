@@ -92,7 +92,6 @@ const Head = ({
 }: {
 	fields: Array<Field>;
 	items: Array<any>;
-	selectItems: Function;
 	selectable?: boolean;
 	selectedItemsKey: string;
 	selectedItemsValue: any;
@@ -143,7 +142,7 @@ const Body = ({
 	itemInlineChanges,
 	items,
 	itemsActions,
-	selectItems,
+	onItemSelectionChange,
 	selectable,
 	selectedItemsKey,
 	selectedItemsValue,
@@ -157,13 +156,15 @@ const Body = ({
 	itemInlineChanges?: Array<any>;
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
-	selectItems: Function;
+	onItemSelectionChange: Function;
 	selectable?: boolean;
 	selectedItemsKey: string;
 	selectedItemsValue: any;
 	selectionType?: string;
 }) => {
-	const {itemsChanges, updateItem} = useContext(FrontendDataSetContext);
+	const {allItemsSelectedActive, itemsChanges, updateItem} = useContext(
+		FrontendDataSetContext
+	);
 
 	const SelectionComponent =
 		selectionType === 'multiple' ? ClayCheckbox : ClayRadio;
@@ -239,6 +240,7 @@ const Body = ({
 													{!item.editable && (
 														<SelectionComponent
 															checked={
+																allItemsSelectedActive ||
 																!!selectedItemsValue.find(
 																	(
 																		element: any
@@ -252,7 +254,9 @@ const Body = ({
 																)
 															}
 															onChange={() =>
-																selectItems(id)
+																onItemSelectionChange(
+																	item
+																)
 															}
 															title={Liferay.Language.get(
 																'select-item'
@@ -665,10 +669,12 @@ function getVisibleFieldsMap(
 const Table = ({
 	items = [],
 	itemsActions,
+	onItemSelectionChange,
 	schema,
 }: {
 	items: Array<any>;
 	itemsActions: Array<IItemsActions>;
+	onItemSelectionChange: Function;
 	schema: ITableSchema;
 }) => {
 	const {
@@ -679,7 +685,6 @@ const Table = ({
 		nestedItemsKey,
 		nestedItemsReferenceKey,
 		portletId,
-		selectItems,
 		selectable,
 		selectedItemsKey = 'id',
 		selectedItemsValue,
@@ -816,7 +821,6 @@ const Table = ({
 				<Head
 					fields={schema.fields as Array<Field>}
 					items={items}
-					selectItems={selectItems}
 					selectable={selectable}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
@@ -829,7 +833,7 @@ const Table = ({
 					itemInlineChanges={itemsChanges}
 					items={items}
 					itemsActions={itemsActions}
-					selectItems={selectItems}
+					onItemSelectionChange={onItemSelectionChange}
 					selectable={selectable}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}

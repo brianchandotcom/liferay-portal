@@ -277,33 +277,6 @@ const FrontendDataSet = ({
 		}
 	}
 
-	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
-		items.some((item) => item.id === id)
-	);
-
-	if (
-		allItemsSelectedActive &&
-		!!pageSelectedItemsValue.length &&
-		pageSelectedItemsValue.length !== items.length
-	) {
-		setAllItemsSelectedActive(false);
-		deselectItems(
-			selectedItemsValue.filter(
-				(item) => !pageSelectedItemsValue.includes(item)
-			)
-		);
-	}
-	else if (allItemsSelectedActive) {
-		const currentItems = items.map((item) => item.id);
-		const newItems = currentItems.filter(
-			(item) => !selectedItemsValue.includes(item)
-		);
-
-		if (newItems.length) {
-			selectItems(newItems);
-		}
-	}
-
 	useEffect(() => {
 		loadClientExtensions([
 			{
@@ -615,7 +588,6 @@ const FrontendDataSet = ({
 	const managementBar = showManagementBar ? (
 		<div className="management-bar-wrapper">
 			<ManagementBar
-				allItemsSelectedActive={allItemsSelectedActive}
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
 				deselectItems={(items) => {
@@ -629,10 +601,10 @@ const FrontendDataSet = ({
 				items={items}
 				onBulkActionsClear={() => {
 					deselectItems(selectedItemsValue);
+
 					setAllItemsSelectedActive(false);
 				}}
 				onSelectAll={(value) => setAllItemsSelectedActive(value)}
-				pageSelectedItemsValue={pageSelectedItemsValue}
 				selectItems={(items) => selectItems(items)}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}
@@ -666,6 +638,23 @@ const FrontendDataSet = ({
 						header={header}
 						items={items}
 						itemsActions={itemsActions}
+						onItemSelectionChange={(selectedItem) => {
+							if (allItemsSelectedActive) {
+								setSelectedItemsValue(
+									items
+										.filter(
+											(item) =>
+												item.id !== selectedItem.id
+										)
+										.map((item) => item.id)
+								);
+
+								setAllItemsSelectedActive(false);
+							}
+							else {
+								selectItems(selectedItem.id);
+							}
+						}}
 						style={style}
 						{...currentViewProps}
 					/>
@@ -960,6 +949,7 @@ const FrontendDataSet = ({
 		<FrontendDataSetContext.Provider
 			value={{
 				actionParameterName,
+				allItemsSelectedActive,
 				apiURL,
 				appURL,
 				applyItemInlineUpdates,

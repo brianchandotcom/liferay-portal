@@ -4,7 +4,9 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import React from 'react';
+import React, {useContext} from 'react';
+
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 
 interface SelectionCheckboxProps {
 	handleCheckboxClick: () => void;
@@ -17,9 +19,11 @@ const SelectionCheckbox = ({
 	items,
 	selectedItemsValue,
 }: SelectionCheckboxProps) => {
+	const {allItemsSelectedActive} = useContext(FrontendDataSetContext);
+
 	return (
 		<ClayCheckbox
-			checked={!!selectedItemsValue.length}
+			checked={allItemsSelectedActive || !!selectedItemsValue.length}
 			indeterminate={
 				!!selectedItemsValue.length &&
 				items.length !== selectedItemsValue.length

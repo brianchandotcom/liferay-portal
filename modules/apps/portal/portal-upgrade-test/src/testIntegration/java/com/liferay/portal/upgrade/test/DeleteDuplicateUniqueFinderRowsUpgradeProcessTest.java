@@ -155,7 +155,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 						primaryKeys.toString(), 2, primaryKeys.size());
 					Assert.assertTrue(
 						primaryKeys.contains(uniqueRowPrimaryKey));
-					Assert.assertTrue(primaryKeys.contains(4));
+					Assert.assertTrue(primaryKeys.contains(4L));
 				}
 			});
 	}

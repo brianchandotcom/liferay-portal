@@ -64,15 +64,27 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 								{
 									setId(depotEntryGroup::getGroupId);
 									setName(
-										() ->
-											depotEntryGroup.getDescriptiveName(
-												dtoConverterContext.
-													getLocale()));
+										() -> {
+											if (depotEntryGroup == null) {
+												return null;
+											}
+
+											return depotEntryGroup.
+												getDescriptiveName(
+													dtoConverterContext.
+														getLocale());
+										});
 									setName_i18n(
-										() -> LocalizedMapUtil.getI18nMap(
-											dtoConverterContext.
-												isAcceptAllLanguages(),
-											depotEntryGroup.getNameMap()));
+										() -> {
+											if (depotEntryGroup == null) {
+												return null;
+											}
+
+											return LocalizedMapUtil.getI18nMap(
+												dtoConverterContext.
+													isAcceptAllLanguages(),
+												depotEntryGroup.getNameMap());
+										});
 								}
 							};
 						},

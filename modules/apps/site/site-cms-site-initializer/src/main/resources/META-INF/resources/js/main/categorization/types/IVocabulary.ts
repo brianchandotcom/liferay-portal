@@ -5,7 +5,20 @@
 
 import {AssetType} from './AssetType';
 
+interface Actions {
+	delete?: HTTPMethod;
+	get?: HTTPMethod;
+	replace?: HTTPMethod;
+	update?: HTTPMethod;
+}
+
+type HTTPMethod = {
+	href: string;
+	method: string;
+};
+
 export interface IVocabulary {
+	actions?: Actions;
 	assetTypes?: AssetType[];
 	description?: string;
 	description_i18n?: {

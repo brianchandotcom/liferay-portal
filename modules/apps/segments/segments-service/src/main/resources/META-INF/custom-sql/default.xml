@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.segments.service.persistence.SegmentsEntryFinder.findBySegmentsEntryIds">
+		<![CDATA[
+			SELECT
+				{SegmentsEntry.*}
+			FROM
+				SegmentsEntry
+			WHERE
+				SegmentsEntry.segmentsEntryId IN ([$SEGMENTS_ENTRY_IDS$])
+		]]>
+	</sql>
+</custom-sql>

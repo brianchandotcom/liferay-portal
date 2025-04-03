@@ -98,8 +98,7 @@ public class MasterPageDTOConverter
 	}
 
 	private ItemExternalReference[] _getKeywordItemExternalReferences(
-			String className, long classPK, long groupId)
-		throws Exception {
+		String className, long classPK, long groupId) {
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			className, classPK);
@@ -111,37 +110,43 @@ public class MasterPageDTOConverter
 		return TransformUtil.unsafeTransform(
 			assetTags,
 			assetTag -> {
-				Group group = _groupLocalService.getGroup(
-					assetTag.getGroupId());
-
 				ItemExternalReference itemExternalReference =
 					new ItemExternalReference();
 
 				itemExternalReference.setExternalReferenceCode(
 					assetTag::getExternalReferenceCode);
-
-				if (groupId != group.getGroupId()) {
-					Scope scope = new Scope();
-
-					scope.setExternalReferenceCode(
-						group::getExternalReferenceCode);
-					scope.setType(
-						() -> {
-							if (group.getType() == GroupConstants.TYPE_DEPOT) {
-								return Scope.Type.ASSET_LIBRARY;
-							}
-
-							return Scope.Type.SITE;
-						});
-
-					itemExternalReference.setScope(() -> scope);
-				}
+				itemExternalReference.setScope(
+					() -> _getScope(groupId, assetTag.getGroupId()));
 
 				return itemExternalReference;
 			}
 		).toArray(
 			new ItemExternalReference[0]
 		);
+	}
+
+	private Scope _getScope(long curGroupId, long scopeGroupId)
+		throws Exception {
+
+		if (curGroupId == scopeGroupId) {
+			return null;
+		}
+
+		Group group = _groupLocalService.getGroup(scopeGroupId);
+
+		Scope scope = new Scope();
+
+		scope.setExternalReferenceCode(group::getExternalReferenceCode);
+		scope.setType(
+			() -> {
+				if (group.getType() == GroupConstants.TYPE_DEPOT) {
+					return Scope.Type.ASSET_LIBRARY;
+				}
+
+				return Scope.Type.SITE;
+			});
+
+		return scope;
 	}
 
 	@Reference

@@ -35,14 +35,14 @@ public class SharingEntryModelDocumentContributor
 			Field.CLASS_PK, String.valueOf(sharingEntry.getClassPK()));
 		document.addDate(Field.CREATE_DATE, sharingEntry.getCreateDate());
 		document.addDate(Field.MODIFIED_DATE, sharingEntry.getModifiedDate());
+		document.addLocalizedText(Field.TITLE, _getTitleMap(sharingEntry));
+		document.addKeyword(Field.USER_ID, sharingEntry.getUserId());
 		document.addKeyword(
 			"sharingEntryId", String.valueOf(sharingEntry.getSharingEntryId()));
-		document.addLocalizedText(Field.TITLE, _getTitleMap(sharingEntry));
 		document.addKeyword(
 			"toUserGroupId", String.valueOf(sharingEntry.getToUserGroupId()));
 		document.addKeyword(
 			"toUserId", String.valueOf(sharingEntry.getToUserId()));
-		document.addKeyword(Field.USER_ID, sharingEntry.getUserId());
 	}
 
 	private Map<Locale, String> _getTitleMap(SharingEntry sharingEntry) {

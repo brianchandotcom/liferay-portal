@@ -61,17 +61,17 @@ public class CategoryFacetPortletUpgradeProcessTest {
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		String portletId =
-			"com_liferay_portal_search_web_category_facet_portlet_" +
-				"CategoryFacetPortlet";
 		String defaultPreferences = StringBundler.concat(
 			"<portlet-preferences><preference><name>vocabularyIds",
 			"</name><value>",
 			_assetVocabulary1.getVocabularyId() + "," +
 				_assetVocabulary2.getVocabularyId(),
 			"</value></preference></portlet-preferences>");
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+		String portletId =
+			"com_liferay_portal_search_web_category_facet_portlet_" +
+				"CategoryFacetPortlet";
 
 		_portletPreferences =
 			_portletPreferencesLocalService.addPortletPreferences(

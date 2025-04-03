@@ -10,11 +10,10 @@ import {liferayConfig} from '../liferay.config';
 
 const remoteApiHelpersTest = test.extend<{remoteApiHelpers: ApiHelpers}>({
 	remoteApiHelpers: async ({page}, use) => {
-		liferayConfig.environment.baseUrl =
-			liferayConfig.environment.baseUrl.replace('8080', '9080');
-		const apiHelpers = new ApiHelpers(page);
-		liferayConfig.environment.baseUrl =
-			liferayConfig.environment.baseUrl.replace('9080', '8080');
+		const apiHelpers = new ApiHelpers(
+			page,
+			liferayConfig.environment.baseUrl.replace('8080', '9080')
+		);
 
 		await use(apiHelpers);
 	},

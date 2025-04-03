@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "javax.portlet.name=" + CategoryFacetPortletKeys.CATEGORY_FACET,
 	service = ExportImportPortletPreferencesProcessor.class
 )
-public class CategoryFacetExportImportPortletPreferencesProcessor
+public class CategoryFacetSearchExportImportPortletPreferencesProcessor
 	extends BaseSearchExportImportPortletPreferencesProcessor {
 
 	@Override

@@ -175,7 +175,6 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setAttribute(Field.NAME, search);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -197,6 +196,8 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 							},
 							BooleanClauseOccur.MUST.getName())
 					});
+
+				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			sorts,
 			document -> _toKeyword(

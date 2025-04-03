@@ -15,6 +15,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {siteSettingsPagesTest} from '../../fixtures/siteSettingsPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
@@ -169,6 +170,38 @@ test.describe('manage picklists inside the picklists portlet', () => {
 				listTypeDefinitionContent[i]
 			);
 		}
+	});
+
+	test('ensure that attempting to add picklist item with empty name/key will show a required error', async ({
+		apiHelpers,
+		listTypeDefinitionPage,
+		page,
+	}) => {
+		const listTypeDefinition: ListTypeDefinition =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
+
+		await listTypeDefinitionPage.goto();
+
+		await page.getByRole('link', {name: listTypeDefinition.name}).click();
+
+		await listTypeDefinitionPage.addPicklistItemButton.click();
+
+		await listTypeDefinitionPage.modalSaveButton.click();
+
+		expect(await page.getByText('Required').count()).toBe(2);
+
+		await listTypeDefinitionPage.modalNameInput.fill(
+			'picklisItem' + getRandomInt()
+		);
+
+		await listTypeDefinitionPage.modalSaveButton.click();
+
+		await waitForAlert(page, 'The picklist item was created successfully.');
 	});
 
 	test('can delete a picklist item', async ({

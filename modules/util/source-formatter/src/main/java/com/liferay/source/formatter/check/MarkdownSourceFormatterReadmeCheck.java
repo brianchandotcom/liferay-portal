@@ -620,14 +620,29 @@ public class MarkdownSourceFormatterReadmeCheck extends BaseFileCheck {
 		StringBundler sb = new StringBundler();
 
 		for (int i = 0; i < fileExtensions.size(); i++) {
-			sb.append(fileExtensions.get(i));
+			if (i == 0) {
+				sb.append(fileExtensions.get(i));
 
-			if (i == (fileExtensions.size() - 2)) {
-				sb.append(" or ");
+				continue;
 			}
-			else if (i < (fileExtensions.size() - 1)) {
+
+			if ((i == (fileExtensions.size() - 1)) &&
+				(fileExtensions.size() == 2)) {
+
+				sb.append(" or ");
+				sb.append(fileExtensions.get(i));
+
+				break;
+			}
+
+			if (i < (fileExtensions.size() - 1)) {
 				sb.append(", ");
 			}
+			else if (i == (fileExtensions.size() - 1)) {
+				sb.append(", or ");
+			}
+
+			sb.append(fileExtensions.get(i));
 		}
 
 		return sb.toString();

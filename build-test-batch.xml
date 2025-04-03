@@ -470,22 +470,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-					public Properties getProjectProperties() {
-						Properties projectProperties = new Properties();
-
-						for (String propertyName : project.getPropertyNames()) {
-							String propertyValue = project.getProperty(propertyName);
-
-							if (propertyValue == null) {
-								continue;
-							}
-
-							projectProperties.setProperty(propertyName, project.getProperty(propertyName));
-						}
-
-						return projectProperties;
-					}
-
 					public String getPlaywrightEnvValue(Properties projectProperties, String playwrightEnvName) {
 						String playwrightEnvValue = project.getProperty("env." + playwrightEnvName);
 
@@ -510,6 +494,22 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						}
 
 						return null;
+					}
+
+					public Properties getProjectProperties() {
+						Properties projectProperties = new Properties();
+
+						for (String propertyName : project.getPropertyNames()) {
+							String propertyValue = project.getProperty(propertyName);
+
+							if (propertyValue == null) {
+								continue;
+							}
+
+							projectProperties.setProperty(propertyName, project.getProperty(propertyName));
+						}
+
+						return projectProperties;
 					}
 
 					StringBuilder sb = new StringBuilder();

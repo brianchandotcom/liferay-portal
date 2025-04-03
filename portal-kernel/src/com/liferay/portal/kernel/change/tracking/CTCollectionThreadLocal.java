@@ -32,6 +32,10 @@ public class CTCollectionThreadLocal {
 		_ctCollectionId.remove();
 	}
 
+	public static void setCTCollectionId(long ctCollectionId) {
+		_ctCollectionId.set(ctCollectionId);
+	}
+
 	public static SafeCloseable setCTCollectionIdWithSafeCloseable(
 		long ctCollectionId) {
 

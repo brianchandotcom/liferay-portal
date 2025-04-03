@@ -103,13 +103,21 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-		Group group = _groupLocalService.getGroup(groupId);
+		if (cmd.equals(Constants.ADD_TEMP) ||
+			cmd.equals(Constants.DELETE_TEMP)) {
+
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+			Group group = _groupLocalService.getGroup(groupId);
+
+			ctCollectionId = group.getCtCollectionId();
+		}
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					group.getCtCollectionId())) {
+					ctCollectionId)) {
 
 			if (cmd.equals(Constants.ADD_TEMP)) {
 				addTempFileEntry(
@@ -245,7 +253,14 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 
 			importData(actionRequest, inputStream);
 
-			deleteTempFileEntry(groupId, folderName);
+			Group group = _groupLocalService.getGroup(groupId);
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						group.getCtCollectionId())) {
+
+				deleteTempFileEntry(groupId, folderName);
+			}
 		}
 	}
 

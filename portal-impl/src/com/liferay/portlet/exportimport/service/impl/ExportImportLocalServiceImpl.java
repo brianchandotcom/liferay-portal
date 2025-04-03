@@ -41,10 +41,10 @@ import java.io.Serializable;
 /**
  * @author Daniel Kocsis
  */
-@CTAware
 public class ExportImportLocalServiceImpl
 	extends ExportImportLocalServiceBaseImpl {
 
+	@CTAware
 	@Override
 	public File exportLayoutsAsFile(
 			ExportImportConfiguration exportImportConfiguration)
@@ -72,6 +72,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration)
@@ -96,6 +97,7 @@ public class ExportImportLocalServiceImpl
 		return backgroundTask.getBackgroundTaskId();
 	}
 
+	@CTAware
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			long userId, long exportImportConfigurationId)
@@ -107,6 +109,7 @@ public class ExportImportLocalServiceImpl
 				exportImportConfigurationId));
 	}
 
+	@CTAware
 	@Override
 	public File exportPortletInfoAsFile(
 			ExportImportConfiguration exportImportConfiguration)
@@ -134,6 +137,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration)
@@ -161,6 +165,7 @@ public class ExportImportLocalServiceImpl
 		return backgroundTask.getBackgroundTaskId();
 	}
 
+	@CTAware
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			long userId, long exportImportConfigurationId)
@@ -172,6 +177,7 @@ public class ExportImportLocalServiceImpl
 				exportImportConfigurationId));
 	}
 
+	@CTAware
 	@Override
 	public void importLayouts(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -208,6 +214,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public void importLayouts(
 			ExportImportConfiguration exportImportConfiguration,
@@ -245,6 +252,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public void importLayoutsDataDeletions(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -282,6 +290,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public long importLayoutSetPrototypeInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
@@ -307,6 +316,7 @@ public class ExportImportLocalServiceImpl
 		return backgroundTask.getBackgroundTaskId();
 	}
 
+	@CTAware
 	@Override
 	public long importLayoutsInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
@@ -330,6 +340,7 @@ public class ExportImportLocalServiceImpl
 		return backgroundTask.getBackgroundTaskId();
 	}
 
+	@CTAware
 	@Override
 	public long importLayoutsInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
@@ -368,6 +379,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public long importLayoutsInBackground(
 			long userId, long exportImportConfigurationId, File file)
@@ -380,6 +392,7 @@ public class ExportImportLocalServiceImpl
 			file);
 	}
 
+	@CTAware
 	@Override
 	public long importLayoutsInBackground(
 			long userId, long exportImportConfigurationId,
@@ -393,6 +406,7 @@ public class ExportImportLocalServiceImpl
 			inputStream);
 	}
 
+	@CTAware
 	@Override
 	public void importPortletDataDeletions(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -430,6 +444,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public void importPortletInfo(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -479,6 +494,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public void importPortletInfo(
 			ExportImportConfiguration exportImportConfiguration,
@@ -516,6 +532,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public long importPortletInfoInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
@@ -539,6 +556,7 @@ public class ExportImportLocalServiceImpl
 		return backgroundTask.getBackgroundTaskId();
 	}
 
+	@CTAware
 	@Override
 	public long importPortletInfoInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
@@ -577,6 +595,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public long importPortletInfoInBackground(
 			long userId, long exportImportConfigurationId, File file)
@@ -589,6 +608,7 @@ public class ExportImportLocalServiceImpl
 			file);
 	}
 
+	@CTAware
 	@Override
 	public long importPortletInfoInBackground(
 			long userId, long exportImportConfigurationId,
@@ -602,6 +622,7 @@ public class ExportImportLocalServiceImpl
 			inputStream);
 	}
 
+	@CTAware
 	@Override
 	public long mergeLayoutSetPrototypeInBackground(
 			long userId, long groupId,
@@ -624,6 +645,7 @@ public class ExportImportLocalServiceImpl
 		return backgroundTask.getBackgroundTaskId();
 	}
 
+	@CTAware
 	@Override
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -661,6 +683,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration,
@@ -698,6 +721,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public MissingReferences validateImportPortletInfo(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -735,6 +759,7 @@ public class ExportImportLocalServiceImpl
 		}
 	}
 
+	@CTAware
 	@Override
 	public MissingReferences validateImportPortletInfo(
 			ExportImportConfiguration exportImportConfiguration,

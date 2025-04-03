@@ -6,6 +6,7 @@
 package com.liferay.portal.background.task.internal;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -57,6 +58,8 @@ public class BackgroundTaskThreadLocalManagerImpl
 		threadLocalValues.put(
 			"clusterInvoke", ClusterInvokeThreadLocal.isEnabled());
 		threadLocalValues.put(
+			"ctCollectionId", CTCollectionThreadLocal.getCTCollectionId());
+		threadLocalValues.put(
 			"defaultLocale", LocaleThreadLocal.getDefaultLocale());
 		threadLocalValues.put("groupId", GroupThreadLocal.getGroupId());
 		threadLocalValues.put("principalName", PrincipalThreadLocal.getName());
@@ -102,6 +105,13 @@ public class BackgroundTaskThreadLocalManagerImpl
 		}
 
 		Boolean clusterInvoke = (Boolean)threadLocalValues.get("clusterInvoke");
+
+		if (clusterInvoke != null) {
+			ClusterInvokeThreadLocal.setEnabled(clusterInvoke);
+		}
+
+		CTCollectionThreadLocal.setCTCollectionId(
+			GetterUtil.getLong(threadLocalValues.get("ctCollectionId")));
 
 		if (clusterInvoke != null) {
 			ClusterInvokeThreadLocal.setEnabled(clusterInvoke);

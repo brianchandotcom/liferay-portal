@@ -16,6 +16,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -45,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.change.tracking.model.CTProcess",
 	service = AopService.class
 )
+@CTAware(onProduction = true)
 public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)

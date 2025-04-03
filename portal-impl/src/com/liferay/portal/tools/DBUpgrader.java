@@ -172,7 +172,7 @@ public class DBUpgrader {
 
 			InitUtil.registerContext();
 
-			upgradeModules();
+			upgradeModules(() -> StartupHelperUtil.setUpgrading(false));
 
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -189,8 +189,6 @@ public class DBUpgrader {
 			result = "Failed";
 		}
 		finally {
-			StartupHelperUtil.setUpgrading(false);
-
 			System.out.println(
 				StringBundler.concat(
 					"\n", result, " Liferay upgrade process in ",
@@ -227,7 +225,7 @@ public class DBUpgrader {
 		}
 	}
 
-	public static void upgradeModules() {
+	public static void upgradeModules(Runnable upgradeModulesCallbackRunnable) {
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortalInitialized);
 
@@ -242,7 +240,7 @@ public class DBUpgrader {
 			IndexUpdaterUtil.updateAllIndexes();
 		}
 
-		StartupHelperUtil.setUpgrading(false);
+		upgradeModulesCallbackRunnable.run();
 
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortletsInitialized);

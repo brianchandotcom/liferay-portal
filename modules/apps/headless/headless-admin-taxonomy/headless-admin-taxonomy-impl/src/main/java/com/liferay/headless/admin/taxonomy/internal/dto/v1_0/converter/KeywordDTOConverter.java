@@ -62,7 +62,7 @@ public class KeywordDTOConverter implements DTOConverter<AssetTag, Keyword> {
 
 							return new AssetLibrary() {
 								{
-									setId(depotEntryGroup::getGroupId);
+									setId(assetTagGroupRel::getGroupId);
 									setName(
 										() -> {
 											if (depotEntryGroup == null) {

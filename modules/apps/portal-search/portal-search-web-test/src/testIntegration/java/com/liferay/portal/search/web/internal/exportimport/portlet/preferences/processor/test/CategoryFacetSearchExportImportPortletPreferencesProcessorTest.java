@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Joshua Cords
  */
 @RunWith(Arquillian.class)
-public class CategoryFacetExportImportPortletPreferencesProcessorTest
+public class CategoryFacetSearchExportImportPortletPreferencesProcessorTest
 	extends BaseExportImportPortletPreferencesProcessorTestCase {
 
 	@ClassRule

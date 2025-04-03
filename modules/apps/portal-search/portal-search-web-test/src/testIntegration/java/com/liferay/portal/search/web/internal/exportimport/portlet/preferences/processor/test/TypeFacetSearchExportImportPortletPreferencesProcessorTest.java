@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.test.util.exportimport.BaseExportImportPortletPreferencesProcessorTestCase;
-import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
+import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
  * @author Gustavo Lima
  */
 @RunWith(Arquillian.class)
-public class FolderFacetExportImportPortletPreferencesProcessorTest
+public class TypeFacetSearchExportImportPortletPreferencesProcessorTest
 	extends BaseExportImportPortletPreferencesProcessorTestCase {
 
 	@ClassRule
@@ -36,9 +36,7 @@ public class FolderFacetExportImportPortletPreferencesProcessorTest
 		return _exportImportPortletPreferencesProcessor;
 	}
 
-	@Inject(
-		filter = "javax.portlet.name=" + FolderFacetPortletKeys.FOLDER_FACET
-	)
+	@Inject(filter = "javax.portlet.name=" + TypeFacetPortletKeys.TYPE_FACET)
 	private ExportImportPortletPreferencesProcessor
 		_exportImportPortletPreferencesProcessor;
 

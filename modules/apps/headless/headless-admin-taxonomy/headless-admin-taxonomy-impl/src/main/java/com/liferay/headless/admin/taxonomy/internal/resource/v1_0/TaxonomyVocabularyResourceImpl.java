@@ -32,9 +32,14 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -288,7 +293,7 @@ public class TaxonomyVocabularyResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _getTaxonomyVocabulariesPage(
+		return SearchUtil.search(
 			HashMapBuilder.put(
 				"create",
 				addAction(
@@ -318,8 +323,42 @@ public class TaxonomyVocabularyResourceImpl
 					ActionKeys.UPDATE, "putTaxonomyVocabularyBatch",
 					AssetCategoriesPermission.RESOURCE_NAME, null)
 			).build(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, search, aggregation, filter,
-			pagination, sorts);
+			booleanQuery -> {
+			},
+			filter, AssetVocabulary.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ASSET_VOCABULARY_ID),
+			searchContext -> {
+				searchContext.addVulcanAggregation(aggregation);
+
+				BooleanFilter booleanFilter = new BooleanFilter();
+
+				booleanFilter.addRequiredTerm(
+					Field.GROUP_ID, GroupConstants.DEFAULT_LIVE_GROUP_ID);
+
+				searchContext.setBooleanClauses(
+					new BooleanClause[] {
+						BooleanClauseFactoryUtil.create(
+							new BooleanQueryImpl() {
+								{
+									if (filter != null) {
+										booleanFilter.add(
+											filter, BooleanClauseOccur.MUST);
+									}
+
+									setPreBooleanFilter(booleanFilter);
+								}
+							},
+							BooleanClauseOccur.MUST.getName())
+					});
+
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			sorts,
+			document -> _toTaxonomyVocabulary(
+				_assetVocabularyService.getVocabulary(
+					GetterUtil.getLong(
+						document.get(Field.ASSET_VOCABULARY_ID)))));
 	}
 
 	@Override

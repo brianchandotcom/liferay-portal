@@ -292,12 +292,12 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			Arrays.asList(keyword1, keyword2, keyword3),
 			(List<Keyword>)page.getItems());
 
-		String filter = StringBundler.concat(
-			"(groupIds in ('", assetLibrary1.getId(), "', '",
-			assetLibrary2.getId(), "'))");
-
 		page = keywordResource.getKeywordsPage(
-			null, null, filter, Pagination.of(1, 5), null);
+			null, null,
+			StringBundler.concat(
+				"(groupIds in ('", assetLibrary1.getId(), "', '",
+				assetLibrary2.getId(), "'))"),
+			Pagination.of(1, 5), null);
 
 		assertEquals(
 			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());

@@ -1371,10 +1371,10 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			});
 
-		_addObjectFieldSettingDefaultValue(
+		_addObjectFieldSettingWithDefaultValue(
 			StringPool.TRUE, objectDefinition,
 			"localizedBooleanObjectFieldName");
-		_addObjectFieldSettingDefaultValue(
+		_addObjectFieldSettingWithDefaultValue(
 			_listTypeEntryKey1, objectDefinition,
 			"localizedPicklistObjectFieldName");
 
@@ -2358,7 +2358,7 @@ public class DefaultObjectEntryManagerImplTest
 				_addAndAssertObjectEntryWithPicklistObjectField(
 					"listTypeEntryKey2", "listTypeEntryKey2", objectDefinition);
 
-			_addObjectFieldSettingDefaultValue(
+			_addObjectFieldSettingWithDefaultValue(
 				"listTypeEntryKey1", objectDefinition,
 				"picklistObjectFieldName");
 
@@ -6136,7 +6136,7 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
-	private void _addObjectFieldSettingDefaultValue(
+	private void _addObjectFieldSettingWithDefaultValue(
 			String defaultValue, ObjectDefinition objectDefinition,
 			String objectFieldName)
 		throws Exception {

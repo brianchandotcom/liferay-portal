@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.persistence.SegmentsEntryFinder;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 
 import java.io.Serializable;
@@ -602,6 +603,9 @@ public abstract class SegmentsEntryLocalServiceBaseImpl
 
 	@Reference
 	protected SegmentsEntryPersistence segmentsEntryPersistence;
+
+	@Reference
+	protected SegmentsEntryFinder segmentsEntryFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

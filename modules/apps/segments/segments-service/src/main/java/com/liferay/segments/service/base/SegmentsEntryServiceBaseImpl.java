@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
+import com.liferay.segments.service.persistence.SegmentsEntryFinder;
 import com.liferay.segments.service.persistence.SegmentsEntryPersistence;
 
 import java.sql.Connection;
@@ -116,6 +117,9 @@ public abstract class SegmentsEntryServiceBaseImpl
 
 	@Reference
 	protected SegmentsEntryPersistence segmentsEntryPersistence;
+
+	@Reference
+	protected SegmentsEntryFinder segmentsEntryFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

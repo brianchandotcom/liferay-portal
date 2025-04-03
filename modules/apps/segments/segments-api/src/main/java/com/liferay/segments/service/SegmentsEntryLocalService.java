@@ -293,6 +293,10 @@ public interface SegmentsEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SegmentsEntry> getSegmentsEntries(
+		List<Long> segmentsEntryIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SegmentsEntry> getSegmentsEntries(
 		long groupId, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator);
 

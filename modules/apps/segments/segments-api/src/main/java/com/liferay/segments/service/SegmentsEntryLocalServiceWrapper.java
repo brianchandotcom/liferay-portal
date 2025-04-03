@@ -373,6 +373,14 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<SegmentsEntry> getSegmentsEntries(
+		java.util.List<Long> segmentsEntryIds, int start, int end) {
+
+		return _segmentsEntryLocalService.getSegmentsEntries(
+			segmentsEntryIds, start, end);
+	}
+
+	@Override
+	public java.util.List<SegmentsEntry> getSegmentsEntries(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator) {

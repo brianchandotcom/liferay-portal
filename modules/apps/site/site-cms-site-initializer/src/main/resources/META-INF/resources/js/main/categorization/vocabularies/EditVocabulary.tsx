@@ -153,8 +153,11 @@ export default function EditVocabulary({
 					</ManagementToolbar.ItemList>
 				</ManagementToolbar.Container>
 
-				<ClayLayout.ContainerFluid className="m-0" size={false}>
-					<ClayLayout.Row>
+				<ClayLayout.ContainerFluid
+					className="cms-parent-container m-0"
+					size={false}
+				>
+					<ClayLayout.Row className="cms-container-child">
 						<ClayLayout.Col
 							className="categorization-vertical-nav p-0"
 							md={3}

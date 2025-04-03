@@ -9,6 +9,14 @@
 		border-style: none;
 	}
 
+	.cms-parent-container {
+		height: calc(100vh - 6rem - var(--control-menu-container-height, 0));
+
+		.cms-container-child {
+			height: 100%;
+		}
+	}
+
 	.edit-vocabulary {
 		.asset-icon {
 			padding-right: 15px;

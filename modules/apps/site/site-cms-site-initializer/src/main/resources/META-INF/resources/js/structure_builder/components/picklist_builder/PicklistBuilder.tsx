@@ -5,6 +5,10 @@
 
 import React, {useEffect} from 'react';
 
+import StateContextProvider, {
+	buildState,
+	useId,
+} from '../../contexts/PicklistBuilderContext';
 import {Picklist} from '../../types/Picklist';
 
 export default function PicklistBuilder({
@@ -12,21 +16,29 @@ export default function PicklistBuilder({
 }: {
 	state: {listTypeDefinition: Picklist};
 }) {
-	return <HistoryManager picklistId={state.listTypeDefinition.id} />;
+	return (
+		<StateContextProvider
+			initialState={buildState(state.listTypeDefinition)}
+		>
+			<HistoryManager />
+		</StateContextProvider>
+	);
 }
 
-function HistoryManager({picklistId}: {picklistId: number}) {
+function HistoryManager() {
+	const id = useId();
+
 	useEffect(() => {
-		if (!picklistId) {
+		if (!id) {
 			return;
 		}
 
 		const url = new URL(window.location.href);
 
-		url.searchParams.set('listTypeDefinitionId', picklistId.toString());
+		url.searchParams.set('listTypeDefinitionId', id.toString());
 
 		history.replaceState(null, document.head.title, url.href);
-	}, [picklistId]);
+	}, [id]);
 
 	return null;
 }

@@ -7,4 +7,5 @@ export type Picklist = {
 	externalReferenceCode: string;
 	id: number;
 	name: string;
+	name_i18n: Liferay.Language.LocalizedValue<string>;
 };

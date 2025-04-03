@@ -13,7 +13,10 @@ import com.liferay.mail.kernel.service.MailServiceUtil;
  */
 public class LPD_32001 {
 
-	public void method(InternetAddress emailFromAddress, InternetAddress to, String subject,  String body, boolean htmlFormat) {
+	public void method(
+		InternetAddress emailFromAddress, InternetAddress to, String subject,
+		String body, boolean htmlFormat) {
+
 		MailEngine.send(emailFromAddress, to, "test123", body, htmlFormat);
 		MailServiceUtil.sendEmail(new MailMessage(emailFromAddress, to, subject, body, htmlFormat));
 	}

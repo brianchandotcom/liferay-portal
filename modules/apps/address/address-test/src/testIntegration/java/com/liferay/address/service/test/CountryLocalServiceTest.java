@@ -321,13 +321,13 @@ public class CountryLocalServiceTest {
 	}
 
 	private void _testSearchCountries(
-			String keywords, Boolean active, Country... expectedCountries)
+			String keywords, Boolean active, Country... countries)
 		throws Exception {
 
-		List<Country> expectedCountriesList = Arrays.asList(expectedCountries);
+		List<Country> expectedCountries = Arrays.asList(countries);
 
 		Arrays.sort(
-			expectedCountries,
+			countries,
 			Comparator.comparing(
 				Country::getName, String.CASE_INSENSITIVE_ORDER));
 
@@ -338,9 +338,9 @@ public class CountryLocalServiceTest {
 				OrderByComparatorFactoryUtil.create("Country", "name", true));
 
 		Assert.assertEquals(
-			expectedCountriesList.size(), baseModelSearchResult.getLength());
+			expectedCountries.size(), baseModelSearchResult.getLength());
 		Assert.assertEquals(
-			expectedCountriesList, baseModelSearchResult.getBaseModels());
+			expectedCountries, baseModelSearchResult.getBaseModels());
 	}
 
 	@Inject

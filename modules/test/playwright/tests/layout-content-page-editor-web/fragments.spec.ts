@@ -2694,3 +2694,76 @@ test(
 		});
 	}
 );
+
+test.describe('Accordion Fragment', () => {
+	test('Check the functionality of the Accordion fragment', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page with an Accordion fragment inside a Container
+
+		const accordionId = getRandomString();
+
+		const accordionDefinition = getFragmentDefinition({
+			id: accordionId,
+			key: 'BASIC_COMPONENT-accordion',
+		});
+
+		const containerDefinition = getContainerDefinition({
+			id: getRandomString(),
+			pageElements: [accordionDefinition],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([containerDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Change the accordion text
+
+		await pageEditorPage.editTextEditable(
+			accordionId,
+			'accordion-title',
+			'My Accordion'
+		);
+
+		// Check that a fragment can be added to the dropzone of the accordion
+
+		await pageEditorPage.addFragment(
+			'Basic Components',
+			'Heading',
+			page.getByText('Drag and drop fragments or widgets here.', {
+				exact: true,
+			})
+		);
+
+		await expect(page.getByText('Heading Example')).toHaveCount(1);
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		const accordionButton = page
+			.locator('button')
+			.filter({hasText: 'My Accordion'});
+
+		await accordionButton.click();
+
+		await expect(
+			page.locator('.collapse-icon-closed').first()
+		).toBeVisible();
+		await expect(
+			page.locator('.collapse-icon-open').first()
+		).not.toBeVisible();
+
+		await expect(
+			accordionButton.getByText('Heading Example')
+		).not.toBeVisible();
+	});
+});

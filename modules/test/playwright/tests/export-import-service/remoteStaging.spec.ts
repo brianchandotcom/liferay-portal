@@ -16,7 +16,6 @@ import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {remoteApiHelpersTest} from '../../fixtures/remoteApiHelpersTest';
 import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
-import {performLoginViaApi} from '../../utils/performLogin';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
@@ -44,9 +43,9 @@ test(
 	{tag: '@LPS-81950'},
 	async ({
 		apiHelpers,
-		page,
 		pageEditorPage,
 		remoteApiHelpers,
+		remotePage,
 		remoteStagingPage,
 		uiElementsPage,
 		webContentDisplayPage,
@@ -70,23 +69,11 @@ test(
 			remoteApiHelpers.baseUrl.length - 3
 		);
 
-		await performLoginViaApi({
-			apiHelpers: remoteApiHelpers,
-			loginUrl: remoteUrl,
-			page,
-			screenName: 'test',
-		});
-
 		const remoteSite = await remoteApiHelpers.headlessSite.createSite({
 			name: 'Remote Site Name',
 		});
 
 		remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
-
-		await performLoginViaApi({
-			page,
-			screenName: 'test',
-		});
 
 		await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
 			groupId: site.id,
@@ -125,18 +112,11 @@ test(
 			siteFriendlyUrl: site.friendlyUrlPath,
 		});
 
-		await performLoginViaApi({
-			apiHelpers: remoteApiHelpers,
-			loginUrl: remoteUrl,
-			page,
-			screenName: 'test',
-		});
-
-		await page.goto(`${remoteUrl}/web${remoteSite.friendlyUrlPath}`);
+		await remotePage.goto(`${remoteUrl}/web${remoteSite.friendlyUrlPath}`);
 
 		expect(
-			page.getByRole('heading', {name: 'WC WebContent Title'})
+			remotePage.getByRole('heading', {name: 'WC WebContent Title'})
 		).toBeVisible();
-		expect(page.getByText('WC WebContent Content')).toBeVisible();
+		expect(remotePage.getByText('WC WebContent Content')).toBeVisible();
 	}
 );

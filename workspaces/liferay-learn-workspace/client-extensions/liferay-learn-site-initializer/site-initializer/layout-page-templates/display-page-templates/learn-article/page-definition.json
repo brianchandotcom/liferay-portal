@@ -3,7 +3,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": ["learn-article-page-container"],
+					"cssClasses": [
+						"learn-article-page-container"
+					],
 					"customCSSViewports": [
 						{
 							"customCSS": ".[$FRAGMENT_CLASS$] {\nposition: relative;\nflex-wrap: wrap;\n}",

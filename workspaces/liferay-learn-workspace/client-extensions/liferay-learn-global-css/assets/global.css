@@ -254,7 +254,7 @@ pre[class*='language-'] {
 	}
 
 	.education-home__section-header {
-		@media (max-width: 575px) {			
+		@media (max-width: 575px) {
 			display: flex;
 			flex-wrap: wrap;
 			gap: 16px;
@@ -580,27 +580,6 @@ pre[class*='language-'] {
 	}
 }
 
-.learn-article-page-container {
-	position: relative;
-	
-	h1 {
-		color: #282934 !important;
-	}
-		
-	.learn-article-nav-item a{
-		font-weight: 600;
-		line-height: 24px;
-	}
-
-	.learn-article, .learn-recipe-container {
-		& .learn-article-content {
-			& table {
-				word-break: unset !important;
-			}
-		}
-	}
-}
-
 .learn-article-content,
 .learn-article-nav-container .component-html,
 .learn-course-side-nav,
@@ -835,6 +814,27 @@ pre[class*='language-'] {
 	}
 }
 
+.learn-article-page-container {
+	position: relative;
+	
+	h1 {
+		color: var(--color-neutral-10, #282934) !important;
+	}
+		
+	.learn-article, .learn-recipe-container {
+		& .learn-article-content {
+			& table {
+				word-break: unset !important;
+			}
+		}
+	}
+
+	.learn-article-nav-item a{
+		font-weight: 600;
+		line-height: 24px;
+	}
+}
+
 .learn-banner {
 	background: linear-gradient(
 		180deg,
@@ -879,10 +879,10 @@ pre[class*='language-'] {
 
 	.btn {
 		align-items: center;
-    	border-radius: 0.5rem !important;
-    	display: flex;
-    	gap: 0.625rem;
-    	justify-content: center;
+		border-radius: 0.5rem !important;
+		display: flex;
+		gap: 0.625rem;
+		justify-content: center;
 	}
 }
 
@@ -977,7 +977,7 @@ pre[class*='language-'] {
 
 	.course-module-title {
 		width: 70%;
-	 }
+	}
 
 	.course-module-transparent {
 		height: 32px;
@@ -1268,7 +1268,7 @@ pre[class*='language-'] {
 
 	button.copy-to-clipboard-button {
 		&[data-copy-state='copy-success'] {
-		  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Cpath%20class='lexicon-icon-outline'%20d='M192.9%20429.5c-8.3%200-16.4-3.3-22.3-9.2L44.5%20294.1C15%20263.2%2062.7%20222%2089.1%20249.5L191.5%20352l230-258.9c27.2-30.5%2074.3%2011.5%2047.1%2041.9L216.4%20418.9c-5.8%206.5-14%2010.3-22.6%2010.6h-.9z'%20fill='%234aab3b'/%3E%3C/svg%3E");
+			background-image: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Cpath%20class='lexicon-icon-outline'%20d='M192.9%20429.5c-8.3%200-16.4-3.3-22.3-9.2L44.5%20294.1C15%20263.2%2062.7%20222%2089.1%20249.5L191.5%20352l230-258.9c27.2-30.5%2074.3%2011.5%2047.1%2041.9L216.4%20418.9c-5.8%206.5-14%2010.3-22.6%2010.6h-.9z'%20fill='%234aab3b'/%3E%3C/svg%3E");
 		}
 	}
 
@@ -1288,7 +1288,7 @@ pre[class*='language-'] {
 
 	.component-button:hover {
 		background: var(--color-action-primary-active-20, #e6edfb);
-		border-radius: var(--border-radius-sm);    
+		border-radius: var(--border-radius-sm);
 	}
 
 	.disclaimer {
@@ -1307,7 +1307,7 @@ pre[class*='language-'] {
 		}
 	}
 
-	.label-dark {			
+	.label-dark {
 		background-color: var(--color-state-info-lighten-2, #e6ebf5);
 		border-style: none;
 		color: #1C3667;

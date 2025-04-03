@@ -287,6 +287,14 @@ public class SegmentsEntryLocalServiceImpl
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
+		List<Long> segmentsEntryIds, int start, int end) {
+
+		return segmentsEntryFinder.findBySegmentsEntryIds(
+			segmentsEntryIds, start, end);
+	}
+
+	@Override
+	public List<SegmentsEntry> getSegmentsEntries(
 		long groupId, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 

@@ -17,6 +17,7 @@ import {IBusinessEvent, IOption} from '~/utils/types';
 import './RecordGoLiveEventPage.css';
 
 import {Observer} from '@clayui/modal/lib/types';
+import classNames from 'classnames';
 
 import useGetGMTTimeZonesList from '../../../hooks/useGetGMTTimeZonesList';
 import useUpdateOrg from '../../../hooks/useUpdateOrg';
@@ -55,6 +56,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
+	const [isValidRecordDate, setIsValidRecordDate] = useState<boolean>(false);
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
 
@@ -99,6 +101,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		const isValidDate = (date: string) => new Date(date) <= new Date();
 		const isActualGoLiveDateValid = isValidDate(hasActualGoLiveDate);
 
+		setIsValidRecordDate(isActualGoLiveDateValid);
 		const hasAllRequiredFieldsFilled = Boolean(hasActualGoLiveDate);
 
 		setBaseButtonDisabled(
@@ -175,7 +178,11 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		>
 			<div>
 				<ClayInput.Group className="business-date-container m-0">
-					<ClayInput.GroupItem className="m-0">
+					<ClayInput.GroupItem
+						className={classNames('m-0', {
+							'be-record-container': !isValidRecordDate,
+						})}
+					>
 						<DatePicker
 							badgeClassName="mx-3"
 							dateFormat="MM-dd-yyyy"
@@ -235,7 +242,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 				<Badge alertType="info" badgeClassName="mt-3">
 					<span className="pl-1 text-paragraph">
 						{i18n.translate(
-							'entering-a-go-live-date-will-close-this-business-event-no-further-edits-will-be-possible'
+							'entering-an-actual-go-live-date-will-close-this-business-event-no-further-edits-will-be-possible'
 						)}
 					</span>
 				</Badge>

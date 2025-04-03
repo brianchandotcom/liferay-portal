@@ -1,3 +1,13 @@
+.be-record-container {
+	.has-success .form-control {
+		border-color: var(--color-state-error);
+	}
+
+	.has-success .input-group-item .input-group-inset~.input-group-inset-item  {
+		border-color: var(--color-state-error);
+	}
+}
+
 .business-date-container .form-group > label:not(.toggle-switch) {
 	margin: 0;
 }

@@ -33,21 +33,19 @@ public class BatchEngineDeletionHelperImpl
 	public void addDeletionEvent(
 		PortletDataContext portletDataContext, SystemEvent systemEvent) {
 
-		String key =
-			systemEvent.getClassName() + _BATCH_DELETE_CLASS_NAME_POSTFIX;
-
 		Map<String, String> newPrimaryKeysMap =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(key);
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				systemEvent.getClassName() + _BATCH_DELETE_CLASS_NAME_POSTFIX);
 
 		newPrimaryKeysMap.put(systemEvent.getClassExternalReferenceCode(), "");
 	}
 
 	@Override
 	public void exportDeletions(PortletDataContext portletDataContext) {
-		for (String key :
-				portletDataContext.getNewPrimaryKeysMaps(
-				).keySet()) {
+		Map<String, Map<?, ?>> newPrimaryKeysMaps =
+			portletDataContext.getNewPrimaryKeysMaps();
 
+		for (String key : newPrimaryKeysMaps.keySet()) {
 			if (key.endsWith(_BATCH_DELETE_CLASS_NAME_POSTFIX)) {
 				String className = key.substring(
 					0,

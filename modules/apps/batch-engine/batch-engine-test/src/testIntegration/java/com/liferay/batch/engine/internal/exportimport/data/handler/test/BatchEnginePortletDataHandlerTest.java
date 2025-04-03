@@ -382,9 +382,7 @@ public class BatchEnginePortletDataHandlerTest {
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(larFile)) {
-			String filePath = className + "_deletions.json";
-
-			ZipEntry zipEntry = zipFile.getEntry(filePath);
+			ZipEntry zipEntry = zipFile.getEntry(className + "_deletions.json");
 
 			if (zipEntry == null) {
 				throw new FileNotFoundException();

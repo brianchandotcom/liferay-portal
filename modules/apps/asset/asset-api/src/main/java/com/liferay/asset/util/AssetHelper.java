@@ -48,7 +48,7 @@ public interface AssetHelper {
 	};
 
 	public Set<String> addLayoutTags(
-		HttpServletRequest httpServletRequest, List<AssetTag> tags);
+		HttpServletRequest httpServletRequest, List<AssetTag> assetTags);
 
 	public PortletURL getAddPortletURL(
 			LiferayPortletRequest liferayPortletRequest,

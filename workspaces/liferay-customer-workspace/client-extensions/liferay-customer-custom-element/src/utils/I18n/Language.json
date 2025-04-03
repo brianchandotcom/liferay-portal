@@ -199,7 +199,7 @@
 	"enter-name-or-email-address": "Enter name or email address",
 	"enter-the-purpose": "Enter the purpose",
 	"enter-the-timezone-to-be-used-for-all-data-reporting-in-your-workspace": "Enter the timezone to be used for all data reporting in your workspace.",
-	"entering-a-go-live-date-will-close-this-business-event-no-further-edits-will-be-possible": "Entering a go live date will close this business event. No further edits will be possible.",
+	"entering-an-actual-go-live-date-will-close-this-business-event-no-further-edits-will-be-possible": "Entering an actual go live date will close this business event. No further edits will be possible.",
 	"enterprise-search": "Enterprise Search",
 	"entries": "entries",
 	"environment": "Environment",

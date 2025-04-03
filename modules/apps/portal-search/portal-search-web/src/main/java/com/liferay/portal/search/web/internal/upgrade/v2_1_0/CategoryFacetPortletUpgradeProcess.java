@@ -84,10 +84,10 @@ public class CategoryFacetPortletUpgradeProcess
 			return new String();
 		}
 
+		List<String> groupVocabularyExternalReferenceCodes = new LinkedList<>();
+
 		List<String> vocabularyIds = StringUtil.split(
 			vocabularyIdsPreference, ',');
-
-		List<String> groupVocabularyExternalReferenceCodes = new LinkedList<>();
 
 		for (String vocabularyId : vocabularyIds) {
 			try {
@@ -105,8 +105,8 @@ public class CategoryFacetPortletUpgradeProcess
 			catch (Exception exception) {
 				_log.error(
 					StringBundler.concat(
-						"Error updating ", portletId,
-						" referencing vocabularyId ", vocabularyId));
+						"Unable to portlet ", portletId,
+						" referencing vocabulary ID ", vocabularyId));
 
 				throw exception;
 			}

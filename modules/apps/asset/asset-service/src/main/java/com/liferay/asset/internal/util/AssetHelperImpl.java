@@ -100,7 +100,7 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Override
 	public Set<String> addLayoutTags(
-		HttpServletRequest httpServletRequest, List<AssetTag> tags) {
+		HttpServletRequest httpServletRequest, List<AssetTag> assetTags) {
 
 		Set<String> tagNames = (Set<String>)httpServletRequest.getAttribute(
 			WebKeys.ASSET_LAYOUT_TAG_NAMES);
@@ -112,8 +112,8 @@ public class AssetHelperImpl implements AssetHelper {
 				WebKeys.ASSET_LAYOUT_TAG_NAMES, tagNames);
 		}
 
-		for (AssetTag tag : tags) {
-			tagNames.add(tag.getName());
+		for (AssetTag assetTag : assetTags) {
+			tagNames.add(assetTag.getName());
 		}
 
 		return tagNames;

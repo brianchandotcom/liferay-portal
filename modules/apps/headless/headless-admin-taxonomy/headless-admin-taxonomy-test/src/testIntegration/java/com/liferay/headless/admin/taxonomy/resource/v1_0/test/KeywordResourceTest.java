@@ -275,6 +275,36 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetKeywordsPage() throws Exception {
+		super.testGetKeywordsPage();
+
+		AssetLibrary assetLibrary1 = _randomAssetLibrary();
+		AssetLibrary assetLibrary2 = _randomAssetLibrary();
+
+		Keyword keyword1 = _addKeywordWithAssetLibraries(assetLibrary1);
+		Keyword keyword2 = _addKeywordWithAssetLibraries(assetLibrary2);
+		Keyword keyword3 = _addKeywordWithAssetLibraries(_randomAssetLibrary());
+
+		Page<Keyword> page = keywordResource.getKeywordsPage(
+			null, null, null, Pagination.of(1, 5), null);
+
+		assertEquals(
+			Arrays.asList(keyword1, keyword2, keyword3),
+			(List<Keyword>)page.getItems());
+
+		String filter = StringBundler.concat(
+			"(groupIds in ('", assetLibrary1.getId(), "', '",
+			assetLibrary2.getId(), "'))");
+
+		page = keywordResource.getKeywordsPage(
+			null, null, filter, Pagination.of(1, 5), null);
+
+		assertEquals(
+			Arrays.asList(keyword1, keyword2), (List<Keyword>)page.getItems());
+	}
+
+	@Override
+	@Test
 	public void testGetKeywordsRankedPage() throws Exception {
 		Page<Keyword> page = keywordResource.getKeywordsRankedPage(
 			RandomTestUtil.randomString(), testGroup.getGroupId(),

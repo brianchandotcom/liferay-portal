@@ -171,12 +171,12 @@ public class CategoryFacetExportImportPortletPreferencesProcessor
 		Group group = null;
 
 		if (oldValues.length > 1) {
-			Map<Long, Long> groupIdPrimaryKeyMap =
+			Map<Long, Long> newPrimaryKeysMap =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Group.class);
 
 			long groupId = MapUtil.getLong(
-				groupIdPrimaryKeyMap, GetterUtil.getLong(oldValues[1]));
+				newPrimaryKeysMap, GetterUtil.getLong(oldValues[1]));
 
 			if (groupId != 0) {
 				group = _groupLocalService.fetchGroup(groupId);

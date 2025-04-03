@@ -81,7 +81,7 @@ test(
 			name: 'Remote Site Name',
 		});
 
-		remoteApiHelpers.data.push({id: site.id, type: 'site'});
+		remoteApiHelpers.data.push({id: remoteSite.id, type: 'site'});
 
 		await performLoginViaApi({
 			page,

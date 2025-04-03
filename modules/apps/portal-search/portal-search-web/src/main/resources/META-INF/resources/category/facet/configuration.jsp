@@ -91,7 +91,7 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 					module="{SelectVocabularies} from portal-search-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
-							"initialSelectedVocabularyERCs", StringUtil.merge(categoryFacetPortletPreferences.getGroupVocabularyExternalReferenceCodes())
+							"initialSelectedVocabularyExternalReferenceCodes", StringUtil.merge(categoryFacetPortletPreferences.getGroupVocabularyExternalReferenceCodes())
 						).put(
 							"learnResources", LearnMessageUtil.getReactDataJSONObject("portal-search-web")
 						).put(

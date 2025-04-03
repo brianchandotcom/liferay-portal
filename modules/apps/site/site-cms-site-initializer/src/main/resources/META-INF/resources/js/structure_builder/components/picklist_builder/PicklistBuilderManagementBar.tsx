@@ -13,6 +13,7 @@ import {
 	useSetId,
 } from '../../contexts/PicklistBuilderContext';
 import PicklistService from '../../services/PicklistService';
+import focusInvalidElement from '../../utils/focusInvalidElement';
 import AsyncButton from '../AsyncButton';
 import ManagementBar from '../ManagementBar';
 
@@ -30,6 +31,8 @@ export default function PicklistBuilderManagementBar() {
 	const onSave = async () => {
 		try {
 			if (!localizedName || !erc) {
+				focusInvalidElement();
+
 				return;
 			}
 

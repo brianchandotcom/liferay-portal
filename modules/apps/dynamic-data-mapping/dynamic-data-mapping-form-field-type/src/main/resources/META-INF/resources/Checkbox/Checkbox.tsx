@@ -50,6 +50,8 @@ export default function Main({
 }
 
 interface IProps extends ICheckboxLocalizedObjectFieldProps {
+	errorMessage: string;
+	id?: string;
 	isLocalizationSupported: boolean;
 	localizedObjectField?: boolean;
 	predefinedValue?: boolean | String[];
@@ -57,6 +59,7 @@ interface IProps extends ICheckboxLocalizedObjectFieldProps {
 	showAsSwitcher?: boolean;
 	showMaximumRepetitionsInfo?: boolean;
 	systemSettingsURL: string;
+	tip: string;
 	visible?: boolean;
 }
 

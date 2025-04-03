@@ -10,6 +10,7 @@ import React from 'react';
 import type {FieldChangeEventHandler, LocalizedValue} from '../types';
 
 const Switcher: React.FC<ISwitcherProps> = ({
+	accessibleProps,
 	checked,
 	disabled,
 	label,
@@ -24,7 +25,7 @@ const Switcher: React.FC<ISwitcherProps> = ({
 		<>
 			<label className="toggle-switch">
 				<ClayToggle
-					aria-required={required}
+					{...accessibleProps}
 					disabled={disabled}
 					name={name}
 					onToggle={(checked) => {
@@ -66,6 +67,7 @@ const Switcher: React.FC<ISwitcherProps> = ({
 };
 
 const Toggle: React.FC<ISwitcherProps> = ({
+	accessibleProps,
 	checked,
 	disabled,
 	label,
@@ -80,6 +82,7 @@ const Toggle: React.FC<ISwitcherProps> = ({
 }) => {
 	return showAsSwitcher ? (
 		<Switcher
+			accessibleProps={accessibleProps}
 			checked={checked}
 			disabled={disabled}
 			label={label}
@@ -93,7 +96,7 @@ const Toggle: React.FC<ISwitcherProps> = ({
 		/>
 	) : (
 		<ClayCheckbox
-			aria-required={required}
+			{...accessibleProps}
 			checked={checked}
 			disabled={disabled}
 			label={showLabel ? label : ''}
@@ -125,6 +128,15 @@ export default function CheckboxBase({
 	return (
 		<>
 			<Toggle
+				accessibleProps={{
+					...(otherProps.tip && {
+						'aria-describedby': `${otherProps.id ?? name}_fieldHelp`,
+					}),
+					...(otherProps.errorMessage && {
+						'aria-errormessage': `${otherProps.id ?? name}_fieldError`,
+					}),
+					'aria-required': !!otherProps.required,
+				}}
 				checked={checked}
 				disabled={readOnly}
 				name={name}
@@ -173,17 +185,25 @@ export interface ICheckboxBaseProps {
 }
 
 interface ISwitcherProps extends ICheckboxBaseProps {
+	accessibleProps: {
+		'aria-describedby'?: string;
+		'aria-errormessage'?: string;
+		'aria-required': boolean;
+	};
 	showMaximumRepetitionsInfo: boolean;
 	systemSettingsURL: string;
 }
 
 interface IProps extends ICheckboxBaseProps {
 	editOnlyInDefaultLanguage: boolean;
+	errorMessage: string;
+	id?: string;
 	isLocalizationSupported: boolean;
 	predefinedValue?: boolean | String[];
 	readOnly?: boolean;
 	showAsSwitcher?: boolean;
 	showMaximumRepetitionsInfo?: boolean;
 	systemSettingsURL: string;
+	tip: string;
 	visible?: boolean;
 }

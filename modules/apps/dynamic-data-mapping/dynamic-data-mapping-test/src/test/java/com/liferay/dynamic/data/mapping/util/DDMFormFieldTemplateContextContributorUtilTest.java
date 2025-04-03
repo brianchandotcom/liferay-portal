@@ -39,7 +39,7 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 	}
 
 	@Test
-	public void testGetLocaleMap() {
+	public void testGetLocalizationParameters() {
 		CheckboxDDMFormFieldTemplateContextContributor
 			checkboxDDMFormFieldTemplateContextContributor =
 				new CheckboxDDMFormFieldTemplateContextContributor();
@@ -47,6 +47,8 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 		DDMFormField ddmFormField = new DDMFormField("field", "checkbox");
 
 		ddmFormField.setDDMForm(getDDMForm());
+		ddmFormField.setProperty("editOnlyInDefaultLanguage", true);
+		ddmFormField.setProperty("isLocalizationSupported", true);
 
 		Map<String, Object> parameters =
 			checkboxDDMFormFieldTemplateContextContributor.getParameters(
@@ -65,6 +67,8 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 			LocaleUtil.US.toString(), defaultLocaleJSONObject.get("localeId"));
 		Assert.assertEquals(
 			LocaleUtil.US.toString(), editingLocaleJSONObject.get("localeId"));
+		Assert.assertTrue((boolean)parameters.get("editOnlyInDefaultLanguage"));
+		Assert.assertTrue((boolean)parameters.get("isLocalizationSupported"));
 	}
 
 }

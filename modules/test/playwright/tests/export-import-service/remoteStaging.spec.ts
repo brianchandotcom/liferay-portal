@@ -64,11 +64,6 @@ test(
 			title: 'Staging Test Page',
 		});
 
-		const remoteUrl = remoteApiHelpers.baseUrl.substring(
-			0,
-			remoteApiHelpers.baseUrl.length - 3
-		);
-
 		const remoteSite = await remoteApiHelpers.headlessSite.createSite({
 			name: 'Remote Site Name',
 		});
@@ -111,6 +106,11 @@ test(
 			layoutFriendlyURL: layout.friendlyURL,
 			siteFriendlyUrl: site.friendlyUrlPath,
 		});
+
+		const remoteUrl = remoteApiHelpers.baseUrl.substring(
+			0,
+			remoteApiHelpers.baseUrl.length - 3
+		);
 
 		await remotePage.goto(`${remoteUrl}/web${remoteSite.friendlyUrlPath}`);
 

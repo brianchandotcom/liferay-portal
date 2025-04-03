@@ -176,6 +176,17 @@ public class UserSegmentsCriteriaContributorTest {
 				"') or (roleIds eq '", _role2.getRoleId(),
 				"' or userGroupIds eq '", _userGroup.getUserGroupId(), "'))"),
 			criteria.getFilterString(Criteria.Type.MODEL));
+
+		criteria = new Criteria();
+
+		segmentsCriteriaContributor.contribute(
+			criteria, "dateModified eq 2025-03-14T00:00:00.000Z",
+			Criteria.Conjunction.AND);
+
+		Assert.assertEquals(
+			"dateModified ge 2025-03-14T00:00:00.000Z and dateModified le " +
+				"2025-03-14T23:59:59.999Z",
+			criteria.getFilterString(Criteria.Type.MODEL));
 	}
 
 	@Test
@@ -212,23 +223,6 @@ public class UserSegmentsCriteriaContributorTest {
 					))
 			).toString(),
 			String.valueOf(jsonObject.getString("query")));
-	}
-
-	@Test
-	public void testGetCriteriaJSONObjectWithDateModifiedTruncated() {
-		SegmentsCriteriaContributor segmentsCriteriaContributor =
-			_getSegmentsCriteriaContributor();
-
-		Criteria criteria = new Criteria();
-
-		segmentsCriteriaContributor.contribute(
-			criteria, "dateModified eq 2025-03-14T00:00:00.000Z",
-			Criteria.Conjunction.AND);
-
-		Assert.assertEquals(
-			"dateModified ge 2025-03-14T00:00:00.000Z and dateModified le " +
-				"2025-03-14T23:59:59.999Z",
-			criteria.getFilterString(Criteria.Type.MODEL));
 	}
 
 	@Test

@@ -245,7 +245,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry2.getExternalReferenceCode(),
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
-			_classExternalReferenceCodesJSONArray(
+			_getExternalReferenceCodesJSONArray(
 				file, _objectDefinition1.getName()
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -264,7 +264,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
-			_classExternalReferenceCodesJSONArray(
+			_getExternalReferenceCodesJSONArray(
 				file, _objectDefinition2.getName()
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -286,7 +286,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry2.getExternalReferenceCode(),
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
-			_classExternalReferenceCodesJSONArray(
+			_getExternalReferenceCodesJSONArray(
 				file, _objectDefinition1.getName()
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -295,7 +295,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
-			_classExternalReferenceCodesJSONArray(
+			_getExternalReferenceCodesJSONArray(
 				file, _objectDefinition2.getName()
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -375,37 +375,6 @@ public class BatchEnginePortletDataHandlerTest {
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private JSONArray _classExternalReferenceCodesJSONArray(
-			File larFile, String className)
-		throws Exception {
-
-		try (ZipFile zipFile = new ZipFile(larFile)) {
-			ZipEntry zipEntry = zipFile.getEntry(className + "_deletions.json");
-
-			if (zipEntry == null) {
-				throw new FileNotFoundException();
-			}
-
-			JSONArray jsonArray1 = JSONFactoryUtil.createJSONArray(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-			JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray();
-
-			for (Object event : jsonArray1) {
-				if (event instanceof JSONObject) {
-					JSONObject jsonObject = (JSONObject)event;
-
-					String classExternalReferenceCode = jsonObject.getString(
-						"externalReferenceCode");
-
-					jsonArray2.put(classExternalReferenceCode);
-				}
-			}
-
-			return jsonArray2;
-		}
 	}
 
 	private File _exportLayouts() throws Exception {
@@ -500,6 +469,37 @@ public class BatchEnginePortletDataHandlerTest {
 				new String[] {Boolean.TRUE.toString()}));
 
 		return parameterMap;
+	}
+
+	private JSONArray _getExternalReferenceCodesJSONArray(
+			File larFile, String className)
+		throws Exception {
+
+		try (ZipFile zipFile = new ZipFile(larFile)) {
+			ZipEntry zipEntry = zipFile.getEntry(className + "_deletions.json");
+
+			if (zipEntry == null) {
+				throw new FileNotFoundException();
+			}
+
+			JSONArray jsonArray1 = JSONFactoryUtil.createJSONArray(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
+
+			JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray();
+
+			for (Object event : jsonArray1) {
+				if (event instanceof JSONObject) {
+					JSONObject jsonObject = (JSONObject)event;
+
+					String classExternalReferenceCode = jsonObject.getString(
+						"externalReferenceCode");
+
+					jsonArray2.put(classExternalReferenceCode);
+				}
+			}
+
+			return jsonArray2;
+		}
 	}
 
 	private void _importLayouts() throws Exception {

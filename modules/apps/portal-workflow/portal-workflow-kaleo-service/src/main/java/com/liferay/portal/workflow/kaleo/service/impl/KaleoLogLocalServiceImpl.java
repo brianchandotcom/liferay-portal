@@ -88,6 +88,25 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public KaleoLog addInstanceFailKaleoLog(
+			KaleoInstanceToken kaleoInstanceToken, String comment,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KaleoLog kaleoLog = _createKaleoLog(
+			kaleoInstanceToken, LogType.INSTANCE_FAIL, serviceContext);
+
+		kaleoLog.setComment(comment);
+
+		KaleoInstance kaleoInstance = kaleoInstanceToken.getKaleoInstance();
+
+		kaleoLog.setWorkflowContext(kaleoInstance.getWorkflowContext());
+
+		return kaleoLogPersistence.update(kaleoLog);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public KaleoLog addNodeEntryKaleoLog(
 			KaleoInstanceToken kaleoInstanceToken, KaleoNode sourceKaleoNode,
 			KaleoNode targetKaleoNode, ServiceContext serviceContext)

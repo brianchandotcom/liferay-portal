@@ -39,16 +39,18 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
+
+import java.util.Collections;
+import java.util.Map;
+
+import javax.portlet.PortletPreferences;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import javax.portlet.PortletPreferences;
-import java.util.Collections;
-import java.util.Map;
 
 /**
  * @author Joshua Cords
@@ -69,11 +71,11 @@ public class UpgradePortletPreferencesTest {
 
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_portletIds = new String[_portletKeys.length];
+		_portletIds = new String[_PORTLET_KEYS.length];
 
-		for (int i = 0; i < _portletKeys.length; i++) {
+		for (int i = 0; i < _PORTLET_KEYS.length; i++) {
 			_portletIds[i] = LayoutTestUtil.addPortletToLayout(
-				_layout, _portletKeys[i]);
+				_layout, _PORTLET_KEYS[i]);
 		}
 	}
 
@@ -198,7 +200,24 @@ public class UpgradePortletPreferencesTest {
 	}
 
 	private void _assertPortletPreferences(
-		Map<String, String> expectedMap, String portletId)
+		Map<String, String> expectedMap,
+		PortletPreferences portletPreferences) {
+
+		Map<String, String[]> map = portletPreferences.getMap();
+
+		Assert.assertEquals(
+			MapUtil.toString(map), expectedMap.size(), map.size());
+
+		for (Map.Entry<String, String> entry : expectedMap.entrySet()) {
+			Assert.assertTrue(entry.getKey(), map.containsKey(entry.getKey()));
+
+			Assert.assertArrayEquals(
+				new String[] {entry.getValue()}, map.get(entry.getKey()));
+		}
+	}
+
+	private void _assertPortletPreferences(
+			Map<String, String> expectedMap, String portletId)
 		throws Exception {
 
 		_assertPortletPreferences(
@@ -208,7 +227,7 @@ public class UpgradePortletPreferencesTest {
 
 	private UpgradeProcess _getUpgradeProcess() {
 		UpgradeProcess[] upgradeProcesses = UpgradeTestUtil.getUpgradeSteps(
-			_getUpgradeStepRegistrator(), _getVersion());
+			_upgradeStepRegistrator, new Version(2, 1, 1));
 
 		return upgradeProcesses[0];
 	}
@@ -227,7 +246,7 @@ public class UpgradePortletPreferencesTest {
 	}
 
 	private void _testUpgrade(
-		Map<String, String> expectedMap, Map<String, String> map)
+			Map<String, String> expectedMap, Map<String, String> map)
 		throws Exception {
 
 		for (String portletId : _portletIds) {
@@ -242,7 +261,7 @@ public class UpgradePortletPreferencesTest {
 	}
 
 	private void _updateLayoutPortletPreference(
-		String portletId, Map<String, String> portletPreferencesMap)
+			String portletId, Map<String, String> portletPreferencesMap)
 		throws Exception {
 
 		LayoutTestUtil.updateLayoutPortletPreferences(
@@ -250,6 +269,26 @@ public class UpgradePortletPreferencesTest {
 
 		_assertPortletPreferences(portletPreferencesMap, portletId);
 	}
+
+	private static final String[] _PORTLET_KEYS = {
+		CategoryFacetPortletKeys.CATEGORY_FACET + "_INSTANCE_%",
+		CustomFacetPortletKeys.CUSTOM_FACET + "_INSTANCE_%",
+		CustomFilterPortletKeys.CUSTOM_FILTER + "_INSTANCE_%",
+		FolderFacetPortletKeys.FOLDER_FACET + "_INSTANCE_%",
+		ModifiedFacetPortletKeys.MODIFIED_FACET + "_INSTANCE_%",
+		SearchBarPortletKeys.SEARCH_BAR + "_INSTANCE_%",
+		SearchResultsPortletKeys.SEARCH_RESULTS + "_INSTANCE_%",
+		SiteFacetPortletKeys.SITE_FACET + "_INSTANCE_%",
+		SortPortletKeys.SORT + "_INSTANCE_%",
+		TagFacetPortletKeys.TAG_FACET + "_INSTANCE_%",
+		TypeFacetPortletKeys.TYPE_FACET + "_INSTANCE_%",
+		UserFacetPortletKeys.USER_FACET + "_INSTANCE_%"
+	};
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.search.web.internal.upgrade.registry.SearchWebUpgradeStepRegistrator"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private EntityCache _entityCache;
@@ -265,52 +304,6 @@ public class UpgradePortletPreferencesTest {
 	@Inject
 	private MultiVMPool _multiVMPool;
 
-	private String[] _portletKeys = new String[] {
-		CategoryFacetPortletKeys.CATEGORY_FACET + "_INSTANCE_%",
-		CustomFacetPortletKeys.CUSTOM_FACET + "_INSTANCE_%",
-		CustomFilterPortletKeys.CUSTOM_FILTER + "_INSTANCE_%",
-		FolderFacetPortletKeys.FOLDER_FACET + "_INSTANCE_%",
-		ModifiedFacetPortletKeys.MODIFIED_FACET + "_INSTANCE_%",
-		SearchBarPortletKeys.SEARCH_BAR + "_INSTANCE_%",
-		SearchResultsPortletKeys.SEARCH_RESULTS + "_INSTANCE_%",
-		SiteFacetPortletKeys.SITE_FACET + "_INSTANCE_%",
-		SortPortletKeys.SORT + "_INSTANCE_%",
-		TagFacetPortletKeys.TAG_FACET + "_INSTANCE_%",
-		TypeFacetPortletKeys.TYPE_FACET + "_INSTANCE_%",
-		UserFacetPortletKeys.USER_FACET + "_INSTANCE_%"
-	};
 	private String[] _portletIds;
-
-	private void _assertPortletPreferences(
-		Map<String, String> expectedMap,
-		PortletPreferences portletPreferences) {
-
-		Map<String, String[]> map = portletPreferences.getMap();
-
-		Assert.assertEquals(
-			MapUtil.toString(map), expectedMap.size(), map.size());
-
-		for (Map.Entry<String, String> entry : expectedMap.entrySet()) {
-			Assert.assertTrue(entry.getKey(), map.containsKey(entry.getKey()));
-
-			Assert.assertArrayEquals(
-				new String[] {entry.getValue()}, map.get(entry.getKey()));
-		}
-	}
-
-	private UpgradeStepRegistrator _getUpgradeStepRegistrator() {
-		return _upgradeStepRegistrator;
-	}
-
-	private Version _getVersion() {
-		return _VERSION;
-	}
-
-	private static final Version _VERSION = new Version(2, 1, 1);
-
-	@Inject(
-		filter = "component.name=com.liferay.portal.search.web.internal.upgrade.registry.SearchWebUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

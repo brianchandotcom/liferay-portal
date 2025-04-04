@@ -5,13 +5,18 @@
 
 import {test} from '@playwright/test';
 
+import {PicklistBuilderPage} from '../pages/PicklistBuilderPage';
 import {StructureBuilderPage} from '../pages/StructureBuilderPage';
 import {StructuresPage} from '../pages/StructuresPage';
 
 const cmsPagesTest = test.extend<{
+	picklistBuilderPage: PicklistBuilderPage;
 	structureBuilderPage: StructureBuilderPage;
 	structuresPage: StructuresPage;
 }>({
+	picklistBuilderPage: async ({page}, use) => {
+		await use(new PicklistBuilderPage(page));
+	},
 	structureBuilderPage: async ({page}, use) => {
 		await use(new StructureBuilderPage(page));
 	},

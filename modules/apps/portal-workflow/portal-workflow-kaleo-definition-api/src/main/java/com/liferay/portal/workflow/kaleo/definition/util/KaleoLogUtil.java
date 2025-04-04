@@ -29,6 +29,9 @@ public class KaleoLogUtil {
 		else if (type == WorkflowLog.TRANSITION) {
 			return LogType.NODE_EXIT.name();
 		}
+		else if (type == WorkflowLog.WORKFLOW_INSTANCE_FAIL) {
+			return LogType.WORKFLOW_INSTANCE_FAIL.name();
+		}
 
 		return null;
 	}
@@ -50,6 +53,9 @@ public class KaleoLogUtil {
 		}
 		else if (logType.equals(LogType.TASK_UPDATE)) {
 			return WorkflowLog.TASK_UPDATE;
+		}
+		else if (logType.equals(LogType.WORKFLOW_INSTANCE_FAIL)) {
+			return WorkflowLog.WORKFLOW_INSTANCE_FAIL;
 		}
 
 		return -1;

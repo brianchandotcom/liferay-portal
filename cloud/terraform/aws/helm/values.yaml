@@ -1,0 +1,76 @@
+awsServiceAccountArn: &awsServiceAccountArn "<iam role arn for service account from infra output>"
+configmap:
+    data:
+        com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config: |
+            remoteClusterConnectionId="REMOTE"
+        com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config: |
+            active=B"true"
+            authenticationEnabled=B"true"
+            connectionId="REMOTE"
+            httpSSLEnabled=B"false"
+            networkHostAddresses=["https://$[env:OPENSEARCH_ENDPOINT]"]
+            password="$[env:OPENSEARCH_PASSWORD]"
+            username="$[env:OPENSEARCH_USERNAME]"
+        com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config: |
+            accessKey=""
+            bucketName="$[env:S3_BUCKET_ID]"
+            s3Endpoint=""
+            s3PathStyle=B"false"
+            s3Region="$[env:S3_BUCKET_REGION]"
+            secretKey=""
+customEnvFrom:
+    -   secretRef:
+        name: managed-service-details
+customVolumeMounts:
+    -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+        name: liferay-configmap
+        subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+    -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+        name: liferay-configmap
+        subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+    -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+        name: liferay-configmap
+        subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+dependencies:
+    -   name: database
+        portalProperties: |
+            jdbc.default.driverClassName=org.postgresql.Driver
+            jdbc.default.password=${env.DATABASE_PASSWORD}
+            jdbc.default.url=jdbc:postgresql://${env.DATABASE_ENDPOINT}:${env.DATABASE_PORT}/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
+            jdbc.default.username=${env.DATABASE_USERNAME}
+        source: external
+    -   name: objectstorage
+        portalProperties: |
+            dl.store.impl=com.liferay.portal.store.s3.S3Store
+        source: external
+portalBundleDenyList:
+    - com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
+    - com.liferay.portal.search.elasticsearch.monitoring.web
+    - com.liferay.portal.search.elasticsearch7.api
+    - com.liferay.portal.search.elasticsearch7.impl
+    - com.liferay.portal.search.learning.to.rank.api
+    - com.liferay.portal.search.learning.to.rank.impl
+resources:
+    limits:
+        cpu: "4000m"
+        memory: "12Gi"
+    requests:
+        cpu: "2000m"
+        memory: "4Gi"
+service:
+    annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    type: LoadBalancer
+serviceAccount:
+    annotations:
+        eks.amazonaws.com/role-arn: *awsServiceAccountArn
+volumeClaimTemplates:
+    -   metadata:
+        name: liferay-persistent-volume
+        spec:
+            accessModes:
+                - ReadWriteOnce
+            resources:
+                requests:
+                    storage: 10Gi
+            storageClassName: gp2

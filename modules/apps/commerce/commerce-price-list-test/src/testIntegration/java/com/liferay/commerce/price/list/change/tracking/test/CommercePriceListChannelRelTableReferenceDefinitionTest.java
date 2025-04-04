@@ -71,10 +71,10 @@ public class CommercePriceListChannelRelTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static CommerceChannelLocalService _commerceChannelLocalService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Inject
-	private static CommercePriceListChannelRelLocalService
+	private CommercePriceListChannelRelLocalService
 		_commercePriceListChannelRelLocalService;
 
 	private CommerceChannel _commerceChannel;

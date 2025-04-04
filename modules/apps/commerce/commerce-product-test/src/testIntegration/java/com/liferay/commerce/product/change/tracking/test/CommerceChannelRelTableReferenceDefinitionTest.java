@@ -72,7 +72,7 @@ public class CommerceChannelRelTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static CommerceChannelLocalService _commerceChannelLocalService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	private CommerceChannel _commerceChannel;
 

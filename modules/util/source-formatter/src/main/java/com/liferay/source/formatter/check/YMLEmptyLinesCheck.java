@@ -90,7 +90,7 @@ public class YMLEmptyLinesCheck extends BaseFileCheck {
 		String trimmedContent = content.trim();
 
 		if (trimmedContent.startsWith("---")) {
-			return trimmedContent.substring(3);
+			return trimmedContent.substring(4);
 		}
 
 		if (trimmedContent.endsWith("---")) {

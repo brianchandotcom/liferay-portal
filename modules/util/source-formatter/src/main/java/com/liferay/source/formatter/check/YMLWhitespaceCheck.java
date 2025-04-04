@@ -34,40 +34,7 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		List<String> contentBlocks = YMLSourceUtil.getContentBlocks(
-			content, _styleBlockPattern);
-
-		StringBundler sb = new StringBundler(contentBlocks.size() * 2);
-
-		for (int i = 0; i < contentBlocks.size(); i++) {
-			String contentBlock = contentBlocks.get(i);
-
-			if ((i % 2) != 0) {
-				sb.append(contentBlock);
-				sb.append(StringPool.NEW_LINE);
-
-				continue;
-			}
-
-			contentBlock = StringUtil.replace(
-				contentBlock, CharPool.TAB, StringPool.FOUR_SPACES);
-
-			contentBlock = super.doProcess(
-				fileName, absolutePath, contentBlock);
-
-			if (contentBlock.startsWith("---") && (i != 0)) {
-				contentBlock = StringPool.NEW_LINE + contentBlock;
-			}
-
-			sb.append(contentBlock);
-
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		content = _formatDefinitions(
-			fileName, sb.toString(), StringPool.BLANK, 0);
+		content = _formatDefinitions(fileName, content, StringPool.BLANK, 0);
 
 		content = _formatSequencesAndMappings(content);
 
@@ -451,7 +418,5 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 
 	private static final Pattern _mappingEntryPattern = Pattern.compile(
 		"^( *)- *?(\n|\\Z)((\\1 +.+)(\n|\\Z)+)+", Pattern.MULTILINE);
-	private static final Pattern _styleBlockPattern = Pattern.compile(
-		"(?<=\\|-)(?: *\n)(( +).*(\n\\2.*)*)");
 
 }

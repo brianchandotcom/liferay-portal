@@ -99,13 +99,13 @@ kind: Secret
 metadata:
     name: managed-service-details
 data:
-    OPENSEARCH_ENDPOINT: ""
-    OPENSEARCH_PASSWORD: ""
-    OPENSEARCH_USERNAME: ""
     DATABASE_ENDPOINT: ""
     DATABASE_PASSWORD: ""
     DATABASE_PORT: ""
     DATABASE_USERNAME: ""
+    OPENSEARCH_ENDPOINT: ""
+    OPENSEARCH_PASSWORD: ""
+    OPENSEARCH_USERNAME: ""
     S3_BUCKET_ID: ""
     S3_BUCKET_REGION: ""
 ```
@@ -124,9 +124,9 @@ This secret was created when you initialized and applied the Terraform configura
    helm upgrade -i \
      liferay \
      --create-namespace \
-     -f ../helm/values.yaml \
      --namespace $(terraform output -raw deployment_namespace) \
      --set "awsServiceAccountArn=$(terraform output -raw liferay_sa_role)" \
+     --values ../helm/values.yaml \
      oci://[aws_chart]
    ```
 
@@ -136,9 +136,9 @@ This secret was created when you initialized and applied the Terraform configura
    helm upgrade -i \
      liferay \
      --create-namespace \
-     -f ../helm/values.yaml \
      --namespace $(terraform output -raw deployment_namespace) \
      --set "serviceAccount.create=false" \
      --set "serviceAccount.name=${SERVICE_ACCOUNT_NAME}" \
+     --values ../helm/values.yaml \
      oci://[aws_chart]
    ```

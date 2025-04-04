@@ -9,8 +9,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
+import com.liferay.headless.object.client.dto.v1_0.ParentObjectEntryFolderBrief;
 import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
+import com.liferay.headless.object.client.problem.Problem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
@@ -29,6 +31,7 @@ import com.liferay.portal.test.rule.Inject;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -112,6 +115,15 @@ public class ObjectEntryFolderResourceTest
 		super.testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode();
 
 		_testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithGroupKey();
+	}
+
+	@Override
+	@Test
+	public void testPostScopeScopeKeyObjectEntryFolder() throws Exception {
+		super.testPostScopeScopeKeyObjectEntryFolder();
+
+		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolder();
+		_testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolder();
 	}
 
 	@Override
@@ -254,6 +266,20 @@ public class ObjectEntryFolderResourceTest
 		return objectEntryFolder;
 	}
 
+	private ParentObjectEntryFolderBrief _randomParentObjectEntryFolderBrief(
+			String parentExternalReferenceCode, long parentObjectEntryFolderId)
+		throws Exception {
+
+		return new ParentObjectEntryFolderBrief() {
+			{
+				externalReferenceCode = parentExternalReferenceCode;
+				id = parentObjectEntryFolderId;
+				label = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
+	}
+
 	private void _testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithGroupKey()
 		throws Exception {
 
@@ -284,6 +310,63 @@ public class ObjectEntryFolderResourceTest
 
 		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
 		assertValid(getObjectEntryFolder);
+	}
+
+	private void _testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolder()
+		throws Exception {
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder());
+
+		ParentObjectEntryFolderBrief parentObjectEntryFolderBrief =
+			_randomParentObjectEntryFolderBrief(
+				parentObjectEntryFolder.getExternalReferenceCode(), 0);
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		randomObjectEntryFolder.setParentObjectEntryFolderBrief(
+			parentObjectEntryFolderBrief);
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, postObjectEntryFolder);
+		assertValid(postObjectEntryFolder);
+
+		Assert.assertEquals(
+			postObjectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode(),
+			parentObjectEntryFolder.getExternalReferenceCode());
+		Assert.assertEquals(
+			postObjectEntryFolder.getParentObjectEntryFolderId(),
+			parentObjectEntryFolder.getId());
+	}
+
+	private void _testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolder()
+		throws Exception {
+
+		ParentObjectEntryFolderBrief parentObjectEntryFolderBrief =
+			_randomParentObjectEntryFolderBrief(
+				StringUtil.toLowerCase(RandomTestUtil.randomString()), 0L);
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		randomObjectEntryFolder.setParentObjectEntryFolderBrief(
+			parentObjectEntryFolderBrief);
+
+		try {
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder);
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
 	}
 
 	@Inject

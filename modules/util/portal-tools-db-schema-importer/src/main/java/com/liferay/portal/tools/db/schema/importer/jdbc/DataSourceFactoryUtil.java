@@ -31,7 +31,10 @@ public class DataSourceFactoryUtil {
 
 		String driverClassName = "com.mysql.cj.jdbc.Driver";
 
-		if (jdbcURL.indexOf("postgresql") > 0) {
+		if (jdbcURL.contains("mariadb")) {
+			driverClassName = "org.mariadb.jdbc.Driver";
+		}
+		else if (jdbcURL.contains("postgresql")) {
 			driverClassName = "org.postgresql.Driver";
 		}
 
@@ -63,7 +66,11 @@ public class DataSourceFactoryUtil {
 	}
 
 	public static boolean isValidSourceDatabase(String jdbcURL) {
-		return jdbcURL.contains("mysql");
+		if (jdbcURL.contains("mariadb") || jdbcURL.contains("mysql")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isValidTargetDatabase(String jdbcURL) {

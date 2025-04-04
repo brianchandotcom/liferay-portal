@@ -5,6 +5,7 @@
 
 const asahConfig = {
 	environment: {
+		apiToken: process.env.OSB_ASAH_API_TOKEN ? process.env.OSB_ASAH_API_TOKEN : '',
 		backendUrl: process.env.OSB_ASAH_BACKEND_URL
 			? process.env.OSB_ASAH_BACKEND_URL
 			: 'http://osbasahbackend:8080',

@@ -40,6 +40,9 @@ export default function MarketplaceModal({
 	const [title, setTitle] = useState<string | undefined>();
 
 	return (
+
+		// @ts-ignore
+
 		<MarketplaceContextProvider
 			baseResourceURL={MarketplaceRest.getBaseResourceURL()}
 			settings={{productFilter: 'fragments'}}

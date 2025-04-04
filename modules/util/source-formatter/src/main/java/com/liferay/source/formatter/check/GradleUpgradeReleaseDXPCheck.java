@@ -77,11 +77,13 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 			Set<String> names = releaseDXPDependencies.get(
 				gradleDependency.getGroup());
 
-			if ((names != null) && names.contains(gradleDependency.getName())) {
+			if ((names == null) ||
+				!names.contains(gradleDependency.getName())) {
+
+				iterator.remove();
+
 				continue;
 			}
-
-			iterator.remove();
 
 			String configuration = gradleDependency.getConfiguration();
 

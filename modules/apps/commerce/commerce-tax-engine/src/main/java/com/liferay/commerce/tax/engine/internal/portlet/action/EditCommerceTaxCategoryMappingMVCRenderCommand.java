@@ -49,11 +49,11 @@ public class EditCommerceTaxCategoryMappingMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/edit_commerce_tax_category_mapping.jsp");
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/edit_commerce_tax_category_mapping.jsp");
+
 			CommerceTaxCategoryMappingsDisplayContext
 				commerceTaxCategoryMappingsDisplayContext =
 					new CommerceTaxCategoryMappingsDisplayContext(

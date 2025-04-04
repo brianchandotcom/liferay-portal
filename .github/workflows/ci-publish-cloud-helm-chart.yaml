@@ -30,11 +30,9 @@ jobs:
                     echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
             -   name: Package Helm chart
                 run: |
-                    TEMP_DIST_DIR="${{ runner.temp }}/dist"
+                    mkdir "${{ runner.temp }}/dist"
 
-                    mkdir ${TEMP_DIST_DIR}
-
-                    helm package --destination ${TEMP_DIST_DIR} --version ${CHART_VERSION} .
+                    helm package --destination "${{ runner.temp }}/dist" --version ${CHART_VERSION} .
                 working-directory: ./cloud/helm
             -   name: Log in to GAR
                 run: echo "${{ secrets.GAR_PASSWORD }}" | helm registry login ${GAR_REPOSITORY} --password-stdin --username _json_key_base64

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.delivery.cart.resource.v1_0.test;
 
+import com.liferay.account.configuration.AccountEntryAddressSubtypeConfiguration;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -23,6 +24,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -527,53 +530,71 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
-		com.liferay.portal.kernel.model.Address serviceBuilderAddress =
-			_addressLocalService.addAddress(
-				RandomTestUtil.randomString(), _user.getUserId(),
-				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
-				_country.getCountryId(), 0, _region.getRegionId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				false, RandomTestUtil.randomString(), true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), listTypeEntry.getKey(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_serviceContext);
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AccountEntryAddressSubtypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"billingAddressSubtypeListTypeDefinition" +
+								"ExternalReferenceCode",
+							listTypeDefinition.getExternalReferenceCode()
+						).put(
+							"shippingAddressSubtypeListTypeDefinition" +
+								"ExternalReferenceCode",
+							listTypeDefinition.getExternalReferenceCode()
+						).build())) {
 
-		randomPatchCart.setBillingAddress(
-			new Address() {
-				{
-					city = RandomTestUtil.randomString();
-					countryISOCode = _country.getA2();
-					name = RandomTestUtil.randomString();
-					street1 = RandomTestUtil.randomString();
-					subtype = listTypeEntry.getKey();
-					zip = RandomTestUtil.randomString();
-				}
-			});
-		randomPatchCart.setBillingAddressId(0L);
-		randomPatchCart.setShippingAddress(
-			new Address() {
-				{
-					city = serviceBuilderAddress.getCity();
-					id = serviceBuilderAddress.getAddressId();
-					name = serviceBuilderAddress.getName();
-					street1 = serviceBuilderAddress.getStreet1();
-					subtype = serviceBuilderAddress.getSubtype();
-				}
-			});
-		randomPatchCart.setShippingAddressId(
-			serviceBuilderAddress.getAddressId());
+			com.liferay.portal.kernel.model.Address serviceBuilderAddress =
+				_addressLocalService.addAddress(
+					RandomTestUtil.randomString(), _user.getUserId(),
+					AccountEntry.class.getName(),
+					_accountEntry.getAccountEntryId(), _country.getCountryId(),
+					3, _region.getRegionId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), false,
+					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), listTypeEntry.getKey(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), _serviceContext);
 
-		Cart patchCart = cartResource.patchCart(
-			postCart.getId(), randomPatchCart);
+			randomPatchCart.setBillingAddress(
+				new Address() {
+					{
+						city = RandomTestUtil.randomString();
+						countryISOCode = _country.getA2();
+						name = RandomTestUtil.randomString();
+						street1 = RandomTestUtil.randomString();
+						subtype = listTypeEntry.getKey();
+						zip = RandomTestUtil.randomString();
+					}
+				});
+			randomPatchCart.setBillingAddressId(0L);
+			randomPatchCart.setShippingAddress(
+				new Address() {
+					{
+						city = serviceBuilderAddress.getCity();
+						id = serviceBuilderAddress.getAddressId();
+						name = serviceBuilderAddress.getName();
+						street1 = serviceBuilderAddress.getStreet1();
+						subtype = serviceBuilderAddress.getSubtype();
+					}
+				});
+			randomPatchCart.setShippingAddressId(
+				serviceBuilderAddress.getAddressId());
 
-		Address address = patchCart.getBillingAddress();
+			Cart patchCart = cartResource.patchCart(
+				postCart.getId(), randomPatchCart);
 
-		Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
+			Address address = patchCart.getBillingAddress();
 
-		address = patchCart.getShippingAddress();
+			Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
 
-		Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
+			address = patchCart.getShippingAddress();
+
+			Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
+		}
 	}
 
 	private void _testPatchCartWithMoreExternalReferenceCodes()

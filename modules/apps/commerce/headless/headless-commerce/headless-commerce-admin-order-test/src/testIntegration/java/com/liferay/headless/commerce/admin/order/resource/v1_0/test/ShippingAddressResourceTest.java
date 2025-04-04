@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.admin.order.resource.v1_0.test;
 
+import com.liferay.account.configuration.AccountEntryAddressSubtypeConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -29,6 +30,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -327,14 +330,26 @@ public class ShippingAddressResourceTest
 
 		shippingAddress.setSubtype(listTypeEntry.getKey());
 
-		shippingAddressResource.patchOrderIdShippingAddress(
-			_commerceOrder.getCommerceOrderId(), shippingAddress);
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AccountEntryAddressSubtypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"billingAndShippingAddressSubtypeListType" +
+								"DefinitionExternalReferenceCode",
+							listTypeDefinition.getExternalReferenceCode()
+						).build())) {
 
-		shippingAddress = shippingAddressResource.getOrderIdShippingAddress(
-			_commerceOrder.getCommerceOrderId());
+			shippingAddressResource.patchOrderIdShippingAddress(
+				_commerceOrder.getCommerceOrderId(), shippingAddress);
 
-		Assert.assertEquals(
-			listTypeEntry.getKey(), shippingAddress.getSubtype());
+			shippingAddress = shippingAddressResource.getOrderIdShippingAddress(
+				_commerceOrder.getCommerceOrderId());
+
+			Assert.assertEquals(
+				listTypeEntry.getKey(), shippingAddress.getSubtype());
+		}
 	}
 
 	@Inject

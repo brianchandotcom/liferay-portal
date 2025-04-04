@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.user.resource.v1_0.test;
 
+import com.liferay.account.configuration.AccountEntryAddressSubtypeConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
@@ -17,6 +18,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -468,14 +471,26 @@ public class PostalAddressResourceTest
 
 		postalAddress.setAddressSubtype(listTypeEntry.getKey());
 
-		postalAddressResource.patchPostalAddress(
-			postalAddress.getId(), postalAddress);
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AccountEntryAddressSubtypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"billingAddressSubtypeListTypeDefinition" +
+								"ExternalReferenceCode",
+							listTypeDefinition.getExternalReferenceCode()
+						).build())) {
 
-		postalAddress = postalAddressResource.getPostalAddress(
-			postalAddress.getId());
+			postalAddressResource.patchPostalAddress(
+				postalAddress.getId(), postalAddress);
 
-		Assert.assertEquals(
-			listTypeEntry.getKey(), postalAddress.getAddressSubtype());
+			postalAddress = postalAddressResource.getPostalAddress(
+				postalAddress.getId());
+
+			Assert.assertEquals(
+				listTypeEntry.getKey(), postalAddress.getAddressSubtype());
+		}
 	}
 
 	private void _testPostAccountPostalAddressWithSubtype() throws Exception {
@@ -496,11 +511,23 @@ public class PostalAddressResourceTest
 
 		postalAddress.setAddressSubtype(listTypeEntry.getKey());
 
-		postalAddress = testPostAccountPostalAddress_addPostalAddress(
-			postalAddress);
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						AccountEntryAddressSubtypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"billingAddressSubtypeListTypeDefinition" +
+								"ExternalReferenceCode",
+							listTypeDefinition.getExternalReferenceCode()
+						).build())) {
 
-		Assert.assertEquals(
-			listTypeEntry.getKey(), postalAddress.getAddressSubtype());
+			postalAddress = testPostAccountPostalAddress_addPostalAddress(
+				postalAddress);
+
+			Assert.assertEquals(
+				listTypeEntry.getKey(), postalAddress.getAddressSubtype());
+		}
 	}
 
 	private PostalAddress _toPostalAddress(Address address) {

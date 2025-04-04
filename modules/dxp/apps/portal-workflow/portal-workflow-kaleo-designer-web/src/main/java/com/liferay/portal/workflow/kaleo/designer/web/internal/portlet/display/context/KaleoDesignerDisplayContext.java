@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -212,10 +213,22 @@ public class KaleoDesignerDisplayContext {
 			kaleoDefinitionVersion -> JSONUtil.put(
 				"creatorName",
 				() -> {
-					User user = _userLocalService.getUser(
+					User user = _userLocalService.fetchUser(
 						kaleoDefinitionVersion.getUserId());
 
-					return user.getFullName();
+					if (user != null) {
+						return user.getFullName();
+					}
+
+					user = _userLocalService.fetchUserByScreenName(
+						kaleoDefinitionVersion.getCompanyId(),
+						UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT);
+
+					if (user != null) {
+						return user.getFullName();
+					}
+
+					return StringPool.BLANK;
 				}
 			).put(
 				"dateCreated",

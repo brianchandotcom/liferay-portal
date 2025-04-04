@@ -6,12 +6,9 @@
 	<macrodef name="build-analytics-cloud-images">
 		<sequential>
 			<if>
-				<or>
-					<isset property="analytics.cloud.faro.workspace.id" />
-					<isset property="env.FARO_WORKSPACE_ID" />
-				</or>
+				<equals arg1="${env.OSB_ASAH_STAGING_ENABLED}" arg2="true" />
 				<then>
-					<echo>Skipping build-analytics-cloud-images</echo>
+					<echo>Skipping build-analytics-cloud-images due to staging</echo>
 				</then>
 				<else>
 					<loadproperties srcfile="${project.dir}/.gradle/gradle.properties" />
@@ -769,12 +766,9 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 	<macrodef name="start-analytics-cloud">
 		<sequential>
 			<if>
-				<or>
-					<isset property="analytics.cloud.faro.workspace.id" />
-					<isset property="env.FARO_WORKSPACE_ID" />
-				</or>
+				<equals arg1="${env.OSB_ASAH_STAGING_ENABLED}" arg2="true" />
 				<then>
-					<echo>Skipping start-analytics-cloud</echo>
+					<echo>Skipping start-analytics-cloud due to staging</echo>
 				</then>
 				<else>
 					<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />
@@ -948,12 +942,9 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 	<macrodef name="stop-analytics-cloud">
 		<sequential>
 			<if>
-				<or>
-					<isset property="analytics.cloud.faro.workspace.id" />
-					<isset property="env.FARO_WORKSPACE_ID" />
-				</or>
+				<equals arg1="${env.OSB_ASAH_STAGING_ENABLED}" arg2="true" />
 				<then>
-					<echo>Skipping stop-analytics-cloud</echo>
+					<echo>Skipping stop-analytics-cloud due to staging</echo>
 				</then>
 				<else>
 					<fail message="Please set the property ${env.DOCKER_ENABLED}." unless="env.DOCKER_ENABLED" />

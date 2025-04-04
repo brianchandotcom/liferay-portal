@@ -98,11 +98,11 @@ test(
 test(
 	'Structures can be saved with all type of fields',
 	{tag: '@LPD-36752'},
-	async ({structureBuilderPage}) => {
+	async ({picklistBuilderPage, structureBuilderPage}) => {
 
 		// Add a picklist
 
-		const picklist = await structureBuilderPage.createPicklist();
+		const picklist = await picklistBuilderPage.createPicklist();
 
 		// Go to the Structure Builder
 
@@ -139,7 +139,7 @@ test(
 
 		// Delete picklist
 
-		await structureBuilderPage.deletePicklist(picklist.id);
+		await picklistBuilderPage.deletePicklist(picklist.id);
 
 		// Delete structure
 
@@ -284,11 +284,11 @@ test.describe('Frontend validations', () => {
 	test(
 		'Validations when saving the structure',
 		{tag: '@LPD-36752'},
-		async ({page, structureBuilderPage}) => {
+		async ({page, picklistBuilderPage, structureBuilderPage}) => {
 
 			// Add a picklist
 
-			const picklist = await structureBuilderPage.createPicklist();
+			const picklist = await picklistBuilderPage.createPicklist();
 
 			// Go to the Structure Builder
 
@@ -381,18 +381,18 @@ test.describe('Frontend validations', () => {
 
 			// Delete picklist
 
-			await structureBuilderPage.deletePicklist(picklist.id);
+			await picklistBuilderPage.deletePicklist(picklist.id);
 		}
 	);
 
 	test(
 		'Validations in the picklist picker',
 		{tag: '@LPD-51647'},
-		async ({page, structureBuilderPage}) => {
+		async ({page, picklistBuilderPage, structureBuilderPage}) => {
 
 			// Add a picklist
 
-			const picklist = await structureBuilderPage.createPicklist();
+			const picklist = await picklistBuilderPage.createPicklist();
 
 			// Go to the Structure Builder
 
@@ -436,7 +436,7 @@ test.describe('Frontend validations', () => {
 
 			// Delete picklist
 
-			await structureBuilderPage.deletePicklist(picklist.id);
+			await picklistBuilderPage.deletePicklist(picklist.id);
 		}
 	);
 });

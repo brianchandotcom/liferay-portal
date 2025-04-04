@@ -12,6 +12,7 @@ export const PORTLET_URLS = {
 	bookmarks:
 		'/~/control_panel/manage?p_p_id=com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet',
 	categoriesAdmin: '/~/control_panel/manage/-/categories_admin/vocabularies',
+	cmsPicklistBuilder: 'web/cms/picklist-builder',
 	cmsStructureBuilder: 'web/cms/structure-builder',
 	cmsStructures: 'web/cms/structures',
 	collections:

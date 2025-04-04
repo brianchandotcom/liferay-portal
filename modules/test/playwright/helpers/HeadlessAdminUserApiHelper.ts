@@ -388,7 +388,7 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async getUserAccontPasswordResetTicket(
+	async getUserAccountPasswordResetTicket(
 		userAccountId: string
 	): Promise<TTicket> {
 		return this.apiHelpers.get(

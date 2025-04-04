@@ -19,7 +19,7 @@ export const test = mergeTests(
 );
 
 test.afterEach(
-	'Reset configuration and delete emails',
+	'Reset Captcha configuration',
 	async ({captchaConfigPage}) => {
 		await captchaConfigPage.resetCaptchaConfiguration();
 	}
@@ -47,7 +47,7 @@ test('LPD-52234: Check if you can change languages in the update password page',
 		await performLogin(page, 'test');
 
 		const ticket =
-			await apiHelpers.headlessAdminUser.getUserAccontPasswordResetTicket(
+			await apiHelpers.headlessAdminUser.getUserAccountPasswordResetTicket(
 				userAccount.id
 			);
 

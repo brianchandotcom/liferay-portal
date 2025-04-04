@@ -7,6 +7,7 @@ package com.liferay.exportimport.kernel.service;
 
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -43,22 +44,27 @@ public interface ExportImportService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portlet.exportimport.service.impl.ExportImportServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the export import remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ExportImportServiceUtil} if injection and service tracking are not available.
 	 */
+	@CTAware
 	public File exportLayoutsAsFile(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
+	@CTAware
 	public long exportLayoutsAsFileInBackground(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
+	@CTAware
 	public long exportLayoutsAsFileInBackground(
 			long exportImportConfigurationId)
 		throws PortalException;
 
+	@CTAware
 	public File exportPortletInfoAsFile(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
+	@CTAware
 	public long exportPortletInfoAsFileInBackground(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
@@ -70,55 +76,67 @@ public interface ExportImportService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@CTAware
 	public void importLayouts(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
+	@CTAware
 	public void importLayouts(
 			ExportImportConfiguration exportImportConfiguration,
 			InputStream inputStream)
 		throws PortalException;
 
+	@CTAware
 	public long importLayoutsInBackground(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
+	@CTAware
 	public long importLayoutsInBackground(
 			ExportImportConfiguration exportImportConfiguration,
 			InputStream inputStream)
 		throws PortalException;
 
+	@CTAware
 	public void importPortletInfo(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
+	@CTAware
 	public void importPortletInfo(
 			ExportImportConfiguration exportImportConfiguration,
 			InputStream inputStream)
 		throws PortalException;
 
+	@CTAware
 	public long importPortletInfoInBackground(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
+	@CTAware
 	public long importPortletInfoInBackground(
 			ExportImportConfiguration exportImportConfiguration,
 			InputStream inputStream)
 		throws PortalException;
 
+	@CTAware
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
+	@CTAware
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration,
 			InputStream inputStream)
 		throws PortalException;
 
+	@CTAware
 	public MissingReferences validateImportPortletInfo(
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException;
 
+	@CTAware
 	public MissingReferences validateImportPortletInfo(
 			ExportImportConfiguration exportImportConfiguration,
 			InputStream inputStream)

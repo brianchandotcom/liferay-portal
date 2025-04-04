@@ -5,6 +5,8 @@
 
 package com.liferay.sample;
 
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+
 import java.util.UUID;
 
 import org.apache.commons.logging.Log;

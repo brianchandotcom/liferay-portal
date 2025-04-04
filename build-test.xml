@@ -3490,7 +3490,7 @@ tell application "Safari" to quit
 					</echo>
 				</then>
 				<elseif>
-					<isset property="analytics.cloud.faro.workspace.id" />
+					<isset property="analytics.cloud.asah.backend.url" />
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
 							analytics.cloud.asah.backend.url=${analytics.cloud.asah.backend.url}
@@ -3508,7 +3508,7 @@ tell application "Safari" to quit
 					</echo>
 				</then>
 				<elseif>
-					<isset property="analytics.cloud.faro.workspace.id" />
+					<isset property="analytics.cloud.asah.curator.batch.url" />
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
 							analytics.cloud.asah.curator.batch.url=${analytics.cloud.asah.curator.batch.url}
@@ -3525,7 +3525,7 @@ tell application "Safari" to quit
 					</echo>
 				</then>
 				<elseif>
-					<isset property="analytics.cloud.faro.workspace.id" />
+					<isset property="analytics.cloud.asah.project.id" />
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
 							analytics.cloud.asah.project.id=${analytics.cloud.asah.project.id}
@@ -3555,6 +3555,7 @@ tell application "Safari" to quit
 				<isset property="env.OSB_FARO_URL" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.faro.frontend.url=${env.OSB_FARO_URL}
 						analytics.cloud.url=${env.OSB_FARO_URL}
 					</echo>
 				</then>
@@ -3562,6 +3563,7 @@ tell application "Safari" to quit
 					<isset property="test.analytics.cloud.url" />
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.faro.frontend.url=${test.analytics.cloud.url}
 							analytics.cloud.url=${test.analytics.cloud.url}
 						</echo>
 					</then>
@@ -3570,6 +3572,7 @@ tell application "Safari" to quit
 					<equals arg1="${analytics.cloud.enabled}" arg2="true" />
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.faro.frontend.url=${analytics.cloud.faro.frontend.url}
 							analytics.cloud.url=${analytics.cloud.faro.frontend.url}
 						</echo>
 					</then>
@@ -3580,14 +3583,14 @@ tell application "Safari" to quit
 				<isset property="env.OSB_FARO_USER_LOGIN" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">
-						analytics.cloud.user.login=${env.OSB_FARO_USER_LOGIN}
+						analytics.cloud.faro.user.login=${env.OSB_FARO_USER_LOGIN}
 					</echo>
 				</then>
 				<elseif>
-					<isset property="analytics.cloud.user.login" />
+					<isset property="analytics.cloud.faro.user.login" />
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
-							analytics.cloud.user.login=${env.OSB_FARO_USER_LOGIN}
+							analytics.cloud.faro.user.login=${analytics.cloud.faro.user.login}
 						</echo>
 					</then>
 				</elseif>
@@ -3611,11 +3614,8 @@ tell application "Safari" to quit
 			</if>
 
 			<echo append="true" file="${test.ext.properties.file}">
-				analytics.cloud.asah.backend.url=${analytics.cloud.asah.backend.url}
-				analytics.cloud.asah.curator.batch.url=${analytics.cloud.asah.curator.batch.url}
 				analytics.cloud.asah.curator.stream.url=${analytics.cloud.asah.curator.stream.url}
 				analytics.cloud.asah.publisher.url=${analytics.cloud.asah.publisher.url}
-				analytics.cloud.faro.frontend.url=${analytics.cloud.faro.frontend.url}
 			</echo>
 		</sequential>
 	</macrodef>

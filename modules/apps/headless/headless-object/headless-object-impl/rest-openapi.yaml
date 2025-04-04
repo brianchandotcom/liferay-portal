@@ -71,6 +71,7 @@ components:
                     # @review
                     description:
                         The object entry folder's parent, if it exists.
+                    readOnly: true
                 parentObjectEntryFolderExternalReferenceCode:
                     # @review
                     description:

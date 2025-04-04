@@ -10,24 +10,26 @@ jobs:
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
-            -   name: Calculate Helm chart version
+            -   env:
+                    GH_TOKEN: ${{ github.token }}
+                name: Calculate Helm chart version
                 run: |
+                    CHART_VERSION=$(cat ./Chart.yaml | yq .version)
 
-                    #
-                    # heml-chart-1.0.5
-                    #
+                    echo "Calculated Helm chart version: ${CHART_VERSION}."
 
-                    LATEST_HELM_CHART_TAG=$(git describe --tags --match="helm-chart-*" HEAD)
+                    if helm show readme "oci://${GAR_REPOSITORY}/liferay:${CHART_VERSION}" >/dev/null 2>&1
+                    then
+                      echo "Liferay Helm Chart version ${CHART_VERSION} already exists. Aborting publish workflow."
 
-                    #
-                    # 1.0.5
-                    #
+                      gh run cancel ${{ github.run_id }}
+                      gh run watch ${{ github.run_id }} >/dev/null
 
-                    CHART_VERSION=${LATEST_HELM_CHART_TAG#"helm-chart-"}
-
-                    echo "Calculated Helm chart version ${CHART_VERSION}."
+                      exit 1
+                    fi
 
                     echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
+                working-directory: ./cloud/helm
             -   name: Package Helm chart
                 run: |
                     mkdir "${{ runner.temp }}/dist"

@@ -60,7 +60,6 @@ import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.Dictionary;
 import java.util.Map;
 
 import javax.portlet.Portlet;
@@ -416,6 +415,30 @@ public class SegmentsDisplayContextTest {
 				new ConfigurationTemporarySwapper(
 					SegmentsConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", false
+					).build())) {
+
+			try (CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							SegmentsCompanyConfiguration.class.getName(),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"roleSegmentationEnabled", false
+							).build())) {
+
+				Assert.assertFalse(
+					_isRoleSegmentationEnabled(TestPropsValues.getCompanyId()));
+			}
+		}
+	}
+
+	@Test
+	public void testIsRoleSegmentationEnabled() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
 						"roleSegmentationEnabled", true
 					).build())) {
 
@@ -431,23 +454,6 @@ public class SegmentsDisplayContextTest {
 				Assert.assertTrue(
 					_isRoleSegmentationEnabled(TestPropsValues.getCompanyId()));
 			}
-		}
-	}
-
-	@Test
-	public void testIsRoleSegmentationEnabled() throws Exception {
-		Dictionary<String, Object> dictionary =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"roleSegmentationEnabled", true
-			).build();
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.segments.configuration.SegmentsConfiguration",
-					dictionary)) {
-
-			Assert.assertTrue(
-				_isRoleSegmentationEnabled(TestPropsValues.getCompanyId()));
 		}
 	}
 

@@ -34,7 +34,7 @@ export const INITIAL_FILTER: IFilterOption[] = [
 		values: [
 			{
 				key: 'goLive',
-				name: 'Go-Live',
+				name: 'Go Live',
 			},
 			{
 				key: 'upgrade',

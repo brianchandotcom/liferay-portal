@@ -56,9 +56,9 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
-	const [isValidRecordDate, setIsValidRecordDate] = useState<boolean>(false);
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
+	const [isValidRecordDate, setIsValidRecordDate] = useState<boolean>(false);
 
 	const emptyOption = useMemo(
 		() => ({
@@ -102,6 +102,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		const isActualGoLiveDateValid = isValidDate(hasActualGoLiveDate);
 
 		setIsValidRecordDate(isActualGoLiveDateValid);
+
 		const hasAllRequiredFieldsFilled = Boolean(hasActualGoLiveDate);
 
 		setBaseButtonDisabled(

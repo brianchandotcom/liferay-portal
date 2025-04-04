@@ -471,12 +471,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 					public String getPlaywrightEnvValue(Properties projectProperties, String playwrightEnvName) {
-						String playwrightEnvValue = project.getProperty("env." + playwrightEnvName);
-
-						if (playwrightEnvValue != null) {
-							return playwrightEnvValue;
-						}
-
 						String playwrightEnvPropertyNames = JenkinsResultsParserUtil.getProperty(projectProperties, "playwright.env.property.names[" + playwrightEnvName + "]");
 
 						if (playwrightEnvPropertyNames == null) {

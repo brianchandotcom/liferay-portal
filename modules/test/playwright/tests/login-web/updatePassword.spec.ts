@@ -18,12 +18,11 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.afterEach(
-	'Reset Captcha configuration',
-	async ({captchaConfigPage}) => {
-		await captchaConfigPage.resetCaptchaConfiguration();
-	}
-);
+test.afterEach('Reset Captcha configuration', async ({captchaConfigPage}) => {
+	await captchaConfigPage.goTo();
+
+	await captchaConfigPage.resetCaptchaConfiguration();
+});
 
 test('LPD-52234: Check if you can change languages in the update password page', async ({
 	apiHelpers,
@@ -63,7 +62,7 @@ test('LPD-52234: Check if you can change languages in the update password page',
 			trigger: page.getByTitle('Select a Language', {exact: true}),
 		});
 
-		await page.getByRole('heading', { name: 'Alterar senha' }).waitFor();
+		await page.getByRole('heading', {name: 'Alterar senha'}).waitFor();
 
 		await expect(
 			page.getByText(

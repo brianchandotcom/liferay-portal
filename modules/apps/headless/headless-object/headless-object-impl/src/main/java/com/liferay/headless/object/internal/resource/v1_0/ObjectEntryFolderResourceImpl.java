@@ -18,7 +18,7 @@ import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -354,7 +354,7 @@ public class ObjectEntryFolderResourceImpl
 			}
 
 			if (!addObjectEntryFolder) {
-				throw new PortalException();
+				throw new NoSuchModelException();
 			}
 
 			objectEntryFolderPersistence =

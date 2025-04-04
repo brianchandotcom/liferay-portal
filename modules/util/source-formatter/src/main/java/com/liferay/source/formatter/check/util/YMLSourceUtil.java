@@ -11,43 +11,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Peter Shin
  * @author Alan Huang
  */
 public class YMLSourceUtil {
-
-	public static List<String> getContentBlocks(
-		String content, Pattern styleBlockPattern) {
-
-		List<String> contentBlocks = new ArrayList<>();
-
-		Matcher matcher = styleBlockPattern.matcher(content);
-
-		int lastEndPos = 0;
-
-		while (matcher.find()) {
-			contentBlocks.add(
-				content.substring(lastEndPos, matcher.start(1) - 1));
-			contentBlocks.add(
-				content.substring(matcher.start(1), matcher.end(1)));
-
-			lastEndPos = matcher.end(1) + 1;
-		}
-
-		if (lastEndPos < content.length()) {
-			contentBlocks.add(content.substring(lastEndPos));
-		}
-
-		if (contentBlocks.isEmpty()) {
-			contentBlocks.add(content);
-		}
-
-		return contentBlocks;
-	}
 
 	public static List<String> getDefinitions(String content, String indent) {
 		List<String> definitions = new ArrayList<>();

@@ -38,7 +38,7 @@ public class SimilarResultsDisplayContext {
 	}
 
 	public long getDisplayStyleGroupId() {
-		long displayStyleGroupId;
+		long displayStyleGroupId = 0;
 
 		String displayStyleGroupExternalReferenceCode =
 			_similarResultsPortletInstanceConfiguration.

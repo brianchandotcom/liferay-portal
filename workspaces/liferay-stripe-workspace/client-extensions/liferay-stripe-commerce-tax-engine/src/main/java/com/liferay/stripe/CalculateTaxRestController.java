@@ -99,10 +99,10 @@ public class CalculateTaxRestController extends BaseRestController {
 		throws Exception {
 
 		CalculationCreateParams params = CalculationCreateParams.builder(
-		).setCurrency(
-			commerceTaxCalculateRequestJSONObject.getString("currencyCode")
 		).addLineItem(
 			_getLineItem(commerceTaxCalculateRequestJSONObject)
+		).setCurrency(
+			commerceTaxCalculateRequestJSONObject.getString("currencyCode")
 		).setCustomerDetails(
 			CalculationCreateParams.CustomerDetails.builder(
 			).setAddress(

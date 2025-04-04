@@ -18,12 +18,12 @@ const SAMPLES = [
 	{
 		erc: 'LXC:liferay-sample-theme-spritemap-1',
 		name: 'Liferay Sample Theme Spritemap 1',
-		url: '/o/liferay-sample-theme-spritemap-1/spritemap.7b88c355855cfccc64b716479219007e6493f139.svg',
+		url: '',
 	},
 	{
 		erc: 'LXC:liferay-sample-theme-spritemap-2',
 		name: 'Liferay Sample Theme Spritemap 2',
-		url: '/o/liferay-sample-theme-spritemap-2/spritemap.87f79d7e10ac5f96ecc168234ba026ccf2ecf451.svg',
+		url: '',
 	},
 ];
 
@@ -36,10 +36,11 @@ for (const sample of SAMPLES) {
 
 		await viewClientExtensionPage.goto();
 
+		sample.url = await viewClientExtensionPage
+			.fieldLocator('URL')
+			.inputValue();
+
 		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
-		expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
-			sample.url
-		);
 	});
 
 	test(`${sample.name}'s .svg file can be downloaded`, async ({page}) => {

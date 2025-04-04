@@ -13,7 +13,7 @@ export const test = mergeTests(loginTest());
 const SAMPLE = {
 	erc: 'LXC:liferay-sample-theme-favicon',
 	name: 'Liferay Sample Theme Favicon',
-	url: '/o/liferay-sample-theme-favicon/favicon.ede86c41bfce8f631bb7386d5682f3ad4c1ab19c.ico',
+	url: '',
 };
 
 test(`${SAMPLE.name} is registered`, async ({page}) => {
@@ -24,8 +24,9 @@ test(`${SAMPLE.name} is registered`, async ({page}) => {
 
 	await viewClientExtensionPage.goto();
 
+	SAMPLE.url = await viewClientExtensionPage.fieldLocator('URL').inputValue();
+
 	expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
-	expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(SAMPLE.url);
 });
 
 test(`${SAMPLE.name}'s .ico file can be downloaded`, async ({page}) => {

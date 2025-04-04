@@ -48,23 +48,25 @@ public class BatchEngineDeletionHelperImpl
 			portletDataContext.getNewPrimaryKeysMaps();
 
 		for (String key : newPrimaryKeysMaps.keySet()) {
-			if (key.endsWith(
+			if (!key.endsWith(
 					BatchEnginePortletDataHandler.
 						BATCH_DELETE_CLASS_NAME_POSTFIX)) {
 
-				int length =
-					BatchEnginePortletDataHandler.
-						BATCH_DELETE_CLASS_NAME_POSTFIX.length();
+				continue;
+			}
 
-				String className = key.substring(0, key.length() - length);
+			int length =
+				BatchEnginePortletDataHandler.BATCH_DELETE_CLASS_NAME_POSTFIX.
+					length();
 
-				BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-					_getBatchEnginePortletDataHandler(className);
+			String className = key.substring(0, key.length() - length);
 
-				if (batchEnginePortletDataHandler != null) {
-					batchEnginePortletDataHandler.exportDeletionSystemEvents(
-						portletDataContext);
-				}
+			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
+				_getBatchEnginePortletDataHandler(className);
+
+			if (batchEnginePortletDataHandler != null) {
+				batchEnginePortletDataHandler.exportDeletionSystemEvents(
+					portletDataContext);
 			}
 		}
 	}

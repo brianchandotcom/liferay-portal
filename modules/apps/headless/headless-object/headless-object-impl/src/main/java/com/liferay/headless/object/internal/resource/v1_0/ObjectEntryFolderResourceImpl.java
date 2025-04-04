@@ -349,9 +349,11 @@ public class ObjectEntryFolderResourceImpl
 								getExternalReferenceCode(),
 							groupId, contextUser.getCompanyId());
 
-			if ((objectEntryFolderPersistence == null) &&
-				!addObjectEntryFolder) {
+			if (objectEntryFolderPersistence != null) {
+				return objectEntryFolderPersistence.getObjectEntryFolderId();
+			}
 
+			if (!addObjectEntryFolder) {
 				throw new PortalException();
 			}
 

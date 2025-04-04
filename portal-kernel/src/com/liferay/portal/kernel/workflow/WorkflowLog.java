@@ -26,6 +26,8 @@ public interface WorkflowLog extends WorkflowModel {
 
 	public static final int TRANSITION = 0;
 
+	public static final int WORKFLOW_INSTANCE_FAIL = 7;
+
 	public long getAuditUserId();
 
 	public String getComment();

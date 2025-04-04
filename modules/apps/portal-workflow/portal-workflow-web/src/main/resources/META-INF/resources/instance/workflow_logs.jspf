@@ -37,6 +37,9 @@
 								<c:when test="<%= workflowLog.getType() == WorkflowLog.TRANSITION %>">
 									<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getTransitionMessageArguments(workflowLog) %>" key="x-changed-the-state-from-x-to-x" translateArguments="<%= false %>" />
 								</c:when>
+								<c:when test="<%= workflowLog.getType() == WorkflowLog.WORKFLOW_INSTANCE_FAIL %>">
+									<liferay-ui:message key="the-workflow-instance-failed" />
+								</c:when>
 								<c:when test="<%= workflowInstanceEditDisplayContext.isAuditUser(workflowLog) %>">
 									<liferay-ui:message arguments="<%= workflowInstanceEditDisplayContext.getUserFullName(workflowLog) %>" key="<%= workflowInstanceEditDisplayContext.getAssignedTheTaskMessageKey(workflowLog) %>" translateArguments="<%= false %>" />
 								</c:when>

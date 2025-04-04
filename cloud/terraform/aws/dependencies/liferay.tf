@@ -1,0 +1,216 @@
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
+
+module "s3_bucket" {
+    block_public_acls=true
+    block_public_policy=true
+    bucket="${var.deployment_name}-s3-bucket"
+    force_destroy=true
+    ignore_public_acls=true
+    restrict_public_buckets=true
+    server_side_encryption_configuration={
+        rule={
+            apply_server_side_encryption_by_default={
+                sse_algorithm="aws:kms"
+            }
+            bucket_key_enabled=true
+        }
+    }
+    source="terraform-aws-modules/s3-bucket/aws"
+    version="~> 4.1.1"
+}
+
+resource "aws_db_instance" "postgres" {
+    allocated_storage=20
+    backup_retention_period=7
+    db_name="lportal"
+    db_subnet_group_name=aws_db_subnet_group.rds.name
+    engine="postgres"
+    engine_version="14"
+    identifier="${var.deployment_name}-postgres-db"
+    instance_class="db.t3.medium"
+    multi_az=false
+    password=random_password.postgres_password.result
+    skip_final_snapshot=true
+    storage_type="gp2"
+    tags={
+        Name="${var.deployment_name}-postgres-db"
+    }
+    username=random_password.postgres_username.result
+    vpc_security_group_ids=[var.cluster_security_group_id]
+}
+
+resource "aws_db_subnet_group" "rds" {
+    description="My RDS subnet group"
+    name="${var.deployment_name}-rds-sub-grp"
+    subnet_ids=var.private_subnet_ids
+}
+
+resource "aws_iam_policy" "s3" {
+    name="${var.deployment_name}-s3-policy"
+    description="Policy for accessing the Liferay S3 bucket"
+    policy=jsonencode(
+        {
+            Statement=[
+                {
+                    Action=[
+                        "s3:PutObject",
+                        "s3:GetObject",
+                        "s3:DeleteObject",
+                        "s3:ListBucket"
+                    ]
+                    Effect="Allow"
+                    Resource=[
+                        module.s3_bucket.s3_bucket_arn,
+                        "${module.s3_bucket.s3_bucket_arn}/*"
+                    ]
+                    Sid="AllowObjectOperations"
+                }
+            ]
+            Version="2012-10-17"
+        }
+    )
+}
+
+resource "aws_iam_role" "liferay" {
+    assume_role_policy=jsonencode(
+        {
+            Version="2012-10-17"
+            Statement=[
+                {
+                    Action="sts:AssumeRoleWithWebIdentity"
+                    Condition={
+                        StringEquals={
+                            "${var.oidc_provider}:sub" : "system:serviceaccount:${var.deployment_namespace}:liferay"
+                        }
+                    }
+                    Effect="Allow"
+                    Principal={
+                        Federated=var.oidc_provider_arn
+                    }
+                }
+            ]
+        }
+    )
+    name="${var.deployment_name}-irsa"
+}
+
+resource "aws_iam_role_policy_attachment" "s3" {
+    policy_arn=aws_iam_policy.s3.arn
+    role=aws_iam_role.liferay.name
+}
+
+resource "aws_opensearch_domain" "os" {
+    access_policies=<<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "*"
+            },
+            "Action": "es:*",
+            "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.deployment_name}-os-d/*"
+        }
+    ]
+}
+POLICY
+    advanced_options={
+        "rest.action.multi.allow_explicit_index"="true"
+    }
+    advanced_security_options {
+        enabled=true
+        internal_user_database_enabled=true
+        master_user_options {
+            master_user_name=random_password.opensearch_username.result
+            master_user_password=random_password.opensearch_password.result
+        }
+    }
+    cluster_config {
+        instance_count=2
+        instance_type="t3.small.search"
+        zone_awareness_config {
+            availability_zone_count=2
+        }
+        zone_awareness_enabled=true
+    }
+    domain_endpoint_options {
+        enforce_https=true
+        tls_security_policy="Policy-Min-TLS-1-2-2019-07"
+    }
+    domain_name="${var.deployment_name}-os-d"
+    ebs_options {
+        ebs_enabled=true
+        volume_size=20
+        volume_type="gp2"
+    }
+    encrypt_at_rest {
+        enabled=true
+    }
+    engine_version="OpenSearch_2.17"
+    node_to_node_encryption {
+        enabled=true
+    }
+    tags={
+        Name="${var.deployment_name}-os-d"
+    }
+    vpc_options {
+        security_group_ids=[aws_security_group.os.id]
+        subnet_ids=slice(var.private_subnet_ids, 0, 2)
+    }
+}
+
+resource "aws_security_group" "os" {
+    description="Security group for OpenSearch domain"
+    name="${var.deployment_name}-os-sg"
+    tags={
+        Name="${var.deployment_name}-os-sg"
+    }
+    vpc_id=var.vpc_id
+}
+
+resource "aws_security_group" "rds" {
+    description="Security group for RDS PostgreSQL instance"
+    name="${var.deployment_name}-rds-sg"
+    tags={
+        Name="${var.deployment_name}-rds-sg"
+    }
+    vpc_id=var.vpc_id
+}
+
+resource "aws_vpc_security_group_ingress_rule" "os_ingress" {
+    cidr_ipv4=var.vpc_cidr
+    from_port=443
+    ip_protocol="tcp"
+    security_group_id=aws_security_group.os.id
+    to_port=443
+}
+
+resource "aws_vpc_security_group_ingress_rule" "rds_ingress" {
+    cidr_ipv4=var.vpc_cidr
+    from_port=5432
+    ip_protocol="tcp"
+    security_group_id=aws_security_group.rds.id
+    to_port=5432
+}
+
+resource "kubernetes_secret" "managed_service_details" {
+    data={
+        "DATABASE_ENDPOINT"=aws_db_instance.postgres.address
+        "DATABASE_PASSWORD"=random_password.postgres_password.result
+        "DATABASE_PORT"=aws_db_instance.postgres.port
+        "DATABASE_USERNAME"=random_password.postgres_username.result
+        "OPENSEARCH_ENDPOINT"=aws_opensearch_domain.os.endpoint
+        "OPENSEARCH_PASSWORD"=random_password.opensearch_password.result
+        "OPENSEARCH_USERNAME"=random_password.opensearch_username.result
+        "S3_BUCKET_ID"=module.s3_bucket.s3_bucket_id
+        "S3_BUCKET_REGION"=module.s3_bucket.s3_bucket_region
+    }
+    metadata {
+        name="managed-service-details"
+        namespace=var.deployment_namespace
+    }
+    type="Opaque"
+}

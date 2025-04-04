@@ -441,8 +441,7 @@ public class DBSchemaImporterProcess {
 		}
 
 		if (!Files.exists(Paths.get(_path, "tables.sql"))) {
-			throw new IllegalStateException(
-				"Missing " + _path + "/tables.sql");
+			throw new IllegalStateException("Missing " + _path + "/tables.sql");
 		}
 	}
 

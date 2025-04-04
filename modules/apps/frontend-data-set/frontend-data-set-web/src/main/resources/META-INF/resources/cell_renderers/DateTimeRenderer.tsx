@@ -23,13 +23,14 @@ function DateTimeRenderer({
 
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
-	const dateOptions = options?.format || {
-		day: 'numeric',
-		hour: 'numeric',
-		minute: 'numeric',
-		month: 'short',
-		second: 'numeric',
-		year: 'numeric',
+	const dateOptions = {
+		day: options?.format?.day || 'numeric',
+		hour: options?.format?.hour || 'numeric',
+		minute: options?.format?.minute || 'numeric',
+		month: options?.format?.month || 'short',
+		second: options?.format?.second || 'numeric',
+		timeZone: options?.format?.timeZone || 'UTC',
+		year: options?.format?.year || 'numeric',
 	};
 
 	if (

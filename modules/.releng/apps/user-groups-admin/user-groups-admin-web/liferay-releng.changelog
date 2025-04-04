@@ -337,3 +337,8 @@ e4a21fc05af80083f5fdad8c28248139e5be42ed^..9f6d2bc2271a4fe155cc7ad7e559a19cf25ae
 # Bundle Version 5.0.65
 #
 3cdf98c871b5b9becdd966716dff38872c195f6e^..aebc3cb60de05fbfa1737209af530c2efa356bde=LPD-47508
+
+#
+# Bundle Version 5.0.66
+#
+aebc3cb60de05fbfa1737209af530c2efa356bde^..6c29e8ce2ffd86c480de9973fc7f5e8c400933f8=LPD-47925 LPD-48847 LPD-50867 LPD-51373

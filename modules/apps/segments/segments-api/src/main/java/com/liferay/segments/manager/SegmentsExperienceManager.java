@@ -30,18 +30,18 @@ public class SegmentsExperienceManager {
 	}
 
 	public long getSegmentsExperienceId(HttpServletRequest httpServletRequest) {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((themeDisplay == null) || (permissionChecker == null)) {
+		if (themeDisplay == null) {
 			return _segmentsExperienceLocalService.
 				fetchDefaultSegmentsExperienceId(
 					ParamUtil.getLong(httpServletRequest, "plid"));
 		}
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			PortalUtil.getOriginalServletRequest(httpServletRequest),

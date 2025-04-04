@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {redirectPagesTest} from '../../fixtures/redirectPagesTest';
+import {liferayConfig} from '../../liferay.config';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -39,7 +40,7 @@ test('Ensure that the user will be redirected to the cached target URL of a perm
 
 	await redirectPage.addRedirect(
 		'test/source/url',
-		`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`,
 		true
 	);
 
@@ -52,7 +53,7 @@ test('Ensure that the user will be redirected to the cached target URL of a perm
 	await redirectPage.editRedirect(
 		'/test/source/url',
 		'test/source/url',
-		`http://localhost:8080/web/${site.name}${newDestinationPage.friendlyURL}`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${newDestinationPage.friendlyURL}`,
 		true
 	);
 
@@ -83,7 +84,7 @@ test('Ensure that the user will be redirected to the latest target URL of a temp
 
 	await redirectPage.addRedirect(
 		'test/source/url',
-		`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`,
 		false
 	);
 
@@ -96,7 +97,7 @@ test('Ensure that the user will be redirected to the latest target URL of a temp
 	await redirectPage.editRedirect(
 		'/test/source/url',
 		'test/source/url',
-		`http://localhost:8080/web/${site.name}${newDestinationPage.friendlyURL}`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${newDestinationPage.friendlyURL}`,
 		false
 	);
 
@@ -130,7 +131,7 @@ test('Ensure that a redirect can be added without updating references for redire
 
 	await redirectPage.addRedirect(
 		'test-page-1',
-		`http://localhost:8080/web/${site.name}/test-page-2`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}/test-page-2`,
 		false
 	);
 
@@ -138,7 +139,7 @@ test('Ensure that a redirect can be added without updating references for redire
 
 	await redirectPage.fillRedirectDetails(
 		'test-page-2',
-		`http://localhost:8080/web/${site.name}/test-page-3`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}/test-page-3`,
 		false
 	);
 
@@ -184,7 +185,7 @@ test('Ensure that a redirect can be added with updating references for redirect 
 
 	await redirectPage.addRedirect(
 		'test-page-1',
-		`http://localhost:8080/web/${site.name}/test-page-2`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}/test-page-2`,
 		false
 	);
 
@@ -192,7 +193,7 @@ test('Ensure that a redirect can be added with updating references for redirect 
 
 	await redirectPage.fillRedirectDetails(
 		'test-page-2',
-		`http://localhost:8080/web/${site.name}/test-page-3`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}/test-page-3`,
 		false
 	);
 
@@ -261,7 +262,7 @@ test('Ensure Check URL button opens to correct destination URL', async ({
 
 	await redirectPage.fillRedirectDetails(
 		'test/source/url',
-		`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`,
 		false
 	);
 
@@ -338,7 +339,7 @@ test('Ensure an expired redirect entry can be reset', async ({
 
 	await redirectPage.addRedirect(
 		'test/source/url',
-		`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`,
 		false,
 		'01/01/2000'
 	);
@@ -352,7 +353,7 @@ test('Ensure an expired redirect entry can be reset', async ({
 	await redirectPage.editRedirect(
 		'/test/source/url',
 		'test/source/url',
-		`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`,
 		false,
 		'12/31/2099'
 	);
@@ -371,13 +372,13 @@ test('Ensure redirect entries can be found by search', async ({
 
 	await redirectPage.addRedirect(
 		'test/source',
-		`http://localhost:8080/web/${site.name}/test/destination`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}/test/destination`,
 		false
 	);
 
 	await redirectPage.addRedirect(
 		'test/origin',
-		`http://localhost:8080/web/${site.name}/test/landing`,
+		`${liferayConfig.environment.baseUrl}/web/${site.name}/test/landing`,
 		true,
 		'12/31/2099'
 	);

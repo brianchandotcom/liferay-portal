@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {redirectPagesTest} from '../../fixtures/redirectPagesTest';
+import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -58,7 +59,7 @@ test('Ensure that a redirect can be added from an active 404 URL', async ({
 	await page
 		.getByLabel('Destination URL')
 		.fill(
-			`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`
+			`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`
 		);
 
 	await page.getByRole('button', {name: 'Create'}).click();
@@ -118,7 +119,7 @@ test('Ensure that a redirect can be added from an ignored 404 URL', async ({
 	await page
 		.getByLabel('Destination URL')
 		.fill(
-			`http://localhost:8080/web/${site.name}${destinationPage.friendlyURL}`
+			`${liferayConfig.environment.baseUrl}/web/${site.name}${destinationPage.friendlyURL}`
 		);
 
 	await page.getByRole('button', {name: 'Create'}).click();

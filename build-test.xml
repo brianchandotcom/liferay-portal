@@ -3516,7 +3516,6 @@ tell application "Safari" to quit
 				</elseif>
 			</if>
 
-
 			<if>
 				<isset property="env.OSB_ASAH_BATCH_CURATOR_URL" />
 				<then>

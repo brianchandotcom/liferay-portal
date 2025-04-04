@@ -5,14 +5,18 @@
 
 const asahConfig = {
 	environment: {
-		apiToken: process.env.OSB_ASAH_API_TOKEN ? process.env.OSB_ASAH_API_TOKEN : '',
+		apiToken: process.env.OSB_ASAH_API_TOKEN
+			? process.env.OSB_ASAH_API_TOKEN
+			: '',
 		backendUrl: process.env.OSB_ASAH_BACKEND_URL
 			? process.env.OSB_ASAH_BACKEND_URL
 			: 'http://osbasahbackend:8080',
 		batchCuratordUrl: process.env.OSB_ASAH_BATCH_CURATOR_URL
 			? process.env.OSB_ASAH_BATCH_CURATOR_URL
 			: 'http://osbasahbatchcurator:8080',
-		projectId: process.env.OSB_ASAH_PROJECT_ID ? process.env.OSB_ASAH_PROJECT_ID : 'osbasah',
+		projectId: process.env.OSB_ASAH_PROJECT_ID
+			? process.env.OSB_ASAH_PROJECT_ID
+			: 'osbasah',
 	},
 };
 

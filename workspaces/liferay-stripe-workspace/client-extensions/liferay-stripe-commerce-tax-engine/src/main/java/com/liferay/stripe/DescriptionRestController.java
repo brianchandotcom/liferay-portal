@@ -37,7 +37,7 @@ public class DescriptionRestController extends BaseRestController {
 		return new ResponseEntity<>(
 			new JSONObject(
 			).put(
-				"description", "Liferay Stripe Commerce Tax Engine"
+				"description", "Calculate tax using Stripe."
 			).toString(),
 			HttpStatus.OK);
 	}

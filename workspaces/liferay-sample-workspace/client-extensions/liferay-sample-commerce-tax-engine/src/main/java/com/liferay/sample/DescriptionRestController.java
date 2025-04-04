@@ -37,7 +37,7 @@ public class DescriptionRestController extends BaseRestController {
 		return new ResponseEntity<>(
 			new JSONObject(
 			).put(
-				"description", "Tax Engine Description"
+				"description", "Calculate tax via Sample Tax Engine."
 			).toString(),
 			HttpStatus.OK);
 	}

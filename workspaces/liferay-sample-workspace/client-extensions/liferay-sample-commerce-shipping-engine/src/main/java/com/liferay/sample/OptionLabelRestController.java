@@ -44,7 +44,7 @@ public class OptionLabelRestController extends BaseRestController {
 		return new ResponseEntity<>(
 			new JSONObject(
 			).put(
-				"name", "Shipping Option Name"
+				"name", "Sample Shipping Option"
 			).toString(),
 			HttpStatus.OK);
 	}

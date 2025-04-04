@@ -37,7 +37,7 @@ public class DescriptionRestController extends BaseRestController {
 		return new ResponseEntity<>(
 			new JSONObject(
 			).put(
-				"description", "Shipping Engine Description"
+				"description", "Ship via Sample Shipping Engine."
 			).toString(),
 			HttpStatus.OK);
 	}

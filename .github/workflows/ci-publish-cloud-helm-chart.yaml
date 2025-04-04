@@ -3,7 +3,7 @@ defaults:
         shell: bash
 env:
     CHART_VERSION: "0.0.0"
-    GAR_REPO: "us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart"
+    GAR_REPOSITORY: "us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart"
 jobs:
     publish-cloud-helm-chart:
         runs-on: ubuntu-latest
@@ -12,12 +12,22 @@ jobs:
                 uses: actions/checkout@v4
             -   name: Calculate Helm chart version
                 run: |
+
+                    #
+                    # heml-chart-1.0.5
+                    #
+
                     LATEST_HELM_CHART_TAG=$(git describe --tags --match="helm-chart-*" HEAD)
 
-                    PUBLISH_VERSION=${LATEST_HELM_CHART_TAG#"helm-chart-"}
+                    #
+                    # 1.0.5
+                    #
 
-                    echo "CHART_VERSION=${PUBLISH_VERSION}"
-                    echo "CHART_VERSION=${PUBLISH_VERSION}" >> ${GITHUB_ENV}
+                    CHART_VERSION=${LATEST_HELM_CHART_TAG#"helm-chart-"}
+
+                    echo "Calculated Helm chart version ${CHART_VERSION}."
+
+                    echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
             -   name: Package Helm chart
                 run: |
                     TEMP_DIST_DIR="${{ runner.temp }}/dist"
@@ -26,17 +36,15 @@ jobs:
 
                     helm package --destination ${TEMP_DIST_DIR} --version ${CHART_VERSION} .
                 working-directory: ./cloud/helm
-            -   name: Log in to registry
-                run: echo "${{ secrets.GAR_KEY }}" | helm registry login ${GAR_REPO} --password-stdin --username _json_key_base64
-            -   name: Push Helm chart to registry
+            -   name: Log in to GAR
+                run: echo "${{ secrets.GAR_PASSWORD }}" | helm registry login ${GAR_REPOSITORY} --password-stdin --username _json_key_base64
+            -   name: Push Helm chart to GAR
                 run: |
-                    OCI_URL=$(echo "oci://${GAR_REPO}" | tr '[:upper:]' '[:lower:]')
-
                     for file_name in *.tgz
                     do
-                            echo "${file_name}"
+                        echo "Pushing ${file_name}."
 
-                            helm push "${file_name}" "${OCI_URL}"
+                        helm push "${file_name}" "oci://${GAR_REPOSITORY}"
                     done
                 working-directory: ${{ runner.temp }}/dist
 on:

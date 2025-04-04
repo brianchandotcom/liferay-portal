@@ -178,13 +178,14 @@ test('LPD-38392 Assert View Entity Modification History sorting', async ({
 	journalPage,
 	page,
 }) => {
+	await changeTrackingPage.workOnProduction();
+
 	await apiHelpers.headlessChangeTracking.publishCTCollection(
 		ctCollections[0].body.id
 	);
 
 	date = moment().format('ll');
 
-	await changeTrackingPage.workOnProduction();
 	await goToPublicationTimelineModal(page, journalPage);
 	const entityHistoryModalLocator = getEntityHistoryTableLocator(page);
 

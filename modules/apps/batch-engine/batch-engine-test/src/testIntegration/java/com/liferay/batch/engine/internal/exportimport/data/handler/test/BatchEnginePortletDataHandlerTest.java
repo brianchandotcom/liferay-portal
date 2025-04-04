@@ -246,7 +246,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				file, _objectDefinition1.getName()
+				_objectDefinition1.getName(), file
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -254,7 +254,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 			).toString(),
 			_getClassExternalReferenceCodesJSONArray(
-				_companyGroupId, file
+				file, _companyGroupId
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -265,7 +265,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				file, _objectDefinition2.getName()
+				_objectDefinition2.getName(), file
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -273,7 +273,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 			).toString(),
 			_getClassExternalReferenceCodesJSONArray(
-				_companyGroupId, file
+				file, _companyGroupId
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -287,7 +287,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				file, _objectDefinition1.getName()
+				_objectDefinition1.getName(), file
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -296,7 +296,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				file, _objectDefinition2.getName()
+				_objectDefinition2.getName(), file
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -304,7 +304,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 			).toString(),
 			_getClassExternalReferenceCodesJSONArray(
-				_companyGroupId, file
+				file, _companyGroupId
 			).toString(),
 			JSONCompareMode.STRICT);
 	}
@@ -407,10 +407,10 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private JSONArray _getClassExternalReferenceCodesJSONArray(
-			long groupId, File larFile)
+			File file, long groupId)
 		throws Exception {
 
-		try (ZipFile zipFile = new ZipFile(larFile)) {
+		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"group/" + groupId + "/deletion-system-events.xml");
 
@@ -472,10 +472,10 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private JSONArray _getExternalReferenceCodesJSONArray(
-			File larFile, String className)
+			String className, File file)
 		throws Exception {
 
-		try (ZipFile zipFile = new ZipFile(larFile)) {
+		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry(className + "_deletions.json");
 
 			if (zipEntry == null) {

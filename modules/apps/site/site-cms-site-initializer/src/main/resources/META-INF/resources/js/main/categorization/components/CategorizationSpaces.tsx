@@ -16,7 +16,11 @@ type Space = {
 	value: any;
 };
 
-export default function CategorizationSpaces() {
+export default function CategorizationSpaces({
+	checkboxText,
+}: {
+	checkboxText: string;
+}) {
 	const [allSpaces, setAllSpaces] = useState<Space[]>([]);
 	const [availableSpaces, setAvailableSpaces] = useState<Space[]>([]);
 	const [checkbox, setCheckbox] = useState(true);
@@ -65,7 +69,7 @@ export default function CategorizationSpaces() {
 	}, [checkbox, allSpaces]);
 
 	return (
-		<>
+		<div>
 			<label htmlFor="multiSelect">
 				{Liferay.Language.get('space')}
 
@@ -120,12 +124,18 @@ export default function CategorizationSpaces() {
 			<div className="mt-2">
 				<ClayCheckbox
 					checked={checkbox}
-					label={Liferay.Language.get(
-						'make-this-tag-available-in-all-spaces'
-					)}
+					label={
+						checkboxText === 'tag'
+							? Liferay.Language.get(
+									'make-this-tag-available-in-all-spaces'
+								)
+							: Liferay.Language.get(
+									'make-this-vocabulary-available-in-all-spaces'
+								)
+					}
 					onChange={() => setCheckbox(!checkbox)}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }

@@ -103,7 +103,7 @@ export default function CreationTagModalContent({
 					value={values.tagName}
 				/>
 
-				<CategorizationSpaces />
+				<CategorizationSpaces checkboxText="tag" />
 			</ClayModal.Body>
 
 			<ClayModal.Footer

@@ -6,7 +6,6 @@
 import ClayAlert from '@clayui/alert';
 import {LanguagePicker, Provider} from '@clayui/core';
 import ClayForm, {
-	ClayCheckbox,
 	ClayInput,
 	ClaySelectWithOption,
 	ClayToggle,
@@ -16,6 +15,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import CategorizationSpaces from '../components/CategorizationSpaces';
 import {IVocabulary} from '../types/IVocabulary';
 
 const VISIBILITY_OPTIONS = [
@@ -46,7 +46,6 @@ export default function EditGeneralInfo({
 	spritemap: string;
 	vocabulary: IVocabulary;
 }) {
-	const [isChecked, setIsChecked] = useState<boolean>(true);
 	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
 	const [toggled, setToggle] = useState<boolean>(true);
 
@@ -203,28 +202,7 @@ export default function EditGeneralInfo({
 					{Liferay.Language.get('space')}
 				</div>
 
-				<div>
-					<label>
-						{Liferay.Language.get('space')}
-
-						<ClayIcon
-							className="c-ml-1 reference-mark"
-							focusable="false"
-							role="presentation"
-							symbol="asterisk"
-						/>
-					</label>
-
-					<ClaySelectWithOption options={[]} />
-				</div>
-
-				<ClayCheckbox
-					checked={isChecked}
-					label={Liferay.Language.get(
-						'make-this-vocabulary-available-in-all-spaces'
-					)}
-					onChange={() => setIsChecked(!isChecked)}
-				/>
+				<CategorizationSpaces checkboxText="vocabulary" />
 			</ClayForm.Group>
 		</div>
 	);

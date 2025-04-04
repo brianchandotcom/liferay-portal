@@ -940,6 +940,9 @@ public class DefaultObjectEntryManagerImpl
 
 		serviceBuilderObjectEntry.setObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
+		serviceBuilderObjectEntry.setDefaultLanguageId(
+			_language.getLanguageId(
+				_portal.getSiteDefaultLocale(GetterUtil.getLong(scopeKey))));
 		serviceBuilderObjectEntry.setValues(
 			_toObjectValues(
 				dtoConverterContext.getLocale(), objectDefinition, objectEntry,

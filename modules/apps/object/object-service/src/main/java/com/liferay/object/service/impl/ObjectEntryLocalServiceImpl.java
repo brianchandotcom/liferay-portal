@@ -332,8 +332,11 @@ public class ObjectEntryLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateValues(
-			dlFileEntriesMap, null, user.isGuestUser(), groupId,
-			objectDefinition, serviceContext, userId, null, values);
+			defaultLanguageId, dlFileEntriesMap, null, groupId,
+			user.isGuestUser(), objectDefinition,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			serviceContext, userId, null, values);
 
 		_addDLFileEntries(
 			dlFileEntriesMap, objectDefinition, objectEntryId, serviceContext,
@@ -342,15 +345,14 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Serializable> insertedValues = new HashMap<>();
 
 		_insertIntoLocalizationTable(
-			defaultLanguageId, insertedValues, objectDefinition, objectEntryId,
-			values, workflowAction);
+			insertedValues, objectDefinition, objectEntryId, values);
 
 		boolean dynamicObjectDefinitionStaticValues = _insertIntoTable(
 			_getDynamicObjectDefinitionTable(objectDefinitionId),
-			insertedValues, objectEntryId, values, workflowAction);
+			insertedValues, objectEntryId, values);
 		boolean extensionDynamicObjectDefinitionStaticValues = _insertIntoTable(
 			_getExtensionDynamicObjectDefinitionTable(objectDefinitionId),
-			insertedValues, objectEntryId, values, workflowAction);
+			insertedValues, objectEntryId, values);
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(objectEntryId);
 
@@ -483,8 +485,16 @@ public class ObjectEntryLocalServiceImpl
 		Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap = new HashMap<>();
 		User user = _userLocalService.getUser(userId);
 
+		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
+			_getExtensionDynamicObjectDefinitionTable(
+				objectDefinition.getObjectDefinitionId());
+
+		String defaultLanguageId = _language.getLanguageId(
+			_portal.getSiteDefaultLocale(0));
+
 		_validateValues(
-			dlFileEntriesMap, null, user.isGuestUser(), 0, objectDefinition,
+			defaultLanguageId, dlFileEntriesMap, null, 0, user.isGuestUser(),
+			objectDefinition, dynamicObjectDefinitionTable.getObjectFields(),
 			serviceContext, userId, null, values);
 
 		_addDLFileEntries(
@@ -1557,14 +1567,12 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		if (count > 0) {
-			_updateTable(
-				dynamicObjectDefinitionTable, primaryKey, values,
-				WorkflowConstants.ACTION_PUBLISH);
+			_updateTable(dynamicObjectDefinitionTable, primaryKey, values);
 		}
 		else {
 			_insertIntoTable(
 				dynamicObjectDefinitionTable, new HashMap<>(), primaryKey,
-				values, WorkflowConstants.ACTION_PUBLISH);
+				values);
 		}
 	}
 
@@ -1663,9 +1671,11 @@ public class ObjectEntryLocalServiceImpl
 		Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap = new HashMap<>();
 
 		_validateValues(
-			dlFileEntriesMap, objectEntry, user.isGuestUser(),
-			objectEntry.getGroupId(), objectDefinition, serviceContext, userId,
-			null, values);
+			objectEntry.getDefaultLanguageId(), dlFileEntriesMap, objectEntry,
+			objectEntry.getGroupId(), user.isGuestUser(), objectDefinition,
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			serviceContext, userId, null, values);
 
 		_addDLFileEntries(
 			dlFileEntriesMap, objectDefinition, objectEntryId, serviceContext,
@@ -1681,16 +1691,15 @@ public class ObjectEntryLocalServiceImpl
 
 		_deleteFromLocalizationTable(objectDefinition, objectEntryId);
 		_insertIntoLocalizationTable(
-			objectEntry.getDefaultLanguageId(), new HashMap<>(),
-			objectDefinition, objectEntryId, values, workflowAction);
+			new HashMap<>(), objectDefinition, objectEntryId, values);
 		_updateTable(
 			_getDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId()),
-			objectEntryId, values, workflowAction);
+			objectEntryId, values);
 		_updateTable(
 			_getExtensionDynamicObjectDefinitionTable(
 				objectEntry.getObjectDefinitionId()),
-			objectEntryId, values, workflowAction);
+			objectEntryId, values);
 
 		objectEntryPersistence.clearCache(SetUtil.fromArray(objectEntryId));
 
@@ -1981,8 +1990,11 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		_validateValues(
-			Collections.emptyMap(), objectEntry, false, groupId,
+			objectEntry.getDefaultLanguageId(), Collections.emptyMap(),
+			objectEntry, groupId, false,
 			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId()),
+			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId()),
 			serviceContext, serviceContext.getUserId(), validationErrors,
 			objectEntry.getValues());
@@ -4158,9 +4170,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _insertIntoLocalizationTable(
-			String defaultLanguageId, Map<String, Serializable> insertedValues,
+			Map<String, Serializable> insertedValues,
 			ObjectDefinition objectDefinition, long objectEntryId,
-			Map<String, Serializable> values, int workflowAction)
+			Map<String, Serializable> values)
 		throws PortalException {
 
 		DynamicObjectDefinitionLocalizationTable
@@ -4197,20 +4209,6 @@ public class ObjectEntryLocalServiceImpl
 		sb.append(", languageId");
 
 		for (ObjectField objectField : objectFields) {
-			Map<String, Serializable> localizedValues =
-				(Map<String, Serializable>)values.get(
-					objectField.getI18nObjectFieldName());
-
-			if ((MapUtil.isEmpty(localizedValues) ||
-				 Validator.isNull(
-					 MapUtil.getString(localizedValues, defaultLanguageId))) &&
-				objectField.isRequired() &&
-				(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				throw new ObjectEntryValuesException.RequiredLanguageId(
-					defaultLanguageId, objectField.getName());
-			}
-
 			columnNames.add(objectField.getDBColumnName());
 
 			count++;
@@ -4305,7 +4303,7 @@ public class ObjectEntryLocalServiceImpl
 	private boolean _insertIntoTable(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			Map<String, Serializable> insertedValues, long objectEntryId,
-			Map<String, Serializable> values, int workflowAction)
+			Map<String, Serializable> values)
 		throws PortalException {
 
 		List<String> columnNames = new ArrayList<>();
@@ -4362,13 +4360,6 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			if (!values.containsKey(objectField.getName())) {
-				if (objectField.isRequired() &&
-					(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-					throw new ObjectEntryValuesException.Required(
-						objectField.getName());
-				}
-
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"No value was provided for object field \"" +
@@ -5214,13 +5205,11 @@ public class ObjectEntryLocalServiceImpl
 
 	private void _updateTable(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-			long objectEntryId, Map<String, Serializable> values,
-			int workflowAction)
+			long objectEntryId, Map<String, Serializable> values)
 		throws PortalException {
 
 		List<String> columnNames = new ArrayList<>();
 		int count = 0;
-		ObjectEntry objectEntry = fetchObjectEntry(objectEntryId);
 
 		StringBundler sb = new StringBundler();
 
@@ -5237,17 +5226,6 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			if (!values.containsKey(objectField.getName())) {
-				if (objectField.isRequired() &&
-					(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) &&
-					(objectEntry != null) &&
-					Validator.isNull(
-						MapUtil.getString(
-							objectEntry.getValues(), objectField.getName()))) {
-
-					throw new ObjectEntryValuesException.Required(
-						objectField.getName());
-				}
-
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"No value was provided for object field \"" +
@@ -5493,10 +5471,7 @@ public class ObjectEntryLocalServiceImpl
 			_listTypeEntryLocalService.fetchListTypeEntry(
 				objectField.getListTypeDefinitionId(), listTypeEntryKey);
 
-		if ((listTypeEntry == null) &&
-			(Validator.isNotNull(listTypeEntryKey) ||
-			 objectField.isRequired())) {
-
+		if ((listTypeEntry == null) && Validator.isNotNull(listTypeEntryKey)) {
 			_handle(
 				new ObjectEntryValuesException.ListTypeEntry(
 					objectField.getName()),
@@ -5670,6 +5645,110 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateRequiredValues(
+			String defaultLanguageId, ObjectEntry existingObjectEntry,
+			ObjectField objectField, ServiceContext serviceContext,
+			List<ValidationError> validationErrors,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		try {
+			_validateRequiredValues(
+				defaultLanguageId, existingObjectEntry, objectField,
+				serviceContext, values);
+		}
+		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
+			if (!objectField.isLocalized()) {
+				_handle(objectEntryValuesException, validationErrors);
+			}
+
+			_handle(
+				new ObjectEntryValuesException.RequiredLanguageId(
+					defaultLanguageId, objectField.getName()),
+				validationErrors);
+		}
+	}
+
+	private void _validateRequiredValues(
+			String defaultLanguageId, ObjectEntry existingObjectEntry,
+			ObjectField objectField, ServiceContext serviceContext,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		if (!objectField.isRequired() ||
+			(serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+			return;
+		}
+
+		String name = objectField.getName();
+
+		if (objectField.isLocalized()) {
+			name = objectField.getI18nObjectFieldName();
+		}
+
+		if (!values.containsKey(name)) {
+			if ((existingObjectEntry == null) ||
+				(existingObjectEntry.isDraft() &&
+				 Validator.isNull(
+					 MapUtil.getString(
+						 existingObjectEntry.getValues(), name)))) {
+
+				throw new ObjectEntryValuesException.Required(
+					objectField.getName());
+			}
+
+			return;
+		}
+
+		Serializable value = values.get(name);
+
+		if (objectField.isLocalized()) {
+			Map<String, Serializable> localizedValues =
+				(Map<String, Serializable>)value;
+
+			if (!localizedValues.containsKey(defaultLanguageId)) {
+				throw new ObjectEntryValuesException.Required(
+					objectField.getName());
+			}
+
+			value = localizedValues.get(defaultLanguageId);
+		}
+
+		if (Validator.isNull(value)) {
+			throw new ObjectEntryValuesException.Required(
+				objectField.getName());
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
+
+			if (!GetterUtil.getBoolean(value)) {
+				throw new ObjectEntryValuesException.Required(
+					objectField.getName());
+			}
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			List<String> listTypeEntryKeys = null;
+
+			if (value instanceof List) {
+				listTypeEntryKeys = (List<String>)value;
+			}
+			else {
+				listTypeEntryKeys = ListUtil.fromString(
+					GetterUtil.getString(String.valueOf(value)),
+					StringPool.COMMA_AND_SPACE);
+			}
+
+			if (listTypeEntryKeys.isEmpty()) {
+				throw new ObjectEntryValuesException.Required(
+					objectField.getName());
+			}
+		}
+	}
+
 	private void _validateTextMaxLength(
 			int defaultMaxLength, String objectEntryValue, long objectFieldId,
 			String objectFieldName, List<ValidationError> validationErrors)
@@ -5786,23 +5865,13 @@ public class ObjectEntryLocalServiceImpl
 			Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap,
 			ObjectEntry existingObjectEntry, boolean guestUser, long groupId,
 			ObjectDefinition objectDefinition, ObjectField objectField,
-			ServiceContext serviceContext, long userId,
-			List<ValidationError> validationErrors, Serializable value,
-			String valueLanguageId)
+			long userId, List<ValidationError> validationErrors,
+			Serializable value, String valueLanguageId)
 		throws PortalException {
 
-		if (Validator.isNull(value) && !objectField.isLocalized() &&
-			objectField.isRequired() &&
-			(serviceContext.getWorkflowAction() !=
-				WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-			_handle(
-				new ObjectEntryValuesException.Required(objectField.getName()),
-				validationErrors);
-		}
-		else if (StringUtil.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+		if (StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
 				GetterUtil.getLong(value));
@@ -5839,25 +5908,6 @@ public class ObjectEntryLocalServiceImpl
 			if (Validator.isNotNull(value)) {
 				_handle(
 					new ObjectEntryValuesException.InvalidValue(
-						objectField.getName()),
-					validationErrors);
-			}
-			else if (objectField.isRequired() &&
-					 (serviceContext.getWorkflowAction() !=
-						 WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				_handle(
-					new ObjectEntryValuesException.Required(
-						objectField.getName()),
-					validationErrors);
-			}
-		}
-		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
-
-			if (!GetterUtil.getBoolean(value) && objectField.isRequired()) {
-				_handle(
-					new ObjectEntryValuesException.Required(
 						objectField.getName()),
 					validationErrors);
 			}
@@ -5994,16 +6044,6 @@ public class ObjectEntryLocalServiceImpl
 						StringPool.COMMA_AND_SPACE);
 				}
 
-				if (listTypeEntryKeys.isEmpty() && objectField.isRequired() &&
-					(serviceContext.getWorkflowAction() !=
-						WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-					_handle(
-						new ObjectEntryValuesException.Required(
-							objectField.getName()),
-						validationErrors);
-				}
-
 				for (String listTypeEntryKey : listTypeEntryKeys) {
 					_validateListTypeEntryKey(
 						listTypeEntryKey, objectField, validationErrors);
@@ -6030,41 +6070,44 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateValues(
+			String defaultLanguageId,
 			Map<ObjectField, Set<DLFileEntry>> dlFileEntriesMap,
-			ObjectEntry existingObjectEntry, boolean guestUser, long groupId,
-			ObjectDefinition objectDefinition, ServiceContext serviceContext,
-			long userId, List<ValidationError> validationErrors,
+			ObjectEntry existingObjectEntry, long groupId, boolean guestUser,
+			ObjectDefinition objectDefinition, List<ObjectField> objectFields,
+			ServiceContext serviceContext, long userId,
+			List<ValidationError> validationErrors,
 			Map<String, Serializable> values)
 		throws PortalException {
 
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
 		for (ObjectField objectField : objectFields) {
+			_validateRequiredValues(
+				defaultLanguageId, existingObjectEntry, objectField,
+				serviceContext, validationErrors, values);
+
 			if (!objectField.isLocalized() &&
 				values.containsKey(objectField.getName())) {
 
 				_validateValues(
 					dlFileEntriesMap, existingObjectEntry, guestUser, groupId,
-					objectDefinition, objectField, serviceContext, userId,
-					validationErrors, values.get(objectField.getName()),
-					StringPool.BLANK);
+					objectDefinition, objectField, userId, validationErrors,
+					values.get(objectField.getName()), StringPool.BLANK);
 			}
 
-			Map<String, String> localizedValues =
-				(Map<String, String>)values.get(
+			Map<String, Serializable> localizedValues =
+				(Map<String, Serializable>)values.get(
 					objectField.getI18nObjectFieldName());
 
 			if (MapUtil.isEmpty(localizedValues)) {
 				continue;
 			}
 
-			for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
+			for (Map.Entry<String, Serializable> entry :
+					localizedValues.entrySet()) {
+
 				_validateValues(
 					dlFileEntriesMap, existingObjectEntry, guestUser, groupId,
-					objectDefinition, objectField, serviceContext, userId,
-					validationErrors, entry.getValue(), entry.getKey());
+					objectDefinition, objectField, userId, validationErrors,
+					entry.getValue(), entry.getKey());
 			}
 		}
 	}

@@ -9,9 +9,7 @@
 	$marginRight
 ) {
 	display: #{$displayType};
-	gap:
-		#{$gapRowValue},
-		#{$gapColumnValue};
+	gap: #{$gapRowValue} #{$gapColumnValue};
 
 	&-download {
 		display: none;
@@ -19,6 +17,7 @@
 
 	&-button {
 		background-color: unset;
+		min-width: fit-content;
 	}
 
 	&-loading {
@@ -45,7 +44,7 @@
 }
 
 .lfr-objects__attachment {
-	@include attachment(flex, 1rem, 0, 0, 0, 1rem, 0, 0);
+	@include attachment(flex, 1rem, 1rem, 0, 0, 1rem, 0, 0);
 }
 
 .col-ddm .col-md-4 {

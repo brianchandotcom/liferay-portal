@@ -10,7 +10,7 @@ import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import performLogin, {performLogout} from '../../utils/performLogin';
+import {performLoginViaApi, performLogout} from '../../utils/performLogin';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -40,11 +40,11 @@ test('LPD-52234: Check if you can change languages in the update password page',
 		await page.goto(liferayConfig.environment.baseUrl);
 		await page.getByRole('button', {name: 'Sign In'}).click();
 		await page.getByText('Forgot Password').click();
-		await page.waitForTimeout(1000);
+		await page.getByRole('button', {name: 'Send New Password'}).waitFor();
 		await page.getByLabel('Email Address').fill(userAccount.emailAddress);
 		await page.getByRole('button', {name: 'Send New Password'}).click();
 
-		await performLogin(page, 'test');
+		await performLoginViaApi(page, 'test');
 
 		const ticket =
 			await apiHelpers.headlessAdminUser.getUserAccountPasswordResetTicket(
@@ -63,7 +63,9 @@ test('LPD-52234: Check if you can change languages in the update password page',
 			trigger: page.getByTitle('Select a Language', {exact: true}),
 		});
 
-		expect(
+		await page.getByRole('heading', { name: 'Alterar senha' }).waitFor();
+
+		await expect(
 			page.getByText(
 				'Este formato de link não é mais reconhecido. Solicite um novo link.'
 			)
@@ -72,7 +74,7 @@ test('LPD-52234: Check if you can change languages in the update password page',
 	finally {
 		await page.goto('/en');
 
-		await performLogin(page, 'test');
+		await performLoginViaApi(page, 'test');
 
 		await apiHelpers.headlessAdminUser.deleteUserAccount(
 			Number(userAccount.id)

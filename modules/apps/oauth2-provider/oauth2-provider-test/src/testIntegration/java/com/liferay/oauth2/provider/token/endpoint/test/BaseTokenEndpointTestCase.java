@@ -60,12 +60,12 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 			clientAuthentications.put(
 				TEST_CLIENT_ID_1,
 				new ClientPasswordClientAuthentication(
-					TEST_CLIENT_ID_1, TEST_CLIENT_SECRET));
+					TEST_CLIENT_ID_1, _TEST_CLIENT_SECRET));
 			clientAuthentications.put(
 				TEST_CLIENT_ID_2,
 				new JWTAssertionClientAuthentication(
 					getTokenWebTarget(), TEST_CLIENT_ID_2, false,
-					TEST_CLIENT_ID_2, TEST_CLIENT_SECRET, true));
+					TEST_CLIENT_ID_2, _TEST_CLIENT_SECRET, true));
 			clientAuthentications.put(
 				TEST_CLIENT_ID_3,
 				new JWTAssertionClientAuthentication(
@@ -77,19 +77,19 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 					getTokenWebTarget(), TEST_CLIENT_ID_4, true,
 					TEST_CLIENT_ID_4,
 					Base64.encode(
-						TEST_CLIENT_SECRET_NOT_BASE64.getBytes(
+						_TEST_CLIENT_SECRET_NOT_BASE64.getBytes(
 							StandardCharsets.UTF_8)),
 					true));
 
 			createOAuth2ApplicationWithClientSecretPost(
-				user.getCompanyId(), user, TEST_CLIENT_ID_1, TEST_CLIENT_SECRET,
+				user.getCompanyId(), user, TEST_CLIENT_ID_1, _TEST_CLIENT_SECRET,
 				Arrays.asList(
 					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN,
 					GrantType.JWT_BEARER),
 				Arrays.asList(
 					"everything", "everything.read", "everything.write"));
 			createOAuth2ApplicationWithClientSecretJWT(
-				user.getCompanyId(), user, TEST_CLIENT_ID_2, TEST_CLIENT_SECRET,
+				user.getCompanyId(), user, TEST_CLIENT_ID_2, _TEST_CLIENT_SECRET,
 				Arrays.asList(
 					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN,
 					GrantType.JWT_BEARER),
@@ -105,7 +105,7 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 					"everything", "everything.read", "everything.write"));
 			createOAuth2ApplicationWithClientSecretJWT(
 				user.getCompanyId(), user, TEST_CLIENT_ID_4,
-				TEST_CLIENT_SECRET_NOT_BASE64,
+				_TEST_CLIENT_SECRET_NOT_BASE64,
 				Arrays.asList(
 					GrantType.CLIENT_CREDENTIALS, GrantType.JWT_BEARER),
 				Arrays.asList(
@@ -161,10 +161,10 @@ public abstract class BaseTokenEndpointTestCase extends BaseClientTestCase {
 
 	protected static final String TEST_CLIENT_ID_4 = "test_client_id_4";
 
-	protected static final String TEST_CLIENT_SECRET =
+	private static final String _TEST_CLIENT_SECRET =
 		"oauthTestApplicationSecret";
 
-	protected static final String TEST_CLIENT_SECRET_NOT_BASE64 =
+	private static final String _TEST_CLIENT_SECRET_NOT_BASE64 =
 		"secret-2527c3ad-be54-dcea-18a3-ab349ff637ac";
 
 	protected static final Map<String, ClientAuthentication>

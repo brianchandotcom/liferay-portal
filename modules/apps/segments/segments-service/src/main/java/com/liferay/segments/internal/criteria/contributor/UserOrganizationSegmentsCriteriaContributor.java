@@ -64,7 +64,7 @@ public class UserOrganizationSegmentsCriteriaContributor
 			while (matcher.find()) {
 				String date = matcher.group("date");
 
-				newFilterString = StringUtil.replace(
+				filterString = StringUtil.replace(
 					filterString, matcher.group(),
 					StringBundler.concat(
 						"dateModified ge ", date, "T00:00:00.000Z and ",

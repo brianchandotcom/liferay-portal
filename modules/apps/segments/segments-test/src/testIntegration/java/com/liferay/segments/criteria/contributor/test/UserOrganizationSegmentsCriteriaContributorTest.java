@@ -5,6 +5,8 @@
 
 package com.liferay.segments.criteria.contributor.test;
 
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
@@ -103,12 +105,13 @@ public class UserOrganizationSegmentsCriteriaContributorTest {
 		Criteria criteria = new Criteria();
 
 		segmentsCriteriaContributor.contribute(
-			criteria, "dateModified eq 2025-03-14T00:00:00.000Z",
+			criteria,
+			"dateModified eq " +
+				ISO8601Utils.format(_organization.getModifiedDate()),
 			Criteria.Conjunction.AND);
 
 		Assert.assertEquals(
-			"dateModified ge 2025-03-14T00:00:00.000Z and dateModified le " +
-				"2025-03-14T23:59:59.999Z",
+			"organizationIds in ('" + _organization.getOrganizationId() + "')",
 			criteria.getFilterString(Criteria.Type.MODEL));
 	}
 

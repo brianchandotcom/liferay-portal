@@ -10,26 +10,33 @@ jobs:
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
-            -   name: Calculate chart version
+            -   name: Calculate Helm chart version
                 run: |
-                    LATEST_CHART_TAG=$(git describe --tags --match="helm-chart-*" HEAD)
-                    PUBLISH_VERSION=${LATEST_CHART_TAG#"helm-"}
+                    LATEST_HELM_CHART_TAG=$(git describe --tags --match="helm-chart-*" HEAD)
+
+                    PUBLISH_VERSION=${LATEST_HELM_CHART_TAG#"helm-"}
+
                     echo "CHART_VERSION=${PUBLISH_VERSION}"
                     echo "CHART_VERSION=${PUBLISH_VERSION}" >> ${GITHUB_ENV}
             -   name: Package Helm chart
                 run: |
                     TEMP_DIST_DIR="${{ runner.temp }}/dist"
+
                     mkdir ${TEMP_DIST_DIR}
-                    helm package --version ${CHART_VERSION} -d ${TEMP_DIST_DIR} .
+
+                    helm package --destination ${TEMP_DIST_DIR} --version ${CHART_VERSION} .
                 working-directory: ./cloud/helm
             -   name: Log in to registry
-                run: echo "${{ secrets.GAR_KEY }}" | helm registry login ${GAR_REPO} -u _json_key_base64 --password-stdin
+                run: echo "${{ secrets.GAR_KEY }}" | helm registry login ${GAR_REPO} --password-stdin --username _json_key_base64
             -   name: Push Helm chart to registry
                 run: |
                     OCI_URL=$(echo "oci://${GAR_REPO}" | tr '[:upper:]' '[:lower:]')
-                    for f in *.tgz ; do
-                            echo "$f"
-                            helm push "$f" "$OCI_URL"
+
+                    for file_name in *.tgz
+                    do
+                            echo "${file_name}"
+
+                            helm push "${file_name}" "${OCI_URL}"
                     done
                 working-directory: ${{ runner.temp }}/dist
 on:

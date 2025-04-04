@@ -44,6 +44,10 @@
 		"type": 6
 	},
 	{
+		"name": "Provisioning Admin",
+		"type": 1
+	},
+	{
 		"name": "Provisioning Member",
 		"type": 1
 	},

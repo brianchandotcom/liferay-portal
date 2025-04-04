@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Announcements Web
 Bundle-SymbolicName: com.liferay.announcements.web
-Bundle-Version: 6.0.72
+Bundle-Version: 6.0.73
 Web-ContextPath: /announcements-web

@@ -378,13 +378,12 @@ private void _createYarnTasks() {
 			setUpYarnOfflineCache.finalizedBy yarnTask
 
 			yarnTask = tasks.create(name: "updateYarnBinariesCache" + _camelCase(yarnLockFile.parentFile.name), type: Copy) {
-				from nodeModulesCacheDir
-
 				exclude {
 					FileTreeElement fileTreeElement ->
 					return Files.isSymbolicLink(fileTreeElement.file.toPath())
 				}
 
+				from nodeModulesCacheDir
 				into offlineCacheDir
 
 				doFirst {

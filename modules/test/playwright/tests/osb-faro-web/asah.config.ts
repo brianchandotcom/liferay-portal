@@ -11,7 +11,7 @@ const asahConfig = {
 		batchCuratordUrl: process.env.OSB_ASAH_BATCH_CURATOR_URL
 			? process.env.OSB_ASAH_BATCH_CURATOR_URL
 			: 'http://osbasahbatchcurator:8080',
-		projectId: process.env.PROJECT_ID ? process.env.PROJECT_ID : 'osbasah',
+		projectId: process.env.OSB_ASAH_PROJECT_ID ? process.env.OSB_ASAH_PROJECT_ID : 'osbasah',
 	},
 };
 

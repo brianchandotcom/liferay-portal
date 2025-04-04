@@ -3483,6 +3483,58 @@ tell application "Safari" to quit
 			<get-testcase-property property.name="analytics.cloud.enabled" />
 
 			<if>
+				<isset property="env.OSB_ASAH_BACKEND_URL" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.asah.backend.url=${env.OSB_ASAH_BACKEND_URL}
+					</echo>
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.workspace.id" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.asah.backend.url=${analytics.cloud.asah.backend.url}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+
+			<if>
+				<isset property="env.OSB_ASAH_BATCH_CURATOR_URL" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.asah.curator.batch.url=${env.OSB_ASAH_BATCH_CURATOR_URL}
+					</echo>
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.workspace.id" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.asah.curator.batch.url=${analytics.cloud.asah.curator.batch.url}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<isset property="env.OSB_ASAH_PROJECT_ID" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.asah.project.id=${env.OSB_ASAH_PROJECT_ID}
+					</echo>
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.workspace.id" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.asah.project.id=${analytics.cloud.asah.project.id}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
 				<isset property="env.OSB_FARO_PASSWORD" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">
@@ -3536,23 +3588,6 @@ tell application "Safari" to quit
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
 							analytics.cloud.user.login=${env.OSB_FARO_USER_LOGIN}
-						</echo>
-					</then>
-				</elseif>
-			</if>
-
-			<if>
-				<isset property="env.FARO_WORKSPACE_ID" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						analytics.cloud.workspace.id=${env.FARO_WORKSPACE_ID}
-					</echo>
-				</then>
-				<elseif>
-					<isset property="analytics.cloud.faro.workspace.id" />
-					<then>
-						<echo append="true" file="${test.ext.properties.file}">
-							analytics.cloud.workspace.id=${analytics.cloud.faro.workspace.id}
 						</echo>
 					</then>
 				</elseif>

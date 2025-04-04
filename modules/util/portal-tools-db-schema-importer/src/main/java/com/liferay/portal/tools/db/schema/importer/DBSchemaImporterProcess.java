@@ -437,12 +437,12 @@ public class DBSchemaImporterProcess {
 	private void _validateSQLFiles() {
 		if (!Files.exists(Paths.get(_path, "indexes.sql"))) {
 			throw new IllegalStateException(
-				"indexes.sql is required in: " + _path);
+				"Missing " + _path + "/indexes.sql");
 		}
 
 		if (!Files.exists(Paths.get(_path, "tables.sql"))) {
 			throw new IllegalStateException(
-				"tables.sql is required in: " + _path);
+				"Missing " + _path + "/tables.sql");
 		}
 	}
 

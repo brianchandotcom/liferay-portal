@@ -165,12 +165,6 @@ export class StructureBuilderPage {
 		}
 	}
 
-	async createPicklist() {
-		const apiHelpers = new ApiHelpers(this.page);
-
-		return await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-	}
-
 	async deleteFields(fields: Field[]) {
 
 		// Deleting one field
@@ -229,12 +223,6 @@ export class StructureBuilderPage {
 					.locator('.treeview-group > .treeview-item')
 			).toHaveCount(count - fields.length);
 		}
-	}
-
-	async deletePicklist(id: number) {
-		const apiHelpers = new ApiHelpers(this.page);
-
-		await apiHelpers.listTypeAdmin.deleteListTypeDefinition(id);
 	}
 
 	async deleteStructure(id: number) {

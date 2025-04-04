@@ -43,6 +43,16 @@ public abstract class PortalBatchBuildRunner<T extends PortalBatchBuildData>
 				workspaceGitRepository.addPropertyOption("docker");
 			}
 
+			String osbAsahStagingEnabled = System.getenv(
+				"OSB_ASAH_STAGING_ENABLED");
+
+			if ((osbAsahStagingEnabled != null) &&
+				osbAsahStagingEnabled.equals("true")) {
+
+				workspaceGitRepository.addPropertyOption(
+					"osb-asah-staging-enabled");
+			}
+
 			if (JenkinsResultsParserUtil.isWindows()) {
 				workspaceGitRepository.addPropertyOption("windows");
 			}

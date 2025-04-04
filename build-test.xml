@@ -3483,6 +3483,23 @@ tell application "Safari" to quit
 			<get-testcase-property property.name="analytics.cloud.enabled" />
 
 			<if>
+				<isset property="env.OSB_ASAH_API_TOKEN" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.asah.api.token=${env.OSB_ASAH_API_TOKEN}
+					</echo>
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.asah.api.token" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.asah.api.token=${analytics.cloud.asah.api.token}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
 				<isset property="env.OSB_ASAH_BACKEND_URL" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">

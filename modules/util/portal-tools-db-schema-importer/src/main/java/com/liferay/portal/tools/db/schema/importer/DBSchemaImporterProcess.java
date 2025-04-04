@@ -24,6 +24,7 @@ import java.io.FileFilter;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -112,6 +113,8 @@ public class DBSchemaImporterProcess {
 	}
 
 	public void run() throws Exception {
+		_validateSQLFiles();
+
 		_createTables();
 
 		_copyTables();
@@ -373,6 +376,10 @@ public class DBSchemaImporterProcess {
 	private void _runSQLTemplate(DataSource dataSource, String template)
 		throws Exception {
 
+		if (Validator.isNull(template)) {
+			return;
+		}
+
 		_preprocessSQLTemplate(template);
 
 		for (String sql : _syncInitialSQLs) {
@@ -425,6 +432,18 @@ public class DBSchemaImporterProcess {
 		}
 
 		_syncFinalSQLs.clear();
+	}
+
+	private void _validateSQLFiles() {
+		if (!Files.exists(Paths.get(_path, "indexes.sql"))) {
+			throw new IllegalStateException(
+				"indexes.sql is required in: " + _path);
+		}
+
+		if (!Files.exists(Paths.get(_path, "tables.sql"))) {
+			throw new IllegalStateException(
+				"tables.sql is required in: " + _path);
+		}
 	}
 
 	private static final int _COMPANY_BATCH_SIZE = 5;

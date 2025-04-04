@@ -1,4 +1,4 @@
-# Checks for .ftl, .jsp, .jspf, .jspx, or .vm
+# Checks for .ftl, .jsp, .jspf, .jspx or .vm
 
 Check | Category | Description
 ----- | -------- | -----------

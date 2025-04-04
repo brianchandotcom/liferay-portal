@@ -34,7 +34,9 @@ public class ObjectDefinitionPortletIdUpgradeProcess
 				long objectDefinitionId = resultSet.getLong(
 					"objectDefinitionId");
 
-				if (className.endsWith(StringPool.POUND + objectDefinitionId)) {
+				if ((className == null) ||
+					className.endsWith(StringPool.POUND + objectDefinitionId)) {
+
 					continue;
 				}
 

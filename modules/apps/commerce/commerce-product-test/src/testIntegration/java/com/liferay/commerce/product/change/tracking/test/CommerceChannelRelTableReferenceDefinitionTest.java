@@ -71,10 +71,10 @@ public class CommerceChannelRelTableReferenceDefinitionTest
 		return _commerceChannelRel;
 	}
 
+	private CommerceChannel _commerceChannel;
+
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
-
-	private CommerceChannel _commerceChannel;
 
 	@DeleteAfterTestRun
 	private CommerceChannelRel _commerceChannelRel;

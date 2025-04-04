@@ -70,14 +70,15 @@ public class CommercePriceListChannelRelTableReferenceDefinitionTest
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
+	private CommerceChannel _commerceChannel;
+
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	private CommercePriceList _commercePriceList;
 
 	@Inject
 	private CommercePriceListChannelRelLocalService
 		_commercePriceListChannelRelLocalService;
-
-	private CommerceChannel _commerceChannel;
-	private CommercePriceList _commercePriceList;
 
 }

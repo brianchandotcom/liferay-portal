@@ -5,13 +5,13 @@
 
 const faroConfig = {
 	environment: {
-		baseUrl: process.env.FARO_URL
-			? process.env.FARO_URL
+		baseUrl: process.env.OSB_FARO_URL
+			? process.env.OSB_FARO_URL
 			: 'http://osbfarofrontend:8080',
 	},
 	user: {
-		login: process.env.FARO_USER_LOGIN || 'test@liferay.com',
-		password: process.env.FARO_PASSWORD || 'test',
+		login: process.env.OSB_FARO_USER_LOGIN || 'test@liferay.com',
+		password: process.env.OSB_FARO_PASSWORD || 'test',
 	},
 };
 

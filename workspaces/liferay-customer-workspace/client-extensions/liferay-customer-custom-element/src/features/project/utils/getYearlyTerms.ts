@@ -13,18 +13,18 @@ const getYearlyTerms = ({
 	endDate = new Date(endDate);
 	startDate = new Date(startDate);
 
-	const endDateYear = endDate.getFullYear();
-	const startDateYear = startDate.getFullYear();
+	const endDateYear = endDate.getUTCFullYear();
+	const startDateYear = startDate.getUTCFullYear();
 	const yearlyTerms = [];
 
 	const isExactlyOneYearApart = (startDate: Date, endDate: Date): boolean => {
 		const oneYearLater = new Date(startDate);
-		oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+		oneYearLater.setFullYear(oneYearLater.getUTCFullYear() + 1);
 
 		return (
-			endDate.getFullYear() === oneYearLater.getFullYear() &&
-			endDate.getMonth() === oneYearLater.getMonth() &&
-			endDate.getDate() === oneYearLater.getDate()
+			endDate.getUTCFullYear() === oneYearLater.getUTCFullYear() &&
+			endDate.getUTCMonth() === oneYearLater.getUTCMonth() &&
+			endDate.getUTCDate() === oneYearLater.getUTCDate()
 		);
 	};
 
@@ -37,11 +37,13 @@ const getYearlyTerms = ({
 
 	for (let year = startDateYear; year <= endDateYear; year++) {
 		let endDateIterationYear = new Date(
-			year + 1,
-			startDate.getMonth(),
-			startDate.getDate() - 1
+			Date.UTC(
+				year + 1,
+				startDate.getUTCMonth(),
+				startDate.getUTCDate() - 1
+			)
 		);
-		const startDateIterationYear = new Date(startDate);
+		const startDateIterationYear = new Date(startDate.setFullYear(year));
 
 		if (startDateIterationYear > endDate) {
 			break;

@@ -35,7 +35,7 @@ public class NameRestController extends BaseRestController {
 		return new ResponseEntity<>(
 			new JSONObject(
 			).put(
-				"name", "Shipping Engine Name"
+				"name", "Sample Shipping Engine"
 			).toString(),
 			HttpStatus.OK);
 	}

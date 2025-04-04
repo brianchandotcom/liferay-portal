@@ -7,8 +7,11 @@ package com.liferay.client.extension.util.spring.boot3.service;
 
 import java.time.Duration;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.apache.commons.logging.Log;
@@ -41,15 +44,15 @@ import reactor.netty.resources.ConnectionProvider;
 public abstract class BaseService {
 
 	protected Disposable asyncDelete(
-		String authorization, String body, String path) {
+		String body, Map<String, String> httpHeadersMap, String path) {
 
 		return _getWebClient(
 		).method(
 			HttpMethod.DELETE
 		).uri(
 			path
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
 		).bodyValue(
 			body
 		).exchangeToMono(
@@ -57,13 +60,46 @@ public abstract class BaseService {
 		).subscribe();
 	}
 
-	protected Disposable asyncGet(String authorization, String path) {
+	protected Disposable asyncDelete(
+		String authorization, String body, String path) {
+
+		return asyncDelete(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
+	}
+
+	protected Disposable asyncGet(
+		Map<String, String> httpHeadersMap, String path) {
+
 		return _getWebClient(
 		).get(
 		).uri(
 			path
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
+		).exchangeToMono(
+			_getExchangeToMonoFunction()
+		).subscribe();
+	}
+
+	protected Disposable asyncGet(String authorization, String path) {
+		return asyncGet(
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
+	}
+
+	protected Disposable asyncPatch(
+		String body, Map<String, String> httpHeadersMap, String path) {
+
+		return _getWebClient(
+		).patch(
+		).uri(
+			path
+		).bodyValue(
+			body
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).subscribe();
@@ -72,14 +108,23 @@ public abstract class BaseService {
 	protected Disposable asyncPatch(
 		String authorization, String body, String path) {
 
+		return asyncPatch(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
+	}
+
+	protected Disposable asyncPost(
+		String body, Map<String, String> httpHeadersMap, String path) {
+
 		return _getWebClient(
-		).patch(
+		).post(
 		).uri(
 			path
 		).bodyValue(
 			body
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).subscribe();
@@ -88,14 +133,23 @@ public abstract class BaseService {
 	protected Disposable asyncPost(
 		String authorization, String body, String path) {
 
+		return asyncPost(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
+	}
+
+	protected Disposable asyncPut(
+		String body, Map<String, String> httpHeadersMap, String path) {
+
 		return _getWebClient(
-		).post(
+		).put(
 		).uri(
 			path
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
 		).bodyValue(
 			body
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).subscribe();
@@ -104,44 +158,52 @@ public abstract class BaseService {
 	protected Disposable asyncPut(
 		String authorization, String body, String path) {
 
-		return _getWebClient(
-		).put(
-		).uri(
-			path
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).bodyValue(
-			body
-		).exchangeToMono(
-			_getExchangeToMonoFunction()
-		).subscribe();
+		return asyncPut(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
 	}
 
-	protected String delete(String authorization, String body, String path) {
+	protected String delete(
+		String body, Map<String, String> httpHeadersMap, String path) {
+
 		return _getWebClient(
 		).method(
 			HttpMethod.DELETE
 		).uri(
 			path
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
 		).bodyValue(
 			body
+		).exchangeToMono(
+			_getExchangeToMonoFunction()
+		).block();
+	}
+
+	protected String delete(String authorization, String body, String path) {
+		return delete(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
+	}
+
+	protected String get(Map<String, String> httpHeadersMap, String path) {
+		return _getWebClient(
+		).get(
+		).uri(
+			path
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).block();
 	}
 
 	protected String get(String authorization, String path) {
-		return _getWebClient(
-		).get(
-		).uri(
-			path
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).exchangeToMono(
-			_getExchangeToMonoFunction()
-		).block();
+		return get(
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
 	}
 
 	protected String getWebClientBaseURL() {
@@ -187,46 +249,73 @@ public abstract class BaseService {
 		}
 	}
 
-	protected String patch(String authorization, String body, String path) {
+	protected String patch(
+		String body, Map<String, String> httpHeadersMap, String path) {
+
 		return _getWebClient(
 		).patch(
 		).uri(
 			path
 		).bodyValue(
 			body
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).block();
 	}
 
-	protected String post(String authorization, String body, String path) {
+	protected String patch(String authorization, String body, String path) {
+		return patch(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
+	}
+
+	protected String post(
+		String body, Map<String, String> httpHeadersMap, String path) {
+
 		return _getWebClient(
 		).post(
 		).uri(
 			path
 		).bodyValue(
 			body
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
+		).exchangeToMono(
+			_getExchangeToMonoFunction()
+		).block();
+	}
+
+	protected String post(String authorization, String body, String path) {
+		return post(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
+	}
+
+	protected String put(
+		String body, Map<String, String> httpHeadersMap, String path) {
+
+		return _getWebClient(
+		).put(
+		).uri(
+			path
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
+		).bodyValue(
+			body
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).block();
 	}
 
 	protected String put(String authorization, String body, String path) {
-		return _getWebClient(
-		).put(
-		).uri(
-			path
-		).header(
-			HttpHeaders.AUTHORIZATION, authorization
-		).bodyValue(
-			body
-		).exchangeToMono(
-			_getExchangeToMonoFunction()
-		).block();
+		return put(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			path);
 	}
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
@@ -270,6 +359,18 @@ public abstract class BaseService {
 
 			return mono.flatMap(Mono::error);
 		};
+	}
+
+	private Consumer<HttpHeaders> _getHttpHeadersConsumer(
+		Map<String, String> httpHeadersMap) {
+
+		if (httpHeadersMap == null) {
+			return httpHeadersConsumer -> httpHeadersConsumer.setAll(
+				new HashMap<>());
+		}
+
+		return httpHeadersConsumer -> httpHeadersConsumer.setAll(
+			httpHeadersMap);
 	}
 
 	private WebClient _getWebClient() {

@@ -93,7 +93,7 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 
 					});
 
-		List<AssetCategory> categories = new ArrayList<>();
+		List<AssetCategory> assetCategories = new ArrayList<>();
 
 		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
 				assetEntryAssetCategoryRels) {
@@ -102,12 +102,12 @@ public class AssetCategoriesForAssetEntryRelatedInfoItemCollectionProvider
 				assetEntryAssetCategoryRel.getAssetCategoryId());
 
 			if (category != null) {
-				categories.add(category);
+				assetCategories.add(category);
 			}
 		}
 
 		return InfoPage.of(
-			categories, pagination,
+			assetCategories, pagination,
 			() ->
 				_assetEntryAssetCategoryRelLocalService.
 					getAssetEntryAssetCategoryRelsCount(

@@ -67,13 +67,12 @@ public class AssetCategoryUtil {
 			}
 		).addAll(
 			() -> {
-				List<AssetCategory> ancestorsCategories =
-					category.getAncestors();
+				List<AssetCategory> assetCategories = category.getAncestors();
 
-				Collections.reverse(ancestorsCategories);
+				Collections.reverse(assetCategories);
 
 				return TransformUtil.transform(
-					ancestorsCategories,
+					assetCategories,
 					curCategory -> BreadcrumbEntryBuilder.setTitle(
 						curCategory.getTitle(themeDisplay.getLocale())
 					).setURL(

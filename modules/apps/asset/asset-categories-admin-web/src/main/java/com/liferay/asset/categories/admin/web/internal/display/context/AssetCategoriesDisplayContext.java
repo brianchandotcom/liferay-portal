@@ -522,15 +522,15 @@ public class AssetCategoriesDisplayContext {
 		for (DepotEntry depotEntry : depotEntries) {
 			Group group = depotEntry.getGroup();
 
-			List<AssetVocabulary> groupVocabularies =
+			List<AssetVocabulary> groupAssetVocabularies =
 				AssetVocabularyServiceUtil.getGroupVocabularies(
 					group.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS,
 					AssetVocabularyCreateDateComparator.getInstance(true));
 
-			if (ListUtil.isNotEmpty(groupVocabularies)) {
+			if (ListUtil.isNotEmpty(groupAssetVocabularies)) {
 				_inheritedVocabularies.put(
-					group.getGroupId(), groupVocabularies);
+					group.getGroupId(), groupAssetVocabularies);
 			}
 		}
 
@@ -593,11 +593,11 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public VerticalNavItemList getVerticalNavItemList(
-		List<AssetVocabulary> vocabularies) {
+		List<AssetVocabulary> assetVocabularies) {
 
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
-		for (AssetVocabulary vocabulary : vocabularies) {
+		for (AssetVocabulary vocabulary : assetVocabularies) {
 			verticalNavItemList.add(
 				verticalNavItem -> {
 					if (vocabulary.getGroupId() !=
@@ -646,16 +646,16 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<AssetVocabulary> getVocabularies() throws PortalException {
-		if (_vocabularies != null) {
-			return _vocabularies;
+		if (_assetVocabularies != null) {
+			return _assetVocabularies;
 		}
 
-		_vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
+		_assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
 			_themeDisplay.getScopeGroupId(), false, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
 			AssetVocabularyCreateDateComparator.getInstance(true));
 
-		return _vocabularies;
+		return _assetVocabularies;
 	}
 
 	public List<DropdownItem> getVocabulariesDropdownItems() {
@@ -952,10 +952,10 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	private long _getDefaultVocabularyId() throws PortalException {
-		List<AssetVocabulary> vocabularies = getVocabularies();
+		List<AssetVocabulary> assetVocabularies = getVocabularies();
 
-		if (ListUtil.isNotEmpty(vocabularies)) {
-			AssetVocabulary vocabulary = vocabularies.get(0);
+		if (ListUtil.isNotEmpty(assetVocabularies)) {
+			AssetVocabulary vocabulary = assetVocabularies.get(0);
 
 			return vocabulary.getVocabularyId();
 		}
@@ -967,10 +967,10 @@ public class AssetCategoriesDisplayContext {
 			for (Map.Entry<Long, List<AssetVocabulary>> entry :
 					inheritedVocabularies.entrySet()) {
 
-				vocabularies = entry.getValue();
+				assetVocabularies = entry.getValue();
 
-				if (ListUtil.isNotEmpty(vocabularies)) {
-					AssetVocabulary vocabulary = vocabularies.get(0);
+				if (ListUtil.isNotEmpty(assetVocabularies)) {
+					AssetVocabulary vocabulary = assetVocabularies.get(0);
 
 					return vocabulary.getVocabularyId();
 				}
@@ -1038,6 +1038,7 @@ public class AssetCategoriesDisplayContext {
 
 	private final AssetCategoriesAdminWebConfiguration
 		_assetCategoriesAdminWebConfiguration;
+	private List<AssetVocabulary> _assetVocabularies;
 	private Set<Locale> _availableLocales;
 	private SearchContainer<AssetCategory> _categoriesSearchContainer;
 	private AssetCategory _category;
@@ -1054,7 +1055,6 @@ public class AssetCategoriesDisplayContext {
 	private String _selectedLanguageId;
 	private Boolean _showSelectAssetDisplayPage;
 	private final ThemeDisplay _themeDisplay;
-	private List<AssetVocabulary> _vocabularies;
 	private SearchContainer<AssetVocabulary> _vocabulariesSearchContainer;
 	private AssetVocabulary _vocabulary;
 	private Long _vocabularyId;

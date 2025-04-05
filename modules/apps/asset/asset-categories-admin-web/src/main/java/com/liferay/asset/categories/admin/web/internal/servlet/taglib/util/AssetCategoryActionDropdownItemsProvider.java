@@ -267,13 +267,13 @@ public class AssetCategoryActionDropdownItemsProvider {
 				AssetVocabulary vocabulary =
 					AssetVocabularyServiceUtil.getVocabulary(vocabularyId);
 
-				List<AssetVocabulary> vocabularies =
+				List<AssetVocabulary> assetVocabularies =
 					AssetVocabularyServiceUtil.getGroupVocabularies(
 						_themeDisplay.getScopeGroupId(),
 						vocabulary.getVisibilityType());
 
 				return ListUtil.toString(
-					vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
+					assetVocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);
 			}
 		).buildString();
 	}

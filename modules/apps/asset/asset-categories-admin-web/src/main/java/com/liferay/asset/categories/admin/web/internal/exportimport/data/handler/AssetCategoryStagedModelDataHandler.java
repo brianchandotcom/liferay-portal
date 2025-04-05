@@ -142,20 +142,23 @@ public class AssetCategoryStagedModelDataHandler
 
 		category.setUserUuid(category.getUserUuid());
 
-		List<AssetCategoryProperty> categoryProperties =
+		List<AssetCategoryProperty> assetCategoryProperties =
 			_assetCategoryPropertyLocalService.getCategoryProperties(
 				category.getCategoryId());
 
-		for (AssetCategoryProperty categoryProperty : categoryProperties) {
-			if (!_exists(categoryElement, categoryProperty)) {
+		for (AssetCategoryProperty assetCategoryProperty :
+				assetCategoryProperties) {
+
+			if (!_exists(categoryElement, assetCategoryProperty)) {
 				Element propertyElement = categoryElement.addElement(
 					"property");
 
 				propertyElement.addAttribute(
-					"userUuid", categoryProperty.getUserUuid());
-				propertyElement.addAttribute("key", categoryProperty.getKey());
+					"userUuid", assetCategoryProperty.getUserUuid());
 				propertyElement.addAttribute(
-					"value", categoryProperty.getValue());
+					"key", assetCategoryProperty.getKey());
+				propertyElement.addAttribute(
+					"value", assetCategoryProperty.getValue());
 			}
 		}
 

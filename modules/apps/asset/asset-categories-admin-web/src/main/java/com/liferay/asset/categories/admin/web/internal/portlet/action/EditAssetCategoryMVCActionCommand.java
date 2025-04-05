@@ -129,21 +129,22 @@ public class EditAssetCategoryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String[] _getCategoryProperties(
-		List<AssetCategoryProperty> categoryProperties) {
+		List<AssetCategoryProperty> assetCategoryProperties) {
 
-		String[] categoryPropertiesArray =
-			new String[categoryProperties.size()];
+		String[] assetCategoryPropertiesArray =
+			new String[assetCategoryProperties.size()];
 
-		for (int i = 0; i < categoryProperties.size(); i++) {
-			AssetCategoryProperty categoryProperty = categoryProperties.get(i);
+		for (int i = 0; i < assetCategoryProperties.size(); i++) {
+			AssetCategoryProperty categoryProperty =
+				assetCategoryProperties.get(i);
 
-			categoryPropertiesArray[i] =
+			assetCategoryPropertiesArray[i] =
 				categoryProperty.getKey() +
 					AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR +
 						categoryProperty.getValue();
 		}
 
-		return categoryPropertiesArray;
+		return assetCategoryPropertiesArray;
 	}
 
 	@Reference

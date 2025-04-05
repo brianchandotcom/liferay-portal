@@ -393,8 +393,7 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 				sb.append(StringPool.DASH);
 				sb.append(StringPool.NEW_LINE);
 				sb.append(indent);
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.SPACE);
+				sb.append(StringPool.FOUR_SPACES);
 				sb.append(port);
 			}
 

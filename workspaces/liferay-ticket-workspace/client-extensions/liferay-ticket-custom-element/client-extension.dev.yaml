@@ -1,5 +1,5 @@
 liferay-ticket-custom-element:
     urls:
-        - http://localhost:5173/@vite/client
-        - http://localhost:5173/@vite/refresh.ts
-        - http://localhost:5173/src/main.tsx
+        -   http://localhost:5173/@vite/client
+        -   http://localhost:5173/@vite/refresh.ts
+        -   http://localhost:5173/src/main.tsx

@@ -30,66 +30,66 @@ spec:
                 {{- toYaml . | nindent 16 }}
             {{- end }}
             containers:
-                - #
-                  {{- if or .statefulset.env .statefulset.customEnv }}
-                  env:
-                      {{- with .statefulset.env }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                      {{- with .statefulset.customEnv }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                  {{- end }}
-                  {{- if or .statefulset.envFrom .statefulset.customEnvFrom }}
-                  envFrom:
-                      {{- with .statefulset.envFrom }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                      {{- with .statefulset.customEnvFrom }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                  {{- end }}
-                  image: {{ printf "%s:%s" .statefulset.image.repository (.statefulset.image.tag | toString) }}
-                  imagePullPolicy: {{ .statefulset.image.pullPolicy }}
-                  {{- with .statefulset.livenessProbe }}
-                  livenessProbe:
-                      {{- toYaml . | nindent 22 }}
-                  {{- end }}
-                  name: {{ include "liferay.name" .root }}{{ $suffix }}
-                  {{- if or .statefulset.ports .statefulset.customPorts }}
-                  ports:
-                      {{- with .statefulset.ports }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                      {{- with .statefulset.customPorts }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                  {{- end }}
-                  {{- with .statefulset.readinessProbe }}
-                  readinessProbe:
-                      {{- toYaml . | nindent 22 }}
-                  {{- end }}
-                  {{- with .statefulset.resources }}
-                  resources:
-                      {{- toYaml . | nindent 22 }}
-                  {{- end }}
-                  {{- with .statefulset.securityContext }}
-                  securityContext:
-                      {{- toYaml . | nindent 22 }}
-                  {{- end }}
-                  {{- with .statefulset.startupProbe }}
-                  startupProbe:
-                      {{- toYaml . | nindent 22 }}
-                  {{- end }}
-                  {{- if or .statefulset.volumeMounts .statefulset.customVolumeMounts}}
-                  volumeMounts:
-                      {{- with .statefulset.volumeMounts }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                      {{- with .statefulset.customVolumeMounts }}
-                      {{- toYaml . | nindent 22 }}
-                      {{- end }}
-                  {{- end }}
+                -   #
+                    {{- if or .statefulset.env .statefulset.customEnv }}
+                    env:
+                        {{- with .statefulset.env }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                        {{- with .statefulset.customEnv }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                    {{- end }}
+                    {{- if or .statefulset.envFrom .statefulset.customEnvFrom }}
+                    envFrom:
+                        {{- with .statefulset.envFrom }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                        {{- with .statefulset.customEnvFrom }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                    {{- end }}
+                    image: {{ printf "%s:%s" .statefulset.image.repository (.statefulset.image.tag | toString) }}
+                    imagePullPolicy: {{ .statefulset.image.pullPolicy }}
+                    {{- with .statefulset.livenessProbe }}
+                    livenessProbe:
+                        {{- toYaml . | nindent 22 }}
+                    {{- end }}
+                    name: {{ include "liferay.name" .root }}{{ $suffix }}
+                    {{- if or .statefulset.ports .statefulset.customPorts }}
+                    ports:
+                        {{- with .statefulset.ports }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                        {{- with .statefulset.customPorts }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                    {{- end }}
+                    {{- with .statefulset.readinessProbe }}
+                    readinessProbe:
+                        {{- toYaml . | nindent 22 }}
+                    {{- end }}
+                    {{- with .statefulset.resources }}
+                    resources:
+                        {{- toYaml . | nindent 22 }}
+                    {{- end }}
+                    {{- with .statefulset.securityContext }}
+                    securityContext:
+                        {{- toYaml . | nindent 22 }}
+                    {{- end }}
+                    {{- with .statefulset.startupProbe }}
+                    startupProbe:
+                        {{- toYaml . | nindent 22 }}
+                    {{- end }}
+                    {{- if or .statefulset.volumeMounts .statefulset.customVolumeMounts}}
+                    volumeMounts:
+                        {{- with .statefulset.volumeMounts }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                        {{- with .statefulset.customVolumeMounts }}
+                        {{- toYaml . | nindent 22 }}
+                        {{- end }}
+                    {{- end }}
             {{- if or .statefulset.pullSecrets .statefulset.customPullSecrets}}
             imagePullSecrets:
                 {{- with .statefulset.pullSecrets }}
@@ -106,16 +106,16 @@ spec:
                 {{- if .containerTemplate }}
                 {{- tpl .containerTemplate $statefulset | nindent 16 }}
                 {{- else }}
-                - #
-                  {{- toYaml . | nindent 18 }}
+                -   #
+                    {{- toYaml . | nindent 18 }}
                 {{- end }}
                 {{- end }}
                 {{- range .statefulset.customInitContainers }}
                 {{- if .containerTemplate }}
                 {{- tpl .containerTemplate $statefulset | nindent 16 }}
                 {{- else }}
-                - #
-                  {{- toYaml . | nindent 18 }}
+                -   #
+                    {{- toYaml . | nindent 18 }}
                 {{- end }}
                 {{- end }}
             {{- end }}

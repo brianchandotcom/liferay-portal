@@ -1,6 +1,6 @@
 assemble:
-    - fromTask: writeLanguageBatchEngineData
-      into: batch
+    -   fromTask: writeLanguageBatchEngineData
+        into: batch
 language-batch:
     name: Language Batch
     oAuthApplicationHeadlessServer: language-batch-oauth-application-headless-server
@@ -10,7 +10,7 @@ language-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Language Batch OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Message.Admin.REST.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Message.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

@@ -1,16 +1,16 @@
 assemble:
-    - include:
-          - "**/*.js"
-          - package.json
+    -   include:
+            -   "**/*.js"
+            -   package.json
 liferay-testray-etc-jira-oauth-application-user-agent:
     .serviceAddress: localhost:3001
     .serviceScheme: http
     name: Liferay Testray Etc Jira OAuth Application User Agent
     scopes:
-        - C_Issue.everything.read
-        - C_Requirement.everything
-        - C_TestrayJiraOAuths.everything
-        - Liferay.Headless.Admin.User.everything
+        -   C_Issue.everything.read
+        -   C_Requirement.everything
+        -   C_TestrayJiraOAuths.everything
+        -   Liferay.Headless.Admin.User.everything
     type: oAuthApplicationUserAgent
 liferay-testray-etc-jira-requirement-tickets:
     name: Liferay Testray Etc Jira Requirement Tickets

@@ -17,7 +17,7 @@ services:
             test: mysql --execute="select 1" --host=localhost --password=$$MYSQL_ROOT_PASSWORD --protocol=tcp --user=root 2>&1 | grep -qvF "Can't connect"
         image: mysql:5.7
         ports:
-            - 3306:3306
+            -   3306:3306
     liferay:
         container_name: liferay-partner-workspace-liferay
         depends_on:
@@ -26,7 +26,7 @@ services:
         env_file: liferay.env
         image: liferay/dxp:2024.q2.6
         ports:
-            - 8000:8000
-            - 8080:8080
+            -   8000:8000
+            -   8080:8080
         volumes:
-            - ../build/docker/client-extensions:/opt/liferay/osgi/client-extensions
+            -   ../build/docker/client-extensions:/opt/liferay/osgi/client-extensions

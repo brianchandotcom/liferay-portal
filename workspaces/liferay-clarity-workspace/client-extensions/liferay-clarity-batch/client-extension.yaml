@@ -1,6 +1,6 @@
 assemble:
-    - from: batch
-      into: batch
+    -   from: batch
+        into: batch
 liferay-clarity-batch:
     name: Liferay Clarity Batch
     oAuthApplicationHeadlessServer: liferay-clarity-batch-oauth-application-headless-server
@@ -10,10 +10,10 @@ liferay-clarity-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Clarity Batch OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Admin.List.Type.everything
-        - Liferay.Headless.Admin.User.everything
-        - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Notification.REST.everything
-        - Liferay.Object.Admin.REST.everything
+        -   Liferay.Headless.Admin.List.Type.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Notification.REST.everything
+        -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

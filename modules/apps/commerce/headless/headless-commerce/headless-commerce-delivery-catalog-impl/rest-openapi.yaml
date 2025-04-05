@@ -114,7 +114,7 @@ components:
                 type:
                     enum: [business, guest, person, supplier]
             required:
-                - name
+                -   name
             type:
                 object
         Attachment:
@@ -180,9 +180,9 @@ components:
                     type: string
                 tags:
                     example:
-                        - tag1
-                        - tag2
-                        - tag3
+                        -   tag1
+                        -   tag2
+                        -   tag3
                     items:
                         type: string
                     readOnly: true
@@ -194,7 +194,7 @@ components:
                     readOnly: true
                     type: integer
             required:
-                - sku
+                -   sku
             type: object
         Availability:
             properties:
@@ -250,9 +250,9 @@ components:
                 type:
                     type: string
             required:
-                - currencyCode
-                - name
-                - type
+                -   currencyCode
+                -   name
+                -   type
             type: object
         Currency:
             properties:
@@ -313,8 +313,8 @@ components:
                     example: $
                     type: string
             required:
-                - code
-                - name
+                -   code
+                -   name
             type: object
         CustomField:
             description:
@@ -386,10 +386,10 @@ components:
                     readOnly: true
                     type: integer
             required:
-                - errorCode
-                - errorDescription
-                - message
-                - status
+                -   errorCode
+                -   errorDescription
+                -   message
+                -   status
             type: object
         Geo:
             description:
@@ -509,9 +509,9 @@ components:
                     type: string
                 type:
                     enum:
-                        - diagram
-                        - external
-                        - sku
+                        -   diagram
+                        -   external
+                        -   sku
                     example: sku
                     type: string
                 urls:
@@ -669,9 +669,9 @@ components:
                     type: string
                 tags:
                     example:
-                        - tag1
-                        - tag2
-                        - tag3
+                        -   tag1
+                        -   tag2
+                        -   tag3
                     items:
                         type: string
                     type: array
@@ -694,10 +694,10 @@ components:
                     type: boolean
                 allowedOrderQuantities:
                     example:
-                        - 10
-                        - 20
-                        - 30
-                        - 40
+                        -   10
+                        -   20
+                        -   30
+                        -   40
                     items:
                         example: 10.1
                         format: bigdecimal
@@ -969,10 +969,10 @@ components:
                     type: array
                 allowedOrderQuantities:
                     example:
-                        - 10
-                        - 20
-                        - 30
-                        - 40
+                        -   10
+                        -   20
+                        -   30
+                        -   40
                     items:
                         type: string
                     type: array
@@ -1251,30 +1251,30 @@ paths:
         get:
             operationId: getChannelsPage
             parameters:
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1321,69 +1321,69 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.read
             summary: "Gets a list of channels."
             tags:
-                - Channel
+                -   Channel
     "/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/pins":
         get:
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePinsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The Channel External Reference Code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The Product External Reference Code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The Channel External Reference Code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The Product External Reference Code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1438,34 +1438,34 @@ paths:
         get:
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1517,85 +1517,85 @@ paths:
         get:
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productOptionExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product Option external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  explode: false
-                  name: productOptionValueId
-                  required: false
-                  schema:
-                      description:
-                          Product Option Value Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: false
-                  name: skuId
-                  required: false
-                  schema:
-                      description:
-                          Sku Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productOptionExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product Option external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    explode: false
+                    name: productOptionValueId
+                    required: false
+                    schema:
+                        description:
+                            Product Option Value Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: false
+                    name: skuId
+                    required: false
+                    schema:
+                        description:
+                            Sku Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -1649,85 +1649,85 @@ paths:
                 reference code.
             operationId: postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productOptionExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product Option external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  explode: false
-                  name: productOptionValueId
-                  required: false
-                  schema:
-                      description:
-                          Product Option Value Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: false
-                  name: skuId
-                  required: false
-                  schema:
-                      description:
-                          Sku Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productOptionExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product Option external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    explode: false
+                    name: productOptionValueId
+                    required: false
+                    schema:
+                        description:
+                            Product Option Value Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: false
+                    name: skuId
+                    required: false
+                    schema:
+                        description:
+                            Sku Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1794,34 +1794,34 @@ paths:
         get:
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecificationsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1875,52 +1875,52 @@ paths:
                 Retrieves products from selected channel.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1970,43 +1970,43 @@ paths:
                 Posts an SKU with selected channel and product external reference code.
             operationId: postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSku
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: quantity
-                  required: false
-                  schema:
-                      description:
-                          Quantity
-                      example: 10.1
-                      format: bigdecimal
-                      type: number
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: quantity
+                    required: false
+                    schema:
+                        description:
+                            Quantity
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
             requestBody:
                 content:
                     application/json:
@@ -2071,51 +2071,51 @@ paths:
                 Retrieves a product from selected channel.
             operationId: getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: skuExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Sku external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: skuExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Sku external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
             responses:
                 200:
                     content:
@@ -2162,58 +2162,58 @@ paths:
                 Retrieves a SKU from selected channel and product using their external reference code.
             operationId: postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption
             parameters:
-                - in: path
-                  explode: false
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productExternalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Product external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: quantity
-                  required: false
-                  schema:
-                      description:
-                          Quantity
-                      example: 10.1
-                      format: bigdecimal
-                      type: number
-                - in: query
-                  name: skuUnitOfMeasureKey
-                  required: false
-                  schema:
-                      description:
-                          Sku Unit Of Measure Key
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productExternalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Product external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: quantity
+                    required: false
+                    schema:
+                        description:
+                            Quantity
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
+                -   in: query
+                    name: skuUnitOfMeasureKey
+                    required: false
+                    schema:
+                        description:
+                            Sku Unit Of Measure Key
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -2278,40 +2278,40 @@ paths:
                 Retrieves currencies from selected channel.
             operationId: getChannelByExternalReferenceCodeCurrenciesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel ExternalReferenceCode
-                      type: string
-                  style: simple
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel ExternalReferenceCode
+                        type: string
+                    style: simple
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2362,43 +2362,43 @@ paths:
                 Retrieves wishlists for a given channel.
             operationId: getChannelByExternalReferenceCodeWishListsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2448,25 +2448,25 @@ paths:
         post:
             operationId: postChannelByExternalReferenceCodeWishList
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          Channel external reference code
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            Channel external reference code
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -2526,37 +2526,37 @@ paths:
         get:
             operationId: getChannelAccountsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2607,18 +2607,18 @@ paths:
         post:
             operationId: postChannelAccount
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2679,10 +2679,10 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - CommerceOpenApiAdmin.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   CommerceOpenApiAdmin.write
             summary: Creates or updates an Account.
             tags: ["Account"]
     "/channels/{channelId}/currencies":
@@ -2691,41 +2691,41 @@ paths:
                 Retrieves currencies from selected channel.
             operationId: getChannelCurrenciesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2776,52 +2776,52 @@ paths:
                 Retrieves products from selected channel.
             operationId: getChannelProductsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2872,35 +2872,35 @@ paths:
                 Retrieves products from selected channel.
             operationId: getChannelProductByFriendlyUrlPath
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: friendlyUrlPath
-                  required: true
-                  schema:
-                      type: string
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: friendlyUrlPath
+                    required: true
+                    schema:
+                        type: string
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
             responses:
                 200:
                     content:
@@ -2947,40 +2947,40 @@ paths:
                 Retrieves products from selected channel.
             operationId: getChannelProduct
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
             responses:
                 200:
                     content:
@@ -3025,50 +3025,50 @@ paths:
         get:
             operationId: getChannelProductAttachmentsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3122,40 +3122,40 @@ paths:
                 Gets a list of Category related to a Product.
             operationId: getChannelProductCategoriesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3206,50 +3206,50 @@ paths:
         get:
             operationId: getChannelProductImagesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3301,54 +3301,54 @@ paths:
         get:
             operationId: getChannelProductLinkedProductsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          The Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            The Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -3398,83 +3398,83 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminCatalog.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminCatalog.read
             summary: Gets a list of grouped product.
             tags:
-                - LinkedProduct
+                -   LinkedProduct
     "/channels/{channelId}/products/{productId}/mapped-products":
         get:
             operationId: getChannelProductMappedProductsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          The Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            The Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3529,64 +3529,64 @@ paths:
         get:
             operationId: getChannelProductPinsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          The Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            The Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3641,40 +3641,40 @@ paths:
         get:
             operationId: getChannelProductProductOptionsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3726,94 +3726,94 @@ paths:
         get:
             operationId: getChannelProductProductOptionProductOptionValuesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productOptionId
-                  required: true
-                  schema:
-                      description:
-                          Product Option Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  explode: false
-                  name: productOptionValueId
-                  required: false
-                  schema:
-                      description:
-                          Product Option Value Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: false
-                  name: skuId
-                  required: false
-                  schema:
-                      description:
-                          Sku Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productOptionId
+                    required: true
+                    schema:
+                        description:
+                            Product Option Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    explode: false
+                    name: productOptionValueId
+                    required: false
+                    schema:
+                        description:
+                            Product Option Value Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: false
+                    name: skuId
+                    required: false
+                    schema:
+                        description:
+                            Sku Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -3866,94 +3866,94 @@ paths:
                 Retrieves a list of ProductOptionValue from selected channel, product ID and product option ID.
             operationId: postChannelProductProductOptionProductOptionValuesPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productOptionId
-                  required: true
-                  schema:
-                      description:
-                          Product Option Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  explode: false
-                  name: productOptionValueId
-                  required: false
-                  schema:
-                      description:
-                          Product Option Value Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: false
-                  name: skuId
-                  required: false
-                  schema:
-                      description:
-                          Sku Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productOptionId
+                    required: true
+                    schema:
+                        description:
+                            Product Option Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    explode: false
+                    name: productOptionValueId
+                    required: false
+                    schema:
+                        description:
+                            Product Option Value Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: false
+                    name: skuId
+                    required: false
+                    schema:
+                        description:
+                            Sku Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -4020,40 +4020,40 @@ paths:
         get:
             operationId: getChannelProductProductSpecificationsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4107,47 +4107,47 @@ paths:
                 Gets a list of Related Products of a Product.
             operationId: getChannelProductRelatedProductsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  explode: true
-                  name: type
-                  required: false
-                  schema:
-                      type: string
-                  style: form
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    explode: true
+                    name: type
+                    required: false
+                    schema:
+                        type: string
+                    style: form
             responses:
                 200:
                     content:
@@ -4200,58 +4200,58 @@ paths:
                 Retrieves products from selected channel.
             operationId: getChannelProductSkusPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4301,49 +4301,49 @@ paths:
                 Retrieves a SKU from selected channel and product ID.
             operationId: postChannelProductSku
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: quantity
-                  required: false
-                  schema:
-                      description:
-                          Quantity
-                      example: 10.1
-                      format: bigdecimal
-                      type: number
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: quantity
+                    required: false
+                    schema:
+                        description:
+                            Quantity
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
             requestBody:
                 content:
                     application/json:
@@ -4408,64 +4408,64 @@ paths:
                 Retrieves a SKU from selected channel and product ID.
             operationId: postChannelProductSkuBySkuOption
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: quantity
-                  required: false
-                  schema:
-                      description:
-                          Quantity
-                      example: 10.1
-                      format: bigdecimal
-                      type: number
-                - in: query
-                  name: skuUnitOfMeasureKey
-                  required: false
-                  schema:
-                      description:
-                          Sku Unit Of Measure Key
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: quantity
+                    required: false
+                    schema:
+                        description:
+                            Quantity
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
+                -   in: query
+                    name: skuUnitOfMeasureKey
+                    required: false
+                    schema:
+                        description:
+                            Sku Unit Of Measure Key
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -4530,60 +4530,60 @@ paths:
                 Retrieves a product from selected channel.
             operationId: getChannelProductSku
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: productId
-                  required: true
-                  schema:
-                      description:
-                          Product Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: skuId
-                  required: true
-                  schema:
-                      description:
-                          Sku Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: productId
+                    required: true
+                    schema:
+                        description:
+                            Product Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: skuId
+                    required: true
+                    schema:
+                        description:
+                            Sku Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
             responses:
                 200:
                     content:
@@ -4630,44 +4630,44 @@ paths:
                 Retrieves wishlists for a given channel.
             operationId: getChannelWishListsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -4717,26 +4717,26 @@ paths:
         post:
             operationId: postChannelWishList
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -4798,16 +4798,16 @@ paths:
                 Deletes a wishlist item by wishListItemId.
             operationId: deleteWishListItem
             parameters:
-                - in: path
-                  explode: false
-                  name: wishListItemId
-                  required: true
-                  schema:
-                      description:
-                          WishList item Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: wishListItemId
+                    required: true
+                    schema:
+                        description:
+                            WishList item Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 204:
                     content:
@@ -4830,34 +4830,34 @@ paths:
                 Retrieves wishlist item by wishListItemId for a specific channel and account
             operationId: getWishListItem
             parameters:
-                - in: path
-                  explode: false
-                  name: wishListItemId
-                  required: true
-                  schema:
-                      description:
-                          WishListItem Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
+                -   in: path
+                    explode: false
+                    name: wishListItemId
+                    required: true
+                    schema:
+                        description:
+                            WishListItem Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
             responses:
                 200:
                     content:
@@ -4906,16 +4906,16 @@ paths:
                 Deletes a wishlist by wishListId.
             operationId: deleteWishList
             parameters:
-                - in: path
-                  explode: false
-                  name: wishListId
-                  required: true
-                  schema:
-                      description:
-                          WishList Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: wishListId
+                    required: true
+                    schema:
+                        description:
+                            WishList Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 204:
                     content:
@@ -4938,16 +4938,16 @@ paths:
                 Retrieves a wishlist by wishListId.
             operationId: getWishList
             parameters:
-                - in: path
-                  explode: false
-                  name: wishListId
-                  required: true
-                  schema:
-                      description:
-                          WishList Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: wishListId
+                    required: true
+                    schema:
+                        description:
+                            WishList Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -4993,26 +4993,26 @@ paths:
         patch:
             operationId: patchWishList
             parameters:
-                - in: path
-                  explode: false
-                  name: wishListId
-                  required: true
-                  schema:
-                      description:
-                          WishList Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: wishListId
+                    required: true
+                    schema:
+                        description:
+                            WishList Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -5074,44 +5074,44 @@ paths:
                 Retrieves wishlist items by wishListId for a specific channel and account
             operationId: getWishlistWishListWishListItemsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: wishListId
-                  required: true
-                  schema:
-                      description:
-                          WishList Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                - in: query
-                  name: currencyCode
-                  required: false
-                  schema:
-                      description:
-                          Currency code of the price list
-                      example: USD
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: wishListId
+                    required: true
+                    schema:
+                        description:
+                            WishList Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                -   in: query
+                    name: currencyCode
+                    required: false
+                    schema:
+                        description:
+                            Currency code of the price list
+                        example: USD
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -5161,26 +5161,26 @@ paths:
         post:
             operationId: postWishlistWishListWishListItem
             parameters:
-                - in: path
-                  explode: false
-                  name: wishListId
-                  required: true
-                  schema:
-                      description:
-                          WishList Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: accountId
-                  required: false
-                  schema:
-                      description:
-                          Account Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: wishListId
+                    required: true
+                    schema:
+                        description:
+                            WishList Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: accountId
+                    required: false
+                    schema:
+                        description:
+                            Account Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -5237,4 +5237,4 @@ paths:
             summary: Creates a WishList Item.
             tags: ["WishListItem"]
 servers:
-    - url: /
+    -   url: /

@@ -1,10 +1,10 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-partner-etc-cron-oahs:
     .serviceAddress: localhost:18080
     .serviceScheme: http
     name: Liferay Partner Etc Cron OAuth Application Headless Server
     scopes:
-        - C_Activity.everything
-        - C_MDFClaim.everything.read
+        -   C_Activity.everything
+        -   C_MDFClaim.everything.read
     type: oAuthApplicationHeadlessServer

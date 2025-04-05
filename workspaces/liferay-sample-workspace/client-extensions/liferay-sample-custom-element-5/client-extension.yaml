@@ -1,6 +1,6 @@
 assemble:
-    - from: build/static
-      into: static
+    -   from: build/static
+        into: static
 liferay-sample-custom-element-5:
     htmlElementName: liferay-sample-custom-element-5
     instanceable: false
@@ -8,5 +8,5 @@ liferay-sample-custom-element-5:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - index.*.js
+        -   index.*.js
     useESM: true

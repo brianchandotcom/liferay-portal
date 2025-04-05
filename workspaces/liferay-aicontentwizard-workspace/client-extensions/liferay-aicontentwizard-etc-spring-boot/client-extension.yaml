@@ -1,20 +1,20 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-aicontentwizard-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay AI Content Wizard Etc Spring Boot OAuth Application User Agent
     scopes:
-        - c_k9l6aicontentwizardsetting.everything
-        - Liferay.Bulk.REST.everything
-        - Liferay.Headless.Admin.Content.everything
-        - Liferay.Headless.Admin.Taxonomy.everything
-        - Liferay.Headless.Admin.User.everything
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Headless.Commerce.Admin.Account.everything
-        - Liferay.Headless.Commerce.Admin.Catalog.everything
-        - Liferay.Headless.Commerce.Admin.Inventory.everything
-        - Liferay.Headless.Delivery.everything
-        - Liferay.Headless.Site.everything
-        - Liferay.Object.Admin.REST.everything
+        -   c_k9l6aicontentwizardsetting.everything
+        -   Liferay.Bulk.REST.everything
+        -   Liferay.Headless.Admin.Content.everything
+        -   Liferay.Headless.Admin.Taxonomy.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Headless.Commerce.Admin.Account.everything
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything
+        -   Liferay.Headless.Commerce.Admin.Inventory.everything
+        -   Liferay.Headless.Delivery.everything
+        -   Liferay.Headless.Site.everything
+        -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationUserAgent

@@ -9,5 +9,5 @@ liferay-partner-site-initializer-code-oahs:
     .serviceScheme: http
     name: Liferay Partner Site Initializer Code OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Site.everything
+        -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

@@ -23,9 +23,9 @@ components:
                     description:
                         The default value is open.
                     enum:
-                        - open
-                        - private
-                        - restricted
+                        -   open
+                        -   private
+                        -   restricted
                     type: string
                     writeOnly: true
                 name:
@@ -38,12 +38,12 @@ components:
                     writeOnly: true
                 templateType:
                     enum:
-                        - site-initializer
-                        - site-template
+                        -   site-initializer
+                        -   site-template
                     type: string
                     writeOnly: true
             required:
-                - name
+                -   name
             type: object
 info:
     description:
@@ -63,12 +63,12 @@ paths:
                 Deletes a site and all of its associated content.
             operationId: deleteSite
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -117,11 +117,11 @@ paths:
                 Deletes a site and all of its associated content.
             operationId: deleteSiteByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -131,11 +131,11 @@ paths:
         get:
             operationId: getSiteByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -153,11 +153,11 @@ paths:
                 Adds or update a new site
             operationId: putSiteByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     multipart/form-data:
@@ -183,11 +183,11 @@ paths:
         get:
             operationId: getSiteByExternalReferenceCodeSiteInitializer
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:

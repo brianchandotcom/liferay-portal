@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-stripe-commerce-tax-engine:
     key: liferay-stripe-commerce-tax-engine
     name: Liferay Stripe Commerce Tax Engine
@@ -12,5 +12,5 @@ liferay-stripe-commerce-tax-engine-oauth-application-user-agent:
     .serviceScheme: http
     name: Liferay Stripe Commerce Tax Engine OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent

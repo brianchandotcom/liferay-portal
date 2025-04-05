@@ -9,32 +9,32 @@ metadata:
     namespace: {{ include "liferay.namespace" . }}
 spec:
     containers:
-        - command:
-              - /bin/sh
-              - -c
-              - |
-                    trap "echo 'Received signal to terminate.'; exit 0" SIGINT SIGTERM
+        -   command:
+                -   /bin/sh
+                -   -c
+                -   |
+                        trap "echo 'Received signal to terminate.'; exit 0" SIGINT SIGTERM
 
-                    START_TIME=$(date +%s)
+                        START_TIME=$(date +%s)
 
-                    until nc -vz -w 2 {{ include "liferay.fullname" . }} {{ (index .Values.service.ports 1).port }}
-                    do
-                        CURRENT_TIME=$(date +%s)
+                        until nc -vz -w 2 {{ include "liferay.fullname" . }} {{ (index .Values.service.ports 1).port }}
+                        do
+                            CURRENT_TIME=$(date +%s)
 
-                        DELTA_TIME=$((${CURRENT_TIME} - ${START_TIME}))
+                            DELTA_TIME=$((${CURRENT_TIME} - ${START_TIME}))
 
-                        if [ ${DELTA_TIME} -gt 300 ]
-                        then
-                            echo "Liferay did not start."
+                            if [ ${DELTA_TIME} -gt 300 ]
+                            then
+                                echo "Liferay did not start."
 
-                            exit 1
-                        fi
+                                exit 1
+                            fi
 
-                        echo "Waiting for Liferay..."
+                            echo "Waiting for Liferay..."
 
-                        sleep 2
-                    done
-          image: busybox:latest
-          name: test-connection
+                            sleep 2
+                        done
+            image: busybox:latest
+            name: test-connection
     restartPolicy: Never
     serviceAccountName: {{ include "liferay.serviceAccountName" . }}

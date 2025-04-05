@@ -24,16 +24,16 @@ paths:
         delete:
             operationId: deleteMessage
             parameters:
-                - in: query
-                  name: key
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: languageId
-                  required: false
-                  schema:
-                      type: string
+                -   in: query
+                    name: key
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: languageId
+                    required: false
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -43,16 +43,16 @@ paths:
         get:
             operationId: getMessage
             parameters:
-                - in: query
-                  name: key
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: languageId
-                  required: true
-                  schema:
-                      type: string
+                -   in: query
+                    name: key
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: languageId
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -107,11 +107,11 @@ paths:
         post:
             operationId: postMessagesExportPage
             parameters:
-                - in: query
-                  name: languageId
-                  required: true
-                  schema:
-                      type: string
+                -   in: query
+                    name: languageId
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -142,11 +142,11 @@ paths:
         post:
             operationId: postMessageImport
             parameters:
-                - in: query
-                  name: languageId
-                  required: true
-                  schema:
-                      type: string
+                -   in: query
+                    name: languageId
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     multipart/form-data:

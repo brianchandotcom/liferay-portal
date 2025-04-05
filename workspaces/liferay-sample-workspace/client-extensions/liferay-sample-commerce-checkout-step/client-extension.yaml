@@ -1,7 +1,7 @@
 assemble:
-    - from: assets
-      into: static
-    - fromTask: bootJar
+    -   from: assets
+        into: static
+    -   fromTask: bootJar
 liferay-sample-commerce-checkout-step:
     active: true
     checkoutStepLabel: liferay-sample-commerce-checkout-step-label
@@ -19,5 +19,5 @@ liferay-sample-commerce-checkout-step-oauth-application-user-agent:
     .serviceScheme: http
     name: Liferay Sample Commerce Checkout Step OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent

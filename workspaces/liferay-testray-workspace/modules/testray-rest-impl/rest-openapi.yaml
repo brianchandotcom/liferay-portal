@@ -378,18 +378,18 @@ paths:
         post:
             operationId: postTestrayBuildAutofill
             parameters:
-                - in: path
-                  name: testrayBuildId1
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: testrayBuildId2
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testrayBuildId1
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: testrayBuildId2
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -404,12 +404,12 @@ paths:
         patch:
             operationId: patchTestrayBuild
             parameters:
-                - in: path
-                  name: testrayBuildId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testrayBuildId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -424,72 +424,72 @@ paths:
         get:
             operationId: getTestrayCaseResultHistoryTestrayCasePage
             parameters:
-                - in: path
-                  name: testrayCaseId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: error
-                  schema:
-                      type: string
-                - in: query
-                  name: issues
-                  schema:
-                      type: string
-                - in: query
-                  name: maxExecutionDate
-                  schema:
-                      type: string
-                - in: query
-                  name: minExecutionDate
-                  schema:
-                      type: string
-                - in: query
-                  name: noError
-                  schema:
-                      type: boolean
-                - in: query
-                  name: noIssues
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: status
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayProductVersionIds
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayRoutineIds
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayRunName
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
-                - in: query
-                  name: userId
-                  schema:
-                      type: string
-                - in: query
-                  name: warning
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayCaseId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: error
+                    schema:
+                        type: string
+                -   in: query
+                    name: issues
+                    schema:
+                        type: string
+                -   in: query
+                    name: maxExecutionDate
+                    schema:
+                        type: string
+                -   in: query
+                    name: minExecutionDate
+                    schema:
+                        type: string
+                -   in: query
+                    name: noError
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: noIssues
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: status
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayProductVersionIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayRoutineIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayRunName
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: userId
+                    schema:
+                        type: string
+                -   in: query
+                    name: warning
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -508,92 +508,92 @@ paths:
         get:
             operationId: getTestrayCaseResultsTestrayBuildPage
             parameters:
-                - in: path
-                  name: testrayBuildId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: comment
-                  schema:
-                      type: string
-                - in: query
-                  name: error
-                  schema:
-                      type: string
-                - in: query
-                  name: flaky
-                  schema:
-                      type: boolean
-                - in: query
-                  name: issues
-                  schema:
-                      type: string
-                - in: query
-                  name: noComment
-                  schema:
-                      type: boolean
-                - in: query
-                  name: noError
-                  schema:
-                      type: boolean
-                - in: query
-                  name: noIssues
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: priority
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-                - in: query
-                  name: status
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseName
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseTypeIds
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayComponentIds
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayRunId
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayRunName
-                  schema:
-                      type: string
-                - in: query
-                  name: testraySubtaskId
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
-                - in: query
-                  name: userId
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayBuildId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: comment
+                    schema:
+                        type: string
+                -   in: query
+                    name: error
+                    schema:
+                        type: string
+                -   in: query
+                    name: flaky
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: issues
+                    schema:
+                        type: string
+                -   in: query
+                    name: noComment
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: noError
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: noIssues
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: priority
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseName
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseTypeIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayComponentIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayRunId
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayRunName
+                    schema:
+                        type: string
+                -   in: query
+                    name: testraySubtaskId
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: userId
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -612,12 +612,12 @@ paths:
         get:
             operationId: getTestrayExportCaseResultTestrayBuild
             parameters:
-                - in: path
-                  name: testrayBuildId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testrayBuildId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -630,44 +630,44 @@ paths:
         get:
             operationId: getTestrayRoutineDurationReportsTestrayRoutinePage
             parameters:
-                - in: path
-                  name: testrayRoutineId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: flaky
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: priority
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseName
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseTypeIds
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayComponentIds
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayRoutineId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: flaky
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: priority
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseName
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseTypeIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayComponentIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -686,12 +686,12 @@ paths:
         get:
             operationId: getTestrayRunComparisonByTestrayRoutineIdTestrayRoutine
             parameters:
-                - in: path
-                  name: testrayRoutineId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testrayRoutineId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -706,22 +706,22 @@ paths:
         get:
             operationId: getTestrayRunComparison
             parameters:
-                - in: path
-                  name: testrayRunId1
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: testrayRunId2
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayRunId1
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: testrayRunId2
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -736,46 +736,46 @@ paths:
         get:
             operationId: getTestrayRunComparisonRun
             parameters:
-                - in: path
-                  name: testrayRunId1
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: testrayRunId2
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultError1
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultError2
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultIssue1
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultIssue2
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultStatus1
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultStatus2
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayRunId1
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: testrayRunId2
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultError1
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultError2
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultIssue1
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultIssue2
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultStatus1
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultStatus2
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -790,54 +790,54 @@ paths:
         get:
             operationId: getTestrayRunComparisonTestrayCaseResultComparisonsPage
             parameters:
-                - in: path
-                  name: testrayRunId1
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: testrayRunId2
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: testrayCaseResultError1
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultError2
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultIssue1
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultIssue2
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultStatus1
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseResultStatus2
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayRunId1
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: testrayRunId2
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: testrayCaseResultError1
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultError2
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultIssue1
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultIssue2
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultStatus1
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseResultStatus2
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -856,28 +856,28 @@ paths:
         get:
             operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayCaseTypesMetricsPage
             parameters:
-                - in: path
-                  name: testrayBuildId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: string
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCasePriorities
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayBuildId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: string
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCasePriorities
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -896,32 +896,32 @@ paths:
         get:
             operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayComponentsMetricsPage
             parameters:
-                - in: path
-                  name: testrayBuildId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: string
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCasePriorities
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseTypes
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayBuildId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: string
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCasePriorities
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseTypes
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -940,32 +940,32 @@ paths:
         get:
             operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayRunsMetricsPage
             parameters:
-                - in: path
-                  name: testrayBuildId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: string
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCasePriorities
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseTypes
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayBuildId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: string
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCasePriorities
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseTypes
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -984,37 +984,37 @@ paths:
         get:
             operationId: getTestrayStatusMetricByTestrayBuildIdTestrayBuildTestrayTeamsMetricsPage
             parameters:
-                - in: path
-                  name: testrayBuildId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: string
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCasePriorities
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayCaseTypes
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayRunId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayBuildId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: string
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCasePriorities
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayCaseTypes
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayRunId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1033,24 +1033,24 @@ paths:
         get:
             operationId: getTestrayStatusMetricByTestrayProjectIdTestrayProjectTestrayRoutinesMetricsPage
             parameters:
-                - in: path
-                  name: testrayProjectId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: string
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayProjectId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: string
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1069,37 +1069,37 @@ paths:
         get:
             operationId: getTestrayStatusMetricByTestrayRoutineIdTestrayRoutineTestrayBuildsMetricsPage
             parameters:
-                - in: path
-                  name: testrayRoutineId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: string
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayBuildId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: testrayBuildName
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayProductVersion
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTaskStatus
-                  schema:
-                      type: string
+                -   in: path
+                    name: testrayRoutineId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: string
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayBuildId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: testrayBuildName
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayProductVersion
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTaskStatus
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1150,12 +1150,12 @@ paths:
         put:
             operationId: putTestrayTestFlowByTestraySubtaskIdTestraySubtask
             parameters:
-                - in: path
-                  name: testraySubtaskId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testraySubtaskId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -1188,51 +1188,51 @@ paths:
         get:
             operationId: getTestrayTestFlowTestraySubtaskPage
             parameters:
-                - in: query
-                  name: error
-                  schema:
-                      type: string
-                - in: query
-                  name: issues
-                  schema:
-                      type: string
-                - in: query
-                  name: name
-                  schema:
-                      type: string
-                - in: query
-                  name: noIssues
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: status
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayComponentIds
-                  schema:
-                      type: string
-                - in: query
-                  name: testrayTaskId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: testrayTeamIds
-                  schema:
-                      type: string
-                - in: query
-                  name: userId
-                  schema:
-                      type: string
+                -   in: query
+                    name: error
+                    schema:
+                        type: string
+                -   in: query
+                    name: issues
+                    schema:
+                        type: string
+                -   in: query
+                    name: name
+                    schema:
+                        type: string
+                -   in: query
+                    name: noIssues
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: status
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayComponentIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: testrayTaskId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: testrayTeamIds
+                    schema:
+                        type: string
+                -   in: query
+                    name: userId
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1280,12 +1280,12 @@ paths:
         post:
             operationId: postTestrayTestFlow
             parameters:
-                - in: path
-                  name: testrayTaskId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testrayTaskId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:

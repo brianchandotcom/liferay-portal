@@ -1,6 +1,6 @@
 assemble:
-    - from: foo
-      include: foo.txt
-      into: static
+    -   from: foo
+        include: foo.txt
+        into: static
 client-extension:
     type: customElement

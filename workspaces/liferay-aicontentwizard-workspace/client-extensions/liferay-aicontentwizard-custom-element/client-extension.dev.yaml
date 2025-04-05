@@ -1,10 +1,10 @@
 liferay-aicontentwizard-custom-element-app:
     urls:
-        - http://localhost:5173/@vite/client
-        - http://localhost:5173/@vite/refresh.ts
-        - http://localhost:5173/src/main.tsx
+        -   http://localhost:5173/@vite/client
+        -   http://localhost:5173/@vite/refresh.ts
+        -   http://localhost:5173/src/main.tsx
 liferay-aicontentwizard-custom-element-settings:
     urls:
-        - http://localhost:5173/@vite/client
-        - http://localhost:5173/@vite/refresh.ts
-        - http://localhost:5173/src/main.tsx
+        -   http://localhost:5173/@vite/client
+        -   http://localhost:5173/@vite/refresh.ts
+        -   http://localhost:5173/src/main.tsx

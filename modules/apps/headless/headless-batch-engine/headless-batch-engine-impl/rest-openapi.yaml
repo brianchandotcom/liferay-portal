@@ -169,11 +169,11 @@ paths:
                 Retrieves the export task by external reference code.
             operationId: getExportTaskByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 202:
                     content:
@@ -191,11 +191,11 @@ paths:
                 Retrieves the exported content by external reference code.
             operationId: getExportTaskByExternalReferenceCodeContent
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -211,36 +211,36 @@ paths:
                 Submits a request for exporting items to a file.
             operationId: postExportTask
             parameters:
-                - in: path
-                  name: className
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contentType
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: batchNestedFields
-                  schema:
-                      type: string
-                - in: query
-                  name: callbackURL
-                  schema:
-                      type: string
-                - in: query
-                  name: externalReferenceCode
-                  schema:
-                      type: string
-                - in: query
-                  name: fieldNames
-                  schema:
-                      type: string
-                - in: query
-                  name: taskItemDelegateName
-                  schema:
-                      type: string
+                -   in: path
+                    name: className
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contentType
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: batchNestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: callbackURL
+                    schema:
+                        type: string
+                -   in: query
+                    name: externalReferenceCode
+                    schema:
+                        type: string
+                -   in: query
+                    name: fieldNames
+                    schema:
+                        type: string
+                -   in: query
+                    name: taskItemDelegateName
+                    schema:
+                        type: string
             responses:
                 202:
                     content:
@@ -260,12 +260,12 @@ paths:
                 Retrieves the export task.
             operationId: getExportTask
             parameters:
-                - in: path
-                  name: exportTaskId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: exportTaskId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 202:
                     content:
@@ -283,12 +283,12 @@ paths:
                 Retrieves the exported content.
             operationId: getExportTaskContent
             parameters:
-                - in: path
-                  name: exportTaskId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: exportTaskId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -304,11 +304,11 @@ paths:
                 Retrieves the import task by external reference code.
             operationId: getImportTaskByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -325,11 +325,11 @@ paths:
                 Retrieves the exported content by external reference code.
             operationId: getImportTaskByExternalReferenceCodeContent
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -342,11 +342,11 @@ paths:
         get:
             operationId: getImportTaskByExternalReferenceCodeFailedItemReport
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -362,28 +362,28 @@ paths:
                 Uploads a new file for deleting items in batch.
             operationId: deleteImportTask
             parameters:
-                - in: path
-                  name: className
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: callbackURL
-                  schema:
-                      type: string
-                - in: query
-                  name: externalReferenceCode
-                  schema:
-                      type: string
-                - in: query
-                  name: importStrategy
-                  schema:
-                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                      type: string
-                - in: query
-                  name: taskItemDelegateName
-                  schema:
-                      type: string
+                -   in: path
+                    name: className
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: callbackURL
+                    schema:
+                        type: string
+                -   in: query
+                    name: externalReferenceCode
+                    schema:
+                        type: string
+                -   in: query
+                    name: importStrategy
+                    schema:
+                        enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
+                        type: string
+                -   in: query
+                    name: taskItemDelegateName
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -422,45 +422,45 @@ paths:
                 Uploads a new file for creating new items in batch.
             operationId: postImportTask
             parameters:
-                - in: path
-                  name: className
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: batchExternalReferenceCode
-                  schema:
-                      type: string
-                - in: query
-                  name: batchRestrictFields
-                  schema:
-                      type: string
-                - in: query
-                  name: callbackURL
-                  schema:
-                      type: string
-                - in: query
-                  name: createStrategy
-                  schema:
-                      enum: [INSERT, UPSERT]
-                      type: string
-                - in: query
-                  name: externalReferenceCode
-                  schema:
-                      type: string
-                - in: query
-                  name: fieldNameMapping
-                  schema:
-                      type: string
-                - in: query
-                  name: importStrategy
-                  schema:
-                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                      type: string
-                - in: query
-                  name: taskItemDelegateName
-                  schema:
-                      type: string
+                -   in: path
+                    name: className
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: batchExternalReferenceCode
+                    schema:
+                        type: string
+                -   in: query
+                    name: batchRestrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: callbackURL
+                    schema:
+                        type: string
+                -   in: query
+                    name: createStrategy
+                    schema:
+                        enum: [INSERT, UPSERT]
+                        type: string
+                -   in: query
+                    name: externalReferenceCode
+                    schema:
+                        type: string
+                -   in: query
+                    name: fieldNameMapping
+                    schema:
+                        type: string
+                -   in: query
+                    name: importStrategy
+                    schema:
+                        enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
+                        type: string
+                -   in: query
+                    name: taskItemDelegateName
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -499,33 +499,33 @@ paths:
                 Uploads a new file for updating items in batch.
             operationId: putImportTask
             parameters:
-                - in: path
-                  name: className
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: callbackURL
-                  schema:
-                      type: string
-                - in: query
-                  name: externalReferenceCode
-                  schema:
-                      type: string
-                - in: query
-                  name: importStrategy
-                  schema:
-                      enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
-                      type: string
-                - in: query
-                  name: taskItemDelegateName
-                  schema:
-                      type: string
-                - in: query
-                  name: updateStrategy
-                  schema:
-                      enum: [PARTIAL_UPDATE, UPDATE]
-                      type: string
+                -   in: path
+                    name: className
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: callbackURL
+                    schema:
+                        type: string
+                -   in: query
+                    name: externalReferenceCode
+                    schema:
+                        type: string
+                -   in: query
+                    name: importStrategy
+                    schema:
+                        enum: [ON_ERROR_CONTINUE, ON_ERROR_FAIL]
+                        type: string
+                -   in: query
+                    name: taskItemDelegateName
+                    schema:
+                        type: string
+                -   in: query
+                    name: updateStrategy
+                    schema:
+                        enum: [PARTIAL_UPDATE, UPDATE]
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -566,12 +566,12 @@ paths:
                 Retrieves the import task.
             operationId: getImportTask
             parameters:
-                - in: path
-                  name: importTaskId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: importTaskId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -588,12 +588,12 @@ paths:
                 Retrieves the exported content.
             operationId: getImportTaskContent
             parameters:
-                - in: path
-                  name: importTaskId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: importTaskId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -606,12 +606,12 @@ paths:
         get:
             operationId: getImportTaskFailedItemReport
             parameters:
-                - in: path
-                  name: importTaskId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: importTaskId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:

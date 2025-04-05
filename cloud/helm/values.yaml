@@ -5,12 +5,12 @@ autoscaling:
     enabled: false
     maxReplicas: 100
     metrics:
-        - resource:
-              name: cpu
-              target:
-                  averageUtilization: 80
-                  type: Utilization
-          type: Resource
+        -   resource:
+                name: cpu
+                target:
+                    averageUtilization: 80
+                    type: Utilization
+            type: Resource
     minReplicas: 1
 configmap:
     annotations: {}
@@ -33,22 +33,22 @@ dependencies:
         portalProperties: ""
         source: external
 env:
-    - name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
-      value: "${env.POD_ID}"
-    - name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_UDP_QUOTE__CLOSEBRACKET_
-      value: "${env.POD_ID}"
-    - name: LIFERAY_PORTAL_PERIOD_INSTANCE_PERIOD_INET_PERIOD_SOCKET_PERIOD_ADDRESS
-      value: "${env.POD_ID}:8080"
-    - name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
-      value: "true"
-    - name: POD_ID
-      valueFrom:
-          fieldRef:
-              fieldPath: status.podIP
+    -   name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
+        value: "${env.POD_ID}"
+    -   name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_UDP_QUOTE__CLOSEBRACKET_
+        value: "${env.POD_ID}"
+    -   name: LIFERAY_PORTAL_PERIOD_INSTANCE_PERIOD_INET_PERIOD_SOCKET_PERIOD_ADDRESS
+        value: "${env.POD_ID}:8080"
+    -   name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
+        value: "true"
+    -   name: POD_ID
+        valueFrom:
+            fieldRef:
+                fieldPath: status.podIP
 envFrom:
-    - secretRef:
-          name: liferay
-          optional: true
+    -   secretRef:
+            name: liferay
+            optional: true
 fullnameOverride: ""
 image:
     pullPolicy: IfNotPresent
@@ -62,50 +62,50 @@ ingress:
     rules: []
     tls: []
 initContainers:
-    - containerTemplate: |
-          - command:
-                - /bin/sh
-                - -c
-                - |
-                      if [ -z "$(ls -A '/temp/liferay/data')" ]
-                      then
-                          mkdir -p /temp/liferay/data
+    -   containerTemplate: |
+            -   command:
+                    -   /bin/sh
+                    -   -c
+                    -   |
+                            if [ -z "$(ls -A '/temp/liferay/data')" ]
+                            then
+                                mkdir -p /temp/liferay/data
 
-                          cp -frv /opt/liferay/data/* /temp/liferay/data
-                      fi
+                                cp -frv /opt/liferay/data/* /temp/liferay/data
+                            fi
 
-                      if [ ! -f /temp/liferay/data/license/*.li ]
-                      then
-                          mkdir -p /temp/liferay/deploy
+                            if [ ! -f /temp/liferay/data/license/*.li ]
+                            then
+                                mkdir -p /temp/liferay/deploy
 
-                          cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
-                      fi
-            image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
-            imagePullPolicy: {{ .image.pullPolicy }}
-            name: liferay-prepopulate-data
-            volumeMounts:
-                - mountPath: /temp
-                  name: liferay-persistent-volume
-    - containerTemplate: |
-          - command:
-                - /bin/sh
-                - -c
-                - |
-                      trap "echo 'Received signal to terminate.'; exit 0" SIGINT SIGTERM
+                                cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
+                            fi
+                image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+                imagePullPolicy: {{ .image.pullPolicy }}
+                name: liferay-prepopulate-data
+                volumeMounts:
+                    -   mountPath: /temp
+                        name: liferay-persistent-volume
+    -   containerTemplate: |
+            -   command:
+                    -   /bin/sh
+                    -   -c
+                    -   |
+                            trap "echo 'Received signal to terminate.'; exit 0" SIGINT SIGTERM
 
-                      {{- range .dependencies }}
-                          {{- if eq .source "statefulset" }}
-                              until nc -vz -w 2 liferay-{{ .name }} {{ (index .statefulset.service.ports 0).port }}
-                              do
-                                  echo "Waiting for liferay-{{ .name }}..."
+                            {{- range .dependencies }}
+                                {{- if eq .source "statefulset" }}
+                                    until nc -vz -w 2 liferay-{{ .name }} {{ (index .statefulset.service.ports 0).port }}
+                                    do
+                                        echo "Waiting for liferay-{{ .name }}..."
 
-                                  sleep 2
-                              done
-                          {{- end }}
-                      {{- end }}
-            image: busybox:latest
-            imagePullPolicy: IfNotPresent
-            name: liferay-wait-on-services
+                                        sleep 2
+                                    done
+                                {{- end }}
+                            {{- end }}
+                image: busybox:latest
+                imagePullPolicy: IfNotPresent
+                name: liferay-wait-on-services
 livenessProbe:
     failureThreshold: 2
     httpGet:
@@ -125,15 +125,15 @@ portalBundleDenyList: []
 portalComponentDenyList: []
 portalProperties:
 ports:
-    - containerPort: 7800
-      name: cluster
-      protocol: TCP
-    - containerPort: 8000
-      name: debug
-      protocol: TCP
-    - containerPort: 8080
-      name: http
-      protocol: TCP
+    -   containerPort: 7800
+        name: cluster
+        protocol: TCP
+    -   containerPort: 8000
+        name: debug
+        protocol: TCP
+    -   containerPort: 8080
+        name: http
+        protocol: TCP
 pullSecrets: []
 readinessProbe:
     failureThreshold: 2
@@ -148,19 +148,19 @@ schedulingGates: []
 securityContext:
     capabilities:
         drop:
-            - ALL
+            -   ALL
     readOnlyRootFilesystem: true
 service:
     annotations: {}
     ports:
-        - name: cluster
-          port: 7800
-          protocol: TCP
-          targetPort: cluster
-        - name: http
-          port: 8080
-          protocol: TCP
-          targetPort: http
+        -   name: cluster
+            port: 7800
+            protocol: TCP
+            targetPort: cluster
+        -   name: http
+            port: 8080
+            protocol: TCP
+            targetPort: http
     type: ClusterIP
 serviceAccount:
     annotations: {}
@@ -170,12 +170,12 @@ serviceAccount:
     role:
         annotations: {}
         rules:
-            - apiGroups:
-                  - ""
-              resources:
-                  - configmaps
-              verbs:
-                  - "*"
+            -   apiGroups:
+                    -   ""
+                resources:
+                    -   configmaps
+                verbs:
+                    -   "*"
 startupProbe:
     failureThreshold: 30
     httpGet:
@@ -187,65 +187,65 @@ tolerations: []
 updateStrategy:
     type: RollingUpdate
 volumeClaimTemplates:
-    - metadata:
-          name: liferay-persistent-volume
-      spec:
-          accessModes:
-              - ReadWriteOnce
-          resources:
-              requests:
-                  storage: 1Gi
+    -   metadata:
+            name: liferay-persistent-volume
+        spec:
+            accessModes:
+                -   ReadWriteOnce
+            resources:
+                requests:
+                    storage: 1Gi
 volumeMounts:
-    - mountPath: /opt/liferay/data
-      name: liferay-persistent-volume
-      subPath: liferay/data
-    - mountPath: /opt/liferay/deploy
-      name: liferay-persistent-volume
-      subPath: liferay/deploy
-    - mountPath: /opt/liferay/liferay.pid
-      name: liferay-persistent-volume
-      subPath: liferay/liferay.pid
-    - mountPath: /opt/liferay/logs
-      name: liferay-persistent-volume
-      subPath: liferay/logs
-    - mountPath: /opt/liferay/osgi/configs
-      name: liferay-persistent-volume
-      subPath: osgi/configs
-    - mountPath: /opt/liferay/osgi/configs/com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
-      name: liferay-configmap
-      subPath: com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
-    - mountPath: /opt/liferay/osgi/modules
-      name: liferay-persistent-volume
-      subPath: osgi/modules
-    - mountPath: /opt/liferay/osgi/state
-      name: liferay-persistent-volume
-      subPath: osgi/state
-    - mountPath: /opt/liferay/portal-cloud.properties
-      name: liferay-configmap
-      subPath: portal-cloud.properties
-    - mountPath: /opt/liferay/portal-ext.properties
-      name: liferay-configmap
-      subPath: portal-ext.properties
-    - mountPath: /opt/liferay/reports
-      name: liferay-persistent-volume
-      subPath: liferay/reports
-    - mountPath: /opt/liferay/routes
-      name: liferay-persistent-volume
-      subPath: liferay/routes
-    - mountPath: /opt/liferay/tomcat/logs
-      name: liferay-persistent-volume
-      subPath: tomcat/logs
-    - mountPath: /opt/liferay/tomcat/temp
-      name: liferay-persistent-volume
-      subPath: tomcat/temp
-    - mountPath: /opt/liferay/tomcat/work
-      name: liferay-persistent-volume
-      subPath: tomcat/work
-    - mountPath: /opt/liferay/work
-      name: liferay-persistent-volume
-      subPath: liferay/work
+    -   mountPath: /opt/liferay/data
+        name: liferay-persistent-volume
+        subPath: liferay/data
+    -   mountPath: /opt/liferay/deploy
+        name: liferay-persistent-volume
+        subPath: liferay/deploy
+    -   mountPath: /opt/liferay/liferay.pid
+        name: liferay-persistent-volume
+        subPath: liferay/liferay.pid
+    -   mountPath: /opt/liferay/logs
+        name: liferay-persistent-volume
+        subPath: liferay/logs
+    -   mountPath: /opt/liferay/osgi/configs
+        name: liferay-persistent-volume
+        subPath: osgi/configs
+    -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+        name: liferay-configmap
+        subPath: com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+    -   mountPath: /opt/liferay/osgi/modules
+        name: liferay-persistent-volume
+        subPath: osgi/modules
+    -   mountPath: /opt/liferay/osgi/state
+        name: liferay-persistent-volume
+        subPath: osgi/state
+    -   mountPath: /opt/liferay/portal-cloud.properties
+        name: liferay-configmap
+        subPath: portal-cloud.properties
+    -   mountPath: /opt/liferay/portal-ext.properties
+        name: liferay-configmap
+        subPath: portal-ext.properties
+    -   mountPath: /opt/liferay/reports
+        name: liferay-persistent-volume
+        subPath: liferay/reports
+    -   mountPath: /opt/liferay/routes
+        name: liferay-persistent-volume
+        subPath: liferay/routes
+    -   mountPath: /opt/liferay/tomcat/logs
+        name: liferay-persistent-volume
+        subPath: tomcat/logs
+    -   mountPath: /opt/liferay/tomcat/temp
+        name: liferay-persistent-volume
+        subPath: tomcat/temp
+    -   mountPath: /opt/liferay/tomcat/work
+        name: liferay-persistent-volume
+        subPath: tomcat/work
+    -   mountPath: /opt/liferay/work
+        name: liferay-persistent-volume
+        subPath: liferay/work
 volumes:
-    - configMap:
-          name: liferay
-          optional: true
-      name: liferay-configmap
+    -   configMap:
+            name: liferay
+            optional: true
+        name: liferay-configmap

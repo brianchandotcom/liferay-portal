@@ -1,8 +1,8 @@
 assemble:
-    - from: build/buildTheme/img
-      into: static/img
-    - from: build/buildTheme/images
-      into: static/images
+    -   from: build/buildTheme/img
+        into: static/img
+    -   from: build/buildTheme/images
+        into: static/images
 liferay-sample-theme-css-2:
     clayRTLURL: css/clay_rtl.css
     clayURL: css/clay.css

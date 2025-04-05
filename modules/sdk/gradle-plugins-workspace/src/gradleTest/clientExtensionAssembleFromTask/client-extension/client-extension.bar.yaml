@@ -1,4 +1,4 @@
 assemble:
-    - fromTask: barTask
+    -   fromTask: barTask
 foo-client-extension:
     type: customElement

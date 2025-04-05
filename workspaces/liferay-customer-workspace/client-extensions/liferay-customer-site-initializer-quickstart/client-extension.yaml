@@ -9,21 +9,21 @@ liferay-customer-site-initializer-quickstart-oahs:
     .serviceScheme: http
     name: Liferay Customer Site Initializer Quickstart OAuth Application Headless Server
     scopes:
-        - c_accountflag.everything
-        - c_accountsubscription.everything
-        - c_accountsubscriptiongroup.everything
-        - c_accountsubscriptionterm.everything
-        - c_admindxpcloud.everything
-        - c_adminliferayexperiencecloud.everything
-        - c_analyticscloudworkspace.everything
-        - c_bannedemaildomain.everything
-        - c_dxpcloudenvironment.everything
-        - c_incidentreportcontactanalyticscloud.everything
-        - c_koroneikiaccount.everything
-        - c_liferayexperiencecloudenvironment.everything
-        - Liferay.Headless.Admin.User.everything
-        - Liferay.Headless.Commerce.Admin.Catalog.everything
-        - Liferay.Headless.Commerce.Admin.Channel.everything
-        - Liferay.Headless.Commerce.Admin.Order.everything
-        - Liferay.Headless.Site.everything
+        -   c_accountflag.everything
+        -   c_accountsubscription.everything
+        -   c_accountsubscriptiongroup.everything
+        -   c_accountsubscriptionterm.everything
+        -   c_admindxpcloud.everything
+        -   c_adminliferayexperiencecloud.everything
+        -   c_analyticscloudworkspace.everything
+        -   c_bannedemaildomain.everything
+        -   c_dxpcloudenvironment.everything
+        -   c_incidentreportcontactanalyticscloud.everything
+        -   c_koroneikiaccount.everything
+        -   c_liferayexperiencecloudenvironment.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything
+        -   Liferay.Headless.Commerce.Admin.Channel.everything
+        -   Liferay.Headless.Commerce.Admin.Order.everything
+        -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

@@ -1,7 +1,7 @@
 assemble:
-    - from: assets
-      hashify: global.css
-      into: static
+    -   from: assets
+        hashify: global.css
+        into: static
 liferay-sample-global-css-2:
     name: Liferay Sample Global CSS 2
     type: globalCSS

@@ -1,30 +1,30 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay Jethr0 Etc Spring Boot OAuth Application Headless Server
     scopes:
-        - c_build.everything
-        - c_buildrun.everything
-        - c_environment.everything
-        - c_gitbranch.everything
-        - c_gitcommit.everything
-        - c_gitpullrequest.everything
-        - c_gituser.everything
-        - c_jenkinscohort.everything
-        - c_jenkinsnode.everything
-        - c_jenkinsserver.everything
-        - c_job.everything
-        - c_jobcomparator.everything
-        - c_jobdefinition.everything
-        - c_jobdefinitionparameter.everything
-        - c_jobprioritizer.everything
-        - c_jobqueueorder.everything
-        - c_routine.everything
-        - c_task.everything
-        - c_taskrun.everything
-        - c_testsuite.everything
+        -   c_build.everything
+        -   c_buildrun.everything
+        -   c_environment.everything
+        -   c_gitbranch.everything
+        -   c_gitcommit.everything
+        -   c_gitpullrequest.everything
+        -   c_gituser.everything
+        -   c_jenkinscohort.everything
+        -   c_jenkinsnode.everything
+        -   c_jenkinsserver.everything
+        -   c_job.everything
+        -   c_jobcomparator.everything
+        -   c_jobdefinition.everything
+        -   c_jobdefinitionparameter.everything
+        -   c_jobprioritizer.everything
+        -   c_jobqueueorder.everything
+        -   c_routine.everything
+        -   c_task.everything
+        -   c_taskrun.everything
+        -   c_testsuite.everything
     type: oAuthApplicationHeadlessServer
 liferay-jethr0-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081

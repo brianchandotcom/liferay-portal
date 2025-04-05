@@ -1,6 +1,6 @@
 assemble:
-    - from: batch
-      into: batch
+    -   from: batch
+        into: batch
 liferay-sample-batch:
     name: Liferay Sample Batch
     oAuthApplicationHeadlessServer: liferay-sample-batch-oauth-application-headless-server
@@ -10,7 +10,7 @@ liferay-sample-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Sample OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

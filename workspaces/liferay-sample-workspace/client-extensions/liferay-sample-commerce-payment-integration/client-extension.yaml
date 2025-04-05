@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-sample-commerce-payment-integration:
     key: liferay-sample-commerce-payment-integration
     name: Liferay Sample Commerce Payment Integration
@@ -17,5 +17,5 @@ liferay-sample-commerce-payment-integration-oauth-application-user-agent:
     .serviceScheme: http
     name: Liferay Sample Commerce Payment Integration OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent

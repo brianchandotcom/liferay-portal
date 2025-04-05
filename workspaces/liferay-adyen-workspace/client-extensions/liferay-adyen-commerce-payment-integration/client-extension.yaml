@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-adyen-commerce-payment-integration:
     key: liferay-adyen-commerce-payment-integration
     name: Liferay Adyen Commerce Payment Integration
@@ -19,17 +19,17 @@ liferay-adyen-commerce-payment-integration-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Adyen Commerce Payment Integration OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Headless.Commerce.Admin.Payment.everything
-        - Liferay.Object.Admin.REST.everything
-        - c_n1a0adyenwebhook.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Headless.Commerce.Admin.Payment.everything
+        -   Liferay.Object.Admin.REST.everything
+        -   c_n1a0adyenwebhook.everything
     type: oAuthApplicationHeadlessServer
 liferay-adyen-commerce-payment-integration-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay Adyen Commerce Payment Integration OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Commerce.Admin.Order.everything
-        - c_n1a0adyenwebhook.everything
+        -   Liferay.Headless.Commerce.Admin.Order.everything
+        -   c_n1a0adyenwebhook.everything
     type: oAuthApplicationUserAgent

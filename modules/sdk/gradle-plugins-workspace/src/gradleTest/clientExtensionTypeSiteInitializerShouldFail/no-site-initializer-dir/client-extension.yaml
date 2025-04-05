@@ -3,7 +3,7 @@ oauth:
     .serviceScheme: http
     name: oauth
     scopes:
-        - Liferay.Headless.Site.everything
+        -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer
 site-initializer:
     name: site initializer

@@ -44,10 +44,10 @@ components:
                 zip:
                     type: string
             required:
-                - city
-                - countryISOCode
-                - name
-                - street1
+                -   city
+                -   countryISOCode
+                -   name
+                -   street1
             type: object
         Cart:
             properties:
@@ -134,7 +134,7 @@ components:
                 useAsBilling:
                     type: boolean
             required:
-                - currencyCode
+                -   currencyCode
             type: object
         CartComment:
             properties:
@@ -207,7 +207,7 @@ components:
                 name:
                     type: string
             required:
-                - name
+                -   name
             type: object
         Organization:
             properties:
@@ -216,7 +216,7 @@ components:
                 name:
                     type: string
             required:
-                - name
+                -   name
             type: object
         Price:
             properties:
@@ -268,12 +268,12 @@ components:
                 punchOutStartURL:
                     type: string
             required:
-                - buyerAccountReferenceCode
-                - buyerGroup
-                - buyerUser
-                - cart
-                - punchOutReturnURL
-                - punchOutSessionType
+                -   buyerAccountReferenceCode
+                -   buyerGroup
+                -   buyerUser
+                -   cart
+                -   punchOutReturnURL
+                -   punchOutSessionType
             type: object
         Settings:
             properties:
@@ -361,7 +361,7 @@ components:
                         type: string
                     type: array
             required:
-                - email
+                -   email
             type: object
 info:
     description:

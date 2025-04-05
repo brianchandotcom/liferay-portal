@@ -1,6 +1,6 @@
 assemble:
-    - from: assets
-      into: static
+    -   from: assets
+        into: static
 liferay-learn-static-content:
     name: Liferay Learn Static Content
     type: staticContent

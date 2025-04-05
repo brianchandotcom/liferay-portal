@@ -116,34 +116,34 @@ paths:
         get:
             operationId: getGroupAssetMetric
             parameters:
-                - in: path
-                  name: groupId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: assetType
-                  schema:
-                      type: string
-                - in: query
-                  name: assetId
-                  schema:
-                      type: string
-                - in: query
-                  name: identityType
-                  schema:
-                      enum: [ALL, KNOWN, UNKNOWN]
-                      type: string
-                - in: query
-                  name: rangeKey
-                  schema:
-                      type: integer
-                - in: query
-                  name: selectedMetrics
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   in: path
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: assetType
+                    schema:
+                        type: string
+                -   in: query
+                    name: assetId
+                    schema:
+                        type: string
+                -   in: query
+                    name: identityType
+                    schema:
+                        enum: [ALL, KNOWN, UNKNOWN]
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
+                -   in: query
+                    name: selectedMetrics
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 200:
                     content:
@@ -158,28 +158,28 @@ paths:
         get:
             operationId: getGroupAssetMetricAssetTypeAppearsOnHistogram
             parameters:
-                - in: path
-                  name: groupId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: assetType
-                  schema:
-                      type: string
-                - in: query
-                  name: assetId
-                  schema:
-                      type: string
-                - in: query
-                  name: identityType
-                  schema:
-                      enum: [ALL, KNOWN, UNKNOWN]
-                      type: string
-                - in: query
-                  name: rangeKey
-                  schema:
-                      type: integer
+                -   in: path
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: assetType
+                    schema:
+                        type: string
+                -   in: query
+                    name: assetId
+                    schema:
+                        type: string
+                -   in: query
+                    name: identityType
+                    schema:
+                        enum: [ALL, KNOWN, UNKNOWN]
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -194,28 +194,28 @@ paths:
         get:
             operationId: getGroupAssetMetricAssetTypeDevice
             parameters:
-                - in: path
-                  name: groupId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: assetType
-                  schema:
-                      type: string
-                - in: query
-                  name: assetId
-                  schema:
-                      type: string
-                - in: query
-                  name: identityType
-                  schema:
-                      enum: [ALL, KNOWN, UNKNOWN]
-                      type: string
-                - in: query
-                  name: rangeKey
-                  schema:
-                      type: integer
+                -   in: path
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: assetType
+                    schema:
+                        type: string
+                -   in: query
+                    name: assetId
+                    schema:
+                        type: string
+                -   in: query
+                    name: identityType
+                    schema:
+                        enum: [ALL, KNOWN, UNKNOWN]
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -230,28 +230,28 @@ paths:
         get:
             operationId: getGroupAssetMetricAssetTypeHistogram
             parameters:
-                - in: path
-                  name: groupId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: assetType
-                  schema:
-                      type: string
-                - in: query
-                  name: assetId
-                  schema:
-                      type: string
-                - in: query
-                  name: identityType
-                  schema:
-                      enum: [ALL, KNOWN, UNKNOWN]
-                      type: string
-                - in: query
-                  name: rangeKey
-                  schema:
-                      type: integer
+                -   in: path
+                    name: groupId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: assetType
+                    schema:
+                        type: string
+                -   in: query
+                    name: assetId
+                    schema:
+                        type: string
+                -   in: query
+                    name: identityType
+                    schema:
+                        enum: [ALL, KNOWN, UNKNOWN]
+                        type: string
+                -   in: query
+                    name: rangeKey
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:

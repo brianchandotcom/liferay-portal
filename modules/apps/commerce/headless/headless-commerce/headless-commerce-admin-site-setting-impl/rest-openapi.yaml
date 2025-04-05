@@ -116,7 +116,7 @@ components:
                         hu_HU: Horvatorszag
                     type: object
             required:
-                - title
+                -   title
             type: object
         Error:
             properties:
@@ -143,10 +143,10 @@ components:
                     readOnly: true
                     type: integer
             required:
-                - errorCode
-                - errorDescription
-                - message
-                - status
+                -   errorCode
+                -   errorDescription
+                -   message
+                -   status
             type: object
         MeasurementUnit:
             properties:
@@ -192,9 +192,9 @@ components:
                     example: Dimensions
                     type: string
             required:
-                - key
-                - name
-                - type
+                -   key
+                -   name
+                -   type
             type: object
         TaxCategory:
             properties:
@@ -226,7 +226,7 @@ components:
                         hu_HU: Horvatorszag
                     type: object
             required:
-                - name
+                -   name
             type: object
         Warehouse:
             properties:
@@ -300,8 +300,8 @@ components:
                     example: "91765"
                     type: string
             required:
-                - commerceCountryId
-                - name
+                -   commerceCountryId
+                -   name
             type: object
     securitySchemes:
         BasicAuth:
@@ -338,18 +338,18 @@ paths:
         delete:
             operationId: deleteAvailabilityEstimate
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -365,28 +365,28 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes an Availability Estimate by ID.
             tags:
-                - AvailabilityEstimate
+                -   AvailabilityEstimate
         get:
             operationId: getAvailabilityEstimate
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -432,28 +432,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets an Availability Estimate by ID.
             tags:
-                - AvailabilityEstimate
+                -   AvailabilityEstimate
         put:
             operationId: putAvailabilityEstimate
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -504,43 +504,43 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates an Availability Estimate by ID.
             tags:
-                - AvailabilityEstimate
+                -   AvailabilityEstimate
     /commerceAdminSiteSetting/{groupId}/availabilityEstimate:
         get:
             operationId: getCommerceAdminSiteSettingGroupAvailabilityEstimatePage
             parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: groupId
+                    required: true
+                    schema:
+                        description:
+                            Group to filter (Liferay site)
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -587,28 +587,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a list of Availability Estimate.
             tags:
-                - AvailabilityEstimate
+                -   AvailabilityEstimate
         post:
             operationId: postCommerceAdminSiteSettingGroupAvailabilityEstimate
             parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: groupId
+                    required: true
+                    schema:
+                        description:
+                            Group to filter (Liferay site)
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -669,43 +669,43 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates or Updates an Availability Estimate.
             tags:
-                - AvailabilityEstimate
+                -   AvailabilityEstimate
     /commerceAdminSiteSetting/{groupId}/taxCategory:
         get:
             operationId: getCommerceAdminSiteSettingGroupTaxCategoryPage
             parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: groupId
+                    required: true
+                    schema:
+                        description:
+                            Group to filter (Liferay site)
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -752,28 +752,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a list of Tax Category.
             tags:
-                - TaxCategory
+                -   TaxCategory
         post:
             operationId: postCommerceAdminSiteSettingGroupTaxCategory
             parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: groupId
+                    required: true
+                    schema:
+                        description:
+                            Group to filter (Liferay site)
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -834,53 +834,53 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates a Tax Category.
             tags:
-                - TaxCategory
+                -   TaxCategory
     /commerceAdminSiteSetting/{groupId}/warehouse:
         get:
             operationId: getCommerceAdminSiteSettingGroupWarehousePage
             parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: active
-                  required: false
-                  schema:
-                      description:
-                          Active to filter
-                      example: true
-                      type: boolean
-                  style: form
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: groupId
+                    required: true
+                    schema:
+                        description:
+                            Group to filter (Liferay site)
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: active
+                    required: false
+                    schema:
+                        description:
+                            Active to filter
+                        example: true
+                        type: boolean
+                    style: form
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -927,28 +927,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a list of Warehouse.
             tags:
-                - Warehouse
+                -   Warehouse
         post:
             operationId: postCommerceAdminSiteSettingGroupWarehouse
             parameters:
-                - in: path
-                  explode: false
-                  name: groupId
-                  required: true
-                  schema:
-                      description:
-                          Group to filter (Liferay site)
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: groupId
+                    required: true
+                    schema:
+                        description:
+                            Group to filter (Liferay site)
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1009,37 +1009,37 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates a Warehouse.
             tags:
-                - Warehouse
+                -   Warehouse
     /measurement-units:
         get:
             operationId: getMeasurementUnitsPage
             parameters:
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1089,13 +1089,13 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a List of Measurement Unit.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         post:
             operationId: postMeasurementUnit
             requestBody:
@@ -1158,28 +1158,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: "Creates or updates a Measurement Unit."
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
     /measurement-units/by-externalReferenceCode/{externalReferenceCode}:
         delete:
             operationId: deleteMeasurementUnitByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 204:
                     content:
@@ -1196,27 +1196,27 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Measurement Unit by external reference code.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         get:
             operationId: getMeasurementUnitByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 200:
                     content:
@@ -1262,27 +1262,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Measurement Unit by external reference code.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         patch:
             operationId: patchMeasurementUnitByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1333,27 +1333,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Measurement Unit by external reference code.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         put:
             operationId: putMeasurementUnitByExternalReferenceCode
             parameters:
-                - in: path
-                  explode: false
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1414,28 +1414,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Creates or updates a Measurement Unit.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
     /measurement-units/by-key/{key}:
         delete:
             operationId: deleteMeasurementUnitByKey
             parameters:
-                - in: path
-                  explode: false
-                  name: key
-                  required: true
-                  schema:
-                      description:
-                          The resource key
-                      example: kg
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: key
+                    required: true
+                    schema:
+                        description:
+                            The resource key
+                        example: kg
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 204:
                     content:
@@ -1452,27 +1452,27 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Measurement Unit by key.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         get:
             operationId: getMeasurementUnitByKey
             parameters:
-                - in: path
-                  explode: false
-                  name: key
-                  required: true
-                  schema:
-                      description:
-                          The resource key
-                      example: kg
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: key
+                    required: true
+                    schema:
+                        description:
+                            The resource key
+                        example: kg
+                        minLength: 1
+                        type: string
+                    style: simple
             responses:
                 200:
                     content:
@@ -1518,27 +1518,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Measurement Unit by key.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         patch:
             operationId: patchMeasurementUnitByKey
             parameters:
-                - in: path
-                  explode: false
-                  name: key
-                  required: true
-                  schema:
-                      description:
-                          The resource key
-                      example: kg
-                      minLength: 1
-                      type: string
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: key
+                    required: true
+                    schema:
+                        description:
+                            The resource key
+                        example: kg
+                        minLength: 1
+                        type: string
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1589,43 +1589,43 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Measurement Unit by key.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
     /measurement-units/by-type/{measurementUnitType}:
         get:
             operationId: getMeasurementUnitsByType
             parameters:
-                - in: path
-                  explode: false
-                  name: measurementUnitType
-                  required: true
-                  schema:
-                      description:
-                          The resource type
-                      example: Dimensions
-                      minLength: 1
-                      type: string
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: measurementUnitType
+                    required: true
+                    schema:
+                        description:
+                            The resource type
+                        example: Dimensions
+                        minLength: 1
+                        type: string
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1675,29 +1675,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a List of Measurement Unit by type.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
     /measurement-units/{id}:
         delete:
             operationId: deleteMeasurementUnit
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     content:
@@ -1714,28 +1714,28 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Measurement Unit by ID.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         get:
             operationId: getMeasurementUnit
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -1781,28 +1781,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Measurement Unit by ID.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
         patch:
             operationId: patchMeasurementUnit
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -1853,29 +1853,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Measurement Unit by ID.
             tags:
-                - MeasurementUnit
+                -   MeasurementUnit
     /taxCategory/{id}:
         delete:
             operationId: deleteTaxCategory
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -1891,28 +1891,28 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Tax Category by ID.
             tags:
-                - TaxCategory
+                -   TaxCategory
         get:
             operationId: getTaxCategory
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -1958,28 +1958,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Tax Category by ID.
             tags:
-                - TaxCategory
+                -   TaxCategory
         put:
             operationId: putTaxCategory
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2030,29 +2030,29 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Tax Category by ID.
             tags:
-                - TaxCategory
+                -   TaxCategory
     /warehouse/{id}:
         delete:
             operationId: deleteWarehouse
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     description:
@@ -2068,28 +2068,28 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Deletes a Warehouse by ID.
             tags:
-                - Warehouse
+                -   Warehouse
         get:
             operationId: getWarehouse
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2135,28 +2135,28 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.read
             summary: Gets a Warehouse by ID.
             tags:
-                - Warehouse
+                -   Warehouse
         put:
             operationId: putWarehouse
             parameters:
-                - in: path
-                  explode: false
-                  name: id
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: id
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2207,71 +2207,71 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceAdminSiteSetting.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceAdminSiteSetting.write
             summary: Updates a Warehouse by ID.
             tags:
-                - Warehouse
+                -   Warehouse
 servers:
-    - description:
-          Liferay Commerce API server
-      url: https://commerce.{environment}.liferay.com/commerce-admin-site-setting/{basePath}
-      variables:
-          basePath:
-              default: v1.0
-          environment:
-              default: api
-              enum:
-                  - api
-                  - api.dev
-                  - api.uat
-    - description:
-          Liferay Commerce Local Development (Hosts file)
-      url: "{protocol}://{host}:{port}/o/commerce-admin-site-setting/{basePath}"
-      variables:
-          basePath:
-              default: v1.0
-          host:
-              default: test.dev
-          port:
-              default: "8080"
-              enum:
-                  - "443"
-                  - "8080"
-                  - "8443"
-          protocol:
-              default: http
-              enum:
-                  - http
-                  - https
-    - description:
-          Liferay Commerce Local Development with Ngrok
-      url: "{protocol}://{host}.ngrok.io/o/commerce-admin-site-setting/{basePath}"
-      variables:
-          basePath:
-              default: v1.0
-          host:
-              default: commerce
-          protocol:
-              default: http
-              enum:
-                  - http
-                  - https
-    - description:
-          SwaggerHub API Auto Mocking
-      url: https://virtserver.swaggerhub.com/liferay6/commerce-admin-site-setting/v1.0
+    -   description:
+            Liferay Commerce API server
+        url: https://commerce.{environment}.liferay.com/commerce-admin-site-setting/{basePath}
+        variables:
+            basePath:
+                default: v1.0
+            environment:
+                default: api
+                enum:
+                    -   api
+                    -   api.dev
+                    -   api.uat
+    -   description:
+            Liferay Commerce Local Development (Hosts file)
+        url: "{protocol}://{host}:{port}/o/commerce-admin-site-setting/{basePath}"
+        variables:
+            basePath:
+                default: v1.0
+            host:
+                default: test.dev
+            port:
+                default: "8080"
+                enum:
+                    -   "443"
+                    -   "8080"
+                    -   "8443"
+            protocol:
+                default: http
+                enum:
+                    -   http
+                    -   https
+    -   description:
+            Liferay Commerce Local Development with Ngrok
+        url: "{protocol}://{host}.ngrok.io/o/commerce-admin-site-setting/{basePath}"
+        variables:
+            basePath:
+                default: v1.0
+            host:
+                default: commerce
+            protocol:
+                default: http
+                enum:
+                    -   http
+                    -   https
+    -   description:
+            SwaggerHub API Auto Mocking
+        url: https://virtserver.swaggerhub.com/liferay6/commerce-admin-site-setting/v1.0
 tags:
-    - description:
-          Operations on Availability Estimates
-      name: AvailabilityEstimate
-    - description:
-          Operations on Measurement Units
-      name: MeasurementUnit
-    - description:
-          Operations on Tax Categories
-      name: TaxCategory
-    - description:
-          Operations on Warehouses
-      name: Warehouse
+    -   description:
+            Operations on Availability Estimates
+        name: AvailabilityEstimate
+    -   description:
+            Operations on Measurement Units
+        name: MeasurementUnit
+    -   description:
+            Operations on Tax Categories
+        name: TaxCategory
+    -   description:
+            Operations on Warehouses
+        name: Warehouse

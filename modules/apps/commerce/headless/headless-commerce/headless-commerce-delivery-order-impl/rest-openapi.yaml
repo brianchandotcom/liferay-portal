@@ -957,26 +957,26 @@ paths:
             description:
                 Retrieves placed orders for specific account in the given channel.
             parameters:
-                - in: path
-                  name: accountExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: channelExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    name: accountExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: channelExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1029,36 +1029,36 @@ paths:
                 Retrieves placed orders in the given channel.
             operationId: getChannelByExternalReferenceCodePlacedOrdersPage
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1110,36 +1110,36 @@ paths:
             description:
                 Retrieves placed orders for specific account in the given channel.
             parameters:
-                - in: path
-                  explode: false
-                  name: accountId
-                  required: true
-                  schema:
-                      description:
-                          Account Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: accountId
+                    required: true
+                    schema:
+                        description:
+                            Account Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -1192,41 +1192,41 @@ paths:
                 Retrieves placed orders in the given channel.
             operationId: getChannelPlacedOrdersPage
             parameters:
-                - in: path
-                  explode: false
-                  name: channelId
-                  required: true
-                  schema:
-                      description:
-                          Channel Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: channelId
+                    required: true
+                    schema:
+                        description:
+                            Channel Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1276,11 +1276,11 @@ paths:
     /placed-order-comments/by-externalReferenceCode/{externalReferenceCode}:
         get:
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1330,16 +1330,16 @@ paths:
     /placed-order-comments/{placedOrderCommentId}:
         get:
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderCommentId
-                  required: true
-                  schema:
-                      description:
-                          Note Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderCommentId
+                    required: true
+                    schema:
+                        description:
+                            Note Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -1391,11 +1391,11 @@ paths:
             description:
                 Retrieve information of the given placed order item.
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1441,11 +1441,11 @@ paths:
             description:
                 Retrieve shipments of the given placed order item.
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1495,16 +1495,16 @@ paths:
             description:
                 Retrieve information of the given Placed Order.
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderItemId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Item Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderItemId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Item Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -1550,16 +1550,16 @@ paths:
             description:
                 Retrieve shipments of the given Placed Order Item.
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderItemId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Item Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderItemId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Item Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -1610,11 +1610,11 @@ paths:
                 Retrieve information of the given Placed Order.
             operationId: getPlacedOrderByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -1658,15 +1658,15 @@ paths:
         patch:
             operationId: patchPlacedOrderByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -1725,25 +1725,25 @@ paths:
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments:
         get:
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -1790,20 +1790,20 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceDeliveryOrder.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceDeliveryOrder.read
             summary: Gets a list of attachments related to an order.
             tags: ["Attachment"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-base64:
         post:
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -1864,25 +1864,25 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceDeliveryOrder.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceDeliveryOrder.write
             summary: Creates an attachment related to an order.
             tags: ["Attachment"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}:
         delete:
             parameters:
-                - in: path
-                  name: attachmentExternalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: attachmentExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -1899,10 +1899,10 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceDeliveryOrder.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceDeliveryOrder.write
             summary: Deletes an attachment by external reference code.
             tags: ["Attachment"]
     /placed-orders/by-externalReferenceCode/{externalReferenceCode}/delivery-term:
@@ -1910,15 +1910,15 @@ paths:
             description:
                 Retrieve delivery term of the given Placed Order.
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
             responses:
                 200:
                     content:
@@ -1964,15 +1964,15 @@ paths:
             description:
                 Retrieve payment term of the given Placed Order.
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      description:
-                          The resource external reference code
-                      example: AB-34098-789-N
-                      minLength: 1
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        description:
+                            The resource external reference code
+                        example: AB-34098-789-N
+                        minLength: 1
+                        type: string
             responses:
                 200:
                     content:
@@ -2017,16 +2017,16 @@ paths:
         get:
             operationId: getPlacedOrderByExternalReferenceCodePaymentURL
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: callbackURL
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: callbackURL
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2040,11 +2040,11 @@ paths:
                 Retrieve placed order billing address.
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2089,21 +2089,21 @@ paths:
         get:
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderCommentsPage
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -2160,37 +2160,37 @@ paths:
                 Retrieve placed order items.
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderItemsPage
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: skuId
-                  required: false
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: skuId
+                    required: false
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2243,11 +2243,11 @@ paths:
                 Retrieve placed order shipping address.
             operationId: getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2292,36 +2292,36 @@ paths:
         get:
             operationId: getPlacedOrderByExternalReferenceCodeShipmentsPage
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2377,16 +2377,16 @@ paths:
             description:
                 Retrieve information of the given Placed Order.
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Order Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Order Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2430,16 +2430,16 @@ paths:
         patch:
             operationId: patchPlacedOrder
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Order Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Order Id
+                        format: int64
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2498,32 +2498,32 @@ paths:
     /placed-orders/{placedOrderId}/attachments:
         get:
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: query
-                  explode: true
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
-                - in: query
-                  explode: true
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                  style: form
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: query
+                    explode: true
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
+                -   in: query
+                    explode: true
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                    style: form
             responses:
                 200:
                     content:
@@ -2570,27 +2570,27 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceDeliveryOrder.read
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceDeliveryOrder.read
             summary: Gets a list of attachments related to an order.
             tags: ["Attachment"]
     /placed-orders/{placedOrderId}/attachments/by-base64:
         post:
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             requestBody:
                 content:
                     application/json:
@@ -2651,39 +2651,39 @@ paths:
                     description:
                         Unexpected error
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceDeliveryOrder.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceDeliveryOrder.write
             summary: Creates an attachment related to an order.
             tags: ["Attachment"]
     /placed-orders/{placedOrderId}/attachments/{attachmentId}:
         delete:
             parameters:
-                - in: path
-                  explode: false
-                  name: attachmentId
-                  required: true
-                  schema:
-                      description:
-                          The attachment Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          The resource Id
-                      example: 30130
-                      format: int64
-                      minimum: 0
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: attachmentId
+                    required: true
+                    schema:
+                        description:
+                            The attachment Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            The resource Id
+                        example: 30130
+                        format: int64
+                        minimum: 0
+                        type: integer
+                    style: simple
             responses:
                 204:
                     content:
@@ -2700,10 +2700,10 @@ paths:
                     description:
                         Authentication information is missing or invalid
             security:
-                - BasicAuth: []
-                - BearerAuth: []
-                - OAuth2:
-                      - HeadlessCommerceDeliveryOrder.write
+                -   BasicAuth: []
+                -   BearerAuth: []
+                -   OAuth2:
+                        -   HeadlessCommerceDeliveryOrder.write
             summary: Deletes an attachment.
             tags: ["Attachment"]
     /placed-orders/{placedOrderId}/delivery-term:
@@ -2712,16 +2712,16 @@ paths:
                 Retrieve delivery term of the given Placed Order.
             operationId: getPlacedOrderDeliveryTerm
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2768,16 +2768,16 @@ paths:
                 Retrieve order transitions of the given Placed Order.
             operationId: getPlacedOrderOrderTransitionsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2825,12 +2825,12 @@ paths:
         post:
             operationId: postPlacedOrderOrderTransition
             parameters:
-                - in: path
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -2856,16 +2856,16 @@ paths:
                 Retrieve payment term of the given Placed Order.
             operationId: getPlacedOrderPaymentTerm
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2910,17 +2910,17 @@ paths:
         get:
             operationId: getPlacedOrderPaymentURL
             parameters:
-                - in: path
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: callbackURL
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: callbackURL
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -2933,16 +2933,16 @@ paths:
             description:
                 Retrieve placed order billing address.
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -2986,26 +2986,26 @@ paths:
     /placed-orders/{placedOrderId}/placed-order-comments:
         get:
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -3061,42 +3061,42 @@ paths:
             description:
                 Retrieve placed order items.
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: skuId
-                  required: false
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: skuId
+                    required: false
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3148,16 +3148,16 @@ paths:
             description:
                 Retrieve placed order shipping address.
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
             responses:
                 200:
                     content:
@@ -3204,41 +3204,41 @@ paths:
                 Retrieve placed order shipments.
             operationId: getPlacedOrderShipmentsPage
             parameters:
-                - in: path
-                  explode: false
-                  name: placedOrderId
-                  required: true
-                  schema:
-                      description:
-                          Placed Order Id
-                      format: int64
-                      type: integer
-                  style: simple
-                - in: query
-                  name: filter
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
+                -   in: path
+                    explode: false
+                    name: placedOrderId
+                    required: true
+                    schema:
+                        description:
+                            Placed Order Id
+                        format: int64
+                        type: integer
+                    style: simple
+                -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3286,4 +3286,4 @@ paths:
                         Unexpected error
             tags: ["Shipment"]
 servers:
-    - url: /
+    -   url: /

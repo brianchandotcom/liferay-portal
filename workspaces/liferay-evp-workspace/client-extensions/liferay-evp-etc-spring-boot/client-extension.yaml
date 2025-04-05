@@ -1,14 +1,14 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-evp-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay EVP Etc Spring Boot Spring Boot OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
-        - C_EVPOrganization.everything.read
-        - C_EVPRequest.everything.write
-        - C_EVPRequest.everything.read
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   C_EVPOrganization.everything.read
+        -   C_EVPRequest.everything.write
+        -   C_EVPRequest.everything.read
     type: oAuthApplicationUserAgent
 liferay-evp-etc-spring-boot-object-action-organization-status:
     name: Liferay EVP Etc Spring Boot Spring Boot Object Action Organization Status

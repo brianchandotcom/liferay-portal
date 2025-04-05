@@ -241,28 +241,28 @@ paths:
         get:
             operationId: getCTCollectionsPage
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-                - in: query
-                  name: status
-                  schema:
-                      items:
-                          type: integer
-                      type: array
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        items:
+                            type: integer
+                        type: array
             responses:
                 200:
                     content:
@@ -301,11 +301,11 @@ paths:
         delete:
             operationId: deleteCTCollectionByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -315,11 +315,11 @@ paths:
         get:
             operationId: getCTCollectionByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -333,11 +333,11 @@ paths:
         patch:
             operationId: patchCTCollectionByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -360,11 +360,11 @@ paths:
         post:
             operationId: postCTCollectionByExternalReferenceCodePublish
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -375,17 +375,17 @@ paths:
         post:
             operationId: postCTCollectionByExternalReferenceCodeSchedulePublish
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: publishDate
-                  required: false
-                  schema:
-                      format: date-time
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: publishDate
+                    required: false
+                    schema:
+                        format: date-time
+                        type: string
             responses:
                 200:
                     content:
@@ -396,11 +396,11 @@ paths:
         get:
             operationId: getCTCollectionByExternalReferenceCodeShareLink
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -412,12 +412,12 @@ paths:
         get:
             operationId: getCTCollectionShareLink
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -429,12 +429,12 @@ paths:
         delete:
             operationId: deleteCTCollection
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -444,12 +444,12 @@ paths:
         get:
             operationId: getCTCollection
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -463,12 +463,12 @@ paths:
         patch:
             operationId: patchCTCollection
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -490,12 +490,12 @@ paths:
         put:
             operationId: putCTCollection
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -518,12 +518,12 @@ paths:
         post:
             operationId: postCTCollectionCheckout
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -534,36 +534,36 @@ paths:
         get:
             operationId: getCtCollectionCTEntriesPage
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: showHideable
-                  schema:
-                      type: boolean
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: showHideable
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -582,24 +582,24 @@ paths:
         get:
             operationId: getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: modelClassNameId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: modelClassPK
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: modelClassNameId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: modelClassPK
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -614,12 +614,12 @@ paths:
         post:
             operationId: postCTCollectionPublish
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -630,18 +630,18 @@ paths:
         post:
             operationId: postCTCollectionSchedulePublish
             parameters:
-                - in: path
-                  name: ctCollectionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: publishDate
-                  required: false
-                  schema:
-                      format: date-time
-                      type: string
+                -   in: path
+                    name: ctCollectionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: publishDate
+                    required: false
+                    schema:
+                        format: date-time
+                        type: string
             responses:
                 200:
                     content:
@@ -652,42 +652,42 @@ paths:
         get:
             operationId: getCTEntriesHistoryPage
             parameters:
-                - in: query
-                  name: classNameId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: classPK
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: siteId
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: classNameId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: classPK
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: siteId
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -706,12 +706,12 @@ paths:
         get:
             operationId: getCTEntry
             parameters:
-                - in: path
-                  name: ctEntryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -726,32 +726,32 @@ paths:
         get:
             operationId: getCTProcessesPage
             parameters:
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-                - in: query
-                  name: status
-                  schema:
-                      items:
-                          type: integer
-                      type: array
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    schema:
+                        items:
+                            type: integer
+                        type: array
             responses:
                 200:
                     content:
@@ -770,12 +770,12 @@ paths:
         delete:
             operationId: deleteCTProcess
             parameters:
-                - in: path
-                  name: ctProcessId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -785,12 +785,12 @@ paths:
         get:
             operationId: getCTProcess
             parameters:
-                - in: path
-                  name: ctProcessId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: ctProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -805,20 +805,20 @@ paths:
         post:
             operationId: postCTProcessRevert
             parameters:
-                - in: path
-                  name: ctProcessId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: description
-                  schema:
-                      type: string
-                - in: query
-                  name: name
-                  schema:
-                      type: string
+                -   in: path
+                    name: ctProcessId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: description
+                    schema:
+                        type: string
+                -   in: query
+                    name: name
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -829,22 +829,22 @@ paths:
         get:
             operationId: getCTRemotesPage
             parameters:
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -883,12 +883,12 @@ paths:
         delete:
             operationId: deleteCTRemote
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -898,12 +898,12 @@ paths:
         get:
             operationId: getCTRemote
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -917,12 +917,12 @@ paths:
         patch:
             operationId: patchCTRemote
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -944,12 +944,12 @@ paths:
         put:
             operationId: putCTRemote
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

@@ -1,8 +1,8 @@
 assemble:
-    - from: ../../../../definitions
-      into: static/dtd
-    - from: assets
-      into: static
+    -   from: ../../../../definitions
+        into: static/dtd
+    -   from: assets
+        into: static
 liferay-dotcom-static-content:
     name: Liferay Dotcom Static Content
     type: staticContent

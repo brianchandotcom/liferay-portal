@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-sample-commerce-shipping-engine:
     key: liferay-sample-commerce-shipping-engine
     name: Liferay Sample Commerce Shipping Engine
@@ -16,5 +16,5 @@ liferay-sample-commerce-shipping-engine-oauth-application-user-agent:
     .serviceScheme: http
     name: Liferay Sample Commerce Shipping Engine OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent

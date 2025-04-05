@@ -92,12 +92,12 @@ paths:
         post:
             operationId: postDispatchTriggerRun
             parameters:
-                - in: path
-                  name: dispatchTriggerId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: dispatchTriggerId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:

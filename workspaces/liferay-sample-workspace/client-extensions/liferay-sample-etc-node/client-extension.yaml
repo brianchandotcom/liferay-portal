@@ -1,13 +1,13 @@
 assemble:
-    - include:
-          - "**/*.js"
-          - package.json
+    -   include:
+            -   "**/*.js"
+            -   package.json
 liferay-sample-etc-node-oauth-application-user-agent:
     .serviceAddress: localhost:3001
     .serviceScheme: http
     name: Liferay Sample Etc Node OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent
 liferay-sample-etc-node-object-action-1:
     name: Liferay Sample Node Object Action 1

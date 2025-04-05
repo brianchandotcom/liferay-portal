@@ -9,5 +9,5 @@ liferay-partner-site-initializer-quickstart-oahs:
     .serviceScheme: http
     name: Liferay Partner Site Initializer Quickstart OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Site.everything
+        -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

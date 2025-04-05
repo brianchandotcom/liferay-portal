@@ -1,6 +1,6 @@
 assemble:
-    - from: build/static
-      into: static
+    -   from: build/static
+        into: static
 liferay-commerceminium4-js-import-maps-entry:
     bareSpecifier: minium-primary-navigation
     name: Liferay Commerce Minium 4 JS Import Maps Entry

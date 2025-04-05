@@ -115,16 +115,16 @@ paths:
         get:
             operationId: getPlansPage
             parameters:
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -163,16 +163,16 @@ paths:
         get:
             operationId: getPlanInternalClassNameKeyFieldsPage
             parameters:
-                - in: path
-                  name: internalClassNameKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: export
-                  required: false
-                  schema:
-                      type: boolean
+                -   in: path
+                    name: internalClassNameKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: export
+                    required: false
+                    schema:
+                        type: boolean
             responses:
                 200:
                     content:
@@ -191,16 +191,16 @@ paths:
         get:
             operationId: getPlanInternalClassNameKeySiteScopesPage
             parameters:
-                - in: path
-                  name: internalClassNameKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: export
-                  required: false
-                  schema:
-                      type: boolean
+                -   in: path
+                    name: internalClassNameKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: export
+                    required: false
+                    schema:
+                        type: boolean
             responses:
                 200:
                     content:
@@ -219,11 +219,11 @@ paths:
         get:
             operationId: getPlanInternalClassNameKeyStrategiesPage
             parameters:
-                - in: path
-                  name: internalClassNameKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: internalClassNameKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -242,11 +242,11 @@ paths:
         get:
             operationId: getPlanTemplate
             parameters:
-                - in: path
-                  name: internalClassNameKey
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: internalClassNameKey
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -259,12 +259,12 @@ paths:
         delete:
             operationId: deletePlan
             parameters:
-                - in: path
-                  name: planId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: planId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -274,12 +274,12 @@ paths:
         get:
             operationId: getPlan
             parameters:
-                - in: path
-                  name: planId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: planId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -293,12 +293,12 @@ paths:
         patch:
             operationId: patchPlan
             parameters:
-                - in: path
-                  name: planId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: planId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

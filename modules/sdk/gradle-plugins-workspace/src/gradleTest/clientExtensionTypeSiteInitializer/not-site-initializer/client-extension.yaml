@@ -3,5 +3,5 @@ alt-oauth:
     .serviceScheme: http
     name: alt-oauth
     scopes:
-        - Liferay.Headless.Site.everything
+        -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

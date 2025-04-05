@@ -1,7 +1,7 @@
 assemble:
-    - from: assets
-      hashify: global.js
-      into: static
+    -   from: assets
+        hashify: global.js
+        into: static
 clarity-solution-theme-global-js:
     name: Clarity Solution Global JS
     type: globalJS

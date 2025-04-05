@@ -1,6 +1,6 @@
 assemble:
-    - from: assets
-      into: static
+    -   from: assets
+        into: static
 liferay-dotcom-global-css:
     name: Liferay Dotcom Global CSS
     type: globalCSS

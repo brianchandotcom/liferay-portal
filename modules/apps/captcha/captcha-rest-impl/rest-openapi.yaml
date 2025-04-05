@@ -9,7 +9,7 @@ components:
                 token:
                     type: string
             required:
-                - token
+                -   token
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

@@ -1,9 +1,9 @@
 assemble:
-    - from: build/vite
-      into: static
+    -   from: build/vite
+        into: static
 liferay-marketplace-custom-element:
     cssURLs:
-        - "**/index*.css"
+        -   "**/index*.css"
     friendlyURLMapping: liferay-marketplace-custom-element
     htmlElementName: liferay-marketplace-custom-element
     instanceable: false
@@ -18,5 +18,5 @@ liferay-marketplace-custom-element:
         trialEulaURL: https://marketplace.liferay.com/documents/d/marketplace/evaluation-agreement-cloud-services
     type: customElement
     urls:
-        - "main.js"
+        -   "main.js"
     useESM: true

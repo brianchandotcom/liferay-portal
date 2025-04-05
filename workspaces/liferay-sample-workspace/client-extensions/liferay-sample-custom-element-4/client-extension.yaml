@@ -1,6 +1,6 @@
 assemble:
-    - from: build/static
-      into: static
+    -   from: build/static
+        into: static
 liferay-sample-custom-element-4:
     friendlyURLMapping: liferay-sample-custom-element-4
     htmlElementName: liferay-sample-custom-element-4
@@ -9,5 +9,5 @@ liferay-sample-custom-element-4:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - index.*.js
+        -   index.*.js
     useESM: true

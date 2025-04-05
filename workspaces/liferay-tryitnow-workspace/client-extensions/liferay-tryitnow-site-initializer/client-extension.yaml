@@ -9,5 +9,5 @@ liferay-tryitnow-site-initializer-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Try It Now Site Initializer OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Site.everything
+        -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

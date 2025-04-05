@@ -1,9 +1,9 @@
 assemble:
-    - from: build/static
-      into: static
+    -   from: build/static
+        into: static
 liferay-jethr0-custom-element:
     cssURLs:
-        - css/main.*.css
+        -   css/main.*.css
     friendlyURLMapping: liferay-jethr0-custom-element
     htmlElementName: liferay-jethr0-custom-element
     instanceable: false
@@ -11,5 +11,5 @@ liferay-jethr0-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - js/main.*.js
+        -   js/main.*.js
     useESM: true

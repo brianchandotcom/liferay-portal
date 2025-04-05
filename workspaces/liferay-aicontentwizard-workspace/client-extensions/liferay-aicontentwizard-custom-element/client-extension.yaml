@@ -1,9 +1,9 @@
 assemble:
-    - from: build/vite
-      into: static
+    -   from: build/vite
+        into: static
 liferay-aicontentwizard-custom-element-app:
     cssURLs:
-        - "**/index*.css"
+        -   "**/index*.css"
     friendlyURLMapping: liferay-aicontentwizard-custom-element
     htmlElementName: liferay-aicontentwizard-custom-element
     instanceable: false
@@ -13,11 +13,11 @@ liferay-aicontentwizard-custom-element-app:
         route: app
     type: customElement
     urls:
-        - "main.js"
+        -   "main.js"
     useESM: true
 liferay-aicontentwizard-custom-element-settings:
     cssURLs:
-        - "**/index*.css"
+        -   "**/index*.css"
     friendlyURLMapping: liferay-aicontentwizard-custom-element
     htmlElementName: liferay-aicontentwizard-custom-element
     instanceable: false
@@ -29,5 +29,5 @@ liferay-aicontentwizard-custom-element-settings:
         route: settings
     type: customElement
     urls:
-        - "main.js"
+        -   "main.js"
     useESM: true

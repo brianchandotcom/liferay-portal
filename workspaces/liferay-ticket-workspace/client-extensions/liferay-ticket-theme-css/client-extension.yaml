@@ -1,9 +1,9 @@
 assemble:
-    - from: build/buildTheme/img
-      into: static/img
+    -   from: build/buildTheme/img
+        into: static/img
 assemble:
-    - from: build/buildTheme/images
-      into: static/images
+    -   from: build/buildTheme/images
+        into: static/images
 liferay-ticket-theme-css:
     clayURL: css/clay.css
     mainURL: css/main.css

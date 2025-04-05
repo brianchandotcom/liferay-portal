@@ -30,17 +30,17 @@ components:
                     type: string
         KeywordBulkSelection:
             allOf:
-                - $ref: "#/components/schemas/DocumentBulkSelection"
-                  x-merge-properties: false
-                - properties:
-                      keywordsToAdd:
-                          items:
-                              type: string
-                          type: array
-                      keywordsToRemove:
-                          items:
-                              type: string
-                          type: array
+                -   $ref: "#/components/schemas/DocumentBulkSelection"
+                    x-merge-properties: false
+                -   properties:
+                        keywordsToAdd:
+                            items:
+                                type: string
+                            type: array
+                        keywordsToRemove:
+                            items:
+                                type: string
+                            type: array
         Selection:
             properties:
                 size:
@@ -60,19 +60,19 @@ components:
                     type: string
         TaxonomyCategoryBulkSelection:
             allOf:
-                - $ref: "#/components/schemas/DocumentBulkSelection"
-                  x-merge-properties: false
-                - properties:
-                      taxonomyCategoryIdsToAdd:
-                          items:
-                              format: int64
-                              type: integer
-                          type: array
-                      taxonomyCategoryIdsToRemove:
-                          items:
-                              format: int64
-                              type: integer
-                          type: array
+                -   $ref: "#/components/schemas/DocumentBulkSelection"
+                    x-merge-properties: false
+                -   properties:
+                        taxonomyCategoryIdsToAdd:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
+                        taxonomyCategoryIdsToRemove:
+                            items:
+                                format: int64
+                                type: integer
+                            type: array
         TaxonomyVocabulary:
             properties:
                 multiValued:
@@ -180,12 +180,12 @@ paths:
         post:
             operationId: postSiteTaxonomyVocabulariesCommonPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

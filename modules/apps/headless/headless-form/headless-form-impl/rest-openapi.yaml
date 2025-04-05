@@ -443,12 +443,12 @@ paths:
             deprecated: true
             operationId: deleteFormDocument
             parameters:
-                - in: path
-                  name: formDocumentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formDocumentId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -459,12 +459,12 @@ paths:
             deprecated: true
             operationId: getFormDocument
             parameters:
-                - in: path
-                  name: formDocumentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formDocumentId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -480,12 +480,12 @@ paths:
             deprecated: true
             operationId: getFormRecord
             parameters:
-                - in: path
-                  name: formRecordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formRecordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -500,16 +500,16 @@ paths:
             deprecated: true
             operationId: putFormRecord
             parameters:
-                - in: path
-                  name: formRecordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
+                -   in: path
+                    name: formRecordId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -533,12 +533,12 @@ paths:
             deprecated: true
             operationId: getFormStructure
             parameters:
-                - in: path
-                  name: formStructureId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formStructureId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -554,12 +554,12 @@ paths:
             deprecated: true
             operationId: getForm
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -575,16 +575,16 @@ paths:
             deprecated: true
             operationId: postFormEvaluateContext
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -608,12 +608,12 @@ paths:
             deprecated: true
             operationId: postFormFormDocument
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     multipart/form-data:
@@ -640,20 +640,20 @@ paths:
             deprecated: true
             operationId: getFormFormRecordsPage
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -672,16 +672,16 @@ paths:
             deprecated: true
             operationId: postFormFormRecord
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -705,12 +705,12 @@ paths:
             deprecated: true
             operationId: getFormFormRecordByLatestDraft
             parameters:
-                - in: path
-                  name: formId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: formId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -726,20 +726,20 @@ paths:
             deprecated: true
             operationId: getSiteFormStructuresPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -759,20 +759,20 @@ paths:
             deprecated: true
             operationId: getSiteFormsPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:

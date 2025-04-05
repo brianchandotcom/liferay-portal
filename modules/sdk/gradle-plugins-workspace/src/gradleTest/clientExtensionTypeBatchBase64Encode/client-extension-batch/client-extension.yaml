@@ -1,6 +1,6 @@
 assemble:
-    - from: batch
-      into: batch
+    -   from: batch
+        into: batch
 batch:
     name: Batch
     oAuthApplicationHeadlessServer: oauth
@@ -10,6 +10,6 @@ oauth:
     .serviceScheme: http
     name: Oauth
     scopes:
-        - C_FooModel.everything
-        - Liferay.Headless.Batch.Engine.everything
+        -   C_FooModel.everything
+        -   Liferay.Headless.Batch.Engine.everything
     type: oAuthApplicationHeadlessServer

@@ -97,36 +97,36 @@ paths:
         get:
             operationId: getSiteDSEnvelopesPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: fromDate
-                  schema:
-                      type: string
-                - in: query
-                  name: keywords
-                  schema:
-                      type: string
-                - in: query
-                  name: order
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: status
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fromDate
+                    schema:
+                        type: string
+                -   in: query
+                    name: keywords
+                    schema:
+                        type: string
+                -   in: query
+                    name: order
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: status
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -144,12 +144,12 @@ paths:
         post:
             operationId: postSiteDSEnvelope
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -172,17 +172,17 @@ paths:
         get:
             operationId: getSiteDSEnvelope
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: dsEnvelopeId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: dsEnvelopeId
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -197,17 +197,17 @@ paths:
         post:
             operationId: postSiteDSRecipientViewDefinition
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: dsEnvelopeId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: dsEnvelopeId
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:

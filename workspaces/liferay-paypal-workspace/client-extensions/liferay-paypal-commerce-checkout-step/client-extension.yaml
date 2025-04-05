@@ -1,7 +1,7 @@
 assemble:
-    - from: assets
-      into: static
-    - fromTask: bootJar
+    -   from: assets
+        into: static
+    -   fromTask: bootJar
 liferay-paypal-commerce-checkout-step:
     active: true
     checkoutStepLabel: PayPal SDK Checkout Step
@@ -20,5 +20,5 @@ liferay-paypal-commerce-checkout-step-oauth-application-user-agent:
     .serviceScheme: http
     name: Liferay PayPal Commerce Checkout Step OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent

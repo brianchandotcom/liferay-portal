@@ -1,6 +1,6 @@
 assemble:
-    - from: batch
-      into: batch
+    -   from: batch
+        into: batch
 liferay-aicontentwizard-batch:
     name: Liferay AI Content Wizard Batch
     oAuthApplicationHeadlessServer: liferay-aicontentwizard-batch-oauth-application-headless-server
@@ -10,10 +10,10 @@ liferay-aicontentwizard-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay AI Content Wizard Batch Headless Server
     scopes:
-        - Liferay.Headless.Admin.List.Type.everything
-        - Liferay.Headless.Admin.User.everything
-        - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Notification.REST.everything
-        - Liferay.Object.Admin.REST.everything
+        -   Liferay.Headless.Admin.List.Type.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Notification.REST.everything
+        -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

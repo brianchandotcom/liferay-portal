@@ -7,5 +7,5 @@ client-extension-override-lcp-json-oauth:
     .serviceScheme: http
     name: Oauth
     scopes:
-        - Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Headless.Batch.Engine.everything
     type: oAuthApplicationHeadlessServer

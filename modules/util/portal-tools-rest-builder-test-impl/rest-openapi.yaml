@@ -2,21 +2,21 @@ components:
     schemas:
         ChildTestEntity1:
             allOf:
-                - $ref: "#/components/schemas/TestEntity"
-                - properties:
-                      property1:
-                          type: string
+                -   $ref: "#/components/schemas/TestEntity"
+                -   properties:
+                        property1:
+                            type: string
             type: object
         ChildTestEntity2:
             allOf:
-                - $ref: "#/components/schemas/TestEntity"
-                - properties:
-                      property2:
-                          type: string
+                -   $ref: "#/components/schemas/TestEntity"
+                -   properties:
+                        property2:
+                            type: string
             type: object
         ChildTestEntity3:
             allOf:
-                - $ref: "#/components/schemas/TestEntity"
+                -   $ref: "#/components/schemas/TestEntity"
             type: object
         CompanyTestEntity:
             properties:
@@ -205,9 +205,9 @@ components:
                     $ref: "#/components/schemas/TestEntity"
                 type:
                     enum:
-                        - ChildTestEntity1
-                        - ChildTestEntity2
-                        - ChildTestEntity3
+                        -   ChildTestEntity1
+                        -   ChildTestEntity2
+                        -   ChildTestEntity3
                     type: string
             type: object
         TestEntityAddress:
@@ -296,11 +296,11 @@ paths:
         get:
             operationId: getCompanyTestEntityByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -316,11 +316,11 @@ paths:
         put:
             operationId: putCompanyTestEntityByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/json:
@@ -345,12 +345,12 @@ paths:
         get:
             operationId: getCompanyTestEntity
             parameters:
-                - in: path
-                  name: companyTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: companyTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -366,12 +366,12 @@ paths:
         put:
             operationId: putCompanyTestEntity
             parameters:
-                - in: path
-                  name: companyTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: companyTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -396,16 +396,16 @@ paths:
         get:
             operationId: getCompanyTestEntityPermissionsPage
             parameters:
-                - in: path
-                  name: companyTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: roleNames
-                  schema:
-                      type: string
+                -   in: path
+                    name: companyTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: roleNames
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -415,12 +415,12 @@ paths:
         put:
             operationId: putCompanyTestEntityPermissionsPage
             parameters:
-                - in: path
-                  name: companyTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: companyTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json: {}
@@ -459,12 +459,12 @@ paths:
                 VulcanBatchEngineTaskItemDelegate interfaces will not be implemented automatically)"
             operationId: getEntityModelResourceTestEntities2EntityModelResourceTestEntity2
             parameters:
-                - in: path
-                  name: entityModelResourceTestEntity2Id
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: entityModelResourceTestEntity2Id
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -536,12 +536,12 @@ paths:
         get:
             operationId: getSiteTestEntity
             parameters:
-                - in: path
-                  name: siteTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -557,12 +557,12 @@ paths:
         put:
             operationId: putSiteTestEntity
             parameters:
-                - in: path
-                  name: siteTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -587,16 +587,16 @@ paths:
         get:
             operationId: getSiteTestEntityPermissionsPage
             parameters:
-                - in: path
-                  name: siteTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: roleNames
-                  schema:
-                      type: string
+                -   in: path
+                    name: siteTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: roleNames
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -606,12 +606,12 @@ paths:
         put:
             operationId: putSiteTestEntityPermissionsPage
             parameters:
-                - in: path
-                  name: siteTestEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json: {}
@@ -626,12 +626,12 @@ paths:
         get:
             operationId: getSiteSiteTestEntitiesPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -651,12 +651,12 @@ paths:
         post:
             operationId: postSiteSiteTestEntity
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -679,17 +679,17 @@ paths:
         get:
             operationId: getSiteSiteTestEntityByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -705,17 +705,17 @@ paths:
         put:
             operationId: putSiteSiteTestEntityByExternalReferenceCode
             parameters:
-                - in: path
-                  name: externalReferenceCode
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -814,12 +814,12 @@ paths:
         get:
             operationId: getTestEntity
             parameters:
-                - in: path
-                  name: testEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -835,18 +835,18 @@ paths:
         patch:
             operationId: patchTestEntity
             parameters:
-                - in: path
-                  name: testEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: optionalParameter
-                  required: false
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: optionalParameter
+                    required: false
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -870,18 +870,18 @@ paths:
         put:
             operationId: putTestEntity
             parameters:
-                - in: path
-                  name: testEntityId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: optionalParameter
-                  required: false
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: optionalParameter
+                    required: false
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -906,14 +906,14 @@ paths:
         get:
             operationId: getTestEntityTestEntityAddress
             parameters:
-                - in: path
-                  name: testEntityId
-                  required: true
-                  schema:
-                      description:
-                          Test Entity Id
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: testEntityId
+                    required: true
+                    schema:
+                        description:
+                            Test Entity Id
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:

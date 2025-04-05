@@ -1,10 +1,10 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-sample-etc-cron-oauth-application-headless-server:
     .serviceAddress: localhost:8080
     .serviceScheme: http
     name: Liferay Sample Etc Cron OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Admin.User.everything.read
-        - Liferay.Headless.Delivery.everything
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Headless.Delivery.everything
     type: oAuthApplicationHeadlessServer

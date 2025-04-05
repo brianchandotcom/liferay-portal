@@ -1,6 +1,6 @@
 assemble:
-    - from: build
-      into: static
+    -   from: build
+        into: static
 liferay-learn-global-js:
     name: Liferay Learn Global JS
     type: globalJS

@@ -1,7 +1,7 @@
 assemble:
-    - from: assets
-      hashify: "*.ico"
-      into: static
+    -   from: assets
+        hashify: "*.ico"
+        into: static
 clarity-solution-theme-favicon-dark:
     name: Clarity Solution Theme Favicon Dark
     type: themeFavicon

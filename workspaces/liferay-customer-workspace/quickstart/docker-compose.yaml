@@ -5,22 +5,22 @@ services:
         container_name: liferay-customer-workspace-cron
         env_file: cron.env
         ports:
-            - 18080:18080
+            -   18080:18080
         user: root
         volumes:
-            - routes_cron:/etc/liferay/lxc/ext-init-metadata
-            - routes_dxp:/etc/liferay/lxc/dxp-metadata
+            -   routes_cron:/etc/liferay/lxc/ext-init-metadata
+            -   routes_dxp:/etc/liferay/lxc/dxp-metadata
     database:
         command: mysqld --character-set-filesystem=utf8 --character-set-server=utf8 --collation-server=utf8_general_ci --max_allowed_packet=32M
         container_name: liferay-customer-workspace-database
         env_file: database.env
         image: mysql:5.7
         ports:
-            - 3306:3306
+            -   3306:3306
     liferay:
         container_name: liferay-customer-workspace-liferay
         depends_on:
-            - database
+            -   database
         env_file: liferay.env
         healthcheck:
             interval: 10s
@@ -30,30 +30,30 @@ services:
             timeout: 10s
         image: liferay/dxp:2024.q2.7
         ports:
-            - 8080:8080
+            -   8080:8080
         user: root
         volumes:
-            - ./liferay:/mnt/liferay
-            - routes_cron:/opt/liferay/routes/default/liferay-customer-etc-cron
-            - routes_dxp:/opt/liferay/routes/default/dxp
-            - routes_spring_boot:/opt/liferay/routes/default/liferay-customer-etc-spring-boot
+            -   ./liferay:/mnt/liferay
+            -   routes_cron:/opt/liferay/routes/default/liferay-customer-etc-cron
+            -   routes_dxp:/opt/liferay/routes/default/dxp
+            -   routes_spring_boot:/opt/liferay/routes/default/liferay-customer-etc-spring-boot
     mail:
         container_name: liferay-customer-workspace-mail
         image: maildev/maildev
         ports:
-            - 1025:1025
-            - 1080:1080
+            -   1025:1025
+            -   1080:1080
         restart: always
     spring_boot:
         build: ../client-extensions/liferay-customer-etc-spring-boot/build/liferay-client-extension-build
         container_name: liferay-customer-workspace-spring-boot
         env_file: spring-boot.env
         ports:
-            - 58081:58081
+            -   58081:58081
         user: root
         volumes:
-            - routes_dxp:/etc/liferay/lxc/dxp-metadata
-            - routes_spring_boot:/etc/liferay/lxc/ext-init-metadata
+            -   routes_dxp:/etc/liferay/lxc/dxp-metadata
+            -   routes_spring_boot:/etc/liferay/lxc/ext-init-metadata
 volumes:
     routes_cron:
     routes_dxp:

@@ -1,6 +1,6 @@
 assemble:
-    - from: batch
-      into: batch
+    -   from: batch
+        into: batch
 liferay-dlfoldertemplate-batch:
     name: Liferay DL Folder Template Batch
     oAuthApplicationHeadlessServer: liferay-dlfoldertemplate-batch-oauth-application-headless-server
@@ -10,6 +10,6 @@ liferay-dlfoldertemplate-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay DL Folder Template Batch OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

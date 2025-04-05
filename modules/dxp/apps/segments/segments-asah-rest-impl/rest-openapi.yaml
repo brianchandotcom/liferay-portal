@@ -44,8 +44,8 @@ components:
                     readOnly: true
                     type: string
             required:
-                - confidenceLevel
-                - experimentVariants
+                -   confidenceLevel
+                -   experimentVariants
             type: object
         ExperimentVariant:
             properties:
@@ -64,7 +64,7 @@ components:
                 winnerVariantId:
                     type: string
             required:
-                - status
+                -   status
             type: object
 info:
     description:
@@ -81,11 +81,11 @@ paths:
         delete:
             operationId: deleteExperiment
             parameters:
-                - in: path
-                  name: experimentId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: experimentId
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     content:
@@ -95,11 +95,11 @@ paths:
         get:
             operationId: getExperiment
             parameters:
-                - in: path
-                  name: experimentId
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: experimentId
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -114,12 +114,12 @@ paths:
         post:
             operationId: postExperimentRun
             parameters:
-                - in: path
-                  name: experimentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: experimentId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -142,12 +142,12 @@ paths:
         post:
             operationId: postExperimentStatus
             parameters:
-                - in: path
-                  name: experimentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: experimentId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

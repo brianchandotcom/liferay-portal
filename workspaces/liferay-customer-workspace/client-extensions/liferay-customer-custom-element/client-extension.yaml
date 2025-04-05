@@ -1,9 +1,9 @@
 assemble:
-    - from: build/static
-      into: static
+    -   from: build/static
+        into: static
 liferay-customer-custom-element:
     cssURLs:
-        - "*.css"
+        -   "*.css"
     friendlyURLMapping: liferay-customer-custom-element
     htmlElementName: liferay-customer-custom-element
     instanceable: false
@@ -22,5 +22,5 @@ liferay-customer-custom-element:
         provisioning-server-api: https://webserver-lrprovisioning-uat.lfr.cloud/o/provisioning-rest/v1.0
     type: customElement
     urls:
-        - "*.js"
+        -   "*.js"
     useESM: true

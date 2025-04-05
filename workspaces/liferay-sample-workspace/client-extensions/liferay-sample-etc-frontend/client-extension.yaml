@@ -1,6 +1,6 @@
 assemble:
-    - from: build/static
-      into: static
+    -   from: build/static
+        into: static
 liferay-sample-etc-frontend-custom-element:
     htmlElementName: liferay-sample-etc-frontend-custom-element
     instanceable: false
@@ -8,7 +8,7 @@ liferay-sample-etc-frontend-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        - custom-element.*.js
+        -   custom-element.*.js
     useESM: true
 liferay-sample-etc-frontend-js-import-maps-entry:
     bareSpecifier: my-utils

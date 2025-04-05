@@ -7,6 +7,6 @@ jobs:
 on:
     push:
         branches:
-            - master
+            -   master
         paths:
-            - workspaces/liferay-clarity-workspace/**
+            -   workspaces/liferay-clarity-workspace/**

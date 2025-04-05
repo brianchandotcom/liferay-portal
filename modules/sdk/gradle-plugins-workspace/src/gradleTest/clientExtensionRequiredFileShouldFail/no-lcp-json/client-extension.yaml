@@ -1,13 +1,13 @@
 assemble:
-    - include:
-          - "**/*.js"
-          - package.json
+    -   include:
+            -   "**/*.js"
+            -   package.json
 no-lcp-json-oauth-application-user-agent:
     .serviceAddress: localhost:3001
     .serviceScheme: http
     name: No lcp.json OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Admin.Workflow.everything
     type: oAuthApplicationUserAgent
 no-lcp-json-object-action-1:
     name: No lcp.json Object Action 1

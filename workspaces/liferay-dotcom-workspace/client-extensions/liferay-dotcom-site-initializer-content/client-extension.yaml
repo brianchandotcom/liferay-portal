@@ -9,5 +9,5 @@ liferay-dotcom-site-initializer-content-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Dotcom Content OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Site.everything
+        -   Liferay.Headless.Site.everything
     type: oAuthApplicationHeadlessServer

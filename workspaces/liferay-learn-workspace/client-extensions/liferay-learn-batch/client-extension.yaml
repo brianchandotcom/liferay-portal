@@ -1,6 +1,6 @@
 assemble:
-    - from: batch
-      into: batch
+    -   from: batch
+        into: batch
 liferay-learn-batch:
     name: Liferay Learn Batch
     oAuthApplicationHeadlessServer: liferay-learn-batch-oauth-application-headless-server
@@ -10,6 +10,6 @@ liferay-learn-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Learn Batch OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

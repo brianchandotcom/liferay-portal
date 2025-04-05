@@ -1,6 +1,6 @@
 assemble:
-    - from: batch
-      into: batch
+    -   from: batch
+        into: batch
 liferay-paypal-batch:
     name: Liferay Paypal Batch
     oAuthApplicationHeadlessServer: liferay-paypal-batch-oauth-application-headless-server
@@ -10,6 +10,6 @@ liferay-paypal-batch-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay PayPal Batch OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Batch.Engine.everything
-        - Liferay.Object.Admin.REST.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Object.Admin.REST.everything
     type: oAuthApplicationHeadlessServer

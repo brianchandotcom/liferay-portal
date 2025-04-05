@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-marketplace-etc-spring-boot-marketplace-product-purchase:
     name: Liferay Marketplace Etc Spring Boot Marketplace Product Purchase
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oauth-application-user-agent
@@ -15,19 +15,19 @@ liferay-marketplace-etc-spring-boot-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Marketplace Etc Spring Boot OAuth Application Headless Server
     scopes:
-        - Liferay.Headless.Admin.User.everything
-        - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Commerce.Admin.Catalog.everything
-        - Liferay.Headless.Commerce.Admin.Order.everything
-        - Liferay.Headless.Commerce.Delivery.Catalog.everything
-        - Liferay.Notification.REST.everything
+        -   Liferay.Headless.Admin.User.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Commerce.Admin.Catalog.everything
+        -   Liferay.Headless.Commerce.Admin.Order.everything
+        -   Liferay.Headless.Commerce.Delivery.Catalog.everything
+        -   Liferay.Notification.REST.everything
     type: oAuthApplicationHeadlessServer
 liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http
     name: Liferay Marketplace Etc Spring Boot OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.User.read
+        -   Liferay.Headless.Admin.User.read
     type: oAuthApplicationUserAgent
 liferay-marketplace-etc-spring-boot-trial-provisioning:
     name: Liferay Marketplace Etc Spring Boot Trial Provisioning

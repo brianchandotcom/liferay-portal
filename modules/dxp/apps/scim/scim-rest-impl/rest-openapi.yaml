@@ -122,19 +122,19 @@ components:
             type: object
         Group:
             allOf:
-                - $ref: "#/components/schemas/BaseScim"
-                - properties:
-                      displayName:
-                          description:
-                              A human-readable name for the Group.
-                          type: string
-                      members:
-                          description:
-                              A list of members of the Group.
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                  type: object
+                -   $ref: "#/components/schemas/BaseScim"
+                -   properties:
+                        displayName:
+                            description:
+                                A human-readable name for the Group.
+                            type: string
+                        members:
+                            description:
+                                A list of members of the Group.
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                    type: object
         Meta:
             description:
                 A complex attribute containing resource metadata.
@@ -205,11 +205,11 @@ components:
                     description:
                         The value that should be updated.
                     oneOf:
-                        - type: array
-                        - type: boolean
-                        - type: integer
-                        - type: number
-                        - type: string
+                        -   type: array
+                        -   type: boolean
+                        -   type: integer
+                        -   type: number
+                        -   type: string
             type: object
         PatchOp:
             properties:
@@ -268,10 +268,10 @@ components:
                     description:
                         A multi-valued list of complex objects containing the requested resources.
                     oneOf:
-                        - $ref: "#/components/schemas/Group"
-                        - $ref: "#/components/schemas/ResourceType"
-                        - $ref: "#/components/schemas/Schema"
-                        - $ref: "#/components/schemas/User"
+                        -   $ref: "#/components/schemas/Group"
+                        -   $ref: "#/components/schemas/ResourceType"
+                        -   $ref: "#/components/schemas/Schema"
+                        -   $ref: "#/components/schemas/User"
                     type: object
                 itemsPerPage:
                     description:
@@ -316,16 +316,16 @@ components:
                         A list of URIs of the resource type's schema extensions
                     items:
                         allOf:
-                            - properties:
-                                  required:
-                                      description:
-                                          A Boolean value that specifies whether or not the schema extension is required
-                                          for the resource type.
-                                      type: boolean
-                                  schema:
-                                      description:
-                                          The resource type's primary/base schema URI.
-                                      type: string
+                            -   properties:
+                                    required:
+                                        description:
+                                            A Boolean value that specifies whether or not the schema extension is
+                                            required for the resource type.
+                                        type: boolean
+                                    schema:
+                                        description:
+                                            The resource type's primary/base schema URI.
+                                        type: string
                         type: object
                     type: array
             type: object
@@ -420,171 +420,171 @@ components:
             type: object
         User:
             allOf:
-                - $ref: "#/components/schemas/BaseScim"
-                - properties:
-                      active:
-                          description:
-                              A Boolean value indicating the user's administrative status.
-                          type: boolean
-                      addresses:
-                          description:
-                              A physical mailing address for this user.
-                          items:
-                              allOf:
-                                  - $ref: "#/components/schemas/MultiValuedAttribute"
-                                  - properties:
-                                        country:
-                                            description:
-                                                The country name component.
-                                            type: string
-                                        formatted:
-                                            description:
-                                                The full mailing address, formatted for display or use with a mailing
-                                                label.
-                                            type: string
-                                        locality:
-                                            description:
-                                                The city or locality component.
-                                            type: string
-                                        postalCode:
-                                            description:
-                                                The zip code or postal code component.
-                                            type: string
-                                        region:
-                                            description:
-                                                The state or region component.
-                                            type: string
-                                        streetAddress:
-                                            description:
-                                                The full street address component, which may include house number,
-                                                street name, P.O. box, and multi-line extended street address
-                                                information.
-                                            type: string
-                                    type: object
-                              type: object
-                          type: array
-                      displayName:
-                          description:
-                              The name of the user, suitable for display to end-users.
-                          type: string
-                      emails:
-                          description:
-                              Email addresses for the User.
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                      entitlements:
-                          description:
-                              A list of entitlements for the user that represent a thing the user has.
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                      groups:
-                          description:
-                              A list of groups to which the user belongs, either through direct membership, through
-                              nested groups, or dynamically calculated.
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                      ims:
-                          description:
-                              Instant messaging address for the user.
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                      locale:
-                          description:
-                              Used to indicate the User's default location for purposes of localizing such items as
-                              currency, date time format, or numerical representations.
-                          type: string
-                      name:
-                          description:
-                              The components of the user's name.
-                          properties:
-                              familyName:
-                                  type: string
-                              formatted:
-                                  type: string
-                              givenName:
-                                  type: string
-                              honorificPrefix:
-                                  type: string
-                              honorificSuffix:
-                                  type: string
-                              middleName:
-                                  type: string
-                          type: object
-                      nickName:
-                          description:
-                              The casual way to address the user in real life, e.g., "Bob" or "Bobby" instead of
-                              "Robert".
-                          type: string
-                      password:
-                          description:
-                              This attribute is intended to be used as a means to set, replace, or compare (i.e., filter
-                              for equality) a password.
-                          type: string
-                          writeOnly: true
-                      phoneNumbers:
-                          description:
-                              Phone numbers for the user.
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                      photos:
-                          description:
-                              A URI that is a uniform resource locator that points to a resource location representing
-                              the user's image.
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                      preferredLanguage:
-                          description:
-                              Indicates the user's preferred written or spoken languages and is generally used for
-                              selecting a localized user interface.
-                          type: string
-                      profileUrl:
-                          description:
-                              A URI that is a uniform resource locator and that points to a location representing the
-                              user's online profile (e.g., a web page).
-                          type: string
-                      roles:
-                          description:
-                              A list of roles for the user that collectively represent who the user is, e.g., "Student",
-                              "Faculty".
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                      timezone:
-                          description:
-                              The User's time zone, in IANA Time Zone database format, also known as the "Olson" time
-                              zone database format (e.g., "America/Los_Angeles").
-                          type: string
-                      title:
-                          description:
-                              The user's title, such as "Vice President".
-                          type: string
-                      urn:ietf:params:scim:schemas:extension:liferay:2.0:User:
-                          $ref: "#/components/schemas/UserSchemaExtension"
-                          description:
-                              The components of the Liferay's User Schema Extension.
-                          type: UserSchemaExtension
-                      userName:
-                          description:
-                              A service provider's unique identifier for the user, typically used by the user to
-                              directly authenticate to the service provider.
-                          type: string
-                      userType:
-                          description:
-                              Used to identify the relationship between the organization and the user.
-                          type: string
-                      x509Certificates:
-                          description:
-                              A list of certificates associated with the resource (e.g., a User).
-                          items:
-                              $ref: "#/components/schemas/MultiValuedAttribute"
-                          type: array
-                  type: object
+                -   $ref: "#/components/schemas/BaseScim"
+                -   properties:
+                        active:
+                            description:
+                                A Boolean value indicating the user's administrative status.
+                            type: boolean
+                        addresses:
+                            description:
+                                A physical mailing address for this user.
+                            items:
+                                allOf:
+                                    -   $ref: "#/components/schemas/MultiValuedAttribute"
+                                    -   properties:
+                                            country:
+                                                description:
+                                                    The country name component.
+                                                type: string
+                                            formatted:
+                                                description:
+                                                    The full mailing address, formatted for display or use with a
+                                                    mailing label.
+                                                type: string
+                                            locality:
+                                                description:
+                                                    The city or locality component.
+                                                type: string
+                                            postalCode:
+                                                description:
+                                                    The zip code or postal code component.
+                                                type: string
+                                            region:
+                                                description:
+                                                    The state or region component.
+                                                type: string
+                                            streetAddress:
+                                                description:
+                                                    The full street address component, which may include house number,
+                                                    street name, P.O. box, and multi-line extended street address
+                                                    information.
+                                                type: string
+                                        type: object
+                                type: object
+                            type: array
+                        displayName:
+                            description:
+                                The name of the user, suitable for display to end-users.
+                            type: string
+                        emails:
+                            description:
+                                Email addresses for the User.
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                        entitlements:
+                            description:
+                                A list of entitlements for the user that represent a thing the user has.
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                        groups:
+                            description:
+                                A list of groups to which the user belongs, either through direct membership, through
+                                nested groups, or dynamically calculated.
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                        ims:
+                            description:
+                                Instant messaging address for the user.
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                        locale:
+                            description:
+                                Used to indicate the User's default location for purposes of localizing such items as
+                                currency, date time format, or numerical representations.
+                            type: string
+                        name:
+                            description:
+                                The components of the user's name.
+                            properties:
+                                familyName:
+                                    type: string
+                                formatted:
+                                    type: string
+                                givenName:
+                                    type: string
+                                honorificPrefix:
+                                    type: string
+                                honorificSuffix:
+                                    type: string
+                                middleName:
+                                    type: string
+                            type: object
+                        nickName:
+                            description:
+                                The casual way to address the user in real life, e.g., "Bob" or "Bobby" instead of
+                                "Robert".
+                            type: string
+                        password:
+                            description:
+                                This attribute is intended to be used as a means to set, replace, or compare (i.e.,
+                                filter for equality) a password.
+                            type: string
+                            writeOnly: true
+                        phoneNumbers:
+                            description:
+                                Phone numbers for the user.
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                        photos:
+                            description:
+                                A URI that is a uniform resource locator that points to a resource location representing
+                                the user's image.
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                        preferredLanguage:
+                            description:
+                                Indicates the user's preferred written or spoken languages and is generally used for
+                                selecting a localized user interface.
+                            type: string
+                        profileUrl:
+                            description:
+                                A URI that is a uniform resource locator and that points to a location representing the
+                                user's online profile (e.g., a web page).
+                            type: string
+                        roles:
+                            description:
+                                A list of roles for the user that collectively represent who the user is, e.g.,
+                                "Student", "Faculty".
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                        timezone:
+                            description:
+                                The User's time zone, in IANA Time Zone database format, also known as the "Olson" time
+                                zone database format (e.g., "America/Los_Angeles").
+                            type: string
+                        title:
+                            description:
+                                The user's title, such as "Vice President".
+                            type: string
+                        urn:ietf:params:scim:schemas:extension:liferay:2.0:User:
+                            $ref: "#/components/schemas/UserSchemaExtension"
+                            description:
+                                The components of the Liferay's User Schema Extension.
+                            type: UserSchemaExtension
+                        userName:
+                            description:
+                                A service provider's unique identifier for the user, typically used by the user to
+                                directly authenticate to the service provider.
+                            type: string
+                        userType:
+                            description:
+                                Used to identify the relationship between the organization and the user.
+                            type: string
+                        x509Certificates:
+                            description:
+                                A list of certificates associated with the resource (e.g., a User).
+                            items:
+                                $ref: "#/components/schemas/MultiValuedAttribute"
+                            type: array
+                    type: object
         UserSchemaExtension:
             description:
                 Liferay's User Schema Extension.
@@ -612,31 +612,31 @@ paths:
                 Lists groups.
             operationId: getV2Groups
             parameters:
-                - in: query
-                  name: count
-                  schema:
-                      type: integer
-                - in: query
-                  name: excludedAttributes
-                  schema:
-                      type: string
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: startIndex
-                  schema:
-                      type: integer
+                -   in: query
+                    name: count
+                    schema:
+                        type: integer
+                -   in: query
+                    name: excludedAttributes
+                    schema:
+                        type: string
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: startIndex
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/QueryResponse"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/QueryResponse"
                     description:
                         The list of groups.
             tags: ["Group"]
@@ -655,9 +655,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/Group"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/Group"
                     description:
                         The Group was successfully created.
             tags: ["Group"]
@@ -677,9 +677,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/QueryResponse"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/QueryResponse"
                     description:
                         List of found groups based on query
             tags: ["Group"]
@@ -689,11 +689,11 @@ paths:
                 Deletes a group.
             operationId: deleteV2Group
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     description:
@@ -705,24 +705,24 @@ paths:
                 Retrieves a group.
             operationId: getV2GroupById
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: excludedAttributes
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: excludedAttributes
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/Group"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/Group"
                     description:
                         If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
                         result in the body of the response.
@@ -732,11 +732,11 @@ paths:
                 Updates a group.
             operationId: patchV2Group
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/scim+json:
@@ -752,11 +752,11 @@ paths:
                 Updates a group.
             operationId: putV2Group
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/scim+json:
@@ -768,9 +768,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/Group"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/Group"
                     description:
                         The Group was successfully updated.
             tags: ["Group"]
@@ -785,9 +785,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/QueryResponse"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/QueryResponse"
                     description:
                         The list of Resource Types.
             tags: ["ResourceTypes"]
@@ -795,22 +795,22 @@ paths:
         get:
             operationId: getV2ResourceTypeById
             parameters:
-                - in: path
-                  description:
-                      Resource type defines the endpoints.
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    description:
+                        Resource type defines the endpoints.
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/ResourceType"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/ResourceType"
                     description:
                         The requested resource types.
                 404:
@@ -828,9 +828,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/QueryResponse"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/QueryResponse"
                     description:
                         The list of Schemas.
             tags: ["Schema"]
@@ -838,22 +838,22 @@ paths:
         get:
             operationId: getV2SchemaById
             parameters:
-                - in: path
-                  description:
-                      The schema's unique identifier.
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    description:
+                        The schema's unique identifier.
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/Schema"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/Schema"
                     description:
                         The requested schema.
                 404:
@@ -871,9 +871,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/ServiceProviderConfig"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/ServiceProviderConfig"
                     description:
                         The ServiceProviderConfig info.
             tags: ["ServiceProviderConfig"]
@@ -883,27 +883,27 @@ paths:
                 Lists users.
             operationId: getV2Users
             parameters:
-                - in: query
-                  name: count
-                  schema:
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: startIndex
-                  schema:
-                      type: integer
+                -   in: query
+                    name: count
+                    schema:
+                        type: integer
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    name: startIndex
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/QueryResponse"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/QueryResponse"
                     description:
                         The list of users.
             tags: ["User"]
@@ -922,9 +922,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/User"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/User"
                     description:
                         The User was successfully created.
             tags: ["User"]
@@ -944,9 +944,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/QueryResponse"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/QueryResponse"
                     description:
                         List of found users based on query
             tags: ["User"]
@@ -956,11 +956,11 @@ paths:
                 Deletes a user.
             operationId: deleteV2User
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             responses:
                 204:
                     description:
@@ -972,20 +972,20 @@ paths:
                 Retrieves a user.
             operationId: getV2UserById
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/User"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/User"
                     description:
                         If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
                         result in the body of the response.
@@ -995,11 +995,11 @@ paths:
                 Updates a user.
             operationId: patchV2User
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/scim+json:
@@ -1011,9 +1011,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/User"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/User"
                     description:
                         The User was successfully updated.
             tags: ["User"]
@@ -1022,11 +1022,11 @@ paths:
                 Updates a user.
             operationId: putV2User
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
             requestBody:
                 content:
                     application/scim+json:
@@ -1038,9 +1038,9 @@ paths:
                         application/scim+json:
                             schema:
                                 oneOf:
-                                    - format: binary
-                                      type: string
-                                    - $ref: "#/components/schemas/User"
+                                    -   format: binary
+                                        type: string
+                                    -   $ref: "#/components/schemas/User"
                     description:
                         The User was successfully updated.
             tags: ["User"]

@@ -50,10 +50,10 @@ components:
                     default: true
                     type: boolean
             required:
-                - a2
-                - a3
-                - name
-                - number
+                -   a2
+                -   a3
+                -   name
+                -   number
             type: object
         Region:
             properties:
@@ -81,8 +81,8 @@ components:
                         type: string
                     type: object
             required:
-                - regionCode
-                - name
+                -   regionCode
+                -   name
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -98,26 +98,26 @@ paths:
         get:
             operationId: getCountriesPage
             parameters:
-                - in: query
-                  name: active
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: active
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -156,12 +156,12 @@ paths:
         get:
             operationId: getCountryByA2
             parameters:
-                - in: path
-                  name: a2
-                  required: true
-                  schema:
-                      pattern: "[A-Z]{2}"
-                      type: string
+                -   in: path
+                    name: a2
+                    required: true
+                    schema:
+                        pattern: "[A-Z]{2}"
+                        type: string
             responses:
                 200:
                     content:
@@ -176,12 +176,12 @@ paths:
         get:
             operationId: getCountryByA3
             parameters:
-                - in: path
-                  name: a3
-                  required: true
-                  schema:
-                      pattern: "[A-Z]{3}"
-                      type: string
+                -   in: path
+                    name: a3
+                    required: true
+                    schema:
+                        pattern: "[A-Z]{3}"
+                        type: string
             responses:
                 200:
                     content:
@@ -196,11 +196,11 @@ paths:
         get:
             operationId: getCountryByName
             parameters:
-                - in: path
-                  name: name
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: name
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -215,11 +215,11 @@ paths:
         get:
             operationId: getCountryByNumber
             parameters:
-                - in: path
-                  name: number
-                  required: true
-                  schema:
-                      type: integer
+                -   in: path
+                    name: number
+                    required: true
+                    schema:
+                        type: integer
             responses:
                 200:
                     content:
@@ -234,12 +234,12 @@ paths:
         delete:
             operationId: deleteCountry
             parameters:
-                - in: path
-                  name: countryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: countryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -249,12 +249,12 @@ paths:
         get:
             operationId: getCountry
             parameters:
-                - in: path
-                  name: countryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: countryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -268,12 +268,12 @@ paths:
         patch:
             operationId: patchCountry
             parameters:
-                - in: path
-                  name: countryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: countryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -295,12 +295,12 @@ paths:
         put:
             operationId: putCountry
             parameters:
-                - in: path
-                  name: countryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: countryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -323,32 +323,32 @@ paths:
         get:
             operationId: getCountryRegionsPage
             parameters:
-                - in: path
-                  name: countryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: active
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: path
+                    name: countryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: active
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -366,12 +366,12 @@ paths:
         post:
             operationId: postCountryRegion
             parameters:
-                - in: path
-                  name: countryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: countryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -394,17 +394,17 @@ paths:
         get:
             operationId: getCountryRegionByRegionCode
             parameters:
-                - in: path
-                  name: countryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: regionCode
-                  required: true
-                  schema:
-                      type: string
+                -   in: path
+                    name: countryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: regionCode
+                    required: true
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -419,26 +419,26 @@ paths:
         get:
             operationId: getRegionsPage
             parameters:
-                - in: query
-                  name: active
-                  schema:
-                      type: boolean
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
+                -   in: query
+                    name: active
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -457,12 +457,12 @@ paths:
         delete:
             operationId: deleteRegion
             parameters:
-                - in: path
-                  name: regionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: regionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 204:
                     content:
@@ -472,12 +472,12 @@ paths:
         get:
             operationId: getRegion
             parameters:
-                - in: path
-                  name: regionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: regionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             responses:
                 200:
                     content:
@@ -491,12 +491,12 @@ paths:
         patch:
             operationId: patchRegion
             parameters:
-                - in: path
-                  name: regionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: regionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:
@@ -518,12 +518,12 @@ paths:
         put:
             operationId: putRegion
             parameters:
-                - in: path
-                  name: regionId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
+                -   in: path
+                    name: regionId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
             requestBody:
                 content:
                     application/json:

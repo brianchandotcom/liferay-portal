@@ -7,6 +7,6 @@ jobs:
 on:
     push:
         branches:
-            - master
+            -   master
         paths:
-            - workspaces/liferay-ticket-workspace/**
+            -   workspaces/liferay-ticket-workspace/**

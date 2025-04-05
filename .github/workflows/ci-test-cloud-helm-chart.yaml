@@ -27,6 +27,6 @@ jobs:
 on:
     push:
         branches:
-            - master
+            -   master
         paths:
-            - cloud/**
+            -   cloud/**

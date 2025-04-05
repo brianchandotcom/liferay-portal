@@ -1,5 +1,5 @@
 assemble:
-    - fromTask: bootJar
+    -   fromTask: bootJar
 liferay-stripe-commerce-payment-integration:
     key: liferay-stripe-commerce-payment-integration
     name: Liferay Stripe Commerce Payment Integration
@@ -13,6 +13,6 @@ liferay-stripe-commerce-payment-integration-oauth-application-user-agent:
     .serviceScheme: http
     name: Liferay Stripe Commerce Payment Integration OAuth Application User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
-        - Liferay.Headless.Commerce.Admin.Order.everything
+        -   Liferay.Headless.Admin.Workflow.everything
+        -   Liferay.Headless.Commerce.Admin.Order.everything
     type: oAuthApplicationUserAgent

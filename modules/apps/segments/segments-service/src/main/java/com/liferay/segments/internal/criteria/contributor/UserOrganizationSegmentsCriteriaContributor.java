@@ -59,24 +59,23 @@ public class UserOrganizationSegmentsCriteriaContributor
 		String newFilterString = null;
 
 		try {
+			Matcher matcher = _pattern.matcher(filterString);
+
+			while (matcher.find()) {
+				String date = matcher.group("date");
+
+				filterString = StringUtil.replace(
+					filterString, matcher.group(),
+					StringBundler.concat(
+						"dateModified ge ", date, "T00:00:00.000Z and ",
+						"dateModified le ", date, "T23:59:59.999Z"));
+			}
+
 			List<Organization> organizations = _oDataRetriever.getResults(
 				CompanyThreadLocal.getCompanyId(), filterString,
 				LocaleUtil.getDefault(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			if (organizations.isEmpty()) {
-				Matcher matcher = _pattern.matcher(filterString);
-
-				while (matcher.find()) {
-					String date = matcher.group("date");
-
-					filterString = StringUtil.replace(
-						filterString, matcher.group(),
-						StringBundler.concat(
-							"dateModified ge ", date, "T00:00:00.000Z and ",
-							"dateModified le ", date, "T23:59:59.999Z"));
-				}
-			}
-			else {
+			if (!organizations.isEmpty()) {
 				StringBundler sb = new StringBundler(
 					(2 * organizations.size()) + 1);
 

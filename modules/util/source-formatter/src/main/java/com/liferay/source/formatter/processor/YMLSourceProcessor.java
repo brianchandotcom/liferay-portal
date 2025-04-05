@@ -81,7 +81,7 @@ public class YMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private String _postProcess(String content) {
-		return content.replaceAll("(?m)^( *-)\n +(.*)", "$1 $2");
+		return content.replaceAll("(?m)^( *-)\n +(.*)", "$1   $2");
 	}
 
 	private String _preProcess(String content) {

@@ -20,8 +20,6 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -35,8 +33,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		throws IOException {
 
 		content = _formatDefinitions(fileName, content, StringPool.BLANK, 0);
-
-		content = _formatSequencesAndMappings(content);
 
 		if (content.endsWith("\n")) {
 			content = content.substring(0, content.length() - 1);
@@ -234,45 +230,6 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		return content;
 	}
 
-	private String _formatSequencesAndMappings(String content) {
-		Matcher matcher = _mappingEntryPattern.matcher(content);
-
-		while (matcher.find()) {
-			String s = matcher.group();
-
-			String[] lines = s.split("\n");
-
-			if ((lines.length <= 1) ||
-				StringUtil.startsWith(lines[0].trim(), "- '")) {
-
-				continue;
-			}
-
-			StringBundler sb = new StringBundler();
-
-			for (int i = 1; i < lines.length; i++) {
-				sb.append(StringPool.NEW_LINE);
-
-				if (Validator.isNotNull(lines[i])) {
-					sb.append(lines[i].substring(2));
-				}
-			}
-
-			sb.append(StringPool.NEW_LINE);
-
-			String newContent = _formatSequencesAndMappings(sb.toString());
-
-			if (s.endsWith("\n\n")) {
-				newContent = newContent + "\n";
-			}
-
-			content = StringUtil.replaceFirst(
-				content, matcher.group(), lines[0] + newContent);
-		}
-
-		return content;
-	}
-
 	private boolean _hasMapInsideList(String[] lines) {
 		if (lines.length <= 1) {
 			return false;
@@ -415,8 +372,5 @@ public class YMLWhitespaceCheck extends WhitespaceCheck {
 		return StringUtil.replaceFirst(
 			line, StringPool.SPACE, StringPool.BLANK, x);
 	}
-
-	private static final Pattern _mappingEntryPattern = Pattern.compile(
-		"^( *)- *?(\n|\\Z)((\\1 +.+)(\n|\\Z)+)+", Pattern.MULTILINE);
 
 }

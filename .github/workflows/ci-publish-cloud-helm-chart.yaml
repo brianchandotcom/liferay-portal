@@ -8,43 +8,43 @@ jobs:
     publish-cloud-helm-chart:
         runs-on: ubuntu-latest
         steps:
-            -   name: Checkout code
-                uses: actions/checkout@v4
-            -   name: Calculate Helm chart version
-                run: |
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Calculate Helm chart version
+              run: |
 
-                    #
-                    # heml-chart-1.0.5
-                    #
+                  #
+                  # heml-chart-1.0.5
+                  #
 
-                    LATEST_HELM_CHART_TAG=$(git describe --tags --match="helm-chart-*" HEAD)
+                  LATEST_HELM_CHART_TAG=$(git describe --tags --match="helm-chart-*" HEAD)
 
-                    #
-                    # 1.0.5
-                    #
+                  #
+                  # 1.0.5
+                  #
 
-                    CHART_VERSION=${LATEST_HELM_CHART_TAG#"helm-chart-"}
+                  CHART_VERSION=${LATEST_HELM_CHART_TAG#"helm-chart-"}
 
-                    echo "Calculated Helm chart version ${CHART_VERSION}."
+                  echo "Calculated Helm chart version ${CHART_VERSION}."
 
-                    echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
-            -   name: Package Helm chart
-                run: |
-                    mkdir "${{ runner.temp }}/dist"
+                  echo "CHART_VERSION=${CHART_VERSION}" >> ${GITHUB_ENV}
+            - name: Package Helm chart
+              run: |
+                  mkdir "${{ runner.temp }}/dist"
 
-                    helm package --destination "${{ runner.temp }}/dist" --version ${CHART_VERSION} .
-                working-directory: ./cloud/helm
-            -   name: Log in to GAR
-                run: echo "${{ secrets.GAR_PASSWORD }}" | helm registry login ${GAR_REPOSITORY} --password-stdin --username _json_key_base64
-            -   name: Push Helm chart to GAR
-                run: |
-                    for file_name in *.tgz
-                    do
-                        echo "Pushing ${file_name}."
+                  helm package --destination "${{ runner.temp }}/dist" --version ${CHART_VERSION} .
+              working-directory: ./cloud/helm
+            - name: Log in to GAR
+              run: echo "${{ secrets.GAR_PASSWORD }}" | helm registry login ${GAR_REPOSITORY} --password-stdin --username _json_key_base64
+            - name: Push Helm chart to GAR
+              run: |
+                  for file_name in *.tgz
+                  do
+                      echo "Pushing ${file_name}."
 
-                        helm push "${file_name}" "oci://${GAR_REPOSITORY}"
-                    done
-                working-directory: ${{ runner.temp }}/dist
+                      helm push "${file_name}" "oci://${GAR_REPOSITORY}"
+                  done
+              working-directory: ${{ runner.temp }}/dist
 on:
     push:
         branches:

@@ -223,18 +223,18 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> categories =
+		List<AssetCategory> assetCategories =
 			AssetCategoryServiceUtil.getVocabularyCategories(
 				categoryId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		for (AssetCategory category : categories) {
+		for (AssetCategory assetCategory : assetCategories) {
 			jsonArray.put(
 				JSONUtil.put(
 					"children",
 					() -> {
 						JSONArray childrenJSONArray = _getCategoriesJSONArray(
-							vocabularyId, category.getCategoryId());
+							vocabularyId, assetCategory.getCategoryId());
 
 						if (childrenJSONArray.length() > 0) {
 							return childrenJSONArray;
@@ -250,12 +250,12 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 				).put(
 					"icon", "categories"
 				).put(
-					"id", category.getCategoryId()
+					"id", assetCategory.getCategoryId()
 				).put(
-					"name", category.getTitle(_themeDisplay.getLocale())
+					"name", assetCategory.getTitle(_themeDisplay.getLocale())
 				).put(
 					"nodePath",
-					category.getPath(_themeDisplay.getLocale(), true)
+					assetCategory.getPath(_themeDisplay.getLocale(), true)
 				));
 		}
 

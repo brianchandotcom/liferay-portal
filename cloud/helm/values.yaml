@@ -27,11 +27,11 @@ customVolumeClaimTemplates: []
 customVolumeMounts: []
 customVolumes: []
 dependencies:
-    -   name: database
-        portalBundleDenyList: []
-        portalComponentDenyList: []
-        portalProperties: ""
-        source: external
+    - name: database
+      portalBundleDenyList: []
+      portalComponentDenyList: []
+      portalProperties: ""
+      source: external
 env:
     - name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
       value: "${env.POD_ID}"

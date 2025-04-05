@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="UnusedVariableCheck" files="change-tracking-service/src/main/java/com/liferay/change/tracking/internal/service/CTDLAppServiceWrapper\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="GradleRestClientDependenciesCheck" files="change-tracking-web/build.gradle" />
 	</source-check>

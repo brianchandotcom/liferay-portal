@@ -6,8 +6,8 @@ metadata:
 spec:
     {{- if $.Values.slave.ports.vnc.enabled }}
     ports:
-        - name: {{ $.Values.slave.ports.vnc.name }}
-          containerPort: {{ $.Values.slave.ports.vnc.containerPort }}
+        -   name: {{ $.Values.slave.ports.vnc.name }}
+            containerPort: {{ $.Values.slave.ports.vnc.containerPort }}
     {{- end }}
     selector:
         app: {{ $masterPodName }}
@@ -22,12 +22,12 @@ metadata:
     name: {{ $masterPodName }}-ingress-resource
 spec:
     rules:
-      - host: {{ $.Values.ingressHostname }}
-        http:
-            paths:
-              - backend:
-                    servicePort: 8080
-                    serviceName: {{ $masterSubdomain }}
-                path: /{{ $masterPodName }}
+      -   host: {{ $.Values.ingressHostname }}
+          http:
+              paths:
+                -   backend:
+                        servicePort: 8080
+                        serviceName: {{ $masterSubdomain }}
+                    path: /{{ $masterPodName }}
 {{- end }}
 {{- end }}

@@ -26,23 +26,23 @@ paths:
     "/projects/{projectKey}/contacts/{contactKey}/roles":
         delete:
             parameters:
-                - in: path
-                  name: projectKey
-                  required: true
-                  schema:
-                      type: string
-                - in: path
-                  name: contactKey
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   in: path
+                    name: projectKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -50,23 +50,23 @@ paths:
             tags: ["Project"]
         put:
             parameters:
-                - in: path
-                  name: projectKey
-                  required: false
-                  schema:
-                      type: string
-                - in: path
-                  name: contactKey
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: contactRoleKeys
-                  required: true
-                  schema:
-                      items:
-                          type: string
-                      type: array
+                -   in: path
+                    name: projectKey
+                    required: false
+                    schema:
+                        type: string
+                -   in: path
+                    name: contactKey
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: contactRoleKeys
+                    required: true
+                    schema:
+                        items:
+                            type: string
+                        type: array
             responses:
                 204:
                     content:
@@ -76,95 +76,95 @@ paths:
         get:
             operationId: getCollectionEntriesPage
             parameters:
-                - in: path
-                  name: siteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: path
-                  name: key
-                  required: true
-                  schema:
-                      type: string
-                - in: query
-                  explode: true
-                  name: changeTypesFilter
-                  required: false
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                  style: form
-                - in: query
-                  explode: true
-                  name: classNameIdsFilter
-                  required: false
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                  style: form
-                - in: query
-                  name: collision
-                  required: false
-                  schema:
-                      default: false
-                      type: boolean
-                  style: form
-                - in: query
-                  explode: true
-                  name: groupIdsFilter
-                  required: false
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                  style: form
-                - in: query
-                  name: page
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  required: false
-                  schema:
-                      type: integer
-                - in: query
-                  name: sort
-                  required: false
-                  schema:
-                      type: string
-                - in: query
-                  name: status
-                  required: false
-                  schema:
-                      default: 2
-                      type: integer
-                - in: query
-                  explode: true
-                  name: userIdsFilter
-                  required: false
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                  style: form
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-                - in: cookie
-                  name: csrftoken
-                  schema:
-                      type: string
-                - in: cookie
-                  name: debug
-                  schema:
-                      default: 0
-                      enum: [0, 1]
-                      type: integer
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: key
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    explode: true
+                    name: changeTypesFilter
+                    required: false
+                    schema:
+                        items:
+                            type: string
+                        type: array
+                    style: form
+                -   in: query
+                    explode: true
+                    name: classNameIdsFilter
+                    required: false
+                    schema:
+                        items:
+                            type: string
+                        type: array
+                    style: form
+                -   in: query
+                    name: collision
+                    required: false
+                    schema:
+                        default: false
+                        type: boolean
+                    style: form
+                -   in: query
+                    explode: true
+                    name: groupIdsFilter
+                    required: false
+                    schema:
+                        items:
+                            type: string
+                        type: array
+                    style: form
+                -   in: query
+                    name: page
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    required: false
+                    schema:
+                        type: integer
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: status
+                    required: false
+                    schema:
+                        default: 2
+                        type: integer
+                -   in: query
+                    explode: true
+                    name: userIdsFilter
+                    required: false
+                    schema:
+                        items:
+                            type: string
+                        type: array
+                    style: form
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
+                -   in: cookie
+                    name: csrftoken
+                    schema:
+                        type: string
+                -   in: cookie
+                    name: debug
+                    schema:
+                        default: 0
+                        enum: [0, 1]
+                        type: integer
             responses:
                 200:
                     content:
@@ -182,18 +182,18 @@ paths:
 ---
 tasks:
     # Install Git
-    - name: Install Git
-      package:
-          name: git
-          state: present
+    -   name: Install Git
+        package:
+            name: git
+            state: present
     # Deploy SSH key
-    - copy:
-          content: "{{ id_rsa_continuous-integration }}"
-          dest: /home/rancher/.ssh/id_rsa_continuous-integration@liferay.com
-          mode: 384
-          owner: rancher
-      name: Deploy SSH key
-    - copy:
-          content: |-
-              {{ github_repos | sort | join(' ') }}
-          dest: "/data/slaves/{{ item.hostname }}/git/liferay/.repositories"
+    -   copy:
+            content: "{{ id_rsa_continuous-integration }}"
+            dest: /home/rancher/.ssh/id_rsa_continuous-integration@liferay.com
+            mode: 384
+            owner: rancher
+        name: Deploy SSH key
+    -   copy:
+            content: |-
+                {{ github_repos | sort | join(' ') }}
+            dest: "/data/slaves/{{ item.hostname }}/git/liferay/.repositories"

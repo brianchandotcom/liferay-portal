@@ -1,4 +1,4 @@
-# Checks for .jsp, .jspf, .jspx, .tag, .tpl or .vm
+# Checks for .jsp, .jspf, .jspx, .tag, .tpl, or .vm
 
 Check | Category | Description
 ----- | -------- | -----------

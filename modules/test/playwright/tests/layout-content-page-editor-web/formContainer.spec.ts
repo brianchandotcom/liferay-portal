@@ -4334,6 +4334,7 @@ test.describe('Form Localization', () => {
 					label: {
 						en_US: 'Numeric',
 					},
+					localized: true,
 					name: 'numeric',
 				},
 				{
@@ -4344,6 +4345,7 @@ test.describe('Form Localization', () => {
 					label: {
 						en_US: 'Date And Time',
 					},
+					localized: true,
 					name: 'dateAndTime',
 					objectFieldSettings: [
 						{
@@ -4360,6 +4362,7 @@ test.describe('Form Localization', () => {
 					label: {
 						en_US: 'Date',
 					},
+					localized: true,
 					name: 'date',
 				},
 				{

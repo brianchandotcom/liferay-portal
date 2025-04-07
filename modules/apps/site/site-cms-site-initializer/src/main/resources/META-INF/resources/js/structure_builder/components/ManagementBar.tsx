@@ -5,10 +5,12 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectHistory from '../selectors/selectHistory';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
@@ -151,6 +153,7 @@ function PublishButton() {
 
 	const erc = useSelector(selectStructureERC);
 	const fields = useSelector(selectStructureFields);
+	const history = useSelector(selectHistory);
 	const label = useSelector(selectStructureLabel);
 	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const name = useSelector(selectStructureName);
@@ -163,6 +166,21 @@ function PublishButton() {
 
 		if (!valid) {
 			return;
+		}
+
+		if (history.deletedFields) {
+			if (
+				!(await openConfirmModal({
+					buttonLabel: Liferay.Language.get('publish'),
+					status: 'danger',
+					text: Liferay.Language.get(
+						'you-removed-one-or-more-fields-from-the-structure'
+					),
+					title: Liferay.Language.get('publish-structure-changes'),
+				}))
+			) {
+				return;
+			}
 		}
 
 		try {

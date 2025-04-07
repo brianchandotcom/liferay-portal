@@ -211,6 +211,13 @@ function reducer(state: State, action: Action): State {
 				};
 			}
 
+			if (state.publishedFields.has(uuid)) {
+				nextState = {
+					...nextState,
+					history: {...nextState.history, deletedFields: true},
+				};
+			}
+
 			return nextState;
 		}
 		case 'delete-selection': {

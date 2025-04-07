@@ -14,7 +14,7 @@ import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.List;
@@ -23,7 +23,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +32,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,58 +43,34 @@ public class AccountTicketsRestController extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.GET,
-		path = "/accounts/{externalReferenceCode}/tickets/{ticketId}"
-	)
-	public ResponseEntity<String> getZendeskTicket(
-			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@PathVariable("ticketId") long ticketId)
-		throws Exception {
-
-		try {
-			_businessEventPermission.check(jwt, externalReferenceCode);
-
-			long zendeskOrganizationId = _fetchZendeskOrganizationId(
-				externalReferenceCode);
-			ZendeskTicket zendeskTicket = _zendeskService.getZendeskTicket(
-				ticketId);
-
-			if (zendeskOrganizationId !=
-					zendeskTicket.getZendeskOrganizationId()) {
-
-				throw new PrincipalException();
-			}
-
-			JSONObject jsonObject = zendeskTicket.toJSONObject();
-
-			return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@RequestMapping(
-		method = RequestMethod.GET,
 		path = "/accounts/{externalReferenceCode}/tickets"
 	)
 	public ResponseEntity<String> getZendeskTickets(
 			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("externalReferenceCode") String externalReferenceCode)
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@RequestParam(defaultValue = "", required = false) long[]
+				associatedTicketIds)
 		throws Exception {
 
 		try {
-			_businessEventPermission.check(jwt, externalReferenceCode);
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
 
 			ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
 
 			zendeskTicketQuery.addCriterion(
 				"organization:" +
 					_fetchZendeskOrganizationId(externalReferenceCode));
-			zendeskTicketQuery.addCriterion("status<closed");
+
+			if (associatedTicketIds.length > 0) {
+				for (long associatedTicketId : associatedTicketIds) {
+					zendeskTicketQuery.addCriterion(
+						"ticket_id:" + associatedTicketId);
+				}
+			}
+			else {
+				zendeskTicketQuery.addCriterion("status<solved");
+			}
 
 			int page = 1;
 

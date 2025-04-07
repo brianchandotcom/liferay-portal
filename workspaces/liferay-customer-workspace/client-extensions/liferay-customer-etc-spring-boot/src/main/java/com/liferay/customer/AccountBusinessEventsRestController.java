@@ -14,6 +14,7 @@ import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -61,7 +62,8 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			_businessEventPermission.check(jwt, externalReferenceCode);
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.UPDATE);
 
 			JSONObject jsonObject = new JSONObject(json);
 

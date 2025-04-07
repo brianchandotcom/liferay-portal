@@ -22,6 +22,10 @@ html#{$cadmin-selector} {
 	}
 }
 
-.ae-toolbar-styles {
-	z-index: $alloyEditorZIndex;
+.ae-ui .ae-toolbars {
+	.ae-toolbar,
+	.ae-toolbar-add,
+	.ae-toolbar-styles {
+		z-index: $alloyEditorZIndex;
+	}
 }

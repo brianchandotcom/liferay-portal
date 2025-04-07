@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import com.liferay.batch.engine.BatchEngineDeletionHelperUtil;
+import com.liferay.batch.engine.BatchEngineDeletionHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -101,8 +101,8 @@ public class DeletionSystemEventImporterImpl
 				continue;
 			}
 
-			if (BatchEngineDeletionHelperUtil.isBatchPortlet(portletId)) {
-				BatchEngineDeletionHelperUtil.importDeletions(
+			if (_batchEngineDeletionHelper.isBatchPortlet(portletId)) {
+				_batchEngineDeletionHelper.importDeletions(
 					portletDataContext, portletId);
 			}
 		}
@@ -165,6 +165,9 @@ public class DeletionSystemEventImporterImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventImporterImpl.class);
+
+	@Reference
+	private BatchEngineDeletionHelper _batchEngineDeletionHelper;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

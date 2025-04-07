@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import com.liferay.batch.engine.BatchEngineDeletionHelperUtil;
+import com.liferay.batch.engine.BatchEngineDeletionHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
@@ -114,7 +114,7 @@ public class DeletionSystemEventExporterImpl
 				"/deletion-system-events.xml",
 			document.formattedString());
 
-		BatchEngineDeletionHelperUtil.exportDeletions(portletDataContext);
+		_batchEngineDeletionHelper.exportDeletions(portletDataContext);
 
 		if (ListUtil.isNotEmpty(exportedSystemEventIds) &&
 			ExportImportThreadLocal.isStagingInProcess()) {
@@ -214,8 +214,8 @@ public class DeletionSystemEventExporterImpl
 		String className = PortalUtil.getClassName(
 			systemEvent.getClassNameId());
 
-		if (BatchEngineDeletionHelperUtil.isBatchDeleteSupported(className)) {
-			BatchEngineDeletionHelperUtil.addDeletionEvent(
+		if (_batchEngineDeletionHelper.isBatchDeleteSupported(className)) {
+			_batchEngineDeletionHelper.addDeletionEvent(
 				portletDataContext, systemEvent);
 		}
 		else {
@@ -326,6 +326,9 @@ public class DeletionSystemEventExporterImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventExporterImpl.class);
+
+	@Reference
+	private BatchEngineDeletionHelper _batchEngineDeletionHelper;
 
 	@Reference
 	private ExportImportProcessCallbackRegistry

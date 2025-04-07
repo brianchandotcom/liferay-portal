@@ -105,6 +105,36 @@ public class DLValidatorImplTest {
 	}
 
 	@Test
+	public void testMaxAllowableSizeDLFileMaxSizeTakesPrecedenceOverUploadServletRequestFileMaxSizeWithNoBufferLimitDeducted()
+		throws Exception {
+
+		Mockito.when(
+			_uploadServletRequestConfigurationProvider.getMaxSize()
+		).thenReturn(
+			20L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
+				Mockito.anyLong())
+		).thenReturn(
+			15L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyRequestFileSizeBuffer(
+				Mockito.anyLong())
+		).thenReturn(
+			1L
+		);
+
+		Assert.assertEquals(
+			15,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), RandomTestUtil.randomString()));
+	}
+
+	@Test
 	public void testMaxAllowableSizeMimeTypeSizeLimit() throws Exception {
 		Mockito.when(
 			_uploadServletRequestConfigurationProvider.getMaxSize()
@@ -151,6 +181,36 @@ public class DLValidatorImplTest {
 
 		Assert.assertEquals(
 			10,
+			_dlValidator.getMaxAllowableSize(
+				RandomTestUtil.randomInt(), RandomTestUtil.randomString()));
+	}
+
+	@Test
+	public void testMaxAllowableSizeUploadServletRequestFileMaxSizeTakesPrecedenceOverDLFileMaxSizeWithBufferLimitDeducted()
+		throws Exception {
+
+		Mockito.when(
+			_uploadServletRequestConfigurationProvider.getMaxSize()
+		).thenReturn(
+			15L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
+				Mockito.anyLong())
+		).thenReturn(
+			15L
+		);
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getCompanyRequestFileSizeBuffer(
+				Mockito.anyLong())
+		).thenReturn(
+			1L
+		);
+
+		Assert.assertEquals(
+			14,
 			_dlValidator.getMaxAllowableSize(
 				RandomTestUtil.randomInt(), RandomTestUtil.randomString()));
 	}

@@ -1013,6 +1013,10 @@ public class PropsValues {
 	public static final String JDBC_DEFAULT_USERNAME = PropsUtil.get(
 		PropsKeys.JDBC_DEFAULT_USERNAME);
 
+	public static long JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT));
+
 	public static final boolean JSON_SERVICE_AUTH_TOKEN_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JSON_SERVICE_AUTH_TOKEN_ENABLED));

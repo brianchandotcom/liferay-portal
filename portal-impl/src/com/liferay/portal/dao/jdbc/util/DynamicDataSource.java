@@ -8,7 +8,10 @@ package com.liferay.portal.dao.jdbc.util;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.spring.hibernate.SpringHibernateThreadLocalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.PrintWriter;
 
@@ -17,6 +20,8 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
 
@@ -109,11 +114,58 @@ public class DynamicDataSource implements DataSource {
 		if (!_writeDataSourceThreadLocal.get() &&
 			SpringHibernateThreadLocalUtil.isCurrentTransactionReadOnly()) {
 
+			if (PropsValues.JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT > 0) {
+				HttpSession httpSession =
+					PortalSessionThreadLocal.getHttpSession();
+
+				if (httpSession == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Failed to get write data source last used date " +
+								"from http session");
+					}
+				}
+				else {
+					long lastUsedDate = GetterUtil.getLong(
+						httpSession.getAttribute(
+							_WRITE_DATA_SOURCE_LAST_USED_DATE));
+
+					if (PropsValues.JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT >
+							(System.currentTimeMillis() - lastUsedDate)) {
+
+						if (_log.isTraceEnabled()) {
+							_log.trace("Returning write data source");
+						}
+
+						return _writeDataSource;
+					}
+				}
+			}
+
 			if (_log.isTraceEnabled()) {
 				_log.trace("Returning read data source");
 			}
 
 			return _readDataSource;
+		}
+
+		if ((PropsValues.JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT > 0) &&
+			!SpringHibernateThreadLocalUtil.isCurrentTransactionReadOnly()) {
+
+			HttpSession httpSession = PortalSessionThreadLocal.getHttpSession();
+
+			if (httpSession == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Failed to set write data source last used date into " +
+							"http session");
+				}
+			}
+			else {
+				httpSession.setAttribute(
+					_WRITE_DATA_SOURCE_LAST_USED_DATE,
+					System.currentTimeMillis());
+			}
 		}
 
 		if (_log.isTraceEnabled()) {
@@ -124,6 +176,9 @@ public class DynamicDataSource implements DataSource {
 
 		return _writeDataSource;
 	}
+
+	private static final String _WRITE_DATA_SOURCE_LAST_USED_DATE =
+		"WRITE_DATA_SOURCE_LAST_USED_DATE";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicDataSource.class);

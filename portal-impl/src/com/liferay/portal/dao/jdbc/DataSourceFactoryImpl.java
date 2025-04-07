@@ -264,7 +264,10 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	}
 
 	protected boolean isPropertyLiferay(String key) {
-		if (StringUtil.equalsIgnoreCase(key, "jndi.name")) {
+		if (StringUtil.equalsIgnoreCase(key, "jndi.name") ||
+			StringUtil.equalsIgnoreCase(
+				key, "data.source.unavailable.timeout")) {
+
 			return true;
 		}
 

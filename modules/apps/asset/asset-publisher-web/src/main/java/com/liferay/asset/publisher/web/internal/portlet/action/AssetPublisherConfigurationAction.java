@@ -584,9 +584,9 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 
 			strTokenizer.setQuoteMatcher(StrMatcher.quoteMatcher());
 
-			List<String> valuesList = (List<String>)strTokenizer.getTokenList();
+			List<String> tokens = (List<String>)strTokenizer.getTokenList();
 
-			values = valuesList.toArray(new String[0]);
+			values = tokens.toArray(new String[0]);
 		}
 		else {
 			values = ParamUtil.getStringValues(
@@ -861,15 +861,15 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 
 		int i = 0;
 
-		List<AssetQueryRule> queryRules = new ArrayList<>();
+		List<AssetQueryRule> assetQueryRules = new ArrayList<>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
 			AssetQueryRule queryRule = _getQueryRule(
 				actionRequest, queryRulesIndex);
 
-			_validateQueryRule(userId, groupId, queryRules, queryRule);
+			_validateQueryRule(userId, groupId, assetQueryRules, queryRule);
 
-			queryRules.add(queryRule);
+			assetQueryRules.add(queryRule);
 
 			setPreference(
 				actionRequest, "queryContains" + i,
@@ -913,7 +913,7 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 	}
 
 	private void _validateQueryRule(
-			long userId, long groupId, List<AssetQueryRule> queryRules,
+			long userId, long groupId, List<AssetQueryRule> assetQueryRules,
 			AssetQueryRule queryRule)
 		throws Exception {
 
@@ -924,7 +924,7 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 				userId, groupId, queryRule.getValues());
 		}
 
-		if (queryRules.contains(queryRule)) {
+		if (assetQueryRules.contains(queryRule)) {
 			throw new DuplicateQueryRuleException(
 				queryRule.isContains(), queryRule.isAndOperator(),
 				queryRule.getName());

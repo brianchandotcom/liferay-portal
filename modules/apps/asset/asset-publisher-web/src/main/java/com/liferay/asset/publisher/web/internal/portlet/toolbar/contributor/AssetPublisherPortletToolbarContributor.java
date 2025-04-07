@@ -102,11 +102,11 @@ public class AssetPublisherPortletToolbarContributor
 			WebKeys.THEME_DISPLAY);
 
 		if (scopeAssetPublisherAddItemHolders.size() == 1) {
-			Set<Map.Entry<Long, List<AssetPublisherAddItemHolder>>> entrySet =
+			Set<Map.Entry<Long, List<AssetPublisherAddItemHolder>>> entries =
 				scopeAssetPublisherAddItemHolders.entrySet();
 
 			Iterator<Map.Entry<Long, List<AssetPublisherAddItemHolder>>>
-				iterator = entrySet.iterator();
+				iterator = entries.iterator();
 
 			Map.Entry<Long, List<AssetPublisherAddItemHolder>>
 				scopeAddPortletURL = iterator.next();

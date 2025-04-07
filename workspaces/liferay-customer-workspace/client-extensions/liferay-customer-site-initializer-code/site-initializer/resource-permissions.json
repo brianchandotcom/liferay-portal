@@ -1,6 +1,269 @@
 [
 	{
 		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountFlag$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscription$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscriptionGroup$]",
+		"roleName": "Account Administrator",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscriptionGroup$]",
+		"roleName": "Account Member",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"UPDATE"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscriptionGroup$]",
+		"roleName": "Organization User",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscriptionGroup$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscriptionTerm$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AdminDXPCloud$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AdminLiferayExperienceCloud$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AnalyticsCloudDataCenterLocation$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AnalyticsCloudDataCenterLocation$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AnalyticsCloudWorkspace$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:BannedEmailDomain$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:BannedEmailDomain$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CallbackRequest$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CallbackRequest$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:DXPCDataCenterRegion$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:DXPCDataCenterRegion$]",
+		"roleName": "User",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:DXPCloudEnvironment$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:HighPriorityContacts$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:IncidentReportContactAnalyticsCloud$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:KoroneikiAccount$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:LiferayExperienceCloudEnvironment$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ReplacementActivationKeyRequest$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:SupportTicketEscalation$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TeamMembersInvitation$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TicketAttachment$]",
+		"roleName": "Provisioning Member",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"VIEW_CONTROL_PANEL"
 		],
 		"resourceName": "90",
@@ -723,269 +986,6 @@
 		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TicketAttachment$]",
 		"roleName": "Requester",
 		"scope": "3"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountFlag$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscription$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
-		"roleName": "Account Administrator",
-		"scope": "3"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
-		"roleName": "Account Member",
-		"scope": "3"
-	},
-	{
-		"actionIds": [
-			"UPDATE"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
-		"roleName": "Organization User",
-		"scope": "3"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AccountSubscriptionTerm$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AdminDXPCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AdminLiferayExperienceCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AnalyticsCloudDataCenterLocation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AnalyticsCloudDataCenterLocation$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:AnalyticsCloudWorkspace$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:BannedEmailDomain$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:BannedEmailDomain$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackRequest$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CallbackRequest$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DXPCDataCenterRegion$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DXPCDataCenterRegion$]",
-		"roleName": "User",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:DXPCloudEnvironment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:HighPriorityContacts$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:IncidentReportContactAnalyticsCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:KoroneikiAccount$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LiferayExperienceCloudEnvironment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ReplacementActivationKeyRequest$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:SupportTicketEscalation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TeamMembersInvitation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:TicketAttachment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
 	},
 	{
 		"actionIds": [

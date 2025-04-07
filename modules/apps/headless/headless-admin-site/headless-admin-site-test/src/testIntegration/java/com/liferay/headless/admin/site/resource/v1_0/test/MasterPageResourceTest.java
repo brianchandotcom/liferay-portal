@@ -808,24 +808,19 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup, TestPropsValues.getUserId()));
 
-		return TransformUtil.unsafeTransform(
+		return TransformUtil.unsafeTransformToArray(
 			assetCategories,
-			assetCategory -> {
-				ItemExternalReference itemExternalReference =
-					new ItemExternalReference();
-
-				itemExternalReference.setExternalReferenceCode(
-					assetCategory.getExternalReferenceCode());
-
-				itemExternalReference.setScope(
-					_getScope(
-						testGroup.getGroupId(), assetCategory.getGroupId()));
-
-				return itemExternalReference;
-			}
-		).toArray(
-			new ItemExternalReference[0]
-		);
+			assetCategory -> new ItemExternalReference() {
+				{
+					setExternalReferenceCode(
+						assetCategory.getExternalReferenceCode());
+					setScope(
+						() -> _getScope(
+							testGroup.getGroupId(),
+							assetCategory.getGroupId()));
+				}
+			},
+			ItemExternalReference.class);
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(

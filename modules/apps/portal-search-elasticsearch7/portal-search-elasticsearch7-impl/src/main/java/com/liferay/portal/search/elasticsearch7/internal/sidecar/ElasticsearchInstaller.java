@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 
@@ -146,7 +147,7 @@ public class ElasticsearchInstaller {
 
 	private void _downloadAndInstallElasticsearch() throws IOException {
 		String rootArchiveName = UncompressUtil.unarchive(
-			_getFilePath(_distribution.getElasticsearchDistributable()),
+			_locateOrDownload(_distribution.getElasticsearchDistributable()),
 			_temporaryDirectoryPath);
 
 		PathUtil.copyDirectory(
@@ -157,7 +158,7 @@ public class ElasticsearchInstaller {
 	private void _downloadAndInstallPlugin(Distributable distributable)
 		throws IOException {
 
-		Path filePath = _getFilePath(distributable);
+		Path filePath = _locateOrDownload(distributable);
 
 		String pluginName = StringUtils.substringBeforeLast(
 			String.valueOf(filePath.getFileName()), StringPool.DASH);
@@ -187,19 +188,15 @@ public class ElasticsearchInstaller {
 		}
 	}
 
-	private Path _getFilePath(Distributable distributable) throws IOException {
-		Path filePath = _locateOrDownload(distributable);
-
-		_guardChecksum(filePath, distributable.getChecksum());
-
-		return filePath;
-	}
-
-	private void _guardChecksum(Path filePath, String checksum)
+	private void _guardChecksum(
+			String checksum, String distributableChecksum, String fileName)
 		throws IOException {
 
-		if (!checksum.equals(getChecksum(filePath))) {
-			throw new RuntimeException("Checksum mismatch");
+		if (!checksum.equals(distributableChecksum)) {
+			throw new RuntimeException(
+				StringBundler.concat(
+					"Checksum mismatch for ", fileName, StringPool.COLON,
+					StringPool.SPACE, checksum));
 		}
 	}
 
@@ -219,12 +216,20 @@ public class ElasticsearchInstaller {
 			fileName);
 
 		if (Files.exists(distributableFilePath)) {
+			_guardChecksum(
+				getChecksum(distributableFilePath), distributable.getChecksum(),
+				fileName);
+
 			return distributableFilePath;
 		}
 
 		Path downloadedFilePath = _temporaryDirectoryPath.resolve(fileName);
 
 		PathUtil.download(new URL(downloadURLString), downloadedFilePath);
+
+		_guardChecksum(
+			getChecksum(downloadedFilePath), distributable.getChecksum(),
+			fileName);
 
 		return downloadedFilePath;
 	}

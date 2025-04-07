@@ -82,7 +82,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -1202,15 +1201,7 @@ public class HookHotDeployListener
 			Properties portalProperties, Properties unfilteredPortalProperties)
 		throws Exception {
 
-		if (GetterUtil.getBoolean(
-				SystemProperties.get("company-id-properties"))) {
-
-			CompanyLocalServiceUtil.forEachCompany(
-				company -> PropsUtil.addProperties(company, portalProperties));
-		}
-		else {
-			PropsUtil.addProperties(portalProperties);
-		}
+		PropsUtil.addProperties(portalProperties);
 
 		if (_log.isDebugEnabled() && portalProperties.containsKey(LOCALES)) {
 			_log.debug(

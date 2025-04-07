@@ -11,29 +11,55 @@ import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import {deleteItems} from './utils/deleteItems';
 
-export const xssBypassTest = mergeTests(
+const baseTest = mergeTests(formsPagesTest, loginTest());
+
+const ckeditor5Test = mergeTests(
+	baseTest,
+	featureFlagsTest({
+		'LPD-11235': {enabled: true},
+	})
+);
+
+const xssBypassTest = mergeTests(
+	baseTest,
 	featureFlagsTest({
 		'LPD-31212': {enabled: true},
-	}),
-	loginTest(),
-	formsPagesTest
+	})
 );
 
-export const xssDisabledTest = mergeTests(
+const xssDisabledTest = mergeTests(
+	baseTest,
 	featureFlagsTest({
 		'LPD-31212': {enabled: false},
-	}),
-	loginTest(),
-	formsPagesTest
+	})
 );
 
-[xssBypassTest, xssDisabledTest].forEach((testSuite) => {
+[ckeditor5Test, xssBypassTest, xssDisabledTest].forEach((testSuite) => {
 	testSuite.afterEach(async ({formsPage}) => {
 		await formsPage.goTo();
 
 		await deleteItems(formsPage);
 	});
 });
+
+ckeditor5Test(
+	'Added "Rich Text" field includes preview of editor',
+	{
+		tag: ['@LPD-11235'],
+	},
+	async ({formBuilderPage, formBuilderSidePanelPage}) => {
+		await formBuilderPage.goToNew();
+
+		await expect(formBuilderPage.newFormHeading).toBeVisible();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
+
+		const editable = formBuilderSidePanelPage.page.getByRole('textbox', {
+			name: 'Rich Text Editor',
+		});
+		await expect(editable).toBeVisible();
+	}
+);
 
 const content = '<script>alert("Hello! I am an alert box!");</script>';
 const sanitizedContent = '<script>;</script>';

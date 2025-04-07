@@ -15,6 +15,15 @@ import {Field} from '../../../../src/main/resources/META-INF/resources/js/struct
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 import {MockStateProvider} from '../mocks/MockStateProvider';
 
+jest.mock('@liferay/layout-js-components-web', () => {
+	const actual = jest.requireActual('@liferay/layout-js-components-web');
+
+	return {
+		...actual,
+		openConfirmModal: jest.fn(),
+	};
+});
+
 type Props = {
 	state?: Partial<State>;
 };
@@ -121,5 +130,29 @@ describe('ManagementBar', () => {
 
 		expect(StructureService.publishStructure).not.toBeCalled();
 		expect(StructureService.createStructure).not.toBeCalled();
+	});
+
+	it('Shows warning modal when a published field has been deleted', async () => {
+		renderComponent({
+			state: {history: {deletedFields: true}, status: 'published'},
+		});
+
+		const publishButton = screen.getByText('publish');
+
+		await userEvent.click(publishButton);
+
+		await waitFor(() => {
+			expect(
+				require('@liferay/layout-js-components-web').openConfirmModal
+			).toBeCalledWith(
+				expect.objectContaining({
+					text: 'you-removed-one-or-more-fields-from-the-structure',
+				})
+			);
+		});
+
+		expect(StructureService.createStructure).not.toBeCalled();
+		expect(StructureService.updateStructure).not.toBeCalled();
+		expect(StructureService.publishStructure).not.toBeCalled();
 	});
 });

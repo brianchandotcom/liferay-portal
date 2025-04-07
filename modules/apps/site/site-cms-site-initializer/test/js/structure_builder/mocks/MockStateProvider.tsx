@@ -16,6 +16,7 @@ const DEFAULT_STATE: State = {
 	erc: 'default-erc',
 	error: null,
 	fields: new Map(),
+	history: {deletedFields: false},
 	id: null,
 	invalids: new Map(),
 	label: 'untitled-structure',

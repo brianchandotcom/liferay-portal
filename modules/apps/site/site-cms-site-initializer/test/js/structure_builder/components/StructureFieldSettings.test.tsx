@@ -48,6 +48,7 @@ const DEFAULT_STATE: State = {
 	erc: 'structure-erc',
 	error: null,
 	fields: new Map([[TEXT_FIELD_UUID, FIELD]]),
+	history: {deletedFields: false},
 	id: null,
 	invalids: new Map(),
 	label: 'untitled-structure',

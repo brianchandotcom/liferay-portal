@@ -46,6 +46,7 @@ describe('buildState', () => {
 		const initialState = {
 			erc: 'structureERC',
 			error: null,
+			history: {deletedFields: false},
 			id: 1,
 			invalids: new Map(),
 			label: {en_US: 'Structure'},
@@ -76,6 +77,7 @@ describe('buildState', () => {
 		const initialState = {
 			erc: 'structureERC',
 			error: null,
+			history: {deletedFields: false},
 			id: 1,
 			invalids: new Map(),
 			label: {en_US: 'Structure'},
@@ -117,6 +119,7 @@ describe('buildState', () => {
 		const initialState = {
 			erc: 'structureERC',
 			error: null,
+			history: {deletedFields: false},
 			id: 1,
 			invalids: new Map(),
 			label: {en_US: 'Structure'},

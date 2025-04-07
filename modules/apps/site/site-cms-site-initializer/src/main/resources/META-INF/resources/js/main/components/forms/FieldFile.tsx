@@ -44,9 +44,9 @@ const FieldFile = ({
 		target,
 	}: React.ChangeEvent<HTMLInputElement>) => {
 		if (
-			!target.value.endsWith(validExtensions) ||
 			!target.files ||
-			target.files?.length === 0
+			target.files?.length === 0 ||
+			!target.files[0].name.endsWith(validExtensions)
 		) {
 			return;
 		}

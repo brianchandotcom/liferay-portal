@@ -182,7 +182,9 @@ public abstract class BaseAttachmentResourceImpl
 			existingAttachment.setContentType(attachment.getContentType());
 		}
 
-		existingAttachment.setCustomFields(attachment.getCustomFields());
+		if (attachment.getCustomFields() != null) {
+			existingAttachment.setCustomFields(attachment.getCustomFields());
+		}
 
 		if (attachment.getDisplayDate() != null) {
 			existingAttachment.setDisplayDate(attachment.getDisplayDate());

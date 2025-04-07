@@ -1872,7 +1872,9 @@ public abstract class BaseUserAccountResourceImpl
 				userAccount.getCurrentPassword());
 		}
 
-		existingUserAccount.setCustomFields(userAccount.getCustomFields());
+		if (userAccount.getCustomFields() != null) {
+			existingUserAccount.setCustomFields(userAccount.getCustomFields());
+		}
 
 		if (userAccount.getEmailAddress() != null) {
 			existingUserAccount.setEmailAddress(userAccount.getEmailAddress());
@@ -2193,7 +2195,9 @@ public abstract class BaseUserAccountResourceImpl
 				userAccount.getCurrentPassword());
 		}
 
-		existingUserAccount.setCustomFields(userAccount.getCustomFields());
+		if (userAccount.getCustomFields() != null) {
+			existingUserAccount.setCustomFields(userAccount.getCustomFields());
+		}
 
 		if (userAccount.getEmailAddress() != null) {
 			existingUserAccount.setEmailAddress(userAccount.getEmailAddress());

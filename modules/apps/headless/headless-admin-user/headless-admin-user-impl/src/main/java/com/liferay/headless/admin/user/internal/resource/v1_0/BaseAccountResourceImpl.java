@@ -580,7 +580,9 @@ public abstract class BaseAccountResourceImpl
 		Account existingAccount = getAccountByExternalReferenceCode(
 			externalReferenceCode);
 
-		existingAccount.setCustomFields(account.getCustomFields());
+		if (account.getCustomFields() != null) {
+			existingAccount.setCustomFields(account.getCustomFields());
+		}
 
 		if (account.getDefaultBillingAddressExternalReferenceCode() != null) {
 			existingAccount.setDefaultBillingAddressExternalReferenceCode(
@@ -852,7 +854,9 @@ public abstract class BaseAccountResourceImpl
 
 		Account existingAccount = getAccount(accountId);
 
-		existingAccount.setCustomFields(account.getCustomFields());
+		if (account.getCustomFields() != null) {
+			existingAccount.setCustomFields(account.getCustomFields());
+		}
 
 		if (account.getDefaultBillingAddressExternalReferenceCode() != null) {
 			existingAccount.setDefaultBillingAddressExternalReferenceCode(

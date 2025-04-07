@@ -264,8 +264,10 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getArticleBody());
 		}
 
-		existingKnowledgeBaseArticle.setCustomFields(
-			knowledgeBaseArticle.getCustomFields());
+		if (knowledgeBaseArticle.getCustomFields() != null) {
+			existingKnowledgeBaseArticle.setCustomFields(
+				knowledgeBaseArticle.getCustomFields());
+		}
 
 		if (knowledgeBaseArticle.getDatePublished() != null) {
 			existingKnowledgeBaseArticle.setDatePublished(

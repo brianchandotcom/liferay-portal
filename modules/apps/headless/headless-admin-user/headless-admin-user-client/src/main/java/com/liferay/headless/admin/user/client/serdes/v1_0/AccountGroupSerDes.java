@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroup;
-import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -104,7 +103,7 @@ public class AccountGroupSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < accountGroup.getCustomFields().length; i++) {
-				sb.append(String.valueOf(accountGroup.getCustomFields()[i]));
+				sb.append(accountGroup.getCustomFields()[i]);
 
 				if ((i + 1) < accountGroup.getCustomFields().length) {
 					sb.append(", ");
@@ -421,12 +420,16 @@ public class AccountGroupSerDes {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					CustomField[] customFieldsArray =
-						new CustomField[jsonParserFieldValues.length];
+					com.liferay.headless.admin.user.client.custom.field.
+						CustomField[] customFieldsArray = new
+						com.liferay.headless.admin.user.client.custom.field.
+							CustomField[jsonParserFieldValues.length];
 
 					for (int i = 0; i < customFieldsArray.length; i++) {
-						customFieldsArray[i] = CustomFieldSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
+						customFieldsArray[i] =
+							com.liferay.headless.admin.user.client.custom.field.
+								CustomField.toDTO(
+									(String)jsonParserFieldValues[i]);
 					}
 
 					accountGroup.setCustomFields(customFieldsArray);

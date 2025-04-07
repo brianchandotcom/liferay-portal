@@ -49,16 +49,24 @@ public class Account implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
-	public CustomField[] getCustomFields() {
+	public com.liferay.headless.commerce.delivery.catalog.client.custom.field.
+		CustomField[] getCustomFields() {
+
 		return customFields;
 	}
 
-	public void setCustomFields(CustomField[] customFields) {
+	public void setCustomFields(
+		com.liferay.headless.commerce.delivery.catalog.client.custom.field.
+			CustomField[] customFields) {
+
 		this.customFields = customFields;
 	}
 
 	public void setCustomFields(
-		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
+		UnsafeSupplier
+			<com.liferay.headless.commerce.delivery.catalog.client.custom.field.
+				CustomField[],
+			 Exception> customFieldsUnsafeSupplier) {
 
 		try {
 			customFields = customFieldsUnsafeSupplier.get();
@@ -68,7 +76,9 @@ public class Account implements Cloneable, Serializable {
 		}
 	}
 
-	protected CustomField[] customFields;
+	protected
+		com.liferay.headless.commerce.delivery.catalog.client.custom.field.
+			CustomField[] customFields;
 
 	public Date getDateCreated() {
 		return dateCreated;

@@ -18,8 +18,8 @@ import './RecordGoLiveEventPage.css';
 
 import {Observer} from '@clayui/modal/lib/types';
 
+import useAccountBusinessEvents from '../../../hooks/useAccountBusinessEvents';
 import useGetGMTTimeZonesList from '../../../hooks/useGetGMTTimeZonesList';
-import useUpdateOrg from '../../../hooks/useUpdateOrg';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
@@ -72,7 +72,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		[]
 	);
 
-	const {updateOrg} = useUpdateOrg(
+	const {updateAccountBusinessEvents} = useAccountBusinessEvents(
 		accountExternalReferenceCode,
 		businessEvent,
 		false,
@@ -128,7 +128,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateOrg();
+			await updateAccountBusinessEvents();
 
 			await client.mutate<{
 				updateBusinessEvent: IBusinessEvent;

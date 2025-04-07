@@ -8,7 +8,7 @@ import {Liferay} from '~/services/liferay';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {IBusinessEvent} from '~/utils/types';
 
-export default function useUpdateOrg(
+export default function useAccountBusinessEvents(
 	accountExternalReferenceCode: string,
 	businessEvent: IBusinessEvent,
 	isEdition: boolean,
@@ -29,7 +29,7 @@ export default function useUpdateOrg(
 		isRemoval,
 	]);
 
-	const updateOrg = async () => {
+	const updateAccountBusinessEvents = async () => {
 		const businessEventsResponse = await getBusinessEvents(
 			encodeURI(filterQuery)
 		);
@@ -98,5 +98,5 @@ export default function useUpdateOrg(
 		return response;
 	};
 
-	return {updateOrg};
+	return {updateAccountBusinessEvents};
 }

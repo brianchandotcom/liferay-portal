@@ -21,12 +21,12 @@ import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 
 import Layout from '../../../../../../../components/FormLayout';
 import AssociatedTicketsContainer from '../../components/AssociatedTicketsContainer';
+import useAccountBusinessEvents from '../../hooks/useAccountBusinessEvents';
 import useAccountTickets from '../../hooks/useAccountTickets';
 import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
 import useGetGMTTimeZonesList from '../../hooks/useGetGMTTimeZonesList';
 import useGetVersionOfLiferaySoftwareList from '../../hooks/useGetVersionOfLiferaySoftwareList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
-import useUpdateOrg from '../../hooks/useUpdateOrg';
 import {getFormattedGoLiveDateTime} from '../../utils/getFormattedGoLiveDate';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
 
@@ -99,7 +99,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 
 	const navigate = useNavigate();
 
-	const {updateOrg} = useUpdateOrg(
+	const {updateAccountBusinessEvents} = useAccountBusinessEvents(
 		project?.accountKey || '',
 		businessEvent,
 		false,
@@ -151,7 +151,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateOrg();
+			await updateAccountBusinessEvents();
 
 			await client.mutate<{
 				addBusinessEvent: IBusinessEvent;

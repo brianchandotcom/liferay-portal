@@ -26,10 +26,10 @@ import i18n from '~/utils/I18n';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
+import useAccountBusinessEvents from '../../../hooks/useAccountBusinessEvents';
 import useAccountTickets from '../../../hooks/useAccountTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
-import useUpdateOrg from '../../../hooks/useUpdateOrg';
 import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
 import useIsSaasOnly from '../../../utils/useIsSaasOnly';
 import BusinessEventsConfirmationPage from './components/BusinessEventsConfirmationPage';
@@ -106,7 +106,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		onClose: () => setIsModalOpen(false),
 	});
 
-	const {updateOrg} = useUpdateOrg(
+	const {updateAccountBusinessEvents} = useAccountBusinessEvents(
 		project?.accountKey || '',
 		businessEvent,
 		true,
@@ -172,7 +172,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateOrg();
+			await updateAccountBusinessEvents();
 
 			await client.mutate<{
 				updateBusinessEvent: IBusinessEvent;

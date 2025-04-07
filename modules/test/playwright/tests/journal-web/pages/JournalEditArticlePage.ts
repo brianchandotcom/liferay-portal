@@ -78,24 +78,6 @@ export class JournalEditArticlePage {
 		this.undoButton = page.getByTitle('Undo', {exact: true});
 	}
 
-	async goto({
-		siteUrl,
-		structureName,
-	}: {
-		siteUrl?: Site['friendlyUrlPath'];
-		structureName?: string;
-	} = {}) {
-		await this.journalPage.goto(siteUrl);
-		await this.journalPage.goToCreateArticle(structureName);
-
-		// Do it twice so we decrease flakiness
-
-		await this.journalPage.goto(siteUrl);
-		await this.journalPage.goToCreateArticle(structureName);
-
-		await this.propertiesTab.waitFor();
-	}
-
 	async assertPrivateContentIconInRelatedAssetPopUp(assetType: string) {
 		await expect(
 			this.page
@@ -103,6 +85,60 @@ export class JournalEditArticlePage {
 				.getByLabel('Not Visible to Guest Users')
 				.locator('use')
 		).toBeVisible({timeout: 1000});
+	}
+
+	async assertScheduledArticleDates(
+		title: string,
+		publishDate: string,
+		{workflow} = {workflow: false},
+		expirationDate?: string,
+		reviewDate?: string
+	) {
+		await this.editArticle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: workflow
+					? 'Schedule Publication and Submit for Workflow'
+					: 'Schedule Publication',
+			}),
+			trigger: this.page.getByLabel(
+				workflow
+					? 'Select and Confirm Submit for Workflow Settings'
+					: 'Select and Confirm Publish Settings',
+				{
+					exact: true,
+				}
+			),
+		});
+
+		if (expirationDate) {
+			await expect(this.page.getByText('Expiration Date')).toHaveValue(
+				expirationDate
+			);
+		}
+
+		await expect(
+			this.page.getByPlaceholder('YYYY-MM-DD HH:mm')
+		).toHaveValue(publishDate);
+
+		if (reviewDate) {
+			await expect(this.page.getByText('Review Date')).toHaveValue(
+				reviewDate
+			);
+		}
+	}
+
+	async changeLanguage(languageId: string) {
+		await this.page
+			.getByRole('combobox', {
+				name: 'Select a language',
+			})
+			.click();
+
+		await this.page.locator(`button[id="${languageId}"]`).click();
 	}
 
 	async changeViewInRelatedAssetPopUp(assetType: string, viewType: string) {
@@ -118,6 +154,14 @@ export class JournalEditArticlePage {
 			.frameLocator(`iframe[title="Select ${assetType}"]`)
 			.getByRole('menuitem', {name: viewType})
 			.click();
+	}
+
+	async createAndPublishBasicArticle(title?: string) {
+		const articleTitle = title || getRandomString();
+
+		await this.fillTitle(articleTitle);
+
+		await this.publishArticle();
 	}
 
 	async createArticleForStructure({
@@ -141,12 +185,129 @@ export class JournalEditArticlePage {
 		);
 	}
 
-	async createAndPublishBasicArticle(title?: string) {
-		const articleTitle = title || getRandomString();
+	async createArticleWithDuplicatedField(
+		structureName: string,
+		site?: Site,
+		title?: string
+	) {
+		await this.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
 
-		await this.fillTitle(articleTitle);
+		await fillAndClickOutside(
+			this.page,
+			this.titleInput,
+			title || getRandomString()
+		);
+
+		const field = this.page.locator(
+			'input[id^="_com_liferay_journal_web_portlet_JournalPortlet_ddm$$Text"]'
+		);
+
+		await fillAndClickOutside(this.page, field, 'Text Field');
+
+		await this.duplicateButton.click();
+
+		await this.page
+			.locator(
+				'input[id^="_com_liferay_journal_web_portlet_JournalPortlet_ddm$$Text"]'
+			)
+			.nth(1)
+			.fill('Duplicated Text Field');
 
 		await this.publishArticle();
+	}
+
+	async createBasicArticleWithFriendlyURL(site, structureName?: string) {
+		await this.journalPage.goto(site.friendlyUrlPath);
+		await this.journalPage.goToCreateArticle(
+			structureName || 'Basic Web Content'
+		);
+
+		const title = getRandomString();
+		await this.fillTitle(title);
+		await this.fillFriendlyURL('test');
+
+		await this.publishArticle();
+		await expect(this.page.getByTitle(title, {exact: true})).toBeVisible();
+	}
+
+	async editAndPublishExistingBasicArticle(title: string) {
+		await this.editArticle(title);
+
+		await this.fillTitle(title);
+
+		await this.publishArticle(true);
+	}
+
+	async editArticle(title: string) {
+		await this.journalPage.goToJournalArticleAction('Edit', title);
+
+		await this.propertiesTab.waitFor();
+
+		await this.page.locator('body').click();
+	}
+
+	async fillContent(content: string) {
+		await this.journalPage.articleContentTextBox.fill(content);
+		await this.journalPage.articleContentTextBox.press('Enter');
+	}
+
+	async fillFriendlyURL(friendlyURL: string) {
+		await fillAndClickOutside(
+			this.page,
+			this.friendlyURLInput,
+			friendlyURL
+		);
+	}
+
+	async fillTitle(title: string) {
+		await this.propertiesTab.waitFor();
+
+		await fillAndClickOutside(this.page, this.titleInput, title);
+	}
+
+	async goto({
+		siteUrl,
+		structureName,
+	}: {
+		siteUrl?: Site['friendlyUrlPath'];
+		structureName?: string;
+	} = {}) {
+		await this.journalPage.goto(siteUrl);
+		await this.journalPage.goToCreateArticle(structureName);
+
+		// Do it twice so we decrease flakiness
+
+		await this.journalPage.goto(siteUrl);
+		await this.journalPage.goToCreateArticle(structureName);
+
+		await this.propertiesTab.waitFor();
+	}
+
+	async openDMItemSelectorForImages() {
+		await this.page.getByLabel('Image', {exact: true}).click();
+		await this.page
+			.frameLocator('iframe[title="Select Item"]')
+			.getByRole('link', {name: 'Documents and Media'})
+			.click();
+	}
+
+	async openFieldSet(assetType: string, fieldSetId: string) {
+		const isOpened = await this.page
+			.locator(`#${fieldSetId}Content`)
+			.evaluate((element) => element.classList.contains('show'));
+
+		if (!isOpened) {
+			await this.page.getByRole('button', {name: assetType}).click();
+		}
+	}
+
+	async openRelatedAsset(assetType: string) {
+		await this.openFieldSet('Related Assets', 'relatedAssets');
+		await this.page.getByLabel('Select Items').click();
+		await this.page.getByRole('menuitem', {name: assetType}).click();
 	}
 
 	async publishArticle(
@@ -191,150 +352,6 @@ export class JournalEditArticlePage {
 			.locator('[role="dialog"]')
 			.getByRole('button', {name: /publish|publier/i})
 			.click();
-	}
-
-	async editArticle(title: string) {
-		await this.journalPage.goToJournalArticleAction('Edit', title);
-
-		await this.propertiesTab.waitFor();
-
-		await this.page.locator('body').click();
-	}
-
-	async fillContent(content: string) {
-		await this.journalPage.articleContentTextBox.fill(content);
-		await this.journalPage.articleContentTextBox.press('Enter');
-	}
-
-	async fillFriendlyURL(friendlyURL: string) {
-		await fillAndClickOutside(
-			this.page,
-			this.friendlyURLInput,
-			friendlyURL
-		);
-	}
-
-	async changeLanguage(languageId: string) {
-		await this.page
-			.getByRole('combobox', {
-				name: 'Select a language',
-			})
-			.click();
-
-		await this.page.locator(`button[id="${languageId}"]`).click();
-	}
-
-	async createBasicArticleWithFriendlyURL(site, structureName?: string) {
-		await this.journalPage.goto(site.friendlyUrlPath);
-		await this.journalPage.goToCreateArticle(
-			structureName || 'Basic Web Content'
-		);
-
-		const title = getRandomString();
-		await this.fillTitle(title);
-		await this.fillFriendlyURL('test');
-
-		await this.publishArticle();
-		await expect(this.page.getByTitle(title, {exact: true})).toBeVisible();
-	}
-
-	async createArticleWithDuplicatedField(
-		structureName: string,
-		site?: Site,
-		title?: string
-	) {
-		await this.goto({
-			siteUrl: site.friendlyUrlPath,
-			structureName,
-		});
-
-		await fillAndClickOutside(
-			this.page,
-			this.titleInput,
-			title || getRandomString()
-		);
-
-		const field = this.page.locator(
-			'input[id^="_com_liferay_journal_web_portlet_JournalPortlet_ddm$$Text"]'
-		);
-
-		await fillAndClickOutside(this.page, field, 'Text Field');
-
-		await this.duplicateButton.click();
-
-		await this.page
-			.locator(
-				'input[id^="_com_liferay_journal_web_portlet_JournalPortlet_ddm$$Text"]'
-			)
-			.nth(1)
-			.fill('Duplicated Text Field');
-
-		await this.publishArticle();
-	}
-
-	async fillTitle(title: string) {
-		await this.propertiesTab.waitFor();
-
-		await fillAndClickOutside(this.page, this.titleInput, title);
-	}
-
-	async editAndPublishExistingBasicArticle(title: string) {
-		await this.editArticle(title);
-
-		await this.fillTitle(title);
-
-		await this.publishArticle(true);
-	}
-
-	async openDMItemSelectorForImages() {
-		await this.page.getByLabel('Image', {exact: true}).click();
-		await this.page
-			.frameLocator('iframe[title="Select Item"]')
-			.getByRole('link', {name: 'Documents and Media'})
-			.click();
-	}
-
-	async openFieldSet(assetType: string, fieldSetId: string) {
-		const isOpened = await this.page
-			.locator(`#${fieldSetId}Content`)
-			.evaluate((element) => element.classList.contains('show'));
-
-		if (!isOpened) {
-			await this.page.getByRole('button', {name: assetType}).click();
-		}
-	}
-
-	async openRelatedAsset(assetType: string) {
-		await this.openFieldSet('Related Assets', 'relatedAssets');
-		await this.page.getByLabel('Select Items').click();
-		await this.page.getByRole('menuitem', {name: assetType}).click();
-	}
-
-	async selectSpecificDisplayPage(displayPageName: string) {
-		await this.openFieldSet('Display Page', 'displayPage');
-		await this.page
-			.getByLabel('Select Display Page Type')
-			.selectOption('Specific');
-		await this.page
-			.getByRole('button', {name: 'Select Display Page'})
-			.click();
-		const selectDisplayPageModal = this.page.frameLocator(
-			'iframe[title*="Select Display Page"]'
-		);
-
-		await selectDisplayPageModal
-			.locator('.card-type-asset')
-			.filter({hasText: displayPageName})
-			.click({trial: true});
-
-		await clickAndExpectToBeHidden({
-			target: this.page.locator('.modal-title', {
-				hasText: 'Select Display Page',
-			}),
-			trigger: selectDisplayPageModal
-				.locator('.card-type-asset')
-				.filter({hasText: displayPageName}),
-		});
 	}
 
 	async saveAsDraftWithPermissions(title: string) {
@@ -424,6 +441,33 @@ export class JournalEditArticlePage {
 			.waitFor();
 	}
 
+	async selectSpecificDisplayPage(displayPageName: string) {
+		await this.openFieldSet('Display Page', 'displayPage');
+		await this.page
+			.getByLabel('Select Display Page Type')
+			.selectOption('Specific');
+		await this.page
+			.getByRole('button', {name: 'Select Display Page'})
+			.click();
+		const selectDisplayPageModal = this.page.frameLocator(
+			'iframe[title*="Select Display Page"]'
+		);
+
+		await selectDisplayPageModal
+			.locator('.card-type-asset')
+			.filter({hasText: displayPageName})
+			.click({trial: true});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Select Display Page',
+			}),
+			trigger: selectDisplayPageModal
+				.locator('.card-type-asset')
+				.filter({hasText: displayPageName}),
+		});
+	}
+
 	async submitArticleForWorkflow(title: string) {
 		await this.fillTitle(title);
 
@@ -460,49 +504,5 @@ export class JournalEditArticlePage {
 			.filter({hasText: title});
 
 		await row.locator('span.label').filter({hasText: 'Pending'}).waitFor();
-	}
-
-	async assertScheduledArticleDates(
-		title: string,
-		publishDate: string,
-		{workflow} = {workflow: false},
-		expirationDate?: string,
-		reviewDate?: string
-	) {
-		await this.editArticle(title);
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				exact: true,
-				name: workflow
-					? 'Schedule Publication and Submit for Workflow'
-					: 'Schedule Publication',
-			}),
-			trigger: this.page.getByLabel(
-				workflow
-					? 'Select and Confirm Submit for Workflow Settings'
-					: 'Select and Confirm Publish Settings',
-				{
-					exact: true,
-				}
-			),
-		});
-
-		if (expirationDate) {
-			await expect(this.page.getByText('Expiration Date')).toHaveValue(
-				expirationDate
-			);
-		}
-
-		await expect(
-			this.page.getByPlaceholder('YYYY-MM-DD HH:mm')
-		).toHaveValue(publishDate);
-
-		if (reviewDate) {
-			await expect(this.page.getByText('Review Date')).toHaveValue(
-				reviewDate
-			);
-		}
 	}
 }

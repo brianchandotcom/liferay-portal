@@ -3,6 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export function convertStringToObject(value, localeId) {
+	if (typeof value === 'string') {
+		const object = new Object();
+
+		object[localeId] = value;
+
+		return object;
+	}
+
+	return value;
+}
+
 export function convertValueToJSON(value) {
 	if (value && typeof value === 'string') {
 		try {
@@ -16,25 +28,13 @@ export function convertValueToJSON(value) {
 	return value;
 }
 
-export function convertStringToObject(value, localeId) {
-	if (typeof value === 'string') {
-		const object = new Object();
-
-		object[localeId] = value;
-
-		return object;
+const convertValueToString = (value) => {
+	if (value && typeof value === 'object') {
+		return JSON.stringify(value);
 	}
 
 	return value;
-}
-
-export function getISO639LanguageCode(localeId) {
-	if (localeId?.match(/[a-z]{2}_[A-Z]{2}/)) {
-		return localeId.split('_')[0];
-	}
-
-	return localeId;
-}
+};
 
 export function getEditingValue({
 	defaultLocale,
@@ -60,18 +60,22 @@ export function getEditingValue({
 	return editingLocale;
 }
 
+export function getISO639LanguageCode(localeId) {
+	if (localeId?.match(/[a-z]{2}_[A-Z]{2}/)) {
+		return localeId.split('_')[0];
+	}
+
+	return localeId;
+}
+
 export function getInitialInternalValue({editingLocale, value}) {
 	const valueJSON = convertValueToJSON(value);
 
 	return valueJSON ? valueJSON[editingLocale?.localeId] : '';
 }
 
-const convertValueToString = (value) => {
-	if (value && typeof value === 'object') {
-		return JSON.stringify(value);
-	}
-
-	return value;
+const isDefaultLocale = ({defaultLocale, localeId}) => {
+	return defaultLocale.localeId === localeId;
 };
 
 const isTranslated = ({localeId, value}) => {
@@ -82,10 +86,6 @@ const isTranslated = ({localeId, value}) => {
 	}
 
 	return false;
-};
-
-const isDefaultLocale = ({defaultLocale, localeId}) => {
-	return defaultLocale.localeId === localeId;
 };
 
 export function normalizeLocaleId(localeId) {

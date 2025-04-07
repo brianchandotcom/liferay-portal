@@ -214,7 +214,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		return JSONUtil.put(
 			"add",
 			JSONUtil.put(
-				"buttons", JSONUtil.put("image", "hline")
+				"buttons", JSONUtil.putAll("image", "hline")
 			).put(
 				"tabIndex", 1
 			)

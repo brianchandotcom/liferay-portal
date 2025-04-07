@@ -11,12 +11,13 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.lar.DeletionSystemEventImporter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -27,17 +28,18 @@ import java.io.StringReader;
 
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 /**
  * @author Zsolt Berentey
  */
-public class DeletionSystemEventImporter {
-
-	public static DeletionSystemEventImporter getInstance() {
-		return _deletionSystemEventImporter;
-	}
+@Component(service = DeletionSystemEventImporter.class)
+public class DeletionSystemEventImporterImpl
+	implements DeletionSystemEventImporter {
 
 	public void importDeletionSystemEvents(
 			final PortletDataContext portletDataContext)
@@ -78,9 +80,6 @@ public class DeletionSystemEventImporter {
 		_importBatchDeletions(portletDataContext);
 	}
 
-	private DeletionSystemEventImporter() {
-	}
-
 	private void _importBatchDeletions(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -95,7 +94,7 @@ public class DeletionSystemEventImporter {
 		for (Element portletElement : sitePortletsElement.elements()) {
 			String portletId = portletElement.attributeValue("portlet-id");
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
 			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
@@ -165,9 +164,9 @@ public class DeletionSystemEventImporter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeletionSystemEventImporter.class);
+		DeletionSystemEventImporterImpl.class);
 
-	private static final DeletionSystemEventImporter
-		_deletionSystemEventImporter = new DeletionSystemEventImporter();
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

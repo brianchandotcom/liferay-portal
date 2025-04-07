@@ -8,12 +8,13 @@ package com.liferay.exportimport.internal.lar;
 import com.liferay.batch.engine.BatchEngineDeletionHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
@@ -23,15 +24,15 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -45,14 +46,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Zsolt Berentey
  */
-public class DeletionSystemEventExporter {
-
-	public static DeletionSystemEventExporter getInstance() {
-		return _deletionSystemEventExporter;
-	}
+@Component(service = DeletionSystemEventExporter.class)
+public class DeletionSystemEventExporterImpl
+	implements DeletionSystemEventExporter {
 
 	public void exportDeletionSystemEvents(
 			PortletDataContext portletDataContext)
@@ -88,9 +90,9 @@ public class DeletionSystemEventExporter {
 		if (exportedSystemEventIds != null) {
 			for (Long systemEventId : exportedSystemEventIds) {
 				SystemEvent systemEvent =
-					SystemEventLocalServiceUtil.fetchSystemEvent(systemEventId);
+					_systemEventLocalService.fetchSystemEvent(systemEventId);
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					systemEvent.getExtraData());
 
 				Object assetTitle = jsonObject.get("assetTitle");
@@ -117,7 +119,7 @@ public class DeletionSystemEventExporter {
 		if (ListUtil.isNotEmpty(exportedSystemEventIds) &&
 			ExportImportThreadLocal.isStagingInProcess()) {
 
-			ExportImportProcessCallbackRegistryUtil.registerCallback(
+			_exportImportProcessCallbackRegistry.registerCallback(
 				portletDataContext.getExportImportProcessId(),
 				new DeleteSystemEventsCallable(exportedSystemEventIds));
 		}
@@ -205,9 +207,6 @@ public class DeletionSystemEventExporter {
 		}
 	}
 
-	private DeletionSystemEventExporter() {
-	}
-
 	private void _exportDeletionSystemEvent(
 		Element deletionSystemEventsElement,
 		PortletDataContext portletDataContext, SystemEvent systemEvent) {
@@ -231,7 +230,7 @@ public class DeletionSystemEventExporter {
 			if (className.equals(FragmentEntry.class.getName())) {
 				try {
 					JSONObject extraDataJSONObject =
-						JSONFactoryUtil.createJSONObject(
+						_jsonFactory.createJSONObject(
 							systemEvent.getExtraData());
 
 					Long[] layoutIds = ArrayUtil.toArray(
@@ -241,7 +240,7 @@ public class DeletionSystemEventExporter {
 						String[] layoutUUIDs = new String[layoutIds.length];
 
 						for (int i = 0; i < layoutIds.length; i++) {
-							Layout layout = LayoutLocalServiceUtil.getLayout(
+							Layout layout = _layoutLocalService.getLayout(
 								portletDataContext.getGroupId(),
 								portletDataContext.isPrivateLayout(),
 								layoutIds[i]);
@@ -305,7 +304,7 @@ public class DeletionSystemEventExporter {
 		List<Long> systemEventIds = new ArrayList<>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			SystemEventLocalServiceUtil.getActionableDynamicQuery();
+			_systemEventLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> doAddCriteria(
@@ -326,10 +325,20 @@ public class DeletionSystemEventExporter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeletionSystemEventExporter.class);
+		DeletionSystemEventExporterImpl.class);
 
-	private static final DeletionSystemEventExporter
-		_deletionSystemEventExporter = new DeletionSystemEventExporter();
+	@Reference
+	private ExportImportProcessCallbackRegistry
+		_exportImportProcessCallbackRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private SystemEventLocalService _systemEventLocalService;
 
 	private class DeleteSystemEventsCallable implements Callable<Void> {
 
@@ -350,7 +359,7 @@ public class DeletionSystemEventExporter {
 			throws PortalException {
 
 			try {
-				SystemEventLocalServiceUtil.deleteSystemEvent(systemEventId);
+				_systemEventLocalService.deleteSystemEvent(systemEventId);
 			}
 			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {

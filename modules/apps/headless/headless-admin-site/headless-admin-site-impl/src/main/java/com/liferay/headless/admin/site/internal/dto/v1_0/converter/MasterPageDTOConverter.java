@@ -106,8 +106,8 @@ public class MasterPageDTOConverter
 	}
 
 	private <T> ItemExternalReference[] _getItemExternalReferences(
-		List<T> items, Function<T, Long> getGroupIdFunction,
-		Function<T, String> getExternalReferenceCodeFunction, long groupId) {
+		Function<T, String> getExternalReferenceCodeFunction,
+		Function<T, Long> getGroupIdFunction, long groupId, List<T> items) {
 
 		if (ListUtil.isEmpty(items)) {
 			return new ItemExternalReference[0];
@@ -137,8 +137,8 @@ public class MasterPageDTOConverter
 			className, classPK);
 
 		return _getItemExternalReferences(
-			assetTags, AssetTag::getGroupId, AssetTag::getExternalReferenceCode,
-			groupId);
+			AssetTag::getExternalReferenceCode, AssetTag::getGroupId, groupId,
+			assetTags);
 	}
 
 	private Scope _getScope(long groupId, long scopeGroupId) throws Exception {
@@ -170,8 +170,8 @@ public class MasterPageDTOConverter
 			_assetCategoryLocalService.getCategories(className, classPK);
 
 		return _getItemExternalReferences(
-			assetCategories, AssetCategory::getGroupId,
-			AssetCategory::getExternalReferenceCode, groupId);
+			AssetCategory::getExternalReferenceCode, AssetCategory::getGroupId,
+			groupId, assetCategories);
 	}
 
 	@Reference

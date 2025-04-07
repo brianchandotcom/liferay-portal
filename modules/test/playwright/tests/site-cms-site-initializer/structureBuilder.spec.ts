@@ -72,7 +72,7 @@ test(
 
 		// Remove a field
 
-		await structureBuilderPage.deleteField({label: 'Long Text'});
+		await structureBuilderPage.deleteFields([{label: 'Long Text'}]);
 
 		// Publish it
 
@@ -87,7 +87,7 @@ test(
 		// Check another field with same name can not be added
 
 		await structureBuilderPage.addField('Text');
-		await structureBuilderPage.selectField({label: 'Text', nth: 1});
+		await structureBuilderPage.selectFields([{label: 'Text', nth: 1}]);
 		await structureBuilderPage.changeFieldSettings({name: 'text'});
 
 		// Delete structure
@@ -151,7 +151,7 @@ test(
 test(
 	'Can delete multiple fields',
 	{tag: '@LPD-36767'},
-	async ({page, structureBuilderPage}) => {
+	async ({structureBuilderPage}) => {
 
 		// Go to the Structure Builder
 
@@ -183,34 +183,11 @@ test(
 
 		// Select and delete three fields
 
-		const textField = page
-			.locator('.treeview-item')
-			.getByLabel('Text', {exact: true});
-
-		await textField.click();
-
-		await textField.focus();
-
-		await expect(async () => {
-			await page.keyboard.down('Control');
-
-			await page.keyboard.press('ArrowDown');
-			await page.keyboard.press('Space');
-
-			await expect(page.getByText('3 Items Selected')).toBeVisible({
-				timeout: 1000,
-			});
-		}).toPass();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'Delete'}),
-			trigger: page.getByLabel('Selection Options'),
-		});
-
-		// Check tree node count is 2 (Root and remaining field)
-
-		await expect(page.locator('.treeview-link')).toHaveCount(2);
+		await structureBuilderPage.deleteFields([
+			{label: 'Text'},
+			{label: 'Long Text'},
+			{label: 'Upload'},
+		]);
 
 		// Delete structure
 
@@ -244,7 +221,7 @@ test(
 
 		await structureBuilderPage.addField('Text');
 
-		await structureBuilderPage.selectField({label: 'Text'});
+		await structureBuilderPage.selectFields([{label: 'Text'}]);
 
 		// Configure the field
 
@@ -353,7 +330,7 @@ test.describe('Frontend validations', () => {
 
 			await structureBuilderPage.addField('Single Select');
 
-			await structureBuilderPage.selectField({label: 'Single Select'});
+			await structureBuilderPage.selectFields([{label: 'Single Select'}]);
 
 			// Put empty name
 
@@ -389,9 +366,9 @@ test.describe('Frontend validations', () => {
 
 			// Check picklist setting is saved
 
-			await structureBuilderPage.selectField({label: 'Text'});
+			await structureBuilderPage.selectFields([{label: 'Text'}]);
 
-			await structureBuilderPage.selectField({label: 'Single Select'});
+			await structureBuilderPage.selectFields([{label: 'Single Select'}]);
 
 			await expect(page.getByText(picklist.name)).toBeVisible();
 
@@ -426,7 +403,7 @@ test.describe('Frontend validations', () => {
 
 			await structureBuilderPage.addField('Single Select');
 
-			await structureBuilderPage.selectField({label: 'Single Select'});
+			await structureBuilderPage.selectFields([{label: 'Single Select'}]);
 
 			const picklistPicker = page.getByLabel('Picklist');
 
@@ -448,7 +425,7 @@ test.describe('Frontend validations', () => {
 
 			await structureBuilderPage.addField('Multiselect');
 
-			await structureBuilderPage.selectField({label: 'Multiselect'});
+			await structureBuilderPage.selectFields([{label: 'Multiselect'}]);
 
 			await expect(errorMessage).not.toBeAttached();
 

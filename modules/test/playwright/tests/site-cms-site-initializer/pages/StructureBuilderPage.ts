@@ -27,6 +27,8 @@ export const FIELD_TYPES = [
 
 type FieldType = (typeof FIELD_TYPES)[number];
 
+type Field = {label: string; nth?: number};
+
 export class StructureBuilderPage {
 	readonly page: Page;
 
@@ -169,31 +171,63 @@ export class StructureBuilderPage {
 		return await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
 	}
 
-	async deleteField({label, nth = 0}: {label: string; nth?: number}) {
-		const count = await this.page
-			.locator('.treeview-item')
-			.getByLabel(label, {exact: true})
-			.count();
+	async deleteFields(fields: Field[]) {
 
-		const treeItem = this.page
-			.locator('.treeview-item')
-			.getByLabel(label, {exact: true})
-			.nth(nth);
+		// Deleting one field
 
-		if (treeItem) {
-			await treeItem.click();
+		if (fields.length === 1) {
+			const [field] = fields;
+
+			const count = await this.page
+				.locator('.treeview-item')
+				.getByLabel(field.label, {exact: true})
+				.count();
+
+			const treeItem = this.page
+				.locator('.treeview-item')
+				.getByLabel(field.label, {exact: true})
+				.nth(field.nth || 0);
+
+			if (treeItem) {
+				await this.selectFields([field]);
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: this.page.getByRole('menuitem', {name: 'Delete'}),
+					trigger: treeItem.getByLabel('Field Options'),
+				});
+
+				await expect(
+					this.page
+						.locator('.treeview-item')
+						.getByLabel(field.label, {exact: true})
+				).toHaveCount(count - 1);
+			}
+		}
+
+		// Deleting multiple fields
+
+		else {
+			const count = await this.page
+				.locator('.treeview-item')
+				.first()
+				.locator('.treeview-group > .treeview-item')
+				.count();
+
+			await this.selectFields(fields);
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
 				target: this.page.getByRole('menuitem', {name: 'Delete'}),
-				trigger: treeItem.getByLabel('Field Options'),
+				trigger: this.page.getByLabel('Selection Options'),
 			});
 
 			await expect(
 				this.page
 					.locator('.treeview-item')
-					.getByLabel(label, {exact: true})
-			).toHaveCount(count - 1);
+					.first()
+					.locator('.treeview-group > .treeview-item')
+			).toHaveCount(count - fields.length);
 		}
 	}
 
@@ -267,13 +301,27 @@ export class StructureBuilderPage {
 		return await response.json();
 	}
 
-	async selectField({label, nth = 0}: {label: string; nth?: number}) {
-		await clickAndExpectToBeVisible({
-			target: this.page.locator('.breadcrumb-link', {hasText: label}),
-			trigger: this.page
+	async selectFields(fields: Field[]) {
+		for (const [i, field] of fields.entries()) {
+			const treeItem = this.page
 				.locator('.treeview-item')
-				.getByLabel(label, {exact: true})
-				.nth(nth),
-		});
+				.getByLabel(field.label, {exact: true})
+				.nth(field.nth || 0);
+
+			await expect(async () => {
+				await treeItem.click({
+					modifiers: i === 0 ? [] : ['ControlOrMeta'],
+					timeout: 500,
+				});
+
+				await expect(treeItem).toHaveClass(/active/, {timeout: 500});
+			}).toPass();
+		}
+
+		if (fields.length > 1) {
+			await expect(
+				this.page.getByText(`${fields.length} Items Selected`)
+			).toBeVisible();
+		}
 	}
 }

@@ -115,17 +115,14 @@ public class MasterPageDTOConverter
 
 		return TransformUtil.unsafeTransformToArray(
 			items,
-			item -> {
-				ItemExternalReference itemExternalReference =
-					new ItemExternalReference();
-
-				itemExternalReference.setExternalReferenceCode(
-					() -> getExternalReferenceCodeFunction.apply(item));
-
-				itemExternalReference.setScope(
-					() -> _getScope(groupId, getGroupIdFunction.apply(item)));
-
-				return itemExternalReference;
+			item -> new ItemExternalReference() {
+				{
+					setExternalReferenceCode(
+						() -> getExternalReferenceCodeFunction.apply(item));
+					setScope(
+						() -> _getScope(
+							groupId, getGroupIdFunction.apply(item)));
+				}
 			},
 			ItemExternalReference.class);
 	}

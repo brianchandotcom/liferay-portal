@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.source.formatter</artifactId>
-	<version>1.0.1492</version>
+	<version>1.0.1493</version>
 	<goalPrefix>source-formatter</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -314,12 +314,6 @@
 			<artifactId>ant-launcher</artifactId>
 			<type>jar</type>
 			<version>1.10.14</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>tools</artifactId>
-			<type>jar</type>
-			<version>1.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven</groupId>

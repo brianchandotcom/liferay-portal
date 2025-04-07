@@ -456,7 +456,10 @@ public abstract class BaseAccountGroupResourceImpl
 		AccountGroup existingAccountGroup =
 			getAccountGroupByExternalReferenceCode(externalReferenceCode);
 
-		existingAccountGroup.setCustomFields(accountGroup.getCustomFields());
+		if (accountGroup.getCustomFields() != null) {
+			existingAccountGroup.setCustomFields(
+				accountGroup.getCustomFields());
+		}
 
 		if (accountGroup.getDescription() != null) {
 			existingAccountGroup.setDescription(accountGroup.getDescription());
@@ -657,7 +660,10 @@ public abstract class BaseAccountGroupResourceImpl
 
 		AccountGroup existingAccountGroup = getAccountGroup(accountGroupId);
 
-		existingAccountGroup.setCustomFields(accountGroup.getCustomFields());
+		if (accountGroup.getCustomFields() != null) {
+			existingAccountGroup.setCustomFields(
+				accountGroup.getCustomFields());
+		}
 
 		if (accountGroup.getDescription() != null) {
 			existingAccountGroup.setDescription(accountGroup.getDescription());

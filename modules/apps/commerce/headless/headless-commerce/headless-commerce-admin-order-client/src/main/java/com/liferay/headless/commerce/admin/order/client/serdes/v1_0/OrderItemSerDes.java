@@ -5,7 +5,6 @@
 
 package com.liferay.headless.commerce.admin.order.client.serdes.v1_0;
 
-import com.liferay.headless.commerce.admin.order.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.VirtualItem;
 import com.liferay.headless.commerce.admin.order.client.json.BaseJSONParser;
@@ -74,7 +73,7 @@ public class OrderItemSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < orderItem.getCustomFields().length; i++) {
-				sb.append(String.valueOf(orderItem.getCustomFields()[i]));
+				sb.append(orderItem.getCustomFields()[i]);
 
 				if ((i + 1) < orderItem.getCustomFields().length) {
 					sb.append(", ");
@@ -1304,12 +1303,16 @@ public class OrderItemSerDes {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					CustomField[] customFieldsArray =
-						new CustomField[jsonParserFieldValues.length];
+					com.liferay.headless.commerce.admin.order.client.custom.
+						field.CustomField[] customFieldsArray = new
+						com.liferay.headless.commerce.admin.order.client.custom.
+							field.CustomField[jsonParserFieldValues.length];
 
 					for (int i = 0; i < customFieldsArray.length; i++) {
-						customFieldsArray[i] = CustomFieldSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
+						customFieldsArray[i] =
+							com.liferay.headless.commerce.admin.order.client.
+								custom.field.CustomField.toDTO(
+									(String)jsonParserFieldValues[i]);
 					}
 
 					orderItem.setCustomFields(customFieldsArray);

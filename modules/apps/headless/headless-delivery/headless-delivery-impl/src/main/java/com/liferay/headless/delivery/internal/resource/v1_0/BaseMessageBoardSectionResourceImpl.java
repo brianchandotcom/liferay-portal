@@ -257,8 +257,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		MessageBoardSection existingMessageBoardSection =
 			getMessageBoardSection(messageBoardSectionId);
 
-		existingMessageBoardSection.setCustomFields(
-			messageBoardSection.getCustomFields());
+		if (messageBoardSection.getCustomFields() != null) {
+			existingMessageBoardSection.setCustomFields(
+				messageBoardSection.getCustomFields());
+		}
 
 		if (messageBoardSection.getDescription() != null) {
 			existingMessageBoardSection.setDescription(

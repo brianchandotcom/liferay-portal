@@ -134,16 +134,23 @@ public class Organization implements Cloneable, Serializable {
 
 	protected Creator creator;
 
-	public CustomField[] getCustomFields() {
+	public com.liferay.headless.admin.user.client.custom.field.CustomField[]
+		getCustomFields() {
+
 		return customFields;
 	}
 
-	public void setCustomFields(CustomField[] customFields) {
+	public void setCustomFields(
+		com.liferay.headless.admin.user.client.custom.field.CustomField[]
+			customFields) {
+
 		this.customFields = customFields;
 	}
 
 	public void setCustomFields(
-		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
+		UnsafeSupplier
+			<com.liferay.headless.admin.user.client.custom.field.CustomField[],
+			 Exception> customFieldsUnsafeSupplier) {
 
 		try {
 			customFields = customFieldsUnsafeSupplier.get();
@@ -153,7 +160,8 @@ public class Organization implements Cloneable, Serializable {
 		}
 	}
 
-	protected CustomField[] customFields;
+	protected com.liferay.headless.admin.user.client.custom.field.CustomField[]
+		customFields;
 
 	public Date getDateCreated() {
 		return dateCreated;

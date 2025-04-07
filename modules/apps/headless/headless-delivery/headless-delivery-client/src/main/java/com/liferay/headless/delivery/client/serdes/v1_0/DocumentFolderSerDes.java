@@ -5,7 +5,6 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -97,7 +96,7 @@ public class DocumentFolderSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < documentFolder.getCustomFields().length; i++) {
-				sb.append(String.valueOf(documentFolder.getCustomFields()[i]));
+				sb.append(documentFolder.getCustomFields()[i]);
 
 				if ((i + 1) < documentFolder.getCustomFields().length) {
 					sb.append(", ");
@@ -514,12 +513,16 @@ public class DocumentFolderSerDes {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					CustomField[] customFieldsArray =
-						new CustomField[jsonParserFieldValues.length];
+					com.liferay.headless.delivery.client.custom.field.
+						CustomField[] customFieldsArray = new
+						com.liferay.headless.delivery.client.custom.field.
+							CustomField[jsonParserFieldValues.length];
 
 					for (int i = 0; i < customFieldsArray.length; i++) {
-						customFieldsArray[i] = CustomFieldSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
+						customFieldsArray[i] =
+							com.liferay.headless.delivery.client.custom.field.
+								CustomField.toDTO(
+									(String)jsonParserFieldValues[i]);
 					}
 
 					documentFolder.setCustomFields(customFieldsArray);

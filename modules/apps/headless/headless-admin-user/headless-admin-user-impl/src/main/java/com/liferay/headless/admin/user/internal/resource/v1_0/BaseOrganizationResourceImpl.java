@@ -821,7 +821,10 @@ public abstract class BaseOrganizationResourceImpl
 			existingOrganization.setComment(organization.getComment());
 		}
 
-		existingOrganization.setCustomFields(organization.getCustomFields());
+		if (organization.getCustomFields() != null) {
+			existingOrganization.setCustomFields(
+				organization.getCustomFields());
+		}
 
 		if (organization.getExternalReferenceCode() != null) {
 			existingOrganization.setExternalReferenceCode(
@@ -1276,7 +1279,10 @@ public abstract class BaseOrganizationResourceImpl
 			existingOrganization.setComment(organization.getComment());
 		}
 
-		existingOrganization.setCustomFields(organization.getCustomFields());
+		if (organization.getCustomFields() != null) {
+			existingOrganization.setCustomFields(
+				organization.getCustomFields());
+		}
 
 		if (organization.getExternalReferenceCode() != null) {
 			existingOrganization.setExternalReferenceCode(

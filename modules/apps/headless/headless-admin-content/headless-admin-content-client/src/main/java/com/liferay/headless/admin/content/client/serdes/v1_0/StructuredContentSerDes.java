@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.ContentField;
-import com.liferay.headless.admin.content.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.content.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.admin.content.client.dto.v1_0.RenderedContent;
 import com.liferay.headless.admin.content.client.dto.v1_0.StructuredContent;
@@ -1113,12 +1112,16 @@ public class StructuredContentSerDes {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					CustomField[] customFieldsArray =
-						new CustomField[jsonParserFieldValues.length];
+					com.liferay.headless.admin.content.client.custom.field.
+						CustomField[] customFieldsArray = new
+						com.liferay.headless.admin.content.client.custom.field.
+							CustomField[jsonParserFieldValues.length];
 
 					for (int i = 0; i < customFieldsArray.length; i++) {
-						customFieldsArray[i] = CustomFieldSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
+						customFieldsArray[i] =
+							com.liferay.headless.admin.content.client.custom.
+								field.CustomField.toDTO(
+									(String)jsonParserFieldValues[i]);
 					}
 
 					structuredContent.setCustomFields(customFieldsArray);

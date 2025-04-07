@@ -5,7 +5,6 @@
 
 package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
@@ -76,7 +75,7 @@ public class OptionSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < option.getCustomFields().length; i++) {
-				sb.append(String.valueOf(option.getCustomFields()[i]));
+				sb.append(option.getCustomFields()[i]);
 
 				if ((i + 1) < option.getCustomFields().length) {
 					sb.append(", ");
@@ -424,12 +423,17 @@ public class OptionSerDes {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					CustomField[] customFieldsArray =
-						new CustomField[jsonParserFieldValues.length];
+					com.liferay.headless.commerce.admin.catalog.client.custom.
+						field.CustomField[] customFieldsArray = new
+						com.liferay.headless.commerce.admin.catalog.client.
+							custom.field.CustomField
+							[jsonParserFieldValues.length];
 
 					for (int i = 0; i < customFieldsArray.length; i++) {
-						customFieldsArray[i] = CustomFieldSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
+						customFieldsArray[i] =
+							com.liferay.headless.commerce.admin.catalog.client.
+								custom.field.CustomField.toDTO(
+									(String)jsonParserFieldValues[i]);
 					}
 
 					option.setCustomFields(customFieldsArray);

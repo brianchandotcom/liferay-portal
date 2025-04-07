@@ -485,7 +485,9 @@ public abstract class BaseSkuResourceImpl
 			existingSku.setCost(sku.getCost());
 		}
 
-		existingSku.setCustomFields(sku.getCustomFields());
+		if (sku.getCustomFields() != null) {
+			existingSku.setCustomFields(sku.getCustomFields());
+		}
 
 		if (sku.getDepth() != null) {
 			existingSku.setDepth(sku.getDepth());

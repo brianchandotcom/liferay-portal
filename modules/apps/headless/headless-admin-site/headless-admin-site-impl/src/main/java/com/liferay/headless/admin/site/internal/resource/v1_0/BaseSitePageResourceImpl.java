@@ -424,7 +424,9 @@ public abstract class BaseSitePageResourceImpl
 				sitePage.getCreatorExternalReferenceCode());
 		}
 
-		existingSitePage.setCustomFields(sitePage.getCustomFields());
+		if (sitePage.getCustomFields() != null) {
+			existingSitePage.setCustomFields(sitePage.getCustomFields());
+		}
 
 		if (sitePage.getDateCreated() != null) {
 			existingSitePage.setDateCreated(sitePage.getDateCreated());

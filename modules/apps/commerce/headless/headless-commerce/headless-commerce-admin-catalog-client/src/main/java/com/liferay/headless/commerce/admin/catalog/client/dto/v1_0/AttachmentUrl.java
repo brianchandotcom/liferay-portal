@@ -48,16 +48,24 @@ public class AttachmentUrl implements Cloneable, Serializable {
 
 	protected String contentType;
 
-	public CustomField[] getCustomFields() {
+	public com.liferay.headless.commerce.admin.catalog.client.custom.field.
+		CustomField[] getCustomFields() {
+
 		return customFields;
 	}
 
-	public void setCustomFields(CustomField[] customFields) {
+	public void setCustomFields(
+		com.liferay.headless.commerce.admin.catalog.client.custom.field.
+			CustomField[] customFields) {
+
 		this.customFields = customFields;
 	}
 
 	public void setCustomFields(
-		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
+		UnsafeSupplier
+			<com.liferay.headless.commerce.admin.catalog.client.custom.field.
+				CustomField[],
+			 Exception> customFieldsUnsafeSupplier) {
 
 		try {
 			customFields = customFieldsUnsafeSupplier.get();
@@ -67,7 +75,8 @@ public class AttachmentUrl implements Cloneable, Serializable {
 		}
 	}
 
-	protected CustomField[] customFields;
+	protected com.liferay.headless.commerce.admin.catalog.client.custom.field.
+		CustomField[] customFields;
 
 	public Date getDisplayDate() {
 		return displayDate;

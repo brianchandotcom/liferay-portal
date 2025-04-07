@@ -1970,8 +1970,10 @@ public abstract class BaseStructuredContentResourceImpl
 				structuredContent.getContentStructureId());
 		}
 
-		existingStructuredContent.setCustomFields(
-			structuredContent.getCustomFields());
+		if (structuredContent.getCustomFields() != null) {
+			existingStructuredContent.setCustomFields(
+				structuredContent.getCustomFields());
+		}
 
 		if (structuredContent.getDateExpired() != null) {
 			existingStructuredContent.setDateExpired(

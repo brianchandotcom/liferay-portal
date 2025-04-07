@@ -12,7 +12,6 @@ import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletExportController;
-import com.liferay.exportimport.internal.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.internal.lar.PermissionExporter;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
@@ -32,6 +31,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
@@ -1324,8 +1324,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private final DeletionSystemEventExporter _deletionSystemEventExporter =
-		DeletionSystemEventExporter.getInstance();
+	@Reference
+	private DeletionSystemEventExporter _deletionSystemEventExporter;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

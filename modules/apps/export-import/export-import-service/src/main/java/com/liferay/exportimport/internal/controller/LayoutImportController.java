@@ -9,7 +9,6 @@ import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
-import com.liferay.exportimport.internal.lar.DeletionSystemEventImporter;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -33,6 +32,7 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.exportimport.lar.DeletionSystemEventImporter;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.layout.admin.kernel.visibility.LayoutVisibilityManager;
@@ -1375,8 +1375,8 @@ public class LayoutImportController implements ImportController {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private final DeletionSystemEventImporter _deletionSystemEventImporter =
-		DeletionSystemEventImporter.getInstance();
+	@Reference
+	private DeletionSystemEventImporter _deletionSystemEventImporter;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

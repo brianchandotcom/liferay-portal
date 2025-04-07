@@ -56,8 +56,49 @@ const NOT_SELECTED_OPTION = {
 	value: '',
 };
 
-function getInputCommonConfiguration(configurationValues, formFields) {
+function getInputCommonFields(
+	configurationValues,
+	formFields,
+	allowedInputTypes
+) {
 	const fields = [];
+
+	const baseFields = {
+		helpText: {
+			cssClass: 'mb-4',
+			defaultValue: Liferay.Language.get('add-your-help-text-here'),
+			label: Liferay.Language.get('help-text'),
+			localizable: true,
+			name: HELP_TEXT_CONFIGURATION_KEY,
+			type: 'text',
+		},
+		label: {
+			cssClass: 'mb-4',
+			defaultValue: '',
+			label: Liferay.Language.get('label'),
+			localizable: true,
+			name: LABEL_CONFIGURATION_KEY,
+			type: 'text',
+		},
+		showHelpText: {
+			defaultValue: false,
+			label: Liferay.Language.get('show-help-text'),
+			name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
+			type: 'checkbox',
+			typeOptions: {displayType: 'toggle'},
+		},
+		showLabel: {
+			defaultValue: true,
+			label: Liferay.Language.get('show-label'),
+			name: 'inputShowLabel',
+			type: 'checkbox',
+			typeOptions: {displayType: 'toggle'},
+		},
+	};
+
+	if (allowedInputTypes?.includes('friendly-url')) {
+		return [baseFields.label];
+	}
 
 	if (configurationValues[FIELD_ID_CONFIGURATION_KEY]) {
 		const isRequiredField = isRequiredFormField(
@@ -76,36 +117,10 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 	}
 
 	fields.push(
-		{
-			defaultValue: true,
-			label: Liferay.Language.get('show-label'),
-			name: 'inputShowLabel',
-			type: 'checkbox',
-			typeOptions: {displayType: 'toggle'},
-		},
-		{
-			cssClass: 'mb-4',
-			defaultValue: '',
-			label: Liferay.Language.get('label'),
-			localizable: true,
-			name: LABEL_CONFIGURATION_KEY,
-			type: 'text',
-		},
-		{
-			defaultValue: false,
-			label: Liferay.Language.get('show-help-text'),
-			name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
-			type: 'checkbox',
-			typeOptions: {displayType: 'toggle'},
-		},
-		{
-			cssClass: 'mb-4',
-			defaultValue: Liferay.Language.get('add-your-help-text-here'),
-			label: Liferay.Language.get('help-text'),
-			localizable: true,
-			name: HELP_TEXT_CONFIGURATION_KEY,
-			type: 'text',
-		}
+		baseFields.showLabel,
+		baseFields.label,
+		baseFields.showHelpText,
+		baseFields.helpText
 	);
 
 	return fields;
@@ -283,10 +298,6 @@ export function FormInputGeneralPanel({item}) {
 	);
 
 	const configFields = useMemo(() => {
-		if (allowedInputTypes?.includes('friendly-url')) {
-			return [];
-		}
-
 		const fieldSetsWithoutLabel =
 			fragmentEntryLinkRef.current.configuration?.fieldSets
 				?.filter(
@@ -304,9 +315,10 @@ export function FormInputGeneralPanel({item}) {
 			return fieldSetsWithoutLabel;
 		}
 
-		const inputCommonFields = getInputCommonConfiguration(
+		const inputCommonFields = getInputCommonFields(
 			configurationValues,
-			formFields
+			formFields,
+			allowedInputTypes
 		);
 
 		return [...inputCommonFields, ...fieldSetsWithoutLabel];

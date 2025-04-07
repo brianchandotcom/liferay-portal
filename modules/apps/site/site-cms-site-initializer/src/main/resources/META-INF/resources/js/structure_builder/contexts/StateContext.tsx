@@ -25,6 +25,10 @@ import {
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
+type History = {
+	deletedFields: boolean;
+};
+
 type Status = 'new' | 'draft' | 'published';
 
 type Spaces = 'all' | string[];
@@ -35,6 +39,7 @@ export type State = {
 	erc: string;
 	error: string | null;
 	fields: Map<Uuid, Field>;
+	history: History;
 	id: number | null;
 	invalids: Map<Uuid, Set<ValidationError>>;
 	label: Liferay.Language.LocalizedValue<string>;
@@ -50,6 +55,9 @@ const INITIAL_STATE: State = {
 	erc: '',
 	error: null,
 	fields: new Map(),
+	history: {
+		deletedFields: false,
+	},
 	id: null,
 	invalids: new Map(),
 	label: {

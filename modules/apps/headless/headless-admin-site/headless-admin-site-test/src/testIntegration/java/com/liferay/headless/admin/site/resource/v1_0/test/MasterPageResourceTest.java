@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -747,11 +746,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			AssetVocabulary assetVocabulary =
 				_assetVocabularyLocalService.addVocabulary(
 					TestPropsValues.getUserId(), testGroup.getGroupId(),
-					StringPool.BLANK, RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomLocaleStringMap(),
-					"multiValued=true\nselectedClassNameIds=0:-1\n",
-					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-					serviceContext);
+					RandomTestUtil.randomString(), serviceContext);
 
 			assetCategories = ListUtil.concat(
 				assetCategories,
@@ -761,11 +756,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
 				TestPropsValues.getUserId(), testCompany.getGroupId(),
-				StringPool.BLANK, RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				"multiValued=true\nselectedClassNameIds=0:-1\n",
-				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-				serviceContext);
+				RandomTestUtil.randomString(), serviceContext);
 
 		return ListUtil.concat(
 			assetCategories,

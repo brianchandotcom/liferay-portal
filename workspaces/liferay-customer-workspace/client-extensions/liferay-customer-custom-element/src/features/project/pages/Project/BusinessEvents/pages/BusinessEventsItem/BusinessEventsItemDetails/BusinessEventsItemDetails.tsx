@@ -41,7 +41,7 @@ const BusinessEventsItemDetails = () => {
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const {loading: loadingTickets, tickets} = useAccountTickets(
-		accountKey || ''
+		accountKey || '', businessEvent
 	);
 
 	const navigate = useNavigate();

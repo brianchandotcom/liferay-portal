@@ -13,6 +13,8 @@ public class RoleConstants {
 	public static final String NAME_ACCOUNT_ADMINISTRATOR =
 		"Account Administrator";
 
+	public static final String NAME_ACCOUNT_MEMBER = "Account Member";
+
 	public static final String NAME_ADMINISTRATOR = "Administrator";
 
 	public static final String NAME_LIFERAY_STAFF = "Liferay Staff";
@@ -36,6 +38,10 @@ public class RoleConstants {
 	public static final String[] PARTNER_ACCOUNT_ROLES = {
 		NAME_PARTNER_MANAGER, NAME_PARTNER_MARKETING_USER, NAME_PARTNER_MEMBER,
 		NAME_PARTNER_SALES_USER, NAME_PARTNER_TECHNICAL_USER
+	};
+
+	public static final String[] SUPPORT_ACCOUNT_ROLES = {
+		NAME_ACCOUNT_ADMINISTRATOR, NAME_ACCOUNT_MEMBER, NAME_REQUESTER
 	};
 
 	public static final String[] SUPPORT_ACCOUNT_TICKET_ROLES = {

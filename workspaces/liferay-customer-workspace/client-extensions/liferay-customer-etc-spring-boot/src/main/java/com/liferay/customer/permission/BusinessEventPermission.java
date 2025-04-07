@@ -14,6 +14,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.net.URL;
@@ -29,13 +30,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class BusinessEventPermission {
 
-	public void check(Jwt jwt, String externalReferenceCode) throws Exception {
-		if (!_contains(jwt, externalReferenceCode)) {
+	public void check(Jwt jwt, String externalReferenceCode, String actionId)
+		throws Exception {
+
+		if (!_contains(jwt, externalReferenceCode, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
-	private boolean _contains(Jwt jwt, String externalReferenceCode)
+	private boolean _contains(
+			Jwt jwt, String externalReferenceCode, String actionId)
 		throws Exception {
 
 		UserAccountResource userAccountResource = UserAccountResource.builder(
@@ -76,7 +80,16 @@ public class BusinessEventPermission {
 				for (RoleBrief roleBrief : accountBrief.getRoleBriefs()) {
 					if (ArrayUtil.contains(
 							RoleConstants.SUPPORT_ACCOUNT_TICKET_ROLES,
-							roleBrief.getName())) {
+							roleBrief.getName()) &&
+						actionId.equals(ActionKeys.UPDATE)) {
+
+						return true;
+					}
+
+					if (ArrayUtil.contains(
+							RoleConstants.SUPPORT_ACCOUNT_ROLES,
+							roleBrief.getName()) &&
+						actionId.equals(ActionKeys.VIEW)) {
 
 						return true;
 					}

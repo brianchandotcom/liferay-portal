@@ -64,17 +64,17 @@ public class AssetCategorySAPEntryPortalInstanceLifecycleListenerTest {
 
 		Assert.assertNotNull(sapEntry);
 
-		List<String> allowedServiceSignaturesList =
+		List<String> allowedServiceSignatures =
 			sapEntry.getAllowedServiceSignaturesList();
 
-		Assert.assertTrue(ListUtil.isNotEmpty(allowedServiceSignaturesList));
+		Assert.assertTrue(ListUtil.isNotEmpty(allowedServiceSignatures));
 		Assert.assertEquals(
-			allowedServiceSignaturesList.toString(), 1,
-			allowedServiceSignaturesList.size());
+			allowedServiceSignatures.toString(), 1,
+			allowedServiceSignatures.size());
 
 		Assert.assertEquals(
 			AssetCategoryService.class.getName() + "#search",
-			allowedServiceSignaturesList.get(0));
+			allowedServiceSignatures.get(0));
 	}
 
 	private static final String _SAP_ENTRY_NAME = "ASSET_CATEGORY_DEFAULT";

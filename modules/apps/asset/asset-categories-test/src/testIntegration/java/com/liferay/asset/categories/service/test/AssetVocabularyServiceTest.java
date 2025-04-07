@@ -324,12 +324,12 @@ public class AssetVocabularyServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user, permissionChecker)) {
 
-			List<AssetVocabulary> vocabularies =
+			List<AssetVocabulary> assetVocabularies =
 				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), false, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
-			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+			Assert.assertTrue(ListUtil.isEmpty(assetVocabularies));
 		}
 		finally {
 			UserLocalServiceUtil.deleteUser(user);
@@ -359,12 +359,12 @@ public class AssetVocabularyServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user, permissionChecker)) {
 
-			List<AssetVocabulary> vocabularies =
+			List<AssetVocabulary> assetVocabularies =
 				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), true, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
-			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+			Assert.assertTrue(ListUtil.isEmpty(assetVocabularies));
 		}
 		finally {
 			UserLocalServiceUtil.deleteUser(user);
@@ -375,24 +375,25 @@ public class AssetVocabularyServiceTest {
 	public void testGetGroupVocabulariesPaginatedWithNoVocabularies()
 		throws Exception {
 
-		List<AssetVocabulary> vocabularies =
+		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+		Assert.assertTrue(ListUtil.isEmpty(assetVocabularies));
 	}
 
 	@Test
 	public void testGetGroupVocabulariesPaginatedWithNoVocabulariesCreatesDefaultVocabulary()
 		throws Exception {
 
-		List<AssetVocabulary> vocabularies =
+		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		Assert.assertEquals(vocabularies.toString(), 1, vocabularies.size());
+		Assert.assertEquals(
+			assetVocabularies.toString(), 1, assetVocabularies.size());
 	}
 
 	@Test
@@ -418,11 +419,11 @@ public class AssetVocabularyServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user, permissionChecker)) {
 
-			List<AssetVocabulary> vocabularies =
+			List<AssetVocabulary> assetVocabularies =
 				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), false);
 
-			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+			Assert.assertTrue(ListUtil.isEmpty(assetVocabularies));
 		}
 		finally {
 			UserLocalServiceUtil.deleteUser(user);
@@ -452,11 +453,11 @@ public class AssetVocabularyServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user, permissionChecker)) {
 
-			List<AssetVocabulary> vocabularies =
+			List<AssetVocabulary> assetVocabularies =
 				_assetVocabularyService.getGroupVocabularies(
 					_group.getGroupId(), true);
 
-			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+			Assert.assertTrue(ListUtil.isEmpty(assetVocabularies));
 		}
 		finally {
 			UserLocalServiceUtil.deleteUser(user);
@@ -465,22 +466,23 @@ public class AssetVocabularyServiceTest {
 
 	@Test
 	public void testGetGroupVocabulariesWithNoVocabularies() throws Exception {
-		List<AssetVocabulary> vocabularies =
+		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), false);
 
-		Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+		Assert.assertTrue(ListUtil.isEmpty(assetVocabularies));
 	}
 
 	@Test
 	public void testGetGroupVocabulariesWithNoVocabulariesCreatesDefaultVocabulary()
 		throws Exception {
 
-		List<AssetVocabulary> vocabularies =
+		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
 				_group.getGroupId(), true);
 
-		Assert.assertEquals(vocabularies.toString(), 1, vocabularies.size());
+		Assert.assertEquals(
+			assetVocabularies.toString(), 1, assetVocabularies.size());
 	}
 
 	@Test

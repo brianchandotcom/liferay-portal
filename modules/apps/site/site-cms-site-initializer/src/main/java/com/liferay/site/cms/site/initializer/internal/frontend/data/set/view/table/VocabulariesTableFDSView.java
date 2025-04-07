@@ -38,7 +38,13 @@ public class VocabulariesTableFDSView extends BaseTableFDSView {
 			)
 		).add(
 			"numberOfTaxonomyCategories", "categories",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"view-categories"
+			).setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
 			"assetTypes", "type",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

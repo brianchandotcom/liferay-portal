@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter.VocabularyAssetTypesSelectionFDSFilter;
@@ -137,6 +138,17 @@ public class ViewVocabulariesDisplayContext {
 				"password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
 				null, "modal-permissions"),
+			new FDSActionDropdownItem(
+				HttpComponentsUtil.addParameter(
+					PortalUtil.getLayoutFullURL(
+						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+							_themeDisplay.getScopeGroupId(), false,
+							"/categorization/view_categories"),
+						_themeDisplay),
+					"vocabularyId", "{id}"),
+				null, "view-categories",
+				LanguageUtil.get(_httpServletRequest, "view-categories"), "get",
+				null, null),
 			new FDSActionDropdownItem(
 				null, "times-circle", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), null, "delete",

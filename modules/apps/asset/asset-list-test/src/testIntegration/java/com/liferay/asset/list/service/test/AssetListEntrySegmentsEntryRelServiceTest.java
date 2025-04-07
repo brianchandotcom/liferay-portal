@@ -158,18 +158,17 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 				_group.getGroupId(), assetListEntry);
 
-		List<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRelList =
-				_assetListEntrySegmentsEntryRelLocalService.
-					getAssetListEntrySegmentsEntryRels(
-						assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS);
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			_assetListEntrySegmentsEntryRelLocalService.
+				getAssetListEntrySegmentsEntryRels(
+					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
 
 		Assert.assertTrue(
-			assetListEntrySegmentsEntryRelList.contains(
+			assetListEntrySegmentsEntryRels.contains(
 				assetListEntrySegmentsEntryRel1));
 		Assert.assertTrue(
-			assetListEntrySegmentsEntryRelList.contains(
+			assetListEntrySegmentsEntryRels.contains(
 				assetListEntrySegmentsEntryRel2));
 	}
 

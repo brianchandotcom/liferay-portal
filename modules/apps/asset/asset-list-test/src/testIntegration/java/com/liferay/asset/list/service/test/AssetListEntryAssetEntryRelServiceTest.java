@@ -250,20 +250,20 @@ public class AssetListEntryAssetEntryRelServiceTest {
 		AssetListTestUtil.addAssetListEntryAssetEntryRel(
 			_group.getGroupId(), assetEntry2, assetListEntry, segmentsEntryId);
 
-		List<AssetListEntryAssetEntryRel> assetListEntryRelList =
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 			_assetListEntryAssetEntryRelLocalService.
 				getAssetListEntryAssetEntryRels(
 					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
 		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel =
-			assetListEntryRelList.get(0);
+			assetListEntryAssetEntryRels.get(0);
 
 		Assert.assertEquals(
 			assetListEntryAssetEntryRel.getAssetEntryId(),
 			assetEntry1.getEntryId());
 
-		assetListEntryAssetEntryRel = assetListEntryRelList.get(1);
+		assetListEntryAssetEntryRel = assetListEntryAssetEntryRels.get(1);
 
 		Assert.assertEquals(
 			assetListEntryAssetEntryRel.getAssetEntryId(),

@@ -7,6 +7,17 @@
 
 	.categorization-toolbar {
 		border-style: none;
+
+		.breadcrumb-item {
+			font-size: 18px;
+			font-weight: 400;
+			line-height: 150%;
+			vertical-align: middle;
+
+			&:last-child {
+				font-weight: 600;
+			}
+		}
 	}
 
 	.cms-parent-container {

@@ -16,6 +16,9 @@ public class CMSSiteInitializerFDSNames {
 	public static final String ALL_SPACES_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-allSpacesSection";
 
+	public static final String CATEGORIES =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-categories";
+
 	public static final String CATEGORIZATION_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
 			"-categorizationSection";

@@ -70,7 +70,7 @@
 	&:hover,
 	&:focus,
 	&:focus-visible {
-		background: var(--color-action-primary-hover-lighten);
+		background: var(--color-action-primary-hover-lighten, #EDF3FE);
 		outline: var(--color-brand-primary-lighten-2, #6399FF) solid 2px;
 
 		.mega-menu-item-external-icon {

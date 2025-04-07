@@ -11,6 +11,8 @@ export {default as StructureUsagesFDSPropsTransformer} from './main/FDSPropsTran
 export {default as StructuresFDSPropsTransformer} from './main/FDSPropsTransformer/StructuresFDSPropsTransformer';
 export {default as VocabularyFDSPropsTransformer} from './main/FDSPropsTransformer/VocabularyFDSPropsTransformer';
 export {default as CategorizationToolbar} from './main/categorization/CategorizationToolbar';
+export {default as EditCategoryPage} from './main/categorization/categories/EditCategoryPage';
+export {default as CategorizationBreadcrumb} from './main/categorization/components/CategorizationBreadcrumb';
 export {default as ViewTags} from './main/categorization/tags/ViewTags';
 export {default as EditVocabulary} from './main/categorization/vocabularies/EditVocabulary';
 export {default as SpacesSticker} from './main/components/SpaceSticker';

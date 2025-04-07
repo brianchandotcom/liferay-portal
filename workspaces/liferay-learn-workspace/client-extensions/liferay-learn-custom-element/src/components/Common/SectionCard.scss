@@ -1,16 +1,4 @@
-.card-tag {
-	background-color: var(--color-state-info-lighten-2, #e6ebf5);
-	border-radius: var(--border-radius-sm, 0.25rem);
-	color: var(--color-state-info-darken-2, #1c3667);
-	display: flex;
-	font-family: var(--font-family-sans-serif);
-	font-weight: var(--font-weight-normal, 500);
-	padding: var(--spacer-1, 0.25rem) var(--spacer-2, 0.5rem);
-	white-space: nowrap;
-	width: fit-content;
-}
-
-.education-home-card-container {
+.section-card-container {
 	background-color: var(--color-brand-primary-lighten-6, #fbfcfe);
 	border: 1px solid var(--color-brand-primary-lighten-5, #e7efff);
 	border-radius: var(--border-radius-lg, 1rem);
@@ -27,15 +15,10 @@
 		border-color: var(--color-action-primary-hover, #0053f0);
 		cursor: pointer;
 	}
-
-	.card-tags-container {
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
 }
 
-.education-home-card-link,
-.education-home-card-link:hover {
+.section-card-link,
+.section-link:hover {
 	color: inherit;
 	text-decoration: none;
 	width: 100%;

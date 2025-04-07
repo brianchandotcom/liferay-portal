@@ -165,6 +165,27 @@ definition {
 	}
 
 	@priority = 3
+	test SmokeWithJDBCAndReadDataSourceTimeout {
+		property custom.properties = "jdbc.read.data.source.unavailable.timeout=5000";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Smoke.viewWelcomeContentPage();
+
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "ALL",
+			categoryName = "com.liferay.portal.dao.jdbc.util.DynamicDataSource");
+
+		Smoke.runSmoke();
+
+		AssertConsoleTextPresent(value1 = "Returning write data source");
+
+		AssertConsoleTextPresent(value1 = "Returning read data source");
+	}
+
+	@priority = 3
 	test SmokeWithJNDI {
 		property configure.read.write.database = "jndi";
 		property test.liferay.virtual.instance = "false";

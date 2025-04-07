@@ -1,6 +1,14 @@
 [
 	{
 		"actionIds": [
+			"VIEW_CONTROL_PANEL"
+		],
+		"resourceName": "90",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"DELETE",
 			"UPDATE",
 			"VIEW"
@@ -264,9 +272,33 @@
 	},
 	{
 		"actionIds": [
-			"VIEW_CONTROL_PANEL"
+			"ACCESS_IN_CONTROL_PANEL"
 		],
-		"resourceName": "90",
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:AccountSubscriptionGroup$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:AnalyticsCloudWorkspace$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:DXPCloudEnvironment$]",
+		"roleName": "Provisioning Admin",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"ACCESS_IN_CONTROL_PANEL"
+		],
+		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:LiferayExperienceCloudEnvironment$]",
 		"roleName": "Provisioning Admin",
 		"scope": "1"
 	},
@@ -1090,38 +1122,6 @@
 		"resourceName": "com_liferay_journal_web_portlet_JournalPortlet",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:AccountSubscriptionGroup$]",
-		"roleName": "Provisioning Admin",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:AnalyticsCloudWorkspace$]",
-		"roleName": "Provisioning Admin",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:DXPCloudEnvironment$]",
-		"roleName": "Provisioning Admin",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:LiferayExperienceCloudEnvironment$]",
-		"roleName": "Provisioning Admin",
-		"scope": "1"
 	},
 	{
 		"actionIds": [

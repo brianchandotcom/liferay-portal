@@ -9,9 +9,9 @@ type Props = {
 	buttonLabel: string;
 	center?: boolean;
 	hideCancel?: boolean;
-	onCancel?: () => void;
-	onConfirm?: () => void;
-	status: 'info' | 'warning';
+	onCancel?: () => Promise<void>;
+	onConfirm?: () => Promise<void>;
+	status: 'danger' | 'info' | 'warning';
 	text?: string;
 	title: string;
 };
@@ -20,47 +20,45 @@ export default function openConfirmModal({
 	buttonLabel,
 	center,
 	hideCancel,
-	onCancel,
-	onConfirm,
+	onCancel = () => Promise.resolve(),
+	onConfirm = () => Promise.resolve(),
 	status,
 	text,
 	title,
 }: Props) {
-	const buttons = [];
+	return new Promise((resolve) => {
+		const buttons = [];
 
-	if (!hideCancel) {
+		if (!hideCancel) {
+			buttons.push({
+				autoFocus: true,
+				displayType: 'secondary' as const,
+				label: Liferay.Language.get('cancel'),
+				onClick: ({processClose} = {processClose: () => {}}) => {
+					processClose();
+
+					onCancel().then(() => resolve(false));
+				},
+				type: 'cancel' as const,
+			});
+		}
+
 		buttons.push({
-			autoFocus: true,
-			displayType: 'secondary' as const,
-			label: Liferay.Language.get('cancel'),
+			displayType: status,
+			label: buttonLabel,
 			onClick: ({processClose} = {processClose: () => {}}) => {
 				processClose();
 
-				if (onCancel) {
-					onCancel();
-				}
+				onConfirm().then(() => resolve(true));
 			},
-			type: 'cancel' as const,
 		});
-	}
 
-	buttons.push({
-		displayType: status,
-		label: buttonLabel,
-		onClick: ({processClose} = {processClose: () => {}}) => {
-			processClose();
-
-			if (onConfirm) {
-				onConfirm();
-			}
-		},
-	});
-
-	openModal({
-		bodyHTML: text,
-		buttons,
-		center,
-		status,
-		title,
+		openModal({
+			bodyHTML: text,
+			buttons,
+			center,
+			status,
+			title,
+		});
 	});
 }

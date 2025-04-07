@@ -42,7 +42,7 @@ type State = {
 	marketplaceConfiguration: ReturnType<typeof useMarketplaceConfiguration>;
 	marketplaceRest: MarketplaceRest;
 	modal: ReturnType<typeof useModal>;
-	permissions: AppsPermissions;
+	permissions?: AppsPermissions;
 	product: Product;
 	productListView: {
 		loading: boolean;
@@ -69,7 +69,7 @@ export type MarketplaceContextProviderProps = {
 	className?: string;
 	defaultView?: MarketplaceView;
 	onCloseModal?: () => void;
-	permissions: AppsPermissions;
+	permissions?: AppsPermissions;
 	settings: {
 		productFilter?: 'all' | 'fragments' | 'payments';
 		productFilterCustom?: string;

@@ -16,7 +16,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 		<clay:sheet-header
 			cssClass="c-mb-4"
 		>
-			<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message="mime-type-size-limit-error" />
+			<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>" message='<%= (String)portletSession.getAttribute("configurationModelListenerException", portletSession.APPLICATION_SCOPE) %>' />
 
 			<h2>
 				<liferay-ui:message key="dl-size-limit-configuration-name" />

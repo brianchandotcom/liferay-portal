@@ -370,8 +370,13 @@ public final class DLValidatorImpl implements DLValidator {
 	}
 
 	private long _getGlobalMaxAllowableSize(long companyId, long groupId) {
+		long companyRequestFileSizeBuffer =
+			_dlSizeLimitConfigurationHelper.getCompanyRequestFileSizeBuffer(
+				companyId);
+
 		return _min(
-			_uploadServletRequestConfigurationProvider.getMaxSize(),
+			_uploadServletRequestConfigurationProvider.getMaxSize() -
+				companyRequestFileSizeBuffer,
 			_min(
 				_dlSizeLimitConfigurationHelper.getCompanyFileMaxSize(
 					companyId),

@@ -22,6 +22,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,6 +70,13 @@ public class EditSizeLimitsMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionErrors.add(
 				actionRequest, configurationModelListenerException.getClass());
+
+			PortletSession portletSession = actionRequest.getPortletSession();
+
+			portletSession.setAttribute(
+				"configurationModelListenerException",
+				configurationModelListenerException.causeMessage,
+				PortletSession.APPLICATION_SCOPE);
 
 			actionResponse.sendRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));

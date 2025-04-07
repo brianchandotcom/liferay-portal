@@ -5,7 +5,9 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
@@ -24,6 +26,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.List;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,6 +70,11 @@ public class MasterPageDTOConverter
 						layoutPageTemplateEntry.getGroupId()));
 				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setName(layoutPageTemplateEntry::getName);
+				setTaxonomyCategoryItemExternalReferences(
+					() -> _getTaxonomyCategoryItemExternalReferences(
+						Layout.class.getName(),
+						layoutPageTemplateEntry.getPlid(),
+						layoutPageTemplateEntry.getGroupId()));
 				setThumbnail(
 					() -> {
 						if (layoutPageTemplateEntry.getPreviewFileEntryId() <=
@@ -97,30 +105,40 @@ public class MasterPageDTOConverter
 		};
 	}
 
+	private <T> ItemExternalReference[] _getItemExternalReferences(
+		List<T> items, Function<T, Long> getGroupIdFunction,
+		Function<T, String> getExternalReferenceCodeFunction, long groupId) {
+
+		if (ListUtil.isEmpty(items)) {
+			return new ItemExternalReference[0];
+		}
+
+		return TransformUtil.unsafeTransformToArray(
+			items,
+			item -> {
+				ItemExternalReference itemExternalReference =
+					new ItemExternalReference();
+
+				itemExternalReference.setExternalReferenceCode(
+					() -> getExternalReferenceCodeFunction.apply(item));
+
+				itemExternalReference.setScope(
+					() -> _getScope(groupId, getGroupIdFunction.apply(item)));
+
+				return itemExternalReference;
+			},
+			ItemExternalReference.class);
+	}
+
 	private ItemExternalReference[] _getKeywordItemExternalReferences(
 		String className, long classPK, long groupId) {
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			className, classPK);
 
-		if (ListUtil.isEmpty(assetTags)) {
-			return new ItemExternalReference[0];
-		}
-
-		return TransformUtil.unsafeTransformToArray(
-			assetTags,
-			assetTag -> {
-				ItemExternalReference itemExternalReference =
-					new ItemExternalReference();
-
-				itemExternalReference.setExternalReferenceCode(
-					assetTag::getExternalReferenceCode);
-				itemExternalReference.setScope(
-					() -> _getScope(groupId, assetTag.getGroupId()));
-
-				return itemExternalReference;
-			},
-			ItemExternalReference.class);
+		return _getItemExternalReferences(
+			assetTags, AssetTag::getGroupId, AssetTag::getExternalReferenceCode,
+			groupId);
 	}
 
 	private Scope _getScope(long groupId, long scopeGroupId) throws Exception {
@@ -144,6 +162,20 @@ public class MasterPageDTOConverter
 			}
 		};
 	}
+
+	private ItemExternalReference[] _getTaxonomyCategoryItemExternalReferences(
+		String className, long classPK, long groupId) {
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(className, classPK);
+
+		return _getItemExternalReferences(
+			assetCategories, AssetCategory::getGroupId,
+			AssetCategory::getExternalReferenceCode, groupId);
+	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

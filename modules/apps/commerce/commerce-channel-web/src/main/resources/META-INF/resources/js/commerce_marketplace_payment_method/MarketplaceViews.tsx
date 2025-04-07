@@ -26,7 +26,11 @@ export default function MarketplaceViews() {
 	const {
 		marketplaceConfiguration,
 		marketplaceRest,
-		permissions,
+		permissions = {
+			installFreeApps: false,
+			purchaseAndInstallPaidApps: false,
+			viewApps: false,
+		},
 		product,
 		setProduct,
 		setView,

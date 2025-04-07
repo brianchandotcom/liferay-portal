@@ -491,10 +491,8 @@ public class BatchEnginePortletDataHandlerTest {
 				if (event instanceof JSONObject) {
 					JSONObject jsonObject = (JSONObject)event;
 
-					String classExternalReferenceCode = jsonObject.getString(
-						"externalReferenceCode");
-
-					jsonArray2.put(classExternalReferenceCode);
+					jsonArray2.put(
+						jsonObject.getString("externalReferenceCode"));
 				}
 			}
 

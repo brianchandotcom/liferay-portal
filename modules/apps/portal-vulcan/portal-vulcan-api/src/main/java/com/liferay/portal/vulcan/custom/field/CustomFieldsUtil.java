@@ -41,13 +41,11 @@ import java.util.function.Function;
 public class CustomFieldsUtil {
 
 	public static CustomField[] toCustomFields(
-		boolean acceptAllLanguages, String className, long classPK,
-		long companyId, Locale locale) {
+		boolean acceptAllLanguages, Map<String, Serializable> attributes,
+		String className, long classPK, long companyId, Locale locale) {
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			companyId, className, classPK);
-
-		Map<String, Serializable> attributes = expandoBridge.getAttributes();
 
 		return TransformUtil.transformToArray(
 			attributes.entrySet(),
@@ -69,6 +67,18 @@ public class CustomFieldsUtil {
 					entry, expandoBridge, locale);
 			},
 			CustomField.class);
+	}
+
+	public static CustomField[] toCustomFields(
+		boolean acceptAllLanguages, String className, long classPK,
+		long companyId, Locale locale) {
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			companyId, className, classPK);
+
+		return toCustomFields(
+			acceptAllLanguages, expandoBridge.getAttributes(), className,
+			classPK, companyId, locale);
 	}
 
 	public static Map<String, Serializable> toMap(

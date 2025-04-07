@@ -257,7 +257,7 @@ window.addEventListener('load', () => {
 	].forEach((args) => new navigation.default.DropdownProvider(...args));
 });
 
-window.addEventListener('resize', checkScreenSize);
+["DOMContentLoaded", "resize"].forEach(event => window.addEventListener(event, checkScreenSize));
 
 menuElements.menuButton.addEventListener('click', () => {
 	documentationEducationDropdown.classList.toggle('hide');

@@ -4,6 +4,9 @@
  */
 
 /* eslint-disable no-undef */
+['DOMContentLoaded', 'resize'].forEach((event) =>
+	window.addEventListener(event, checkScreenSize)
+);
 
 const documentationEducationDropdown = document.querySelector(
 	'.documentation-education-dropdown'
@@ -256,8 +259,6 @@ window.addEventListener('load', () => {
 		['.search-icon, .close-search', '.search-wrapper', 'search-open', true],
 	].forEach((args) => new navigation.default.DropdownProvider(...args));
 });
-
-["DOMContentLoaded", "resize"].forEach(event => window.addEventListener(event, checkScreenSize));
 
 menuElements.menuButton.addEventListener('click', () => {
 	documentationEducationDropdown.classList.toggle('hide');

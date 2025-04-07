@@ -1140,21 +1140,20 @@ pre[class*='language-'] {
 }
 
 .learn-education {
-	.learn-education__card {
-		margin-bottom: 1.5rem;
-		min-height: 282px;
-	}
+	.card-tag {
+		background-color: var(--color-state-info-lighten-2, #e6ebf5) !important;
+		border-radius: var(--border-radius-sm, 4px) !important;
+		color: var(--color-state-info-darken-2, #1c3667) !important;
+		display: flex;
+		font-family: var(--font-family-sans-serif) !important;
+		font-weight: var(--font-weight-normal, 500) !important;
+		padding: var(--spacer-1, 0.25rem) var(--spacer-2, 0.5rem);
+		white-space: nowrap;
+		width: fit-content;
 
-	.learn-education__landing-card {
-		margin-bottom: 3rem;
-		min-height: 282px;
-	}
-
-	.learn-education__card:hover,
-	.learn-education__landing-card:hover {
-		background: var(--color-action-primary-hover-10, #edf3fe) !important;
-		border-color: var(--color-action-primary-hover, #0053f0) !important;
-		cursor: pointer;
+		p {
+			margin-bottom: 0rem !important;
+		}
 	}
 
 	.card-tag__persona p::before {
@@ -1233,6 +1232,22 @@ pre[class*='language-'] {
 		margin-right: 4px;
 		vertical-align: middle;
 		width: 14px;
+	}
+
+	.card-tags-container {
+		flex-wrap: wrap !important;
+		gap: 0.5rem !important;
+	}
+
+	.learn-education__landing-card {
+		margin-bottom: 3rem;
+		min-height: 282px;
+	}
+
+	.learn-education__landing-card:hover {
+		background: var(--color-action-primary-hover-10, #edf3fe) !important;
+		border-color: var(--color-action-primary-hover, #0053f0) !important;
+		cursor: pointer;
 	}
 
 	@media (max-width: 576px) {
@@ -1807,6 +1822,17 @@ pre[class*='language-'] {
 
 .token.entity {
 	cursor: help;
+}
+
+.tooltip-inner {
+	background-color: #3F404B;
+}
+
+.tooltip .arrow::before {
+	border-style: solid;
+	border-top-color: #3F404B;
+	content: '';
+	position: absolute;
 }
 
 .treeview .btn {

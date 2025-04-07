@@ -12,6 +12,7 @@ import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
+import com.liferay.exportimport.kernel.exception.LARScopeException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.exception.MissingPortletDataHandlerException;
@@ -84,6 +85,8 @@ import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.sites.kernel.util.Sites;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -590,6 +593,20 @@ public class LayoutImportController implements ImportController {
 
 			if (group.isCompany() ^ companySourceGroup) {
 				throw new LARTypeException(LARTypeException.TYPE_COMPANY_GROUP);
+			}
+
+			StagingGroupHelper stagingGroupHelper =
+				StagingGroupHelperUtil.getStagingGroupHelper();
+
+			String scope = headerElement.attributeValue("scope");
+
+			boolean companyGroup = stagingGroupHelper.isCompanyGroup(group);
+
+			if (((scope == null) && companyGroup) ||
+				(Objects.equals(scope, "company") && !companyGroup) ||
+				(Objects.equals(scope, "site") && companyGroup)) {
+
+				throw new LARScopeException();
 			}
 		}
 

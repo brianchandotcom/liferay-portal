@@ -1257,6 +1257,9 @@ public interface PropsKeys {
 
 	public static final String JDBC_DEFAULT_USERNAME = "jdbc.default.username";
 
+	public static final String JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT =
+		"jdbc.read.data.source.unavailable.timeout";
+
 	public static final String JNDI_ENVIRONMENT = "jndi.environment.";
 
 	public static final String JSON_DESERIALIZATION_WHITELIST_CLASS_NAMES =

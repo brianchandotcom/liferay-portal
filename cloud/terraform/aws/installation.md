@@ -73,8 +73,6 @@ Once the repository has been cloned, you have two choices:
 
    You are prompted to apply the changes. 
 
-<!-- Just a sanity check on the above two sections. It sounds like there are two `terraform.tfvars` files in two different directories: `eks` and `dependencies`. In EKS Cluster Bootstrap, you have the reader editing `terraform.tfvars` in `eks`, and then append the result of a command into `../dependencies/terraform.tfvars`. In Liferay Infrastructure Bootstrap, you have the reader edit only `dependencies/terraform.tfvars`, but the instructions (wordsmithed) correspond to the instructions above for the `eks/terraform.tfvars` file. -->
-
 ## Helm Setup
 
 To use Helm you must use the `aws` CLI to set up `kubectl`. 

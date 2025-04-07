@@ -129,6 +129,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 						className={classNames({
 							active: selectedKeys.has(item.id),
 						})}
+						expandOnClick={false}
 					>
 						<ClayIcon symbol={item.icon} />
 

@@ -113,16 +113,16 @@ public class AssetCategoryPropertyLocalServiceTest {
 			TestPropsValues.getUserId(), _assetCategory.getCategoryId(),
 			"keyNotToBeFound", "anotherValue");
 
-		List<AssetCategoryProperty> categoryPropertyValues =
+		List<AssetCategoryProperty> assetCategoryProperties =
 			_assetCategoryPropertyLocalService.getCategoryPropertyValues(
 				_group.getGroupId(), "keyToBeFound");
 
 		Assert.assertEquals(
-			categoryPropertyValues.toString(), 1,
-			categoryPropertyValues.size());
+			assetCategoryProperties.toString(), 1,
+			assetCategoryProperties.size());
 
 		AssetCategoryProperty assetCategoryProperty =
-			categoryPropertyValues.get(0);
+			assetCategoryProperties.get(0);
 
 		Assert.assertEquals("keyToBeFound", assetCategoryProperty.getKey());
 		Assert.assertEquals("someValue", assetCategoryProperty.getValue());

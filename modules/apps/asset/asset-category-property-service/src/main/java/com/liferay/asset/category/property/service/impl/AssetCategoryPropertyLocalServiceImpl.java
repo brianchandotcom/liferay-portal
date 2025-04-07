@@ -70,11 +70,13 @@ public class AssetCategoryPropertyLocalServiceImpl
 
 	@Override
 	public void deleteCategoryProperties(long entryId) {
-		List<AssetCategoryProperty> categoryProperties =
+		List<AssetCategoryProperty> assetCategoryProperties =
 			assetCategoryPropertyPersistence.findByCategoryId(entryId);
 
-		for (AssetCategoryProperty categoryProperty : categoryProperties) {
-			deleteCategoryProperty(categoryProperty);
+		for (AssetCategoryProperty assetCategoryProperty :
+				assetCategoryProperties) {
+
+			deleteCategoryProperty(assetCategoryProperty);
 		}
 	}
 

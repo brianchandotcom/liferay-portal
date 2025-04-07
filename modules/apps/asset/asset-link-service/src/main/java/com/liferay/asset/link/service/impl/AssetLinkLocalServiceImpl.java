@@ -344,16 +344,18 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getLinks(long entryId) {
-		List<AssetLink> e1Links = assetLinkPersistence.findByEntryId1(entryId);
-		List<AssetLink> e2Links = assetLinkPersistence.findByEntryId2(entryId);
+		List<AssetLink> e1AssetLinks = assetLinkPersistence.findByEntryId1(
+			entryId);
+		List<AssetLink> e2AssetLinks = assetLinkPersistence.findByEntryId2(
+			entryId);
 
-		List<AssetLink> links = new ArrayList<>(
-			e1Links.size() + e2Links.size());
+		List<AssetLink> assetLinks = new ArrayList<>(
+			e1AssetLinks.size() + e2AssetLinks.size());
 
-		links.addAll(e1Links);
-		links.addAll(e2Links);
+		assetLinks.addAll(e1AssetLinks);
+		assetLinks.addAll(e2AssetLinks);
 
-		return links;
+		return assetLinks;
 	}
 
 	@Override
@@ -421,18 +423,18 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getLinks(long entryId, int typeId) {
-		List<AssetLink> e1Links = assetLinkPersistence.findByE1_T(
+		List<AssetLink> e1AssetLinks = assetLinkPersistence.findByE1_T(
 			entryId, typeId);
-		List<AssetLink> e2Links = assetLinkPersistence.findByE2_T(
+		List<AssetLink> e2AssetLinks = assetLinkPersistence.findByE2_T(
 			entryId, typeId);
 
-		List<AssetLink> links = new ArrayList<>(
-			e1Links.size() + e2Links.size());
+		List<AssetLink> assetLinks = new ArrayList<>(
+			e1AssetLinks.size() + e2AssetLinks.size());
 
-		links.addAll(e1Links);
-		links.addAll(e2Links);
+		assetLinks.addAll(e1AssetLinks);
+		assetLinks.addAll(e2AssetLinks);
 
-		return links;
+		return assetLinks;
 	}
 
 	/**
@@ -531,15 +533,15 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 			return;
 		}
 
-		List<AssetLink> links = getLinks(entryId, typeId);
+		List<AssetLink> assetLinks = getLinks(entryId, typeId);
 
-		for (AssetLink link : links) {
-			if (((link.getEntryId1() == entryId) &&
-				 !ArrayUtil.contains(linkEntryIds, link.getEntryId2())) ||
-				((link.getEntryId2() == entryId) &&
-				 !ArrayUtil.contains(linkEntryIds, link.getEntryId1()))) {
+		for (AssetLink assetLink : assetLinks) {
+			if (((assetLink.getEntryId1() == entryId) &&
+				 !ArrayUtil.contains(linkEntryIds, assetLink.getEntryId2())) ||
+				((assetLink.getEntryId2() == entryId) &&
+				 !ArrayUtil.contains(linkEntryIds, assetLink.getEntryId1()))) {
 
-				deleteAssetLink(link);
+				deleteAssetLink(assetLink);
 			}
 		}
 

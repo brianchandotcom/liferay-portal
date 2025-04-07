@@ -2174,7 +2174,6 @@ public class ObjectEntryLocalServiceTest {
 				new ServiceContext()));
 	}
 
-	@FeatureFlags("LPD-31149")
 	@Test
 	public void testAddObjectEntryWithObjectRelationshipInScopeDepot()
 		throws Exception {
@@ -4194,7 +4193,6 @@ public class ObjectEntryLocalServiceTest {
 			23, values3, valuesList.get(2), selectedObjectFieldNames);
 	}
 
-	@FeatureFlags("LPD-31149")
 	@Test
 	public void testScope() throws Exception {
 

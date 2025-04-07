@@ -154,7 +154,6 @@ public class ObjectRelationshipLocalServiceTest {
 			"/o/test-endpoint/entries");
 	}
 
-	@FeatureFlags("LPD-31149")
 	@Test
 	public void testAddObjectRelationship() throws Exception {
 		//_testAddObjectRelationship(

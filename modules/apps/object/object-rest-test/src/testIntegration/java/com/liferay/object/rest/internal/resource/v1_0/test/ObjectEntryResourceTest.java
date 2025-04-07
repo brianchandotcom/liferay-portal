@@ -7260,7 +7260,6 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getExternalReferenceCode());
 	}
 
-	@FeatureFlags("LPD-31149")
 	@Test
 	public void testGetScopeScopeKeyObjectEntriesPage() throws Exception {
 

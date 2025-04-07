@@ -74,14 +74,14 @@ public class AssetVocabularyUtilTest {
 	public void testGetUnambiguousVocabularyTitleWithAmbiguity()
 		throws Exception {
 
-		List<AssetVocabulary> vocabularies = new ArrayList<>();
+		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
 
-		vocabularies.add(_companyVocabulary);
-		vocabularies.add(_vocabulary);
+		assetVocabularies.add(_companyVocabulary);
+		assetVocabularies.add(_vocabulary);
 
 		String unambiguousCompanyVocabularyTitle =
 			_companyVocabulary.getUnambiguousTitle(
-				vocabularies, _group.getGroupId(), _LOCALE);
+				assetVocabularies, _group.getGroupId(), _LOCALE);
 
 		Assert.assertTrue(
 			unambiguousCompanyVocabularyTitle,
@@ -89,7 +89,7 @@ public class AssetVocabularyUtilTest {
 				_companyGroup.getDescriptiveName(_LOCALE)));
 
 		String unambiguousVocabularyTitle = _vocabulary.getUnambiguousTitle(
-			vocabularies, _group.getGroupId(), _LOCALE);
+			assetVocabularies, _group.getGroupId(), _LOCALE);
 
 		Assert.assertEquals(_TITLE, unambiguousVocabularyTitle);
 	}

@@ -13,6 +13,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
@@ -55,14 +56,12 @@ public class BatchEngineDeletionHelperImpl
 				continue;
 			}
 
-			int length =
-				BatchEnginePortletDataHandler.BATCH_DELETE_CLASS_NAME_POSTFIX.
-					length();
-
-			String className = key.substring(0, key.length() - length);
-
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-				_getBatchEnginePortletDataHandler(className);
+				_getBatchEnginePortletDataHandler(
+					StringUtil.removeLast(
+						key,
+						BatchEnginePortletDataHandler.
+							BATCH_DELETE_CLASS_NAME_POSTFIX));
 
 			if (batchEnginePortletDataHandler != null) {
 				batchEnginePortletDataHandler.exportDeletionSystemEvents(

@@ -1084,7 +1084,7 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 	}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFolderExternalReferenceCode: 'Default',
+				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 

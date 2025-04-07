@@ -381,6 +381,7 @@ public class DBCopyTablesProcess {
 			valueString = String.valueOf(value);
 		}
 		else if ((sourceType == Types.LONGVARCHAR) ||
+				 (sourceType == Types.NVARCHAR) ||
 				 (sourceType == Types.VARCHAR)) {
 
 			String value = resultSet.getString(columnName);

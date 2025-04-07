@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
@@ -20,6 +21,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -56,6 +58,13 @@ public abstract class BaseWorkflowManagerTestCase {
 
 		return classLoader.getResourceAsStream(
 			"com/liferay/portal/workflow/kaleo/dependencies/" + name);
+	}
+
+	protected String readFileToJSON(String fileName) throws Exception {
+		Class<?> clazz = getClass();
+
+		return WorkflowDefinitionContentUtil.toJSON(
+			StringUtil.read(clazz.getClassLoader(), _getBasePath() + fileName));
 	}
 
 	protected ServiceRegistrationHolder registryWorkflowHandler() {
@@ -153,6 +162,10 @@ public abstract class BaseWorkflowManagerTestCase {
 		private final ServiceRegistration<WorkflowHandler<?>>
 			_serviceRegistration;
 
+	}
+
+	private String _getBasePath() {
+		return "com/liferay/portal/workflow/kaleo/dependencies/";
 	}
 
 }

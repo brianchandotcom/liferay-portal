@@ -6,7 +6,7 @@
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 
 type Props = {
-	onContinue: () => {};
+	onContinue: () => Promise<void>;
 };
 
 export function openFormConversionModal({onContinue}: Props) {

@@ -211,8 +211,6 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_assertIndex("Ticket", "IX_B2468446");
 
-		ticket.setTicketId(2);
-
 		Assert.assertEquals(ticket, TicketLocalServiceUtil.getTicket(2));
 	}
 

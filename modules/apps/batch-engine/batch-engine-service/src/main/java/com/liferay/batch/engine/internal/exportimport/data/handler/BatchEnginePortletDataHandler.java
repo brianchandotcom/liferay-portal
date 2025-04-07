@@ -87,9 +87,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (String erc : map.keySet()) {
+		for (String key : map.keySet()) {
 			jsonArray.put(
-				JSONUtil.put("externalReferenceCode", String.valueOf(erc)));
+				JSONUtil.put("externalReferenceCode", String.valueOf(key)));
 		}
 
 		portletDataContext.addZipEntry(

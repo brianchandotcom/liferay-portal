@@ -47,10 +47,10 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 			deleteAssetEntryAssetCategoryRelByAssetCategoryId(
 				category.getCategoryId());
 
-		List<AssetEntry> entries = _getAssetEntriesByAssetCategoryId(
+		List<AssetEntry> assetEntries = _getAssetEntriesByAssetCategoryId(
 			category.getCategoryId());
 
-		_assetEntryLocalService.reindex(entries);
+		_assetEntryLocalService.reindex(assetEntries);
 
 		return super.deleteCategory(category, skipRebuildTree);
 	}
@@ -82,12 +82,13 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 	public AssetCategory mergeCategories(long fromCategoryId, long toCategoryId)
 		throws PortalException {
 
-		List<AssetEntry> entries = _getAssetEntriesByAssetCategoryId(
+		List<AssetEntry> assetEntries = _getAssetEntriesByAssetCategoryId(
 			fromCategoryId);
 
-		for (AssetEntry entry : entries) {
+		for (AssetEntry assetEntry : assetEntries) {
 			_assetEntryAssetCategoryRelLocalService.
-				addAssetEntryAssetCategoryRel(entry.getEntryId(), toCategoryId);
+				addAssetEntryAssetCategoryRel(
+					assetEntry.getEntryId(), toCategoryId);
 		}
 
 		return super.mergeCategories(fromCategoryId, toCategoryId);
@@ -110,10 +111,10 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 			categoryId);
 
 		if (!Objects.equals(category.getName(), name)) {
-			List<AssetEntry> entries = _getAssetEntriesByAssetCategoryId(
+			List<AssetEntry> assetEntries = _getAssetEntriesByAssetCategoryId(
 				category.getCategoryId());
 
-			_assetEntryLocalService.reindex(entries);
+			_assetEntryLocalService.reindex(assetEntries);
 		}
 
 		return super.updateCategory(

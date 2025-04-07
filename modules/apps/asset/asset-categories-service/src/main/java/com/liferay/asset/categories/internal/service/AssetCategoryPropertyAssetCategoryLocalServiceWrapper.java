@@ -120,11 +120,13 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 	public AssetCategory mergeCategories(long fromCategoryId, long toCategoryId)
 		throws PortalException {
 
-		List<AssetCategoryProperty> categoryProperties =
+		List<AssetCategoryProperty> assetCategoryProperties =
 			_assetCategoryPropertyLocalService.getCategoryProperties(
 				fromCategoryId);
 
-		for (AssetCategoryProperty fromCategoryProperty : categoryProperties) {
+		for (AssetCategoryProperty fromCategoryProperty :
+				assetCategoryProperties) {
+
 			AssetCategoryProperty toCategoryProperty =
 				_assetCategoryPropertyLocalService.fetchCategoryProperty(
 					toCategoryId, fromCategoryProperty.getKey());
@@ -148,11 +150,11 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<AssetCategoryProperty> oldCategoryProperties =
+		List<AssetCategoryProperty> assetCategoryProperties =
 			_assetCategoryPropertyLocalService.getCategoryProperties(
 				categoryId);
 
-		oldCategoryProperties = ListUtil.copy(oldCategoryProperties);
+		assetCategoryProperties = ListUtil.copy(assetCategoryProperties);
 
 		if (categoryProperties != null) {
 			for (String categoryProperty : categoryProperties) {
@@ -186,7 +188,7 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 				AssetCategoryProperty oldCategoryProperty = null;
 
 				Iterator<AssetCategoryProperty> iterator =
-					oldCategoryProperties.iterator();
+					assetCategoryProperties.iterator();
 
 				while (iterator.hasNext()) {
 					oldCategoryProperty = iterator.next();
@@ -217,7 +219,7 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 			}
 		}
 
-		for (AssetCategoryProperty categoryProperty : oldCategoryProperties) {
+		for (AssetCategoryProperty categoryProperty : assetCategoryProperties) {
 			_assetCategoryPropertyLocalService.deleteAssetCategoryProperty(
 				categoryProperty);
 		}

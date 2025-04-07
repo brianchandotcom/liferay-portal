@@ -297,7 +297,7 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private long[] _filterAssetCategoryIds(long[] assetCategoryIds) {
-		List<Long> assetCategoryIdsList = new ArrayList<>();
+		List<Long> filteredAssetCategoryIds = new ArrayList<>();
 
 		for (long assetCategoryId : assetCategoryIds) {
 			AssetCategory category =
@@ -307,10 +307,10 @@ public class AssetListAssetEntryProviderImpl
 				continue;
 			}
 
-			assetCategoryIdsList.add(assetCategoryId);
+			filteredAssetCategoryIds.add(assetCategoryId);
 		}
 
-		return ArrayUtil.toArray(assetCategoryIdsList.toArray(new Long[0]));
+		return ArrayUtil.toArray(filteredAssetCategoryIds.toArray(new Long[0]));
 	}
 
 	private long[] _getAssetCategoryIds(UnicodeProperties unicodeProperties) {

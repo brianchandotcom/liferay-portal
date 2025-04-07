@@ -5,7 +5,9 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -267,6 +270,10 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
+		serviceContext.setAssetCategoryIds(
+			_getAssetCategoryIds(
+				groupId,
+				masterPage.getTaxonomyCategoryItemExternalReferences()));
 		serviceContext.setAssetTagNames(
 			_getAssetTagNames(
 				groupId, masterPage.getKeywordItemExternalReferences()));
@@ -296,6 +303,11 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		if (masterPage.getPageSpecifications() != null) {
 			existingMasterPage.setPageSpecifications(
 				masterPage::getPageSpecifications);
+		}
+
+		if (masterPage.getTaxonomyCategoryItemExternalReferences() != null) {
+			existingMasterPage.setTaxonomyCategoryItemExternalReferences(
+				masterPage::getTaxonomyCategoryItemExternalReferences);
 		}
 
 		if (masterPage.getThumbnail() != null) {
@@ -328,6 +340,15 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					groupId, masterPage.getKeywordItemExternalReferences()));
 		}
 
+		if (ArrayUtil.isNotEmpty(
+				masterPage.getTaxonomyCategoryItemExternalReferences())) {
+
+			serviceContext.setAssetCategoryIds(
+				_getAssetCategoryIds(
+					groupId,
+					masterPage.getTaxonomyCategoryItemExternalReferences()));
+		}
+
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				masterPage.getExternalReferenceCode(), groupId,
@@ -338,6 +359,42 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				_getPreviewFileEntryId(groupId, masterPage), defaultTemplate, 0,
 				_getLayoutPlid(groupId, masterPage, serviceContext), 0, status,
 				serviceContext));
+	}
+
+	private long[] _getAssetCategoryIds(
+			long groupId, ItemExternalReference[] itemExternalReferences)
+		throws Exception {
+
+		if (ArrayUtil.isEmpty(itemExternalReferences)) {
+			return new long[0];
+		}
+
+		Group group = _groupService.getGroup(groupId);
+
+		return unsafeTransformToLongArray(
+			ListUtil.fromArray(itemExternalReferences),
+			itemExternalReference -> {
+				long scopeGroupId = groupId;
+
+				Scope scope = itemExternalReference.getScope();
+
+				if (scope != null) {
+					scopeGroupId = GroupUtil.getGroupId(
+						true, true, group.getCompanyId(),
+						scope.getExternalReferenceCode());
+				}
+
+				AssetCategory assetCategory =
+					_assetCategoryService.fetchCategoryByExternalReferenceCode(
+						itemExternalReference.getExternalReferenceCode(),
+						scopeGroupId);
+
+				if (assetCategory == null) {
+					throw new UnsupportedOperationException();
+				}
+
+				return assetCategory.getCategoryId();
+			});
 	}
 
 	private String[] _getAssetTagNames(
@@ -465,6 +522,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		return false;
 	}
+
+	@Reference
+	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private AssetTagService _assetTagService;

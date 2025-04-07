@@ -119,6 +119,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -223,6 +224,10 @@ public class RenderLayoutStructureTagTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
@@ -231,6 +236,7 @@ public class RenderLayoutStructureTagTest {
 
 	@After
 	public void tearDown() {
+		PrincipalThreadLocal.setName(_originalName);
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -3158,6 +3164,8 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	private String _originalName;
 
 	@Inject
 	private Portal _portal;

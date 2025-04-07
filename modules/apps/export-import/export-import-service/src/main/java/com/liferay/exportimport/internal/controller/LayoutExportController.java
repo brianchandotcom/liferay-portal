@@ -58,6 +58,8 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -218,6 +220,16 @@ public class LayoutExportController implements ExportController {
 			"schema-version",
 			ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION);
 
+		Group group = _groupLocalService.fetchGroup(
+			portletDataContext.getGroupId());
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		headerElement.addAttribute(
+			"scope",
+			stagingGroupHelper.isCompanyGroup(group) ? "company" : "site");
+
 		headerElement.addAttribute("export-date", Time.getRFC822());
 
 		if (portletDataContext.hasDateRange()) {
@@ -241,9 +253,6 @@ public class LayoutExportController implements ExportController {
 		headerElement.addAttribute(
 			"private-layout",
 			String.valueOf(portletDataContext.isPrivateLayout()));
-
-		Group group = _groupLocalService.fetchGroup(
-			portletDataContext.getGroupId());
 
 		String type = "layout-set";
 

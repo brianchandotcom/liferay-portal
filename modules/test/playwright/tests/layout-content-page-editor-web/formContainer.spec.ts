@@ -1768,6 +1768,18 @@ test.describe('Friendly URL Fragment', () => {
 			await expect(
 				page.getByRole('combobox', {name: 'Field'})
 			).toHaveValue('ObjectEntry_objectEntryFriendlyURL');
+
+			// Change its label
+
+			await pageEditorPage.changeConfiguration({
+				fieldLabel: 'Label',
+				tab: 'General',
+				value: 'My new friendly url label',
+			});
+
+			await expect(
+				page.getByLabel('My new friendly url label')
+			).toBeAttached();
 		}
 	);
 });

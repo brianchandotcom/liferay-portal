@@ -108,11 +108,7 @@ data:
     S3_BUCKET_REGION: ""
 ```
 
-This secret was created when you initialized and applied the Terraform configuration. If you skipped that, it must be provided manually.
-
-<!-- Which step above initialized this file? I made a guess; please verify my guess was right. :-)
-     Also, the instructions above provide no use case for skipping a step. How would this happen? 
--->
+This secret is created automatically when you run the Terraform auto-configuration. If you have your own configuration, you must provide it manually.
 
 1. Navigate to the `dependencies` directory.
 

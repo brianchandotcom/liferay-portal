@@ -487,13 +487,10 @@ public class BatchEnginePortletDataHandlerTest {
 
 			JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray();
 
-			for (Object event : jsonArray1) {
-				if (event instanceof JSONObject) {
-					JSONObject jsonObject = (JSONObject)event;
+			for (int i = 0; i < jsonArray1.length(); i++) {
+				JSONObject jsonObject = jsonArray1.getJSONObject(i);
 
-					jsonArray2.put(
-						jsonObject.getString("externalReferenceCode"));
-				}
+				jsonArray2.put(jsonObject.getString("externalReferenceCode"));
 			}
 
 			return jsonArray2;

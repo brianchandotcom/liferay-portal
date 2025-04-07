@@ -23,7 +23,7 @@ export function openAddLocalizationSelect({dispatch, formId}: Props) {
 
 	openConfirmModal({
 		buttonLabel: title,
-		onConfirm: () =>
+		onConfirm: async () =>
 			dispatch(
 				addFragment({
 					fieldTypes: ['localizationSelect'],

@@ -425,7 +425,7 @@ function computeDrop({
 			!isMultistepForm(formParent)
 		) {
 			openFormConversionModal({
-				onContinue: () => onDragEnd(targetId, position),
+				onContinue: async () => onDragEnd(targetId, position),
 			});
 		}
 		else {

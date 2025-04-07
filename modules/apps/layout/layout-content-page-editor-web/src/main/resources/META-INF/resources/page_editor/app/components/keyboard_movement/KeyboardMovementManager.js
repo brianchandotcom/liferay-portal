@@ -200,7 +200,7 @@ export default function KeyboardMovementManager() {
 					!isMultistepForm(formParent)
 				) {
 					openFormConversionModal({
-						onContinue: () => executeAction(),
+						onContinue: async () => executeAction(),
 					});
 				}
 				else {

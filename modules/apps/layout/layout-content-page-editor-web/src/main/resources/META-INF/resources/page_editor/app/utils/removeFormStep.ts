@@ -36,7 +36,7 @@ export default function removeFormStep({
 
 	const numberOfSteps = form.config.numberOfSteps;
 
-	const executeAction = () =>
+	const executeAction = async () =>
 		dispatch(
 			removeFormStepThunk({
 				index,

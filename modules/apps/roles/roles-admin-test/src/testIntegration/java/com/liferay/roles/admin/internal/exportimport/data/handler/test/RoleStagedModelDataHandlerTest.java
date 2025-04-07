@@ -64,9 +64,6 @@ public class RoleStagedModelDataHandlerTest
 	@Test
 	public void testStagedModelDataHandler() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-		_originalName = PrincipalThreadLocal.getName();
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
 
 		try {
 			super.testStagedModelDataHandler();
@@ -158,6 +155,10 @@ public class RoleStagedModelDataHandlerTest
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, role);
 
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
@@ -188,8 +189,8 @@ public class RoleStagedModelDataHandlerTest
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
-				_originalPermissionChecker);
-			PrincipalThreadLocal.setName(_originalName);
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
@@ -214,6 +215,10 @@ public class RoleStagedModelDataHandlerTest
 			1, _roleLocalService.getAssigneesTotal(role.getRoleId()));
 
 		StagedModelDataHandlerUtil.exportStagedModel(portletDataContext, role);
+
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
@@ -244,8 +249,8 @@ public class RoleStagedModelDataHandlerTest
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
-				_originalPermissionChecker);
-			PrincipalThreadLocal.setName(_originalName);
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
@@ -256,9 +261,6 @@ public class RoleStagedModelDataHandlerTest
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	private String _originalName;
-	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

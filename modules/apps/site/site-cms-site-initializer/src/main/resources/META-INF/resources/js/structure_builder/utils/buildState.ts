@@ -68,6 +68,9 @@ export default function buildState(
 		erc: objectDefinition.externalReferenceCode,
 		error: null,
 		fields,
+		history: {
+			deletedFields: false,
+		},
 		id: objectDefinition.id ?? null,
 		invalids: new Map(),
 		label: objectDefinition.label,

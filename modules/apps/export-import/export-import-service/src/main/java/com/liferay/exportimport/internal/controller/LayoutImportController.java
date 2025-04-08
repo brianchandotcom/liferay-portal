@@ -598,13 +598,16 @@ public class LayoutImportController implements ImportController {
 			StagingGroupHelper stagingGroupHelper =
 				StagingGroupHelperUtil.getStagingGroupHelper();
 
-			String scope = headerElement.attributeValue("scope");
+			String groupFriendlyUrl = headerElement.attributeValue(
+				"group-friendly-url");
 
 			boolean companyGroup = stagingGroupHelper.isCompanyGroup(group);
 
-			if (((scope == null) && companyGroup) ||
-				(Objects.equals(scope, "company") && !companyGroup) ||
-				(Objects.equals(scope, "site") && companyGroup)) {
+			if (((groupFriendlyUrl == null) && companyGroup) ||
+				(Objects.equals(groupFriendlyUrl, "/export-import") &&
+				 !companyGroup) ||
+				(!Objects.equals(groupFriendlyUrl, "/export-import") &&
+				 companyGroup)) {
 
 				throw new LARScopeException();
 			}

@@ -11,6 +11,12 @@ export class AccountAddressesPage {
 	readonly addressesTable: DataTablePage;
 	readonly deleteButton: Locator;
 	readonly page: Page;
+	readonly rowSubtypeCell: (
+		addressName: string,
+		subtypeName: string,
+		colIndex?: number,
+		strictEqual?: boolean
+	) => Promise<Locator>;
 
 	constructor(page: Page) {
 		this.addressesTable = new DataTablePage(
@@ -23,5 +29,23 @@ export class AccountAddressesPage {
 			.getByRole('button', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));
 		this.page = page;
+		this.rowSubtypeCell = async (
+			addressName,
+			subtypeName,
+			colIndex = 1,
+			strictEqual = true
+		) => {
+			const row = await this.addressesTable.row(
+				colIndex,
+				addressName,
+				strictEqual
+			);
+
+			if (row && row.row) {
+				return row.row.getByText(subtypeName);
+			}
+
+			return null;
+		};
 	}
 }

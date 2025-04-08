@@ -21,6 +21,8 @@ export class EditAccountAddressPage {
 	readonly regionInput: Locator;
 	readonly saveButton: Locator;
 	readonly street1Input: Locator;
+	readonly subtypeInput: Locator;
+	readonly subtypeMenuItem: (name: string) => Locator;
 	readonly typeInput: Locator;
 
 	constructor(page: Page) {
@@ -35,6 +37,9 @@ export class EditAccountAddressPage {
 		this.regionInput = page.getByLabel('Region');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.street1Input = page.getByLabel('Street 1');
+		this.subtypeInput = page.getByPlaceholder('Subtype');
+		this.subtypeMenuItem = (name: string) =>
+			page.getByRole('menuitem', {name});
 		this.typeInput = page.getByLabel('Type');
 	}
 
@@ -47,6 +52,7 @@ export class EditAccountAddressPage {
 		postalCode = getRandomInt(),
 		region = 'Alabama',
 		street1 = getRandomString(),
+		subtype = '',
 		type = 'Billing and Shipping',
 	}: {
 		city?: string;
@@ -57,6 +63,7 @@ export class EditAccountAddressPage {
 		postalCode?: number | string;
 		region?: string;
 		street1?: string;
+		subtype?: string;
 		type?: string;
 	}) {
 		await expect(this.countryInput).toBeEnabled();
@@ -69,6 +76,11 @@ export class EditAccountAddressPage {
 		await this.postalCodeInput.fill(String(postalCode));
 		await this.phoneNumberInput.fill(phoneNumber);
 		await this.typeInput.selectOption({label: type});
+
+		if (subtype) {
+			await this.subtypeInput.fill(subtype);
+			await this.subtypeMenuItem(subtype).click();
+		}
 
 		if (region) {
 			await this.regionInput.selectOption({label: region});

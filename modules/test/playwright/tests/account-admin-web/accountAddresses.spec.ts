@@ -9,6 +9,8 @@ import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {listTypeDefinitionsPagesTest} from '../../fixtures/listTypeDefinitionsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
@@ -25,6 +27,16 @@ export const test = mergeTests(
 	loginTest(),
 	usersAndOrganizationsPagesTest,
 	serverAdministrationPageTest
+);
+
+export const testWithAddressSubtypeEnabled = mergeTests(
+	accountsPagesTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-43000': {enabled: true},
+	}),
+	listTypeDefinitionsPagesTest,
+	loginTest()
 );
 
 test('LPD-46415 Can add an address to an account', async ({
@@ -73,6 +85,9 @@ test('LPD-46415 Can add an address to an account', async ({
 	await expect(
 		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
+	await expect(
+		accountAddressesPage.addressesTable.cell('Subtype', false)
+	).toHaveCount(0);
 
 	await accountAddressesPage.addressesTable.valueLink(address.name).click();
 
@@ -1023,3 +1038,224 @@ test('LPD-46415 A new address can be added via Set Default Address', async ({
 		accountAddressesPage.addressesTable.valueLink(address.name)
 	).toBeVisible();
 });
+
+testWithAddressSubtypeEnabled(
+	'Can add an address to an account with subtype',
+	{tag: '@LPD-51453'},
+	async ({
+		accountAddressesPage,
+		accountInstanceSettingsAccountAddressSubtypePage,
+		accountsPage,
+		apiHelpers,
+		editAccountAddressPage,
+		editAccountPage,
+		listTypeDefinitionPage,
+		page,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			description: getRandomString(),
+			type: 'business',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		const listTypeDefinitionBilling =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinitionBilling.id,
+			type: 'listTypeDefinition',
+		});
+
+		const listTypeDefinitionBillingAndShipping =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinitionBillingAndShipping.id,
+			type: 'listTypeDefinition',
+		});
+
+		const listTypeDefinitionShipping =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinitionShipping.id,
+			type: 'listTypeDefinition',
+		});
+
+		await listTypeDefinitionPage.goto();
+
+		const picklistItemBilling1 = 'Billing1';
+
+		await apiHelpers.listTypeAdmin.postListTypeEntry(
+			listTypeDefinitionBilling.externalReferenceCode,
+			picklistItemBilling1
+		);
+
+		const picklistItemBillingAndShipping1 = 'BillingAndShipping1';
+
+		await apiHelpers.listTypeAdmin.postListTypeEntry(
+			listTypeDefinitionBillingAndShipping.externalReferenceCode,
+			picklistItemBillingAndShipping1
+		);
+
+		const picklistItemShipping1 = 'Shipping1';
+
+		await apiHelpers.listTypeAdmin.postListTypeEntry(
+			listTypeDefinitionShipping.externalReferenceCode,
+			picklistItemShipping1
+		);
+
+		await accountInstanceSettingsAccountAddressSubtypePage.setAddressSubtypeExternalReferenceCodes(
+			listTypeDefinitionBilling.name,
+			listTypeDefinitionBillingAndShipping.name,
+			listTypeDefinitionShipping.name
+		);
+
+		const billingAddress = {
+			city: getRandomString(),
+			country: 'United States',
+			countryId: '0',
+			name: getRandomString(),
+			postalCode: String(getRandomInt()),
+			region: 'Alabama',
+			regionId: '0',
+			street1: getRandomString(),
+			subtype: picklistItemBilling1,
+			type: 'Billing',
+		};
+		const billingAndShippingAddress = {
+			city: getRandomString(),
+			country: 'United States',
+			countryId: '0',
+			name: getRandomString(),
+			postalCode: String(getRandomInt()),
+			region: 'Alabama',
+			regionId: '0',
+			street1: getRandomString(),
+			subtype: picklistItemBillingAndShipping1,
+			type: 'Billing and Shipping',
+		};
+		const shippingAddress = {
+			city: getRandomString(),
+			country: 'United States',
+			countryId: '0',
+			name: getRandomString(),
+			postalCode: String(getRandomInt()),
+			region: 'Alabama',
+			regionId: '0',
+			street1: getRandomString(),
+			subtype: picklistItemShipping1,
+			type: 'Shipping',
+		};
+
+		try {
+			await accountsPage.goto();
+			await accountsPage.accountsTable.valueLink(account.name).click();
+			await editAccountPage.addressesTab.click();
+			await accountAddressesPage.addressesTable.newButton.click();
+			await editAccountAddressPage.addAddress(billingAddress);
+
+			await expect(
+				accountAddressesPage.addressesTable.valueLink(
+					billingAddress.name
+				)
+			).toBeVisible();
+			await expect(
+				await accountAddressesPage.rowSubtypeCell(
+					billingAddress.name,
+					picklistItemBilling1
+				)
+			).toHaveCount(1);
+
+			await accountAddressesPage.addressesTable
+				.valueLink(billingAddress.name)
+				.click();
+
+			await expect(editAccountAddressPage.subtypeInput).toHaveValue(
+				billingAddress.subtype
+			);
+
+			await editAccountAddressPage.backButton.click();
+			await accountAddressesPage.addressesTable.newButton.click();
+			await editAccountAddressPage.addAddress(billingAndShippingAddress);
+
+			await expect(
+				accountAddressesPage.addressesTable.valueLink(
+					billingAndShippingAddress.name
+				)
+			).toBeVisible();
+			await expect(
+				await accountAddressesPage.rowSubtypeCell(
+					billingAndShippingAddress.name,
+					picklistItemBillingAndShipping1
+				)
+			).toHaveCount(1);
+
+			await accountAddressesPage.addressesTable
+				.valueLink(billingAndShippingAddress.name)
+				.click();
+
+			await expect(editAccountAddressPage.subtypeInput).toHaveValue(
+				billingAndShippingAddress.subtype
+			);
+
+			await editAccountAddressPage.backButton.click();
+			await accountAddressesPage.addressesTable.newButton.click();
+			await editAccountAddressPage.addAddress(shippingAddress);
+
+			await expect(
+				accountAddressesPage.addressesTable.valueLink(
+					shippingAddress.name
+				)
+			).toBeVisible();
+			await expect(
+				await accountAddressesPage.rowSubtypeCell(
+					shippingAddress.name,
+					picklistItemShipping1
+				)
+			).toHaveCount(1);
+
+			await accountAddressesPage.addressesTable
+				.valueLink(shippingAddress.name)
+				.click();
+
+			await expect(editAccountAddressPage.subtypeInput).toHaveValue(
+				shippingAddress.subtype
+			);
+
+			await editAccountAddressPage.backButton.click();
+			await accountAddressesPage.addressesTable
+				.valueLink(shippingAddress.name)
+				.click();
+			await editAccountAddressPage.typeInput.selectOption('Billing');
+			await editAccountAddressPage.subtypeInput.fill(
+				picklistItemBilling1
+			);
+			await editAccountAddressPage
+				.subtypeMenuItem(picklistItemBilling1)
+				.click();
+			await editAccountAddressPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await expect(
+				await accountAddressesPage.rowSubtypeCell(
+					shippingAddress.name,
+					picklistItemBilling1
+				)
+			).toHaveCount(1);
+		}
+		finally {
+			await accountInstanceSettingsAccountAddressSubtypePage.setAddressSubtypeExternalReferenceCodes();
+			await accountsPage.goto();
+			await accountsPage.accountsTable.valueLink(account.name).click();
+			await editAccountPage.addressesTab.click();
+			await accountAddressesPage.addressesTable
+				.valueLink(shippingAddress.name)
+				.click();
+
+			await expect(editAccountAddressPage.subtypeInput).toBeDisabled();
+		}
+	}
+);

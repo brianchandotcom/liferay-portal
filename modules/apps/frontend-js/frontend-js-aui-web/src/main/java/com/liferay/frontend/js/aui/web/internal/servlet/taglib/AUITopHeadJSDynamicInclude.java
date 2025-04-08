@@ -98,7 +98,8 @@ public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 		for (String resourcePath : _FILE_NAMES_AUI_CORE) {
 			allJSResourcePaths.add(
 				_servletContext.getContextPath() + resourcePath);
-			jsResourcePaths.add(_servletContext.getContextPath() + resourcePath);
+			jsResourcePaths.add(
+				_servletContext.getContextPath() + resourcePath);
 		}
 
 		if (auiConfiguration.enableAUIPreload()) {
@@ -139,8 +140,7 @@ public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 		String comboURL = comboRequestAbsolutePortalURLBuilder.build();
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
-		StringBundler
-		 sb = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		for (String url : urls) {
 			if ((sb.length() + url.length() + 1) >= 2000) {

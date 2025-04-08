@@ -29,3 +29,7 @@ html#{$cadmin-selector} {
 		z-index: $alloyEditorZIndex;
 	}
 }
+
+.cke_dialog_contents_body {
+	min-width: 20rem;
+}

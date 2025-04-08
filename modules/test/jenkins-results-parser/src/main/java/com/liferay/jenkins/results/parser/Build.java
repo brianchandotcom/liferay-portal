@@ -283,6 +283,10 @@ public interface Build {
 			return _queueId;
 		}
 
+		public ReinvokeRule getReinvokeRule() {
+			return _reinvokeRule;
+		}
+
 		public void setBuildURL(String buildURL) {
 			_buildURL = buildURL;
 		}
@@ -295,10 +299,15 @@ public interface Build {
 			_queueId = queueId;
 		}
 
+		public void setReinvokeRule(ReinvokeRule reinvokeRule) {
+			_reinvokeRule = reinvokeRule;
+		}
+
 		private final Build _build;
 		private String _buildURL;
 		private JenkinsMaster _jenkinsMaster;
 		private long _queueId;
+		private ReinvokeRule _reinvokeRule;
 
 	}
 

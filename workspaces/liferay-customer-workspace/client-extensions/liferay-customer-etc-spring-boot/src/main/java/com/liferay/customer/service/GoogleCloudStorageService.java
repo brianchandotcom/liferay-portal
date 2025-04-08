@@ -13,7 +13,7 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
@@ -37,13 +37,13 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @author Amos Fong
  */
 @Component
-public class GoogleCloudStorageService extends BaseRestController {
+public class GoogleCloudStorageService extends BaseService {
 
 	public void deleteObject(String bucketName, String objectName)
 		throws Exception {
 
 		delete(
-			"Bearer " + _getAccessToken(), null,
+			"Bearer " + _getAccessToken(), "",
 			StringBundler.concat(
 				"/storage/v1/b/", bucketName, "/o/", objectName));
 	}

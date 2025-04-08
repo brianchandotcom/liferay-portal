@@ -5,7 +5,7 @@
 
 package com.liferay.customer.service;
 
-import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.petra.string.StringBundler;
 
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  * @author Amos Fong
  */
 @Component
-public class TicketAttachmentService extends BaseRestController {
+public class TicketAttachmentService extends BaseService {
 
 	public TicketAttachment addTicketAttachment(
 			Jwt jwt, String accountKey, String externalReferenceCode,
@@ -95,7 +95,7 @@ public class TicketAttachmentService extends BaseRestController {
 		throws Exception {
 
 		delete(
-			"Bearer " + jwt.getTokenValue(), null,
+			"Bearer " + jwt.getTokenValue(), "",
 			"/o/c/ticketattachments/" + ticketAttachmentId);
 	}
 

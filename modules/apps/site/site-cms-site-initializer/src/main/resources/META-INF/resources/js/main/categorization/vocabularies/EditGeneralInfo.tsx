@@ -48,6 +48,11 @@ export default function EditGeneralInfo({
 }) {
 	const [languageId, setLanguageId] = useState<string>(defaultLanguageId);
 	const [toggled, setToggle] = useState<boolean>(true);
+	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
+
+	const assetLibraries = selectedSpaces.map((number) => ({
+		id: number,
+	}));
 
 	const getLanguageLabel = (languageId: string) => {
 		return languageId.replace('_', '-');
@@ -81,7 +86,10 @@ export default function EditGeneralInfo({
 
 		onChangeVocabulary(() => ({
 			...vocabulary,
-			...(languageId === defaultLanguageId && {name: newName}),
+			...(languageId === defaultLanguageId && {
+				name: newName,
+				siteId: assetLibraries,
+			}),
 			name_i18n: {
 				...vocabulary.name_i18n,
 				[getLanguageLabel(languageId)]: newName,
@@ -202,7 +210,10 @@ export default function EditGeneralInfo({
 					{Liferay.Language.get('space')}
 				</div>
 
-				<CategorizationSpaces checkboxText="vocabulary" />
+				<CategorizationSpaces
+					checkboxText="vocabulary"
+					setSelectedSpaces={setSelectedSpaces}
+				/>
 			</ClayForm.Group>
 		</div>
 	);

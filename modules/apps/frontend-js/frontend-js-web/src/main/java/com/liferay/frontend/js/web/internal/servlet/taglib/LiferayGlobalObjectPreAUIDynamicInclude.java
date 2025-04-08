@@ -96,29 +96,29 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		printWriter.print(" data-senna-track=\"temporary\"");
 		printWriter.println(" type=\"text/javascript\">");
 
-		StringBuilder definitionSB = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
 		try {
-			_renderLiferayAUI(definitionSB, httpServletRequest);
-			_renderLiferayBrowser(definitionSB, httpServletRequest);
-			_renderLiferayData(definitionSB, httpServletRequest);
-			_renderLiferayFeatureFlags(definitionSB, httpServletRequest);
-			_renderLiferayLanguage(definitionSB);
-			_renderLiferayPortlet(definitionSB);
-			_renderLiferayPortletKeys(definitionSB);
-			_renderLiferayPropsValues(definitionSB, httpServletRequest);
-			_renderLiferayThemeDisplay(definitionSB, httpServletRequest);
-			_renderLiferayUtil(definitionSB);
+			_renderLiferayAUI(sb, httpServletRequest);
+			_renderLiferayBrowser(sb, httpServletRequest);
+			_renderLiferayData(sb, httpServletRequest);
+			_renderLiferayFeatureFlags(sb, httpServletRequest);
+			_renderLiferayLanguage(sb);
+			_renderLiferayPortlet(sb);
+			_renderLiferayPortletKeys(sb);
+			_renderLiferayPropsValues(sb, httpServletRequest);
+			_renderLiferayThemeDisplay(sb, httpServletRequest);
+			_renderLiferayUtil(sb);
 
 			_renderValue(
-				definitionSB, "authToken",
+				sb, "authToken",
 				_authToken.getToken(httpServletRequest));
 
 			String currentURL = _portal.getCurrentURL(httpServletRequest);
 
-			_renderValue(definitionSB, "currentURL", currentURL);
+			_renderValue(sb, "currentURL", currentURL);
 			_renderValue(
-				definitionSB, "currentURLEncoded",
+				sb, "currentURLEncoded",
 				HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)));
 		}
 		catch (PortalException portalException) {
@@ -132,7 +132,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			StringUtil.replace(
 				_LIFERAY_TPL, new String[] {"[$DEFINITION$]", "[$DEV_MODE$]"},
 				new Object[] {
-					definitionSB, requestURL.startsWith("http://localhost")
+					sb, requestURL.startsWith("http://localhost")
 				}));
 
 		printWriter.println("</script>");

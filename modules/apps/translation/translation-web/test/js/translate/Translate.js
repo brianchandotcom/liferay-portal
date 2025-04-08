@@ -45,18 +45,6 @@ const baseProps = {
 					targetContentDir: 'ltr',
 					targetLanguageId: 'es_ES',
 				},
-				{
-					editorConfiguration: null,
-					html: false,
-					id: 'infoField--text--',
-					label: 'Text',
-					multiline: false,
-					sourceContent: ['mock text'],
-					sourceContentDir: 'ltr',
-					targetContent: ['mock text'],
-					targetContentDir: 'ltr',
-					targetLanguageId: 'es_ES',
-				},
 			],
 			legend: 'Basic Information',
 		},
@@ -91,6 +79,18 @@ const baseProps = {
 						'<p>mock target repeteable field 2</p>',
 						'<p>mock target repeteable field 3</p>',
 					],
+					targetContentDir: 'ltr',
+					targetLanguageId: 'es_ES',
+				},
+				{
+					editorConfiguration: null,
+					html: false,
+					id: 'infoField--text--',
+					label: 'Text',
+					multiline: false,
+					sourceContent: ['mock text'],
+					sourceContentDir: 'ltr',
+					targetContent: ['mock text'],
 					targetContentDir: 'ltr',
 					targetLanguageId: 'es_ES',
 				},
@@ -264,21 +264,11 @@ describe('Translate', () => {
 
 			// LPS-133164
 
-			it('updates the input of a non-html field with the translated message with unescaped characters', () => {
+			it('updates the `Title` input of a non-html field with the translated message with unescaped characters', () => {
 				const {getByDisplayValue} = result;
 
 				expect(
 					getByDisplayValue("título simulado'")
-				).toBeInTheDocument();
-			});
-
-			// LPD-52521
-
-			it('updates the input with the translated message with HTML unescaped character', () => {
-				const {getByDisplayValue} = result;
-
-				expect(
-					getByDisplayValue('Esto es un "texto de ejemplo"')
 				).toBeInTheDocument();
 			});
 
@@ -303,11 +293,23 @@ describe('Translate', () => {
 				});
 			});
 
-			it('updates the input with the translated message with HTML unescaped character', () => {
+			// LPS-133164
+
+			it('updates the `Title` input with a translated message containing unescaped HTML characters', () => {
 				const {getByDisplayValue} = result;
 
 				expect(
 					getByDisplayValue("título simulado'")
+				).toBeInTheDocument();
+			});
+
+			// LPD-52521
+
+			it('updates the `Text` input with a translated message containing unescaped HTML characters', () => {
+				const {getByDisplayValue} = result;
+
+				expect(
+					getByDisplayValue('Esto es un "texto de ejemplo"')
 				).toBeInTheDocument();
 			});
 

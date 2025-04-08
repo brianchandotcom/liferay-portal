@@ -12,13 +12,12 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
-import com.liferay.headless.object.dto.v1_0.ParentObjectEntryFolderBrief;
 import com.liferay.headless.object.internal.odata.entity.v1_0.ObjectEntryFolderEntityModel;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -238,9 +237,7 @@ public class ObjectEntryFolderResourceImpl
 
 		return _addObjectEntryFolder(
 			groupId,
-			_getParentObjectEntryFolderId(
-				false, objectEntryFolder.getParentObjectEntryFolderBrief(),
-				groupId),
+			_getParentObjectEntryFolderId(false, objectEntryFolder, groupId),
 			objectEntryFolder);
 	}
 
@@ -265,18 +262,14 @@ public class ObjectEntryFolderResourceImpl
 		if (persistedObjectEntryFolder == null) {
 			return _addObjectEntryFolder(
 				groupId,
-				_getParentObjectEntryFolderId(
-					true, objectEntryFolder.getParentObjectEntryFolderBrief(),
-					groupId),
+				_getParentObjectEntryFolderId(true, objectEntryFolder, groupId),
 				objectEntryFolder);
 		}
 
 		return _toObjectEntryFolder(
 			_objectEntryFolderService.updateObjectEntryFolder(
 				persistedObjectEntryFolder.getObjectEntryFolderId(),
-				_getParentObjectEntryFolderId(
-					true, objectEntryFolder.getParentObjectEntryFolderBrief(),
-					groupId),
+				_getParentObjectEntryFolderId(true, objectEntryFolder, groupId),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					objectEntryFolder.getLabel(),
@@ -323,61 +316,64 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	private long _getParentObjectEntryFolderId(
-			boolean addObjectEntryFolder,
-			ParentObjectEntryFolderBrief parentObjectEntryFolderBrief,
+			boolean addObjectEntryFolder, ObjectEntryFolder objectEntryFolder,
 			long groupId)
 		throws Exception {
 
-		long parentObjectEntryFolderId = 0;
+		String parentObjectEntryFolderExternalReferenceCode =
+			objectEntryFolder.getParentObjectEntryFolderExternalReferenceCode();
 
-		if (parentObjectEntryFolderBrief == null) {
-			return parentObjectEntryFolderId;
-		}
+		Long parentObjectEntryFolderId =
+			objectEntryFolder.getParentObjectEntryFolderId();
 
-		parentObjectEntryFolderId = GetterUtil.getLong(
-			parentObjectEntryFolderBrief.getId());
-
-		if (parentObjectEntryFolderId > 0) {
-			return parentObjectEntryFolderId;
-		}
-
-		if (Validator.isNotNull(
-				parentObjectEntryFolderBrief.getExternalReferenceCode())) {
-
-			com.liferay.object.model.ObjectEntryFolder
-				objectEntryFolderPersistence =
-					_objectEntryFolderService.
-						fetchObjectEntryFolderByExternalReferenceCode(
-							parentObjectEntryFolderBrief.
-								getExternalReferenceCode(),
-							groupId, contextUser.getCompanyId());
-
-			if (objectEntryFolderPersistence != null) {
-				return objectEntryFolderPersistence.getObjectEntryFolderId();
+		if (Validator.isNull(parentObjectEntryFolderExternalReferenceCode)) {
+			if (parentObjectEntryFolderId == null) {
+				return ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
 			}
 
+			if (parentObjectEntryFolderId > ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+				_objectEntryFolderService.getObjectEntryFolder(
+					parentObjectEntryFolderId);
+			}
+
+			return parentObjectEntryFolderId;
+		}
+
+		com.liferay.object.model.ObjectEntryFolder
+			objectEntryFolderPersistence =
+				_objectEntryFolderService.
+					fetchObjectEntryFolderByExternalReferenceCode(
+						parentObjectEntryFolderExternalReferenceCode, groupId,
+						contextUser.getCompanyId());
+
+		if ((parentObjectEntryFolderId != null) &&
+			((objectEntryFolderPersistence == null) ||
+			 (objectEntryFolderPersistence.getObjectEntryFolderId() !=
+				 parentObjectEntryFolderId))) {
+
+			throw new NoSuchObjectEntryFolderException();
+		}
+
+		if (objectEntryFolderPersistence == null) {
 			if (!addObjectEntryFolder) {
-				throw new NoSuchModelException();
+				throw new NoSuchObjectEntryFolderException();
 			}
 
 			objectEntryFolderPersistence =
 				_objectEntryFolderService.addObjectEntryFolder(
-					parentObjectEntryFolderBrief.getExternalReferenceCode(),
-					groupId, 0,
-					LocalizedMapUtil.getLocalizedMap(
-						contextAcceptLanguage.getPreferredLocale(),
-						parentObjectEntryFolderBrief.getLabel(),
-						parentObjectEntryFolderBrief.getLabel_i18n()),
-					parentObjectEntryFolderBrief.getName(),
+					parentObjectEntryFolderExternalReferenceCode, groupId,
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					null, parentObjectEntryFolderExternalReferenceCode,
 					ServiceContextBuilder.create(
 						groupId, contextHttpServletRequest, null
 					).build());
-
-			parentObjectEntryFolderId =
-				objectEntryFolderPersistence.getObjectEntryFolderId();
 		}
 
-		return parentObjectEntryFolderId;
+		return objectEntryFolderPersistence.getObjectEntryFolderId();
 	}
 
 	private ObjectEntryFolder _patchObjectEntryFolder(
@@ -394,10 +390,12 @@ public class ObjectEntryFolderResourceImpl
 		}
 
 		long parentObjectEntryFolderId = _getParentObjectEntryFolderId(
-			false, objectEntryFolder.getParentObjectEntryFolderBrief(),
-			persistedObjectEntryFolder.getGroupId());
+			false, objectEntryFolder, persistedObjectEntryFolder.getGroupId());
 
-		if (parentObjectEntryFolderId == 0) {
+		if (parentObjectEntryFolderId ==
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
 			parentObjectEntryFolderId =
 				persistedObjectEntryFolder.getObjectEntryFolderId();
 		}

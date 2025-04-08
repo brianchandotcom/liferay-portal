@@ -6,10 +6,11 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
-import {openConfirmModal, openToast} from 'frontend-js-components-web';
-import {fetch, navigate, sub} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
 import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
 import CategorizationSpaces from '../components/CategorizationSpaces';
@@ -17,15 +18,17 @@ import CategorizationSpaces from '../components/CategorizationSpaces';
 export default function EditTagsModalContent({
 	assetLibraries,
 	closeModal,
+	editTagURL,
+	loadData,
 	tagId,
 	tagName,
-	tagsURL,
 }: {
 	assetLibraries: any;
 	closeModal: () => void;
+	editTagURL: string;
+	loadData: () => {};
 	tagId: number;
 	tagName: string;
-	tagsURL: string;
 }) {
 	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
 	const [spaceChange, setSpaceChange] = useState(false);
@@ -35,51 +38,23 @@ export default function EditTagsModalContent({
 	}));
 
 	const updateTag = (values: any) => {
-		const url = '/o/headless-admin-taxonomy/v1.0/keywords/' + tagId;
-
 		const body = {
 			assetLibraries: assetLibraryIds,
 			name: values.tagName,
 		};
 
-		return fetch(url, {
-			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
+		executeAsyncItemAction({
 			method: 'PUT',
-		})
-			.then((response) => {
-				if (response.ok) {
-					openToast({
-						autoClose: true,
-						message: Liferay.Language.get(
-							'your-request-completed-successfully'
-						),
-						title: Liferay.Language.get('success'),
-						type: 'success',
-					});
-				}
-				else {
-					openToast({
-						message: Liferay.Language.get(
-							'an-unexpected-error-occurred'
-						),
-						title: Liferay.Language.get('error'),
-						type: 'danger',
-					});
-				}
-			})
-			.catch(() => {
-				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
-					title: Liferay.Language.get('error'),
-					type: 'danger',
-				});
-			});
+			refreshData: loadData,
+			requestBody: JSON.stringify(body),
+			successMessage: sub(
+				Liferay.Language.get('x-was-updated-successfully'),
+				`<strong>${Liferay.Util.escapeHTML(tagName)}</strong>`
+			),
+			url: editTagURL,
+		});
+
+		closeModal();
 	};
 
 	const {errors, handleChange, handleSubmit, touched, values} = useFormik({
@@ -152,11 +127,7 @@ export default function EditTagsModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton
-							displayType="primary"
-							onClick={() => navigate(tagsURL)}
-							type="submit"
-						>
+						<ClayButton displayType="primary" type="submit">
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

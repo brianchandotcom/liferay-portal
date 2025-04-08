@@ -70,13 +70,8 @@ public class ObjectEntryFolderAssetRendererFactory
 
 	@Override
 	public boolean isSearchable() {
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
-
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled(
+			CompanyThreadLocal.getCompanyId(), "LPD-17564");
 	}
 
 	@Reference

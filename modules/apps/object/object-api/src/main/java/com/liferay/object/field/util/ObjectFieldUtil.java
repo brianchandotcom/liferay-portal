@@ -206,7 +206,9 @@ public class ObjectFieldUtil {
 		else if ((value.length() == 27) && (value.charAt(26) == 'M')) {
 			return "dd-MMM-yyyy hh:mm:ss.SSS a";
 		}
-		else if ((value.length() == 28) && (value.charAt(23) == '+')) {
+		else if ((value.length() == 28) &&
+				 ((value.charAt(23) == '+') || (value.charAt(23) == '-'))) {
+
 			return "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 		}
 		else if (value.length() == 28) {

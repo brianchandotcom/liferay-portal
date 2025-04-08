@@ -149,6 +149,12 @@ public interface KaleoLogLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public KaleoLog addWorkflowInstanceFailKaleoLog(
+			KaleoInstanceToken kaleoInstanceToken, String comment,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public KaleoLog addWorkflowInstanceStartKaleoLog(
 			KaleoInstanceToken kaleoInstanceToken,
 			ServiceContext serviceContext)

@@ -187,6 +187,18 @@ public class KaleoLogLocalServiceWrapper
 	}
 
 	@Override
+	public KaleoLog addWorkflowInstanceFailKaleoLog(
+			com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken
+				kaleoInstanceToken,
+			String comment,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoLogLocalService.addWorkflowInstanceFailKaleoLog(
+			kaleoInstanceToken, comment, serviceContext);
+	}
+
+	@Override
 	public KaleoLog addWorkflowInstanceStartKaleoLog(
 			com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken
 				kaleoInstanceToken,

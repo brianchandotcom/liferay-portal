@@ -93,10 +93,6 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 				"text/plain", _TEST_FILE_CONTENT.getBytes(), null, null, null,
 				new ServiceContext());
 
-			autoCloseables.add(
-				() -> _dlAppLocalService.deleteFileEntry(
-					fileEntry.getFileEntryId()));
-
 			String previewURL = _dlURLHelper.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, "", false, false);
 

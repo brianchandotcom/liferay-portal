@@ -22,7 +22,6 @@ export const CORE_USER_ACCOUNT_FIELDS = gql`
 		isLiferayStaff @client
 		isLoggedUser @client
 		isPartner @client
-		isProvisioning @client
 		lastLoginDate
 		name
 		organizationBriefs {

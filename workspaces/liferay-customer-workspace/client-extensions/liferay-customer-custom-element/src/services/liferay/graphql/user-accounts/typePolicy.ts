@@ -63,14 +63,6 @@ export const userAccountsTypePolicy = {
 					);
 				},
 			},
-			isProvisioning: {
-				read(_: unknown, {readField}: {readField: Function}): boolean {
-					return !!(readField('roleBriefs') as any[]).some(
-						(roleBrief: any) =>
-							readField('name', roleBrief) === 'Provisioning'
-					);
-				},
-			},
 			selectedAccountSummary: {
 				read(
 					_: unknown,

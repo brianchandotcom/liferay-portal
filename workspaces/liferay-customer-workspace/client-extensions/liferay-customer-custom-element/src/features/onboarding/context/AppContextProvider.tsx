@@ -83,21 +83,9 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 						)
 				);
 
-				const isAccountProvisioning = Boolean(
-					data.userAccount?.accountBriefs
-						?.find(
-							({
-								externalReferenceCode,
-							}: {
-								externalReferenceCode: string;
-							}) =>
-								externalReferenceCode ===
-								projectExternalReferenceCode
-						)
-						?.roleBriefs?.find(
-							({name}: {name: string}) => name === 'Provisioning'
-						)
-				);
+				const isAccountProvisioning = data.userAccount.roleBriefs?.find(
+                	({name}: {name: string}) => name === 'Provisioning Admin' || name === 'Provisioning Member'
+                );
 
 				const isOmniAdmin = Boolean(
 					data.userAccount?.roleBriefs?.find(

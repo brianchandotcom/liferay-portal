@@ -111,7 +111,7 @@ const ActivationStatusAnalyticsCloud = () => {
 			title: i18n.translate('analytics-cloud-activation'),
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
-			dropdownIcon: (userAccount.isStaff ||
+			dropdownIcon: (userAccount.isStaff &&
 				userAccount.isProvisioning) && (
 				<ButtonDropDown
 					align={Align.BottomRight}

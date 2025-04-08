@@ -245,8 +245,7 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry2.getExternalReferenceCode(),
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				_objectDefinition1.getName(), file),
+			_getExternalReferenceCodesJSON(_objectDefinition1.getName(), file),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -262,8 +261,7 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				_objectDefinition2.getName(), file),
+			_getExternalReferenceCodesJSON(_objectDefinition2.getName(), file),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -282,15 +280,13 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntry2.getExternalReferenceCode(),
 				_objectEntry3.getExternalReferenceCode()
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				_objectDefinition1.getName(), file),
+			_getExternalReferenceCodesJSON(_objectDefinition1.getName(), file),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				_objectDefinition2.getName(), file),
+			_getExternalReferenceCodesJSON(_objectDefinition2.getName(), file),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -453,8 +449,7 @@ public class BatchEnginePortletDataHandlerTest {
 		return parameterMap;
 	}
 
-	private String _getExternalReferenceCodesJSON(
-			String className, File file)
+	private String _getExternalReferenceCodesJSON(String className, File file)
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(file)) {

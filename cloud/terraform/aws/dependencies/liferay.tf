@@ -1,7 +1,7 @@
-data "aws_caller_identity" "current" {}
-
-data "aws_region" "current" {}
-
+data "aws_caller_identity" "current" {    
+}
+data "aws_region" "current" {
+}
 module "s3_bucket" {
 	block_public_acls=true
 	block_public_policy=true
@@ -20,7 +20,6 @@ module "s3_bucket" {
 	source="terraform-aws-modules/s3-bucket/aws"
 	version="~> 4.1.1"
 }
-
 resource "aws_db_instance" "postgres" {
 	allocated_storage=20
 	backup_retention_period=7
@@ -40,13 +39,11 @@ resource "aws_db_instance" "postgres" {
 	username=random_password.postgres_username.result
 	vpc_security_group_ids=[var.cluster_security_group_id]
 }
-
 resource "aws_db_subnet_group" "rds" {
 	description="My RDS subnet group"
 	name="${var.deployment_name}-rds-sub-grp"
 	subnet_ids=var.private_subnet_ids
 }
-
 resource "aws_iam_policy" "s3" {
 	name="${var.deployment_name}-s3-policy"
 	description="Policy for accessing the Liferay S3 bucket"

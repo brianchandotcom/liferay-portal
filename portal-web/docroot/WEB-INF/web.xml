@@ -161,6 +161,9 @@
 			<url-pattern>/ms/c/portal/protected</url-pattern>
 			<url-pattern>/ms-MY/c/portal/protected</url-pattern>
 			<url-pattern>/ms_MY/c/portal/protected</url-pattern>
+			<url-pattern>/my/c/portal/protected</url-pattern>
+			<url-pattern>/my-MM/c/portal/protected</url-pattern>
+			<url-pattern>/my_MM/c/portal/protected</url-pattern>
 			<url-pattern>/nb/c/portal/protected</url-pattern>
 			<url-pattern>/nb-NO/c/portal/protected</url-pattern>
 			<url-pattern>/nb_NO/c/portal/protected</url-pattern>

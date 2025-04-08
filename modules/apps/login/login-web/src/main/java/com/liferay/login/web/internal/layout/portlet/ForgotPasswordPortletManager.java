@@ -23,11 +23,7 @@ public class ForgotPasswordPortletManager implements PortletManager {
 
 	@Override
 	public boolean isVisible(Layout layout) {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled("LPD-6378");
 	}
 
 }

@@ -87,7 +87,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_assertCount("PortalPreferences", true, "ownerType", "ownerId");
 
-		IndexUpdaterUtil.updateAllIndexes();
+		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndex("PortalPreferences", "IX_D1846D13");
 
@@ -127,7 +127,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		_assertCount(
 			"PortletItem", true, "groupId", "classNameId", "portletId", "name");
 
-		IndexUpdaterUtil.updateAllIndexes();
+		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndex("PortletItem", "IX_C6246ECD");
 
@@ -177,7 +177,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 			"SocialActivitySetting", true, "groupId", "classNameId",
 			"activityType", "name", "ctCollectionId");
 
-		IndexUpdaterUtil.updateAllIndexes();
+		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndex("SocialActivitySetting", "IX_4FC6CD18");
 		socialActivitySetting.setActivitySettingId(1);
@@ -207,7 +207,7 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 
 		_assertCount("Ticket", true, "key_");
 
-		IndexUpdaterUtil.updateAllIndexes();
+		IndexUpdaterUtil.updatePortalIndexes();
 
 		_assertIndex("Ticket", "IX_B2468446");
 

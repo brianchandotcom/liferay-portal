@@ -303,11 +303,17 @@ public class BatchEnginePortletDataHandlerTest {
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
 
+		// Export deletions
+
 		File file = _exportLayouts(true, _objectDefinition1);
 
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
 
+		// Import to recreate deleted object entries
+
 		_importLayouts();
+
+		// Import deletions
 
 		_importLayouts(false, file, _objectDefinition1);
 

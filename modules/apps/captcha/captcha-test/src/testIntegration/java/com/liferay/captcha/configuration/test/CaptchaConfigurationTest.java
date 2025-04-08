@@ -52,25 +52,15 @@ public class CaptchaConfigurationTest {
 
 	@Test
 	public void test() throws Exception {
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						CaptchaConfiguration.class.getName(),
-						new HashMapDictionaryBuilder(
-						).<String, Object>put(
-							"createAccountCaptchaEnabled", true
-						).build());
-			ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					CaptchaConfiguration.class.getName(),
-					new HashMapDictionaryBuilder(
-					).<String, Object>put(
-						"createAccountCaptchaEnabled", false
-					).build())) {
+		_assertIsCaptchaRendered(true, true, false);
+		_assertIsCaptchaRendered(false, false, true);
+	}
 
-			Assert.assertTrue(_isCaptchaRendered());
-		}
+	private void _assertIsCaptchaRendered(
+			boolean expectedCaptchaRendered,
+			boolean instanceSettingsCreateAccountCaptchaEnabled,
+			boolean systemSettingsCreateAccountCaptchaEnabled)
+		throws Exception {
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -79,17 +69,19 @@ public class CaptchaConfigurationTest {
 						CaptchaConfiguration.class.getName(),
 						new HashMapDictionaryBuilder(
 						).<String, Object>put(
-							"createAccountCaptchaEnabled", false
+							"createAccountCaptchaEnabled",
+							instanceSettingsCreateAccountCaptchaEnabled
 						).build());
 			ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					CaptchaConfiguration.class.getName(),
 					new HashMapDictionaryBuilder(
 					).<String, Object>put(
-						"createAccountCaptchaEnabled", true
+						"createAccountCaptchaEnabled",
+						systemSettingsCreateAccountCaptchaEnabled
 					).build())) {
 
-			Assert.assertFalse(_isCaptchaRendered());
+			Assert.assertEquals(expectedCaptchaRendered, _isCaptchaRendered());
 		}
 	}
 

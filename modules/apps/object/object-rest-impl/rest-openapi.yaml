@@ -148,6 +148,9 @@ components:
                     type: string
                 status:
                     $ref: "#/components/schemas/Status"
+                systemProperties:
+                    $ref: "#/components/schemas/SystemProperties"
+                    readOnly: true
                 taxonomyCategoryBriefs:
                     description:
                         The categories associated with this object entry.
@@ -164,8 +167,6 @@ components:
                         type: integer
                     type: array
                     writeOnly: true
-                version:
-                    $ref: "#/components/schemas/Version"
             type: object
         Scope:
             properties:
@@ -186,6 +187,11 @@ components:
                     type: string
             required:
                 -   code
+            type: object
+        SystemProperties:
+            properties:
+                version:
+                    $ref: "#/components/schemas/Version"
             type: object
         TaxonomyCategoryBrief:
             properties:

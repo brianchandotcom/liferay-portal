@@ -359,6 +359,7 @@ public class ObjectEntryFolderResourceTest
 		try {
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				randomObjectEntryFolder);
+
 			Assert.fail();
 		}
 		catch (Problem.ProblemException problemException) {

@@ -387,7 +387,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				sb.append("</span>");
 			}
 
-			sb.append("',type:'warning'},");
+			sb.append("', type: 'warning'},");
 		}
 
 		sb.append("],");

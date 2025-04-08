@@ -432,14 +432,9 @@ public class LDAPServerConfigurationProviderImpl
 		Dictionary<String, Object> oldProperties =
 			configuration.getProperties();
 
-		if (Arrays.equals(
-				GetterUtil.getStringValues(oldProperties.get(key)),
-				GetterUtil.getStringValues(properties.get(key)))) {
-
-			return false;
-		}
-
-		return true;
+		return !Arrays.equals(
+			GetterUtil.getStringValues(oldProperties.get(key)),
+			GetterUtil.getStringValues(properties.get(key)));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

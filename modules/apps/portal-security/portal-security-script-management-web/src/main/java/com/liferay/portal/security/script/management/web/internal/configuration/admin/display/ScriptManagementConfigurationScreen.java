@@ -53,11 +53,7 @@ public class ScriptManagementConfigurationScreen
 
 	@Override
 	public boolean isVisible() {
-		if (PropsValues.SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED) {
-			return true;
-		}
-
-		return false;
+		return PropsValues.SCRIPT_MANAGEMENT_CONFIGURATION_ENABLED;
 	}
 
 	@Override

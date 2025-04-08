@@ -44,11 +44,7 @@ public class DefaultAuditRouter implements AuditRouter {
 	public boolean isDeployed() {
 		Set<String> keys = _serviceTrackerMap.keySet();
 
-		if (keys.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !keys.isEmpty();
 	}
 
 	@Override

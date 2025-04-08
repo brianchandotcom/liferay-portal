@@ -735,11 +735,7 @@ public class QuartzSchedulerEngineTest {
 
 		@Override
 		public boolean isShutdown() {
-			if (!_ready) {
-				return true;
-			}
-
-			return false;
+			return !_ready;
 		}
 
 		@Override

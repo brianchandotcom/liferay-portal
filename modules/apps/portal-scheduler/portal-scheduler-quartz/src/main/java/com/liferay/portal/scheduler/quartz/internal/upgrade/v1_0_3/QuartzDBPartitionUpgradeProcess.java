@@ -32,11 +32,7 @@ public class QuartzDBPartitionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected boolean isSkipUpgradeProcess() {
-		if (!DBPartition.isPartitionEnabled()) {
-			return true;
-		}
-
-		return false;
+		return !DBPartition.isPartitionEnabled();
 	}
 
 	private void _addIndex(String createIndexSQLStatement) throws Exception {

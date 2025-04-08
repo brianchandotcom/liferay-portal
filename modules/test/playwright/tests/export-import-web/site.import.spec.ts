@@ -24,6 +24,7 @@ import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
+import {HomePage} from '../../pages/portal-web/HomePage';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
@@ -55,6 +56,17 @@ export const test = mergeTests(
 	wikiPagesTest
 );
 
+export const testWithStagingInInstanceFF = mergeTests(
+	applicationsMenuPageTest,
+	companyExportImportPageTest,
+	exportImportPagesTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-35914': {enabled: true, system: true},
+	}),
+	loginTest()
+);
+
 async function getSiteHomePageScreenshot(
 	page: Page,
 	siteKey: string,
@@ -81,6 +93,63 @@ async function getSiteHomePageScreenshot(
 
 	return screenshot;
 }
+
+testWithStagingInInstanceFF(
+	'cannot import an instance scoped lar file',
+	async ({apiHelpers, companyExportImportPage, exportImportPage, page}) => {
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectActionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: 'test',
+				label: {
+					en_US: 'Test',
+				},
+				name: 'Test',
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'Name',
+						},
+						name: 'name',
+						required: true,
+					},
+				],
+				pluralLabel: {
+					en_US: 'Tests',
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const homePage = new HomePage(page);
+
+		const exportFilePath = await companyExportImportPage.export('Tests');
+
+		await homePage.goto();
+
+		await exportImportPage.goToImport();
+
+		await exportImportPage.createNewImportProcess(
+			exportFilePath,
+			'The LAR file contains one or more entities with a different scope.'
+		);
+	}
+);
 
 test(
 	'Make sure we do not export-import wikiNodes if they are not selected in the export configuration screen',

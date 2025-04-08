@@ -58,8 +58,6 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.adapter.util.ModelAdapterUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.site.model.adapter.StagedGroup;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -223,12 +221,8 @@ public class LayoutExportController implements ExportController {
 		Group group = _groupLocalService.fetchGroup(
 			portletDataContext.getGroupId());
 
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
 		headerElement.addAttribute(
-			"scope",
-			stagingGroupHelper.isCompanyGroup(group) ? "company" : "site");
+			"group-friendly-url", group.getFriendlyURL());
 
 		headerElement.addAttribute("export-date", Time.getRFC822());
 

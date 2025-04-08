@@ -45,8 +45,8 @@ resource "aws_db_subnet_group" "rds" {
 	subnet_ids=var.private_subnet_ids
 }
 resource "aws_iam_policy" "s3" {
-	name="${var.deployment_name}-s3-policy"
 	description="Policy for accessing the Liferay S3 bucket"
+    name="${var.deployment_name}-s3-policy"
 	policy=jsonencode(
 		{
 			Statement=[
@@ -73,7 +73,6 @@ resource "aws_iam_policy" "s3" {
 resource "aws_iam_role" "liferay" {
 	assume_role_policy=jsonencode(
 		{
-			Version="2012-10-17"
 			Statement=[
 				{
 					Action="sts:AssumeRoleWithWebIdentity"
@@ -88,6 +87,7 @@ resource "aws_iam_role" "liferay" {
 					}
 				}
 			]
+            Version="2012-10-17"
 		}
 	)
 	name="${var.deployment_name}-irsa"
@@ -101,7 +101,6 @@ resource "aws_iam_role_policy_attachment" "s3" {
 resource "aws_opensearch_domain" "os" {
 	access_policies=<<POLICY
 {
-	"Version": "2012-10-17",
 	"Statement": [
 		{
 			"Effect": "Allow",
@@ -111,7 +110,8 @@ resource "aws_opensearch_domain" "os" {
 			"Action": "es:*",
 			"Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.deployment_name}-os-d/*"
 		}
-	]
+	],
+    "Version": "2012-10-17"
 }
 POLICY
 	advanced_options={

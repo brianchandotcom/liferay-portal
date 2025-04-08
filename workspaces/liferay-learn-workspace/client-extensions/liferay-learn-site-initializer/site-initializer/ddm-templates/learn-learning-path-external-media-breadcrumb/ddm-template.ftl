@@ -7,11 +7,8 @@
 </script>
 
 <#if (ObjectEntry_objectEntryId.getData())??>
-	<#assign learningPathId = restClient
-		.get("/c/externalmedias/${ObjectEntry_objectEntryId.getData()}?fields=r_externalMedia_c_learningPathStep&nestedFields=learningPath%2C%20learningPathStep")
-		.r_externalMedia_c_learningPathStep
-		.r_learningPathSteps_c_learningPathId
-
+	<#assign
+		learningPathId = (themeDisplay.getURLCurrent())?matches("(?<=learning-path=)[^&]*")[0]
 		learningPathName = restClient.get("/c/learningpaths/${learningPathId}?fields=name").name
 	/>
 

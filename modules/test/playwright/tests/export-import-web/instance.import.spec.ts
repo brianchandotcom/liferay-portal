@@ -21,6 +21,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import getRandomString from '../../utils/getRandomString';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {readFileFromZip} from '../../utils/zip';
@@ -47,6 +48,34 @@ export const test = mergeTests(
 	stagingPageTest,
 	wikiPagesTest
 );
+
+test('cannot import a site scoped lar file', async ({
+	companyExportImportPage,
+	exportImportPage,
+}) => {
+	await exportImportPage.goToExport();
+
+	const taskName = 'MyExport-' + getRandomString();
+
+	await exportImportPage.createNewExportProcess(taskName);
+
+	await expect(
+		exportImportPage.page
+			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
+			.first()
+			.locator('../..')
+			.getByText('Successful')
+	).toBeVisible();
+
+	const exportFilePath =
+		await exportImportPage.downloadExportProcess(taskName);
+
+	await companyExportImportPage.import(
+		exportFilePath,
+		false,
+		'The LAR file contains one or more entities with a different scope.'
+	);
+});
 
 test('can export and import custom object entries at instance level', async ({
 	apiHelpers,

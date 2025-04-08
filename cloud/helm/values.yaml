@@ -67,14 +67,14 @@ initContainers:
                     -   /bin/sh
                     -   -c
                     -   |
-                            if [ -z "$(ls -A '/temp/liferay/data')" ]
+                            if [ ! -d /temp/liferay/data ] || [ -z "$(ls -A /temp/liferay/data)" ]
                             then
                                 mkdir -p /temp/liferay/data
 
                                 cp -frv /opt/liferay/data/* /temp/liferay/data
                             fi
 
-                            if [ ! -f /temp/liferay/data/license/*.li ]
+                            if [ ! -d /temp/liferay/data/license ] || [ ! -e /temp/liferay/data/license/*.li ]
                             then
                                 mkdir -p /temp/liferay/deploy
 

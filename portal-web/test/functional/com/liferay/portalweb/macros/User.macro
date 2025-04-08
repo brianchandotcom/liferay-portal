@@ -2410,26 +2410,6 @@ definition {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 	}
 
-	@description = "Log into OpenAM as ${userScreenName} using the password ${password}."
-	@summary = "Default summary"
-	macro loginUserWithOpenSSOEnabledPG(password = null, hostsURL = null, userScreenName = null) {
-		Navigator.openSpecificURL(url = ${hostsURL});
-
-		Navigator.gotoLoginPage();
-
-		Type(
-			locator1 = "TextInput#TEXT",
-			value1 = ${userScreenName});
-
-		Type(
-			locator1 = "TextInput#PASSWORD_TYPE",
-			value1 = ${password});
-
-		Click(locator1 = "OpenAM#LOG_IN");
-
-		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-	}
-
 	@summary = "Default summary"
 	macro logoutAndLoginPG(password = null, authenticationMethod = null, userScreenName = null, userLoginEmailAddress = null, nodePort = null, signOutLocalizationName = null) {
 		Navigator.openURL();

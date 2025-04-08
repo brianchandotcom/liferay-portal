@@ -254,77 +254,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-43015. Ignore test due to OpenAM 12 doesn't support Tomcat 9."
-	@ignore = "true"
-	@priority = 5
-	test OpenSSOSmoke {
-		property custom.properties = "javascript.single.page.application.enabled=false";
-		property dummy.socket.proxy.disabled = "true";
-		property openam.enabled = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Go to http://test.able.com:8080/openam and run ant command") {
-			Navigator.openSpecificURL(url = "http://test.able.com:8080/openam");
-
-			AntCommands.runCommand("build-test-openam.xml", "run-openam-tools");
-		}
-
-		task ("Wait for OpenAM setup") {
-			var pauseCount = 0;
-
-			while ((IsElementNotPresent(locator1 = "TextInput#TEXT")) && (${pauseCount} != 20)) {
-				Refresh();
-
-				// Wait for OpenAM configuration to finish. See LRQA-28959 for more details.
-
-				Pause(value1 = 30000);
-
-				var pauseCount = ${pauseCount} + 1;
-
-				echo("Pause count: ${pauseCount}");
-			}
-
-			if (${pauseCount} == 20) {
-				fail("OpenAM setup timed out after 10 minutes.");
-			}
-		}
-
-		task ("Login and configure open SSO") {
-			User.firstLoginPG();
-
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
-				configurationCategory = "SSO",
-				configurationName = "OpenSSO",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.configureOpenSSO(
-				openSsoLoginURL = "http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login",
-				openSsoLogoutURL = "http://test.able.com:8080/openam/UI/Logout?goto=http://www.able.com:8080/web/guest/home",
-				openSsoServiceURL = "http://test.able.com:8080/openam");
-		}
-
-		task ("Test SSO connection") {
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
-				configurationCategory = "SSO",
-				configurationName = "OpenSSO",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.testOpenSSOConnection();
-		}
-
-		task ("Logout and login with open SSO") {
-			User.logoutPG();
-
-			User.loginUserWithOpenSSOEnabledPG(
-				hostsURL = "http://www.able.com:8080",
-				password = "password",
-				userScreenName = "test");
-		}
-	}
-
 	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
 	@priority = 5
 	test RedirectToDefaultPortalLandingPageOnLogin {
@@ -392,7 +321,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-27619. Verify that LDAP and OpenSSO portlets are present at Instance Settings."
+	@description = "This is a use case for LRQA-27619. Verify that LDAP portlet is present at Instance Settings."
 	@priority = 5
 	test ViewInstanceSettingsAuthentication {
 		property osgi.app.includes = "portal-security-sso-openid";
@@ -407,10 +336,6 @@ definition {
 
 		task ("View LDAP CP authentication settings") {
 			PortalSettings.viewAuthenticationLDAPCP();
-		}
-
-		task ("View openSSO CP authentication settings") {
-			PortalSettings.viewAuthenticationOpenSSOCP();
 		}
 	}
 

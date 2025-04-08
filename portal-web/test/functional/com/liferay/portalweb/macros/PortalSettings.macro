@@ -273,25 +273,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureOpenSSO(openSsoServiceURL = null, openSsoLoginURL = null, openSsoLogoutURL = null) {
-		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX");
-
-		FormFields.editText(
-			fieldName = "loginURL",
-			fieldValue = ${openSsoLoginURL});
-
-		FormFields.editText(
-			fieldName = "logoutURL",
-			fieldValue = ${openSsoLogoutURL});
-
-		FormFields.editText(
-			fieldName = "serviceURL",
-			fieldValue = ${openSsoServiceURL});
-
-		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
 	macro configureRatingType(ratingType = null, configureBlogsRatingType = null, configureKbRatingType = null) {
 		if (${configureBlogsRatingType} == "true") {
 			Select(
@@ -882,23 +863,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro testOpenSSOConnection() {
-		Click.waitForMenuToggleJSClick(locator1 = "PortalSettingsAuthentication#VERTICAL_ELLIPSIS");
-
-		AssertClick(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON",
-			value1 = "Test OpenSSO Configuration");
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Liferay has successfully connected to the OpenSSO server.");
-
-		var key_modalTitle = "OpenSSO";
-
-		Click(locator1 = "Button#CLOSE_MODAL");
-	}
-
-	@summary = "Default summary"
 	macro uncheckStrangersVerifyEmailCheckbox() {
 		Uncheck(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 
@@ -1004,76 +968,6 @@ definition {
 		AssertElementPresent(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON");
 
 		AssertElementPresent(locator1 = "PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro viewAuthenticationOpenSSOCP() {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "SSO",
-			configurationName = "OpenSSO",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX");
-
-		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER",
-			value1 = "Login URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD",
-			value1 = "http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER",
-			value1 = "Logout URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD",
-			value1 = "http://openssohost.example.com:8080/opensso/UI/Logout?goto=http://portalhost.example.com:8080/web/guest/home");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER",
-			value1 = "Service URL");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD",
-			value1 = "http://openssohost.example.com:8080/opensso");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER",
-			value1 = "Screen Name Attribute");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD",
-			value1 = "uid");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER",
-			value1 = "Email Address Attribute");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD",
-			value1 = "mail");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER",
-			value1 = "First Name Attribute");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD",
-			value1 = "givenName");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER",
-			value1 = "Last Name Attribute");
-
-		AssertTextEquals(
-			locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD",
-			value1 = "sn");
-
-		AssertElementPresent(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON");
 	}
 
 	@summary = "Default summary"

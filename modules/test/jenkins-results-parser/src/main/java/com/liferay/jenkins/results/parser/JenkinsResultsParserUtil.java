@@ -5318,13 +5318,14 @@ public class JenkinsResultsParserUtil {
 			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
-		Retryable<JSONObject> retryable = new Retryable<Object>(true, maxRetries, retryPeriod, true) {
+		Retryable<JSONObject> retryable = new Retryable<Object>(
+			true, maxRetries, retryPeriod, true) {
 
 			@Override
 			public JSONObject execute() {
 				String response = toString(
-			url, checkCache, 0, httpRequestMethod, postContent,
-			retryPeriod, timeout, httpAuthorization, true);
+					url, checkCache, 0, httpRequestMethod, postContent,
+					retryPeriod, timeout, httpAuthorization, true);
 
 				if ((response == null) ||
 					response.endsWith("was truncated due to its size.")) {
@@ -5332,23 +5333,24 @@ public class JenkinsResultsParserUtil {
 					return null;
 				}
 
-			return createJSONObject(response);
-				}
-				@Override
-				protected String getRetryMessage(int retryCount) {
-					return combine(
-						"Unable to create JSONObject: ",
-						super.getRetryMessage(retryCount));
-				}
-			};
+				return createJSONObject(response);
+			}
 
-			try {
-				retryable.executeWithRetries();
+			@Override
+			protected String getRetryMessage(int retryCount) {
+				return combine(
+					"Unable to create JSONObject: ",
+					super.getRetryMessage(retryCount));
 			}
-			catch (Exception exception) {
-				throw new RuntimeException(
-					"Unable to create JSONObject");
-			}
+
+		};
+
+		try {
+			retryable.executeWithRetries();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException("Unable to create JSONObject");
+		}
 	}
 
 	public static JSONObject toJSONObject(

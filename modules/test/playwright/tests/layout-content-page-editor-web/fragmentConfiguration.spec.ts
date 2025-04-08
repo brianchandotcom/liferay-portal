@@ -470,7 +470,7 @@ test.describe('Advanced Configuration', () => {
 
 		// Check that there are results
 
-		const searchResults = page.getByText('Suggestions');
+		const searchResults = page.getByText('Suggestions', {exact: true});
 
 		await expect(searchResults).toBeVisible();
 

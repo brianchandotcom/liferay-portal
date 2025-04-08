@@ -17,7 +17,7 @@ spec:
 
                         START_TIME=$(date +%s)
 
-                        until nc -vz -w 2 {{ include "liferay.fullname" . }} {{ (index .Values.service.ports 1).port }}
+                        until nc -vz -w 2 {{ include "liferay.name" . }} {{ (index .Values.service.ports 1).port }}
                         do
                             CURRENT_TIME=$(date +%s)
 

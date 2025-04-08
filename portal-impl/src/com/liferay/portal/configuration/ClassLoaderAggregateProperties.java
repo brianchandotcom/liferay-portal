@@ -47,10 +47,9 @@ import org.apache.commons.configuration.SystemConfiguration;
 public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 
 	public ClassLoaderAggregateProperties(
-		ClassLoader classLoader, String companyId, String componentName) {
+		ClassLoader classLoader, String componentName) {
 
 		_classLoader = classLoader;
-		_companyId = companyId;
 		_componentName = componentName;
 
 		_prefixedSystemConfiguration = new SubsetConfiguration(
@@ -433,7 +432,6 @@ public class ClassLoaderAggregateProperties extends CompositeConfiguration {
 	private final CompositeConfiguration _baseCompositeConfiguration =
 		new CompositeConfiguration();
 	private final ClassLoader _classLoader;
-	private final String _companyId;
 	private final String _componentName;
 	private final CompositeConfiguration _globalCompositeConfiguration =
 		new CompositeConfiguration();

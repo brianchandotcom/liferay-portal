@@ -318,7 +318,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Collaborator"
                                 type: array
-            tags: ["Collaborator"]
         post:
             description:
                 Add or update all the collaborators received in the request. Delete existing collaborators that are not
@@ -357,6 +356,119 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Collaborator"
                                 type: array
+            tags: ["Collaborator"]
+    "/object-entry-folders/{objectEntryFolderId}/collaborators/by-type/{collaboratorType}/{collaboratorId}":
+        delete:
+            description:
+                Deletes the collaborator for an object entry folder and returns a 204 if the operation succeeds.
+            operationId: deleteObjectEntryFolderCollaborator
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: collaboratorType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Collaborator"]
+        get:
+            description:
+                Retrieves the collaborator of an object entry.
+            operationId: getObjectEntryFolderCollaborator
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: collaboratorType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
+            tags: ["Collaborator"]
+        put:
+            description:
+                Add or update a collaborator received in the request.
+            operationId: putObjectEntryFolderCollaborator
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: collaboratorType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Collaborator"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Collaborator"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
             tags: ["Collaborator"]
     "/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}":
         delete:
@@ -615,7 +727,6 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Collaborator"
                                 type: array
-            tags: ["Collaborator"]
         post:
             description:
                 Add or update all the collaborators received in the request. Delete existing collaborators that are not
@@ -658,4 +769,129 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Collaborator"
                                 type: array
+            tags: ["Collaborator"]
+    "/scopes/{scopeKey}/object-entry-folders/by-external-reference-code/{externalReferenceCode}/collaborators/by-type/{collaboratorType}/{collaboratorId}":
+        delete:
+            description:
+                Deletes the collaborator for an object entry folder and returns a 204 if the operation succeeds.
+            operationId: deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaborator
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Collaborator"]
+        get:
+            description:
+                Retrieves the collaborator for an object entry folder.
+            operationId: getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaborator
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
+            tags: ["Collaborator"]
+        put:
+            description:
+                Add or update a collaborator received in the request.
+            operationId: putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaborator
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorType
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: collaboratorId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Collaborator"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Collaborator"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Collaborator"
             tags: ["Collaborator"]

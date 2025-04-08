@@ -27,52 +27,52 @@ public class DateFormatPatternUtil {
 
 		String dateFormatPattern = _dateFormatPatterns.get(languageId);
 
-		if (dateFormatPattern == null) {
-			boolean endDelimiter = false;
-
-			String delimiterString = StringPool.FORWARD_SLASH;
-
-			SimpleDateFormat simpleDateFormat =
-				(SimpleDateFormat)DateFormat.getDateInstance(
-					DateFormat.SHORT, locale);
-
-			dateFormatPattern = simpleDateFormat.toPattern();
-
-			for (char dateDelimiter : _DATE_DELIMITERS) {
-				if (dateFormatPattern.indexOf(dateDelimiter) != -1) {
-					delimiterString = String.valueOf(dateDelimiter);
-
-					endDelimiter = dateFormatPattern.endsWith(delimiterString);
-
-					break;
-				}
-			}
-
-			int dayOrder = dateFormatPattern.indexOf('d');
-			int monthOrder = dateFormatPattern.indexOf('M');
-			int yearOrder = dateFormatPattern.indexOf('y');
-
-			if ((yearOrder < dayOrder) && (yearOrder < monthOrder)) {
-				dateFormatPattern = StringBundler.concat(
-					"%Y", delimiterString, "%m", delimiterString, "%d");
-			}
-			else if (dayOrder < monthOrder) {
-				dateFormatPattern = StringBundler.concat(
-					"%d", delimiterString, "%m", delimiterString, "%Y");
-			}
-			else {
-				dateFormatPattern = StringBundler.concat(
-					"%m", delimiterString, "%d", delimiterString, "%Y");
-			}
-
-			if (endDelimiter) {
-				dateFormatPattern += delimiterString;
-			}
-
-			_dateFormatPatterns.put(languageId, dateFormatPattern);
+		if (dateFormatPattern != null) {
+			return dateFormatPattern;
 		}
 
-		return dateFormatPattern;
+		boolean endDelimiter = false;
+
+		String delimiterString = StringPool.FORWARD_SLASH;
+
+		SimpleDateFormat simpleDateFormat =
+			(SimpleDateFormat)DateFormat.getDateInstance(
+				DateFormat.SHORT, locale);
+
+		dateFormatPattern = simpleDateFormat.toPattern();
+
+		for (char dateDelimiter : _DATE_DELIMITERS) {
+			if (dateFormatPattern.indexOf(dateDelimiter) != -1) {
+				delimiterString = String.valueOf(dateDelimiter);
+
+				endDelimiter = dateFormatPattern.endsWith(delimiterString);
+
+				break;
+			}
+		}
+
+		int dayOrder = dateFormatPattern.indexOf('d');
+		int monthOrder = dateFormatPattern.indexOf('M');
+		int yearOrder = dateFormatPattern.indexOf('y');
+
+		if ((yearOrder < dayOrder) && (yearOrder < monthOrder)) {
+			dateFormatPattern = StringBundler.concat(
+				"%Y", delimiterString, "%m", delimiterString, "%d");
+		}
+		else if (dayOrder < monthOrder) {
+			dateFormatPattern = StringBundler.concat(
+				"%d", delimiterString, "%m", delimiterString, "%Y");
+		}
+		else {
+			dateFormatPattern = StringBundler.concat(
+				"%m", delimiterString, "%d", delimiterString, "%Y");
+		}
+
+		if (endDelimiter) {
+			dateFormatPattern += delimiterString;
+		}
+
+		_dateFormatPatterns.put(languageId, dateFormatPattern);
 	}
 
 	private static final char[] _DATE_DELIMITERS = {

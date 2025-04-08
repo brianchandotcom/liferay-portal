@@ -1660,10 +1660,6 @@ public class ViewChangesDisplayContext {
 				).put(
 					"modelKey", modelInfo._modelKey
 				).put(
-					"movable",
-					_ctDisplayRendererRegistry.isMovable(
-						model, modelClassNameId)
-				).put(
 					"title",
 					_getTitle(
 						CTConstants.CT_COLLECTION_ID_PRODUCTION,
@@ -1765,10 +1761,6 @@ public class ViewChangesDisplayContext {
 					"modelKey", modelInfo._modelKey
 				).put(
 					"modifiedTime", modifiedDate.getTime()
-				).put(
-					"movable",
-					_ctDisplayRendererRegistry.isMovable(
-						model, modelClassNameId)
 				).put(
 					"timeDescription",
 					_language.getTimeDescription(

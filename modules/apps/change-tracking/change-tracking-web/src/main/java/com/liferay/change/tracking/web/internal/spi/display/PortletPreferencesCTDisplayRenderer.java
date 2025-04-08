@@ -106,11 +106,6 @@ public class PortletPreferencesCTDisplayRenderer
 	}
 
 	@Override
-	public boolean isMovable(PortletPreferences portletPreferences) {
-		return false;
-	}
-
-	@Override
 	protected void buildDisplay(
 		DisplayBuilder<PortletPreferences> displayBuilder) {
 

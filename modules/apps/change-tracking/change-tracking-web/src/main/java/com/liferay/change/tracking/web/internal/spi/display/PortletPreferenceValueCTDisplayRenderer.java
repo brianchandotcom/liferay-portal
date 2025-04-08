@@ -115,11 +115,6 @@ public class PortletPreferenceValueCTDisplayRenderer
 		return false;
 	}
 
-	@Override
-	public boolean isMovable(PortletPreferenceValue portletPreferenceValue) {
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferenceValueCTDisplayRenderer.class);
 

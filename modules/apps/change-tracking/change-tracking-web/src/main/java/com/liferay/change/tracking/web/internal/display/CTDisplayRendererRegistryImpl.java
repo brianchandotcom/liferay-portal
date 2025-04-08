@@ -469,16 +469,6 @@ public class CTDisplayRendererRegistryImpl
 	}
 
 	@Override
-	public <T extends BaseModel<T>> boolean isMovable(
-		T model, long modelClassNameId) {
-
-		CTDisplayRenderer<T> ctDisplayRenderer = getCTDisplayRenderer(
-			modelClassNameId);
-
-		return ctDisplayRenderer.isMovable(model);
-	}
-
-	@Override
 	public <T extends BaseModel<T>> boolean isWorkflowEnabled(
 		CTEntry ctEntry, T model) {
 

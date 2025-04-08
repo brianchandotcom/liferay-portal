@@ -101,10 +101,6 @@ public interface CTDisplayRenderer<T> {
 		return false;
 	}
 
-	public default boolean isMovable(T model) {
-		return !isHideable(model);
-	}
-
 	/**
 	 * Renders the model with the display context.
 	 *

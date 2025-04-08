@@ -362,7 +362,7 @@ export default function ChangeTrackingChangeView({
 
 	const getMoveChangesURL = useCallback(
 		(node) => {
-			if (!node.movable || !moveChangesURL) {
+			if (!moveChangesURL) {
 				return null;
 			}
 

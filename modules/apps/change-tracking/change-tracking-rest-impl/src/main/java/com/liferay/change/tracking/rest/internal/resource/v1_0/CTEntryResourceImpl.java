@@ -12,13 +12,11 @@ import com.liferay.change.tracking.rest.internal.odata.entity.v1_0.CTEntryEntity
 import com.liferay.change.tracking.rest.resource.v1_0.CTEntryResource;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProviderRegistry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
@@ -252,22 +250,6 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 						return null;
 					}
 
-					CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-						_ctDisplayRendererRegistry.getCTSQLMode(
-							ctEntry.getCtCollectionId(), ctEntry);
-
-					T model = _ctDisplayRendererRegistry.fetchCTModel(
-						ctEntry.getCtCollectionId(), ctSQLMode,
-						ctEntry.getModelClassNameId(),
-						ctEntry.getModelClassPK());
-
-					if ((model == null) ||
-						!_ctDisplayRendererRegistry.isMovable(
-							model, ctEntry.getModelClassNameId())) {
-
-						return null;
-					}
-
 					return addAction(
 						ActionKeys.UPDATE, ctEntry.getCtCollectionId(),
 						"getCTEntry", _ctCollectionModelResourcePermission);
@@ -328,9 +310,6 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 	)
 	private volatile ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
-
-	@Reference
-	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference(
 		target = "(component.name=com.liferay.change.tracking.rest.internal.dto.v1_0.converter.CTEntryDTOConverter)"

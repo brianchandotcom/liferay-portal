@@ -499,10 +499,10 @@ components:
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Product Description HU
-                        hr_HR: Product Description HR
                         en_US: Professional hand stainless steel saw for wood. Made to last and
                             saw forever. Made of best steel
+                        hr_HR: Product Description HR
+                        hu_HU: Product Description HU
                 engineKey:
                     example: DAB-34098-789-N
                     type: string
@@ -543,10 +543,10 @@ components:
                     additionalProperties:
                         type: string
                     example:
-                        hu_HU: Product Description HU
-                        hr_HR: Product Description HR
                         en_US: Professional hand stainless steel saw for wood. Made to last and
                             saw forever. Made of best steel
+                        hr_HR: Product Description HR
+                        hu_HU: Product Description HU
                 id:
                     example: 30324
                     format: int64

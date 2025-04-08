@@ -71,6 +71,7 @@ import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.dto.v1_0.SystemProperties;
 import com.liferay.object.rest.dto.v1_0.Version;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -4086,9 +4087,13 @@ public class DefaultObjectEntryManagerImplTest
 				properties = HashMapBuilder.<String, Object>put(
 					"textObjectFieldName", RandomTestUtil.randomString()
 				).build();
-				version = new Version() {
+				systemProperties = new SystemProperties() {
 					{
-						number = 1;
+						version = new Version() {
+							{
+								number = 1;
+							}
+						};
 					}
 				};
 			}
@@ -4111,9 +4116,13 @@ public class DefaultObjectEntryManagerImplTest
 				properties = HashMapBuilder.<String, Object>put(
 					"textObjectFieldName", RandomTestUtil.randomString()
 				).build();
-				version = new Version() {
+				systemProperties = new SystemProperties() {
 					{
-						number = 2;
+						version = new Version() {
+							{
+								number = 2;
+							}
+						};
 					}
 				};
 			}
@@ -4974,9 +4983,13 @@ public class DefaultObjectEntryManagerImplTest
 				properties = HashMapBuilder.<String, Object>put(
 					"textObjectFieldName", RandomTestUtil.randomString()
 				).build();
-				version = new Version() {
+				systemProperties = new SystemProperties() {
 					{
-						number = 1;
+						version = new Version() {
+							{
+								number = 1;
+							}
+						};
 					}
 				};
 			}
@@ -4999,9 +5012,13 @@ public class DefaultObjectEntryManagerImplTest
 				properties = HashMapBuilder.<String, Object>put(
 					"textObjectFieldName", RandomTestUtil.randomString()
 				).build();
-				version = new Version() {
+				systemProperties = new SystemProperties() {
 					{
-						number = 2;
+						version = new Version() {
+							{
+								number = 2;
+							}
+						};
 					}
 				};
 			}
@@ -5028,10 +5045,15 @@ public class DefaultObjectEntryManagerImplTest
 						objectEntry1::getExternalReferenceCode);
 					setKeywords(objectEntry1::getKeywords);
 					setProperties(objectEntry1::getProperties);
-					setVersion(
-						new Version() {
+					setSystemProperties(
+						() -> new SystemProperties() {
 							{
-								number = 3;
+								setVersion(
+									() -> new Version() {
+										{
+											number = 3;
+										}
+									});
 							}
 						});
 				}

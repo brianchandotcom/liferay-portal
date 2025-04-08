@@ -5,7 +5,7 @@ network. This tool is a beta feature. It is experimental and not supported.
 
 ## Requirements
 
-- Source database must be MariaDB, MySQL or SQLServer
+- Source database must be MariaDB, MySQL or SQL Server
 - Target database must be PostgreSQL
 - Database user with read access to all partitions
 - Previous run of DBSchemaDefinitionExporter to generate SQL schema files

@@ -6,102 +6,20 @@
 				"en_US": "Business Event Add"
 			},
 			"name": "businessEventAdd",
-			"objectActionExecutorKey": "add-object-entry",
+			"objectActionExecutorKey": "function#liferay-customer-etc-spring-boot-object-action-business-event",
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
-				"objectDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION",
-				"predefinedValues": [
-					{
-						"businessType": "Picklist",
-						"inputAsValue": true,
-						"label": {
-							"en_US": "Change"
-						},
-						"name": "change",
-						"value": "Created"
-					},
-					{
-						"businessType": "Text",
-						"inputAsValue": true,
-						"label": {
-							"en_US": "Comment"
-						},
-						"name": "comment",
-						"value": "New Business Event has been created."
-					}
-				],
-				"relatedObjectEntries": true,
-				"system": "false"
 			}
 		},
 		{
 			"active": true,
-			"conditionExpression": "isEmpty(actualGoLiveDateTime)",
 			"label": {
-				"en_US": "Business Event Edited"
+				"en_US": "Business Event Update"
 			},
-			"name": "businessEventEdited",
-			"objectActionExecutorKey": "add-object-entry",
+			"name": "businessEventUpdate",
+			"objectActionExecutorKey": "function#liferay-customer-etc-spring-boot-object-action-business-event",
 			"objectActionTriggerKey": "onAfterUpdate",
 			"parameters": {
-				"objectDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION",
-				"predefinedValues": [
-					{
-						"businessType": "Picklist",
-						"inputAsValue": true,
-						"label": {
-							"en_US": "Change"
-						},
-						"name": "change",
-						"value": "Edited"
-					},
-					{
-						"businessType": "Text",
-						"inputAsValue": false,
-						"label": {
-							"en_US": "Comment"
-						},
-						"name": "comment",
-						"value": "lastComment"
-					}
-				],
-				"relatedObjectEntries": true,
-				"system": "false"
-			}
-		},
-		{
-			"active": true,
-			"conditionExpression": "isEmpty(actualGoLiveDateTime) == false",
-			"label": {
-				"en_US": "Business Event Go Live"
-			},
-			"name": "businessEventGoLive",
-			"objectActionExecutorKey": "add-object-entry",
-			"objectActionTriggerKey": "onAfterUpdate",
-			"parameters": {
-				"objectDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION",
-				"predefinedValues": [
-					{
-						"businessType": "Picklist",
-						"inputAsValue": true,
-						"label": {
-							"en_US": "Change"
-						},
-						"name": "change",
-						"value": "GoLive"
-					},
-					{
-						"businessType": "Text",
-						"inputAsValue": false,
-						"label": {
-							"en_US": "Comment"
-						},
-						"name": "comment",
-						"value": "lastComment"
-					}
-				],
-				"relatedObjectEntries": true,
-				"system": "false"
 			}
 		}
 	],

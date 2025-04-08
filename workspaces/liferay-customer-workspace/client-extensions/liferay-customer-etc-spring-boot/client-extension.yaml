@@ -6,5 +6,11 @@ liferay-customer-etc-spring-boot-oaua:
     name: Liferay Customer Etc Spring Boot OAuth Application User Agent
     scopes:
         -   Liferay.Headless.Admin.User.everything.read
+        -   c_businesseventversion.everything.write
         -   c_ticketattachment.everything
     type: oAuthApplicationUserAgent
+liferay-customer-etc-spring-boot-object-action-business-event:
+    name: Liferay Customer Etc Spring Boot Object Action Business Event
+    oAuth2ApplicationExternalReferenceCode: liferay-customer-etc-spring-boot-oaua
+    resourcePath: /object/action/business/event
+    type: objectAction

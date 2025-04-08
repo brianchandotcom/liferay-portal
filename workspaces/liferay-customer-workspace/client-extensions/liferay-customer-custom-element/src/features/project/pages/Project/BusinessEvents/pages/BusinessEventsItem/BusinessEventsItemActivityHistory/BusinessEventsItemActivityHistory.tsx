@@ -13,20 +13,11 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
-import {useCustomerPortal} from '~/features/project/context';
 import {Liferay} from '~/services/liferay';
-import {
-	getBusinessEventById,
-	getBusinessEventVersions,
-} from '~/services/liferay/api';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
-import {
-	IBusinessEvent,
-	IBusinessEventVersion,
-	IUserAccount,
-} from '~/utils/types';
+import {IUserAccount} from '~/utils/types';
 
 import './BusinessEventsItemActivityHistory.css';
 
@@ -34,72 +25,18 @@ import {getUserAccount} from '~/services/liferay/graphql/queries';
 
 import Avatar from '../../../../TeamMembers/components/TeamMembersTable/components/columns/NameColumn/components/Avatar';
 import ManageEventModal from '../../../components/ManageEventModal';
+import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
+import useGetBusinessEventVersions from '../../../hooks/useGetBusinessEventVersions';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 
 const BusinessEventsItemActivityHistory = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
 
-	const [businessEvent, setBusinessEvent] = useState<
-		IBusinessEvent | undefined
-	>(undefined);
-	const [businessEventVersion, setBusinessEventVersion] = useState<
-		IBusinessEventVersion[]
-	>([]);
+	const {businessEvent, fetchBusinessEvent, loading} = useGetBusinessEvent(
+		id || ''
+	);
 
-	const [{project}] = useCustomerPortal();
 	const {client, gravatarAPI} = useAppPropertiesContext();
-
-	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
-
-	const [modalType, setModalType] = useState('');
-	const [loading, setLoading] = useState(true);
-	const {observer, onOpenChange, open} = useModal();
-
-	const navigate = useNavigate();
-
-	const fetchBusinessEvent = useCallback(async () => {
-		try {
-			setLoading(true);
-
-			const eventData = await getBusinessEventById(id!);
-
-			setBusinessEvent(eventData);
-		}
-		catch (error) {
-			console.error('Error', error);
-
-			setBusinessEvent(undefined);
-		}
-		finally {
-			setLoading(false);
-		}
-	}, [id]);
-
-	const handleOnCancel = useCallback(() => {
-		fetchBusinessEvent();
-
-		Liferay.Util.openToast({
-			message: i18n.translate('business-event-canceled-successfully'),
-			type: 'success',
-		});
-	}, [fetchBusinessEvent]);
-
-	const handleOnCompleted = useCallback(() => {
-		fetchBusinessEvent();
-
-		Liferay.Util.openToast({
-			message: i18n.translate(
-				'business-event-actual-go-live-date-recorded-successfully'
-			),
-			type: 'success',
-		});
-	}, [fetchBusinessEvent]);
-
-	useEffect(() => {
-		if (id) {
-			fetchBusinessEvent();
-		}
-	}, [fetchBusinessEvent, id]);
 
 	const generateFilterQuery = useCallback(() => {
 		const queryParams: string[] = [];
@@ -124,58 +61,25 @@ const BusinessEventsItemActivityHistory = () => {
 
 	const filterQuery = generateFilterQuery();
 
-	const fetchBusinessEventsVersions = useCallback(async () => {
-		setLoading(true);
+	const {
+		businessEventVersions,
+		fetchBusinessEventVersions,
+		loading: loadingVersions,
+	} = useGetBusinessEventVersions(filterQuery);
 
-		try {
-			const businessEventsVersionsResponse =
-				await getBusinessEventVersions(filterQuery);
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
-			setBusinessEventVersion(businessEventsVersionsResponse.items);
-		}
-		catch (error) {
-			console.error('Error fetching business events versions:', error);
-		}
-		finally {
-			setLoading(false);
-		}
-	}, [filterQuery]);
+	const [modalType, setModalType] = useState('');
 
-	useEffect(() => {
-		if (!project?.id) {
-			setLoading(true);
+	const navigate = useNavigate();
 
-			return;
-		}
-
-		fetchBusinessEventsVersions();
-	}, [fetchBusinessEventsVersions, filterQuery, project?.id]);
+	const {observer, onOpenChange, open} = useModal();
 
 	const [userAccount, setUserAccount] = useState<IUserAccount | null>(null);
 
-	useEffect(() => {
-		const getUser = async () => {
-			try {
-				const {data} = await client.query({
-					query: getUserAccount,
-					variables: {
-						id: Liferay.ThemeDisplay.getUserId(),
-					},
-				});
-
-				setUserAccount(data.userAccount);
-			}
-			catch (error) {
-				console.error('Error fetching user account:', error);
-			}
-		};
-
-		getUser();
-	}, [client]);
-
 	const rows = useMemo(() => {
-		if (businessEventVersion?.length > 0) {
-			return businessEventVersion.map((businessEventVersion) => {
+		if (businessEventVersions?.length > 0) {
+			return businessEventVersions.map((businessEventVersion) => {
 				return {
 					change: (
 						<div className="font-weight-semi-bold text-neutral-10">
@@ -224,9 +128,53 @@ const BusinessEventsItemActivityHistory = () => {
 		}
 
 		return [];
-	}, [businessEventVersion, gravatarAPI, userAccount?.emailAddress]);
+	}, [businessEventVersions, gravatarAPI, userAccount?.emailAddress]);
 
-	if (loading) {
+	const handleOnCancel = useCallback(() => {
+		fetchBusinessEvent();
+
+		fetchBusinessEventVersions();
+
+		Liferay.Util.openToast({
+			message: i18n.translate('business-event-canceled-successfully'),
+			type: 'success',
+		});
+	}, [fetchBusinessEvent, fetchBusinessEventVersions]);
+
+	const handleOnCompleted = useCallback(() => {
+		fetchBusinessEvent();
+
+		fetchBusinessEventVersions();
+
+		Liferay.Util.openToast({
+			message: i18n.translate(
+				'business-event-actual-go-live-date-recorded-successfully'
+			),
+			type: 'success',
+		});
+	}, [fetchBusinessEvent, fetchBusinessEventVersions]);
+
+	useEffect(() => {
+		const getUser = async () => {
+			try {
+				const {data} = await client.query({
+					query: getUserAccount,
+					variables: {
+						id: Liferay.ThemeDisplay.getUserId(),
+					},
+				});
+
+				setUserAccount(data.userAccount);
+			}
+			catch (error) {
+				console.error('Error fetching user account:', error);
+			}
+		};
+
+		getUser();
+	}, [client]);
+
+	if (loading || loadingVersions) {
 		return (
 			<div className="mx-auto">
 				<ClayLoadingIndicator size="sm" />
@@ -237,6 +185,25 @@ const BusinessEventsItemActivityHistory = () => {
 	if (!businessEvent) {
 		return <div>{i18n.translate('no-data-found')}</div>;
 	}
+
+	const columns = [
+		{
+			columnKey: 'change',
+			label: i18n.translate('change'),
+		},
+		{
+			columnKey: 'user',
+			label: i18n.translate('user'),
+		},
+		{
+			columnKey: 'comment',
+			label: i18n.translate('comment'),
+		},
+		{
+			columnKey: 'date',
+			label: i18n.translate('date'),
+		},
+	];
 
 	const userOptions = [
 		{
@@ -264,25 +231,6 @@ const BusinessEventsItemActivityHistory = () => {
 				setModalType('cancelEvent');
 				onOpenChange(true);
 			},
-		},
-	];
-
-	const columns = [
-		{
-			columnKey: 'change',
-			label: i18n.translate('change'),
-		},
-		{
-			columnKey: 'user',
-			label: i18n.translate('user'),
-		},
-		{
-			columnKey: 'comment',
-			label: i18n.translate('comment'),
-		},
-		{
-			columnKey: 'date',
-			label: i18n.translate('date'),
 		},
 	];
 
@@ -373,7 +321,7 @@ const BusinessEventsItemActivityHistory = () => {
 			)}
 
 			<div className="">
-				{businessEventVersion?.length ? (
+				{businessEventVersions?.length ? (
 					<div className="versions-table">
 						<Table
 							columns={columns}

@@ -13,12 +13,7 @@ import {getRandomInt} from '../../utils/getRandomInt';
 import performLoginViaApi, {performLogout} from '../../utils/performLogin';
 import {deleteItems} from './utils/deleteItems';
 
-export const test = mergeTests(
-	dataApiHelpersTest,
-	loginTest(),
-	formsPagesTest,
-	formsPagesTest
-);
+export const test = mergeTests(dataApiHelpersTest, loginTest(), formsPagesTest);
 
 test.afterEach(async ({formsPage}) => {
 	await formsPage.goTo();

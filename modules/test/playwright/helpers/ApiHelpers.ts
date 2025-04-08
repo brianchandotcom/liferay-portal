@@ -14,6 +14,7 @@ import {Page} from '@playwright/test';
 import {liferayConfig} from '../liferay.config';
 import {ApiBuilderHelper} from './ApiBuilderHelper';
 import {DataEngineApiHelper} from './DataEngineApiHelper';
+import {DynamicDataMappingApiHelper} from './DynamicDataMappingApiHelper';
 import {FeatureFlagApiHelper} from './FeatureFlagApiHelper';
 import {HeadlessAdminAddressApiHelper} from './HeadlessAdminAddressApiHelper';
 import {HeadlessAdminContentApiHelper} from './HeadlessAdminContentApiHelper';
@@ -110,6 +111,7 @@ export class ApiHelpers {
 	readonly baseUrl: string;
 	readonly featureFlag: FeatureFlagApiHelper;
 	readonly dataEngine: DataEngineApiHelper;
+	readonly dynamicDataMapping: DynamicDataMappingApiHelper;
 	readonly headlessAdminAddress: HeadlessAdminAddressApiHelper;
 	readonly headlessAdminContent: HeadlessAdminContentApiHelper;
 	readonly headlessAdminTaxonomy: HeadlessAdminTaxonomyApiHelper;
@@ -174,6 +176,7 @@ export class ApiHelpers {
 		this.baseUrl = liferayConfig.environment.baseUrl + '/o/';
 		this.featureFlag = new FeatureFlagApiHelper(page);
 		this.dataEngine = new DataEngineApiHelper(this);
+		this.dynamicDataMapping = new DynamicDataMappingApiHelper(this);
 		this.headlessAdminAddress = new HeadlessAdminAddressApiHelper(this);
 		this.headlessAdminContent = new HeadlessAdminContentApiHelper(this);
 		this.headlessAdminTaxonomy = new HeadlessAdminTaxonomyApiHelper(this);

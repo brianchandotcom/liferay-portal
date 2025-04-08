@@ -488,7 +488,7 @@ test.describe('ensure picklist translation', () => {
 
 		// Preview form
 
-		await page.waitForTimeout(200);
+		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
 
 		const newTabPagePromise = new Promise<Page>((resolve) =>
 			formBuilderPage.page.once('popup', resolve)

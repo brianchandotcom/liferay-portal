@@ -76,7 +76,7 @@ test.describe('FormView when form storage type is object', () => {
 
 		await expect(formBuilderSidePanelPage.objectFieldSelect).toBeVisible();
 
-		await page.waitForTimeout(200);
+		await apiHelpers.dynamicDataMapping.waitForDDMEvaluate(page);
 
 		await formBuilderPage.clickSaveButton();
 

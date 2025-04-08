@@ -92,6 +92,25 @@ public class ObjectEntryInfoItemFields {
 		).build();
 
 	public static InfoField getFriendlyURLInfoField(
+		boolean editable, String name, String namespace) {
+
+		return InfoField.builder(
+			namespace
+		).infoFieldType(
+			FriendlyURLInfoFieldType.INSTANCE
+		).name(
+			name + "_objectEntryFriendlyURL"
+		).editable(
+			editable
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				ObjectEntryInfoItemFields.class, "friendly-url")
+		).localizable(
+			true
+		).build();
+	}
+
+	public static InfoField getFriendlyURLInfoField(
 		ObjectDefinition objectDefinition) {
 
 		return BuilderHolder._builder.infoFieldType(

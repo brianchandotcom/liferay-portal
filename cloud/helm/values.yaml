@@ -244,6 +244,12 @@ volumeMounts:
     -   mountPath: /opt/liferay/work
         name: liferay-persistent-volume
         subPath: liferay/work
+    -   mountPath: /opt/liferay/unicast.xml
+        name: liferay-configmap
+        subPath: unicast.xml
+    -   mountPath: /usr/local/liferay/scripts/pre-configure/000_jdk_java_options.sh
+        name: liferay-configmap
+        subPath: 000_jdk_java_options.sh
 volumes:
     -   configMap:
             name: liferay

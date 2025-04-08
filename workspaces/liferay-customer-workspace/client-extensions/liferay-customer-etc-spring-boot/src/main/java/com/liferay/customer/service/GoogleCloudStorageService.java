@@ -43,7 +43,7 @@ public class GoogleCloudStorageService extends BaseRestController {
 		throws Exception {
 
 		delete(
-			"Bearer " + _getAccessToken(), null,
+			"Bearer " + _getAccessToken(), "",
 			StringBundler.concat(
 				"/storage/v1/b/", bucketName, "/o/", objectName));
 	}

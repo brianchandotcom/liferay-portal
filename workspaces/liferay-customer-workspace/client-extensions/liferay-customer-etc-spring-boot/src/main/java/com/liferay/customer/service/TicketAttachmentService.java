@@ -95,7 +95,7 @@ public class TicketAttachmentService extends BaseRestController {
 		throws Exception {
 
 		delete(
-			"Bearer " + jwt.getTokenValue(), null,
+			"Bearer " + jwt.getTokenValue(), "",
 			"/o/c/ticketattachments/" + ticketAttachmentId);
 	}
 

@@ -105,7 +105,7 @@ public class CustomerCommandLineRunner
 			}
 
 			delete(
-				_getAuthorization(), null,
+				_getAuthorization(), "",
 				"/ticket-attachments/" +
 					ticketAttachmentJSONObject.getInt("id"));
 		}

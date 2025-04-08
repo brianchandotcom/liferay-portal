@@ -5,6 +5,7 @@
 
 package com.liferay.customer.service;
 
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -27,17 +28,14 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Jenny Chen
  */
 @Component
-public class JiraService {
+public class JiraService extends BaseRestController {
 
 	@CacheEvict(
 		allEntries = true, value = {"affectedVersions", "issue", "issues"}
@@ -111,19 +109,7 @@ public class JiraService {
 	public JSONObject getIssueJSONObject(String issueKey) throws Exception {
 		try {
 			JSONObject jsonObject = new JSONObject(
-				WebClient.create(
-					_jiraURL
-				).get(
-				).uri(
-					StringBundler.concat(_URL_REST_API_2, "/issue/", issueKey)
-				).accept(
-					MediaType.APPLICATION_JSON
-				).header(
-					HttpHeaders.AUTHORIZATION, _getCredentials()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block());
+				get(_getCredentials(), _URL_REST_API_2 + "/issue/" + issueKey));
 
 			return _transformIssue(jsonObject);
 		}
@@ -282,6 +268,11 @@ public class JiraService {
 		return _transformSearchResults(jsonObject);
 	}
 
+	@Override
+	protected String getWebClientBaseURL() {
+		return _jiraURL;
+	}
+
 	private int _calculatePage(int startAt, int maxResults) {
 		return (startAt / maxResults) + 1;
 	}
@@ -343,29 +334,12 @@ public class JiraService {
 
 		try {
 			return new JSONObject(
-				WebClient.create(
-					_jiraURL
-				).get(
-				).uri(
-					uriBuilder -> uriBuilder.path(
-						_URL_REST_API_2 + "/search"
-					).queryParam(
-						"jql", jql
-					).queryParam(
-						"fields", StringUtil.merge(returnFields)
-					).queryParam(
-						"maxResults", maxResults
-					).queryParam(
-						"startAt", startAt
-					).build()
-				).accept(
-					MediaType.APPLICATION_JSON
-				).header(
-					HttpHeaders.AUTHORIZATION, _getCredentials()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block());
+				get(
+					_getCredentials(),
+					StringBundler.concat(
+						_URL_REST_API_2, "/search?jql=", jql, "&fields=",
+						StringUtil.merge(returnFields), "&maxResults=",
+						maxResults, "&startAt=", startAt)));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

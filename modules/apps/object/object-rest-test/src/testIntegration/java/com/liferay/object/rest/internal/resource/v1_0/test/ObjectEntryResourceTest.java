@@ -8092,7 +8092,7 @@ public class ObjectEntryResourceTest {
 		String timeZoneId = user.getTimeZoneId();
 
 		try {
-			String testTimeZoneId = "America/Anchorage";
+			String testTimeZoneId = "Europe/Madrid";
 
 			user.setTimeZoneId(testTimeZoneId);
 
@@ -8101,17 +8101,17 @@ public class ObjectEntryResourceTest {
 			JSONAssert.assertEquals(
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2025-03-11T00:00:00.000"
+					"2000-07-27T11:00:00.000"
 				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2025-03-11T08:00:00.000Z"
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T09:00:00.000Z"
 				).toString(),
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"2025-03-11T00:00:00.000"
+						"2000-07-27T11:00:00.000"
 					).put(
 						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"2025-03-11T00:00:00.000"
+						"2000-07-27T11:00:00.000"
 					).toString(),
 					_objectDefinition1.getRESTContextPath(), Http.Method.POST
 				).toString(),
@@ -8120,17 +8120,17 @@ public class ObjectEntryResourceTest {
 			JSONAssert.assertEquals(
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2025-03-10T20:00:00.000"
+					"2000-07-27T11:00:00.000"
 				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2025-03-10T20:00:00.000Z"
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T07:00:00.000Z"
 				).toString(),
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"2025-03-11T00:00:00.000+0400"
+						"2000-07-27T11:00:00.000+0400"
 					).put(
 						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"2025-03-11T00:00:00.000+0400"
+						"2000-07-27T11:00:00.000+0400"
 					).toString(),
 					_objectDefinition1.getRESTContextPath(), Http.Method.POST
 				).toString(),
@@ -8139,17 +8139,17 @@ public class ObjectEntryResourceTest {
 			JSONAssert.assertEquals(
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2025-03-11T04:00:00.000"
+					"2000-07-27T11:00:00.000"
 				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2025-03-11T04:00:00.000Z"
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T15:00:00.000Z"
 				).toString(),
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"2025-03-11T00:00:00.000-0400"
+						"2000-07-27T11:00:00.000-0400"
 					).put(
 						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"2025-03-11T00:00:00.000-0400"
+						"2000-07-27T11:00:00.000-0400"
 					).toString(),
 					_objectDefinition1.getRESTContextPath(), Http.Method.POST
 				).toString(),
@@ -8158,17 +8158,17 @@ public class ObjectEntryResourceTest {
 			JSONAssert.assertEquals(
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2025-03-11T00:00:00.000"
+					"2000-07-27T11:00:00.000"
 				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2025-03-11T00:00:00.000Z"
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T11:00:00.000Z"
 				).toString(),
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"2025-03-11T00:00:00.000Z"
+						"2000-07-27T11:00:00.000Z"
 					).put(
 						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"2025-03-11T00:00:00.000Z"
+						"2000-07-27T11:00:00.000Z"
 					).toString(),
 					_objectDefinition1.getRESTContextPath(), Http.Method.POST
 				).toString(),
@@ -8177,17 +8177,17 @@ public class ObjectEntryResourceTest {
 			JSONAssert.assertEquals(
 				JSONUtil.put(
 					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2025-03-11T08:00:00.000"
+					"2000-07-27T11:00:00.000"
 				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2025-03-11T08:00:00.000Z"
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T09:00:00.000Z"
 				).toString(),
 				HTTPTestUtil.invokeToJSONObject(
 					JSONUtil.put(
 						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"Tue Mar 11 00:00:00 AKT 2025"
+						"Thu Jul 27 11:00:00 CET 2000"
 					).put(
 						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"Tue Mar 11 00:00:00 AKT 2025"
+						"Thu Jul 27 11:00:00 CET 2000"
 					).toString(),
 					_objectDefinition1.getRESTContextPath(), Http.Method.POST
 				).toString(),

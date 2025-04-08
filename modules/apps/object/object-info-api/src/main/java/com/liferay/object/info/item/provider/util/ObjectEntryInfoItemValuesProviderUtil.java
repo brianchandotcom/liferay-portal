@@ -7,6 +7,8 @@ package com.liferay.object.info.item.provider.util;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.ActionInfoFieldType;
@@ -41,6 +43,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -69,6 +72,33 @@ import java.util.Objects;
  * @author Carolina Barbosa
  */
 public class ObjectEntryInfoItemValuesProviderUtil {
+
+	public static InfoLocalizedValue<?> getFriendlyURLInfoFieldValue(
+		long classNameId,
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService,
+		long objectEntryId) {
+
+		try {
+			FriendlyURLEntry friendlyURLEntry =
+				friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					classNameId, objectEntryId);
+
+			if (friendlyURLEntry == null) {
+				return null;
+			}
+
+			return InfoLocalizedValue.function(
+				locale -> friendlyURLEntry.getUrlTitle(
+					LocaleUtil.toLanguageId(locale)));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
+	}
 
 	public static List<InfoFieldValue<Object>> getInfoFieldValues(
 			DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,

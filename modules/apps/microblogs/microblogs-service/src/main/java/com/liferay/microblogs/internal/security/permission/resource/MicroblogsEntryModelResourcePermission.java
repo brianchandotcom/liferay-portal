@@ -75,16 +75,10 @@ public class MicroblogsEntryModelResourcePermission
 		if (actionId.equals(ActionKeys.DELETE) ||
 			actionId.equals(ActionKeys.UPDATE)) {
 
-			if (permissionChecker.hasOwnerPermission(
-					microblogsEntry.getCompanyId(),
-					MicroblogsEntry.class.getName(),
-					microblogsEntry.getMicroblogsEntryId(),
-					microblogsEntry.getUserId(), actionId)) {
-
-				return true;
-			}
-
-			return false;
+			return permissionChecker.hasOwnerPermission(
+				microblogsEntry.getCompanyId(), MicroblogsEntry.class.getName(),
+				microblogsEntry.getMicroblogsEntryId(),
+				microblogsEntry.getUserId(), actionId);
 		}
 
 		if (permissionChecker.hasOwnerPermission(

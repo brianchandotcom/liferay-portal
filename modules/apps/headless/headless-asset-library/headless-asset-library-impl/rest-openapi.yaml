@@ -449,10 +449,10 @@ paths:
                     description:
                         default response
             tags: ["UserAccount"]
-        post:
+        get:
             description:
-                Adds the user to the asset library using the provided external reference codes.
-            operationId: postAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode
+                Gets a user connected to the asset library using the provided external reference codes.
+            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -465,10 +465,41 @@ paths:
                     schema:
                         type: string
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description:
+                        default response
+            tags: ["UserAccount"]
+        put:
+            description:
+                Adds the user to the asset library using the provided external reference codes.
+            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: userExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
                     description:
                         default response
             tags: ["UserAccount"]
@@ -715,10 +746,6 @@ paths:
                 -   in: path
                     name: externalReferenceCode
                     required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: filter
                     schema:
                         type: string
                 -   in: query
@@ -1037,10 +1064,6 @@ paths:
                         format: int64
                         type: integer
                 -   in: query
-                    name: filter
-                    schema:
-                        type: string
-                -   in: query
                     name: keywords
                     schema:
                         type: string
@@ -1106,10 +1129,10 @@ paths:
                     description:
                         default response
             tags: ["UserAccount"]
-        post:
+        get:
             description:
-                Adds the user to the asset library.
-            operationId: postAssetLibraryUserAccount
+                Gets a user connected to the asset library.
+            operationId: getAssetLibraryUserAccount
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -1124,10 +1147,43 @@ paths:
                         format: int64
                         type: integer
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                    description:
+                        default response
+            tags: ["UserAccount"]
+        put:
+            description:
+                Adds the user to the asset library.
+            operationId: putAssetLibraryUserAccount
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: userId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
                     description:
                         default response
             tags: ["UserAccount"]

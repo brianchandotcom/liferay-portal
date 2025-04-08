@@ -220,14 +220,14 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 		_renderMethod("getCombine", sb, themeDisplay.isThemeJsFastLoad());
 
-		long jsLastModified = PortalWebResourcesUtil.getLastModified(
+		long lastModified = PortalWebResourcesUtil.getLastModified(
 			PortalWebResourceConstants.RESOURCE_TYPE_JS);
 
 		String comboURL = _portal.getStaticResourceURL(
 			httpServletRequest,
 			themeDisplay.getCDNDynamicResourcesHost() +
 				themeDisplay.getPathContext() + "/combo/",
-			"minifierType=", jsLastModified);
+			"minifierType=", lastModified);
 
 		_renderMethod("getComboPath", sb, comboURL + "&");
 
@@ -239,20 +239,20 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			PortalWebResourcesUtil.getContextPath(
 				PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR));
 
-		String filter = "raw";
+		String filterString = "raw";
 
 		if (themeDisplay.isThemeJsFastLoad()) {
-			filter = "min";
+			filterString = "min";
 		}
 		else if (PropsValues.JAVASCRIPT_LOG_ENABLED) {
-			filter = "debug";
+			filterString = "debug";
 		}
 
-		_renderMethod("getFilter", sb, filter);
+		_renderMethod("getFilter", sb, filterString);
 
 		String staticResourceURLParams = _portal.getStaticResourceURL(
 			httpServletRequest, StringPool.BLANK, "minifierType=",
-			jsLastModified);
+			lastModified);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
 			_renderMethod("getFilterConfig", sb, null);

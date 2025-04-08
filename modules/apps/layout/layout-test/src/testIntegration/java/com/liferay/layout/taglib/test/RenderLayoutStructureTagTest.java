@@ -93,9 +93,12 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -242,7 +245,7 @@ public class RenderLayoutStructureTagTest {
 
 	@FeatureFlags("LPD-21926")
 	@Test
-	@TestInfo("LPD-50584")
+	@TestInfo({"LPD-50584", "LPD-52416"})
 	public void testDisplayPageTemplateWithMappedFriendlyURLInfoField()
 		throws Exception {
 
@@ -266,6 +269,32 @@ public class RenderLayoutStructureTagTest {
 			objectDefinition.getObjectDefinitionId());
 
 		objectDefinition.setEnableFriendlyURLCustomization(true);
+
+		ObjectDefinition relationshipObjectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, true, true, true,
+				false, false, RandomTestUtil.randomLocaleStringMap(),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				ListUtil.fromArray(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "text")));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			relationshipObjectDefinition.getObjectDefinitionId());
+
+		relationshipObjectDefinition.setEnableFriendlyURLCustomization(true);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition,
+				relationshipObjectDefinition);
 
 		long classNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
@@ -342,6 +371,12 @@ public class RenderLayoutStructureTagTest {
 				RandomTestUtil.randomString(
 					LayoutFriendlyURLRandomizerBumper.INSTANCE),
 				StringPool.SLASH));
+		String relationshipFriendlyURLValue = StringUtil.toLowerCase(
+			StringUtil.removeSubstring(
+				RandomTestUtil.randomString(
+					LayoutFriendlyURLRandomizerBumper.INSTANCE),
+				StringPool.SLASH));
+		String relationshipTextValue = RandomTestUtil.randomString();
 		String textValue = RandomTestUtil.randomString();
 
 		for (Map.Entry<Long, LayoutStructureItem> entry :
@@ -371,6 +406,11 @@ public class RenderLayoutStructureTagTest {
 				"-text-input\" name=\"text\" placeholder=\"\" type=\"text\" ",
 				"value=\"");
 
+			String namespace = StringBundler.concat(
+				ObjectRelationship.class.getName(), StringPool.POUND,
+				relationshipObjectDefinition.getName(), StringPool.POUND,
+				objectRelationship.getName());
+
 			if (Objects.equals(
 					fremarkerFragmentEntryProcessorJSONObject.getString(
 						"inputFieldId"),
@@ -383,6 +423,34 @@ public class RenderLayoutStructureTagTest {
 
 				expectedList.add(
 					expectedContent + friendlyURLValue + StringPool.QUOTE);
+			}
+			else if (Objects.equals(
+						fremarkerFragmentEntryProcessorJSONObject.getString(
+							"inputFieldId"),
+						StringBundler.concat(
+							namespace, StringPool.UNDERLINE,
+							objectRelationship.getName(),
+							"_objectEntryFriendlyURL"))) {
+
+				expectedContent = StringBundler.concat(
+					"id=\"", fragmentEntryLink.getNamespace(),
+					"-friendly-url-input\" name=\"",
+					objectRelationship.getName(),
+					"_objectEntryFriendlyURL\"\" type=\"text\" value=\"");
+
+				expectedList.add(
+					expectedContent + relationshipFriendlyURLValue +
+						StringPool.QUOTE);
+			}
+			else if (Objects.equals(
+						fremarkerFragmentEntryProcessorJSONObject.getString(
+							"inputFieldId"),
+						StringBundler.concat(
+							namespace, StringPool.UNDERLINE,
+							objectRelationship.getName(), "_text"))) {
+
+				expectedList.add(
+					expectedContent + relationshipTextValue + StringPool.QUOTE);
 			}
 			else {
 				expectedList.add(
@@ -399,6 +467,30 @@ public class RenderLayoutStructureTagTest {
 		_serviceContext.setAttribute(
 			"friendlyUrlMap",
 			HashMapBuilder.put(
+				relationshipObjectDefinition.getDefaultLanguageId(),
+				relationshipFriendlyURLValue
+			).build());
+
+		ObjectEntry relationshipObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				relationshipObjectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				HashMapBuilder.<String, Serializable>put(
+					"text", relationshipTextValue
+				).build(),
+				_serviceContext);
+
+		Assert.assertEquals(
+			relationshipFriendlyURLValue,
+			relationshipObjectEntry.getURLTitle(
+				objectDefinition.getDefaultLocale()));
+
+		_serviceContext.setAttribute(
+			"friendlyUrlMap",
+			HashMapBuilder.put(
 				objectDefinition.getDefaultLanguageId(), friendlyURLValue
 			).build());
 
@@ -408,6 +500,9 @@ public class RenderLayoutStructureTagTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
+				objectRelationship.getName(),
+				relationshipObjectEntry.getObjectEntryId()
+			).put(
 				"text", textValue
 			).build(),
 			_serviceContext);
@@ -3206,6 +3301,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	private String _originalName;
 

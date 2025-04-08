@@ -48,7 +48,7 @@ if (commerceOrderPayment != null) {
 				</aui:button-row>
 			</div>
 		</c:when>
-		<c:when test="<%= paymentStatus == CommerceOrderPaymentConstants.STATUS_COMPLETED %>">
+		<c:when test="<%= (paymentStatus == CommerceOrderPaymentConstants.STATUS_COMPLETED) || (paymentStatus == CommerceOrderPaymentConstants.STATUS_NOT_REQUIRED) %>">
 			<div class="success-message">
 				<liferay-ui:message key="success-your-order-has-been-processed" />
 			</div>

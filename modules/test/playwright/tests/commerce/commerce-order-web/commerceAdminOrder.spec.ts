@@ -697,3 +697,99 @@ test('LPD-47793 Notes should be visible using their respective permissions in th
 		)
 	).toBeVisible();
 });
+
+test('LPD-31378 Check order date formatted correctly', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	page,
+}) => {
+	await test.step('Create commerce site', async () => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'Minium',
+			templateKey: 'minium-initializer',
+			templateType: 'site-initializer',
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await applicationsMenuPage.goToSite('Minium');
+	});
+
+	await test.step('Add transmission to shopping cart', async () => {
+		const accountNameField = page.getByText('There is no order selected.');
+		await accountNameField.waitFor({state: 'visible'});
+
+		const transmissionButton = page
+			.locator('#wwxc_column_2d_2_1_add_to_cart')
+			.getByRole('button', {name: 'Add to Cart'});
+
+		await transmissionButton.waitFor({state: 'visible'});
+		await transmissionButton.click();
+
+		const cartButton = page.locator('[data-qa-id="miniCartButton"]');
+
+		await cartButton.waitFor({state: 'visible'});
+		await cartButton.click();
+	});
+
+	await test.step('Complete order', async () => {
+		const submitButton = page.getByRole('button', {name: 'Submit'});
+		await submitButton.waitFor({state: 'visible'});
+		await submitButton.click();
+
+		await page.getByPlaceholder('Name', {exact: true}).fill('Name');
+
+		await page.getByPlaceholder('Phone Number').fill('Number');
+
+		await page.getByPlaceholder('Address', {exact: true}).fill('Address');
+
+		await page
+			.locator(
+				'[id="_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_countryId"]'
+			)
+			.selectOption('United States');
+
+		await page.getByPlaceholder('Zip').fill('Zip');
+
+		await page.getByPlaceholder('City').fill('City');
+
+		await page.getByRole('button', {name: 'Continue'}).click();
+
+		await page.getByRole('button', {name: 'Continue'}).click();
+
+		await page.getByRole('button', {name: 'Continue'}).click();
+	});
+
+	await test.step('Check date and time of order', async () => {
+		await page.getByRole('button', {name: 'Go to Order Details'}).click();
+
+		const orderDate = await page
+			.locator('dl.commerce-list:has-text("Order Date") dd')
+			.textContent();
+
+		const orderId = await page
+			.locator('dl.commerce-list:has-text("Order ID") dd')
+			.textContent();
+
+		await page.getByRole('link', {name: 'Placed Orders'}).click();
+
+		const cleanedDateText = orderDate.replace(/\s+/g, ' ').trim();
+
+		const cleanedDateText2 = cleanedDateText.replace(
+			/(\w+ \d+, )(\d{2})/,
+			'$120$2,'
+		);
+
+		await page.getByTestId('applicationsMenu').click();
+
+		await page.getByRole('tab', {name: 'Commerce'}).click();
+
+		await page.getByRole('menuitem', {name: 'Orders'}).click();
+
+		const orderDate2 = await page
+			.locator(`tr:has-text("${orderId}") .cell-orderDate`)
+			.textContent();
+
+		expect(cleanedDateText2).toBe(orderDate2);
+	});
+});

@@ -14,7 +14,13 @@ import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
-export default function CreateTagsModalContent({tagsURL}: {tagsURL: string}) {
+export default function CreateTagsModalContent({
+	closeModal,
+	tagsURL,
+}: {
+	closeModal: () => void;
+	tagsURL: string;
+}) {
 	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
 
 	const assetLibraries = selectedSpaces.map((number) => ({
@@ -112,7 +118,7 @@ export default function CreateTagsModalContent({tagsURL}: {tagsURL: string}) {
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => navigate(tagsURL)}
+							onClick={closeModal}
 							type="button"
 						>
 							{Liferay.Language.get('cancel')}

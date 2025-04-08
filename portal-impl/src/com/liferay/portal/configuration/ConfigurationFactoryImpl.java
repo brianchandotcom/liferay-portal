@@ -31,7 +31,7 @@ public class ConfigurationFactoryImpl implements ConfigurationFactory {
 		}
 
 		CONFIGURATION_PORTAL = new ConfigurationImpl(
-			classLoader, PropsFiles.PORTAL, null);
+			classLoader, PropsFiles.PORTAL);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class ConfigurationFactoryImpl implements ConfigurationFactory {
 			return null;
 		}
 
-		return new ConfigurationImpl(classLoader, name, null);
+		return new ConfigurationImpl(classLoader, name);
 	}
 
 }

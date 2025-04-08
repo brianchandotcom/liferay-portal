@@ -3,10 +3,10 @@
 <config
 	xmlns="urn:org:jgroups"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups-4.2.xsd"
+	xsi:schemaLocation="urn:org:jgroups http://www.jgroups.org/schema/jgroups-4.1.xsd"
 >
 	<TCP
-		bind_port="{{ (index .Values.service.ports 1).port }}"
+		bind_port="{{ (index .Values.service.ports 0).port }}"
 		max_bundle_size="64K"
 		port_range="1"
 		recv_buf_size="${tcp.recv_buf_size:5M}"
@@ -23,7 +23,7 @@
 	/>
 	<MERGE3 max_interval="30000" min_interval="10000" />
 	<FD_SOCK />
-	<FD max_tries="3" timeout="3000" />
+	<FD_ALL timeout="9000" interval="3000" />
 	<VERIFY_SUSPECT timeout="1500" />
 	<BARRIER />
 	<pbcast.NAKACK2 discard_delivered_msgs="true" use_mcast_xmit="false" />
@@ -32,8 +32,9 @@
 		stability_delay="1000" desired_avg_gossip="50000" max_bytes="4M"
 	/>
 	<pbcast.GMS
-		print_local_addr="true" join_timeout="2000" view_bundling="true"
+		print_local_addr="true" join_timeout="2000"
 	/>
+	<UFC max_credits="2M" min_threshold="0.4" />
 	<MFC max_credits="2M" min_threshold="0.4" />
 	<FRAG2 frag_size="60K" />
 	<pbcast.STATE_TRANSFER />

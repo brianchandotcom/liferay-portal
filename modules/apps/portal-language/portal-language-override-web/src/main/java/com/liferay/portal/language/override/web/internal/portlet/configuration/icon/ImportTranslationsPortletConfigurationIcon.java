@@ -65,14 +65,9 @@ public class ImportTranslationsPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PortalPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES)) {
-
-			return true;
-		}
-
-		return false;
+		return PortalPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(),
+			PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
 	}
 
 	@Reference

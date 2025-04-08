@@ -445,7 +445,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 		Company company, String name, boolean defaultValue) {
 
 		String value = PrefsPropsUtil.getString(
-			company.getCompanyId(), name, PropsUtil.get(company, name));
+			company.getCompanyId(), name, PropsUtil.get(name));
 
 		if (value != null) {
 			return GetterUtil.getBoolean(value);
@@ -458,7 +458,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 		Company company, String name, String defaultValue) {
 
 		String value = PrefsPropsUtil.getString(
-			company.getCompanyId(), name, PropsUtil.get(company, name));
+			company.getCompanyId(), name, PropsUtil.get(name));
 
 		if (value != null) {
 			return value;

@@ -199,10 +199,21 @@ public class DateTimeObjectFieldBusinessType
 	private LocalDateTime _getLocalDateTime(
 		String sourceTimeZoneId, String targetTimeZoneId, String value) {
 
+		String pattern = ObjectFieldUtil.getDateTimePattern(value);
+
+		if (pattern.contains("'Z'")) {
+			sourceTimeZoneId = StringPool.UTC;
+		}
+		else if (pattern.contains("Z") || pattern.contains("zzz")) {
+			ZonedDateTime zonedDateTime = ZonedDateTime.parse(
+				value, DateTimeFormatter.ofPattern(pattern));
+
+			sourceTimeZoneId = zonedDateTime.getZone(
+			).getId();
+		}
+
 		LocalDateTime localDateTime = LocalDateTime.parse(
-			value,
-			DateTimeFormatter.ofPattern(
-				ObjectFieldUtil.getDateTimePattern(value)));
+			value, DateTimeFormatter.ofPattern(pattern));
 
 		if (Validator.isNull(sourceTimeZoneId) ||
 			Validator.isNull(targetTimeZoneId)) {

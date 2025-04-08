@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
@@ -40,7 +41,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.BundleActivator;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Víctor Galán
@@ -85,51 +85,20 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
+			User user = UserTestUtil.getAdminUser(
+				PortalUtil.getDefaultCompanyId());
 
-			String previewURL = null;
+			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+				null, user.getUserId(), user.getGroupId(), 0, "test-file.txt",
+				"text/plain", _TEST_FILE_CONTENT.getBytes(), null, null, null,
+				new ServiceContext());
 
-			ServiceReference<DLAppLocalService>
-				dlAppLocalServiceServiceReference =
-					bundleContext.getServiceReference(DLAppLocalService.class);
-			ServiceReference<DLURLHelper> dlUrlHelperServiceReference =
-				bundleContext.getServiceReference(DLURLHelper.class);
+			autoCloseables.add(
+				() -> _dlAppLocalService.deleteFileEntry(
+					fileEntry.getFileEntryId()));
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
-
-			try {
-				DLAppLocalService dlAppLocalService = bundleContext.getService(
-					dlAppLocalServiceServiceReference);
-
-				FileEntry fileEntry = dlAppLocalService.addFileEntry(
-					null, user.getUserId(), user.getGroupId(), 0,
-					"test-file.txt", "text/plain",
-					_TEST_FILE_CONTENT.getBytes(), null, null, null,
-					new ServiceContext());
-
-				autoCloseables.add(
-					() -> {
-						dlAppLocalService.deleteFileEntry(
-							fileEntry.getFileEntryId());
-
-						bundleContext.ungetService(
-							dlAppLocalServiceServiceReference);
-						bundleContext.ungetService(dlUrlHelperServiceReference);
-					});
-
-				DLURLHelper dlURLHelper = bundleContext.getService(
-					dlUrlHelperServiceReference);
-
-				previewURL = dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, "", false,
-					false);
-			}
-			catch (Exception exception) {
-				bundleContext.ungetService(dlAppLocalServiceServiceReference);
-				bundleContext.ungetService(dlUrlHelperServiceReference);
-
-				throw exception;
-			}
+			String previewURL = _dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, "", false, false);
 
 			registerJaxRsApplication(
 				new TestPreviewURLApplication(previewURL), "preview-url",
@@ -138,7 +107,7 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 				).build());
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication",
+				PortalUtil.getDefaultCompanyId(), user, "oauthTestApplication",
 				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
 				Arrays.asList("GET", "everything.read.documents.download"));
 		}
@@ -163,5 +132,11 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 	}
 
 	private static final String _TEST_FILE_CONTENT = "Test File Content";
+
+	@Inject
+	private static DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private static DLURLHelper _dlURLHelper;
 
 }

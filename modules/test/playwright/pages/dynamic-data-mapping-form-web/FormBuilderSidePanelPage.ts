@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 export class FormBuilderSidePanelPage {
+	readonly addMultipleSelectionButton: Locator;
 	readonly addSelectFromListButton: Locator;
 	readonly addSelectOptionButton: Locator;
 	readonly addSingleSelectionButton: Locator;
@@ -22,6 +23,9 @@ export class FormBuilderSidePanelPage {
 	readonly requiredFieldToggleSwitch: Locator;
 
 	constructor(page: Page) {
+		this.addMultipleSelectionButton = page.getByRole('button', {
+			name: 'Press enter to add Multiple Selection field.',
+		});
 		this.addSelectFromListButton = page.getByRole('button', {
 			name: 'Press enter to add Select',
 		});

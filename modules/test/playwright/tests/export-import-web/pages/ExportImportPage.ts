@@ -76,7 +76,10 @@ export class ExportImportPage {
 		expect(wikiLabelCount).toBe(0);
 	}
 
-	async createNewImportProcess(folderPath: string) {
+	async createNewImportProcess(
+		folderPath: string,
+		expectedUploadErrorMessage?: string
+	) {
 		await this.newImportButton.click();
 
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
@@ -86,6 +89,14 @@ export class ExportImportPage {
 		const fileChooser = await fileChooserPromise;
 
 		await fileChooser.setFiles(folderPath);
+
+		if (expectedUploadErrorMessage) {
+			await expect(
+				this.page.getByText(expectedUploadErrorMessage)
+			).toBeVisible();
+
+			return;
+		}
 
 		await this.continueButton.click();
 

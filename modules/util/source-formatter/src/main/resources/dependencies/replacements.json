@@ -3777,6 +3777,76 @@
 	},
 	{
 		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, long paramName)",
+		"issueKey": "LPD-41285",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#1#, null, StringPool.BLANK)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, long paramName, boolean paramName)",
+		"issueKey": "LPD-41285",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#1#, null, StringPool.BLANK, param#2#)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, String paramName)",
+		"issueKey": "LPD-41285",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#0#, param#1#, StringPool.BLANK)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, String paramName, boolean paramName)",
+		"issueKey": "LPD-41285",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#0#, param#1#, StringPool.BLANK, param#2#)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, String paramName, int paramName)",
+		"issueKey": "LPD-41285",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#0#, param#1#, param#2#, StringPool.BLANK)"
+	},
+	{
+		"classNames": [
 			"DDMTemplateLocalService",
 			"DDMTemplateLocalServiceUtil"
 		],

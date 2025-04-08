@@ -82,11 +82,7 @@ public class StagedExpandoColumnStagedModelDataHandler
 			fetchStagedModelsByUuidAndCompanyId(
 				uuid, portletDataContext.getCompanyId());
 
-		if (ListUtil.isEmpty(stagedExpandoColumns)) {
-			return false;
-		}
-
-		return true;
+		return !ListUtil.isEmpty(stagedExpandoColumns);
 	}
 
 	@Override

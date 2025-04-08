@@ -23,24 +23,14 @@ public class DepotEntryInfoPermissionProvider
 	public boolean hasAddPermission(
 		long groupId, PermissionChecker permissionChecker) {
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				permissionChecker.getCompanyId(), "LPD-17564")) {
-
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled(
+			permissionChecker.getCompanyId(), "LPD-17564");
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
-		if (FeatureFlagManagerUtil.isEnabled(
-				permissionChecker.getCompanyId(), "LPD-17564")) {
-
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled(
+			permissionChecker.getCompanyId(), "LPD-17564");
 	}
 
 }

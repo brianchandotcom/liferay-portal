@@ -60,6 +60,19 @@ const BaseEditor = forwardRef(
 					delete window.CKEDITOR;
 				}
 			});
+
+			Liferay.once('screenDeactivate', () => {
+				if (
+					window.CKEDITOR &&
+					Object.keys(window.CKEDITOR.instances).length
+				) {
+					Object.keys(window.CKEDITOR.instances).forEach(
+						(editorName) => {
+							window.CKEDITOR.instances[editorName].setData();
+						}
+					);
+				}
+			});
 		}, []);
 
 		useEffect(() => {

@@ -4,7 +4,6 @@ output "cluster_name" {
 }
 
 output "deployment_namespace" {
-	description="Deployment namespace"
 	value=var.deployment_namespace
 }
 

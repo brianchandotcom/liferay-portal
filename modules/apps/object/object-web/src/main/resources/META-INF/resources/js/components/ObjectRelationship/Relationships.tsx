@@ -297,7 +297,7 @@ export default function Relationships({
 						<ClayLink
 							decoration="underline"
 							href={toastAction.linkHref}
-							style={{color: 'inherit'}}
+							style={{fontWeight: 'bold'}}
 						>
 							{toastAction.linkLabel}
 						</ClayLink>

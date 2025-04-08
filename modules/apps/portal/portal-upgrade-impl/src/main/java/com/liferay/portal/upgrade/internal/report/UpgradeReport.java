@@ -74,6 +74,8 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.lang.model.SourceVersion;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
 import org.apache.logging.log4j.ThreadContext;
@@ -567,27 +569,22 @@ public class UpgradeReport {
 				Map<String, Long> upgradeProcessDurations = new HashMap<>();
 
 				for (String message : messages) {
-					int startIndex = message.indexOf("com.");
+					String[] parts = StringUtil.split(
+						message, StringPool.SPACE);
 
-					int endIndex = message.indexOf(
-						StringPool.SPACE, startIndex);
-
-					String className = message.substring(startIndex, endIndex);
-
-					if (className.equals(
-							PortalUpgradeProcess.class.getName())) {
+					if (ArrayUtil.contains(
+							parts, PortalUpgradeProcess.class.getName())) {
 
 						continue;
 					}
 
-					startIndex = message.indexOf(
-						StringPool.SPACE, endIndex + 1);
+					String className = ArrayUtil.filter(
+						parts,
+						part ->
+							SourceVersion.isName(part) &&
+							!SourceVersion.isIdentifier(part))[0];
 
-					endIndex = message.indexOf(
-						StringPool.SPACE, startIndex + 1);
-
-					long duration = GetterUtil.getLong(
-						message.substring(startIndex, endIndex));
+					long duration = GetterUtil.getLong(parts[parts.length - 2]);
 
 					if (duration >=
 							PropsValues.

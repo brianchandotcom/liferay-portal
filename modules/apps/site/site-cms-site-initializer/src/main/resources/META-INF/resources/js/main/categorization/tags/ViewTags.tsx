@@ -4,10 +4,11 @@
  */
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
-import {openModal, openToast} from 'frontend-js-components-web';
-import {fetch, navigate, sub} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
 import SpaceSticker from '../../components/SpaceSticker';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
@@ -123,8 +124,12 @@ export default function ViewTags({
 		title: Liferay.Language.get('no-tags-yet'),
 	};
 
-	const onDeleteClick = (itemData: {
-		itemData: {actions: {delete: {href: string; method: string}}};
+	const deleteTag = ({
+		itemData,
+		loadData,
+	}: {
+		itemData: any;
+		loadData: () => {};
 	}) => {
 		openModal({
 			bodyHTML: Liferay.Language.get(
@@ -141,48 +146,19 @@ export default function ViewTags({
 					displayType: 'danger',
 					label: Liferay.Language.get('delete'),
 					onClick: ({processClose}: {processClose: Function}) => {
+						executeAsyncItemAction({
+							method: itemData.actions.delete.method,
+							refreshData: loadData,
+							successMessage: sub(
+								Liferay.Language.get(
+									'x-was-deleted-successfully'
+								),
+								`<strong>${Liferay.Util.escapeHTML(itemData.name)}</strong>`
+							),
+							url: itemData.actions.delete.href,
+						});
+
 						processClose();
-
-						const deleteURL = itemData.itemData.actions.delete.href;
-
-						fetch(deleteURL, {
-							headers: {
-								'Accept': 'application/json',
-								'Content-Type': 'application/json',
-								'x-csrf-token': Liferay.authToken,
-							},
-							method: itemData.itemData.actions.delete.method,
-						})
-							.then((response) => {
-								if (response.ok) {
-									openToast({
-										message: Liferay.Language.get(
-											'your-request-completed-successfully'
-										),
-										title: Liferay.Language.get('success'),
-										type: 'success',
-									});
-								}
-								else {
-									openToast({
-										message: Liferay.Language.get(
-											'an-unexpected-error-occurred'
-										),
-										title: Liferay.Language.get('error'),
-										type: 'danger',
-									});
-								}
-							})
-							.catch(() => {
-								openToast({
-									message: Liferay.Language.get(
-										'an-unexpected-error-occurred'
-									),
-									title: Liferay.Language.get('error'),
-									type: 'danger',
-								});
-							});
-						navigate(tagsURL);
 					},
 				},
 			],
@@ -192,6 +168,44 @@ export default function ViewTags({
 				Liferay.Language.get('tag')
 			),
 		});
+	};
+
+	const editTag = ({
+		itemData,
+		loadData,
+	}: {
+		itemData: any;
+		loadData: () => {};
+	}) => {
+		openModal({
+			contentComponent: ({closeModal}: {closeModal: () => void}) =>
+				EditTagsModal({
+					assetLibraries: itemData.assetLibraries,
+					closeModal,
+					editTagURL: itemData.actions.replace.href,
+					loadData,
+					tagId: itemData.id,
+					tagName: itemData.name,
+				}),
+			size: 'md',
+		});
+	};
+
+	const onActionDropdownItemClick = ({
+		action,
+		itemData,
+		loadData,
+	}: {
+		action: any;
+		itemData: any;
+		loadData: () => {};
+	}) => {
+		if (action.id === 'deleteTag') {
+			deleteTag({itemData, loadData});
+		}
+		else if (action.id === 'editTag') {
+			editTag({itemData, loadData});
+		}
 	};
 
 	return (
@@ -219,36 +233,23 @@ export default function ViewTags({
 				id="ViewTags"
 				itemsActions={[
 					{
-						icon: 'pencil',
-						label: Liferay.Language.get('edit'),
-						onClick: (itemData: {itemData: any}) => {
-							openModal({
-								contentComponent: ({
-									closeModal,
-								}: {
-									closeModal: () => void;
-								}) =>
-									EditTagsModal({
-										assetLibraries:
-											itemData.itemData.assetLibraries,
-										closeModal,
-										tagId: itemData.itemData.id,
-										tagName: itemData.itemData.name,
-										tagsURL,
-									}),
-								size: 'md',
-							});
+						data: {
+							permissionKey: 'replace',
 						},
+						icon: 'pencil',
+						id: 'editTag',
+						label: Liferay.Language.get('edit'),
 					},
 					{
 						data: {
 							permissionKey: 'delete',
 						},
 						icon: 'trash',
+						id: 'deleteTag',
 						label: Liferay.Language.get('delete'),
-						onClick: onDeleteClick,
 					},
 				]}
+				onActionDropdownItemClick={onActionDropdownItemClick}
 				showManagementBar={true}
 				showSearch={true}
 				views={views}

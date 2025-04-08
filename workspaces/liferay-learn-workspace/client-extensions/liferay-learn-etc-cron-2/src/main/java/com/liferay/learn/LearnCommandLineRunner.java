@@ -5,8 +5,8 @@
 
 package com.liferay.learn;
 
-import com.liferay.client.extension.util.spring.boot.BaseRestController;
-import com.liferay.client.extension.util.spring.boot.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 
 import org.json.JSONObject;
 

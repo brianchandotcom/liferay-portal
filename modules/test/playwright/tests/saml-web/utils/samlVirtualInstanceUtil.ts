@@ -179,7 +179,7 @@ export async function resetSamlConfiguration(page: Page) {
 	) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: systemSettingsPage.page.getByRole('link', {
+			target: systemSettingsPage.page.getByRole('menuitem', {
 				name: 'Reset Default Values',
 			}),
 			trigger: systemSettingsPage.page.getByRole('button', {
@@ -201,7 +201,7 @@ export async function resetSamlKeystoreManagerTarget(page: Page) {
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
-		target: systemSettingsPage.page.getByRole('link', {
+		target: systemSettingsPage.page.getByRole('menuitem', {
 			name: 'Reset Default Values',
 		}),
 		trigger: systemSettingsPage.page.getByRole('button', {name: 'Actions'}),

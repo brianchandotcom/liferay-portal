@@ -1496,7 +1496,7 @@ test('LPD-32213 AC1 TC1 and TC5: Verify SP initiated SSO from a restricted resou
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
-		target: siteSettingsPage.page.getByRole('link', {
+		target: siteSettingsPage.page.getByRole('menuitem', {
 			name: 'Reset Default Values',
 		}),
 		trigger: siteSettingsPage.page.getByRole('button', {

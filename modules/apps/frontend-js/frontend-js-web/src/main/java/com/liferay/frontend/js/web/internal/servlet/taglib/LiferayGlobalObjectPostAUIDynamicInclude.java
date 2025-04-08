@@ -45,12 +45,10 @@ public class LiferayGlobalObjectPostAUIDynamicInclude
 		throws IOException {
 
 		if (_bundle == null) {
-			_log.error("Bundle is not set");
+			_log.error("Bundle is nul")l;
 
 			return;
 		}
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		try {
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
@@ -63,7 +61,7 @@ public class LiferayGlobalObjectPostAUIDynamicInclude
 						_bundle, "/Liferay.js");
 
 			_renderScript(
-				httpServletRequest, printWriter,
+				httpServletRequest, httpServletResponse.getWriter(),
 				bundleScriptAbsolutePortalURLBuilder.build(),
 				"text/javascript");
 		}

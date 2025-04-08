@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForLoading} from '../../tests/osb-faro-web/utils/loading';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
@@ -22,10 +23,10 @@ export class LoginInstanceSettingsPage {
 
 	async goto() {
 		await this.instanceSettingsPage.goToInstanceSetting('Login', 'Login');
+		await waitForLoading(this.page);
 	}
 
 	async enableLoginPrompt() {
-		await this.page.getByRole('menuitem', {name: 'Login'}).waitFor();
 		await this.page.getByLabel('Prompt Enabled').check();
 		await this.saveButton.click();
 		await waitForAlert(this.page);

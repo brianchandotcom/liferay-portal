@@ -248,7 +248,6 @@ public class BatchEnginePortletDataHandlerTest {
 			_getExternalReferenceCodesJSON(
 				_objectDefinition1.getName(), file),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 			).toString(),
@@ -266,7 +265,6 @@ public class BatchEnginePortletDataHandlerTest {
 			_getExternalReferenceCodesJSON(
 				_objectDefinition2.getName(), file),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 			).toString(),
@@ -287,7 +285,6 @@ public class BatchEnginePortletDataHandlerTest {
 			_getExternalReferenceCodesJSON(
 				_objectDefinition1.getName(), file),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				_objectEntry4.getExternalReferenceCode()
@@ -295,7 +292,6 @@ public class BatchEnginePortletDataHandlerTest {
 			_getExternalReferenceCodesJSON(
 				_objectDefinition2.getName(), file),
 			JSONCompareMode.LENIENT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 			).toString(),
@@ -323,12 +319,10 @@ public class BatchEnginePortletDataHandlerTest {
 			_objectEntryLocalService.fetchObjectEntry(
 				_objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
-
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				_objectEntry2.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
-
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				_objectEntry3.getExternalReferenceCode(),
@@ -340,12 +334,10 @@ public class BatchEnginePortletDataHandlerTest {
 			_objectEntryLocalService.fetchObjectEntry(
 				_objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
-
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				_objectEntry2.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
-
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				_objectEntry3.getExternalReferenceCode(),

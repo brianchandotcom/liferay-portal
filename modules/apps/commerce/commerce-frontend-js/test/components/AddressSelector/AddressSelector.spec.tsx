@@ -8,7 +8,9 @@
 import fetchMock from 'fetch-mock';
 
 import {
+	IAddressSubtypeConfiguration,
 	ICountryAPIResponse,
+	IListTypeEntryAPIResponse,
 	IPostalAddress,
 	IPostalAddressAPIResponse,
 } from '../../../src/main/resources/META-INF/resources/components/multishipping/Types';
@@ -16,6 +18,7 @@ import {
 import '@testing-library/jest-dom/extend-expect';
 import {RenderResult, cleanup, render, waitFor} from '@testing-library/react';
 import React from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 
 import AddressSelector from '../../../src/main/resources/META-INF/resources/components/multishipping/AddressSelector';
 import * as ErrorMessage from '../../../src/main/resources/META-INF/resources/components/multishipping/ErrorMessage';
@@ -26,6 +29,7 @@ interface ILocators {
 	addressIdSelect: HTMLSelectElement;
 	addressLocalityInput: HTMLInputElement;
 	addressRegionSelect: HTMLSelectElement;
+	addressSubtypeInput: HTMLInputElement;
 	nameInput: HTMLInputElement;
 	phoneNumberInput: HTMLInputElement;
 	postalCodeInput: HTMLInputElement;
@@ -40,6 +44,7 @@ function getLocators(renderedComponent: RenderResult): ILocators {
 		addressIdSelect: renderedComponent.getByLabelText('choose-x'),
 		addressLocalityInput: renderedComponent.getByLabelText('city'),
 		addressRegionSelect: renderedComponent.getByLabelText('region'),
+		addressSubtypeInput: renderedComponent.queryByLabelText('subtype'),
 		nameInput: renderedComponent.getByLabelText('address-name'),
 		phoneNumberInput: renderedComponent.getByLabelText('phone-number'),
 		postalCodeInput: renderedComponent.getByLabelText('zip'),
@@ -99,7 +104,41 @@ const POSTAL_ADDRESS_DATA: Array<IPostalAddress> = [
 		id: 104,
 		name: 'name4',
 	},
+	{
+		addressCountry: 'United States',
+		addressLocality: 'addressLocality1',
+		addressRegion: 'Alabama',
+		addressSubtype: 'SHIPPING2',
+		addressType: 'shipping',
+		externalReferenceCode: '71061669-ba97-943c-70a3-96cdc0c8305a',
+		id: 105,
+		name: 'name1',
+		phoneNumber: 'phoneNumber1',
+		postalCode: 'postalCode1',
+		primary: false,
+		streetAddressLine1: 'streetAddressLine11',
+		streetAddressLine2: 'streetAddressLine21',
+		streetAddressLine3: 'streetAddressLine31',
+	},
+	{
+		addressCountry: 'United States',
+		addressLocality: 'addressLocality1',
+		addressRegion: 'Alabama',
+		addressSubtype: 'BILLINGANDSHIPPING2',
+		addressType: 'billing-and-shipping',
+		externalReferenceCode: '71061669-ba97-943c-70a3-96cdc0c8305a',
+		id: 106,
+		name: 'name1',
+		phoneNumber: 'phoneNumber1',
+		postalCode: 'postalCode1',
+		primary: false,
+		streetAddressLine1: 'streetAddressLine11',
+		streetAddressLine2: 'streetAddressLine21',
+		streetAddressLine3: 'streetAddressLine31',
+	},
 ];
+
+global.ResizeObserver = ResizeObserver;
 
 describe('AddressSelector', () => {
 	const handleSubmit = jest.fn();
@@ -227,7 +266,7 @@ describe('AddressSelector', () => {
 		let {addressIdSelect} = getLocators(renderedComponent);
 
 		await waitFor(() => {
-			expect(addressIdSelect?.options?.length).toBe(4);
+			expect(addressIdSelect?.options?.length).toBe(6);
 		});
 
 		renderedComponent.unmount();
@@ -245,7 +284,7 @@ describe('AddressSelector', () => {
 		({addressIdSelect} = getLocators(renderedComponent));
 
 		await waitFor(() => {
-			expect(addressIdSelect?.options?.length).toBe(3);
+			expect(addressIdSelect?.options?.length).toBe(4);
 		});
 	});
 
@@ -433,7 +472,7 @@ describe('AddressSelector', () => {
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
-			expect(addressIdSelect?.options?.length).toBe(4);
+			expect(addressIdSelect?.options?.length).toBe(6);
 		});
 
 		changeAddress(
@@ -498,7 +537,7 @@ describe('AddressSelector', () => {
 
 		await waitFor(() => {
 			expect(addressCountrySelect?.options?.length).toBe(3);
-			expect(addressIdSelect?.options?.length).toBe(4);
+			expect(addressIdSelect?.options?.length).toBe(6);
 		});
 
 		expect(addressCountrySelect).toBeDisabled();
@@ -688,6 +727,393 @@ describe('AddressSelector', () => {
 			expect(spyOnShowError).toHaveBeenCalledTimes(1);
 			expect(handlerCallbackResult.id).toBe(0);
 		});
+	});
+
+	it('Must hide the subtype field if configuration is not provided', async () => {
+		const renderedComponent = render(
+			<AddressSelector
+				accountId={10}
+				setHandleNameChange={jest.fn()}
+				setHandleSubmit={handleSubmit}
+				setIsFormValid={isFormValid}
+			/>
+		);
+
+		expect(fetchMock.calls().matched.length).toBe(2);
+
+		const {addressSubtypeInput} = getLocators(renderedComponent);
+
+		expect(addressSubtypeInput).not.toBeInTheDocument();
+	});
+
+	it('Must show the subtype field if configuration is provided', async () => {
+		fetchMock.get(
+			/headless-admin-list-type\/.*\/list-type-definitions\/by-external-reference-code\/\w+\/list-type-entries/i,
+			(): IListTypeEntryAPIResponse => {
+				return {
+					items: [
+						{id: 100, key: 'SHIPPING1', name: 'SHIPPING 1'},
+						{id: 101, key: 'SHIPPING2', name: 'SHIPPING 2'},
+					],
+				};
+			}
+		);
+
+		const renderedComponent = render(
+			<AddressSelector
+				accountId={10}
+				addressSubtypeConfiguration={{
+					billingAndShipping: 'ERCBILLINGANDSHIPPING',
+					shipping: 'ERCSHIPPING',
+				}}
+				setHandleNameChange={jest.fn()}
+				setHandleSubmit={handleSubmit}
+				setIsFormValid={isFormValid}
+			/>
+		);
+
+		expect(fetchMock.calls().matched.length).toBe(3);
+
+		const {addressSubtypeInput} = getLocators(renderedComponent);
+
+		await waitFor(() => {
+			expect(addressSubtypeInput).toBeVisible();
+		});
+	});
+
+	it('Must show the subtype field disabled if configuration is not provided for specific address type', async () => {
+		const renderedComponent = render(
+			<AddressSelector
+				accountId={10}
+				addressSubtypeConfiguration={{
+					billingAndShipping: 'ERCBILLINGANDSHIPPING',
+				}}
+				setHandleNameChange={jest.fn()}
+				setHandleSubmit={handleSubmit}
+				setIsFormValid={isFormValid}
+			/>
+		);
+
+		expect(fetchMock.calls().matched.length).toBe(2);
+
+		const {addressSubtypeInput} = getLocators(renderedComponent);
+
+		await waitFor(() => {
+			expect(addressSubtypeInput).toBeVisible();
+			expect(addressSubtypeInput).toBeDisabled();
+		});
+	});
+
+	it('Must save an empty subtype field when adding a new address', async () => {
+		fetchMock.get(
+			/headless-admin-list-type\/.*\/list-type-definitions\/by-external-reference-code\/\w+\/list-type-entries/i,
+			(): IListTypeEntryAPIResponse => {
+				return {
+					items: [
+						{id: 100, key: 'SHIPPING1', name: 'SHIPPING 1'},
+						{id: 101, key: 'SHIPPING2', name: 'SHIPPING 2'},
+					],
+				};
+			}
+		);
+
+		fetchMock.post(
+			/headless-admin-user\/.*\/accounts\/\d+\/postal-addresses$/i,
+			(): IPostalAddress => {
+				return {
+					addressCountry: 'United States',
+					addressLocality: 'addressLocality',
+					addressRegion: 'Alabama',
+					addressSubtype: '',
+					addressType: 'shipping',
+					externalReferenceCode: '2156-321-321',
+					id: 100,
+					name: 'name',
+					phoneNumber: 'phoneNumber',
+					postalCode: 'postalCode',
+					primary: false,
+					streetAddressLine1: 'streetAddressLine1',
+					streetAddressLine2: 'streetAddressLine2',
+					streetAddressLine3: 'streetAddressLine3',
+				};
+			}
+		);
+
+		const renderedComponent = render(
+			<AddressSelector
+				accountId={10}
+				addressSubtypeConfiguration={{shipping: 'ERCSHIPPING'}}
+				setHandleNameChange={jest.fn()}
+				setHandleSubmit={handleSubmit}
+				setIsFormValid={isFormValid}
+			/>
+		);
+
+		expect(fetchMock.calls().matched.length).toBe(3);
+
+		const {
+			addressCountrySelect,
+			addressLocalityInput,
+			addressRegionSelect,
+			addressSubtypeInput,
+			nameInput,
+			phoneNumberInput,
+			postalCodeInput,
+			streetAddressLine1Input,
+			streetAddressLine2Input,
+			streetAddressLine3Input,
+		} = getLocators(renderedComponent);
+
+		await waitFor(() => {
+			expect(addressCountrySelect?.options?.length).toBe(3);
+		});
+
+		await setFieldValue(addressCountrySelect, 'United States');
+		await setFieldValue(addressLocalityInput, 'addressLocality');
+		await setFieldValue(addressRegionSelect, 'Alabama');
+		await setFieldValue(addressSubtypeInput, '');
+		await setFieldValue(nameInput, 'name');
+		await setFieldValue(phoneNumberInput, 'phoneNumberInput');
+		await setFieldValue(postalCodeInput, 'postalCode');
+		await setFieldValue(streetAddressLine1Input, 'streetAddressLine1');
+		await setFieldValue(streetAddressLine2Input, 'streetAddressLine2');
+		await setFieldValue(streetAddressLine3Input, 'streetAddressLine3');
+
+		const handlerCallbackFunction: Function =
+			handleSubmit.mock.calls.pop()[0];
+		const handlerCallbackInstance: Function = handlerCallbackFunction();
+		const handlerCallbackResult: IPostalAddress =
+			await handlerCallbackInstance(new Event(''));
+		expect(handlerCallbackResult.id).toBe(100);
+
+		expect(fetchMock.calls().matched[3][1].body).toBe(
+			'{"addressType":"shipping","id":0,"primary":false,"addressRegion":"Alabama","addressCountry":"United States","addressLocality":"addressLocality","name":"name","phoneNumber":"phoneNumberInput","postalCode":"postalCode","streetAddressLine1":"streetAddressLine1","streetAddressLine2":"streetAddressLine2","streetAddressLine3":"streetAddressLine3"}'
+		);
+		expect(fetchMock.calls().matched[3][1].method).toBe('POST');
+	});
+
+	it('Must save the subtype field when adding a new address', async () => {
+		fetchMock.get(
+			/headless-admin-list-type\/.*\/list-type-definitions\/by-external-reference-code\/\w+\/list-type-entries/i,
+			(): IListTypeEntryAPIResponse => {
+				return {
+					items: [
+						{id: 100, key: 'SHIPPING1', name: 'SHIPPING 1'},
+						{id: 101, key: 'SHIPPING2', name: 'SHIPPING 2'},
+					],
+				};
+			}
+		);
+
+		fetchMock.post(
+			/headless-admin-user\/.*\/accounts\/\d+\/postal-addresses$/i,
+			(): IPostalAddress => {
+				return {
+					addressCountry: 'United States',
+					addressLocality: 'addressLocality',
+					addressRegion: 'Alabama',
+					addressSubtype: 'SHIPPING2',
+					addressType: 'shipping',
+					externalReferenceCode: '2156-321-321',
+					id: 100,
+					name: 'name',
+					phoneNumber: 'phoneNumber',
+					postalCode: 'postalCode',
+					primary: false,
+					streetAddressLine1: 'streetAddressLine1',
+					streetAddressLine2: 'streetAddressLine2',
+					streetAddressLine3: 'streetAddressLine3',
+				};
+			}
+		);
+
+		const renderedComponent = render(
+			<AddressSelector
+				accountId={10}
+				addressSubtypeConfiguration={{shipping: 'ERSHIPPING'}}
+				setHandleNameChange={jest.fn()}
+				setHandleSubmit={handleSubmit}
+				setIsFormValid={isFormValid}
+			/>
+		);
+
+		expect(fetchMock.calls().matched.length).toBe(3);
+
+		const {
+			addressCountrySelect,
+			addressLocalityInput,
+			addressRegionSelect,
+			addressSubtypeInput,
+			nameInput,
+			phoneNumberInput,
+			postalCodeInput,
+			streetAddressLine1Input,
+			streetAddressLine2Input,
+			streetAddressLine3Input,
+		} = getLocators(renderedComponent);
+
+		await waitFor(() => {
+			expect(addressCountrySelect?.options?.length).toBe(3);
+		});
+
+		await setFieldValue(addressCountrySelect, 'United States');
+		await setFieldValue(addressLocalityInput, 'addressLocality');
+		await setFieldValue(addressRegionSelect, 'Alabama');
+		await setFieldValue(nameInput, 'name');
+		await setFieldValue(phoneNumberInput, 'phoneNumberInput');
+		await setFieldValue(postalCodeInput, 'postalCode');
+		await setFieldValue(streetAddressLine1Input, 'streetAddressLine1');
+		await setFieldValue(streetAddressLine2Input, 'streetAddressLine2');
+		await setFieldValue(streetAddressLine3Input, 'streetAddressLine3');
+
+		await setFieldValue(addressSubtypeInput, 'SHIPPING1');
+		renderedComponent.getByRole('option', {name: 'SHIPPING 1'}).click();
+
+		await setFieldValue(addressSubtypeInput, 'SHIPPING2');
+		renderedComponent.getByRole('option', {name: 'SHIPPING 2'}).click();
+
+		const handlerCallbackFunction: Function =
+			handleSubmit.mock.calls.pop()[0];
+		const handlerCallbackInstance: Function = handlerCallbackFunction();
+		const handlerCallbackResult: IPostalAddress =
+			await handlerCallbackInstance(new Event(''));
+		expect(handlerCallbackResult.id).toBe(100);
+
+		expect(fetchMock.calls().matched[3][1].body).toBe(
+			'{"addressType":"shipping","id":0,"primary":false,"addressRegion":"Alabama","addressCountry":"United States","addressLocality":"addressLocality","name":"name","phoneNumber":"phoneNumberInput","postalCode":"postalCode","streetAddressLine1":"streetAddressLine1","streetAddressLine2":"streetAddressLine2","streetAddressLine3":"streetAddressLine3","addressSubtype":"SHIPPING2"}'
+		);
+		expect(fetchMock.calls().matched[3][1].method).toBe('POST');
+	});
+
+	it('Must preload subtype field if specified address as it', async () => {
+		fetchMock.get(
+			/headless-admin-list-type\/.*\/list-type-definitions\/by-external-reference-code\/\w+\/list-type-entries/i,
+			(): IListTypeEntryAPIResponse => {
+				return {
+					items: [
+						{id: 100, key: 'SHIPPING1', name: 'SHIPPING 1'},
+						{id: 101, key: 'SHIPPING2', name: 'SHIPPING 2'},
+					],
+				};
+			}
+		);
+
+		const selectedAddress = POSTAL_ADDRESS_DATA.find(
+			(address) => address.id === 105
+		) as IPostalAddress;
+
+		const renderedComponent = render(
+			<AddressSelector
+				accountId={10}
+				addressId={selectedAddress.id}
+				addressSubtypeConfiguration={{shipping: 'ERCSHIPPING'}}
+				setHandleNameChange={jest.fn()}
+				setHandleSubmit={handleSubmit}
+				setIsFormValid={isFormValid}
+			/>
+		);
+
+		expect(fetchMock.calls().matched.length).toBe(3);
+
+		const {addressIdSelect, addressSubtypeInput} =
+			getLocators(renderedComponent);
+
+		await waitFor(() => {
+			expect(addressIdSelect?.options?.length).toBe(6);
+		});
+
+		expect(addressSubtypeInput).toBeDisabled();
+		expect(addressSubtypeInput).toHaveValue('SHIPPING 2');
+
+		expect(isFormValid).toBeCalledWith(true);
+	});
+
+	it('Must preload the subtype field when selecting an existing address', async () => {
+		const mockFetch = jest
+			.fn()
+			.mockReturnValueOnce(() => {
+				return {
+					items: [
+						{id: 100, key: 'SHIPPING1', name: 'SHIPPING 1'},
+						{id: 101, key: 'SHIPPING2', name: 'SHIPPING 2'},
+					],
+				} as IAddressSubtypeConfiguration;
+			})
+			.mockReturnValueOnce(() => {
+				return {
+					items: [
+						{
+							id: 100,
+							key: 'BILLINGANDSHIPPING1',
+							name: 'BILLING AND SHIPPING 1',
+						},
+						{
+							id: 101,
+							key: 'BILLINGANDSHIPPING2',
+							name: 'BILLING AND SHIPPING 2',
+						},
+					],
+				} as IAddressSubtypeConfiguration;
+			})
+			.mockReturnValue(() => {
+				return {
+					items: [
+						{id: 100, key: 'SHIPPING1', name: 'SHIPPING 1'},
+						{id: 101, key: 'SHIPPING2', name: 'SHIPPING 2'},
+					],
+				} as IAddressSubtypeConfiguration;
+			});
+
+		fetchMock.get(
+			/headless-admin-list-type\/.*\/list-type-definitions\/by-external-reference-code\/\w+\/list-type-entries/i,
+			mockFetch
+		);
+
+		const renderedComponent = render(
+			<AddressSelector
+				accountId={10}
+				addressSubtypeConfiguration={{
+					billingAndShipping: 'ERCBILLINGANDSHIPPING',
+					shipping: 'ERCSHIPPING',
+				}}
+				setHandleNameChange={jest.fn()}
+				setHandleSubmit={handleSubmit}
+				setIsFormValid={isFormValid}
+			/>
+		);
+
+		expect(fetchMock.calls().matched.length).toBe(3);
+
+		const {addressIdSelect, addressSubtypeInput} =
+			getLocators(renderedComponent);
+
+		const changeAddress = async (addressId: number, subtype: string) => {
+			setFieldValue(addressIdSelect, String(addressId));
+
+			await waitFor(() => {
+				expect(addressSubtypeInput).toBeDisabled();
+				expect(addressSubtypeInput).toHaveValue(subtype);
+			});
+		};
+
+		await waitFor(() => {
+			expect(addressIdSelect?.options?.length).toBe(6);
+		});
+
+		await changeAddress(105, 'SHIPPING 2');
+
+		expect(fetchMock.calls().matched.length).toBe(3);
+		expect(isFormValid).toBeCalledWith(true);
+
+		await changeAddress(106, 'BILLING AND SHIPPING 2');
+
+		expect(fetchMock.calls().matched.length).toBe(4);
+		expect(isFormValid).toBeCalledWith(true);
+
+		await changeAddress(101, '');
+
+		expect(fetchMock.calls().matched.length).toBe(4);
+		expect(isFormValid).toBeCalledWith(true);
 	});
 });
 

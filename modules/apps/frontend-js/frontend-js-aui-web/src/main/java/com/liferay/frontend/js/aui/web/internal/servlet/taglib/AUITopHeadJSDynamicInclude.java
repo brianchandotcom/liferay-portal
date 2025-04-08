@@ -64,7 +64,7 @@ public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 			else {
 				_renderBundleComboURLs(
 					httpServletRequest, httpServletResponse,
-					_allJsResourcePaths);
+					_allJSResourcePaths);
 			}
 		}
 		else {
@@ -75,7 +75,7 @@ public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 			else {
 				_renderBundleURLs(
 					httpServletRequest, httpServletResponse,
-					_allJsResourcePaths);
+					_allJSResourcePaths);
 			}
 		}
 	}
@@ -92,29 +92,30 @@ public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 		AUIConfiguration auiConfiguration = ConfigurableUtil.createConfigurable(
 			AUIConfiguration.class, properties);
 
-		List<String> allJsResourcePaths = new ArrayList<>();
-
+		List<String> allJSResourcePaths = new ArrayList<>();
 		List<String> jsResourcePaths = new ArrayList<>();
 
-		String bundleContextPath = _servletContext.getContextPath();
-
 		for (String resourcePath : _FILE_NAMES_AUI_CORE) {
-			jsResourcePaths.add(bundleContextPath + resourcePath);
-			allJsResourcePaths.add(bundleContextPath + resourcePath);
+			allJSResourcePaths.add(
+				_servletContext.getContextPath() + resourcePath);
+			jsResourcePaths.add(_servletContext.getContextPath() + resourcePath);
 		}
 
 		if (auiConfiguration.enableAUIPreload()) {
 			for (String resourcePath : _FILE_NAMES_AUI_PRELOAD) {
-				jsResourcePaths.add(bundleContextPath + resourcePath);
-				allJsResourcePaths.add(bundleContextPath + resourcePath);
+				allJSResourcePaths.add(
+					_servletContext.getContextPath() + resourcePath);
+				jsResourcePaths.add(
+					_servletContext.getContextPath() + resourcePath);
 			}
 
 			for (String resourcePath : _FILE_NAMES_AUI_PRELOAD_AUTHENTICATED) {
-				allJsResourcePaths.add(bundleContextPath + resourcePath);
+				allJSResourcePaths.add(
+					_servletContext.getContextPath() + resourcePath);
 			}
 		}
 
-		_allJsResourcePaths = allJsResourcePaths;
+		_allJSResourcePaths = allJSResourcePaths;
 		_jsResourcePaths = jsResourcePaths;
 	}
 
@@ -138,8 +139,8 @@ public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 		String comboURL = comboRequestAbsolutePortalURLBuilder.build();
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		StringBundler sb = new StringBundler();
+		StringBundler
+		 sb = new StringBundler();
 
 		for (String url : urls) {
 			if ((sb.length() + url.length() + 1) >= 2000) {
@@ -292,7 +293,7 @@ public class AUITopHeadJSDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
-	private volatile List<String> _allJsResourcePaths = new ArrayList<>();
+	private volatile List<String> _allJSResourcePaths = new ArrayList<>();
 	private volatile List<String> _jsResourcePaths = new ArrayList<>();
 
 	@Reference(

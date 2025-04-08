@@ -177,6 +177,17 @@ public class KaleoLogLocalServiceUtil {
 			kaleoInstanceToken, serviceContext);
 	}
 
+	public static KaleoLog addWorkflowInstanceFailKaleoLog(
+			com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken
+				kaleoInstanceToken,
+			String comment,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addWorkflowInstanceFailKaleoLog(
+			kaleoInstanceToken, comment, serviceContext);
+	}
+
 	public static KaleoLog addWorkflowInstanceStartKaleoLog(
 			com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken
 				kaleoInstanceToken,

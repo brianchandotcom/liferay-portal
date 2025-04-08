@@ -12,12 +12,13 @@ import {openConfirmModal} from 'frontend-js-components-web';
 import React, {useCallback} from 'react';
 
 import DeliveryGroupModal from './DeliveryGroupModal';
-import {IDeliveryGroup} from './Types';
+import {IAddressSubtypeConfiguration, IDeliveryGroup} from './Types';
 
 interface IDeliveryGroupHeaderCellProps {
 	handleDeleteDeliveryGroup(deliveryGroup: IDeliveryGroup): void;
 	handleSubmitDeliveryGroup(deliveryGroup: IDeliveryGroup): void;
 	accountId: number;
+	addressSubtypeConfiguration?: IAddressSubtypeConfiguration;
 	deliveryGroup: IDeliveryGroup;
 	disabled?: boolean;
 	hasManageAddressesPermission?: boolean;
@@ -29,6 +30,7 @@ interface IDeliveryGroupHeaderCellProps {
 
 const DeliveryGroupHeaderCell = ({
 	accountId,
+	addressSubtypeConfiguration,
 	deliveryGroup,
 	disabled = false,
 	handleDeleteDeliveryGroup,
@@ -163,6 +165,7 @@ const DeliveryGroupHeaderCell = ({
 			{open && (
 				<DeliveryGroupModal
 					accountId={accountId}
+					addressSubtypeConfiguration={addressSubtypeConfiguration}
 					deliveryGroup={deliveryGroup}
 					handleSubmit={handleSubmitDeliveryGroupWrapper}
 					hasManageAddressesPermission={hasManageAddressesPermission}

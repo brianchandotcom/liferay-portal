@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export interface IAddressSubtypeConfiguration {
+	billing?: string;
+	billingAndShipping?: string;
+	shipping?: string;
+}
+
 export interface IAPIResponseError {
 	detail?: string;
 	errorDescription?: string;
@@ -33,6 +39,16 @@ export interface IDeliveryGroup {
 
 export interface IFieldError {
 	[key: string]: string;
+}
+
+export interface IListTypeEntry {
+	id: number;
+	key: string;
+	name: string;
+}
+
+export interface IListTypeEntryAPIResponse {
+	items: Array<IListTypeEntry>;
 }
 
 export interface IOrderItemDeliveryGroup {
@@ -93,6 +109,7 @@ export interface IPostalAddress {
 	addressCountry?: string;
 	addressLocality?: string;
 	addressRegion?: string;
+	addressSubtype?: string;
 	addressType?: string;
 	externalReferenceCode?: string;
 	id: number;

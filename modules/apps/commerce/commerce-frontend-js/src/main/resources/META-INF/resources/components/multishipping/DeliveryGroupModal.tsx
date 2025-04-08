@@ -14,13 +14,19 @@ import React, {useCallback, useRef, useState} from 'react';
 
 import AddressSelector from './AddressSelector';
 import ErrorMessage from './ErrorMessage';
-import {IDeliveryGroup, IFieldError, IPostalAddress} from './Types';
+import {
+	IAddressSubtypeConfiguration,
+	IDeliveryGroup,
+	IFieldError,
+	IPostalAddress,
+} from './Types';
 
 const MANDATORY_FIELDS = ['name'];
 
 interface IDeliveryGroupModalProps {
 	onOpenModal(value: boolean): void;
 	accountId: number;
+	addressSubtypeConfiguration?: IAddressSubtypeConfiguration;
 	deliveryGroup?: IDeliveryGroup;
 	handleSubmit: any;
 	hasManageAddressesPermission?: boolean;
@@ -31,6 +37,7 @@ interface IDeliveryGroupModalProps {
 
 const DeliveryGroupModal = ({
 	accountId,
+	addressSubtypeConfiguration,
 	deliveryGroup,
 	handleSubmit,
 	hasManageAddressesPermission = true,
@@ -210,6 +217,9 @@ const DeliveryGroupModal = ({
 						<AddressSelector
 							accountId={accountId}
 							addressId={deliveryGroupState.addressId || 0}
+							addressSubtypeConfiguration={
+								addressSubtypeConfiguration
+							}
 							addressType="shipping"
 							hasManageAddressesPermission={
 								hasManageAddressesPermission

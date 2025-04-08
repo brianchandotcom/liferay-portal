@@ -8,9 +8,11 @@ import {useModal} from '@clayui/modal';
 import React, {useCallback} from 'react';
 
 import DeliveryGroupModal from './DeliveryGroupModal';
+import {IAddressSubtypeConfiguration} from './Types';
 
 interface IAddDeliveryGroupButtonProps {
 	accountId: number;
+	addressSubtypeConfiguration?: IAddressSubtypeConfiguration;
 	disabled?: boolean;
 	handleSubmit: any;
 	hasManageAddressesPermission?: boolean;
@@ -20,6 +22,7 @@ interface IAddDeliveryGroupButtonProps {
 
 const AddDeliveryGroupButton = ({
 	accountId,
+	addressSubtypeConfiguration,
 	disabled = false,
 	handleSubmit,
 	hasManageAddressesPermission = true,
@@ -53,6 +56,7 @@ const AddDeliveryGroupButton = ({
 			{open && (
 				<DeliveryGroupModal
 					accountId={accountId}
+					addressSubtypeConfiguration={addressSubtypeConfiguration}
 					handleSubmit={handleSubmitWrapper}
 					hasManageAddressesPermission={hasManageAddressesPermission}
 					namespace={namespace}

@@ -13,6 +13,15 @@
 		HashMapBuilder.<String, Object>put(
 			"accountId", commerceAccountId
 		).put(
+			"addressSubtypeConfiguration",
+			HashMapBuilder.<String, Object>put(
+				"billing", billingAddressSubtypeListTypeDefinitionExternalReferenceCode
+			).put(
+				"billingAndShipping", billingAndShippingAddressSubtypeListTypeDefinitionExternalReferenceCode
+			).put(
+				"shipping", shippingAddressSubtypeListTypeDefinitionExternalReferenceCode
+			).build()
+		).put(
 			"orderId", commerceOrderId
 		).put(
 			"readonly", readOnly

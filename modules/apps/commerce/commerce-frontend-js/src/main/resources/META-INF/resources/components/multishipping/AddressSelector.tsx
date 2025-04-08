@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Autocomplete from '@clayui/autocomplete';
 import ClayForm, {
 	ClayInput,
 	ClaySelect,
@@ -25,9 +26,12 @@ import ServiceProvider from '../../ServiceProvider/index';
 import ErrorMessage, {showError} from './ErrorMessage';
 import {
 	IAPIResponseError,
+	IAddressSubtypeConfiguration,
 	ICountry,
 	ICountryAPIResponse,
 	IFieldError,
+	IListTypeEntry,
+	IListTypeEntryAPIResponse,
 	IPostalAddress,
 	IPostalAddressAPIResponse,
 	IRegion,
@@ -41,6 +45,7 @@ interface IAddressSelectorProps {
 	setIsFormValid(value: boolean): void;
 	accountId: number;
 	addressId?: number;
+	addressSubtypeConfiguration?: IAddressSubtypeConfiguration;
 	addressType?: string;
 	hasManageAddressesPermission?: boolean;
 	label?: string;
@@ -59,6 +64,11 @@ const MANDATORY_FIELDS = [
 function AddressSelector({
 	accountId,
 	addressId = 0,
+	addressSubtypeConfiguration = {
+		billing: '',
+		billingAndShipping: '',
+		shipping: '',
+	},
 	addressType = 'shipping',
 	hasManageAddressesPermission = true,
 	label = Liferay.Language.get('delivery-group'),
@@ -83,6 +93,7 @@ function AddressSelector({
 		}, {})
 	);
 	const [regions, setRegions] = useState<Array<IRegion>>([]);
+	const [subtypes, setSubtypes] = useState<Array<IListTypeEntry>>([]);
 	const [currentAddress, setCurrentAddress] = useState<IPostalAddress>(
 		defaultAddressRef?.current
 	);
@@ -295,6 +306,36 @@ function AddressSelector({
 	}, [accountId, currentAddress, errors, handleFieldChange, setHandleSubmit]);
 
 	useEffect(() => {
+		const externalReferenceCode =
+			currentAddress.addressType === 'shipping'
+				? addressSubtypeConfiguration.shipping
+				: addressSubtypeConfiguration.billingAndShipping;
+
+		if (!externalReferenceCode) {
+			setSubtypes([]);
+
+			return;
+		}
+
+		ServiceProvider.AdminListTypeAPI('v1')
+			.getListTypeEntries(externalReferenceCode, {
+				pageSize: -1,
+			})
+			.then((data: IListTypeEntryAPIResponse) => {
+				setSubtypes(data.items);
+			})
+			.catch((error: IAPIResponseError) => {
+				setSubtypes([]);
+
+				showError(error);
+			});
+	}, [
+		addressSubtypeConfiguration.billingAndShipping,
+		addressSubtypeConfiguration.shipping,
+		currentAddress.addressType,
+	]);
+
+	useEffect(() => {
 		setIsFormValid(!Object.keys(errors).length);
 	}, [errors, setIsFormValid]);
 
@@ -360,6 +401,66 @@ function AddressSelector({
 
 						<ErrorMessage errors={errors} name="name" />
 					</ClayForm.Group>
+
+					{(addressSubtypeConfiguration.billing ||
+						addressSubtypeConfiguration.billingAndShipping ||
+						addressSubtypeConfiguration.shipping) && (
+						<ClayForm.Group
+							className={classnames({
+								'has-error': !!errors.addressSubtype,
+							})}
+						>
+							<label htmlFor={`${namespace}addressSubtype`}>
+								{Liferay.Language.get('subtype')}
+							</label>
+
+							<Autocomplete
+								aria-label={Liferay.Language.get('subtype')}
+								className="mb-3"
+								defaultValue={
+									currentAddress?.addressSubtype || ''
+								}
+								disabled={
+									!!currentAddress.id ||
+									!(currentAddress?.addressType === 'shipping'
+										? addressSubtypeConfiguration.shipping
+										: addressSubtypeConfiguration.billingAndShipping)
+								}
+								id={`${namespace}addressSubtype`}
+								items={subtypes}
+								menuTrigger="focus"
+								name="addressSubtype"
+								onChange={(value: string) => {
+									handleFieldChange({
+										target: {name: 'addressSubtype', value},
+									});
+								}}
+								onItemsChange={() => {}}
+								placeholder={Liferay.Language.get('subtype')}
+								value={
+									subtypes.find(
+										(item) =>
+											item.key ===
+											currentAddress?.addressSubtype
+									)?.name || ''
+								}
+							>
+								{(item: IListTypeEntry) => (
+									<Autocomplete.Item
+										key={item.key}
+										value={item.key}
+									>
+										{item.name}
+									</Autocomplete.Item>
+								)}
+							</Autocomplete>
+
+							<ErrorMessage
+								errors={errors}
+								name="addressSubtype"
+							/>
+						</ClayForm.Group>
+					)}
 
 					<ClayForm.Group
 						className={classnames({

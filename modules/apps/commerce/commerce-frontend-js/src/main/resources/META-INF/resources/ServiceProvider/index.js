@@ -4,6 +4,7 @@
  */
 
 import AdminAddressAPI from './admin-address/index';
+import AdminListTypeAPI from './admin-list-type/index';
 import AdminUserAPI from './admin-user/index';
 import AdminAccountAPI from './commerce-admin-account/index';
 import AdminCatalogAPI from './commerce-admin-catalog/index';
@@ -23,6 +24,7 @@ const ServiceProvider = {
 	AdminCatalogAPI,
 	AdminChannelAPI,
 	AdminInventoryAPI,
+	AdminListTypeAPI,
 	AdminOrderAPI,
 	AdminPricingAPI,
 	AdminUserAPI,

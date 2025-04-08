@@ -13,7 +13,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <liferay-theme:defineObjects />
 
 <%
+String billingAddressSubtypeListTypeDefinitionExternalReferenceCode = (String)request.getAttribute("liferay-commerce:multishipping:billingAddressSubtypeListTypeDefinitionExternalReferenceCode");
+String billingAndShippingAddressSubtypeListTypeDefinitionExternalReferenceCode = (String)request.getAttribute("liferay-commerce:multishipping:billingAndShippingAddressSubtypeListTypeDefinitionExternalReferenceCode");
 long commerceAccountId = (long)request.getAttribute("liferay-commerce:multishipping:commerceAccountId");
 long commerceOrderId = (long)request.getAttribute("liferay-commerce:multishipping:commerceOrderId");
 boolean readOnly = (boolean)request.getAttribute("liferay-commerce:multishipping:readOnly");
+String shippingAddressSubtypeListTypeDefinitionExternalReferenceCode = (String)request.getAttribute("liferay-commerce:multishipping:shippingAddressSubtypeListTypeDefinitionExternalReferenceCode");
 %>

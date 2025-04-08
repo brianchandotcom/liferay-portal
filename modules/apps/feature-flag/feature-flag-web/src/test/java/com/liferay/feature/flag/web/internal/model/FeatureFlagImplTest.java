@@ -5,16 +5,9 @@
 
 package com.liferay.feature.flag.web.internal.model;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.CompanyWrapper;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,9 +38,6 @@ public class FeatureFlagImplTest {
 	@Before
 	public void setUp() {
 		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
-
-		_companyIdThreadLocal = ReflectionTestUtil.getFieldValue(
-			CompanyThreadLocal.class, "_companyId");
 	}
 
 	@Test
@@ -132,72 +122,26 @@ public class FeatureFlagImplTest {
 			"ABC-123");
 	}
 
-	@NewEnv.JVMArgsLine("-Dcompany-id-properties=true")
 	@Test
 	public void testIsEnabled() {
 		String systemKey1 = "ABC-123";
 		String systemKey2 = "ABC-456";
+		String systemKey3 = "ABC-789";
 
 		PropsUtil.set(
 			FeatureFlagConstants.getKey(systemKey1), Boolean.TRUE.toString());
 		PropsUtil.set(
 			FeatureFlagConstants.getKey(systemKey2), Boolean.FALSE.toString());
 
-		Company company1 = new TestCompany(1);
-		String company1key1 = "DEF-123";
-		String company1key2 = "DEF-456";
-
-		PropsUtil.set(
-			company1, FeatureFlagConstants.getKey(company1key1),
-			Boolean.TRUE.toString());
-		PropsUtil.set(
-			company1, FeatureFlagConstants.getKey(company1key2),
-			Boolean.FALSE.toString());
-
-		Company company2 = new TestCompany(2);
-		String company2key1 = "XYZ-123";
-
-		PropsUtil.set(
-			company2, FeatureFlagConstants.getKey(systemKey1),
-			Boolean.FALSE.toString());
-		PropsUtil.set(
-			company2, FeatureFlagConstants.getKey(company2key1),
-			Boolean.TRUE.toString());
-
 		withFeatureFlag(
-			CompanyConstants.SYSTEM,
 			featureFlag -> Assert.assertTrue(featureFlag.isEnabled()),
 			systemKey1);
 		withFeatureFlag(
-			CompanyConstants.SYSTEM,
 			featureFlag -> Assert.assertFalse(featureFlag.isEnabled()),
 			systemKey2);
 		withFeatureFlag(
-			CompanyConstants.SYSTEM,
 			featureFlag -> Assert.assertFalse(featureFlag.isEnabled()),
-			company1key1);
-
-		withFeatureFlag(
-			company1.getCompanyId(),
-			featureFlag -> Assert.assertFalse(featureFlag.isEnabled()),
-			systemKey1);
-		withFeatureFlag(
-			company1.getCompanyId(),
-			featureFlag -> Assert.assertTrue(featureFlag.isEnabled()),
-			company1key1);
-		withFeatureFlag(
-			company1.getCompanyId(),
-			featureFlag -> Assert.assertFalse(featureFlag.isEnabled()),
-			company1key2);
-
-		withFeatureFlag(
-			company2.getCompanyId(),
-			featureFlag -> Assert.assertFalse(featureFlag.isEnabled()),
-			systemKey1);
-		withFeatureFlag(
-			company2.getCompanyId(),
-			featureFlag -> Assert.assertTrue(featureFlag.isEnabled()),
-			company2key1);
+			systemKey3);
 	}
 
 	protected void withFeatureFlag(
@@ -206,46 +150,12 @@ public class FeatureFlagImplTest {
 		consumer.accept(new FeatureFlagImpl(featureFlagKey));
 	}
 
-	protected void withFeatureFlag(
-		long companyId, Consumer<FeatureFlag> consumer, String featureFlagKey) {
-
-		try (SafeCloseable safeCloseable =
-				_companyIdThreadLocal.setWithSafeCloseable(companyId)) {
-
-			withFeatureFlag(consumer, featureFlagKey);
-		}
-	}
-
 	private void _setType(
 		String featureFlagKey, FeatureFlagType featureFlagType) {
 
 		PropsUtil.set(
 			FeatureFlagConstants.getKey(featureFlagKey, "type"),
 			featureFlagType.toString());
-	}
-
-	private CentralizedThreadLocal<Long> _companyIdThreadLocal;
-
-	private static class TestCompany extends CompanyWrapper {
-
-		public TestCompany(long companyId) {
-			super(null);
-
-			_companyId = companyId;
-		}
-
-		@Override
-		public long getCompanyId() {
-			return _companyId;
-		}
-
-		@Override
-		public String getWebId() {
-			return String.valueOf(_companyId);
-		}
-
-		private final long _companyId;
-
 	}
 
 }

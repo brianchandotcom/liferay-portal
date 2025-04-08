@@ -132,7 +132,7 @@ public class NotificationsRestController extends BaseRestController {
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-adyen-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
-					null,
+					"",
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						externalReferenceCode);
 			}

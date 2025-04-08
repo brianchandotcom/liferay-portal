@@ -77,7 +77,7 @@ public class AuthorizeRestController extends BaseRestController {
 					commercePaymentEntryJSONObject.getString("payload"));
 
 				delete(
-					"Bearer " + jwt.getTokenValue(), null,
+					"Bearer " + jwt.getTokenValue(), "",
 					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
 						payloadJSONObject.getString("id"));
 

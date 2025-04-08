@@ -45,7 +45,7 @@ public class LiferayGlobalObjectPostAUIDynamicInclude
 		throws IOException {
 
 		if (_bundle == null) {
-			_log.error("Bundle is nul")l;
+			_log.error("Bundle is null");
 
 			return;
 		}

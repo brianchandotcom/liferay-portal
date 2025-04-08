@@ -366,7 +366,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 			sb.append(timeZone.getDisplayName(false, TimeZone.SHORT, locale));
 
-			sb.append("</span>',message:'");
+			sb.append("</span>', message:'");
 
 			sb.append(
 				_language.format(

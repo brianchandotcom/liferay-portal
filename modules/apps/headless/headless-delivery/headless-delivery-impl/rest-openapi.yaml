@@ -5024,10 +5024,10 @@ components:
                         The localized canonical URL of the page, if it exists.
                     type: object
                 description:
-                    type: string
                     # @review
                     description:
                         The page's description to be used as summary for search engines.
+                    type: string
                 description_i18n:
                     additionalProperties:
                         type: string

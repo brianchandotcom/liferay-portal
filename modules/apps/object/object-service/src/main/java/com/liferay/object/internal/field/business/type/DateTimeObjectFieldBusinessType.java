@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
@@ -197,7 +198,9 @@ public class DateTimeObjectFieldBusinessType
 	}
 
 	private boolean _containsZoneId(String pattern) {
-		if (pattern.contains("Z") || pattern.contains("z")) {
+		if (pattern.contains("X") || pattern.contains("Z") ||
+			pattern.contains("z")) {
+
 			return true;
 		}
 
@@ -207,7 +210,8 @@ public class DateTimeObjectFieldBusinessType
 	private LocalDateTime _getLocalDateTime(
 		String sourceTimeZoneId, String targetTimeZoneId, String value) {
 
-		String pattern = ObjectFieldUtil.getDateTimePattern(value);
+		String pattern = StringUtil.replace(
+			ObjectFieldUtil.getDateTimePattern(value), "'Z'", "X");
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
 			pattern);

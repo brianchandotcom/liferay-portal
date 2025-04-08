@@ -791,7 +791,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-core.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Core</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -803,7 +803,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-soap.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime SOAP Binding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -815,7 +815,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-bindings-xml.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime XML Binding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -827,7 +827,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-databinding-jaxb.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime JAXB DataBinding</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -839,7 +839,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-jaxws.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime JAX-WS Frontend</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -851,7 +851,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-frontend-simple.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime Simple Frontend</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -863,7 +863,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-transports-http.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime HTTP Transport</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -875,7 +875,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-addr.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime WS Addressing</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -887,7 +887,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-ws-policy.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime WS Policy</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -899,7 +899,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.cmis.impl.jar!cxf-rt-wsdl.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF Runtime Core for WSDL</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -923,7 +923,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.search.jar!lucene-analyzers-common.jar</file-name>
-				<version>7.1.0</version>
+				<version>8.6.2</version>
 				<project-name>Lucene Common Analyzers</project-name>
 				<licenses>
 					<license>
@@ -934,7 +934,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.search.jar!lucene-core.jar</file-name>
-				<version>7.1.0</version>
+				<version>8.6.2</version>
 				<project-name>Lucene Core</project-name>
 				<licenses>
 					<license>
@@ -945,7 +945,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.search.jar!lucene-queries.jar</file-name>
-				<version>7.1.0</version>
+				<version>8.6.2</version>
 				<project-name>Lucene Queries</project-name>
 				<licenses>
 					<license>
@@ -956,7 +956,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.search.jar!lucene-queryparser.jar</file-name>
-				<version>7.1.0</version>
+				<version>8.6.2</version>
 				<project-name>Lucene QueryParsers</project-name>
 				<licenses>
 					<license>
@@ -967,7 +967,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.document.library.repository.search.jar!lucene-sandbox.jar</file-name>
-				<version>7.1.0</version>
+				<version>8.6.2</version>
 				<project-name>Lucene Sandbox</project-name>
 				<licenses>
 					<license>
@@ -2219,18 +2219,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.osgi.web.wab.extender.jar!javax.servlet.jsp.jar</file-name>
-				<version>2.3.3-b02.LIFERAY-PATCHED-10</version>
-				<project-name>JSP implementation</project-name>
-				<project-url>http://glassfish.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.remote.jaxrs.whiteboard.jar!wsdl4j.jar</file-name>
 				<version>1.6.3</version>
 				<project-name>WSDL4J</project-name>
@@ -2244,7 +2232,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-extension-providers.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF JAX-RS Extensions: Providers</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -2256,7 +2244,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-json-basic.jar</file-name>
-				<version>3.5.10</version>
+				<version>3.5.11</version>
 				<project-name>Apache CXF JAX-RS Extensions: JSON Basic</project-name>
 				<project-url>https://cxf.apache.org</project-url>
 				<licenses>
@@ -3639,6 +3627,17 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tools.db.schema.importer.jar!mariadb-java-client.jar</file-name>
+				<version>3.2.0</version>
+				<project-name>mariadb-java-client</project-name>
+				<project-url>https://mariadb.com/kb/en/mariadb/about-mariadb-connector-j/</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL-2.1</license-name>
 					</license>
 				</licenses>
 			</library>

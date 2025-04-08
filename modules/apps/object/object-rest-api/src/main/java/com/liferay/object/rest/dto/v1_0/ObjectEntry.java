@@ -825,6 +825,49 @@ public class ObjectEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public SystemProperties getSystemProperties() {
+		if (_systemPropertiesSupplier != null) {
+			systemProperties = _systemPropertiesSupplier.get();
+
+			_systemPropertiesSupplier = null;
+		}
+
+		return systemProperties;
+	}
+
+	public void setSystemProperties(SystemProperties systemProperties) {
+		this.systemProperties = systemProperties;
+
+		_systemPropertiesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSystemProperties(
+		UnsafeSupplier<SystemProperties, Exception>
+			systemPropertiesUnsafeSupplier) {
+
+		_systemPropertiesSupplier = () -> {
+			try {
+				return systemPropertiesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected SystemProperties systemProperties;
+
+	@JsonIgnore
+	private Supplier<SystemProperties> _systemPropertiesSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The categories associated with this object entry."
 	)
@@ -919,48 +962,6 @@ public class ObjectEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Version getVersion() {
-		if (_versionSupplier != null) {
-			version = _versionSupplier.get();
-
-			_versionSupplier = null;
-		}
-
-		return version;
-	}
-
-	public void setVersion(Version version) {
-		this.version = version;
-
-		_versionSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setVersion(
-		UnsafeSupplier<Version, Exception> versionUnsafeSupplier) {
-
-		_versionSupplier = () -> {
-			try {
-				return versionUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Version version;
-
-	@JsonIgnore
-	private Supplier<Version> _versionSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -1027,14 +1028,14 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "status")) {
 			return getStatus();
 		}
+		else if (Objects.equals(propertyName, "systemProperties")) {
+			return getSystemProperties();
+		}
 		else if (Objects.equals(propertyName, "taxonomyCategoryBriefs")) {
 			return getTaxonomyCategoryBriefs();
 		}
 		else if (Objects.equals(propertyName, "taxonomyCategoryIds")) {
 			return getTaxonomyCategoryIds();
-		}
-		else if (Objects.equals(propertyName, "version")) {
-			return getVersion();
 		}
 		else {
 			if (properties.containsKey(propertyName)) {
@@ -1369,6 +1370,18 @@ public class ObjectEntry implements Serializable {
 			sb.append(String.valueOf(status));
 		}
 
+		SystemProperties systemProperties = getSystemProperties();
+
+		if (systemProperties != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"systemProperties\": ");
+
+			sb.append(String.valueOf(systemProperties));
+		}
+
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
 			getTaxonomyCategoryBriefs();
 
@@ -1412,18 +1425,6 @@ public class ObjectEntry implements Serializable {
 			}
 
 			sb.append("]");
-		}
-
-		Version version = getVersion();
-
-		if (version != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"version\": ");
-
-			sb.append(String.valueOf(version));
 		}
 
 		sb.append("}");

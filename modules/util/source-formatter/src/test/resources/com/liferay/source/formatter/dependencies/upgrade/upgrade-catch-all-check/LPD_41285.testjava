@@ -1,0 +1,63 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Rubens Soares
+ */
+public class LPD_41285 {
+
+	public void method(long cpInstanceId, long commercePriceListId) {
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(cpInstanceId, commercePriceListId);
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(123, commercePriceListId);
+		CommercePriceEntryServiceUtil.fetchCommercePriceEntry(cpInstanceId, commercePriceListId);
+		_commercePriceEntryLocalService.fetchCommercePriceEntry(cpInstanceId, commercePriceListId);
+		_commercePriceEntryService.fetchCommercePriceEntry(cpInstanceId, commercePriceListId);
+	}
+
+	public void method(
+		long cpInstanceId, long commercePriceListId, boolean useAncestor) {
+
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(cpInstanceId, commercePriceListId, useAncestor);
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(123, commercePriceListId, useAncestor);
+		CommercePriceEntryServiceUtil.fetchCommercePriceEntry(cpInstanceId, commercePriceListId, useAncestor);
+		_commercePriceEntryLocalService.fetchCommercePriceEntry(cpInstanceId, commercePriceListId, useAncestor);
+		_commercePriceEntryService.fetchCommercePriceEntry(cpInstanceId, commercePriceListId, useAncestor);
+	}
+
+	public void method(long commercePriceListId, String cpInstanceUuid) {
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid);
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(commercePriceListId, "test123");
+		CommercePriceEntryServiceUtil.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid);
+		_commercePriceEntryLocalService.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid);
+		_commercePriceEntryService.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid);
+	}
+
+	public void method(long commercePriceListId, String cpInstanceUuid, boolean useAncestor) {
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, useAncestor);
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(commercePriceListId, "test123", useAncestor);
+		CommercePriceEntryServiceUtil.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, useAncestor);
+		_commercePriceEntryLocalService.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, useAncestor);
+		_commercePriceEntryService.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, useAncestor);
+	}
+
+	public void method(long commercePriceListId, String cpInstanceUuid, int status) {
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, status);
+		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(commercePriceListId, "test123", status);
+		CommercePriceEntryServiceUtil.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, status);
+		_commercePriceEntryLocalService.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, status);
+		_commercePriceEntryService.fetchCommercePriceEntry(commercePriceListId, cpInstanceUuid, status);
+	}
+
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
+
+}

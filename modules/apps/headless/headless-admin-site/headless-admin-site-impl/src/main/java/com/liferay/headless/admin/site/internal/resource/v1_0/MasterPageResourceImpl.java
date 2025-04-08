@@ -513,14 +513,9 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				(ContentPageSpecification)pageSpecifications[1];
 		}
 
-		if (Objects.equals(
-				publishedContentPageSpecification.getStatus(),
-				PageSpecification.Status.APPROVED)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			publishedContentPageSpecification.getStatus(),
+			PageSpecification.Status.APPROVED);
 	}
 
 	@Reference

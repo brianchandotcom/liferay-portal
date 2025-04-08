@@ -1089,13 +1089,8 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	private boolean _isPermanentRedirect(long companyId) {
-		if (Objects.equals(
-				_getFriendlyURLRedirectionType(companyId), "permanent")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_getFriendlyURLRedirectionType(companyId), "permanent");
 	}
 
 	private boolean _isShowAlternativeLayoutFriendlyURLMessage(long companyId) {

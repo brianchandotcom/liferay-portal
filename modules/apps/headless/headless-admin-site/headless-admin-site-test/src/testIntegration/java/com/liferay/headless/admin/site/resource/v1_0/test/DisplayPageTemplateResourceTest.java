@@ -718,13 +718,8 @@ public class DisplayPageTemplateResourceTest
 	private boolean _isPublished(Layout layout) {
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		if (GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"))) {
-
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			draftLayout.getTypeSettingsProperty("published"));
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(

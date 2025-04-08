@@ -86,11 +86,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-164563")) {
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled("LPS-164563");
 	}
 
 	@Override

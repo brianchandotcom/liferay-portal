@@ -63,11 +63,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public boolean isVisible() {
-		if (_featureFlagType.isUIEnabled()) {
-			return true;
-		}
-
-		return false;
+		return _featureFlagType.isUIEnabled();
 	}
 
 	@Override

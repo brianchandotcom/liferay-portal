@@ -28,8 +28,13 @@ export default function ViewTags({
 				label: Liferay.Language.get('new'),
 				onClick: () => {
 					openModal({
-						contentComponent: () =>
+						contentComponent: ({
+							closeModal,
+						}: {
+							closeModal: () => void;
+						}) =>
 							CreateTagsModal({
+								closeModal,
 								tagsURL,
 							}),
 						size: 'md',
@@ -218,10 +223,15 @@ export default function ViewTags({
 						label: Liferay.Language.get('edit'),
 						onClick: (itemData: {itemData: any}) => {
 							openModal({
-								contentComponent: () =>
+								contentComponent: ({
+									closeModal,
+								}: {
+									closeModal: () => void;
+								}) =>
 									EditTagsModal({
 										assetLibraries:
 											itemData.itemData.assetLibraries,
+										closeModal,
 										tagId: itemData.itemData.id,
 										tagName: itemData.itemData.name,
 										tagsURL,

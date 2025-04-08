@@ -16,11 +16,13 @@ import CategorizationSpaces from '../components/CategorizationSpaces';
 
 export default function EditTagsModalContent({
 	assetLibraries,
+	closeModal,
 	tagId,
 	tagName,
 	tagsURL,
 }: {
 	assetLibraries: any;
+	closeModal: () => void;
 	tagId: number;
 	tagName: string;
 	tagsURL: string;
@@ -144,7 +146,7 @@ export default function EditTagsModalContent({
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => navigate(tagsURL)}
+							onClick={closeModal}
 							type="button"
 						>
 							{Liferay.Language.get('cancel')}

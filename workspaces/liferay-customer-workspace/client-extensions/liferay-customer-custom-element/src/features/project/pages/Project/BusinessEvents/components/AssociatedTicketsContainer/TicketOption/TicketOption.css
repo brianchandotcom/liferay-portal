@@ -44,7 +44,7 @@
 				border-radius: var(--border-radius-lg, 10px)!important;
 			}
 	
-			.ticket-text {
+			.ticket-text-container {
 				color: var(--color-action-primary-hover, #0053F0);
 	
 				.ticket-link-icon-exhibit, .ticket-link-icon-selected {
@@ -63,12 +63,16 @@
 			line-height: var(--text-paragraph-xs-line-height, 16px);
 		}
 	
-		.ticket-text {
+		.ticket-text-container {
 			color: var(--color-neutral-8, #54555F);
 			font-size: var(--text-paragraph-sm-font-size, 13px);
 			font-weight: 600;
 			line-height: var(--text-small-caps-line-height, 16px);
-			text-overflow: ellipsis;
+
+			.ticket-text {
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 		}
 	}
 

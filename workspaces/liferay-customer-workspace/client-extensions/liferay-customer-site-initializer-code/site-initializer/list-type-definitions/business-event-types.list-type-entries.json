@@ -1,9 +1,9 @@
 [
 	{
 		"key": "goLive",
-		"name": "Go-Live",
+		"name": "Go Live",
 		"name_i18n": {
-			"en-US": "Go-Live"
+			"en-US": "Go Live"
 		},
 		"type": "string"
 	},

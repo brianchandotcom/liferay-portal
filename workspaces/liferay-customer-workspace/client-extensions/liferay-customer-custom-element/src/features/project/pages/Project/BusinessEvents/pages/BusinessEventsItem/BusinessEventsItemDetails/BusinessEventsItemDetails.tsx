@@ -19,7 +19,7 @@ import {getFormattedTime} from '~/utils/getFormattedTime';
 import {ITicket} from '~/utils/types';
 
 import './BusinessEventsItemDetails.css';
-import TicketList from '../../../components/AssociatedTicketsContainer/TicketList';
+import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
 import ManageEventModal from '../../../components/ManageEventModal';
 import useAccountTickets from '../../../hooks/useAccountTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
@@ -316,7 +316,9 @@ const BusinessEventsItemDetails = () => {
 									</div>
 
 									<div className="w-50">
-										<TicketList tickets={ticketOptions} />
+										<AssociatedTicketsContainer
+											tickets={ticketOptions}
+										/>
 									</div>
 								</div>
 							)

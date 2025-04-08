@@ -116,8 +116,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	const {versionOfLiferaySoftwareList} = useGetVersionOfLiferaySoftwareList();
 
 	const [
-		versionOfLiferaySoftwareOptions,
-		setVersionOfLiferaySoftwareOptions,
+		currentVersionOfLiferaySoftwareOptions,
+		setCurrentVersionOfLiferaySoftwareOptions,
+	] = useState<IOption[]>([]);
+
+	const [
+		newVersionOfLiferaySoftwareOptions,
+		setNewVersionOfLiferaySoftwareOptions,
 	] = useState<IOption[]>([]);
 
 	const [ticketOptions, setTicketOptions] = useState<ITicket[]>([]);
@@ -225,10 +230,10 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	}, [hasImpactingEvents, setFieldValue, ticketOptions]);
 
 	useEffect(() => {
-		if (versionOfLiferaySoftwareOptions.length) {
+		if (currentVersionOfLiferaySoftwareOptions.length) {
 			setFieldValue(
 				'businessEvent.currentLiferayVersion.name',
-				versionOfLiferaySoftwareOptions.filter(
+				currentVersionOfLiferaySoftwareOptions.filter(
 					(version) =>
 						version.value ===
 						businessEvent.currentLiferayVersion?.key
@@ -237,8 +242,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		}
 	}, [
 		businessEvent.currentLiferayVersion?.key,
+		currentVersionOfLiferaySoftwareOptions,
 		setFieldValue,
-		versionOfLiferaySoftwareOptions,
 	]);
 
 	useEffect(() => {
@@ -253,19 +258,26 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	}, [businessEvent.eventType?.key, businessEventTypesList, setFieldValue]);
 
 	useEffect(() => {
-		if (versionOfLiferaySoftwareOptions.length) {
-			setFieldValue(
-				'businessEvent.newLiferayVersion.name',
-				versionOfLiferaySoftwareOptions.filter(
-					(version) =>
-						version.value === businessEvent.newLiferayVersion?.key
-				)[0].label
-			);
+		if (newVersionOfLiferaySoftwareOptions.length) {
+			const filteredOption = newVersionOfLiferaySoftwareOptions.filter(
+				(version) =>
+					version.value === businessEvent.newLiferayVersion?.key
+			)[0];
+
+			if (filteredOption) {
+				setFieldValue(
+					'businessEvent.newLiferayVersion.name',
+					filteredOption.label
+				);
+			}
+			else {
+				setFieldValue('businessEvent.newLiferayVersion.key', '');
+			}
 		}
 	}, [
 		businessEvent.newLiferayVersion?.key,
+		newVersionOfLiferaySoftwareOptions,
 		setFieldValue,
-		versionOfLiferaySoftwareOptions,
 	]);
 
 	useEffect(() => {
@@ -329,12 +341,37 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		if (versionOfLiferaySoftwareList?.length) {
-			setVersionOfLiferaySoftwareOptions([
+			setCurrentVersionOfLiferaySoftwareOptions([
 				emptyOption,
 				...versionOfLiferaySoftwareList,
 			]);
 		}
 	}, [emptyOption, versionOfLiferaySoftwareList]);
+
+	useEffect(() => {
+		if (currentVersionOfLiferaySoftwareOptions?.length) {
+			setNewVersionOfLiferaySoftwareOptions([
+				emptyOption,
+				...currentVersionOfLiferaySoftwareOptions.filter(
+					(version, index, versions) => {
+						return (
+							index >=
+							versions.findIndex((version) => {
+								return (
+									version.value ===
+									businessEvent.currentLiferayVersion?.key
+								);
+							})
+						);
+					}
+				),
+			]);
+		}
+	}, [
+		businessEvent.currentLiferayVersion?.key,
+		currentVersionOfLiferaySoftwareOptions,
+		emptyOption,
+	]);
 
 	useEffect(() => {
 		if (originalBusinessEvent && tickets) {
@@ -531,7 +568,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 												)}
 												name="businessEvent.currentLiferayVersion.key"
 												options={
-													versionOfLiferaySoftwareOptions
+													currentVersionOfLiferaySoftwareOptions
 												}
 												required
 											/>
@@ -549,7 +586,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 												)}
 												name="businessEvent.newLiferayVersion.key"
 												options={
-													versionOfLiferaySoftwareOptions
+													newVersionOfLiferaySoftwareOptions
 												}
 												required
 											/>

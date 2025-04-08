@@ -48,6 +48,7 @@ export interface IBusinessEvent {
 		name: string;
 	};
 	id?: number;
+	lastComment?: string;
 	name?: string;
 	newLiferayVersion?: {
 		key: string;

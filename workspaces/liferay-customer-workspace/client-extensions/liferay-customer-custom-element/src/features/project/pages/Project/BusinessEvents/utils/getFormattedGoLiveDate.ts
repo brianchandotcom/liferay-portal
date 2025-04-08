@@ -15,21 +15,32 @@ function getFormattedGoLiveDateTime(
 
 	const [month, day, year] = targetGoLiveDate.split('-');
 
+	if (!year || !month || !day) {
+		return undefined;
+	}
+
 	const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
 	let hours: string;
 	let minutes: string;
 
 	if (typeof targetGoLiveTime === 'string') {
-		[hours, minutes] = targetGoLiveTime.split(':');
+		const splittedTime = targetGoLiveTime.split(':');
+
+		if (splittedTime.length !== 2) {
+			return undefined;
+		}
+
+		[hours, minutes] = splittedTime;
 	}
 	else {
-		hours = targetGoLiveTime.hours.includes('-')
+		hours = targetGoLiveTime?.hours?.includes('-')
 			? '00'
-			: targetGoLiveTime.hours;
-		minutes = targetGoLiveTime.minutes.includes('-')
+			: targetGoLiveTime?.hours ?? '00';
+
+		minutes = targetGoLiveTime?.minutes?.includes('-')
 			? '00'
-			: targetGoLiveTime.minutes;
+			: targetGoLiveTime?.minutes ?? '00';
 	}
 
 	const formattedDateTime = `${formattedDate}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00.000`;

@@ -26,15 +26,17 @@ const TicketOption: React.FC<IProps> = ({
 	return (
 		<div className={`d-flex ticket-container ticket-container-${type}`}>
 			<div
-				className={`align-items-center d-flex justify-content-between ticket-label ticket-label-${type} w-100`}
+				className={`align-items-center d-flex justify-content-between overflow-hidden ticket-label ticket-label-${type} w-100`}
 			>
 				<Button
 					borderless
 					className="d-flex w-100"
 					onClick={() => primaryAction(ticket)}
 				>
-					<div className="d-flex justify-content-between ticket-text w-100">
-						{`${ticket.ticketId} - ${ticket.subject}`}
+					<div className="d-flex justify-content-between overflow-hidden ticket-text-container w-100">
+						<div className="overflow-hidden ticket-text">
+							{`${ticket.ticketId} - ${ticket.subject}`}
+						</div>
 
 						<div
 							className={`d-none ticket-link-icon ticket-link-icon-${type}`}

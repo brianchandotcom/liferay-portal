@@ -157,6 +157,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public long getCtCollectionId() {
+		return _dlFileEntry.getCtCollectionId();
+	}
+
+	@Override
 	public String getDescription() {
 		return _dlFileEntry.getDescription();
 	}

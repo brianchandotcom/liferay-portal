@@ -60,10 +60,12 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
@@ -375,12 +377,18 @@ public class DLFileEntryLocalServiceImpl
 		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
 			fileEntryId);
 
-		DLFileVersion dlFileVersion =
-			_dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					dlFileEntry.getCtCollectionId())) {
 
-		_removeFileVersion(dlFileEntry, dlFileVersion);
+			DLFileVersion dlFileVersion =
+				_dlFileVersionLocalService.getLatestFileVersion(
+					fileEntryId, false);
 
-		return dlFileVersion;
+			_removeFileVersion(dlFileEntry, dlFileVersion);
+
+			return dlFileVersion;
+		}
 	}
 
 	@Override
@@ -556,16 +564,21 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion dlFileVersion =
 			_dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		DLFileEntry dlFileEntry = _checkOutDLFileEntryModel(
-			userId, fileEntryId, fileEntryTypeId, owner, expirationTime,
-			serviceContext);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					dlFileVersion.getCtCollectionId())) {
 
-		DLFileVersion latestDLFileVersion = dlFileEntry.getLatestFileVersion(
-			true);
+			DLFileEntry dlFileEntry = _checkOutDLFileEntryModel(
+				userId, fileEntryId, fileEntryTypeId, owner, expirationTime,
+				serviceContext);
 
-		_copyFileVersion(dlFileEntry, dlFileVersion, latestDLFileVersion);
+			DLFileVersion latestDLFileVersion =
+				dlFileEntry.getLatestFileVersion(true);
 
-		return dlFileEntry;
+			_copyFileVersion(dlFileEntry, dlFileVersion, latestDLFileVersion);
+
+			return dlFileEntry;
+		}
 	}
 
 	@Override

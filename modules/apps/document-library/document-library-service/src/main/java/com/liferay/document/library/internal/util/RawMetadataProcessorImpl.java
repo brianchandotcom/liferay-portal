@@ -15,6 +15,8 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -132,31 +134,37 @@ public class RawMetadataProcessorImpl
 			}
 		}
 
-		List<DDMStructure> ddmStructures =
-			_ddmStructureManager.getClassStructures(
-				fileVersion.getCompanyId(),
-				_portal.getClassNameId(RawMetadataProcessor.class));
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					fileVersion.getCtCollectionId())) {
 
-		ServiceContext serviceContext = new ServiceContext();
+			List<DDMStructure> ddmStructures =
+				_ddmStructureManager.getClassStructures(
+					fileVersion.getCompanyId(),
+					_portal.getClassNameId(RawMetadataProcessor.class));
 
-		serviceContext.setScopeGroupId(fileVersion.getGroupId());
-		serviceContext.setUserId(fileVersion.getUserId());
+			ServiceContext serviceContext = new ServiceContext();
 
-		_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
-			null, fileVersion.getCompanyId(), ddmStructures,
-			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-			rawMetadataMap, serviceContext);
+			serviceContext.setScopeGroupId(fileVersion.getGroupId());
+			serviceContext.setUserId(fileVersion.getUserId());
 
-		FileEntry fileEntry = fileVersion.getFileEntry();
+			_dlFileEntryMetadataLocalService.updateFileEntryMetadata(
+				null, fileVersion.getCompanyId(), ddmStructures,
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				rawMetadataMap, serviceContext);
 
-		if (fileEntry instanceof LiferayFileEntry) {
-			Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
-				DLFileEntryConstants.getClassName());
+			FileEntry fileEntry = fileVersion.getFileEntry();
 
-			if (indexer != null) {
-				LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
+			if (fileEntry instanceof LiferayFileEntry) {
+				Indexer<DLFileEntry> indexer = IndexerRegistryUtil.getIndexer(
+					DLFileEntryConstants.getClassName());
 
-				indexer.reindex(liferayFileEntry.getDLFileEntry());
+				if (indexer != null) {
+					LiferayFileEntry liferayFileEntry =
+						(LiferayFileEntry)fileEntry;
+
+					indexer.reindex(liferayFileEntry.getDLFileEntry());
+				}
 			}
 		}
 	}

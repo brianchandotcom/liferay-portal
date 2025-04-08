@@ -30,11 +30,13 @@ import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -558,15 +560,21 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
-		FileVersion draftFileVersion = repository.cancelCheckOut(fileEntryId);
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					fileEntry.getCtCollectionId())) {
 
-		ServiceContext serviceContext = new ServiceContext();
+			FileVersion draftFileVersion = repository.cancelCheckOut(
+				fileEntryId);
 
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+			ServiceContext serviceContext = new ServiceContext();
 
-		_dlAppHelperLocalService.cancelCheckOut(
-			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
-			draftFileVersion, serviceContext);
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+			_dlAppHelperLocalService.cancelCheckOut(
+				getUserId(), fileEntry, null, fileEntry.getFileVersion(),
+				draftFileVersion, serviceContext);
+		}
 	}
 
 	/**
@@ -689,10 +697,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, serviceContext);
 
-		FileVersion fileVersion = fileEntry.getLatestFileVersion();
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					fileEntry.getCtCollectionId())) {
 
-		_dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileVersion, fileEntryId);
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			_dlAppHelperLocalService.updateFileEntry(
+				getUserId(), fileEntry, null, fileVersion, fileEntryId);
+		}
 	}
 
 	/**
@@ -733,10 +746,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, owner, expirationTime, serviceContext);
 
-		FileVersion fileVersion = fileEntry.getLatestFileVersion();
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					fileEntry.getCtCollectionId())) {
 
-		_dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileVersion, fileEntryId);
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			_dlAppHelperLocalService.updateFileEntry(
+				getUserId(), fileEntry, null, fileVersion, fileEntryId);
+		}
 
 		return fileEntry;
 	}

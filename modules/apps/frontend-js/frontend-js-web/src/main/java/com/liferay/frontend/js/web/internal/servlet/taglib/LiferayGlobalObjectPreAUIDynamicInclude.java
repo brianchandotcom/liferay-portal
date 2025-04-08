@@ -749,8 +749,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		new ConcurrentHashMap<>();
 
 	static {
-		_LIFERAY_TPL = _loadTemplate("Liferay.tpl");
 		_LANGUAGE_PROLOG = _loadTemplate("Language.prolog.tpl");
+		_LIFERAY_TPL = _loadTemplate("Liferay.tpl");
 	}
 
 	@Reference

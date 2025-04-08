@@ -3613,6 +3613,23 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
+				<isset property="env.OSB_FARO_WORKSPACE_NAME" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						analytics.cloud.faro.workspace.name=${env.OSB_FARO_WORKSPACE_NAME}
+					</echo>
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.user.login" />
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							analytics.cloud.faro.workspace.name=${analytics.cloud.faro.workspace.name}
+						</echo>
+					</then>
+				</elseif>
+			</if>
+
+			<if>
 				<isset property="test.analytics.cloud.publisher.url" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">

@@ -315,6 +315,8 @@ public class ObjectEntryFolderResourceTest
 	private void _testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolder()
 		throws Exception {
 
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
 		ObjectEntryFolder parentObjectEntryFolder =
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				randomObjectEntryFolder());
@@ -322,8 +324,6 @@ public class ObjectEntryFolderResourceTest
 		ParentObjectEntryFolderBrief parentObjectEntryFolderBrief =
 			_randomParentObjectEntryFolderBrief(
 				parentObjectEntryFolder.getExternalReferenceCode(), 0);
-
-		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
 
 		randomObjectEntryFolder.setParentObjectEntryFolderBrief(
 			parentObjectEntryFolderBrief);
@@ -347,11 +347,11 @@ public class ObjectEntryFolderResourceTest
 	private void _testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolder()
 		throws Exception {
 
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
 		ParentObjectEntryFolderBrief parentObjectEntryFolderBrief =
 			_randomParentObjectEntryFolderBrief(
 				StringUtil.toLowerCase(RandomTestUtil.randomString()), 0L);
-
-		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
 
 		randomObjectEntryFolder.setParentObjectEntryFolderBrief(
 			parentObjectEntryFolderBrief);

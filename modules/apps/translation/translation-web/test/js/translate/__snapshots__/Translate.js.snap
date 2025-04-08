@@ -55,7 +55,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-21"
+                    aria-controls="clay-dropdown-menu-23"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
@@ -93,7 +93,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                   class="dropdown"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-22"
+                    aria-controls="clay-dropdown-menu-24"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle btn btn-monospaced btn-sm btn-secondary"
@@ -555,6 +555,60 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                 name="_mock_TranslationPortlet_infoField--repeteableContent--"
                 type="hidden"
                 value="<p>mock target repeteable field 3</p>"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="control-label"
+              >
+                Text
+              </label>
+              <input
+                class="form-control"
+                dir="ltr"
+                readonly=""
+                type="text"
+                value="mock text"
+              />
+            </div>
+          </div>
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="autofit-col autofit-col-expand"
+                >
+                  <label
+                    class="control-label"
+                    for="_mock_TranslationPortlet_infoField--text--0"
+                  >
+                    Text
+                  </label>
+                </div>
+              </div>
+              <input
+                class="form-control"
+                dir="ltr"
+                id="_mock_TranslationPortlet_infoField--text--0"
+                name="_mock_TranslationPortlet_infoField--text--"
+                type="text"
+                value="mock text"
               />
             </div>
           </div>
@@ -1327,6 +1381,91 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                 class="sr-only"
               >
                 auto-translate-Content-field
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Text
+                  </label>
+                  <input
+                    class="form-control"
+                    dir="ltr"
+                    readonly=""
+                    type="text"
+                    value="mock text"
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="autofit-col autofit-col-expand"
+                    >
+                      <label
+                        class="control-label"
+                        for="_mock_TranslationPortlet_infoField--text--0"
+                      >
+                        Text
+                      </label>
+                    </div>
+                  </div>
+                  <input
+                    class="form-control"
+                    dir="ltr"
+                    id="_mock_TranslationPortlet_infoField--text--0"
+                    name="_mock_TranslationPortlet_infoField--text--"
+                    type="text"
+                    value="mock text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-Text-field"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-Text-field
               </span>
             </button>
           </div>
@@ -2136,6 +2275,91 @@ exports[`Translate renders with experiences selector 1`] = `
                 class="sr-only"
               >
                 auto-translate-Content-field
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-autotranslate-content autofit-col autofit-col-expand"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <label
+                    class="control-label"
+                  >
+                    Text
+                  </label>
+                  <input
+                    class="form-control"
+                    dir="ltr"
+                    readonly=""
+                    type="text"
+                    value="mock text"
+                  />
+                </div>
+              </div>
+              <div
+                class="col-md-6"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="autofit-col autofit-col-expand"
+                    >
+                      <label
+                        class="control-label"
+                        for="_mock_TranslationPortlet_infoField--text--0"
+                      >
+                        Text
+                      </label>
+                    </div>
+                  </div>
+                  <input
+                    class="form-control"
+                    dir="ltr"
+                    id="_mock_TranslationPortlet_infoField--text--0"
+                    name="_mock_TranslationPortlet_infoField--text--"
+                    type="text"
+                    value="mock text"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-top col-autotranslate-button autofit-col"
+          >
+            <button
+              class="btn btn-monospaced btn-secondary"
+              title="auto-translate-Text-field"
+              type="button"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-automatic-translate"
+                role="presentation"
+              >
+                <use
+                  href="#automatic-translate"
+                />
+              </svg>
+              <span
+                class="sr-only"
+              >
+                auto-translate-Text-field
               </span>
             </button>
           </div>

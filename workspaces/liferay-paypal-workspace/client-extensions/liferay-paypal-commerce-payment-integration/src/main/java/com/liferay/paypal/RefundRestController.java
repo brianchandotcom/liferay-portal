@@ -6,6 +6,7 @@
 package com.liferay.paypal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.math.BigDecimal;
 
@@ -19,7 +20,6 @@ import org.json.JSONObject;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Brian I. Kim
@@ -56,25 +55,7 @@ public class RefundRestController extends BaseRestController {
 				"typeSettings");
 
 			JSONObject refundResponseJSONObject = new JSONObject(
-				WebClient.create(
-					getPayPalURL(typeSettingsJSONObject.getString("mode"))
-				).post(
-				).uri(
-					StringBundler.concat(
-						"v2/payments/captures/",
-						commercePaymentEntryJSONObject.getString(
-							"transactionCode"),
-						"/refund")
-				).contentType(
-					MediaType.APPLICATION_JSON
-				).header(
-					HttpHeaders.AUTHORIZATION,
-					"Bearer " + getAuthorization(typeSettingsJSONObject)
-				).header(
-					"PayPal-Partner-Attribution-Id", "Liferay_SP_PPCP_API"
-				).header(
-					"Prefer", "return=representation"
-				).bodyValue(
+				post(
 					new JSONObject(
 					).put(
 						"amount",
@@ -90,11 +71,21 @@ public class RefundRestController extends BaseRestController {
 									"amount")
 							).longValue()
 						)
-					).toString()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).block());
+					).toString(),
+					HashMapBuilder.put(
+						HttpHeaders.AUTHORIZATION,
+						"Bearer " + getAuthorization(typeSettingsJSONObject)
+					).put(
+						"PayPal-Partner-Attribution-Id", "Liferay_SP_PPCP_API"
+					).put(
+						"Prefer", "return=representation"
+					).build(),
+					StringBundler.concat(
+						getPayPalURL(typeSettingsJSONObject.getString("mode")),
+						"v2/payments/captures/",
+						commercePaymentEntryJSONObject.getString(
+							"transactionCode"),
+						"/refund")));
 
 			if (Objects.equals(
 					refundResponseJSONObject.getString("status"),

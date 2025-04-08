@@ -202,7 +202,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 				() -> {
 					try {
 						delete(
-							getAuthorization(), null,
+							getAuthorization(), "",
 							_getEntityURLPath(objectEntryId));
 					}
 					catch (Exception exception) {

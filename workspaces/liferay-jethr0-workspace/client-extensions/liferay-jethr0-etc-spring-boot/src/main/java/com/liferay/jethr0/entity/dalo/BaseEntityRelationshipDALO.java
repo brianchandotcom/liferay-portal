@@ -177,7 +177,7 @@ public abstract class BaseEntityRelationshipDALO
 
 					try {
 						responseJSON = put(
-							getAuthorization(), null, objectDefinitionURLPath);
+							getAuthorization(), "", objectDefinitionURLPath);
 					}
 					catch (Exception exception) {
 						refresh();
@@ -225,8 +225,7 @@ public abstract class BaseEntityRelationshipDALO
 				},
 				() -> {
 					try {
-						delete(
-							getAuthorization(), null, objectDefinitionURLPath);
+						delete(getAuthorization(), "", objectDefinitionURLPath);
 					}
 					catch (Exception exception) {
 						refresh();

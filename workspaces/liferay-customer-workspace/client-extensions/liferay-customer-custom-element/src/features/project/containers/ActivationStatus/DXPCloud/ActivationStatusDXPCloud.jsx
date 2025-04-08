@@ -33,7 +33,7 @@ import ModalDXPCActivationStatus from '../../ModalDXPCActivationStatus';
 import AlreadySubmittedModal from '../AlreadySubmittedModal';
 import ActivationStatusLayout from '../Layout';
 import PopoverIcon from './components/PopoverIcon';
-import ActivationCardLink from '../index';
+import ActivationCardLink from '../ActivationCardLink'; 
 
 const submittedModalTexts = {
 	paragraph: i18n.translate(

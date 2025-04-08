@@ -43,17 +43,21 @@ export default function getActivationStatusCardLayout(
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
 				<div className="d-flex flex-column">
-					<ActivationCardLink
-						linkText={i18n.translate('go-to-liferay-saas')}
-						url={`https://${lxcEnvironment?.projectId}.lxc.liferay.com`}
-					/>
+					{lxcEnvironment?.projectId && (
+						<ActivationCardLink
+							linkText={i18n.translate('go-to-liferay-saas')}
+							url={`https://${lxcEnvironment?.projectId}.lxc.liferay.com`}
+						/>
+					)}
 
-					<ActivationCardLink
-						linkText={i18n.translate('go-to-uat')}
-						url={`https://${lxcEnvironment?.projectId}-uat.lxc.liferay.com`}
-					/>
+					{lxcEnvironment?.projectId && (
+						<ActivationCardLink
+							linkText={i18n.translate('go-to-uat')}
+							url={`https://${lxcEnvironment?.projectId}-uat.lxc.liferay.com`}
+						/>
+					)}
 
-					{hasDevInstance && (
+					{hasDevInstance && lxcEnvironment?.projectId && (
 						<ActivationCardLink
 							linkText={i18n.translate('go-to-dev')}
 							url={`https://${lxcEnvironment?.projectId}-dev.lxc.liferay.com`}

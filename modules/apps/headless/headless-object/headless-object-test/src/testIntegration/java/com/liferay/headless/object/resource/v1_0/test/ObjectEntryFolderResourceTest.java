@@ -121,8 +121,25 @@ public class ObjectEntryFolderResourceTest
 	public void testPostScopeScopeKeyObjectEntryFolder() throws Exception {
 		super.testPostScopeScopeKeyObjectEntryFolder();
 
-		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolder();
-		_testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolder();
+		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderByExternalReferenceCode();
+		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderByObjectEntryFolderId();
+		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderDataMismatch();
+		_testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolderByExternalReferenceCode();
+		_testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolderByObjectEntryFolderId();
+	}
+
+	@Override
+	@Test
+	public void testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		super.testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode();
+
+		_testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithExistingParentObjectEntryFolderByExternalReferenceCode();
+		_testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithExistingParentObjectEntryFolderByObjectEntryFolderId();
+		_testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithExistingParentObjectEntryFolderDataMismatch();
+		_testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithNonexistentParentObjectEntryFolderByExternalReferenceCode();
+		_testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithNonexistentParentObjectEntryFolderByObjectEntryFolderId();
 	}
 
 	@Override
@@ -296,7 +313,7 @@ public class ObjectEntryFolderResourceTest
 		assertValid(getObjectEntryFolder);
 	}
 
-	private void _testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolder()
+	private void _testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderByExternalReferenceCode()
 		throws Exception {
 
 		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
@@ -324,7 +341,64 @@ public class ObjectEntryFolderResourceTest
 			parentObjectEntryFolder.getId());
 	}
 
-	private void _testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolder()
+	private void _testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderByObjectEntryFolderId()
+		throws Exception {
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder());
+
+		randomObjectEntryFolder.setParentObjectEntryFolderId(
+			parentObjectEntryFolder.getId());
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, postObjectEntryFolder);
+		assertValid(postObjectEntryFolder);
+
+		Assert.assertEquals(
+			postObjectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode(),
+			parentObjectEntryFolder.getExternalReferenceCode());
+		Assert.assertEquals(
+			postObjectEntryFolder.getParentObjectEntryFolderId(),
+			parentObjectEntryFolder.getId());
+	}
+
+	private void _testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderDataMismatch()
+		throws Exception {
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder());
+
+		randomObjectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
+			parentObjectEntryFolder.getExternalReferenceCode());
+
+		randomObjectEntryFolder.setParentObjectEntryFolderId(
+			RandomTestUtil.randomLong());
+
+		try {
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolderByExternalReferenceCode()
 		throws Exception {
 
 		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
@@ -335,6 +409,197 @@ public class ObjectEntryFolderResourceTest
 		try {
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				randomObjectEntryFolder);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolderByObjectEntryFolderId()
+		throws Exception {
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		randomObjectEntryFolder.setParentObjectEntryFolderId(
+			RandomTestUtil.randomLong());
+
+		try {
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithExistingParentObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder());
+
+		randomObjectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
+			parentObjectEntryFolder.getExternalReferenceCode());
+
+		ObjectEntryFolder putObjectEntryFolder =
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
+		Assert.assertEquals(
+			parentObjectEntryFolder.getExternalReferenceCode(),
+			putObjectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode());
+		assertValid(putObjectEntryFolder);
+	}
+
+	private void _testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithExistingParentObjectEntryFolderByObjectEntryFolderId()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder());
+
+		randomObjectEntryFolder.setParentObjectEntryFolderId(
+			parentObjectEntryFolder.getId());
+
+		ObjectEntryFolder putObjectEntryFolder =
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
+		Assert.assertEquals(
+			parentObjectEntryFolder.getExternalReferenceCode(),
+			putObjectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode());
+		assertValid(putObjectEntryFolder);
+	}
+
+	private void _testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithExistingParentObjectEntryFolderDataMismatch()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder());
+
+		randomObjectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
+			parentObjectEntryFolder.getExternalReferenceCode());
+
+		randomObjectEntryFolder.setParentObjectEntryFolderId(
+			RandomTestUtil.randomLong());
+
+		try {
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomObjectEntryFolder);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+	}
+
+	private void _testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithNonexistentParentObjectEntryFolderByExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		String parentObjectEntryFolderExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		randomObjectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
+			parentObjectEntryFolderExternalReferenceCode);
+
+		ObjectEntryFolder putObjectEntryFolder =
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
+		Assert.assertEquals(
+			parentObjectEntryFolderExternalReferenceCode,
+			putObjectEntryFolder.
+				getParentObjectEntryFolderExternalReferenceCode());
+		assertValid(putObjectEntryFolder);
+
+		ObjectEntryFolder parentObjectEntryFolder =
+			objectEntryFolderResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						putObjectEntryFolder),
+					parentObjectEntryFolderExternalReferenceCode);
+
+		Assert.assertEquals(
+			parentObjectEntryFolderExternalReferenceCode,
+			parentObjectEntryFolder.getExternalReferenceCode());
+		assertValid(parentObjectEntryFolder);
+	}
+
+	private void _testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithNonexistentParentObjectEntryFolderByObjectEntryFolderId()
+		throws Exception {
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		randomObjectEntryFolder.setParentObjectEntryFolderId(
+			RandomTestUtil.randomLong());
+
+		try {
+			objectEntryFolderResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
+						postObjectEntryFolder),
+					postObjectEntryFolder.getExternalReferenceCode(),
+					randomObjectEntryFolder);
 
 			Assert.fail();
 		}

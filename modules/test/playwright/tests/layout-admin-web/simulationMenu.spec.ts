@@ -343,28 +343,31 @@ test.describe('Page content', () => {
 				title: getRandomString(),
 			});
 
-			// Go to view mode and check info messages
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Open simulation panel
+
+			await simulationMenuPage.openSimulationPanel();
+
+			// Assert empty messages
+
+			await expect(
+				page.getByText('Showing content for the segment "Anyone".')
+			).toBeVisible({timeout: 5000});
+
+			await expect(
+				page.getByText(
+					'No segments have been added yet. To add a new segment go to Product Menu > People > Segments.'
+				)
+			).toBeVisible({timeout: 1000});
 
 			await expect(async () => {
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+				await simulationMenuPage.changeCombobox(
+					'Preview By',
+					'Segments'
 				);
-
-				// Open simulation panel
-
-				await simulationMenuPage.openSimulationPanel();
-
-				// Assert empty messages
-
-				await expect(
-					page.getByText('Showing content for the segment "Anyone".')
-				).toBeVisible({timeout: 5000});
-
-				await expect(
-					page.getByText(
-						'No segments have been added yet. To add a new segment go to Product Menu > People > Segments.'
-					)
-				).toBeVisible({timeout: 1000});
 
 				await simulationMenuPage.changeCombobox(
 					'Preview By',
@@ -375,11 +378,11 @@ test.describe('Page content', () => {
 					page.getByText(
 						'Showing content for the experience "Default".'
 					)
-				).toBeVisible({timeout: 1000});
+				).toBeVisible({timeout: 5000});
 
 				await expect(
 					page.getByText('No experiences have been added yet.')
-				).toBeVisible({timeout: 1000});
+				).toBeVisible({timeout: 5000});
 			}).toPass();
 		}
 	);

@@ -1452,6 +1452,35 @@ public abstract class BaseBuild implements Build {
 			return true;
 		}
 
+		Map<ReinvokeRule, Integer> reinvokeRuleCountMap = new HashMap<>();
+
+		for (Invocation invocation : _invocations) {
+			ReinvokeRule reinvokeRule = invocation.getReinvokeRule();
+
+			if (reinvokeRule == null) {
+				continue;
+			}
+
+			Integer invocationCount = reinvokeRuleCountMap.getOrDefault(
+				reinvokeRule, 0);
+
+			invocationCount++;
+
+			reinvokeRuleCountMap.put(reinvokeRule, invocationCount);
+		}
+
+		for (Map.Entry<ReinvokeRule, Integer> reinvokeRuleIntegerEntry :
+				reinvokeRuleCountMap.entrySet()) {
+
+			ReinvokeRule reinvokeRule = reinvokeRuleIntegerEntry.getKey();
+
+			Integer invocationCount = reinvokeRuleIntegerEntry.getValue();
+
+			if (invocationCount > reinvokeRule.getMaximumInvocationCount()) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -3144,17 +3173,17 @@ public abstract class BaseBuild implements Build {
 			Properties properties =
 				JenkinsResultsParserUtil.getBuildProperties();
 
-			String propertyName = "reinvoke.rule.max.invocation.count";
+			String propertyName = "build.max.invocation.count";
 
 			if (properties.containsKey(propertyName)) {
 				return Integer.parseInt(properties.getProperty(propertyName));
 			}
-
-			return _MAXIMUM_INVOCATION_COUNT;
 		}
 		catch (IOException ioException) {
-			return _MAXIMUM_INVOCATION_COUNT;
+			System.out.println("Unable to load build.max.invocation.count");
 		}
+
+		return _MAXIMUM_INVOCATION_COUNT;
 	}
 
 	private List<Element> _getStopWatchRecordTableRowElements(

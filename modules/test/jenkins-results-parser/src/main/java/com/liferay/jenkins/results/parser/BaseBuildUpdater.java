@@ -6,7 +6,9 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Michael Hashimoto
@@ -85,7 +87,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			return;
 		}
 
-		if (!_build.hasMaximumInvocationCount()) {
+		if (!_hasMaximumInvocationCount()) {
 			_build.setStatus("starting");
 
 			_build.reset();
@@ -159,6 +161,24 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		_build.setStatus("queued");
 	}
 
+	private boolean _hasMaximumInvocationCount() {
+		Build build = getBuild();
+
+		if ((isBuildCompleted() && !isBuildFailing()) || !isBuildCompleted() ||
+			build.isFromArchive()) {
+
+			return false;
+		}
+
+		_setCurrentReinvokeRule();
+
+		if (build.hasMaximumInvocationCount()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isApplyReinvokeRules() {
 		Build build = getBuild();
 
@@ -167,7 +187,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		}
 
 		if ((isBuildCompleted() && !isBuildFailing()) || !isBuildCompleted() ||
-			build.isFromArchive() || build.hasMaximumInvocationCount()) {
+			build.isFromArchive() || _hasMaximumInvocationCount()) {
 
 			return false;
 		}
@@ -230,7 +250,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		Build build = getBuild();
 
 		if (build instanceof AxisBuild || build instanceof ParentBuild ||
-			build.hasMaximumInvocationCount()) {
+			_hasMaximumInvocationCount()) {
 
 			return;
 		}
@@ -281,6 +301,40 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		reinvoke();
 	}
 
+	private void _setCurrentReinvokeRule() {
+		Build build = getBuild();
+
+		if (build instanceof AxisBuild || build instanceof ParentBuild) {
+			return;
+		}
+
+		if ((isBuildCompleted() && !isBuildFailing()) || !isBuildCompleted() ||
+			build.isFromArchive()) {
+
+			return;
+		}
+
+		Build.Invocation currentInvocation = build.getCurrentInvocation();
+
+		if (_reinvokeRulesMap.containsKey(currentInvocation)) {
+			return;
+		}
+
+		for (ReinvokeRule reinvokeRule : ReinvokeRule.getReinvokeRules()) {
+			if (!reinvokeRule.matches(build)) {
+				continue;
+			}
+
+			_reinvokeRulesMap.put(currentInvocation, reinvokeRule);
+
+			currentInvocation.setReinvokeRule(reinvokeRule);
+
+			break;
+		}
+
+		_reinvokeRulesMap.put(currentInvocation, null);
+	}
+
 	private void _takeSlaveOffline(SlaveOfflineRule slaveOfflineRule) {
 		Build build = getBuild();
 
@@ -292,5 +346,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	}
 
 	private final Build _build;
+	private final Map<Build.Invocation, ReinvokeRule> _reinvokeRulesMap =
+		new HashMap<>();
 
 }

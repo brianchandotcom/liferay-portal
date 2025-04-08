@@ -99,26 +99,25 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		StringBuilder sb = new StringBuilder();
 
 		try {
-			_renderLiferayAUI(sb, httpServletRequest);
-			_renderLiferayBrowser(sb, httpServletRequest);
-			_renderLiferayData(sb, httpServletRequest);
-			_renderLiferayFeatureFlags(sb, httpServletRequest);
+			_renderLiferayAUI(httpServletRequest, sb);
+			_renderLiferayBrowser(httpServletRequest, sb);
+			_renderLiferayData(httpServletRequest, sb);
+			_renderLiferayFeatureFlags(httpServletRequest, sb);
 			_renderLiferayLanguage(sb);
 			_renderLiferayPortlet(sb);
 			_renderLiferayPortletKeys(sb);
-			_renderLiferayPropsValues(sb, httpServletRequest);
-			_renderLiferayThemeDisplay(sb, httpServletRequest);
+			_renderLiferayPropsValues(httpServletRequest, sb);
+			_renderLiferayThemeDisplay(httpServletRequest, sb);
 			_renderLiferayUtil(sb);
 
 			_renderValue(
-				sb, "authToken",
-				_authToken.getToken(httpServletRequest));
+				"authToken", sb, _authToken.getToken(httpServletRequest));
 
 			String currentURL = _portal.getCurrentURL(httpServletRequest);
 
-			_renderValue(sb, "currentURL", currentURL);
+			_renderValue("currentURL", sb, currentURL);
 			_renderValue(
-				sb, "currentURLEncoded",
+				"currentURLEncoded", sb,
 				HtmlUtil.escapeJS(URLCodec.encodeURL(currentURL)));
 		}
 		catch (PortalException portalException) {
@@ -131,9 +130,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		printWriter.println(
 			StringUtil.replace(
 				_LIFERAY_TPL, new String[] {"[$DEFINITION$]", "[$DEV_MODE$]"},
-				new Object[] {
-					sb, requestURL.startsWith("http://localhost")
-				}));
+				new Object[] {sb, requestURL.startsWith("http://localhost")}));
 
 		printWriter.println("</script>");
 	}
@@ -213,7 +210,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayAUI(
-		StringBuilder sb, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, StringBuilder sb) {
 
 		sb.append("AUI: {");
 
@@ -221,7 +218,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_renderMethod(sb, "getCombine", themeDisplay.isThemeJsFastLoad());
+		_renderMethod("getCombine", sb, themeDisplay.isThemeJsFastLoad());
 
 		long jsLastModified = PortalWebResourcesUtil.getLastModified(
 			PortalWebResourceConstants.RESOURCE_TYPE_JS);
@@ -232,13 +229,13 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				themeDisplay.getPathContext() + "/combo/",
 			"minifierType=", jsLastModified);
 
-		_renderMethod(sb, "getComboPath", comboURL + "&");
+		_renderMethod("getComboPath", sb, comboURL + "&");
 
 		_renderMethod(
-			sb, "getDateFormat",
+			"getDateFormat", sb,
 			_getDateFormatPattern(themeDisplay.getLocale()));
 		_renderMethod(
-			sb, "getEditorCKEditorPath",
+			"getEditorCKEditorPath", sb,
 			PortalWebResourcesUtil.getContextPath(
 				PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR));
 
@@ -251,79 +248,79 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			filter = "debug";
 		}
 
-		_renderMethod(sb, "getFilter", filter);
+		_renderMethod("getFilter", sb, filter);
 
 		String staticResourceURLParams = _portal.getStaticResourceURL(
 			httpServletRequest, StringPool.BLANK, "minifierType=",
 			jsLastModified);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
-			_renderMethod(sb, "getFilterConfig", null);
+			_renderMethod("getFilterConfig", sb, null);
 		}
 		else {
 			sb.append("getFilterConfig: () => ({");
 
-			_renderMethod(sb, "replaceStr", ".js" + staticResourceURLParams);
-			_renderMethod(sb, "searchExp", "\\\\.js$");
+			_renderMethod("replaceStr", sb, ".js" + staticResourceURLParams);
+			_renderMethod("searchExp", sb, "\\\\.js$");
 
 			sb.append("}),");
 		}
 
 		_renderMethod(
-			sb, "getJavaScriptRootPath", themeDisplay.getPathJavaScript());
+			"getJavaScriptRootPath", sb, themeDisplay.getPathJavaScript());
 		_renderMethod(
-			sb, "getPortletRootPath",
+			"getPortletRootPath", sb,
 			themeDisplay.getPathContext() + "/html/portlet");
 		_renderMethod(
-			sb, "getStaticResourceURLParams", staticResourceURLParams);
+			"getStaticResourceURLParams", sb, staticResourceURLParams);
 
 		sb.append("},");
 	}
 
 	private void _renderLiferayBrowser(
-		StringBuilder sb, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, StringBuilder sb) {
 
 		sb.append("Browser: {");
 
 		_renderMethod(
-			sb, "acceptsGzip",
+			"acceptsGzip", sb,
 			BrowserSnifferUtil.acceptsGzip(httpServletRequest));
 
 		String version = BrowserSnifferUtil.getVersion(httpServletRequest);
 
-		_renderMethod(sb, "getMajorVersion", version.isEmpty() ? "0" : version);
+		_renderMethod("getMajorVersion", sb, version.isEmpty() ? "0" : version);
 
 		_renderMethod(
-			sb, "getRevision",
+			"getRevision", sb,
 			BrowserSnifferUtil.getRevision(httpServletRequest));
-		_renderMethod(sb, "getVersion", version);
+		_renderMethod("getVersion", sb, version);
 
 		BrowserMetadata browserMetadata = BrowserSnifferUtil.getBrowserMetadata(
 			httpServletRequest);
 
-		_renderMethod(sb, "isAir", browserMetadata.isAir());
-		_renderMethod(sb, "isChrome", browserMetadata.isChrome());
-		_renderMethod(sb, "isEdge", browserMetadata.isEdge());
-		_renderMethod(sb, "isFirefox", browserMetadata.isFirefox());
-		_renderMethod(sb, "isGecko", browserMetadata.isGecko());
-		_renderMethod(sb, "isIe", browserMetadata.isIe());
-		_renderMethod(sb, "isIphone", browserMetadata.isIphone());
-		_renderMethod(sb, "isLinux", browserMetadata.isLinux());
-		_renderMethod(sb, "isMac", browserMetadata.isMac());
-		_renderMethod(sb, "isMobile", browserMetadata.isMobile());
-		_renderMethod(sb, "isMozilla", browserMetadata.isMozilla());
-		_renderMethod(sb, "isOpera", browserMetadata.isOpera());
-		_renderMethod(sb, "isRtf", browserMetadata.isRtf(version));
-		_renderMethod(sb, "isSafari", browserMetadata.isSafari());
-		_renderMethod(sb, "isSun", browserMetadata.isSun());
-		_renderMethod(sb, "isWebKit", browserMetadata.isWebKit());
-		_renderMethod(sb, "isWindows", browserMetadata.isWindows());
+		_renderMethod("isAir", sb, browserMetadata.isAir());
+		_renderMethod("isChrome", sb, browserMetadata.isChrome());
+		_renderMethod("isEdge", sb, browserMetadata.isEdge());
+		_renderMethod("isFirefox", sb, browserMetadata.isFirefox());
+		_renderMethod("isGecko", sb, browserMetadata.isGecko());
+		_renderMethod("isIe", sb, browserMetadata.isIe());
+		_renderMethod("isIphone", sb, browserMetadata.isIphone());
+		_renderMethod("isLinux", sb, browserMetadata.isLinux());
+		_renderMethod("isMac", sb, browserMetadata.isMac());
+		_renderMethod("isMobile", sb, browserMetadata.isMobile());
+		_renderMethod("isMozilla", sb, browserMetadata.isMozilla());
+		_renderMethod("isOpera", sb, browserMetadata.isOpera());
+		_renderMethod("isRtf", sb, browserMetadata.isRtf(version));
+		_renderMethod("isSafari", sb, browserMetadata.isSafari());
+		_renderMethod("isSun", sb, browserMetadata.isSun());
+		_renderMethod("isWebKit", sb, browserMetadata.isWebKit());
+		_renderMethod("isWindows", sb, browserMetadata.isWindows());
 
 		sb.append("},");
 	}
 
 	private void _renderLiferayData(
-			StringBuilder sb, HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, StringBuilder sb)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -332,15 +329,15 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 		sb.append("Data: {");
 
-		_renderValue(sb, "ICONS_INLINE_SVG", true);
-		_renderValue(sb, "NAV_SELECTOR", "#navigation");
-		_renderValue(sb, "NAV_SELECTOR_MOBILE", "#navigationCollapse");
+		_renderValue("ICONS_INLINE_SVG", sb, true);
+		_renderValue("NAV_SELECTOR", sb, "#navigation");
+		_renderValue("NAV_SELECTOR_MOBILE", sb, "#navigationCollapse");
 
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
 		_renderMethod(
-			sb, "isCustomizationView",
+			"isCustomizationView", sb,
 			layoutTypePortlet.isCustomizable() &&
 			_layoutPermission.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
@@ -399,7 +396,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderLiferayFeatureFlags(
-		StringBuilder sb, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, StringBuilder sb) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -461,9 +458,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("Portlet: {");
 
 		_renderStub(
-			sb, "openModal", "frontend-js-components-web", "openPortletModal");
+			"frontend-js-components-web", "openModal", sb, "openPortletModal");
 		_renderStub(
-			sb, "openWindow", "frontend-js-components-web",
+			"frontend-js-components-web", "openWindow", sb,
 			"openPortletWindow");
 
 		sb.append("},");
@@ -472,21 +469,21 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	private void _renderLiferayPortletKeys(StringBuilder sb) {
 		sb.append("PortletKeys: {");
 
-		_renderValue(sb, "DOCUMENT_LIBRARY", PortletKeys.DOCUMENT_LIBRARY);
+		_renderValue("DOCUMENT_LIBRARY", sb, PortletKeys.DOCUMENT_LIBRARY);
 		_renderValue(
-			sb, "DYNAMIC_DATA_MAPPING",
+			"DYNAMIC_DATA_MAPPING", sb,
 			"com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet");
 		_renderValue(
-			sb, "INSTANCE_SETTINGS",
+			"INSTANCE_SETTINGS", sb,
 			"com_liferay_configuration_admin_web_portlet_" +
 				"InstanceSettingsPortlet");
-		_renderValue(sb, "ITEM_SELECTOR", PortletKeys.ITEM_SELECTOR);
+		_renderValue("ITEM_SELECTOR", sb, PortletKeys.ITEM_SELECTOR);
 
 		sb.append("},");
 	}
 
 	private void _renderLiferayPropsValues(
-		StringBuilder sb, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, StringBuilder sb) {
 
 		sb.append("PropsValues: {");
 
@@ -495,21 +492,21 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				WebKeys.THEME_DISPLAY);
 
 		_renderValue(
-			sb, "JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT",
+			"JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT", sb,
 			_prefsProps.getInteger(
 				themeDisplay.getCompanyId(),
 				PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT,
 				PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT));
 
 		_renderValue(
-			sb, "UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE",
+			"UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE", sb,
 			_uploadServletRequestConfigurationProvider.getMaxSize());
 
 		sb.append("},");
 	}
 
 	private void _renderLiferayThemeDisplay(
-			StringBuilder sb, HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, StringBuilder sb)
 		throws PortalException {
 
 		sb.append("ThemeDisplay: {");
@@ -521,32 +518,32 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout != null) {
-			_renderMethod(sb, "getLayoutId", layout.getLayoutId());
+			_renderMethod("getLayoutId", sb, layout.getLayoutId());
 
 			Layout controlPanelLayout = themeDisplay.getControlPanelLayout();
 
 			_renderMethod(
-				sb, "getLayoutRelativeControlPanelURL",
+				"getLayoutRelativeControlPanelURL", sb,
 				_portal.getLayoutRelativeURL(
 					new VirtualLayout(
 						controlPanelLayout, themeDisplay.getScopeGroup()),
 					themeDisplay));
 
 			_renderMethod(
-				sb, "getLayoutRelativeURL",
+				"getLayoutRelativeURL", sb,
 				_portal.getLayoutRelativeURL(layout, themeDisplay));
 			_renderMethod(
-				sb, "getLayoutURL", _portal.getLayoutURL(layout, themeDisplay));
+				"getLayoutURL", sb, _portal.getLayoutURL(layout, themeDisplay));
 
-			_renderMethod(sb, "getParentLayoutId", layout.getParentLayoutId());
-			_renderMethod(sb, "isControlPanel", layout.isTypeControlPanel());
-			_renderMethod(sb, "isPrivateLayout", layout.isPrivateLayout());
+			_renderMethod("getParentLayoutId", sb, layout.getParentLayoutId());
+			_renderMethod("isControlPanel", sb, layout.isTypeControlPanel());
+			_renderMethod("isPrivateLayout", sb, layout.isPrivateLayout());
 			_renderMethod(
-				sb, "isVirtualLayout", layout instanceof VirtualLayout);
+				"isVirtualLayout", sb, layout instanceof VirtualLayout);
 		}
 
 		_renderMethod(
-			sb, "getBCP47LanguageId",
+			"getBCP47LanguageId", sb,
 			_language.getBCP47LanguageId(httpServletRequest));
 
 		String completeURL = _portal.getCurrentCompleteURL(httpServletRequest);
@@ -559,102 +556,102 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				themeDisplay);
 
 		_renderMethod(
-			sb, "getCanonicalURL", HtmlUtil.escapeJS(layoutSEOLink.getHref()));
+			"getCanonicalURL", sb, HtmlUtil.escapeJS(layoutSEOLink.getHref()));
 
-		_renderMethod(sb, "getCDNBaseURL", themeDisplay.getCDNBaseURL());
+		_renderMethod("getCDNBaseURL", sb, themeDisplay.getCDNBaseURL());
 		_renderMethod(
-			sb, "getCDNDynamicResourcesHost",
+			"getCDNDynamicResourcesHost", sb,
 			themeDisplay.getCDNDynamicResourcesHost());
-		_renderMethod(sb, "getCDNHost", themeDisplay.getCDNHost());
+		_renderMethod("getCDNHost", sb, themeDisplay.getCDNHost());
 		_renderMethod(
-			sb, "getCompanyGroupId", themeDisplay.getCompanyGroupId());
-		_renderMethod(sb, "getCompanyId", themeDisplay.getCompanyId());
+			"getCompanyGroupId", sb, themeDisplay.getCompanyGroupId());
+		_renderMethod("getCompanyId", sb, themeDisplay.getCompanyId());
 		_renderMethod(
-			sb, "getDefaultLanguageId",
+			"getDefaultLanguageId", sb,
 			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()));
 		_renderMethod(
-			sb, "getDoAsUserIdEncoded",
+			"getDoAsUserIdEncoded", sb,
 			UnicodeFormatter.toString(themeDisplay.getDoAsUserId()));
 		_renderMethod(
-			sb, "getLanguageId", _language.getLanguageId(httpServletRequest));
-		_renderMethod(sb, "getParentGroupId", themeDisplay.getSiteGroupId());
-		_renderMethod(sb, "getPathContext", themeDisplay.getPathContext());
-		_renderMethod(sb, "getPathImage", themeDisplay.getPathImage());
+			"getLanguageId", sb, _language.getLanguageId(httpServletRequest));
+		_renderMethod("getParentGroupId", sb, themeDisplay.getSiteGroupId());
+		_renderMethod("getPathContext", sb, themeDisplay.getPathContext());
+		_renderMethod("getPathImage", sb, themeDisplay.getPathImage());
 
 		_renderMethod(
-			sb, "getPathJavaScript", themeDisplay.getPathJavaScript());
-		_renderMethod(sb, "getPathMain", themeDisplay.getPathMain());
+			"getPathJavaScript", sb, themeDisplay.getPathJavaScript());
+		_renderMethod("getPathMain", sb, themeDisplay.getPathMain());
 		_renderMethod(
-			sb, "getPathThemeImages", themeDisplay.getPathThemeImages());
-		_renderMethod(sb, "getPathThemeRoot", themeDisplay.getPathThemeRoot());
-		_renderMethod(sb, "getPlid", themeDisplay.getPlid());
-		_renderMethod(sb, "getPortalURL", themeDisplay.getPortalURL());
-		_renderMethod(sb, "getRealUserId", themeDisplay.getRealUserId());
-		_renderMethod(sb, "getRemoteAddr", themeDisplay.getRemoteAddr());
-		_renderMethod(sb, "getRemoteHost", themeDisplay.getRemoteHost());
+			"getPathThemeImages", sb, themeDisplay.getPathThemeImages());
+		_renderMethod("getPathThemeRoot", sb, themeDisplay.getPathThemeRoot());
+		_renderMethod("getPlid", sb, themeDisplay.getPlid());
+		_renderMethod("getPortalURL", sb, themeDisplay.getPortalURL());
+		_renderMethod("getRealUserId", sb, themeDisplay.getRealUserId());
+		_renderMethod("getRemoteAddr", sb, themeDisplay.getRemoteAddr());
+		_renderMethod("getRemoteHost", sb, themeDisplay.getRemoteHost());
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		_renderMethod(sb, "getScopeGroupId", scopeGroup.getGroupId());
+		_renderMethod("getScopeGroupId", sb, scopeGroup.getGroupId());
 
 		Group liveGroup = _staging.getLiveGroup(scopeGroup);
 
 		_renderMethod(
-			sb, "getScopeGroupIdOrLiveGroupId", liveGroup.getGroupId());
+			"getScopeGroupIdOrLiveGroupId", sb, liveGroup.getGroupId());
 
 		HttpSession httpSession = httpServletRequest.getSession(true);
 
 		_renderMethod(
-			sb, "getSessionId",
+			"getSessionId", sb,
 			PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID ?
 				httpSession.getId() : StringPool.BLANK);
 
 		_renderMethod(
-			sb, "getSiteAdminURL",
+			"getSiteAdminURL", sb,
 			_portal.getSiteAdminURL(themeDisplay, StringPool.BLANK, null));
-		_renderMethod(sb, "getSiteGroupId", themeDisplay.getSiteGroupId());
+		_renderMethod("getSiteGroupId", sb, themeDisplay.getSiteGroupId());
 
 		TimeZone timeZone = themeDisplay.getTimeZone();
 
 		if (timeZone != null) {
-			_renderMethod(sb, "getTimeZone", timeZone.getID());
+			_renderMethod("getTimeZone", sb, timeZone.getID());
 		}
 		else {
 			TimeZone defaultTimeZone = TimeZone.getDefault();
 
-			_renderMethod(sb, "getTimeZone", defaultTimeZone.getID());
+			_renderMethod("getTimeZone", sb, defaultTimeZone.getID());
 		}
 
 		_renderMethod(
-			sb, "getURLControlPanel", themeDisplay.getURLControlPanel());
+			"getURLControlPanel", sb, themeDisplay.getURLControlPanel());
 		_renderMethod(
-			sb, "getURLHome", HtmlUtil.escapeJS(themeDisplay.getURLHome()));
+			"getURLHome", sb, HtmlUtil.escapeJS(themeDisplay.getURLHome()));
 
 		User user = themeDisplay.getUser();
 
 		_renderMethod(
-			sb, "getUserEmailAddress",
+			"getUserEmailAddress", sb,
 			themeDisplay.isSignedIn() ?
 				HtmlUtil.escapeJS(user.getEmailAddress()) : StringPool.BLANK);
 
-		_renderMethod(sb, "getUserId", themeDisplay.getUserId());
+		_renderMethod("getUserId", sb, themeDisplay.getUserId());
 		_renderMethod(
-			sb, "getUserName",
+			"getUserName", sb,
 			themeDisplay.isSignedIn() ?
 				UnicodeFormatter.toString(user.getFullName()) :
 					StringPool.BLANK);
 		_renderMethod(
-			sb, "isAddSessionIdToURL", themeDisplay.isAddSessionIdToURL());
-		_renderMethod(sb, "isImpersonated", themeDisplay.isImpersonated());
-		_renderMethod(sb, "isSignedIn", themeDisplay.isSignedIn());
+			"isAddSessionIdToURL", sb, themeDisplay.isAddSessionIdToURL());
+		_renderMethod("isImpersonated", sb, themeDisplay.isImpersonated());
+		_renderMethod("isSignedIn", sb, themeDisplay.isSignedIn());
 
 		_renderMethod(
-			sb, "isStagedPortlet",
+			"isStagedPortlet", sb,
 			Validator.isNotNull(themeDisplay.getPpid()) ?
 				liveGroup.isStagedPortlet(themeDisplay.getPpid()) : false);
-		_renderMethod(sb, "isStateExclusive", themeDisplay.isStateExclusive());
-		_renderMethod(sb, "isStateMaximized", themeDisplay.isStateMaximized());
-		_renderMethod(sb, "isStatePopUp", themeDisplay.isStatePopUp());
+		_renderMethod("isStateExclusive", sb, themeDisplay.isStateExclusive());
+		_renderMethod("isStateMaximized", sb, themeDisplay.isStateMaximized());
+		_renderMethod("isStatePopUp", sb, themeDisplay.isStatePopUp());
 
 		sb.append("},");
 	}
@@ -663,25 +660,25 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("Util: {");
 
 		_renderStub(
-			sb, "openAlertModal", "frontend-js-components-web",
+			"frontend-js-components-web", "openAlertModal", sb,
 			"openAlertModal");
 		_renderStub(
-			sb, "openConfirmModal", "frontend-js-components-web",
+			"frontend-js-components-web", "openConfirmModal", sb,
 			"openConfirmModal");
-		_renderStub(sb, "openModal", "frontend-js-components-web", "openModal");
+		_renderStub("frontend-js-components-web", "openModal", sb, "openModal");
 		_renderStub(
-			sb, "openSelectionModal", "frontend-js-components-web",
+			"frontend-js-components-web", "openSelectionModal", sb,
 			"openSelectionModal");
 		_renderStub(
-			sb, "openSimpleInputModal", "frontend-js-components-web",
+			"frontend-js-components-web", "openSimpleInputModal", sb,
 			"openSimpleInputModal");
-		_renderStub(sb, "openToast", "frontend-js-components-web", "openToast");
+		_renderStub("frontend-js-components-web", "openToast", sb, "openToast");
 
 		sb.append("},");
 	}
 
 	private void _renderMethod(
-		StringBuilder sb, String methodName, Object value) {
+		String methodName, StringBuilder sb, Object value) {
 
 		sb.append(methodName);
 		sb.append(": () => ");
@@ -702,7 +699,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderStub(
-		StringBuilder sb, String methodName, String contextPath,
+		String contextPath, String methodName, StringBuilder sb,
 		String symbol) {
 
 		sb.append(methodName);
@@ -714,7 +711,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	}
 
 	private void _renderValue(
-		StringBuilder sb, String fieldName, Object value) {
+		String fieldName, StringBuilder sb, Object value) {
 
 		sb.append(fieldName);
 		sb.append(StringPool.COLON);

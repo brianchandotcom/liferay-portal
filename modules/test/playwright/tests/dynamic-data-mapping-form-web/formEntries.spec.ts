@@ -30,6 +30,52 @@ test.beforeEach(({page}) => {
 	page.setViewportSize({height: 1080, width: 1920});
 });
 
+test.describe('Accessibility', () => {
+	test('aria-errormessage is applied for invalid multiple selection', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		formsPage,
+		page,
+	}) => {
+		await formsPage.goTo();
+
+		await formsPage.clickManagementToolbarNewButton();
+
+		await formBuilderSidePanelPage.addMultipleSelectionButton.dblclick();
+
+		await formBuilderSidePanelPage.requiredFieldToggleSwitch.click();
+
+		await page.waitForTimeout(1000);
+
+		await formBuilderPage.clickPublishFormButton();
+
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
+
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		const singleSelect = page.getByRole('checkbox');
+
+		await singleSelect.waitFor();
+
+		const fieldFeedbackElement = page.locator('.form-feedback-item');
+
+		await expect(fieldFeedbackElement).toBeVisible();
+
+		await expect(fieldFeedbackElement).toHaveText(
+			'This field is required.'
+		);
+
+		const fieldFeedbackId = await fieldFeedbackElement.getAttribute('id');
+
+		await expect(singleSelect).toHaveAttribute(
+			'aria-errormessage',
+			fieldFeedbackId
+		);
+	});
+});
+
 test('can interact with a large list of fields on the form entries page', async ({
 	formBuilderPage,
 	formBuilderSidePanelPage,

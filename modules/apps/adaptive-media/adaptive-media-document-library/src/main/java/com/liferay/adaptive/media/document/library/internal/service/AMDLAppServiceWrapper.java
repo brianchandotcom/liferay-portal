@@ -7,7 +7,6 @@ package com.liferay.adaptive.media.document.library.internal.service;
 
 import com.liferay.adaptive.media.document.library.internal.util.AMCleanUpOnUpdateAndCheckInThreadLocal;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -20,7 +19,6 @@ import java.io.InputStream;
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -59,8 +57,5 @@ public class AMDLAppServiceWrapper extends DLAppServiceWrapper {
 				description, changeLog, dlVersionNumberIncrease, inputStream,
 				size, displayDate, expirationDate, reviewDate, serviceContext));
 	}
-
-	@Reference
-	private DLAppService _dlAppService;
 
 }

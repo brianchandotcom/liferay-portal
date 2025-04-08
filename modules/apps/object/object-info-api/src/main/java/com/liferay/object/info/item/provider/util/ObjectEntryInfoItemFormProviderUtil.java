@@ -31,6 +31,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -80,7 +81,7 @@ public class ObjectEntryInfoItemFormProviderUtil {
 
 					unsafeConsumer.accept(
 						_getInfoFieldSet(
-							true, currentObjectDefinition.getLabelMap(),
+							true, false, currentObjectDefinition.getLabelMap(),
 							currentObjectDefinition.getName(),
 							ObjectField.class.getSimpleName(),
 							currentObjectDefinition,
@@ -233,16 +234,18 @@ public class ObjectEntryInfoItemFormProviderUtil {
 								StringPool.CLOSE_PARENTHESIS));
 					}
 
+					String namespace = StringBundler.concat(
+						ObjectRelationship.class.getSimpleName(),
+						StringPool.POUND, parentObjectDefinition.getName(),
+						StringPool.POUND, objectRelationship.getName());
+
 					unsafeConsumer.accept(
 						_getInfoFieldSet(
-							true, fieldSetLabelMap,
-							objectRelationship.getName(),
-							StringBundler.concat(
-								ObjectRelationship.class.getSimpleName(),
-								StringPool.POUND,
-								parentObjectDefinition.getName(),
-								StringPool.POUND, objectRelationship.getName()),
-							parentObjectDefinition,
+							true,
+							FeatureFlagManagerUtil.isEnabled(
+								objectDefinition.getCompanyId(), "LPD-21926"),
+							fieldSetLabelMap, objectRelationship.getName(),
+							namespace, parentObjectDefinition,
 							objectDefinitionLocalService,
 							objectFieldInfoFieldConverter,
 							objectFieldLocalService,
@@ -305,8 +308,8 @@ public class ObjectEntryInfoItemFormProviderUtil {
 	}
 
 	private static InfoFieldSet _getInfoFieldSet(
-		boolean editable, Map<Locale, String> labelMap, String name,
-		String namespace, ObjectDefinition objectDefinition,
+		boolean editable, boolean friendlyURL, Map<Locale, String> labelMap,
+		String name, String namespace, ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -345,6 +348,13 @@ public class ObjectEntryInfoItemFormProviderUtil {
 					unsafeConsumer.accept(
 						objectFieldInfoFieldConverter.getInfoField(
 							editable, namespace, objectField));
+				}
+
+				if (friendlyURL) {
+					unsafeConsumer.accept(
+						ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+							objectDefinition.isEnableFriendlyURLCustomization(),
+							name, namespace));
 				}
 			}
 		).labelInfoLocalizedValue(

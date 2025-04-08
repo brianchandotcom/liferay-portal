@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.time.LocalDateTime;
@@ -102,6 +103,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 
 	public static List<InfoFieldValue<Object>> getInfoFieldValues(
 			DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
+			FriendlyURLEntryLocalService friendlyURLEntryLocalService,
 			ListTypeEntryLocalService listTypeEntryLocalService,
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
@@ -113,7 +115,8 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 			List<ObjectField> objectFields,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			ObjectScopeProviderRegistry objectScopeProviderRegistry,
-			ThemeDisplay themeDisplay, Map<String, Object> values)
+			Portal portal, ThemeDisplay themeDisplay,
+			Map<String, Object> values)
 		throws Exception {
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
@@ -180,15 +183,40 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 						relatedObjectField.getI18nObjectFieldName());
 				}
 
+				String namespace = StringBundler.concat(
+					ObjectRelationship.class.getSimpleName(), StringPool.POUND,
+					parentObjectDefinition.getName(), StringPool.POUND,
+					objectRelationship.getName());
+
 				_addInfoFieldValue(
 					dlAppLocalService, dlURLHelper, infoFieldValues,
 					listTypeEntryLocalService, objectEntryLocalService,
 					relatedObjectField, objectFieldInfoFieldConverter,
-					StringBundler.concat(
-						ObjectRelationship.class.getSimpleName(),
-						StringPool.POUND, parentObjectDefinition.getName(),
-						StringPool.POUND, objectRelationship.getName()),
-					objectRelationshipLocalService, themeDisplay, value);
+					namespace, objectRelationshipLocalService, themeDisplay,
+					value);
+
+				if (FeatureFlagManagerUtil.isEnabled(
+						parentObjectDefinition.getCompanyId(), "LPD-21926")) {
+
+					infoFieldValues.add(
+						new InfoFieldValue<>(
+							ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+								parentObjectDefinition.
+									isEnableFriendlyURLCustomization(),
+								objectRelationship.getName(), namespace),
+							() -> {
+								if (objectEntry == null) {
+									return null;
+								}
+
+								return getFriendlyURLInfoFieldValue(
+									portal.getClassNameId(
+										parentObjectDefinition.getClassName()),
+									friendlyURLEntryLocalService,
+									GetterUtil.getLong(
+										values.get(objectField.getName())));
+							}));
+				}
 			}
 		}
 

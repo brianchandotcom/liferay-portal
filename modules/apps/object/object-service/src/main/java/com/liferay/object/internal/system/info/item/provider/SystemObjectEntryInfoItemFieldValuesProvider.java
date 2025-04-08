@@ -223,15 +223,15 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 
 		infoFieldValues.addAll(
 			ObjectEntryInfoItemValuesProviderUtil.getInfoFieldValues(
-				_dlAppLocalService, _dlURLHelper, _listTypeEntryLocalService,
-				_objectActionLocalService, _objectDefinition,
-				_objectDefinitionLocalService, _objectEntryLocalService,
-				_objectEntryManagerRegistry, _objectFieldInfoFieldConverter,
-				_objectFieldLocalService,
+				_dlAppLocalService, _dlURLHelper, _friendlyURLEntryLocalService,
+				_listTypeEntryLocalService, _objectActionLocalService,
+				_objectDefinition, _objectDefinitionLocalService,
+				_objectEntryLocalService, _objectEntryManagerRegistry,
+				_objectFieldInfoFieldConverter, _objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
 					_objectDefinition.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				themeDisplay, values));
+				_portal, themeDisplay, values));
 
 		return infoFieldValues;
 	}

@@ -189,15 +189,15 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		objectEntryFieldValues.addAll(
 			ObjectEntryInfoItemValuesProviderUtil.getInfoFieldValues(
-				_dlAppLocalService, _dlURLHelper, _listTypeEntryLocalService,
-				_objectActionLocalService, _objectDefinition,
-				_objectDefinitionLocalService, _objectEntryLocalService,
-				_objectEntryManagerRegistry, _objectFieldInfoFieldConverter,
-				_objectFieldLocalService,
+				_dlAppLocalService, _dlURLHelper, _friendlyURLEntryLocalService,
+				_listTypeEntryLocalService, _objectActionLocalService,
+				_objectDefinition, _objectDefinitionLocalService,
+				_objectEntryLocalService, _objectEntryManagerRegistry,
+				_objectFieldInfoFieldConverter, _objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
 					objectEntry.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				themeDisplay, properties));
+				_portal, themeDisplay, properties));
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				_objectDefinition.getCompanyId(), "LPD-21926")) {
@@ -249,15 +249,15 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getDateModified()));
 		objectEntryFieldValues.addAll(
 			ObjectEntryInfoItemValuesProviderUtil.getInfoFieldValues(
-				_dlAppLocalService, _dlURLHelper, _listTypeEntryLocalService,
-				_objectActionLocalService, _objectDefinition,
-				_objectDefinitionLocalService, _objectEntryLocalService,
-				_objectEntryManagerRegistry, _objectFieldInfoFieldConverter,
-				_objectFieldLocalService,
+				_dlAppLocalService, _dlURLHelper, _friendlyURLEntryLocalService,
+				_listTypeEntryLocalService, _objectActionLocalService,
+				_objectDefinition, _objectDefinitionLocalService,
+				_objectEntryLocalService, _objectEntryManagerRegistry,
+				_objectFieldInfoFieldConverter, _objectFieldLocalService,
 				_objectFieldLocalService.getObjectFields(
 					serviceBuilderObjectEntry.getObjectDefinitionId()),
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
-				themeDisplay, objectEntry.getProperties()));
+				_portal, themeDisplay, objectEntry.getProperties()));
 
 		return objectEntryFieldValues;
 	}

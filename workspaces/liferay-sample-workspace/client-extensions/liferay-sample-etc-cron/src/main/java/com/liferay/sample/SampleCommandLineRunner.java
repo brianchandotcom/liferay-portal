@@ -5,6 +5,7 @@
 
 package com.liferay.sample;
 
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.admin.user.client.dto.v1_0.Site;
 import com.liferay.headless.admin.user.client.resource.v1_0.SiteResource;
@@ -13,6 +14,7 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
 
@@ -24,15 +26,16 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Gregory Amerson
  */
 @Component
-public class SampleCommandLineRunner implements CommandLineRunner {
+public class SampleCommandLineRunner
+	extends BaseRestController implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -61,20 +64,13 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		// Call another client extension (liferay-sample-etc-spring-boot)
 
 		try {
-			String dadJoke = WebClient.create(
-			).get(
-			).uri(
-				_liferaySampleEtcSpringBootHomePageURL + "/dad/joke"
-			).header(
-				"Authorization",
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-sample-etc-cron-oauth-application-headless-server")
-			).accept(
-				MediaType.TEXT_PLAIN
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block();
+			String dadJoke = get(
+				HashMapBuilder.put(
+					HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN_VALUE
+				).put(
+					HttpHeaders.AUTHORIZATION, _getAuthorization()
+				).build(),
+				"/dad/joke");
 
 			if ((dadJoke != null) && _log.isInfoEnabled()) {
 				_log.info("Dad joke: " + dadJoke);
@@ -83,6 +79,11 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	@Override
+	protected String getWebClientBaseURL() {
+		return _liferaySampleEtcSpringBootHomePageURL.toString();
 	}
 
 	private void _countMessageBoardThreads(
@@ -134,6 +135,11 @@ public class SampleCommandLineRunner implements CommandLineRunner {
 				_log.info(messageBoardThread);
 			}
 		}
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-sample-etc-cron-oauth-application-headless-server");
 	}
 
 	private static final Log _log = LogFactory.getLog(

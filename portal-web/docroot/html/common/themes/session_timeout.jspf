@@ -29,13 +29,15 @@ String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REME
 					Liferay.Session.plug(
 						Liferay.SessionDisplay,
 						{
-							openToast: (...params) => {
-								import(
-									Liferay.ThemeDisplay.getPathContext() + '/o/frontend-js-components-web/__liferay__/index.js'
-								).then(
-									({openToast}) => openToast(...params)
-								);
-							},
+							openToast: (...params) => new Promise(
+								resolve => {
+									import(
+										Liferay.ThemeDisplay.getPathContext() + '/o/frontend-js-components-web/__liferay__/index.js'
+									).then(({openToast}) => {
+										resolve(openToast(...params));
+									});
+								}
+							),
 						}
 					);
 				</c:if>

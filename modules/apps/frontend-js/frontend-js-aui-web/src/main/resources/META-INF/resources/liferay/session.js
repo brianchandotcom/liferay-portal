@@ -407,15 +407,15 @@ AUI.add(
 					instance._uiSetActivated();
 				},
 
-				_afterDefExpiredFn() {
+				async _afterDefExpiredFn() {
 					const instance = this;
 
 					instance._host.unregisterInterval(instance._intervalId);
 
-					instance._uiSetExpired();
+					await instance._uiSetExpired();
 				},
 
-				_beforeHostWarned() {
+				async _beforeHostWarned() {
 					const instance = this;
 
 					const host = instance._host;
@@ -437,7 +437,7 @@ AUI.add(
 						remainingTime = warningLength;
 					}
 
-					instance._getBanner();
+					await instance._getBanner();
 
 					const counterTextNode = document.querySelector(
 						`#${TOAST_ID} .countdown-timer`
@@ -510,7 +510,7 @@ AUI.add(
 					return time;
 				},
 
-				_getBanner() {
+				async _getBanner() {
 					const instance = this;
 
 					let banner = instance._banner;
@@ -539,7 +539,7 @@ AUI.add(
 							},
 						};
 
-						openToast({
+						await openToast({
 							message: instance._warningText,
 							type: 'warning',
 							...toastDefaultConfig,
@@ -548,10 +548,10 @@ AUI.add(
 						const toastComponent = Liferay.component(TOAST_ID);
 
 						banner = {
-							open(props) {
+							async open(props) {
 								instance._destroyBanner();
 
-								openToast({
+								await openToast({
 									...props,
 									...toastDefaultConfig,
 								});
@@ -565,11 +565,11 @@ AUI.add(
 					return banner;
 				},
 
-				_onHostSessionStateChange(event) {
+				async _onHostSessionStateChange(event) {
 					const instance = this;
 
 					if (event.newVal === 'warned') {
-						instance._beforeHostWarned(event);
+						await instance._beforeHostWarned(event);
 					}
 				},
 
@@ -585,12 +585,12 @@ AUI.add(
 					}
 				},
 
-				_uiSetExpired() {
+				async _uiSetExpired() {
 					const instance = this;
 
-					const banner = instance._getBanner();
+					const banner = await instance._getBanner();
 
-					banner.open({
+					await banner.open({
 						message: instance._expiredText,
 						title: Liferay.Language.get('danger'),
 						type: 'danger',

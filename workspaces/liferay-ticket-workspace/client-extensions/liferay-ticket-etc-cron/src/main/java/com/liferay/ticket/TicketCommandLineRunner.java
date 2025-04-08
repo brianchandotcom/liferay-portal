@@ -67,7 +67,7 @@ public class TicketCommandLineRunner
 			}
 
 			delete(
-				"Bearer " + _oAuth2AccessToken.getTokenValue(), null,
+				"Bearer " + _oAuth2AccessToken.getTokenValue(), "",
 				"/o/c/j3y7tickets/" + id);
 		}
 	}

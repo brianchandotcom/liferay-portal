@@ -38,6 +38,7 @@ import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Scope;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.dto.v1_0.SystemProperties;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.rest.dto.v1_0.Version;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
@@ -302,6 +303,10 @@ public class ObjectEntryDTOConverter
 					() -> _toStatus(
 						dtoConverterContext.getLocale(),
 						serviceBuilderObjectEntry.getStatus()));
+				setSystemProperties(
+					() -> _toSystemProperties(
+						objectDefinition,
+						serviceBuilderObjectEntry.getVersion()));
 				setTaxonomyCategoryBriefs(
 					() -> {
 						if (!objectDefinition.isEnableCategorization()) {
@@ -318,10 +323,6 @@ public class ObjectEntryDTOConverter
 										assetCategory, dtoConverterContext),
 							TaxonomyCategoryBrief.class);
 					});
-				setVersion(
-					() -> _toVersion(
-						objectDefinition,
-						serviceBuilderObjectEntry.getVersion()));
 			}
 		};
 
@@ -370,11 +371,11 @@ public class ObjectEntryDTOConverter
 			() -> _toStatus(
 				dtoConverterContext.getLocale(),
 				objectEntryVersion.getStatus()));
+		objectEntry.setSystemProperties(
+			() -> _toSystemProperties(
+				objectDefinition, objectEntryVersion.getVersion()));
 		objectEntry.setTaxonomyCategoryBriefs(
 			contentObjectEntry::getTaxonomyCategoryBriefs);
-		objectEntry.setVersion(
-			() -> _toVersion(
-				objectDefinition, objectEntryVersion.getVersion()));
 
 		return objectEntry;
 	}
@@ -1198,14 +1199,21 @@ public class ObjectEntryDTOConverter
 		};
 	}
 
-	private Version _toVersion(ObjectDefinition objectDefinition, int version) {
+	private SystemProperties _toSystemProperties(
+		ObjectDefinition objectDefinition, int versionNumber) {
+
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
 			return null;
 		}
 
-		return new Version() {
+		return new SystemProperties() {
 			{
-				setNumber(() -> version);
+				setVersion(
+					() -> new Version() {
+						{
+							setNumber(() -> versionNumber);
+						}
+					});
 			}
 		};
 	}

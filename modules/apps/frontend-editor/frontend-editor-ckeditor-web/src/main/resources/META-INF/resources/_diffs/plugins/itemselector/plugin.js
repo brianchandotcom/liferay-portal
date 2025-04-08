@@ -52,6 +52,10 @@
 		},
 
 		_checkImageWidth(editor, editorContent, imageSrc) {
+			if (!editorContent) {
+				return;
+			}
+
 			const url = imageSrc.url ? imageSrc.url : imageSrc;
 
 			const editorContentDocument =

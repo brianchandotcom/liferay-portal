@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.internal.report;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -63,6 +64,12 @@ public class UpgradeReportTest {
 						add(
 							"Completed com.test.TestUpgradeProcess in " +
 								"20000000 ms");
+						add(
+							StringBundler.concat(
+								"Completed upgrade process ",
+								"com.test.UpgradeAssetCategory - Modifying ",
+								"table AssetCategory to alter the type of the ",
+								"column title to TEXT null in 10000000 ms"));
 					}
 				}
 			).build()
@@ -75,7 +82,7 @@ public class UpgradeReportTest {
 		List<?> runningUpgradeProcesses = (List<?>)reportDataDiagnostics.get(
 			"longest.upgrade.processes");
 
-		Assert.assertTrue(runningUpgradeProcesses.size() == 2);
+		Assert.assertTrue(runningUpgradeProcesses.size() == 3);
 
 		Assert.assertEquals(
 			"fr.test.TestUpgradeProcess took 30000000 ms to complete\n",
@@ -86,6 +93,11 @@ public class UpgradeReportTest {
 			"com.test.TestUpgradeProcess took 20000000 ms to complete\n",
 			runningUpgradeProcesses.get(
 				1
+			).toString());
+		Assert.assertEquals(
+			"com.test.UpgradeAssetCategory took 10000000 ms to complete\n",
+			runningUpgradeProcesses.get(
+				2
 			).toString());
 	}
 

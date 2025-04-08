@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
-import com.liferay.headless.object.client.dto.v1_0.ParentObjectEntryFolderBrief;
 import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
 import com.liferay.headless.object.client.problem.Problem;
@@ -144,7 +143,6 @@ public class ObjectEntryFolderResourceTest
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				numberOfObjectEntries = RandomTestUtil.randomInt();
 				numberOfObjectEntryFolders = RandomTestUtil.randomInt();
-				parentObjectEntryFolderId = 0L;
 			}
 		};
 	}
@@ -266,20 +264,6 @@ public class ObjectEntryFolderResourceTest
 		return objectEntryFolder;
 	}
 
-	private ParentObjectEntryFolderBrief _randomParentObjectEntryFolderBrief(
-			String parentExternalReferenceCode, long parentObjectEntryFolderId)
-		throws Exception {
-
-		return new ParentObjectEntryFolderBrief() {
-			{
-				externalReferenceCode = parentExternalReferenceCode;
-				id = parentObjectEntryFolderId;
-				label = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-			}
-		};
-	}
-
 	private void _testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithGroupKey()
 		throws Exception {
 
@@ -321,9 +305,8 @@ public class ObjectEntryFolderResourceTest
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				randomObjectEntryFolder());
 
-		randomObjectEntryFolder.setParentObjectEntryFolderBrief(
-			_randomParentObjectEntryFolderBrief(
-				parentObjectEntryFolder.getExternalReferenceCode(), 0L));
+		randomObjectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
+			parentObjectEntryFolder.getExternalReferenceCode());
 
 		ObjectEntryFolder postObjectEntryFolder =
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
@@ -346,9 +329,8 @@ public class ObjectEntryFolderResourceTest
 
 		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
 
-		randomObjectEntryFolder.setParentObjectEntryFolderBrief(
-			_randomParentObjectEntryFolderBrief(
-				StringUtil.toLowerCase(RandomTestUtil.randomString()), 0L));
+		randomObjectEntryFolder.setParentObjectEntryFolderExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		try {
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(

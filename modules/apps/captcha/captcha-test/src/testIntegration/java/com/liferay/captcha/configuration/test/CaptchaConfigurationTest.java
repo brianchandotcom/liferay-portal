@@ -72,12 +72,21 @@ public class CaptchaConfigurationTest {
 			Assert.assertTrue(_isCaptchaRendered());
 		}
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CaptchaConfiguration.class.getName(),
+						new HashMapDictionaryBuilder(
+						).<String, Object>put(
+							"createAccountCaptchaEnabled", false
+						).build());
+			ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					CaptchaConfiguration.class.getName(),
 					new HashMapDictionaryBuilder(
 					).<String, Object>put(
-						"createAccountCaptchaEnabled", false
+						"createAccountCaptchaEnabled", true
 					).build())) {
 
 			Assert.assertFalse(_isCaptchaRendered());

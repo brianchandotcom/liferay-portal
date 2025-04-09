@@ -8,6 +8,7 @@ package com.liferay.portal.remote.cors.client.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.remote.cors.configuration.WebContextCORSConfiguration;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -35,7 +36,7 @@ public class WebContextConfigurationCORSClientTest
 	@Before
 	public void setUp() {
 		registerJaxRsApplication(
-			new CORSTestApplication(), "cors",
+			new CORSTestApplication(), _PATH,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.name", "test-cors"
 			).build());
@@ -58,43 +59,38 @@ public class WebContextConfigurationCORSClientTest
 
 	@Test
 	public void testApplicationCORSForGuestUser() throws Exception {
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, false, false);
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, false, true, "::1");
+		assertJaxRSUrl(_URL, HttpMethod.GET, false, false);
+		assertJaxRSUrl(_URL, HttpMethod.GET, false, true, "::1");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.GET, false, true,
-			"http://127.0.0.1:8080");
+			_URL, HttpMethod.GET, false, true, "http://127.0.0.1:8080");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.GET, false, true,
-			"http://localhost:8080");
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, false, false);
+			_URL, HttpMethod.GET, false, true, "http://localhost:8080");
+		assertJaxRSUrl(_URL, HttpMethod.OPTIONS, false, false);
+		assertJaxRSUrl(_URL, HttpMethod.OPTIONS, false, true, "::1");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, false, true, "::1");
+			_URL, HttpMethod.OPTIONS, false, true, "http://127.0.0.1:8080");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, false, true,
-			"http://127.0.0.1:8080");
-		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, false, true,
-			"http://localhost:8080");
+			_URL, HttpMethod.OPTIONS, false, true, "http://localhost:8080");
 	}
 
 	@Test
 	public void testApplicationCORSWithoutOAuth2() throws Exception {
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, true, false);
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.GET, true, false, "::1");
+		assertJaxRSUrl(_URL, HttpMethod.GET, true, false);
+		assertJaxRSUrl(_URL, HttpMethod.GET, true, false, "::1");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.GET, true, false,
-			"http://127.0.0.1:8080");
+			_URL, HttpMethod.GET, true, false, "http://127.0.0.1:8080");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.GET, true, false,
-			"http://localhost:8080");
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, true, false);
-		assertJaxRSUrl("/cors/cors-app", HttpMethod.OPTIONS, true, true, "::1");
+			_URL, HttpMethod.GET, true, false, "http://localhost:8080");
+		assertJaxRSUrl(_URL, HttpMethod.OPTIONS, true, false);
+		assertJaxRSUrl(_URL, HttpMethod.OPTIONS, true, true, "::1");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, true, true,
-			"http://127.0.0.1:8080");
+			_URL, HttpMethod.OPTIONS, true, true, "http://127.0.0.1:8080");
 		assertJaxRSUrl(
-			"/cors/cors-app", HttpMethod.OPTIONS, true, true,
-			"http://localhost:8080");
+			_URL, HttpMethod.OPTIONS, true, true, "http://localhost:8080");
 	}
+
+	private static final String _PATH = RandomTestUtil.randomString();
+
+	private static final String _URL = "/" + _PATH + "/cors-app";
 
 }

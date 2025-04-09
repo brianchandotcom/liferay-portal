@@ -13,6 +13,7 @@ export class FormBuilderFieldSettingsSidePanelPage {
 	readonly inlineToggle: Locator;
 	readonly optionDisplayNameInputField: Locator;
 	readonly page: Page;
+	readonly repeatableToggle: Locator;
 
 	constructor(page: Page) {
 		this.addOptionButton = page.getByRole('button', {name: 'Add Option'});
@@ -26,6 +27,7 @@ export class FormBuilderFieldSettingsSidePanelPage {
 		this.inlineToggle = page.getByText('Inline');
 		this.optionDisplayNameInputField = page.getByPlaceholder('Option');
 		this.page = page;
+		this.repeatableToggle = page.getByText('Repeatable');
 	}
 
 	async addOptions(numberOfOptions: number, optionsSufix: string = 'Option') {

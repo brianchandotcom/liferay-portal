@@ -168,6 +168,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			description: updatedBusinessEvent.description,
 			eventType: updatedBusinessEvent.eventType?.key,
 			lastComment: reason,
+			name: updatedBusinessEvent?.name,
 			newLiferayVersion: updatedBusinessEvent.newLiferayVersion?.key,
 			r_accountEntryToBusinessEvents_accountEntryId:
 				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
@@ -553,6 +554,16 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 							name="businessEvent"
 							render={() => (
 								<>
+									<div className="event-edit-field mb-4">
+										<Input
+											badgeClassName="mt-1 mx-3"
+											label={i18n.translate('event-name')}
+											name="businessEvent.name"
+											required
+											type="text"
+										/>
+									</div>
+
 									<div className="event-edit-field mb-4">
 										<Select
 											className="mx-3"

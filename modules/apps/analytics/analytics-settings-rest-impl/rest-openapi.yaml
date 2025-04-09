@@ -453,7 +453,7 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
-                    descritpion:
+                    description:
                         Connected
                 500:
                     content:

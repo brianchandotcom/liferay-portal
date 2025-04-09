@@ -20,7 +20,7 @@
 									"pt_BR": "Base de conhecimento"
 								},
 								"type": "url",
-								"url": "/knowledge-base",
+								"url": "https://help.liferay.com/hc",
 								"useNewTab": false
 							},
 							{
@@ -32,7 +32,7 @@
 									"pt_BR": "Documentação"
 								},
 								"type": "url",
-								"url": "/documentation",
+								"url": "https://learn.liferay.com/documentation",
 								"useNewTab": false
 							}
 						],

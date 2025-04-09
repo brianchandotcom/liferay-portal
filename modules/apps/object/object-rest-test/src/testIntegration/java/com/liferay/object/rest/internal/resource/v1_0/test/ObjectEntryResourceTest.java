@@ -8120,6 +8120,127 @@ public class ObjectEntryResourceTest {
 				).toString(),
 				JSONCompareMode.LENIENT);
 
+			// Format: "dd-MMM-yyyy hh:mm:ss.SSS a"
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T09:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+						"27-Jul-2000 11:00:00.000 AM"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
+						"27-Jul-2000 11:00:00.000 AM"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd"
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T00:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T00:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT, "2000-07-27"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd HH:mm"
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T09:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT, "2000-07-27 11:00"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27 11:00"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd HH:mm:ss.S"
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T09:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+						"2000-07-27 11:00:00.000"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
+						"2000-07-27 11:00:00.000"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd HH:mm:ss.SSS"
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T09:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+						"2000-07-27 11:00:00.000"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
+						"2000-07-27 11:00:00.000"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd'T'HH:mm:ss'Z'"
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T11:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+						"2000-07-27T11:00:00Z"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T11:00:00Z"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
 			// Format: "yyyy-MM-dd'T'HH:mm:ss.SSS"
 
 			JSONAssert.assertEquals(

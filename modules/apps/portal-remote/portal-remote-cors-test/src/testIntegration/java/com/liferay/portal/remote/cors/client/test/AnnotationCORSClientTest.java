@@ -7,6 +7,7 @@ package com.liferay.portal.remote.cors.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -32,7 +33,7 @@ public class AnnotationCORSClientTest extends BaseCORSClientTestCase {
 	@Before
 	public void setUp() {
 		registerJaxRsApplication(
-			new CORSTestApplication(), "cors-annotation",
+			new CORSTestApplication(), _PATH,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"liferay.cors.annotation", true
 			).build());
@@ -40,18 +41,18 @@ public class AnnotationCORSClientTest extends BaseCORSClientTestCase {
 
 	@Test
 	public void testApplicationAnnotationCORSForGuestUser() throws Exception {
-		assertJaxRSUrl(
-			"/cors-annotation/cors-app", HttpMethod.OPTIONS, true, true);
-		assertJaxRSUrl(
-			"/cors-annotation/cors-app", HttpMethod.GET, true, false);
+		assertJaxRSUrl(_URL, HttpMethod.OPTIONS, true, true);
+		assertJaxRSUrl(_URL, HttpMethod.GET, true, false);
 	}
 
 	@Test
 	public void testApplicationAnnotationCORSWithoutOAuth2() throws Exception {
-		assertJaxRSUrl(
-			"/cors-annotation/cors-app", HttpMethod.OPTIONS, true, true);
-		assertJaxRSUrl(
-			"/cors-annotation/cors-app", HttpMethod.GET, true, false);
+		assertJaxRSUrl(_URL, HttpMethod.OPTIONS, true, true);
+		assertJaxRSUrl(_URL, HttpMethod.GET, true, false);
 	}
+
+	private static final String _PATH = RandomTestUtil.randomString();
+
+	private static final String _URL = "/" + _PATH + "/cors-app";
 
 }

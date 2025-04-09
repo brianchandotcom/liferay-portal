@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
+import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -30,6 +31,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.account.configuration.manager.AccountEntryAddressSubtypeConfigurationManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -257,6 +259,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 		if (field.equals("billingAddress")) {
 			return HashMapBuilder.<String, Object>put(
+				"addressSubtypeConfiguration",
+				_getAddressSubtypeConfiguration(commerceOrder.getCompanyId())
+			).put(
 				"hasManageAddressesPermission",
 				() -> {
 					CommerceContext commerceContext =
@@ -347,6 +352,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		}
 		else if (field.equals("shippingAddress")) {
 			return HashMapBuilder.<String, Object>put(
+				"addressSubtypeConfiguration",
+				_getAddressSubtypeConfiguration(commerceOrder.getCompanyId())
+			).put(
 				"hasManageAddressesPermission",
 				() -> {
 					CommerceContext commerceContext =
@@ -416,6 +424,32 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		);
 
 		return jsonObject.toString();
+	}
+
+	private Map<String, String> _getAddressSubtypeConfiguration(
+		long companyId) {
+
+		return HashMapBuilder.put(
+			"billing",
+			AccountEntryAddressSubtypeConfigurationManagerUtil.
+				getAddressSubtypeListTypeDefinitionExternalReferenceCode(
+					companyId,
+					AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING)
+		).put(
+			"billingAndShipping",
+			AccountEntryAddressSubtypeConfigurationManagerUtil.
+				getAddressSubtypeListTypeDefinitionExternalReferenceCode(
+					companyId,
+					AccountListTypeConstants.
+						ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING)
+		).put(
+			"shipping",
+			AccountEntryAddressSubtypeConfigurationManagerUtil.
+				getAddressSubtypeListTypeDefinitionExternalReferenceCode(
+					companyId,
+					AccountListTypeConstants.
+						ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING)
+		).build();
 	}
 
 	private String _getConfigurationValue(

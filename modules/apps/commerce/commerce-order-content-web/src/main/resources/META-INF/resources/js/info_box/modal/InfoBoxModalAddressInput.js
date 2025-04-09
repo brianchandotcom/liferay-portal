@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Autocomplete from '@clayui/autocomplete';
 import ClayForm, {
 	ClayInput,
 	ClaySelect,
@@ -31,6 +32,7 @@ const InfoBoxModalAddressInput = ({
 	const [countries, setCountries] = useState([]);
 	const [errors, setErrors] = useState({});
 	const [hasRegions, setHasRegions] = useState(false);
+	const [subtypes, setSubtypes] = useState([]);
 
 	const getAddressType = () => {
 		if (field === 'billingAddress') {
@@ -193,6 +195,48 @@ const InfoBoxModalAddressInput = ({
 	}, [currentAddress]);
 
 	useEffect(() => {
+		const externalReferenceCode =
+			currentAddress.addressType === 'billing'
+				? additionalProps.addressSubtypeConfiguration.billing
+				: currentAddress.addressType === 'shipping'
+					? additionalProps.addressSubtypeConfiguration.shipping
+					: additionalProps.addressSubtypeConfiguration
+							.billingAndShipping;
+
+		if (!externalReferenceCode) {
+			setSubtypes([]);
+
+			return;
+		}
+
+		CommerceServiceProvider.AdminListTypeAPI('v1')
+			.getListTypeEntries(externalReferenceCode, {
+				pageSize: -1,
+			})
+			.then((data) => {
+				setSubtypes(data.items);
+			})
+			.catch((error) => {
+				setSubtypes([]);
+
+				openToast({
+					message:
+						error.detail ||
+						error.errorDescription ||
+						Liferay.Language.get(
+							'an-unexpected-system-error-occurred'
+						),
+					type: 'danger',
+				});
+			});
+	}, [
+		additionalProps.addressSubtypeConfiguration.billing,
+		additionalProps.addressSubtypeConfiguration.billingAndShipping,
+		additionalProps.addressSubtypeConfiguration.shipping,
+		currentAddress.addressType,
+	]);
+
+	useEffect(() => {
 		CommerceServiceProvider.AdminUserAPI('v1')
 			.getPostalAddresses(Liferay.CommerceContext.account.accountId)
 			.then(({items}) => {
@@ -341,6 +385,79 @@ const InfoBoxModalAddressInput = ({
 							name="infoBoxModalAddressNameInput"
 						/>
 					</ClayForm.Group>
+
+					{(additionalProps.addressSubtypeConfiguration.billing ||
+						additionalProps.addressSubtypeConfiguration
+							.billingAndShipping ||
+						additionalProps.addressSubtypeConfiguration
+							.shipping) && (
+						<ClayForm.Group
+							className={classnames({
+								'has-error':
+									!!errors.infoBoxModalAddressSubtypeInput,
+							})}
+						>
+							<label htmlFor="infoBoxModalAddressSubtypeInput">
+								{Liferay.Language.get('subtype')}
+							</label>
+
+							<Autocomplete
+								aria-label={Liferay.Language.get('subtype')}
+								className="mb-3"
+								defaultValue={
+									currentAddress?.addressSubtype || ''
+								}
+								disabled={
+									!!currentAddress.id ||
+									!(currentAddress?.addressType === 'billing'
+										? additionalProps
+												.addressSubtypeConfiguration
+												.billing
+										: currentAddress.addressType ===
+											  'shipping'
+											? additionalProps
+													.addressSubtypeConfiguration
+													.shipping
+											: additionalProps
+													.addressSubtypeConfiguration
+													.billingAndShipping)
+								}
+								id="infoBoxModalAddressSubtypeInput"
+								items={subtypes}
+								menuTrigger="focus"
+								name="infoBoxModalAddressSubtypeInput"
+								onChange={(value) => {
+									setCurrentAddress({
+										...currentAddress,
+										addressSubtype: value,
+									});
+								}}
+								onItemsChange={() => {}}
+								placeholder={Liferay.Language.get('subtype')}
+								value={
+									subtypes.find(
+										(item) =>
+											item.key ===
+											currentAddress?.addressSubtype
+									)?.name || ''
+								}
+							>
+								{(item) => (
+									<Autocomplete.Item
+										key={item.key}
+										value={item.key}
+									>
+										{item.name}
+									</Autocomplete.Item>
+								)}
+							</Autocomplete>
+
+							<ErrorMessage
+								errors={errors}
+								name="infoBoxModalAddressSubtypeInput"
+							/>
+						</ClayForm.Group>
+					)}
 
 					<ClayForm.Group
 						className={classnames({

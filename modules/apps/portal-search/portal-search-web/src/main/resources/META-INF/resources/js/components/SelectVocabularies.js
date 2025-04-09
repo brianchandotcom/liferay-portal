@@ -118,12 +118,12 @@ function VocabularyTree({
 	const _handleSelect = (list, add = true) => {
 		const newList = new Set(selectedKeys);
 
-		list.forEach(({erc}) => {
+		list.forEach(({externalReferenceCode}) => {
 			if (add) {
-				newList.add(erc);
+				newList.add(externalReferenceCode);
 			}
 			else {
-				newList.delete(erc);
+				newList.delete(externalReferenceCode);
 			}
 		});
 
@@ -131,7 +131,7 @@ function VocabularyTree({
 	};
 
 	const _handleToggle = (item) => {
-		_handleSelect([item], !selectedKeys.has(item.erc));
+		_handleSelect([item], !selectedKeys.has(item.externalReferenceCode));
 	};
 
 	if (loading || vocabularyTree === null) {
@@ -164,13 +164,15 @@ function VocabularyTree({
 
 					{item.children?.length ? (
 						<TreeView.Group items={item.children}>
-							{({erc, name}) => (
+							{({externalReferenceCode, name}) => (
 								<TreeView.Item
-									key={erc}
+									key={externalReferenceCode}
 									style={{cursor: 'unset'}}
 								>
 									<ClayCheckbox
-										checked={selectedKeys.has(erc)}
+										checked={selectedKeys.has(
+											externalReferenceCode
+										)}
 										onChange={() => _handleToggle(item)}
 									/>
 
@@ -293,21 +295,19 @@ function SelectVocabularies({
 
 										return true;
 									})
-									.map(
-										({externalReferenceCode, id, name}) => {
-											const erc = `${itemsFilteredForSites[index].externalReferenceCode}&&${externalReferenceCode}`;
+									.map((item) => {
+										const externalReferenceCode = `${itemsFilteredForSites[index].externalReferenceCode}&&${item.externalReferenceCode}`;
 
-											fetchedExternalReferenceCodes.push(
-												erc
-											); // Collect ExternalReferenceCodes to allow deselection of unavailable vocabularies
+										fetchedExternalReferenceCodes.push(
+											externalReferenceCode
+										); // Collect ExternalReferenceCodes to allow deselection of unavailable vocabularies
 
-											return {
-												erc,
-												id: id.toString(),
-												name,
-											};
-										}
-									),
+										return {
+											externalReferenceCode,
+											id: item.id.toString(),
+											name: item.name,
+										};
+									}),
 							}))
 						);
 
@@ -331,9 +331,11 @@ function SelectVocabularies({
 	const _handleDeselectUnavailableVocabularyExternalReferenceCodes = () => {
 		const newList = new Set(selectedKeys);
 
-		unavailableVocabularyExternalReferenceCodes.forEach((erc) => {
-			newList.delete(erc);
-		});
+		unavailableVocabularyExternalReferenceCodes.forEach(
+			(externalReferenceCode) => {
+				newList.delete(externalReferenceCode);
+			}
+		);
 
 		setSelectedKeys(newList);
 	};
@@ -347,8 +349,8 @@ function SelectVocabularies({
 	};
 
 	const _isUnavailableVocabularyExternalReferenceCodesSelected = () =>
-		unavailableVocabularyExternalReferenceCodes.some((erc) =>
-			selectedKeys.has(erc)
+		unavailableVocabularyExternalReferenceCodes.some(
+			(externalReferenceCode) => selectedKeys.has(externalReferenceCode)
 		);
 
 	return (

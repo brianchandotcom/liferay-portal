@@ -74,7 +74,7 @@ definition {
 	@summary = "Default summary"
 	macro resetConfigureCSP() {
 		if (isSet(reset)) {
-			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+			Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 			MenuItem.clickNoError(menuItem = "Reset Default Values");
 		}

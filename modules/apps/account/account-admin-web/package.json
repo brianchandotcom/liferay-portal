@@ -6,6 +6,7 @@
 		"@clayui/layout": "3.128.0",
 		"@clayui/multi-select": "3.133.0",
 		"@liferay/address-web": "*",
+		"commerce-frontend-js": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0"

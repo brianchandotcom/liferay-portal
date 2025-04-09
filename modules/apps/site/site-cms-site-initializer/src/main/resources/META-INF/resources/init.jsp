@@ -16,6 +16,7 @@ page import="com.liferay.site.cms.site.initializer.internal.constants.CMSSiteIni
 page import="com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.AllSpacesSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ContentsSectionDisplayContext" %><%@
+page import="com.liferay.site.cms.site.initializer.internal.display.context.EditCategoryDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.EditVocabularyDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.FilesSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.StructureUsagesDisplayContext" %><%@

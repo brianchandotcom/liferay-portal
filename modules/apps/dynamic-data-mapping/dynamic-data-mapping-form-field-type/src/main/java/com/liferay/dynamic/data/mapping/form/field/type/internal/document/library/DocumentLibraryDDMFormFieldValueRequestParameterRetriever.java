@@ -7,6 +7,9 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.document.libra
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,12 +36,17 @@ public class DocumentLibraryDDMFormFieldValueRequestParameterRetriever
 		String parameterValue = httpServletRequest.getParameter(
 			ddmFormFieldParameterName);
 
-		if (!Validator.isBlank(parameterValue)) {
-			parameterValue = String.valueOf(
-				getJSONObject(_log, parameterValue));
+		if (Validator.isBlank(parameterValue)) {
+			return parameterValue;
 		}
 
-		return parameterValue;
+		JSONObject jsonObject = getJSONObject(_log, parameterValue);
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return StringPool.BLANK;
+		}
+
+		return jsonObject.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

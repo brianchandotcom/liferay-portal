@@ -250,8 +250,7 @@ public class PropsUtil {
 				}
 
 				configuration = new ConfigurationImpl(
-					PropsUtil.class.getClassLoader(), PropsFiles.PORTAL,
-					companyId, webId);
+					PropsUtil.class.getClassLoader(), PropsFiles.PORTAL, webId);
 
 				_configurations.put(companyId, configuration);
 			}
@@ -273,7 +272,7 @@ public class PropsUtil {
 
 		if (configuration == null) {
 			configuration = new ConfigurationImpl(
-				PropsUtil.class.getClassLoader(), PropsFiles.PORTAL, companyId,
+				PropsUtil.class.getClassLoader(), PropsFiles.PORTAL,
 				company.getWebId());
 
 			_configurations.put(companyId, configuration);

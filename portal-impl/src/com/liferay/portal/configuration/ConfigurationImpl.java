@@ -6,11 +6,9 @@
 package com.liferay.portal.configuration;
 
 import com.liferay.petra.lang.HashUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -41,13 +39,12 @@ public class ConfigurationImpl
 	implements com.liferay.portal.kernel.configuration.Configuration {
 
 	public ConfigurationImpl(
-		ClassLoader classLoader, String name, long companyId, String webId) {
+		ClassLoader classLoader, String name, String webId) {
 
 		_classLoaderAggregateProperties =
-			ClassLoaderAggregatePropertiesUtil.create(
-				classLoader, companyId, webId, name);
+			ClassLoaderAggregatePropertiesUtil.create(classLoader, webId, name);
 
-		printSources(companyId, webId);
+		printSources();
 	}
 
 	@Override
@@ -317,7 +314,7 @@ public class ConfigurationImpl
 		clearCache();
 	}
 
-	protected void printSources(long companyId, String webId) {
+	protected void printSources() {
 		if (GetterUtil.getBoolean(
 				System.getProperty("configuration.impl.quiet"))) {
 
@@ -340,14 +337,6 @@ public class ConfigurationImpl
 			}
 
 			String info = "Loading " + source;
-
-			if (companyId > CompanyConstants.SYSTEM) {
-				info += StringBundler.concat(
-					" for company ID ", companyId, " and web ID ", webId,
-					"\nCompany properties can be overwrritten by setting the ",
-					"environment variable LIFERAY_PROPS_BY_COMPANY_",
-					companyId);
-			}
 
 			System.out.println(info);
 		}

@@ -3620,7 +3620,7 @@ tell application "Safari" to quit
 					</echo>
 				</then>
 				<elseif>
-					<isset property="analytics.cloud.faro.user.login" />
+					<isset property="analytics.cloud.faro.workspace.name" />
 					<then>
 						<echo append="true" file="${test.ext.properties.file}">
 							analytics.cloud.faro.workspace.name=${analytics.cloud.faro.workspace.name}

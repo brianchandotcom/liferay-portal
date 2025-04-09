@@ -1,3 +1,29 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	compileOnly group: "jakarta.ws.rs", name: "jakarta.ws.rs-api", version: "3.1.0"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+javadoc {
+	enabled = false
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/jakarta/ws/rs/ext/FactoryFinder.java"
+	originalLibModuleName = "jakarta.ws.rs-api"
 }

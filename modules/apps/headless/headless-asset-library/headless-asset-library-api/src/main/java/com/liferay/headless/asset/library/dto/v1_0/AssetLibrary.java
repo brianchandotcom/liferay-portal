@@ -448,6 +448,49 @@ public class AssetLibrary implements Serializable {
 	private Supplier<Map<String, String>> _name_i18nSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The number of this asset library's sites."
+	)
+	public Integer getNumberOfSites() {
+		if (_numberOfSitesSupplier != null) {
+			numberOfSites = _numberOfSitesSupplier.get();
+
+			_numberOfSitesSupplier = null;
+		}
+
+		return numberOfSites;
+	}
+
+	public void setNumberOfSites(Integer numberOfSites) {
+		this.numberOfSites = numberOfSites;
+
+		_numberOfSitesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setNumberOfSites(
+		UnsafeSupplier<Integer, Exception> numberOfSitesUnsafeSupplier) {
+
+		_numberOfSitesSupplier = () -> {
+			try {
+				return numberOfSitesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The number of this asset library's sites.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer numberOfSites;
+
+	@JsonIgnore
+	private Supplier<Integer> _numberOfSitesSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The number of this asset library's associated users."
 	)
 	public Integer getNumberOfUserAccounts() {
@@ -869,6 +912,18 @@ public class AssetLibrary implements Serializable {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(name_i18n));
+		}
+
+		Integer numberOfSites = getNumberOfSites();
+
+		if (numberOfSites != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfSites\": ");
+
+			sb.append(numberOfSites);
 		}
 
 		Integer numberOfUserAccounts = getNumberOfUserAccounts();

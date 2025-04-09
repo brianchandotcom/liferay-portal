@@ -167,6 +167,16 @@ public class AssetLibrarySerDes {
 			sb.append(_toJSON(assetLibrary.getName_i18n()));
 		}
 
+		if (assetLibrary.getNumberOfSites() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfSites\": ");
+
+			sb.append(assetLibrary.getNumberOfSites());
+		}
+
 		if (assetLibrary.getNumberOfUserAccounts() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -351,6 +361,15 @@ public class AssetLibrarySerDes {
 			map.put("name_i18n", String.valueOf(assetLibrary.getName_i18n()));
 		}
 
+		if (assetLibrary.getNumberOfSites() == null) {
+			map.put("numberOfSites", null);
+		}
+		else {
+			map.put(
+				"numberOfSites",
+				String.valueOf(assetLibrary.getNumberOfSites()));
+		}
+
 		if (assetLibrary.getNumberOfUserAccounts() == null) {
 			map.put("numberOfUserAccounts", null);
 		}
@@ -445,6 +464,9 @@ public class AssetLibrarySerDes {
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfSites")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "numberOfUserAccounts")) {
 
@@ -528,6 +550,12 @@ public class AssetLibrarySerDes {
 				if (jsonParserFieldValue != null) {
 					assetLibrary.setName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfSites")) {
+				if (jsonParserFieldValue != null) {
+					assetLibrary.setNumberOfSites(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

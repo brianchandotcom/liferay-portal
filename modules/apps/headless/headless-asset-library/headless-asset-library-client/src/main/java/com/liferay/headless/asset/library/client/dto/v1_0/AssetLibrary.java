@@ -215,6 +215,27 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public Integer getNumberOfSites() {
+		return numberOfSites;
+	}
+
+	public void setNumberOfSites(Integer numberOfSites) {
+		this.numberOfSites = numberOfSites;
+	}
+
+	public void setNumberOfSites(
+		UnsafeSupplier<Integer, Exception> numberOfSitesUnsafeSupplier) {
+
+		try {
+			numberOfSites = numberOfSitesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfSites;
+
 	public Integer getNumberOfUserAccounts() {
 		return numberOfUserAccounts;
 	}

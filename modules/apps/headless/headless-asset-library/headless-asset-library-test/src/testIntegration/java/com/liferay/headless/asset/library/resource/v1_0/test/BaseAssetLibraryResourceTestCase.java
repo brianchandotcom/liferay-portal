@@ -950,6 +950,14 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("numberOfSites", additionalAssertFieldName)) {
+				if (assetLibrary.getNumberOfSites() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"numberOfUserAccounts", additionalAssertFieldName)) {
 
@@ -1213,6 +1221,17 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				if (!equals(
 						(Map)assetLibrary1.getName_i18n(),
 						(Map)assetLibrary2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfSites", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetLibrary1.getNumberOfSites(),
+						assetLibrary2.getNumberOfSites())) {
 
 					return false;
 				}
@@ -1612,6 +1631,12 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("numberOfSites")) {
+			sb.append(String.valueOf(assetLibrary.getNumberOfSites()));
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("numberOfUserAccounts")) {
 			sb.append(String.valueOf(assetLibrary.getNumberOfUserAccounts()));
 
@@ -1697,6 +1722,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				numberOfSites = RandomTestUtil.randomInt();
 				numberOfUserAccounts = RandomTestUtil.randomInt();
 				numberOfUserGroups = RandomTestUtil.randomInt();
 			}

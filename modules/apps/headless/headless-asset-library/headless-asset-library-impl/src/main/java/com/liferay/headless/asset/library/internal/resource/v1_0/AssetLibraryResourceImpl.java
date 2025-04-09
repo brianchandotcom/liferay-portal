@@ -374,7 +374,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					addAction(
 						ActionKeys.UPDATE, depotEntry, "patchAssetLibrary")
 				).build(),
-				_dtoConverterRegistry, depotEntry.getGroupId(),
+				_dtoConverterRegistry, depotEntry.getDepotEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

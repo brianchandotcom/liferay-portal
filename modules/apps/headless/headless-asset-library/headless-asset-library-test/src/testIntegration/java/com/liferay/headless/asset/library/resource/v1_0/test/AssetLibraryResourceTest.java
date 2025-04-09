@@ -61,7 +61,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		DepotEntry originalTestDepotEntry = testDepotEntry;
 		Group originalTestGroup = testGroup;
 
-		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
+		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
 			assetLibrary.getId());
 
 		testDepotEntry = depotEntry;

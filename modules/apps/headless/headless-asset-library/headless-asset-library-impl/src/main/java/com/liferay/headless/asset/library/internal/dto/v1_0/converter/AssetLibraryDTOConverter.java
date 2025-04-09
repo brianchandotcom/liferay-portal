@@ -59,7 +59,7 @@ public class AssetLibraryDTOConverter
 
 		return toDTO(
 			dtoConverterContext,
-			_depotEntryLocalService.getGroupDepotEntry(
+			_depotEntryLocalService.getDepotEntry(
 				(Long)dtoConverterContext.getId()));
 	}
 
@@ -83,7 +83,7 @@ public class AssetLibraryDTOConverter
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getDescriptionMap()));
 				setExternalReferenceCode(group::getExternalReferenceCode);
-				setId(group::getGroupId);
+				setId(depotEntry::getDepotEntryId);
 				setName(() -> group.getName(dtoConverterContext.getLocale()));
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(

@@ -214,15 +214,15 @@ public class LayoutExportController implements ExportController {
 		headerElement.addAttribute(
 			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
 
-		headerElement.addAttribute(
-			"schema-version",
-			ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION);
-
 		Group group = _groupLocalService.fetchGroup(
 			portletDataContext.getGroupId());
 
 		headerElement.addAttribute(
 			"group-friendly-url", group.getFriendlyURL());
+
+		headerElement.addAttribute(
+			"schema-version",
+			ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION);
 
 		headerElement.addAttribute("export-date", Time.getRFC822());
 

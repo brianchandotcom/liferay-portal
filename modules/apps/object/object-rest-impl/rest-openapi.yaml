@@ -686,6 +686,97 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
+    "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/collaborators":
+        get:
+            description:
+                Retrieves the collaborators of an object entry.
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+            tags: ["Collaborator"]
+        post:
+            description:
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not
+                included in the request. Send a notification for the new collaborators and those whose permissions are
+                different.
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+            tags: ["Collaborator"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/object-actions/{objectActionName}":
         put:
             operationId: putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName
@@ -913,6 +1004,90 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
+    "/{objectEntryId}/collaborators":
+        get:
+            description:
+                Retrieves the collaborators of an object entry.
+            operationId: getObjectEntryCollaboratorsPage
+            parameters:
+                -   in: path
+                    name: objectEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+            tags: ["Collaborator"]
+        post:
+            description:
+                Add or update all the collaborators received in the request. Delete existing collaborators that are not
+                included in the request.
+            operationId: postObjectEntryCollaboratorsPage
+            parameters:
+                -   in: path
+                    name: objectEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator"
+                                type: array
+            tags: ["Collaborator"]
     "/{objectEntryId}/object-actions/{objectActionName}":
         put:
             operationId: putObjectEntryObjectActionObjectActionName

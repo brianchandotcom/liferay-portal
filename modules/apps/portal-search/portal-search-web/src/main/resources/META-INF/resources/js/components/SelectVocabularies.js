@@ -149,7 +149,7 @@ function VocabularyTree({
 			showExpanderOnHover={false}
 		>
 			{(item) => (
-				<TreeView.Item key={item.id}>
+				<TreeView.Item key={item.externalReferenceCode}>
 					<div className="treeview-link-site-row">
 						<SiteRow
 							name={

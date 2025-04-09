@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.model.UserTrackerPath;
@@ -25,8 +27,11 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -125,6 +130,21 @@ public class PortalRequestProcessor {
 		throws IOException, ServletException {
 
 		String path = _processPath(httpServletRequest);
+
+		if (_PATH_PORTAL_UPDATE_PASSWORD.equals(path)) {
+			String updatePasswordPath = _getUpadatePasswordPath(
+				httpServletRequest);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Update Password path " + updatePasswordPath);
+			}
+
+			if (Validator.isNotNull(updatePasswordPath)) {
+				httpServletResponse.sendRedirect(updatePasswordPath);
+
+				return;
+			}
+		}
 
 		ActionMapping actionMapping = _moduleConfig.getActionMapping(path);
 
@@ -311,6 +331,56 @@ public class PortalRequestProcessor {
 		return StringBundler.concat(
 			portalURL, lastPath.getContextPath(), lastPath.getPath(),
 			parameters);
+	}
+
+	private String _getUpadatePasswordPath(
+		HttpServletRequest httpServletRequest) {
+
+		if (Validator.isNotNull(httpServletRequest.getParameter("ticketId"))) {
+			return null;
+		}
+
+		try {
+			User user = PortalUtil.getUser(httpServletRequest);
+
+			if ((user == null) || !user.isPasswordReset() ||
+				user.isGuestUser()) {
+
+				return null;
+			}
+
+			Date expirationDate = new Date(System.currentTimeMillis() + 600000);
+
+			Ticket ticket = TicketLocalServiceUtil.addDistinctTicket(
+				user.getCompanyId(), User.class.getName(), user.getUserId(),
+				TicketConstants.TYPE_PASSWORD, null, expirationDate,
+				new ServiceContext());
+
+			StringBuffer sb = new StringBuffer();
+
+			sb.append(PortalUtil.getPortalURL(httpServletRequest));
+			sb.append(PortalUtil.getPathContext());
+			sb.append("/c/portal/update_password");
+			sb.append("?p_l_id=");
+			sb.append(LayoutConstants.DEFAULT_PLID);
+			sb.append("&ticketId=");
+			sb.append(ticket.getTicketId());
+			sb.append("&ticketKey=");
+			sb.append(ticket.getKey());
+
+			ticket.setKey(PasswordEncryptorUtil.encrypt(ticket.getKey()));
+
+			TicketLocalServiceUtil.updateTicket(ticket);
+
+			return sb.toString();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
 	}
 
 	private void _internalModuleRelativeForward(

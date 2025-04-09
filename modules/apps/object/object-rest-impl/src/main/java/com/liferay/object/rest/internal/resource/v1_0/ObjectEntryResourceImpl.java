@@ -26,7 +26,6 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -437,24 +436,12 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String scopeKey, ValidationRequest validationRequest)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-37056")) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		return _validateObjectEntry(scopeKey, validationRequest);
 	}
 
 	@Override
 	public ValidationResponse postValidate(ValidationRequest validationRequest)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-37056")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		return _validateObjectEntry(null, validationRequest);
 	}

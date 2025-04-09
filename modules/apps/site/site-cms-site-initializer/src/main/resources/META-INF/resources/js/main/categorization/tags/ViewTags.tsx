@@ -15,9 +15,11 @@ import CreateTagsModal from './CreateTagsModal';
 import EditTagsModal from './EditTagsModal';
 
 export default function ViewTags({
+	dataSetId,
 	tagsURL,
 	vocabulariesURL,
 }: {
+	dataSetId: string;
 	tagsURL: string;
 	vocabulariesURL: string;
 }) {
@@ -36,7 +38,7 @@ export default function ViewTags({
 						}) =>
 							CreateTagsModal({
 								closeModal,
-								tagsURL,
+								dataSetId,
 							}),
 						size: 'md',
 					});
@@ -230,7 +232,7 @@ export default function ViewTags({
 				}}
 				emptyState={emptyState}
 				filters={filters}
-				id="ViewTags"
+				id={dataSetId}
 				itemsActions={[
 					{
 						data: {

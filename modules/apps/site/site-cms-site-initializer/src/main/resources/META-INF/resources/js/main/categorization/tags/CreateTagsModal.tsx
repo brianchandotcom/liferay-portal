@@ -6,20 +6,22 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
-import {openToast} from 'frontend-js-components-web';
-import {fetch, navigate} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
 import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
+const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
+
 export default function CreateTagsModalContent({
 	closeModal,
-	tagsURL,
+	dataSetId,
 }: {
 	closeModal: () => void;
-	tagsURL: string;
+	dataSetId: string;
 }) {
 	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
 
@@ -41,43 +43,18 @@ export default function CreateTagsModalContent({
 					name: values.tagName,
 				};
 
-				fetch(url, {
-					body: JSON.stringify(body),
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json',
-					},
+				executeAsyncItemAction({
 					method: 'POST',
-				})
-					.then((response) => {
-						if (response.ok) {
-							openToast({
-								message: Liferay.Language.get(
-									'your-request-completed-successfully'
-								),
-								title: Liferay.Language.get('success'),
-								type: 'success',
-							});
-						}
-						else {
-							openToast({
-								message: Liferay.Language.get(
-									'an-unexpected-error-occurred'
-								),
-								title: Liferay.Language.get('error'),
-								type: 'danger',
-							});
-						}
-					})
-					.catch(() => {
-						openToast({
-							message: Liferay.Language.get(
-								'an-unexpected-error-occurred'
-							),
-							title: Liferay.Language.get('error'),
-							type: 'danger',
-						});
-					});
+					requestBody: JSON.stringify(body),
+					successMessage: sub(
+						Liferay.Language.get('x-was-created-successfully'),
+						`<strong>${Liferay.Util.escapeHTML(values.tagName)}</strong>`
+					),
+					url,
+				}).then(() =>
+					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {id: dataSetId})
+				);
+
 				resetForm();
 			},
 			validate: (values) => {
@@ -130,7 +107,7 @@ export default function CreateTagsModalContent({
 
 						<ClayButton
 							displayType="primary"
-							onClick={() => navigate(tagsURL)}
+							onClick={closeModal}
 							type="submit"
 						>
 							{Liferay.Language.get('save')}

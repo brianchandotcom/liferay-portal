@@ -725,43 +725,11 @@ public class DisplayPageTemplateResourceTest
 
 	private ClassSubtypeReference _getRandomClassSubtypeReference() {
 		if (RandomTestUtil.randomBoolean()) {
-			return new ClassSubtypeReference() {
-				{
-					setClassName(AssetCategory.class.getName());
-				}
-			};
+			return _getClassSubtypeReference(AssetCategory.class.getName());
 		}
 
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				"com.liferay.journal.model.JournalArticle");
-
-		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
-			infoItemFormVariationsProvider.getInfoItemFormVariations(
-				testGroup.getGroupId()));
-
-		Assert.assertFalse(infoItemFormVariations.isEmpty());
-
-		infoItemFormVariations.sort(
-			Comparator.comparing(InfoItemFormVariation::getKey));
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariations.get(0);
-
-		return new ClassSubtypeReference() {
-			{
-				setClassName("com.liferay.journal.model.JournalArticle");
-				setSubTypeExternalReference(
-					() -> new ItemExternalReference() {
-						{
-							setExternalReferenceCode(
-								infoItemFormVariation::
-									getExternalReferenceCode);
-						}
-					});
-			}
-		};
+		return _getClassSubtypeReference(
+			"com.liferay.journal.model.JournalArticle");
 	}
 
 	private boolean _isPublished(Layout layout) {

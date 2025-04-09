@@ -26,6 +26,7 @@ const test = mergeTests(
 let dataSetERC: string;
 let dataSetLabel: string;
 const clientExtensionName = 'Liferay Sample FDS Filter';
+const CLIENT_EXTENSION_FILTER_DISPLAY_TYPE = 'Client Extension Filter';
 const DATE_FIELD_NAME = 'dateCreated';
 const NAME_FIELD_NAME = 'fieldName';
 
@@ -123,11 +124,18 @@ test('Can create a Client Extension Filter in DSM', async ({
 		await filtersPage.saveAddFilterForm();
 	});
 
-	await test.step('Check that the client extension filter is in the list', async () => {
+	await test.step('Check that the client extension filter is in the list with correct fields', async () => {
 		await expect(
 			page.getByRole('cell', {
 				exact: true,
 				name: DATE_FIELD_NAME,
+			})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {
+				exact: true,
+				name: CLIENT_EXTENSION_FILTER_DISPLAY_TYPE,
 			})
 		).toBeVisible();
 	});

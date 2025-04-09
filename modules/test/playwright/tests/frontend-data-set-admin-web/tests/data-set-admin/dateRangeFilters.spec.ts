@@ -28,7 +28,9 @@ const dataSetERCs = [];
 let dataSetERC: string;
 let dataSetLabel: string;
 const DATE_FIELD_NAME = 'dateCreated';
+const DATE_FILTER_DISPLAY_TYPE = 'Date Filter';
 const DATE_FILTER_NAME = 'Creation Date';
+const DISPLAY_TYPE_COLUMN_INDEX = 3;
 const NAME_COLUMN_INDEX = 1;
 
 test.beforeEach(async ({dataSetManagerApiHelpers, filtersPage}) => {
@@ -193,13 +195,20 @@ test('Ability to save and edit DSM date filters @LPS-181281', async ({
 		await filtersPage.saveAddFilterForm();
 	});
 
-	await test.step('Assert filter with new name is saved @LPS-183056', async () => {
+	await test.step('Assert filter with correct fields is saved @LPS-183056', async () => {
 		await expect(
 			filtersPage
 				.getRowByText(filterNewName)
 				.locator('td')
 				.nth(NAME_COLUMN_INDEX)
 		).toHaveText(filterNewName);
+
+		await expect(
+			filtersPage
+				.getRowByText(filterNewName)
+				.locator('td')
+				.nth(DISPLAY_TYPE_COLUMN_INDEX)
+		).toHaveText(DATE_FILTER_DISPLAY_TYPE);
 
 		await filtersPage.assertFiltersTableRowCount(1);
 	});

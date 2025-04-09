@@ -18,6 +18,7 @@ import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {filtersPageTest} from './fixtures/filtersPageTest';
 
 const SELECTION_API_HEADLESS_FILTER_NAME = 'Selection API Headless filter';
+const SELECTION_DISPLAY_TYPE = 'Selection Filter';
 const SELECTION_PICKLIST_FILTER_NAME = 'Selection Picklist filter';
 const SELECTION_PICKLIST_NO_PRESELECTED_VALUES_FILTER_NAME =
 	'Selection Picklist filter without preselected values';
@@ -409,6 +410,13 @@ test(
 				page.getByRole('cell', {
 					exact: true,
 					name: SELECTION_API_HEADLESS_FILTER_NAME,
+				})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_DISPLAY_TYPE,
 				})
 			).toBeVisible();
 		});

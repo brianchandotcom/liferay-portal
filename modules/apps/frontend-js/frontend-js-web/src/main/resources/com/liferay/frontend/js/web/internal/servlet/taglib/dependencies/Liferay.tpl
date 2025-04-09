@@ -15,7 +15,7 @@
 	}
 
 	let __liferay = {
-		[$DEFINITION$]
+[$DEFINITION$]
 	};
 
 	if (window.Liferay) {

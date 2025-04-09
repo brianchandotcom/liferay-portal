@@ -1356,12 +1356,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		// Account groups visibility
 
-		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
-			cpDefinition.getCPDefinitionId(),
-			GetterUtil.getBoolean(
-				product.getProductAccountGroupFilter(),
-				cpDefinition.isAccountGroupFilterEnabled()));
-
 		ProductAccountGroup[] productAccountGroups =
 			product.getProductAccountGroups();
 
@@ -1396,6 +1390,12 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 					cpDefinition.getCPDefinitionId());
 			}
 		}
+
+		_cpDefinitionService.updateCPDefinitionAccountGroupFilter(
+			cpDefinition.getCPDefinitionId(),
+			GetterUtil.getBoolean(
+				product.getProductAccountGroupFilter(),
+				cpDefinition.isAccountGroupFilterEnabled()));
 
 		CPType cpType = _cpTypeRegistry.getCPType(
 			cpDefinition.getProductTypeName());

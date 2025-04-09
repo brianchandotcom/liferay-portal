@@ -10,19 +10,21 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import FieldWrapper from './FieldWrapper';
 
+export type TFieldFile = {
+	errorMessage?: string;
+	fieldId: string;
+	label: string;
+	onFileChange?: (file: File | null) => void;
+	validExtensions: string;
+};
+
 const FieldFile = ({
 	errorMessage,
 	fieldId,
 	label,
 	onFileChange,
 	validExtensions,
-}: {
-	errorMessage?: string;
-	fieldId: string;
-	label: string;
-	onFileChange?: (file: File | null) => void;
-	validExtensions: string;
-}) => {
+}: TFieldFile) => {
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 	const [file, setFile] = useState<File | null>(null);
 

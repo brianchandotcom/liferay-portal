@@ -7,24 +7,18 @@ import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import FieldFile from '../../../../../src/main/resources/META-INF/resources/js/main/components/forms/FieldFile';
+import FieldFile, {
+	TFieldFile,
+} from '../../../../../src/main/resources/META-INF/resources/js/main/components/forms/FieldFile';
 
-type Props = {
-	errorMessage?: string;
-	fieldId: string;
-	label: string;
-	onFileChange?: (file: File | null) => void;
-	validExtensions: string;
-};
-
-const DEFAULT_PROPS: Props = {
+const DEFAULT_PROPS: TFieldFile = {
 	fieldId: 'file-input',
 	label: 'File',
 	onFileChange: jest.fn(),
 	validExtensions: '.json',
 };
 
-const renderComponent = (props: Props = DEFAULT_PROPS) => {
+const renderComponent = (props: TFieldFile = DEFAULT_PROPS) => {
 	return render(<FieldFile {...props} />);
 };
 

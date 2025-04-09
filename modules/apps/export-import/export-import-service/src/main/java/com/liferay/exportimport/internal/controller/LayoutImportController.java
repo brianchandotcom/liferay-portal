@@ -605,8 +605,7 @@ public class LayoutImportController implements ImportController {
 			String companyGroupFriendlyURL =
 				stagingGroupHelper.getCompanyGroupFriendlyURL();
 
-			if (((groupFriendlyUrl == null) && companyGroup) ||
-				(Objects.equals(groupFriendlyUrl, companyGroupFriendlyURL) &&
+			if ((Objects.equals(groupFriendlyUrl, companyGroupFriendlyURL) &&
 				 !companyGroup) ||
 				(!Objects.equals(groupFriendlyUrl, companyGroupFriendlyURL) &&
 				 companyGroup)) {

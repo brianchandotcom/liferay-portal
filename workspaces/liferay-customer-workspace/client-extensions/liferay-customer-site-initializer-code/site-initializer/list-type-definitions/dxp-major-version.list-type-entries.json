@@ -1,5 +1,61 @@
 [
 	{
+		"key": "dxp2025q1",
+		"name": "DXP 2025.Q1 (LTS)",
+		"name_i18n": {
+			"en-US": "DXP 2025.Q1 (LTS)"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dxp2024q4",
+		"name": "DXP 2024.Q4",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q4"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dxp2024q3",
+		"name": "DXP 2024.Q3",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q3"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dxp2024q2",
+		"name": "DXP 2024.Q2",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q2"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dxp2024q1",
+		"name": "DXP 2024.Q1 (LTS)",
+		"name_i18n": {
+			"en-US": "DXP 2024.Q1 (LTS)"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dxp2023q4",
+		"name": "DXP 2023.Q4",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q4"
+		},
+		"type": "string"
+	},
+	{
+		"key": "dxp2023q3",
+		"name": "DXP 2023.Q3",
+		"name_i18n": {
+			"en-US": "DXP 2023.Q3"
+		},
+		"type": "string"
+	},
+	{
 		"key": "74",
 		"name": "7.4",
 		"name_i18n": {

@@ -1,49 +1,65 @@
 [
 	{
-		"key": "2024q43",
-		"name": "2024.q4.3",
+		"key": "2025q10",
+		"name": "2025.Q1.0 (LTS)",
 		"name_i18n": {
-			"en-US": "2024.q4.3"
+			"en-US": "2025.Q1.0 (LTS)"
+		},
+		"type": "string"
+	},
+	{
+		"key": "2024q43",
+		"name": "2024.Q4.3",
+		"name_i18n": {
+			"en-US": "2024.Q4.3"
 		},
 		"type": "string"
 	},
 	{
 		"key": "2024q313",
-		"name": "2024.q3.13",
+		"name": "2024.Q3.13",
 		"name_i18n": {
-			"en-US": "2024.q3.13"
+			"en-US": "2024.Q3.13"
 		},
 		"type": "string"
 	},
 	{
 		"key": "2024q212",
-		"name": "2024.q2.12",
+		"name": "2024.Q2.12",
 		"name_i18n": {
-			"en-US": "2024.q2.12"
+			"en-US": "2024.Q2.12"
 		},
 		"type": "string"
 	},
 	{
 		"key": "2024q112",
-		"name": "2024.q1.12",
+		"name": "2024.Q1.12 (LTS)",
 		"name_i18n": {
-			"en-US": "2024.q1.12"
+			"en-US": "2024.Q1.12 (LTS)"
+		},
+		"type": "string"
+	},
+	{
+		"key": "2024q11",
+		"name": "2024.Q1.1 (LTS)",
+		"name_i18n": {
+			"en-US": "2024.Q1.1 (LTS)"
 		},
 		"type": "string"
 	},
 	{
 		"key": "2023q49",
-		"name": "2023.q4.9",
+		"name": "2023.Q4.9",
 		"name_i18n": {
-			"en-US": "2023.q4.9"
+			"en-US": "2023.Q4.9"
 		},
 		"type": "string"
 	},
 	{
 		"key": "2023q39",
-		"name": "2023.q3.9",
+		"name": "2023.Q3.9",
 		"name_i18n": {
-			"en-US": "2023.q3.9"
+			"en-US": "2023.Q3.9"
 		},
 		"type": "string"
 	},

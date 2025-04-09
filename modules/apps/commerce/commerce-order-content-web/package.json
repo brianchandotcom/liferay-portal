@@ -14,14 +14,28 @@
 		"@liferay/frontend-data-set-web": "*",
 		"classnames": "2.3.1",
 		"commerce-frontend-js": "*",
+		"fetch-mock": "5.13.1",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"resize-observer-polyfill": "1.5.1"
+	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/test/js/tests_utilities/setup.spec.js"
+		],
+		"testMatch": [
+			"<rootDir>/test/js/**/*.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/js/tests_utilities/"
+		]
 	},
 	"main": "js/index.js",
 	"name": "@liferay/commerce-order-content-web",
+	"private": true,
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",

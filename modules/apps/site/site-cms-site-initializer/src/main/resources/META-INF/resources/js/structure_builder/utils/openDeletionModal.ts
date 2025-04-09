@@ -8,6 +8,7 @@ import {openConfirmModal} from '@liferay/layout-js-components-web';
 export default function openDeletionModal() {
 	openConfirmModal({
 		buttonLabel: Liferay.Language.get('done'),
+		center: true,
 		hideCancel: true,
 		status: 'warning',
 		text: Liferay.Language.get(

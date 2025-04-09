@@ -172,6 +172,7 @@ function PublishButton() {
 			if (
 				!(await openConfirmModal({
 					buttonLabel: Liferay.Language.get('publish'),
+					center: true,
 					status: 'danger',
 					text: Liferay.Language.get(
 						'you-removed-one-or-more-fields-from-the-structure'

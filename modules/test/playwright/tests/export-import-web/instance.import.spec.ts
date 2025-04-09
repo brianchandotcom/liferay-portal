@@ -57,7 +57,7 @@ test('cannot import a site scoped lar file', async ({
 
 	const taskName = 'MyExport-' + getRandomString();
 
-	await exportImportPage.createNewExportProcess(taskName);
+	await exportImportPage.export(taskName);
 
 	await expect(
 		exportImportPage.page

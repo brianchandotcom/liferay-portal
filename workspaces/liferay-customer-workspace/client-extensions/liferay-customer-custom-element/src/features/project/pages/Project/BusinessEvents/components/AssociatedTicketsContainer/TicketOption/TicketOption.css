@@ -61,6 +61,8 @@
 			font-weight: 400;
 			height: 16px;
 			line-height: var(--text-paragraph-xs-line-height, 16px);
+			margin-top: 0.125rem;
+			width: 5rem;
 		}
 	
 		.ticket-text-container {

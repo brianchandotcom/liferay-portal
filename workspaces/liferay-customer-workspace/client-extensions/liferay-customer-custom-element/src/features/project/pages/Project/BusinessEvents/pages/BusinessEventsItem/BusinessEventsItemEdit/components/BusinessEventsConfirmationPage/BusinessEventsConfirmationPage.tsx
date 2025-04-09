@@ -12,6 +12,7 @@ import BusinessEventsModal from '../../../../../components/BusinessEventsModal/B
 import './BusinessEventsConfirmationPage.css';
 
 interface IBusinessEventsConfirmationPageProps {
+	eventName: string | undefined;
 	handleSubmit: () => void;
 	message: string;
 	observer: Observer;
@@ -21,6 +22,7 @@ interface IBusinessEventsConfirmationPageProps {
 }
 
 const BusinessEventsConfirmationPage = ({
+	eventName,
 	handleSubmit,
 	message,
 	observer,
@@ -35,9 +37,7 @@ const BusinessEventsConfirmationPage = ({
 	return (
 		<BusinessEventsModal
 			handleSubmit={handleSubmit}
-			headerTitle={i18n
-				.translate('third-party-vendor-integration')
-				.toUpperCase()}
+			headerTitle={(eventName ?? '').toUpperCase()}
 			modalType="editEvent"
 			observer={observer}
 			onClose={onClose}
@@ -57,9 +57,6 @@ const BusinessEventsConfirmationPage = ({
 				<ClayInput
 					component="textarea"
 					onChange={handleInputChange}
-					placeholder={i18n.translate(
-						'unresolved-tickets-blocked-us-from-going-live'
-					)}
 					required
 					type="text"
 					value={reason}

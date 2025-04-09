@@ -167,9 +167,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		<BusinessEventsModal
 			baseButtonDisabled={baseButtonDisabled}
 			handleSubmit={handleSubmit}
-			headerTitle={i18n
-				.translate('third-party-vendor-integration')
-				.toUpperCase()}
+			headerTitle={(businessEvent?.name ?? '').toUpperCase()}
 			isLoadingSubmitButton={isLoadingSubmitButton}
 			modalType={modalType}
 			observer={observer}

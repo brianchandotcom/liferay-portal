@@ -209,7 +209,7 @@ const BusinessEventsItemActivityHistory = () => {
 		{
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="pencil" />,
-			label: i18n.translate('edit-event-details'),
+			label: i18n.translate('edit-event'),
 			onClick: () => {
 				navigate(`/${accountKey}/business-events/${id}/edit`);
 			},
@@ -265,7 +265,7 @@ const BusinessEventsItemActivityHistory = () => {
 							<div>
 								<ButtonDropDown
 									items={userOptions}
-									label="Actions"
+									label={i18n.translate('actions')}
 									menuElementAttrs={{
 										className: 'p-0',
 									}}

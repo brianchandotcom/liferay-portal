@@ -19,6 +19,10 @@ import {getFormattedTime} from '~/utils/getFormattedTime';
 import {ITicket} from '~/utils/types';
 
 import './BusinessEventsItemDetails.css';
+
+import getKebabCase from '~/utils/getKebabCase';
+
+import TicketList from '../../../components/AssociatedTicketsContainer/TicketList';
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
 import ManageEventModal from '../../../components/ManageEventModal';
 import useAccountTickets from '../../../hooks/useAccountTickets';
@@ -49,7 +53,7 @@ const BusinessEventsItemDetails = () => {
 		{
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="pencil" />,
-			label: i18n.translate('edit-event-details'),
+			label: i18n.translate('edit-event'),
 			onClick: () => {
 				navigate(`/${accountKey}/business-events/${id}/edit`);
 			},
@@ -138,7 +142,11 @@ const BusinessEventsItemDetails = () => {
 				<div
 					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
 				>
-					{businessEvent?.eventStatus?.name}
+					{i18n.translate(
+						getKebabCase(
+							businessEvent?.eventStatus?.key as string
+						) as string
+					)}
 				</div>
 
 				<div className="alight-items-center d-flex justify-content-between mb-4 mt-2">
@@ -153,7 +161,7 @@ const BusinessEventsItemDetails = () => {
 							<div className="be-actions">
 								<ButtonDropDown
 									items={userOptions}
-									label="Actions"
+									label={i18n.translate('actions')}
 									menuElementAttrs={{
 										className: 'p-0',
 									}}
@@ -204,7 +212,11 @@ const BusinessEventsItemDetails = () => {
 							</div>
 
 							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-								{businessEvent?.eventType?.name}
+								{i18n.translate(
+									getKebabCase(
+										businessEvent?.eventType?.key as string
+									) as string
+								)}
 							</div>
 						</div>
 					)}

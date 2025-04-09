@@ -44,7 +44,8 @@ public class AllSpacesSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/headless-asset-library/v1.0/asset-libraries";
+		return "/o/headless-asset-library/v1.0/asset-libraries?nestedFields=" +
+			"numberOfSites,numberOfUserAccounts,numberOfUserGroups";
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {

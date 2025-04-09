@@ -66,7 +66,6 @@ public class ObjectEntryFolderDTOConverter
 				setLabel_i18n(
 					() -> LocalizedMapUtil.getLanguageIdMap(
 						objectEntryFolder.getLabelMap()));
-				setName(objectEntryFolder::getName);
 				setNumberOfObjectEntries(
 					() -> NestedFieldsSupplier.supply(
 						"numberOfObjectEntries",
@@ -111,6 +110,7 @@ public class ObjectEntryFolderDTOConverter
 					});
 				setScopeKey(
 					() -> String.valueOf(objectEntryFolder.getGroupId()));
+				setTitle(objectEntryFolder::getName);
 			}
 		};
 	}
@@ -147,7 +147,7 @@ public class ObjectEntryFolderDTOConverter
 				setLabel_i18n(
 					() -> LocalizedMapUtil.getLanguageIdMap(
 						parentObjectEntryFolder.getLabelMap()));
-				setName(parentObjectEntryFolder::getName);
+				setTitle(parentObjectEntryFolder::getName);
 			}
 		};
 	}

@@ -83,8 +83,8 @@ public class ObjectEntryFolderResourceTest
 			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
 				scopeKey, objectEntryFolder1);
 
-		EntityField nameEntityField = new StringEntityField(
-			"name", locale -> Field.getSortableFieldName(Field.NAME));
+		EntityField titleEntityField = new StringEntityField(
+			"title", locale -> Field.getSortableFieldName(Field.TITLE));
 
 		for (EntityField entityField : entityFields) {
 			Page<ObjectEntryFolder> page =
@@ -96,7 +96,7 @@ public class ObjectEntryFolderResourceTest
 								entityField, "between", objectEntryFolder1),
 							" and ",
 							getFilterString(
-								nameEntityField, "contains",
+								titleEntityField, "contains",
 								objectEntryFolder1)),
 						Pagination.of(1, 2), null);
 
@@ -144,7 +144,7 @@ public class ObjectEntryFolderResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"label", "name"};
+		return new String[] {"label", "title"};
 	}
 
 	@Override
@@ -157,9 +157,9 @@ public class ObjectEntryFolderResourceTest
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				label = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				numberOfObjectEntries = RandomTestUtil.randomInt();
 				numberOfObjectEntryFolders = RandomTestUtil.randomInt();
+				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}

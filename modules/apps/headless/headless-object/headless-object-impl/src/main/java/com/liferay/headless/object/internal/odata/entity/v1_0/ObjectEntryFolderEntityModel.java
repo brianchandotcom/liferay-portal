@@ -43,7 +43,7 @@ public class ObjectEntryFolderEntityModel implements EntityModel {
 					return sortableFieldName.concat(".keyword_lowercase");
 				}),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME)));
+				"title", locale -> Field.getSortableFieldName(Field.NAME)));
 	}
 
 	@Override

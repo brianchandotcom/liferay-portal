@@ -6,6 +6,7 @@
 package com.liferay.style.book.internal.upgrade.v1_7_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -17,6 +18,9 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -24,6 +28,8 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,9 +66,38 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 				_group.getGroupId(), false, null, RandomTestUtil.randomString(),
 				null, null, _serviceContext);
 
-		Assert.assertTrue(Validator.isNull(styleBookEntry.getThemeId()));
+		long groupId = RandomTestUtil.randomLong();
 
-		_runUpgrade();
+		StyleBookEntry orphanedStyleBookEntry =
+			_styleBookEntryLocalService.addStyleBookEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				groupId, false, null, RandomTestUtil.randomString(), null, null,
+				_serviceContext);
+
+		Assert.assertTrue(Validator.isNull(styleBookEntry.getThemeId()));
+		Assert.assertTrue(
+			Validator.isNull(orphanedStyleBookEntry.getThemeId()));
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.style.book.internal.upgrade.v1_7_0." +
+					"StyleBookEntryThemeIdUpgradeProcess",
+				LoggerTestUtil.WARN)) {
+
+			_runUpgrade();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to find group with id ", groupId,
+					". Removing orphaned style book entry with id ",
+					orphanedStyleBookEntry.getStyleBookEntryId(), "."),
+				logEntry.getMessage());
+		}
 
 		EntityCacheUtil.clearCache();
 
@@ -76,6 +111,10 @@ public class StyleBookEntryThemeIdUpgradeProcessTest {
 
 		Assert.assertEquals(
 			publicLayoutSet.getThemeId(), styleBookEntry.getThemeId());
+
+		Assert.assertNull(
+			_styleBookEntryLocalService.fetchStyleBookEntry(
+				orphanedStyleBookEntry.getStyleBookEntryId()));
 	}
 
 	private void _runUpgrade() throws Exception {

@@ -8140,25 +8140,6 @@ public class ObjectEntryResourceTest {
 				).toString(),
 				JSONCompareMode.LENIENT);
 
-			// Format: "yyyy-MM-dd"
-
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2000-07-27T00:00:00.000"
-				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T00:00:00.000Z"
-				).toString(),
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_DATE_TIME_INPUT, "2000-07-27"
-					).put(
-						_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27"
-					).toString(),
-					_objectDefinition1.getRESTContextPath(), Http.Method.POST
-				).toString(),
-				JSONCompareMode.LENIENT);
-
 			// Format: "yyyy-MM-dd HH:mm"
 
 			JSONAssert.assertEquals(

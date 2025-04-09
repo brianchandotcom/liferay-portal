@@ -1,0 +1,220 @@
+<script data-senna-track="temporary" type="text/javascript">
+(function() {
+	function buildESMStub(contextPath, symbol) {
+		return (
+			(...args) => {
+				import(
+					Liferay.ThemeDisplay.getPathContext() +
+						'/o/' +
+						contextPath +
+						'/__liferay__/index.js'
+				).then(
+					(exports) => exports[symbol](...args)
+				);
+			}
+		);
+	}
+
+	let __liferay = {
+AUI: {
+getCombine: () => false,
+getComboPath: () => '/combo/?minifierType=&t=0&',
+getDateFormat: () => '%m/%d/%Y',
+getEditorCKEditorPath: () => '/o/ckeditor',
+getFilter: () => 'raw',
+getFilterConfig: () => ({
+replaceStr: () => '.js?minifierType=&t=0',
+searchExp: () => '\\.js$',
+}),
+getJavaScriptRootPath: () => '/o/frontend-js-web',
+getPortletRootPath: () => '/html/portlet',
+getStaticResourceURLParams: () => '?minifierType=&t=0',
+},
+Browser: {
+acceptsGzip: () => false,
+getMajorVersion: () => '42.0',
+getRevision: () => '42.0',
+getVersion: () => '42.0',
+isAir: () => false,
+isChrome: () => false,
+isEdge: () => false,
+isFirefox: () => false,
+isGecko: () => false,
+isIe: () => false,
+isIphone: () => false,
+isLinux: () => false,
+isMac: () => false,
+isMobile: () => false,
+isMozilla: () => false,
+isOpera: () => false,
+isRtf: () => false,
+isSafari: () => false,
+isSun: () => false,
+isWebKit: () => false,
+isWindows: () => false,
+},
+Data: {
+ICONS_INLINE_SVG:true,
+NAV_SELECTOR:'#navigation',
+NAV_SELECTOR_MOBILE:'#navigationCollapse',
+isCustomizationView: () => false,
+notices: [
+{
+message:'the-portal-will-shutdown-for-maintenance-in-x-minutes',
+title:'maintenance-alert<span class="mx-2">2009/04/23, 00:00:00 UTC</span>',
+type: 'warning'
+},
+],
+},
+FeatureFlags: {
+'LPD-00042':true,
+},
+Language: {
+_cache:
+	window?.Liferay?.Language?._cache
+		? Liferay.Language._cache
+		: {},
+get:
+	(key) => {
+		let value = Liferay.Language._cache[key];
+
+		if (value === undefined) {
+			value = key;
+		}
+
+		return value;
+	},
+available: {'fr_FR':'français\x20\x28France\x29','en_CA':'English\x20\x28Canada\x29',},
+direction: {'fr_FR':'ltr','en_CA':'ltr',},
+},
+Portlet: {
+openModal: buildESMStub('frontend-js-components-web', 'openPortletModal'),
+openWindow: buildESMStub('frontend-js-components-web', 'openPortletWindow'),
+},
+PortletKeys: {
+DOCUMENT_LIBRARY:'com_liferay_document_library_web_portlet_DLPortlet',
+DYNAMIC_DATA_MAPPING:'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',
+INSTANCE_SETTINGS:'com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet',
+ITEM_SELECTOR:'com_liferay_item_selector_web_portlet_ItemSelectorPortlet',
+},
+PropsValues: {
+JAVASCRIPT_SINGLE_PAGE_APPLICATION_TIMEOUT:0,
+UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE:0,
+},
+ThemeDisplay: {
+getBCP47LanguageId: () => 'en-US',
+getCanonicalURL: () => 'http\x3a\x2f\x2flocalhost\x3a8080',
+getCDNBaseURL: () => 'http://localhost:8080',
+getCDNDynamicResourcesHost: () => '',
+getCDNHost: () => '',
+getCompanyGroupId: () => 0,
+getCompanyId: () => 0,
+getDefaultLanguageId: () => 'en',
+getDoAsUserIdEncoded: () => '',
+getLanguageId: () => 'en_US',
+getParentGroupId: () => 0,
+getPathContext: () => '',
+getPathImage: () => '/image',
+getPathJavaScript: () => '/o/frontend-js-web',
+getPathMain: () => 'c',
+getPathThemeImages: () => 'http://localhost:8080/o/classic-theme/images',
+getPathThemeRoot: () => '/o/classic-theme',
+getPlid: () => 0,
+getPortalURL: () => 'http://localhost:8080',
+getRealUserId: () => 0,
+getRemoteAddr: () => '127.0.0.1',
+getRemoteHost: () => '127.0.0.1',
+getScopeGroupId: () => 0,
+getScopeGroupIdOrLiveGroupId: () => 0,
+getSessionId: () => '',
+getSiteAdminURL: () => 'http://localhost:8080/group/guest/~/control_panel/manage?p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view',
+getSiteGroupId: () => 0,
+getTimeZone: () => 'UTC',
+getURLControlPanel: () => '/group/control_panel?refererPlid=8',
+getURLHome: () => 'http\x3a\x2f\x2flocalhost\x3a8080\x2fweb\x2fguest',
+getUserEmailAddress: () => '',
+getUserId: () => 0,
+getUserName: () => '',
+isAddSessionIdToURL: () => false,
+isImpersonated: () => false,
+isSignedIn: () => false,
+isStagedPortlet: () => false,
+isStateExclusive: () => false,
+isStateMaximized: () => false,
+isStatePopUp: () => false,
+},
+Util: {
+openAlertModal: buildESMStub('frontend-js-components-web', 'openAlertModal'),
+openConfirmModal: buildESMStub('frontend-js-components-web', 'openConfirmModal'),
+openModal: buildESMStub('frontend-js-components-web', 'openModal'),
+openSelectionModal: buildESMStub('frontend-js-components-web', 'openSelectionModal'),
+openSimpleInputModal: buildESMStub('frontend-js-components-web', 'openSimpleInputModal'),
+openToast: buildESMStub('frontend-js-components-web', 'openToast'),
+},
+authToken:'LrPaVz44',
+currentURL:'/',
+currentURLEncoded:'\x252F',
+
+	};
+
+	if (window.Liferay) {
+		window.Liferay = {
+			...window.Liferay,
+			...__liferay,
+			__disableOverwriteCheck: true
+		}
+	}
+	else {
+		Object.defineProperty(
+			window,
+			"Liferay",
+			{
+				get: () => __liferay,
+				set: (x) => {
+					if (x.hasOwnProperty("Loader")) {
+						__liferay.Loader = x.Loader;
+						return;
+					}
+
+					if (x.hasOwnProperty("__disableOverwriteCheck")) {
+						delete x.__disableOverwriteCheck;
+						__liferay = x;
+						return;
+					}
+
+					console.error("Global variable 'Liferay' is read-only");
+				}
+			}
+		);
+
+		const themeDisplayLocations = new Set();
+
+		Object.defineProperty(
+			window,
+			"themeDisplay",
+			{
+				get: () => {
+					if (true) {
+						let location = new Error().stack.split('\n')[1];
+
+						if (location.includes(':')) {
+							location = location.split(':')[0];
+						}
+
+						if (!themeDisplayLocations.has(location)) {
+							console.error("Global variable 'themeDisplay' is deprecated. Use 'Liferay.ThemeDisplay' instead.");
+
+							themeDisplayLocations.add(location);
+						}
+					}
+
+					return window.Liferay.ThemeDisplay;
+				},
+				set: () => {
+					console.error("Global variable 'themeDisplay' is read-only");
+				}
+			}
+		);
+	}
+})();
+</script>

@@ -35,6 +35,7 @@ export default function EditGeneralInfo({
 	nameInputError,
 	onChangeVocabulary,
 	setNameInputError,
+	setSpaceInputError,
 	spritemap,
 	vocabulary,
 }: {
@@ -43,6 +44,7 @@ export default function EditGeneralInfo({
 	nameInputError: string;
 	onChangeVocabulary: Function;
 	setNameInputError: Function;
+	setSpaceInputError: (value: string) => void;
 	spritemap: string;
 	vocabulary: IVocabulary;
 }) {
@@ -213,6 +215,7 @@ export default function EditGeneralInfo({
 				<CategorizationSpaces
 					checkboxText="vocabulary"
 					setSelectedSpaces={setSelectedSpaces}
+					setSpaceInputError={setSpaceInputError}
 				/>
 			</ClayForm.Group>
 		</div>

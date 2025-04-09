@@ -44,6 +44,7 @@ export default function EditVocabulary({
 	const [activeVerticalNavKey, setActiveVerticalNavKey] = useState(
 		NAVIGATION_TABS.GENERAL
 	);
+	const [spaceInputError, setSpaceInputError] = useState('');
 	const [nameInputError, setNameInputError] = useState<string>('');
 	const {observer, onOpenChange, open} = useModal();
 	const [title, setTitle] = useState<string>('');
@@ -93,6 +94,12 @@ export default function EditVocabulary({
 				)
 			);
 
+			setActiveVerticalNavKey('general');
+
+			return false;
+		}
+
+		if (spaceInputError) {
 			setActiveVerticalNavKey('general');
 
 			return false;
@@ -243,6 +250,7 @@ export default function EditVocabulary({
 									nameInputError={nameInputError}
 									onChangeVocabulary={setVocabulary}
 									setNameInputError={setNameInputError}
+									setSpaceInputError={setSpaceInputError}
 									spritemap={spritemap}
 									vocabulary={vocabulary}
 								/>

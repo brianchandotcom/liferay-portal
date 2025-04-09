@@ -71,7 +71,10 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({showAddButton}) => {
 					))}
 
 					<li className="nav-item" role="none">
-						<ClayLink className="nav-link" href="/web/cms/all">
+						<ClayLink
+							className="nav-link"
+							href="/web/cms/all-spaces"
+						>
 							<span className="mr-2 sticker">
 								<ClayIcon symbol="box-container" />
 							</span>

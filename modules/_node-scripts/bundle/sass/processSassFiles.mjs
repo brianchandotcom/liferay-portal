@@ -5,9 +5,9 @@
 
 import fg from 'fast-glob';
 import fs from 'fs/promises';
-import {r2} from 'liferay-theme-tasks';
 import path from 'path';
 import resolve from 'resolve';
+import rtlcss from 'rtlcss';
 
 import {
 	BUILD_RESOURCES_PATH,
@@ -210,7 +210,7 @@ async function processSassFile(filePath, includePaths, timestamp) {
 
 	// Apply RTL translation to CSS
 
-	const rtlTimestampedCss = r2.swap(timestampedCss);
+	const rtlTimestampedCss = rtlcss.process(timestampedCss);
 
 	// Write stuff
 

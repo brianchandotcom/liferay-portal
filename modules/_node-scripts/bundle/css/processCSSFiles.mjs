@@ -5,8 +5,8 @@
 
 import fg from 'fast-glob';
 import fs from 'fs/promises';
-import {r2} from 'liferay-theme-tasks';
 import path from 'path';
+import rtlcss from 'rtlcss';
 
 import {BUILD_RESOURCES_PATH, SRC_PATH} from '../../util/constants.mjs';
 
@@ -48,7 +48,7 @@ async function processCssFile(filePath) {
 
 	const css = await fs.readFile(filePath, 'utf-8');
 
-	const rtlCss = r2.swap(css);
+	const rtlCssContent = rtlcss.process(css);
 
 	// Write stuff
 
@@ -56,6 +56,6 @@ async function processCssFile(filePath) {
 
 	await Promise.all([
 		fs.writeFile(outFilePath, css, 'utf-8'),
-		fs.writeFile(outRtlFilePath, rtlCss, 'utf-8'),
+		fs.writeFile(outRtlFilePath, rtlCssContent, 'utf-8'),
 	]);
 }

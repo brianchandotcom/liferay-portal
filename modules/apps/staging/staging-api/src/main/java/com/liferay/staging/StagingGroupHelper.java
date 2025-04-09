@@ -33,6 +33,8 @@ public interface StagingGroupHelper {
 
 	public Group fetchRemoteLiveGroup(long groupId);
 
+	public String getCompanyGroupFriendlyURL();
+
 	public Group getStagedPortletGroup(Group group, String portletId);
 
 	public long getStagedPortletGroupId(long groupId, String portletId);

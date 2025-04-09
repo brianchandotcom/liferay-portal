@@ -16,6 +16,7 @@ import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -48,8 +49,7 @@ public class AccountTicketsRestController extends BaseRestController {
 	public ResponseEntity<String> getZendeskTickets(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@RequestParam(defaultValue = "", required = false) long[]
-				associatedTicketIds)
+			@RequestParam(defaultValue = "", required = false) String filter)
 		throws Exception {
 
 		try {
@@ -62,14 +62,8 @@ public class AccountTicketsRestController extends BaseRestController {
 				"organization:" +
 					_fetchZendeskOrganizationId(externalReferenceCode));
 
-			if (associatedTicketIds.length > 0) {
-				for (long associatedTicketId : associatedTicketIds) {
-					zendeskTicketQuery.addCriterion(
-						"ticket_id:" + associatedTicketId);
-				}
-			}
-			else {
-				zendeskTicketQuery.addCriterion("status<solved");
+			if (Validator.isNotNull(filter)) {
+				zendeskTicketQuery.addCriterion(filter);
 			}
 
 			int page = 1;

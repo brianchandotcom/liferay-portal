@@ -28,9 +28,11 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -316,6 +318,28 @@ public class DisplayPageTemplateResourceImpl
 						displayPageTemplate.getMarkedAsDefault()));
 		}
 
+		ClassSubtypeReference contentTypeReference =
+			displayPageTemplate.getContentTypeReference();
+
+		if (contentTypeReference != null) {
+			ClassName className = _classNameLocalService.fetchClassName(
+				contentTypeReference.getClassName());
+
+			if (className == null) {
+				throw new UnsupportedOperationException();
+			}
+
+			long classTypeId = _getClassTypeId(contentTypeReference, groupId);
+
+			if (!className.equals(layoutPageTemplateEntry.getClassName()) ||
+				(classTypeId != layoutPageTemplateEntry.getClassTypeId())) {
+
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					className.getClassNameId(), classTypeId);
+			}
+		}
+
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
@@ -429,6 +453,9 @@ public class DisplayPageTemplateResourceImpl
 
 		return serviceContext;
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.DisplayPageTemplateDTOConverter)"

@@ -64,6 +64,7 @@ export class OpenIdInstanceSettingsPage {
 		await this.clickSetupOpenIdConnectionMenuItem();
 		await this.enabledCheckbox.uncheck();
 		await this.saveButton.click();
+		await waitForAlert(this.page);
 	}
 
 	async enableOpenIDConnect() {

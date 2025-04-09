@@ -1,0 +1,19 @@
+diff --git a/jakarta/ws/rs/ext/FactoryFinder.java b/jakarta/ws/rs/ext/FactoryFinder.java
+index bbd5afd96c45a..e0ccbaccc33c5 100644
+--- a/jakarta/ws/rs/ext/FactoryFinder.java
++++ b/jakarta/ws/rs/ext/FactoryFinder.java
+@@ -178,7 +178,7 @@ final class FactoryFinder {
+                 if (loader.iterator().hasNext()) {
+                     return loader.iterator().next();
+                 }
+-            } catch (Exception e) {
++            } catch (Throwable e) {
+                 LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", e);
+             }
+             return null;
+@@ -189,3 +189,4 @@ final class FactoryFinder {
+         return AccessController.doPrivileged(action);
+     }
+ }
++/* @generated */
+\ No newline at end of file

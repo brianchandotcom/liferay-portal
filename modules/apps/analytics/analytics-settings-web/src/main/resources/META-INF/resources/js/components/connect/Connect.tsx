@@ -126,14 +126,19 @@ const Connect: React.FC<
 								onClick={async () => {
 									setSubmitting(true);
 
-									const {ok} = await fetchConnection(token);
+									const response =
+										await fetchConnection(token);
 
 									setSubmitting(false);
 
-									if (ok) {
+									if (response.ok) {
+										const {liferayAnalyticsURL} =
+											await response.json();
+
 										dispatch({
 											payload: {
 												connected: true,
+												liferayAnalyticsURL,
 												token,
 											},
 											type: Events.Connect,

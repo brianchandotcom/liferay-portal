@@ -20,7 +20,7 @@ configmap:
             secretKey=""
 customEnvFrom:
     -   secretRef:
-        name: managed-service-details
+            name: managed-service-details
 customVolumeMounts:
     -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
         name: liferay-configmap
@@ -66,11 +66,11 @@ serviceAccount:
         eks.amazonaws.com/role-arn: *awsServiceAccountArn
 volumeClaimTemplates:
     -   metadata:
-        name: liferay-persistent-volume
-        spec:
-            accessModes:
-                - ReadWriteOnce
-            resources:
-                requests:
-                    storage: 10Gi
-            storageClassName: gp2
+            name: liferay-persistent-volume
+            spec:
+                accessModes:
+                    - ReadWriteOnce
+                resources:
+                    requests:
+                        storage: 10Gi
+                storageClassName: gp2

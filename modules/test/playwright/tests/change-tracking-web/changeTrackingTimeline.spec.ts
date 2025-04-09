@@ -28,14 +28,17 @@ export const test = mergeTests(
 	changeTrackingPagesTest
 );
 
-let title1;
-let title2;
+const folderTitle1 = getRandomString();
+const folderTitle2 = getRandomString();
+const title1 = getRandomString();
+const title2 = getRandomString();
 
 test.beforeEach(
 	async ({
 		changeTrackingPage,
 		ctCollection,
 		documentLibraryEditFilePage,
+		documentLibraryEditFolderPage,
 		documentLibraryPage,
 		page,
 		site,
@@ -45,22 +48,36 @@ test.beforeEach(
 		await documentLibraryPage.goto(site.friendlyUrlPath);
 		await documentLibraryPage.goToCreateNewFile();
 
-		title1 = getRandomString();
-
 		await documentLibraryEditFilePage.publishNewBasicFileEntry(
 			title1,
 			site.friendlyUrlPath
 		);
 
+		await documentLibraryPage.goToCreateNewFolder();
+
+		await documentLibraryEditFolderPage.fillTitle(folderTitle1);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
 		await changeTrackingPage.workOnPublication(ctCollection);
 
-		title2 = getRandomString();
-
+		await documentLibraryPage.goto(site.friendlyUrlPath);
 		await documentLibraryPage.goToEditFileEntry(title1);
 
 		await documentLibraryEditFilePage.titleSelector.fill(title2);
-
 		await documentLibraryEditFilePage.publishButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+		await documentLibraryPage.goToEditFolder(folderTitle1);
+
+		await documentLibraryEditFolderPage.fillTitle(folderTitle2);
+
+		await page.getByRole('button', {name: 'Save'}).click();
 
 		await waitForAlert(
 			page,
@@ -85,8 +102,7 @@ test('LPD-25853 Edit in x publication is added in the timeline dropdown actions'
 	await changeTrackingPage.workOnProduction();
 
 	await documentLibraryPage.goto(site.friendlyUrlPath);
-
-	await documentLibraryPage.goToEditFileEntry(title1);
+	await documentLibraryPage.goToViewFileEntry(title1);
 
 	const timelineButton = page.getByLabel('timeline-button');
 	await timelineButton.waitFor();
@@ -100,7 +116,9 @@ test('LPD-25853 Edit in x publication is added in the timeline dropdown actions'
 		name: `Edit in ${ctCollection.body.name}`,
 	});
 	await editButton.waitFor();
+
 	await expect(editButton).toBeVisible();
+
 	await editButton.click();
 
 	await page
@@ -122,7 +140,6 @@ test('LPD-25853 Review Change is added in the timeline dropdown actions', async 
 	site,
 }) => {
 	await documentLibraryPage.goto(site.friendlyUrlPath);
-
 	await documentLibraryPage.goToEditFileEntry(title2);
 
 	await expect(page.getByText('Upload documents no larger')).toBeVisible();
@@ -168,7 +185,6 @@ test('LPD-25853 Discard Change is added in the timeline dropdown actions', async
 	site,
 }) => {
 	await documentLibraryPage.goto(site.friendlyUrlPath);
-
 	await documentLibraryPage.goToEditFileEntry(title2);
 
 	await expect(page.getByText('Upload documents no larger')).toBeVisible();
@@ -205,7 +221,6 @@ test('LPD-25853 Move Change is added in the timeline dropdown actions', async ({
 	site,
 }) => {
 	await documentLibraryPage.goto(site.friendlyUrlPath);
-
 	await documentLibraryPage.goToEditFileEntry(title2);
 
 	await expect(page.getByText('Upload documents no larger')).toBeVisible();
@@ -321,13 +336,14 @@ test('LPD-25853 Timeline actions are not visible to user without permissions', a
 	await expect(timelineActionsButton).toBeVisible({visible: false});
 
 	await performLogout(page);
+
 	await performLogin(page, 'test');
 });
 
 test('LPD-26155 Conflict warning is visible when content is edited in more than one publication', async ({
 	apiHelpers,
 	changeTrackingPage,
-	documentLibraryEditFilePage,
+	documentLibraryEditFolderPage,
 	documentLibraryPage,
 	page,
 	site,
@@ -341,38 +357,44 @@ test('LPD-26155 Conflict warning is visible when content is edited in more than 
 
 	await documentLibraryPage.goto(site.friendlyUrlPath);
 
-	const title3 = getRandomString();
+	const folderTitle3 = getRandomString();
 
-	await documentLibraryPage.goToEditFileEntry(title1);
+	await documentLibraryPage.goToEditFolder(folderTitle1);
 
-	await documentLibraryEditFilePage.titleSelector.fill(title3);
+	await documentLibraryEditFolderPage.fillTitle(folderTitle3);
 
-	await documentLibraryEditFilePage.publishButton.click();
+	await page.getByRole('button', {name: 'Save'}).click();
 
 	await waitForAlert(page, 'Success:Your request completed successfully.');
 
+	await documentLibraryPage.goToEditFolder(folderTitle3);
+
 	const timelineButton = page.locator('.change-tracking-timeline-button svg');
 	await timelineButton.waitFor();
+
 	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
+
 	await timelineButton.click();
 
 	const conflictWarning = page.locator(
 		'.publication-timeline .alert-warning'
 	);
 	await conflictWarning.waitFor();
+
 	await expect(conflictWarning).toBeVisible();
 
 	const conflictIcon = page.locator(
 		'.publication-timeline .change-tracking-conflict-icon-warning'
 	);
 	await conflictIcon.first().waitFor();
+
 	await expect(conflictIcon).toHaveCount(2);
 });
 
 test('LPD-26155 Production conflict info is visible when new changes have been made to production', async ({
 	changeTrackingPage,
 	ctCollection,
-	documentLibraryEditFilePage,
+	documentLibraryEditFolderPage,
 	documentLibraryPage,
 	page,
 	site,
@@ -381,27 +403,32 @@ test('LPD-26155 Production conflict info is visible when new changes have been m
 
 	await documentLibraryPage.goto(site.friendlyUrlPath);
 
-	const title3 = getRandomString();
+	const folderTitle3 = getRandomString();
 
-	await documentLibraryPage.goToEditFileEntry(title1);
+	await documentLibraryPage.goToEditFolder(folderTitle1);
 
-	await documentLibraryEditFilePage.titleSelector.fill(title3);
+	await documentLibraryEditFolderPage.fillTitle(folderTitle3);
 
-	await documentLibraryEditFilePage.publishButton.click();
+	await page.getByRole('button', {name: 'Save'}).click();
 
 	await waitForAlert(page, 'Success:Your request completed successfully.');
 
 	await changeTrackingPage.workOnPublication(ctCollection);
 
+	await documentLibraryPage.goToEditFolder(folderTitle2);
+
 	const prodConflictIcon = page.locator(
 		'.change-tracking-conflict-icon-danger'
 	);
 	await prodConflictIcon.waitFor();
+
 	await expect(prodConflictIcon).toBeVisible();
+
 	await prodConflictIcon.hover();
 
 	const prodConflictText = page.getByText('Production Conflict');
 	await prodConflictText.waitFor();
+
 	await expect(prodConflictText).toBeVisible();
 });
 
@@ -420,10 +447,11 @@ test('LPD-37842 Timeline icon is yellow for cross-publication edits.', async ({
 	await changeTrackingPage.workOnPublication(ctCollection2);
 
 	await documentLibraryPage.goto(site.friendlyUrlPath);
-	await documentLibraryPage.goToEditFileEntry(title1);
+	await documentLibraryPage.goToEditFolder(folderTitle1);
 
 	const timelineButton = page.locator('.change-tracking-timeline-button svg');
 	await timelineButton.waitFor();
+
 	await expect(timelineButton).toHaveCSS('color', 'rgb(255, 182, 141)');
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(

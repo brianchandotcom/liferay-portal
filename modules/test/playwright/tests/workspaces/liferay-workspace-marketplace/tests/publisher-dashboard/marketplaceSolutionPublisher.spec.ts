@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../../utils/getRandomInt';
 import {marketplaceHelper} from '../../fixtures/marketplaceHelper';
@@ -13,6 +14,9 @@ import {marketplaceSiteFixture} from '../../fixtures/marketplaceSite';
 import {SOLUTION_PUBLISHER_ROLE, solutions} from '../../utils/constants';
 
 export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-48862': {enabled: true},
+	}),
 	marketplaceSiteFixture,
 	marketplaceHelper,
 	marketplacePagesTest

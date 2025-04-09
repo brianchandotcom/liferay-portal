@@ -21,7 +21,8 @@ type ContactUs = {
 
 export type PublishProductPayload = {
 	appType: string;
-	categories: string[];
+	areas: string[];
+	category: string;
 	compatibleOfferings: string[];
 	description: string;
 	dxpVersions: string[];

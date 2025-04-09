@@ -432,15 +432,20 @@ public class CommerceChannelDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		if (PortletPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.PAYMENT_METHODS,
-			MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS) || PortletPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.PAYMENT_METHODS,
-			MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)) {
+				themeDisplay.getPermissionChecker(),
+				MarketplacePortletKeys.PAYMENT_METHODS,
+				MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS) ||
+			PortletPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				MarketplacePortletKeys.PAYMENT_METHODS,
+				MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)) {
+
 			return true;
 		}
 
 		return PortletPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.PAYMENT_METHODS,
+			themeDisplay.getPermissionChecker(),
+			MarketplacePortletKeys.PAYMENT_METHODS,
 			MarketplaceActionKeys.VIEW_APPS);
 	}
 

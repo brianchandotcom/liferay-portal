@@ -449,6 +449,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_OPTIONS_ICON</td>
+	<td>//*[@id="wrapper"]//li[contains(@class, "tbar-item")]//button[contains(@class, "dropdown-toggle")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(@class,'page-content') and contains(.,'${key_rowEntry}')]//button[contains(@class,'page-contents')]</td>
 	<td></td>

@@ -4386,7 +4386,7 @@ return	Array.from(getWebElement("(//div[@data-name='${fragmentName}'])[${index}]
 
 	@summary = "Default summary"
 	macro viewNotPresentInPermissionsIframeBody(elementValue = null) {
-		Click.clickAtNotVisible(locator1 = "Portlet#OPTIONS_ICON");
+		Click.clickAtNotVisible(locator1 = "Icon#FRAGMENT_OPTIONS_ICON");
 
 		Click(
 			key_menuItem = "Permissions",

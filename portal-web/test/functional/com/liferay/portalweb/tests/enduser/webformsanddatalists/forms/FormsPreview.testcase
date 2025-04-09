@@ -525,32 +525,6 @@ definition {
 			fieldValue = "");
 	}
 
-	@description = "Verify that a Fields Groups can be previewed"
-	@priority = 5
-	test FieldsGroupsCanBePreviewed {
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.addTextField(fieldPositionNumber = 0);
-
-		Form.closeSidebar();
-
-		Form.gotoAddField(
-			fieldPositionNumber = 1,
-			fieldType = "Numeric");
-
-		Form.addFieldToFieldsGroup(
-			sourceFieldName = "Numeric",
-			targetFieldLabel = "Text");
-
-		FormFields.viewTextLabel(fieldLabel = "Fields Group");
-
-		FormFields.viewTextLabel(fieldLabel = "Text");
-
-		FormFields.viewTextLabel(fieldLabel = "Numeric");
-	}
-
 	@description = "Verify that a Grid Field can be previewed"
 	@priority = 5
 	test GridFieldCanBePreviewed {

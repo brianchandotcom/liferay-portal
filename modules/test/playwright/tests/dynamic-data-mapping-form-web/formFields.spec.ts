@@ -377,4 +377,39 @@ test.describe('Manage fields through Form Builder page', () => {
 
 		await expect(newTabPage.getByText(formattedDate)).toBeVisible();
 	});
+
+	test('assert that a fields group can be previewed', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+		await formBuilderSidePanelPage.backButton.click();
+
+		await formBuilderSidePanelPage.addFieldToFieldGroup('Numeric', 0);
+
+		const newTabPagePromise = new Promise<Page>((resolve) =>
+			formBuilderPage.page.once('popup', resolve)
+		);
+
+		await formBuilderPage.previewButton.click();
+
+		const newTabPage = await newTabPagePromise;
+
+		await newTabPage.waitForLoadState('domcontentloaded');
+
+		await expect(
+			newTabPage.getByLabel('Fields Group', {exact: true})
+		).toBeVisible();
+
+		await expect(
+			newTabPage.getByLabel('Text', {exact: true})
+		).toBeVisible();
+
+		await expect(
+			newTabPage.getByLabel('Numeric', {exact: true})
+		).toBeVisible();
+	});
 });

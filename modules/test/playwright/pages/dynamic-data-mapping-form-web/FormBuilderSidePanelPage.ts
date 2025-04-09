@@ -56,6 +56,16 @@ export class FormBuilderSidePanelPage {
 			.dblclick();
 	}
 
+	async addFieldToFieldGroup(
+		sourceField: FormFieldTypeTitle,
+		position: number
+	) {
+		await this.page
+			.getByRole('tabpanel')
+			.getByTitle(sourceField, {exact: true})
+			.dragTo(this.page.locator('.ddm-drag').nth(position));
+	}
+
 	async clickAdvancedTab() {
 		await this.advancedTab.click();
 	}

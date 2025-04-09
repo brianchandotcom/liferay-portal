@@ -23,6 +23,7 @@ import useGetVersionOfLiferaySoftwareList from '~/features/project/pages/Project
 import {Liferay} from '~/services/liferay';
 import {updateBusinessEvent} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
+import getKebabCase from '~/utils/getKebabCase';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
@@ -461,7 +462,11 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 						<div
 							className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
 						>
-							{businessEvent?.eventStatus?.name}
+							{i18n.translate(
+								getKebabCase(
+									businessEvent?.eventStatus?.key as string
+								) as string
+							)}
 						</div>
 
 						<div className="align-items-center d-flex justify-content-between mb-4 mt-2">
@@ -513,6 +518,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 					{isModalOpen && (
 						<BusinessEventsConfirmationPage
+							eventName={businessEvent?.name}
 							handleSubmit={handleSubmit}
 							message={i18n.translate(
 								'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
@@ -686,7 +692,9 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 															hasImpactingEvents ===
 															'no'
 														}
-														label="No"
+														label={i18n.translate(
+															'no'
+														)}
 														onChange={() =>
 															handleRadioChange(
 																'no'
@@ -700,7 +708,9 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 															hasImpactingEvents ===
 															'yes'
 														}
-														label="Yes"
+														label={i18n.translate(
+															'yes'
+														)}
 														onChange={() =>
 															handleRadioChange(
 																'yes'

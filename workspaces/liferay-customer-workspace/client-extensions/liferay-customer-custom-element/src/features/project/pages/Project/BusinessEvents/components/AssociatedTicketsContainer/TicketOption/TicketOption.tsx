@@ -9,6 +9,7 @@ import './TicketOption.css';
 
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import i18n from '~/utils/I18n';
 
 interface IProps {
 	primaryAction?: (value: ITicket) => void;
@@ -45,8 +46,8 @@ const TicketOption: React.FC<IProps> = ({
 						</div>
 					</div>
 
-					<div className="align-items-center d-flex px-3 text-capitalize ticket-status">
-						{ticket.status}
+					<div className="align-items-center d-flex justify-content-center px-3 text-capitalize ticket-status">
+						{i18n.translate(ticket.status)}
 					</div>
 				</Button>
 			</div>

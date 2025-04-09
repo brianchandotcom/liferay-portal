@@ -6,6 +6,7 @@
 import {Button} from '~/components';
 import BadgeButton from '~/components/BadgeButton';
 import i18n from '~/utils/I18n';
+import getKebabCase from '~/utils/getKebabCase';
 
 import {IFilterOption} from '../../Filter';
 
@@ -67,7 +68,13 @@ const FilterResults = ({
 								<BadgeButton
 									filterName={i18n.translate(option.name)}
 									filterValue={option.values
-										.map((value) => value.name)
+										.map((value) =>
+											i18n.translate(
+												getKebabCase(
+													value.key
+												) as string
+											)
+										)
 										.join(', ')}
 									key={option.key}
 									onClick={() =>

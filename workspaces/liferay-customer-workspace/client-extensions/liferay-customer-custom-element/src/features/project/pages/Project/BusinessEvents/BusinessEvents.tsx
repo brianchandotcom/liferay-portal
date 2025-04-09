@@ -21,6 +21,7 @@ import {useCustomerPortal} from '~/features/project/context';
 import {Liferay} from '~/services/liferay';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
+import getKebabCase from '~/utils/getKebabCase';
 import {IBusinessEvent} from '~/utils/types';
 
 import ManageEventModal from './components/ManageEventModal';
@@ -253,7 +254,11 @@ const BusinessEvents = () => {
 							</div>
 
 							<div className="be-subtitle text-neutral-7">
-								{businessEvent?.eventType?.name}
+								{i18n.translate(
+									getKebabCase(
+										businessEvent?.eventType?.key as string
+									) as string
+								)}
 							</div>
 						</div>
 					),
@@ -262,7 +267,12 @@ const BusinessEvents = () => {
 							<div
 								className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} px-2 py-1`}
 							>
-								{businessEvent?.eventStatus?.name}
+								{i18n.translate(
+									getKebabCase(
+										businessEvent?.eventStatus
+											?.key as string
+									) as string
+								)}
 							</div>
 						</div>
 					),

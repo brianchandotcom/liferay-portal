@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {AssetLibraryType} from './AssetLibraryType';
 import {AssetType} from './AssetType';
 
 interface Actions {
@@ -19,6 +20,7 @@ type HTTPMethod = {
 
 export interface IVocabulary {
 	actions?: Actions;
+	assetLibraries: AssetLibraryType[];
 	assetTypes?: AssetType[];
 	description?: string;
 	description_i18n?: {

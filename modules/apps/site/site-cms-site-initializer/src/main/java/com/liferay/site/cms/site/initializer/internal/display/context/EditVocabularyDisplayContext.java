@@ -57,14 +57,14 @@ public class EditVocabularyDisplayContext {
 				HashMapBuilder.put(
 					"icon", availableAssetRendererFactory.getIconCssClass()
 				).put(
-					"label",
+					"restricted", Boolean.FALSE.toString()
+				).put(
+					"type",
 					ResourceActionsUtil.getModelResource(
 						_themeDisplay.getLocale(),
 						availableAssetRendererFactory.getClassName())
 				).put(
-					"restricted", Boolean.FALSE.toString()
-				).put(
-					"value",
+					"typeId",
 					String.valueOf(
 						availableAssetRendererFactory.getClassNameId())
 				).build());

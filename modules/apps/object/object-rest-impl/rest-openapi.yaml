@@ -690,6 +690,7 @@ paths:
         get:
             description:
                 Retrieves the collaborators of an object entry.
+            operationId: getScopeScopeKeyByExternalReferenceCodeCollaboratorsPage
             parameters:
                 -   in: path
                     name: scopeKey
@@ -740,6 +741,7 @@ paths:
                 Add or update all the collaborators received in the request. Delete existing collaborators that are not
                 included in the request. Send a notification for the new collaborators and those whose permissions are
                 different.
+            operationId: postScopeScopeKeyByExternalReferenceCodeCollaboratorsPage
             parameters:
                 -   in: path
                     name: scopeKey

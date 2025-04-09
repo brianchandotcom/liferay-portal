@@ -8099,69 +8099,6 @@ public class ObjectEntryResourceTest {
 
 			user = _userLocalService.updateUser(user);
 
-			// Format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ" and positive offset
-
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2000-07-27T11:00:00.000"
-				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T07:00:00.000Z"
-				).toString(),
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"2000-07-27T11:00:00.000+0400"
-					).put(
-						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"2000-07-27T11:00:00.000+0400"
-					).toString(),
-					_objectDefinition1.getRESTContextPath(), Http.Method.POST
-				).toString(),
-				JSONCompareMode.LENIENT);
-
-			// Format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ" and negative offset
-
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2000-07-27T11:00:00.000"
-				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T15:00:00.000Z"
-				).toString(),
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"2000-07-27T11:00:00.000-0400"
-					).put(
-						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"2000-07-27T11:00:00.000-0400"
-					).toString(),
-					_objectDefinition1.getRESTContextPath(), Http.Method.POST
-				).toString(),
-				JSONCompareMode.LENIENT);
-
-			// Format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-					"2000-07-27T11:00:00.000"
-				).put(
-					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T11:00:00.000Z"
-				).toString(),
-				HTTPTestUtil.invokeToJSONObject(
-					JSONUtil.put(
-						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
-						"2000-07-27T11:00:00.000Z"
-					).put(
-						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
-						"2000-07-27T11:00:00.000Z"
-					).toString(),
-					_objectDefinition1.getRESTContextPath(), Http.Method.POST
-				).toString(),
-				JSONCompareMode.LENIENT);
-
 			// Format: "EEE MMM dd HH:mm:ss zzz yyyy"
 
 			JSONAssert.assertEquals(
@@ -8199,6 +8136,69 @@ public class ObjectEntryResourceTest {
 					).put(
 						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
 						"2000-07-27T11:00:00.000"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T11:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+						"2000-07-27T11:00:00.000Z"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
+						"2000-07-27T11:00:00.000Z"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ" and negative offset
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T15:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+						"2000-07-27T11:00:00.000-0400"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
+						"2000-07-27T11:00:00.000-0400"
+					).toString(),
+					_objectDefinition1.getRESTContextPath(), Http.Method.POST
+				).toString(),
+				JSONCompareMode.LENIENT);
+
+			// Format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ" and positive offset
+
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+					"2000-07-27T11:00:00.000"
+				).put(
+					_OBJECT_FIELD_NAME_DATE_TIME_UTC, "2000-07-27T07:00:00.000Z"
+				).toString(),
+				HTTPTestUtil.invokeToJSONObject(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_DATE_TIME_INPUT,
+						"2000-07-27T11:00:00.000+0400"
+					).put(
+						_OBJECT_FIELD_NAME_DATE_TIME_UTC,
+						"2000-07-27T11:00:00.000+0400"
 					).toString(),
 					_objectDefinition1.getRESTContextPath(), Http.Method.POST
 				).toString(),

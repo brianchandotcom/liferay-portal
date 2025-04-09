@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {FormFieldsPage} from '../../pages/dynamic-data-mapping-form-web/FormFieldsPage';
 import getRandomString from '../../utils/getRandomString';
 import {deleteItems} from './utils/deleteItems';
 
@@ -195,4 +196,46 @@ test('can interact with Single Selection options using only keys', async ({
 			formPreviewPage.getByLabel('Option1').nth(index)
 		).toBeChecked();
 	}
+});
+
+test('can add image to repeated Rich Text field', async ({
+	formBuilderFieldSettingsSidePanelPage,
+	formBuilderPage,
+	formBuilderSidePanelPage,
+	formsPage,
+	page,
+}) => {
+	await formsPage.goTo();
+
+	await formsPage.clickManagementToolbarNewButton();
+
+	await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
+
+	await formBuilderFieldSettingsSidePanelPage.advancedTabButton.click();
+
+	await formBuilderFieldSettingsSidePanelPage.repeatableToggle.click();
+
+	const formPreviewPagePromise = page.waitForEvent('popup');
+
+	await formBuilderPage.previewButton.click();
+
+	formPreviewPage = await formPreviewPagePromise;
+
+	const formFieldsPage = new FormFieldsPage(formPreviewPage);
+
+	const editorContentFrame = formPreviewPage.frameLocator(
+		'iframe[title="editor"]'
+	);
+
+	await formFieldsPage.repeatFieldButton.click();
+
+	await formFieldsPage.richTextAddImageButton.nth(1).click();
+
+	await formFieldsPage.richTextselectImage('planet.png');
+
+	await expect(
+		editorContentFrame
+			.nth(1)
+			.locator('img[src="/documents/d/guest/planet-png"]')
+	).toBeVisible();
 });

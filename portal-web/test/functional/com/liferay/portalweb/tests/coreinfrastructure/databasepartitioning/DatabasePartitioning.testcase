@@ -381,6 +381,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+		property web.xml.timeout = "60";
 
 		task ("Add www.able.com with an asset") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -490,6 +491,7 @@ definition {
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
+		property web.xml.timeout = "60";
 
 		task ("Add www.able.com with an asset") {
 			HeadlessPortalInstanceAPI.addPortalInstance(

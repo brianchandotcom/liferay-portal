@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.settings.rest.resource.v1_0;
 
+import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceLiferayAnalyticsURL;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -43,7 +44,8 @@ public interface DataSourceResource {
 
 	public void deleteDataSource() throws Exception;
 
-	public void postDataSource(DataSourceToken dataSourceToken)
+	public DataSourceLiferayAnalyticsURL postDataSource(
+			DataSourceToken dataSourceToken)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -86,7 +86,7 @@ resource "aws_iam_role" "liferay" {
 					}
 				}
 			]
-            Version="2012-10-17"
+			Version="2012-10-17"
 		}
 	)
 	name="${var.deployment_name}-irsa"
@@ -108,7 +108,7 @@ resource "aws_opensearch_domain" "os" {
 			"Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.deployment_name}-os-d/*"
 		}
 	],
-    "Version": "2012-10-17"
+	"Version": "2012-10-17"
 }
 POLICY
 	advanced_options={

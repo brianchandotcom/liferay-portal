@@ -11,6 +11,7 @@ import React from 'react';
 
 import {AssetData} from '../../FDSPropsTransformer/actions/createAssetAction';
 import {FolderData} from '../../FDSPropsTransformer/actions/createFolderAction';
+import {SpaceData} from '../../FDSPropsTransformer/actions/createSpaceAction';
 import {FieldPicker, FieldText} from '../forms';
 import {required, validate} from '../forms/validations';
 
@@ -20,7 +21,7 @@ export type AssetLibray = {
 };
 
 type Props = {
-	action: AssetData['action'] | FolderData['action'];
+	action: AssetData['action'] | FolderData['action'] | SpaceData['action'];
 	assetLibraries: AssetLibray[];
 	closeModal: () => void;
 	redirect?: string;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.delivery.internal.jaxrs.exception.mapper;
+package com.liferay.headless.object.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
@@ -21,9 +21,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Delivery)",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Object)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Delivery.ObjectEntryFolderScopeExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Object.ObjectEntryFolderScopeExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )

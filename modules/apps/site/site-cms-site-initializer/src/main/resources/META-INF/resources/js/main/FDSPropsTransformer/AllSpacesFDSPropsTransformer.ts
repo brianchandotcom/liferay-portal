@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+
 import createSpaceAction from './actions/createSpaceAction';
+import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
 const ACTIONS = {
@@ -25,6 +28,15 @@ export default function AllSpacesFDSPropsTransformer({
 				creationMenu.primaryItems,
 				ACTIONS
 			),
+		},
+		customRenderers: {
+			tableCell: [
+				{
+					component: SpaceRenderer,
+					name: 'spaceTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+			],
 		},
 	};
 }

@@ -13,6 +13,7 @@ export class FormBuilderFieldSettingsSidePanelPage {
 	readonly inlineToggle: Locator;
 	readonly optionDisplayNameInputField: Locator;
 	readonly page: Page;
+	readonly repeatableToggle: Locator;
 	readonly requiredFieldToggle: Locator;
 
 	constructor(page: Page) {
@@ -27,6 +28,7 @@ export class FormBuilderFieldSettingsSidePanelPage {
 		this.inlineToggle = page.getByText('Inline');
 		this.optionDisplayNameInputField = page.getByPlaceholder('Option');
 		this.page = page;
+		this.repeatableToggle = page.getByText('Repeatable');
 		this.requiredFieldToggle = page.getByLabel('Required Field');
 	}
 

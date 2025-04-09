@@ -83,6 +83,15 @@ public class CommerceOrderModelListenerTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
+			_serviceContext);
+
 		_commerceCurrency =
 			CommerceCurrencyLocalServiceUtil.fetchPrimaryCommerceCurrency(
 				_group.getCompanyId());
@@ -94,45 +103,6 @@ public class CommerceOrderModelListenerTest {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
-
-		_commercePaymentMethodGroupRel =
-			_commercePaymentMethodGroupRelLocalService.
-				addCommercePaymentMethodGroupRel(
-					_user.getUserId(), _commerceChannel.getGroupId(),
-					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomLocaleStringMap(), true, null,
-					TestCommercePaymentMethod.KEY, 99, null);
-
-		_commerceShippingMethod =
-			_commerceShippingMethodLocalService.addCommerceShippingMethod(
-				_user.getUserId(), _commerceChannel.getGroupId(),
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()),
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()),
-				true, "fixed", null, 1, RandomTestUtil.randomString());
-
-		String shippingOptionName = RandomTestUtil.randomString();
-
-		_commerceShippingFixedOption =
-			_commerceShippingFixedOptionLocalService.
-				addCommerceShippingFixedOption(
-					_user.getUserId(), _commerceChannel.getGroupId(),
-					_commerceShippingMethod.getCommerceShippingMethodId(),
-					BigDecimal.valueOf(RandomTestUtil.nextDouble()),
-					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomString(),
-					Collections.singletonMap(LocaleUtil.US, shippingOptionName),
-					RandomTestUtil.nextDouble());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
-
-		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + "@liferay.com",
-			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
-			_serviceContext);
 
 		_commerceDeliveryTerm =
 			_commerceTermEntryLocalService.addCommerceTermEntry(
@@ -146,6 +116,14 @@ public class CommerceOrderModelListenerTest {
 				CommerceTermEntryConstants.TYPE_DELIVERY_TERMS, null,
 				_serviceContext);
 
+		_commercePaymentMethodGroupRel =
+			_commercePaymentMethodGroupRelLocalService.
+				addCommercePaymentMethodGroupRel(
+					_user.getUserId(), _commerceChannel.getGroupId(),
+					RandomTestUtil.randomLocaleStringMap(),
+					RandomTestUtil.randomLocaleStringMap(), true, null,
+					TestCommercePaymentMethod.KEY, 99, null);
+
 		_commercePaymentTerm =
 			_commerceTermEntryLocalService.addCommerceTermEntry(
 				RandomTestUtil.randomString(), _user.getUserId(), true,
@@ -157,6 +135,27 @@ public class CommerceOrderModelListenerTest {
 				RandomTestUtil.randomString(), 1000,
 				CommerceTermEntryConstants.TYPE_PAYMENT_TERMS, null,
 				_serviceContext);
+
+		_commerceShippingMethod =
+			_commerceShippingMethodLocalService.addCommerceShippingMethod(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				true, "fixed", null, 1, RandomTestUtil.randomString());
+
+		_commerceShippingFixedOption =
+			_commerceShippingFixedOptionLocalService.
+				addCommerceShippingFixedOption(
+					_user.getUserId(), _commerceChannel.getGroupId(),
+					_commerceShippingMethod.getCommerceShippingMethodId(),
+					BigDecimal.valueOf(RandomTestUtil.nextDouble()),
+					RandomTestUtil.randomLocaleStringMap(),
+					RandomTestUtil.randomString(),
+					Collections.singletonMap(
+						LocaleUtil.US, RandomTestUtil.randomString()),
+					RandomTestUtil.nextDouble());
 
 		_country = _countryLocalService.addCountry(
 			"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(), "000",

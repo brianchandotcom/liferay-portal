@@ -5,7 +5,7 @@
 		"@liferay/cookies-banner-web": "*",
 		"ckeditor4": "4.22.1",
 		"ckeditor4-react": "1.4.2",
-		"ckeditor5": "43.3.1",
+		"ckeditor5": "44.3.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"liferay-ckeditor": "4.21.0-liferay.11",

@@ -38,6 +38,10 @@ export default function CategorizationSpaces({
 	const [checkbox, setCheckbox] = useState(true);
 	const [newSelectedSpaces, setNewSelectedSpaces] = useState<number[]>([]);
 
+	const initialSelectedSpaces = assetLibraries?.map(
+		(item: {id: number; name: string}) => item.id
+	);
+
 	useEffect(() => {
 		SpaceService.getSpaces().then((response) => {
 			const spaces = response.map((item) => ({
@@ -66,18 +70,9 @@ export default function CategorizationSpaces({
 
 	useEffect(() => {
 		if (checkbox) {
-			if (setSpaceChange) {
-				setSpaceChange(false);
-			}
-
 			setNewSelectedSpaces([-1]);
 		}
-		else {
-			if (setSpaceChange) {
-				setSpaceChange(true);
-			}
-		}
-	}, [checkbox, setSpaceChange]);
+	}, [checkbox]);
 
 	useEffect(() => {
 		if (assetLibraries?.some((item: {id: number}) => item.id === -1)) {
@@ -103,7 +98,25 @@ export default function CategorizationSpaces({
 
 	useEffect(() => {
 		setSelectedSpaces(newSelectedSpaces);
-	}, [newSelectedSpaces, setSelectedSpaces]);
+
+		if (setSpaceChange) {
+			if (
+				initialSelectedSpaces?.some(
+					(item: number) => !newSelectedSpaces.includes(item)
+				)
+			) {
+				setSpaceChange(true);
+			}
+			else {
+				setSpaceChange(false);
+			}
+		}
+	}, [
+		initialSelectedSpaces,
+		newSelectedSpaces,
+		setSelectedSpaces,
+		setSpaceChange,
+	]);
 
 	const selectedItems = useMemo(() => {
 		if (checkbox) {

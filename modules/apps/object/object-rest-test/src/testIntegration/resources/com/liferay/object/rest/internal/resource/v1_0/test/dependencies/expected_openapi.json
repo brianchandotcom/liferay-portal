@@ -390,6 +390,9 @@
 						"x-batch-unsupported-formats": "CSV",
 						"x-parent-map": "properties"
 					},
+					"systemProperties": {
+						"$ref": "#/components/schemas/SystemProperties"
+					},
 					"taxonomyCategoryBriefs": {
 						"description": "The categories associated with this object entry.",
 						"items": {
@@ -407,9 +410,6 @@
 						"type": "array",
 						"writeOnly": true,
 						"x-batch-unsupported-formats": "CSV"
-					},
-					"version": {
-						"$ref": "#/components/schemas/Version"
 					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -739,6 +739,9 @@
 						"x-batch-unsupported-formats": "CSV",
 						"x-parent-map": "properties"
 					},
+					"systemProperties": {
+						"$ref": "#/components/schemas/SystemProperties"
+					},
 					"taxonomyCategoryBriefs": {
 						"description": "The categories associated with this object entry.",
 						"items": {
@@ -756,9 +759,6 @@
 						"type": "array",
 						"writeOnly": true,
 						"x-batch-unsupported-formats": "CSV"
-					},
-					"version": {
-						"$ref": "#/components/schemas/Version"
 					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -1182,6 +1182,24 @@
 				],
 				"xml": {
 					"name": "Status"
+				}
+			},
+			"SystemProperties": {
+				"properties": {
+					"version": {
+						"$ref": "#/components/schemas/Version"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.SystemProperties",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "SystemProperties"
 				}
 			},
 			"TaxonomyCategoryBrief": {

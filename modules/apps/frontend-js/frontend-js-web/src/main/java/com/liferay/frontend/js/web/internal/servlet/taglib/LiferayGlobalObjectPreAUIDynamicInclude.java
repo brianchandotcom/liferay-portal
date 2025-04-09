@@ -346,27 +346,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append("notices: [\n");
 
 		if (ShutdownUtil.isInProcess()) {
-			sb.append("{title:'");
+			sb.append("{\nmessage:'");
 
 			Locale locale = themeDisplay.getLocale();
-
-			sb.append(_language.get(locale, "maintenance-alert"));
-
-			sb.append("<span class=\"mx-2\">");
-
-			Format format = FastDateFormatFactoryUtil.getTime(locale);
-
-			TimeZone timeZone = themeDisplay.getTimeZone();
-
-			sb.append(
-				format.format(
-					Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))));
-
-			sb.append(StringPool.SPACE);
-
-			sb.append(timeZone.getDisplayName(false, TimeZone.SHORT, locale));
-
-			sb.append("</span>', message:'");
 
 			sb.append(
 				_language.format(
@@ -387,7 +369,25 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				sb.append("</span>");
 			}
 
-			sb.append("', type: 'warning'},");
+			sb.append("',\ntitle:'");
+
+			sb.append(_language.get(locale, "maintenance-alert"));
+
+			sb.append("<span class=\"mx-2\">");
+
+			Format format = _fastDateFormatFactory.getTime(locale);
+
+			TimeZone timeZone = themeDisplay.getTimeZone();
+
+			sb.append(
+				format.format(
+					Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))));
+
+			sb.append(StringPool.SPACE);
+
+			sb.append(timeZone.getDisplayName(false, TimeZone.SHORT, locale));
+
+			sb.append("</span>',\ntype: 'warning'\n},\n");
 		}
 
 		sb.append("],\n");
@@ -756,6 +756,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;
+
 	@Reference
 	private FeatureFlagManager _featureFlagManager;
 

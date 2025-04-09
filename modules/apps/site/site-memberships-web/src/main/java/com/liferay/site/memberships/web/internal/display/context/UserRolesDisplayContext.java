@@ -248,7 +248,8 @@ public class UserRolesDisplayContext {
 
 	private List<Role> _getSelectedRoles() throws PortalException {
 		return TransformUtil.transform(
-			UserGroupRoleLocalServiceUtil.getUserGroupRoles(_getUserId()),
+			UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+				_getUserId(), _getGroupId()),
 			userGroupRole -> RoleLocalServiceUtil.fetchRole(
 				userGroupRole.getRoleId()));
 	}

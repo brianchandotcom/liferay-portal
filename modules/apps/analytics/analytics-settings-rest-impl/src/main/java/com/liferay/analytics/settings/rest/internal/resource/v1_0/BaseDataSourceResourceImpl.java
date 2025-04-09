@@ -5,6 +5,7 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
+import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceLiferayAnalyticsURL;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
 import com.liferay.analytics.settings.rest.resource.v1_0.DataSourceResource;
 import com.liferay.petra.function.UnsafeFunction;
@@ -69,8 +70,11 @@ public abstract class BaseDataSourceResourceImpl implements DataSourceResource {
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void postDataSource(DataSourceToken dataSourceToken)
+	public DataSourceLiferayAnalyticsURL postDataSource(
+			DataSourceToken dataSourceToken)
 		throws Exception {
+
+		return new DataSourceLiferayAnalyticsURL();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

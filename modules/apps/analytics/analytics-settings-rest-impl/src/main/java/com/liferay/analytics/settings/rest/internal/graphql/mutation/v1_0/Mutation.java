@@ -7,6 +7,7 @@ package com.liferay.analytics.settings.rest.internal.graphql.mutation.v1_0;
 
 import com.liferay.analytics.settings.rest.dto.v1_0.Channel;
 import com.liferay.analytics.settings.rest.dto.v1_0.ContactConfiguration;
+import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceLiferayAnalyticsURL;
 import com.liferay.analytics.settings.rest.dto.v1_0.DataSourceToken;
 import com.liferay.analytics.settings.rest.dto.v1_0.Field;
 import com.liferay.analytics.settings.rest.dto.v1_0.RecommendationConfiguration;
@@ -129,17 +130,15 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean createDataSource(
+	public DataSourceLiferayAnalyticsURL createDataSource(
 			@GraphQLName("dataSourceToken") DataSourceToken dataSourceToken)
 		throws Exception {
 
-		_applyVoidComponentServiceObjects(
+		return _applyComponentServiceObjects(
 			_dataSourceResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			dataSourceResource -> dataSourceResource.postDataSource(
 				dataSourceToken));
-
-		return true;
 	}
 
 	@GraphQLField

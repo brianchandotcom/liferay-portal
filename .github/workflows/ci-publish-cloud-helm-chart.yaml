@@ -6,7 +6,7 @@ env:
     GAR_REPOSITORY: "us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart"
 jobs:
     publish-cloud-helm-chart:
-        if: (github.repository == "liferay/liferay-portal")
+        if: ${{ github.repository == 'liferay/liferay-portal' }}
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code

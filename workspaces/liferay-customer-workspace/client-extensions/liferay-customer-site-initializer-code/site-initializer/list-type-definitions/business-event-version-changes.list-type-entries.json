@@ -3,7 +3,10 @@
 		"key": "created",
 		"name": "Created",
 		"name_i18n": {
-			"en-US": "Created"
+			"en-US": "Event Created",
+			"es-ES": "Evento Creado",
+			"ja-JP": "イベントの作成",
+			"pt-BR": "Evento Criado"
 		},
 		"type": "string"
 	},
@@ -11,7 +14,10 @@
 		"key": "edited",
 		"name": "Edited",
 		"name_i18n": {
-			"en-US": "Edited"
+			"en-US": "Edited",
+			"es-ES": "Editado",
+			"ja-JP": "編集済み",
+			"pt-BR": "Editado"
 		},
 		"type": "string"
 	},
@@ -19,7 +25,10 @@
 		"key": "eventCanceled",
 		"name": "Event Canceled",
 		"name_i18n": {
-			"en-US": "Event Canceled"
+			"en-US": "Event Canceled",
+			"es-ES": "Evento Cancelado",
+			"ja-JP": "イベントのキャンセル",
+			"pt-BR": "Evento Cancelado"
 		},
 		"type": "string"
 	},
@@ -27,7 +36,10 @@
 		"key": "goLive",
 		"name": "Go Live",
 		"name_i18n": {
-			"en-US": "Go Live"
+			"en-US": "Go Live",
+			"es-ES": "Go Live",
+			"ja-JP": "Go Live",
+			"pt-BR": "Go Live"
 		},
 		"type": "string"
 	}

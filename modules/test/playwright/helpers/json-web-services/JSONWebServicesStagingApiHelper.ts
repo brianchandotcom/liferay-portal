@@ -98,7 +98,10 @@ export class JSONWebServicesStagingApiHelper {
 		branchingPrivate = false,
 		branchingPublic = false,
 		groupId,
-		remoteAddress = 'localhost',
+		remoteAddress = liferayConfig.environment.baseUrl.substring(
+			7,
+			liferayConfig.environment.baseUrl.length - 5
+		),
 		remoteGroupId,
 		remotePort,
 		secureConnection = false,

@@ -71,12 +71,12 @@ public class SharingEntryObjectEntryFolderServiceWrapper
 			return objectEntryFolder;
 		}
 
-		List<SharingEntry> sharingEntryList =
+		List<SharingEntry> sharingEntries =
 			_sharingEntryLocalService.getSharingEntries(
 				className.getClassNameId(),
 				objectEntryFolder.getObjectEntryFolderId());
 
-		sharingEntryList.forEach(
+		sharingEntries.forEach(
 			sharingEntry -> {
 				try {
 					indexer.reindex(sharingEntry);

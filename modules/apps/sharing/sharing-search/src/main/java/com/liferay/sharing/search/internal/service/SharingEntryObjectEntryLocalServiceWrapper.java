@@ -65,11 +65,11 @@ public class SharingEntryObjectEntryLocalServiceWrapper
 			return objectEntry;
 		}
 
-		List<SharingEntry> sharingEntryList =
+		List<SharingEntry> sharingEntries =
 			_sharingEntryLocalService.getSharingEntries(
 				className.getClassNameId(), objectEntry.getObjectEntryId());
 
-		sharingEntryList.forEach(
+		sharingEntries.forEach(
 			sharingEntry -> {
 				try {
 					indexer.reindex(sharingEntry);

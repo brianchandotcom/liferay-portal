@@ -46,6 +46,13 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
+export const HEADERS_ALL_LANGUAGES = new Headers({
+	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+	'X-Accept-All-Languages': 'true',
+});
+
 export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	const result = await fetch(input, {headers, method: 'GET', ...init});
 

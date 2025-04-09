@@ -13,7 +13,6 @@ import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import VocabularyService from '../services/VocabularyService';
-import {AssetType} from '../types/AssetType';
 import {IVocabulary} from '../types/IVocabulary';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';

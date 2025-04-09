@@ -492,6 +492,7 @@ modules/util/portal-tools-rest-builder-test-client/    @liferay-headless
 modules/util/portal-tools-rest-builder-test-impl/    @liferay-headless
 modules/util/portal-tools-rest-builder-test-test/    @liferay-headless
 modules/util/portal-tools-rest-builder/    @liferay-headless
+modules/util/portal-tools-sample-sql-builder/    @liferay-core-infra
 modules/util/portal-tools-service-builder-spring-sample-api/    @liferay-core-infra
 modules/util/portal-tools-service-builder-spring-sample-service/    @liferay-core-infra
 modules/util/portal-tools-service-builder-test-api/    @liferay-core-infra

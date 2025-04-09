@@ -5,29 +5,28 @@
 
 import {useCallback, useEffect, useState} from 'react';
 import {Liferay} from '~/services/liferay';
-import {IBusinessEvent} from '~/utils/types';
 import {ITicket} from '~/utils/types';
 
 const useAccountTickets = (
-	externalReferenceCode: string,
-	businessEvent?: IBusinessEvent,
-	getOpenTickets?: boolean
+	externalReferenceCode?: string,
+	filter?: string,
+	skip?: boolean
 ) => {
 	const [loading, setLoading] = useState(true);
 	const [tickets, setTickets] = useState<ITicket[] | undefined>(undefined);
 
-	const fetchTickets = useCallback(async (associatedTicketIds?: string) => {
-		if (!externalReferenceCode) {
-			setTickets(undefined);
-
+	const fetchTickets = useCallback(async () => {
+		if (skip || !externalReferenceCode) {
 			return;
 		}
 
-		if (associatedTicketIds) {
-			associatedTicketIds = `associatedTicketIds=${JSON.parse(
-				associatedTicketIds).map(
-					(id: string) => Number(id)
-			)}`;
+		let filterQuery = filter;
+
+		if (filter) {
+			filterQuery = `?${filter}`;
+		}
+		else {
+			filterQuery = '';
 		}
 
 		try {
@@ -36,28 +35,11 @@ const useAccountTickets = (
 					'liferay-customer-etc-spring-boot-oaua'
 				)
 					.fetch(
-						`/accounts/${externalReferenceCode}/tickets?${associatedTicketIds}`
+						`/accounts/${externalReferenceCode}/tickets${filterQuery}`
 					)
 					.then((response: {json: () => any}) => response.json());
 
-			if (getOpenTickets) {
-				const openTicketResponse: ITicket[] =
-					await Liferay.OAuth2Client.FromUserAgentApplication(
-						'liferay-customer-etc-spring-boot-oaua'
-					)
-						.fetch(`/accounts/${externalReferenceCode}/tickets`)
-						.then((response: {json: () => any}) => response.json());
-
-				setTickets(
-					openTicketResponse.filter(
-						(openTicket) => !response.some(
-							(ticket) => openTicket.ticketId === ticket.ticketId)
-					).concat(response)
-				);
-			}
-			else {
-				setTickets(response);
-			}
+			setTickets(response);
 
 			setLoading(false);
 		}
@@ -65,18 +47,13 @@ const useAccountTickets = (
 			console.error('Error fetching tickets data:', error);
 
 			setTickets(undefined);
+
 			setLoading(false);
 		}
-	}, [businessEvent, externalReferenceCode, getOpenTickets]);
+	}, [externalReferenceCode, filter, skip]);
 
 	useEffect(() => {
-		if (businessEvent) {
-			fetchTickets(businessEvent?.associatedTickets);
-		}
-		else {
-			fetchTickets();
-		}
-
+		fetchTickets();
 	}, [fetchTickets]);
 
 	return {loading, tickets};

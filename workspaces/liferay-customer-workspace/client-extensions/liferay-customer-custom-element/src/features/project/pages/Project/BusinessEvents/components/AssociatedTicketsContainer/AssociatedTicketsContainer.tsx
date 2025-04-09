@@ -75,6 +75,7 @@ const AssociatedTicketsContainer: React.FC<IProps> = ({
 						<ClayDropDown.Menu
 							active={expand}
 							alignElementRef={triggerElementRef}
+							autoBestAlign={false}
 							onActiveChange={() => setExpand(!expand)}
 							width="sm"
 						>
@@ -84,6 +85,7 @@ const AssociatedTicketsContainer: React.FC<IProps> = ({
 								tickets={tickets.filter(
 									(ticket) =>
 										!ticket.selected &&
+										ticket.status !== 'closed' &&
 										ticket.subject?.includes(searchTerm)
 								)}
 								type="option"

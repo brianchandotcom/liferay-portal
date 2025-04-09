@@ -98,7 +98,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 	const {isSaasOnly} = useIsSaasOnly(subscriptionGroups);
 
-	const {loading, tickets} = useAccountTickets(project?.accountKey || '', originalBusinessEvent, true);
+	const {loading, tickets} = useAccountTickets(project?.accountKey);
 
 	const navigate = useNavigate();
 

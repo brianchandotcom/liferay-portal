@@ -147,6 +147,11 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 	}
 
 	@Override
+	public String getCompanyGroupFriendlyURL() {
+		return CompanyGroupConstants.FRIENDLY_URL;
+	}
+
+	@Override
 	public Group getStagedPortletGroup(Group group, String portletId) {
 		if (isLocalStagingGroup(group.getGroupId()) &&
 			!isStagedPortlet(group.getGroupId(), portletId)) {

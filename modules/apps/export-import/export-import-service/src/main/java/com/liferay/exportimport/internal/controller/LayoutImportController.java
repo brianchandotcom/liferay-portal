@@ -602,11 +602,13 @@ public class LayoutImportController implements ImportController {
 				"group-friendly-url");
 
 			boolean companyGroup = stagingGroupHelper.isCompanyGroup(group);
+			String companyGroupFriendlyURL =
+				stagingGroupHelper.getCompanyGroupFriendlyURL();
 
 			if (((groupFriendlyUrl == null) && companyGroup) ||
-				(Objects.equals(groupFriendlyUrl, "/export-import") &&
+				(Objects.equals(groupFriendlyUrl, companyGroupFriendlyURL) &&
 				 !companyGroup) ||
-				(!Objects.equals(groupFriendlyUrl, "/export-import") &&
+				(!Objects.equals(groupFriendlyUrl, companyGroupFriendlyURL) &&
 				 companyGroup)) {
 
 				throw new LARScopeException();

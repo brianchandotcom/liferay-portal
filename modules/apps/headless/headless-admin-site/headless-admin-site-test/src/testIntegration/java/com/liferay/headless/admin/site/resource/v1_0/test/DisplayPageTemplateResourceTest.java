@@ -389,6 +389,7 @@ public class DisplayPageTemplateResourceTest
 	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateContentTypeReference();
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateMarkAsDefault();
 
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
@@ -1002,6 +1003,41 @@ public class DisplayPageTemplateResourceTest
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getExternalReferenceCode(),
 			displayPageTemplateFolder.getExternalReferenceCode());
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateContentTypeReference()
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		displayPageTemplate.setContentTypeReference(
+			_getClassSubtypeReference(AssetCategory.class.getName()));
+
+		DisplayPageTemplate putDisplayPageTemplate =
+			displayPageTemplateResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode(),
+					displayPageTemplate);
+
+		Assert.assertEquals(
+			displayPageTemplate.getContentTypeReference(),
+			putDisplayPageTemplate.getContentTypeReference());
+
+		displayPageTemplate.setContentTypeReference(
+			_getClassSubtypeReference(
+				"com.liferay.journal.model.JournalArticle"));
+
+		putDisplayPageTemplate =
+			displayPageTemplateResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode(),
+					displayPageTemplate);
+
+		Assert.assertEquals(
+			displayPageTemplate.getContentTypeReference(),
+			putDisplayPageTemplate.getContentTypeReference());
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateMarkAsDefault()

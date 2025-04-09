@@ -8764,7 +8764,6 @@ public class ObjectEntryResourceTest {
 		);
 	}
 
-	@FeatureFlags("LPD-37056")
 	@Test
 	public void testPostScopeScopeKeyValidate() throws Exception {
 		_testPostValidate(
@@ -8801,7 +8800,6 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_VALUE_1, jsonObject.getInt(_OBJECT_FIELD_NAME_1));
 	}
 
-	@FeatureFlags("LPD-37056")
 	@Test
 	public void testPostValidate() throws Exception {
 		_testPostValidate(

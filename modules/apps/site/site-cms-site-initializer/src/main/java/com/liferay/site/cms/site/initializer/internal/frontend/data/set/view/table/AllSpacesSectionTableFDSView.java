@@ -34,7 +34,7 @@ public class AllSpacesSectionTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"title"
+				"spaceTableCellRenderer"
 			).setSortable(
 				true
 			)

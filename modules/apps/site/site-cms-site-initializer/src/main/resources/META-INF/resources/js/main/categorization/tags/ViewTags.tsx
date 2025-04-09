@@ -50,6 +50,8 @@ export default function ViewTags({
 	const filters = [
 		{
 			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
+			entityFieldType: 'string',
+			id: 'groupIds',
 			itemKey: 'id',
 			itemLabel: 'name',
 			label: 'Space',
@@ -252,7 +254,9 @@ export default function ViewTags({
 					},
 				]}
 				onActionDropdownItemClick={onActionDropdownItemClick}
+				pagination={{initialDelta: 20}}
 				showManagementBar={true}
+				showPagination={true}
 				showSearch={true}
 				views={views}
 			/>

@@ -1,3 +1,9 @@
-<span style="font-size: ${configuration.iconSize}">
+[@liferay_aui.style]
+	.${fragmentEntryLinkNamespace}_iconSize{
+		font-size: ${configuration.iconSize};
+	}
+[/@]
+
+<span class="${fragmentEntryLinkNamespace}_iconSize">
 	[@clay["icon"] symbol="${configuration.iconName}" /]
 </span>

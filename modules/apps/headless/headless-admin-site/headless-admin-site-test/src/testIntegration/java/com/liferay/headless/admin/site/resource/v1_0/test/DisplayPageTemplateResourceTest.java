@@ -622,6 +622,55 @@ public class DisplayPageTemplateResourceTest
 				testGroup, TestPropsValues.getUserId()));
 	}
 
+	private ClassSubtypeReference _getClassSubtypeReference(
+		String classSubtypeReferenceClassName) {
+
+		if (classSubtypeReferenceClassName.equals(
+				AssetCategory.class.getName())) {
+
+			return new ClassSubtypeReference() {
+				{
+					setClassName(classSubtypeReferenceClassName);
+				}
+			};
+		}
+
+		Assert.assertEquals(
+			"com.liferay.journal.model.JournalArticle",
+			classSubtypeReferenceClassName);
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				classSubtypeReferenceClassName);
+
+		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
+			infoItemFormVariationsProvider.getInfoItemFormVariations(
+				testGroup.getGroupId()));
+
+		Assert.assertFalse(infoItemFormVariations.isEmpty());
+
+		infoItemFormVariations.sort(
+			Comparator.comparing(InfoItemFormVariation::getKey));
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariations.get(0);
+
+		return new ClassSubtypeReference() {
+			{
+				setClassName(classSubtypeReferenceClassName);
+				setSubTypeExternalReference(
+					() -> new ItemExternalReference() {
+						{
+							setExternalReferenceCode(
+								infoItemFormVariation::
+									getExternalReferenceCode);
+						}
+					});
+			}
+		};
+	}
+
 	private DisplayPageTemplate _getDisplayPageTemplate(
 		List<DisplayPageTemplate> displayPageTemplates,
 		String externalReferenceCode) {

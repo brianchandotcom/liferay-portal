@@ -3,7 +3,10 @@
 		"key": "open",
 		"name": "Open",
 		"name_i18n": {
-			"en-US": "Open"
+			"en-US": "Open",
+			"es-ES": "Abierto",
+			"ja-JP": "オープン",
+			"pt-BR": "Aberto"
 		},
 		"type": "string"
 	},
@@ -11,7 +14,10 @@
 		"key": "overdue",
 		"name": "Overdue",
 		"name_i18n": {
-			"en-US": "Overdue"
+			"en-US": "Overdue",
+			"es-ES": "Atrasado",
+			"ja-JP": "期限切れ",
+			"pt-BR": "Atrasado"
 		},
 		"type": "string"
 	},
@@ -19,7 +25,10 @@
 		"key": "completed",
 		"name": "Completed",
 		"name_i18n": {
-			"en-US": "Completed"
+			"en-US": "Completed",
+			"es-ES": "Completado",
+			"ja-JP": "完了",
+			"pt-BR": "Concluído"
 		},
 		"type": "string"
 	},
@@ -27,7 +36,10 @@
 		"key": "canceled",
 		"name": "Canceled",
 		"name_i18n": {
-			"en-US": "Canceled"
+			"en-US": "Canceled",
+			"es-ES": "Cancelado",
+			"ja-JP": "キャンセル",
+			"pt-BR": "Cancelado"
 		},
 		"type": "string"
 	}

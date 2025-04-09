@@ -3,7 +3,10 @@
 		"key": "goLive",
 		"name": "Go Live",
 		"name_i18n": {
-			"en-US": "Go Live"
+			"en-US": "Go Live",
+			"es-ES": "Go Live",
+			"ja-JP": "Go Live",
+			"pt-BR": "Go Live"
 		},
 		"type": "string"
 	},
@@ -11,7 +14,10 @@
 		"key": "migration",
 		"name": "Migration",
 		"name_i18n": {
-			"en-US": "Migration"
+			"en-US": "Migration",
+			"es-ES": "Migración",
+			"ja-JP": "マイグレーション",
+			"pt-BR": "Migração"
 		},
 		"type": "string"
 	},
@@ -19,7 +25,10 @@
 		"key": "upgrade",
 		"name": "Upgrade",
 		"name_i18n": {
-			"en-US": "Upgrade"
+			"en-US": "Upgrade",
+			"es-ES": "Actualización",
+			"ja-JP": "アップグレード",
+			"pt-BR": "Atualização"
 		},
 		"type": "string"
 	},
@@ -27,7 +36,10 @@
 		"key": "otherEvent",
 		"name": "Other Event",
 		"name_i18n": {
-			"en-US": "Other Event"
+			"en-US": "Other Event",
+			"es-ES": "Otro evento",
+			"ja-JP": "その他のイベント",
+			"pt-BR": "Outro Evento"
 		},
 		"type": "string"
 	}

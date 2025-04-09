@@ -85,10 +85,14 @@ public class AllSpacesSectionDisplayContext {
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
-					"/cms/edit_content_item?className={entryClassName}&",
-					"objectEntryId={id}"),
-				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
-				"get", "update", null),
+					"/cms/space_settings?id={id}"),
+				"cog", "edit",
+				LanguageUtil.get(_httpServletRequest, "space-settings"), "get",
+				"update", null),
+			new FDSActionDropdownItem(
+				"#", "users", "view-members",
+				LanguageUtil.get(_httpServletRequest, "view-members"), "get",
+				"update", null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortalUtil.getControlPanelPortletURL(
@@ -101,7 +105,7 @@ public class AllSpacesSectionDisplayContext {
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"modelResource", DepotEntry.class
+					"modelResource", DepotEntry.class.getName()
 				).setParameter(
 					"modelResourceDescription", "{name}"
 				).setParameter(

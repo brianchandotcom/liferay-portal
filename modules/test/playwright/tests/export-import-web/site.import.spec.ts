@@ -144,7 +144,7 @@ testWithStagingInInstanceFF(
 
 		await exportImportPage.goToImport();
 
-		await exportImportPage.createNewImportProcess(
+		await exportImportPage.import(
 			exportFilePath,
 			'The LAR file contains one or more entities with a different scope.'
 		);
@@ -202,7 +202,7 @@ test(
 
 		const exportName = 'MyExport-' + getRandomString();
 
-		await exportImportPage.createNewExportProcess(exportName);
+		await exportImportPage.export(exportName);
 
 		await expect(
 			exportImportPage.page
@@ -298,7 +298,7 @@ test('can import a lar file selecting some items to import', async ({
 
 	const exportName = 'MyExport-' + getRandomString();
 
-	await exportImportPage.createNewExportProcess(exportName);
+	await exportImportPage.export(exportName);
 
 	await expect(
 		exportImportPage.page
@@ -313,7 +313,7 @@ test('can import a lar file selecting some items to import', async ({
 
 	await exportImportPage.goToImport();
 
-	await exportImportPage.createNewImportProcess(exportFilePath);
+	await exportImportPage.import(exportFilePath);
 
 	await expect(
 		exportImportPage.page
@@ -409,7 +409,7 @@ test('can see corresponding elements at site level', async ({
 
 	const exportName = 'MyExport-' + getRandomString();
 
-	await exportImportPage.createNewExportProcess(exportName);
+	await exportImportPage.export(exportName);
 
 	await expect(
 		exportImportPage.page

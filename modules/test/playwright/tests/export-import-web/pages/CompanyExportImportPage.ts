@@ -121,7 +121,7 @@ export class CompanyExportImportPage {
 	async import(
 		filePath: string,
 		includePermissions: boolean = false,
-		expectedErrorMessage?: string,
+		expectedUploadErrorMessage?: string,
 		useCurrentUser: boolean = false
 	): Promise<void> {
 		await this.applicationsMenuPage.goToImport();
@@ -130,9 +130,9 @@ export class CompanyExportImportPage {
 
 		await this.page.locator('input[type="file"]').setInputFiles(filePath);
 
-		if (expectedErrorMessage) {
+		if (expectedUploadErrorMessage) {
 			await expect(
-				this.page.getByText(expectedErrorMessage)
+				this.page.getByText(expectedUploadErrorMessage)
 			).toBeVisible();
 
 			return;

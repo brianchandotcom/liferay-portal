@@ -12,25 +12,27 @@ export default function resolveEditableValue(
 	languageId = null,
 	getFieldValue = InfoItemService.getInfoItemFieldValue
 ) {
-	return isMapped(editableValue) && getFieldValue
-		? getFieldValue({
-				...editableValue,
-				editableTypeOptions: editableValue.config,
-				languageId,
-			}).catch(() =>
-				Promise.resolve(
-					getEditableLocalizedValue(
-						editableValue,
-						languageId,
-						editableValue
-					)
-				)
-			)
-		: Promise.resolve(
+	if (isMapped(editableValue) && getFieldValue) {
+		return getFieldValue({
+			...editableValue,
+			editableTypeOptions: editableValue.config,
+			languageId,
+		}).catch(() =>
+			Promise.resolve(
 				getEditableLocalizedValue(
 					editableValue,
 					languageId,
 					editableValue
 				)
-			);
+			)
+		);
+	}
+
+	const localizedEditableValue = getEditableLocalizedValue(
+		editableValue,
+		languageId,
+		editableValue
+	);
+
+	return Promise.resolve(localizedEditableValue);
 }

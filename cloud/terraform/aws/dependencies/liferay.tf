@@ -69,7 +69,6 @@ resource "aws_iam_policy" "s3" {
 		}
 	)
 }
-
 resource "aws_iam_role" "liferay" {
 	assume_role_policy=jsonencode(
 		{
@@ -92,12 +91,10 @@ resource "aws_iam_role" "liferay" {
 	)
 	name="${var.deployment_name}-irsa"
 }
-
 resource "aws_iam_role_policy_attachment" "s3" {
 	policy_arn=aws_iam_policy.s3.arn
 	role=aws_iam_role.liferay.name
 }
-
 resource "aws_opensearch_domain" "os" {
 	access_policies=<<POLICY
 {
@@ -158,7 +155,6 @@ POLICY
 		subnet_ids=slice(var.private_subnet_ids, 0, 2)
 	}
 }
-
 resource "aws_security_group" "os" {
 	description="Security group for OpenSearch domain"
 	name="${var.deployment_name}-os-sg"
@@ -167,7 +163,6 @@ resource "aws_security_group" "os" {
 	}
 	vpc_id=var.vpc_id
 }
-
 resource "aws_security_group" "rds" {
 	description="Security group for RDS PostgreSQL instance"
 	name="${var.deployment_name}-rds-sg"
@@ -176,7 +171,6 @@ resource "aws_security_group" "rds" {
 	}
 	vpc_id=var.vpc_id
 }
-
 resource "aws_vpc_security_group_ingress_rule" "os_ingress" {
 	cidr_ipv4=var.vpc_cidr
 	from_port=443
@@ -184,7 +178,6 @@ resource "aws_vpc_security_group_ingress_rule" "os_ingress" {
 	security_group_id=aws_security_group.os.id
 	to_port=443
 }
-
 resource "aws_vpc_security_group_ingress_rule" "rds_ingress" {
 	cidr_ipv4=var.vpc_cidr
 	from_port=5432
@@ -192,7 +185,6 @@ resource "aws_vpc_security_group_ingress_rule" "rds_ingress" {
 	security_group_id=aws_security_group.rds.id
 	to_port=5432
 }
-
 resource "kubernetes_secret" "managed_service_details" {
 	data={
 		"DATABASE_ENDPOINT"=aws_db_instance.postgres.address

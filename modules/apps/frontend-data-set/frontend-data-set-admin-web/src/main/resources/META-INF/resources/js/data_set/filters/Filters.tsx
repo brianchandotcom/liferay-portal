@@ -50,7 +50,7 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 	[EFilterType.CLIENT_EXTENSION]: {
 		Component: ClientExtensionFilterFormContent,
 		availableFieldsFilter: (item: IField) => !!item,
-		displayType: Liferay.Language.get('client-extension-filter'),
+		displayType: () => Liferay.Language.get('client-extension-filter'),
 		fdsViewRelationship:
 			OBJECT_RELATIONSHIP.DATA_SET_CLIENT_EXTENSION_FILTERS,
 		fdsViewRelationshipId:
@@ -63,7 +63,7 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 		availableFieldsFilter: (item: IField) =>
 			item.format === EFieldFormat.DATE ||
 			item.format === EFieldFormat.DATE_TIME,
-		displayType: Liferay.Language.get('date-filter'),
+		displayType: () => Liferay.Language.get('date-filter'),
 		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTERS,
 		fdsViewRelationshipId: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTERS_ID,
 		label: Liferay.Language.get('date-range'),
@@ -74,8 +74,8 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 		availableFieldsFilter: (item: IField) =>
 			(item.type === EFieldType.STRING && !item.format) ||
 			item.type === EFieldType.INTEGER,
-		displayType: (filter: IFilter) => {
-			if (filter.sourceType === ESelectionFilterSourceType.ITEM_PROXY) {
+		displayType: (filter: IFilter | undefined) => {
+			if (filter?.sourceType === ESelectionFilterSourceType.ITEM_PROXY) {
 				return Liferay.Language.get('system-filter');
 			}
 
@@ -151,7 +151,7 @@ function FilterFormComponent({
 
 		openDefaultSuccessToast();
 
-		onSave({...responseJSON, displayType, filterType});
+		onSave({...responseJSON, displayType: displayType(filter), filterType});
 	};
 
 	return (
@@ -226,19 +226,9 @@ function Filters({
 					responseJSON[filterTypeProps.fdsViewRelationship];
 
 				filtersArray.forEach((filter: any) => {
-					let displayType: string = '';
-
-					if (typeof filterTypeProps.displayType === 'string') {
-						displayType = filterTypeProps.displayType;
-					}
-
-					if (typeof filterTypeProps.displayType === 'function') {
-						displayType = filterTypeProps.displayType(filter);
-					}
-
 					filtersOrdered.push({
 						...filter,
-						displayType,
+						displayType: filterTypeProps.displayType(filter),
 						filterType: type as EFilterType,
 					});
 				});

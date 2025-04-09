@@ -136,7 +136,7 @@ export interface IFilterTypeProps {
 		Header: JSXElementConstructor<any>;
 	};
 	availableFieldsFilter: (field: IField) => boolean;
-	displayType: string | ((filter: IFilter) => string);
+	displayType: (filter?: IFilter) => string;
 	fdsViewRelationship: string;
 	fdsViewRelationshipId: string;
 	label: string;

@@ -276,7 +276,17 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertNull(postDisplayPageTemplate.getParentFolder());
 
+		ClassSubtypeReference contentTypeReference =
+			postDisplayPageTemplate.getContentTypeReference();
+
+		String className = contentTypeReference.getClassName();
+
+		if (className.equals(AssetCategory.class.getName())) {
+			className = "com.liferay.journal.model.JournalArticle";
+		}
+
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			_getClassSubtypeReference(className),
 			postDisplayPageTemplate.getExternalReferenceCode(),
 			new DisplayPageTemplateFolder() {
 				{
@@ -287,14 +297,14 @@ public class DisplayPageTemplateResourceTest
 			},
 			Boolean.FALSE);
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-			postDisplayPageTemplate.getExternalReferenceCode(), null,
+			null, postDisplayPageTemplate.getExternalReferenceCode(), null,
 			Boolean.FALSE);
 
 		_updateLayoutPageTemplateEntryStatus(
 			postDisplayPageTemplate.getExternalReferenceCode());
 
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-			postDisplayPageTemplate.getExternalReferenceCode(), null,
+			null, postDisplayPageTemplate.getExternalReferenceCode(), null,
 			Boolean.TRUE);
 
 		_assertProblemException(
@@ -831,6 +841,7 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+			ClassSubtypeReference classSubtypeReference,
 			String displayPageTemplateExternalReferenceCode,
 			DisplayPageTemplateFolder displayPageTemplateFolder,
 			Boolean markedAsDefault)
@@ -845,6 +856,8 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate randomDisplayPageTemplate =
 			randomDisplayPageTemplate();
 
+		randomDisplayPageTemplate.setContentTypeReference(
+			classSubtypeReference);
 		randomDisplayPageTemplate.setExternalReferenceCode(
 			displayPageTemplateExternalReferenceCode);
 		randomDisplayPageTemplate.setMarkedAsDefault(markedAsDefault);
@@ -859,6 +872,17 @@ public class DisplayPageTemplateResourceTest
 
 		assertEquals(randomDisplayPageTemplate, patchDisplayPageTemplate);
 		assertValid(patchDisplayPageTemplate);
+
+		if (classSubtypeReference == null) {
+			Assert.assertEquals(
+				getDisplayPageTemplate.getContentTypeReference(),
+				patchDisplayPageTemplate.getContentTypeReference());
+		}
+		else {
+			Assert.assertEquals(
+				classSubtypeReference,
+				patchDisplayPageTemplate.getContentTypeReference());
+		}
 
 		if (displayPageTemplateFolder == null) {
 			displayPageTemplateFolder =

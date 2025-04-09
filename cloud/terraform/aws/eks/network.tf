@@ -58,8 +58,8 @@ resource "aws_subnet" "private" {
 	cidr_block=var.private_subnets[count.index]
 	count=length(var.private_subnets)
 	tags={
-		"kubernetes.io/role/internal-elb"="1"
 		DeploymentName=var.deployment_name
+		"kubernetes.io/role/internal-elb"="1"
 		Name="${var.deployment_name}-private-sn-${count.index}"
 	}
 	vpc_id=aws_vpc.main.id
@@ -71,8 +71,8 @@ resource "aws_subnet" "public" {
 	map_public_ip_on_launch=true
 	tags={
 		DeploymentName=var.deployment_name
-		Name="${var.deployment_name}-public-sn-${count.index}"
 		"kubernetes.io/role/elb"="1"
+		Name="${var.deployment_name}-public-sn-${count.index}"
 	}
 	vpc_id=aws_vpc.main.id
 }

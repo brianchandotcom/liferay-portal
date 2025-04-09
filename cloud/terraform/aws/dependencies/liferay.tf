@@ -46,16 +46,16 @@ resource "aws_db_subnet_group" "rds" {
 }
 resource "aws_iam_policy" "s3" {
 	description="Policy for accessing the Liferay S3 bucket"
-    name="${var.deployment_name}-s3-policy"
+	name="${var.deployment_name}-s3-policy"
 	policy=jsonencode(
 		{
 			Statement=[
 				{
 					Action=[
-						"s3:PutObject",
-						"s3:GetObject",
 						"s3:DeleteObject",
-						"s3:ListBucket"
+						"s3:GetObject",
+						"s3:ListBucket",
+						"s3:PutObject"
 					]
 					Effect="Allow"
 					Resource=[
@@ -100,11 +100,11 @@ resource "aws_opensearch_domain" "os" {
 {
 	"Statement": [
 		{
+			"Action": "es:*",
 			"Effect": "Allow",
 			"Principal": {
 				"AWS": "*"
 			},
-			"Action": "es:*",
 			"Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.deployment_name}-os-d/*"
 		}
 	],

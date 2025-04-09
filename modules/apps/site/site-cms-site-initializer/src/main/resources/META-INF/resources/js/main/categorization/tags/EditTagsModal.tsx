@@ -32,6 +32,7 @@ export default function EditTagsModalContent({
 }) {
 	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
 	const [spaceChange, setSpaceChange] = useState(false);
+	const [spaceInputError, setSpaceInputError] = useState('');
 
 	const assetLibraryIds = selectedSpaces.map((number) => ({
 		id: number,
@@ -57,40 +58,52 @@ export default function EditTagsModalContent({
 		closeModal();
 	};
 
-	const {errors, handleChange, handleSubmit, touched, values} = useFormik({
-		initialValues: {
-			tagId,
-			tagName,
-		},
-		onSubmit: (values) => {
-			if (spaceChange) {
-				openConfirmModal({
-					message: Liferay.Language.get(
-						'removing-a-space-will-make-the-tag-unavailable'
-					),
-					onConfirm: (isConfirm: boolean) => {
-						if (isConfirm) {
-							updateTag(values);
-						}
+	const {errors, handleBlur, handleChange, handleSubmit, touched, values} =
+		useFormik({
+			initialValues: {
+				assetLibraries,
+				tagId,
+				tagName,
+			},
+			onSubmit: (values) => {
+				if (spaceChange) {
+					openConfirmModal({
+						message: Liferay.Language.get(
+							'removing-a-space-will-make-the-tag-unavailable'
+						),
+						onConfirm: (isConfirm: boolean) => {
+							if (isConfirm) {
+								updateTag(values);
+							}
+						},
+						status: 'info',
+						title: Liferay.Language.get('confirm-space-change'),
+					});
+				}
+				else {
+					updateTag(values);
+				}
+			},
+			validate: (values) => {
+				const errors = validate(
+					{
+						assetLibraries: [required],
+						tagName: [required],
 					},
-					status: 'info',
-					title: Liferay.Language.get('confirm-space-change'),
-				});
-			}
-			else {
-				updateTag(values);
-			}
-		},
-		validate: (values) => {
-			validate(
-				{
-					tagId: [required],
-					tagName: [required],
-				},
-				values
-			);
-		},
-	});
+					values
+				);
+				if (spaceInputError) {
+					errors.assetLibraries = spaceInputError;
+				}
+
+				return errors;
+			},
+		});
+
+	const errorMessage = sub(
+		Liferay.Language.get('the-x-field-is-required'),
+		Liferay.Language.get('name')
+	);
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -100,9 +113,14 @@ export default function EditTagsModalContent({
 
 			<ClayModal.Body>
 				<FieldText
-					errorMessage={touched.tagName ? errors.tagName : undefined}
+					errorMessage={
+						values.tagName.length !== 0 || !touched.tagName
+							? errors.tagName
+							: errorMessage
+					}
 					label={Liferay.Language.get('name')}
 					name="tagName"
+					onBlur={handleBlur}
 					onChange={handleChange}
 					required
 					value={values.tagName}
@@ -113,6 +131,7 @@ export default function EditTagsModalContent({
 					checkboxText="tag"
 					setSelectedSpaces={setSelectedSpaces}
 					setSpaceChange={setSpaceChange}
+					setSpaceInputError={setSpaceInputError}
 				/>
 			</ClayModal.Body>
 

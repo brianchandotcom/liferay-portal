@@ -24,49 +24,72 @@ export default function CreateTagsModalContent({
 	dataSetId: string;
 }) {
 	const [selectedSpaces, setSelectedSpaces] = useState<string[]>([]);
+	const [spaceInputError, setSpaceInputError] = useState('');
+	const [close, setClose] = useState(false);
 
 	const assetLibraries = selectedSpaces.map((number) => ({
 		id: number,
 	}));
 
-	const {errors, handleChange, handleSubmit, resetForm, touched, values} =
-		useFormik({
-			initialValues: {
-				assetLibraries: [],
-				tagName: '',
-			},
-			onSubmit: (values) => {
-				const url = '/o/headless-admin-taxonomy/v1.0/keywords';
+	const {
+		errors,
+		handleBlur,
+		handleChange,
+		handleSubmit,
+		resetForm,
+		touched,
+		values,
+	} = useFormik({
+		initialValues: {
+			assetLibraries: [],
+			tagName: '',
+		},
+		onSubmit: (values) => {
+			const url = '/o/headless-admin-taxonomy/v1.0/keywords';
 
-				const body = {
-					assetLibraries,
-					name: values.tagName,
-				};
+			const body = {
+				assetLibraries,
+				name: values.tagName,
+			};
 
-				executeAsyncItemAction({
-					method: 'POST',
-					requestBody: JSON.stringify(body),
-					successMessage: sub(
-						Liferay.Language.get('x-was-created-successfully'),
-						`<strong>${Liferay.Util.escapeHTML(values.tagName)}</strong>`
-					),
-					url,
-				}).then(() =>
-					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {id: dataSetId})
-				);
+			executeAsyncItemAction({
+				method: 'POST',
+				requestBody: JSON.stringify(body),
+				successMessage: sub(
+					Liferay.Language.get('x-was-created-successfully'),
+					`<strong>${Liferay.Util.escapeHTML(values.tagName)}</strong>`
+				),
+				url,
+			}).then(() =>
+				Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {id: dataSetId})
+			);
 
-				resetForm();
-			},
-			validate: (values) => {
-				validate(
-					{
-						assetLibraries: [required],
-						tagName: [required],
-					},
-					values
-				);
-			},
-		});
+			resetForm();
+
+			if (close) {
+				closeModal();
+			}
+		},
+		validate: (values) => {
+			const errors = validate(
+				{
+					assetLibraries: [required],
+					tagName: [required],
+				},
+				values
+			);
+			if (spaceInputError) {
+				errors.assetLibraries = spaceInputError;
+			}
+
+			return errors;
+		},
+	});
+
+	const errorMessage = sub(
+		Liferay.Language.get('the-x-field-is-required'),
+		Liferay.Language.get('name')
+	);
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -76,9 +99,14 @@ export default function CreateTagsModalContent({
 
 			<ClayModal.Body>
 				<FieldText
-					errorMessage={touched.tagName ? errors.tagName : undefined}
+					errorMessage={
+						values.tagName.length !== 0 || !touched.tagName
+							? errors.tagName
+							: errorMessage
+					}
 					label={Liferay.Language.get('name')}
 					name="tagName"
+					onBlur={handleBlur}
 					onChange={handleChange}
 					required
 					value={values.tagName}
@@ -87,6 +115,7 @@ export default function CreateTagsModalContent({
 				<CategorizationSpaces
 					checkboxText="tag"
 					setSelectedSpaces={setSelectedSpaces}
+					setSpaceInputError={setSpaceInputError}
 				/>
 			</ClayModal.Body>
 
@@ -107,7 +136,7 @@ export default function CreateTagsModalContent({
 
 						<ClayButton
 							displayType="primary"
-							onClick={closeModal}
+							onClick={() => setClose(true)}
 							type="submit"
 						>
 							{Liferay.Language.get('save')}

@@ -36,6 +36,8 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.marketplace.constants.MarketplaceActionKeys;
+import com.liferay.marketplace.constants.MarketplacePortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -57,6 +59,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -421,6 +424,24 @@ public class CommerceChannelDisplayContext
 		return GroupPermissionUtil.contains(
 			PermissionThreadLocal.getPermissionChecker(),
 			commerceChannel.getSiteGroupId(), ActionKeys.ADD_LAYOUT);
+	}
+
+	public boolean hasAddPaymentMethodsPermission() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (PortletPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.PAYMENT_METHODS,
+			MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS) || PortletPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.PAYMENT_METHODS,
+			MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)) {
+			return true;
+		}
+
+		return PortletPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), MarketplacePortletKeys.PAYMENT_METHODS,
+			MarketplaceActionKeys.VIEW_APPS);
 	}
 
 	public boolean hasManageLinkSupplierPermission() {

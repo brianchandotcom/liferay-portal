@@ -258,7 +258,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	title='<%= LanguageUtil.get(request, "payment-methods") %>'
 >
 	<div>
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35941") && PortletPermissionUtil.contains(themeDisplay.getPermissionChecker(), MarketplacePortletKeys.PAYMENT_METHODS, MarketplaceActionKeys.VIEW_APPS) %>'>
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35941") && commerceChannelDisplayContext.hasAddPaymentMethodsPermission() %>'>
 			<div>
 				<react:component
 					module="{CommerceChannelAddPaymentMethod} from commerce-channel-web"

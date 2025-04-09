@@ -10,6 +10,8 @@ import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.dto.v1_0.ParentObjectEntryFolderBrief;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -109,7 +111,17 @@ public class ObjectEntryFolderDTOConverter
 						return null;
 					});
 				setScopeKey(
-					() -> String.valueOf(objectEntryFolder.getGroupId()));
+					() -> {
+						Group group = _groupLocalService.fetchGroup(
+							objectEntryFolder.getGroupId());
+
+						if (group == null) {
+							return String.valueOf(
+								objectEntryFolder.getGroupId());
+						}
+
+						return group.getGroupKey();
+					});
 				setTitle(objectEntryFolder::getName);
 			}
 		};
@@ -151,6 +163,9 @@ public class ObjectEntryFolderDTOConverter
 			}
 		};
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

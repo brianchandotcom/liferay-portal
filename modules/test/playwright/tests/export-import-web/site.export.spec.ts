@@ -65,7 +65,7 @@ test('can export at site level with custom export task name', async ({
 
 	const taskName = 'MyExport-' + getRandomString();
 
-	await exportImportPage.createNewExportProcess(taskName);
+	await exportImportPage.export(taskName);
 
 	await expect(
 		exportImportPage.page

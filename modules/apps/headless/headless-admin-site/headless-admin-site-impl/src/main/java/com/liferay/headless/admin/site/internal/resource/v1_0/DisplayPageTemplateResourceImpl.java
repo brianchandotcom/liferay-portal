@@ -351,6 +351,11 @@ public class DisplayPageTemplateResourceImpl
 		DisplayPageTemplate displayPageTemplate,
 		DisplayPageTemplate existingDisplayPageTemplate) {
 
+		if (displayPageTemplate.getContentTypeReference() != null) {
+			existingDisplayPageTemplate.setContentTypeReference(
+				displayPageTemplate::getContentTypeReference);
+		}
+
 		if (displayPageTemplate.getParentFolder() != null) {
 			existingDisplayPageTemplate.setParentFolder(
 				displayPageTemplate::getParentFolder);

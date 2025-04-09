@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -212,7 +212,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	private void _renderLiferayAUI(
 		HttpServletRequest httpServletRequest, StringBuilder sb) {
 
-		sb.append("AUI: {");
+		sb.append("AUI: {\n");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -258,12 +258,12 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			_renderMethod("getFilterConfig", sb, null);
 		}
 		else {
-			sb.append("getFilterConfig: () => ({");
+			sb.append("getFilterConfig: () => ({\n");
 
 			_renderMethod("replaceStr", sb, ".js" + staticResourceURLParams);
 			_renderMethod("searchExp", sb, "\\\\.js$");
 
-			sb.append("}),");
+			sb.append("}),\n");
 		}
 
 		_renderMethod(
@@ -274,13 +274,13 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_renderMethod(
 			"getStaticResourceURLParams", sb, staticResourceURLParams);
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayBrowser(
 		HttpServletRequest httpServletRequest, StringBuilder sb) {
 
-		sb.append("Browser: {");
+		sb.append("Browser: {\n");
 
 		_renderMethod(
 			"acceptsGzip", sb,
@@ -316,7 +316,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_renderMethod("isWebKit", sb, browserMetadata.isWebKit());
 		_renderMethod("isWindows", sb, browserMetadata.isWindows());
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayData(
@@ -327,7 +327,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		sb.append("Data: {");
+		sb.append("Data: {\n");
 
 		_renderValue("ICONS_INLINE_SVG", sb, true);
 		_renderValue("NAV_SELECTOR", sb, "#navigation");
@@ -343,7 +343,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 				ActionKeys.CUSTOMIZE));
 
-		sb.append("notices: [");
+		sb.append("notices: [\n");
 
 		if (ShutdownUtil.isInProcess()) {
 			sb.append("{title:'");
@@ -390,9 +390,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			sb.append("', type: 'warning'},");
 		}
 
-		sb.append("],");
+		sb.append("],\n");
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayFeatureFlags(
@@ -402,7 +402,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		sb.append("FeatureFlags: {");
+		sb.append("FeatureFlags: {\n");
 
 		for (FeatureFlag featureFlag :
 				_featureFlagManager.getFeatureFlags(
@@ -412,16 +412,17 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			sb.append(featureFlag.getKey());
 			sb.append("':");
 			sb.append(featureFlag.isEnabled());
-			sb.append(StringPool.COMMA);
+			sb.append(",\n");
 		}
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayLanguage(StringBuilder sb) {
-		sb.append("Language: {");
+		sb.append("Language: {\n");
 
 		sb.append(_LANGUAGE_PROLOG);
+		sb.append(StringPool.NEW_LINE);
 
 		sb.append("available: {");
 
@@ -435,7 +436,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			sb.append("',");
 		}
 
-		sb.append("},");
+		sb.append("},\n");
 
 		sb.append("direction: {");
 
@@ -449,13 +450,13 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			sb.append("',");
 		}
 
-		sb.append("},");
+		sb.append("},\n");
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayPortlet(StringBuilder sb) {
-		sb.append("Portlet: {");
+		sb.append("Portlet: {\n");
 
 		_renderStub(
 			"frontend-js-components-web", "openModal", sb, "openPortletModal");
@@ -463,11 +464,11 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			"frontend-js-components-web", "openWindow", sb,
 			"openPortletWindow");
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayPortletKeys(StringBuilder sb) {
-		sb.append("PortletKeys: {");
+		sb.append("PortletKeys: {\n");
 
 		_renderValue("DOCUMENT_LIBRARY", sb, PortletKeys.DOCUMENT_LIBRARY);
 		_renderValue(
@@ -479,13 +480,13 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				"InstanceSettingsPortlet");
 		_renderValue("ITEM_SELECTOR", sb, PortletKeys.ITEM_SELECTOR);
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayPropsValues(
 		HttpServletRequest httpServletRequest, StringBuilder sb) {
 
-		sb.append("PropsValues: {");
+		sb.append("PropsValues: {\n");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -502,14 +503,14 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			"UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE", sb,
 			_uploadServletRequestConfigurationProvider.getMaxSize());
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayThemeDisplay(
 			HttpServletRequest httpServletRequest, StringBuilder sb)
 		throws PortalException {
 
-		sb.append("ThemeDisplay: {");
+		sb.append("ThemeDisplay: {\n");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -653,11 +654,11 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_renderMethod("isStateMaximized", sb, themeDisplay.isStateMaximized());
 		_renderMethod("isStatePopUp", sb, themeDisplay.isStatePopUp());
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderLiferayUtil(StringBuilder sb) {
-		sb.append("Util: {");
+		sb.append("Util: {\n");
 
 		_renderStub(
 			"frontend-js-components-web", "openAlertModal", sb,
@@ -674,7 +675,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			"openSimpleInputModal");
 		_renderStub("frontend-js-components-web", "openToast", sb, "openToast");
 
-		sb.append("},");
+		sb.append("},\n");
 	}
 
 	private void _renderMethod(
@@ -692,10 +693,10 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			sb.append(StringPool.APOSTROPHE);
 		}
 		else {
-			sb.append(value.toString());
+			sb.append(value);
 		}
 
-		sb.append(StringPool.COMMA);
+		sb.append(",\n");
 	}
 
 	private void _renderStub(
@@ -707,7 +708,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		sb.append(contextPath);
 		sb.append("', '");
 		sb.append(symbol);
-		sb.append("'),");
+		sb.append("'),\n");
 	}
 
 	private void _renderValue(
@@ -725,10 +726,10 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			sb.append(StringPool.APOSTROPHE);
 		}
 		else {
-			sb.append(value.toString());
+			sb.append(value);
 		}
 
-		sb.append(StringPool.COMMA);
+		sb.append(",\n");
 	}
 
 	private static final char[] _DATE_DELIMITERS = {
@@ -753,6 +754,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	@Reference
 	private AuthToken _authToken;
 
+	@Reference
+	private FastDateFormatFactory _fastDateFormatFactory;
 	@Reference
 	private FeatureFlagManager _featureFlagManager;
 

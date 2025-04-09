@@ -14,6 +14,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext" %><%@
+page import="com.liferay.site.cms.site.initializer.internal.display.context.AllSpacesSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ContentsSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.EditVocabularyDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.FilesSectionDisplayContext" %><%@

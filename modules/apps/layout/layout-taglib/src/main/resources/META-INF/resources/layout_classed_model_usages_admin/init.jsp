@@ -18,6 +18,7 @@ page import="com.liferay.layout.taglib.internal.display.context.LayoutClassedMod
 page import="com.liferay.layout.taglib.internal.display.context.LayoutClassedModelUsagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %>
 
 <%@ page import="java.util.List" %><%@

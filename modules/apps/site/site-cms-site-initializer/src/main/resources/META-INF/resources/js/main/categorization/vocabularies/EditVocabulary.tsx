@@ -49,13 +49,23 @@ export default function EditVocabulary({
 	const {observer, onOpenChange, open} = useModal();
 	const [title, setTitle] = useState<string>('');
 	const [vocabulary, setVocabulary] = useState<IVocabulary>({
+		assetLibraries: [
+			{
+				id: -1,
+			},
+		],
+		assetTypes: [
+			{
+				required: false,
+				subtype: '-1',
+				type: 'AllAssetTypes',
+				typeId: '0',
+			},
+		],
 		description: '',
-		description_i18n: {
-			[defaultLanguageId]: '',
-		},
 		name: '',
 		name_i18n: {
-			[defaultLanguageId]: '',
+			[defaultLanguageId.replace('_', '-')]: '',
 		},
 	});
 
@@ -115,7 +125,7 @@ export default function EditVocabulary({
 			}
 
 			if (isNew) {
-				await VocabularyService.createVocabulary(siteId, vocabulary);
+				await VocabularyService.createVocabulary(vocabulary);
 			}
 			else {
 				await VocabularyService.updateVocabulary(siteId, vocabulary);

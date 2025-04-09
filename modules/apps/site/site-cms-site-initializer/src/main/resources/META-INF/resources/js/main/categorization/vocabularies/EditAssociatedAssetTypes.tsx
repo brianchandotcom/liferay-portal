@@ -15,9 +15,10 @@ import {AssetType} from '../types/AssetType';
 
 const ALL_ASSET_TYPES: AssetType[] = [
 	{
-		label: Liferay.Language.get('all-asset-types'),
 		required: false,
-		value: '0',
+		subtype: '-1',
+		type: Liferay.Language.get('all-asset-types'),
+		typeId: '0',
 	},
 ];
 
@@ -34,7 +35,7 @@ export default function EditAssociatedAssetTypes({
 		useState<AssetType[]>(ALL_ASSET_TYPES);
 
 	const isChecked = (items: AssetType[], item: AssetType) => {
-		return !!items.find((val) => val.value === item.value);
+		return !!items.find((val) => val.typeId === item.typeId);
 	};
 
 	const _handleChangeAllAssetTypes = () => {
@@ -72,16 +73,18 @@ export default function EditAssociatedAssetTypes({
 			_handleChangeAssetTypes([
 				...selectedAssetTypes,
 				{
-					icon: item.icon,
-					label: item.label,
 					required: false,
-					value: item.value,
+					subtype: '-1',
+					type: item.type,
+					typeId: item.typeId,
 				},
 			]);
 		}
 		else {
 			_handleChangeAssetTypes(
-				selectedAssetTypes.filter((entry) => item.value !== entry.value)
+				selectedAssetTypes.filter(
+					(entry) => item.typeId !== entry.typeId
+				)
 			);
 		}
 	};
@@ -89,7 +92,7 @@ export default function EditAssociatedAssetTypes({
 	const _handleChangeAssetTypeRequired = (item: AssetType) => {
 		const updatedSelectedAssetTypes = selectedAssetTypes.map(
 			(assetType) => {
-				if (assetType.value === item.value) {
+				if (assetType.typeId === item.typeId) {
 					return {
 						...assetType,
 						required: !item.required,
@@ -201,7 +204,7 @@ export default function EditAssociatedAssetTypes({
 
 						<ClayTable.Body>
 							{selectedAssetTypes.map((assetType: AssetType) => (
-								<ClayTable.Row key={assetType.value}>
+								<ClayTable.Row key={assetType.typeId}>
 									<ClayTable.Cell>
 										{assetType.icon && (
 											<span className="asset-icon">
@@ -211,7 +214,7 @@ export default function EditAssociatedAssetTypes({
 											</span>
 										)}
 
-										{assetType.label}
+										{assetType.type}
 									</ClayTable.Cell>
 
 									<ClayTable.Cell>

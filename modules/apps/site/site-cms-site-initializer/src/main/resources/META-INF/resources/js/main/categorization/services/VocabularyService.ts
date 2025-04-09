@@ -14,8 +14,8 @@ const HEADERS = new Headers({
 	'X-Accept-All-Languages': 'true',
 });
 
-async function createVocabulary(siteId: number, vocabulary: IVocabulary) {
-	const url: string = `/o/headless-admin-taxonomy/v1.0/sites/${siteId}/taxonomy-vocabularies`;
+async function createVocabulary(vocabulary: IVocabulary) {
+	const url: string = `/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies`;
 
 	const response = await fetch(url, {
 		body: JSON.stringify(vocabulary),

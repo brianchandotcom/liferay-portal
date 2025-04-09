@@ -86,6 +86,10 @@ components:
                         format: int64
                         type: integer
                     type: array
+        DataSourceLiferayAnalyticsURL:
+            properties:
+                liferayAnalyticsURL:
+                    type: string
         DataSourceToken:
             properties:
                 token:
@@ -449,10 +453,14 @@ paths:
                         schema:
                             $ref: "#/components/schemas/DataSourceToken"
             responses:
-                204:
+                200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataSourceLiferayAnalyticsURL"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataSourceLiferayAnalyticsURL"
                     description:
                         Connected
                 500:

@@ -97,7 +97,7 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 						).put(
 							"namespace", liferayPortletResponse.getNamespace()
 						).put(
-							"vocabularyERCsInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES)
+							"vocabularyExternalReferenceCodesInputName", PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES)
 						).build()
 					%>'
 				/>

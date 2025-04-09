@@ -40,12 +40,10 @@ resource "aws_db_instance" "postgres" {
 	vpc_security_group_ids=[var.cluster_security_group_id]
 }
 resource "aws_db_subnet_group" "rds" {
-	description="My RDS subnet group"
 	name="${var.deployment_name}-rds-sub-grp"
 	subnet_ids=var.private_subnet_ids
 }
 resource "aws_iam_policy" "s3" {
-	description="Policy for accessing the Liferay S3 bucket"
 	name="${var.deployment_name}-s3-policy"
 	policy=jsonencode(
 		{
@@ -156,7 +154,6 @@ POLICY
 	}
 }
 resource "aws_security_group" "os" {
-	description="Security group for OpenSearch domain"
 	name="${var.deployment_name}-os-sg"
 	tags={
 		Name="${var.deployment_name}-os-sg"
@@ -164,7 +161,6 @@ resource "aws_security_group" "os" {
 	vpc_id=var.vpc_id
 }
 resource "aws_security_group" "rds" {
-	description="Security group for RDS PostgreSQL instance"
 	name="${var.deployment_name}-rds-sg"
 	tags={
 		Name="${var.deployment_name}-rds-sg"

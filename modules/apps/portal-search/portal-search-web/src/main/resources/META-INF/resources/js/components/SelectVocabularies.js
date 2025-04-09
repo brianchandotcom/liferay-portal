@@ -365,7 +365,9 @@ function SelectVocabularies({
 				value={
 					selection === SELECT_OPTIONS.ALL
 						? SELECT_OPTIONS.ALL
-						: Array.from(selectedKeys).toString()
+						: Array.from(selectedKeys)
+								.filter((item) => item.includes('&&')) // Filter out site headers ClayTreeView may select
+								.toString()
 				}
 			/>
 

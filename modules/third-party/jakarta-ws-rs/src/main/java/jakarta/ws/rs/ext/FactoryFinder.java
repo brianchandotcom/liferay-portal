@@ -178,7 +178,7 @@ final class FactoryFinder {
                 if (loader.iterator().hasNext()) {
                     return loader.iterator().next();
                 }
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", e);
             }
             return null;
@@ -189,3 +189,4 @@ final class FactoryFinder {
         return AccessController.doPrivileged(action);
     }
 }
+/* @generated */

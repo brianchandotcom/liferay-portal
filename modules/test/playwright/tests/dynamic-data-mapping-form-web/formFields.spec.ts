@@ -338,4 +338,43 @@ test.describe('Manage fields through Form Builder page', () => {
 			)
 		).toBeVisible();
 	});
+
+	test('assert that a date field can be previewed', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Date');
+
+		const newTabPagePromise = new Promise<Page>((resolve) =>
+			formBuilderPage.page.once('popup', resolve)
+		);
+
+		await formBuilderPage.previewButton.click();
+
+		const newTabPage = await newTabPagePromise;
+
+		await newTabPage.waitForLoadState('domcontentloaded');
+
+		await expect(
+			newTabPage.getByLabel('Date', {exact: true})
+		).toBeVisible();
+
+		await newTabPage.getByRole('button', {name: 'Select Date'}).click();
+
+		await newTabPage.getByLabel('Select Current Date').click();
+
+		await newTabPage.keyboard.press('Escape');
+
+		const currentDate = new Date();
+
+		const formattedDate = new Intl.DateTimeFormat('en-US', {
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		}).format(currentDate);
+
+		await expect(newTabPage.getByText(formattedDate)).toBeVisible();
+	});
 });

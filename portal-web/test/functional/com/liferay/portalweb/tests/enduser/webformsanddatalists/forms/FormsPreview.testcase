@@ -373,41 +373,6 @@ definition {
 		FormFields.viewField(fieldName = "Numeric");
 	}
 
-	@description = "Verify that a Date Field can be previewed"
-	@priority = 5
-	test DateFieldCanBePreviewed {
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		Form.gotoAddField(
-			fieldPositionNumber = 0,
-			fieldType = "Date");
-
-		FormFields.editHelpText(
-			fieldHelpText = "Test Help Text",
-			fieldName = "tip");
-
-		FormsAdminNavigator.gotoPreviewForm();
-
-		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
-
-		FormFields.viewDateField(
-			fieldLabel = "Date",
-			fieldName = "Date");
-
-		FormFields.viewFieldHelpText(
-			fieldHelpText = "Test Help Text",
-			fieldName = "Test Help Text");
-
-		FormFields.editDateCalendar(
-			fieldName = "Date",
-			fieldValue = "01/01/2019",
-			valueDay = 1,
-			valueMonth = "January",
-			valueYear = 2019);
-	}
-
 	@description = "Verify that a rule with a (Does not contain) condition can be previewed"
 	@priority = 5
 	test DoesNotContainRuleCanBePreviewed {

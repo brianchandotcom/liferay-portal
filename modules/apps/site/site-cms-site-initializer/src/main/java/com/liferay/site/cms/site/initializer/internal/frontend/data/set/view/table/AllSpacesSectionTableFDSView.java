@@ -39,7 +39,11 @@ public class AllSpacesSectionTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"id", "id"
+			"numberOfUserAccounts", "num-of-users"
+		).add(
+			"numberOfUserGroups", "num-of-user-groups"
+		).add(
+			"numberOfSites", "num-of-connections"
 		).add(
 			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

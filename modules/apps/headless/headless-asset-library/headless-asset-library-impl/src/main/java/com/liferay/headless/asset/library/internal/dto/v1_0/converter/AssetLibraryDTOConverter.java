@@ -6,6 +6,7 @@
 package com.liferay.headless.asset.library.internal.dto.v1_0.converter;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.MimeTypeLimit;
@@ -89,6 +90,12 @@ public class AssetLibraryDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getNameMap()));
+				setNumberOfSites(
+					() -> NestedFieldsSupplier.supply(
+						"numberOfSites",
+						nestedField ->
+							_depotEntryGroupRelLocalService.
+								getDepotEntryGroupRelsCount(depotEntry)));
 				setNumberOfUserAccounts(
 					() -> NestedFieldsSupplier.supply(
 						"numberOfUserAccounts",
@@ -156,6 +163,9 @@ public class AssetLibraryDTOConverter
 			}
 		};
 	}
+
+	@Reference
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

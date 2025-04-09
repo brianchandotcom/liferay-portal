@@ -251,8 +251,8 @@
 						"x-batch-unsupported-formats": "CSV",
 						"x-parent-map": "properties"
 					},
-					"version": {
-						"$ref": "#/components/schemas/Version"
+					"systemProperties": {
+						"$ref": "#/components/schemas/SystemProperties"
 					},
 					"x-class-name": {
 						"default": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
@@ -427,6 +427,24 @@
 				],
 				"xml": {
 					"name": "Status"
+				}
+			},
+			"SystemProperties": {
+				"properties": {
+					"version": {
+						"$ref": "#/components/schemas/Version"
+					},
+					"x-class-name": {
+						"default": "com.liferay.object.rest.dto.v1_0.SystemProperties",
+						"readOnly": true,
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"x-filterable": [
+				],
+				"xml": {
+					"name": "SystemProperties"
 				}
 			},
 			"UserGroupBrief": {

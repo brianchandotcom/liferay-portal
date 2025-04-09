@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ImageService from '../../services/ImageService';
 import InfoItemService from '../../services/InfoItemService';
 import {getEditableLocalizedValue} from '../getEditableLocalizedValue';
 import isMapped from './isMapped';
@@ -34,5 +35,14 @@ export default function resolveEditableValue(
 		editableValue
 	);
 
-	return Promise.resolve(localizedEditableValue);
+	if (!localizedEditableValue.fileEntryId) {
+		return Promise.resolve(localizedEditableValue);
+	}
+
+	return ImageService.getFileEntry({
+		fileEntryId: localizedEditableValue.fileEntryId,
+	}).then(({fileEntryURL}) => ({
+		...localizedEditableValue,
+		url: fileEntryURL,
+	}));
 }

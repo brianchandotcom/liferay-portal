@@ -8,7 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {membershipsPagesTest} from '../site-admin-web/fixtures/membershipsPagesTest';
+import getRandomString from '../../utils/getRandomString';
+import {membershipsPagesTest} from './fixtures/membershipsPagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -243,5 +244,55 @@ test(
 		await expect(page.getByText(user.name)).not.toBeVisible();
 
 		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+	}
+);
+
+test(
+	'Filter roles that are assigned to the user based on the current group',
+	{
+		tag: '@LPD-53010',
+	},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const currentSiteId = await page.evaluate(() => {
+			return String(Liferay.ThemeDisplay.getSiteGroupId());
+		});
+
+		const site2 = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			currentSiteId,
+			user.id
+		);
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site2.id,
+			user.id
+		);
+
+		await membershipsPage.goto();
+		await membershipsPage.assignSiteAdministratorRole();
+
+		await page.goto(`/group/${site2.name}/~/control_panel/manage`);
+
+		await membershipsPage.goto();
+		await membershipsPage.openAssignRoles(user.alternateName);
+
+		await expect(
+			page
+				.frameLocator('iframe[title="Assign Roles"]')
+				.getByText('Site Administrator')
+		).toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+		await apiHelpers.headlessSite.deleteSite(site2.id);
 	}
 );

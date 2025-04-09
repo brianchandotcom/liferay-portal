@@ -18,21 +18,7 @@ export class MembershipsPage {
 	}
 
 	async assignAllRolesToUser(userName: String) {
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				exact: true,
-				name: 'Assign Roles',
-			}),
-			timeout: 500,
-			trigger: this.page
-				.locator(
-					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
-						userName +
-						'"]'
-				)
-				.getByLabel('More actions'),
-		});
+		await this.openAssignRoles(userName);
 
 		await this.page.waitForTimeout(500);
 
@@ -92,6 +78,24 @@ export class MembershipsPage {
 	async goto() {
 		await this.productMenuPage.openProductMenuIfClosed();
 		await this.productMenuPage.goToMemberships();
+	}
+
+	async openAssignRoles(userName: String) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Assign Roles',
+			}),
+			timeout: 500,
+			trigger: this.page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
+						userName +
+						'"]'
+				)
+				.getByLabel('More actions'),
+		});
 	}
 
 	async removeSiteMembershipFromUser(userName: String) {

@@ -7,7 +7,10 @@ package com.liferay.style.book.internal.upgrade.v1_7_0;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -39,11 +42,42 @@ public class StyleBookEntryThemeIdUpgradeProcess extends UpgradeProcess {
 					connection,
 					"update StyleBookEntry set themeId = ? where " +
 						"ctCollectionId = ? and styleBookEntryId = ?");
+			PreparedStatement preparedStatement3 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"delete from StyleBookEntry where styleBookEntryId = ?");
+			PreparedStatement preparedStatement4 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"delete from StyleBookEntryVersion where " +
+						"styleBookEntryId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				Group group = _groupLocalService.getGroup(
-					resultSet.getLong("groupId"));
+				long groupId = resultSet.getLong("groupId");
+				long styleBookEntryId = resultSet.getLong("styleBookEntryId");
+
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				if (group == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unable to find group with id ", groupId,
+								". Removing orphaned style book entry with id ",
+								styleBookEntryId, "."));
+					}
+
+					preparedStatement3.setLong(1, styleBookEntryId);
+
+					preparedStatement3.addBatch();
+
+					preparedStatement4.setLong(1, styleBookEntryId);
+
+					preparedStatement4.addBatch();
+
+					continue;
+				}
 
 				LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 
@@ -61,15 +95,19 @@ public class StyleBookEntryThemeIdUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement2.setLong(
 					2, resultSet.getLong("ctCollectionId"));
-				preparedStatement2.setLong(
-					3, resultSet.getLong("styleBookEntryId"));
+				preparedStatement2.setLong(3, styleBookEntryId);
 
 				preparedStatement2.addBatch();
 			}
 
 			preparedStatement2.executeBatch();
+			preparedStatement3.executeBatch();
+			preparedStatement4.executeBatch();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StyleBookEntryThemeIdUpgradeProcess.class);
 
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;

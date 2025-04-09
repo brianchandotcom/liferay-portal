@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>OPTIONS_ICON</td>
-	<td>//*[contains(@class,'portlet-layout')]//button[*//*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//*[@id="wrapper"]//li[contains(@class, "tbar-item")]//button[contains(@class, "dropdown-toggle")]</td>
 	<td></td>
 </tr>
 <tr>

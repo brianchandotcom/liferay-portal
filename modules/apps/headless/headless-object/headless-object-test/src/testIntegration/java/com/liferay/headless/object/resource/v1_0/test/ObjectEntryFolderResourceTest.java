@@ -323,7 +323,7 @@ public class ObjectEntryFolderResourceTest
 
 		randomObjectEntryFolder.setParentObjectEntryFolderBrief(
 			_randomParentObjectEntryFolderBrief(
-				parentObjectEntryFolder.getExternalReferenceCode(), 0));
+				parentObjectEntryFolder.getExternalReferenceCode(), 0L));
 
 		ObjectEntryFolder postObjectEntryFolder =
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(

@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
-import React, {useEffect, useMemo, useState} from 'react';
+import {sub} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import SpaceSticker from '../../components/SpaceSticker';
 import SpaceService from '../services/SpaceService';
@@ -28,15 +30,19 @@ export default function CategorizationSpaces({
 	checkboxText,
 	setSelectedSpaces,
 	setSpaceChange,
+	setSpaceInputError,
 }: {
 	assetLibraries?: any;
 	checkboxText: string;
 	setSelectedSpaces: (value: any) => void;
 	setSpaceChange?: (value: boolean) => void;
+	setSpaceInputError: (value: string) => void;
 }) {
 	const [availableSpaces, setAvailableSpaces] = useState<Space[]>([]);
 	const [checkbox, setCheckbox] = useState(true);
+	const [inputError, setInputError] = useState('');
 	const [newSelectedSpaces, setNewSelectedSpaces] = useState<number[]>([]);
+	const [selectedItems, setSelectedItems] = useState<Space[]>([]);
 
 	const initialSelectedSpaces = assetLibraries?.map(
 		(item: {id: number; name: string}) => item.id
@@ -111,6 +117,18 @@ export default function CategorizationSpaces({
 				setSpaceChange(false);
 			}
 		}
+
+		if (newSelectedSpaces.length) {
+			setInputError('');
+		}
+		else {
+			setInputError(
+				sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					Liferay.Language.get('space')
+				)
+			);
+		}
 	}, [
 		initialSelectedSpaces,
 		newSelectedSpaces,
@@ -118,15 +136,21 @@ export default function CategorizationSpaces({
 		setSpaceChange,
 	]);
 
-	const selectedItems = useMemo(() => {
+	useEffect(() => {
 		if (checkbox) {
-			return ALL_SPACES;
+			setSelectedItems(ALL_SPACES);
 		}
 
-		return availableSpaces.filter((item) =>
-			newSelectedSpaces.includes(item.value)
+		setSelectedItems(
+			availableSpaces.filter((item) =>
+				newSelectedSpaces.includes(item.value)
+			)
 		);
 	}, [availableSpaces, checkbox, newSelectedSpaces]);
+
+	useEffect(() => {
+		setSpaceInputError(inputError);
+	}, [inputError, setSpaceInputError]);
 
 	return (
 		<div>
@@ -146,41 +170,58 @@ export default function CategorizationSpaces({
 				/>
 			)}
 
-			{!checkbox && (
-				<ClayMultiSelect
-					disabled={checkbox}
-					id="multiSelect"
-					items={selectedItems}
-					loadingState={3}
-					onItemsChange={(items: Space[]) => {
-						setNewSelectedSpaces(items.map((item) => item.value));
-					}}
-					sourceItems={availableSpaces}
-				>
-					{(item) => (
-						<ClayMultiSelect.Item
-							key={item.value}
-							textValue={item.label}
-						>
-							<div className="autofit-row autofit-row-center">
-								<div className="autofit-col">
-									<ClayCheckbox
-										aria-label={item.label}
-										checked={isChecked(item.value)}
-										onChange={() => {
-											handleCheckboxChange(item.value);
-										}}
-									/>
-								</div>
+			<div className={inputError ? 'has-error' : ''}>
+				{!checkbox && (
+					<ClayMultiSelect
+						disabled={checkbox}
+						id="multiSelect"
+						items={selectedItems}
+						loadingState={3}
+						onItemsChange={(items: Space[]) => {
+							setNewSelectedSpaces(
+								items.map((item) => item.value)
+							);
+						}}
+						sourceItems={availableSpaces}
+					>
+						{(item) => (
+							<ClayMultiSelect.Item
+								key={item.value}
+								textValue={item.label}
+							>
+								<div className="autofit-row autofit-row-center">
+									<div className="autofit-col">
+										<ClayCheckbox
+											aria-label={item.label}
+											checked={isChecked(item.value)}
+											onChange={() => {
+												handleCheckboxChange(
+													item.value
+												);
+											}}
+										/>
+									</div>
 
-								<span className="align-items-center d-flex space-renderer-sticker">
-									<SpaceSticker name={item.label} size="sm" />
-								</span>
-							</div>
-						</ClayMultiSelect.Item>
-					)}
-				</ClayMultiSelect>
-			)}
+									<span className="align-items-center d-flex space-renderer-sticker">
+										<SpaceSticker
+											name={item.label}
+											size="sm"
+										/>
+									</span>
+								</div>
+							</ClayMultiSelect.Item>
+						)}
+					</ClayMultiSelect>
+				)}
+
+				{inputError && (
+					<ClayAlert displayType="danger" variant="feedback">
+						<strong>{Liferay.Language.get('error')}: </strong>
+
+						{inputError}
+					</ClayAlert>
+				)}
+			</div>
 
 			<div className="mt-2">
 				<ClayCheckbox
@@ -194,7 +235,10 @@ export default function CategorizationSpaces({
 									'make-this-vocabulary-available-in-all-spaces'
 								)
 					}
-					onChange={() => setCheckbox(!checkbox)}
+					onChange={() => {
+						setCheckbox(!checkbox);
+						setNewSelectedSpaces([]);
+					}}
 				/>
 			</div>
 		</div>

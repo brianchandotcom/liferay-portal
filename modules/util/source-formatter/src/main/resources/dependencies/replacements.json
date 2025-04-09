@@ -4147,6 +4147,28 @@
 		"to": "fetchAccountEntryByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntryByExternalReferenceCode(long paramName, String paramName)",
+		"issueKey": "LPD-53012",
+		"to": "fetchCommercePriceEntryByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntryByReferenceCode(long paramName, String paramName)",
+		"issueKey": "LPD-53012",
+		"to": "fetchCommercePriceEntryByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

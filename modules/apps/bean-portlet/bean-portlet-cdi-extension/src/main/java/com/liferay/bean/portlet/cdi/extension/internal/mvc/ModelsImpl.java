@@ -41,9 +41,9 @@ public class ModelsImpl implements Models, Serializable {
 
 	@Override
 	public Iterator<String> iterator() {
-		Set<String> keySet = _modelsMap.keySet();
+		Set<String> keys = _modelsMap.keySet();
 
-		return keySet.iterator();
+		return keys.iterator();
 	}
 
 	@Override

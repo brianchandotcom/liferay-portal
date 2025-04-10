@@ -145,9 +145,10 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 			if ((mutableBindingResult != null) &&
 				!mutableBindingResult.isConsulted()) {
 
-				Set<ParamError> allErrors = mutableBindingResult.getAllErrors();
+				Set<ParamError> paramErrors =
+					mutableBindingResult.getAllErrors();
 
-				for (ParamError paramError : allErrors) {
+				for (ParamError paramError : paramErrors) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(

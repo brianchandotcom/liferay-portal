@@ -205,14 +205,13 @@ public class CDIBeanPortletExtension implements Extension {
 			}
 		}
 
-		Set<Type> typeClosures = new HashSet<>(annotatedType.getTypeClosure());
+		Set<Type> types = new HashSet<>(annotatedType.getTypeClosure());
 
-		if (typeClosures.remove(PortletConfig.class) ||
+		if (types.remove(PortletConfig.class) ||
 			!annotations.equals(annotatedType.getAnnotations())) {
 
 			processAnnotatedType.setAnnotatedType(
-				new ModifiedAnnotatedType<>(
-					annotatedType, annotations, typeClosures));
+				new ModifiedAnnotatedType<>(annotatedType, annotations, types));
 		}
 
 		_discoveredClasses.add(discoveredClass);
@@ -333,7 +332,7 @@ public class CDIBeanPortletExtension implements Extension {
 
 				@Override
 				public void invokeWithActiveScopes(
-						List<BeanPortletMethod> beanMethods,
+						List<BeanPortletMethod> beanPortletMethods,
 						PortletConfig portletConfig,
 						PortletRequest portletRequest,
 						PortletResponse portletResponse)
@@ -343,7 +342,7 @@ public class CDIBeanPortletExtension implements Extension {
 						() -> new ScopedBeanManager(
 							portletConfig, portletRequest, portletResponse),
 						() -> _invokePortletBeanMethods(
-							beanMethods, portletRequest, portletResponse,
+							beanPortletMethods, portletRequest, portletResponse,
 							portletConfig));
 				}
 

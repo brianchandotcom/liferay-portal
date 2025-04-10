@@ -46,7 +46,7 @@ public class RequestImpl implements Request {
 	}
 
 	@Override
-	public Variant selectVariant(List<Variant> list) {
+	public Variant selectVariant(List<Variant> variants) {
 		throw new UnsupportedOperationException();
 	}
 

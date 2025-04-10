@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
@@ -35,6 +36,15 @@ export default function StructureBuilderManagementBar() {
 					: Liferay.Language.get('new-structure')
 			}
 		>
+			<ManagementToolbar.Item>
+				<ClayLink
+					className="btn btn-outline-borderless btn-outline-secondary btn-sm"
+					href="structures"
+				>
+					{Liferay.Language.get('cancel')}
+				</ClayLink>
+			</ManagementToolbar.Item>
+
 			{status !== 'published' ? (
 				<ManagementToolbar.Item>
 					<SaveButton />

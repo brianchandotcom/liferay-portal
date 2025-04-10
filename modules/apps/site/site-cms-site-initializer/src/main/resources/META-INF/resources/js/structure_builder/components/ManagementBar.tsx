@@ -36,15 +36,6 @@ export default function ManagementBar({backURL, children, title}: Props) {
 					</h2>
 				</ManagementToolbar.Item>
 
-				<ManagementToolbar.Item>
-					<ClayLink
-						className="btn btn-outline-borderless btn-outline-secondary btn-sm"
-						href="structures"
-					>
-						{Liferay.Language.get('cancel')}
-					</ClayLink>
-				</ManagementToolbar.Item>
-
 				{children}
 			</ManagementToolbar.ItemList>
 		</ManagementToolbar.Container>

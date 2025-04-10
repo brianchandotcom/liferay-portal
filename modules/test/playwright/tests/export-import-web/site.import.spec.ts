@@ -19,8 +19,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
@@ -47,7 +47,7 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	objectPagesTest,
-	pageEditorPagesTest,
+	pageViewModePagesTest,
 	pageTemplatesPagesTest,
 	productMenuPageTest,
 	stagingPageTest,
@@ -88,9 +88,9 @@ test(
 	async ({
 		exportImportPage,
 		page,
-		pageEditorPage,
 		pageTemplatesPage,
 		site,
+		widgetPagePage,
 		wikiPage,
 	}) => {
 		await wikiPage.goto(site.friendlyUrlPath);
@@ -122,9 +122,9 @@ test(
 
 		await pageTemplatesPage.page.getByLabel('Add', {exact: true}).click();
 
-		await pageEditorPage.addWidgetToWidgetPageTemplate(
-			'Content Management',
-			'Web Content Display'
+		await widgetPagePage.addPortlet(
+			'Web Content Display',
+			'Content Management'
 		);
 
 		await wikiPage.goto(site.friendlyUrlPath);

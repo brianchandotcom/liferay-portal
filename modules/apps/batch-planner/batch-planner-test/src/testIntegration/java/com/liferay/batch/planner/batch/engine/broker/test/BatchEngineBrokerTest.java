@@ -721,11 +721,13 @@ public class BatchEngineBrokerTest {
 		for (int i = 1; i < actualCSVRecords.size(); i++) {
 			List<String> actualCSVRecord = _toList(actualCSVRecords.get(i));
 
-			if (actualCSVRecord.contains(externalReferenceCode)) {
-				Assert.assertEquals(expectedCSVRecord, actualCSVRecord);
-
-				found = true;
+			if (!actualCSVRecord.contains(externalReferenceCode)) {
+				continue;
 			}
+
+			Assert.assertEquals(expectedCSVRecord, actualCSVRecord);
+
+			found = true;
 		}
 
 		Assert.assertTrue(

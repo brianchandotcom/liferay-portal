@@ -226,12 +226,12 @@ public class AssetEntryServiceTest {
 			assetEntry.getCompanyId(), _portal.getClassNameId(AssetEntry.class),
 			assetEntry.getEntryId(), 2);
 
-		List<AssetEntry> topViewEntries =
+		List<AssetEntry> topViewedAssetEntries =
 			_assetEntryLocalService.getTopViewedEntries(
 				"testClass", false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
-			topViewEntries.toString(), 1, topViewEntries.size());
+			topViewedAssetEntries.toString(), 1, topViewedAssetEntries.size());
 	}
 
 	@Test(expected = AssetCategoryException.class)

@@ -86,32 +86,32 @@ public class AssetRendererFactoryRegistryUtilTest {
 
 	@Test
 	public void testGetClassNameIds1() {
-		List<Long> classNameIdsList = ListUtil.fromArray(
+		List<Long> classNameIds = ListUtil.fromArray(
 			AssetRendererFactoryRegistryUtil.getClassNameIds(1));
 
 		Assert.assertTrue(
-			classNameIdsList.toString(),
-			classNameIdsList.contains(Long.valueOf(1234567890)));
+			classNameIds.toString(),
+			classNameIds.contains(Long.valueOf(1234567890)));
 	}
 
 	@Test
 	public void testGetClassNameIds2() {
-		List<Long> classNameIdsList = ListUtil.fromArray(
+		List<Long> classNameIds = ListUtil.fromArray(
 			AssetRendererFactoryRegistryUtil.getClassNameIds(1, true));
 
 		Assert.assertTrue(
-			classNameIdsList.toString(),
-			classNameIdsList.contains(Long.valueOf(1234567890)));
+			classNameIds.toString(),
+			classNameIds.contains(Long.valueOf(1234567890)));
 	}
 
 	@Test
 	public void testGetClassNameIds3() {
-		List<Long> classNameIdsList = ListUtil.fromArray(
+		List<Long> classNameIds = ListUtil.fromArray(
 			AssetRendererFactoryRegistryUtil.getClassNameIds(1, false));
 
 		Assert.assertTrue(
-			classNameIdsList.toString(),
-			classNameIdsList.contains(Long.valueOf(1234567890)));
+			classNameIds.toString(),
+			classNameIds.contains(Long.valueOf(1234567890)));
 	}
 
 }

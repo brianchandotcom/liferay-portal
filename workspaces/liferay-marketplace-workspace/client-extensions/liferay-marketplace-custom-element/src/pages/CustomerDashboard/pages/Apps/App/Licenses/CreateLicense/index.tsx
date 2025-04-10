@@ -15,7 +15,6 @@ import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOr
 import {Liferay} from '../../../../../../../liferay/liferay';
 import zodSchema from '../../../../../../../schema/zod';
 import provisioningOAuth2 from '../../../../../../../services/oauth/Provisioning';
-import {getValueFromDeliverySpecifications} from '../../../../../../../utils/util';
 import ProductCard from '../../../../../../GetApp/components/ProductCard/ProductCard';
 import StepWizard from '../../../../../../GetApp/components/StepWizard/StepWizard';
 import {formatDate} from '../../../../../../PublisherDashboard/PublisherDashboardPageUtil';
@@ -23,6 +22,7 @@ import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
 import {CreateLicenseForm, StepCreateLicense, StepsInformation} from './types';
+import {MarketplaceProduct} from '../../../../../../../entity/MarketplaceProduct';
 
 import './index.scss';
 
@@ -130,12 +130,8 @@ const CreateLicense = () => {
 		async (form: z.infer<typeof zodSchema.generateLicenseKey>) => {
 			setLoading(true);
 
-			const producSpecifications =
-				(product as DeliveryProduct)?.productSpecifications || [];
-
-			const appEntryUUID = getValueFromDeliverySpecifications(
-				producSpecifications,
-				'app-entry-uuid'
+			const marketplaceProduct = new MarketplaceProduct(
+				product as DeliveryProduct
 			);
 
 			try {
@@ -143,18 +139,18 @@ const CreateLicense = () => {
 					licenseEntry: {
 						description: form.description,
 						hostName: form.hostname,
-						ipAddresses: form.ipAddress,
-						macAddresses: form.macAddress,
+						ipAddresses: form.ipAddress.replaceAll('\n', ','),
+						macAddresses: form.macAddress.replaceAll('\n', ','),
 						orderId: orderId as string,
-						productId: appEntryUUID || undefined,
+						productId:
+							marketplaceProduct.specificationValues
+								.APP_ENTRY_UUID || undefined,
 						productPurchaseKey: form.subscription
 							?.productPurchasedKey as string,
 						productVersion:
 							form.subscription?.productVersion ||
-							getValueFromDeliverySpecifications(
-								producSpecifications,
-								'latest-version'
-							) ||
+							marketplaceProduct.specificationValues
+								.APP_VERSION ||
 							'1.0.0',
 					},
 					skuId: form.subscription?.skuId as number,

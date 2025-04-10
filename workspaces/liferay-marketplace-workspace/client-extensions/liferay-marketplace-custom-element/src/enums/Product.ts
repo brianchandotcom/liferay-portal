@@ -39,6 +39,7 @@ export enum PRODUCT_SPECIFICATION_KEY {
 	APP_BUILD_NUMBER_OF_CPUS = 'cpu',
 	APP_BUILD_RAM_IN_GBS = 'ram',
 	APP_DEVELOPER_NAME = 'developer-name',
+	APP_ENTRY_UUID = 'app-entry-uuid',
 	APP_LICENSING_TYPE = 'license-type',
 	APP_PRICING_MODEL = 'price-model',
 	APP_SETTINGS = 'app-settings',

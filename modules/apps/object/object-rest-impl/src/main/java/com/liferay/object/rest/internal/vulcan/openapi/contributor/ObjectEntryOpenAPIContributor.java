@@ -177,6 +177,12 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			paths.remove(key);
 		}
 
+		if (!_objectDefinition.isEnableObjectEntryVersioning()) {
+			objectDefinitionSchemaProperties.remove("systemProperties");
+
+			schemas.remove("SystemProperties");
+		}
+
 		if (!_objectDefinition.isEnableCategorization()) {
 			objectDefinitionSchemaProperties.remove("keywords");
 			objectDefinitionSchemaProperties.remove("taxonomyCategoryBriefs");

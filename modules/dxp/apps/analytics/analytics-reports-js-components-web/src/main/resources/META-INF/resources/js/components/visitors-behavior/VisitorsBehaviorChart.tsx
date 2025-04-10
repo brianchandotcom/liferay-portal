@@ -152,7 +152,7 @@ const VisitorsBehaviorChart: React.FC<IVisitorsBehaviorChartProps> = ({
 					formatTooltipDate(
 						formattedData.combinedData[0]?.[
 							VisitorsBehaviorDataKey.AxisX
-						] as unknown as Date,
+						] as number,
 						filters.rangeSelector
 					)
 				)}

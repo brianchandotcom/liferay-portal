@@ -43,10 +43,7 @@ const VisitorsBehaviorChartTooltip: React.FC<
 				},
 				{
 					align: Alignments.Right,
-					label: formatTooltipDate(
-						payload.x as unknown as Date,
-						rangeSeletor
-					),
+					label: formatTooltipDate(payload.x as number, rangeSeletor),
 					width: 55,
 				},
 			],

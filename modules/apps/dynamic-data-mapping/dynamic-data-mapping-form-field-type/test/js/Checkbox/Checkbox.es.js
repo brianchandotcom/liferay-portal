@@ -20,7 +20,7 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has a helptext', () => {
-		const {container} = render(<Checkbox tip="Type something" />);
+		const {container} = render(<Checkbox id="ID" tip="Type something" />);
 
 		expect(container).toMatchSnapshot();
 	});

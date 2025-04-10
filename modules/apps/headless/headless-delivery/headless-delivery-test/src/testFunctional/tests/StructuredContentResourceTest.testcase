@@ -49,7 +49,7 @@ definition {
 				webContentSelectFromList = "Option 1",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Then the user could get customized field reference value of options in GraphQL response") {
@@ -121,7 +121,7 @@ definition {
 
 			WebContent.addWithStructureCP(webContentMultipleSelection = "Second");
 
-			PageEditor.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Then the user could get default field reference value of options in GraphQL response") {
@@ -167,7 +167,7 @@ definition {
 				webContentGrid = "true",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Then the user could get field reference value of Grid's options in GraphQL response") {
@@ -223,7 +223,7 @@ definition {
 				webContentSingleSelection = "Option 3",
 				webContentTitle = "Web Content Title");
 
-			PageEditor.publish();
+			WebContent.publishWithPermissions();
 		}
 
 		task ("Then the user could get field reference value of single selection's option in GraphQL response") {

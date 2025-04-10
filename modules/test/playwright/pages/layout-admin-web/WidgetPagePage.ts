@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -64,6 +64,8 @@ export class WidgetPagePage {
 			.getByRole('textbox', {name: 'Search Form'})
 			.fill(portletName);
 
+		let item: Locator;
+
 		if (category) {
 			const categoryPanel = this.page.locator(
 				'.add-content-menu .panel',
@@ -74,25 +76,28 @@ export class WidgetPagePage {
 				}
 			);
 
-			categoryPanel
+			item = categoryPanel
 				.locator('.panel-body')
 				.filter({hasText: portletName})
-				.getByRole('button', {name: 'Add Content'})
-				.click();
+				.getByRole('button', {name: 'Add Content'});
 		}
 		else {
-			await this.page
+			item = this.page
 				.locator('.sidebar-body__add-panel__tab-item')
 				.filter({hasText: portletName})
 				.getByRole('button', {name: 'Add Content'})
-				.first()
-				.click();
+				.first();
 		}
 
-		await waitForAlert(
-			this.page,
-			'Success:The application was added to the page.'
-		);
+		await expect(async () => {
+			await item.click({timeout: 1000});
+
+			await waitForAlert(
+				this.page,
+				'Success:The application was added to the page.',
+				{timeout: 1000}
+			);
+		}).toPass();
 	}
 
 	async clickOnAction(portletName: string, action: string) {

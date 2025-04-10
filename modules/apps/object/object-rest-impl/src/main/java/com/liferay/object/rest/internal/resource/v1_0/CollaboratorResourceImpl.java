@@ -44,10 +44,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier Gamarra
  */
-@Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/collaborator.properties",
-	scope = ServiceScope.PROTOTYPE, service = CollaboratorResource.class
-)
 public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 
 	@Override

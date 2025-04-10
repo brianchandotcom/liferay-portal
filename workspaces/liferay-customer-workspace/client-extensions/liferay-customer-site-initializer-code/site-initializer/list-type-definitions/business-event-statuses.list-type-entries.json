@@ -1,5 +1,27 @@
 [
 	{
+		"key": "canceled",
+		"name": "Canceled",
+		"name_i18n": {
+			"en-US": "Canceled",
+			"es-ES": "Cancelado",
+			"ja-JP": "キャンセル",
+			"pt-BR": "Cancelado"
+		},
+		"type": "string"
+	},
+	{
+		"key": "completed",
+		"name": "Completed",
+		"name_i18n": {
+			"en-US": "Completed",
+			"es-ES": "Completado",
+			"ja-JP": "完了",
+			"pt-BR": "Concluído"
+		},
+		"type": "string"
+	},
+	{
 		"key": "open",
 		"name": "Open",
 		"name_i18n": {
@@ -18,28 +40,6 @@
 			"es-ES": "Atrasado",
 			"ja-JP": "期限切れ",
 			"pt-BR": "Atrasado"
-		},
-		"type": "string"
-	},
-	{
-		"key": "completed",
-		"name": "Completed",
-		"name_i18n": {
-			"en-US": "Completed",
-			"es-ES": "Completado",
-			"ja-JP": "完了",
-			"pt-BR": "Concluído"
-		},
-		"type": "string"
-	},
-	{
-		"key": "canceled",
-		"name": "Canceled",
-		"name_i18n": {
-			"en-US": "Canceled",
-			"es-ES": "Cancelado",
-			"ja-JP": "キャンセル",
-			"pt-BR": "Cancelado"
 		},
 		"type": "string"
 	}

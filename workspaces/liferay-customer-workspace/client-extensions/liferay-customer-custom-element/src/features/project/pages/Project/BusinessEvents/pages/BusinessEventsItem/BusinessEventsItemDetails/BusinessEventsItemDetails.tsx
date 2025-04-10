@@ -22,7 +22,6 @@ import './BusinessEventsItemDetails.css';
 
 import getKebabCase from '~/utils/getKebabCase';
 
-import TicketList from '../../../components/AssociatedTicketsContainer/TicketList';
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
 import ManageEventModal from '../../../components/ManageEventModal';
 import useAccountTickets from '../../../hooks/useAccountTickets';

@@ -22,17 +22,6 @@
 		"type": "string"
 	},
 	{
-		"key": "upgrade",
-		"name": "Upgrade",
-		"name_i18n": {
-			"en-US": "Upgrade",
-			"es-ES": "Actualización",
-			"ja-JP": "アップグレード",
-			"pt-BR": "Atualização"
-		},
-		"type": "string"
-	},
-	{
 		"key": "otherEvent",
 		"name": "Other Event",
 		"name_i18n": {
@@ -40,6 +29,17 @@
 			"es-ES": "Otro evento",
 			"ja-JP": "その他のイベント",
 			"pt-BR": "Outro Evento"
+		},
+		"type": "string"
+	},
+	{
+		"key": "upgrade",
+		"name": "Upgrade",
+		"name_i18n": {
+			"en-US": "Upgrade",
+			"es-ES": "Actualización",
+			"ja-JP": "アップグレード",
+			"pt-BR": "Atualização"
 		},
 		"type": "string"
 	}

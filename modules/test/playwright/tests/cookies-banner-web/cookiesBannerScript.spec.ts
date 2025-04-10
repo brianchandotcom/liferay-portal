@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../fixtures/systemSettingsPageTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -135,9 +136,19 @@ test(
 					'</script>'
 			);
 
-			const publishButton = page.getByRole('button', {name: 'Publish'});
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {
+					name: 'Publish With Permissions',
+				}),
+				trigger: page.getByRole('button', {
+					name: 'Select and Confirm Publish Settings',
+				}),
+			});
 
-			await publishButton.click();
+			await page
+				.getByRole('button', {exact: true, name: 'Publish'})
+				.click();
 
 			await waitForAlert(
 				page,

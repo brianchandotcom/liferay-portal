@@ -110,8 +110,8 @@ com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalServiceW
 com.liferay.commerce.account.service.CommerceAccountOrganizationRelService=com.liferay.account.service.AccountEntryOrganizationRelService
 com.liferay.commerce.account.service.CommerceAccountOrganizationRelServiceUtil=com.liferay.account.service.AccountEntryOrganizationRelServiceUtil
 com.liferay.commerce.account.service.CommerceAccountOrganizationRelServiceWrapper=com.liferay.account.service.AccountEntryOrganizationRelServiceWrapper
-com.liferay.commerce.account.service.CommerceAccountService=com.liferay.account.service.AccountEntryService;
-com.liferay.commerce.account.service.CommerceAccountServiceUtil=com.liferay.account.service.AccountEntryServiceUtil;
+com.liferay.commerce.account.service.CommerceAccountService=com.liferay.account.service.AccountEntryService
+com.liferay.commerce.account.service.CommerceAccountServiceUtil=com.liferay.account.service.AccountEntryServiceUtil
 com.liferay.commerce.account.service.CommerceAccountServiceWrapper=com.liferay.account.service.AccountEntryServiceWrapper
 com.liferay.commerce.account.service.CommerceAccountUserRelLocalService=com.liferay.account.service.AccountEntryUserRelLocalService
 com.liferay.commerce.account.service.CommerceAccountUserRelLocalServiceUtil=com.liferay.account.service.AccountEntryUserRelLocalServiceUtil

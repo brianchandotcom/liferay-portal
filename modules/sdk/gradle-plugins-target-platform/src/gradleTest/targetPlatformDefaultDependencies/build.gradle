@@ -36,7 +36,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
 	compileOnly group: "javax.portlet", name: "portlet-api"
-	compileOnly group: "jstl", name: "jstl"
+	compileOnly group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api"
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.2.1"
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom.compile.only", version: "7.2.1"

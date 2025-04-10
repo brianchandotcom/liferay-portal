@@ -1,0 +1,30 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	compileOnly group: "javax.enterprise", name: "cdi-api", version: "1.2"
+	compileOnly group: "org.glassfish", name: "javax.faces", version: "2.2.20"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+javadoc {
+	enabled = false
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/com/sun/faces/flow/FlowDiscoveryCDIExtension.java"
+	originalLibModuleName = "javax.faces"
+}

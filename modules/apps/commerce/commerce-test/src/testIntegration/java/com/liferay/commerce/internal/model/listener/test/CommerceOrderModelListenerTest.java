@@ -115,7 +115,6 @@ public class CommerceOrderModelListenerTest {
 				RandomTestUtil.randomString(), 1000,
 				CommerceTermEntryConstants.TYPE_DELIVERY_TERMS, null,
 				_serviceContext);
-
 		_commercePaymentMethodGroupRel =
 			_commercePaymentMethodGroupRelLocalService.
 				addCommercePaymentMethodGroupRel(
@@ -123,7 +122,6 @@ public class CommerceOrderModelListenerTest {
 					RandomTestUtil.randomLocaleStringMap(),
 					RandomTestUtil.randomLocaleStringMap(), true, null,
 					TestCommercePaymentMethod.KEY, 99, null);
-
 		_commercePaymentTerm =
 			_commerceTermEntryLocalService.addCommerceTermEntry(
 				RandomTestUtil.randomString(), _user.getUserId(), true,

@@ -399,9 +399,11 @@ public class BaseBatchEngineTaskExecutorTest {
 			for (Document document : hits.getDocs()) {
 				BlogPosting item = transformUnsafeFunction.apply(document);
 
-				if (item != null) {
-					blogPostings.add(item);
+				if (item == null) {
+					continue;
 				}
+
+				blogPostings.add(item);
 			}
 
 			return Page.of(

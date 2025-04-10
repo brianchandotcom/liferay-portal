@@ -7,6 +7,13 @@ package com.liferay.fragment.collection.contributor.basic.component;
 
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.ServletContext;
 
@@ -29,8 +36,32 @@ public class BasicComponentFragmentCollectionContributor
 	}
 
 	@Override
+	public List<FragmentEntry> getFragmentEntries() {
+		return _filter(super.getFragmentEntries());
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(int type) {
+		return _filter(super.getFragmentEntries(type));
+	}
+
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
+
+			return fragmentEntries;
+		}
+
+		return ListUtil.filter(
+			fragmentEntries,
+			fragmentEntry -> !Objects.equals(
+				fragmentEntry.getFragmentEntryKey(),
+				"BASIC_COMPONENT-accordion"));
 	}
 
 	@Reference(

@@ -403,7 +403,7 @@ public class DisplayPageTemplateResourceImpl
 			contentTypeReference.getSubTypeExternalReference();
 
 		if (itemExternalReference == null) {
-			return -1;
+			throw new UnsupportedOperationException();
 		}
 
 		InfoItemFormVariation infoItemFormVariation =

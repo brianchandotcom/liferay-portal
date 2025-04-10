@@ -107,6 +107,16 @@ public class CustomFDSSerializer
 	}
 
 	@Override
+	public String serializeAdditionalAPIURLParameters(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> properties = getDataSetObjectEntryProperties(
+			fdsName, httpServletRequest);
+
+		return String.valueOf(properties.get("additionalAPIURLParameters"));
+	}
+
+	@Override
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

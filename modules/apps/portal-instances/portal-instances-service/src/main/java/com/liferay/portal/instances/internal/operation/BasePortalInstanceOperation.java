@@ -5,10 +5,13 @@
 
 package com.liferay.portal.instances.internal.operation;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -16,9 +19,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,9 +45,7 @@ public abstract class BasePortalInstanceOperation {
 			Company company = callable.call();
 
 			if (company != null) {
-				_deleteConfiguration(
-					"com.liferay.portal.instances.internal.configuration." +
-						"PortalInstancesConfiguration~" + company.getWebId());
+				_deleteConfiguration((String)properties.get("service.pid"));
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -61,12 +65,34 @@ public abstract class BasePortalInstanceOperation {
 	@Reference
 	protected ClusterMasterExecutor clusterMasterExecutor;
 
+	@Reference
+	protected ConfigurationAdmin configurationAdmin;
+
 	private void _deleteConfiguration(String pid) {
 		try {
-			Files.deleteIfExists(
-				Paths.get(
-					PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-					pid.concat(".config")));
+			Configuration configuration = configurationAdmin.getConfiguration(
+				pid, StringPool.QUESTION);
+
+			if (configuration != null) {
+				Dictionary<String, Object> properties =
+					configuration.getProperties();
+
+				if ((properties != null) &&
+					Validator.isNotNull(
+						properties.get(
+							FileInstallConstants.
+								FELIX_FILE_INSTALL_FILENAME))) {
+
+					Files.deleteIfExists(
+						Paths.get(
+							PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+							pid.concat(".config")));
+
+					return;
+				}
+
+				configuration.delete();
+			}
 		}
 		catch (IOException ioException) {
 			_log.error(ioException);

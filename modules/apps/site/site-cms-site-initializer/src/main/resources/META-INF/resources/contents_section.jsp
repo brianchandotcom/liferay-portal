@@ -20,7 +20,7 @@ ContentsSectionDisplayContext contentsSectionDisplayContext = (ContentsSectionDi
 		fdsActionDropdownItems="<%= contentsSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.CONTENTS_SECTION %>"
-		itemsPerPage="<%= 10 %>"
+		itemsPerPage="<%= 20 %>"
 		propsTransformer="{ContentsFDSPropsTransformer} from site-cms-site-initializer"
 		selectedItemsKey="id"
 		selectionType="multiple"

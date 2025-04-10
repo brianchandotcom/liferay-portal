@@ -1908,37 +1908,18 @@ public class RenderLayoutStructureTagTest {
 					_portal.getClassNameId(MockObject.class.getName())),
 				"0", layout, _layoutStructureProvider, infoField);
 
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(layout);
-
-			SessionMessages.add(mockHttpServletRequest, formItemId);
-
-			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-				layout, mockHttpServletRequest);
-
-			String content = mockHttpServletResponse.getContentAsString();
-
-			String formStartHTML = "<form action=\"";
-
-			Assert.assertFalse(content.contains(formStartHTML));
-
 			Locale locale = _portal.getSiteDefaultLocale(_group);
 
-			String expectedSuccessMessage = LanguageUtil.get(
-				locale,
-				"thank-you.-your-information-was-successfully-received");
-
-			String expectedSuccessHTML = StringBundler.concat(
-				"<div class=\"bg-white font-weight-semi-bold p-5 text-3 ",
-				"text-center text-secondary\">", expectedSuccessMessage,
-				"</div>");
-
-			Assert.assertTrue(content.contains(expectedSuccessHTML));
-
-			String expectedInfoFieldInput =
-				"<p>InputName:" + infoField.getName() + "</p>";
-
-			Assert.assertFalse(content.contains(expectedInfoFieldInput));
+			_testRenderFormWithSuccessMessage(
+				StringBundler.concat(
+					"<div class=\"bg-white font-weight-semi-bold p-5 text-3 ",
+					"text-center text-secondary\">",
+					LanguageUtil.get(
+						locale,
+						"thank-you.-your-information-was-successfully-" +
+							"received"),
+					"</div>"),
+				formItemId, infoField, layout);
 		}
 	}
 
@@ -2991,6 +2972,33 @@ public class RenderLayoutStructureTagTest {
 				itemId, layout, i, numberOfItemsPerPage, numberOfPages,
 				"simple", strings);
 		}
+	}
+
+	private void _testRenderFormWithSuccessMessage(
+			String expectedSuccessHTML, String formItemId,
+			InfoField<TextInfoFieldType> infoField, Layout layout)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
+
+		SessionMessages.add(mockHttpServletRequest, formItemId);
+
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, mockHttpServletRequest);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		String formStartHTML = "<form action=\"";
+
+		Assert.assertFalse(content.contains(formStartHTML));
+
+		Assert.assertTrue(content, content.contains(expectedSuccessHTML));
+
+		String expectedInfoFieldInput =
+			"<p>InputName:" + infoField.getName() + "</p>";
+
+		Assert.assertFalse(content.contains(expectedInfoFieldInput));
 	}
 
 	private void _testRenderLayoutWithLocale(

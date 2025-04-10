@@ -16,7 +16,6 @@ import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -48,8 +46,7 @@ public class AccountTicketsRestController extends BaseRestController {
 	)
 	public ResponseEntity<String> getZendeskTickets(
 			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@RequestParam(defaultValue = "", required = false) String filter)
+			@PathVariable("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
 		try {
@@ -61,10 +58,6 @@ public class AccountTicketsRestController extends BaseRestController {
 			zendeskTicketQuery.addCriterion(
 				"organization:" +
 					_fetchZendeskOrganizationId(externalReferenceCode));
-
-			if (Validator.isNotNull(filter)) {
-				zendeskTicketQuery.addCriterion(filter);
-			}
 
 			int page = 1;
 

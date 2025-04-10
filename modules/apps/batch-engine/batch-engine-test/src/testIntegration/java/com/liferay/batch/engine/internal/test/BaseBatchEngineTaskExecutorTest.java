@@ -168,13 +168,13 @@ public class BaseBatchEngineTaskExecutorTest {
 
 		@Override
 		public void create(
-				Collection<BlogPosting> items,
+				Collection<BlogPosting> blogPostings,
 				Map<String, Serializable> parameters)
 			throws Exception {
 
 			Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
 
-			super.create(items, parameters);
+			super.create(blogPostings, parameters);
 		}
 
 		@Override
@@ -201,13 +201,13 @@ public class BaseBatchEngineTaskExecutorTest {
 
 		@Override
 		public void delete(
-				Collection<BlogPosting> items,
+				Collection<BlogPosting> blogPostings,
 				Map<String, Serializable> parameters)
 			throws Exception {
 
 			Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
 
-			super.delete(items, parameters);
+			super.delete(blogPostings, parameters);
 		}
 
 		@Override
@@ -258,13 +258,13 @@ public class BaseBatchEngineTaskExecutorTest {
 
 		@Override
 		public void update(
-				Collection<BlogPosting> items,
+				Collection<BlogPosting> blogPostings,
 				Map<String, Serializable> parameters)
 			throws Exception {
 
 			Assert.assertTrue(LazyReferencingThreadLocal.isEnabled());
 
-			super.update(items, parameters);
+			super.update(blogPostings, parameters);
 		}
 
 		@Override
@@ -383,7 +383,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				};
 			}
 
-			List<BlogPosting> items = new ArrayList<>();
+			List<BlogPosting> blogPostings = new ArrayList<>();
 
 			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				(Class<?>)BlogsEntry.class);
@@ -400,12 +400,12 @@ public class BaseBatchEngineTaskExecutorTest {
 				BlogPosting item = transformUnsafeFunction.apply(document);
 
 				if (item != null) {
-					items.add(item);
+					blogPostings.add(item);
 				}
 			}
 
 			return Page.of(
-				items, pagination, indexer.searchCount(searchContext));
+				blogPostings, pagination, indexer.searchCount(searchContext));
 		}
 
 		private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) {

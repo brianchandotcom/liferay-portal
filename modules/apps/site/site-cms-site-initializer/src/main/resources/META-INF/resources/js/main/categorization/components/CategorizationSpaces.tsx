@@ -173,6 +173,7 @@ export default function CategorizationSpaces({
 			<div className={inputError ? 'has-error' : ''}>
 				{!checkbox && (
 					<ClayMultiSelect
+						aria-label={Liferay.Language.get('space-selector')}
 						disabled={checkbox}
 						id="multiSelect"
 						items={selectedItems}

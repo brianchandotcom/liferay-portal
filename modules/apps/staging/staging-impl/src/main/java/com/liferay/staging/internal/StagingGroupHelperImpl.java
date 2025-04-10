@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.internal.constants.CompanyGroupConstants;
+import com.liferay.staging.constants.CompanyGroupConstants;
 
 import java.util.Collections;
 import java.util.List;
@@ -144,11 +144,6 @@ public class StagingGroupHelperImpl implements StagingGroupHelper {
 	@Override
 	public Group fetchRemoteLiveGroup(long groupId) {
 		return fetchRemoteLiveGroup(_groupLocalService.fetchGroup(groupId));
-	}
-
-	@Override
-	public String getCompanyGroupFriendlyURL() {
-		return CompanyGroupConstants.FRIENDLY_URL;
 	}
 
 	@Override

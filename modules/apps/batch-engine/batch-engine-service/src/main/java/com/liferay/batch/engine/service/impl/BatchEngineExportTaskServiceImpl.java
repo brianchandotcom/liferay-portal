@@ -40,7 +40,7 @@ public class BatchEngineExportTaskServiceImpl
 	public BatchEngineExportTask addBatchEngineExportTask(
 			String externalReferenceCode, long companyId, long userId,
 			String callbackURL, String className, String contentType,
-			String executeStatus, List<String> fieldNamesList,
+			String executeStatus, List<String> fieldNames,
 			Map<String, Serializable> parameters, String taskItemDelegateName)
 		throws PortalException {
 
@@ -48,7 +48,7 @@ public class BatchEngineExportTaskServiceImpl
 
 		return batchEngineExportTaskLocalService.addBatchEngineExportTask(
 			externalReferenceCode, companyId, userId, callbackURL, className,
-			contentType, executeStatus, fieldNamesList, parameters,
+			contentType, executeStatus, fieldNames, parameters,
 			taskItemDelegateName);
 	}
 

@@ -104,9 +104,9 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		if (containsHeaders) {
 			CSVRecord csvRecord = csvRecordIterator.next();
 
-			List<String> fieldNamesList = csvRecord.toList();
+			List<String> fieldNames = csvRecord.toList();
 
-			return fieldNamesList.toArray(new String[0]);
+			return fieldNames.toArray(new String[0]);
 		}
 
 		String[] fieldNames = new String[100];

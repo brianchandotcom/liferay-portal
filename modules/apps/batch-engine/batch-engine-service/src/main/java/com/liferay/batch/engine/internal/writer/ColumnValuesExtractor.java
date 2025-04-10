@@ -55,9 +55,9 @@ public class ColumnValuesExtractor {
 	public List<Object[]> extractValues(Object item)
 		throws ReflectiveOperationException {
 
-		List<Object[]> valuesList = new ArrayList<>();
+		List<Object[]> values = new ArrayList<>();
 
-		Object[] values = _getBlankValues(_columnDescriptors.length);
+		Object[] blankValues = _getBlankValues(_columnDescriptors.length);
 
 		List<ColumnDescriptor> childFieldColumnDescriptors = new ArrayList<>();
 
@@ -68,11 +68,11 @@ public class ColumnValuesExtractor {
 				continue;
 			}
 
-			values[columnDescriptor.getIndex()] = columnDescriptor.getValue(
-				item);
+			blankValues[columnDescriptor.getIndex()] =
+				columnDescriptor.getValue(item);
 		}
 
-		valuesList.add(values);
+		values.add(blankValues);
 
 		int hash = -1;
 
@@ -82,16 +82,16 @@ public class ColumnValuesExtractor {
 			if (hash != childFieldColumnDescriptor.getParentHashCode()) {
 				hash = childFieldColumnDescriptor.getParentHashCode();
 
-				values = _getBlankValues(_columnDescriptors.length);
+				blankValues = _getBlankValues(_columnDescriptors.length);
 
-				valuesList.add(values);
+				values.add(blankValues);
 			}
 
-			values[childFieldColumnDescriptor.getIndex()] =
+			blankValues[childFieldColumnDescriptor.getIndex()] =
 				childFieldColumnDescriptor.getValue(item);
 		}
 
-		return valuesList;
+		return values;
 	}
 
 	public String[] getHeaders() {

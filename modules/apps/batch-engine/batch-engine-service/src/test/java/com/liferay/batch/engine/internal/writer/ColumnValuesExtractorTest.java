@@ -54,16 +54,16 @@ public class ColumnValuesExtractorTest {
 			new String[] {"doubles", "length", "strings"},
 			columnValuesExtractor.getHeaders());
 
-		List<Object[]> valuesList = columnValuesExtractor.extractValues(
+		List<Object[]> values1 = columnValuesExtractor.extractValues(
 			arraysAggregator);
 
-		Assert.assertFalse(valuesList.isEmpty());
+		Assert.assertFalse(values1.isEmpty());
 
-		Object[] values = valuesList.get(0);
+		Object[] values2 = values1.get(0);
 
-		Assert.assertEquals(values.toString(), 3, values.length);
+		Assert.assertEquals(values2.toString(), 3, values2.length);
 
-		CSVRecord csvRecord = _toCSVRecord((String)values[0]);
+		CSVRecord csvRecord = _toCSVRecord((String)values2[0]);
 
 		Assert.assertEquals(5, csvRecord.size());
 
@@ -72,9 +72,9 @@ public class ColumnValuesExtractorTest {
 				arraysAggregator.doubles[i], Double.valueOf(csvRecord.get(i)));
 		}
 
-		Assert.assertEquals(Integer.valueOf(5), values[1]);
+		Assert.assertEquals(Integer.valueOf(5), values2[1]);
 
-		csvRecord = _toCSVRecord((String)values[2]);
+		csvRecord = _toCSVRecord((String)values2[2]);
 
 		Assert.assertEquals(5, csvRecord.size());
 
@@ -107,19 +107,19 @@ public class ColumnValuesExtractorTest {
 			},
 			columnValuesExtractor.getHeaders());
 
-		List<Object[]> valuesList = columnValuesExtractor.extractValues(
+		List<Object[]> values1 = columnValuesExtractor.extractValues(
 			nestedObjectsAggregator);
 
-		Assert.assertFalse(valuesList.isEmpty());
+		Assert.assertFalse(values1.isEmpty());
 
-		Object[] values = valuesList.get(0);
+		Object[] values2 = values1.get(0);
 
-		Assert.assertEquals(Arrays.toString(values), 7, values.length);
-		Assert.assertEquals(Integer.valueOf(2), values[6]);
+		Assert.assertEquals(Arrays.toString(values2), 7, values2.length);
+		Assert.assertEquals(Integer.valueOf(2), values2[6]);
 
-		values = valuesList.get(1);
+		values2 = values1.get(1);
 
-		CSVRecord csvRecord = _toCSVRecord((String)values[0]);
+		CSVRecord csvRecord = _toCSVRecord((String)values2[0]);
 
 		Assert.assertEquals(5, csvRecord.size());
 
@@ -128,7 +128,7 @@ public class ColumnValuesExtractorTest {
 				arraysAggregator.doubles[i], Double.valueOf(csvRecord.get(i)));
 		}
 
-		csvRecord = _toCSVRecord((String)values[2]);
+		csvRecord = _toCSVRecord((String)values2[2]);
 
 		Assert.assertEquals(5, csvRecord.size());
 
@@ -157,21 +157,21 @@ public class ColumnValuesExtractorTest {
 			new String[] {"id", "name", "propertyString", "propertyLong"},
 			columnValuesExtractor.getHeaders());
 
-		List<Object[]> valuesList = columnValuesExtractor.extractValues(
+		List<Object[]> values1 = columnValuesExtractor.extractValues(
 			testObjectEntry);
 
-		Assert.assertFalse(valuesList.isEmpty());
+		Assert.assertFalse(values1.isEmpty());
 
-		Object[] values = valuesList.get(0);
+		Object[] values2 = values1.get(0);
 
-		Assert.assertEquals(values.toString(), 4, values.length);
+		Assert.assertEquals(values2.toString(), 4, values2.length);
 
-		Assert.assertEquals(testObjectEntry._id, values[0]);
-		Assert.assertEquals(testObjectEntry._name, values[1]);
+		Assert.assertEquals(testObjectEntry._id, values2[0]);
+		Assert.assertEquals(testObjectEntry._name, values2[1]);
 		Assert.assertEquals(
-			testObjectEntry._properties.get("propertyString"), values[2]);
+			testObjectEntry._properties.get("propertyString"), values2[2]);
 		Assert.assertEquals(
-			testObjectEntry._properties.get("propertyLong"), values[3]);
+			testObjectEntry._properties.get("propertyLong"), values2[3]);
 	}
 
 	private void _assertHeaders(String[] expected, String[] actual) {
@@ -187,14 +187,14 @@ public class ColumnValuesExtractorTest {
 		CSVParser csvParser = new CSVParser(
 			new StringReader(value), CSVFormat.DEFAULT);
 
-		List<CSVRecord> records = csvParser.getRecords();
+		List<CSVRecord> csvRecords = csvParser.getRecords();
 
-		if (records.isEmpty()) {
+		if (csvRecords.isEmpty()) {
 			throw new IllegalArgumentException(
 				"Unable to parse value " + value);
 		}
 
-		return records.get(0);
+		return csvRecords.get(0);
 	}
 
 	private class ArraysAggregator {

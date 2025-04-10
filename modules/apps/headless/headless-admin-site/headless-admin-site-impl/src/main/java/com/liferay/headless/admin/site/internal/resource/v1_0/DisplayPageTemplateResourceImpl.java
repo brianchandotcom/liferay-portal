@@ -321,23 +321,25 @@ public class DisplayPageTemplateResourceImpl
 		ClassSubtypeReference contentTypeReference =
 			displayPageTemplate.getContentTypeReference();
 
-		if (contentTypeReference != null) {
-			ClassName className = _classNameLocalService.fetchClassName(
-				contentTypeReference.getClassName());
+		if (contentTypeReference == null) {
+			throw new UnsupportedOperationException();
+		}
 
-			if (className == null) {
-				throw new UnsupportedOperationException();
-			}
+		ClassName className = _classNameLocalService.fetchClassName(
+			contentTypeReference.getClassName());
 
-			long classTypeId = _getClassTypeId(contentTypeReference, groupId);
+		if (className == null) {
+			throw new UnsupportedOperationException();
+		}
 
-			if (!className.equals(layoutPageTemplateEntry.getClassName()) ||
-				(classTypeId != layoutPageTemplateEntry.getClassTypeId())) {
+		long classTypeId = _getClassTypeId(contentTypeReference, groupId);
 
-				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					className.getClassNameId(), classTypeId);
-			}
+		if (!className.equals(layoutPageTemplateEntry.getClassName()) ||
+			(classTypeId != layoutPageTemplateEntry.getClassTypeId())) {
+
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				className.getClassNameId(), classTypeId);
 		}
 
 		return _displayPageTemplateDTOConverter.toDTO(

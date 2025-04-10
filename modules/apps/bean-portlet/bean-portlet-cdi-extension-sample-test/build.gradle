@@ -4,10 +4,10 @@ dependencies {
 	compileOnly group: "javax.enterprise", name: "cdi-api", version: "1.2"
 	compileOnly group: "javax.faces", name: "javax.faces-api", version: "2.2"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	implementation group: "com.liferay", name: "javax.faces", version: "2.2.20.LIFERAY-PATCHED-1"
 	implementation group: "com.liferay.faces", name: "com.liferay.faces.bridge.api", version: "4.3.0"
 	implementation group: "com.liferay.faces", name: "com.liferay.faces.bridge.ext", version: "6.1.1"
 	implementation group: "com.liferay.faces", name: "com.liferay.faces.bridge.impl", version: "4.3.0"
-	implementation group: "org.glassfish", name: "javax.faces", version: "2.2.20"
 }
 
 deploy {

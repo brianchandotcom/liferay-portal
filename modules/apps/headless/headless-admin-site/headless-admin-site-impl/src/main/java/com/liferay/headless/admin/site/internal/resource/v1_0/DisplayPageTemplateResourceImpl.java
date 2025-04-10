@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -330,8 +329,7 @@ public class DisplayPageTemplateResourceImpl
 				className.getClassNameId(), classTypeId);
 		}
 
-		if (Validator.isNotNull(displayPageTemplate.getMarkedAsDefault()) &&
-			!Objects.equals(
+		if (!Objects.equals(
 				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
 				layoutPageTemplateEntry.isDefaultTemplate())) {
 

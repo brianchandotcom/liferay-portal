@@ -290,7 +290,8 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.UserGroup)"
 	)
-	private ModelResourcePermission<Group> _userGroupModelResourcePermission;
+	private ModelResourcePermission<com.liferay.portal.kernel.model.UserGroup>
+		_userGroupModelResourcePermission;
 
 	@Reference
 	private UserGroupService _userGroupService;

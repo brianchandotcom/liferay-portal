@@ -26,6 +26,7 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
                 class="toggle-switch-check-bar"
               >
                 <input
+                  aria-required="false"
                   class="toggle-switch-check"
                   name="enableValidation"
                   role="switch"

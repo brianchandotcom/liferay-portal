@@ -19,6 +19,7 @@ exports[`Field Radio has a helptext 1`] = `
         >
           <label>
             <input
+              aria-describedby="radioField_fieldHelp"
               class="custom-control-input"
               name="radioField"
               role="radio"
@@ -42,6 +43,7 @@ exports[`Field Radio has a helptext 1`] = `
         >
           <label>
             <input
+              aria-describedby="radioField_fieldHelp"
               class="custom-control-input"
               name="radioField"
               role="radio"

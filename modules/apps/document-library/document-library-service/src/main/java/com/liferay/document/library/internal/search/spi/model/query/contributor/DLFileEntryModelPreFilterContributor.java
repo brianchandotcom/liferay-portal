@@ -5,10 +5,17 @@
 
 package com.liferay.document.library.internal.search.spi.model.query.contributor;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -17,6 +24,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,6 +32,9 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +57,7 @@ public class DLFileEntryModelPreFilterContributor
 		_addAttachmentFilter(booleanFilter, searchContext);
 		_addClassTypeIdsFilter(booleanFilter, searchContext);
 		_addDDMFieldFilter(booleanFilter, searchContext);
+		_addSubtypeFilter(booleanFilter, searchContext);
 		addWorkflowStatusFilter(
 			booleanFilter, modelSearchSettings, searchContext);
 		addHiddenFilter(booleanFilter, searchContext);
@@ -157,5 +169,73 @@ public class DLFileEntryModelPreFilterContributor
 			booleanFilter.add(mimeTypesBooleanFilter, BooleanClauseOccur.MUST);
 		}
 	}
+
+	private void _addSubtypeFilter(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		HashMap<String, List<String[]>> searchableAssetSubtypesMap =
+			(HashMap<String, List<String[]>>)searchContext.getAttribute(
+				"searchableAssetSubtypesMap");
+
+		if ((searchableAssetSubtypesMap == null) ||
+			!searchableAssetSubtypesMap.containsKey(
+				DLFileEntry.class.getName())) {
+
+			return;
+		}
+
+		BooleanFilter subtypeBooleanFilter = new BooleanFilter();
+
+		List<String[]> searchableAssetSubtypeIdentifiers =
+			searchableAssetSubtypesMap.get(DLFileEntry.class.getName());
+
+		for (String[] searchableAssetSubtypeIdentifier :
+				searchableAssetSubtypeIdentifiers) {
+
+			try {
+				if (searchableAssetSubtypeIdentifier[1].equals(
+						StringPool.BLANK)) {
+
+					subtypeBooleanFilter.addTerm("fileEntryTypeId", 0);
+
+					continue;
+				}
+
+				Group group =
+					_groupLocalService.getGroupByExternalReferenceCode(
+						searchableAssetSubtypeIdentifier[1],
+						searchContext.getCompanyId());
+
+				DLFileEntryType dlFileEntryType =
+					_dlFileEntryTypeLocalService.
+						getDLFileEntryTypeByExternalReferenceCode(
+							searchableAssetSubtypeIdentifier[2],
+							group.getGroupId());
+
+				subtypeBooleanFilter.addTerm(
+					"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Could not add document library file structure filter",
+						exception);
+				}
+			}
+		}
+
+		if (subtypeBooleanFilter.hasClauses()) {
+			booleanFilter.add(subtypeBooleanFilter, BooleanClauseOccur.MUST);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileEntryModelPreFilterContributor.class);
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

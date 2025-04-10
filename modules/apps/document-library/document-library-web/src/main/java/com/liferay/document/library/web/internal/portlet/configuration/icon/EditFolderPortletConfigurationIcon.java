@@ -147,12 +147,33 @@ public class EditFolderPortletConfigurationIcon
 					(ThemeDisplay)portletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				return ModelResourcePermissionUtil.contains(
-					_folderModelResourcePermission,
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), folderId,
-					ActionKeys.UPDATE);
+				boolean hasAdvancedUpdatePermission = _hasPermission(
+					folderId, ActionKeys.ADVANCED_UPDATE, themeDisplay);
+				boolean hasUpdatePermission = _hasPermission(
+					folderId, ActionKeys.UPDATE, themeDisplay);
+
+				if (hasAdvancedUpdatePermission || hasUpdatePermission) {
+					if ((folderId ==
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) &&
+						!hasAdvancedUpdatePermission) {
+
+						return false;
+					}
+
+					return true;
+				}
+
+				return false;
 			});
+	}
+
+	private boolean _hasPermission(
+			long folderId, String actionKey, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return ModelResourcePermissionUtil.contains(
+			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
+			themeDisplay.getScopeGroupId(), folderId, actionKey);
 	}
 
 	private boolean _isDLWorkflowEnabled() {

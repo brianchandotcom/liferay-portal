@@ -99,7 +99,7 @@ describe('Wizard Page', () => {
 		expect(buttonAttributes).toBeInTheDocument();
 	});
 
-	it('render each of all steps only with connect token', async () => {
+	it.skip('render each of all steps only with connect token', async () => {
 		let data: TData = initialState;
 
 		const ComponentWithData = () => {

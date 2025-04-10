@@ -8,6 +8,8 @@
 	window.addEventListener(event, checkScreenSize)
 );
 
+adjustNavigation();
+
 const documentationEducationDropdown = document.querySelector(
 	'.documentation-education-dropdown'
 );
@@ -54,6 +56,19 @@ async function postData(data = {}, url = '') {
 	});
 
 	return response.json();
+}
+
+function adjustNavigation() {
+	const controlMenu = document.getElementById('ControlMenu');
+
+	if (controlMenu) {
+		const navegacaoContainer = document.querySelector(
+			'.public-site-navigation-container'
+		);
+		if (navegacaoContainer) {
+			navegacaoContainer.style.top = '3.5rem';
+		}
+	}
 }
 
 function changeFocus() {

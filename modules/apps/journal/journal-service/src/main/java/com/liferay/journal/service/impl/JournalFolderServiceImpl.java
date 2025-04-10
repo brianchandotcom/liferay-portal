@@ -597,6 +597,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 					_journalFolderModelResourcePermission, permissionChecker,
 					groupId, folderId, ActionKeys.UPDATE)) {
 
+				parentFolderId = folder.getParentFolderId();
 				name = folder.getName();
 				description = folder.getDescription();
 			}

@@ -9,7 +9,6 @@ import {ITicket} from '~/utils/types';
 
 const useAccountTickets = (
 	externalReferenceCode?: string,
-	filter?: string,
 	skip?: boolean
 ) => {
 	const [loading, setLoading] = useState(true);
@@ -20,22 +19,13 @@ const useAccountTickets = (
 			return;
 		}
 
-		let filterQuery = filter;
-
-		if (filter) {
-			filterQuery = `?${filter}`;
-		}
-		else {
-			filterQuery = '';
-		}
-
 		try {
 			const response: ITicket[] =
 				await Liferay.OAuth2Client.FromUserAgentApplication(
 					'liferay-customer-etc-spring-boot-oaua'
 				)
 					.fetch(
-						`/accounts/${externalReferenceCode}/tickets${filterQuery}`
+						`/accounts/${externalReferenceCode}/tickets`
 					)
 					.then((response: {json: () => any}) => response.json());
 
@@ -50,7 +40,7 @@ const useAccountTickets = (
 
 			setLoading(false);
 		}
-	}, [externalReferenceCode, filter, skip]);
+	}, [externalReferenceCode, skip]);
 
 	useEffect(() => {
 		fetchTickets();

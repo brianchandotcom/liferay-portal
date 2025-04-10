@@ -10,6 +10,7 @@ import path from 'path';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -53,17 +54,29 @@ test('LPD-26363 Can delete ctEntries in bulk', async ({
 }) => {
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
-	await expect(
-		changeTrackingPage.frontendDataSetEntries.getByText(file.title)
-	).toBeVisible();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByTitle('Select Items'),
+		trigger: changeTrackingPage.frontendDataSetEntries.getByText(
+			file.title
+		),
+	});
 
-	await page.getByTitle('Select Items').check();
+	const allSelected = await page.getByText('All Selected');
 
-	await expect(page.getByText('All Selected')).toBeVisible();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page
+			.locator('[data-testid="visualization-mode-table"]')
+			.getByLabel('Actions'),
+		trigger: allSelected,
+	});
 
-	await expect(changeTrackingPage.bulkDeleteButton).toBeVisible();
-
-	await changeTrackingPage.bulkDeleteButton.click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Discard Changes'}),
+		trigger: allSelected,
+	});
 
 	await expect(
 		page.getByRole('heading', {name: 'Discarded Changes'})
@@ -99,22 +112,29 @@ test('LPD-46060 Can move ctEntries in bulk', async ({
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
-	await expect(
-		changeTrackingPage.frontendDataSetEntries.getByText(file.title)
-	).toBeVisible();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByTitle('Select Items'),
+		trigger: changeTrackingPage.frontendDataSetEntries.getByText(
+			file.title
+		),
+	});
 
-	await page.getByTitle('Select Items').check();
+	const allSelected = await page.getByText('All Selected');
 
-	await expect(page.getByText('All Selected')).toBeVisible();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page
+			.locator('[data-testid="visualization-mode-table"]')
+			.getByLabel('Actions'),
+		trigger: allSelected,
+	});
 
-	const bulkMoveButton = page
-		.locator('.bulk-actions')
-		.getByRole('button')
-		.nth(0);
-
-	await expect(bulkMoveButton).toBeVisible();
-
-	await bulkMoveButton.click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Move Changes'}),
+		trigger: allSelected,
+	});
 
 	await expect(
 		page.getByRole('heading', {name: 'Moved Changes'})

@@ -13,7 +13,6 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class ChangeTrackingPage {
-	readonly bulkDeleteButton: Locator;
 	readonly frontendDataSetEntries: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
@@ -21,11 +20,6 @@ export class ChangeTrackingPage {
 	readonly tabsContainer: Locator;
 
 	constructor(page: Page) {
-		this.bulkDeleteButton = page
-			.locator('[data-testid="visualization-mode-table"]')
-			.locator('.bulk-actions')
-			.getByRole('button')
-			.nth(1);
 		this.frontendDataSetEntries = page.locator(
 			'[data-testid="visualization-mode-table"]'
 		);

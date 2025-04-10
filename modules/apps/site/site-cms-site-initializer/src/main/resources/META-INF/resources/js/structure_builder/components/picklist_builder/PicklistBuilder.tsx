@@ -6,6 +6,7 @@
 import ClayLayout from '@clayui/layout';
 import React, {useEffect} from 'react';
 
+import CacheContextProvider from '../../contexts/CacheContext';
 import StateContextProvider, {
 	buildState,
 	useId,
@@ -26,7 +27,9 @@ export default function PicklistBuilder({
 			<div className="d-flex flex-column">
 				<HistoryManager />
 
-				<PicklistBuilderManagementBar />
+				<CacheContextProvider>
+					<PicklistBuilderManagementBar />
+				</CacheContextProvider>
 
 				<ClayLayout.ContainerFluid className="px-4" size="md" view>
 					<PicklistFields />

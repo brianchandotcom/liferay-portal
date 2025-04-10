@@ -135,6 +135,8 @@ public class JournalArticleModelPreFilterContributor
 			searchableAssetSubtypesMap.containsKey(
 				JournalArticle.class.getName())) {
 
+			BooleanFilter subtypeBooleanFilter = new BooleanFilter();
+
 			List<String[]> searchableAssetSubtypeIdentifiers =
 				searchableAssetSubtypesMap.get(JournalArticle.class.getName());
 
@@ -155,7 +157,7 @@ public class JournalArticleModelPreFilterContributor
 								_classNameLocalService.getClassNameId(
 									JournalArticle.class));
 
-					booleanFilter.addRequiredTerm(
+					subtypeBooleanFilter.addTerm(
 						"ddmStructureKey", ddmStructure.getStructureKey());
 				}
 				catch (Exception exception) {
@@ -165,6 +167,11 @@ public class JournalArticleModelPreFilterContributor
 							exception);
 					}
 				}
+			}
+
+			if (subtypeBooleanFilter.hasClauses()) {
+				booleanFilter.add(
+					subtypeBooleanFilter, BooleanClauseOccur.MUST);
 			}
 		}
 

@@ -17,12 +17,15 @@ export function formatDate(date: Date) {
 }
 
 export function toUnix(str: string) {
-	const date = new Date(str);
-
-	return Math.floor(date.getTime() / 1000) || null;
+	return new Date(str).getTime();
 }
 
-export function formatTooltipDate(date: Date, rangeSelectors: RangeSelectors) {
+export function formatTooltipDate(
+	timestamp: number = 0,
+	rangeSelectors: RangeSelectors
+) {
+	const date = new Date(timestamp);
+
 	if (rangeSelectors === RangeSelectors.Last24Hours) {
 		return dateUtils.format(date, 'MMM D, h A');
 	}

@@ -10,15 +10,14 @@
 <%
 OrderConfirmationCheckoutStepDisplayContext orderConfirmationCheckoutStepDisplayContext = (OrderConfirmationCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
-CommerceOrderPayment commerceOrderPayment = orderConfirmationCheckoutStepDisplayContext.getCommerceOrderPayment();
 CommerceOrder commerceOrder = orderConfirmationCheckoutStepDisplayContext.getCommerceOrder();
+CommerceOrderPayment commerceOrderPayment = orderConfirmationCheckoutStepDisplayContext.getCommerceOrderPayment();
 
-String commerceOrderPaymentContent = null;
-
+String content = null;
 int paymentStatus = commerceOrder.getPaymentStatus();
 
 if (commerceOrderPayment != null) {
-	commerceOrderPaymentContent = commerceOrderPayment.getContent();
+	content = commerceOrderPayment.getContent();
 	paymentStatus = commerceOrderPayment.getStatus();
 }
 %>
@@ -40,8 +39,8 @@ if (commerceOrderPayment != null) {
 
 				<liferay-ui:message key="<%= taglibMessageKey %>" />
 
-				<c:if test="<%= !commerceOrderPaymentContent.isEmpty() %>">
-					<div><%= SanitizerUtil.sanitize(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), CommerceOrderPayment.class.getName(), commerceOrderPayment.getCommerceOrderPaymentId(), "plain/text", commerceOrderPaymentContent) %></div>
+				<c:if test="<%= !content.isEmpty() %>">
+					<div><%= SanitizerUtil.sanitize(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), CommerceOrderPayment.class.getName(), commerceOrderPayment.getCommerceOrderPaymentId(), "plain/text", content) %></div>
 				</c:if>
 
 				<aui:button-row>

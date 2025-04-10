@@ -78,6 +78,8 @@ test('LPD-40224: Check if the export audit events .csv is being filtered by the 
 		.locator(`#${AUDIT_PORTLET_NAMESPACE}eventType:visible`)
 		.fill(resourceAction);
 
+	await expect(page.locator('.lexicon-icon-search')).toBeVisible();
+
 	await page.locator('.lexicon-icon-search').click();
 
 	await page.waitForTimeout(500);

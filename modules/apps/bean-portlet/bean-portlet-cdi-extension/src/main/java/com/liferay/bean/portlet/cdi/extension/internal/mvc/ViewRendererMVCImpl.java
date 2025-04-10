@@ -138,26 +138,30 @@ public class ViewRendererMVCImpl implements ViewRenderer {
 			}
 		}
 
-		if (_importsMvcBindingPackage) {
-			MutableBindingResult mutableBindingResult =
-				BeanUtil.getMutableBindingResult(_beanManager);
+		if (!_importsMvcBindingPackage) {
+			return;
+		}
 
-			if ((mutableBindingResult != null) &&
-				!mutableBindingResult.isConsulted()) {
+		MutableBindingResult mutableBindingResult =
+			BeanUtil.getMutableBindingResult(_beanManager);
 
-				Set<ParamError> paramErrors =
-					mutableBindingResult.getAllErrors();
+		if ((mutableBindingResult == null) ||
+			mutableBindingResult.isConsulted()) {
 
-				for (ParamError paramError : paramErrors) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"A BindingResult error was not processed for ",
-								paramError.getParamName(), ": ",
-								paramError.getMessage()));
-					}
-				}
+			return;
+		}
+
+		Set<ParamError> paramErrors = mutableBindingResult.getAllErrors();
+
+		for (ParamError paramError : paramErrors) {
+			if (!_log.isWarnEnabled()) {
+				continue;
 			}
+
+			_log.warn(
+				StringBundler.concat(
+					"A BindingResult error was not processed for ",
+					paramError.getParamName(), ": ", paramError.getMessage()));
 		}
 	}
 

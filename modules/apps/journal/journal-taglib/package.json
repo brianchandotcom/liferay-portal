@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/pagination": "3.133.0",
+		"@clayui/pagination": "3.134.0",
 		"frontend-js-web": "*",
 		"react": "18.2.0"
 	},

@@ -11,6 +11,7 @@ import {dataRemoteApiHelpersTest} from '../../fixtures/dataRemoteApiHelpersTest'
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {remoteApiHelpersTest} from '../../fixtures/remoteApiHelpersTest';
@@ -19,7 +20,6 @@ import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTes
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
-import { pageViewModePagesTest } from '../../fixtures/pageViewModePagesTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -53,6 +53,8 @@ test(
 		webContentDisplayPage,
 		widgetPagePage,
 	}) => {
+		test.slow();
+
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'Site Name',
 		});

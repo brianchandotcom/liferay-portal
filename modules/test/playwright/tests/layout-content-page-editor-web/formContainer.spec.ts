@@ -1849,9 +1849,7 @@ test.describe('Form Localization', () => {
 
 			await translationSelector.click();
 
-			const option = page.getByRole('option', {
-				name: 'Spanish (Spain) Language',
-			});
+			const option = page.getByRole('option').filter({hasText: 'es-ES'});
 
 			await expect(option).toContainText(/Not Translated/);
 
@@ -2082,9 +2080,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger: page.getByLabel(
 					'Select a language, current language:'
 				),
@@ -2211,9 +2207,9 @@ test.describe('Form Localization', () => {
 
 			await page.getByLabel('Legal Things').check();
 
-			const spanishOption = page.getByRole('option', {
-				name: 'Spanish (Spain) Language',
-			});
+			const spanishOption = page
+				.getByRole('option')
+				.filter({hasText: 'es-ES'});
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -2362,9 +2358,9 @@ test.describe('Form Localization', () => {
 				trigger: page.getByPlaceholder('Choose an Option'),
 			});
 
-			const spanishOption = page.getByRole('option', {
-				name: 'Spanish (Spain) Language',
-			});
+			const spanishOption = page
+				.getByRole('option')
+				.filter({hasText: 'es-ES'});
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -2516,9 +2512,9 @@ test.describe('Form Localization', () => {
 			await page.getByRole('checkbox', {name: 'Spain'}).check();
 			await page.getByRole('checkbox', {name: 'Italy'}).check();
 
-			const spanishOption = page.getByRole('option', {
-				name: 'Spanish (Spain) Language',
-			});
+			const spanishOption = page
+				.getByRole('option')
+				.filter({hasText: 'es-ES'});
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -2682,9 +2678,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger: page.getByLabel(
 					'Select a language, current language:'
 				),
@@ -2886,9 +2880,9 @@ test.describe('Form Localization', () => {
 
 			// Change the translation to spanish and update the files
 
-			const spanishOption = page.getByRole('option', {
-				name: 'Spanish (Spain) Language',
-			});
+			const spanishOption = page
+				.getByRole('option')
+				.filter({hasText: 'es-ES'});
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -2924,9 +2918,9 @@ test.describe('Form Localization', () => {
 
 			// Choose other language to check the default values
 
-			const catalanOption = page.getByRole('option', {
-				name: 'Catalan (Spain) Language',
-			});
+			const catalanOption = page
+				.getByRole('option')
+				.filter({hasText: 'ca-ES'});
 
 			await expect(catalanOption).toContainText(
 				'Language: Not Translated'
@@ -3150,9 +3144,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger,
 			});
 
@@ -3188,9 +3180,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger,
 			});
 
@@ -3204,9 +3194,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Catalan (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'ca-ES'}),
 				trigger,
 			});
 
@@ -3353,9 +3341,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger,
 			});
 
@@ -3715,9 +3701,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger: page.getByLabel(
 					'Select a language, current language:'
 				),
@@ -3904,9 +3888,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger: page.getByLabel(
 					'Select a language, current language:'
 				),
@@ -4182,9 +4164,7 @@ test.describe('Form Localization', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: page.getByRole('option').filter({hasText: 'es-ES'}),
 				trigger: page.getByLabel(
 					'Select a language, current language:'
 				),
@@ -8867,6 +8847,6 @@ async function chooseFileFromDocumentLibrary({
 	await clickAndExpectToBeHidden({
 		target: iframe.getByText(fileName),
 		timeout: 2000,
-		trigger: iframe.getByText(fileName),
+		trigger: iframe.locator('.card', {hasText: fileName}).locator('img'),
 	});
 }

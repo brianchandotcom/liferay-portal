@@ -146,6 +146,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
@@ -410,6 +411,8 @@ public class DefaultObjectEntryManagerImplTest
 						_createObjectFieldSetting(
 							"fileSource", "documentsAndMedia"),
 						_createObjectFieldSetting("maximumFileSize", "100"))
+				).indexed(
+					true
 				).readOnly(
 					"conditional"
 				).readOnlyConditionExpression(
@@ -2852,6 +2855,9 @@ public class DefaultObjectEntryManagerImplTest
 							_objectRelationshipFieldName,
 							parentObjectEntry1.getId()
 						).put(
+							"attachmentObjectFieldName",
+							_getAttachmentObjectFieldValue()
+						).put(
 							"localizedDateObjectFieldName", "2024-01-01"
 						).put(
 							"longIntegerObjectFieldName", 21394167160L
@@ -2875,6 +2881,9 @@ public class DefaultObjectEntryManagerImplTest
 						Arrays.asList(_listTypeEntryKey3, _listTypeEntryKey4)
 					).put(
 						_objectRelationshipFieldName, parentObjectEntry1.getId()
+					).put(
+						"attachmentObjectFieldName",
+						_getFileEntryId(childObjectEntry1)
 					).put(
 						"localizedBooleanObjectFieldName", true
 					).put(
@@ -3608,6 +3617,24 @@ public class DefaultObjectEntryManagerImplTest
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"search", parentObjectEntry1.getExternalReferenceCode()
+			).build(),
+			childObjectEntry1);
+
+		objectField = objectFieldLocalService.fetchObjectField(
+			_objectDefinition2.getObjectDefinitionId(),
+			"attachmentObjectFieldName");
+
+		_objectDefinition2.setTitleObjectFieldId(
+			objectField.getObjectFieldId());
+
+		objectDefinitionLocalService.updateObjectDefinition(_objectDefinition2);
+
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry =
+			_dlAppLocalService.getFileEntry(_getFileEntryId(childObjectEntry1));
+
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"search", fileEntry.getTitle()
 			).build(),
 			childObjectEntry1);
 
@@ -5819,11 +5846,21 @@ public class DefaultObjectEntryManagerImplTest
 			FileEntry fileEntry = (FileEntry)actualObjectEntryProperties.get(
 				expectedEntry.getKey());
 
-			if ((fileEntry == null) && (expectedEntry.getValue() == null)) {
+			Object expectedValue = expectedEntry.getValue();
+
+			if ((fileEntry == null) && (expectedValue == null)) {
 				return;
 			}
 
-			Assert.assertEquals(expectedEntry.getValue(), fileEntry.getId());
+			if (Validator.isNumber(expectedValue.toString())) {
+				Assert.assertEquals(expectedValue, fileEntry.getId());
+			}
+			else {
+				FileEntry expectedEntryFileEntry = (FileEntry)expectedValue;
+
+				Assert.assertEquals(
+					expectedEntryFileEntry.getId(), fileEntry.getId());
+			}
 
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 				fileEntry.getId());

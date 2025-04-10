@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<Configuration strict="true">
+    <Loggers>
+        <Logger level="ERROR" name="com.amazonaws.util.Base64" />
+    </Loggers>
+</Configuration>

@@ -654,9 +654,15 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/site-name/test-page-name?previewCTCollectionId=${ctCollectionId2}");
 
-		AssertElementPresent(
-			key_title = "HTTP Status 404",
-			locator1 = "Header#H1_TITLE");
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Page Not Found");
+
+		ContentPages.viewFragmentText(
+			fragmentName = "paragraph",
+			id = "element-text",
+			text = "Error Code: 404");
 	}
 
 	@description = "This is the use case for LPS-183473."

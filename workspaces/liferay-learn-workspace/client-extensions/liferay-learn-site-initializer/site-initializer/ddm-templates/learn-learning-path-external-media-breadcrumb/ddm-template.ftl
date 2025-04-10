@@ -9,6 +9,7 @@
 <#if (ObjectEntry_objectEntryId.getData())??>
 	<#assign
 		learningPathId = (themeDisplay.getURLCurrent())?matches("(?<=learning-path=)[^&]*")[0]
+
 		learningPathName = restClient.get("/c/learningpaths/${learningPathId}?fields=name").name
 	/>
 

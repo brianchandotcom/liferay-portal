@@ -10,7 +10,7 @@ import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {getAssetsLibrariesByCompany} from '../../api/api';
+import SpaceService from '../../structure_builder/services/SpaceService';
 import SpaceSticker from '../components/SpaceSticker';
 
 const MAX_NUMBER_SPACES = 5;
@@ -25,9 +25,11 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({showAddButton}) => {
 	>([]);
 
 	useEffect(() => {
-		getAssetsLibrariesByCompany().then((result: any) => {
-			setAssetsLibraries(result);
-		});
+		SpaceService.getTopSpaces({limit: MAX_NUMBER_SPACES}).then(
+			(result: any) => {
+				setAssetsLibraries(result);
+			}
+		);
 	}, []);
 
 	const onAddButtonClick = (event: any) => {

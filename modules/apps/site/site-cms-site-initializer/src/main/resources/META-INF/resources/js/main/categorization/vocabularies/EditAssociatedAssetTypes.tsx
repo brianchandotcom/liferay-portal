@@ -11,8 +11,6 @@ import ClayTable from '@clayui/table';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {AssetType} from '../types/AssetType';
-
 const ALL_ASSET_TYPES: AssetType[] = [
 	{
 		label: Liferay.Language.get('all-asset-types'),

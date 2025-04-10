@@ -815,6 +815,10 @@ public class CustomFDSSerializer
 		return (Boolean)properties.get("active");
 	}
 
+	private Boolean _isCollection(String fieldName) {
+		return fieldName.contains(StringPool.OPEN_BRACKET);
+	}
+
 	private JSONObject _serializeFilter(
 			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
 		throws Exception {
@@ -963,7 +967,16 @@ public class CustomFDSSerializer
 		JSONObject jsonObject = JSONUtil.put(
 			"autocompleteEnabled", true
 		).put(
-			"entityFieldType", FDSEntityFieldTypes.STRING
+			"entityFieldType",
+			() -> {
+				if (_isCollection(
+						String.valueOf(properties.get("fieldName")))) {
+
+					return FDSEntityFieldTypes.COLLECTION;
+				}
+
+				return FDSEntityFieldTypes.STRING;
+			}
 		).put(
 			"id",
 			() -> {

@@ -10,9 +10,8 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {portletConfigurationPermissionsPageTest} from '../../fixtures/portletConfigurationPermissionsPagesTest';
-import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../fixtures/webContentDisplayPageTest';
 import getRandomString from '../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
@@ -23,7 +22,7 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	apiHelpersTest,
 	loginTest(),
-	pageEditorPagesTest,
+	pageViewModePagesTest,
 	stagingConfigurationPageTest
 );
 
@@ -39,8 +38,7 @@ export const testFlagsEnabled = mergeTests(
 	portletConfigurationPermissionsPageTest,
 	stagingPageTest,
 	test,
-	webContentDisplayPageTest,
-	uiElementsPageTest
+	webContentDisplayPageTest
 );
 
 test('Check if local staging can be enabled', async ({
@@ -66,13 +64,7 @@ test('Check if local staging can be enabled', async ({
 testFlagsEnabled(
 	'Check if local staging with page-scoped Web Content can be enabled',
 	{tag: ['@LPS-83147']},
-	async ({
-		apiHelpers,
-		page,
-		pageEditorPage,
-		uiElementsPage,
-		webContentDisplayPage,
-	}) => {
+	async ({apiHelpers, page, webContentDisplayPage, widgetPagePage}) => {
 		const siteName = getRandomString();
 		const layoutName = getRandomString();
 		const webContentName = getRandomString();
@@ -89,17 +81,14 @@ testFlagsEnabled(
 			title: layoutName,
 		});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await widgetPagePage.goto(layout, site.friendlyUrlPath);
 
 		await page.getByLabel('Add', {exact: true}).click();
 
-		await pageEditorPage.addWidgetToWidgetPageTemplate(
-			'Content Management',
-			'Web Content Display'
+		await widgetPagePage.addPortlet(
+			'Web Content Display',
+			'Content Management'
 		);
-
-		await uiElementsPage.anySuccessAlert.waitFor({state: 'visible'});
-		await uiElementsPage.anySuccessAlert.waitFor({state: 'hidden'});
 
 		await webContentDisplayPage.goToConfiguration();
 		await webContentDisplayPage.setScope(layout.uuid);

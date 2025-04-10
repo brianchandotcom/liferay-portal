@@ -176,27 +176,6 @@ export class PageEditorPage {
 			.press('Enter');
 	}
 
-	async addWidgetToWidgetPageTemplate(category: string, name: string) {
-		await this.goToSidebarTab('Widgets');
-
-		await this.page
-			.getByRole('tab', {exact: true, name: 'Widgets'})
-			.click();
-
-		const header = this.page.getByRole('button', {
-			exact: true,
-			name: category,
-		});
-
-		await expandSection(header);
-
-		await this.page
-			.locator('li', {hasText: name})
-			.getByLabel('Add Content')
-			.first()
-			.click();
-	}
-
 	async addWidget(category: string, name: string, dropTarget?: Locator) {
 		await this.goToSidebarTab('Components');
 

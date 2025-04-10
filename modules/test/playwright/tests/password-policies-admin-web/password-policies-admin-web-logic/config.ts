@@ -4,6 +4,7 @@
  */
 
 export const config = {
-	name: 'password-policies-admin-web',
-	testDir: 'tests/password-policies-admin-web',
+	name: 'password-policies-admin-web-logic',
+	testDir:
+		'tests/password-policies-admin-web/password-policies-admin-web-logic',
 };

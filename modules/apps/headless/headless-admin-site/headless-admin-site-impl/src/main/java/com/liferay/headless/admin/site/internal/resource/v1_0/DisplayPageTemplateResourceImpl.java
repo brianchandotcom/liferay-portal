@@ -306,18 +306,6 @@ public class DisplayPageTemplateResourceImpl
 					layoutPageTemplateCollectionId);
 		}
 
-		if (Validator.isNotNull(displayPageTemplate.getMarkedAsDefault()) &&
-			!Objects.equals(
-				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
-				layoutPageTemplateEntry.isDefaultTemplate())) {
-
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					GetterUtil.getBoolean(
-						displayPageTemplate.getMarkedAsDefault()));
-		}
-
 		ClassSubtypeReference contentTypeReference =
 			displayPageTemplate.getContentTypeReference();
 
@@ -340,6 +328,18 @@ public class DisplayPageTemplateResourceImpl
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				className.getClassNameId(), classTypeId);
+		}
+
+		if (Validator.isNotNull(displayPageTemplate.getMarkedAsDefault()) &&
+			!Objects.equals(
+				GetterUtil.getBoolean(displayPageTemplate.getMarkedAsDefault()),
+				layoutPageTemplateEntry.isDefaultTemplate())) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					GetterUtil.getBoolean(
+						displayPageTemplate.getMarkedAsDefault()));
 		}
 
 		return _displayPageTemplateDTOConverter.toDTO(

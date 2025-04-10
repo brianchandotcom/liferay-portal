@@ -181,7 +181,7 @@ public class JournalFolderActionDropdownItems {
 						_themeDisplay.getPermissionChecker(),
 						_themeDisplay.getScopeGroupId(),
 						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-						ActionKeys.UPDATE)) {
+						ActionKeys.ADVANCED_UPDATE)) {
 
 					return true;
 				}

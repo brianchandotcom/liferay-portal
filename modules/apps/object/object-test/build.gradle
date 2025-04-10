@@ -37,6 +37,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:notification:notification-api")
 	testIntegrationImplementation project(":apps:notification:notification-test-util")
 	testIntegrationImplementation project(":apps:object:object-admin-rest-api")
+	testIntegrationImplementation project(":apps:object:object-admin-rest-client")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:object:object-rest-api")
 	testIntegrationImplementation project(":apps:object:object-scripting-api")

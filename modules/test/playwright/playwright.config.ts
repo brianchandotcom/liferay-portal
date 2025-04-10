@@ -83,7 +83,8 @@ import {config as notificationsWebConfig} from './tests/notifications-web/config
 import {config as objectWebConfig} from './tests/object-web/config';
 import {config as openIdLinkConfig} from './tests/openid-link/config';
 import {config as osbFaroWebConfig} from './tests/osb-faro-web/config';
-import {config as passwordPoliciesAdminWebConfig} from './tests/password-policies-admin-web/config';
+import {config as passwordPoliciesAdminWebConfigLogic} from './tests/password-policies-admin-web/password-policies-admin-web-logic/config';
+import {config as passwordPoliciesAdminWebConfigLogin} from './tests/password-policies-admin-web/password-policies-admin-web-login/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/config';
 import {config as portalLanguageOverrideWebConfig} from './tests/portal-language-override-web/config';
 import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-web/config';
@@ -225,7 +226,8 @@ export default defineConfig({
 		objectWebConfig,
 		openIdLinkConfig,
 		osbFaroWebConfig,
-		passwordPoliciesAdminWebConfig,
+		passwordPoliciesAdminWebConfigLogic,
+		passwordPoliciesAdminWebConfigLogin,
 		portalDefaultPermissionsWebConfig,
 		portalLanguageOverrideWebConfig,
 		portalSearchAdminWebConfig,

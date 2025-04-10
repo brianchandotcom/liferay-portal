@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -164,16 +163,13 @@ public class BeanPortletInvokerPortlet implements InvokerPortlet {
 
 		Event event = eventRequest.getEvent();
 
-		List<BeanPortletMethod> eventMethods = new ArrayList<>();
-
-		for (BeanPortletMethod beanPortletMethod : beanPortletMethods) {
-			if (beanPortletMethod.isEventProcessor(event.getQName())) {
-				eventMethods.add(beanPortletMethod);
-			}
-		}
+		beanPortletMethods = ListUtil.filter(
+			beanPortletMethods,
+			beanPortletMethod -> beanPortletMethod.isEventProcessor(
+				event.getQName()));
 
 		_invokeMethodWithActiveScopes(
-			eventMethods, eventRequest, eventResponse);
+			beanPortletMethods, eventRequest, eventResponse);
 	}
 
 	@Override

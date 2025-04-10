@@ -5,36 +5,26 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {MultiFactorAuthenticationConfigurationPage} from '../../pages/multi-factor-authentication/MultiFactorAuthenticationConfigurationPage';
-import {TimeBasedOneTimePasswordConfigurationPage} from '../../pages/multi-factor-authentication/TimeBasedOneTimePasswordConfigurationPage';
-import {HomePage} from '../../pages/portal-web/HomePage';
-import {AccountSettingsPage} from '../../pages/users-admin-web/AccountSettingsPage';
+import {multiFactorAuthenticationPagesTest} from '../../fixtures/multiFactorAuthenticationPagesTest';
 
-export const test = mergeTests(loginTest());
+export const test = mergeTests(accountSettingsPagesTest, loginTest(),
+ multiFactorAuthenticationPagesTest);
 
-test('LPD-48214 verify that qr code is visible', async ({page}) => {
-	const multiFactorAuthPage = new MultiFactorAuthenticationConfigurationPage(
-		page
-	);
+test('LPD-48214 verify that QR code is visible', async ({
+	accountSettingsPage,
+	multiFactorAuthenticationConfigurationPage,
+	page,
+	timeBasedOneTimePasswordConfigurationPage,
+}) => {
+	await multiFactorAuthenticationConfigurationPage.goto();
 
-	const timeBasedOTPPage = new TimeBasedOneTimePasswordConfigurationPage(
-		page
-	);
+	await multiFactorAuthenticationConfigurationPage.enable();
 
-	const accountSettingsPage = new AccountSettingsPage(page);
+	await timeBasedOneTimePasswordConfigurationPage.goto();
 
-	const homePage = new HomePage(page);
-
-	await multiFactorAuthPage.goTo();
-
-	await multiFactorAuthPage.enable();
-
-	await timeBasedOTPPage.goTo();
-
-	await timeBasedOTPPage.enable();
-
-	await homePage.goto();
+	await timeBasedOneTimePasswordConfigurationPage.enable();
 
 	await accountSettingsPage.goToMultiFactorAuthenticationSettings();
 
@@ -42,11 +32,11 @@ test('LPD-48214 verify that qr code is visible', async ({page}) => {
 		await page.getByAltText('otp-configuration-qrcode').getAttribute('src')
 	).not.toBeNull();
 
-	await timeBasedOTPPage.goTo();
+	await timeBasedOneTimePasswordConfigurationPage.goto();
 
-	await timeBasedOTPPage.disable();
+	await timeBasedOneTimePasswordConfigurationPage.resetConfiguration();
 
-	await multiFactorAuthPage.goTo();
+	await multiFactorAuthenticationConfigurationPage.goto();
 
-	await multiFactorAuthPage.disable();
+	await multiFactorAuthenticationConfigurationPage.resetConfiguration();
 });

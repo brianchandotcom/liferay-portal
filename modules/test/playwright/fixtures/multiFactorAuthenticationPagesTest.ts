@@ -6,13 +6,18 @@
 import {test} from '@playwright/test';
 
 import {MultiFactorAuthenticationConfigurationPage} from '../pages/multi-factor-authentication/MultiFactorAuthenticationConfigurationPage';
+import {TimeBasedOneTimePasswordConfigurationPage} from '../pages/multi-factor-authentication/TimeBasedOneTimePasswordConfigurationPage';
 
-const multiFactorAuthenticationConfigurationPageTest = test.extend<{
+const multiFactorAuthenticationPagesTest = test.extend<{
 	multiFactorAuthenticationConfigurationPage: MultiFactorAuthenticationConfigurationPage;
+	timeBasedOneTimePasswordConfigurationPage: TimeBasedOneTimePasswordConfigurationPage;
 }>({
 	multiFactorAuthenticationConfigurationPage: async ({page}, use) => {
 		await use(new MultiFactorAuthenticationConfigurationPage(page));
 	},
+	timeBasedOneTimePasswordConfigurationPage: async ({page}, use) => {
+		await use(new TimeBasedOneTimePasswordConfigurationPage(page));
+	},
 });
 
-export {multiFactorAuthenticationConfigurationPageTest};
+export {multiFactorAuthenticationPagesTest};

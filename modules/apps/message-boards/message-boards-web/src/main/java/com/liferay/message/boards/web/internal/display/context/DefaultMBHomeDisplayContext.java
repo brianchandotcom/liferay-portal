@@ -9,6 +9,7 @@ import com.liferay.message.boards.display.context.MBHomeDisplayContext;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.web.internal.display.context.helper.MBRequestHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.UUID;
 
@@ -36,7 +37,8 @@ public class DefaultMBHomeDisplayContext implements MBHomeDisplayContext {
 		}
 
 		return LanguageUtil.format(
-			_mbRequestHelper.getRequest(), "edit-x", category.getName(), false);
+			_mbRequestHelper.getRequest(), "edit-x",
+			HtmlUtil.escape(category.getName()), false);
 	}
 
 	@Override

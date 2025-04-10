@@ -11,6 +11,7 @@ import {z} from 'zod';
 import FooterButtons from '../../../../../../../components/FooterButtons';
 import {useMarketplaceContext} from '../../../../../../../context/MarketplaceContext';
 import {Analytics} from '../../../../../../../core/Analytics';
+import {MarketplaceProduct} from '../../../../../../../entity/MarketplaceProduct';
 import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOrderId';
 import {Liferay} from '../../../../../../../liferay/liferay';
 import zodSchema from '../../../../../../../schema/zod';
@@ -22,7 +23,6 @@ import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
 import {CreateLicenseForm, StepCreateLicense, StepsInformation} from './types';
-import {MarketplaceProduct} from '../../../../../../../entity/MarketplaceProduct';
 
 import './index.scss';
 

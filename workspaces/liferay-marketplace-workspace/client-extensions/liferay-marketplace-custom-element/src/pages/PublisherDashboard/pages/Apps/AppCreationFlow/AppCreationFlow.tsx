@@ -10,6 +10,7 @@ import useSWR from 'swr';
 import AppToolbar from '../../../../../components/AppPublish/Navbar';
 import Loading from '../../../../../components/Loading';
 import {AppFlowList} from '../../../../../components/NewAppFlowList/AppFlowList';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 import {MarketplaceTaxonomyVocabularies} from '../../../../../entity/MarketplaceTaxonomyVocabulary';
 import {PRODUCT_TYPE_VOCABULARY} from '../../../../../enums/Product';
 import {ProductVocabulary} from '../../../../../enums/ProductVocabulary';
@@ -28,7 +29,6 @@ import {ProvideAppSupportAndHelpPage} from './ProvideAppSupportAndHelpPage/Provi
 import {ProvideVersionDetailsPage} from './ProvideVersionDetailsPage/ProvideVersionDetailsPage';
 import {ReviewAndSubmitAppPage} from './ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 import {CustomizeAppStorefrontPage} from './StorefrontPage/CustomizeAppStorefrontPage';
-import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 
 import './AppCreationFlow.scss';
 

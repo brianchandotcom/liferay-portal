@@ -109,7 +109,7 @@ public class StructuresSectionDisplayContext {
 							"/structure-usages"),
 						_themeDisplay),
 					"objectDefinitionId", "{id}"),
-				null, "viewUsages",
+				"list-ul", "viewUsages",
 				LanguageUtil.get(_httpServletRequest, "view-usages"), "get",
 				null, null),
 			new FDSActionDropdownItem(

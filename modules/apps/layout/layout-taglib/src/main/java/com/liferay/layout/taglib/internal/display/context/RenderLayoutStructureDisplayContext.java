@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -663,16 +664,16 @@ public class RenderLayoutStructureDisplayContext {
 			JSONObject messageJSONObject =
 				successMessageJSONObject.getJSONObject("message");
 
-			successMessage = messageJSONObject.getString(
-				_themeDisplay.getLanguageId());
+			successMessage = HtmlUtil.escape(
+				messageJSONObject.getString(_themeDisplay.getLanguageId()));
 
 			if (Validator.isNull(successMessage)) {
 				String siteDefaultLanguageId = LanguageUtil.getLanguageId(
 					PortalUtil.getSiteDefaultLocale(
 						_themeDisplay.getScopeGroupId()));
 
-				successMessage = messageJSONObject.getString(
-					siteDefaultLanguageId);
+				successMessage = HtmlUtil.escape(
+					messageJSONObject.getString(siteDefaultLanguageId));
 			}
 		}
 

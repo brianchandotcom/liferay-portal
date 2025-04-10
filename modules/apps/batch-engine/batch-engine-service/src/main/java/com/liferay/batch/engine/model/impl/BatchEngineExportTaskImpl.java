@@ -27,8 +27,8 @@ public class BatchEngineExportTaskImpl extends BatchEngineExportTaskBaseImpl {
 	}
 
 	@Override
-	public void setFieldNamesList(List<String> fieldNamesList) {
-		setFieldNames(StringUtil.merge(fieldNamesList, StringPool.COMMA));
+	public void setFieldNamesList(List<String> fieldNames) {
+		setFieldNames(StringUtil.merge(fieldNames, StringPool.COMMA));
 	}
 
 }

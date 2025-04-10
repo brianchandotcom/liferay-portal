@@ -1914,6 +1914,44 @@ public class RenderLayoutStructureTagTest {
 							"received"),
 					"</div>"),
 				formItemId, infoField, layout);
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid());
+
+			LayoutStructure layoutStructure =
+				_layoutStructureProvider.getLayoutStructure(
+					draftLayout.getPlid(), segmentsExperienceId);
+
+			List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+				layoutStructure.getFormStyledLayoutStructureItems();
+
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				formStyledLayoutStructureItems.get(0);
+
+			String message =
+				"<script>alert('" + RandomTestUtil.randomString() +
+					"')</script>";
+
+			formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+				JSONUtil.put(
+					"message",
+					JSONUtil.put(LocaleUtil.toLanguageId(locale), message)
+				).put(
+					"type", "embedded"
+				));
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					_group.getGroupId(), draftLayout.getPlid(),
+					segmentsExperienceId, layoutStructure.toString());
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			_testRenderFormWithSuccessMessage(
+				HtmlUtil.escape(message), formItemId, infoField, layout);
 		}
 	}
 

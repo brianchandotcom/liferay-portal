@@ -44,15 +44,17 @@ public class AccountEntryServiceUtil {
 	}
 
 	public static AccountEntry addAccountEntry(
-			long userId, long parentAccountEntryId, String name,
-			String description, String[] domains, String email,
-			byte[] logoBytes, String taxIdNumber, String type, int status,
+			String externalReferenceCode, long userId,
+			long parentAccountEntryId, String name, String description,
+			String[] domains, String email, byte[] logoBytes,
+			String taxIdNumber, String type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAccountEntry(
-			userId, parentAccountEntryId, name, description, domains, email,
-			logoBytes, taxIdNumber, type, status, serviceContext);
+			externalReferenceCode, userId, parentAccountEntryId, name,
+			description, domains, email, logoBytes, taxIdNumber, type, status,
+			serviceContext);
 	}
 
 	public static AccountEntry addOrUpdateAccountEntry(
@@ -156,17 +158,17 @@ public class AccountEntryServiceUtil {
 	}
 
 	public static AccountEntry updateAccountEntry(
-			long accountEntryId, long parentAccountEntryId, String name,
-			String description, boolean deleteLogo, String[] domains,
-			String emailAddress, byte[] logoBytes, String taxIdNumber,
-			int status,
+			String externalReferenceCode, long accountEntryId,
+			long parentAccountEntryId, String name, String description,
+			boolean deleteLogo, String[] domains, String emailAddress,
+			byte[] logoBytes, String taxIdNumber, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateAccountEntry(
-			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
-			domains, emailAddress, logoBytes, taxIdNumber, status,
-			serviceContext);
+			externalReferenceCode, accountEntryId, parentAccountEntryId, name,
+			description, deleteLogo, domains, emailAddress, logoBytes,
+			taxIdNumber, status, serviceContext);
 	}
 
 	public static AccountEntry updateDefaultBillingAddressId(

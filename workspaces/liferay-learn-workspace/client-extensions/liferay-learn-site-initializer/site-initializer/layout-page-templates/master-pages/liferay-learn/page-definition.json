@@ -4,6 +4,9 @@
 		"pageElements": [
 			{
 				"definition": {
+					"cssClasses": [
+						"public-site-navigation-container"
+					],
 					"fragment": {
 						"key": "public-sites-navigation",
 						"siteKey": "Liferay Learn"
@@ -45,9 +48,6 @@
 							}
 						}
 					],
-					"fragmentStyle": {
-						"paddingBottom": "7rem"
-					},
 					"indexed": true
 				},
 				"id": "34c3bff4-7af8-5104-323a-861fbf5e37e8",

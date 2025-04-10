@@ -2,6 +2,14 @@
 	display: none;
 }
 
+.public-site-navigation-container {
+	left: 0;
+	position: sticky;
+	top: 0;
+	width: 100%;
+	z-index: 99;  
+}
+
 .search-account-container {
 	padding-right: 8px;
 }
@@ -348,7 +356,8 @@ nav {
 		align-items: stretch;
 		background-color: var(--white);
 		font-size: var(--font-size-base);
-		position: fixed;
+		margin-top: 0;
+		position: inherit;
 		width: 100%;
 		z-index: 3;
 
@@ -493,6 +502,7 @@ nav {
 			.language-dropdown-list-container {
 				display: none;
 				position: absolute;
+				top: 48px;
 				z-index: 3;
 
 				.language-dropdown-list {

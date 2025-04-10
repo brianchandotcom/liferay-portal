@@ -23,7 +23,7 @@
 	/>
 	<MERGE3 max_interval="30000" min_interval="10000" />
 	<FD_SOCK />
-	<FD_ALL timeout="9000" interval="3000" />
+	<FD_ALL interval="3000" timeout="9000" />
 	<VERIFY_SUSPECT timeout="1500" />
 	<BARRIER />
 	<pbcast.NAKACK2 discard_delivered_msgs="true" use_mcast_xmit="false" />

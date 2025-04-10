@@ -61,6 +61,11 @@ public class AllSpacesSectionDisplayContext {
 			dropdownItem -> {
 				dropdownItem.putData("action", "createSpace");
 				dropdownItem.putData(
+					"redirect",
+					StringBundler.concat(
+						_themeDisplay.getPortalURL(),
+						_themeDisplay.getPathMain(), "/cms/e/space-view"));
+				dropdownItem.putData(
 					"title", _language.get(_httpServletRequest, "new-space"));
 				dropdownItem.setIcon("forms");
 				dropdownItem.setLabel(

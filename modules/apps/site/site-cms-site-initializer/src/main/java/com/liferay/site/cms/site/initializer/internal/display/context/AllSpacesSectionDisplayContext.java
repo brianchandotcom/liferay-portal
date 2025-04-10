@@ -89,9 +89,8 @@ public class AllSpacesSectionDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				StringBundler.concat(
-					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
-					"/cms/space_settings?id={id}"),
+				_themeDisplay.getPathFriendlyURLPublic() +
+					"/cms/asset-library/{id}",
 				"cog", "edit",
 				LanguageUtil.get(_httpServletRequest, "space-settings"), "get",
 				"update", null),

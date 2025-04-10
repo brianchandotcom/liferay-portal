@@ -73,17 +73,19 @@ public class AssetCategoryUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<AssetCategory> ancestorCategories = assetCategory.getAncestors();
+		List<AssetCategory> ancestorAssetCategories =
+			assetCategory.getAncestors();
 
-		Collections.reverse(ancestorCategories);
+		Collections.reverse(ancestorAssetCategories);
 
-		for (AssetCategory ancestorCategory : ancestorCategories) {
+		for (AssetCategory ancestorAssetCategory : ancestorAssetCategories) {
 			portletURL.setParameter(
-				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
+				"categoryId",
+				String.valueOf(ancestorAssetCategory.getCategoryId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				httpServletRequest,
-				ancestorCategory.getTitle(themeDisplay.getLocale()),
+				ancestorAssetCategory.getTitle(themeDisplay.getLocale()),
 				portletURL.toString(), null, portletBreadcrumbEntry);
 		}
 

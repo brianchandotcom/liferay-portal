@@ -17,13 +17,13 @@ import java.util.List;
 public class AssetVocabularyUtil {
 
 	public static List<AssetVocabulary> filterVocabularies(
-		List<AssetVocabulary> vocabularies, String className,
+		List<AssetVocabulary> assetVocabularies, String className,
 		long classTypePK) {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return ListUtil.filter(
-			vocabularies,
+			assetVocabularies,
 			assetVocabulary ->
 				assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
 					classNameId, classTypePK));

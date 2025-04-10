@@ -103,14 +103,14 @@ public class AssetCategoriesNavigationDisplayContext {
 	}
 
 	public List<AssetVocabulary> getVocabularies() throws PortalException {
-		if (_vocabularies != null) {
-			return _vocabularies;
+		if (_assetVocabularies != null) {
+			return _assetVocabularies;
 		}
 
-		List<AssetVocabulary> vocabularies = new ArrayList<>();
+		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
 
 		if (_vocabularyIds == null) {
-			vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
+			assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						_themeDisplay.getScopeGroupId()),
@@ -122,18 +122,18 @@ public class AssetCategoriesNavigationDisplayContext {
 					AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
 
 				if (vocabulary != null) {
-					vocabularies.add(vocabulary);
+					assetVocabularies.add(vocabulary);
 				}
 			}
 		}
 
-		_vocabularies = ListUtil.sort(
-			vocabularies,
+		_assetVocabularies = ListUtil.sort(
+			assetVocabularies,
 			new AssetVocabularyGroupLocalizedTitleComparator(
 				_themeDisplay.getScopeGroupId(), _themeDisplay.getLocale(),
 				true));
 
-		return _vocabularies;
+		return _assetVocabularies;
 	}
 
 	public boolean hasCategories() throws PortalException {
@@ -155,15 +155,15 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> categories = ListUtil.sort(
+		List<AssetCategory> assetCategories = ListUtil.sort(
 			AssetCategoryServiceUtil.getVocabularyRootCategories(
 				groupId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null),
 			new AssetCategoryAssetVocabularyLocalizedTitleComparator(
 				vocabularyId, _themeDisplay.getLocale(), true));
 
-		for (AssetCategory category : categories) {
-			categoriesJSONArray.put(_getCategoryJSONObject(category));
+		for (AssetCategory assetCategory : assetCategories) {
+			categoriesJSONArray.put(_getCategoryJSONObject(assetCategory));
 		}
 
 		return categoriesJSONArray;
@@ -194,13 +194,14 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		JSONArray childCategoriesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<AssetCategory> childCategories = ListUtil.sort(
+		List<AssetCategory> childAssetCategories = ListUtil.sort(
 			AssetCategoryServiceUtil.getChildCategories(categoryId),
 			new AssetCategoryAssetVocabularyLocalizedTitleComparator(
 				0, _themeDisplay.getLocale(), true));
 
-		for (AssetCategory childCategory : childCategories) {
-			childCategoriesJSONArray.put(_getCategoryJSONObject(childCategory));
+		for (AssetCategory childAssetCategory : childAssetCategories) {
+			childCategoriesJSONArray.put(
+				_getCategoryJSONObject(childAssetCategory));
 		}
 
 		return childCategoriesJSONArray;
@@ -251,13 +252,13 @@ public class AssetCategoriesNavigationDisplayContext {
 		return _vocabulariesJSONArray;
 	}
 
+	private List<AssetVocabulary> _assetVocabularies;
 	private Long _categoryId;
 	private final boolean _hidePortletWhenEmpty;
 	private final HttpServletRequest _httpServletRequest;
 	private String _namespace;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
-	private List<AssetVocabulary> _vocabularies;
 	private JSONArray _vocabulariesJSONArray;
 	private long[] _vocabularyIds;
 

@@ -8,7 +8,7 @@ import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import ManagementBar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/ManagementBar';
+import StructureBuilderManagementBar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/StructureBuilderManagementBar';
 import {State} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 import StructureService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/StructureService';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
@@ -35,12 +35,12 @@ const renderComponent = ({state}: Props = {}) => {
 		<MockStateProvider
 			state={{...state, fields: DEFAULT_FIELDS, spaces: 'all'}}
 		>
-			<ManagementBar />
+			<StructureBuilderManagementBar />
 		</MockStateProvider>
 	);
 };
 
-describe('ManagementBar', () => {
+describe('StructureBuilderManagementBar', () => {
 	beforeAll(() => {
 		StructureService.createStructure = jest.fn().mockResolvedValue({id: 1});
 		StructureService.updateStructure = jest.fn();

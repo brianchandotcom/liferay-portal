@@ -147,7 +147,7 @@ public class AddStructuredContentItemStrutsActionTest {
 				_group, _layout);
 
 		mockHttpServletRequest.setParameter(
-			"groupId", String.valueOf(_group.getGroupId()));
+			"groupId", String.valueOf(_depotEntry.getGroupId()));
 		mockHttpServletRequest.setParameter(
 			"objectDefinitionId",
 			String.valueOf(_objectDefinition.getObjectDefinitionId()));
@@ -239,8 +239,9 @@ public class AddStructuredContentItemStrutsActionTest {
 
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
-				_group.getGroupId(), _objectDefinition.getObjectDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				_depotEntry.getGroupId(),
+				_objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			objectEntries.toString(), count, objectEntries.size());

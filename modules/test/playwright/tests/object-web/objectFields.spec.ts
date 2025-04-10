@@ -19,6 +19,8 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
+import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {AsyncArray} from './utils/AsyncArray';
 import {createObjectFields, mockObjectFields} from './utils/mockObjectFields';
 
@@ -1006,5 +1008,63 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				`The object field "${integerFieldName}" cannot be deleted because it is used in a unique composite key validation. To remove this object field, you must first delete the associated unique composite key validation.`
 			)
 		).toBeVisible();
+	});
+
+	test('can only edit external reference code of custom fields through the UI', async ({
+		apiHelpers,
+		objectFieldsPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+		await objectFieldsPage.openObjectField(
+			objectDefinition.objectFields[0].label['en_US']
+		);
+
+		await expect(
+			objectFieldsPage.externalReferenceCodeField
+		).toBeDisabled();
+
+		const field = objectDefinition.objectFields.find((item) => {
+			return !item.system;
+		});
+
+		await objectFieldsPage.openObjectField(field.label['en_US']);
+
+		await objectFieldsPage.externalReferenceCodeField.click();
+
+		const ERCValue = getRandomString();
+
+		await objectFieldsPage.externalReferenceCodeField.fill(ERCValue);
+
+		await objectFieldsPage.editFieldSaveButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:The object field was updated successfully.'
+		);
+
+		await objectFieldsPage.openObjectField(field.label['en_US']);
+
+		await page
+			.frameLocator('iframe')
+			.getByText('Field')
+			.first()
+			.waitFor({state: 'visible'});
+
+		expect(objectFieldsPage.externalReferenceCodeField).toHaveValue(
+			ERCValue
+		);
 	});
 });

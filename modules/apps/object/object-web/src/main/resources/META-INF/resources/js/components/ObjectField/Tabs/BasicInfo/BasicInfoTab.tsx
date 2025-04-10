@@ -37,7 +37,6 @@ interface BasicInfoTabProps {
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	isDefaultStorageType: boolean;
 	modelBuilder?: boolean;
 	objectDefinition?: ObjectDefinition;
 	objectFieldBusinessTypes: ObjectFieldBusinessType[];
@@ -58,7 +57,6 @@ export function BasicInfoTab({
 	errors,
 	filterOperators,
 	handleChange,
-	isDefaultStorageType,
 	modelBuilder = false,
 	objectDefinition,
 	objectFieldBusinessTypes,
@@ -216,33 +214,32 @@ export function BasicInfoTab({
 				/>
 			</ContainerWrapper>
 
-			{Liferay.FeatureFlags['LPS-135430'] && !isDefaultStorageType && (
-				<ContainerWrapper
-					collapsable
-					defaultExpanded
-					displayTitle={Liferay.Language.get('external-data-source')}
-					displayType="unstyled"
-					title={Liferay.Language.get('external-data-source')}
-				>
-					<Input
-						className={classNames({
-							'lfr-objects__edit-object-field-model-builder-panel':
-								modelBuilder,
-						})}
-						label={Liferay.Language.get('external-reference-code')}
-						name="externalReferenceCode"
-						onBlur={(event) => {
-							event.stopPropagation();
+			<ContainerWrapper
+				collapsable
+				defaultExpanded
+				displayTitle={Liferay.Language.get('external-data-source')}
+				displayType="unstyled"
+				title={Liferay.Language.get('external-data-source')}
+			>
+				<Input
+					className={classNames({
+						'lfr-objects__edit-object-field-model-builder-panel':
+							modelBuilder,
+					})}
+					disabled={values.system}
+					label={Liferay.Language.get('external-reference-code')}
+					name="externalReferenceCode"
+					onBlur={(event) => {
+						event.stopPropagation();
 
-							if (onSubmit) {
-								onSubmit();
-							}
-						}}
-						onChange={handleChange}
-						value={values.externalReferenceCode}
-					/>
-				</ContainerWrapper>
-			)}
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
+					onChange={handleChange}
+					value={values.externalReferenceCode}
+				/>
+			</ContainerWrapper>
 		</>
 	);
 }

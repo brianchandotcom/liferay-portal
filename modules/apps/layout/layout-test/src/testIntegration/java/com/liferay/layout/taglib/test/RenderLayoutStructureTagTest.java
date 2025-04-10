@@ -1882,6 +1882,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-52923")
 	public void testRenderFormWithSuccessMessage() throws Exception {
 		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
 

@@ -142,7 +142,7 @@ test('Displays empty state when Analytics Cloud is not connected', async ({
 
 	await page.locator('.tab-content a').click();
 
-	await expect(page.getByText('Connect Analytics Cloud')).toBeVisible();
+	await expect(page.getByText('Connect to Analytics Cloud')).toBeVisible();
 });
 
 test('Displays empty state when asset belongs to an asset library with no site connected', async ({

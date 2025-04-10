@@ -74,14 +74,11 @@ initContainers:
                                 cp -frv /opt/liferay/data/* /temp/liferay/data
                             fi
 
-                            if [ -d /opt/liferay/deploy ] && [ ! -z "$(ls -A /opt/liferay/deploy)" ]
+                            if [ -n "$(ls -A /opt/liferay/deploy 2>/dev/null)" ] && { [ ! -d /temp/liferay/data/license ] || [ ! -f /temp/liferay/data/license/*.li ]; }
                             then
-                                if [ ! -d /temp/liferay/data/license ] || [ ! -e /temp/liferay/data/license/*.li ]
-                                then
-                                    mkdir -p /temp/liferay/deploy
+                                mkdir -p /temp/liferay/deploy
 
-                                    cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
-                                fi
+                                cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
                             fi
                 image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                 imagePullPolicy: {{ .image.pullPolicy }}

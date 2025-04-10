@@ -127,7 +127,7 @@ export default function EditGeneralInfo({
 					</label>
 
 					<ClayInput
-						id={Liferay.Language.get('name')}
+						aria-label={Liferay.Language.get('name')}
 						onChange={({target: {value}}) => onChangeName(value)}
 						required
 						type="text"
@@ -149,6 +149,7 @@ export default function EditGeneralInfo({
 					<label>{Liferay.Language.get('description')}</label>
 
 					<ClayInput
+						aria-label={Liferay.Language.get('description')}
 						component="textarea"
 						onChange={({target: {value}}) =>
 							onChangeDescription(value)
@@ -165,7 +166,11 @@ export default function EditGeneralInfo({
 				</div>
 
 				<label className="toggle-switch">
-					<ClayToggle onToggle={setToggle} toggled={toggled} />
+					<ClayToggle
+						aria-label="Multi Value"
+						onToggle={setToggle}
+						toggled={toggled}
+					/>
 
 					{Liferay.Language.get('allow-multiple-categories')}
 
@@ -193,7 +198,10 @@ export default function EditGeneralInfo({
 						</ClayTooltipProvider>
 					</label>
 
-					<ClaySelectWithOption options={VISIBILITY_OPTIONS} />
+					<ClaySelectWithOption
+						aria-label={Liferay.Language.get('visibility')}
+						options={VISIBILITY_OPTIONS}
+					/>
 				</div>
 			</ClayForm.Group>
 

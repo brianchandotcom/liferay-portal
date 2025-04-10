@@ -88,6 +88,7 @@ export default function CategorizationSpaces({
 
 			{!checkbox && (
 				<ClayMultiSelect
+					aria-label={Liferay.Language.get('space-selector')}
 					disabled={checkbox}
 					id="multiSelect"
 					loadingState={3}

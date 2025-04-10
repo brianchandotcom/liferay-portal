@@ -28,6 +28,7 @@ import {ProvideAppSupportAndHelpPage} from './ProvideAppSupportAndHelpPage/Provi
 import {ProvideVersionDetailsPage} from './ProvideVersionDetailsPage/ProvideVersionDetailsPage';
 import {ReviewAndSubmitAppPage} from './ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 import {CustomizeAppStorefrontPage} from './StorefrontPage/CustomizeAppStorefrontPage';
+import {useMarketplaceContext} from '../../../../../context/MarketplaceContext';
 
 import './AppCreationFlow.scss';
 
@@ -43,6 +44,7 @@ type AppCreationFlowProps = {
 export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 	const [{appERC, appLogo, appName, appProductId, priceModel}] =
 		useAppContext();
+	const {properties} = useMarketplaceContext();
 	const [appFlowListItems, setAppFlowListItems] =
 		useState(initialFLowListItems);
 	const [currentFlow, setCurrentFlow] = useState('create');
@@ -53,8 +55,11 @@ export function AppCreationFlow({catalogId}: AppCreationFlowProps) {
 
 	const {data: {areas = [], categories = [], productType, tags = []} = {}} =
 		useSWR('/taxonomy-vocabularies', async () => {
-			const data =
-				await HeadlessAdminTaxonomyImpl.getTaxonomyVocabulariesWithCategories();
+			const fn = properties.useSiteTaxonomyVocabularyQuery
+				? HeadlessAdminTaxonomyImpl.getSiteTaxonomyVocabulariesWithCategories
+				: HeadlessAdminTaxonomyImpl.getTaxonomyVocabulariesWithCategories;
+
+			const data = await fn();
 
 			const marketplaceTaxonomyVocabularies =
 				new MarketplaceTaxonomyVocabularies(data.items);

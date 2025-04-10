@@ -312,6 +312,7 @@ type DefaultProperties = {
 	productId: string;
 	trialAccountCheck: 'false' | 'true';
 	trialEulaURL: string;
+	useSiteTaxonomyVocabularyQuery: boolean;
 };
 
 type DeliveryProduct = {

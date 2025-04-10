@@ -13,12 +13,45 @@ class HeadlessAdminTaxonomy {
 		);
 	}
 
+	/**
+	 * @deprecated use {getSiteTaxonomyVocabulariesWithCategories} for the 2025.Q2 or greater
+	 * @description Due a recent change the query was renamed from taxonomyVocabularies to siteTaxonomyVocabularies
+	 */
+
 	async getTaxonomyVocabulariesWithCategories() {
 		const response = await fetcher.post<{
 			data: {taxonomyVocabularies: APIResponse<TaxonomyVocabulary>};
 		}>('/o/graphql', {
 			query: `{
 				taxonomyVocabularies(siteKey: "${Liferay.ThemeDisplay.getScopeGroupId()}") {
+					items {
+						id
+						name
+						taxonomyCategories {
+							items {
+								externalReferenceCode
+								id
+								name
+							}
+						}
+					}
+					lastPage
+					page
+					pageSize
+					totalCount
+				}
+			}`,
+		});
+
+		return response.data.taxonomyVocabularies;
+	}
+
+	async getSiteTaxonomyVocabulariesWithCategories() {
+		const response = await fetcher.post<{
+			data: {taxonomyVocabularies: APIResponse<TaxonomyVocabulary>};
+		}>('/o/graphql', {
+			query: `{
+				taxonomyVocabularies: siteTaxonomyVocabularies(siteKey: "${Liferay.ThemeDisplay.getScopeGroupId()}") {
 					items {
 						id
 						name

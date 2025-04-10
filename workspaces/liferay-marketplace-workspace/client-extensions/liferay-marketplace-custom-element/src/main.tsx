@@ -36,6 +36,10 @@ class WebComponent extends HTMLElement {
 							(this.getAttribute('trialAccountCheck') as any) ||
 							'true',
 						trialEulaURL: this.getAttribute('trialEulaURL') || '',
+						useSiteTaxonomyVocabularyQuery:
+							this.getAttribute(
+								'useSiteTaxonomyVocabularyQuery'
+							) === 'true',
 					}}
 				/>
 			);

@@ -5,7 +5,7 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Security";
+	property testray.main.component.name = "Login";
 
 	setUp {
 		TestCase.setUpPortalInstance();

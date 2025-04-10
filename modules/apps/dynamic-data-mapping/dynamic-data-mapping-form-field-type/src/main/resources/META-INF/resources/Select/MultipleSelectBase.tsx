@@ -53,6 +53,7 @@ const MultipleSelectBase = ({
 			{!loading && (
 				<ClayMultiSelect
 					{...accessibleProps}
+					clearAllTitle={Liferay.Language.get('clear-all')}
 					disabled={readOnly}
 					items={items}
 					onItemsChange={(itemsChanged: MultiSelectItem[]) => {

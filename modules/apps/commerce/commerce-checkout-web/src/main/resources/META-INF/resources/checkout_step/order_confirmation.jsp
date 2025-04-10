@@ -11,10 +11,11 @@
 OrderConfirmationCheckoutStepDisplayContext orderConfirmationCheckoutStepDisplayContext = (OrderConfirmationCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 CommerceOrderPayment commerceOrderPayment = orderConfirmationCheckoutStepDisplayContext.getCommerceOrderPayment();
+CommerceOrder commerceOrder = orderConfirmationCheckoutStepDisplayContext.getCommerceOrder();
 
 String commerceOrderPaymentContent = null;
 
-int paymentStatus = CommerceOrderPaymentConstants.STATUS_PENDING;
+int paymentStatus = commerceOrder.getPaymentStatus();
 
 if (commerceOrderPayment != null) {
 	commerceOrderPaymentContent = commerceOrderPayment.getContent();

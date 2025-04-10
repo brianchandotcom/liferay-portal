@@ -100,7 +100,7 @@ public class FlowDiscoveryCDIExtension implements Extension {
     
     void beforeBeanDiscovery(@Observes final BeforeBeanDiscovery event, BeanManager beanManager) {
         AnnotatedType flowDiscoveryHelper = beanManager.createAnnotatedType(FlowDiscoveryCDIHelper.class);
-        event.addAnnotatedType(flowDiscoveryHelper);
+        event.addAnnotatedType(flowDiscoveryHelper, null);
         
     }
     
@@ -116,3 +116,4 @@ public class FlowDiscoveryCDIExtension implements Extension {
     
     
 }
+/* @generated */

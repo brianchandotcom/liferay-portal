@@ -1,0 +1,19 @@
+diff --git a/com/sun/faces/flow/FlowDiscoveryCDIExtension.java b/com/sun/faces/flow/FlowDiscoveryCDIExtension.java
+index d7e744e323f7f..7b781ad2fa274 100644
+--- a/com/sun/faces/flow/FlowDiscoveryCDIExtension.java
++++ b/com/sun/faces/flow/FlowDiscoveryCDIExtension.java
+@@ -100,7 +100,7 @@ public class FlowDiscoveryCDIExtension implements Extension {
+     
+     void beforeBeanDiscovery(@Observes final BeforeBeanDiscovery event, BeanManager beanManager) {
+         AnnotatedType flowDiscoveryHelper = beanManager.createAnnotatedType(FlowDiscoveryCDIHelper.class);
+-        event.addAnnotatedType(flowDiscoveryHelper);
++        event.addAnnotatedType(flowDiscoveryHelper, null);
+         
+     }
+     
+@@ -116,3 +116,4 @@ public class FlowDiscoveryCDIExtension implements Extension {
+     
+     
+ }
++/* @generated */
+\ No newline at end of file

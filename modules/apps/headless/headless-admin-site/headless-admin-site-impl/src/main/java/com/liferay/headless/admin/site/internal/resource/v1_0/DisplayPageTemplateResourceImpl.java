@@ -372,6 +372,10 @@ public class DisplayPageTemplateResourceImpl
 		ClassSubtypeReference contentTypeReference =
 			displayPageTemplate.getContentTypeReference();
 
+		if (contentTypeReference == null) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				displayPageTemplate.getExternalReferenceCode(), groupId,

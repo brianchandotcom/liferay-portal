@@ -51,3 +51,21 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 
 	return (await result.json()) as T;
 }
+
+export async function postScopeScopeKeyObjectEntryFolder(
+	scopeKey: string,
+	name: string,
+	parentObjectEntryFolderExternalReferenceCode: string
+) {
+	return await fetch(
+		`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,
+		{
+			body: JSON.stringify({
+				name,
+				parentObjectEntryFolderExternalReferenceCode,
+			}),
+			headers,
+			method: 'POST',
+		}
+	);
+}

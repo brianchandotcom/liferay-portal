@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {useFormik} from 'formik';
+import {FormikHelpers, useFormik} from 'formik';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -24,6 +24,16 @@ type Props = {
 	action: AssetData['action'] | FolderData['action'] | SpaceData['action'];
 	assetLibraries: AssetLibray[];
 	closeModal: () => void;
+	onSubmit?: (
+		values: {
+			groupId: string;
+			name: string;
+		},
+		formikHelpers: FormikHelpers<{
+			groupId: string;
+			name: string;
+		}>
+	) => Promise<any> | void;
 	redirect?: string;
 	title: string;
 };
@@ -32,6 +42,7 @@ export default function CreationModalContent({
 	action,
 	assetLibraries,
 	closeModal,
+	onSubmit,
 	redirect,
 	title,
 }: Props) {
@@ -44,7 +55,7 @@ export default function CreationModalContent({
 						: '',
 				name: '',
 			},
-			onSubmit: (values) => {
+			onSubmit: async (values, formikHelpers) => {
 				if (redirect) {
 					const {groupId, name} = values;
 
@@ -54,9 +65,12 @@ export default function CreationModalContent({
 					url.searchParams.set('groupId', groupId);
 
 					navigate(url.pathname + url.search);
+
+					return;
 				}
-				else {
-					alert(JSON.stringify(values, null, 4));
+
+				if (onSubmit) {
+					await onSubmit(values, formikHelpers);
 				}
 			},
 			validate: (values) =>

@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -39,6 +40,13 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			objectDefinitionSettingLocalService);
 
 		_depotEntryLocalService = depotEntryLocalService;
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"parentObjectEntryFolderExternalReferenceCode",
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES
+		).build();
 	}
 
 	@Override

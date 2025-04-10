@@ -5,7 +5,8 @@
 
 export default function addOnClickToCreationMenuItems(
 	items: {data: {action: string}}[],
-	actions: Record<string, (data: any) => void>
+	actions: Record<string, (data: any, additionalProps?: any) => void>,
+	additionalProps?: any
 ) {
 	return items.map((item: {data?: {action?: string}}) => {
 		return {
@@ -14,7 +15,7 @@ export default function addOnClickToCreationMenuItems(
 				const action = item?.data?.action;
 
 				if (action) {
-					actions[action](item.data);
+					actions[action](item.data, additionalProps);
 				}
 			},
 		};

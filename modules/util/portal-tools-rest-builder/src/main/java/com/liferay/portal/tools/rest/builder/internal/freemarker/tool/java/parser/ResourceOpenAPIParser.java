@@ -209,6 +209,16 @@ public class ResourceOpenAPIParser {
 				sb.append(operation.getDescription());
 				sb.append("\"");
 
+				if ((javaMethodSignature.getOperationId() != null) &&
+					!StringUtil.equals(
+						javaMethodSignature.getMethodName(),
+						javaMethodSignature.getOperationId())) {
+
+					sb.append(", operationId=\"");
+					sb.append(javaMethodSignature.getOperationId());
+					sb.append("\"");
+				}
+
 				if (getMultipartBodySchemas(javaMethodSignature) != null) {
 					sb.append(", requestBody = ");
 					sb.append("@io.swagger.v3.oas.annotations.parameters.");

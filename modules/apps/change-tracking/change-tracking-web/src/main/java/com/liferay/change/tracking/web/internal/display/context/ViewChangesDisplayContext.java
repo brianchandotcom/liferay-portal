@@ -249,9 +249,9 @@ public class ViewChangesDisplayContext {
 						).setParameter(
 							"ctCollectionId", _ctCollection.getCtCollectionId()
 						).buildString(),
-						"move-folder", "move-changes", "post",
+						"move-folder", "move-changes",
 						_language.get(_httpServletRequest, "move-changes"),
-						"move-changes", null));
+						"post", "move-changes", null));
 			}
 
 			if (_ctCollection.getStatus() == WorkflowConstants.STATUS_DRAFT) {
@@ -266,9 +266,9 @@ public class ViewChangesDisplayContext {
 						).setParameter(
 							"ctCollectionId", _ctCollection.getCtCollectionId()
 						).buildString(),
-						"trash", "view-discard", "delete",
-						_language.get(_httpServletRequest, "discard"),
-						"view-discard", null));
+						"trash", "view-discard",
+						_language.get(_httpServletRequest, "discard-changes"),
+						"delete", "view-discard", null));
 			}
 		}
 

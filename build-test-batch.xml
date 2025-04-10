@@ -1168,16 +1168,10 @@ app.server.type=@{app.server.type}]]></echo>
 				</fileset>
 			</chmod>
 
-			<tar
-				basedir="."
-				compression="gzip"
-				destfile="liferay-portal-bundle-@{app.server.type}.tar.gz"
-				includes="bundles/**"
-				longfile="posix"
-			/>
-
 			<execute>
 				<![CDATA[
+					tar --format=posix -czf liferay-portal-bundle-@{app.server.type}.tar.gz bundles/
+
 					tar --file=liferay-portal-bundle-@{app.server.type}.tar.gz --gzip --list --verbose
 				]]>
 			</execute>

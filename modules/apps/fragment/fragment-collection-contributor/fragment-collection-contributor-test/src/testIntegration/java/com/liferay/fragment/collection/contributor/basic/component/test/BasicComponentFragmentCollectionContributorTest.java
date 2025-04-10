@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -56,6 +58,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Víctor Galán
  */
+@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 public class BasicComponentFragmentCollectionContributorTest {
 
@@ -69,6 +72,39 @@ public class BasicComponentFragmentCollectionContributorTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	@TestInfo("LPD-51802")
+	public void testAccordionAccessibility() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-accordion");
+
+		Document document = Jsoup.parseBodyFragment(
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				_fragmentEntryLinkService.addFragmentEntryLink(
+					null, _group.getGroupId(), 0,
+					fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, null,
+					fragmentEntry.getType(),
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId())),
+				_getFragmentEntryProcessorContext(
+					layout, LocaleUtil.getMostRelevantLocale())));
+
+		Elements elements = document.select("[aria-controls]");
+
+		Assert.assertEquals(elements.toString(), 1, elements.size());
+
+		for (Element element : elements) {
+			Assert.assertNotNull(
+				document.getElementById(element.attr("aria-controls")));
+		}
 	}
 
 	@Test

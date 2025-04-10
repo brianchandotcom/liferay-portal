@@ -45,14 +45,17 @@ const INITIAL_CACHE: Cache = {
 };
 
 const CacheContext = createContext<{
+	broadcast: BroadcastChannel;
 	cache: Cache;
 	update: <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => void;
 }>({
+	broadcast: {} as BroadcastChannel,
 	cache: INITIAL_CACHE,
 	update: () => {},
 });
 
 function CacheContextProvider({children}: {children: ReactNode}) {
+	const [broadcast] = useState(() => new BroadcastChannel('update-cache'));
 	const [cache, setCache] = useState(INITIAL_CACHE);
 
 	const update = <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => {
@@ -66,14 +69,14 @@ function CacheContextProvider({children}: {children: ReactNode}) {
 	};
 
 	return (
-		<CacheContext.Provider value={{cache, update}}>
+		<CacheContext.Provider value={{broadcast, cache, update}}>
 			{children}
 		</CacheContext.Provider>
 	);
 }
 
 function useCache<T extends CacheKey>(key: T): Cache[T] {
-	const {cache, update} = useContext(CacheContext);
+	const {broadcast, cache, update} = useContext(CacheContext);
 
 	const item = cache[key];
 
@@ -89,15 +92,34 @@ function useCache<T extends CacheKey>(key: T): Cache[T] {
 		});
 	}, [item, key, update]);
 
+	useEffect(() => {
+		const updateCache = ({data}: MessageEvent) => {
+			if (data.type !== 'updateCache' || data.key !== key) {
+				return;
+			}
+
+			item.fetcher().then((response) => {
+				update(key, {data: response} as Partial<Cache[T]>);
+			});
+		};
+
+		broadcast.addEventListener('message', updateCache);
+
+		return () => {
+			broadcast.removeEventListener('message', updateCache);
+		};
+	}, [broadcast, item, update, key]);
+
 	return item;
 }
 
-function useClearCache() {
-	const {update} = useContext(CacheContext);
+function useUpdateCache() {
+	const {broadcast} = useContext(CacheContext);
 
-	return (key: CacheKey) => update(key, INITIAL_CACHE[key]);
+	return (key: CacheKey) => {
+		broadcast.postMessage({key, type: 'updateCache'});
+	};
 }
-
 export default CacheContextProvider;
 
-export {CacheContext, useCache, useClearCache};
+export {CacheContext, useCache, useUpdateCache};

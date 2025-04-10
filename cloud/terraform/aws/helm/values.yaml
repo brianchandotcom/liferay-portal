@@ -22,15 +22,15 @@ customEnvFrom:
     -   secretRef:
             name: managed-service-details
 customVolumeMounts:
-    -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
-        name: liferay-configmap
-        subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
     -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
         name: liferay-configmap
         subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
     -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
         name: liferay-configmap
         subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+    -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+        name: liferay-configmap
+        subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
 dependencies:
     -   name: database
         portalProperties: |

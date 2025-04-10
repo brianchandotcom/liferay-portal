@@ -60,7 +60,7 @@
 			"label": {
 				"en_US": "Current Liferay Version"
 			},
-			"listTypeDefinitionExternalReferenceCode": "VERSION-OF-LIFERAY-SOFTWARE",
+			"listTypeDefinitionExternalReferenceCode": "DXP-MINOR-VERSION-AND-PORTAL-MAJOR-VERSION",
 			"localized": false,
 			"name": "currentLiferayVersion",
 			"readOnly": "false",
@@ -204,7 +204,7 @@
 			"label": {
 				"en_US": "New Liferay Version"
 			},
-			"listTypeDefinitionExternalReferenceCode": "VERSION-OF-LIFERAY-SOFTWARE",
+			"listTypeDefinitionExternalReferenceCode": "DXP-MINOR-VERSION-AND-PORTAL-MAJOR-VERSION",
 			"localized": false,
 			"name": "newLiferayVersion",
 			"readOnly": "false",

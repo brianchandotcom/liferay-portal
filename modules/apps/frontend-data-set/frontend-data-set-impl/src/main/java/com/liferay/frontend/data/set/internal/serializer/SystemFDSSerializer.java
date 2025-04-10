@@ -71,6 +71,20 @@ public class SystemFDSSerializer
 	}
 
 	@Override
+	public String serializeAdditionalAPIURLParameters(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		SystemFDSEntry systemFDSEntry =
+			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
+
+		if (systemFDSEntry == null) {
+			return null;
+		}
+
+		return String.valueOf(systemFDSEntry.getAdditionalAPIURLParameters());
+	}
+
+	@Override
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
@@ -84,8 +98,6 @@ public class SystemFDSSerializer
 		return createFDSAPIURLBuilder(
 			httpServletRequest, systemFDSEntry.getRESTApplication(),
 			systemFDSEntry.getRESTEndpoint(), systemFDSEntry.getRESTSchema()
-		).addQueryString(
-			systemFDSEntry.getAdditionalAPIURLParameters()
 		).build();
 	}
 

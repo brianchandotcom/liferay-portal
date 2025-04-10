@@ -32,6 +32,9 @@ public interface FDSSerializer {
 	public boolean isAvailable(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public String serializeAdditionalAPIURLParameters(
+		String fdsName, HttpServletRequest httpServletRequest);
+
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest);
 

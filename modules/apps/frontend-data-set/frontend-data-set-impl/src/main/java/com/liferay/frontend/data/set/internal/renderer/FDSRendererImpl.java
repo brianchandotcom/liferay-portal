@@ -70,6 +70,19 @@ public class FDSRendererImpl implements FDSRenderer {
 		else {
 			props.putAll(
 				HashMapBuilder.<String, Object>put(
+					"additionalAPIURLParameters",
+					() -> {
+						String additionalAPIURLParameters =
+							fdsSerializer.serializeAdditionalAPIURLParameters(
+								fdsName, httpServletRequest);
+
+						if (Validator.isNull(additionalAPIURLParameters)) {
+							return null;
+						}
+
+						return additionalAPIURLParameters;
+					}
+				).put(
 					"apiURL",
 					() -> {
 						String apiURL = fdsSerializer.serializeAPIURL(

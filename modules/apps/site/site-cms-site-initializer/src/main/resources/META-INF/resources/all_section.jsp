@@ -20,7 +20,7 @@ AllSectionDisplayContext allSectionDisplayContext = (AllSectionDisplayContext)re
 		fdsActionDropdownItems="<%= allSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"
-		itemsPerPage="<%= 10 %>"
+		itemsPerPage="<%= 20 %>"
 		propsTransformer="{AllFDSPropsTransformer} from site-cms-site-initializer"
 		selectedItemsKey="id"
 		selectionType="multiple"

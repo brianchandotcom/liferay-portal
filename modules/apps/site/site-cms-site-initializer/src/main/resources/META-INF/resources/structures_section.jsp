@@ -19,7 +19,7 @@ StructuresSectionDisplayContext structuresSectionDisplayContext = (StructuresSec
 		fdsActionDropdownItems="<%= structuresSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"
-		itemsPerPage="<%= 10 %>"
+		itemsPerPage="<%= 20 %>"
 		propsTransformer="{StructuresFDSPropsTransformer} from site-cms-site-initializer"
 		selectedItemsKey="id"
 		selectionType="multiple"

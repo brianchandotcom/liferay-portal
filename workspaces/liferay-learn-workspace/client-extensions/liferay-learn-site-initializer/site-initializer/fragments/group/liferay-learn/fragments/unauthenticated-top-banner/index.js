@@ -4,14 +4,17 @@
  */
 
 if (!themeDisplay.isSignedIn()) {
-	document.querySelector('.public-site-navigation-container').style.marginTop = '50px';
-	document.querySelector('.public-site-navigation-container').style.top = '50px';
+	const publicSiteNavigationContainer = document.querySelector(
+		'.public-site-navigation-container'
+	);
+	publicSiteNavigationContainer.style.marginTop = '50px';
+	publicSiteNavigationContainer.style.top = '50px';
 
 	document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector('.icon-x').addEventListener('click', () => {
 			document.querySelector('.banner-sign-in').style.display = 'none';
-			document.querySelector('.public-site-navigation-container').style.marginTop = '0';
-			document.querySelector('.public-site-navigation-container').style.top = '0';
+			publicSiteNavigationContainer.style.marginTop = '0';
+			publicSiteNavigationContainer.style.top = '0';
 
 			const navigationContainer = document.querySelector(
 				'.navigation-container'

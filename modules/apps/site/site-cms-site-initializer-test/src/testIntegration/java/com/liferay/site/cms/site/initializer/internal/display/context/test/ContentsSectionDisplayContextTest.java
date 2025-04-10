@@ -144,27 +144,35 @@ public class ContentsSectionDisplayContextTest
 			_getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 1,
+			fdsActionDropdownItems.toString(), 3,
 			fdsActionDropdownItems.size());
 
-		FDSActionDropdownItem fdsActionDropdownItem =
-			fdsActionDropdownItems.get(0);
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(0), "pencil", "edit", "edit", "get",
+			"item");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(1), "password-policies", "permissions",
+			"permissions", "get", "item");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(2), "trash", "delete", "delete",
+			"delete", "item");
+	}
+
+	private void _assertFDSActionDropdownItem(
+		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
+		String label, String method, String type) {
 
 		Assert.assertNotNull(fdsActionDropdownItem);
 
 		Map<String, String> data =
 			(Map<String, String>)fdsActionDropdownItem.get("data");
 
-		Assert.assertNotNull("permissions", data.get("id"));
-		Assert.assertNotNull("get", data.get("method"));
+		Assert.assertEquals(id, data.get("id"));
+		Assert.assertEquals(method, data.get("method"));
 
-		Assert.assertNotNull(fdsActionDropdownItem.get("href"));
-		Assert.assertEquals(
-			"password-policies", fdsActionDropdownItem.get("icon"));
-		Assert.assertEquals("permissions", fdsActionDropdownItem.get("label"));
-		Assert.assertEquals(
-			"modal-permissions", fdsActionDropdownItem.get("target"));
-		Assert.assertEquals("item", fdsActionDropdownItem.get("type"));
+		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
+		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
+		Assert.assertEquals(type, fdsActionDropdownItem.get("type"));
 	}
 
 	private String _getAPIURL() throws Exception {

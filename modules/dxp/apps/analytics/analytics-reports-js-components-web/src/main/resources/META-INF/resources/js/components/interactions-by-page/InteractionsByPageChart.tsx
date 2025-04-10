@@ -180,7 +180,7 @@ const InteractionsByPageChart: React.FC<IInteractionsByPageChartProps> = ({
 					formatTooltipDate(
 						formattedData.combinedData[0]?.[
 							InteractionsByPageDataKey.AxisX
-						] as unknown as Date,
+						] as number,
 						filters.rangeSelector
 					)
 				)}

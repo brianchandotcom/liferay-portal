@@ -53,18 +53,3 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 
 	return (await result.json()) as T;
 }
-
-export async function getAssetsLibrariesByCompany() {
-	await delay(1000);
-
-	return [
-		{
-			id: 1,
-			name: 'Space 1',
-		},
-		{
-			id: 2,
-			name: 'Space 2',
-		},
-	];
-}

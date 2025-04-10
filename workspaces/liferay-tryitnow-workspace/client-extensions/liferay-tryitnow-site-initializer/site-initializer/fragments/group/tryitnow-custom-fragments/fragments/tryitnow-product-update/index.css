@@ -1,15 +1,15 @@
-.fragmentcss_product-update_container h5 {
+.fragmentcss-product-update-container h5 {
 	max-width: 300px;
 }
 
-.fragmentcss_product-update_container .icon-container {
+.fragmentcss-product-update-container .icon-container {
 	align-items: center;
 	display: flex;
 	justify-content: center;
 	position: relative;
 }
 
-.fragmentcss_product-update_container .product-update-container {
+.fragmentcss-product-update-container .product-update-container {
 	border-radius: 10px;
 	border-style: solid;
 	border-width: 1px;
@@ -18,12 +18,12 @@
 	padding: 16px;
 }
 
-.fragmentcss_product-update_container .product-update-info {
+.fragmentcss-product-update-container .product-update-info {
 	display: flex;
 	flex-direction: column;
 	margin-left: 20px;
 }
 
-.fragmentcss_product-update_container .product-update-info .info-item {
+.fragmentcss-product-update-container .product-update-info .info-item {
 	margin-bottom: 4px;
 }

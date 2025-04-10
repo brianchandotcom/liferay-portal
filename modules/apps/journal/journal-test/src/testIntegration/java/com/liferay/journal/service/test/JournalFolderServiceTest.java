@@ -25,13 +25,24 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -815,6 +826,56 @@ public class JournalFolderServiceTest {
 	}
 
 	@Test
+	public void testUpdateFolderWithAdvancedUpdatePermission()
+		throws Exception {
+
+		JournalFolder parentFolder = _journalFolderFixture.addFolder(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
+
+		JournalFolder childFolder = _journalFolderFixture.addFolder(
+			_group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString());
+
+		JournalFolder irrelevantFolder = _journalFolderFixture.addFolder(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString());
+
+		String name = childFolder.getName();
+		String description = childFolder.getDescription();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		User user = UserTestUtil.addUser();
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), JournalFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(childFolder.getFolderId()), role.getRoleId(),
+			new String[] {ActionKeys.ADVANCED_UPDATE});
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user, PermissionCheckerFactoryUtil.create(user))) {
+
+			childFolder = _journalFolderService.updateFolder(
+				_group.getGroupId(), childFolder.getFolderId(),
+				irrelevantFolder.getFolderId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), new long[0],
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT, false,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), user.getUserId()));
+
+			Assert.assertEquals(
+				parentFolder.getFolderId(), childFolder.getParentFolderId());
+			Assert.assertEquals(name, childFolder.getName());
+			Assert.assertEquals(description, childFolder.getDescription());
+		}
+	}
+
+	@Test
 	public void testUpdateParentWithRestriction() throws Exception {
 		JournalFolder parentFolder = _journalFolderFixture.addFolder(
 			_group.getGroupId(),
@@ -901,5 +962,11 @@ public class JournalFolderServiceTest {
 
 	@Inject
 	private JournalFolderService _journalFolderService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -10,7 +10,7 @@ definition {
 	property remote.elasticsearch.enabled = "true";
 	property search.environment.suite.exclude = "true";
 	property test.run.environment = "EE";
-	property testray.main.component.name = "Elasticsearch Impl";
+	property testray.main.component.name = "Search Infrastructure > Elasticsearch Connector";
 
 	setUp {
 		TestCase.setUpPortalInstance();

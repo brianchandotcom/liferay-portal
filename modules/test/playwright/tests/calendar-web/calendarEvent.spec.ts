@@ -145,7 +145,7 @@ test('assert that unprivileged users are denied access to calendar URLs', async 
 		await pageEditorPage.getFragmentId('Collection Display')
 	);
 
-	await pageEditorPage.chooseCollectionDisplayOption(
+	await pageEditorPage.chooseCollectionDisplayCollection(
 		'Collections',
 		calendarEventDynamicCollection
 	);

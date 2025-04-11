@@ -103,7 +103,7 @@ test.describe('General', () => {
 
 		await page.locator('.lfr-layout-structure-item-collection').click();
 
-		await pageEditorPage.chooseCollectionDisplayOption(
+		await pageEditorPage.chooseCollectionDisplayCollection(
 			'Repeatable Fields Collection Providers',
 			'Species'
 		);
@@ -766,7 +766,7 @@ test.describe('Object Display page', () => {
 				'Collection Display'
 			);
 
-			await pageEditorPage.chooseCollectionDisplayOption(
+			await pageEditorPage.chooseCollectionDisplayCollection(
 				'Related Items Collection Providers',
 				'Lemon Basket to Lemon'
 			);

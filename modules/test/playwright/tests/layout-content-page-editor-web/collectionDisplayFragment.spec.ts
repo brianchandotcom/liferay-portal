@@ -247,7 +247,7 @@ testWithIsolatedSite(
 			await pageEditorPage.getFragmentId('Collection Display')
 		);
 
-		await pageEditorPage.chooseCollectionDisplayOption(
+		await pageEditorPage.chooseCollectionDisplayCollection(
 			'Collection Providers',
 			'Highest Rated Assets'
 		);

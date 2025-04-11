@@ -394,22 +394,19 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
-	async chooseCollectionDisplayOption(
-		collectionType: string,
-		collectionTitle?: string
-	) {
+	async chooseCollectionDisplayCollection(type: string, title: string) {
 		await this.page.getByLabel('Select Collection', {exact: true}).click();
 
 		await this.page
 			.frameLocator('iframe[title="Select"]')
-			.getByRole('link', {name: collectionType})
+			.getByRole('link', {name: type})
 			.click();
 
 		await clickAndExpectToBeHidden({
 			target: this.page.locator('.modal-dialog'),
 			trigger: this.page
 				.frameLocator('iframe[title="Select"]')
-				.getByRole('button', {name: 'Select ' + collectionTitle}),
+				.getByRole('button', {name: 'Select ' + title}),
 		});
 	}
 

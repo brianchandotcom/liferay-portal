@@ -145,7 +145,7 @@ test('LPD-30855 Can map order item information', async ({
 
 	await page.getByText('Select a collection to display.').click();
 
-	await pageEditorPage.chooseCollectionDisplayOption(
+	await pageEditorPage.chooseCollectionDisplayCollection(
 		'Related Items Collection Providers',
 		'Order Items'
 	);

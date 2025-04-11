@@ -5,8 +5,6 @@
 
 package com.liferay.client.extension.util.spring.boot2;
 
-import com.liferay.petra.string.StringBundler;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -175,8 +173,8 @@ public class LiferayOAuth2ClientConfiguration {
 				externalReferenceCode + ".oauth2.token.uri", "/o/oauth2/token");
 
 			if (!tokenURI.contains("://")) {
-				tokenURI = StringBundler.concat(
-					_lxcDXPServerProtocol, "://", _lxcDXPMainDomain, tokenURI);
+				tokenURI = 
+					_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain + tokenURI;
 			}
 
 			ClientRegistration clientRegistration =

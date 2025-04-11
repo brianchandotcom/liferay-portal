@@ -5,8 +5,6 @@
 
 package com.liferay.client.extension.util.spring.boot3;
 
-import com.liferay.petra.string.StringBundler;
-
 import com.nimbusds.jose.JOSEObjectType;
 import com.nimbusds.jose.proc.DefaultJOSEObjectTypeVerifier;
 import com.nimbusds.jose.proc.JWSAlgorithmFamilyJWSKeySelector;
@@ -66,9 +64,8 @@ public class LiferayOAuth2ResourceServerEnableWebSecurity {
 			new DefaultJWTProcessor<>();
 
 		URL jwkSetURL = new URL(
-			StringBundler.concat(
-				_lxcDXPServerProtocol, "://", _lxcDXPMainDomain,
-				"/o/oauth2/jwks"));
+			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain +
+				"/o/oauth2/jwks");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Using " + jwkSetURL);

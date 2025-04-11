@@ -56,4 +56,4 @@ on:
         branches:
             -   master
         paths:
-            -   cloud/helm/standard/**
+            -   cloud/helm/official/**

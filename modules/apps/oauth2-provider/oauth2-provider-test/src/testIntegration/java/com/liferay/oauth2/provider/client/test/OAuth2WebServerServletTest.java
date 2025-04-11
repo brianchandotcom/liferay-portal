@@ -93,11 +93,12 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 				"text/plain", _TEST_FILE_CONTENT.getBytes(), null, null, null,
 				new ServiceContext());
 
-			String previewURL = _dlURLHelper.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, "", false, false);
-
 			registerJaxRsApplication(
-				new TestPreviewURLApplication(previewURL), "preview-url",
+				new TestPreviewURLApplication(
+					_dlURLHelper.getPreviewURL(
+						fileEntry, fileEntry.getFileVersion(), null, "", false,
+						false)),
+				"preview-url",
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.name", TestPreviewURLApplication.class.getName()
 				).build());

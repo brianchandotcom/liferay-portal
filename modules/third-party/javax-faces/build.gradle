@@ -12,6 +12,10 @@ dependencies {
 	compileOnly group: "org.glassfish", name: "javax.faces", version: "2.2.20"
 }
 
+generateJSPJava	{
+	mustRunAfter copyPatchOriginalLibClasses
+}
+
 jarSources {
 	mustRunAfter patch
 }

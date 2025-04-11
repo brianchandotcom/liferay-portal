@@ -228,7 +228,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long companyId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		List<BlogsEntry> entries = new ArrayList<>();
+		List<BlogsEntry> blogsEntries1 = new ArrayList<>();
 
 		boolean listNotExhausted = true;
 
@@ -239,31 +239,31 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
 
-		while ((entries.size() < max) && listNotExhausted) {
+		while ((blogsEntries1.size() < max) && listNotExhausted) {
 			queryDefinition.setEnd(queryDefinition.getStart() + max);
 
-			List<BlogsEntry> entryList =
+			List<BlogsEntry> blogsEntries2 =
 				blogsEntryLocalService.getCompanyEntries(
 					companyId, displayDate, queryDefinition);
 
 			queryDefinition.setStart(queryDefinition.getStart() + max);
 
-			listNotExhausted = entryList.size() == max;
+			listNotExhausted = blogsEntries2.size() == max;
 
-			for (BlogsEntry entry : entryList) {
-				if (entries.size() >= max) {
+			for (BlogsEntry blogsEntry : blogsEntries2) {
+				if (blogsEntries1.size() >= max) {
 					break;
 				}
 
 				if (_blogsEntryModelResourcePermission.contains(
-						getPermissionChecker(), entry, ActionKeys.VIEW)) {
+						getPermissionChecker(), blogsEntry, ActionKeys.VIEW)) {
 
-					entries.add(entry);
+					blogsEntries1.add(blogsEntry);
 				}
 			}
 		}
 
-		return entries;
+		return blogsEntries1;
 	}
 
 	@Override
@@ -454,7 +454,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long companyId, long groupId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		List<BlogsEntry> entries = new ArrayList<>();
+		List<BlogsEntry> blogsEntries1 = new ArrayList<>();
 
 		boolean listNotExhausted = true;
 
@@ -465,31 +465,31 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
 
-		while ((entries.size() < max) && listNotExhausted) {
+		while ((blogsEntries1.size() < max) && listNotExhausted) {
 			queryDefinition.setEnd(queryDefinition.getStart() + max);
 
-			List<BlogsEntry> entryList =
+			List<BlogsEntry> blogsEntries2 =
 				blogsEntryLocalService.getGroupsEntries(
 					companyId, groupId, displayDate, queryDefinition);
 
 			queryDefinition.setStart(queryDefinition.getStart() + max);
 
-			listNotExhausted = entryList.size() == max;
+			listNotExhausted = blogsEntries2.size() == max;
 
-			for (BlogsEntry entry : entryList) {
-				if (entries.size() >= max) {
+			for (BlogsEntry blogsEntry : blogsEntries2) {
+				if (blogsEntries1.size() >= max) {
 					break;
 				}
 
 				if (_blogsEntryModelResourcePermission.contains(
-						getPermissionChecker(), entry, ActionKeys.VIEW)) {
+						getPermissionChecker(), blogsEntry, ActionKeys.VIEW)) {
 
-					entries.add(entry);
+					blogsEntries1.add(blogsEntry);
 				}
 			}
 		}
 
-		return entries;
+		return blogsEntries1;
 	}
 
 	@Override
@@ -540,7 +540,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			long organizationId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		List<BlogsEntry> entries = new ArrayList<>();
+		List<BlogsEntry> blogsEntries1 = new ArrayList<>();
 
 		boolean listNotExhausted = true;
 
@@ -551,30 +551,31 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
 
-		while ((entries.size() < max) && listNotExhausted) {
+		while ((blogsEntries1.size() < max) && listNotExhausted) {
 			queryDefinition.setEnd(queryDefinition.getStart() + max);
 
-			List<BlogsEntry> entryList = blogsEntryFinder.findByOrganizationId(
-				organizationId, displayDate, queryDefinition);
+			List<BlogsEntry> blogsEntries2 =
+				blogsEntryFinder.findByOrganizationId(
+					organizationId, displayDate, queryDefinition);
 
 			queryDefinition.setStart(queryDefinition.getStart() + max);
 
-			listNotExhausted = entryList.size() == max;
+			listNotExhausted = blogsEntries2.size() == max;
 
-			for (BlogsEntry entry : entryList) {
-				if (entries.size() >= max) {
+			for (BlogsEntry blogsEntry : blogsEntries2) {
+				if (blogsEntries1.size() >= max) {
 					break;
 				}
 
 				if (_blogsEntryModelResourcePermission.contains(
-						getPermissionChecker(), entry, ActionKeys.VIEW)) {
+						getPermissionChecker(), blogsEntry, ActionKeys.VIEW)) {
 
-					entries.add(entry);
+					blogsEntries1.add(blogsEntry);
 				}
 			}
 		}
 
-		return entries;
+		return blogsEntries1;
 	}
 
 	@Override

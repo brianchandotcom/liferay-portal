@@ -63,8 +63,8 @@ public class StyleBookEntryVersionThemeIdUpgradeProcess extends UpgradeProcess {
 						_log.warn(
 							StringBundler.concat(
 								"Deleting style book entry version for style ",
-								"book entry", styleBookEntryId,
-								" because group ", groupId, "does not exist"));
+								"book entry ", styleBookEntryId,
+								" because group ", groupId, " does not exist"));
 					}
 
 					preparedStatement3.setLong(1, styleBookEntryId);

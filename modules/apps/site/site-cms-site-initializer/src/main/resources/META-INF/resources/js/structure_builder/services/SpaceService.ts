@@ -7,14 +7,6 @@ import {State} from '../contexts/StateContext';
 import {Space} from '../types/Space';
 import ApiHelper from './ApiHelper';
 
-async function getTopSpaces({limit = 5}: {limit?: number}): Promise<Space[]> {
-	const {items} = await ApiHelper.get(
-		`/o/headless-asset-library/v1.0/asset-libraries?pageSize=${limit}`
-	);
-
-	return items;
-}
-
 async function getSpaces(): Promise<Space[]> {
 	const {items} = await ApiHelper.get(
 		'/o/headless-asset-library/v1.0/asset-libraries'
@@ -35,5 +27,4 @@ async function addSpace({name}: {name: State['name']}) {
 export default {
 	addSpace,
 	getSpaces,
-	getTopSpaces,
 };

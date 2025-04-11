@@ -10,11 +10,22 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
+import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
@@ -70,8 +81,16 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			ObjectValuePair<JSONArray, Long> assetLibrariesObjectValuePair =
+				_getAssetLibrariesObjectValuePair(themeDisplay);
+
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
+					"assetLibraries", assetLibrariesObjectValuePair.getKey()
+				).put(
+					"assetLibrariesCount",
+					assetLibrariesObjectValuePair.getValue()
+				).put(
 					"showAddButton",
 					_portletResourcePermission.contains(
 						themeDisplay.getPermissionChecker(),
@@ -91,6 +110,47 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 			throw new RuntimeException(exception);
 		}
 	}
+
+	private ObjectValuePair<JSONArray, Long> _getAssetLibrariesObjectValuePair(
+		ThemeDisplay themeDisplay) {
+
+		try {
+			AssetLibraryResource.Builder builder =
+				_assetLibraryResourceFactory.create();
+
+			AssetLibraryResource assetLibraryResource = builder.user(
+				themeDisplay.getUser()
+			).build();
+
+			Page<AssetLibrary> assetLibrariesPage =
+				assetLibraryResource.getAssetLibrariesPage(
+					null, null, null, Pagination.of(1, 5), null);
+
+			return new ObjectValuePair<>(
+				JSONUtil.toJSONArray(
+					assetLibrariesPage.getItems(),
+					assetLibrary -> JSONUtil.put(
+						"id", assetLibrary.getId()
+					).put(
+						"name", assetLibrary.getName()
+					)),
+				assetLibrariesPage.getTotalCount());
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return new ObjectValuePair<>(_jsonFactory.createJSONArray(), 0L);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SpacesSectionFragmentRenderer.class);
+
+	@Reference
+	private AssetLibraryResource.Factory _assetLibraryResourceFactory;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

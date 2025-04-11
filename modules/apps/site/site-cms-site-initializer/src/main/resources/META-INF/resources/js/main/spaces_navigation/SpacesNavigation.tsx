@@ -13,25 +13,22 @@ import React, {useEffect, useState} from 'react';
 import SpaceService from '../../structure_builder/services/SpaceService';
 import SpaceSticker from '../components/SpaceSticker';
 
-const MAX_NUMBER_SPACES = 5;
+interface AssetLibrary {
+	id: number;
+	name: string;
+}
 
 interface SpacesNavigationProps {
+	assetLibraries: AssetLibrary[];
+	assetLibrariesCount: number;
 	showAddButton: boolean;
 }
 
-const SpacesNavigation: React.FC<SpacesNavigationProps> = ({showAddButton}) => {
-	const [assetLibraries, setAssetsLibraries] = useState<
-		{id: string; name: string}[]
-	>([]);
-
-	useEffect(() => {
-		SpaceService.getTopSpaces({limit: MAX_NUMBER_SPACES}).then(
-			(result: any) => {
-				setAssetsLibraries(result);
-			}
-		);
-	}, []);
-
+const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
+	assetLibraries,
+	assetLibrariesCount,
+	showAddButton,
+}) => {
 	const onAddButtonClick = (event: any) => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -64,10 +61,10 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({showAddButton}) => {
 		>
 			<ClayPanel.Body className="p-0">
 				<ul className="menubar-primary nav nav-stacked" role="menu">
-					{assetLibraries.slice(0, MAX_NUMBER_SPACES).map((space) => (
-						<li className="nav-item" key={space.id}>
+					{assetLibraries.map((assetLibrary) => (
+						<li className="nav-item" key={assetLibrary.id}>
 							<ClayLink className="nav-link" href="#">
-								<SpaceSticker name={space.name} />
+								<SpaceSticker name={assetLibrary.name} />
 							</ClayLink>
 						</li>
 					))}
@@ -83,7 +80,7 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({showAddButton}) => {
 
 							{sub(
 								Liferay.Language.get('all-spaces-x'),
-								assetLibraries.length
+								assetLibrariesCount
 							)}
 						</ClayLink>
 					</li>

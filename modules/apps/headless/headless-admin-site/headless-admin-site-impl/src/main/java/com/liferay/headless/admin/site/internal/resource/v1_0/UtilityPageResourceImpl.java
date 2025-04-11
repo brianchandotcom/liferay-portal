@@ -200,15 +200,24 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		UtilityPageSettings utilityPageSettings =
 			utilityPage.getUtilityPageSettings();
 
-		UtilityPageSEOSettings utilityPageSEOSettings =
-			utilityPageSettings.getSeoSettings();
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			_portal.getSiteDefaultLocale(groupId), utilityPage.getName());
+		Map<Locale, String> descriptionMap = Collections.emptyMap();
+
+		if ((utilityPageSettings != null) &&
+			(utilityPageSettings.getSeoSettings() != null)) {
+
+			UtilityPageSEOSettings utilityPageSEOSettings =
+				utilityPageSettings.getSeoSettings();
+
+			titleMap = LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getHtmlTitle_i18n());
+			descriptionMap = LocalizedMapUtil.getLocalizedMap(
+				utilityPageSEOSettings.getDescription_i18n());
+		}
 
 		LayoutUtil.updateContentLayout(
-			layout, layout.getNameMap(),
-			LocalizedMapUtil.getLocalizedMap(
-				utilityPageSEOSettings.getHtmlTitle_i18n()),
-			LocalizedMapUtil.getLocalizedMap(
-				utilityPageSEOSettings.getDescription_i18n()),
+			layout, layout.getNameMap(), titleMap, descriptionMap,
 			utilityPage.getPageSpecifications(),
 			_getServiceContext(groupId, utilityPage));
 
@@ -277,7 +286,8 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId), utilityPage.getName());
 
-		Map<Locale, String> titleMap = Collections.emptyMap();
+		Map<Locale, String> titleMap = nameMap;
+
 		Map<Locale, String> descriptionMap = Collections.emptyMap();
 
 		UtilityPageSettings utilityPageSettings =

@@ -5843,12 +5843,11 @@ public class DefaultObjectEntryManagerImplTest
 		else if (Objects.equals(
 					expectedEntry.getKey(), "attachmentObjectFieldName")) {
 
+			Object expectedValue = expectedEntry.getValue();
 			FileEntry fileEntry = (FileEntry)actualObjectEntryProperties.get(
 				expectedEntry.getKey());
 
-			Object expectedValue = expectedEntry.getValue();
-
-			if ((fileEntry == null) && (expectedValue == null)) {
+			if ((expectedValue == null) && (fileEntry == null)) {
 				return;
 			}
 

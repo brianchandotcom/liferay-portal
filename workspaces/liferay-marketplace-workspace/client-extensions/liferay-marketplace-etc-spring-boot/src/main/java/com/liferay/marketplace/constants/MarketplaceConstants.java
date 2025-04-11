@@ -12,6 +12,8 @@ public class MarketplaceConstants {
 
 	public static final int ORDER_PAYMENT_STATUS_COMPLETED = 0;
 
+	public static final int ORDER_PAYMENT_STATUS_NOT_REQUIRED = 23;
+
 	public static final int ORDER_STATUS_CANCELLED = 8;
 
 	public static final String ORDER_STATUS_CANCELLED_LABEL = "Cancelled";

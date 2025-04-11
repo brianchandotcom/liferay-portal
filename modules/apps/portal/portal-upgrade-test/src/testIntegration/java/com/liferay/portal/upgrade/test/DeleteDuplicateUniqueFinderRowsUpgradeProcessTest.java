@@ -99,7 +99,9 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Test
-	public void testDuplicateRemovalProcessOnPortletItemTable() throws Exception {
+	public void testDuplicateRemovalProcessOnPortletItemTable()
+		throws Exception {
+
 		_dropIndexes("PortletItem", "groupId");
 
 		PortletItem portletItem = PortletItemLocalServiceUtil.createPortletItem(

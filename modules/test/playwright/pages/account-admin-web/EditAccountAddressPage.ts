@@ -39,8 +39,8 @@ export class EditAccountAddressPage {
 		this.street1Input = page.getByLabel('Street 1');
 		this.subtypeInput = page.getByPlaceholder('Subtype');
 		this.subtypeMenuItem = (name: string) =>
-			page.getByRole('menuitem', {name});
-		this.typeInput = page.getByLabel('Type');
+			page.getByRole('option', {name});
+		this.typeInput = page.getByLabel('Type', {exact: true});
 	}
 
 	async addAddress({

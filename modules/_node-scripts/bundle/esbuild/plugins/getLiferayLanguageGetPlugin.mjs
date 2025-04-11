@@ -35,6 +35,7 @@ export default function getLiferayLanguageGetPlugin(
 				},
 				async (args) => {
 					let contents = await fs.readFile(args.path, 'utf-8');
+					const keys = [];
 
 					for (const match of contents.matchAll(REGEXP)) {
 						const key = match[1].trim();
@@ -68,16 +69,18 @@ export default function getLiferayLanguageGetPlugin(
 							continue;
 						}
 
-						languageJSON.keys.push(key.slice(1, key.length - 1));
+						keys.push(key.slice(1, key.length - 1));
 					}
 
-					if (languageJSON.keys.length) {
+					if (keys.length) {
 						contents =
 							'await import(`@liferay/language/' +
 							'${Liferay.ThemeDisplay.getLanguageId()}' +
 							projectWebContextPath +
 							'/all.js`);\n' +
 							contents;
+
+						languageJSON.keys.push(...keys);
 					}
 
 					let loader = 'jsx';

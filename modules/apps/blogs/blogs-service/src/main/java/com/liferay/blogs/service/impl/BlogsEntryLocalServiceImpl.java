@@ -2319,17 +2319,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			}
 		}
 
-		if (!validTrackbacks.isEmpty()) {
-			String mergedTrackbacks = StringUtil.merge(validTrackbacks);
-
-			if (Validator.isNotNull(entry.getTrackbacks())) {
-				mergedTrackbacks += StringPool.COMMA + entry.getTrackbacks();
-			}
-
-			entry.setTrackbacks(mergedTrackbacks);
-
-			blogsEntryPersistence.update(entry);
+		if (validTrackbacks.isEmpty()) {
+			return;
 		}
+
+		String mergedTrackbacks = StringUtil.merge(validTrackbacks);
+
+		if (Validator.isNotNull(entry.getTrackbacks())) {
+			mergedTrackbacks += StringPool.COMMA + entry.getTrackbacks();
+		}
+
+		entry.setTrackbacks(mergedTrackbacks);
+
+		blogsEntryPersistence.update(entry);
 	}
 
 	private String _sanitizeUrlTitle(String urlTitle) {

@@ -124,6 +124,20 @@ const useSetName = () => useContext(StateContext).setName;
 
 const useOptions = () => useContext(StateContext).options;
 
+const useRemoveOptions = () => {
+	const {setOptions} = useContext(StateContext);
+
+	return (ercs: string[]) => {
+		setOptions((options) => {
+			const newOptions = new Map(options);
+
+			ercs.forEach((erc) => newOptions.delete(erc));
+
+			return newOptions;
+		});
+	};
+};
+
 export {
 	buildState,
 	INITIAL_STATE,
@@ -137,4 +151,5 @@ export {
 	useSetId,
 	useName,
 	useSetName,
+	useRemoveOptions,
 };

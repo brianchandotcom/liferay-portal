@@ -244,8 +244,6 @@ public abstract class BaseDataSourceResourceTestCase {
 		DataSourceLiferayAnalyticsURL dataSourceLiferayAnalyticsURL2) {
 
 		Assert.assertTrue(
-			dataSourceLiferayAnalyticsURL1 + " does not equal " +
-				dataSourceLiferayAnalyticsURL2,
 			equals(
 				dataSourceLiferayAnalyticsURL1,
 				dataSourceLiferayAnalyticsURL2));

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -61,6 +62,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,6 +85,18 @@ public class AddStructuredContentItemStrutsActionTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_group = GroupLocalServiceUtil.fetchGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CMS);
+
+		if (_group == null) {
+			_group = GroupTestUtil.addGroup(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
+				GroupConstants.CMS);
+		}
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
@@ -93,9 +107,6 @@ public class AddStructuredContentItemStrutsActionTest {
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		_group = GroupLocalServiceUtil.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -264,6 +275,8 @@ public class AddStructuredContentItemStrutsActionTest {
 			mockHttpServletResponse.getRedirectedUrl());
 	}
 
+	private static Group _group;
+
 	@Inject(filter = "path=/cms/add_structured_content_item")
 	private StrutsAction _addStructuredContentItemStrutsAction;
 
@@ -276,7 +289,6 @@ public class AddStructuredContentItemStrutsActionTest {
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
-	private Group _group;
 	private Layout _layout;
 
 	@Inject

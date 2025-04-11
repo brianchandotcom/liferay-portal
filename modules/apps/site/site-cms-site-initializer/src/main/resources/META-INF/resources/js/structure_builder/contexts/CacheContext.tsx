@@ -17,17 +17,18 @@ import {Picklist} from '../types/Picklist';
 import {Space} from '../types/Space';
 
 type CacheKey = 'picklists' | 'spaces';
+type Status = 'idle' | 'saving' | 'saved';
 
 export type Cache = {
 	picklists: {
 		data: Picklist[];
 		fetcher: () => Promise<Picklist[]>;
-		status: 'idle' | 'saving' | 'saved';
+		status: Status;
 	};
 	spaces: {
 		data: Space[];
 		fetcher: () => Promise<Space[]>;
-		status: 'idle' | 'saving' | 'saved';
+		status: Status;
 	};
 };
 

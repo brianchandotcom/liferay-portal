@@ -39,6 +39,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -64,7 +65,8 @@ public class ResourceOpenAPIParser {
 
 		Map<String, String> javaDataTypeMap =
 			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
-		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
+		Map<String, List<JavaMethodSignature>> javaMethodSignaturesMap =
+			new HashMap<>();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			String path = entry.getKey();
@@ -90,6 +92,7 @@ public class ResourceOpenAPIParser {
 								_getJavaMethodParameters(
 									javaDataTypeMap, operation,
 									requestBodyMediaTypes);
+
 							String methodName = _getMethodName(
 								configYAML, operation, path, returnType,
 								schemaName,
@@ -104,15 +107,74 @@ public class ResourceOpenAPIParser {
 									_getParentSchema(
 										path, pathItems, schemaName));
 
-							javaMethodSignatures.add(javaMethodSignature);
+							javaMethodSignaturesMap.compute(
+								methodName,
+								(key, list) -> {
+									if (list == null) {
+										list = new ArrayList<>();
+									}
+
+									list.add(javaMethodSignature);
+
+									return list;
+								});
 
 							if (configYAML.isGenerateBatch()) {
 								_addBatchJavaMethodSignature(
 									configYAML, javaMethodSignature,
-									javaMethodSignatures);
+									javaMethodSignaturesMap);
 							}
 						});
 				});
+		}
+
+		List<JavaMethodSignature> javaMethodSignatures = new ArrayList<>();
+
+		for (List<JavaMethodSignature> javaMethodSignatureList :
+				javaMethodSignaturesMap.values()) {
+
+			if (javaMethodSignatureList.size() == 1) {
+				javaMethodSignatures.add(javaMethodSignatureList.get(0));
+
+				continue;
+			}
+
+			for (JavaMethodSignature javaMethodSignature :
+					javaMethodSignatureList) {
+
+				boolean containsObjectParameter = false;
+
+				for (JavaMethodParameter javaMethodParameter :
+						javaMethodSignature.getJavaMethodParameters()) {
+
+					if (Objects.equals(
+							javaMethodParameter.getParameterName(), "object") &&
+						Objects.equals(
+							javaMethodParameter.getParameterType(),
+							"java.lang.Object")) {
+
+						containsObjectParameter = true;
+
+						break;
+					}
+				}
+
+				if (containsObjectParameter) {
+					javaMethodSignature = new JavaMethodSignature(
+						javaMethodSignature.getPath(),
+						javaMethodSignature.getPathItem(),
+						javaMethodSignature.getOperation(),
+						javaMethodSignature.getOperationId(),
+						javaMethodSignature.getRequestBodyMediaTypes(),
+						javaMethodSignature.getSchemaName(),
+						javaMethodSignature.getJavaMethodParameters(),
+						javaMethodSignature.getMethodName() + "Object",
+						javaMethodSignature.getReturnType(),
+						javaMethodSignature.getParentSchemaName());
+				}
+
+				javaMethodSignatures.add(javaMethodSignature);
+			}
 		}
 
 		javaMethodSignatures.sort(
@@ -463,7 +525,7 @@ public class ResourceOpenAPIParser {
 
 	private static void _addBatchJavaMethodSignature(
 		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
-		List<JavaMethodSignature> javaMethodSignatures) {
+		Map<String, List<JavaMethodSignature>> javaMethodSignaturesMap) {
 
 		BatchOperationType batchOperationType = null;
 
@@ -501,18 +563,22 @@ public class ResourceOpenAPIParser {
 			batchOperationType, configYAML, javaMethodSignature.getPath(),
 			schemaName);
 
-		for (JavaMethodSignature existingJavaMethodSignature :
-				javaMethodSignatures) {
+		for (List<JavaMethodSignature> existingJavaMethodSignatures :
+				javaMethodSignaturesMap.values()) {
 
-			String httpMethod = OpenAPIParserUtil.getHTTPMethod(
-				existingJavaMethodSignature.getOperation());
+			for (JavaMethodSignature existingJavaMethodSignature :
+					existingJavaMethodSignatures) {
 
-			if (Objects.equals(
-					existingJavaMethodSignature.getPath(), batchPath) &&
-				httpMethod.equals(
-					OpenAPIParserUtil.getHTTPMethod(batchOperation))) {
+				String httpMethod = OpenAPIParserUtil.getHTTPMethod(
+					existingJavaMethodSignature.getOperation());
 
-				return;
+				if (Objects.equals(
+						existingJavaMethodSignature.getPath(), batchPath) &&
+					httpMethod.equals(
+						OpenAPIParserUtil.getHTTPMethod(batchOperation))) {
+
+					return;
+				}
 			}
 		}
 
@@ -546,13 +612,23 @@ public class ResourceOpenAPIParser {
 		String batchMethodName = _getBatchMethodName(
 			batchOperationType, methodName);
 
-		javaMethodSignatures.add(
-			new JavaMethodSignature(
-				batchPath, javaMethodSignature.getPathItem(), batchOperation,
-				batchMethodName,
-				Collections.singleton(ContentTypes.APPLICATION_JSON),
-				schemaName, javaMethodParameters, batchMethodName,
-				"javax.ws.rs.core.Response", parentSchemaName));
+		javaMethodSignaturesMap.compute(
+			batchMethodName,
+			(key, list) -> {
+				if (list == null) {
+					list = new ArrayList<>();
+				}
+
+				list.add(
+					new JavaMethodSignature(
+						batchPath, javaMethodSignature.getPathItem(),
+						batchOperation, batchMethodName,
+						Collections.singleton(ContentTypes.APPLICATION_JSON),
+						schemaName, javaMethodParameters, batchMethodName,
+						"javax.ws.rs.core.Response", parentSchemaName));
+
+				return list;
+			});
 	}
 
 	private static String _addParameter(Parameter parameter) {

@@ -8,9 +8,8 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import SpaceService from '../../structure_builder/services/SpaceService';
 import SpaceSticker from '../components/SpaceSticker';
 
 interface AssetLibrary {
@@ -64,7 +63,10 @@ const SpacesNavigation: React.FC<SpacesNavigationProps> = ({
 				<ul className="menubar-primary nav nav-stacked" role="menu">
 					{assetLibraries.map((assetLibrary) => (
 						<li className="nav-item" key={assetLibrary.id}>
-							<ClayLink className="nav-link" href={assetLibrary.url}>
+							<ClayLink
+								className="nav-link"
+								href={assetLibrary.url}
+							>
 								<SpaceSticker name={assetLibrary.name} />
 							</ClayLink>
 						</li>

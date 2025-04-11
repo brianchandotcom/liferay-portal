@@ -20,19 +20,21 @@ export class MultiFactorAuthenticationConfigurationPage {
 
 	constructor(page: Page) {
 		this.actions = page.getByRole('button', {name: 'Actions'});
-		this.enabledCheckBox = page.getByLabel('Enabled');  
+		this.enabledCheckBox = page.getByLabel('Enabled');
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
-		this.oneTimePasswordLength = page.getByLabel('One-Time Password Length');
+		this.oneTimePasswordLength = page.getByLabel(
+			'One-Time Password Length'
+		);
 		this.page = page;
 		this.resetDefaultValues = page.getByText('Reset Default Values');
-		this.saveButton = page.getByRole('button', { name: 'Save' });
-		this.updateButton = page.getByRole('button', { name: 'Update' });
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
 	async enable() {
 		await expect(this.enabledCheckBox).toBeVisible();
 
-		await expect(async() => {
+		await expect(async () => {
 			await this.enabledCheckBox.check();
 
 			await expect(this.enabledCheckBox).toBeChecked();
@@ -47,7 +49,7 @@ export class MultiFactorAuthenticationConfigurationPage {
 			'Multi-Factor Authentication and Email One-Time Password Configuration'
 		);
 
-		await expect(this.oneTimePasswordLength).toBeVisible();	
+		await expect(this.oneTimePasswordLength).toBeVisible();
 	}
 
 	async resetConfiguration() {
@@ -58,7 +60,9 @@ export class MultiFactorAuthenticationConfigurationPage {
 				trigger: this.actions,
 			});
 
-			await this.page.getByText('Success:Your request completed successfully.').waitFor();
+			await this.page
+				.getByText('Success:Your request completed successfully.')
+				.waitFor();
 		}
 	}
 
@@ -70,6 +74,8 @@ export class MultiFactorAuthenticationConfigurationPage {
 			await this.saveButton.click();
 		}
 
-		await this.page.getByText('Success:Your request completed successfully.').waitFor();
+		await this.page
+			.getByText('Success:Your request completed successfully.')
+			.waitFor();
 	}
 }

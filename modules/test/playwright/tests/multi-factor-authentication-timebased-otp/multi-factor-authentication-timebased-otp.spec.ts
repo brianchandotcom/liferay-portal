@@ -9,8 +9,11 @@ import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest'
 import {loginTest} from '../../fixtures/loginTest';
 import {multiFactorAuthenticationPagesTest} from '../../fixtures/multiFactorAuthenticationPagesTest';
 
-export const test = mergeTests(accountSettingsPagesTest, loginTest(),
- multiFactorAuthenticationPagesTest);
+export const test = mergeTests(
+	accountSettingsPagesTest,
+	loginTest(),
+	multiFactorAuthenticationPagesTest
+);
 
 test('LPD-48214 verify that QR code is visible', async ({
 	accountSettingsPage,

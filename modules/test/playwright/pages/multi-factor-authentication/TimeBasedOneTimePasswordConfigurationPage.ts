@@ -25,14 +25,14 @@ export class TimeBasedOneTimePasswordConfigurationPage {
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.page = page;
 		this.resetDefaultValues = page.getByText('Reset Default Values');
-		this.saveButton = page.getByRole('button', { name: 'Save' });
-		this.updateButton = page.getByRole('button', { name: 'Update' });
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
 	async enable() {
 		await expect(this.enabledCheckBox).toBeVisible();
 
-		await expect(async() => {
+		await expect(async () => {
 			await this.enabledCheckBox.check();
 
 			await expect(this.enabledCheckBox).toBeChecked();
@@ -58,7 +58,9 @@ export class TimeBasedOneTimePasswordConfigurationPage {
 				trigger: this.actions,
 			});
 
-			await this.page.getByText('Success:Your request completed successfully.').waitFor();
+			await this.page
+				.getByText('Success:Your request completed successfully.')
+				.waitFor();
 		}
 	}
 
@@ -70,6 +72,8 @@ export class TimeBasedOneTimePasswordConfigurationPage {
 			await this.saveButton.click();
 		}
 
-		await this.page.getByText('Success:Your request completed successfully.').waitFor();
+		await this.page
+			.getByText('Success:Your request completed successfully.')
+			.waitFor();
 	}
 }

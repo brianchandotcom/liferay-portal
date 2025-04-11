@@ -34,8 +34,9 @@ export class AccountSettingsPage {
 			name: 'Display Settings',
 		});
 		this.languageSelect = page.getByLabel('Language');
-		this.multiFactorAuthentitacionNavigationItem = page.getByRole('link',
-			 { name: 'Multi-Factor Authentication' });
+		this.multiFactorAuthentitacionNavigationItem = page.getByRole('link', {
+			name: 'Multi-Factor Authentication',
+		});
 		this.newPasswordInput = page.getByLabel('New Password');
 		this.page = page;
 		this.passwordErrorMessage = (message: string) => {
@@ -90,7 +91,9 @@ export class AccountSettingsPage {
 	async goToMultiFactorAuthenticationSettings() {
 		await this.goToAccountSettings();
 
-		await expect(this.multiFactorAuthentitacionNavigationItem).toBeVisible();
+		await expect(
+			this.multiFactorAuthentitacionNavigationItem
+		).toBeVisible();
 
 		await this.multiFactorAuthentitacionNavigationItem.click();
 

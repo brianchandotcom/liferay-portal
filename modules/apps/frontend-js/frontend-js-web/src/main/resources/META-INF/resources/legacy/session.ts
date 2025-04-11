@@ -41,7 +41,7 @@ export class Session {
 
 	constructor(config: SessionConfig) {
 		this.autoExtend = config.autoExtend || false;
-		this.redirectOnExpire = config.redirectOnExpire || true;
+		this.redirectOnExpire = config.redirectOnExpire ?? true;
 		this.redirectUrl = config.redirectUrl || '';
 		this.sessionLength = config.sessionLength * 1000 || 0;
 		this.sessionTimeoutOffset = config.sessionTimeoutOffset * 1000 || 0;
@@ -60,7 +60,7 @@ export class Session {
 		this._initPageTitle = document.title;
 		this._initTimestamp = Date.now().toString();
 		this._pageTitle = document.title;
-		this._timestamp = '';
+		this._timestamp = this._initTimestamp;
 		this._warningLength = config.warningLength * 1000 || this.sessionLength;
 		this._warningText = Liferay.Util.sub(
 			Liferay.Language.get('due-to-inactivity-your-session-will-expire'),
@@ -82,11 +82,19 @@ export class Session {
 	}
 
 	expire() {
-		this.setSessionState('expired');
+		this._expireSession();
+		this._uiSetExpired();
+
+		this.sessionState = 'expired';
+
+		clearInterval(this._intervalId);
 	}
 
 	extend() {
-		this.setSessionState('active');
+		this._removeAlert();
+		this._extendSession();
+
+		this.sessionState = 'active';
 	}
 
 	async openToast(args: any) {
@@ -98,31 +106,10 @@ export class Session {
 		openToast(args);
 	}
 
-	setSessionState(newVal: TSessionState) {
-		const prevVal = this.sessionState;
-
-		if (newVal === 'warned') {
-			this._uiSetWarned();
-		}
-		else if (prevVal === 'expired' && prevVal !== newVal) {
-			return;
-		}
-		else if (prevVal === 'active') {
-			if (newVal === 'active') {
-				this._uiSetActivated();
-				this._extendSession();
-			}
-			else if (newVal === 'expired') {
-				this._expireSession();
-				this._uiSetExpired();
-			}
-		}
-
-		this.sessionState = newVal;
-	}
-
 	warn() {
-		this.setSessionState('warned');
+		this._uiSetWarned();
+
+		this.sessionState = 'warned';
 	}
 
 	private _destroyBanner() {
@@ -248,10 +235,6 @@ export class Session {
 		return banner;
 	}
 
-	private _getWarningTime() {
-		return this.sessionLength - this._warningLength;
-	}
-
 	private _setTimestamp() {
 		this._timestamp = Date.now().toString();
 
@@ -269,45 +252,36 @@ export class Session {
 
 	private _startTimer() {
 		this._intervalId = setInterval(() => {
-
-			// LPS-82336 Maintain session state in multiple tabs
-
-			if (this._initTimestamp !== this._timestamp) {
-				this._setTimestamp();
-
-				if (this.sessionState !== 'active') {
-					this.setSessionState('active');
-				}
-			}
-
 			const elapsed =
 				Math.floor(
 					(Date.now() - parseInt(this._timestamp, 10)) / 1000
 				) * 1000;
 
-			const hasExpired = elapsed >= this.sessionLength;
-			const hasExpiredTimeoutOffset =
-				elapsed >= this.sessionLength - this.sessionTimeoutOffset;
-			const hasWarned = elapsed >= this._getWarningTime();
+			const shouldExpire = elapsed >= this.sessionLength;
+			const shouldWarn =
+				elapsed >= this.sessionLength - this._warningLength;
 
-			if (hasExpired && this.sessionState !== 'expired') {
+			const expiredTimeoutOffset =
+				elapsed >= this.sessionLength - this.sessionTimeoutOffset;
+
+			if (shouldExpire && this.sessionState !== 'expired') {
 				this.expire();
 			}
-			else if (this.autoExtend && hasExpiredTimeoutOffset) {
+			else if (this.autoExtend && expiredTimeoutOffset) {
 				this.extend();
 			}
 			else if (
 				!this.autoExtend &&
-				hasWarned &&
+				shouldWarn &&
 				this.sessionState !== 'warned'
 			) {
 				this.warn();
 			}
 
-			if (!hasWarned) {
-				this._uiSetActivated();
+			if (!shouldWarn) {
+				this._removeAlert();
 			}
-			else if (!hasExpired) {
+			else if (!shouldExpire) {
 				this._uiSetRemainingTime(
 					this.sessionLength - elapsed,
 					document.querySelector(`#${TOAST_ID} .countdown-timer`)
@@ -316,7 +290,7 @@ export class Session {
 		}, 1000);
 	}
 
-	private _uiSetActivated() {
+	private _removeAlert() {
 		document.title = this._initPageTitle;
 
 		if (this._banner) {

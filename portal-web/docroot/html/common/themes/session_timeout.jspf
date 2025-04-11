@@ -5,23 +5,12 @@
  */
 --%>
 
-<%
-String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REMEMBER_ME, request);
-%>
-
-<c:if test="<%= !themeDisplay.isSignedIn() || Validator.isNull(rememberMe) %>">
+<c:if test="<%= themeDisplay.isSignedIn() && (PropsValues.SESSION_TIMEOUT_WARNING > 0) %>">
 	<aui:script type="module">
 		import {Session} from '<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-web", "legacy") %>';
 
 		Liferay.Session = new Session({
 				autoExtend: <%= !themeDisplay.isSignedIn() || SessionTimeoutUtil.isAutoExtend(request) %>,
-				openToast: (...params) => {
-					import(
-						'<%= ESMURLUtil.buildURL(themeDisplay, "frontend-js-components-web") %>'
-					).then(
-						({openToast}) => openToast(...params)
-					);
-				},
 				redirectOnExpire: <%= SSOUtil.isSessionRedirectOnExpire(themeDisplay.getCompanyId()) %>,
 				redirectUrl: '<%= HtmlUtil.escapeJS(SSOUtil.getSessionExpirationRedirectURL(themeDisplay.getCompanyId(), themeDisplay.getURLHome())) %>',
 				sessionLength: <%= PropsValues.SESSION_TIMEOUT * 60 %>,

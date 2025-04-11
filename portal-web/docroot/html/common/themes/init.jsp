@@ -7,8 +7,7 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.cookies.constants.CookiesConstants" %><%@
-page import="com.liferay.portal.kernel.model.Portlet" %><%@
+<%@ page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.portlet.PortletDependency" %><%@
 page import="com.liferay.portal.kernel.portlet.render.PortletRenderUtil" %><%@
 page import="com.liferay.portal.kernel.session.timeout.SessionTimeoutUtil" %><%@

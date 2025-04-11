@@ -342,7 +342,7 @@ public class RESTBuilder {
 
 				if (Validator.isNotNull(_configYAML.getClientDir())) {
 					if (createClientCustomFieldFiles &&
-						_containsVulcanCustomFields(schema)) {
+						_containsVulcanCustomField(schema)) {
 
 						_createClientCustomFieldFiles(context);
 
@@ -498,7 +498,7 @@ public class RESTBuilder {
 		FileUtil.write(file, yamlString);
 	}
 
-	private boolean _containsVulcanCustomFields(Schema schema) {
+	private boolean _containsVulcanCustomField(Schema schema) {
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
 		if (MapUtil.isEmpty(propertySchemas)) {

@@ -1052,7 +1052,7 @@ public class CustomFieldsUtilTest {
 	@Test
 	public void testToCustomFieldsMissingCustomFields() throws Exception {
 
-		// Random className
+		// Random class name
 
 		Assert.assertEquals(
 			new CustomField[0],
@@ -1061,7 +1061,7 @@ public class CustomFieldsUtilTest {
 				RandomTestUtil.randomLong(), TestPropsValues.getCompanyId(),
 				LocaleUtil.getDefault()));
 
-		// Random primaryKey
+		// Random primary key
 
 		Assert.assertEquals(
 			new CustomField[0],

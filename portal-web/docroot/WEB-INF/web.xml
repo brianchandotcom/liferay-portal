@@ -52,9 +52,6 @@
 			<url-pattern>/bg/c/portal/protected</url-pattern>
 			<url-pattern>/bg-BG/c/portal/protected</url-pattern>
 			<url-pattern>/bg_BG/c/portal/protected</url-pattern>
-			<url-pattern>/my/c/portal/protected</url-pattern>
-			<url-pattern>/my-MM/c/portal/protected</url-pattern>
-			<url-pattern>/my_MM/c/portal/protected</url-pattern>
 			<url-pattern>/ca/c/portal/protected</url-pattern>
 			<url-pattern>/ca-AD/c/portal/protected</url-pattern>
 			<url-pattern>/ca-ES/c/portal/protected</url-pattern>
@@ -164,6 +161,9 @@
 			<url-pattern>/ms/c/portal/protected</url-pattern>
 			<url-pattern>/ms-MY/c/portal/protected</url-pattern>
 			<url-pattern>/ms_MY/c/portal/protected</url-pattern>
+			<url-pattern>/my/c/portal/protected</url-pattern>
+			<url-pattern>/my-MM/c/portal/protected</url-pattern>
+			<url-pattern>/my_MM/c/portal/protected</url-pattern>
 			<url-pattern>/nb/c/portal/protected</url-pattern>
 			<url-pattern>/nb-NO/c/portal/protected</url-pattern>
 			<url-pattern>/nb_NO/c/portal/protected</url-pattern>

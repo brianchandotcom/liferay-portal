@@ -84,10 +84,6 @@ public class UpgradeReportTest {
 			"longest.upgrade.processes");
 
 		Assert.assertEquals(
-			runningUpgradeProcesses.toString(), 3,
-			runningUpgradeProcesses.size());
-
-		Assert.assertEquals(
 			"com.test.UpgradeTestTable took 30000 ms to complete\n",
 			runningUpgradeProcesses.get(
 				0
@@ -102,6 +98,9 @@ public class UpgradeReportTest {
 			runningUpgradeProcesses.get(
 				2
 			).toString());
+		Assert.assertEquals(
+			runningUpgradeProcesses.toString(), 3,
+			runningUpgradeProcesses.size());
 	}
 
 	private static final MockedStatic<DBUpgrader> _dbUpgraderMockedStatic =

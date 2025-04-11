@@ -373,6 +373,12 @@ const FrontendDataSet = ({
 	}
 
 	function selectItems(value) {
+		if (selectionType === 'single') {
+			return setSelectedItemsValue(
+				Array.isArray(value) ? value : [value]
+			);
+		}
+
 		if (Array.isArray(value)) {
 			const newItems = value.filter(
 				(item) => !selectedItemsValue.includes(item)

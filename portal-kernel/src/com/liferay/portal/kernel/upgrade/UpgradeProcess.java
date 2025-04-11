@@ -120,6 +120,8 @@ public abstract class UpgradeProcess
 					}
 
 					doUpgrade();
+
+					closeConnections(false);
 				});
 		}
 		catch (Throwable throwable) {
@@ -129,6 +131,8 @@ public abstract class UpgradeProcess
 		}
 		finally {
 			this.connection = null;
+
+			closeConnections(false);
 
 			NotificationThreadLocal.setEnabled(notificationEnabled);
 			WorkflowThreadLocal.setEnabled(workflowEnabled);

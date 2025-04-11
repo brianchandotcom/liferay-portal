@@ -331,22 +331,13 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
-		if (ArrayUtil.isNotEmpty(
-				masterPage.getKeywordItemExternalReferences())) {
-
-			serviceContext.setAssetTagNames(
-				_getAssetTagNames(
-					groupId, masterPage.getKeywordItemExternalReferences()));
-		}
-
-		if (ArrayUtil.isNotEmpty(
-				masterPage.getTaxonomyCategoryItemExternalReferences())) {
-
-			serviceContext.setAssetCategoryIds(
-				_getAssetCategoryIds(
-					groupId,
-					masterPage.getTaxonomyCategoryItemExternalReferences()));
-		}
+		serviceContext.setAssetCategoryIds(
+			_getAssetCategoryIds(
+				groupId,
+				masterPage.getTaxonomyCategoryItemExternalReferences()));
+		serviceContext.setAssetTagNames(
+			_getAssetTagNames(
+				groupId, masterPage.getKeywordItemExternalReferences()));
 
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(

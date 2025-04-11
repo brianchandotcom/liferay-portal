@@ -43,6 +43,9 @@ export default function createFolderAction(
 								),
 								`<strong>${name}</strong>`
 							),
+							onClose: () => {
+								window.location.reload();
+							},
 							type: 'success',
 						});
 					}

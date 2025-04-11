@@ -65,6 +65,7 @@ function adjustNavigation() {
 		const navegacaoContainer = document.querySelector(
 			'.public-site-navigation-container'
 		);
+
 		if (navegacaoContainer) {
 			navegacaoContainer.style.top = '3.5rem';
 		}

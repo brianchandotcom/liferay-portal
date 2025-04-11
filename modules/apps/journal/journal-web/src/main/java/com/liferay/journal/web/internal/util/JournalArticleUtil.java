@@ -366,7 +366,11 @@ public class JournalArticleUtil {
 					Calendar calendar = CalendarFactoryUtil.getCalendar(
 						user.getTimeZone());
 
-					if (article.getDisplayDate() != null) {
+					displayDate = article.getDisplayDate();
+
+					if ((displayDate != null) &&
+						displayDate.before(new Date())) {
+
 						calendar.setTime(article.getDisplayDate());
 					}
 					else {

@@ -18,6 +18,7 @@ import './RecordGoLiveEventPage.css';
 
 import {Observer} from '@clayui/modal/lib/types';
 import classNames from 'classnames';
+import {isValidDate} from '~/utils/validations.form';
 
 import useAccountBusinessEvents from '../../../hooks/useAccountBusinessEvents';
 import useGetGMTTimeZonesList from '../../../hooks/useGetGMTTimeZonesList';
@@ -167,7 +168,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		<BusinessEventsModal
 			baseButtonDisabled={baseButtonDisabled}
 			handleSubmit={handleSubmit}
-			headerTitle={(businessEvent?.name ?? '').toUpperCase()}
+			headerTitle={businessEvent.name!}
 			isLoadingSubmitButton={isLoadingSubmitButton}
 			modalType={modalType}
 			observer={observer}
@@ -183,7 +184,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 						})}
 					>
 						<DatePicker
-							badgeClassName="mx-3"
+							badgeClassName="mr-4"
 							dateFormat="MM-dd-yyyy"
 							groupStyle="pb-1"
 							label={i18n.translate('actual-go-live-date')}
@@ -196,6 +197,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 							}
 							placeholder={i18n.translate('mm-dd-yyyy')}
 							required
+							validations={[isValidDate]}
 						/>
 					</ClayInput.GroupItem>
 
@@ -245,6 +247,16 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 						)}
 					</span>
 				</Badge>
+
+				{!isValidRecordDate && (
+					<Badge>
+						<span className="pl-1">
+							{i18n.translate(
+								'please-select-an-actual-go-live-date-that-has-already-occurred-or-is-today'
+							)}
+						</span>
+					</Badge>
+				)}
 			</div>
 		</BusinessEventsModal>
 	);

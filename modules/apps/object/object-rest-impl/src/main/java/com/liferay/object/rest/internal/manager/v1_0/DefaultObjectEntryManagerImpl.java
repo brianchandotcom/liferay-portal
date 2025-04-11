@@ -943,6 +943,7 @@ public class DefaultObjectEntryManagerImpl
 		serviceBuilderObjectEntry.setDefaultLanguageId(
 			_language.getLanguageId(
 				_portal.getSiteDefaultLocale(GetterUtil.getLong(scopeKey))));
+		serviceBuilderObjectEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
 		serviceBuilderObjectEntry.setValues(
 			_toObjectValues(
 				dtoConverterContext.getLocale(), objectDefinition, objectEntry,

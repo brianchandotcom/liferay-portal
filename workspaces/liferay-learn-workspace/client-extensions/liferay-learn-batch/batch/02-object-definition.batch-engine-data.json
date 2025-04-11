@@ -831,7 +831,7 @@
 					"label": {
 						"en_US": "Result"
 					},
-					"listTypeDefinitionExternalReferenceCode": "P2S3_RESULT",
+					"listTypeDefinitionExternalReferenceCode": "P2S3_RESULTS",
 					"localized": false,
 					"name": "result",
 					"readOnly": "false",
@@ -1856,7 +1856,7 @@
 					"label": {
 						"en_US": "Step Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "P2S3_STEP_TYPE",
+					"listTypeDefinitionExternalReferenceCode": "P2S3_STEP_TYPES",
 					"localized": false,
 					"name": "stepType",
 					"readOnly": "false",
@@ -2583,7 +2583,7 @@
 					"label": {
 						"en_US": "Question Type"
 					},
-					"listTypeDefinitionExternalReferenceCode": "P2S3_QUIZ_QUESTION_TYPE",
+					"listTypeDefinitionExternalReferenceCode": "P2S3_QUIZ_QUESTION_TYPES",
 					"localized": false,
 					"name": "questionType",
 					"readOnly": "false",

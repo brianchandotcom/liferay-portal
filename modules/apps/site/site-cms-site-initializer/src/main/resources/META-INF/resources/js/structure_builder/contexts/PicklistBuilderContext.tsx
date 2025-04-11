@@ -122,6 +122,8 @@ const useSetId = () => useContext(StateContext).setId;
 
 const useSetName = () => useContext(StateContext).setName;
 
+const useOptions = () => useContext(StateContext).options;
+
 export {
 	buildState,
 	INITIAL_STATE,
@@ -131,6 +133,7 @@ export {
 	useErc,
 	useSetErc,
 	useId,
+	useOptions,
 	useSetId,
 	useName,
 	useSetName,

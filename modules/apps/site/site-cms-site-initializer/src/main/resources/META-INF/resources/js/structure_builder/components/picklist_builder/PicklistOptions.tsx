@@ -7,10 +7,13 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {Options, useOptions} from '../../contexts/PicklistBuilderContext';
 import AddOptionModal from './AddOptionModal';
 
 export default function PicklistOptions() {
 	const [modalVisible, setModalVisible] = useState<Boolean>(false);
+
+	const options = useOptions();
 
 	return (
 		<>
@@ -49,6 +52,7 @@ export default function PicklistOptions() {
 					title: Liferay.Language.get('there-are-no-options-yet'),
 				}}
 				id="optionList"
+				items={normalizeOptionsToItems(options)}
 				style="fluid"
 				views={[
 					{
@@ -76,4 +80,12 @@ export default function PicklistOptions() {
 			/>
 		</>
 	);
+}
+
+function normalizeOptionsToItems(options: Options) {
+	return [...options].map(([erc, value]) => ({
+		erc,
+		id: erc,
+		...value,
+	}));
 }

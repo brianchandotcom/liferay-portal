@@ -26,67 +26,6 @@ public class CustomField {
 		return customFieldJSONParser.parseToDTO(json);
 	}
 
-	public CustomValue getCustomValue() {
-		return customValue;
-	}
-
-	public void setCustomValue(CustomValue customValue) {
-		this.customValue = customValue;
-	}
-
-	public void setCustomValue(
-		UnsafeSupplier<CustomValue, Exception> customValueUnsafeSupplier) {
-
-		try {
-			customValue = customValueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected CustomValue customValue;
-
-	public String getDataType() {
-		return dataType;
-	}
-
-	public void setDataType(String dataType) {
-		this.dataType = dataType;
-	}
-
-	public void setDataType(
-		UnsafeSupplier<String, Exception> dataTypeUnsafeSupplier) {
-
-		try {
-			dataType = dataTypeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String dataType;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String name;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -102,6 +41,18 @@ public class CustomField {
 		return Objects.equals(toString(), customField.toString());
 	}
 
+	public CustomValue getCustomValue() {
+		return customValue;
+	}
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	@Override
 	public int hashCode() {
 		String string = toString();
@@ -109,64 +60,59 @@ public class CustomField {
 		return string.hashCode();
 	}
 
+	public void setCustomValue(CustomValue customValue) {
+		this.customValue = customValue;
+	}
+
+	public void setCustomValue(
+		UnsafeSupplier<CustomValue, Exception> customValueUnsafeSupplier) {
+
+		try {
+			customValue = customValueUnsafeSupplier.get();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	public void setDataType(
+		UnsafeSupplier<String, Exception> dataTypeUnsafeSupplier) {
+
+		try {
+			dataType = dataTypeUnsafeSupplier.get();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	public String toString() {
 		return CustomFieldJSONParser.toJSON(this);
 	}
 
+	protected CustomValue customValue;
+	protected String dataType;
+	protected String name;
+
 	private static class CustomFieldJSONParser
 		extends BaseJSONParser<CustomField> {
-
-		@Override
-		protected CustomField createDTO() {
-			return new CustomField();
-		}
-
-		@Override
-		protected CustomField[] createDTOArray(int size) {
-			return new CustomField[size];
-		}
-
-		@Override
-		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "customValue")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "dataType")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				return false;
-			}
-
-			return false;
-		}
-
-		@Override
-		protected void setField(
-			CustomField customField, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "customValue")) {
-				if (jsonParserFieldValue != null) {
-					customField.setCustomValue(
-						CustomValue.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dataType")) {
-				if (jsonParserFieldValue != null) {
-					customField.setDataType((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					customField.setName((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
 
 		public static String toJSON(CustomField customField) {
 			if (customField == null) {
@@ -218,6 +164,58 @@ public class CustomField {
 			sb.append("}");
 
 			return sb.toString();
+		}
+
+		@Override
+		protected CustomField createDTO() {
+			return new CustomField();
+		}
+
+		@Override
+		protected CustomField[] createDTOArray(int size) {
+			return new CustomField[size];
+		}
+
+		@Override
+		protected boolean parseMaps(String jsonParserFieldName) {
+			if (Objects.equals(jsonParserFieldName, "customValue")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dataType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				return false;
+			}
+
+			return false;
+		}
+
+		@Override
+		protected void setField(
+			CustomField customField, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "customValue")) {
+				if (jsonParserFieldValue != null) {
+					customField.setCustomValue(
+						CustomValue.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dataType")) {
+				if (jsonParserFieldValue != null) {
+					customField.setDataType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					customField.setName((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
 		}
 
 		private static String _escape(Object object) {

@@ -11,15 +11,10 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {Option, useAddOption} from '../../contexts/PicklistBuilderContext';
 import getRandomId from '../../utils/getRandomId';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
-
-type Option = {
-	erc: string;
-	key: string;
-	name: Liferay.Language.LocalizedValue<string>;
-};
 
 export default function AddOptionModal({
 	onCloseModal,
@@ -36,6 +31,7 @@ export default function AddOptionModal({
 				Liferay.Language.get('option'),
 		}
 	);
+	const addOption = useAddOption();
 
 	const {observer, onClose} = useModal({
 		onClose: () => onCloseModal(),
@@ -45,6 +41,8 @@ export default function AddOptionModal({
 		if (!erc || !key || !name) {
 			return;
 		}
+
+		addOption({erc, key, name});
 
 		onClose();
 	};

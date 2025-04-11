@@ -26,18 +26,30 @@ const INITIAL_STATE = {
 	name: {
 		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_PICKLIST_NAME,
 	},
+	options: new Map(),
 	setErc: noop,
 	setId: noop,
 	setName: noop,
+	setOptions: noop,
 };
+
+export type Option = {
+	erc: string;
+	key: string;
+	name: Liferay.Language.LocalizedValue<string>;
+};
+
+export type Options = Map<string, Partial<Option>>;
 
 export type State = {
 	erc: string;
 	id: number | null;
 	name: Liferay.Language.LocalizedValue<string>;
+	options: Options;
 	setErc: Dispatch<SetStateAction<string>>;
 	setId: Dispatch<SetStateAction<number | null>>;
 	setName: Dispatch<SetStateAction<Liferay.Language.LocalizedValue<string>>>;
+	setOptions: Dispatch<SetStateAction<Options>>;
 };
 
 const StateContext = createContext<State>(INITIAL_STATE);
@@ -54,6 +66,7 @@ export default function StateContextProvider({
 	const [name, setName] = useState<Liferay.Language.LocalizedValue<string>>(
 		initialState.name
 	);
+	const [options, setOptions] = useState<Options>(new Map());
 
 	return (
 		<StateContext.Provider
@@ -61,9 +74,11 @@ export default function StateContextProvider({
 				erc,
 				id,
 				name,
+				options,
 				setErc,
 				setId,
 				setName,
+				setOptions,
 			}}
 		>
 			{children}
@@ -84,6 +99,17 @@ const buildState = (picklist: Picklist): State => {
 	};
 };
 
+const useAddOption = () => {
+	const {setOptions} = useContext(StateContext);
+
+	return ({erc, key, name}: Option) =>
+		setOptions((options) => {
+			options.set(erc, {key, name});
+
+			return options;
+		});
+};
+
 const useErc = () => useContext(StateContext).erc;
 
 const useId = () => useContext(StateContext).id;
@@ -101,6 +127,7 @@ export {
 	INITIAL_STATE,
 	StateContext,
 	StateContextProvider,
+	useAddOption,
 	useErc,
 	useSetErc,
 	useId,

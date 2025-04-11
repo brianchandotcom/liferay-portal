@@ -59,10 +59,10 @@ public class AllCommerceOrderTableFDSView extends BaseTableFDSView {
 	}
 
 	private DateTimeFDSTableSchemaField _addDateTimeFDSTableSchemaField() {
-		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
+		DateTimeFDSTableSchemaField dateTimeFDSTableSchemaField =
 			new DateTimeFDSTableSchemaField();
 
-		dateFDSTableSchemaField.setContentRenderer(
+		dateTimeFDSTableSchemaField.setContentRenderer(
 			"dateTime"
 		).setFieldName(
 			"orderDate"
@@ -72,10 +72,10 @@ public class AllCommerceOrderTableFDSView extends BaseTableFDSView {
 			true
 		);
 
-		dateFDSTableSchemaField.setTimeZoneBehavior(
+		dateTimeFDSTableSchemaField.setTimeZoneBehavior(
 			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
 
-		return dateFDSTableSchemaField;
+		return dateTimeFDSTableSchemaField;
 	}
 
 	@Reference

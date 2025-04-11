@@ -27,6 +27,7 @@
 		<field name="listTypeDefinitionId" type="long" />
 		<field name="key" type="String" />
 		<field localized="true" name="name" type="String" />
+		<field name="system" type="boolean" />
 		<field name="type" type="String" />
 	</model>
 </model-hints>

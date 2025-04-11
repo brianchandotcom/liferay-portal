@@ -25,5 +25,6 @@ create table ListTypeEntry (
 	listTypeDefinitionId LONG,
 	key_ VARCHAR(75) null,
 	name STRING null,
+	system_ BOOLEAN,
 	type_ VARCHAR(75) null
 );

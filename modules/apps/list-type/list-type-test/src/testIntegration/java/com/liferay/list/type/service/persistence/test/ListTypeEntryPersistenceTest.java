@@ -138,6 +138,8 @@ public class ListTypeEntryPersistenceTest {
 
 		newListTypeEntry.setName(RandomTestUtil.randomString());
 
+		newListTypeEntry.setSystem(RandomTestUtil.randomBoolean());
+
 		newListTypeEntry.setType(RandomTestUtil.randomString());
 
 		_listTypeEntries.add(_persistence.update(newListTypeEntry));
@@ -177,6 +179,8 @@ public class ListTypeEntryPersistenceTest {
 			existingListTypeEntry.getKey(), newListTypeEntry.getKey());
 		Assert.assertEquals(
 			existingListTypeEntry.getName(), newListTypeEntry.getName());
+		Assert.assertEquals(
+			existingListTypeEntry.isSystem(), newListTypeEntry.isSystem());
 		Assert.assertEquals(
 			existingListTypeEntry.getType(), newListTypeEntry.getType());
 	}
@@ -281,7 +285,7 @@ public class ListTypeEntryPersistenceTest {
 			"externalReferenceCode", true, "listTypeEntryId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "listTypeDefinitionId", true, "key", true,
-			"name", true, "type", true);
+			"name", true, "system", true, "type", true);
 	}
 
 	@Test
@@ -602,6 +606,8 @@ public class ListTypeEntryPersistenceTest {
 		listTypeEntry.setKey(RandomTestUtil.randomString());
 
 		listTypeEntry.setName(RandomTestUtil.randomString());
+
+		listTypeEntry.setSystem(RandomTestUtil.randomBoolean());
 
 		listTypeEntry.setType(RandomTestUtil.randomString());
 

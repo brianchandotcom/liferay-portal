@@ -339,12 +339,16 @@ public class CustomFieldsUtilTest {
 				}
 			},
 			_getCustomField(customFields, _expandoColumn2.getName()));
+
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
 		_assertEquals(
 			new CustomField() {
 				{
 					customValue = new CustomValue() {
 						{
-							data = _dateFormat.format(randomDate);
+							data = dateFormat.format(randomDate);
 						}
 					};
 					dataType = "";
@@ -352,6 +356,7 @@ public class CustomFieldsUtilTest {
 				}
 			},
 			_getCustomField(customFields, _expandoColumn3.getName()));
+
 		_assertEquals(
 			new CustomField() {
 				{
@@ -1437,9 +1442,6 @@ public class CustomFieldsUtilTest {
 	private static final long _DATA_LONG = RandomTestUtil.randomLong();
 
 	private static final String _DATA_STRING = RandomTestUtil.randomString();
-
-	private static final DateFormat _dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

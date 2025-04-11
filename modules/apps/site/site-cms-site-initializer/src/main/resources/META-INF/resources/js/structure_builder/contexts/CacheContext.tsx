@@ -6,6 +6,7 @@
 import React, {
 	ReactNode,
 	createContext,
+	useCallback,
 	useContext,
 	useEffect,
 	useState,
@@ -76,22 +77,26 @@ function CacheContextProvider({children}: {children: ReactNode}) {
 	);
 }
 
-function useCache<T extends CacheKey>(key: T): Cache[T] {
+function useCache<T extends CacheKey>(key: T): Cache[T] & {load: () => void} {
 	const {broadcast, cache, update} = useContext(CacheContext);
 
 	const item = cache[key];
 
-	useEffect(() => {
-		if (item.status !== 'idle') {
-			return;
-		}
-
+	const load = useCallback(() => {
 		update(key, {status: 'saving'} as Partial<Cache[T]>);
 
 		item.fetcher().then((response) => {
 			update(key, {data: response, status: 'saved'} as Partial<Cache[T]>);
 		});
 	}, [item, key, update]);
+
+	useEffect(() => {
+		if (item.status !== 'idle') {
+			return;
+		}
+
+		load();
+	}, [item, load]);
 
 	useEffect(() => {
 		const staleCache = ({data}: MessageEvent) => {
@@ -109,7 +114,7 @@ function useCache<T extends CacheKey>(key: T): Cache[T] {
 		};
 	}, [broadcast, item, update, key]);
 
-	return item;
+	return {...item, load};
 }
 
 function useStaleCache() {

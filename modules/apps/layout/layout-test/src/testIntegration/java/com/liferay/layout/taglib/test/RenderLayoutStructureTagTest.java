@@ -3022,16 +3022,11 @@ public class RenderLayoutStructureTagTest {
 
 		String content = mockHttpServletResponse.getContentAsString();
 
-		String formStartHTML = "<form action=\"";
-
-		Assert.assertFalse(content.contains(formStartHTML));
-
+		Assert.assertFalse(
+			content.contains("<form action=\""));
+		Assert.assertFalse(
+			content.contains("<p>InputName:" + infoField.getName() + "</p>"));
 		Assert.assertTrue(content, content.contains(expectedSuccessHTML));
-
-		String expectedInfoFieldInput =
-			"<p>InputName:" + infoField.getName() + "</p>";
-
-		Assert.assertFalse(content.contains(expectedInfoFieldInput));
 	}
 
 	private void _testRenderLayoutWithLocale(

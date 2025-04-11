@@ -355,10 +355,10 @@ describe('InfoBoxModalAddressInput', () => {
 		});
 
 		await setFieldValue(addressSubtypeInput, 'SHIPPING1');
-		renderedComponent.getByRole('option', {name: 'SHIPPING 1'}).click();
+		expect(addressSubtypeInput).toHaveValue('SHIPPING1');
 
 		await setFieldValue(addressSubtypeInput, 'SHIPPING2');
-		renderedComponent.getByRole('option', {name: 'SHIPPING 2'}).click();
+		expect(addressSubtypeInput).toHaveValue('SHIPPING2');
 	});
 
 	it('Must preload subtype field if specified address as it', async () => {

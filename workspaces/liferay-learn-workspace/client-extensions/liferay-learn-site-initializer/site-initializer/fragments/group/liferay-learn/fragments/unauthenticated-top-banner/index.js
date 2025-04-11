@@ -15,6 +15,7 @@ if (!themeDisplay.isSignedIn()) {
 	document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector('.icon-x').addEventListener('click', () => {
 			document.querySelector('.banner-sign-in').style.display = 'none';
+
 			publicSiteNavigationContainer.classList.remove(
 				'public-site-navigation-margin-top'
 			);

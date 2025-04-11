@@ -91,6 +91,7 @@ export function ManagementToolbar({
 					`lfr__management-toolbar ${className}`,
 					enableBoxShadow && 'lfr__management-toolbar--box-shadow'
 				)}
+				fluidSize="xxxl"
 			>
 				<ClayManagementToolbar.ItemList>
 					<div className="border-right ml-sm-2 mr-3 pr-3">
